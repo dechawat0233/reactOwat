@@ -10,6 +10,11 @@ import Dashboard from "./conponents/Dashboard";
 import Search from "./conponents/Search";
 import Employee from "./conponents/Employee";
 import Salary from "./conponents/Salary";
+import IncomeTax from "./conponents/IncomeTax";
+import SocialSecurity from "./conponents/SocialSecurity";
+import ProvidentFund from "./conponents/ProvidentFund";
+import Collateral from "./conponents/Collateral";
+import Document from "./conponents/Document";
 
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
@@ -34,6 +39,11 @@ function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/employee" element={<Employee />} />
           <Route path="/salary" element={<Salary />} />
+          <Route path="/income_tax" element={<IncomeTax />} />
+          <Route path="/social_security" element={<SocialSecurity />} />
+          <Route path="/provident_fund" element={<ProvidentFund />} />
+          <Route path="/collateral" element={<Collateral />} />
+          <Route path="/document" element={<Document />} />
         </Routes>
       </>
     </Router>

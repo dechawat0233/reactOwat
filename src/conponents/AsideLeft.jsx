@@ -87,31 +87,31 @@ function AsideLeft() {
                     {/* <a href="income_tax.php" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
                       <p>ภาษีเงินได้</p>
                     </a> */}
-                    <Link to="/search" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ภาษีเงินได้</Link>
+                    <Link to="/income_tax" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ภาษีเงินได้</Link>
                   </li>
                   <li class="nav-item">
                     {/* <a href="social_security.php" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
                       <p>ประกันสังคม</p>
                     </a> */}
-                    <Link to="/search" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ประกันสังคม</Link>
+                    <Link to="/social_security" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ประกันสังคม</Link>
                   </li>
                   <li class="nav-item">
                     {/* <a href="provident_fund.php" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
                       <p>กองทุนสำรอง</p>
                     </a> */}
-                    <Link to="/search" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> กองทุนสำรอง</Link>
+                    <Link to="/provident_fund" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> กองทุนสำรอง</Link>
                   </li>
                   <li class="nav-item">
                     {/* <a href="collateral.php" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
                       <p>เงินค้ำประกัน - เงินกู้</p>
                     </a> */}
-                    <Link to="/search" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> เงินค้ำประกัน</Link>
+                    <Link to="/collateral" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> เงินค้ำประกัน</Link>
                   </li>
                   <li class="nav-item">
                     {/* <a href="document.php" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
                       <p>ข้อมูลเอกสาร</p>
                     </a> */}
-                    <Link to="/search" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ข้อมูลเอกสาร</Link>
+                    <Link to="/document" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ข้อมูลเอกสาร</Link>
                   </li>
                 </ul>
               </li>
