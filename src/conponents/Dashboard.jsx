@@ -1,6 +1,7 @@
 import React from 'react'
 // import Top from "./Top"
 // import AsideLeft from './AsideLeft'
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function Dashboard() {
   return (
@@ -29,7 +30,8 @@ function Dashboard() {
               <a href="" class="btn-d btn-app"><i class="fas fa-file-invoice-dollar"></i> ระบบเงินเดือน</a>
               <a href="" class="btn-d btn-app"><i class="fas fa-paste"></i> ระบบออกเอกสาร</a>
               <a href="" class="btn-d btn-app"><i class="fas fa-file-alt"></i> ระบบรายงานผู้บริหาร</a>
-              <a href="search.php" class="btn-d btn-app"><i class="fas fa-network-wired"></i> ระบบบริหารจัดการ<br/>พนักงาน</a>
+              {/* <a href="search.php" class="btn-d btn-app"><i class="fas fa-network-wired"></i> ระบบบริหารจัดการ<br/>พนักงาน</a> */}
+              <Link to="/search" className="btn-d btn-app"><i class="fas fa-network-wired"></i> ระบบบริหารจัดการ<br/>พนักงาน</Link>
               <a href="" class="btn-d btn-app"><i class="fas fa-cog"></i> การตั้งค่า</a>
             </div>
           </div>
