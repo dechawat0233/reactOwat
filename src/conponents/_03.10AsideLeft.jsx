@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 // import React from 'react'
 import React, { Component } from 'react'
 import Navitems from './Navitems'
@@ -7,12 +5,7 @@ import Navitems from './Navitems'
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function AsideLeft() {
-  const [showSubMenu, setShowSubMenu] = useState(false);
-
-  function toggleSubMenu() {
-    setShowSubMenu(!showSubMenu);
-  }
-
+  
   return (
     
     <>
@@ -67,16 +60,12 @@ function AsideLeft() {
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link" onClick={toggleSubMenu}>
+                <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-network-wired"></i>
                   <p> ระบบจัดการพนักงาน <i class="right fas fa-angle-left"></i><i class=""></i></p>
                 </a>
-
-                {showSubMenu && (
-                // <ul class="nav nav-treeview">
-
-                  <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                              <li class="nav-item">
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
                     {/* <a href="search.php" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
                       <p>ค้นหาพนักงาน</p>
                     </a> */}
@@ -125,8 +114,6 @@ function AsideLeft() {
                     <Link to="/document" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ข้อมูลเอกสาร</Link>
                   </li>
                 </ul>
-                        )}
-
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
