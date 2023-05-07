@@ -6,10 +6,14 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 // Set up environment variables
-require('dotenv').config();
+//require('dotenv').config();
 
 // Set up database connection
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+//mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: 
+//true });
+mongoose.connect('mongodb://localhost:27017/users', { useNewUrlParser: true, useUnifiedTopology: 
+true });
+
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
