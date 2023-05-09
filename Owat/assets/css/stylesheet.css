@@ -51,9 +51,9 @@ html {
 .btn-login{
     background: #2B5D8E;
     border-radius: 60px;
-    font-size: 16px;
+    font-size: 18px;
     color: #fff;
-    padding: 10px 10px 10px 10px;
+    padding: 12px 10px 12px 10px;
     border: none;
     width:100%;
     box-shadow: 0 0 5px #8da2ba;
@@ -66,11 +66,11 @@ html {
 .Copyright{margin-top: 30px; color:#fff;}
 .title-login{text-align: center;margin: 10px 0px;}
 .title-login h2 {
-    font-size: 1.4rem;
-    margin: 0;
+    font-size: 1.6rem;
+    margin: 20px 0px;
     font-family: 'kanitregular';
 }
-.Logo-w{background: #2B5D8E;padding: 10px 0;}
+.Logo-w{background:#2B5D8E;padding: 10px 0;}
 .Logo-left {
     height: 52px;
     position: relative;
@@ -91,9 +91,9 @@ html {
 }
 h2.title {
     padding: 1px 0px 12px;
-    margin-bottom: 10px;
-    font-size:16px;
-    color:#19426A;
+    margin-bottom: 15px;
+    font-size:17px;
+    color:#2B5D8E;
     font-weight:700
 }
 .Frame{padding: 30px 20px 20px;margin-bottom: 30px; border-radius: 10px;border:1px Solid #DCDBDB;}
@@ -134,7 +134,7 @@ h2.title {
     color: #fff;
     padding: 8px 10px 8px 10px;
     border: none;
-    width: 140px;
+    width: 130px;
     box-shadow: 0 0 5px #8da2ba;
 }
 .btn:hover {
@@ -143,6 +143,15 @@ h2.title {
 .clean {
     background:#F99800!important;transition: all 0.5s;
 }
+.b-previous{
+    background:#a9b4bd!important;transition: all 0.5s;
+}
+.b-next{
+    background:#1a63b1!important;transition: all 0.5s;
+}
+.b-next:hover{
+    background:#11539a!important;
+}
 .clean:hover{
     background:#ff8d08!important;
 }
@@ -150,7 +159,7 @@ h2.title {
 .btn-app {
   border-radius: 3px;
   background-color: #f8f9fa;
-  border: 1px solid #AAC9D9;
+  border: 1px solid #fff;
   color:#3A4957;
   font-size: 12px;
   height:80px;
@@ -167,6 +176,7 @@ h2.title {
     margin-right:15px;
 }
 .btn-d{
+    color:#fff;
     display: flex;
     align-items: center;
     font-weight: 400;
@@ -177,15 +187,57 @@ h2.title {
     user-select: none;
     background-color: transparent;
     padding: 0.5rem 1rem 0.5rem 1.7rem;
-    font-size: 1.25rem;
-    line-height: 1.5;
+    font-size: 1.3rem;
+    line-height: 1.4;
     border-radius: 0.55rem;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
+a.btn-d:hover {color: #fff;}
 .Inner-dash{padding: 50px;}
 .Inner-dash .row{
     align-items: center;
     justify-content: center;
+}
+.txt-label{padding:0px 10px;font-weight: 700}
+.txt-w{width:60%;display: inline-block;font-weight: 700}
+.check1{margin-top: 0.9rem;}
+.check2{margin-top: 0.9rem;margin-left:0rem;}
+.work-history{padding-inline-start: 20px;}
+.txt-control{
+    height: calc(2.25rem + 2px);
+    padding: 0.375rem 0rem;
+}
+.m-b{
+    margin-bottom: 0.8rem;
+}
+.form-detail{
+    padding-top: calc(0.375rem + 1px);
+    padding-bottom: calc(0.375rem + 1px);
+    margin-bottom: 0;
+    font-size: inherit;
+    line-height: 1.5;
+}
+h2.head-a {
+    padding: 12px 0px 15px;
+    font-size: 16px;
+    color: #2B5D8E;
+    margin: 20px 0;
+    font-weight: 700;
+    border-bottom: 2px solid #dee2e6;
+}
+.tacbox {
+  display:block;
+  padding: 1em;
+  margin: 0em;
+  border: 3px solid #ddd;
+  background-color: #eee;
+  max-width: 100%;
+}
+
+.tacbox input {
+  height: 2em;
+  width: 2em;
+  vertical-align: middle;
 }
 /*---------------------------------------------------------------*/
 @media only screen and (max-width:1200px){
@@ -193,7 +245,7 @@ h2.title {
 }
 
 @media only screen and (max-width:900px){
-    
+    .txt-w{width:auto;display: inline-block;font-weight: 700}
 }
 
 

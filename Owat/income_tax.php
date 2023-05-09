@@ -27,7 +27,7 @@
        <h2 class="title"> ภาษีเงินได้</h2>
        <section class="Frame">
 		   <div class="col-md-12">
-			  <form action="search_results.php">
+			  <form action="">
 				  <div class="row">
 					  <div class="col-md-4">
 						  <div class="form-group">

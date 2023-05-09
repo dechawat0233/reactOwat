@@ -26,68 +26,193 @@
       <div class="container-fluid">
        <form action="">
 	   <h2 class="title">เงินค้ำประกัน</h2>
-       <section class="Frame">
-        <div class="row">
-					  <div class="col-md-6">
-						  <div class="form-group">
-							<label>อัพโหลดบัตรประชาชน</label>
-							<div class="custom-file">
+		<section class="Frame">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>อัพโหลดบัตรประชาชน/หนังสือเดินทาง</label>
+						<div class="custom-file">
 							<input type="file" class="custom-file-input" id="customFile">
 							<label class="custom-file-label" for="customFile">เลือกไฟล์</label>
-							</div>
-						  </div>
-					  </div>
-					  <div class="col-md-6">
-						  <div class="form-group">
-							<label>อัพโหลดบัตรคนพิการ</label>
-							<div class="custom-file">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>อัพโหลดบัตรคนพิการ</label>
+						<div class="custom-file">
 							<input type="file" class="custom-file-input" id="customFile">
 							<label class="custom-file-label" for="customFile">เลือกไฟล์</label>
-							</div>
-						  </div>
-					  </div>
-         </div>
-         <div class="row">
-					  <div class="col-md-6">
-						  <div class="form-group">
-							<label>อัพโหลดทะเบียนบ้าน</label>
-							<div class="custom-file">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>อัพโหลดทะเบียนบ้าน</label>
+						<div class="custom-file">
 							<input type="file" class="custom-file-input" id="customFile">
 							<label class="custom-file-label" for="customFile">เลือกไฟล์</label>
-							</div>
-						  </div>
-					  </div>
-					  <div class="col-md-6">
-						  <div class="form-group">
-							<label>อัพโหลดหลักฐานด้านการศึกษา</label>
-							<div class="custom-file">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>อัพโหลดหลักฐานด้านการศึกษา</label>
+						<div class="custom-file">
 							<input type="file" class="custom-file-input" id="customFile">
 							<label class="custom-file-label" for="customFile">เลือกไฟล์</label>
-							</div>
-						  </div>
-					  </div>
-         </div>
-         <div class="row">
-					  <div class="col-md-6">
-						  <div class="form-group">
-							<label>อัพโหลดสัญญาจ้าง</label>
-							<div class="custom-file">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>อัพโหลดสัญญาจ้าง</label>
+						<div class="custom-file">
 							<input type="file" class="custom-file-input" id="customFile">
 							<label class="custom-file-label" for="customFile">เลือกไฟล์</label>
-							</div>
-						  </div>
-					  </div>
-					  <div class="col-md-6">
-						  <div class="form-group">
-							<label>อัพโหลดหน้าสมุดบัญชี</label>
-							<div class="custom-file">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>อัพโหลดหน้าสมุดบัญชี</label>
+						<div class="custom-file">
 							<input type="file" class="custom-file-input" id="customFile">
 							<label class="custom-file-label" for="customFile">เลือกไฟล์</label>
-							</div>
-						  </div>
-					  </div>
-         </div>
-	   </section><!--Frame-->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>อัพโหลดใบเกณฑ์ทหาร</label>
+						<div class="custom-file">
+							<input type="file" class="custom-file-input" id="customFile">
+							<label class="custom-file-label" for="customFile">เลือกไฟล์</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>อัพโหลดใบอนุญาตทำงาน</label>
+						<div class="custom-file">
+							<input type="file" class="custom-file-input" id="customFile">
+							<label class="custom-file-label" for="customFile">เลือกไฟล์</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>อัพโหลดเอกสารอื่นๆ</label>
+						<div class="custom-file">
+							<input type="file" class="custom-file-input" id="customFile">
+							<label class="custom-file-label" for="customFile">เลือกไฟล์</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section> <!--Frame-->
+		<h2 class="title">เงินค้ำประกันสำหรับชาติต่างด้าว</h2>
+		<section class="Frame">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>อัพโหลดบัตรประชาชน/หนังสือเดินทาง</label>
+						<div class="custom-file">
+							<input type="file" class="custom-file-input" id="customFile">
+							<label class="custom-file-label" for="customFile">เลือกไฟล์</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>อัพโหลดบัตรคนพิการ</label>
+						<div class="custom-file">
+							<input type="file" class="custom-file-input" id="customFile">
+							<label class="custom-file-label" for="customFile">เลือกไฟล์</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>อัพโหลดทะเบียนบ้าน</label>
+						<div class="custom-file">
+							<input type="file" class="custom-file-input" id="customFile">
+							<label class="custom-file-label" for="customFile">เลือกไฟล์</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>อัพโหลดหลักฐานด้านการศึกษา</label>
+						<div class="custom-file">
+							<input type="file" class="custom-file-input" id="customFile">
+							<label class="custom-file-label" for="customFile">เลือกไฟล์</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>อัพโหลดสัญญาจ้าง</label>
+						<div class="custom-file">
+							<input type="file" class="custom-file-input" id="customFile">
+							<label class="custom-file-label" for="customFile">เลือกไฟล์</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>อัพโหลดหน้าสมุดบัญชี</label>
+						<div class="custom-file">
+							<input type="file" class="custom-file-input" id="customFile">
+							<label class="custom-file-label" for="customFile">เลือกไฟล์</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>อัพโหลดใบเกณฑ์ทหาร</label>
+						<div class="custom-file">
+							<input type="file" class="custom-file-input" id="customFile">
+							<label class="custom-file-label" for="customFile">เลือกไฟล์</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>อัพโหลดใบอนุญาตทำงาน</label>
+						<div class="custom-file">
+							<input type="file" class="custom-file-input" id="customFile">
+							<label class="custom-file-label" for="customFile">เลือกไฟล์</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>อัพโหลดเอกสารอื่นๆ</label>
+						<div class="custom-file">
+							<input type="file" class="custom-file-input" id="customFile">
+							<label class="custom-file-label" for="customFile">เลือกไฟล์</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section> <!--Frame-->
 	   <div class="line_btn">
 			<button  type="submit" class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
 			<button type="reset" class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
