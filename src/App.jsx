@@ -3,6 +3,8 @@ import React from "react";
 // import Home from "./Home";
 // import Profile from './Profile';
 
+import LoginForm from './LoginForm';
+
 import AsideLeft from "./conponents/AsideLeft";
 import Top from "./conponents/Top";
 
@@ -29,6 +31,7 @@ function App() {
           <li><Link to="/profile">Profile</Link></li>
           <li><Link to="/dashboard">Dashboard</Link></li>
         </ul> */}
+
         <Top />
         <AsideLeft />
         <Routes>
