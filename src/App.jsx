@@ -3,7 +3,7 @@ import React from "react";
 // import Home from "./Home";
 // import Profile from './Profile';
 
-import LoginForm from './LoginForm';
+import LoginForm from './conponents/LoginForm';
 
 import AsideLeft from "./conponents/AsideLeft";
 import Top from "./conponents/Top";
