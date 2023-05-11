@@ -72,11 +72,25 @@ function application() {
                                         </div>
                                         <div class="">
                                             <div class="form-check form-check-inline" style={{ paddingTop: "5px" }}>
-                                                <input onChange={handleCheckboxChange} class="form-check-input" type="checkbox" id="no1" value="" />
+                                                {/* <input onChange={handleCheckboxChange} class="form-check-input" type="checkbox" id="no1" value="" />
                                                 <label class="form-check-label txt-control" style={{ width: "100 %", marginRight: "10px" }} for="inlineRadio2">เพื่อนหรือเจ้าหน้าที่แนะนำ</label>
                                                 {showInput && (
                                                     <input type="" class="form-control form-check-label" id="choose_hospital1" placeholder="" style={{ display: "none" }} />
-                                                )}
+                                                )} */}
+                                                {/* <input
+                                                    type="checkbox"
+                                                    checked={showInput}
+                                                    onChange={handleCheckboxChange}
+                                                /> */}
+                                                <input onChange={handleCheckboxChange} checked={showInput} class="form-check-input" type="checkbox" id="no1"/>
+                                                <label class="form-check-label txt-control" style={{ width: "100 %", marginRight: "10px" }} for="inlineRadio2">เพื่อนหรือเจ้าหน้าที่แนะนำ</label>
+                                                {/* {showInput ? (
+                                                    <input type="text" id="input" placeholder="Input field" />
+                                                ) : null} */}
+
+                                                {showInput ? (
+                                                    <input type="text" class="form-control form-check-label" id="choose_hospital1" placeholder="" />
+                                                ) : null}
 
                                             </div>
 
@@ -88,7 +102,7 @@ function application() {
                                             </div>
                                         </div>
                                         <div class="">
-                                            <div class="form-check form-check-inline" style={{ paddingtop: "5px" }}>
+                                            <div class="form-check form-check-inline" style={{ paddingTop: "5px" }}>
                                                 <input class="form-check-input" type="checkbox" id="" value="" />
                                                 <label class="form-check-label txt-control" style={{ width: "100%" }} for="inlineRadio2">โซเชียลมีเดีย</label>
                                             </div>

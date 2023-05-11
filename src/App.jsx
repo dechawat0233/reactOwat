@@ -1,7 +1,10 @@
 import React from "react";
+import { useState } from 'react';
 // import Posts from "./Post";
 // import Home from "./Home";
 // import Profile from './Profile';
+
+import LoginForm from './conponents/Login';
 
 import AsideLeft from "./conponents/AsideLeft";
 import Top from "./conponents/Top";
@@ -47,7 +50,20 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+    function handleLogin(username, password) {
+        // TODO: Implement the login process
+        // For now, just set loggedIn to true
+        setLoggedIn(true);
+    }
+
+    function handleLogout() {
+        setLoggedIn(false);
+    }
   return (
+    <div>
+    {            loggedIn?(
     <Router>
       <>
         {/* <ul>
@@ -95,13 +111,14 @@ function App() {
           <Route path="/countday" element={<Countday />} />
         </Routes>
       </>
-      </Router>
-    ) : (
-        <LoginForm onLogin={handleLogin} />
-    )
+    </Router>
+ ) : (
+  <LoginForm onLogin={handleLogin} />
+)
 }
-            </div>
-  );
+      </div>
+);
 }
+        
 
 export default App;
