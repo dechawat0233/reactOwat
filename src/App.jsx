@@ -25,10 +25,15 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(false);
+
     function handleLogin(username, password) {
         // TODO: Implement the login process
         // For now, just set loggedIn to true
         setLoggedIn(true);
+    }
+
+    function handleLogout() {
+        setLoggedIn(false);
     }
 
     return (
@@ -44,7 +49,7 @@ function App() {
           <li><Link to="/dashboard">Dashboard</Link></li>
         </ul> */}
 
-        <Top />
+                        <Top />
         <AsideLeft />
         <Routes>
           {/* <Route path="/" element={<Home />} />
