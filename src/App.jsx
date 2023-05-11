@@ -1,11 +1,7 @@
-// import React from "react";
+import React from "react";
 // import Posts from "./Post";
 // import Home from "./Home";
 // import Profile from './Profile';
-
-import React, { useState, useEffect } from 'react';
-import Login from "./conponents/Login";
-import Registration from "./conponents/Registration";
 
 import AsideLeft from "./conponents/AsideLeft";
 import Top from "./conponents/Top";
@@ -49,19 +45,17 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 // import MyComponent from "./server/MyComponent";
 
 
+
 function App() {
   return (
-
     <Router>
       <>
-
         {/* <ul>
           <li><Link to="/">Home</Link></li>
           <li><Link to="/posts">Posts</Link></li>
           <li><Link to="/profile">Profile</Link></li>
           <li><Link to="/dashboard">Dashboard</Link></li>
         </ul> */}
-
         <Top />
         <AsideLeft />
         <Routes>
@@ -101,7 +95,12 @@ function App() {
           <Route path="/countday" element={<Countday />} />
         </Routes>
       </>
-    </Router>
+      </Router>
+    ) : (
+        <LoginForm onLogin={handleLogin} />
+    )
+}
+            </div>
   );
 }
 
