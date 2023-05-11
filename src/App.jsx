@@ -1,4 +1,6 @@
 import React from "react";
+import { useState } from 'react';
+
 // import Posts from "./Post";
 // import Home from "./Home";
 // import Profile from './Profile';
@@ -20,11 +22,21 @@ import Document from "./conponents/Document";
 
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
+
 function App() {
-  return (
+    const [loggedIn, setLoggedIn] = useState(false);
+    function handleLogin(username, password) {
+        // TODO: Implement the login process
+        // For now, just set loggedIn to true
+        setLoggedIn(true);
+    }
+
+    return (
+    <div>
+        {            loggedIn?(
+
     <Router>
       <>
-
         {/* <ul>
           <li><Link to="/">Home</Link></li>
           <li><Link to="/posts">Posts</Link></li>
@@ -49,7 +61,12 @@ function App() {
           <Route path="/document" element={<Document />} />
         </Routes>
       </>
-    </Router>
+      </Router>
+    ) : (
+        <LoginForm onLogin={handleLogin} />
+    )
+}
+            </div>
   );
 }
 
