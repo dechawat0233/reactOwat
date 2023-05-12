@@ -110,13 +110,13 @@ function AsideLeft() {
                       {/* <a href="income_tax.php" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
                       <p>ภาษีเงินได้</p>
                     </a> */}
-                      <Link to="/calculate_tax_deductions" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> คำนวณหักลดหย่อยภาษี</Link>
+                      <Link to="/calculate_tax_deductions" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> คำนวณหักลดหย่อนภาษี</Link>
                     </li>
                     <li class="nav-item">
                       {/* <a href="income_tax.php" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
                       <p>ภาษีเงินได้</p>
                     </a> */}
-                      <Link to="/other_expenses" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> คำใช้จ่ายอื่นๆ</Link>
+                      <Link to="/other_expenses" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ค่าใช้จ่ายอื่นๆ</Link>
                     </li>
                     <li class="nav-item">
                       {/* <a href="social_security.php" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>

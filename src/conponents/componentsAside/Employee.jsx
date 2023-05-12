@@ -36,13 +36,13 @@ function Employee() {
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>รหัสพนักงาน</label>
-                                                <input type="" class="form-control" id="" placeholder="รหัสพนักงาน" />
+                                                <input type="" class="form-control" id="" placeholder="รหัสพนักงาน" value="5240499001264"/>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>ตำแหน่ง</label>
-                                                <input type="" class="form-control" id="" placeholder="ตำแหน่ง" />
+                                                <input type="" class="form-control" id="" placeholder="ตำแหน่ง" value="พนักงานทำความสะอาด" />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
@@ -60,7 +60,7 @@ function Employee() {
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>หน่วยงาน</label>
-                                                <input type="" class="form-control" id="" placeholder="หน่วยงาน" />
+                                                <input type="" class="form-control" id="" placeholder="หน่วยงาน" value="1"/>
                                             </div>
                                         </div>
                                     </div>
@@ -81,7 +81,7 @@ function Employee() {
                                             <div class="form-group">
                                                 <label>วันที่เริ่มงาน</label>
                                                 <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" />
+                                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" value="25/05/66" />
                                                     <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                                         <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
                                                     </div>
@@ -92,7 +92,7 @@ function Employee() {
                                             <div class="form-group">
                                                 <label>วันที่บรรจุ</label>
                                                 <div class="input-group date" id="reservationdate2" data-target-input="nearest">
-                                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate2" />
+                                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate2" value="20/05/66"/>
                                                     <div class="input-group-append" data-target="#reservationdate2" data-toggle="datetimepicker">
                                                         <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
                                                     </div>
@@ -140,20 +140,20 @@ function Employee() {
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>ชื่อ</label>
-                                                <input type="" class="form-control" id="" placeholder="ชื่อ" />
+                                                <input type="" class="form-control" id="" placeholder="ชื่อ" value="ชุติมณฑน์"/>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>นามสกุล</label>
-                                                <input type="" class="form-control" id="" placeholder="นามสกุล" />
+                                                <input type="" class="form-control" id="" placeholder="นามสกุล" value="จอมนก"/>
                                             </div>
                                         </div>
 
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>ชื่อเล่น</label>
-                                                <input type="" class="form-control" id="" placeholder="ชื่อเล่น" />
+                                                <input type="" class="form-control" id="" placeholder="ชื่อเล่น" value="สา"/>
                                             </div>
                                         </div>
                                     </div>
@@ -174,7 +174,7 @@ function Employee() {
                                             <div class="form-group">
                                                 <label>วันเดือนปีเกิด</label>
                                                 <div class="input-group date" id="reservationdate3" data-target-input="nearest">
-                                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate3" />
+                                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate3" value="16/08/30" />
                                                     <div class="input-group-append" data-target="#reservationdate3" data-toggle="datetimepicker">
                                                         <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
                                                     </div>
@@ -184,14 +184,14 @@ function Employee() {
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>อายุ</label>
-                                                <input type="" class="form-control" id="" placeholder="อายุ" />
+                                                <input type="" class="form-control" id="" placeholder="อายุ" value="36"/>
                                             </div>
                                         </div>
 
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>เลขบัตรประจำตัวประชาชน</label>
-                                                <input type="" class="form-control" id="" placeholder="เลขบัตรประจำตัวประชาชน" />
+                                                <input type="" class="form-control" id="" placeholder="เลขบัตรประจำตัวประชาชน" value="5240499001264"/>
                                             </div>
                                         </div>
                                     </div>
@@ -199,19 +199,19 @@ function Employee() {
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>เชื้อชาติ</label>
-                                                <input type="" class="form-control" id="" placeholder="เชื้อชาติ" />
+                                                <input type="" class="form-control" id="" placeholder="เชื้อชาติ" value="ไทย"/>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>ศาสนา</label>
-                                                <input type="" class="form-control" id="" placeholder="ศาสนา" />
+                                                <input type="" class="form-control" id="" placeholder="ศาสนา" value="พุทธ"/>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>สถานภาพการสมรส</label>
-                                                <input type="" class="form-control" id="" placeholder="สถานภาพการสมรส" />
+                                                <input type="" class="form-control" id="" placeholder="สถานภาพการสมรส" value="โสด"/>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
@@ -231,7 +231,7 @@ function Employee() {
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>ที่อยู่ตามบัตรประชาชน</label>
-                                                <textarea class="form-control" rows="3"></textarea>
+                                                <textarea class="form-control" rows="3" value="152/183  ถ.ริมคลองท่าไข่  ต.หน้าเมือง  อ.เมืองฉะเชิงเทรา"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -240,7 +240,7 @@ function Employee() {
                                                 <div class="icheck-primary d-inline">
                                                     <input type="radio" id="radio" name="radio1" /> ใช้ที่อยู่ตามบัตรประชาชน
                                                 </div>
-                                                <textarea class="form-control" rows="3"></textarea>
+                                                <textarea class="form-control" rows="3" value="152/183  ถ.ริมคลองท่าไข่  ต.หน้าเมือง  อ.เมืองฉะเชิงเทรา"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -249,19 +249,19 @@ function Employee() {
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>เบอร์โทรศัพท์</label>
-                                                <input type="" class="form-control" id="" placeholder="เบอร์โทรศัพท์" />
+                                                <input type="" class="form-control" id="" placeholder="เบอร์โทรศัพท์" value="0926513824"/>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>เบอร์ติดต่อกรณีฉุกเฉิน</label>
-                                                <input type="" class="form-control" id="" placeholder="เบอร์ติดต่อกรณีฉุกเฉิน" />
+                                                <input type="" class="form-control" id="" placeholder="เบอร์ติดต่อกรณีฉุกเฉิน" value="0958461372" />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>ไอดีไลน์</label>
-                                                <input type="" class="form-control" id="" placeholder="ไอดีไลน์" />
+                                                <input type="" class="form-control" id="" placeholder="ไอดีไลน์" value="opowow"/>
                                             </div>
                                         </div>
                                     </div>
@@ -288,7 +288,7 @@ function Employee() {
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>สิทธิการรักษาพยาบาล</label>
-                                            <input type="" class="form-control" id="" placeholder="สิทธิการรักษาพยาบาล" />
+                                            <input type="" class="form-control" id="" placeholder="สิทธิการรักษาพยาบาล" value=""/>
                                         </div>
                                     </div>
                                 </div>
