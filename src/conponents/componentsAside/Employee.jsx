@@ -81,7 +81,7 @@ function Employee() {
                                             <div class="form-group">
                                                 <label>วันที่เริ่มงาน</label>
                                                 <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" value="25/05/66" />
+                                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" value="25/05/2023" />
                                                     <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                                         <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
                                                     </div>
@@ -92,7 +92,7 @@ function Employee() {
                                             <div class="form-group">
                                                 <label>วันที่บรรจุ</label>
                                                 <div class="input-group date" id="reservationdate2" data-target-input="nearest">
-                                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate2" value="20/05/66"/>
+                                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate2" value="20/05/2023"/>
                                                     <div class="input-group-append" data-target="#reservationdate2" data-toggle="datetimepicker">
                                                         <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
                                                     </div>

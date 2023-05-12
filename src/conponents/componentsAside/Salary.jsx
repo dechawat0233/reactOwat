@@ -37,13 +37,13 @@ function Salary() {
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>รหัสพนักงาน</label>
-                                                    <input type="" class="form-control" id="" placeholder="รหัสพนักงาน" />
+                                                    <input type="" class="form-control" id="" placeholder="รหัสพนักงาน" value="660423"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>ตำแหน่ง</label>
-                                                    <input type="" class="form-control" id="" placeholder="ตำแหน่ง" />
+                                                    <input type="" class="form-control" id="" placeholder="ตำแหน่ง" value="พนักงานทำความสะอาด"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -89,7 +89,7 @@ function Salary() {
                                                     <label>ลงบัญชีเป็นค่าใช้จ่าย</label>
                                                     <div class="" style={{ marginTop: "10px" }}>
                                                         <div class="icheck-primary d-inline">
-                                                            <input type="radio" id="" name="" checked="" /> ทางตรง
+                                                            <input type="radio" id="" name="" checked /> ทางตรง
                                                         </div>
                                                         <div class="icheck-primary d-inline">
                                                             <input type="radio" id="" name="" /> ทางอ้อม
@@ -186,7 +186,7 @@ function Salary() {
                                                 <label class="col-sm-3 col-form-label">วันที่เริ่มงาน</label>
                                                 <div class="col-sm-9">
                                                     <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" />
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" value="28/11/2022"/>
                                                         <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
                                                         </div>
@@ -197,7 +197,7 @@ function Salary() {
                                                 <label class="col-sm-3 col-form-label">วันที่บรรจุ</label>
                                                 <div class="col-sm-9">
                                                     <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" />
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" value="01/12/2022"/>
                                                         <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
                                                         </div>
@@ -208,7 +208,7 @@ function Salary() {
                                                 <label class="col-sm-3 col-form-label">วันที่เริ่มต้นคำนวณ</label>
                                                 <div class="col-sm-9">
                                                     <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" />
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" value="15/12/2022"/>
                                                         <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
                                                         </div>
@@ -224,7 +224,7 @@ function Salary() {
                                             <div class="form-group row">
                                                 <label class="col-sm-2 col-form-label">*อัตรา</label>
                                                 <div class="col-sm-10">
-                                                    <input type="" class="form-control" id="" placeholder="350" />
+                                                    <input type="" class="form-control" id="" placeholder="350" value="15000"/>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -257,7 +257,7 @@ function Salary() {
                                                 <label class="col-sm-3 col-form-label">วันที่ปรับปรุง</label>
                                                 <div class="col-sm-9">
                                                     <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" />
+                                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" value="30/01/2023"/>
                                                         <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                                             <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
                                                         </div>
@@ -319,7 +319,7 @@ function Salary() {
                                             <div class="form-group row">
                                                 <label class="col-sm-2 col-form-label">เลขที่บัญชี</label>
                                                 <div class="col-sm-10">
-                                                    <input type="" class="form-control" id="" placeholder="เลขที่บัญชี" />
+                                                    <input type="" class="form-control" id="" placeholder="เลขที่บัญชี" value="6972152992"/>
                                                 </div>
                                             </div>
                                         </div>
