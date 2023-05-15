@@ -4,6 +4,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const bodyParser = require('body-parser');
 
 // Set up environment variables
 //require('dotenv').config();
@@ -78,21 +79,43 @@ app.post('/api/auth/login', async (req, res) => {
   res.json(users);
 });
 
+app.use(bodyParser.json());
+
 // Create new user
 app.post('/api/users', async (req, res) => {
-  const { username, password } = req.body;
+  // const user = new User({ username: 'myusername', password: 'mypassword' });
 
-  // Hash password
-  const hashedPassword = await bcrypt.hash(password, 10);
+  // user.save((err) => {
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     console.log('User saved successfully!');
+  //   }
+  // });
 
-  // Create user
-  const user = new User({ username, password: hashedPassword });
-  try {
-    await user.save();
-    res.json(user);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
+  // const { username, password } = req.body;
+  const username = req.body.username;
+  const password = req.body.password;
+
+  console.log(`Username: ${username}, Password: ${password}`);
+  
+  // console.log(req.body);
+  res.send('User created successfully!');
+  // curl -X POST -H "Content-Type: application/json" -d '{"username": "alice", "password": "secret"}' http://localhost:3000/api/users
+
+  // // Hash password
+  // // const hashedPassword = await bcrypt.hash(password, 10);
+  // const hashedPassword = password;
+
+  // // Create user
+  // const user = new User({ username, password});
+  // try {
+  //   await user.save();
+  //   res.json(user);
+  // } catch (err) {
+  //   res.status(400).json({ error: err.message });
+  // }
+ 
 });
 
 // Start server

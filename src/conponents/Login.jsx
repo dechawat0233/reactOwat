@@ -2,6 +2,38 @@ import axios from 'axios';
 import { useState } from 'react';
 
 function LoginForm({ onLogin }) {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
+
+
+    function handleUsernameChange(event) {
+        setUsername(event.target.value);
+    }
+
+    function handlePasswordChange(event) {
+        setPassword(event.target.value);
+    }
+
+    function handleLogin(event) {
+        event.preventDefault();
+        const endpoint = 'http://localhost:5000/api/users';
+        const data = {
+            username: username,
+            password: password
+        };
+        axios.post(endpoint, data)
+            .then(response => {
+                setMessage('Login successful!');
+
+                onLogin(username, password);
+
+            })
+            .catch(error => {
+                setMessage('Login failed.');
+            });
+    }
+
     function handleSubmit(event) {
         event.preventDefault();
         // Get the values of the username and password fields
@@ -24,14 +56,15 @@ function LoginForm({ onLogin }) {
                         <div class="txt-login">
                             <i class="fas fa-user-circle"></i> เข้าสู่ระบบ
                         </div>
-                        <form method="post" onSubmit={handleSubmit}>
+                        <form onSubmit={handleLogin}>
+
                             <div class="form-group">
                                 <label for="">ชื่อผู้ใช้หรืออีเมล์  <span class="txt-red">*</span></label>
-                                <input type="text" class="form-control" id="username" name="username" placeholder="ชื่อผู้ใช้หรืออีเมล์" />
+                                <input type="text" class="form-control" id="username" name="username" placeholder="ชื่อผู้ใช้หรืออีเมล์" onChange={handleUsernameChange} />
                             </div>
                             <div class="form-group">
                                 <label for="">รหัสผ่าน  <span class="txt-red">*</span></label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="รหัสผ่าน " />
+                                <input type="password" class="form-control" id="password" name="password" placeholder="รหัสผ่าน " onChange={handlePasswordChange} />
                             </div>
                             <div class="clr">
                                 <button type="submit" class="btn-login btn-block">เข้าสู่ระบบ <img src="assets/images/right-to-bracket-solid.png" width="15" /></button>
