@@ -50,19 +50,15 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+    //const [loggedIn, setLoggedIn] = useState(false);
+
+    const [loggedIn, setLoggedIn] = useState(
+        localStorage.getItem('loggedIn') === 'true'
+    );
 
     function handleLogin(username, password) {
         // TODO: Implement the login process
         // For now, just set loggedIn to true
-        const token = localStorage.getItem('token');
-        if (token) {
-            // Token exists, user is logged in
-            setLoggedIn(true);
-        } else {
-            // Token does not exist, user is not logged in
-            setLoggedIn(false);
-        }
     
         //setLoggedIn(true);
     }
@@ -74,6 +70,7 @@ function App() {
   return (
       <div>
     {            loggedIn?(
+
     <Router>
       <>
         {/* <ul>

@@ -1,8 +1,14 @@
 import React from 'react'
+import { useState } from 'react';
 
 function Top() {
 
+    function handleLogout() {
+        localStorage.setItem('loggedIn', 'false');
+        window.location.reload();
 
+        setLoggedIn(false);
+    }
 
     return (
         <>
@@ -14,7 +20,7 @@ function Top() {
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item logout">
-                        <a href="#">
+                        <a href="#" onClick={handleLogout} >
                             ออกจากระบบ &nbsp;<img src="assets/images/arrow-right-from-bracket-solid.png" width="17"/>
                         </a>
                     </li>

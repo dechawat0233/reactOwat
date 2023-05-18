@@ -27,8 +27,9 @@ function LoginForm({ onLogin }) {
                 setMessage('Login successful!');
                 const { token } = response.data;
                 localStorage.setItem('token', token);
-
-                onLogin(username, password);
+                localStorage.setItem('loggedIn', 'true');
+                window.location.reload();
+                //onLogin(username, password);
 
             })
             .catch(error => {
