@@ -51,29 +51,55 @@ const User = mongoose.model('User', userSchema);
 
 // Authenticate user and return JWT token
 app.post('/api/auth/login', async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password } = await req.body;
+console.log(username  + ' ' + password );
 
   // Check if user exists
   const user = await User.findOne({ username });
   if (!user) {
+    console.log('no user');
     return res.status(404).json({ error: 'User not found' });
   }
 
   // Check if password is correct
+  // const passwordMatches = await bcrypt.compare(password, user.password);
   const passwordMatches = await bcrypt.compare(password, user.password);
+
   if (!passwordMatches) {
+    console.log('password can not Matches');
     return res.status(401).json({ error: 'Invalid password' });
   }
 
   // Generate and sign JWT token
-  const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+  // const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-  res.json({ token });
+  // Generate and sign JWT token
+  try {
+    const userId = await user._id; // Replace with the actual user ID
+    // const secretKey = process.env.JWT_SECRET; // Replace with your own secret key
+    const secretKey = await 'Friendlydev'; // Replace with your own secret key
+    const expiresIn = await '1h'; // Set the token expiration time
+  console.log(secretKey );
+    if (!secretKey) {
+      throw new Error('Missing JWT secret key');
+    }
+  
+    const token = await jwt.sign({ userId }, secretKey, { expiresIn });
+    await res.json({ token });
+    
+    await console.log('Token:', token);
+  } catch (error) {
+    console.error('Error generating JWT token:', error.message);
+  }
+  
+  
+  // res.json({ token });
 });
 
+
 // Get list of users
-// app.get('/api/users', jwtMiddleware, async (req, res) => {
-  app.get('/api/users',  async (req, res) => {
+app.get('/api/users', jwtMiddleware, async (req, res) => {
+  // app.get('/api/users',  async (req, res) => {
 
   const users = await User.find();
   res.json(users);
@@ -83,8 +109,8 @@ app.use(bodyParser.json());
 
 // Create new user
 app.post('/api/users', async (req, res) => {
+  
   // const user = new User({ username: 'myusername', password: 'mypassword' });
-
   // user.save((err) => {
   //   if (err) {
   //     console.log(err);
@@ -93,28 +119,23 @@ app.post('/api/users', async (req, res) => {
   //   }
   // });
 
-  // const { username, password } = req.body;
-  const username = req.body.username;
-  const password = req.body.password;
 
+  const { username, password } = req.body;
   console.log(`Username: ${username}, Password: ${password}`);
   
-  // console.log(req.body);
-  res.send('User created successfully!');
-  // curl -X POST -H "Content-Type: application/json" -d '{"username": "alice", "password": "secret"}' http://localhost:3000/api/users
 
-  // // Hash password
-  // // const hashedPassword = await bcrypt.hash(password, 10);
-  // const hashedPassword = password;
+  // Hash password
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-  // // Create user
-  // const user = new User({ username, password});
-  // try {
-  //   await user.save();
-  //   res.json(user);
-  // } catch (err) {
-  //   res.status(400).json({ error: err.message });
-  // }
+  // Create user
+  const user = new User({ username, password: hashedPassword });
+
+  try {
+    await user.save();
+    res.json(user);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
  
 });
 

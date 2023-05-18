@@ -17,7 +17,7 @@ function LoginForm({ onLogin }) {
 
     function handleLogin(event) {
         event.preventDefault();
-        const endpoint = 'http://localhost:5000/api/users';
+        const endpoint = 'http://localhost:5000/api/auth/login';
         const data = {
             username: username,
             password: password
@@ -25,6 +25,8 @@ function LoginForm({ onLogin }) {
         axios.post(endpoint, data)
             .then(response => {
                 setMessage('Login successful!');
+                const { token } = response.data;
+                localStorage.setItem('token', token);
 
                 onLogin(username, password);
 

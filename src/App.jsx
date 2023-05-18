@@ -55,14 +55,24 @@ function App() {
     function handleLogin(username, password) {
         // TODO: Implement the login process
         // For now, just set loggedIn to true
-        setLoggedIn(true);
+        const token = localStorage.getItem('token');
+        if (token) {
+            // Token exists, user is logged in
+            setLoggedIn(true);
+        } else {
+            // Token does not exist, user is not logged in
+            setLoggedIn(false);
+        }
+    
+        //setLoggedIn(true);
     }
 
     function handleLogout() {
         setLoggedIn(false);
     }
+
   return (
-    <div>
+      <div>
     {            loggedIn?(
     <Router>
       <>
