@@ -93,7 +93,6 @@ app.post('/api/auth/login', async (req, res) => {
 // Get list of users
 // app.get('/api/users', jwtMiddleware, async (req, res) => {
   app.get('/api/users',  async (req, res) => {
-    console.log('hello');
 
   const users = await User.find();
   res.json(users);
@@ -103,6 +102,7 @@ app.use(bodyParser.json());
 
 // Create new user
 app.post('/api/users', async (req, res) => {
+  console.log('hello');
 
     // const user = new User({ username: 'myusername', password: 'mypassword' });
   // user.save((err) => {
