@@ -18,7 +18,6 @@ const jwt = require('jsonwebtoken');
 // const db = mongoose.connection;
 // db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-const mongoose = require('mongoose');
 
 const username = 'admin';
 const password = 'friendlydev214';
