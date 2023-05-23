@@ -23,7 +23,8 @@ const username = 'admin';
 const password = 'friendlydev214';
 const host = '172.17.0.2';
 const port = '27017';
-const database = 'users';
+// const database = 'users';
+const database = 'admin';
 
 const connectionString = `mongodb://${username}:${password}@${host}:${port}/${database}`;
 
