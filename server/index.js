@@ -93,6 +93,7 @@ app.post('/api/auth/login', async (req, res) => {
 // Get list of users
 // app.get('/api/users', jwtMiddleware, async (req, res) => {
   app.get('/api/users',  async (req, res) => {
+    console.log('hello');
 
   const users = await User.find();
   res.json(users);
