@@ -97,21 +97,37 @@ app.post('/api/auth/login', async (req, res) => {
   res.json(users);
 });
 
+app.use(bodyParser.json());
+
 // Create new user
 app.post('/api/users', async (req, res) => {
-  const { username, password } = req.body;
 
+    // const user = new User({ username: 'myusername', password: 'mypassword' });
+  // user.save((err) => {
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     console.log('User saved successfully!');
+  //   }
+  // });
+
+
+  const { username, password } = req.body;
+  console.log(`Username: ${username}, Password: ${password}`);
+  
   // Hash password
   const hashedPassword = await bcrypt.hash(password, 10);
 
   // Create user
   const user = new User({ username, password: hashedPassword });
+
   try {
     await user.save();
     res.json(user);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
+ 
 });
 
 // Start server
