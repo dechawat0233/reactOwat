@@ -11,7 +11,7 @@ const jwt = require('jsonwebtoken');
 // Set up database connection
 //mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: 
 //true });
-mongoose.connect('mongodb://172.17.0.2:27017/users', { useNewUrlParser: true, useUnifiedTopology: 
+mongoose.connect('mongodb://localhost:27017/users', { useNewUrlParser: true, useUnifiedTopology: 
 true });
 
 const db = mongoose.connection;
