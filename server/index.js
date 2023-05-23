@@ -11,8 +11,27 @@ const jwt = require('jsonwebtoken');
 // Set up database connection
 //mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: 
 //true });
-mongoose.connect('mongodb://172.17.0.2:27017/users', { useNewUrlParser: true, useUnifiedTopology: 
-true });
+
+// mongoose.connect('mongodb://172.17.0.2:27017/users', { useNewUrlParser: true, useUnifiedTopology: 
+// true });
+
+// const db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+const mongoose = require('mongoose');
+
+const username = 'admin';
+const password = 'friendlydev214';
+const host = '172.17.0.2';
+const port = '27017';
+const database = 'users';
+
+const connectionString = `mongodb://${username}:${password}@${host}:${port}/${database}`;
+
+mongoose.connect(connectionString, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
