@@ -41,10 +41,171 @@ const jwtMiddleware = (req, res, next) => {
 };
 
 // Define user schema
+//const userSchema = new mongoose.Schema({
+//  username: { type: String, required: true, unique: true },
+//  password: { type: String, required: true },
+//});
 const userSchema = new mongoose.Schema({
-  username: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
+  name: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  username: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  role: {
+    type: String,
+    enum: ['admin', 'employee', 'manager'],
+    default: 'employee'
+  }
 });
+
+const addressSchema = new mongoose.Schema({
+  street: {
+    type: String,
+    required: true
+  },
+  city: {
+    type: String,
+    required: true
+  },
+  state: {
+    type: String,
+    required: true
+  },
+  postalCode: {
+    type: String,
+    required: true
+  }
+});
+
+const vaccinationSchema = new mongoose.Schema({
+  vaccineName: {
+    type: String,
+    required: true
+  },
+  date: {
+    type: Date,
+    required: true
+  },
+  location: {
+    type: String,
+    required: true
+  }
+});
+
+const treatmentRightsSchema = new mongoose.Schema({
+  right: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
+  }
+});
+
+// Define the schema for the Employee
+const employeeSchema = new mongoose.Schema({
+  employeeId: {
+    type: String,
+    required: true
+  },
+  name: {
+    type: String,
+    required: true
+  },
+  lastName: {
+    type: String,
+    required: true
+  },
+  nickName: {
+    type: String,
+  },
+  sex: {
+    type: String,
+    enum: ['female', 'male', 'other'],
+  },
+  dateOfBirth: {
+    type: Date,
+    required: true
+  },
+  age: {
+    type: Number,
+    required: true
+  },
+  idCard: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  ethnicity: {
+    type: String,
+  },
+  religion: {
+    type: String,
+  },
+  maritalStatus: {
+    type: String,
+    enum: ['single', 'married', 'divorced', 'widowed', 'other']
+  },
+  militaryStatus: {
+    type: String,
+    enum: ['active', 'veteran', 'reserve', 'inactive', 'other']
+  },
+  address: {
+    type: addressSchema,
+    required: true
+  },
+  currentAddress: {
+    type: addressSchema,
+    required: true
+  },
+  phoneNumber: {
+    type: String,
+    match: /^[0-9]{10}$/ // Regular expression for 10-digit phone number
+  },
+  emergencyContactNumber: {
+    type: String,
+    match: /^[0-9]{10}$/ // Regular expression for 10-digit phone number
+  },
+  idLine: {
+    type: String
+  },
+  vaccination: {
+    type: vaccinationSchema
+  },
+  treatmentRights: [treatmentRightsSchema],
+
+  position: {
+    type: String,
+    required: true
+  },
+  department: {
+    type: String,
+    required: true
+  },
+  salary: {
+    type: Number,
+    required: true
+  }
+});
+
+// Create the Employee model based on the schema
+const Employee = mongoose.model('Employee', employeeSchema);
+
+//module.exports = Employee;
 
 // Define user model
 const User = mongoose.model('User', userSchema);
@@ -78,7 +239,7 @@ console.log(username  + ' ' + password );
     const userId = await user._id; // Replace with the actual user ID
     // const secretKey = process.env.JWT_SECRET; // Replace with your own secret key
     const secretKey = await 'Friendlydev'; // Replace with your own secret key
-    const expiresIn = await '1h'; // Set the token expiration time
+    const expiresIn = await '3h'; // Set the token expiration time
   console.log(secretKey );
     if (!secretKey) {
       throw new Error('Missing JWT secret key');
@@ -137,6 +298,19 @@ app.post('/api/users', async (req, res) => {
     res.status(400).json({ error: err.message });
   }
  
+});
+
+
+// Get users
+app.get('/api/user', async (req, res) => {
+  const name = req.query.username;
+
+  try {
+    const users = await User.find({ username: { $regex: name, $options: 'i' } });
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 // Start server
