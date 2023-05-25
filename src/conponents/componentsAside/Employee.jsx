@@ -2,17 +2,11 @@ import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function Employee() {
+
     return (
-        // <? php include("include/header.php");?>
         <body class="hold-transition sidebar-mini">
             <div class="wrapper">
-                {/* <!-- Navbar -->
-                <?php include("include/top.php");?>
-                <!-- /.navbar -->
-                <!-- Main Sidebar Container -->
-                <?php include("include/aside_left.php");?> */}
                 <div class="content-wrapper">
-                    {/* <!-- Content Header (Page header) --> */}
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><i class="fas fa-home"></i> <a href="index.php">หน้าหลัก</a></li>
                         <li class="breadcrumb-item"><a href="#"> ระบบบริหารจัดการข้อมูล</a></li>
@@ -25,8 +19,6 @@ function Employee() {
                             </div>
                         </div>
                     </div>
-                    {/* <!-- /.content-header -->
-                    <!-- Main content --> */}
                     <section class="content">
                         <div class="container-fluid">
                             <h2 class="title">ข้อมูลพนักงาน</h2>
@@ -218,11 +210,9 @@ function Employee() {
                                             <div class="form-group">
                                                 <label>สถานภาพทางการทหาร</label>
                                                 <select class="form-control">
-                                                    <option>เกณฑ์ทหารแล้ว</option>
-                                                    <option>option 2</option>
-                                                    <option>option 3</option>
-                                                    <option>option 4</option>
-                                                    <option>option 5</option>
+                                                    <option>ยกเว้นการเกณฑ์ทหาร</option>
+                                                    <option>ผ่านการเกณฑ์ทหารแล้ว</option>
+                                                    <option>ไม่ผ่านการเกณฑ์ทหาร</option>
                                                 </select>
                                             </div>
                                         </div>
