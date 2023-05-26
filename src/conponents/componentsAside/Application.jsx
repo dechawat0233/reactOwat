@@ -9,16 +9,9 @@ function application() {
         setShowInput(event.target.checked);
     };
     return (
-        // <?php include("include/header.php");?>
         <body class="hold-transition sidebar-mini">
             <div class="wrapper">
-                {/* <!-- Navbar -->
-                <?php include("include/top.php");?>
-                <!-- /.navbar -->
-                <!-- Main Sidebar Container -->
-                <?php include("include/aside_left.php");?> */}
                 <div class="content-wrapper">
-                    {/* <!-- Content Header (Page header) --> */}
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><i class="fas fa-home"></i> <a href="index.php">หน้าหลัก</a></li>
                         <li class="breadcrumb-item"><a href="#"> ระบบบริหารจัดการข้อมูล</a></li>
@@ -31,8 +24,6 @@ function application() {
                             </div>
                         </div>
                     </div>
-                    {/* <!-- /.content-header -->
-                    <!-- Main content --> */}
                     <section class="content">
                         <div class="container-fluid">
                             <form id="myForm" action="#">
@@ -72,22 +63,8 @@ function application() {
                                         </div>
                                         <div class="">
                                             <div class="form-check form-check-inline" style={{ paddingTop: "5px" }}>
-                                                {/* <input onChange={handleCheckboxChange} class="form-check-input" type="checkbox" id="no1" value="" />
-                                                <label class="form-check-label txt-control" style={{ width: "100 %", marginRight: "10px" }} for="inlineRadio2">เพื่อนหรือเจ้าหน้าที่แนะนำ</label>
-                                                {showInput && (
-                                                    <input type="" class="form-control form-check-label" id="choose_hospital1" placeholder="" style={{ display: "none" }} />
-                                                )} */}
-                                                {/* <input
-                                                    type="checkbox"
-                                                    checked={showInput}
-                                                    onChange={handleCheckboxChange}
-                                                /> */}
                                                 <input onChange={handleCheckboxChange} checked={showInput} class="form-check-input" type="checkbox" id="no1"/>
                                                 <label class="form-check-label txt-control" style={{ width: "100 %", marginRight: "10px" }} for="inlineRadio2">เพื่อนหรือเจ้าหน้าที่แนะนำ</label>
-                                                {/* {showInput ? (
-                                                    <input type="text" id="input" placeholder="Input field" />
-                                                ) : null} */}
-
                                                 {showInput ? (
                                                     <input type="text" class="form-control form-check-label" id="choose_hospital1" placeholder="" />
                                                 ) : null}
@@ -115,22 +92,7 @@ function application() {
                                             </div>
                                         </div>
                                     </div>
-                                    {/* <div>
-                                        <label>
-                                            <input type="checkbox" onChange={handleCheckboxChange} />
-                                            Show Input
-                                        </label>
-                                        {showInput && (
-                                            <div>
-                                                <label>
-                                                    Input:
-                                                    <input type="text" />
-                                                </label>
-                                            </div>
-                                        )}
-                                    </div> */}
                                 </section>
-                                {/* <!--Frame--> */}
                                 <h2 class="title">บัตรประกันสังคม</h2>
                                 <section class="Frame">
                                     <div class="row">
@@ -264,7 +226,6 @@ function application() {
                     </section>
                     {/* <!-- /.content --> */}
                 </div>
-                {/* <?php include("include/footer.php");?> */}
             </div>
         </body>
     )

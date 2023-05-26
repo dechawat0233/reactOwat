@@ -18,8 +18,6 @@ function AsideLeft() {
     <>
 
       <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        {/* <p>351351</p>
-      <a href='app.php'>popopo</a> */}
         <div class="sidebar">
           <div class="Logo-w">
             <a href="dashboard.php" class="brand-link logo-switch">
@@ -40,15 +38,9 @@ function AsideLeft() {
           <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
               <li class="nav-item">
-                {/* <a href="index.php" class="nav-link"><i class="nav-icon fas fa-tachometer-alt"></i>
-                  <p> หน้าหลัก</p>
-                </a> */}
                 <Link to="/dashboard" className="nav-link"><i class="nav-icon fas fa-tachometer-alt"></i> หน้าหลัก</Link>
               </li>
               <li class="nav-item">
-                {/* <a href="#" class="nav-link"><i class="nav-icon fas fa-business-time"></i>
-                  <p> ระบบลงเวลา</p>
-                </a> */}
                 <Link to="../content/about.jsx" className="nav-link"><i class="nav-icon fas fa-business-time"></i> ระบบลงเวลา</Link>
               </li>
               <li class="nav-item">
@@ -73,79 +65,42 @@ function AsideLeft() {
                 </a>
 
                 {showSubMenu && (
-                  // <ul class="nav nav-treeview">
 
                   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <li class="nav-item">
-                      {/* <a href="search.php" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
-                      <p>ค้นหาพนักงาน</p>
-                    </a> */}
                       <Link to="/search" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ค้นหาพนักงาน</Link>
                     </li>
                     <li class="nav-item">
-                      {/* <a href="employee.php" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
-                      <p>ข้อมูลพนักงาน</p>
-                    </a> */}
                       <Link to="/employee" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ข้อมูลพนักงาน</Link>
                     </li>
                     <li class="nav-item">
-                      {/* <a href="salary.php" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
-                      <p>ข้อมูลเงินเดือน</p>
-                    </a> */}
                       <Link to="/salary" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ข้อมูลเงินเดือน</Link>
                     </li>
                     <li class="nav-item">
-                      {/* <a href="income_tax.php" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
-                      <p>ภาษีเงินได้</p>
-                    </a> */}
                       <Link to="/income_tax" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ภาษีเงินได้</Link>
                     </li>
                     <li class="nav-item">
-                      {/* <a href="income_tax.php" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
-                      <p>ภาษีเงินได้</p>
-                    </a> */}
                       <Link to="/calculate_tax" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> คำนวณภาษี</Link>
                     </li>
                     <li class="nav-item">
-                      {/* <a href="income_tax.php" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
-                      <p>ภาษีเงินได้</p>
-                    </a> */}
                       <Link to="/calculate_tax_deductions" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> คำนวณหักลดหย่อนภาษี</Link>
                     </li>
                     <li class="nav-item">
-                      {/* <a href="income_tax.php" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
-                      <p>ภาษีเงินได้</p>
-                    </a> */}
                       <Link to="/other_expenses" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ค่าใช้จ่ายอื่นๆ</Link>
                     </li>
                     <li class="nav-item">
-                      {/* <a href="social_security.php" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
-                      <p>ประกันสังคม</p>
-                    </a> */}
                       <Link to="/social_security" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ประกันสังคม</Link>
                     </li>
                     <li class="nav-item">
-                      {/* <a href="provident_fund.php" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
-                      <p>กองทุนสำรอง</p>
-                    </a> */}
                       <Link to="/provident_fund" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> กองทุนสำรอง</Link>
                     </li>
                     <li class="nav-item">
-                      {/* <a href="collateral.php" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
-                      <p>เงินค้ำประกัน - เงินกู้</p>
-                    </a> */}
                       <Link to="/collateral" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> เงินค้ำประกัน</Link>
                     </li>
                     <li class="nav-item">
-                      {/* <a href="document.php" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
-                      <p>ข้อมูลเอกสาร</p>
-                    </a> */}
                       <Link to="/document" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ข้อมูลเอกสาร</Link>
                     </li>
                     <li class="nav-item">
-                      {/* <a href="document.php" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
-                      <p>ข้อมูลเอกสาร</p>
-                    </a> */}
                       <Link to="/application" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> กรอกใบสมัคร</Link>
                     </li>
                   </ul>
