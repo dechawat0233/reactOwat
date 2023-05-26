@@ -5,13 +5,7 @@ function application1() {
         // <?php include("include/header.php");?>
         <body class="hold-transition sidebar-mini">
             <div class="wrapper">
-                {/* <!-- Navbar -->
-<?php include("include/top.php");?>
-<!-- /.navbar -->
-<!-- Main Sidebar Container -->
-<?php include("include/aside_left.php");?> */}
                 <div class="content-wrapper">
-                    {/* <!-- Content Header (Page header) --> */}
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><i class="fas fa-home"></i> <a href="index.php">หน้าหลัก</a></li>
                         <li class="breadcrumb-item"><a href="#"> ระบบบริหารจัดการข้อมูล</a></li>
@@ -24,8 +18,8 @@ function application1() {
                             </div>
                         </div>
                     </div>
-                    {/* <!-- /.content-header -->
-    <!-- Main content --> */}
+                    {/* /.content-header */}
+                    {/* Main content */}
                     <section class="content">
                         <div class="container-fluid">
                             <form id="myForm" action="#">
@@ -198,7 +192,6 @@ function application1() {
                     </section>
                     {/* <!-- /.content --> */}
                 </div>
-                {/* <?php include("include/footer.php");?> */}
             </div>
         </body>
     )

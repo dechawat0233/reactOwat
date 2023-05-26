@@ -2,14 +2,8 @@ import React from 'react'
 
 function SocialSecurity() {
     return (
-        // <? php include("include/header.php");?>
         <body class="hold-transition sidebar-mini">
             <div class="wrapper">
-                {/* <!-- Navbar -->
-                <?php include("include/top.php");?>
-                <!-- /.navbar -->
-                <!-- Main Sidebar Container -->
-                <?php include("include/aside_left.php");?> */}
                 <div class="content-wrapper">
                     {/* <!-- Content Header (Page header) --> */}
                     <ol class="breadcrumb">
@@ -176,7 +170,6 @@ function SocialSecurity() {
                     </section>
                     {/* <!-- /.content --> */}
                 </div>
-                {/* <?php include("include/footer.php");?> */}
             </div>
         </body>
     )

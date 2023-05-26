@@ -293,7 +293,6 @@ function Employee() {
                     </section>
                     {/* <!-- /.content --> */}
                 </div>
-                {/* <?php include("include/footer.php");?> */}
             </div>
         </body>
 
