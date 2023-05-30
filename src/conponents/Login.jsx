@@ -17,12 +17,8 @@ function LoginForm({ onLogin }) {
 
     function handleLogin(event) {
         event.preventDefault();
-<<<<<<< HEAD
         // const endpoint = 'http://192.168.1.189:5000/api/auth/login';
-        const endpoint = 'http://192.168.1.189:5000/api/auth/login';
-=======
         const endpoint = 'http://localhost:3000/users/auth/login';
->>>>>>> wasan
         const data = {
             username: username,
             password: password
