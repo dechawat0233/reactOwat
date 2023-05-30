@@ -1,4 +1,4 @@
-const url = require('../config');
+const connectionString = require('../config');
 
 var express = require('express');
 var router = express.Router();
@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 
 //Connect mongodb
-mongoose.connect(url ,{ useNewUrlParser: true, useUnifiedTopology: 
+mongoose.connect(connectionString ,{ useNewUrlParser: true, useUnifiedTopology: 
 true });
 
 const db = mongoose.connection;
