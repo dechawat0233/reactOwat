@@ -17,23 +17,25 @@ function LoginForm({ onLogin }) {
 
     function handleLogin(event) {
         event.preventDefault();
-        const endpoint = 'http://localhost:5000/api/auth/login';
+        const endpoint = 'http://localhost:3000/users/auth/login';
         const data = {
             username: username,
             password: password
         };
-        axios.post(endpoint, data)
+        axios.post(endpoint, data )
             .then(response => {
                 setMessage('Login successful!');
                 const { token } = response.data;
+
                 localStorage.setItem('token', token);
+
                 localStorage.setItem('loggedIn', 'true');
                 window.location.reload();
                 //onLogin(username, password);
 
             })
             .catch(error => {
-                setMessage('Login failed.');
+                setMessage('Login failed. กรุณาตรวจสอบชื่อผู้ใช้และรหัสผ่านให้ถูกต้อง');
             });
     }
 
@@ -59,6 +61,7 @@ function LoginForm({ onLogin }) {
                         <div class="txt-login">
                             <i class="fas fa-user-circle"></i> เข้าสู่ระบบ
                         </div>
+<p>{message}</p>
                         <form onSubmit={handleLogin}>
 
                             <div class="form-group">
