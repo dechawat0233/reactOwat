@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import jwt_decode from 'jwt-decode';
 
 // import React from 'react'
 import React, { Component } from 'react'
@@ -9,9 +10,12 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 function AsideLeft() {
   const [showSubMenu, setShowSubMenu] = useState(false);
 
+const token = localStorage.getItem('token');
+
   function toggleSubMenu() {
     setShowSubMenu(!showSubMenu);
   }
+
 
   return (
 

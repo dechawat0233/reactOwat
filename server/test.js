@@ -250,6 +250,8 @@ console.log(username  + ' ' + password );
     await res.json({ token });
     
     await console.log('Token:', token);
+    await console.log('user:', user);
+    
   } catch (error) {
     console.error('Error generating JWT token:', error.message);
   }
