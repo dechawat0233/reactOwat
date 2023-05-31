@@ -1,3 +1,5 @@
+import endpoint from './config';
+
 import axios from 'axios';
 import { useState } from 'react';
 

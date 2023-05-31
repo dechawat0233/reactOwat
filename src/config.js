@@ -7,4 +7,4 @@
 //config for server
   loginEndpoint: 'http://192.168.1.189:3000/users/auth/login'
 
-module.exports = loginEndpoint;
+export default loginEndpoint;
