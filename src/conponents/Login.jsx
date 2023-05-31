@@ -1,4 +1,4 @@
-import loginEndpoint from './config';
+const loginEndpoint = require('./config');
 
 import axios from 'axios';
 import { useState } from 'react';
