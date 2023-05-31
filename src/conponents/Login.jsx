@@ -1,4 +1,4 @@
-import config from './config';
+import loginEndpoint from './config';
 
 import axios from 'axios';
 import { useState } from 'react';
@@ -25,7 +25,7 @@ function LoginForm({ onLogin }) {
             username: username,
             password: password
         };
-        axios.post(config.loginEndpoint, data )
+        axios.post(loginEndpoint , data )
             .then(response => {
                 setMessage('Login successful!');
                 const { token } = response.data;
