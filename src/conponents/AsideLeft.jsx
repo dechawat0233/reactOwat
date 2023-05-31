@@ -11,7 +11,6 @@ function AsideLeft() {
   const [showSubMenu, setShowSubMenu] = useState(false);
 
 const token = localStorage.getItem('token');
-  const user = localStorage.getItem('user') || null;
 
   function toggleSubMenu() {
     setShowSubMenu(!showSubMenu);
@@ -36,7 +35,7 @@ const token = localStorage.getItem('token');
             </div>
             <div class="info">
               <a href="#" class="d-block">
-                <p>คุณสมศรี รักสะอาด</p><i class="nav-icon fas fa-solid fa-user" style={{ fontSsize: "11px", paddingRight: "5px" }}></i> Super Admin {user}
+                <p>คุณสมศรี รักสะอาด</p><i class="nav-icon fas fa-solid fa-user" style={{ fontSsize: "11px", paddingRight: "5px" }}></i> Super Admin 
               </a>
             </div>
           </div>
