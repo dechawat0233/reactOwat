@@ -11,7 +11,7 @@ function AsideLeft() {
   const [showSubMenu, setShowSubMenu] = useState(false);
 
 const token = localStorage.getItem('token');
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
+  const user = JSON.parse(localStorage.getItem('user')) || null;
 
   function toggleSubMenu() {
     setShowSubMenu(!showSubMenu);
