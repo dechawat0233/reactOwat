@@ -31,7 +31,8 @@ function LoginForm({ onLogin }) {
                 const { token , user} = response.data;
 
                 localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
+      //localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('user', user.username;
 
                 localStorage.setItem('loggedIn', 'true');
                 window.location.reload();
