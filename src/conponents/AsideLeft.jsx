@@ -10,9 +10,9 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 function AsideLeft() {
   const [showSubMenu, setShowSubMenu] = useState(false);
 
-//const token = localStorage.getItem('token');
-  const [token, setToken] = useState(localStorage.getItem('token') || '');
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
+const token = localStorage.getItem('token');
+  //const [token, setToken] = useState(localStorage.getItem('token') || '');
+  const user = useState(JSON.parse(localStorage.getItem('user')) || null);
 
   function toggleSubMenu() {
     setShowSubMenu(!showSubMenu);
