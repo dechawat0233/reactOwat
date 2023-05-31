@@ -11,4 +11,4 @@ const config = {
   loginEndpoint: 'http://192.168.1.189:3000/users/auth/login'
 };
 
-export default config;
+module.exports = config;
