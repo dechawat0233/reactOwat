@@ -37,7 +37,7 @@ function AsideLeft() {
             </div>
             <div class="info">
               <a href="#" class="d-block">
-                <p>คุณสมศรี รักสะอาด</p><i class="nav-icon fas fa-solid fa-user" style={{ fontSsize: "11px", paddingRight: "5px" }}></i> Super Admin 
+                <p>คุณสมศรี รักสะอาด</p><i class="nav-icon fas fa-solid fa-user" style={{ fontSsize: "11px", paddingRight: "5px" }}></i> Super Admin {user.name}
               </a>
             </div>
           </div>

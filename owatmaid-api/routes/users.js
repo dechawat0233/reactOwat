@@ -110,7 +110,7 @@ console.log(req.body );
     }
   
     const token = await jwt.sign({ userId }, secretKey, { expiresIn });
-    await res.json({ token });
+    await res.json({ token , user });
     
     await console.log('Token:', token);
   } catch (error) {
