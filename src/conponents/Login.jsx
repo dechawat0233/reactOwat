@@ -28,9 +28,10 @@ function LoginForm({ onLogin }) {
         axios.post(loginEndpoint , data )
             .then(response => {
                 setMessage('Login successful!');
-                const { token } = response.data;
+                const { token , user } = response.data;
 
                 localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
 
                 localStorage.setItem('loggedIn', 'true');
                 window.location.reload();

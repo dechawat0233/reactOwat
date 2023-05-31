@@ -10,7 +10,9 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 function AsideLeft() {
   const [showSubMenu, setShowSubMenu] = useState(false);
 
-const token = localStorage.getItem('token');
+//const token = localStorage.getItem('token');
+  const [token, setToken] = useState(localStorage.getItem('token') || '');
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
 
   function toggleSubMenu() {
     setShowSubMenu(!showSubMenu);
@@ -35,7 +37,7 @@ const token = localStorage.getItem('token');
             </div>
             <div class="info">
               <a href="#" class="d-block">
-                <p>คุณสมศรี รักสะอาด</p><i class="nav-icon fas fa-solid fa-user" style={{ fontSsize: "11px", paddingRight: "5px" }}></i> Super Admin
+                <p>คุณสมศรี รักสะอาด</p><i class="nav-icon fas fa-solid fa-user" style={{ fontSsize: "11px", paddingRight: "5px" }}></i> Super Admin {user.username}
               </a>
             </div>
           </div>
