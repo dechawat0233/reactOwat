@@ -111,7 +111,8 @@ console.log(req.body );
   
     const token = await jwt.sign({ userId }, secretKey, { expiresIn });
     await res.json({ token });
-    
+    await console.log(user);
+
     await console.log('Token:', token);
   } catch (error) {
     await     console.error('Error generating JWT token:', error.message);
