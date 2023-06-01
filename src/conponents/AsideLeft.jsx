@@ -12,6 +12,15 @@ function AsideLeft() {
 
 const token = localStorage.getItem('token');
 
+let storedUser;
+try {
+  storedUser = JSON.parse(localStorage.getItem('user'));
+} catch (error) {
+  console.error('Error parsing user data from localStorage:', error);
+}
+
+const [user, setUser] = useState(storedUser || null);
+
   function toggleSubMenu() {
     setShowSubMenu(!showSubMenu);
   }
@@ -35,7 +44,7 @@ const token = localStorage.getItem('token');
             </div>
             <div class="info">
               <a href="#" class="d-block">
-                <p>คุณสมศรี รักสะอาด</p><i class="nav-icon fas fa-solid fa-user" style={{ fontSsize: "11px", paddingRight: "5px" }}></i> Super Admin
+                <p>{user.username}</p><i class="nav-icon fas fa-solid fa-user" style={{ fontSsize: "11px", paddingRight: "5px" }}></i> Super Admin 
               </a>
             </div>
           </div>

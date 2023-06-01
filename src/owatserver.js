@@ -1,49 +1,27 @@
-const connectionString = require('../config');
-
-var express = require('express');
-var router = express.Router();
-const mongoose = require('mongoose');
+// Import dependencies
+const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 
-//Connect mongodb
-mongoose.connect(connectionString ,{ useNewUrlParser: true, useUnifiedTopology: 
+
+// Set up environment variables
+
+// Set up database connection
+//mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: 
+//true });
+mongoose.connect('mongodb://172.17.0.2:27017/users', { useNewUrlParser: true, useUnifiedTopology: 
 true });
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-// Define user schema
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  username: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  role: {
-    type: String,
-    enum: ['admin', 'employee', 'manager'],
-    default: 'employee'
-  }
-});
-
-// Define user model
-const User = mongoose.model('User', userSchema);
+// Set up express app
+const app = express();
+app.use(express.json());
+app.use(cors());
 
 // Set up JWT middleware
 const jwtMiddleware = (req, res, next) => {
@@ -62,23 +40,20 @@ const jwtMiddleware = (req, res, next) => {
   }
 };
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+// Define user schema
+const userSchema = new mongoose.Schema({
+  username: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
 });
 
-// Get list of users
-  router.get('/list',  async (req, res) => {
-    const users = await User.find();
-    res.json(users);
-  });
-  
+// Define user model
+const User = mongoose.model('User', userSchema);
 
 // Authenticate user and return JWT token
-router.post('/auth/login', async (req, res) => {
+app.post('/api/auth/login', async (req, res) => {
   const { username, password } = await req.body;
 console.log(username  + ' ' + password );
-console.log(req.body );
+
   // Check if user exists
   const user = await User.findOne({ username });
   if (!user) {
@@ -96,44 +71,56 @@ console.log(req.body );
   }
 
   // Generate and sign JWT token
-  // const token = await jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+  // const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
   // Generate and sign JWT token
   try {
     const userId = await user._id; // Replace with the actual user ID
     // const secretKey = process.env.JWT_SECRET; // Replace with your own secret key
     const secretKey = await 'Friendlydev'; // Replace with your own secret key
-    const expiresIn = await '3h'; // Set the token expiration time
+    const expiresIn = await '1h'; // Set the token expiration time
   console.log(secretKey );
     if (!secretKey) {
       throw new Error('Missing JWT secret key');
     }
   
     const token = await jwt.sign({ userId }, secretKey, { expiresIn });
-    await res.json({ token , user});
-    await console.log(user);
-
-    await res.json({ token , user });
+    await res.json({ token });
     
-    //await console.log('Token:', token);
+    await console.log('Token:', token);
   } catch (error) {
-    await     console.error('Error generating JWT token:', error.message);
+    console.error('Error generating JWT token:', error.message);
   }
   
   
   // res.json({ token });
 });
 
+
+// Get list of users
+//app.get('/api/users', jwtMiddleware, async (req, res) => {
+   app.get('/api/users',  async (req, res) => {
+
+  const users = await User.find();
+  res.json(users);
+});
+
+app.use(bodyParser.json());
+
 // Create new user
-router.post('/create', async (req, res) => {
+app.post('/api/users', async (req, res) => {
   
-  const {
-    name,
-    email,
-    username,
-    password,
-    role,
-       } = req.body;
+  // const user = new User({ username: 'myusername', password: 'mypassword' });
+  // user.save((err) => {
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     console.log('User saved successfully!');
+  //   }
+  // });
+
+
+  const { username, password } = req.body;
   console.log(`Username: ${username}, Password: ${password}`);
   
 
@@ -141,13 +128,7 @@ router.post('/create', async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   // Create user
-  const user = new User({ 
-    name,
-email,
-username,
-password: hashedPassword ,
-role
-    });
+  const user = new User({ username, password: hashedPassword });
 
   try {
     await user.save();
@@ -158,5 +139,6 @@ role
  
 });
 
-
-module.exports = router;
+// Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
