@@ -9,11 +9,13 @@ const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 
 //Connect mongodb
-mongoose.connect(connectionString ,{ useNewUrlParser: true, useUnifiedTopology: 
+mongoose.connect(connectionString 
+,{ useNewUrlParser: true, useUnifiedTopology: 
 true });
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
 
 // Define user schema
 const userSchema = new mongoose.Schema({
