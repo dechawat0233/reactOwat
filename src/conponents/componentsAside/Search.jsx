@@ -1,4 +1,4 @@
-//import endpoint from '../../config';
+import endpoint from '../../config';
 
 import React from 'react'
 import axios from 'axios';
@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 
 function Search() {
-/*
+
     const [ employeeId , setEmployeeId] = useState('');
     const [ name , setName] = useState('');
     const [ idCard , setIdCard] = useState('');
@@ -24,14 +24,15 @@ function Search() {
     function handleIdCardChange(event) {
         setIdCard(event.target.value);
     }
+
     function handleWorkPlaceChange(event) {
         setWorkPlace(event.target.value);
     }
-*/
+
 
     function handleSearch(event) {
         event.preventDefault();
-/*
+
         const data = {
             employeeId : employeeId ,
             name : name ,
@@ -52,7 +53,6 @@ function Search() {
                 setMessage('ไม่พบผลการค้นหา กรุณาตรวจสอบข้อมูลที่ใช้ในการค้นหาอีกครั้ง');
             });
     
-*/
     }
 
 
