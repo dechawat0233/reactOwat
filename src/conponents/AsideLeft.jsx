@@ -19,6 +19,9 @@ try {
   console.error('Error parsing user data from localStorage:', error);
         localStorage.setItem('loggedIn', 'false');
 
+        window.location.reload();
+
+        setLoggedIn(false);
 }
 
 const [user, setUser] = useState(storedUser || null);
@@ -47,7 +50,7 @@ const [user, setUser] = useState(storedUser || null);
             </div>
             <div class="info">
               <a href="#" class="d-block">
-                <p>user.username</p><i class="nav-icon fas fa-solid fa-user" style={{ fontSsize: "11px", paddingRight: "5px" }}></i> Super Admin 
+                <p>{ user.username}</p><i class="nav-icon fas fa-solid fa-user" style={{ fontSsize: "11px", paddingRight: "5px" }}></i> Super Admin 
               </a>
             </div>
           </div>
