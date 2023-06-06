@@ -1,5 +1,5 @@
 //import endpoint from '../config';
-const endpoint = '68.183.230.164:3000';
+
 import axios from 'axios';
 import { useState } from 'react';
 
@@ -19,7 +19,7 @@ function LoginForm({ onLogin }) {
 
     function handleLogin(event) {
         event.preventDefault();
-         //const endpoint = 'http://192.168.1.189:3000/users/auth/login';
+         const endpoint = 'http://192.168.1.189:3000/users/auth/login';
         //const endpoint = 'http://localhost:3000/users/auth/login';
 
         const data = {
