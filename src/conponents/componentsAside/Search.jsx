@@ -6,12 +6,13 @@ import { useState } from 'react';
 
 
 function Search() {
+/*
     const [ employeeId , setEmployeeId] = useState('');
     const [ name , setName] = useState('');
     const [ idCard , setIdCard] = useState('');
     const [ workPlace, setWorkPlace] = useState('');
 
-/*
+
     function handleEmployeeIdChange(event) {
         setEmployeeId(event.target.value);
     }
@@ -26,10 +27,11 @@ function Search() {
     function handleWorkPlaceChange(event) {
         setWorkPlace(event.target.value);
     }
-
+*/
 
     function handleSearch(event) {
         event.preventDefault();
+/*
         const data = {
             employeeId : employeeId ,
             name : name ,
@@ -50,9 +52,9 @@ function Search() {
                 setMessage('ไม่พบผลการค้นหา กรุณาตรวจสอบข้อมูลที่ใช้ในการค้นหาอีกครั้ง');
             });
     
-
-    }
 */
+    }
+
 
     return (
         <body class="hold-transition sidebar-mini">
