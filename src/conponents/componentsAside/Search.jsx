@@ -1,6 +1,57 @@
+import endpoint from '../../config';
+
 import React from 'react'
+import axios from 'axios';
+import { useState } from 'react';
+
 
 function Search() {
+    const [ employeeId , setEmployeeId] = useState('');
+    const [ name , setName] = useState('');
+    const [ idCard , setIdCard] = useState('');
+    const [ workPlace, setWorkPlace] = useState('');
+
+    function handleEmployeeIdChange(event) {
+        setEmployeeId(event.target.value);
+    }
+
+    function handleNameChange(event) {
+        setName(event.target.value);
+    }
+
+    function handleIdCardChange(event) {
+        setIdCard(event.target.value);
+    }
+    function handleWorkPlaceChange(event) {
+        setWorkPlace(event.target.value);
+    }
+
+
+    function handleSearch(event) {
+        event.preventDefault();
+        const data = {
+            employeeId : employeeId ,
+            name : name ,
+            idCard : idCard ,
+            workPlace: workPlace ,
+        };
+
+        axios.post(endpoint + '/employee/search' , data )
+            .then(response => {
+                setMessage('Search successful!');
+                const { textSearch , employee } = response.data;
+
+                localStorage.setItem('textSearch', textSearch);
+      localStorage.setItem('employee', JSON.stringify(employee));
+
+            })
+            .catch(error => {
+                setMessage('ไม่พบผลการค้นหา กรุณาตรวจสอบข้อมูลที่ใช้ในการค้นหาอีกครั้ง');
+            });
+    
+
+    }
+
     return (
         <body class="hold-transition sidebar-mini">
             <div class="wrapper">
@@ -25,32 +76,32 @@ function Search() {
                             <h2 class="title"> ค้นหาพนักงาน</h2>
                             <section class="Frame">
                                 <div class="col-md-10 offset-md-1">
-                                    <form action="search_results.php">
+                                    <form onSubmit={handleSearch}>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>รหัสพนักงาน</label>
-                                                    <input type="" class="form-control" id="" placeholder="รหัสพนักงาน" />
+                                                    <label role="employeeId">รหัสพนักงาน</label>
+                                                    <input type="text" name="employeeId" class="form-control" id="employeeId" placeholder="รหัสพนักงาน" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>ชื่อพนักงาน</label>
-                                                    <input type="" class="form-control" id="" placeholder="ชื่อพนักงาน" />
+                                                    <label role="name">ชื่อพนักงาน</label>
+                                                    <input type="text" name="name" class="form-control" id="name" placeholder="ชื่อพนักงาน" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>หมายเลขบัตรประชาชน</label>
-                                                    <input type="" class="form-control" id="" placeholder="หมายเลขบัตรประชาชน" />
+                                                    <label role="idCard">หมายเลขบัตรประชาชน</label>
+                                                    <input type="text" name="idCard" class="form-control" id="idCard" placeholder="หมายเลขบัตรประชาชน" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>หน่วยงาน</label>
-                                                    <input type="" class="form-control" id="" placeholder="หน่วยงาน" />
+                                                    <label role="workPlace">หน่วยงาน</label>
+                                                    <input type="text" name="workPlace" class="form-control" id="workPlace" placeholder="หน่วยงาน" />
                                                 </div>
                                             </div>
                                         </div>

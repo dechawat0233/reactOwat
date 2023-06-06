@@ -1,4 +1,4 @@
-import loginEndpoint from '../config';
+import endpoint from '../config';
 
 import axios from 'axios';
 import { useState } from 'react';
@@ -19,13 +19,14 @@ function LoginForm({ onLogin }) {
 
     function handleLogin(event) {
         event.preventDefault();
-         //const loginEndpoint = 'http://192.168.1.189:3000/users/auth/login';
-        //const loginEndpoint = 'http://localhost:3000/users/auth/login';
+         //const endpoint = 'http://192.168.1.189:3000/users/auth/login';
+        //const endpoint = 'http://localhost:3000/users/auth/login';
+
         const data = {
             username: username,
             password: password
         };
-        axios.post(loginEndpoint , data )
+        axios.post(endpoint + '/users/auth/login' , data )
             .then(response => {
                 setMessage('Login successful!');
                 const { token , user } = response.data;
