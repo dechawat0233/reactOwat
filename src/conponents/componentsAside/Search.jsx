@@ -11,6 +11,7 @@ function Search() {
     const [ idCard , setIdCard] = useState('');
     const [ workPlace, setWorkPlace] = useState('');
 
+/*
     function handleEmployeeIdChange(event) {
         setEmployeeId(event.target.value);
     }
@@ -51,6 +52,7 @@ function Search() {
     
 
     }
+*/
 
     return (
         <body class="hold-transition sidebar-mini">
