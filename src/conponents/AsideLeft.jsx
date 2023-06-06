@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function AsideLeft() {
   const [showSubMenu, setShowSubMenu] = useState(false);
-
+/*
 const token = localStorage.getItem('token');
 
 let storedUser;
@@ -20,6 +20,7 @@ try {
 }
 
 const [user, setUser] = useState(storedUser || null);
+*/
 
   function toggleSubMenu() {
     setShowSubMenu(!showSubMenu);
