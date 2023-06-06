@@ -45,7 +45,7 @@ const [user, setUser] = useState(storedUser || null);
             </div>
             <div class="info">
               <a href="#" class="d-block">
-                <p>{user.username}</p><i class="nav-icon fas fa-solid fa-user" style={{ fontSsize: "11px", paddingRight: "5px" }}></i> Super Admin 
+                <p>user.username</p><i class="nav-icon fas fa-solid fa-user" style={{ fontSsize: "11px", paddingRight: "5px" }}></i> Super Admin 
               </a>
             </div>
           </div>
