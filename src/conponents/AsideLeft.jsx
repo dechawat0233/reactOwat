@@ -17,6 +17,8 @@ try {
   storedUser = JSON.parse(localStorage.getItem('user'));
 } catch (error) {
   console.error('Error parsing user data from localStorage:', error);
+        localStorage.setItem('loggedIn', 'false');
+
 }
 
 const [user, setUser] = useState(storedUser || null);
