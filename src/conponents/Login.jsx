@@ -1,5 +1,5 @@
-import endpoint from '../config';
-
+//import endpoint from '../config';
+const endpoint = '68.183.230.164:3000';
 import axios from 'axios';
 import { useState } from 'react';
 
