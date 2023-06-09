@@ -117,7 +117,7 @@ const Employee = mongoose.model('Employee', employeeSchema);
 
 // Create new employee
 router.post('/create', async (req, res) => {
-  /*
+  
   const {
     employeeId ,
     name,
@@ -142,9 +142,9 @@ router.post('/create', async (req, res) => {
     department
        } = req.body;
   console.log(`Name: ${name}, Id card: ${idCard}`);
-*/
-//example data
 
+//example data
+/*
   let employeeId  = '1001';
   let name ='วสันต์';
   let lastName= 'แปงปวนจู';
@@ -166,7 +166,7 @@ router.post('/create', async (req, res) => {
   let treatmentRights = '';
   let position = '';
   let department = '';
-  
+  */
 
   // Create employee
   const employee = new Employee({ 
