@@ -1,0 +1,37 @@
+[
+{
+  'employeeId': 'EMP001',
+  'name': 'John',
+  'lastName': 'Doe',
+  'nickName': 'JD',
+  'gender': 'male',
+  'dateOfBirth': new Date('1990-01-01'),
+  'age': 33,
+  'idCard': '1234567890',
+  'ethnicity': 'Caucasian',
+  'religion': 'Christian',
+  'maritalStatus': 'single',
+  'militaryStatus': 'active',
+  'address': {
+    'street': '123 Main Street',
+    'city': 'Cityville',
+    'state': 'State',
+    'country': 'Country',
+    'postalCode': '12345'
+  },
+  'currentAddress': {
+    'street': '456 Elm Street',
+    'city': 'Townsville',
+    'state': 'State',
+    'country': 'Country',
+    'postalCode': '67890'
+  },
+  'phoneNumber': '1234567890',
+  'emergencyContactNumber": '9876543210',
+  'idLine': 'john.doe',
+  ],
+  'position': 'Manager',
+  'department': 'Human Resources',
+  'salary': 50000
+}
+]
