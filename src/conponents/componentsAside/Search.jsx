@@ -4,7 +4,6 @@ import React from 'react'
 import axios from 'axios';
 import { useState } from 'react';
 
-
 function Search() {
 
     const [ message , setMessage ] = useState('');
@@ -52,8 +51,9 @@ function Search() {
 
     //localStorage.setItem('searchResults', JSON.stringify(response ));
 //      localStorage.setItem('employee', JSON.stringify(employee));
+setEmployeesResult(response.data);
 
-      setEmployeesResult(JSON.stringify(response.data ));
+    //   setEmployeesResult(JSON.stringify(response.data ));
             })
             .catch(error => {
                 setMessage('ไม่พบผลการค้นหา กรุณาตรวจสอบข้อมูลที่ใช้ในการค้นหาอีกครั้ง');
@@ -61,7 +61,7 @@ function Search() {
     
     }
 
-
+    
     return (
         <body class="hold-transition sidebar-mini">
             <div class="wrapper">
