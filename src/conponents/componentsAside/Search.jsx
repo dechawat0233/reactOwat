@@ -7,11 +7,14 @@ import { useState } from 'react';
 
 function Search() {
 
+    const [ message , setMessage ] = useState('');
+
     const [ employeeId , setEmployeeId] = useState('');
     const [ name , setName] = useState('');
     const [ idCard , setIdCard] = useState('');
     const [ workPlace, setWorkPlace] = useState('');
 
+  const [employeesResult , setEmployeesResult] = useState([]);
 
     function handleEmployeeIdChange(event) {
         setEmployeeId(event.target.value);
@@ -42,12 +45,15 @@ function Search() {
 
         axios.post(endpoint + '/employee/search' , data )
             .then(response => {
-                setMessage('Search successful!');
-                const { textSearch , employee } = response.data;
+//                setMessage('ผลการค้นหา');
+                const { employees } = response.data;
+                setMessage('ผลการค้นหา'+ employees.length + 'รายการ' );
 
-                localStorage.setItem('textSearch', textSearch);
-      localStorage.setItem('employee', JSON.stringify(employee));
 
+    //localStorage.setItem('searchResults', JSON.stringify(response ));
+//      localStorage.setItem('employee', JSON.stringify(employee));
+
+      setEmployeesResult(JSON.stringify(response.data ));
             })
             .catch(error => {
                 setMessage('ไม่พบผลการค้นหา กรุณาตรวจสอบข้อมูลที่ใช้ในการค้นหาอีกครั้ง');
@@ -60,7 +66,6 @@ function Search() {
         <body class="hold-transition sidebar-mini">
             <div class="wrapper">
                 <div class="content-wrapper">
-                    {/* <!-- Content Header (Page header) --> */}
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><i class="fas fa-home"></i> <a href="index.php">หน้าหลัก</a></li>
                         <li class="breadcrumb-item"><a href="#"> ระบบบริหารจัดการข้อมูล</a></li>
@@ -85,13 +90,15 @@ function Search() {
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label role="employeeId">รหัสพนักงาน</label>
-                                                    <input type="text" name="employeeId" class="form-control" id="employeeId" placeholder="รหัสพนักงาน" />
+                                                    <input type="text" name="employeeId" class="form-control" id="employeeId" placeholder="รหัสพนักงาน" 
+onChange={handleEmployeeIdChange} />
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label role="name">ชื่อพนักงาน</label>
-                                                    <input type="text" name="name" class="form-control" id="name" placeholder="ชื่อพนักงาน" />
+                                                    <input type="text" name="name" class="form-control" id="name" placeholder="ชื่อพนักงาน" 
+onChange={handleNameChange} />
                                                 </div>
                                             </div>
                                         </div>
@@ -99,13 +106,15 @@ function Search() {
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label role="idCard">หมายเลขบัตรประชาชน</label>
-                                                    <input type="text" name="idCard" class="form-control" id="idCard" placeholder="หมายเลขบัตรประชาชน" />
+                                                    <input type="text" name="idCard" class="form-control" id="idCard" placeholder="หมายเลขบัตรประชาชน" 
+onChange={handleIdCardChange} />
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label role="workPlace">หน่วยงาน</label>
-                                                    <input type="text" name="workPlace" class="form-control" id="workPlace" placeholder="หน่วยงาน" />
+                                                    <input type="text" name="workPlace" class="form-control" id="workPlace" placeholder="หน่วยงาน" 
+onChange={handleWorkPlaceChange} />
                                                 </div>
                                             </div>
                                         </div>
@@ -114,7 +123,13 @@ function Search() {
                                         </div>
                                     </form>
                                 </div>
+
+<div>
+<h2>{message}</h2>
+
+</div>
                             </section>
+
                         </div>
                         {/* <!-- /.container-fluid --> */}
                     </section>

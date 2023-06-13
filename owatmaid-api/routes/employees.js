@@ -22,7 +22,7 @@ const employeeSchema = new mongoose.Schema({
     type: String
   },
   name: {
-    type: String
+    type: String 
   },
   lastName: {
     type: String
@@ -114,6 +114,54 @@ const Employee = mongoose.model('Employee', employeeSchema);
       }
     
   });
+
+
+router.post('/search', async (req, res) => {
+  try {
+    const { employeeId, name, idCard, workPlace } = req.body;
+
+    // Construct the search query based on the provided parameters
+    const query = {};
+
+    if (employeeId) {
+      query.employeeId = employeeId;
+    }
+
+    if (name) {
+      query.name = { $regex: new RegExp(name, 'i') };
+//{ $regex: name, $options: 'i' };
+    }
+
+    if (idCard) {
+      query.idCard = idCard;
+    }
+
+    if (workPlace) {
+      query.workPlace = { $regex: workPlace, $options: 'i' };
+    }
+
+    console.log('Search Parameters:');
+    console.log({ employeeId, name, idCard, workPlace });
+
+    console.log('Constructed Query:');
+    console.log(query);
+if(employeeId == '' && name  == '' && idCard  == '' && workPlace  == ''){
+    res.status(200).json({ });
+}
+
+    // Query the employee collection for matching documents
+    const employees = await Employee.find(query);
+
+    console.log('Search Results:');
+    console.log(employees);
+let textSearch  = 'test';
+    res.status(200).json({ employees });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 
 // Create new employee
 router.post('/create', async (req, res) => {
