@@ -1,4 +1,3 @@
-//import React from 'react'
 import React, { useEffect, useState } from 'react';
 
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
@@ -6,6 +5,13 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 function Employee() {
     const [storedEmp , setStoredEmp ] = useState([]);
 
+    const [ id, setId ] = useState('');
+
+    useEffect(() => {
+        const firstEmployee = storedEmp[0];
+        const firstId = firstEmployee ? firstEmployee.employeeId : '';
+        setId(firstId );
+    }, [storedEmp ]);
 
     useEffect(() => {
       const storedItem = localStorage.getItem('selectedEmployees');
@@ -64,7 +70,7 @@ function Employee() {
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>รหัสพนักงาน</label>
-                                                <input type="" class="form-control" id="" placeholder="รหัสพนักงาน" value="5240499001264"/>
+                                                <input type="text" class="form-control" id="" placeholder="รหัสพนักงาน" value={storedEmp[0]?.employeeId ?? ''} />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
@@ -168,20 +174,20 @@ function Employee() {
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>ชื่อ</label>
-                                                <input type="" class="form-control" id="" placeholder="ชื่อ" value="ชุติมณฑน์"/>
+                                                <input type="text" class="form-control" id="" placeholder="ชื่อ" value={storedEmp[0]?.name ?? "null"} />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>นามสกุล</label>
-                                                <input type="" class="form-control" id="" placeholder="นามสกุล" value="จอมนก"/>
+                                                <input type="text" class="form-control" id="" placeholder="นามสกุล" value={storedEmp[0]?.lastName ?? "null"} />
                                             </div>
                                         </div>
 
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>ชื่อเล่น</label>
-                                                <input type="" class="form-control" id="" placeholder="ชื่อเล่น" value="สา"/>
+                                                <input type="text" class="form-control" id="" placeholder="ชื่อเล่น" value={storedEmp[0]?.nickName ?? "null"} />
                                             </div>
                                         </div>
                                     </div>
@@ -202,7 +208,7 @@ function Employee() {
                                             <div class="form-group">
                                                 <label>วันเดือนปีเกิด</label>
                                                 <div class="input-group date" id="reservationdate3" data-target-input="nearest">
-                                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate3" value="16/08/30" />
+                                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate3" value={storedEmp[0]?.dateOfBirth ?? "null"} />
                                                     <div class="input-group-append" data-target="#reservationdate3" data-toggle="datetimepicker">
                                                         <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
                                                     </div>
@@ -212,14 +218,14 @@ function Employee() {
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>อายุ</label>
-                                                <input type="" class="form-control" id="" placeholder="อายุ" value="36"/>
+                                                <input type="text" class="form-control" id="" placeholder="อายุ" value={storedEmp[0]?.age ?? "null"} />
                                             </div>
                                         </div>
 
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>เลขบัตรประจำตัวประชาชน</label>
-                                                <input type="" class="form-control" id="" placeholder="เลขบัตรประจำตัวประชาชน" value="5240499001264"/>
+                                                <input type="text" class="form-control" id="" placeholder="เลขบัตรประจำตัวประชาชน" value={storedEmp[0]?.idCard ?? "null"} />
                                             </div>
                                         </div>
                                     </div>
@@ -227,19 +233,19 @@ function Employee() {
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>เชื้อชาติ</label>
-                                                <input type="" class="form-control" id="" placeholder="เชื้อชาติ" value="ไทย"/>
+                                                <input type="text" class="form-control" id="" placeholder="เชื้อชาติ" value={storedEmp[0]?.ethnicity ?? "null"}  />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>ศาสนา</label>
-                                                <input type="" class="form-control" id="" placeholder="ศาสนา" value="พุทธ"/>
+                                                <input type="text" class="form-control" id="" placeholder="ศาสนา" value={storedEmp[0]?.religion ?? "null"}  />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>สถานภาพการสมรส</label>
-                                                <input type="" class="form-control" id="" placeholder="สถานภาพการสมรส" value="โสด"/>
+                                                <input type="text" class="form-control" id="" placeholder="สถานภาพการสมรส" value={storedEmp[0]?.maritalStatus ?? "null"}  />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
@@ -257,7 +263,7 @@ function Employee() {
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>ที่อยู่ตามบัตรประชาชน</label>
-                                                <textarea class="form-control" rows="3" value="152/183  ถ.ริมคลองท่าไข่  ต.หน้าเมือง  อ.เมืองฉะเชิงเทรา"></textarea>
+                                                <textarea class="form-control" rows="3" value={storedEmp[0]?.address ?? ''}  ></textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -266,7 +272,7 @@ function Employee() {
                                                 <div class="icheck-primary d-inline">
                                                     <input type="radio" id="radio" name="radio1" /> ใช้ที่อยู่ตามบัตรประชาชน
                                                 </div>
-                                                <textarea class="form-control" rows="3" value="152/183  ถ.ริมคลองท่าไข่  ต.หน้าเมือง  อ.เมืองฉะเชิงเทรา"></textarea>
+                                                <textarea class="form-control" rows="3" value={storedEmp[0]?.currentAddress ?? ''}  ></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -275,19 +281,19 @@ function Employee() {
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>เบอร์โทรศัพท์</label>
-                                                <input type="" class="form-control" id="" placeholder="เบอร์โทรศัพท์" value="0926513824"/>
+                                                <input type="text" class="form-control" id="" placeholder="เบอร์โทรศัพท์" value={storedEmp[0]?.phoneNumber ?? ''}  />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>เบอร์ติดต่อกรณีฉุกเฉิน</label>
-                                                <input type="" class="form-control" id="" placeholder="เบอร์ติดต่อกรณีฉุกเฉิน" value="0958461372" />
+                                                <input type="text" class="form-control" id="" placeholder="เบอร์ติดต่อกรณีฉุกเฉิน" value={storedEmp[0]?.emergencyContactNumber ?? ''}  />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>ไอดีไลน์</label>
-                                                <input type="" class="form-control" id="" placeholder="ไอดีไลน์" value="opowow"/>
+                                                <input type="text" class="form-control" id="" placeholder="ไอดีไลน์" value={storedEmp[0]?.idLine ?? ''}  />
                                             </div>
                                         </div>
                                     </div>
