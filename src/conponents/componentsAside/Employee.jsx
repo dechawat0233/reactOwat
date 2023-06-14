@@ -1,8 +1,44 @@
-import React from 'react'
+//import React from 'react'
+import React, { useEffect, useState } from 'react';
+
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function Employee() {
+    const [storedEmp , setStoredEmp ] = useState([]);
 
+
+    useEffect(() => {
+      const storedItem = localStorage.getItem('selectedEmployees');
+      if (storedItem) {
+        // Item exists in localStorage
+        // setStoredEmp(storedItem);
+        const parsedData = JSON.parse(storedItem);
+        setStoredEmp(parsedData);
+  //      console.log('Item exists:', storedItem);
+  
+      } else {
+        // Item does not exist in localStorage
+        console.log('Item does not exist');
+      }
+  
+  
+    }, []);
+  
+  
+    useEffect(() => {
+      // Listen for the custom event when selectedEmployees change in localStorage
+      const handleSelectedEmployeesChange = (event) => {
+        const { selectedEmployees } = event.detail;
+        setStoredEmp(selectedEmployees);
+      };
+  
+      window.addEventListener('selectedEmployeesChanged', handleSelectedEmployeesChange);
+  
+      return () => {
+        window.removeEventListener('selectedEmployeesChanged', handleSelectedEmployeesChange);
+      };
+    }, []);
+  
     return (
         <body class="hold-transition sidebar-mini">
             <div class="wrapper">

@@ -51,6 +51,18 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 
 function App() {
+  const [selectedEmployees, setSelectedEmployees] = useState([]);
+
+  function handleEmployeeSelect(employee) {
+    setSelectedEmployees(prevSelectedEmployees => [...prevSelectedEmployees, employee]);
+  }
+
+  function handleEmployeeRemove(employeeId) {
+    setSelectedEmployees(prevSelectedEmployees =>
+      prevSelectedEmployees.filter(employee => employee.id !== employeeId)
+    );
+  }
+
     //const [loggedIn, setLoggedIn] = useState(false);
 
     const [loggedIn, setLoggedIn] = useState(
@@ -118,7 +130,7 @@ function App() {
           <Route path="/time" element={<Testcal />} />
           <Route path="/countday" element={<Countday />} />
         </Routes>
-        <EmployeesSelected/>
+        <EmployeesSelected />
 
       </>
     </Router>

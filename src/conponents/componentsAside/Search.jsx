@@ -1,6 +1,8 @@
 import endpoint from '../../config';
 
-import React, { useState } from 'react';
+//import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
 import axios from 'axios';
 
 function Search() {
@@ -15,6 +17,7 @@ function Search() {
   const [selectedCount, setSelectedCount] = useState(0);
   const [selectedEmployees, setSelectedEmployees] = useState([]);
 
+
   function handleClickResult(employee) {
     const selectedEmployeeCount = selectedCount + 1;
     setSelectedCount(selectedEmployeeCount);
@@ -23,9 +26,14 @@ function Search() {
     const updatedSelectedEmployees = [...selectedEmployees, employee];
     setSelectedEmployees(updatedSelectedEmployees);
     localStorage.setItem('selectedEmployees', JSON.stringify(updatedSelectedEmployees));
-
+    // Dispatch a custom event to notify other components about the change
+    const event = new CustomEvent('selectedEmployeesChanged', {
+      detail: { selectedEmployees: updatedSelectedEmployees },
+    });
+    window.dispatchEvent(event);
     // Do any additional processing or redirection as needed
   }
+
 
   function handleRemoveEmployee(employeeId) {
     const updatedSelectedEmployees = selectedEmployees.filter(
@@ -36,7 +44,15 @@ function Search() {
     setSelectedCount(selectedEmployeeCount);
     localStorage.setItem('selectedEmployees', JSON.stringify(updatedSelectedEmployees));
     localStorage.setItem('selectedEmployeeCount', selectedEmployeeCount);
+
+    // Dispatch a custom event to notify other components about the change
+    const event = new CustomEvent('selectedEmployeesChanged', {
+      detail: { selectedEmployees: updatedSelectedEmployees },
+    });
+    window.dispatchEvent(event);
+
   }
+
 
   async function handleSearch(event) {
     event.preventDefault();

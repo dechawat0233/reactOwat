@@ -15,22 +15,20 @@ const token = localStorage.getItem('token');
 let storedUser;
 try {
   storedUser = JSON.parse(localStorage.getItem('user'));
-
+  
 } catch (error) {
   console.error('Error parsing user data from localStorage:', error);
         localStorage.setItem('loggedIn', 'false');
 
+        setLoggedIn(false);
 
         window.location.reload();
-
-        setLoggedIn(false);
 }
 
 const [user, setUser] = useState(storedUser || null);
 
 
   const [isEmployeeLinkDisabled , setIsEmployeeLinkDisabled ] = useState(false);
-
 
   function toggleSubMenu() {
     setShowSubMenu(!showSubMenu);
