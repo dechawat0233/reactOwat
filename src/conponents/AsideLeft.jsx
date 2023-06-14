@@ -15,11 +15,22 @@ const token = localStorage.getItem('token');
 let storedUser;
 try {
   storedUser = JSON.parse(localStorage.getItem('user'));
+
 } catch (error) {
   console.error('Error parsing user data from localStorage:', error);
+        localStorage.setItem('loggedIn', 'false');
+
+
+        window.location.reload();
+
+        setLoggedIn(false);
 }
 
 const [user, setUser] = useState(storedUser || null);
+
+
+  const [isEmployeeLinkDisabled , setIsEmployeeLinkDisabled ] = useState(false);
+
 
   function toggleSubMenu() {
     setShowSubMenu(!showSubMenu);
@@ -44,7 +55,7 @@ const [user, setUser] = useState(storedUser || null);
             </div>
             <div class="info">
               <a href="#" class="d-block">
-                <p>{user.username}</p><i class="nav-icon fas fa-solid fa-user" style={{ fontSsize: "11px", paddingRight: "5px" }}></i> Super Admin 
+                <p>{ user.name }</p><i class="nav-icon fas fa-solid fa-user" style={{ fontSsize: "11px", paddingRight: "5px" }}></i> {user.role} 
               </a>
             </div>
           </div>
@@ -83,6 +94,45 @@ const [user, setUser] = useState(storedUser || null);
                     <li class="nav-item">
                       <Link to="/search" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ค้นหาพนักงาน</Link>
                     </li>
+
+                    {isEmployeeLinkDisabled ? (
+                        <>                  
+<li class="nav-item">
+                      <span className="nav-link disabled"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ข้อมูลพนักงาน</span>
+                    </li>
+                    <li class="nav-item">
+                      <span className="nav-link disabled"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ข้อมูลเงินเดือน</span>
+                    </li>
+                    <li class="nav-item">
+                      <span className="nav-link disabled"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ภาษีเงินได้</span>
+                    </li>
+                    <li class="nav-item">
+                      <span className="nav-link disabled"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> คำนวณภาษี</span>
+                    </li>
+                    <li class="nav-item">
+                      <span className="nav-link disabled"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> คำนวณหักลดหย่อนภาษี</span>
+                    </li>
+                    <li class="nav-item">
+                      <span className="nav-link disabled"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ค่าใช้จ่ายอื่นๆ</span>
+                    </li>
+                    <li class="nav-item">
+                      <span className="nav-link disabled"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ประกันสังคม</span>
+                    </li>
+                    <li class="nav-item">
+                      <span className="nav-link disabled"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> กองทุนสำรอง</span>
+                    </li>
+                    <li class="nav-item">
+                      <span className="nav-link disabled"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> เงินค้ำประกัน</span>
+                    </li>
+                    <li class="nav-item">
+                      <span className="nav-link disabled"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ข้อมูลเอกสาร</span>
+                    </li>
+                    <li class="nav-item">
+                      <span className="nav-link disabled"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> กรอกใบสมัคร</span>
+                    </li>
+</>
+                    ) : (
+<>
                     <li class="nav-item">
                       <Link to="/employee" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ข้อมูลพนักงาน</Link>
                     </li>
@@ -116,6 +166,9 @@ const [user, setUser] = useState(storedUser || null);
                     <li class="nav-item">
                       <Link to="/application" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> กรอกใบสมัคร</Link>
                     </li>
+                    </>
+                    )}
+
                   </ul>
                 )}
 

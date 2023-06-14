@@ -1,10 +1,13 @@
 // config.js
 //config for local
-  const loginEndpoint = 'http://localhost:3000/users/auth/login';
+//  const endpoint = 'http://localhost:3000';
+
+//config for server test
+  const endpoint = 'http://68.183.230.164:3000';
 
 //config for server
 /*
-  const loginEndpoint = 'http://192.168.1.189:3000/users/auth/login'
-*/
+  const endpoint = 'http://192.168.1.189:3000'
 
-export default loginEndpoint;
+*/
+export default endpoint;

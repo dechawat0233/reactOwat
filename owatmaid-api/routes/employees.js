@@ -17,79 +17,28 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 
 // Define employee schema
-const addressSchema = new mongoose.Schema({
-  street: {
-    type: String,
-    required: true
-  },
-  city: {
-    type: String,
-    required: true
-  },
-  state: {
-    type: String,
-    required: true
-  },
-  postalCode: {
-    type: String,
-    required: true
-  }
-});
-
-const vaccinationSchema = new mongoose.Schema({
-  vaccineName: {
-    type: String,
-    required: true
-  },
-  date: {
-    type: Date,
-    required: true
-  },
-  location: {
-    type: String,
-    required: true
-  }
-});
-
-const treatmentRightsSchema = new mongoose.Schema({
-  right: {
-    type: String,
-    required: true
-  },
-  description: {
-    type: String,
-    required: true
-  }
-});
-
-// Define the schema for the Employee
 const employeeSchema = new mongoose.Schema({
   employeeId: {
-    type: String,
-    required: true
+    type: String
   },
   name: {
-    type: String,
-    required: true
+    type: String 
   },
   lastName: {
-    type: String,
-    required: true
+    type: String
   },
   nickName: {
     type: String,
   },
-  sex: {
+  gender: {
     type: String,
     enum: ['female', 'male', 'other'],
   },
   dateOfBirth: {
-    type: Date,
-    required: true
+    type: Date
   },
   age: {
-    type: Number,
-    required: true
+    type: Number
   },
   idCard: {
     type: String,
@@ -111,12 +60,10 @@ const employeeSchema = new mongoose.Schema({
     enum: ['active', 'veteran', 'reserve', 'inactive', 'other']
   },
   address: {
-    type: addressSchema,
-    required: true
+    type: String
   },
   currentAddress: {
-    type: addressSchema,
-    required: true
+    type: String
   },
   phoneNumber: {
     type: String,
@@ -130,46 +77,21 @@ const employeeSchema = new mongoose.Schema({
     type: String
   },
   vaccination: {
-    type: vaccinationSchema
+    type: String
   },
-  treatmentRights: [treatmentRightsSchema],
-
+  treatmentRights: {
+    type: String
+  },
   position: {
-    type: String,
-    required: true
+    type: String
   },
   department: {
-    type: String,
-    required: true
-  },
-  salary: {
-    type: Number,
-    required: true
+    type: String
   }
 });
 
 // Create the Employee model based on the schema
 const Employee = mongoose.model('Employee', employeeSchema);
-
-//module.exports = Employee;
-
-
-// Set up JWT middleware
-const jwtMiddleware = (req, res, next) => {
-  const authHeader = req.headers.authorization;
-  if (authHeader) {
-    const token = authHeader.split(' ')[1];
-    try {
-      const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-      req.userId = decodedToken.userId;
-      next();
-    } catch (err) {
-      res.status(401).json({ error: 'Invalid token' });
-    }
-  } else {
-    res.status(401).json({ error: 'Token required' });
-  }
-};
 
 
 // Get list of employees
@@ -177,60 +99,146 @@ const jwtMiddleware = (req, res, next) => {
     const employees = await Employee.find();
     res.json(employees);
   });
-  
+
+  // Get  employee by Id
+  router.get('/:employeeId',  async (req, res) => {
+      try {
+        const employee = await Employee.findOne({ employeeId: req.params.employeeId });
+        if (employee) {
+          res.json(employee);
+        } else {
+          res.status(404).json({ error: 'Employee not found' });
+        }
+      } catch (error) {
+        res.status(500).json({ error: 'Internal server error' });
+      }
+    
+  });
+
+
+router.post('/search', async (req, res) => {
+  try {
+    const { employeeId, name, idCard, workPlace } = req.body;
+
+    // Construct the search query based on the provided parameters
+    const query = {};
+
+    if (employeeId) {
+      query.employeeId = employeeId;
+    }
+
+    if (name) {
+      query.name = { $regex: new RegExp(name, 'i') };
+//{ $regex: name, $options: 'i' };
+    }
+
+    if (idCard) {
+      query.idCard = idCard;
+    }
+
+    if (workPlace) {
+      query.workPlace = { $regex: workPlace, $options: 'i' };
+    }
+
+    console.log('Search Parameters:');
+    console.log({ employeeId, name, idCard, workPlace });
+
+    console.log('Constructed Query:');
+    console.log(query);
+if(employeeId == '' && name  == '' && idCard  == '' && workPlace  == ''){
+    res.status(200).json({ });
+}
+
+    // Query the employee collection for matching documents
+    const employees = await Employee.find(query);
+
+    console.log('Search Results:');
+    console.log(employees);
+let textSearch  = 'test';
+    res.status(200).json({ employees });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
 // Create new employee
 router.post('/create', async (req, res) => {
   
   const {
-employeeId,
-name,
-lastName,
-nickName,
-sex,
-dateOfBirth,
-age,
-idCard,
-ethnicity,
-religion,
-maritalStatus,
-militaryStatus,
-address,
-currentAddress,
-phoneNumber,
-emergencyContactNumber,
-idLine,
-vaccination,
-treatmentRights,
-position,
-department,
-salary
+    employeeId ,
+    name,
+    lastName,
+    nickName,
+    gender,
+    dateOfBirth,
+    age,
+    idCard,
+    ethnicity,
+    religion,
+    maritalStatus,
+    militaryStatus,
+    address,
+    currentAddress,
+    phoneNumber,
+    emergencyContactNumber,
+    idLine,
+    vaccination,
+    treatmentRights,
+    position,
+    department
        } = req.body;
   console.log(`Name: ${name}, Id card: ${idCard}`);
-  
+
+//example data
+/*
+  let employeeId  = '1001';
+  let name ='วสันต์';
+  let lastName= 'แปงปวนจู';
+  let nickName = 'สันต์';
+  let gender= 'male';
+  let dateOfBirth = new Date("1991/10/03");
+  let age= 31;
+  let idCard = '1234567890123';
+  let ethnicity = 'ไทย';
+  let religion= 'พุทธ';
+  let maritalStatus = 'married';
+  let militaryStatus = 'other';
+  let address = '251/124 Rich park terminal พหล 59 ';
+  let currentAddress = '251/124 Rich park terminal พหล 59 ';
+  let phoneNumber = '0853568570';
+  let emergencyContactNumber = '0853568570';
+  let idLine = 'Wasan2274';
+  let vaccination = '';
+  let treatmentRights = '';
+  let position = '';
+  let department = '';
+  */
+
   // Create employee
   const employee = new Employee({ 
-employeeId,
-name,
-lastName,
-nickName,
-sex,
-dateOfBirth,
-age,
-idCard,
-ethnicity,
-religion,
-maritalStatus,
-militaryStatus,
-address,
-currentAddress,
-phoneNumber,
-emergencyContactNumber,
-idLine,
-vaccination,
-treatmentRights,
-position,
-department,
-salary
+    employeeId ,
+    name,
+    lastName,
+    nickName,
+    gender,
+    dateOfBirth,
+    age,
+    idCard,
+    ethnicity,
+    religion,
+    maritalStatus,
+    militaryStatus,
+    address,
+    currentAddress,
+    phoneNumber,
+    emergencyContactNumber,
+    idLine,
+    vaccination,
+    treatmentRights,
+    position,
+    department
     });
 
   try {
