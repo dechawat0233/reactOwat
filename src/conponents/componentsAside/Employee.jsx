@@ -174,20 +174,20 @@ function Employee() {
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>ชื่อ</label>
-                                                <input type="text" class="form-control" id="" placeholder="ชื่อ" value={storedEmp[0]?.name ?? "null"} />
+                                                <input type="text" class="form-control" id="" placeholder="ชื่อ" value={storedEmp[0]?.name ?? ''} />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>นามสกุล</label>
-                                                <input type="text" class="form-control" id="" placeholder="นามสกุล" value={storedEmp[0]?.lastName ?? "null"} />
+                                                <input type="text" class="form-control" id="" placeholder="นามสกุล" value={storedEmp[0]?.lastName ?? ''} />
                                             </div>
                                         </div>
 
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>ชื่อเล่น</label>
-                                                <input type="text" class="form-control" id="" placeholder="ชื่อเล่น" value={storedEmp[0]?.nickName ?? "null"} />
+                                                <input type="text" class="form-control" id="" placeholder="ชื่อเล่น" value={storedEmp[0]?.nickName ?? ''} />
                                             </div>
                                         </div>
                                     </div>
@@ -208,7 +208,7 @@ function Employee() {
                                             <div class="form-group">
                                                 <label>วันเดือนปีเกิด</label>
                                                 <div class="input-group date" id="reservationdate3" data-target-input="nearest">
-                                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate3" value={storedEmp[0]?.dateOfBirth ?? "null"} />
+                                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate3" value={storedEmp[0]?.dateOfBirth ?? ''} />
                                                     <div class="input-group-append" data-target="#reservationdate3" data-toggle="datetimepicker">
                                                         <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
                                                     </div>
@@ -218,14 +218,14 @@ function Employee() {
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>อายุ</label>
-                                                <input type="text" class="form-control" id="" placeholder="อายุ" value={storedEmp[0]?.age ?? "null"} />
+                                                <input type="text" class="form-control" id="" placeholder="อายุ" value={storedEmp[0]?.age ?? ''} />
                                             </div>
                                         </div>
 
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>เลขบัตรประจำตัวประชาชน</label>
-                                                <input type="text" class="form-control" id="" placeholder="เลขบัตรประจำตัวประชาชน" value={storedEmp[0]?.idCard ?? "null"} />
+                                                <input type="text" class="form-control" id="" placeholder="เลขบัตรประจำตัวประชาชน" value={storedEmp[0]?.idCard ?? ''} />
                                             </div>
                                         </div>
                                     </div>
@@ -233,19 +233,19 @@ function Employee() {
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>เชื้อชาติ</label>
-                                                <input type="text" class="form-control" id="" placeholder="เชื้อชาติ" value={storedEmp[0]?.ethnicity ?? "null"}  />
+                                                <input type="text" class="form-control" id="" placeholder="เชื้อชาติ" value={storedEmp[0]?.ethnicity ?? ''}  />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>ศาสนา</label>
-                                                <input type="text" class="form-control" id="" placeholder="ศาสนา" value={storedEmp[0]?.religion ?? "null"}  />
+                                                <input type="text" class="form-control" id="" placeholder="ศาสนา" value={storedEmp[0]?.religion ?? ''}  />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>สถานภาพการสมรส</label>
-                                                <input type="text" class="form-control" id="" placeholder="สถานภาพการสมรส" value={storedEmp[0]?.maritalStatus ?? "null"}  />
+                                                <input type="text" class="form-control" id="" placeholder="สถานภาพการสมรส" value={storedEmp[0]?.maritalStatus ?? ''}  />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
