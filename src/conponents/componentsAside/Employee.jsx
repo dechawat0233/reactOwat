@@ -4,13 +4,19 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function Employee() {
     const [storedEmp , setStoredEmp ] = useState([]);
+    const [ newEmp , setNewEmp ] = useState(true);
 
     const [ id, setId ] = useState('');
 
     useEffect(() => {
+setNewEmp(false);
         const firstEmployee = storedEmp[0];
         const firstId = firstEmployee ? firstEmployee.employeeId : '';
         setId(firstId );
+if(firstId == ''){
+    setNewEmp(true);
+}
+
     }, [storedEmp ]);
 
     useEffect(() => {
@@ -21,10 +27,13 @@ function Employee() {
         const parsedData = JSON.parse(storedItem);
         setStoredEmp(parsedData);
   //      console.log('Item exists:', storedItem);
-  
+              setNewEmp(true);
+
+  setNewEmp(false);
       } else {
         // Item does not exist in localStorage
         console.log('Item does not exist');
+        setNewEmp(true);
       }
   
   
@@ -327,7 +336,16 @@ function Employee() {
                             </section>
                             {/* <!--Frame--> */}
                             <div class="line_btn">
-                                <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
+
+                                { newEmp ? (
+                                <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;สร้างพนักงานใหม่</button>
+
+                                ):(
+                                    <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
+                                )}
+
+                                {/* <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button> */}
+
                                 <button class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
                             </div>
                         </div>

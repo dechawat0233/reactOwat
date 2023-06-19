@@ -202,7 +202,7 @@ function Search() {
                             {employee.name}
                             <button onClick={() => handleRemoveEmployee(employee.id)} style={{
                               width: '5rem', height: '2rem', margin: '0.2rem',borderRadius: '8px'
-                              }}>Remove</button>
+                              }}>นำออก</button>
                           </li>
                         ))}
                     </ul>
