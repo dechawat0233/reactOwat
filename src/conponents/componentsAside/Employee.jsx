@@ -77,7 +77,17 @@ async function handleManageEmployee(event) {
 
     //check create or update Employee
     if(newEmp){
-alert('create employee');
+// alert('create employee');
+
+try {
+    const response = await axios.post(endpoint + '/employee/create', data);
+    setEmployeesResult(response.data.employees);
+  } catch (error) {
+    alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+    window.location.reload();
+
+  }
+
     } else {
         alert('update user');
     }
