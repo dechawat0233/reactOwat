@@ -21,6 +21,27 @@ const employeeSchema = new mongoose.Schema({
   employeeId: {
     type: String
   },
+  position: {
+    type: String
+  },
+  department: {
+    type: String
+  },
+  workplace: {
+    type: String
+  },
+  jobtype: {
+    type: String
+  },
+  startjob: {
+    type: String
+  },
+  exceptjob: {
+    type: String
+  },
+  prefix: {
+    type: String
+  },
   name: {
     type: String 
   },
@@ -31,8 +52,7 @@ const employeeSchema = new mongoose.Schema({
     type: String,
   },
   gender: {
-    type: String,
-    enum: ['female', 'male', 'other'],
+    type: String
   },
   dateOfBirth: {
     type: Date
@@ -52,12 +72,10 @@ const employeeSchema = new mongoose.Schema({
     type: String,
   },
   maritalStatus: {
-    type: String,
-    enum: ['single', 'married', 'divorced', 'widowed', 'other']
+    type: String
   },
   militaryStatus: {
-    type: String,
-    enum: ['active', 'veteran', 'reserve', 'inactive', 'other']
+    type: String
   },
   address: {
     type: String
@@ -80,12 +98,6 @@ const employeeSchema = new mongoose.Schema({
     type: String
   },
   treatmentRights: {
-    type: String
-  },
-  position: {
-    type: String
-  },
-  department: {
     type: String
   }
 });
