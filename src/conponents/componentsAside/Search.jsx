@@ -70,6 +70,9 @@ function Search() {
       setMessage(`ผลการค้นหา ${response.data.employees.length} รายการ`);
     } catch (error) {
       setMessage('ไม่พบผลการค้นหา กรุณาตรวจสอบข้อมูลที่ใช้ในการค้นหาอีกครั้ง');
+      alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
+      window.location.reload();
+
     }
   }
 
@@ -193,7 +196,7 @@ function Search() {
 
                 <div style={{ textAlign: 'center' }}>
 
-                  {selectedCount > 0 && (
+                  {/* {selectedCount > 0 && (
                     <div>
                       <h2>จำนวนพนักงานที่เลือก: {selectedCount}</h2>
                       <ul style ={{listStyle:'none'}}>
@@ -208,7 +211,7 @@ function Search() {
                     </ul>
                     </div>
                   )}
-
+ */}
                 <h2>{message}</h2>
 
                 <ul style ={{listStyle:'none'}}>

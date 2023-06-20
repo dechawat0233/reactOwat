@@ -1,4 +1,10 @@
+import endpoint from '../../config';
+
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
@@ -6,13 +12,93 @@ function Employee() {
     const [storedEmp , setStoredEmp ] = useState([]);
     const [ newEmp , setNewEmp ] = useState(true);
 
-    const [ id, setId ] = useState('');
+    //employee data
+    const [ employeeId , setEmployeeId ] = useState('');
+const [position , setPosition ] = useState(''); //ตำแหน่ง
+const [ department , setDepartment] = useState(''); //แผนก
+const [ workplace , setWorkplace ] = useState(''); //หน่วยงาน
+const [ jobtype , setJobtype] = useState(''); //ประเภทการจ้าง
+const [ startjob , setStartjob] = useState(''); //วันที่เริ่มงาน
+const [ exceptjob , setExceptjob] = useState(''); //วันที่บรรจุ
+const [prefix , setPrefix] = useState(''); //นำหน้าชื่อ
+const [name, setName] = useState(''); //ชื่อ
+const [lastName , setLastName] = useState(''); //นามสกุล
+const [nickName , setNickName] = useState(''); //ชื่อเล่น
+const [gender , setGender] = useState(''); //เพศ
+const [dateOfBirth , setDateOfBirth] = useState(''); //วดป เกิด
+const [age, setAge] = useState(''); //อายุ
+const [idCard, setIdCard] = useState(''); //บัตรประชาชน
+const [ethnicity, setEthnicity] = useState(''); //เชื้อชาติ
+const [religion, setReligion] = useState(''); //ศาสนา
+const [maritalStatus, setMaritalStatus] = useState(''); //สถานภาพการสมรส
+const [militaryStatus, setMilitaryStatus] = useState(''); //สถานภาพทางการทหาร
+const [address , setAddress] = useState(''); //ที่อยู่ตามบัตรประชาชน
+const [currentAddress , setCurrentAddress] = useState(''); //ที่อยู่ปัจจุบัน
+const [phoneNumber, setPhoneNumber] = useState(''); //เบอร์โทรศัพท์
+const [emergencyContactNumber, setEmergencyContactNumber] = useState(''); //เบอร์ติดต่อกรณีฉุกเฉิน
+const [idLine, setIdLine] = useState(''); //ไอดีไลน์
+const [vaccination , setVaccination] = useState(''); //การรับวัคซีน
+const [treatmentRights , setTreatmentRights] = useState(''); //สิทธิการรักษาพยาบาล
+
+
+
+async function handleManageEmployee(event) {
+    event.preventDefault();
+
+    const data = {
+            employeeId : employeeId,
+            position: position ,
+            department:  department ,
+                workplace:  workplace, 
+            jobtype : jobtype ,
+            startjob : startjob,
+            exceptjob : exceptjob,
+            prefix : prefix,
+            name : name,
+            lastName : lastName,
+            nickName  : nickName,
+            gender  : gender,
+            dateOfBirth  : dateOfBirth,
+            age : age,
+            idCard : idCard,
+            ethnicity :ethnicity,
+            religion : religion,
+            maritalStatus : maritalStatus,
+            militaryStatus : militaryStatus,
+            address : address,
+            currentAddress  : currentAddress,
+            phoneNumber : phoneNumber,
+            emergencyContactNumber : emergencyContactNumber,
+            idLine : idLine,
+            vaccination  : vaccination,
+            treatmentRights  : treatmentRights,
+      };
+  
+
+    //check create or update Employee
+    if(newEmp){
+alert('create employee');
+    } else {
+        alert('update user');
+    }
+
+}
+
+const handleStartDateChange = (date) => {
+    setStartjob(date);
+  };
+  const handleExceptDateChange = (date) => {
+    setExceptjob(date);
+  };
+  const handleDateOfBirth = (date) => {
+    setDateOfBirth (date);
+  };
 
     useEffect(() => {
 setNewEmp(false);
         const firstEmployee = storedEmp[0];
         const firstId = firstEmployee ? firstEmployee.employeeId : '';
-        setId(firstId );
+        // setId(firstId );
 if(firstId == ''){
     setNewEmp(true);
 }
@@ -72,75 +158,73 @@ if(firstId == ''){
                     </div>
                     <section class="content">
                         <div class="container-fluid">
+                        <form onSubmit={handleManageEmployee}>
+
                             <h2 class="title">ข้อมูลพนักงาน</h2>
                             <section class="Frame">
+
                                 <div class="col-md-12">
+
+
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label>รหัสพนักงาน</label>
-                                                <input type="text" class="form-control" id="" placeholder="รหัสพนักงาน" value={storedEmp[0]?.employeeId ?? ''} />
+                                                <label role="employeeId">รหัสพนักงาน</label>
+                                                <input type="text" class="form-control" id="employeeId" placeholder="รหัสพนักงาน" value={employeeId} onChange={(e) => setEmployeeId(e.target.value)} />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label>ตำแหน่ง</label>
-                                                <input type="" class="form-control" id="" placeholder="ตำแหน่ง" value="พนักงานทำความสะอาด" />
+                                                <label role="position">ตำแหน่ง</label>
+                                                <input type="text" class="form-control" id="position" placeholder="ตำแหน่ง" value={position} onChange={(e) => setPosition(e.target.value)} />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label>แผนก</label>
-                                                <select class="form-control">
-                                                    <option>แผนก 1</option>
-                                                    <option>option 2</option>
-                                                    <option>option 3</option>
-                                                    <option>option 4</option>
-                                                    <option>option 5</option>
+                                                <label role="department">แผนก</label>
+                                                <input type="text" class="form-control" id="department" placeholder="แผนก" value={department} onChange={(e) => setDepartment(e.target.value)} />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label role="workplace">หน่วยงาน</label>
+                                                <select id="workplace" name="workplace" class="form-control">
+                                                    <option value="บริษัท ไทย เอ็นโอเค จำกัด (โรงงานบางประกง)">บริษัท ไทย เอ็นโอเค จำกัด (โรงงานบางประกง)</option>
+                                                    <option value="Gulf สำนักงานใหญ่">Gulf สำนักงานใหญ่</option>
                                                 </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label>หน่วยงาน</label>
-                                                <input type="" class="form-control" id="" placeholder="หน่วยงาน" value="1"/>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label>ประเภทการจ้าง</label>
-                                                <select class="form-control">
-                                                    <option>ประจำ</option>
-                                                    <option>option 2</option>
-                                                    <option>option 3</option>
-                                                    <option>option 4</option>
-                                                    <option>option 5</option>
+                                                <label role="jobtype">ประเภทการจ้าง</label>
+                                                <select id="jobtype" name="jobtype" class="form-control">
+                                                    <option value="ประจำ">ประจำ</option>
+                                                    <option value="ไม่ประจำ">ไม่ประจำ</option>
+                                                    <option value="รายวัน">รายวัน</option>
+                                                    <option value="รายครั้ง">รายครั้ง</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label>วันที่เริ่มงาน</label>
-                                                <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" value="25/05/2023" />
-                                                    <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                                                        <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
-                                                    </div>
-                                                </div>
+                                                <label role="startjob">วันที่เริ่มงาน</label>
+                                                <DatePicker id="startjob" name="startjob"
+        selected={startjob}
+        onChange={handleStartDateChange}
+        dateFormat="dd/MM/yyyy" />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label>วันที่บรรจุ</label>
-                                                <div class="input-group date" id="reservationdate2" data-target-input="nearest">
-                                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate2" value="20/05/2023"/>
-                                                    <div class="input-group-append" data-target="#reservationdate2" data-toggle="datetimepicker">
-                                                        <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                <label role="exceptjob">วันที่บรรจุ</label>
+                                                <DatePicker id="exceptjob" name="exceptjob"
+        selected={exceptjob}
+        onChange={handleExceptDateChange}
+        dateFormat="dd/MM/yyyy" />
+
+        </div>                                    
                                         </div>
                                     </div>
                                     <div class="row">
@@ -172,77 +256,73 @@ if(firstId == ''){
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label>คำนำหน้า</label>
-                                                <select class="form-control">
-                                                    <option>นาย</option>
-                                                    <option>นาง</option>
-                                                    <option>นางสาว</option>
+                                                <label role="prefix">คำนำหน้า</label>
+                                                <select id="prefix" name="prefix" class="form-control">
+                                                    <option value="นาย">นาย</option>
+                                                    <option value="นาง">นาง</option>
+                                                    <option value="นางสาว">นางสาว</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label>ชื่อ</label>
-                                                <input type="text" class="form-control" id="" placeholder="ชื่อ" value={storedEmp[0]?.name ?? ''} />
+                                                <label role="name">ชื่อ</label>
+                                                <input type="text" name="name" class="form-control" id="name" placeholder="ชื่อ" value={name} onChange={(e) => setName(e.target.value)} />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label>นามสกุล</label>
-                                                <input type="text" class="form-control" id="" placeholder="นามสกุล" value={storedEmp[0]?.lastName ?? ''} />
+                                                <label role="lastName">นามสกุล</label>
+                                                <input type="text" name ="lastName" class="form-control" id="lastName" placeholder="นามสกุล" value={lastName} onChange={(e) => setLastName(e.target.value)} />
                                             </div>
                                         </div>
 
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label>ชื่อเล่น</label>
-                                                <input type="text" class="form-control" id="" placeholder="ชื่อเล่น" value={storedEmp[0]?.nickName ?? ''} />
+                                                <label role="nickName">ชื่อเล่น</label>
+                                                <input type="text" name="nickName" class="form-control" id="nickName" placeholder="ชื่อเล่น" value={nickName} onChange={(e) => setNickName(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label>เพศ</label>
-                                                <select class="form-control">
-                                                    <option>ชาย</option>
-                                                    <option>option 2</option>
-                                                    <option>option 3</option>
-                                                    <option>option 4</option>
-                                                    <option>option 5</option>
+                                                <label role="gender">เพศ</label>
+                                                <select name="gender" id="gender" class="form-control">
+                                                    <option value="ชาย">ชาย</option>
+                                                    <option value="หญิง">หญิง</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label>วันเดือนปีเกิด</label>
-                                                <div class="input-group date" id="reservationdate3" data-target-input="nearest">
-                                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate3" value={storedEmp[0]?.dateOfBirth ?? ''} />
-                                                    <div class="input-group-append" data-target="#reservationdate3" data-toggle="datetimepicker">
-                                                        <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
-                                                    </div>
-                                                </div>
+                                                <label role="dateOfBirth">วันเดือนปีเกิด</label>
+                                                <DatePicker id="dateOfBirth" name="dateOfBirth"
+        selected={dateOfBirth}
+        onChange={handleDateOfBirth}
+        dateFormat="dd/MM/yyyy" />
+
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label>อายุ</label>
-                                                <input type="text" class="form-control" id="" placeholder="อายุ" value={storedEmp[0]?.age ?? ''} />
+                                                <label role="age">อายุ</label>
+                                                <input type="text" name="age" class="form-control" id="age" placeholder="อายุ" value={age} onChange={(e) => setAge(e.target.value)} />
                                             </div>
                                         </div>
 
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label>เลขบัตรประจำตัวประชาชน</label>
-                                                <input type="text" class="form-control" id="" placeholder="เลขบัตรประจำตัวประชาชน" value={storedEmp[0]?.idCard ?? ''} />
+                                                <label role="idCard">เลขบัตรประจำตัวประชาชน</label>
+                                                <input type="text" name="idCard" class="form-control" id="idCard" placeholder="เลขบัตรประจำตัวประชาชน" value={idCard} onChange={(e) => setIdCard(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label>เชื้อชาติ</label>
-                                                <input type="text" class="form-control" id="" placeholder="เชื้อชาติ" value={storedEmp[0]?.ethnicity ?? ''}  />
+                                                <label role="ethnicity">เชื้อชาติ</label>
+                                                <input type="text" name="ethnicity" class="form-control" id="ethnicity" placeholder="เชื้อชาติ" value={ethnicity} onChange={(e) => setEthnicity(e.target.value)} />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
@@ -348,8 +428,11 @@ if(firstId == ''){
 
                                 <button class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
                             </div>
+
+                            </form>
                         </div>
                         {/* <!-- /.container-fluid --> */}
+
                     </section>
                     {/* <!-- /.content --> */}
                 </div>

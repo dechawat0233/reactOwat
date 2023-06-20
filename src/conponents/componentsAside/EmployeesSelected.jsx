@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 function EmployeesSelected() {
   const [storedEmp , setStoredEmp ] = useState([]);
+  const [selectedEmployees, setSelectedEmployees] = useState([]);
 
 
   useEffect(() => {
@@ -35,6 +36,25 @@ function EmployeesSelected() {
       window.removeEventListener('selectedEmployeesChanged', handleSelectedEmployeesChange);
     };
   }, []);
+
+
+  function handleRemoveEmployee(employeeId) {
+    const updatedSelectedEmployees = storedEmp.filter(
+      employee => employee.id !== employeeId
+    );
+    const selectedEmployeeCount = updatedSelectedEmployees.length;
+    setStoredEmp(updatedSelectedEmployees);
+    // setSelectedCount(selectedEmployeeCount);
+    localStorage.setItem('selectedEmployees', JSON.stringify(updatedSelectedEmployees));
+    localStorage.setItem('selectedEmployeeCount', selectedEmployeeCount);
+
+    // Dispatch a custom event to notify other components about the change
+    const event = new CustomEvent('selectedEmployeesChanged', {
+      detail: { selectedEmployees: updatedSelectedEmployees },
+    });
+    window.dispatchEvent(event);
+
+  }
 
 /*
   useEffect(() => {
@@ -83,13 +103,25 @@ function EmployeesSelected() {
       )} */}
 
 {storedEmp.length > 0 && (
-<>
-<p>เลือกข้อมูลพนักงานไว้ {storedEmp.length } รายการ</p>
-      {/* <h2>localStorage</h2>
-      {storedEmp.map((employee) => (
-        <p key={employee._id}>{employee.name}</p>
-      ))} */}
-</>
+                <div style={{ textAlign: 'center' }}>
+
+<div>
+                      <h2>จำนวนพนักงานที่เลือก: {storedEmp.length}</h2>
+                      <ul style ={{listStyle:'none'}}>
+                      {storedEmp.map((employee) => (
+                          <li key={employee.id}>
+                          {employee.name}
+                          <button onClick={() => handleRemoveEmployee(employee.id)} style={{
+                            width: '5rem', height: '2rem', margin: '0.2rem',borderRadius: '8px'
+                            }}>นำออก</button>
+                        </li>
+                      ))}
+
+                      </ul>
+                      </div>
+
+                    </div>
+
 )}
     
     </div>
