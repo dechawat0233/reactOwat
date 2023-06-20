@@ -230,7 +230,14 @@ router.post('/create', async (req, res) => {
 
   // Create employee
   const employee = new Employee({ 
-    employeeId ,
+     employeeId,
+     position ,
+      department ,
+          workplace, 
+     jobtype ,
+     startjob,
+    exceptjob,
+    prefix,
     name,
     lastName,
     nickName,
@@ -248,9 +255,8 @@ router.post('/create', async (req, res) => {
     emergencyContactNumber,
     idLine,
     vaccination,
-    treatmentRights,
-    position,
-    department
+    treatmentRights
+
     });
 
   try {
