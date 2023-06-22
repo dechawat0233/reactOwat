@@ -54,16 +54,26 @@ alert(employeeId);
     // const selectedEmployeeCount = updatedSelectedEmployees.length;
     
     await localStorage.setItem('selectedEmployees', JSON.stringify(updatedSelectedEmployees));
-    await setStoredEmp(updatedSelectedEmployees);
 
-    setSelectedCount(selectedEmployeeCount);
-    localStorage.setItem('selectedEmployeeCount', selectedEmployeeCount);
+    await setStoredEmp(updatedSelectedEmployees);
+    const test = JSON.parse(localStorage.getItem('selectedEmployees')) || [];
+alert(test.length);
+
 
     // Dispatch a custom event to notify other components about the change
+/*
     const event = new CustomEvent('removeEventListener', {
       detail: { selectedEmployees: updatedSelectedEmployees },
     });
     window.dispatchEvent(event);
+*/
+    
+    // Dispatch a custom event to notify other components about the change
+    const event = new CustomEvent('selectedEmployeesChanged', {
+      detail: { selectedEmployees: updatedSelectedEmployees },
+    });
+    window.dispatchEvent(event);
+    // Do any additional processing or redirection as needed
 
   }
 

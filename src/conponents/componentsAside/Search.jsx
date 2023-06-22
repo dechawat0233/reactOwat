@@ -18,12 +18,39 @@ function Search() {
   const [selectedEmployees, setSelectedEmployees] = useState([]);
 
 
+  //working when start component
+  useEffect(() => {
+    const updatedEmployeeList = JSON.parse(localStorage.getItem('selectedEmployees')) || [];
+    setSelectedEmployees(updatedEmployeeList );
+
+  }, []);
+
+  useEffect(() => {
+    // Listen for the custom event when selectedEmployees change in localStorage
+    const handleSelectedEmployeesChange = (event) => {
+      const { selectedEmployees } = event.detail;
+      setSelectedEmployees(selectedEmployees);
+    localStorage.setItem('selectedEmployees', JSON.stringify(selectedEmployees));
+
+    };
+
+
+    window.addEventListener('selectedEmployeesChanged', handleSelectedEmployeesChange);
+
+    return () => {
+      window.removeEventListener('selectedEmployeesChanged', handleSelectedEmployeesChange);
+    };
+  }, [selectedEmployees]);
+
+
+  /*
   useEffect(() => {
     // Function to handle changes in localStorage
     const handleStorageChange = () => {
       // Get the updated user list from localStorage
       const updatedEmployeeList = JSON.parse(localStorage.getItem('selectedEmployees')) || [];
-      setSelectedEmployees(updatedEmployeeList );
+      // setSelectedEmployees(updatedEmployeeList );
+
     };
 
         // Add event listener for the storage event
@@ -38,17 +65,20 @@ function Search() {
           window.removeEventListener('storage', handleStorageChange);
         };
   }, []);
+*/
 
-  function handleClickResult(employee) {
-    const selectedEmployeeCount = selectedCount + 1;
-    setSelectedCount(selectedEmployeeCount);
-    localStorage.setItem('selectedEmployeeCount', selectedEmployeeCount);
-    const updatedEmployeeList = JSON.parse(localStorage.getItem('selectedEmployees')) || [];
-    setSelectedEmployees(updatedEmployeeList );
+  async function handleClickResult(employee) {
+   const updatedEmployeeList = await JSON.parse(localStorage.getItem('selectedEmployees')) || [];
+    await setSelectedEmployees(updatedEmployeeList );
+alert(selectedEmployees.length);
 
-    const updatedSelectedEmployees = [...selectedEmployees, employee];
-    setSelectedEmployees(updatedSelectedEmployees);
-    localStorage.setItem('selectedEmployees', JSON.stringify(updatedSelectedEmployees));
+    const updatedSelectedEmployees = await [...selectedEmployees, employee];
+    await setSelectedEmployees(updatedSelectedEmployees);
+    await localStorage.setItem('selectedEmployees', JSON.stringify(updatedSelectedEmployees));
+
+    const test = await JSON.parse(localStorage.getItem('selectedEmployees')) || [];
+    alert(test.length);
+    
     // Dispatch a custom event to notify other components about the change
     const event = new CustomEvent('selectedEmployeesChanged', {
       detail: { selectedEmployees: updatedSelectedEmployees },
