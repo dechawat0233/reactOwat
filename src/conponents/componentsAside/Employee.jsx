@@ -81,10 +81,11 @@ async function handleManageEmployee(event) {
 
 try {
     const response = await axios.post(endpoint + '/employee/create', data);
-    setEmployeesResult(response.data.employees);
+    // setEmployeesResult(response.data.employees);
+
   } catch (error) {
     alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
-    window.location.reload();
+    // window.location.reload();
 
   }
 
@@ -94,6 +95,24 @@ try {
 
 }
 
+
+const handleWorkplace = (event) => {
+    setWorkplace(event.target.value);
+  };
+  const handleJobtype = (event) => {
+    setJobtype(event.target.value);
+  };
+  const handlePrefix = (event) => {
+    setPrefix(event.target.value);
+  };
+  const handleGender = (event) => {
+    setGender(event.target.value);
+  };
+  const handleMilitaryStatus = (event) => {
+    setMilitaryStatus(event.target.value);
+  };
+
+//xxx
 const handleStartDateChange = (date) => {
     setStartjob(date);
   };
@@ -198,7 +217,8 @@ if(firstId == ''){
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label role="workplace">หน่วยงาน</label>
-                                                <select id="workplace" name="workplace" class="form-control">
+                                                <select id="workplace" name="workplace" class="form-control"
+                                                value={workplace} onChange={handleWorkplace }>
                                                     <option value="บริษัท ไทย เอ็นโอเค จำกัด (โรงงานบางประกง)">บริษัท ไทย เอ็นโอเค จำกัด (โรงงานบางประกง)</option>
                                                     <option value="Gulf สำนักงานใหญ่">Gulf สำนักงานใหญ่</option>
                                                 </select>
@@ -209,7 +229,8 @@ if(firstId == ''){
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label role="jobtype">ประเภทการจ้าง</label>
-                                                <select id="jobtype" name="jobtype" class="form-control">
+                                                <select id="jobtype" name="jobtype" class="form-control"
+                                                value={jobtype} onChange={handleJobtype }>
                                                     <option value="ประจำ">ประจำ</option>
                                                     <option value="ไม่ประจำ">ไม่ประจำ</option>
                                                     <option value="รายวัน">รายวัน</option>
@@ -267,7 +288,8 @@ if(firstId == ''){
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label role="prefix">คำนำหน้า</label>
-                                                <select id="prefix" name="prefix" class="form-control">
+                                                <select id="prefix" name="prefix" class="form-control"
+                                                value={prefix} onChange={handlePrefix}>
                                                     <option value="นาย">นาย</option>
                                                     <option value="นาง">นาง</option>
                                                     <option value="นางสาว">นางสาว</option>
@@ -298,7 +320,8 @@ if(firstId == ''){
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label role="gender">เพศ</label>
-                                                <select name="gender" id="gender" class="form-control">
+                                                <select name="gender" id="gender" class="form-control"
+                                                value={gender} onChange={handleGender}>
                                                     <option value="ชาย">ชาย</option>
                                                     <option value="หญิง">หญิง</option>
                                                 </select>
@@ -337,20 +360,21 @@ if(firstId == ''){
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label>ศาสนา</label>
-                                                <input type="text" class="form-control" id="" placeholder="ศาสนา" value={storedEmp[0]?.religion ?? ''}  />
+                                                <label role="religion">ศาสนา</label>
+                                                <input type="text" name="religion" class="form-control" id="religion" placeholder="ศาสนา" value={religion} onChange={(e) => setReligion(e.target.value)} />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label>สถานภาพการสมรส</label>
-                                                <input type="text" class="form-control" id="" placeholder="สถานภาพการสมรส" value={storedEmp[0]?.maritalStatus ?? ''}  />
+                                                <label role="maritalStatus">สถานภาพการสมรส</label>
+                                                <input type="text" name="maritalStatus" class="form-control" id="maritalStatus" placeholder="สถานภาพการสมรส" value={maritalStatus} onChange={(e) => setMaritalStatus(e.target.value)} />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label>สถานภาพทางการทหาร</label>
-                                                <select class="form-control">
+                                                <label role="militaryStatus">สถานภาพทางการทหาร</label>
+                                                <select name="militaryStatus" id="militaryStatus" class="form-control"
+                                                value="militaryStatus" onChange={handleMilitaryStatus}>
                                                     <option>ยกเว้นการเกณฑ์ทหาร</option>
                                                     <option>ผ่านการเกณฑ์ทหารแล้ว</option>
                                                     <option>ไม่ผ่านการเกณฑ์ทหาร</option>
@@ -361,17 +385,17 @@ if(firstId == ''){
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>ที่อยู่ตามบัตรประชาชน</label>
-                                                <textarea class="form-control" rows="3" value={storedEmp[0]?.address ?? ''}  ></textarea>
+                                                <label role="address">ที่อยู่ตามบัตรประชาชน</label>
+                                                <textarea name="address" id="address" class="form-control" rows="3" value={address} onChange={(e) => setAddress(e.target.value)} ></textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>ที่อยู่ปัจจุบัน</label>
+                                                <label role="currentAddress">ที่อยู่ปัจจุบัน</label>
                                                 <div class="icheck-primary d-inline">
                                                     <input type="radio" id="radio" name="radio1" /> ใช้ที่อยู่ตามบัตรประชาชน
                                                 </div>
-                                                <textarea class="form-control" rows="3" value={storedEmp[0]?.currentAddress ?? ''}  ></textarea>
+                                                <textarea name="currentAddress" id="currentAddress" class="form-control" rows="3" value={currentAddress} onChange={(e) => setCurrentAddress(e.target.value)} ></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -379,20 +403,20 @@ if(firstId == ''){
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label>เบอร์โทรศัพท์</label>
-                                                <input type="text" class="form-control" id="" placeholder="เบอร์โทรศัพท์" value={storedEmp[0]?.phoneNumber ?? ''}  />
+                                                <label role="phoneNumber">เบอร์โทรศัพท์</label>
+                                                <input type="text" name="phoneNumber" class="form-control" id="phoneNumber" placeholder="เบอร์โทรศัพท์" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label>เบอร์ติดต่อกรณีฉุกเฉิน</label>
-                                                <input type="text" class="form-control" id="" placeholder="เบอร์ติดต่อกรณีฉุกเฉิน" value={storedEmp[0]?.emergencyContactNumber ?? ''}  />
+                                                <label role="emergencyContactNumber">เบอร์ติดต่อกรณีฉุกเฉิน</label>
+                                                <input type="text" name="emergencyContactNumber" class="form-control" id="emergencyContactNumber" placeholder="เบอร์ติดต่อกรณีฉุกเฉิน" value={emergencyContactNumber} onChange={(e) => setEmergencyContactNumber(e.target.value)} />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label>ไอดีไลน์</label>
-                                                <input type="text" class="form-control" id="" placeholder="ไอดีไลน์" value={storedEmp[0]?.idLine ?? ''}  />
+                                                <label role="idLine">ไอดีไลน์</label>
+                                                <input type="text" name="idLine" class="form-control" id="idLine" placeholder="ไอดีไลน์" value={idLine} onChange={(e) => setIdLine(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -410,7 +434,7 @@ if(firstId == ''){
                                                 <input type="radio" id="radioPrimary1" name="r1" checked="" /> ได้รับวัคซีนแล้ว
                                             </div>
                                             <div class="icheck-primary d-inline">
-                                                <input type="radio" id="radioPrimary2" name="r1" />  ยังไม่ได้รับวัคซีนแล้ว
+                                                <input type="radio" id="radioPrimary2" name="r1" />  ยังไม่ได้รับวัคซีน
                                             </div>
                                         </div>
                                     </div>

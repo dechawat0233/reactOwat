@@ -18,10 +18,33 @@ function Search() {
   const [selectedEmployees, setSelectedEmployees] = useState([]);
 
 
+  useEffect(() => {
+    // Function to handle changes in localStorage
+    const handleStorageChange = () => {
+      // Get the updated user list from localStorage
+      const updatedEmployeeList = JSON.parse(localStorage.getItem('selectedEmployees')) || [];
+      setSelectedEmployees(updatedEmployeeList );
+    };
+
+        // Add event listener for the storage event
+        window.addEventListener('storage', handleStorageChange);
+
+            // Get the initial user list from localStorage
+    const initialEmployeeList = JSON.parse(localStorage.getItem('selectedEmployees')) || [];
+    setSelectedEmployees(initialEmployeeList);
+
+        // Clean up the event listener when the component unmounts
+        return () => {
+          window.removeEventListener('storage', handleStorageChange);
+        };
+  }, []);
+
   function handleClickResult(employee) {
     const selectedEmployeeCount = selectedCount + 1;
     setSelectedCount(selectedEmployeeCount);
     localStorage.setItem('selectedEmployeeCount', selectedEmployeeCount);
+    const updatedEmployeeList = JSON.parse(localStorage.getItem('selectedEmployees')) || [];
+    setSelectedEmployees(updatedEmployeeList );
 
     const updatedSelectedEmployees = [...selectedEmployees, employee];
     setSelectedEmployees(updatedSelectedEmployees);
@@ -34,7 +57,7 @@ function Search() {
     // Do any additional processing or redirection as needed
   }
 
-
+/*
   function handleRemoveEmployee(employeeId) {
     const updatedSelectedEmployees = selectedEmployees.filter(
       employee => employee.id !== employeeId
@@ -52,7 +75,7 @@ function Search() {
     window.dispatchEvent(event);
 
   }
-
+*/
 
   async function handleSearch(event) {
     event.preventDefault();

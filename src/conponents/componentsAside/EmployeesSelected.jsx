@@ -5,6 +5,7 @@ function EmployeesSelected() {
   const [selectedEmployees, setSelectedEmployees] = useState([]);
 
 
+
   useEffect(() => {
     const storedItem = localStorage.getItem('selectedEmployees');
     if (storedItem) {
@@ -28,28 +29,38 @@ function EmployeesSelected() {
     const handleSelectedEmployeesChange = (event) => {
       const { selectedEmployees } = event.detail;
       setStoredEmp(selectedEmployees);
+    localStorage.setItem('selectedEmployees', JSON.stringify(selectedEmployees));
+
     };
+
 
     window.addEventListener('selectedEmployeesChanged', handleSelectedEmployeesChange);
 
     return () => {
       window.removeEventListener('selectedEmployeesChanged', handleSelectedEmployeesChange);
     };
-  }, []);
+  }, [storedEmp]);
 
 
-  function handleRemoveEmployee(employeeId) {
-    const updatedSelectedEmployees = storedEmp.filter(
-      employee => employee.id !== employeeId
-    );
-    const selectedEmployeeCount = updatedSelectedEmployees.length;
-    setStoredEmp(updatedSelectedEmployees);
-    // setSelectedCount(selectedEmployeeCount);
-    localStorage.setItem('selectedEmployees', JSON.stringify(updatedSelectedEmployees));
+  function handleSelectEmp(employeeId) {
+alert(employeeId);
+  }
+
+  async function handleRemoveEmployee(employeeId) {
+    const updatedSelectedEmployees = await storedEmp.filter(
+      employee => employee.employeeId !== employeeId
+          );
+
+    // const selectedEmployeeCount = updatedSelectedEmployees.length;
+    
+    await localStorage.setItem('selectedEmployees', JSON.stringify(updatedSelectedEmployees));
+    await setStoredEmp(updatedSelectedEmployees);
+
+    setSelectedCount(selectedEmployeeCount);
     localStorage.setItem('selectedEmployeeCount', selectedEmployeeCount);
 
     // Dispatch a custom event to notify other components about the change
-    const event = new CustomEvent('selectedEmployeesChanged', {
+    const event = new CustomEvent('removeEventListener', {
       detail: { selectedEmployees: updatedSelectedEmployees },
     });
     window.dispatchEvent(event);
@@ -109,9 +120,14 @@ function EmployeesSelected() {
                       <h2>จำนวนพนักงานที่เลือก: {storedEmp.length}</h2>
                       <ul style ={{listStyle:'none'}}>
                       {storedEmp.map((employee) => (
-                          <li key={employee.id}>
+                          <li key={employee.employeeId}>
                           {employee.name}
-                          <button onClick={() => handleRemoveEmployee(employee.id)} style={{
+
+                          <button onClick={() => handleSelectEmp(employee.employeeId)} style={{
+                            width: '5rem', height: '2rem', margin: '0.2rem',borderRadius: '8px'
+                            }}>เลือก</button>
+
+                          <button onClick={() => handleRemoveEmployee(employee.employeeId)} style={{
                             width: '5rem', height: '2rem', margin: '0.2rem',borderRadius: '8px'
                             }}>นำออก</button>
                         </li>

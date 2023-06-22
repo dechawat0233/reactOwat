@@ -19,7 +19,9 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 // Define employee schema
 const employeeSchema = new mongoose.Schema({
   employeeId: {
-    type: String
+    type: String,
+    required: true,
+    unique: true
   },
   position: {
     type: String
@@ -261,13 +263,13 @@ router.post('/create', async (req, res) => {
     idLine,
     vaccination,
     treatmentRights
-
     });
 
   try {
     await employee.save();
     res.json(employee);
   } catch (err) {
+    console.log(err);
     res.status(400).json({ error: err.message });
   }
  
