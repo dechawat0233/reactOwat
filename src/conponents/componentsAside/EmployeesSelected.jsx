@@ -127,8 +127,8 @@ alert(test.length);
                 <div style={{ textAlign: 'center' }}>
 
 <div>
-                      <h2>จำนวนพนักงานที่เลือก: {storedEmp.length}</h2>
-                      <ul style ={{listStyle:'none'}}>
+                      <h3>จำนวนพนักงานที่เลือก: {storedEmp.length}</h3>
+                      <ul style ={{listStyle:'none',marginLeft:"-2rem"}}>
                       {storedEmp.map((employee) => (
                           <li key={employee.employeeId}>
                           {employee.name}

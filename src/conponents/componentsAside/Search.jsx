@@ -2,7 +2,7 @@ import endpoint from '../../config';
 
 //import React, { useState } from 'react';
 import React, { useEffect, useState } from 'react';
-
+import EmployeesSelected from './EmployeesSelected';
 import axios from 'axios';
 
 function Search() {
@@ -21,7 +21,7 @@ function Search() {
   //working when start component
   useEffect(() => {
     const updatedEmployeeList = JSON.parse(localStorage.getItem('selectedEmployees')) || [];
-    setSelectedEmployees(updatedEmployeeList );
+    setSelectedEmployees(updatedEmployeeList);
 
   }, []);
 
@@ -30,7 +30,7 @@ function Search() {
     const handleSelectedEmployeesChange = (event) => {
       const { selectedEmployees } = event.detail;
       setSelectedEmployees(selectedEmployees);
-    localStorage.setItem('selectedEmployees', JSON.stringify(selectedEmployees));
+      localStorage.setItem('selectedEmployees', JSON.stringify(selectedEmployees));
 
     };
 
@@ -68,9 +68,9 @@ function Search() {
 */
 
   async function handleClickResult(employee) {
-   const updatedEmployeeList = await JSON.parse(localStorage.getItem('selectedEmployees')) || [];
-    await setSelectedEmployees(updatedEmployeeList );
-alert(selectedEmployees.length);
+    const updatedEmployeeList = await JSON.parse(localStorage.getItem('selectedEmployees')) || [];
+    await setSelectedEmployees(updatedEmployeeList);
+    alert(selectedEmployees.length);
 
     const updatedSelectedEmployees = await [...selectedEmployees, employee];
     await setSelectedEmployees(updatedSelectedEmployees);
@@ -78,7 +78,7 @@ alert(selectedEmployees.length);
 
     const test = await JSON.parse(localStorage.getItem('selectedEmployees')) || [];
     alert(test.length);
-    
+
     // Dispatch a custom event to notify other components about the change
     const event = new CustomEvent('selectedEmployeesChanged', {
       detail: { selectedEmployees: updatedSelectedEmployees },
@@ -87,25 +87,25 @@ alert(selectedEmployees.length);
     // Do any additional processing or redirection as needed
   }
 
-/*
-  function handleRemoveEmployee(employeeId) {
-    const updatedSelectedEmployees = selectedEmployees.filter(
-      employee => employee.id !== employeeId
-    );
-    const selectedEmployeeCount = updatedSelectedEmployees.length;
-    setSelectedEmployees(updatedSelectedEmployees);
-    setSelectedCount(selectedEmployeeCount);
-    localStorage.setItem('selectedEmployees', JSON.stringify(updatedSelectedEmployees));
-    localStorage.setItem('selectedEmployeeCount', selectedEmployeeCount);
-
-    // Dispatch a custom event to notify other components about the change
-    const event = new CustomEvent('selectedEmployeesChanged', {
-      detail: { selectedEmployees: updatedSelectedEmployees },
-    });
-    window.dispatchEvent(event);
-
-  }
-*/
+  /*
+    function handleRemoveEmployee(employeeId) {
+      const updatedSelectedEmployees = selectedEmployees.filter(
+        employee => employee.id !== employeeId
+      );
+      const selectedEmployeeCount = updatedSelectedEmployees.length;
+      setSelectedEmployees(updatedSelectedEmployees);
+      setSelectedCount(selectedEmployeeCount);
+      localStorage.setItem('selectedEmployees', JSON.stringify(updatedSelectedEmployees));
+      localStorage.setItem('selectedEmployeeCount', selectedEmployeeCount);
+  
+      // Dispatch a custom event to notify other components about the change
+      const event = new CustomEvent('selectedEmployeesChanged', {
+        detail: { selectedEmployees: updatedSelectedEmployees },
+      });
+      window.dispatchEvent(event);
+  
+    }
+  */
 
   async function handleSearch(event) {
     event.preventDefault();
@@ -180,76 +180,78 @@ alert(selectedEmployees.length);
           <section class="content">
             <div class="container-fluid">
               <h2 class="title"> ค้นหาพนักงาน</h2>
-              <section class="Frame">
-                <div class="col-md-10 offset-md-1">
-                  <form onSubmit={handleSearch}>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label role="employeeId">รหัสพนักงาน</label>
-                          <input
-                            type="text"
-                            name="employeeId"
-                            class="form-control"
-                            id="employeeId"
-                            placeholder="รหัสพนักงาน"
-                            onChange={handleEmployeeIdChange}
-                          />
+              <div class="row">
+                <div class="col-md-9">
+                  <section class="Frame">
+                    <div class="col-md-10 offset-md-1">
+                      <form onSubmit={handleSearch}>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label role="employeeId">รหัสพนักงาน</label>
+                              <input
+                                type="text"
+                                name="employeeId"
+                                class="form-control"
+                                id="employeeId"
+                                placeholder="รหัสพนักงาน"
+                                onChange={handleEmployeeIdChange}
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label role="name">ชื่อพนักงาน</label>
+                              <input
+                                type="text"
+                                name="name"
+                                class="form-control"
+                                id="name"
+                                placeholder="ชื่อพนักงาน"
+                                onChange={handleNameChange}
+                              />
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label role="name">ชื่อพนักงาน</label>
-                          <input
-                            type="text"
-                            name="name"
-                            class="form-control"
-                            id="name"
-                            placeholder="ชื่อพนักงาน"
-                            onChange={handleNameChange}
-                          />
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label role="idCard">หมายเลขบัตรประชาชน</label>
+                              <input
+                                type="text"
+                                name="idCard"
+                                class="form-control"
+                                id="idCard"
+                                placeholder="หมายเลขบัตรประชาชน"
+                                onChange={handleIdCardChange}
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label role="workPlace">หน่วยงาน</label>
+                              <input
+                                type="text"
+                                name="workPlace"
+                                class="form-control"
+                                id="workPlace"
+                                placeholder="หน่วยงาน"
+                                onChange={handleWorkPlaceChange}
+                              />
+                            </div>
+                          </div>
                         </div>
-                      </div>
+                        <div class="line_btn_search">
+                          <button type="submit" value="Submit" class="btn_search">
+                            <i class="fa fa-search"></i> &nbsp;ค้นหา
+                          </button>
+                        </div>
+                      </form>
                     </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label role="idCard">หมายเลขบัตรประชาชน</label>
-                          <input
-                            type="text"
-                            name="idCard"
-                            class="form-control"
-                            id="idCard"
-                            placeholder="หมายเลขบัตรประชาชน"
-                            onChange={handleIdCardChange}
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label role="workPlace">หน่วยงาน</label>
-                          <input
-                            type="text"
-                            name="workPlace"
-                            class="form-control"
-                            id="workPlace"
-                            placeholder="หน่วยงาน"
-                            onChange={handleWorkPlaceChange}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="line_btn_search">
-                      <button type="submit" value="Submit" class="btn_search">
-                        <i class="fa fa-search"></i> &nbsp;ค้นหา
-                      </button>
-                    </div>
-                  </form>
-                </div>
 
-                <div style={{ textAlign: 'center' }}>
+                    <div style={{ textAlign: 'center' }}>
 
-                  {/* {selectedCount > 0 && (
+                      {/* {selectedCount > 0 && (
                     <div>
                       <h2>จำนวนพนักงานที่เลือก: {selectedCount}</h2>
                       <ul style ={{listStyle:'none'}}>
@@ -265,25 +267,31 @@ alert(selectedEmployees.length);
                     </div>
                   )}
  */}
-                <h2>{message}</h2>
+                      <h2>{message}</h2>
 
-                <ul style ={{listStyle:'none'}}>
-                  {employeesResult.map(employee => (
-                    <li
-                      key={employee.id}
-                      onClick={() => handleClickResult(employee)}
-                    >
-                      {employee.name}
-                    </li>
-                  ))}
-                </ul>
+                      <ul style={{ listStyle: 'none' }}>
+                        {employeesResult.map(employee => (
+                          <li
+                            key={employee.id}
+                            onClick={() => handleClickResult(employee)}
+                          >
+                            {employee.name}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </section>
+                </div>
+                <div class="col-md-3">
+                  <section class="Frame"><EmployeesSelected /></section>
+
+                </div>
+              </div>
             </div>
+            {/* <!-- /.container-fluid --> */}
           </section>
+          {/* <!-- /.content --> */}
         </div>
-        {/* <!-- /.container-fluid --> */}
-      </section>
-      {/* <!-- /.content --> */}
-    </div>
       </div >
     </body >
   );
