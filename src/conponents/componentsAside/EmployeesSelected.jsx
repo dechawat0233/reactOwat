@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
-function EmployeesSelected() {
+function EmployeesSelected({ employeesTest , onEmployeeSelect }) {
   const [storedEmp , setStoredEmp ] = useState([]);
   const [selectedEmployees, setSelectedEmployees] = useState([]);
-
+  const [selectedEmployee , setSelectedEmployee] = useState(null);
 
 
   useEffect(() => {
@@ -17,7 +17,7 @@ function EmployeesSelected() {
 
     } else {
       // Item does not exist in localStorage
-      console.log('Item does not exist');
+      // console.log('Item does not exist');
     }
 
 
@@ -42,9 +42,12 @@ function EmployeesSelected() {
   }, [storedEmp]);
 
 
-  function handleSelectEmp(employeeId) {
-alert(employeeId);
-  }
+
+  const handleEmployeeSelect = (selectedEmployee) => {
+    setSelectedEmployee(selectedEmployee);
+    alert(selectedEmployee.employeeId);
+    onEmployeeSelect(selectedEmployee);
+  };
 
   async function handleRemoveEmployee(employeeId) {
     const updatedSelectedEmployees = await storedEmp.filter(
@@ -56,8 +59,8 @@ alert(employeeId);
     await localStorage.setItem('selectedEmployees', JSON.stringify(updatedSelectedEmployees));
 
     await setStoredEmp(updatedSelectedEmployees);
-    const test = JSON.parse(localStorage.getItem('selectedEmployees')) || [];
-alert(test.length);
+    // const test = JSON.parse(localStorage.getItem('selectedEmployees')) || [];
+// alert(test.length);
 
 
     // Dispatch a custom event to notify other components about the change
@@ -133,7 +136,7 @@ alert(test.length);
                           <li key={employee.employeeId}>
                           {employee.name}
 
-                          <button onClick={() => handleSelectEmp(employee.employeeId)} style={{
+                          <button onClick={() => handleEmployeeSelect(employee)} style={{
                             width: '5rem', height: '2rem', margin: '0.2rem',borderRadius: '8px'
                             }}>เลือก</button>
 

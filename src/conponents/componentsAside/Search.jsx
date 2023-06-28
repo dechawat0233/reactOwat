@@ -70,14 +70,14 @@ function Search() {
   async function handleClickResult(employee) {
     const updatedEmployeeList = await JSON.parse(localStorage.getItem('selectedEmployees')) || [];
     await setSelectedEmployees(updatedEmployeeList);
-    alert(selectedEmployees.length);
+    // alert(selectedEmployees.length);
 
     const updatedSelectedEmployees = await [...selectedEmployees, employee];
     await setSelectedEmployees(updatedSelectedEmployees);
     await localStorage.setItem('selectedEmployees', JSON.stringify(updatedSelectedEmployees));
 
-    const test = await JSON.parse(localStorage.getItem('selectedEmployees')) || [];
-    alert(test.length);
+    // const test = await JSON.parse(localStorage.getItem('selectedEmployees')) || [];
+    // alert(test.length);
 
     // Dispatch a custom event to notify other components about the change
     const event = new CustomEvent('selectedEmployeesChanged', {

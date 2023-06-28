@@ -42,6 +42,9 @@ function Employee() {
     const [treatmentRights, setTreatmentRights] = useState(''); //สิทธิการรักษาพยาบาล
 
 
+function onEmployeeSelect(empSelect){
+alert('ool');
+}
 
     async function handleManageEmployee(event) {
         event.preventDefault();
@@ -92,6 +95,7 @@ function Employee() {
 
         } else {
             alert('update user');
+
         }
 
     }
@@ -113,7 +117,6 @@ function Employee() {
         setMilitaryStatus(event.target.value);
     };
 
-    //xxx
     const handleStartDateChange = (date) => {
         setStartjob(date);
     };
@@ -295,7 +298,10 @@ function Employee() {
 
                                     </div>
                                     <div class="col-md-3">
-                                        <section class="Frame"><EmployeesSelected /></section>
+                                        <section class="Frame">
+<EmployeesSelected />
+
+</section>
 
                                     </div>
                                 </div>
