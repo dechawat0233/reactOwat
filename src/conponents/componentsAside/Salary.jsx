@@ -30,6 +30,11 @@ function Salary() {
         const [startjob, setStartjob] = useState(''); //วันที่เริ่มงาน
         const [exceptjob, setExceptjob] = useState(''); //วันที่บรรจุ
         const [startcount , setStartcount] = useState(''); //วันที่บรรจุ
+        const [salary , setSalary] = useState(''); //อัตราเงินเดือน
+        const [salarytype , setSalarytype] = useState(''); //อัตราเงินเดือน
+        const [salaryupdate , setSalaryupdate] = useState(''); //เงินเดือนปรับเมื่อ
+        const [salaryout , setSalaryout] = useState(''); //เงินเดือนปรับเมื่อ
+
 
         const [prefix, setPrefix] = useState(''); //นำหน้าชื่อ
         const [name, setName] = useState(''); //ชื่อ
@@ -56,6 +61,16 @@ function Salary() {
             setWorktimerecord(event.target.value);
         };
 
+
+        const handleSalarytype= (event) => {
+            setSalarytype(event.target.value);
+        };
+        const handleSalaryupdate= (event) => {
+            setSalaryupdate(event.target.value);
+        };
+        const handleSalaryout= (event) => {
+            setSalaryout(event.target.value);
+        };
 
         const handleJobtype = (event) => {
             setJobtype(event.target.value);
@@ -377,21 +392,28 @@ function Salary() {
                                                         <h2 class="title">เงินเดือนปัจจุบัน</h2>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label class="col-sm-2 col-form-label">*อัตรา</label>
+                                                        <label role="salary" class="col-sm-2 col-form-label">*อัตรา</label>
                                                         <div class="col-sm-10">
-                                                            <input type="" class="form-control" id="" placeholder="350" value="15000" />
+                                                        <input type="text" class="form-control" id="salary" placeholder="จำนวนเงิน" value={salary} onChange={(e) => setSalary(e.target.value)} />
+                                                            
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
                                                         <div class="col-md-8">
                                                             <div class="row">
-                                                                <label class="col-sm-3 col-form-label">*ต่อ</label>
+                                                                <label role="salarytype" class="col-sm-3 col-form-label">*ต่อ</label>
                                                                 <div class="col-sm-9">
-                                                                    <select class="form-control">
+                                                                <select id="salarytype" name="salarytype" class="form-control"
+                                                                value={salarytype} onChange={handleSalarytype}>
+                                                                <option value="ต่อวัน">ต่อวัน</option>
+                                                                <option value="ต่อเดือน">ต่อเดือน</option>
+                                                            </select>
+
+                                                                    {/* <select class="form-control">
                                                                         <option>ต่อวัน</option>
                                                                         <option></option>
                                                                         <option></option>
-                                                                    </select>
+                                                                    </select> */}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -409,14 +431,25 @@ function Salary() {
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label class="col-sm-3 col-form-label">วันที่ปรับปรุง</label>
+                                                        <label role="salaryupdate" class="col-sm-3 col-form-label">วันที่ปรับปรุง</label>
                                                         <div class="col-sm-9">
-                                                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
+
+                                                        <div style={{ position: 'relative', zIndex: 9999 }}>
+                                                                <DatePicker id="salaryupdate" name="salaryupdate"
+                                                                    className="form-control" // Apply Bootstrap form-control class
+                                                                    popperClassName="datepicker-popper" // Apply custom popper class if needed
+                                                                    selected={salaryupdate}
+                                                                    onChange={handleSalaryupdate}
+                                                                    dateFormat="dd/MM/yyyy" />
+                                                            </div>
+
+                                                            {/* <div class="input-group date" id="reservationdate" data-target-input="nearest">
                                                                 <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" value="30/01/2023" />
                                                                 <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                                                     <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
                                                                 </div>
-                                                            </div>
+                                                            </div> */}
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -424,9 +457,20 @@ function Salary() {
                                             </div>
                                             {/* <!--row--> */}
                                             <div class="form-group row">
-                                                <label class="col-sm-1">งวดที่จ่าย</label>
+                                                <label role="salaryout" class="col-sm-1">งวดจ่ายเงิน</label>
                                                 <div class="col-sm-9">
-                                                    <div class="icheck-primary d-inline">
+
+                                                <select id="salaryout" name="salaryout" class="form-control"
+                                                                value={salaryout} onChange={handleSalaryout}>
+                                                                <option value="เดือน">เดือน</option>
+                                                                <option value="ครึ่งเดือน">ครึ่งเดือน</option>
+                                                                <option value="สัปดาห์">สัปดาห์</option>
+                                                                <option value="สัปดาห์">10 วัน</option>
+                                                                <option value="สัปดาห์">งวดพิเศษ</option>
+
+                                                            </select>
+
+                                                    {/* <div class="icheck-primary d-inline">
                                                         <input type="radio" id="" name="" checked="" /> เดือน
                                                     </div>
                                                     <div class="icheck-primary d-inline">
@@ -440,7 +484,8 @@ function Salary() {
                                                     </div>
                                                     <div class="icheck-primary d-inline">
                                                         <input type="radio" id="" name="" />  10 วัน
-                                                    </div>
+                                                    </div> */}
+
                                                 </div>
                                             </div>
                                             {/* <!--row--> */}
