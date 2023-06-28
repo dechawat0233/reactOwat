@@ -1,4 +1,5 @@
 import React from 'react'
+import EmployeesSelected from './EmployeesSelected';
 
 function IncomeTax() {
     return (
@@ -23,54 +24,62 @@ function IncomeTax() {
                     <section class="content">
                         <div class="container-fluid">
                             <h2 class="title"> ภาษีเงินได้</h2>
-                            <section class="Frame">
-                                <div class="col-md-12">
-                                    <form action="">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>วันที่เริ่มงาน</label>
-                                                    <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"/>
-                                                            <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                                                                <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <section class="Frame">
+                                        <div class="col-md-12">
+                                            <form action="">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>วันที่เริ่มงาน</label>
+                                                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                                                <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" />
+                                                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                                                    <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+                                                                </div>
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>วันที่บรรจุงาน</label>
+                                                            <div class="input-group date" id="reservationdate2" data-target-input="nearest">
+                                                                <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate2" />
+                                                                <div class="input-group-append" data-target="#reservationdate2" data-toggle="datetimepicker">
+                                                                    <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>อัตราเงินจ้าง</label>
+                                                            <input type="" class="form-control" id="" placeholder="อัตราเงินจ้าง" />
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>วันที่บรรจุงาน</label>
-                                                    <div class="input-group date" id="reservationdate2" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate2"/>
-                                                            <div class="input-group-append" data-target="#reservationdate2" data-toggle="datetimepicker">
-                                                                <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
-                                                            </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>อัตราเงินจ้าง</label>
-                                                    <input type="" class="form-control" id="" placeholder="อัตราเงินจ้าง"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {/* <!-- row --> */}
+                                                {/* <!-- row --> */}
 
-                                        <div class="line_btn_search">
-                                            <button type="submit" value="Submit" class="btn_search"><i class="fa fa-search"></i>  &nbsp;ค้นหา</button>
+                                                <div class="line_btn_search">
+                                                    <button type="submit" value="Submit" class="btn_search"><i class="fa fa-search"></i>  &nbsp;ค้นหา</button>
+                                                </div>
+                                            </form>
                                         </div>
-                                    </form>
+                                    </section>
                                 </div>
-                            </section>
+                                <div class="col-md-3">
+                                    <section class="Frame"><EmployeesSelected /></section>
+
+                                </div>
+                            </div>
                         </div>
                         {/* <!-- /.container-fluid --> */}
                     </section>
                     {/* <!-- /.content --> */}
                 </div>
             </div>
-        </body>        
+        </body>
     )
 }
 

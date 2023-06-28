@@ -1,4 +1,5 @@
 import React from 'react'
+import EmployeesSelected from './EmployeesSelected';
 
 function Collateral() {
     return (
@@ -25,39 +26,46 @@ function Collateral() {
                             <div class="container-fluid">
                                 <form action="">
                                     <h2 class="title">เงินค้ำประกัน</h2>
-                                    <section class="Frame">
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2">ยอดเงินค้ำประกัน</label>
-                                            <div class="col-md-6">
-                                                <input type="" class="form-control" id="" placeholder="ยอดเงินค้ำประกัน" />
-                                            </div>
+                                    <div class="form-group row">
+                                        <div class="col-md-9">
+                                            <section class="Frame">
+                                                <div class="form-group row">
+                                                    <label class="col-form-label col-md-2">ยอดเงินค้ำประกัน</label>
+                                                    <div class="col-md-6">
+                                                        <input type="" class="form-control" id="" placeholder="ยอดเงินค้ำประกัน" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-form-label col-md-2">ยอดเงินค้ำประกันชำระแล้ว</label>
+                                                    <div class="col-md-6">
+                                                        <input type="" class="form-control" id="" placeholder="ยอดเงินค้ำประกันชำระแล้ว" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-form-label col-md-2">ยอดเงินค้ำประกันที่เหลือ</label>
+                                                    <div class="col-md-6">
+                                                        <input type="" class="form-control" id="" placeholder="ยอดเงินค้ำประกันที่เหลือ" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-form-label col-md-2">ส่วนที่เหลือหักครั้งละ</label>
+                                                    <div class="col-md-6">
+                                                        <input type="" class="form-control" id="" placeholder="ส่วนที่เหลือหักครั้งละ" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-form-label col-md-2">ยอดเงินค้ำประกันจ่ายคืน</label>
+                                                    <div class="col-md-6">
+                                                        <input type="" class="form-control" id="" placeholder="ยอดเงินค้ำประกันจ่ายคืน" />
+                                                    </div>
+                                                </div>
+                                            </section>
+                                            {/* <!--Frame--> */}
                                         </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2">ยอดเงินค้ำประกันชำระแล้ว</label>
-                                            <div class="col-md-6">
-                                                <input type="" class="form-control" id="" placeholder="ยอดเงินค้ำประกันชำระแล้ว" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2">ยอดเงินค้ำประกันที่เหลือ</label>
-                                            <div class="col-md-6">
-                                                <input type="" class="form-control" id="" placeholder="ยอดเงินค้ำประกันที่เหลือ" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2">ส่วนที่เหลือหักครั้งละ</label>
-                                            <div class="col-md-6">
-                                                <input type="" class="form-control" id="" placeholder="ส่วนที่เหลือหักครั้งละ" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label col-md-2">ยอดเงินค้ำประกันจ่ายคืน</label>
-                                            <div class="col-md-6">
-                                                <input type="" class="form-control" id="" placeholder="ยอดเงินค้ำประกันจ่ายคืน" />
-                                            </div>
-                                        </div>
-                                    </section>
-                                    {/* <!--Frame--> */}
+                                        <div class="col-md-3">
+                                        <section class="Frame"><EmployeesSelected /></section>
+                                    </div>
+                                    </div>
                                     <div class="line_btn">
                                         <button type="submit" class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
                                         <button type="reset" class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
