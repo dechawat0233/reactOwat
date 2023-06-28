@@ -43,6 +43,17 @@ function Employee() {
     const [treatmentRights, setTreatmentRights] = useState(''); //สิทธิการรักษาพยาบาล
 
 
+    const [copyAddress, setCopyAddress] = useState(false);
+
+    const handleCheckboxChange = () => {
+      setCopyAddress(!copyAddress); // Toggle the value of copyAddress
+      if (!copyAddress) {
+        setCurrentAddress(address); // Copy address to currentAddress
+      } else {
+        setCurrentAddress(''); // Reset currentAddress
+      }
+    };
+
 function onEmployeeSelect(empSelect){
 // alert(empSelect.dateOfBirth);
 setEmployeeselection(empSelect);
@@ -157,13 +168,13 @@ setTreatmentRights(empSelect.treatmentRights);
         setDateOfBirth(date);
     };
 
+    //check create employee or update employee by click select employee
     useEffect(() => {
         // setNewEmp(true);
         if (employeeselection.length >0 ) {
             setNewEmp(true);
         } else{
             setNewEmp(false);
-
         }
 
     }, [employeeselection]);
@@ -449,7 +460,8 @@ setTreatmentRights(empSelect.treatmentRights);
                                                         <div class="form-group">
                                                             <label role="currentAddress">ที่อยู่ปัจจุบัน</label>
                                                             <div class="icheck-primary d-inline">
-                                                                <input type="radio" id="radio" name="radio1" /> ใช้ที่อยู่ตามบัตรประชาชน
+                                                                <input type="checkbox" checked={copyAddress} id="" name="radio1" onChange={handleCheckboxChange}
+        /> ใช้ที่อยู่ตามบัตรประชาชน
                                                             </div>
                                                             <textarea name="currentAddress" id="currentAddress" class="form-control" rows="3" value={currentAddress} onChange={(e) => setCurrentAddress(e.target.value)} ></textarea>
                                                         </div>

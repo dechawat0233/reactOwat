@@ -45,7 +45,7 @@ function EmployeesSelected({onEmployeeSelect }) {
 
   const handleEmployeeSelect = (selectedEmployee) => {
     setSelectedEmployee(selectedEmployee);
-    alert(selectedEmployee.employeeId);
+    // alert(selectedEmployee.employeeId);
     onEmployeeSelect(selectedEmployee);
   };
 
@@ -140,7 +140,7 @@ function EmployeesSelected({onEmployeeSelect }) {
                             width: '5rem', height: '2rem', margin: '0.2rem',borderRadius: '8px'
                             }}>เลือก</button>
 
-                          <button onClick={() => handleRemoveEmployee(employee.employeeId)} style={{
+                          <button type="button" onClick={() => handleRemoveEmployee(employee.employeeId)} style={{
                             width: '5rem', height: '2rem', margin: '0.2rem',borderRadius: '8px'
                             }}>นำออก</button>
                         </li>
