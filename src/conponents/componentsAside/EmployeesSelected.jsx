@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function EmployeesSelected({ employeesTest , onEmployeeSelect }) {
+function EmployeesSelected({onEmployeeSelect }) {
   const [storedEmp , setStoredEmp ] = useState([]);
   const [selectedEmployees, setSelectedEmployees] = useState([]);
   const [selectedEmployee , setSelectedEmployee] = useState(null);

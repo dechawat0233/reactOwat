@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 function Employee() {
     const [storedEmp, setStoredEmp] = useState([]);
     const [newEmp, setNewEmp] = useState(true);
+    const [employeeselection  , setEmployeeselection  ] = useState([]);
 
     //employee data
     const [employeeId, setEmployeeId] = useState('');
@@ -43,7 +44,36 @@ function Employee() {
 
 
 function onEmployeeSelect(empSelect){
-alert('ool');
+// alert(empSelect.dateOfBirth);
+setEmployeeselection(empSelect);
+    setEmployeeId(empSelect.employeeId);
+setPosition(empSelect.position);
+setDepartment(empSelect.department);
+setWorkplace(empSelect.workplace);
+setJobtype(empSelect.jobtype);
+setStartjob( new Date(empSelect.startjob) );
+setExceptjob(new Date(empSelect.exceptjob));
+setPrefix(empSelect.prefix);
+setName(empSelect.name);
+setLastName(empSelect.lastName);
+setNickName(empSelect.nickName);
+setGender(empSelect.gender);
+
+ setDateOfBirth( new Date(empSelect.dateOfBirth) );
+setAge(empSelect.age);
+setIdCard(empSelect.idCard);
+setEthnicity(empSelect.ethnicity);
+setReligion(empSelect.religion);
+setMaritalStatus(empSelect.maritalStatus);
+setMilitaryStatus(empSelect.militaryStatus);
+setAddress(empSelect.address);
+setCurrentAddress(empSelect.currentAddress);
+setPhoneNumber(empSelect.phoneNumber);
+setEmergencyContactNumber(empSelect.emergencyContactNumber);
+setIdLine(empSelect.idLine);
+setVaccination(empSelect.vaccination);
+setTreatmentRights(empSelect.treatmentRights);
+
 }
 
     async function handleManageEmployee(event) {
@@ -128,15 +158,15 @@ alert('ool');
     };
 
     useEffect(() => {
-        setNewEmp(false);
-        const firstEmployee = storedEmp[0];
-        const firstId = firstEmployee ? firstEmployee.employeeId : '';
-        // setId(firstId );
-        if (firstId == '') {
+        // setNewEmp(true);
+        if (employeeselection.length >0 ) {
             setNewEmp(true);
+        } else{
+            setNewEmp(false);
+
         }
 
-    }, [storedEmp]);
+    }, [employeeselection]);
 
     useEffect(() => {
         const storedItem = localStorage.getItem('selectedEmployees');
@@ -148,7 +178,7 @@ alert('ool');
             //      console.log('Item exists:', storedItem);
             setNewEmp(true);
 
-            setNewEmp(false);
+            // setNewEmp(false);
         } else {
             // Item does not exist in localStorage
             console.log('Item does not exist');
@@ -299,7 +329,7 @@ alert('ool');
                                     </div>
                                     <div class="col-md-3">
                                         <section class="Frame">
-<EmployeesSelected />
+<EmployeesSelected onEmployeeSelect={onEmployeeSelect} />
 
 </section>
 
