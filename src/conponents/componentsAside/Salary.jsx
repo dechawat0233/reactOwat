@@ -34,6 +34,13 @@ function Salary() {
         const [salarytype , setSalarytype] = useState(''); //อัตราเงินเดือน
         const [salaryupdate , setSalaryupdate] = useState(''); //เงินเดือนปรับเมื่อ
         const [salaryout , setSalaryout] = useState(''); //เงินเดือนปรับเมื่อ
+        const [salarypayment, setSalarypayment] = useState(''); //วิธีจ่ายเงิน
+        const [salarybank , setSalarybank] = useState(''); //ธนาคาร
+        const [banknumber , setBanknumber] = useState(''); //เลขบัญชี
+        const [salaryadd1 , setSalaryadd1] = useState(''); //เงินเพิ่มพิเศษ ค่ารถ
+        const [salaryadd2 , setSalaryadd2] = useState(''); //เงินเพิ่มพิเศษ ค่าอาหาร
+        const [salaryaddtype , setSalaryaddtype] = useState(''); //เพิ่มพิเศษแบบ ต่อวัน ต่อเดือน
+        const [salaryaddsum , setSalaryaddsum] = useState(''); //เพิ่มพิเศษแบบ ต่อวัน ต่อเดือน
 
 
         const [prefix, setPrefix] = useState(''); //นำหน้าชื่อ
@@ -70,6 +77,22 @@ function Salary() {
         };
         const handleSalaryout= (event) => {
             setSalaryout(event.target.value);
+        };
+        const handleSalarypayment= (event) => {
+            setSalarypayment(event.target.value);
+        };
+        const handleSalarybank = (event) => {
+            setSalarybank(event.target.value);
+        };
+
+        const handleSalaryadd1= (event) => {
+            setSalaryadd1(event.target.value);
+        };
+        const handleSalaryadd2 = (event) => {
+            setSalaryadd2(event.target.value);
+        };
+        const handleSalaryaddtype= (event) => {
+            setSalaryaddtype(event.target.value);
         };
 
         const handleJobtype = (event) => {
@@ -465,8 +488,8 @@ function Salary() {
                                                                 <option value="เดือน">เดือน</option>
                                                                 <option value="ครึ่งเดือน">ครึ่งเดือน</option>
                                                                 <option value="สัปดาห์">สัปดาห์</option>
-                                                                <option value="สัปดาห์">10 วัน</option>
-                                                                <option value="สัปดาห์">งวดพิเศษ</option>
+                                                                <option value="10 วัน">10 วัน</option>
+                                                                <option value="งวดพิเศษ">งวดพิเศษ</option>
 
                                                             </select>
 
@@ -490,13 +513,22 @@ function Salary() {
                                             </div>
                                             {/* <!--row--> */}
                                             <div class="form-group row">
-                                                <label class="col-sm-4">วิธีจ่ายเงิน</label>
+                                                <label role="salarypayment" class="col-sm-4">วิธีจ่ายเงิน</label>
                                                 <div class="col-sm-9">
                                                     <div class="icheck-primary d-inline">
-                                                        <input type="radio" id="" name="" checked="" /> เงินสด
+                                                        <input type="radio" id="salarypayment" name="salarypayment" 
+                                                        value="เงินสด"
+          checked={salarypayment === 'เงินสด'}
+          onChange={handleSalarypayment}
+        /> เงินสด
                                                     </div>
                                                     <div class="icheck-primary d-inline">
-                                                        <input type="radio" id="" name="" />  โอนผ่านธนาคาร
+                                                        <input type="radio" id="salarypayment" name="salarypayment" 
+                                                        value="โอนผ่านธนาคาร"
+          checked={salarypayment === 'โอนผ่านธนาคาร'}
+          onChange={handleSalarypayment}
+        /> โอนผ่านธนาคาร
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -504,22 +536,45 @@ function Salary() {
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group row">
-                                                        <label class="col-sm-3 col-form-label">ชื่อธนาคาร</label>
+                                                        <label role="salarybank" class="col-sm-3 col-form-label">ชื่อธนาคาร</label>
                                                         <div class="col-sm-9">
-                                                            <select class="form-control">
-                                                                <option>กสิกรไทย</option>
-                                                                <option>กสิกรไทย</option>
-                                                                <option>กสิกรไทย</option>
+                                                        <select id="salarybank" name="salarybank" class="form-control"
+                                                                value={salarybank} onChange={handleSalarybank}>
+                                                                <option value="ธนาคารกรุงเทพ">ธนาคารกรุงเทพ</option>
+                                                                <option value="ธนาคารกสิกรไทย">ธนาคารกสิกรไทย</option>
+                                                                <option value="ธนาคารกรุงไทย">ธนาคารกรุงไทย</option>
+                                                                <option value="ธนาคารทหารไทยธนชาต">ธนาคารทหารไทยธนชาต</option>
+                                                                <option value="ธนาคารไทยพาณิชย์">ธนาคารไทยพาณิชย์</option>
+                                                                <option value="ธนาคารกรุงศรีอยุธยา">ธนาคารกรุงศรีอยุธยา</option>
+<option value="ธนาคารเกียรตินาคินภัทร">ธนาคารเกียรตินาคินภัทร</option>
+<option value="ธนาคารซีไอเอ็มบีไทย">ธนาคารซีไอเอ็มบีไทย</option>
+<option value="ธนาคารทิสโก้">ธนาคารทิสโก้</option>
+<option value="ธนาคารยูโอบี">ธนาคารยูโอบี</option>
+<option value="ธนาคารไทยเครดิตเพื่อรายย่อย">ธนาคารไทยเครดิตเพื่อรายย่อย</option>
+<option value="ธนาคารแลนด์ แอนด์ เฮ้าส์">ธนาคารแลนด์ แอนด์ เฮ้าส์</option>
+<option value="ธนาคารไอซีบีซี (ไทย)">ธนาคารไอซีบีซี (ไทย)</option>
+<option value="ธนาคารพัฒนาวิสาหกิจขนาดกลางและขนาดย่อมแห่งประเทศไทย">ธนาคารพัฒนาวิสาหกิจขนาดกลางและขนาดย่อมแห่งประเทศไทย</option>
+<option value="ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร">ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร</option>
+<option value="ธนาคารเพื่อการส่งออกและนำเข้าแห่งประเทศไทย">ธนาคารเพื่อการส่งออกและนำเข้าแห่งประเทศไทย</option>
+<option value="ธนาคารออมสิน">ธนาคารออมสิน</option>
+<option value="ธนาคารอาคารสงเคราะห์">ธนาคารอาคารสงเคราะห์</option>
                                                             </select>
+
+                                                            {/* <select class="form-control">
+                                                                <option>กสิกรไทย</option>
+                                                                <option>กสิกรไทย</option>
+                                                                <option>กสิกรไทย</option>
+                                                            </select> */}
                                                         </div>
                                                     </div>
                                                 </div>
                                                 {/* <!--col-md-6--> */}
                                                 <div class="col-md-6">
                                                     <div class="form-group row">
-                                                        <label class="col-sm-2 col-form-label">เลขที่บัญชี</label>
+                                                        <label role="banknumber" class="col-sm-2 col-form-label">เลขที่บัญชี</label>
                                                         <div class="col-sm-10">
-                                                            <input type="" class="form-control" id="" placeholder="เลขที่บัญชี" value="6972152992" />
+                                                        <input type="text" class="form-control" id="banknumber" placeholder="เลขที่บัญชี" value={banknumber} onChange={(e) => setBanknumber(e.target.value)} />
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -530,7 +585,7 @@ function Salary() {
                                         {/* <!--Frame--> */}
                                     </div>
                                 </div>
-                                <h2 class="title">ช่องเงินพิเศษ</h2>
+                                <h2 class="title">เงินเพิ่มพิเศษ</h2>
                                 <div class="row">
                                     <div class="col-md-9">
                                         <section class="Frame">
@@ -538,37 +593,67 @@ function Salary() {
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>ตารางงาน</label>
-                                                            <select class="form-control">
+                                                            <label>รายการเงินเพิ่มพิเศษ</label>
+                                                            <label>
+        <input
+          type="checkbox"
+          checked={salaryadd1}
+          onChange={handleSalaryadd1}
+        />
+        ค่ารถ
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          checked={salaryadd2}
+          onChange={handleSalaryadd2}
+        />
+        ค่าอาหาร
+      </label>
+
+                                                            {/* <select class="form-control">
                                                                 <option>ไม่กำหนด</option>
                                                                 <option></option>
                                                                 <option></option>
-                                                            </select>
+                                                            </select> */}
+
                                                         </div>
                                                     </div>
+
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>ผู้อนุมัติ</label>
-                                                            <select class="form-control">
+                                                            <label role="salaryaddtype">เพิ่มพิเศษแบบ</label>
+                                                            <select id="salaryaddtype" name="salaryaddtype" class="form-control"
+                                                                value={salaryaddtype} onChange={handleSalaryaddtype}>
+                                                                <option value="ต่อวัน">ต่อวัน</option>
+                                                                <option value="ต่อเดือน">ต่อเดือน</option>
+                                                            </select>
+
+                                                            {/* <select class="form-control">
                                                                 <option>ไม่ได้ใช้งาน</option>
                                                                 <option></option>
                                                                 <option></option>
-                                                            </select>
+                                                            </select> */}
                                                         </div>
                                                     </div>
+
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>ผู้บันทึกเวลา</label>
-                                                            <select class="form-control">
+                                                            <label role="salaryaddsum">เงินเพิ่มพิเศษรวม</label>
+                                                            <input type="text" class="form-control" id="salaryaddsum" placeholder="จำนวนเงิน" value={salaryaddsum} onChange={(e) => setSalaryaddsum(e.target.value)} />
+
+                                                            {/* <select class="form-control">
                                                                 <option>บันทึกผ่านเว็บ</option>
                                                                 <option></option>
                                                                 <option></option>
-                                                            </select>
+                                                            </select> */}
+
                                                         </div>
                                                     </div>
                                                 </div>
                                                 {/* <!--row--> */}
-                                                <div class="row"><h2 class="title">สถานที่ปฎิบัติงานประจำ</h2></div>
+
+                                                {/* <div class="row"><h2 class="title">สถานที่ปฎิบัติงานประจำ</h2></div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -600,7 +685,7 @@ function Salary() {
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> */}
                                                 {/* <!--row--> */}
                                             </div>
                                             {/* <!--col-md-12--> */}
