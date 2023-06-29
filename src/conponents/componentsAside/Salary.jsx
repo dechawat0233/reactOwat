@@ -314,14 +314,14 @@ function Salary() {
                                     <div class="col-md-9">
                                         <section class="Frame">
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-5">
                                                     <div class="row">
                                                         <h2 class="title">วันที่เริ่มงาน</h2>
                                                     </div>
                                                     <div class="form-group row">
 
                                                     <label role="startjob">วันที่เริ่มงาน</label>
-                                                            <div style={{ position: 'relative', zIndex: 9999 }}>
+                                                            <div style={{ position: 'relative', zIndex: 9999 ,marginLeft:"2rem"}}>
                                                                 <DatePicker id="startjob" name="startjob"
                                                                     className="form-control" // Apply Bootstrap form-control class
                                                                     popperClassName="datepicker-popper" // Apply custom popper class if needed
@@ -343,7 +343,7 @@ function Salary() {
                                                     </div>
                                                     <div class="form-group row">
                                                     <label role="exceptjob">วันที่บรรจุ</label>
-                                                            <div style={{ position: 'relative', zIndex: 9999 }}>
+                                                            <div style={{ position: 'relative', zIndex: 9999 ,marginLeft:"2rem"}}>
                                                                 <DatePicker id="exceptjob" name="exceptjob"
                                                                     className="form-control" // Apply Bootstrap form-control class
                                                                     popperClassName="datepicker-popper" // Apply custom popper class if needed
@@ -365,7 +365,7 @@ function Salary() {
                                                     </div>
                                                     <div class="form-group row">
                                                     <label role="startcount">วันที่เริ่มต้นคำนวณ</label>
-                                                            <div style={{ position: 'relative', zIndex: 9999 }}>
+                                                            <div style={{ position: 'relative', zIndex: 9999 ,marginLeft:"2rem" }}>
                                                                 <DatePicker id="startcount" name="startcount"
                                                                     className="form-control" // Apply Bootstrap form-control class
                                                                     popperClassName="datepicker-popper" // Apply custom popper class if needed
@@ -399,10 +399,10 @@ function Salary() {
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <div class="col-md-8">
+                                                        <div class="col-md-6">
                                                             <div class="row">
                                                                 <label role="salarytype" class="col-sm-3 col-form-label">*ต่อ</label>
-                                                                <div class="col-sm-9">
+                                                                <div class="col-sm-6">
                                                                 <select id="salarytype" name="salarytype" class="form-control"
                                                                 value={salarytype} onChange={handleSalarytype}>
                                                                 <option value="ต่อวัน">ต่อวัน</option>
@@ -417,10 +417,10 @@ function Salary() {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-4">
+                                                        <div class="col-md-6">
                                                             <div class="row">
-                                                                <label class="col-sm-5 col-form-label">สกุลเงิน</label>
-                                                                <div class="col-sm-7">
+                                                                <label class="col-sm-6 col-form-label">สกุลเงิน</label>
+                                                                <div class="col-sm-6">
                                                                     <select class="form-control">
                                                                         <option>บาท</option>
                                                                         <option></option>
