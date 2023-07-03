@@ -39,8 +39,11 @@ function Salary() {
         const [banknumber , setBanknumber] = useState(''); //เลขบัญชี
         const [salaryadd1 , setSalaryadd1] = useState(''); //เงินเพิ่มพิเศษ ค่ารถ
         const [salaryadd2 , setSalaryadd2] = useState(''); //เงินเพิ่มพิเศษ ค่าอาหาร
+
         const [salaryaddtype , setSalaryaddtype] = useState(''); //เพิ่มพิเศษแบบ ต่อวัน ต่อเดือน
         const [salaryaddsum , setSalaryaddsum] = useState(''); //เพิ่มพิเศษแบบ ต่อวัน ต่อเดือน
+        const [salaryadd1v , setSalaryadd1v] = useState(''); //จำนวนเงินเพิ่มพิเศษ ค่ารถ 
+        const [salaryadd2v , setSalaryadd2v] = useState(''); //จำนวนเงินเพิ่มพิเศษ ค่าอาหาร
 
 
         const [prefix, setPrefix] = useState(''); //นำหน้าชื่อ
@@ -86,10 +89,18 @@ function Salary() {
         };
 
         const handleSalaryadd1= (event) => {
-            setSalaryadd1(event.target.value);
+if(salaryadd1 !== ''){
+    setSalaryadd1('');
+}else {
+    setSalaryadd1(event.target.value);
+}
         };
         const handleSalaryadd2 = (event) => {
-            setSalaryadd2(event.target.value);
+            if(salaryadd2 !== ''){
+                setSalaryadd2('');
+            } else {
+                setSalaryadd2(event.target.value);
+            }
         };
         const handleSalaryaddtype= (event) => {
             setSalaryaddtype(event.target.value);
@@ -636,6 +647,24 @@ function Salary() {
                                                             </select> */}
                                                         </div>
                                                     </div>
+
+{salaryadd1 && (
+                                                        <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label role="salaryadd1v">เงินเพิ่มค่ารถ</label>
+                                                            <input type="text" class="form-control" id="salaryadd1v" placeholder="ค่ารถ" value={salaryadd1v} onChange={(e) => setSalaryadd1v(e.target.value)} />
+</div>
+</div>
+)}
+
+{salaryadd2 && (
+                                                        <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label role="salaryadd2v">เงินเพิ่มค่าอาหาร</label>
+                                                            <input type="text" class="form-control" id="salaryadd2v" placeholder="ค่าอาหาร" value={salaryadd2v} onChange={(e) => setSalaryadd2v(e.target.value)} />
+</div>
+</div>
+)}
 
                                                     <div class="col-md-4">
                                                         <div class="form-group">
