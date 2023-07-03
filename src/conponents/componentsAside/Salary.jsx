@@ -145,10 +145,11 @@ if(salaryadd1 !== ''){
         // }, [employeeselection]);
     
     
-        function onEmployeeSelect(empSelect){
-            // alert(empSelect.dateOfBirth);
-            // setEmployeeselection(empSelect);
-                setEmployeeId(empSelect.employeeId);
+        async function onEmployeeSelect(empSelect){
+            // alert(empSelect.name);
+            await setEmployeeselection(empSelect);
+            await alert(empSelect.employeeId);
+                await setEmployeeId(empSelect.employeeId);
             // setPosition(empSelect.position);
             // setDepartment(empSelect.department);
             // setWorkplace(empSelect.workplace);
