@@ -26,23 +26,6 @@ function Salary() {
     const [worktimerecord, setWorktimerecord] = useState(''); //ผู้บันทึกเวลา
     const [workrecord, setWorkrecord] = useState(''); //ผู้บันทึกข้อมูลแทน
 
-<<<<<<< HEAD
-    const [jobtype, setJobtype] = useState(''); //ประเภทการจ้าง
-    const [startjob, setStartjob] = useState(''); //วันที่เริ่มงาน
-    const [exceptjob, setExceptjob] = useState(''); //วันที่บรรจุ
-    const [startcount, setStartcount] = useState(''); //วันที่บรรจุ
-    const [salary, setSalary] = useState(''); //อัตราเงินเดือน
-    const [salarytype, setSalarytype] = useState(''); //อัตราเงินเดือน
-    const [salaryupdate, setSalaryupdate] = useState(''); //เงินเดือนปรับเมื่อ
-    const [salaryout, setSalaryout] = useState(''); //เงินเดือนปรับเมื่อ
-    const [salarypayment, setSalarypayment] = useState(''); //วิธีจ่ายเงิน
-    const [salarybank, setSalarybank] = useState(''); //ธนาคาร
-    const [banknumber, setBanknumber] = useState(''); //เลขบัญชี
-    const [salaryadd1, setSalaryadd1] = useState(''); //เงินเพิ่มพิเศษ ค่ารถ
-    const [salaryadd2, setSalaryadd2] = useState(''); //เงินเพิ่มพิเศษ ค่าอาหาร
-    const [salaryaddtype, setSalaryaddtype] = useState(''); //เพิ่มพิเศษแบบ ต่อวัน ต่อเดือน
-    const [salaryaddsum, setSalaryaddsum] = useState(''); //เพิ่มพิเศษแบบ ต่อวัน ต่อเดือน
-=======
         const [jobtype, setJobtype] = useState(''); //ประเภทการจ้าง
         const [startjob, setStartjob] = useState(''); //วันที่เริ่มงาน
         const [exceptjob, setExceptjob] = useState(''); //วันที่บรรจุ
@@ -61,7 +44,6 @@ function Salary() {
         const [salaryaddsum , setSalaryaddsum] = useState(''); //เพิ่มพิเศษแบบ ต่อวัน ต่อเดือน
         const [salaryadd1v , setSalaryadd1v] = useState(''); //จำนวนเงินเพิ่มพิเศษ ค่ารถ 
         const [salaryadd2v , setSalaryadd2v] = useState(''); //จำนวนเงินเพิ่มพิเศษ ค่าอาหาร
->>>>>>> 8ea25dc896a897b1e952381fbefb4aac0ddd4e30
 
 
     const [prefix, setPrefix] = useState(''); //นำหน้าชื่อ
@@ -77,105 +59,6 @@ function Salary() {
         setWorkplace(event.target.value);
     };
 
-<<<<<<< HEAD
-    const handleWorktable = (event) => {
-        setWorktable(event.target.value);
-    };
-
-    const handleWorkexcept = (event) => {
-        setWorkexcept(event.target.value);
-    };
-
-    const handleWorktimerecord = (event) => {
-        setWorktimerecord(event.target.value);
-    };
-
-
-    const handleSalarytype = (event) => {
-        setSalarytype(event.target.value);
-    };
-    const handleSalaryupdate = (event) => {
-        setSalaryupdate(event.target.value);
-    };
-    const handleSalaryout = (event) => {
-        setSalaryout(event.target.value);
-    };
-    const handleSalarypayment = (event) => {
-        setSalarypayment(event.target.value);
-    };
-    const handleSalarybank = (event) => {
-        setSalarybank(event.target.value);
-    };
-
-    const handleSalaryadd1 = (event) => {
-        setSalaryadd1(event.target.value);
-    };
-    const handleSalaryadd2 = (event) => {
-        setSalaryadd2(event.target.value);
-    };
-    const handleSalaryaddtype = (event) => {
-        setSalaryaddtype(event.target.value);
-    };
-
-    const handleJobtype = (event) => {
-        setJobtype(event.target.value);
-    };
-    const handlePrefix = (event) => {
-        setPrefix(event.target.value);
-    };
-    const handleGender = (event) => {
-        setGender(event.target.value);
-    };
-    const handleMilitaryStatus = (event) => {
-        setMilitaryStatus(event.target.value);
-    };
-
-    const handleStartDateChange = (date) => {
-        setStartjob(date);
-    };
-    const handleExceptDateChange = (date) => {
-        setExceptjob(date);
-    };
-    const handleStartcount = (date) => {
-        setStartcount(date);
-    };
-
-    const handleDateOfBirth = (date) => {
-        setDateOfBirth(date);
-    };
-
-    //check create employee or update employee by click select employee
-    // useEffect(() => {
-    //     // setNewEmp(true);
-    //     if (employeeselection.length >0 ) {
-    //         setNewEmp(true);
-    //     } else{
-    //         setNewEmp(false);
-    //     }
-
-    // }, [employeeselection]);
-
-
-    function onEmployeeSelect(empSelect) {
-        // alert(empSelect.dateOfBirth);
-        // setEmployeeselection(empSelect);
-        setEmployeeId(empSelect.employeeId);
-        // setPosition(empSelect.position);
-        // setDepartment(empSelect.department);
-        // setWorkplace(empSelect.workplace);
-        // setJobtype(empSelect.jobtype);
-        // setStartjob( new Date(empSelect.startjob) );
-        // setExceptjob(new Date(empSelect.exceptjob));
-        // setPrefix(empSelect.prefix);
-        // setName(empSelect.name);
-        // setLastName(empSelect.lastName);
-        // setNickName(empSelect.nickName);
-        // setGender(empSelect.gender);
-
-        // setIdCard(empSelect.idCard);
-
-    }
-=======
         const handleSalaryadd1= (event) => {
 if(salaryadd1 !== ''){
     setSalaryadd1('');
@@ -193,7 +76,6 @@ if(salaryadd1 !== ''){
         const handleSalaryaddtype= (event) => {
             setSalaryaddtype(event.target.value);
         };
->>>>>>> 8ea25dc896a897b1e952381fbefb4aac0ddd4e30
 
 
     return (

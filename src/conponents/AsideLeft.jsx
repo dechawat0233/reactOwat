@@ -187,6 +187,9 @@ function AsideLeft() {
                       <p>กำหนดสิทธิ์ใช้งาน</p>
                     </a>
                   </li>
+                  <li class="nav-item">
+                  <Link to="/setting" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ตั้งค่าหน่วยงาน</Link>
+                  </li>
                 </ul>
               </li>
               <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon fas fa fa-cog"></i>
