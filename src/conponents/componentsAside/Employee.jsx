@@ -13,6 +13,7 @@ function Employee() {
     const [storedEmp, setStoredEmp] = useState([]);
     const [newEmp, setNewEmp] = useState(true);
     const [employeeselection  , setEmployeeselection  ] = useState([]);
+const [buttonValue ,setButtonValue] = useState('');
 
     //employee data
     const [employeeId, setEmployeeId] = useState('');
@@ -135,7 +136,10 @@ setTreatmentRights(empSelect.treatmentRights);
             }
 
         } else {
-            alert('update user');
+            if(buttonValue == 'save') {
+                alert('update user');
+
+            }
 
         }
 
@@ -529,7 +533,7 @@ setTreatmentRights(empSelect.treatmentRights);
                                         <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;สร้างพนักงานใหม่</button>
 
                                     ) : (
-                                        <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
+                                        <button type="submit" name="save" value="save" onClick={() => setButtonValue('save')} class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
                                     )}
 
                                     {/* <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button> */}
