@@ -11,16 +11,15 @@ import EmployeesSelected from './EmployeesSelected';
 function Salary() {
     const [storedEmp, setStoredEmp] = useState([]);
     const [newEmp, setNewEmp] = useState(true);
-    const [employeeselection, setEmployeeselection] = useState([]);
-
+    const [salarySelected , setSalarySelected ] = useState([]);
+// const [employeeselection , setEmployeeselection] = useState([]);
 
 useEffect(() => {
     const storedValue = sessionStorage.getItem('empSelect');
     if (storedValue) {
         // setEmployeeselection(storedValue);
     }
-alert(employeeselection.length);
-}, [employeeselection] );
+}, [] );
 
     //employee data
     const [employeeId, setEmployeeId] = useState('');
@@ -172,19 +171,6 @@ alert(employeeselection.length);
 
     }
 
-
-        //check create employee or update employee by click select employee
-        // useEffect(() => {
-        //     // setNewEmp(true);
-        //     if (employeeselection.length >0 ) {
-        //         setNewEmp(true);
-        //     } else{
-        //         setNewEmp(false);
-        //     }
-    
-        // }, [employeeselection]);
-    
-    
             
                 
     return (
