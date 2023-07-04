@@ -203,6 +203,9 @@ function AsideLeft() {
                           <li class="nav-item">
                             <Link to="/setting" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ตั้งค่าหน่วยงาน</Link>
                           </li>
+                          <li class="nav-item">
+                            <Link to="/setting" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ตั้งค่าหน่วยงาน</Link>
+                          </li>
 
                     </>
                   </ul>
