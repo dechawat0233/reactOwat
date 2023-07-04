@@ -173,12 +173,6 @@ alert(employeeselection.length);
     }
 
 
-<<<<<<< HEAD
-=======
-        const handleDateOfBirth = (date) => {
-            setDateOfBirth(date);
-        };
-    
         //check create employee or update employee by click select employee
         // useEffect(() => {
         //     // setNewEmp(true);
@@ -191,31 +185,8 @@ alert(employeeselection.length);
         // }, [employeeselection]);
     
     
-        async function onEmployeeSelect(empSelect){
-            // alert(empSelect.name);
-localStorage.setItem('empSelect', empSelect);
-
-            await setEmployeeselection(empSelect);
-            // await alert(empSelect.employeeId);
-                await setEmployeeId(empSelect.employeeId);
-            // setPosition(empSelect.position);
-            // setDepartment(empSelect.department);
-            // setWorkplace(empSelect.workplace);
-            // setJobtype(empSelect.jobtype);
-            // setStartjob( new Date(empSelect.startjob) );
-            // setExceptjob(new Date(empSelect.exceptjob));
-            // setPrefix(empSelect.prefix);
-            // setName(empSelect.name);
-            // setLastName(empSelect.lastName);
-            // setNickName(empSelect.nickName);
-            // setGender(empSelect.gender);
-            
-            // setIdCard(empSelect.idCard);
-            
-            }
             
                 
->>>>>>> 8886a6c55e65eaaa632ec47231349be7d95dbb64
     return (
         <body class="hold-transition sidebar-mini">
             <div class="wrapper">
