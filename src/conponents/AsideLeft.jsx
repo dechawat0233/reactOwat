@@ -181,7 +181,7 @@ function AsideLeft() {
               <li class="nav-item">
                 <a href="#" class="nav-link" onClick={toggleSubMenu2}>
                   <i class="nav-icon fas fa-shopping-cart"></i>
-                  <p> การตั้งค่าtest <i class="right fas fa-angle-left"></i><i class=""></i></p>
+                  <p> การตั้งค่า<i class="right fas fa-angle-left"></i><i class=""></i></p>
                 </a>
                 {/* <ul class="nav nav-treeview"> */}
                                   {/* <ul className="nav nav-treeview"> */}
@@ -237,7 +237,7 @@ function AsideLeft() {
                   </li>
                 </ul>
               </li> 
-
+                */}
 
               <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon fas fa fa-cog"></i>
                 <p> การแจ้งเตือน</p>
