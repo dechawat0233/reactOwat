@@ -184,7 +184,44 @@ function AsideLeft() {
                   <p> การตั้งค่าtest <i class="right fas fa-angle-left"></i><i class=""></i></p>
                 </a>
                 {/* <ul class="nav nav-treeview"> */}
-                                  <ul className="nav nav-treeview">
+                                  {/* <ul className="nav nav-treeview"> */}
+
+                {showSubMenu2 && (
+
+                  <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <>
+
+
+                          <li class="nav-item">
+                            <a href="#" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
+                              <p>ผู้ใช้งานระบบ</p>
+                            </a>
+                          </li>
+                          <li class="nav-item">
+                            <a href="#" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
+                              <p>กำหนดสิทธิ์ใช้งาน</p>
+                            </a>
+                          </li>
+                          <li class="nav-item">
+                            <Link to="/setting" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ตั้งค่าหน่วยงาน</Link>
+                          </li>
+                          <li class="nav-item">
+                            <Link to="/setting" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ตั้งค่าหน่วยงาน</Link>
+                          </li>
+
+                    </>
+                  </ul>
+                )}
+
+              </li>
+
+              {/* <li className="nav-item">
+                <a href="#" class="nav-link" >
+                  <i class="nav-icon fas fa-shopping-cart"></i>
+                  <p> การตั้งค่า <i class="right fas fa-angle-left"></i><i class=""></i></p>
+                </a>
+                <ul className="nav nav-treeview">
+
                   <li class="nav-item">
                     <a href="#" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
                       <p>ผู้ใช้งานระบบ</p>
