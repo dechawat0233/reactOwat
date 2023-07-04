@@ -14,6 +14,13 @@ function Salary() {
     const [employeeselection, setEmployeeselection] = useState([]);
 
 
+useEffect(() => {
+    const storedValue = sessionStorage.getItem('empSelect');
+    if (storedValue) {
+        // setEmployeeselection(storedValue);
+    }
+alert(employeeselection.length);
+}, [employeeselection] );
 
     //employee data
     const [employeeId, setEmployeeId] = useState('');
@@ -166,6 +173,23 @@ function Salary() {
     }
 
 
+<<<<<<< HEAD
+=======
+        //check create employee or update employee by click select employee
+        // useEffect(() => {
+        //     // setNewEmp(true);
+        //     if (employeeselection.length >0 ) {
+        //         setNewEmp(true);
+        //     } else{
+        //         setNewEmp(false);
+        //     }
+    
+        // }, [employeeselection]);
+    
+    
+            
+                
+>>>>>>> 983d7cf25f0840da68a18710a4260f07d3299687
     return (
         <body class="hold-transition sidebar-mini">
             <div class="wrapper">
