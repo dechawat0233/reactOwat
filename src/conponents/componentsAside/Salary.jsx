@@ -11,7 +11,7 @@ import EmployeesSelected from './EmployeesSelected';
 function Salary() {
     const [storedEmp, setStoredEmp] = useState([]);
     const [newEmp, setNewEmp] = useState(true);
-    const [employeeselection  , setEmployeeselection  ] = useState([]);
+    const [employeeselection, setEmployeeselection] = useState([]);
 
 
 useEffect(() => {
@@ -22,120 +22,159 @@ useEffect(() => {
 alert(employeeselection.length);
 }, [employeeselection] );
 
-        //employee data
-        const [employeeId, setEmployeeId] = useState('');
-        const [position, setPosition] = useState(''); //ตำแหน่ง
-        const [department, setDepartment] = useState(''); //แผนก
-        const [workplace, setWorkplace] = useState(''); //หน่วยงาน
-        const [costtype , setCosttype] = useState(''); //ลงบัญชีเป็นค่าใช้จ่าย
-        const [worktable , setWorktable] = useState(''); //ตารางงาน
-        const [workexcept , setWorkexcept] = useState(''); //ผู้อนุมัต
-        const [worktimerecord , setWorktimerecord ] = useState(''); //ผู้บันทึกเวลา
-        const [workrecord , setWorkrecord] = useState(''); //ผู้บันทึกข้อมูลแทน
+    //employee data
+    const [employeeId, setEmployeeId] = useState('');
+    const [position, setPosition] = useState(''); //ตำแหน่ง
+    const [department, setDepartment] = useState(''); //แผนก
+    const [workplace, setWorkplace] = useState(''); //หน่วยงาน
+    const [costtype, setCosttype] = useState(''); //ลงบัญชีเป็นค่าใช้จ่าย
+    const [worktable, setWorktable] = useState(''); //ตารางงาน
+    const [workexcept, setWorkexcept] = useState(''); //ผู้อนุมัต
+    const [worktimerecord, setWorktimerecord] = useState(''); //ผู้บันทึกเวลา
+    const [workrecord, setWorkrecord] = useState(''); //ผู้บันทึกข้อมูลแทน
 
-        const [jobtype, setJobtype] = useState(''); //ประเภทการจ้าง
-        const [startjob, setStartjob] = useState(''); //วันที่เริ่มงาน
-        const [exceptjob, setExceptjob] = useState(''); //วันที่บรรจุ
-        const [startcount , setStartcount] = useState(''); //วันที่บรรจุ
-        const [salary , setSalary] = useState(''); //อัตราเงินเดือน
-        const [salarytype , setSalarytype] = useState(''); //อัตราเงินเดือน
-        const [salaryupdate , setSalaryupdate] = useState(''); //เงินเดือนปรับเมื่อ
-        const [salaryout , setSalaryout] = useState(''); //เงินเดือนปรับเมื่อ
-        const [salarypayment, setSalarypayment] = useState(''); //วิธีจ่ายเงิน
-        const [salarybank , setSalarybank] = useState(''); //ธนาคาร
-        const [banknumber , setBanknumber] = useState(''); //เลขบัญชี
-        const [salaryadd1 , setSalaryadd1] = useState(''); //เงินเพิ่มพิเศษ ค่ารถ
-        const [salaryadd2 , setSalaryadd2] = useState(''); //เงินเพิ่มพิเศษ ค่าอาหาร
+    const [jobtype, setJobtype] = useState(''); //ประเภทการจ้าง
+    const [startjob, setStartjob] = useState(''); //วันที่เริ่มงาน
+    const [exceptjob, setExceptjob] = useState(''); //วันที่บรรจุ
+    const [startcount, setStartcount] = useState(''); //วันที่บรรจุ
+    const [salary, setSalary] = useState(''); //อัตราเงินเดือน
+    const [salarytype, setSalarytype] = useState(''); //อัตราเงินเดือน
+    const [salaryupdate, setSalaryupdate] = useState(''); //เงินเดือนปรับเมื่อ
+    const [salaryout, setSalaryout] = useState(''); //เงินเดือนปรับเมื่อ
+    const [salarypayment, setSalarypayment] = useState(''); //วิธีจ่ายเงิน
+    const [salarybank, setSalarybank] = useState(''); //ธนาคาร
+    const [banknumber, setBanknumber] = useState(''); //เลขบัญชี
+    const [salaryadd1, setSalaryadd1] = useState(''); //เงินเพิ่มพิเศษ ค่ารถ
+    const [salaryadd2, setSalaryadd2] = useState(''); //เงินเพิ่มพิเศษ ค่าอาหาร
 
-        const [salaryaddtype , setSalaryaddtype] = useState(''); //เพิ่มพิเศษแบบ ต่อวัน ต่อเดือน
-        const [salaryaddsum , setSalaryaddsum] = useState(''); //เพิ่มพิเศษแบบ ต่อวัน ต่อเดือน
-        const [salaryadd1v , setSalaryadd1v] = useState(''); //จำนวนเงินเพิ่มพิเศษ ค่ารถ 
-        const [salaryadd2v , setSalaryadd2v] = useState(''); //จำนวนเงินเพิ่มพิเศษ ค่าอาหาร
-
-
-        const [prefix, setPrefix] = useState(''); //นำหน้าชื่อ
-        const [name, setName] = useState(''); //ชื่อ
-        const [lastName, setLastName] = useState(''); //นามสกุล
-        const [nickName, setNickName] = useState(''); //ชื่อเล่น
-        const [gender, setGender] = useState(''); //เพศ
-        const [idCard, setIdCard] = useState(''); //บัตรประชาชน
-        const [copyAddress, setCopyAddress] = useState(false);
-
-        
-         const handleWorkplace = (event) => {
-            setWorkplace(event.target.value);
-        };
-
-        const handleWorktable= (event) => {
-            setWorktable(event.target.value);
-        };
-        
-        const handleWorkexcept= (event) => {
-            setWorkexcept(event.target.value);
-        };
-
-        const handleWorktimerecord= (event) => {
-            setWorktimerecord(event.target.value);
-        };
+    const [salaryaddtype, setSalaryaddtype] = useState(''); //เพิ่มพิเศษแบบ ต่อวัน ต่อเดือน
+    const [salaryaddsum, setSalaryaddsum] = useState(''); //เพิ่มพิเศษแบบ ต่อวัน ต่อเดือน
+    const [salaryadd1v, setSalaryadd1v] = useState(''); //จำนวนเงินเพิ่มพิเศษ ค่ารถ 
+    const [salaryadd2v, setSalaryadd2v] = useState(''); //จำนวนเงินเพิ่มพิเศษ ค่าอาหาร
 
 
-        const handleSalarytype= (event) => {
-            setSalarytype(event.target.value);
-        };
-        const handleSalaryupdate= (event) => {
-            setSalaryupdate(event.target.value);
-        };
-        const handleSalaryout= (event) => {
-            setSalaryout(event.target.value);
-        };
-        const handleSalarypayment= (event) => {
-            setSalarypayment(event.target.value);
-        };
-        const handleSalarybank = (event) => {
-            setSalarybank(event.target.value);
-        };
+    const [prefix, setPrefix] = useState(''); //นำหน้าชื่อ
+    const [name, setName] = useState(''); //ชื่อ
+    const [lastName, setLastName] = useState(''); //นามสกุล
+    const [nickName, setNickName] = useState(''); //ชื่อเล่น
+    const [gender, setGender] = useState(''); //เพศ
+    const [idCard, setIdCard] = useState(''); //บัตรประชาชน
+    const [copyAddress, setCopyAddress] = useState(false);
 
-        const handleSalaryadd1= (event) => {
-if(salaryadd1 !== ''){
-    setSalaryadd1('');
-}else {
-    setSalaryadd1(event.target.value);
-}
-        };
-        const handleSalaryadd2 = (event) => {
-            if(salaryadd2 !== ''){
-                setSalaryadd2('');
-            } else {
-                setSalaryadd2(event.target.value);
-            }
-        };
-        const handleSalaryaddtype= (event) => {
-            setSalaryaddtype(event.target.value);
-        };
 
-        const handleJobtype = (event) => {
-            setJobtype(event.target.value);
-        };
-        const handlePrefix = (event) => {
-            setPrefix(event.target.value);
-        };
-        const handleGender = (event) => {
-            setGender(event.target.value);
-        };
-        const handleMilitaryStatus = (event) => {
-            setMilitaryStatus(event.target.value);
-        };
-    
-        const handleStartDateChange = (date) => {
-            setStartjob(date);
-        };
-        const handleExceptDateChange = (date) => {
-            setExceptjob(date);
-        };
-        const handleStartcount= (date) => {
-            setStartcount(date);
-        };
+    const handleWorkplace = (event) => {
+        setWorkplace(event.target.value);
+    };
 
+    const handleWorktable = (event) => {
+        setWorktable(event.target.value);
+    };
+
+    const handleWorkexcept = (event) => {
+        setWorkexcept(event.target.value);
+    };
+
+    const handleWorktimerecord = (event) => {
+        setWorktimerecord(event.target.value);
+    };
+
+
+    const handleSalarytype = (event) => {
+        setSalarytype(event.target.value);
+    };
+    const handleSalaryupdate = (event) => {
+        setSalaryupdate(event.target.value);
+    };
+    const handleSalaryout = (event) => {
+        setSalaryout(event.target.value);
+    };
+    const handleSalarypayment = (event) => {
+        setSalarypayment(event.target.value);
+    };
+    const handleSalarybank = (event) => {
+        setSalarybank(event.target.value);
+    };
+
+    const handleSalaryadd1 = (event) => {
+        if (salaryadd1 !== '') {
+            setSalaryadd1('');
+        } else {
+            setSalaryadd1(event.target.value);
+        }
+    };
+    const handleSalaryadd2 = (event) => {
+        if (salaryadd2 !== '') {
+            setSalaryadd2('');
+        } else {
+            setSalaryadd2(event.target.value);
+        }
+    };
+    const handleSalaryaddtype = (event) => {
+        setSalaryaddtype(event.target.value);
+    };
+
+    const handleJobtype = (event) => {
+        setJobtype(event.target.value);
+    };
+    const handlePrefix = (event) => {
+        setPrefix(event.target.value);
+    };
+    const handleGender = (event) => {
+        setGender(event.target.value);
+    };
+    const handleMilitaryStatus = (event) => {
+        setMilitaryStatus(event.target.value);
+    };
+
+    const handleStartDateChange = (date) => {
+        setStartjob(date);
+    };
+    const handleExceptDateChange = (date) => {
+        setExceptjob(date);
+    };
+    const handleStartcount = (date) => {
+        setStartcount(date);
+    };
+
+    const handleDateOfBirth = (date) => {
+        setDateOfBirth(date);
+    };
+
+    //check create employee or update employee by click select employee
+    // useEffect(() => {
+    //     // setNewEmp(true);
+    //     if (employeeselection.length >0 ) {
+    //         setNewEmp(true);
+    //     } else{
+    //         setNewEmp(false);
+    //     }
+
+    // }, [employeeselection]);
+
+
+    function onEmployeeSelect(empSelect) {
+        // alert(empSelect.dateOfBirth);
+        // setEmployeeselection(empSelect);
+        setEmployeeId(empSelect.employeeId);
+        // setPosition(empSelect.position);
+        // setDepartment(empSelect.department);
+        // setWorkplace(empSelect.workplace);
+        // setJobtype(empSelect.jobtype);
+        // setStartjob( new Date(empSelect.startjob) );
+        // setExceptjob(new Date(empSelect.exceptjob));
+        // setPrefix(empSelect.prefix);
+        // setName(empSelect.name);
+        // setLastName(empSelect.lastName);
+        // setNickName(empSelect.nickName);
+        // setGender(empSelect.gender);
+
+        // setIdCard(empSelect.idCard);
+
+    }
+
+
+<<<<<<< HEAD
+=======
         const handleDateOfBirth = (date) => {
             setDateOfBirth(date);
         };
@@ -176,6 +215,7 @@ localStorage.setItem('empSelect', empSelect);
             }
             
                 
+>>>>>>> 8886a6c55e65eaaa632ec47231349be7d95dbb64
     return (
         <body class="hold-transition sidebar-mini">
             <div class="wrapper">
@@ -230,7 +270,7 @@ localStorage.setItem('empSelect', empSelect);
                                                             <label role="workplace">หน่วยงาน</label>
                                                             <select id="workplace" name="workplace" class="form-control"
                                                                 value={workplace} onChange={handleWorkplace}>
-                                                                                                                                    <option value="ยังไม่มีหน่วยงาน">ยังไม่มีหน่วยงาน</option>
+                                                                <option value="ยังไม่มีหน่วยงาน">ยังไม่มีหน่วยงาน</option>
                                                                 <option value="บริษัท ไทย เอ็นโอเค จำกัด (โรงงานบางประกง)">บริษัท ไทย เอ็นโอเค จำกัด (โรงงานบางประกง)</option>
                                                                 <option value="Gulf สำนักงานใหญ่">Gulf สำนักงานใหญ่</option>
                                                             </select>
@@ -254,11 +294,11 @@ localStorage.setItem('empSelect', empSelect);
                                                             <div class="" style={{ marginTop: "10px" }}>
                                                                 <div class="icheck-primary d-inline">
                                                                     <input type="radio" id="costtype" name="costtype" value="ทางตรง" checked={costtype === "ทางตรง"} onChange={() => setCosttype("ทางตรง")}
-        /> ทางตรง
+                                                                    /> ทางตรง
                                                                 </div>
                                                                 <div class="icheck-primary d-inline">
-                                                                <input type="radio" id="costtype" name="costtype" value="ทางอ้อม" checked={costtype === "ทางอ้อม"} onChange={() => setCosttype("ทางอ้อม")}
-        /> ทางอ้อม
+                                                                    <input type="radio" id="costtype" name="costtype" value="ทางอ้อม" checked={costtype === "ทางอ้อม"} onChange={() => setCosttype("ทางอ้อม")}
+                                                                    /> ทางอ้อม
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -270,8 +310,8 @@ localStorage.setItem('empSelect', empSelect);
                                     </div>
                                     <div class="col-md-3">
                                         <section class="Frame">
-                                        <EmployeesSelected onEmployeeSelect={onEmployeeSelect} />
-                                            </section>
+                                            <EmployeesSelected onEmployeeSelect={onEmployeeSelect} />
+                                        </section>
 
                                     </div>
                                 </div>
@@ -317,7 +357,7 @@ localStorage.setItem('empSelect', empSelect);
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                        <label role="jobtype">ประเภทการจ้าง</label>
+                                                            <label role="jobtype">ประเภทการจ้าง</label>
                                                             <select id="jobtype" name="jobtype" class="form-control"
                                                                 value={jobtype} onChange={handleJobtype}>
                                                                 <option value="ประจำ">ประจำ</option>
@@ -330,7 +370,7 @@ localStorage.setItem('empSelect', empSelect);
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                        <label role="workplace">หน่วยงาน</label>
+                                                            <label role="workplace">หน่วยงาน</label>
                                                             <select id="workplace" name="workplace" class="form-control"
                                                                 value={workplace} onChange={handleWorkplace}>
                                                                 <option value="บริษัท ไทย เอ็นโอเค จำกัด (โรงงานบางประกง)">บริษัท ไทย เอ็นโอเค จำกัด (โรงงานบางประกง)</option>
@@ -364,15 +404,15 @@ localStorage.setItem('empSelect', empSelect);
                                                     </div>
                                                     <div class="form-group row">
 
-                                                    <label role="startjob">วันที่เริ่มงาน</label>
-                                                            <div style={{ position: 'relative', zIndex: 9999 ,marginLeft:"2rem"}}>
-                                                                <DatePicker id="startjob" name="startjob"
-                                                                    className="form-control" // Apply Bootstrap form-control class
-                                                                    popperClassName="datepicker-popper" // Apply custom popper class if needed
-                                                                    selected={startjob}
-                                                                    onChange={handleStartDateChange}
-                                                                    dateFormat="dd/MM/yyyy" />
-                                                            </div>
+                                                        <label role="startjob">วันที่เริ่มงาน</label>
+                                                        <div style={{ position: 'relative', zIndex: 9999, marginLeft: "2rem" }}>
+                                                            <DatePicker id="startjob" name="startjob"
+                                                                className="form-control" // Apply Bootstrap form-control class
+                                                                popperClassName="datepicker-popper" // Apply custom popper class if needed
+                                                                selected={startjob}
+                                                                onChange={handleStartDateChange}
+                                                                dateFormat="dd/MM/yyyy" />
+                                                        </div>
 
                                                         {/* <label class="col-sm-3 col-form-label">วันที่เริ่มงาน</label>
                                                         <div class="col-sm-9">
@@ -386,15 +426,15 @@ localStorage.setItem('empSelect', empSelect);
 
                                                     </div>
                                                     <div class="form-group row">
-                                                    <label role="exceptjob">วันที่บรรจุ</label>
-                                                            <div style={{ position: 'relative', zIndex: 9999 ,marginLeft:"2rem"}}>
-                                                                <DatePicker id="exceptjob" name="exceptjob"
-                                                                    className="form-control" // Apply Bootstrap form-control class
-                                                                    popperClassName="datepicker-popper" // Apply custom popper class if needed
-                                                                    selected={exceptjob}
-                                                                    onChange={handleExceptDateChange}
-                                                                    dateFormat="dd/MM/yyyy" />
-                                                            </div>
+                                                        <label role="exceptjob">วันที่บรรจุ</label>
+                                                        <div style={{ position: 'relative', zIndex: 9999, marginLeft: "2rem" }}>
+                                                            <DatePicker id="exceptjob" name="exceptjob"
+                                                                className="form-control" // Apply Bootstrap form-control class
+                                                                popperClassName="datepicker-popper" // Apply custom popper class if needed
+                                                                selected={exceptjob}
+                                                                onChange={handleExceptDateChange}
+                                                                dateFormat="dd/MM/yyyy" />
+                                                        </div>
 
                                                         {/* <label class="col-sm-3 col-form-label">วันที่บรรจุ</label>
                                                         <div class="col-sm-9">
@@ -408,15 +448,15 @@ localStorage.setItem('empSelect', empSelect);
 
                                                     </div>
                                                     <div class="form-group row">
-                                                    <label role="startcount">วันที่เริ่มต้นคำนวณ</label>
-                                                            <div style={{ position: 'relative', zIndex: 9999 ,marginLeft:"2rem" }}>
-                                                                <DatePicker id="startcount" name="startcount"
-                                                                    className="form-control" // Apply Bootstrap form-control class
-                                                                    popperClassName="datepicker-popper" // Apply custom popper class if needed
-                                                                    selected={startcount}
-                                                                    onChange={handleStartcount}
-                                                                    dateFormat="dd/MM/yyyy" />
-                                                            </div>
+                                                        <label role="startcount">วันที่เริ่มต้นคำนวณ</label>
+                                                        <div style={{ position: 'relative', zIndex: 9999, marginLeft: "2rem" }}>
+                                                            <DatePicker id="startcount" name="startcount"
+                                                                className="form-control" // Apply Bootstrap form-control class
+                                                                popperClassName="datepicker-popper" // Apply custom popper class if needed
+                                                                selected={startcount}
+                                                                onChange={handleStartcount}
+                                                                dateFormat="dd/MM/yyyy" />
+                                                        </div>
 
                                                         {/* <label class="col-sm-3 col-form-label">วันที่เริ่มต้นคำนวณ</label>
                                                         <div class="col-sm-9">
@@ -438,8 +478,8 @@ localStorage.setItem('empSelect', empSelect);
                                                     <div class="form-group row">
                                                         <label role="salary" class="col-sm-2 col-form-label">*อัตรา</label>
                                                         <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="salary" placeholder="จำนวนเงิน" value={salary} onChange={(e) => setSalary(e.target.value)} />
-                                                            
+                                                            <input type="text" class="form-control" id="salary" placeholder="จำนวนเงิน" value={salary} onChange={(e) => setSalary(e.target.value)} />
+
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
@@ -447,11 +487,11 @@ localStorage.setItem('empSelect', empSelect);
                                                             <div class="row">
                                                                 <label role="salarytype" class="col-sm-3 col-form-label">*ต่อ</label>
                                                                 <div class="col-sm-6">
-                                                                <select id="salarytype" name="salarytype" class="form-control"
-                                                                value={salarytype} onChange={handleSalarytype}>
-                                                                <option value="ต่อวัน">ต่อวัน</option>
-                                                                <option value="ต่อเดือน">ต่อเดือน</option>
-                                                            </select>
+                                                                    <select id="salarytype" name="salarytype" class="form-control"
+                                                                        value={salarytype} onChange={handleSalarytype}>
+                                                                        <option value="ต่อวัน">ต่อวัน</option>
+                                                                        <option value="ต่อเดือน">ต่อเดือน</option>
+                                                                    </select>
 
                                                                     {/* <select class="form-control">
                                                                         <option>ต่อวัน</option>
@@ -478,7 +518,7 @@ localStorage.setItem('empSelect', empSelect);
                                                         <label role="salaryupdate" class="col-sm-3 col-form-label">วันที่ปรับปรุง</label>
                                                         <div class="col-sm-9">
 
-                                                        <div style={{ position: 'relative', zIndex: 9999 }}>
+                                                            <div style={{ position: 'relative', zIndex: 9999 }}>
                                                                 <DatePicker id="salaryupdate" name="salaryupdate"
                                                                     className="form-control" // Apply Bootstrap form-control class
                                                                     popperClassName="datepicker-popper" // Apply custom popper class if needed
@@ -504,15 +544,15 @@ localStorage.setItem('empSelect', empSelect);
                                                 <label role="salaryout" class="col-sm-1">งวดจ่ายเงิน</label>
                                                 <div class="col-sm-9">
 
-                                                <select id="salaryout" name="salaryout" class="form-control"
-                                                                value={salaryout} onChange={handleSalaryout}>
-                                                                <option value="เดือน">เดือน</option>
-                                                                <option value="ครึ่งเดือน">ครึ่งเดือน</option>
-                                                                <option value="สัปดาห์">สัปดาห์</option>
-                                                                <option value="10 วัน">10 วัน</option>
-                                                                <option value="งวดพิเศษ">งวดพิเศษ</option>
+                                                    <select id="salaryout" name="salaryout" class="form-control"
+                                                        value={salaryout} onChange={handleSalaryout}>
+                                                        <option value="เดือน">เดือน</option>
+                                                        <option value="ครึ่งเดือน">ครึ่งเดือน</option>
+                                                        <option value="สัปดาห์">สัปดาห์</option>
+                                                        <option value="10 วัน">10 วัน</option>
+                                                        <option value="งวดพิเศษ">งวดพิเศษ</option>
 
-                                                            </select>
+                                                    </select>
 
                                                     {/* <div class="icheck-primary d-inline">
                                                         <input type="radio" id="" name="" checked="" /> เดือน
@@ -537,18 +577,18 @@ localStorage.setItem('empSelect', empSelect);
                                                 <label role="salarypayment" class="col-sm-4">วิธีจ่ายเงิน</label>
                                                 <div class="col-sm-9">
                                                     <div class="icheck-primary d-inline">
-                                                        <input type="radio" id="salarypayment" name="salarypayment" 
-                                                        value="เงินสด"
-          checked={salarypayment === 'เงินสด'}
-          onChange={handleSalarypayment}
-        /> เงินสด
+                                                        <input type="radio" id="salarypayment" name="salarypayment"
+                                                            value="เงินสด"
+                                                            checked={salarypayment === 'เงินสด'}
+                                                            onChange={handleSalarypayment}
+                                                        /> เงินสด
                                                     </div>
                                                     <div class="icheck-primary d-inline">
-                                                        <input type="radio" id="salarypayment" name="salarypayment" 
-                                                        value="โอนผ่านธนาคาร"
-          checked={salarypayment === 'โอนผ่านธนาคาร'}
-          onChange={handleSalarypayment}
-        /> โอนผ่านธนาคาร
+                                                        <input type="radio" id="salarypayment" name="salarypayment"
+                                                            value="โอนผ่านธนาคาร"
+                                                            checked={salarypayment === 'โอนผ่านธนาคาร'}
+                                                            onChange={handleSalarypayment}
+                                                        /> โอนผ่านธนาคาร
 
                                                     </div>
                                                 </div>
@@ -559,7 +599,7 @@ localStorage.setItem('empSelect', empSelect);
                                                     <div class="form-group row">
                                                         <label role="salarybank" class="col-sm-3 col-form-label">ชื่อธนาคาร</label>
                                                         <div class="col-sm-9">
-                                                        <select id="salarybank" name="salarybank" class="form-control"
+                                                            <select id="salarybank" name="salarybank" class="form-control"
                                                                 value={salarybank} onChange={handleSalarybank}>
                                                                 <option value="ธนาคารกรุงเทพ">ธนาคารกรุงเทพ</option>
                                                                 <option value="ธนาคารกสิกรไทย">ธนาคารกสิกรไทย</option>
@@ -567,18 +607,18 @@ localStorage.setItem('empSelect', empSelect);
                                                                 <option value="ธนาคารทหารไทยธนชาต">ธนาคารทหารไทยธนชาต</option>
                                                                 <option value="ธนาคารไทยพาณิชย์">ธนาคารไทยพาณิชย์</option>
                                                                 <option value="ธนาคารกรุงศรีอยุธยา">ธนาคารกรุงศรีอยุธยา</option>
-<option value="ธนาคารเกียรตินาคินภัทร">ธนาคารเกียรตินาคินภัทร</option>
-<option value="ธนาคารซีไอเอ็มบีไทย">ธนาคารซีไอเอ็มบีไทย</option>
-<option value="ธนาคารทิสโก้">ธนาคารทิสโก้</option>
-<option value="ธนาคารยูโอบี">ธนาคารยูโอบี</option>
-<option value="ธนาคารไทยเครดิตเพื่อรายย่อย">ธนาคารไทยเครดิตเพื่อรายย่อย</option>
-<option value="ธนาคารแลนด์ แอนด์ เฮ้าส์">ธนาคารแลนด์ แอนด์ เฮ้าส์</option>
-<option value="ธนาคารไอซีบีซี (ไทย)">ธนาคารไอซีบีซี (ไทย)</option>
-<option value="ธนาคารพัฒนาวิสาหกิจขนาดกลางและขนาดย่อมแห่งประเทศไทย">ธนาคารพัฒนาวิสาหกิจขนาดกลางและขนาดย่อมแห่งประเทศไทย</option>
-<option value="ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร">ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร</option>
-<option value="ธนาคารเพื่อการส่งออกและนำเข้าแห่งประเทศไทย">ธนาคารเพื่อการส่งออกและนำเข้าแห่งประเทศไทย</option>
-<option value="ธนาคารออมสิน">ธนาคารออมสิน</option>
-<option value="ธนาคารอาคารสงเคราะห์">ธนาคารอาคารสงเคราะห์</option>
+                                                                <option value="ธนาคารเกียรตินาคินภัทร">ธนาคารเกียรตินาคินภัทร</option>
+                                                                <option value="ธนาคารซีไอเอ็มบีไทย">ธนาคารซีไอเอ็มบีไทย</option>
+                                                                <option value="ธนาคารทิสโก้">ธนาคารทิสโก้</option>
+                                                                <option value="ธนาคารยูโอบี">ธนาคารยูโอบี</option>
+                                                                <option value="ธนาคารไทยเครดิตเพื่อรายย่อย">ธนาคารไทยเครดิตเพื่อรายย่อย</option>
+                                                                <option value="ธนาคารแลนด์ แอนด์ เฮ้าส์">ธนาคารแลนด์ แอนด์ เฮ้าส์</option>
+                                                                <option value="ธนาคารไอซีบีซี (ไทย)">ธนาคารไอซีบีซี (ไทย)</option>
+                                                                <option value="ธนาคารพัฒนาวิสาหกิจขนาดกลางและขนาดย่อมแห่งประเทศไทย">ธนาคารพัฒนาวิสาหกิจขนาดกลางและขนาดย่อมแห่งประเทศไทย</option>
+                                                                <option value="ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร">ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร</option>
+                                                                <option value="ธนาคารเพื่อการส่งออกและนำเข้าแห่งประเทศไทย">ธนาคารเพื่อการส่งออกและนำเข้าแห่งประเทศไทย</option>
+                                                                <option value="ธนาคารออมสิน">ธนาคารออมสิน</option>
+                                                                <option value="ธนาคารอาคารสงเคราะห์">ธนาคารอาคารสงเคราะห์</option>
                                                             </select>
 
                                                             {/* <select class="form-control">
@@ -594,7 +634,7 @@ localStorage.setItem('empSelect', empSelect);
                                                     <div class="form-group row">
                                                         <label role="banknumber" class="col-sm-2 col-form-label">เลขที่บัญชี</label>
                                                         <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="banknumber" placeholder="เลขที่บัญชี" value={banknumber} onChange={(e) => setBanknumber(e.target.value)} />
+                                                            <input type="text" class="form-control" id="banknumber" placeholder="เลขที่บัญชี" value={banknumber} onChange={(e) => setBanknumber(e.target.value)} />
 
                                                         </div>
                                                     </div>
@@ -616,21 +656,21 @@ localStorage.setItem('empSelect', empSelect);
                                                         <div class="form-group">
                                                             <label>รายการเงินเพิ่มพิเศษ</label>
                                                             <label>
-        <input
-          type="checkbox"
-          checked={salaryadd1}
-          onChange={handleSalaryadd1}
-        />
-        ค่ารถ
-      </label>
-      <label>
-        <input
-          type="checkbox"
-          checked={salaryadd2}
-          onChange={handleSalaryadd2}
-        />
-        ค่าอาหาร
-      </label>
+                                                                <input
+                                                                    type="checkbox"
+                                                                    checked={salaryadd1}
+                                                                    onChange={handleSalaryadd1}
+                                                                />
+                                                                ค่ารถ
+                                                            </label>
+                                                            <label>
+                                                                <input
+                                                                    type="checkbox"
+                                                                    checked={salaryadd2}
+                                                                    onChange={handleSalaryadd2}
+                                                                />
+                                                                ค่าอาหาร
+                                                            </label>
 
                                                             {/* <select class="form-control">
                                                                 <option>ไม่กำหนด</option>
@@ -658,23 +698,23 @@ localStorage.setItem('empSelect', empSelect);
                                                         </div>
                                                     </div>
 
-{salaryadd1 && (
+                                                    {salaryadd1 && (
                                                         <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label role="salaryadd1v">เงินเพิ่มค่ารถ</label>
-                                                            <input type="text" class="form-control" id="salaryadd1v" placeholder="ค่ารถ" value={salaryadd1v} onChange={(e) => setSalaryadd1v(e.target.value)} />
-</div>
-</div>
-)}
+                                                            <div class="form-group">
+                                                                <label role="salaryadd1v">เงินเพิ่มค่ารถ</label>
+                                                                <input type="text" class="form-control" id="salaryadd1v" placeholder="ค่ารถ" value={salaryadd1v} onChange={(e) => setSalaryadd1v(e.target.value)} />
+                                                            </div>
+                                                        </div>
+                                                    )}
 
-{salaryadd2 && (
+                                                    {salaryadd2 && (
                                                         <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label role="salaryadd2v">เงินเพิ่มค่าอาหาร</label>
-                                                            <input type="text" class="form-control" id="salaryadd2v" placeholder="ค่าอาหาร" value={salaryadd2v} onChange={(e) => setSalaryadd2v(e.target.value)} />
-</div>
-</div>
-)}
+                                                            <div class="form-group">
+                                                                <label role="salaryadd2v">เงินเพิ่มค่าอาหาร</label>
+                                                                <input type="text" class="form-control" id="salaryadd2v" placeholder="ค่าอาหาร" value={salaryadd2v} onChange={(e) => setSalaryadd2v(e.target.value)} />
+                                                            </div>
+                                                        </div>
+                                                    )}
 
                                                     <div class="col-md-4">
                                                         <div class="form-group">

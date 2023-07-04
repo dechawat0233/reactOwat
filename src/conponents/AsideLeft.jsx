@@ -171,7 +171,7 @@ function AsideLeft() {
                 )}
 
               </li>
-              <li class="nav-item">
+              <li className="nav-item">
                 <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-shopping-cart"></i>
                   <p> การตั้งค่า <i class="right fas fa-angle-left"></i><i class=""></i></p>
