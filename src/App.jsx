@@ -36,6 +36,8 @@ import Application3 from "./conponents/componentsAside/Application3";
 import Application4 from "./conponents/componentsAside/Application4";
 import ApplicationSummary from "./conponents/componentsAside/ApplicationSummary";
 
+import Setting from "./conponents/componentsAside/Setting";
+
 
 // import Time from "./conponents/Time";
 import Testcal from "./conponents/Testcal";
@@ -117,6 +119,7 @@ function App() {
           <Route path="/calculate_tax_deductions" element={<CalculateTaxDeductions />} />
           <Route path="/other_expenses" element={<OtherExpenses />} />
           <Route path="/search_results" element={<SearchResults />} />
+          <Route path="/setting" element={<Setting />} />
 
           <Route path="/application" element={<Application />} />
           <Route path="/applicatio1" element={<Application1 />} />
