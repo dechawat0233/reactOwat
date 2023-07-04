@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function AsideLeft() {
   const [showSubMenu, setShowSubMenu] = useState(false);
+  const [showSubMenu2, setShowSubMenu2] = useState(false);
 
   const token = localStorage.getItem('token');
 
@@ -32,6 +33,10 @@ function AsideLeft() {
 
   function toggleSubMenu() {
     setShowSubMenu(!showSubMenu);
+  }
+
+  function toggleSubMenu2() {
+    setShowSubMenu2(!showSubMenu2);
   }
 
 
@@ -171,13 +176,46 @@ function AsideLeft() {
                 )}
 
               </li>
-              <li className="nav-item">
-                <a href="#" class="nav-link">
+
+
+              <li class="nav-item">
+                <a href="#" class="nav-link" onClick={toggleSubMenu2}>
                   <i class="nav-icon fas fa-shopping-cart"></i>
                   <p> การตั้งค่า <i class="right fas fa-angle-left"></i><i class=""></i></p>
                 </a>
-                {/* <ul class="nav nav-treeview"> */}
-                                  <ul className="nav nav-treeview">
+
+                {showSubMenu2 && (
+
+                  <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <>
+
+
+                          <li class="nav-item">
+                            <a href="#" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
+                              <p>ผู้ใช้งานระบบ</p>
+                            </a>
+                          </li>
+                          <li class="nav-item">
+                            <a href="#" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
+                              <p>กำหนดสิทธิ์ใช้งาน</p>
+                            </a>
+                          </li>
+                          <li class="nav-item">
+                            <Link to="/setting" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ตั้งค่าหน่วยงาน</Link>
+                          </li>
+
+                    </>
+                  </ul>
+                )}
+
+              </li>
+
+              {/* <li className="nav-item">
+                <a href="#" class="nav-link" >
+                  <i class="nav-icon fas fa-shopping-cart"></i>
+                  <p> การตั้งค่า <i class="right fas fa-angle-left"></i><i class=""></i></p>
+                </a>
+                <ul className="nav nav-treeview">
 
                   <li class="nav-item">
                     <a href="#" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
@@ -193,7 +231,9 @@ function AsideLeft() {
                     <Link to="/setting" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ตั้งค่าหน่วยงาน</Link>
                   </li>
                 </ul>
-              </li>
+              </li> */}
+
+
               <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon fas fa fa-cog"></i>
                 <p> การแจ้งเตือน</p>
               </a></li>
