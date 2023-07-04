@@ -173,23 +173,6 @@ alert(employeeselection.length);
     }
 
 
-<<<<<<< HEAD
-=======
-        //check create employee or update employee by click select employee
-        // useEffect(() => {
-        //     // setNewEmp(true);
-        //     if (employeeselection.length >0 ) {
-        //         setNewEmp(true);
-        //     } else{
-        //         setNewEmp(false);
-        //     }
-    
-        // }, [employeeselection]);
-    
-    
-            
-                
->>>>>>> 983d7cf25f0840da68a18710a4260f07d3299687
     return (
         <body class="hold-transition sidebar-mini">
             <div class="wrapper">
