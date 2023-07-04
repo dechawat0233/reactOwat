@@ -14,6 +14,13 @@ function Salary() {
     const [employeeselection  , setEmployeeselection  ] = useState([]);
 
 
+useEffect(() => {
+    const storedValue = sessionStorage.getItem('empSelect');
+    if (storedValue) {
+        // setEmployeeselection(storedValue);
+    }
+alert(employeeselection.length);
+}, [employeeselection] );
 
         //employee data
         const [employeeId, setEmployeeId] = useState('');
@@ -147,8 +154,10 @@ if(salaryadd1 !== ''){
     
         async function onEmployeeSelect(empSelect){
             // alert(empSelect.name);
+localStorage.setItem('empSelect', empSelect);
+
             await setEmployeeselection(empSelect);
-            await alert(empSelect.employeeId);
+            // await alert(empSelect.employeeId);
                 await setEmployeeId(empSelect.employeeId);
             // setPosition(empSelect.position);
             // setDepartment(empSelect.department);
