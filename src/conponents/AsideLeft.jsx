@@ -176,7 +176,9 @@ function AsideLeft() {
                   <i class="nav-icon fas fa-shopping-cart"></i>
                   <p> การตั้งค่า <i class="right fas fa-angle-left"></i><i class=""></i></p>
                 </a>
-                <ul class="nav nav-treeview">
+                {/* <ul class="nav nav-treeview"> */}
+                                  <ul className="nav nav-treeview">
+
                   <li class="nav-item">
                     <a href="#" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
                       <p>ผู้ใช้งานระบบ</p>

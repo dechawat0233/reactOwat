@@ -80,36 +80,6 @@ function EmployeesSelected({onEmployeeSelect }) {
 
   }
 
-/*
-  useEffect(() => {
-    // Retrieve the employee object from local storage
-    const storedEmployee = localStorage.getItem('employee');
-
-    if (storedEmployee) {
-      setEmployeesSelected(JSON.parse(storedEmployee));
-    }
-  }, []); // Empty dependency array to run the effect only once on mount
-*/
-/*  
-  useEffect(() => {
-    const handleStorageChange = (event) => {
-      if (event.key === 'selectedEmployees') {
-        try {
-          const updatedSelectedEmployees = JSON.parse(event.newValue);
-          setEmployeesSelected(updatedSelectedEmployees);
-        } catch (error) {
-          console.error('Error parsing user data from localStorage:', error);
-        }
-      }
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
-  }, []);
-*/
 
   return (
     <div>
