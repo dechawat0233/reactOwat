@@ -350,6 +350,7 @@ setTreatmentRights(empSelect.treatmentRights);
 
                                     </div>
                                 </div>
+                                
                                 <h2 class="title">ข้อมูลส่วนบุคคลพนักงาน</h2>
                                 <div class="row">
                                     <div class="col-md-9">

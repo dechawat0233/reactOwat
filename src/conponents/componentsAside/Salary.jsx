@@ -11,7 +11,6 @@ import EmployeesSelected from './EmployeesSelected';
 function Salary() {
     const [storedEmp, setStoredEmp] = useState([]);
     const [newEmp, setNewEmp] = useState(true);
-    const [salarySelected , setSalarySelected ] = useState([]);
 // const [employeeselection , setEmployeeselection] = useState([]);
 
 useEffect(() => {
@@ -139,6 +138,14 @@ useEffect(() => {
         setDateOfBirth(date);
     };
 
+
+    async function handleManageSalary(event) {
+        event.preventDefault();
+    
+    
+    }
+
+
     //check create employee or update employee by click select employee
     // useEffect(() => {
     //     // setNewEmp(true);
@@ -155,19 +162,19 @@ useEffect(() => {
         // alert(empSelect.dateOfBirth);
         // setEmployeeselection(empSelect);
         setEmployeeId(empSelect.employeeId);
-        // setPosition(empSelect.position);
-        // setDepartment(empSelect.department);
-        // setWorkplace(empSelect.workplace);
-        // setJobtype(empSelect.jobtype);
-        // setStartjob( new Date(empSelect.startjob) );
-        // setExceptjob(new Date(empSelect.exceptjob));
-        // setPrefix(empSelect.prefix);
-        // setName(empSelect.name);
-        // setLastName(empSelect.lastName);
-        // setNickName(empSelect.nickName);
-        // setGender(empSelect.gender);
+        setPosition(empSelect.position);
+        setDepartment(empSelect.department);
+        setWorkplace(empSelect.workplace);
+        setJobtype(empSelect.jobtype);
+        setStartjob( new Date(empSelect.startjob) );
+        setExceptjob(new Date(empSelect.exceptjob));
+        setPrefix(empSelect.prefix);
+        setName(empSelect.name);
+        setLastName(empSelect.lastName);
+        setNickName(empSelect.nickName);
+        setGender(empSelect.gender);
 
-        // setIdCard(empSelect.idCard);
+        setIdCard(empSelect.idCard);
 
     }
 
@@ -193,7 +200,8 @@ useEffect(() => {
                     <!-- Main content --> */}
                     <section class="content">
                         <div class="container-fluid">
-                            <form action="">
+                            <form onSubmit={handleManageSalary}>
+
                                 <h2 class="head-title">ข้อมูลพนักงาน</h2>
                                 <h2 class="title">สังกัดหน่วยงาน</h2>
                                 <div class="row">
