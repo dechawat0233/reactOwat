@@ -7,7 +7,6 @@ const cors = require('cors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
-const { Await } = require('../../node_modules/react-router/dist/index');
 
 //Connect mongodb
 mongoose.connect(connectionString ,{ useNewUrlParser: true, useUnifiedTopology: 
