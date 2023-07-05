@@ -9,6 +9,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import EmployeesSelected from './EmployeesSelected';
 
 function Setting() {
+const [workplaceId , setWorkplaceId] = useState('');
+
     return (
 
         <body class="hold-transition sidebar-mini">
@@ -38,13 +40,13 @@ function Setting() {
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>รหัสหน่วยงาน</label>
-                                                <input type="" class="form-control" id="" placeholder="รหัสหน่วยงาน" />
+                                                <label role="workplaceId">รหัสหน่วยงาน</label>
+                                                <input type="text" class="form-control" id="workplaceId" placeholder="รหัสหน่วยงาน" value={workplaceId} />
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>ชื่อหน่วยงาน</label>
+                                                <label role="workplaceName">ชื่อหน่วยงาน</label>
                                                 <input type="" class="form-control" id="" placeholder="ชื่อหน่วยงาน" />
                                             </div>
                                         </div>
