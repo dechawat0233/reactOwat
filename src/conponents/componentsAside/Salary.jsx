@@ -44,7 +44,7 @@ function Salary() {
     const [banknumber, setBanknumber] = useState(''); //เลขบัญชี
 
     const [salaryadd1, setSalaryadd1] = useState(''); //เงินเพิ่มพิเศษ ค่ารถ
-    const [salaryadd2, setSalaryadd2] = useState(''); //เงินเพิ่มพิเศษ ค่าอาหาร
+    // const [salaryadd2, setSalaryadd2] = useState(''); //เงินเพิ่มพิเศษ ค่าอาหาร
     const [salaryadd3, setSalaryadd3] = useState(''); //เงินเพิ่มพิเศษ เบี้ยขยัน
     const [salaryadd4, setSalaryadd4] = useState(''); //เงินเพิ่มพิเศษ โทรศัพท์
     const [salaryadd5, setSalaryadd5] = useState(''); //เงินเพิ่มพิเศษ เงินประจำตำแหน่ง
@@ -53,7 +53,7 @@ function Salary() {
     const [salaryaddsum, setSalaryaddsum] = useState(''); //เพิ่มพิเศษแบบ ต่อวัน ต่อเดือน
 
     const [salaryadd1v, setSalaryadd1v] = useState(''); //จำนวนเงินเพิ่มพิเศษ ค่ารถ 
-    const [salaryadd2v, setSalaryadd2v] = useState(''); //จำนวนเงินเพิ่มพิเศษ ค่าอาหาร
+    // const [salaryadd2v, setSalaryadd2v] = useState(''); //จำนวนเงินเพิ่มพิเศษ ค่าอาหาร
     const [salaryadd3v, setSalaryadd3v] = useState(''); //จำนวนเงินเพิ่มพิเศษ เบี้ยขยัน 
     const [salaryadd4v, setSalaryadd4v] = useState(''); //จำนวนเงินเพิ่มพิเศษ โทรศัพท์
     const [salaryadd5v, setSalaryadd5v] = useState(''); //จำนวนเงินเพิ่มพิเศษ เงินประจำตำแหน่ง 
@@ -668,14 +668,6 @@ function Salary() {
                                                             <label>
                                                                 <input
                                                                     type="checkbox"
-                                                                    checked={salaryadd2}
-                                                                    onChange={handleSalaryadd2}
-                                                                />
-                                                                ค่าอาหาร
-                                                            </label>
-                                                            <label>
-                                                                <input
-                                                                    type="checkbox"
                                                                     checked={salaryadd3}
                                                                     onChange={handleSalaryadd3}
                                                                 />
@@ -733,19 +725,10 @@ function Salary() {
                                                         </div>
                                                     )}
 
-                                                    {salaryadd2 && (
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label role="salaryadd2v">เงินเพิ่มค่าอาหาร</label>
-                                                                <input type="text" class="form-control" id="salaryadd2v" placeholder="ค่าอาหาร" value={salaryadd2v} onChange={(e) => setSalaryadd2v(e.target.value)} />
-                                                            </div>
-                                                        </div>
-                                                    )}
-
                                                     {salaryadd3 && (
                                                         <div class="col-md-4">
                                                             <div class="form-group">
-                                                                <label role="salaryadd3v">เงินเพิ่มค่าอาหาร</label>
+                                                                <label role="salaryadd3v">ค่าเบี้ยขยัน</label>
                                                                 <input type="text" class="form-control" id="salaryadd3v" placeholder="ค่าเบี้ยขยัน" value={salaryadd3v} onChange={(e) => setSalaryadd3v(e.target.value)} />
                                                             </div>
                                                         </div>
@@ -754,7 +737,7 @@ function Salary() {
                                                     {salaryadd4 && (
                                                         <div class="col-md-4">
                                                             <div class="form-group">
-                                                                <label role="salaryadd4v">เงินเพิ่มค่าอาหาร</label>
+                                                                <label role="salaryadd4v">ค่าโทรศัพท์</label>
                                                                 <input type="text" class="form-control" id="salaryadd4v" placeholder="โทรศัพท์" value={salaryadd4v} onChange={(e) => setSalaryadd4v(e.target.value)} />
                                                             </div>
                                                         </div>
@@ -763,7 +746,7 @@ function Salary() {
                                                     {salaryadd5 && (
                                                         <div class="col-md-4">
                                                             <div class="form-group">
-                                                                <label role="salaryadd5v">เงินเพิ่มค่าอาหาร</label>
+                                                                <label role="salaryadd5v">เงินประจำตำแหน่ง</label>
                                                                 <input type="text" class="form-control" id="salaryadd5v" placeholder="เงินประจำตำแหน่ง" value={salaryadd5v} onChange={(e) => setSalaryadd5v(e.target.value)} />
                                                             </div>
                                                         </div>
