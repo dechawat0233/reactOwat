@@ -14,19 +14,76 @@ import Calendar from 'react-calendar';
 
 
 function Setting() {
-const [workplaceId , setWorkplaceId] = useState('');
+const [newWorkplace , setNewWorkplace] = useState(true);
+
+//Workplace data
+const [workplaceId , setWorkplaceId] = useState(''); //รหัสหน่วยงาน
+const [workplaceName , setWorkplaceName] = useState(''); //ชื่อหน่วยงาน
+const [workplaceArea , setWorkplaceArea] = useState(''); //สถานที่ปฏิบัติงาน
+const [workOfWeek, setWorkOfWeek] = useState(''); //วันทำงานต่อสัปดาห์
+const [workkStart1 , setWorkkStart1] = useState(''); //เวลาเริ่มกะเช้า
+const [workEnd1 , setWorkEnd1] = useState(''); //เวลาออกกะเช้า
+const [workkStart2 , setWorkkStart2] = useState(''); //เวลาเข้ากะบ่าย
+const [workEnd2 , setWorkEnd2] = useState(''); //เวลาออกกะบ่าย
+const [workStart3 , setWorkStart3] = useState(''); //เวลาเข้ากะเย็น
+const [workEnd3 , setWorkEnd3] = useState(''); //เวลาออกกะเย็น
+const [workOfHour , setWorkOfHour] = useState(''); //ชั่วโมงทำงานต่อสัปดาห์
+const [workOfOT , setWorkOfOT] = useState(''); //ชั่วโมง OT ต่อสัปดาห์
+
+const [workRate , setWorkRate] = useState(''); //ค่าจ้างต่อวัน
+const [workRateOT , setWorkRateOT] =  useState(''); //ค่าจ้าง OT ต่อชั่วโมง
+const [workTotalPeople , setWorkTotalPeople] = useState(''); //จำนวนคนในหน่วยงาน
+const [workRateDayoff , setWorkRateDayoff] = useState(''); //ค่าจ้างวันหยุด ต่อวัน
+const [workRateDayoffHour , setWorkRateDayoffHour ] = useState(''); //ค่าจ้างวันหยุดต่อชั่วโมง
+const [workplaceAddress , setWorkplaceAddress] = useState(''); //ที่อยู่หน่วยงาน
 
 
-    const [dailyrate, setDailyrate] = useState(''); //อัตราค่าจ้าง รายวัน   
-    const [otrate, setOtrate] = useState(''); //อัตราค่าจ้าง OT รายชั่วโมง
+async function handleManageWorkplace(event) {
+    event.preventDefault();
 
-    const [personemployees, setPersonemployees] = useState(''); //จำนวนพนักงานที่ปฏิบัติงาน
-    const [holidaydaily, setHolidaydaily] = useState(''); //อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายวัน
+    //get data from input in useState to data 
+    const data = {
+        workplaceId : workplaceId,
+        workplaceName: workplaceName,
+        workplaceArea: workplaceArea,
+        workOfWeek: workOfWeek,
+        workkStart1: workkStart1,
+        workEnd1: workEnd1,
+        workkStart2: workkStart2,
+        workEnd2: workEnd2,
+        workStart3:  workStart3,
+        workEnd3: workEnd3,
+        workOfHour: workOfHour,
+        workOfOT: workOfOT,
+        workRate: workRate,
+        workRateOT: workRateOT,
+        workTotalPeople: workTotalPeople,
+        workRateDayoff: workRateDayoff,
+        workRateDayoffHour: workRateDayoffHour,
+        workplaceAddress: workplaceAddress
+    };
 
-    const [holidayhour, setHolidayhour] = useState(''); //อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง
+            //check create or update Employee
+if(newWorkplace){
+// alert('Create Workplace');
+try {
+    const response = await axios.post(endpoint + '/workplace/create', data);
+    // setEmployeesResult(response.data.employees);
+
+} catch (error) {
+    alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+    // window.location.reload();
+
+}
+
+} else {
+
+}
+
+}
+
     return (
-
-        <body class="hold-transition sidebar-mini">
+                <body class="hold-transition sidebar-mini">
             <div class="wrapper">
 
                 <div class="content-wrapper">
@@ -47,6 +104,9 @@ const [workplaceId , setWorkplaceId] = useState('');
                     <!-- Main content --> */}
                     <section class="content">
                         <div class="container-fluid">
+
+                            <form onSubmit={handleManageWorkplace}>
+
                             <h2 class="title">ตั้งค่าหน่วยงาน</h2>
                             <section class="Frame">
                                 <div class="col-md-12">
@@ -54,13 +114,13 @@ const [workplaceId , setWorkplaceId] = useState('');
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label role="workplaceId">รหัสหน่วยงาน</label>
-                                                <input type="text" class="form-control" id="workplaceId" placeholder="รหัสหน่วยงาน" value={workplaceId} />
+                                                <input type="text" class="form-control" id="workplaceId" placeholder="รหัสหน่วยงาน" value={workplaceId} onChange={(e) => setWorkplaceId(e.target.value)} />
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label role="workplaceName">ชื่อหน่วยงาน</label>
-                                                <input type="" class="form-control" id="" placeholder="ชื่อหน่วยงาน" />
+                                                <input type="text" class="form-control" id="workplaceName" placeholder="ชื่อหน่วยงาน" value={workplaceName} onChange={(e) => setWorkplaceName(e.target.value)} />
                                             </div>
                                         </div>
 
@@ -68,14 +128,14 @@ const [workplaceId , setWorkplaceId] = useState('');
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>สถานที่ปฏิบัติงาน</label>
-                                                <input type="" class="form-control" id="" placeholder="สถานที่ปฏิบัติงาน" />
+                                                <label role="workplaceArea">สถานที่ปฏิบัติงาน</label>
+                                                <input type="text" class="form-control" id="workplaceArea" placeholder="สถานที่ปฏิบัติงาน" value={workplaceArea} onChange={(e) => setWorkplaceArea(e.target.value)} />
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>จำนวนวันทำงาน</label>
-                                                <input type="" class="form-control" id="" placeholder="จำนวนวันทำงาน" />
+                                                <label role="workOfWeek">จำนวนวันทำงานต่อสัปดาห์</label>
+                                                <input type="text" class="form-control" id="workOfWeek" placeholder="จำนวนวันทำงานต่อสัปดาห์" value={workOfWeek} onChange={(e) => setWorkOfWeek(e.target.value)} />
                                             </div>
                                         </div>
 
@@ -93,14 +153,14 @@ const [workplaceId , setWorkplaceId] = useState('');
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label>เวลาเข้างาน</label>
-                                                        <input type="" class="form-control" id="" placeholder="เวลาเข้างาน" />
+                                                        <label role="workkStart1">เวลาเข้างาน</label>
+                                                        <input type="text" class="form-control" id="workkStart1" placeholder="เวลาเข้างาน" value={workkStart1} onChange={(e) => setWorkkStart1(e.target.value)} />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label>เวลาออกงาน</label>
-                                                        <input type="" class="form-control" id="" placeholder="เวลาออกงาน" />
+                                                        <label role="workEnd1">เวลาออกงาน</label>
+                                                        <input type="text" class="form-control" id="workEnd1" placeholder="เวลาออกงาน" value={workEnd1} onChange={(e) => setWorkEnd1(e.target.value)} />
                                                     </div>
                                                 </div>
                                             </div>
@@ -117,14 +177,14 @@ const [workplaceId , setWorkplaceId] = useState('');
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label>เวลาเข้างาน</label>
-                                                        <input type="" class="form-control" id="" placeholder="เวลาเข้างาน" />
+                                                        <label role="workkStart2">เวลาเข้างาน</label>
+                                                        <input type="text" class="form-control" id="workkStart2" placeholder="เวลาเข้างาน" value={workkStart2} onChange={(e) => setWorkkStart2(e.target.value)} />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label>เวลาออกงาน</label>
-                                                        <input type="" class="form-control" id="" placeholder="เวลาออกงาน" />
+                                                        <label role="workEnd2">เวลาออกงาน</label>
+                                                        <input type="text" class="form-control" id="workEnd2" placeholder="เวลาออกงาน"  value={workEnd2} onChange={(e) => setWorkEnd2(e.target.value)} />
                                                     </div>
                                                 </div>
                                             </div>
@@ -141,14 +201,14 @@ const [workplaceId , setWorkplaceId] = useState('');
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label>เวลาเข้างาน</label>
-                                                        <input type="" class="form-control" id="" placeholder="เวลาเข้างาน" />
+                                                        <label role="workStart3">เวลาเข้างาน</label>
+                                                        <input type="text" class="form-control" id="workStart3" placeholder="เวลาเข้างาน" value={workStart3} onChange={(e) => setWorkStart3(e.target.value)} />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label>เวลาออกงาน</label>
-                                                        <input type="" class="form-control" id="" placeholder="เวลาออกงาน" />
+                                                        <label role="workEnd3">เวลาออกงาน</label>
+                                                        <input type="text" class="form-control" id="workEnd3" placeholder="เวลาออกงาน" value={workEnd3} onChange={(e) => setWorkEnd3(e.target.value)} />
                                                     </div>
                                                 </div>
                                             </div>
@@ -165,19 +225,19 @@ const [workplaceId , setWorkplaceId] = useState('');
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>ชั่วโมงทำงาน</label>
-                                            <input type="" class="form-control" id="" placeholder="ชั่วโมงทำงาน" />
+                                            <label role="workOfHour">ชั่วโมงทำงาน</label>
+                                            <input type="text" class="form-control" id="workOfHour" placeholder="ชั่วโมงทำงาน" value ={workOfHour} onChange={(e) => setWorkOfHour(e.target.value)} />
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>ชั่วโมง OT</label>
-                                            <input type="" class="form-control" id="" placeholder="ชั่วโมง OT" />
+                                            <label role="workOfOT">ชั่วโมง OT</label>
+                                            <input type="text" class="form-control" id="workOfOT" placeholder="ชั่วโมง OT" value={workOfOT} onChange={(e) => setWorkOfOT(e.target.value)} />
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>ปฏิทินวันทำงาน</label>
+                                            <label >ปฏิทินวันทำงาน</label>
                                             <input type="" class="form-control" id="" placeholder="ปฏิทินวันทำงาน" />
                                         </div>
                                     </div>
@@ -190,34 +250,34 @@ const [workplaceId , setWorkplaceId] = useState('');
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>อัตราค่าจ้าง รายวัน</label>
-                                            <input type="" class="form-control" id="" placeholder="อัตราค่าจ้าง รายวัน" value={dailyrate} onChange={(e) => setDailyrate(e.target.value)} />
+                                            <label role="workRate">อัตราค่าจ้าง รายวัน</label>
+                                            <input type="text" class="form-control" id="workRate" placeholder="อัตราค่าจ้าง รายวัน" value={workRate} onChange={(e) => setWorkRate(e.target.value)} />
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>อัตราค่าจ้าง OT รายชั่วโมง</label>
-                                            <input type="" class="form-control" id="" placeholder="อัตราค่าจ้าง OT รายชั่วโมง" value={otrate} onChange={(e) => setOtrate(e.target.value)} />
+                                            <label role="workRateOT">อัตราค่าจ้าง OT รายชั่วโมง</label>
+                                            <input type="text" class="form-control" id="workRateOT" placeholder="อัตราค่าจ้าง OT รายชั่วโมง" value={workRateOT} onChange={(e) => setWorkRateOT(e.target.value)} />
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>จำนวนพนักงานที่ปฏิบัติงาน</label>
-                                            <input type="" class="form-control" id="" placeholder="จำนวนพนักงานที่ปฏิบัติงาน" value={personemployees} onChange={(e) => setPersonemployees(e.target.value)} />
+                                            <label role="workTotalPeople">จำนวนพนักงานที่ปฏิบัติงาน</label>
+                                            <input type="text" class="form-control" id="workTotalPeople" placeholder="จำนวนพนักงานที่ปฏิบัติงาน" value={workTotalPeople} onChange={(e) => setWorkTotalPeople(e.target.value)} />
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายวัน</label>
-                                            <input type="" class="form-control" id="" placeholder="อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายวัน" value={holidaydaily} onChange={(e) => setHolidaydaily(e.target.value)} />
+                                            <label role="workRateDayoff">อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายวัน</label>
+                                            <input type="text" class="form-control" id="workRateDayoff" placeholder="อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายวัน" value={workRateDayoff} onChange={(e) => setWorkRateDayoff(e.target.value)}  />
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง</label>
-                                            <input type="" class="form-control" id="" placeholder="อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง" value={holidayhour} onChange={(e) => setHolidayhour(e.target.value)} />
+                                            <label role="workRateDayoffHour">อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง</label>
+                                            <input type="text" class="form-control" id="workRateDayoffHour" placeholder="อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง" value={workRateDayoffHour} onChange={(e) => setWorkRateDayoffHour(e.target.value)}  />
                                         </div>
                                     </div>
                                 </div>
@@ -229,8 +289,8 @@ const [workplaceId , setWorkplaceId] = useState('');
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>ที่อยู่หน่วยงาน</label>
-                                            <input type="" class="form-control" id="" placeholder="ที่อยู่หน่วยงาน" />
+                                            <label role="workplaceAddress">ที่อยู่หน่วยงาน</label>
+                                            <input type="text" class="form-control" id="workplaceAddress" placeholder="ที่อยู่หน่วยงาน" value={workplaceAddress} onChange={(e) => setWorkplaceAddress(e.target.value)} />
                                         </div>
                                     </div>
                                 </div>
@@ -240,6 +300,8 @@ const [workplaceId , setWorkplaceId] = useState('');
                                 <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
                                 <button class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
                             </div>
+
+                            </form>
                         </div>
                         {/* <!-- /.container-fluid --> */}
                     </section>
@@ -248,9 +310,7 @@ const [workplaceId , setWorkplaceId] = useState('');
 
             </div>
         </body>
-
-
-    )
+    );
 }
 
 export default Setting
