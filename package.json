@@ -9,9 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@daypilot/daypilot-lite-react": "^3.15.0",
     "axios": "^1.4.0",
     "bootstrap": "^5.2.3",
     "cors": "^2.8.5",
+    "daypilot-pro-angular": "https://npm.daypilot.org/daypilot-pro-angular/trial/2023.3.5603.tar.gz",
     "jwt-decode": "^3.1.2",
     "mongodb": "^5.5.0",
     "react": "^18.2.0",

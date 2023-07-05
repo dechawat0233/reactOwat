@@ -11,14 +11,14 @@ import EmployeesSelected from './EmployeesSelected';
 function Salary() {
     const [storedEmp, setStoredEmp] = useState([]);
     const [newEmp, setNewEmp] = useState(true);
-// const [employeeselection , setEmployeeselection] = useState([]);
+    // const [employeeselection , setEmployeeselection] = useState([]);
 
-useEffect(() => {
-    const storedValue = sessionStorage.getItem('empSelect');
-    if (storedValue) {
-        // setEmployeeselection(storedValue);
-    }
-}, [] );
+    useEffect(() => {
+        const storedValue = sessionStorage.getItem('empSelect');
+        if (storedValue) {
+            // setEmployeeselection(storedValue);
+        }
+    }, []);
 
     //employee data
     const [employeeId, setEmployeeId] = useState('');
@@ -42,13 +42,30 @@ useEffect(() => {
     const [salarypayment, setSalarypayment] = useState(''); //วิธีจ่ายเงิน
     const [salarybank, setSalarybank] = useState(''); //ธนาคาร
     const [banknumber, setBanknumber] = useState(''); //เลขบัญชี
+
     const [salaryadd1, setSalaryadd1] = useState(''); //เงินเพิ่มพิเศษ ค่ารถ
     const [salaryadd2, setSalaryadd2] = useState(''); //เงินเพิ่มพิเศษ ค่าอาหาร
+    const [salaryadd3, setSalaryadd3] = useState(''); //เงินเพิ่มพิเศษ เบี้ยขยัน
+    const [salaryadd4, setSalaryadd4] = useState(''); //เงินเพิ่มพิเศษ โทรศัพท์
+    const [salaryadd5, setSalaryadd5] = useState(''); //เงินเพิ่มพิเศษ เงินประจำตำแหน่ง
 
     const [salaryaddtype, setSalaryaddtype] = useState(''); //เพิ่มพิเศษแบบ ต่อวัน ต่อเดือน
     const [salaryaddsum, setSalaryaddsum] = useState(''); //เพิ่มพิเศษแบบ ต่อวัน ต่อเดือน
+
     const [salaryadd1v, setSalaryadd1v] = useState(''); //จำนวนเงินเพิ่มพิเศษ ค่ารถ 
     const [salaryadd2v, setSalaryadd2v] = useState(''); //จำนวนเงินเพิ่มพิเศษ ค่าอาหาร
+    const [salaryadd3v, setSalaryadd3v] = useState(''); //จำนวนเงินเพิ่มพิเศษ เบี้ยขยัน 
+    const [salaryadd4v, setSalaryadd4v] = useState(''); //จำนวนเงินเพิ่มพิเศษ โทรศัพท์
+    const [salaryadd5v, setSalaryadd5v] = useState(''); //จำนวนเงินเพิ่มพิเศษ เงินประจำตำแหน่ง 
+//////
+    const [remainbusinessleave, setRemainbusinessleave] = useState(''); //ลาคงเหลือ วันลากิจคงเหลือ 
+    const [businessleavesalary, setBusinessleavesalary] = useState(''); //ลาคงเหลือ จำนวนเงินต่อวัน
+
+    const [remainsickleave, setRemainsickleave] = useState(''); //ลาคงเหลือ วันลาป่วยคงเหลือ 
+    const [sickleavesalary, setSickleavesalary] = useState(''); //ลาคงเหลือ จำนวนเงินต่อวัน
+
+    const [remainvacation, setRemainvacation] = useState(''); //ลาคงเหลือ วันลาพักร้อนคงเหลือ 
+    const [vacationsalary, setVacationsalary] = useState(''); //ลาคงเหลือ จำนวนเงินต่อวัน 
 
 
     const [prefix, setPrefix] = useState(''); //นำหน้าชื่อ
@@ -107,6 +124,27 @@ useEffect(() => {
             setSalaryadd2(event.target.value);
         }
     };
+    const handleSalaryadd3 = (event) => {
+        if (salaryadd3 !== '') {
+            setSalaryadd3('');
+        } else {
+            setSalaryadd3(event.target.value);
+        }
+    };
+    const handleSalaryadd4 = (event) => {
+        if (salaryadd4 !== '') {
+            setSalaryadd4('');
+        } else {
+            setSalaryadd4(event.target.value);
+        }
+    };
+    const handleSalaryadd5 = (event) => {
+        if (salaryadd5 !== '') {
+            setSalaryadd5('');
+        } else {
+            setSalaryadd5(event.target.value);
+        }
+    };
     const handleSalaryaddtype = (event) => {
         setSalaryaddtype(event.target.value);
     };
@@ -141,8 +179,8 @@ useEffect(() => {
 
     async function handleManageSalary(event) {
         event.preventDefault();
-    
-    
+
+
     }
 
 
@@ -166,7 +204,7 @@ useEffect(() => {
         setDepartment(empSelect.department);
         setWorkplace(empSelect.workplace);
         setJobtype(empSelect.jobtype);
-        setStartjob( new Date(empSelect.startjob) );
+        setStartjob(new Date(empSelect.startjob));
         setExceptjob(new Date(empSelect.exceptjob));
         setPrefix(empSelect.prefix);
         setName(empSelect.name);
@@ -635,6 +673,30 @@ useEffect(() => {
                                                                 />
                                                                 ค่าอาหาร
                                                             </label>
+                                                            <label>
+                                                                <input
+                                                                    type="checkbox"
+                                                                    checked={salaryadd3}
+                                                                    onChange={handleSalaryadd3}
+                                                                />
+                                                                เบี้ยขยัน
+                                                            </label>
+                                                            <label>
+                                                                <input
+                                                                    type="checkbox"
+                                                                    checked={salaryadd4}
+                                                                    onChange={handleSalaryadd4}
+                                                                />
+                                                                ค่าโทรศัพท์
+                                                            </label>
+                                                            <label>
+                                                                <input
+                                                                    type="checkbox"
+                                                                    checked={salaryadd5}
+                                                                    onChange={handleSalaryadd5}
+                                                                />
+                                                                เงินประจำตำแหน่ง
+                                                            </label>
 
                                                             {/* <select class="form-control">
                                                                 <option>ไม่กำหนด</option>
@@ -676,6 +738,33 @@ useEffect(() => {
                                                             <div class="form-group">
                                                                 <label role="salaryadd2v">เงินเพิ่มค่าอาหาร</label>
                                                                 <input type="text" class="form-control" id="salaryadd2v" placeholder="ค่าอาหาร" value={salaryadd2v} onChange={(e) => setSalaryadd2v(e.target.value)} />
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    {salaryadd3 && (
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label role="salaryadd3v">เงินเพิ่มค่าอาหาร</label>
+                                                                <input type="text" class="form-control" id="salaryadd3v" placeholder="ค่าเบี้ยขยัน" value={salaryadd3v} onChange={(e) => setSalaryadd3v(e.target.value)} />
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    {salaryadd4 && (
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label role="salaryadd4v">เงินเพิ่มค่าอาหาร</label>
+                                                                <input type="text" class="form-control" id="salaryadd4v" placeholder="โทรศัพท์" value={salaryadd4v} onChange={(e) => setSalaryadd4v(e.target.value)} />
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    {salaryadd5 && (
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label role="salaryadd5v">เงินเพิ่มค่าอาหาร</label>
+                                                                <input type="text" class="form-control" id="salaryadd5v" placeholder="เงินประจำตำแหน่ง" value={salaryadd5v} onChange={(e) => setSalaryadd5v(e.target.value)} />
                                                             </div>
                                                         </div>
                                                     )}
@@ -736,6 +825,69 @@ useEffect(() => {
                                         {/* <!--Frame--> */}
                                     </div>
                                 </div>
+
+
+                                <h2 class="title">เงินเพิ่มพิเศษ</h2>
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <section class="Frame">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="remainbusinessleave">วันลากิจคงเหลือ</label>
+                                                            <input type="text" class="form-control" id="remainbusinessleave" placeholder="วันลากิจคงเหลือ" value={remainbusinessleave} onChange={(e) => setRemainbusinessleave(e.target.value)} />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="businessleavesalary">จำนวนเงินต่อวัน</label>
+                                                            <input type="text" class="form-control" id="businessleavesalary" placeholder="จำนวนเงินต่อวัน" value={businessleavesalary} onChange={(e) => setBusinessleavesalary(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/* <!--row--> */}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="remainsickleave">วันลาป่วยคงเหลือ</label>
+                                                            <input type="text" class="form-control" id="remainsickleave" placeholder="จำนวนเงินต่อวัน" value={remainsickleave} onChange={(e) => setRemainsickleave(e.target.value)} />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="sickleavesalary">จำนวนเงินต่อวัน</label>
+                                                            <input type="text" class="form-control" id="sickleavesalary" placeholder="จำนวนเงินต่อวัน" value={sickleavesalary} onChange={(e) => setSickleavesalary(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/* <!--row--> */}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="remainvacation">วันลาพักร้อนคงเหลือ</label>
+                                                            <input type="text" class="form-control" id="remainvacation" placeholder="จำนวนเงินต่อวัน" value={remainvacation} onChange={(e) => setRemainvacation(e.target.value)} />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="vacationsalary">จำนวนเงินต่อวัน</label>
+                                                            <input type="text" class="form-control" id="vacationsalary" placeholder="จำนวนเงินต่อวัน" value={vacationsalary} onChange={(e) => setVacationsalary(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/* <!--row--> */}
+                                            </div>
+                                            {/* <!--col-md-12--> */}
+                                        </section>
+                                        {/* <!--Frame--> */}
+                                    </div>
+                                </div>
+
+
                                 <div class="line_btn">
                                     <button type="submit" class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
                                     <button type="reset" class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
