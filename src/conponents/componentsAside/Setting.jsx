@@ -8,7 +8,13 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import EmployeesSelected from './EmployeesSelected';
 
+// import { DayPilotCalendar, DayPilotNavigator } from "@daypilot/daypilot-lite-react";
+// import "./CalendarStyles.css";
+import Calendar from 'react-calendar';
+
+
 function Setting() {
+
     return (
 
         <body class="hold-transition sidebar-mini">
@@ -216,6 +222,7 @@ function Setting() {
                     </section>
                     {/* <!-- /.content --> */}
                 </div>
+
             </div>
         </body>
 
