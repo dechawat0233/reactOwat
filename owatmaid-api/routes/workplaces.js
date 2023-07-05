@@ -1,4 +1,4 @@
-const connectionString = require('../config');
+    const connectionString = require('../config');
 
 var express = require('express');
 var router = express.Router();
@@ -7,6 +7,7 @@ const cors = require('cors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
+const { Await } = require('../../node_modules/react-router/dist/index');
 
 //Connect mongodb
 mongoose.connect(connectionString ,{ useNewUrlParser: true, useUnifiedTopology: 
@@ -29,8 +30,8 @@ const workplaceSchema = new mongoose.Schema({
   workplaceArea: {
     type: String
   },
-  workOfWeek: {
-    type: String
+    workOfWeek: {
+        type: String
   },
   workkStart1: {
     type: String
@@ -44,7 +45,7 @@ const workplaceSchema = new mongoose.Schema({
     workEnd2: {
         type: String
     },
-    workkStart3: {
+    workStart3: {
         type: String
     },
     workEnd3: {
@@ -64,11 +65,16 @@ const workplaceSchema = new mongoose.Schema({
   },
   workTotalPeople: {
     type: String,
-  },
+    },
+    workRateDayoff: {
+        type: String
+    },
+    workRateDayoffHour: {
+        type: String
+    },
   workplaceAddress: {
     type: String
-    },
-
+    }
 });
 
 // Create the workplace model based on the schema
@@ -143,94 +149,53 @@ router.post('/search', async (req, res) => {
 // Create new workplace 
 router.post('/create', async (req, res) => {
   
-  const {
-      workplaceId,
-    position ,
-     department ,
-         workplace, 
-    jobtype ,
-    startjob,
-   exceptjob,
-   prefix,
-   name,
-   lastName,
-   nickName,
-   gender,
-   dateOfBirth,
-   age,
-   idCard,
-   ethnicity,
-   religion,
-   maritalStatus,
-   militaryStatus,
-   address,
-   currentAddress,
-   phoneNumber,
-   emergencyContactNumber,
-   idLine,
-   vaccination,
-   treatmentRights
-       } = req.body;
-  console.log(`Name: ${name}, Id card: ${idCard}`);
+    const {
+        workplaceId,
+        workplaceName,
+        workplaceArea,
+        workOfWeek,
+        workkStart1,
+        workEnd1,
+        workkStart2,
+        workEnd2,
+        workStart3,
+        workEnd3,
+        workOfHour,
+        workOfOT,
+        workRate,
+        workRateOT,
+        workTotalPeople,
+        workRateDayoff,
+        workRateDayoffHour,
+        workplaceAddress
+    } = req.body;
 
-//example data
-/*
-  let employeeId  = '1001';
-  let name ='วสันต์';
-  let lastName= 'แปงปวนจู';
-  let nickName = 'สันต์';
-  let gender= 'male';
-  let dateOfBirth = new Date("1991/10/03");
-  let age= 31;
-  let idCard = '1234567890123';
-  let ethnicity = 'ไทย';
-  let religion= 'พุทธ';
-  let maritalStatus = 'married';
-  let militaryStatus = 'other';
-  let address = '251/124 Rich park terminal พหล 59 ';
-  let currentAddress = '251/124 Rich park terminal พหล 59 ';
-  let phoneNumber = '0853568570';
-  let emergencyContactNumber = '0853568570';
-  let idLine = 'Wasan2274';
-  let vaccination = '';
-  let treatmentRights = '';
-  let position = '';
-  let department = '';
-  */
-
-  // Create employee
-  const employee = new Employee({ 
-     employeeId,
-     position ,
-      department ,
-          workplace, 
-     jobtype ,
-     startjob,
-    exceptjob,
-    prefix,
-    name,
-    lastName,
-    nickName,
-    gender,
-    dateOfBirth,
-    age,
-    idCard,
-    ethnicity,
-    religion,
-    maritalStatus,
-    militaryStatus,
-    address,
-    currentAddress,
-    phoneNumber,
-    emergencyContactNumber,
-    idLine,
-    vaccination,
-    treatmentRights
+    
+    // Create workplace
+    const workplace = new Workplace({
+        workplaceId,
+        workplaceName,
+        workplaceArea,
+        workOfWeek,
+        workkStart1,
+        workEnd1,
+        workkStart2,
+        workEnd2,
+        workStart3,
+        workEnd3,
+        workOfHour,
+        workOfOT,
+        workRate,
+        workRateOT,
+        workTotalPeople,
+        workRateDayoff,
+        workRateDayoffHour,
+        workplaceAddress
     });
 
-  try {
-    await employee.save();
-    res.json(employee);
+    try {
+        await workplace.save();
+        res.json(workplace );
   } catch (err) {
     console.log(err);
     res.status(400).json({ error: err.message });
