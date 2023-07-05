@@ -15,6 +15,13 @@ import Calendar from 'react-calendar';
 
 function Setting() {
 
+    const [dailyrate, setDailyrate] = useState(''); //อัตราค่าจ้าง รายวัน   
+    const [otrate, setOtrate] = useState(''); //อัตราค่าจ้าง OT รายชั่วโมง
+
+    const [personemployees, setPersonemployees] = useState(''); //จำนวนพนักงานที่ปฏิบัติงาน
+    const [holidaydaily, setHolidaydaily] = useState(''); //อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายวัน
+
+    const [holidayhour, setHolidayhour] = useState(''); //อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง
     return (
 
         <body class="hold-transition sidebar-mini">
@@ -182,19 +189,33 @@ function Setting() {
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>อัตราค่าจ้าง รายวัน</label>
-                                            <input type="" class="form-control" id="" placeholder="อัตราค่าจ้าง รายวัน" />
+                                            <input type="" class="form-control" id="" placeholder="อัตราค่าจ้าง รายวัน" value={dailyrate} onChange={(e) => setDailyrate(e.target.value)} />
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>อัตราค่าจ้าง OT รายชั่วโมง</label>
-                                            <input type="" class="form-control" id="" placeholder="อัตราค่าจ้าง OT รายชั่วโมง" />
+                                            <input type="" class="form-control" id="" placeholder="อัตราค่าจ้าง OT รายชั่วโมง" value={otrate} onChange={(e) => setOtrate(e.target.value)} />
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>จำนวนพนักงานที่ปฏิบัติงาน</label>
-                                            <input type="" class="form-control" id="" placeholder="จำนวนพนักงานที่ปฏิบัติงาน" />
+                                            <input type="" class="form-control" id="" placeholder="จำนวนพนักงานที่ปฏิบัติงาน" value={personemployees} onChange={(e) => setPersonemployees(e.target.value)} />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายวัน</label>
+                                            <input type="" class="form-control" id="" placeholder="อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายวัน" value={holidaydaily} onChange={(e) => setHolidaydaily(e.target.value)} />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง</label>
+                                            <input type="" class="form-control" id="" placeholder="อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง" value={holidayhour} onChange={(e) => setHolidayhour(e.target.value)} />
                                         </div>
                                     </div>
                                 </div>
