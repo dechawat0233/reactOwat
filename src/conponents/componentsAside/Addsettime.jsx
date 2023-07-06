@@ -217,7 +217,9 @@ function Addsettime() {
                     </section>
 
                 </form>
-                {/* <button type="submit">Submit Form 1</button> */}
+                <div class="form-group">
+                    <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; บันทึก</button>
+                </div>
             </form>
         );
     } else if (selectedOption === 'persontime') {
@@ -355,7 +357,9 @@ function Addsettime() {
                     </section>
 
                 </form>
-                <button type="submit">Submit Form 1</button>
+                <div class="form-group">
+                    <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; บันทึก</button>
+                </div>
             </form>
 
 
@@ -383,127 +387,73 @@ function Addsettime() {
                     </div>
                     {/* <!-- /.content-header -->
                     <!-- Main content --> */}
+
                     <section class="content">
-                        <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="container-fluid">
+                                    <h2 class="title">ข้อมูลการลงเวลาทำงานของพนักงาน</h2>
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label role="formsettime">รูปแบบการลงเวลา</label>
+                                                    <select id="formsettime" name="formsettime" class="form-control" value={selectedOption} onChange={handleOptionChange}>
+                                                        <option value="agencytime">ลงเวลาในหน่วยงาน</option>
+                                                        <option value="persontime">ลงเวลาบุลคล</option>
+                                                    </select>
 
 
-
-                            <h2 class="title">ข้อมูลการลงเวลาทำงานของพนักงาน</h2>
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label role="formsettime">รูปแบบการลงเวลา</label>
-                                            <select id="formsettime" name="formsettime" class="form-control" value={selectedOption} onChange={handleOptionChange}>
-                                                <option value="agencytime">ลงเวลาในหน่วยงาน</option>
-                                                <option value="persontime">ลงเวลาบุลคล</option>
-                                            </select>
-
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {selectedOption && (
-                                <div>
-                                    {formToShow}
-                                </div>
-                            )}
-                            {/* <form >
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label role="agencynumber">รหัสหน่วยงาน</label>
-                                            <input type="text" class="form-control" id="agencynumber" placeholder="รหัสหน่วยงาน" value={workplaceId} onChange={(e) => setWorkplaceId(e.target.value)} />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label role="agencyname">ชื่อหน่วยงาน</label>
-                                            <input type="text" class="form-control" id="agencyname" placeholder="ชื่อหน่วยงาน" value={workplaceId} onChange={(e) => setWorkplaceId(e.target.value)} />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label role="datetime">วันที่</label>
-                                            <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
-                                                <DatePicker id="datetime" name="datetime"
-                                                    className="form-control" // Apply Bootstrap form-control class
-                                                    popperClassName="datepicker-popper" // Apply custom popper class if needed
-                                                    selected={startjob}
-                                                    onChange={handleStartDateChange}
-                                                    dateFormat="dd/MM/yyyy" />
+                                                </div>
                                             </div>
                                         </div>
-
                                     </div>
-                                </div>
+                                    {selectedOption && (
+                                        <div>
+                                            {formToShow}
+                                        </div>
+                                    )}
 
-                            </form>
-                            <form onSubmit={handleManageWorkplace}>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
                                 <section class="Frame">
-                                    <div class="container">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>รหัสพนักงาน</th>
-                                                    <th>ชื่อพนักงาน</th>
-                                                    <th>กะการทำงาน</th>
-                                                    <th>เวลาเข้างาน</th>
-                                                    <th>เวลาออกงาน</th>
-                                                    <th>ชั่วโมงทำงาน</th>
-                                                    <th>ชั่วโมง OT</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td><input type="text" class="form-control" name='staffId' value={staffId} onChange={(e) => setStaffId(e.target.value)} /></td>
-                                                    <td><input type="text" class="form-control" name='staffName' value={staffName} onChange={(e) => setStaffName(e.target.value)} /></td>
-                                                    <td>
-                                                        <select id="formsettime" name="formsettime" class="form-control">
-                                                            <option value="morning_shift">กะเช้า</option>
-                                                            <option value="afternoon_shift">กะบ่าย</option>
-                                                            <option value="night_shift">กะดึก</option>
-                                                        </select></td>
-                                                    <td><input type="time" class="form-control" name='startTime' value={startTime} onChange={(e) => setStartTime(e.target.value)} /></td>
-                                                    <td><input type="time" class="form-control" name='endTime' value={endTime} onChange={(e) => setEndTime(e.target.value)} /></td>
-                                                    <td><input type="text" class="form-control" name='allTime' value={allTime} onChange={(e) => setAllTime(e.target.value)} /></td>
-                                                    <td><input type="text" class="form-control" name='otTime' value={otTime} onChange={(e) => setOtTime(e.target.value)} /></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text" class="form-control" name='' value='' /></td>
-                                                    <td><input type="text" class="form-control" name='' value='' /></td>
-                                                    <td>
-                                                        <select id="formsettime" name="formsettime" class="form-control">
-                                                            <option value="morning_shift">กะเช้า</option>
-                                                            <option value="afternoon_shift">กะบ่าย</option>
-                                                            <option value="night_shift">กะดึก</option>
-                                                        </select></td>
-                                                    <td><input type="time" class="form-control" name='' value='' /></td>
-                                                    <td><input type="time" class="form-control" name='' value='' /></td>
-                                                    <td><input type="text" class="form-control" name='' value='' /></td>
-                                                    <td><input type="text" class="form-control" name='' value='' /></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="text" class="form-control" name='' value='' /></td>
-                                                    <td><input type="text" class="form-control" name='' value='' /></td>
-                                                    <td>
-                                                        <select id="formsettime" name="formsettime" class="form-control">
-                                                            <option value="morning_shift">กะเช้า</option>
-                                                            <option value="afternoon_shift">กะบ่าย</option>
-                                                            <option value="night_shift">กะดึก</option>
-                                                        </select></td>
-                                                    <td><input type="time" class="form-control" name='' value='' /></td>
-                                                    <td><input type="time" class="form-control" name='' value='' /></td>
-                                                    <td><input type="text" class="form-control" name='' value='' /></td>
-                                                    <td><input type="text" class="form-control" name='' value='' /></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                    <h2 class="title">ค้นหา</h2>
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label role="formsettime">รูปแบบการลงเวลา</label>
+                                                    <select id="formsettime" name="formsettime" class="form-control" value={selectedOption} onChange={handleOptionChange}>
+                                                        <option value="agencytime">ลงเวลาในหน่วยงาน</option>
+                                                        <option value="persontime">ลงเวลาบุลคล</option>
+                                                    </select>
+
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label role="formsettime">รูปแบบการลงเวลา</label>
+                                                    <input type='text' class="form-control" name='search' />
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้าหา</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </section>
-
-                            </form> */}
+                            </div>
                         </div>
                         {/* <div>
                             <select value={selectedOption} onChange={handleOptionChange}>
