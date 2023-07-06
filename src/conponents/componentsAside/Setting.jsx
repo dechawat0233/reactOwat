@@ -37,6 +37,33 @@ function Setting() {
     const [workRateDayoffHour, setWorkRateDayoffHour] = useState(''); //ค่าจ้างวันหยุดต่อชั่วโมง
     const [workplaceAddress, setWorkplaceAddress] = useState(''); //ที่อยู่หน่วยงาน
 
+
+    //set data to form
+    async function handleClickResult(workplace ) {
+setNewWorkplace(false);
+
+setWorkplaceId(workplace.workplaceId);
+setWorkplaceName(workplace.workplaceName);
+setWorkplaceArea(workplace.workplaceArea);
+setWorkOfWeek(workplace.workOfWeek);
+setWorkkStart1(workplace.workkStart1);
+setWorkEnd1(workplace.workEnd1);
+setWorkkStart2(workplace.workkStart2);
+setWorkEnd2(workplace.workEnd2);
+setWorkkStart3(workplace.workkStart3);
+setWorkEnd3(workplace.workEnd3);
+setWorkOfHour(workplace.workOfHour);
+setWorkOfOT(workplace.workOfOT);
+
+setWorkRate(workplace.workRate);
+setWorkRateOT(workplace.workRateOT);
+setWorkTotalPeople(workplace.workTotalPeople);
+setWorkRateDayoff(workplace.workRateDayoff);
+setWorkRateDayoffHour(workplace.workRateDayoffHour);
+setWorkplaceAddress(workplace.workplaceAddress);
+
+}
+
 //data for search
 const [searchWorkplaceId, setSearchWorkplaceId] = useState(''); //รหัสหน่วยงาน
 const [searchWorkplaceName, setSearchWorkplaceName] = useState(''); //ชื่อหน่วยงาน
@@ -44,8 +71,8 @@ const [searchResult , setSearchResult] = useState([]);
 
     async function handleSearch(event) {
         event.preventDefault();
-alert(searchWorkplaceId);
-        alert(searchWorkplaceName);
+// alert(searchWorkplaceId);
+        // alert(searchWorkplaceName);
 
 //get value from form search        
         const data = {
@@ -57,8 +84,11 @@ alert(searchWorkplaceId);
             const response = await axios.post(endpoint + '/workplace/search', data);
          setSearchResult(response.data.workplaces);
             // setMessage(`ผลการค้นหา ${response.data.employees.length} รายการ`);
-alert(response.data.workplaces.length);
-alert('search success');
+// alert(response.data.workplaces.length);
+if(response.data.workplaces.length <1 ){
+    window.location.reload();
+
+}
           } catch (error) {
             // setMessage('ไม่พบผลการค้นหา กรุณาตรวจสอบข้อมูลที่ใช้ในการค้นหาอีกครั้ง');
             alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
@@ -166,7 +196,7 @@ alert('search success');
 
                                     <br />
                                     <div class="d-flex justify-content-center">
-                                        <h2 class="title">ผลลัพธ์</h2>
+                                        <h2 class="title">ผลลัพธ์ {searchResult.length} รายการ</h2>
                                     </div>
                                     <div class="d-flex justify-content-center">
                                         <div class="row">
@@ -174,9 +204,14 @@ alert('search success');
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
-                                                        <li >
-                                                            รหัส : 658913 ชื่อ : ไทยยั่งยืน
-                                                        </li>
+                                                        {searchResult.map(workplace => (
+                                                            <li
+                                                            key={workplace.id}
+                                                            onClick={() => handleClickResult(workplace) }
+                                                            >
+รหัส {workplace.workplaceId} หน่วยงาน {workplace.workplaceName}
+                                                            </li>
+                                                        )) }
 
 
                                                     </ul>
