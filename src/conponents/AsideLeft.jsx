@@ -68,7 +68,7 @@ function AsideLeft() {
                 <Link to="/dashboard" className="nav-link"><i class="nav-icon fas fa-tachometer-alt"></i> หน้าหลัก</Link>
               </li>
               <li class="nav-item">
-                <Link to="../content/about.jsx" className="nav-link"><i class="nav-icon fas fa-business-time"></i> ระบบลงเวลา</Link>
+                <Link to="/addsettime" className="nav-link"><i class="nav-icon fas fa-business-time"></i> ระบบลงเวลา</Link>
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link"><i class="nav-icon fas fa-file-invoice-dollar"></i>

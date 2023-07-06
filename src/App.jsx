@@ -37,6 +37,7 @@ import Application4 from "./conponents/componentsAside/Application4";
 import ApplicationSummary from "./conponents/componentsAside/ApplicationSummary";
 
 import Setting from "./conponents/componentsAside/Setting";
+import Addsettime from "./conponents/componentsAside/Addsettime";
 
 
 // import Time from "./conponents/Time";
@@ -120,6 +121,7 @@ function App() {
           <Route path="/other_expenses" element={<OtherExpenses />} />
           <Route path="/search_results" element={<SearchResults />} />
           <Route path="/setting" element={<Setting />} />
+          <Route path="/addsettime" element={<Addsettime />} />
 
           <Route path="/application" element={<Application />} />
           <Route path="/applicatio1" element={<Application1 />} />
