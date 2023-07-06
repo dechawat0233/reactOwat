@@ -126,6 +126,10 @@ function Setting() {
 
                                         </div>
                                         <div class="d-flex justify-content-center">
+                                            <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา</button>
+                                        </div>
+                                        <br />
+                                        <div class="d-flex justify-content-center">
                                             <h2 class="title">ผลลัพธ์</h2>
                                         </div>
                                         <div class="d-flex justify-content-center">
@@ -134,6 +138,7 @@ function Setting() {
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label role="workplaceId">รหัส : 658913 ชื่อ : ไทยยั่งยืน</label>
+                                                        <input type='hidden' value='' />
                                                     </div>
                                                 </div>
                                             </div>
