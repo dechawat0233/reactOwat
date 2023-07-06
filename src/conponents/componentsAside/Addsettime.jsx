@@ -229,13 +229,13 @@ function Addsettime() {
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label role="agencynumber">รหัสหน่วยงาน</label>
+                                <label role="agencynumber">รหัสพนักงาน</label>
                                 <input type="text" class="form-control" id="agencynumber" placeholder="รหัสหน่วยงาน" value={workplaceId} onChange={(e) => setWorkplaceId(e.target.value)} />
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label role="agencyname">ชื่อหน่วยงาน</label>
+                                <label role="agencyname">ชื่อพนักงาน</label>
                                 <input type="text" class="form-control" id="agencyname" placeholder="ชื่อหน่วยงาน" value={workplaceName} onChange={(e) => setworkplaceName(e.target.value)} />
                             </div>
                         </div>
@@ -399,8 +399,8 @@ function Addsettime() {
                                                 <div class="form-group">
                                                     <label role="formsettime">รูปแบบการลงเวลา</label>
                                                     <select id="formsettime" name="formsettime" class="form-control" value={selectedOption} onChange={handleOptionChange}>
-                                                        <option value="agencytime">ลงเวลาในหน่วยงาน</option>
-                                                        <option value="persontime">ลงเวลาบุลคล</option>
+                                                        <option value="agencytime">รูปแบบหน่วยงาน</option>
+                                                        <option value="persontime">รูปแบบบุคคล</option>
                                                     </select>
 
 
@@ -423,10 +423,12 @@ function Addsettime() {
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label role="formsettime">รูปแบบค้นหา</label>
+                                                    <label role="formsettime">ค้นหาด้วย</label>
                                                     <select id="formsettime" name="formsettime" class="form-control" value={selectedOption} onChange={handleOptionChange}>
-                                                        <option value="agencytime">หน่วยงาน</option>
-                                                        <option value="persontime">บุลคล</option>
+                                                        <option value="workplaceId">รหัสหน่วยงาน</option>
+                                                        <option value="agencytime">ชื่อหน่วยงาน</option>
+                                                        <option value="employeeId">รหัสพนักงาน</option>
+                                                        <option value="persontime">ชื่อพนักงาน</option>
                                                     </select>
 
 
