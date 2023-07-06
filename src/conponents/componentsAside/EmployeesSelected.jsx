@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
-function EmployeesSelected({onEmployeeSelect }) {
-  const [storedEmp , setStoredEmp ] = useState([]);
+function EmployeesSelected({ onEmployeeSelect }) {
+  const [storedEmp, setStoredEmp] = useState([]);
   const [selectedEmployees, setSelectedEmployees] = useState([]);
-  const [selectedEmployee , setSelectedEmployee] = useState(null);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
 
 
   useEffect(() => {
@@ -13,7 +13,7 @@ function EmployeesSelected({onEmployeeSelect }) {
       // setStoredEmp(storedItem);
       const parsedData = JSON.parse(storedItem);
       setStoredEmp(parsedData);
-//      console.log('Item exists:', storedItem);
+      //      console.log('Item exists:', storedItem);
 
     } else {
       // Item does not exist in localStorage
@@ -29,7 +29,7 @@ function EmployeesSelected({onEmployeeSelect }) {
     const handleSelectedEmployeesChange = (event) => {
       const { selectedEmployees } = event.detail;
       setStoredEmp(selectedEmployees);
-    localStorage.setItem('selectedEmployees', JSON.stringify(selectedEmployees));
+      localStorage.setItem('selectedEmployees', JSON.stringify(selectedEmployees));
 
     };
 
@@ -52,25 +52,25 @@ function EmployeesSelected({onEmployeeSelect }) {
   async function handleRemoveEmployee(employeeId) {
     const updatedSelectedEmployees = await storedEmp.filter(
       employee => employee.employeeId !== employeeId
-          );
+    );
 
     // const selectedEmployeeCount = updatedSelectedEmployees.length;
-    
+
     await localStorage.setItem('selectedEmployees', JSON.stringify(updatedSelectedEmployees));
 
     await setStoredEmp(updatedSelectedEmployees);
     // const test = JSON.parse(localStorage.getItem('selectedEmployees')) || [];
-// alert(test.length);
+    // alert(test.length);
 
 
     // Dispatch a custom event to notify other components about the change
-/*
-    const event = new CustomEvent('removeEventListener', {
-      detail: { selectedEmployees: updatedSelectedEmployees },
-    });
-    window.dispatchEvent(event);
-*/
-    
+    /*
+        const event = new CustomEvent('removeEventListener', {
+          detail: { selectedEmployees: updatedSelectedEmployees },
+        });
+        window.dispatchEvent(event);
+    */
+
     // Dispatch a custom event to notify other components about the change
     const event = new CustomEvent('selectedEmployeesChanged', {
       detail: { selectedEmployees: updatedSelectedEmployees },
@@ -84,7 +84,7 @@ function EmployeesSelected({onEmployeeSelect }) {
   return (
     <div>
       {/* Display selected employees */}
-{/* <h2>selected employee {employeesSelected.length } item</h2> */}
+      {/* <h2>selected employee {employeesSelected.length } item</h2> */}
       {/* {storedEmp.length > 0 && (
         <div>
           <h2>test employee selected</h2>
@@ -96,35 +96,35 @@ function EmployeesSelected({onEmployeeSelect }) {
         </div>
       )} */}
 
-{storedEmp.length > 0 && (
-                <div style={{ textAlign: 'center' }}>
+      {storedEmp.length > 0 && (
+        <div style={{ textAlign: 'center' }}>
 
-<div>
-                      <h3>จำนวนพนักงานที่เลือก: {storedEmp.length}</h3>
-                      <ul style ={{listStyle:'none',marginLeft:"-2rem"}}>
-                      {storedEmp.map((employee) => (
-                          <li key={employee.employeeId}>
-                          {employee.name}
+          <div>
+            <h3>จำนวนพนักงานที่เลือก: {storedEmp.length}</h3>
+            <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
+              {storedEmp.map((employee) => (
+                <li key={employee.employeeId}>
+                  {employee.name}
 
-                          <button onClick={() => handleEmployeeSelect(employee)} style={{
-                            width: '5rem', height: '2rem', margin: '0.2rem',borderRadius: '8px'
-                            }}>เลือก</button>
+                  <button onClick={() => handleEmployeeSelect(employee)} style={{
+                    width: '5rem', height: '2rem', margin: '0.2rem', borderRadius: '8px'
+                  }}>เลือก</button>
 
-                          <button type="button" onClick={() => handleRemoveEmployee(employee.employeeId)} style={{
-                            width: '5rem', height: '2rem', margin: '0.2rem',borderRadius: '8px'
-                            }}>นำออก</button>
-                        </li>
-                      ))}
+                  <button type="button" onClick={() => handleRemoveEmployee(employee.employeeId)} style={{
+                    width: '5rem', height: '2rem', margin: '0.2rem', borderRadius: '8px'
+                  }}>นำออก</button>
+                </li>
+              ))}
 
-                      </ul>
-                      </div>
+            </ul>
+          </div>
 
-                    </div>
+        </div>
 
-)}
-    
+      )}
+
     </div>
   );
-  }
+}
 
 export default EmployeesSelected;
