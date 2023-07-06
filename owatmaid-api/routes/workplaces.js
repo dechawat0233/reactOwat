@@ -109,31 +109,31 @@ router.post('/search', async (req, res) => {
     // Construct the search query based on the provided parameters
     const query = {};
 
-      if (searchWorkplaceId) {
-          query.searchWorkplaceId = searchWorkplaceId;
+      if (searchWorkplaceId !== '') {
+          query.workplaceId = searchWorkplaceId;
     }
 
-      if (searchWorkplaceName ) {
-          query.searchWorkplaceName = { $regex: new RegExp(searchWorkplaceName , 'i') };
+
+      if (searchWorkplaceName !== '') {
+          query.workplaceName = { $regex: new RegExp(searchWorkplaceName , 'i') };
 //{ $regex: name, $options: 'i' };
-    }
-
-    console.log('Search Parameters:');
+      }
+//    query.searchWorkplaceId = '1001';
 //    console.log({ employeeId, name, idCard, workPlace });
 
     console.log('Constructed Query:');
     console.log(query);
-      if (workplaceId == '' && workplaceName == '' ){
+      if (searchWorkplaceId == '' && searchWorkplaceName == '') {
     res.status(200).json({ });
 }
 
     // Query the workplace collection for matching documents
       const workplaces = await Workplace.find(query);
 
-    console.log('Search Results:');
-      console.log(workplace);
+      await console.log('Search Results:');
+      await console.log(workplaces );
       let textSearch = 'workplace';
-      res.status(200).json({ workplace});
+      await res.status(200).json({ workplaces });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
