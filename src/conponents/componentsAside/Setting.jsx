@@ -137,8 +137,13 @@ function Setting() {
 
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label role="workplaceId">รหัส : 658913 ชื่อ : ไทยยั่งยืน</label>
-                                                        <input type='hidden' value='' />
+                                                        <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
+                                                            <li >
+                                                                รหัส : 658913 ชื่อ : ไทยยั่งยืน
+                                                            </li>
+
+
+                                                        </ul>
                                                     </div>
                                                 </div>
                                             </div>
