@@ -37,6 +37,36 @@ function Setting() {
     const [workRateDayoffHour, setWorkRateDayoffHour] = useState(''); //ค่าจ้างวันหยุดต่อชั่วโมง
     const [workplaceAddress, setWorkplaceAddress] = useState(''); //ที่อยู่หน่วยงาน
 
+//data for search
+const [searchWorkplaceId, setSearchWorkplaceId] = useState(''); //รหัสหน่วยงาน
+const [searchWorkplaceName, setSearchWorkplaceName] = useState(''); //ชื่อหน่วยงาน
+const [searchResult , setSearchResult] = useState([]);
+
+    async function handleSearch(event) {
+        event.preventDefault();
+alert(searchWorkplaceId);
+        alert(searchWorkplaceName);
+
+//get value from form search        
+        const data = {
+            searchWorkplaceId : searchWorkplaceId,
+            searchWorkplaceName : searchWorkplaceName
+        };
+
+        try {
+            const response = await axios.post(endpoint + '/workplace/search', data);
+         setSearchResult(response.data.workplaces);
+            // setMessage(`ผลการค้นหา ${response.data.employees.length} รายการ`);
+alert(response.data.workplaces.length);
+alert('search success');
+          } catch (error) {
+            // setMessage('ไม่พบผลการค้นหา กรุณาตรวจสอบข้อมูลที่ใช้ในการค้นหาอีกครั้ง');
+            alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
+            window.location.reload();
+      
+          }
+      
+    }
 
     async function handleManageWorkplace(event) {
         event.preventDefault();
@@ -62,6 +92,7 @@ function Setting() {
             workRateDayoffHour: workRateDayoffHour,
             workplaceAddress: workplaceAddress
         };
+
 
         //check create or update Employee
         if (newWorkplace) {
@@ -106,21 +137,24 @@ function Setting() {
                         <div class="container-fluid">
 
 
-                            <form >
-                                <h2 class="title">ตั้งค่าหน่วยงาน</h2>
-                                <section class="Frame">
-                                    <div class="col-md-12">
+
+                            <h2 class="title">ตั้งค่าหน่วยงาน</h2>
+                            <section class="Frame">
+                                <div class="col-md-12">
+
+                                <form onSubmit={handleSearch}>
+
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label role="workplaceId">รหัสหน่วยงาน</label>
-                                                    <input type="text" class="form-control" id="workplaceId" placeholder="รหัสหน่วยงาน" value={workplaceId} onChange={(e) => setWorkplaceId(e.target.value)} />
+                                                    <label role="searchWorkplaceId">รหัสหน่วยงาน</label>
+                                                    <input type="text" class="form-control" id="searchWorkplaceId" placeholder="รหัสหน่วยงาน" value={searchWorkplaceId} onChange={(e) => setSearchWorkplaceId(e.target.value)} />
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label role="workplaceName">ชื่อหน่วยงาน</label>
-                                                    <input type="text" class="form-control" id="workplaceName" placeholder="ชื่อหน่วยงาน" value={workplaceName} onChange={(e) => setWorkplaceName(e.target.value)} />
+                                                    <label role="searchWorkplaceName">ชื่อหน่วยงาน</label>
+                                                    <input type="text" class="form-control" id="searchWorkplaceName" placeholder="ชื่อหน่วยงาน" value={searchWorkplaceName} onChange={(e) => setSearchWorkplaceName(e.target.value)} />
                                                 </div>
                                             </div>
 
@@ -128,30 +162,32 @@ function Setting() {
                                         <div class="d-flex justify-content-center">
                                             <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา</button>
                                         </div>
-                                        <br />
-                                        <div class="d-flex justify-content-center">
-                                            <h2 class="title">ผลลัพธ์</h2>
-                                        </div>
-                                        <div class="d-flex justify-content-center">
-                                            <div class="row">
+                                    </form>
 
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
-                                                            <li >
-                                                                รหัส : 658913 ชื่อ : ไทยยั่งยืน
-                                                            </li>
+                                    <br />
+                                    <div class="d-flex justify-content-center">
+                                        <h2 class="title">ผลลัพธ์</h2>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <div class="row">
+
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
+                                                        <li >
+                                                            รหัส : 658913 ชื่อ : ไทยยั่งยืน
+                                                        </li>
 
 
-                                                        </ul>
-                                                    </div>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </section>
-                                {/* <!--Frame--> */}
-                            </form>
+                                </div>
+                            </section>
+                            {/* <!--Frame--> */}
+
                             <form onSubmit={handleManageWorkplace}>
                                 <h2 class="title">ตั้งค่าหน่วยงาน</h2>
                                 <section class="Frame">
@@ -343,7 +379,14 @@ function Setting() {
                                 </section>
                                 {/* <!--Frame--> */}
                                 <div class="line_btn">
-                                    <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
+                                    {newWorkplace ? (
+                                        <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;สร้างหน่วยงานใหม่</button>
+
+                                    ) : (
+                                        <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
+
+                                    )}
+
                                     <button class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
                                 </div>
 
