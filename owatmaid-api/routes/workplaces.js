@@ -104,22 +104,18 @@ router.get('/:workplaceId',  async (req, res) => {
 
 router.post('/search', async (req, res) => {
   try {
-      const { workplaceId, workplaceName , workplaceArea } = req.body;
+      const { searchWorkplaceId, searchWorkplaceName } = req.body;
 
     // Construct the search query based on the provided parameters
     const query = {};
 
-      if (workplaceId) {
-          query.workplaceId = workplaceId;
+      if (searchWorkplaceId) {
+          query.searchWorkplaceId = searchWorkplaceId;
     }
 
-      if (workplaceName) {
-          query.workplaceName = { $regex: new RegExp(workplaceName, 'i') };
+      if (searchWorkplaceName ) {
+          query.searchWorkplaceName = { $regex: new RegExp(searchWorkplaceName , 'i') };
 //{ $regex: name, $options: 'i' };
-    }
-
-      if (workplaceArea) {
-          query.workplaceArea = { $regex: workplaceArea, $options: 'i' };
     }
 
     console.log('Search Parameters:');
@@ -127,7 +123,7 @@ router.post('/search', async (req, res) => {
 
     console.log('Constructed Query:');
     console.log(query);
-      if (workplaceId == '' && workplaceName == '' && workplaceArea == ''){
+      if (workplaceId == '' && workplaceName == '' ){
     res.status(200).json({ });
 }
 
