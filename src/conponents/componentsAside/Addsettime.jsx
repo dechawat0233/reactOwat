@@ -423,10 +423,10 @@ function Addsettime() {
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label role="formsettime">รูปแบบการลงเวลา</label>
+                                                    <label role="formsettime">รูปแบบค้นหา</label>
                                                     <select id="formsettime" name="formsettime" class="form-control" value={selectedOption} onChange={handleOptionChange}>
-                                                        <option value="agencytime">ลงเวลาในหน่วยงาน</option>
-                                                        <option value="persontime">ลงเวลาบุลคล</option>
+                                                        <option value="agencytime">หน่วยงาน</option>
+                                                        <option value="persontime">บุลคล</option>
                                                     </select>
 
 
@@ -437,7 +437,7 @@ function Addsettime() {
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label role="formsettime">รูปแบบการลงเวลา</label>
+                                                    <label role="formsettime">ชื่อ</label>
                                                     <input type='text' class="form-control" name='search' />
                                                 </div>
                                             </div>
@@ -450,6 +450,25 @@ function Addsettime() {
                                                 </div>
                                             </div>
 
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+                                            <h2 class="title">ผลลัพธ์</h2>
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+                                            <div class="row">
+
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
+                                                            <li >
+                                                                 ไทยยั่งยืน
+                                                            </li>
+
+
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </section>
