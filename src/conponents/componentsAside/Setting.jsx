@@ -39,7 +39,7 @@ function Setting() {
 
 
     //set data to form
-    async function handleClickResult(workplace ) {
+    function handleClickResult(workplace ) {
 setNewWorkplace(false);
 
 setWorkplaceId(workplace.workplaceId);
