@@ -48,9 +48,10 @@ setWorkplaceArea(workplace.workplaceArea);
 setWorkOfWeek(workplace.workOfWeek);
 setWorkkStart1(workplace.workkStart1);
 setWorkEnd1(workplace.workEnd1);
+
 setWorkkStart2(workplace.workkStart2);
 setWorkEnd2(workplace.workEnd2);
-setWorkkStart3(workplace.workkStart3);
+setWorkStart3(workplace.workStart3);
 setWorkEnd3(workplace.workEnd3);
 setWorkOfHour(workplace.workOfHour);
 setWorkOfOT(workplace.workOfOT);
