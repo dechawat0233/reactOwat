@@ -51,6 +51,19 @@ function Addsettime() {
         setStartjob(date);
     };
 
+        const [startjob1, setStartjob1] = useState(''); //วันที่เริ่มงาน
+    const handleStartDateChange1 = (date) => {
+        setStartjob1(date);
+    };
+        const [startjob2, setStartjob2] = useState(''); //วันที่เริ่มงาน
+    const handleStartDateChange2 = (date) => {
+        setStartjob2(date);
+    };
+        const [startjob3, setStartjob3] = useState(''); //วันที่เริ่มงาน
+    const handleStartDateChange3 = (date) => {
+        setStartjob3(date);
+    };
+
     // const [workplace, setWorkplace] = useState(''); //หน่วยงาน
     // setWorkplace(empSelect.workplace);
     // const handleWorkplace = (event) => {
@@ -218,7 +231,7 @@ function Addsettime() {
 
                 </form>
                 <div class="form-group">
-                    <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; บันทึก</button>
+                    <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp; บันทึก</button>
                 </div>
             </form>
         );
@@ -284,11 +297,11 @@ function Addsettime() {
                                         <td><input type="text" class="form-control" name='staffName' value={staffName} onChange={(e) => setStaffName(e.target.value)} /></td>
                                         <td>
                                             <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
-                                                <DatePicker id="datetime" name="datetime"
+                                                <DatePicker id="datetime1" name="datetime1"
                                                     className="form-control" // Apply Bootstrap form-control class
                                                     popperClassName="datepicker-popper" // Apply custom popper class if needed
-                                                    selected={startjob}
-                                                    onChange={handleStartDateChange}
+                                                    selected={startjob1}
+                                                    onChange={handleStartDateChange1}
                                                     dateFormat="dd/MM/yyyy" />
                                             </div>
                                         </td>
@@ -308,11 +321,11 @@ function Addsettime() {
                                         <td><input type="text" class="form-control" name='' value='' /></td>
                                         <td>
                                             <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
-                                                <DatePicker id="datetime" name="datetime"
+                                                <DatePicker id="datetime2" name="datetime2"
                                                     className="form-control" // Apply Bootstrap form-control class
                                                     popperClassName="datepicker-popper" // Apply custom popper class if needed
-                                                    selected={startjob}
-                                                    onChange={handleStartDateChange}
+                                                    selected={startjob2}
+                                                    onChange={handleStartDateChange2}
                                                     dateFormat="dd/MM/yyyy" />
                                             </div>
                                         </td>
@@ -332,11 +345,11 @@ function Addsettime() {
                                         <td><input type="text" class="form-control" name='' value='' /></td>
                                         <td>
                                             <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
-                                                <DatePicker id="datetime" name="datetime"
+                                                <DatePicker id="datetime3" name="datetime3"
                                                     className="form-control" // Apply Bootstrap form-control class
                                                     popperClassName="datepicker-popper" // Apply custom popper class if needed
-                                                    selected={startjob}
-                                                    onChange={handleStartDateChange}
+                                                    selected={startjob3}
+                                                    onChange={handleStartDateChange3}
                                                     dateFormat="dd/MM/yyyy" />
                                             </div>
                                         </td>
@@ -358,7 +371,7 @@ function Addsettime() {
 
                 </form>
                 <div class="form-group">
-                    <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; บันทึก</button>
+                    <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp; บันทึก</button>
                 </div>
             </form>
 
