@@ -38,65 +38,83 @@ function Setting() {
     const [workplaceAddress, setWorkplaceAddress] = useState(''); //ที่อยู่หน่วยงาน
 
 
+    const [travelRate, setTravelRate] = useState(''); //ค่ารถ
+    const [mealRate, setMealRate] = useState(''); //ค่าอาหาร
+    const [workOT, setWorkOT] = useState(''); //เบี้ยขยัน
+    const [workanything, setWorkanything] = useState(''); //เงินพิเศษอื่นๆ
+    const [phonebill, setPhoneBill] = useState(''); //ค่าโทรศัพท์
+    const [workPosition, setWorkPosition] = useState(''); //เงินประจำตำแนหง
+
+    //////
+    const [remainbusinessleave, setRemainbusinessleave] = useState(''); //ลาคงเหลือ วันลากิจคงเหลือ 
+    const [businessleavesalary, setBusinessleavesalary] = useState(''); //ลาคงเหลือ จำนวนเงินต่อวัน
+
+    const [remainsickleave, setRemainsickleave] = useState(''); //ลาคงเหลือ วันลาป่วยคงเหลือ 
+    const [sickleavesalary, setSickleavesalary] = useState(''); //ลาคงเหลือ จำนวนเงินต่อวัน
+
+    const [remainvacation, setRemainvacation] = useState(''); //ลาคงเหลือ วันลาพักร้อนคงเหลือ 
+    const [vacationsalary, setVacationsalary] = useState(''); //ลาคงเหลือ จำนวนเงินต่อวัน 
+
+
     //set data to form
-    function handleClickResult(workplace ) {
-setNewWorkplace(false);
+    function handleClickResult(workplace) {
+        setNewWorkplace(false);
 
-setWorkplaceId(workplace.workplaceId);
-setWorkplaceName(workplace.workplaceName);
-setWorkplaceArea(workplace.workplaceArea);
-setWorkOfWeek(workplace.workOfWeek);
-setWorkkStart1(workplace.workkStart1);
-setWorkEnd1(workplace.workEnd1);
+        setWorkplaceId(workplace.workplaceId);
+        setWorkplaceName(workplace.workplaceName);
+        setWorkplaceArea(workplace.workplaceArea);
+        setWorkOfWeek(workplace.workOfWeek);
+        setWorkkStart1(workplace.workkStart1);
+        setWorkEnd1(workplace.workEnd1);
 
-setWorkkStart2(workplace.workkStart2);
-setWorkEnd2(workplace.workEnd2);
-setWorkStart3(workplace.workStart3);
-setWorkEnd3(workplace.workEnd3);
-setWorkOfHour(workplace.workOfHour);
-setWorkOfOT(workplace.workOfOT);
+        setWorkkStart2(workplace.workkStart2);
+        setWorkEnd2(workplace.workEnd2);
+        setWorkStart3(workplace.workStart3);
+        setWorkEnd3(workplace.workEnd3);
+        setWorkOfHour(workplace.workOfHour);
+        setWorkOfOT(workplace.workOfOT);
 
-setWorkRate(workplace.workRate);
-setWorkRateOT(workplace.workRateOT);
-setWorkTotalPeople(workplace.workTotalPeople);
-setWorkRateDayoff(workplace.workRateDayoff);
-setWorkRateDayoffHour(workplace.workRateDayoffHour);
-setWorkplaceAddress(workplace.workplaceAddress);
+        setWorkRate(workplace.workRate);
+        setWorkRateOT(workplace.workRateOT);
+        setWorkTotalPeople(workplace.workTotalPeople);
+        setWorkRateDayoff(workplace.workRateDayoff);
+        setWorkRateDayoffHour(workplace.workRateDayoffHour);
+        setWorkplaceAddress(workplace.workplaceAddress);
 
-}
+    }
 
-//data for search
-const [searchWorkplaceId, setSearchWorkplaceId] = useState(''); //รหัสหน่วยงาน
-const [searchWorkplaceName, setSearchWorkplaceName] = useState(''); //ชื่อหน่วยงาน
-const [searchResult , setSearchResult] = useState([]);
+    //data for search
+    const [searchWorkplaceId, setSearchWorkplaceId] = useState(''); //รหัสหน่วยงาน
+    const [searchWorkplaceName, setSearchWorkplaceName] = useState(''); //ชื่อหน่วยงาน
+    const [searchResult, setSearchResult] = useState([]);
 
     async function handleSearch(event) {
         event.preventDefault();
-// alert(searchWorkplaceId);
+        // alert(searchWorkplaceId);
         // alert(searchWorkplaceName);
 
-//get value from form search        
+        //get value from form search        
         const data = {
-            searchWorkplaceId : searchWorkplaceId,
-            searchWorkplaceName : searchWorkplaceName
+            searchWorkplaceId: searchWorkplaceId,
+            searchWorkplaceName: searchWorkplaceName
         };
 
         try {
             const response = await axios.post(endpoint + '/workplace/search', data);
-         setSearchResult(response.data.workplaces);
+            setSearchResult(response.data.workplaces);
             // setMessage(`ผลการค้นหา ${response.data.employees.length} รายการ`);
-// alert(response.data.workplaces.length);
-if(response.data.workplaces.length <1 ){
-    window.location.reload();
+            // alert(response.data.workplaces.length);
+            if (response.data.workplaces.length < 1) {
+                window.location.reload();
 
-}
-          } catch (error) {
+            }
+        } catch (error) {
             // setMessage('ไม่พบผลการค้นหา กรุณาตรวจสอบข้อมูลที่ใช้ในการค้นหาอีกครั้ง');
             alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
             window.location.reload();
-      
-          }
-      
+
+        }
+
     }
 
     async function handleManageWorkplace(event) {
@@ -173,7 +191,7 @@ if(response.data.workplaces.length <1 ){
                             <section class="Frame">
                                 <div class="col-md-12">
 
-                                <form onSubmit={handleSearch}>
+                                    <form onSubmit={handleSearch}>
 
                                         <div class="row">
                                             <div class="col-md-6">
@@ -207,12 +225,12 @@ if(response.data.workplaces.length <1 ){
                                                     <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
                                                         {searchResult.map(workplace => (
                                                             <li
-                                                            key={workplace.id}
-                                                            onClick={() => handleClickResult(workplace) }
+                                                                key={workplace.id}
+                                                                onClick={() => handleClickResult(workplace)}
                                                             >
-รหัส {workplace.workplaceId} หน่วยงาน {workplace.workplaceName}
+                                                                รหัส {workplace.workplaceId} หน่วยงาน {workplace.workplaceName}
                                                             </li>
-                                                        )) }
+                                                        ))}
 
 
                                                     </ul>
@@ -401,6 +419,112 @@ if(response.data.workplaces.length <1 ){
                                     </div>
                                 </section>
                                 {/* <!--Frame--> */}
+
+                                <h2 class="title">สวัสดิการพนักงาน</h2>
+                                <section class="Frame">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label role="travelRate">ค่ารถ</label>
+                                                <input type="text" class="form-control" id="travelRate" placeholder="ค่ารถ" value={travelRate} onChange={(e) => setTravelRate(e.target.value)} />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label role="mealRate">ค่าอาหาร</label>
+                                                <input type="text" class="form-control" id="mealRate" placeholder="ค่าอาหาร" value={mealRate} onChange={(e) => setMealRate(e.target.value)} />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label role="workOT">เบี้ยขยัน</label>
+                                                <input type="text" class="form-control" id="workOT" placeholder="เบี้ยขยัน" value={workOT} onChange={(e) => setWorkOT(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label role="workanything">เงินพิเศษอื่นๆ</label>
+                                                <input type="text" class="form-control" id="workanything" placeholder="เงินพิเศษอื่นๆ" value={workanything} onChange={(e) => setWorkanything(e.target.value)} />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label role="phonebill">ค่าโทรศัพท์</label>
+                                                <input type="text" class="form-control" id="phonebill" placeholder="ค่าโทรศัพท์" value={phonebill} onChange={(e) => setPhoneBill(e.target.value)} />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label role="workPosition">เงินประจำตำแหน่ง</label>
+                                                <input type="text" class="form-control" id="workPosition" placeholder="เงินประจำตำแหน่ง" value={workPosition} onChange={(e) => setWorkPosition(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                {/* <!--Frame--> */}
+
+                                <h2 class="title">เงินเพิ่มพิเศษ</h2>
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <section class="Frame">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="remainbusinessleave">วันลากิจคงเหลือ</label>
+                                                            <input type="text" class="form-control" id="remainbusinessleave" placeholder="วันลากิจคงเหลือ" value={remainbusinessleave} onChange={(e) => setRemainbusinessleave(e.target.value)} />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="businessleavesalary">จำนวนเงินต่อวัน</label>
+                                                            <input type="text" class="form-control" id="businessleavesalary" placeholder="จำนวนเงินต่อวัน" value={businessleavesalary} onChange={(e) => setBusinessleavesalary(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/* <!--row--> */}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="remainsickleave">วันลาป่วยคงเหลือ</label>
+                                                            <input type="text" class="form-control" id="remainsickleave" placeholder="จำนวนเงินต่อวัน" value={remainsickleave} onChange={(e) => setRemainsickleave(e.target.value)} />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="sickleavesalary">จำนวนเงินต่อวัน</label>
+                                                            <input type="text" class="form-control" id="sickleavesalary" placeholder="จำนวนเงินต่อวัน" value={sickleavesalary} onChange={(e) => setSickleavesalary(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/* <!--row--> */}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="remainvacation">วันลาพักร้อนคงเหลือ</label>
+                                                            <input type="text" class="form-control" id="remainvacation" placeholder="จำนวนเงินต่อวัน" value={remainvacation} onChange={(e) => setRemainvacation(e.target.value)} />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="vacationsalary">จำนวนเงินต่อวัน</label>
+                                                            <input type="text" class="form-control" id="vacationsalary" placeholder="จำนวนเงินต่อวัน" value={vacationsalary} onChange={(e) => setVacationsalary(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/* <!--row--> */}
+                                            </div>
+                                            {/* <!--col-md-12--> */}
+                                        </section>
+                                        {/* <!--Frame--> */}
+                                    </div>
+                                </div>
+
 
                                 <h2 class="title">ที่อยู่หน่วยงาน</h2>
                                 <section class="Frame">
