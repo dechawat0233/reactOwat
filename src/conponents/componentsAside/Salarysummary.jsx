@@ -112,10 +112,10 @@ function Salarysummary() {
                                                         <th style={styles.th} id="test">ค่ารถ</th>
                                                         <th style={styles.th} id="test">ค่าอาหาร</th>
                                                         <th style={styles.th} id="test">เบี้ยขยัน</th>
+                                                        <th style={styles.th} id="test">นักขัติฤกษ์</th>
                                                         <th style={styles.th} id="test">เงินพิเศษอื่นๆ</th>
                                                         <th style={styles.th} id="test">ค่าโทรศัพท์</th>
                                                         <th style={styles.th} id="test">เงินประจำตำแหน่ง</th>
-                                                        <th style={styles.th} id="test">เป็นเงินทั้งสิ้น</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -125,14 +125,56 @@ function Salarysummary() {
                                                         <td>1000</td>
                                                         <td>500</td>
                                                         <td>300</td>
+                                                        <td>300</td>
                                                         <td>1000</td>
                                                         <td>500</td>
                                                         <td>1000</td>
-                                                        <td>12500</td>
+
                                                     </tr>
                                                     <tr>
                                                         <td>66</td>
                                                         <td>3000</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>เป็นเงินทั้งสิ้น</td>
+                                                        <td>12800</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                            หัก<br />
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <section class="Frame">
+                                        <div class="container" style={{ overflowX: 'scroll' }}>
+                                            <table id="" class="table table-bordered ">
+                                                <thead>
+                                                    <tr>
+                                                        <th style={styles.th} id="test">หักอื่นๆ</th>
+                                                        <th style={styles.th} id="test">หักภาษี</th>
+                                                        <th style={styles.th} id="test">หัก ปกส</th>
+                                                        <th style={styles.th} id="test">ธรรมเนียม ธ.</th>
+                                                        <th style={styles.th} id="test">คืนเงินอื่นๆ</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>0</td>
+                                                        <td>0</td>
+                                                        <td>399</td>
+                                                        <td>0</td>
+                                                        <td>0</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>เป็นเงินทั้งสิ้น</td>
+                                                        <td>399</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>สุทธิ</td>
+                                                        <td>12101</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
