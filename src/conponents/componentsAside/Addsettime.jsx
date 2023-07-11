@@ -51,15 +51,15 @@ function Addsettime() {
         setStartjob(date);
     };
 
-        const [startjob1, setStartjob1] = useState(''); //วันที่เริ่มงาน
+    const [startjob1, setStartjob1] = useState(''); //วันที่เริ่มงาน
     const handleStartDateChange1 = (date) => {
         setStartjob1(date);
     };
-        const [startjob2, setStartjob2] = useState(''); //วันที่เริ่มงาน
+    const [startjob2, setStartjob2] = useState(''); //วันที่เริ่มงาน
     const handleStartDateChange2 = (date) => {
         setStartjob2(date);
     };
-        const [startjob3, setStartjob3] = useState(''); //วันที่เริ่มงาน
+    const [startjob3, setStartjob3] = useState(''); //วันที่เริ่มงาน
     const handleStartDateChange3 = (date) => {
         setStartjob3(date);
     };
@@ -179,6 +179,7 @@ function Addsettime() {
                                         <th>เวลาออกงาน</th>
                                         <th>ชั่วโมงทำงาน</th>
                                         <th>ชั่วโมง OT</th>
+                                        <th>เวลา OT</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -191,10 +192,11 @@ function Addsettime() {
                                                 <option value="afternoon_shift">กะบ่าย</option>
                                                 <option value="night_shift">กะดึก</option>
                                             </select></td>
-                                        <td><input type="time" class="form-control" name='startTime' value={startTime} onChange={(e) => setStartTime(e.target.value)} /></td>
-                                        <td><input type="time" class="form-control" name='endTime' value={endTime} onChange={(e) => setEndTime(e.target.value)} /></td>
+                                        <td><input type="time" class="form-control" name='startTime' value={startTime} onChange={(e) => setStartTime(e.target.value)}  style={{ width: '7rem' }}/></td>
+                                        <td><input type="time" class="form-control" name='endTime' value={endTime} onChange={(e) => setEndTime(e.target.value)} style={{ width: '7rem' }}/></td>
                                         <td><input type="text" class="form-control" name='allTime' value={allTime} onChange={(e) => setAllTime(e.target.value)} /></td>
                                         <td><input type="text" class="form-control" name='otTime' value={otTime} onChange={(e) => setOtTime(e.target.value)} /></td>
+                                        <td><input type="time" class="form-control" name='' value='' style={{ width: '7rem' }} /></td>
                                     </tr>
                                     <tr>
                                         <td><input type="text" class="form-control" name='' value='' /></td>
@@ -205,10 +207,11 @@ function Addsettime() {
                                                 <option value="afternoon_shift">กะบ่าย</option>
                                                 <option value="night_shift">กะดึก</option>
                                             </select></td>
-                                        <td><input type="time" class="form-control" name='' value='' /></td>
-                                        <td><input type="time" class="form-control" name='' value='' /></td>
+                                        <td><input type="time" class="form-control" name='' value='' style={{ width: '7rem' }}/></td>
+                                        <td><input type="time" class="form-control" name='' value='' style={{ width: '7rem' }}/></td>
                                         <td><input type="text" class="form-control" name='' value='' /></td>
                                         <td><input type="text" class="form-control" name='' value='' /></td>
+                                        <td><input type="time" class="form-control" name='' value='' style={{ width: '7rem' }} /></td>
                                     </tr>
                                     <tr>
                                         <td><input type="text" class="form-control" name='' value='' /></td>
@@ -219,10 +222,11 @@ function Addsettime() {
                                                 <option value="afternoon_shift">กะบ่าย</option>
                                                 <option value="night_shift">กะดึก</option>
                                             </select></td>
-                                        <td><input type="time" class="form-control" name='' value='' /></td>
-                                        <td><input type="time" class="form-control" name='' value='' /></td>
+                                        <td><input type="time" class="form-control" name='' value='' style={{ width: '7rem' }}/></td>
+                                        <td><input type="time" class="form-control" name='' value='' style={{ width: '7rem' }}/></td>
                                         <td><input type="text" class="form-control" name='' value='' /></td>
                                         <td><input type="text" class="form-control" name='' value='' /></td>
+                                        <td><input type="time" class="form-control" name='' value='' style={{ width: '7rem' }}/></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -289,6 +293,7 @@ function Addsettime() {
                                         <th>เวลาออกงาน</th>
                                         <th>ชั่วโมงทำงาน</th>
                                         <th>ชั่วโมง OT</th>
+                                        <th>เวลา OT</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -315,6 +320,7 @@ function Addsettime() {
                                         <td><input type="time" class="form-control" name='endTime' value={endTime} onChange={(e) => setEndTime(e.target.value)} /></td>
                                         <td><input type="text" class="form-control" name='allTime' value={allTime} onChange={(e) => setAllTime(e.target.value)} /></td>
                                         <td><input type="text" class="form-control" name='otTime' value={otTime} onChange={(e) => setOtTime(e.target.value)} /></td>
+                                        <td><input type="time" class="form-control" name='startTime' value={startTime} onChange={(e) => setStartTime(e.target.value)} /></td>
                                     </tr>
                                     <tr>
                                         <td><input type="text" class="form-control" name='' value='' /></td>
@@ -339,6 +345,7 @@ function Addsettime() {
                                         <td><input type="time" class="form-control" name='' value='' /></td>
                                         <td><input type="text" class="form-control" name='' value='' /></td>
                                         <td><input type="text" class="form-control" name='' value='' /></td>
+                                        <td><input type="time" class="form-control" name='' value='' /></td>
                                     </tr>
                                     <tr>
                                         <td><input type="text" class="form-control" name='' value='' /></td>
@@ -363,6 +370,7 @@ function Addsettime() {
                                         <td><input type="time" class="form-control" name='' value='' /></td>
                                         <td><input type="text" class="form-control" name='' value='' /></td>
                                         <td><input type="text" class="form-control" name='' value='' /></td>
+                                        <td><input type="time" class="form-control" name='' value='' /></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -403,7 +411,7 @@ function Addsettime() {
 
                     <section class="content">
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-md-10">
                                 <div class="container-fluid">
                                     <h2 class="title">ข้อมูลการลงเวลาทำงานของพนักงาน</h2>
                                     <div class="col-md-12">
@@ -429,7 +437,7 @@ function Addsettime() {
 
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <section class="Frame">
                                     <h2 class="title">ค้นหา</h2>
                                     <div class="col-md-12">
@@ -476,7 +484,7 @@ function Addsettime() {
                                                     <div class="form-group">
                                                         <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
                                                             <li >
-                                                                 ไทยยั่งยืน
+                                                                ไทยยั่งยืน
                                                             </li>
 
 

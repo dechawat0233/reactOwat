@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 function AsideLeft() {
   const [showSubMenu, setShowSubMenu] = useState(false);
   const [showSubMenu2, setShowSubMenu2] = useState(false);
+  const [showSubMenu3, setShowSubMenu3] = useState(false);
 
   const token = localStorage.getItem('token');
 
@@ -37,6 +38,10 @@ function AsideLeft() {
 
   function toggleSubMenu2() {
     setShowSubMenu2(!showSubMenu2);
+  }
+
+  function toggleSubMenu3() {
+    setShowSubMenu3(!showSubMenu3);
   }
 
 
@@ -70,11 +75,40 @@ function AsideLeft() {
               <li class="nav-item">
                 <Link to="/addsettime" className="nav-link"><i class="nav-icon fas fa-business-time"></i> ระบบลงเวลา</Link>
               </li>
-              <li class="nav-item">
+
+
+              {/* <li class="nav-item">
                 <a href="#" class="nav-link"><i class="nav-icon fas fa-file-invoice-dollar"></i>
                   <p> ระบบเงินเดือน</p>
                 </a>
+              </li> */}
+
+              <li class="nav-item">
+                <a href="#" class="nav-link" onClick={toggleSubMenu3}>
+                  <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                  <p> ระบบเงินเดือน<i class="right fas fa-angle-left"></i><i class=""></i></p>
+                </a>
+                {/* <ul class="nav nav-treeview"> */}
+                {/* <ul className="nav nav-treeview"> */}
+
+                {showSubMenu3 && (
+
+                  <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <>
+                      <li class="nav-item">
+                        <Link to="/worktimesheet" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ใบลงเวลาการปฏิบัติงาน</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/salarysummary" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> สรุปเงินเดือน</Link>
+                      </li>
+
+                    </>
+                  </ul>
+                )}
+
               </li>
+
+
               <li class="nav-item">
                 <a href="#" class="nav-link"><i class="nav-icon fas fa-file-import"></i>
                   <p> ระบบออกเอกสาร</p>
@@ -184,7 +218,7 @@ function AsideLeft() {
                   <p> การตั้งค่า<i class="right fas fa-angle-left"></i><i class=""></i></p>
                 </a>
                 {/* <ul class="nav nav-treeview"> */}
-                                  {/* <ul className="nav nav-treeview"> */}
+                {/* <ul className="nav nav-treeview"> */}
 
                 {showSubMenu2 && (
 
@@ -192,22 +226,22 @@ function AsideLeft() {
                     <>
 
 
-                          <li class="nav-item">
-                            <a href="#" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
-                              <p>ผู้ใช้งานระบบ</p>
-                            </a>
-                          </li>
-                          <li class="nav-item">
-                            <a href="#" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
-                              <p>กำหนดสิทธิ์ใช้งาน</p>
-                            </a>
-                          </li>
-                          <li class="nav-item">
-                            <Link to="/setting" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ตั้งค่าหน่วยงาน</Link>
-                          </li>
-                          <li class="nav-item">
-                            <Link to="/setting" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ตั้งค่าหน่วยงาน</Link>
-                          </li>
+                      <li class="nav-item">
+                        <a href="#" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
+                          <p>ผู้ใช้งานระบบ</p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="#" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
+                          <p>กำหนดสิทธิ์ใช้งาน</p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/setting" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ตั้งค่าหน่วยงาน</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/setting" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ตั้งค่าหน่วยงาน</Link>
+                      </li>
 
                     </>
                   </ul>

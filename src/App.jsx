@@ -39,6 +39,9 @@ import ApplicationSummary from "./conponents/componentsAside/ApplicationSummary"
 import Setting from "./conponents/componentsAside/Setting";
 import Addsettime from "./conponents/componentsAside/Addsettime";
 
+import Salarysummary from "./conponents/componentsAside/Salarysummary";
+import Worktimesheet from "./conponents/componentsAside/worktimesheet";
+
 
 // import Time from "./conponents/Time";
 import Testcal from "./conponents/Testcal";
@@ -108,6 +111,10 @@ function App() {
           <Route path="/employee" element={<Employee />} />
 
           <Route path="/salary" element={<Salary />} />
+          <Route path="/salarysummary" element={<Salarysummary />} />
+          <Route path="/worktimesheet" element={<Worktimesheet />} />
+
+
 
           <Route path="/income_tax" element={<IncomeTax />} />
           <Route path="/social_security" element={<SocialSecurity />} />
