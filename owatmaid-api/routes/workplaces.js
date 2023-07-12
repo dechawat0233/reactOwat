@@ -65,10 +65,46 @@ const workplaceSchema = new mongoose.Schema({
   workTotalPeople: {
     type: String,
     },
+    holiday: {
+        type: String
+    },
+    holidayHour: {
+        type: String
+    },
+    salaryadd1: {
+        type: String
+    },
+    salaryadd2: {
+        type: String
+    },
+    salaryadd3: {
+        type: String
+    },
+    salaryadd4: {
+        type: String
+    },
+    salaryadd5: {
+        type: String
+    },
+    salaryadd6: {
+        type: String
+    },
+    personalLeave: {
+        type: String
+    },
+    personalLeaveRate: {
+        type: String
+    },
+    sickLeave: {
+        type: String
+    },
+    sickLeaveRate: {
+        type: String
+    },
     workRateDayoff: {
         type: String
     },
-    workRateDayoffHour: {
+    workRateDayoffRate: {
         type: String
     },
   workplaceAddress: {
