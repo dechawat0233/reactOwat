@@ -840,6 +840,14 @@ function Setting() {
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <button class="btn b_save">เพิ่มวัน</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </section>
                                 {/* <!--Frame--> */}
                                 <div class="line_btn">
