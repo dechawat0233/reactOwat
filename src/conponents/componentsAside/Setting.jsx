@@ -37,6 +37,18 @@ function Setting() {
     const [workRateDayoffHour, setWorkRateDayoffHour] = useState(''); //ค่าจ้างวันหยุดต่อชั่วโมง
     const [workplaceAddress, setWorkplaceAddress] = useState(''); //ที่อยู่หน่วยงาน
 
+    ///
+    const [holidaycomment, setHolidaycomment] = useState(''); //วันหยุด
+    const [holidaycomment2, setHolidaycomment2] = useState(''); //วันหยุด
+    const [holidaycomment3, setHolidaycomment3] = useState(''); //วันหยุด
+    const [holidaycomment4, setHolidaycomment4] = useState(''); //วันหยุด
+    const [holidaycomment5, setHolidaycomment5] = useState(''); //วันหยุด
+    const [holidaycomment6, setHolidaycomment6] = useState(''); //วันหยุด
+    const [holidaycomment7, setHolidaycomment7] = useState(''); //วันหยุด
+    const [holidaycomment8, setHolidaycomment8] = useState(''); //วันหยุด
+    const [holidaycomment9, setHolidaycomment9] = useState(''); //วันหยุด
+    const [holidaycomment10, setHolidaycomment10] = useState(''); //วันหยุด
+
 
     const [travelRate, setTravelRate] = useState(''); //ค่ารถ
     const [mealRate, setMealRate] = useState(''); //ค่าอาหาร
@@ -55,6 +67,49 @@ function Setting() {
     const [remainvacation, setRemainvacation] = useState(''); //ลาคงเหลือ วันลาพักร้อนคงเหลือ 
     const [vacationsalary, setVacationsalary] = useState(''); //ลาคงเหลือ จำนวนเงินต่อวัน 
 
+
+    /////////////////
+
+    const [startjob, setStartjob] = useState(''); //วันที่เริ่มงาน
+    const handleStartDateChange = (date) => {
+        setStartjob(date);
+    };
+    const [startjob2, setStartjob2] = useState(''); //วันที่เริ่มงาน
+    const handleStartDateChange2 = (date) => {
+        setStartjob2(date);
+    };
+    const [startjob3, setStartjob3] = useState(''); //วันที่เริ่มงาน
+    const handleStartDateChange3 = (date) => {
+        setStartjob3(date);
+    };
+    const [startjob4, setStartjob4] = useState(''); //วันที่เริ่มงาน
+    const handleStartDateChange4 = (date) => {
+        setStartjob4(date);
+    };
+    const [startjob5, setStartjob5] = useState(''); //วันที่เริ่มงาน
+    const handleStartDateChange5 = (date) => {
+        setStartjob5(date);
+    };
+    const [startjob6, setStartjob6] = useState(''); //วันที่เริ่มงาน
+    const handleStartDateChange6 = (date) => {
+        setStartjob6(date);
+    };
+    const [startjob7, setStartjob7] = useState(''); //วันที่เริ่มงาน
+    const handleStartDateChange7 = (date) => {
+        setStartjob7(date);
+    };
+    const [startjob8, setStartjob8] = useState(''); //วันที่เริ่มงาน
+    const handleStartDateChange8 = (date) => {
+        setStartjob8(date);
+    };
+    const [startjob9, setStartjob9] = useState(''); //วันที่เริ่มงาน
+    const handleStartDateChange9 = (date) => {
+        setStartjob9(date);
+    };
+        const [startjob10, setStartjob10] = useState(''); //วันที่เริ่มงาน
+    const handleStartDateChange10 = (date) => {
+        setStartjob10(date);
+    };
 
     //set data to form
     function handleClickResult(workplace) {
@@ -80,6 +135,17 @@ function Setting() {
         setWorkRateDayoff(workplace.workRateDayoff);
         setWorkRateDayoffHour(workplace.workRateDayoffHour);
         setWorkplaceAddress(workplace.workplaceAddress);
+
+        setHolidaycomment(workplace.holidaycomment);
+        setHolidaycomment2(workplace.holidaycomment2);
+        setHolidaycomment3(workplace.holidaycomment3);
+        setHolidaycomment4(workplace.holidaycomment4);
+        setHolidaycomment5(workplace.holidaycomment5);
+        setHolidaycomment6(workplace.holidaycomment6);
+        setHolidaycomment7(workplace.holidaycomment7);
+        setHolidaycomment8(workplace.holidaycomment8);
+        setHolidaycomment9(workplace.holidaycomment9);
+        setHolidaycomment10(workplace.holidaycomment10);
 
     }
 
@@ -139,7 +205,9 @@ function Setting() {
             workTotalPeople: workTotalPeople,
             workRateDayoff: workRateDayoff,
             workRateDayoffHour: workRateDayoffHour,
-            workplaceAddress: workplaceAddress
+            workplaceAddress: workplaceAddress,
+
+            holidaycomment: holidaycomment
         };
 
 
@@ -533,6 +601,242 @@ function Setting() {
                                             <div class="form-group">
                                                 <label role="workplaceAddress">ที่อยู่หน่วยงาน</label>
                                                 <input type="text" class="form-control" id="workplaceAddress" placeholder="ที่อยู่หน่วยงาน" value={workplaceAddress} onChange={(e) => setWorkplaceAddress(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                {/* <!--Frame--> */}
+
+
+                                <h2 class="title">ลงวันหยุด ( อย่าน้อย 10 วัน )</h2>
+                                <section class="Frame">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label role="workplaceAddress">วันที่ 1 </label>
+                                                <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
+                                                    <DatePicker id="datetime" name="datetime"
+                                                        className="form-control" // Apply Bootstrap form-control class
+                                                        popperClassName="datepicker-popper" // Apply custom popper class if needed
+                                                        selected={startjob}
+                                                        onChange={handleStartDateChange}
+                                                        dateFormat="dd/MM/yyyy" />
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label role="holidaycomment">หมายเหตุ </label>
+                                                <input type="text" class="form-control" id="holidaycomment" placeholder="หมายเหตุ" value={holidaycomment} onChange={(e) => setHolidaycomment(e.target.value)} />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label role="workplaceAddress">วันที่ 2 </label>
+                                                <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
+                                                    <DatePicker id="datetime" name="datetime"
+                                                        className="form-control" // Apply Bootstrap form-control class
+                                                        popperClassName="datepicker-popper" // Apply custom popper class if needed
+                                                        selected={startjob2}
+                                                        onChange={handleStartDateChange2}
+                                                        dateFormat="dd/MM/yyyy" />
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label role="holidaycomment2">หมายเหตุ </label>
+                                                <input type="text" class="form-control" id="holidaycomment2" placeholder="หมายเหตุ" value={holidaycomment2} onChange={(e) => setHolidaycomment2(e.target.value)} />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label role="workplaceAddress">วันที่ 3 </label>
+                                                <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
+                                                    <DatePicker id="datetime" name="datetime"
+                                                        className="form-control" // Apply Bootstrap form-control class
+                                                        popperClassName="datepicker-popper" // Apply custom popper class if needed
+                                                        selected={startjob3}
+                                                        onChange={handleStartDateChange3}
+                                                        dateFormat="dd/MM/yyyy" />
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label role="holidaycomment3">หมายเหตุ </label>
+                                                <input type="text" class="form-control" id="holidaycomment3" placeholder="หมายเหตุ" value={holidaycomment3} onChange={(e) => setHolidaycomment3(e.target.value)} />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label role="workplaceAddress">วันที่ 4 </label>
+                                                <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
+                                                    <DatePicker id="datetime" name="datetime"
+                                                        className="form-control" // Apply Bootstrap form-control class
+                                                        popperClassName="datepicker-popper" // Apply custom popper class if needed
+                                                        selected={startjob4}
+                                                        onChange={handleStartDateChange4}
+                                                        dateFormat="dd/MM/yyyy" />
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label role="holidaycomment4">หมายเหตุ </label>
+                                                <input type="text" class="form-control" id="holidaycomment4" placeholder="หมายเหตุ" value={holidaycomment4} onChange={(e) => setHolidaycomment4(e.target.value)} />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label role="workplaceAddress">วันที่ 5 </label>
+                                                <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
+                                                    <DatePicker id="datetime" name="datetime"
+                                                        className="form-control" // Apply Bootstrap form-control class
+                                                        popperClassName="datepicker-popper" // Apply custom popper class if needed
+                                                        selected={startjob5}
+                                                        onChange={handleStartDateChange5}
+                                                        dateFormat="dd/MM/yyyy" />
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label role="holidaycomment5">หมายเหตุ </label>
+                                                <input type="text" class="form-control" id="holidaycomment5" placeholder="หมายเหตุ" value={holidaycomment5} onChange={(e) => setHolidaycomment5(e.target.value)} />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label role="workplaceAddress">วันที่ 6 </label>
+                                                <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
+                                                    <DatePicker id="datetime" name="datetime"
+                                                        className="form-control" // Apply Bootstrap form-control class
+                                                        popperClassName="datepicker-popper" // Apply custom popper class if needed
+                                                        selected={startjob6}
+                                                        onChange={handleStartDateChange6}
+                                                        dateFormat="dd/MM/yyyy" />
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label role="holidaycomment6">หมายเหตุ </label>
+                                                <input type="text" class="form-control" id="holidaycomment6" placeholder="หมายเหตุ" value={holidaycomment6} onChange={(e) => setHolidaycomment6(e.target.value)} />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label role="workplaceAddress">วันที่ 7 </label>
+                                                <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
+                                                    <DatePicker id="datetime" name="datetime"
+                                                        className="form-control" // Apply Bootstrap form-control class
+                                                        popperClassName="datepicker-popper" // Apply custom popper class if needed
+                                                        selected={startjob7}
+                                                        onChange={handleStartDateChange7}
+                                                        dateFormat="dd/MM/yyyy" />
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label role="holidaycomment7">หมายเหตุ </label>
+                                                <input type="text" class="form-control" id="holidaycomment7" placeholder="หมายเหตุ" value={holidaycomment7} onChange={(e) => setHolidaycomment7(e.target.value)} />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label role="workplaceAddress">วันที่ 8 </label>
+                                                <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
+                                                    <DatePicker id="datetime" name="datetime"
+                                                        className="form-control" // Apply Bootstrap form-control class
+                                                        popperClassName="datepicker-popper" // Apply custom popper class if needed
+                                                        selected={startjob8}
+                                                        onChange={handleStartDateChange8}
+                                                        dateFormat="dd/MM/yyyy" />
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label role="holidaycomment8">หมายเหตุ </label>
+                                                <input type="text" class="form-control" id="holidaycomment8" placeholder="หมายเหตุ" value={holidaycomment8} onChange={(e) => setHolidaycomment8(e.target.value)} />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label role="workplaceAddress">วันที่ 9 </label>
+                                                <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
+                                                    <DatePicker id="datetime" name="datetime"
+                                                        className="form-control" // Apply Bootstrap form-control class
+                                                        popperClassName="datepicker-popper" // Apply custom popper class if needed
+                                                        selected={startjob9}
+                                                        onChange={handleStartDateChange9}
+                                                        dateFormat="dd/MM/yyyy" />
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label role="holidaycomment9">หมายเหตุ </label>
+                                                <input type="text" class="form-control" id="holidaycomment9" placeholder="หมายเหตุ" value={holidaycomment9} onChange={(e) => setHolidaycomment9(e.target.value)} />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label role="workplaceAddress">วันที่ 10 </label>
+                                                <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
+                                                    <DatePicker id="datetime" name="datetime"
+                                                        className="form-control" // Apply Bootstrap form-control class
+                                                        popperClassName="datepicker-popper" // Apply custom popper class if needed
+                                                        selected={startjob10}
+                                                        onChange={handleStartDateChange10}
+                                                        dateFormat="dd/MM/yyyy" />
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label role="holidaycomment10">หมายเหตุ </label>
+                                                <input type="text" class="form-control" id="holidaycomment10" placeholder="หมายเหตุ" value={holidaycomment10} onChange={(e) => setHolidaycomment10(e.target.value)} />
+
                                             </div>
                                         </div>
                                     </div>
