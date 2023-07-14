@@ -21,9 +21,9 @@ function Setting() {
     const [workplaceName, setWorkplaceName] = useState(''); //ชื่อหน่วยงาน
     const [workplaceArea, setWorkplaceArea] = useState(''); //สถานที่ปฏิบัติงาน
     const [workOfWeek, setWorkOfWeek] = useState(''); //วันทำงานต่อสัปดาห์
-    const [workkStart1, setWorkkStart1] = useState(''); //เวลาเริ่มกะเช้า
+    const [workStart1, setWorkStart1] = useState(''); //เวลาเริ่มกะเช้า
     const [workEnd1, setWorkEnd1] = useState(''); //เวลาออกกะเช้า
-    const [workkStart2, setWorkkStart2] = useState(''); //เวลาเข้ากะบ่าย
+    const [workStart2, setWorkStart2] = useState(''); //เวลาเข้ากะบ่าย
     const [workEnd2, setWorkEnd2] = useState(''); //เวลาออกกะบ่าย
     const [workStart3, setWorkStart3] = useState(''); //เวลาเข้ากะเย็น
     const [workEnd3, setWorkEnd3] = useState(''); //เวลาออกกะเย็น
@@ -33,11 +33,25 @@ function Setting() {
     const [workRate, setWorkRate] = useState(''); //ค่าจ้างต่อวัน
     const [workRateOT, setWorkRateOT] = useState(''); //ค่าจ้าง OT ต่อชั่วโมง
     const [workTotalPeople, setWorkTotalPeople] = useState(''); //จำนวนคนในหน่วยงาน
+    const [holiday , setHoliday] = useState(''); //ค่าจ้างวันหยุดนักขัตฤกษ์ 
+const [holidayHour , setHolidayHour] = useState(''); //ค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง
+const [salaryadd1 , setSalaryadd1] = useState(''); //ค่ารถ
+const [salaryadd2 , setSalaryadd2] = useState(''); //ค่าอาหาร
+const [salaryadd3 , setSalaryadd3] = useState(''); //เบี้ยขยัน
+const [salaryadd4 , setSalaryadd4] = useState(''); //เงินพิเศษอื่นๆ
+const [salaryadd5 , setSalaryadd5] = useState(''); //ค่าโทรศัพท์
+const [salaryadd6 , setSalaryadd6] = useState(''); //เงินประจำตำแหน่ง
+const [personalLeave , setPersonalLeave] = useState(''); //วันลากิจ
+const [personalLeaveRate , setPersonalLeaveRate] = useState(''); //จ่ายเงินลากิจ
+const [sickLeave , setSickLeave] = useState(''); //วันลาป่วย
+const [sickLeaveRate , setSickLeaveRate] = useState(''); //จ่ายเงินวันลาป่วย
     const [workRateDayoff, setWorkRateDayoff] = useState(''); //ค่าจ้างวันหยุด ต่อวัน
-    const [workRateDayoffHour, setWorkRateDayoffHour] = useState(''); //ค่าจ้างวันหยุดต่อชั่วโมง
+    const [workRateDayoffRate , setworkRateDayoffRate] = useState('');
+    const [daysOff , setDaysOff] = useState([{ date: '' }]);
     const [workplaceAddress, setWorkplaceAddress] = useState(''); //ที่อยู่หน่วยงาน
 
-    ///
+    const [workRateDayoffHour, setWorkRateDayoffHour] = useState(''); //ค่าจ้างวันหยุดต่อชั่วโมง
+
     const [holidaycomment, setHolidaycomment] = useState(''); //วันหยุด
     const [holidaycomment2, setHolidaycomment2] = useState(''); //วันหยุด
     const [holidaycomment3, setHolidaycomment3] = useState(''); //วันหยุด
@@ -57,7 +71,6 @@ function Setting() {
     const [phonebill, setPhoneBill] = useState(''); //ค่าโทรศัพท์
     const [workPosition, setWorkPosition] = useState(''); //เงินประจำตำแนหง
 
-    //////
     const [remainbusinessleave, setRemainbusinessleave] = useState(''); //ลาคงเหลือ วันลากิจคงเหลือ 
     const [businessleavesalary, setBusinessleavesalary] = useState(''); //ลาคงเหลือ จำนวนเงินต่อวัน
 
@@ -68,7 +81,7 @@ function Setting() {
     const [vacationsalary, setVacationsalary] = useState(''); //ลาคงเหลือ จำนวนเงินต่อวัน 
 
 
-    /////////////////
+
 
     const [startjob, setStartjob] = useState(''); //วันที่เริ่มงาน
     const handleStartDateChange = (date) => {
@@ -119,10 +132,10 @@ function Setting() {
         setWorkplaceName(workplace.workplaceName);
         setWorkplaceArea(workplace.workplaceArea);
         setWorkOfWeek(workplace.workOfWeek);
-        setWorkkStart1(workplace.workkStart1);
+        setWorkStart1(workplace.workkStart1);
         setWorkEnd1(workplace.workEnd1);
 
-        setWorkkStart2(workplace.workkStart2);
+        setWorkStart2(workplace.workkStart2);
         setWorkEnd2(workplace.workEnd2);
         setWorkStart3(workplace.workStart3);
         setWorkEnd3(workplace.workEnd3);
@@ -192,9 +205,9 @@ function Setting() {
             workplaceName: workplaceName,
             workplaceArea: workplaceArea,
             workOfWeek: workOfWeek,
-            workkStart1: workkStart1,
+            workStart1: workStart1,
             workEnd1: workEnd1,
-            workkStart2: workkStart2,
+            workStart2: workStart2,
             workEnd2: workEnd2,
             workStart3: workStart3,
             workEnd3: workEnd3,
@@ -357,8 +370,8 @@ function Setting() {
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label role="workkStart1">เวลาเข้างาน</label>
-                                                            <input type="text" class="form-control" id="workkStart1" placeholder="เวลาเข้างาน" value={workkStart1} onChange={(e) => setWorkkStart1(e.target.value)} />
+                                                            <label role="workStart1">เวลาเข้างาน</label>
+                                                            <input type="text" class="form-control" id="workStart1" placeholder="เวลาเข้างาน" value={workStart1} onChange={(e) => setWorkStart1(e.target.value)} />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -381,8 +394,8 @@ function Setting() {
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label role="workkStart2">เวลาเข้างาน</label>
-                                                            <input type="text" class="form-control" id="workkStart2" placeholder="เวลาเข้างาน" value={workkStart2} onChange={(e) => setWorkkStart2(e.target.value)} />
+                                                            <label role="workStart2">เวลาเข้างาน</label>
+                                                            <input type="text" class="form-control" id="workStart2" placeholder="เวลาเข้างาน" value={workStart2} onChange={(e) => setWorkStart2(e.target.value)} />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -439,12 +452,6 @@ function Setting() {
                                                 <input type="text" class="form-control" id="workOfOT" placeholder="ชั่วโมง OT" value={workOfOT} onChange={(e) => setWorkOfOT(e.target.value)} />
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label >ปฏิทินวันทำงาน</label>
-                                                <input type="" class="form-control" id="" placeholder="ปฏิทินวันทำงาน" />
-                                            </div>
-                                        </div>
                                     </div>
                                 </section>
                                 {/* <!--Frame--> */}
@@ -474,66 +481,66 @@ function Setting() {
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label role="workRateDayoff">อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายวัน</label>
-                                                <input type="text" class="form-control" id="workRateDayoff" placeholder="อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายวัน" value={workRateDayoff} onChange={(e) => setWorkRateDayoff(e.target.value)} />
+                                                <label role="holiday">อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายวัน</label>
+                                                <input type="text" class="form-control" id="holiday" placeholder="อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายวัน" value={holiday} onChange={(e) => setHoliday(e.target.value)} />
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label role="workRateDayoffHour">อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง</label>
-                                                <input type="text" class="form-control" id="workRateDayoffHour" placeholder="อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง" value={workRateDayoffHour} onChange={(e) => setWorkRateDayoffHour(e.target.value)} />
+                                                <label role="holidayHour">อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง</label>
+                                                <input type="text" class="form-control" id="holidayHour" placeholder="อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง" value={holidayHour} onChange={(e) => setHolidayHour(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
                                 </section>
                                 {/* <!--Frame--> */}
 
-                                <h2 class="title">สวัสดิการพนักงาน</h2>
+                                <h2 class="title">สวัสดิการเงินเพิ่มพนักงาน</h2>
                                 <section class="Frame">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label role="travelRate">ค่ารถ</label>
-                                                <input type="text" class="form-control" id="travelRate" placeholder="ค่ารถ" value={travelRate} onChange={(e) => setTravelRate(e.target.value)} />
+                                                <label role="salaryadd1">ค่ารถ</label>
+                                                <input type="text" class="form-control" id="salaryadd1" placeholder="ค่ารถ" value={salaryadd1} onChange={(e) => setSalaryadd1(e.target.value)} />
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label role="mealRate">ค่าอาหาร</label>
-                                                <input type="text" class="form-control" id="mealRate" placeholder="ค่าอาหาร" value={mealRate} onChange={(e) => setMealRate(e.target.value)} />
+                                                <label role="salaryadd2">ค่าอาหาร</label>
+                                                <input type="text" class="form-control" id="salaryadd2" placeholder="ค่าอาหาร" value={salaryadd2} onChange={(e) => setSalaryadd2(e.target.value)} />
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label role="workOT">เบี้ยขยัน</label>
-                                                <input type="text" class="form-control" id="workOT" placeholder="เบี้ยขยัน" value={workOT} onChange={(e) => setWorkOT(e.target.value)} />
+                                                <label role="salaryadd3">เบี้ยขยัน</label>
+                                                <input type="text" class="form-control" id="salaryadd3" placeholder="เบี้ยขยัน" value={salaryadd3} onChange={(e) => setSalaryadd3(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label role="workanything">เงินพิเศษอื่นๆ</label>
-                                                <input type="text" class="form-control" id="workanything" placeholder="เงินพิเศษอื่นๆ" value={workanything} onChange={(e) => setWorkanything(e.target.value)} />
+                                                <label role="salaryadd4">เงินพิเศษอื่นๆ</label>
+                                                <input type="text" class="form-control" id="salaryadd4" placeholder="เงินพิเศษอื่นๆ" value={salaryadd4} onChange={(e) => setSalaryadd4(e.target.value)} />
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label role="phonebill">ค่าโทรศัพท์</label>
-                                                <input type="text" class="form-control" id="phonebill" placeholder="ค่าโทรศัพท์" value={phonebill} onChange={(e) => setPhoneBill(e.target.value)} />
+                                                <label role="salaryadd5">ค่าโทรศัพท์</label>
+                                                <input type="text" class="form-control" id="salaryadd5" placeholder="ค่าโทรศัพท์" value={salaryadd5} onChange={(e) => setSalaryadd5(e.target.value)} />
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label role="workPosition">เงินประจำตำแหน่ง</label>
-                                                <input type="text" class="form-control" id="workPosition" placeholder="เงินประจำตำแหน่ง" value={workPosition} onChange={(e) => setWorkPosition(e.target.value)} />
+                                                <label role="salaryadd6">เงินประจำตำแหน่ง</label>
+                                                <input type="text" class="form-control" id="salaryadd6" placeholder="เงินประจำตำแหน่ง" value={salaryadd6} onChange={(e) => setSalaryadd6(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
                                 </section>
                                 {/* <!--Frame--> */}
 
-                                <h2 class="title">เงินเพิ่มพิเศษ</h2>
+                                <h2 class="title">สวัสดิการวันหยุดพนักงาน</h2>
                                 <div class="row">
                                     <div class="col-md-9">
                                         <section class="Frame">
@@ -541,15 +548,15 @@ function Setting() {
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label role="remainbusinessleave">วันลากิจคงเหลือ</label>
-                                                            <input type="text" class="form-control" id="remainbusinessleave" placeholder="วันลากิจคงเหลือ" value={remainbusinessleave} onChange={(e) => setRemainbusinessleave(e.target.value)} />
+                                                            <label role="personalLeave">วันลากิจ</label>
+                                                            <input type="text" class="form-control" id="personalLeave" placeholder="วันลากิจ" value={personalLeave} onChange={(e) => setPersonalLeave(e.target.value)} />
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label role="businessleavesalary">จำนวนเงินต่อวัน</label>
-                                                            <input type="text" class="form-control" id="businessleavesalary" placeholder="จำนวนเงินต่อวัน" value={businessleavesalary} onChange={(e) => setBusinessleavesalary(e.target.value)} />
+                                                            <label role="personalLeaveRate">จำนวนเงินต่อวัน</label>
+                                                            <input type="text" class="form-control" id="personalLeaveRate" placeholder="จำนวนเงินต่อวัน" value={personalLeaveRate} onChange={(e) => setPersonalLeaveRate(e.target.value)} />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -557,15 +564,15 @@ function Setting() {
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label role="remainsickleave">วันลาป่วยคงเหลือ</label>
-                                                            <input type="text" class="form-control" id="remainsickleave" placeholder="จำนวนเงินต่อวัน" value={remainsickleave} onChange={(e) => setRemainsickleave(e.target.value)} />
+                                                            <label role="sickLeave">วันลาป่วย</label>
+                                                            <input type="text" class="form-control" id="sickLeave" placeholder="วันลาป่วย" value={sickLeave} onChange={(e) => setSickLeave(e.target.value)} />
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label role="sickleavesalary">จำนวนเงินต่อวัน</label>
-                                                            <input type="text" class="form-control" id="sickleavesalary" placeholder="จำนวนเงินต่อวัน" value={sickleavesalary} onChange={(e) => setSickleavesalary(e.target.value)} />
+                                                            <label role="sickLeaveRate">จำนวนเงินต่อวัน</label>
+                                                            <input type="text" class="form-control" id="sickLeaveRate" placeholder="จำนวนเงินต่อวัน" value={sickLeaveRate} onChange={(e) => setSickLeaveRate(e.target.value)} />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -573,15 +580,15 @@ function Setting() {
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label role="remainvacation">วันลาพักร้อนคงเหลือ</label>
-                                                            <input type="text" class="form-control" id="remainvacation" placeholder="จำนวนเงินต่อวัน" value={remainvacation} onChange={(e) => setRemainvacation(e.target.value)} />
+                                                            <label role="workRateDayoff">วันลาพักร้อน</label>
+                                                            <input type="text" class="form-control" id="workRateDayoff" placeholder="จำนวนเงินต่อวัน" value={workRateDayoff} onChange={(e) => setWorkRateDayoff(e.target.value)} />
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label role="vacationsalary">จำนวนเงินต่อวัน</label>
-                                                            <input type="text" class="form-control" id="vacationsalary" placeholder="จำนวนเงินต่อวัน" value={vacationsalary} onChange={(e) => setVacationsalary(e.target.value)} />
+                                                            <label role="workRateDayoffRate">จำนวนเงินต่อวัน</label>
+                                                            <input type="text" class="form-control" id="workRateDayoffRate" placeholder="จำนวนเงินต่อวัน" value={workRateDayoffRate} onChange={(e) => setVacationsalary(e.target.value)} />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -608,7 +615,7 @@ function Setting() {
                                 {/* <!--Frame--> */}
 
 
-                                <h2 class="title">ลงวันหยุด ( อย่าน้อย 10 วัน )</h2>
+                                <h2 class="title">วันหยุดหน่วยงาน</h2>
                                 <section class="Frame">
                                     <div class="row">
                                         <div class="col-md-2">

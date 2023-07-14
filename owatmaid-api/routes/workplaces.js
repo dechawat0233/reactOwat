@@ -32,13 +32,13 @@ const workplaceSchema = new mongoose.Schema({
     workOfWeek: {
         type: String
   },
-  workkStart1: {
+  workStart1: {
     type: String
   },
   workEnd1: {
     type: String
     },
-    workkStart2: {
+    workStart2: {
         type: String
     },
     workEnd2: {
@@ -107,6 +107,9 @@ const workplaceSchema = new mongoose.Schema({
     workRateDayoffRate: {
         type: String
     },
+    daysOff: [{
+        type: Date
+    }],
   workplaceAddress: {
     type: String
     }
@@ -182,23 +185,36 @@ router.post('/create', async (req, res) => {
   
     const {
         workplaceId,
-        workplaceName,
-        workplaceArea,
-        workOfWeek,
-        workkStart1,
-        workEnd1,
-        workkStart2,
-        workEnd2,
-        workStart3,
-        workEnd3,
-        workOfHour,
-        workOfOT,
-        workRate,
-        workRateOT,
-        workTotalPeople,
-        workRateDayoff,
-        workRateDayoffHour,
-        workplaceAddress
+workplaceName,
+workplaceArea,
+workOfWeek,
+workStart1,
+workEnd1,
+workStart2,
+workEnd2,
+workStart3,
+workEnd3,
+workOfHour,
+workOfOT,
+workRate,
+workRateOT,
+workTotalPeople,
+holiday,
+holidayHour,
+salaryadd1,
+salaryadd2,
+salaryadd3,
+salaryadd4,
+salaryadd5,
+salaryadd6,
+personalLeave,
+personalLeaveRate,
+sickLeave,
+sickLeaveRate,
+workRateDayoff,
+workRateDayoffRate,
+daysOff,
+workplaceAddress,
     } = req.body;
 
     
@@ -208,9 +224,9 @@ router.post('/create', async (req, res) => {
         workplaceName,
         workplaceArea,
         workOfWeek,
-        workkStart1,
+        workStart1,
         workEnd1,
-        workkStart2,
+        workStart2,
         workEnd2,
         workStart3,
         workEnd3,
@@ -219,8 +235,21 @@ router.post('/create', async (req, res) => {
         workRate,
         workRateOT,
         workTotalPeople,
+        holiday,
+        holidayHour,
+        salaryadd1,
+        salaryadd2,
+        salaryadd3,
+        salaryadd4,
+        salaryadd5,
+        salaryadd6,
+        personalLeave,
+        personalLeaveRate,
+        sickLeave,
+        sickLeaveRate,
         workRateDayoff,
-        workRateDayoffHour,
+        workRateDayoffRate,
+        daysOff,
         workplaceAddress
     });
 
