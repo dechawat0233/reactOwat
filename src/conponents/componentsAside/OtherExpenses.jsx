@@ -4,6 +4,10 @@ import React, { useEffect, useState } from 'react';
 import EmployeesSelected from './EmployeesSelected';
 
 function OtherExpenses() {
+    const [id, setId] = useState('');
+    const [name, setName] = useState('');
+    const [agency, setAgency] = useState(0);
+    //////////////////////////////////
     const [number1, setNumber1] = useState('');
     const [number2, setNumber2] = useState('');
     const [sum, setSum] = useState(0);
@@ -221,10 +225,23 @@ function OtherExpenses() {
     };
     //////////////////////////////////////////////
     const [sumall, setSumAll] = useState(0);
+    const [sumall2, setSumAll2] = useState(0);
+    const [divide, setDivide] = useState(0);
+    const [divideall, setDivideAll] = useState(0);
     useEffect(() => {
         const sumall = Number(sum) + Number(sum2) + Number(crimeinvestigation) + Number(custom);
         setSumAll(sumall);
     }, [sum, sum2, crimeinvestigation, custom]);
+
+    useEffect(() => {
+        const sumall2 = Number(sum) + Number(sum2) + Number(crimeinvestigation) + Number(custom) + Number(sumadmoney);
+        setSumAll2(sumall2);
+    }, [sum, sum2, crimeinvestigation, custom, sumadmoney]);
+
+    useEffect(() => {
+        const divideAllValue = sumall2 / divide;
+        setDivideAll(divideAllValue);
+    }, [sumall, divide]);
     return (
         <body class="hold-transition sidebar-mini">
             <div class="wrapper">
@@ -247,6 +264,46 @@ function OtherExpenses() {
                     <section class="content">
                         <div class="container-fluid">
                             <form action="">
+                                <h2 class="title">ข้อมูลพนักงาน</h2>
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <section class="Frame">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group row">
+                                                        <div class="col-md-2 col-form-label"><span class="txt-w">รหัส </span></div>
+                                                        <div class="col-md-10">
+                                                            <input type="text" class="form-control" id="id" placeholder="รหัส" value={id} onChange={(e) => setId(e.target.value)} />
+                                                            {/* <input type="number" pattern="[0-9]*" value={number2} onChange={handleNumber2Change} /> */}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group row">
+                                                        <div class="col-md-2 col-form-label"><span class="txt-w">ชื่อ </span></div>
+                                                        <div class="col-md-10">
+                                                            <input type="text" class="form-control" id="name" placeholder="ชื่อ" value={name} onChange={(e) => setName(e.target.value)} />
+                                                            {/* <input type="number" pattern="[0-9]*" value={number2} onChange={handleNumber2Change} /> */}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group row">
+                                                        <div class="col-md-2 col-form-label"><span class="txt-w">หน่วยงาน </span></div>
+                                                        <div class="col-md-10">
+                                                            <input type="text" class="form-control" id="agency" placeholder="หน่วยงาน" value={agency} onChange={(e) => setAgency(e.target.value)} />
+                                                            {/* <input type="number" pattern="[0-9]*" value={number2} onChange={handleNumber2Change} /> */}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                        {/* <!--Frame--> */}
+                                    </div>
+                                    <div class="col-md-3">
+                                        <section class="Frame"><EmployeesSelected /></section>
+                                    </div>
+                                </div>
                                 <h2 class="title">บัตรพนักงาน</h2>
                                 <div class="row">
                                     <div class="col-md-9">
@@ -270,13 +327,6 @@ function OtherExpenses() {
                                                     <div class="row">
                                                         <label class="col-md-2 col-form-label">จำนวน</label>
                                                         <div class="col-md-3">
-                                                            {/* <select class="form-control">
-                                                                <option>1</option>
-                                                                <option>option 2</option>
-                                                                <option>option 3</option>
-                                                                <option>option 4</option>
-                                                                <option>option 5</option>
-                                                            </select> */}
                                                             <input type="number" class="form-control" pattern="[0-9]*" value={number2} onChange={handleNumber2Change} />
                                                         </div>
                                                         <label class="col-md-1 col-form-label">อัน</label>
@@ -285,9 +335,6 @@ function OtherExpenses() {
                                             </div>
                                         </section>
                                         {/* <!--Frame--> */}
-                                    </div>
-                                    <div class="col-md-3">
-                                        <section class="Frame"><EmployeesSelected /></section>
                                     </div>
                                 </div>
                                 <h2 class="title">สุขภาพ</h2>
@@ -530,7 +577,7 @@ function OtherExpenses() {
                                                     <div class="form-group row">
                                                         <div class="col-md-3 col-form-label">รายการที่ 1</div>
                                                         <div class="col-md-8">
-                                                        <input type="text" class="form-control" id="commentadmoney1" placeholder="อื่นๆ" value={commentadmoney1} onChange={(e) => setCommentAdmoney1(e.target.value)} />
+                                                            <input type="text" class="form-control" id="commentadmoney1" placeholder="อื่นๆ" value={commentadmoney1} onChange={(e) => setCommentAdmoney1(e.target.value)} />
 
                                                         </div>
                                                     </div>
@@ -550,7 +597,7 @@ function OtherExpenses() {
                                                     <div class="form-group row">
                                                         <div class="col-md-3 col-form-label">รายการที่ 2</div>
                                                         <div class="col-md-8">
-                                                        <input type="text" class="form-control" id="commentadmoney2" placeholder="รายการที่ 2" value={commentadmoney2} onChange={(e) => setCommentAdmoney2(e.target.value)} />
+                                                            <input type="text" class="form-control" id="commentadmoney2" placeholder="รายการที่ 2" value={commentadmoney2} onChange={(e) => setCommentAdmoney2(e.target.value)} />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -569,7 +616,7 @@ function OtherExpenses() {
                                                     <div class="form-group row">
                                                         <div class="col-md-3 col-form-label">รายการที่ 3</div>
                                                         <div class="col-md-8">
-                                                        <input type="text" class="form-control" id="commentadmoney3" placeholder="รายการที่ 3" value={commentadmoney3} onChange={(e) => setCommentAdmoney3(e.target.value)} />
+                                                            <input type="text" class="form-control" id="commentadmoney3" placeholder="รายการที่ 3" value={commentadmoney3} onChange={(e) => setCommentAdmoney3(e.target.value)} />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -594,35 +641,49 @@ function OtherExpenses() {
                                             <div class="row form-group">
                                                 <label class="col-md-3 col-form-label">ค่าบัตรพนักงานรวมเป็นเงิน</label>
                                                 <div class="col-md-3">
-                                                    <input type="" class="form-control" id="" placeholder="00.00" value={sum} readOnly/>
+                                                    <input type="" class="form-control" id="" placeholder="00.00" value={sum} readOnly />
                                                 </div>
                                                 <div class="col-md-1 col-form-label">บาท</div>
                                             </div>
                                             <div class="row form-group">
                                                 <label class="col-md-3 col-form-label">ค่าตรวจสุขภาพรวมเป็นเงิน</label>
                                                 <div class="col-md-3">
-                                                    <input type="" class="form-control" id="" placeholder="00.00" value={sum2} readOnly/>
+                                                    <input type="" class="form-control" id="" placeholder="00.00" value={sum2} readOnly />
                                                 </div>
                                                 <div class="col-md-1 col-form-label">บาท</div>
                                             </div>
                                             <div class="row form-group">
                                                 <label class="col-md-3 col-form-label">ค่าตรวจสอบอาชญากรรมรวมเป็นเงิน</label>
                                                 <div class="col-md-3">
-                                                    <input type="" class="form-control" id="" placeholder="00.00" value={crimeinvestigation} readOnly/>
+                                                    <input type="" class="form-control" id="" placeholder="00.00" value={crimeinvestigation} readOnly />
                                                 </div>
                                                 <div class="col-md-1 col-form-label">บาท</div>
                                             </div>
                                             <div class="row form-group">
                                                 <label class="col-md-3 col-form-label">ค่าเครื่องแต่งกายรวมเป็นเงิน</label>
                                                 <div class="col-md-3">
-                                                    <input type="" class="form-control" id="" placeholder="00.00" value={custom} readOnly/>
+                                                    <input type="" class="form-control" id="" placeholder="00.00" value={custom} readOnly />
                                                 </div>
                                                 <div class="col-md-1 col-form-label">บาท</div>
                                             </div>
                                             <div class="row form-group">
                                                 <label class="col-md-3 col-form-label">รวมเป็นเงินทั้งหมด</label>
                                                 <div class="col-md-3">
-                                                    <input type="" class="form-control" id="" placeholder="00.00" value={sumall} readOnly/>
+                                                    <input type="" class="form-control" id="" placeholder="00.00" value={sumall} readOnly />
+                                                </div>
+                                                <div class="col-md-1 col-form-label">บาท</div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <label class="col-md-3 col-form-label">จำนวนเงินเบิก</label>
+                                                <div class="col-md-3">
+                                                    <input type="" class="form-control" id="" placeholder="00.00" value={sumadmoney} readOnly />
+                                                </div>
+                                                <div class="col-md-1 col-form-label">บาท</div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <label class="col-md-3 col-form-label">เป็นเงินทั้งสิทธิ</label>
+                                                <div class="col-md-3">
+                                                    <input type="" class="form-control" id="" placeholder="00.00" value={sumall2} readOnly />
                                                 </div>
                                                 <div class="col-md-1 col-form-label">บาท</div>
                                             </div>
@@ -630,15 +691,20 @@ function OtherExpenses() {
                                                 <input type="radio" class="form-check-input" style={{ marginLeft: "8px" }} id="radio1" name="optradio" value="option1" checked />
                                                 <label class="form-check-label col-md-3 col" style={{ paddingLeft: "30px" }} for="radio1">จ่ายจำนวนเต็ม</label>
                                                 <div class="col-md-3">
-                                                    <input type="" class="form-control" id="" placeholder="00.00" value={sumadmoney} readOnly/>
+                                                    <input type="" class="form-control" id="" placeholder="00.00" value={sumall2} readOnly />
                                                 </div>
                                                 <div class="col-md-1 col-form-label">บาท</div>
                                             </div>
                                             <div class="row form-group">
                                                 <input type="radio" class="form-check-input" style={{ marginLeft: "8px" }} id="radio1" name="optradio" value="option1" checked />
-                                                <label class="form-check-label col-md-3 col" style={{ paddingLeft: "30px" }} for="radio1">หักครั้งละ</label>
+                                                <label class="form-check-label col-md-3 col" style={{ paddingLeft: "30px" }} for="radio1">หักเป็นจำนวน</label>
                                                 <div class="col-md-3">
-                                                    <input type="" class="form-control" id="" placeholder="00.00" />
+                                                    <input type="" class="form-control" placeholder="00.00" value={divide} onChange={(event) => setDivide(Number(event.target.value))} />
+                                                </div>
+                                                <div class="col-md-1 col-form-label">ครั้ง</div>
+                                                <label class="form-check-label col-md-2 col" style={{ paddingLeft: "30px" }} for="radio1">เป็นจำนวนครั้งละ</label>
+                                                <div class="col-md-2">
+                                                    <input type="" class="form-control" placeholder="00.00" value={divideall} />
                                                 </div>
                                                 <div class="col-md-1 col-form-label">บาท</div>
                                             </div>
