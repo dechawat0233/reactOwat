@@ -23,20 +23,20 @@ function Setting() {
         const updatedDaysOff = [...daysOff];
         updatedDaysOff[index] = value;
         setDaysOff(updatedDaysOff);
-      };
-    
-      const handleAddDayOff = () => {
+    };
+
+    const handleAddDayOff = () => {
         setDaysOff([...daysOff, '']);
-      };
-    
-      const handleSubmit = (e) => {
+    };
+
+    const handleSubmit = (e) => {
         e.preventDefault();
         // Perform any necessary actions with the daysOff and holidayComment data
         console.log(daysOff);
         console.log(holidayComment);
-      };    
+    };
 
-      
+
     //Workplace data
     const [workplaceId, setWorkplaceId] = useState(''); //รหัสหน่วยงาน
     const [workplaceName, setWorkplaceName] = useState(''); //ชื่อหน่วยงาน
@@ -54,20 +54,20 @@ function Setting() {
     const [workRate, setWorkRate] = useState(''); //ค่าจ้างต่อวัน
     const [workRateOT, setWorkRateOT] = useState(''); //ค่าจ้าง OT ต่อชั่วโมง
     const [workTotalPeople, setWorkTotalPeople] = useState(''); //จำนวนคนในหน่วยงาน
-    const [holiday , setHoliday] = useState(''); //ค่าจ้างวันหยุดนักขัตฤกษ์ 
-const [holidayHour , setHolidayHour] = useState(''); //ค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง
-const [salaryadd1 , setSalaryadd1] = useState(''); //ค่ารถ
-const [salaryadd2 , setSalaryadd2] = useState(''); //ค่าอาหาร
-const [salaryadd3 , setSalaryadd3] = useState(''); //เบี้ยขยัน
-const [salaryadd4 , setSalaryadd4] = useState(''); //เงินพิเศษอื่นๆ
-const [salaryadd5 , setSalaryadd5] = useState(''); //ค่าโทรศัพท์
-const [salaryadd6 , setSalaryadd6] = useState(''); //เงินประจำตำแหน่ง
-const [personalLeave , setPersonalLeave] = useState(''); //วันลากิจ
-const [personalLeaveRate , setPersonalLeaveRate] = useState(''); //จ่ายเงินลากิจ
-const [sickLeave , setSickLeave] = useState(''); //วันลาป่วย
-const [sickLeaveRate , setSickLeaveRate] = useState(''); //จ่ายเงินวันลาป่วย
+    const [holiday, setHoliday] = useState(''); //ค่าจ้างวันหยุดนักขัตฤกษ์ 
+    const [holidayHour, setHolidayHour] = useState(''); //ค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง
+    const [salaryadd1, setSalaryadd1] = useState(''); //ค่ารถ
+    const [salaryadd2, setSalaryadd2] = useState(''); //ค่าอาหาร
+    const [salaryadd3, setSalaryadd3] = useState(''); //เบี้ยขยัน
+    const [salaryadd4, setSalaryadd4] = useState(''); //เงินพิเศษอื่นๆ
+    const [salaryadd5, setSalaryadd5] = useState(''); //ค่าโทรศัพท์
+    const [salaryadd6, setSalaryadd6] = useState(''); //เงินประจำตำแหน่ง
+    const [personalLeave, setPersonalLeave] = useState(''); //วันลากิจ
+    const [personalLeaveRate, setPersonalLeaveRate] = useState(''); //จ่ายเงินลากิจ
+    const [sickLeave, setSickLeave] = useState(''); //วันลาป่วย
+    const [sickLeaveRate, setSickLeaveRate] = useState(''); //จ่ายเงินวันลาป่วย
     const [workRateDayoff, setWorkRateDayoff] = useState(''); //ค่าจ้างวันหยุด ต่อวัน
-    const [workRateDayoffRate , setworkRateDayoffRate] = useState('');
+    const [workRateDayoffRate, setworkRateDayoffRate] = useState('');
     // const [daysOff , setDaysOff] = useState([{ date: '' }]);
     const [workplaceAddress, setWorkplaceAddress] = useState(''); //ที่อยู่หน่วยงาน
 
@@ -140,7 +140,7 @@ const [sickLeaveRate , setSickLeaveRate] = useState(''); //จ่ายเงิ
     const handleStartDateChange9 = (date) => {
         setStartjob9(date);
     };
-        const [startjob10, setStartjob10] = useState(''); //วันที่เริ่มงาน
+    const [startjob10, setStartjob10] = useState(''); //วันที่เริ่มงาน
     const handleStartDateChange10 = (date) => {
         setStartjob10(date);
     };
@@ -164,20 +164,20 @@ const [sickLeaveRate , setSickLeaveRate] = useState(''); //จ่ายเงิ
         setWorkRate(workplace.workRate);
         setWorkRateOT(workplace.workRateOT);
         setWorkTotalPeople(workplace.workTotalPeople);
-        setHoliday(workplace.holiday );
-        setHolidayHour(workplace.holidayHour );
-        setSalaryadd1(workplace.salaryadd1 );
-        setSalaryadd2(workplace. salaryadd2 );
-        setSalaryadd3(workplace.salaryadd3 );
-        setSalaryadd4(workplace.salaryadd4 );
-        setSalaryadd5(workplace.salaryadd5 );
-        setSalaryadd6(workplace.salaryadd6 );
-        setPersonalLeave(workplace.personalLeave );
-        setPersonalLeaveRate(workplace.personalLeaveRate );
-        setSickLeave(workplace.sickLeave );
-        setSickLeaveRate(workplace.sickLeaveRate );
+        setHoliday(workplace.holiday);
+        setHolidayHour(workplace.holidayHour);
+        setSalaryadd1(workplace.salaryadd1);
+        setSalaryadd2(workplace.salaryadd2);
+        setSalaryadd3(workplace.salaryadd3);
+        setSalaryadd4(workplace.salaryadd4);
+        setSalaryadd5(workplace.salaryadd5);
+        setSalaryadd6(workplace.salaryadd6);
+        setPersonalLeave(workplace.personalLeave);
+        setPersonalLeaveRate(workplace.personalLeaveRate);
+        setSickLeave(workplace.sickLeave);
+        setSickLeaveRate(workplace.sickLeaveRate);
         setWorkRateDayoff(workplace.workRateDayoff);
-        setworkRateDayoffRate(workplace.workRateDayoffRate );
+        setworkRateDayoffRate(workplace.workRateDayoffRate);
         // setDaysOff(workplace.daysOff );
         setWorkplaceAddress(workplace.workplaceAddress);
 
@@ -270,23 +270,23 @@ const [sickLeaveRate , setSickLeaveRate] = useState(''); //จ่ายเงิ
             workRate: workRate,
             workRateOT: workRateOT,
             workTotalPeople: workTotalPeople,
-            holiday : holiday ,
-            holidayHour : holidayHour ,
-            salaryadd1 : salaryadd1 ,
-            salaryadd2 : salaryadd2 ,
-            salaryadd3 : salaryadd3 ,
-            salaryadd4 : salaryadd4 ,
-            salaryadd5 : salaryadd5 ,
-            salaryadd6 : salaryadd6 ,
-            personalLeave : personalLeave ,
-            personalLeaveRate : personalLeaveRate ,
-            sickLeave : sickLeave ,
-            sickLeaveRate : sickLeaveRate ,
+            holiday: holiday,
+            holidayHour: holidayHour,
+            salaryadd1: salaryadd1,
+            salaryadd2: salaryadd2,
+            salaryadd3: salaryadd3,
+            salaryadd4: salaryadd4,
+            salaryadd5: salaryadd5,
+            salaryadd6: salaryadd6,
+            personalLeave: personalLeave,
+            personalLeaveRate: personalLeaveRate,
+            sickLeave: sickLeave,
+            sickLeaveRate: sickLeaveRate,
             workRateDayoff: workRateDayoff,
-            workRateDayoffRate : workRateDayoffRate ,
+            workRateDayoffRate: workRateDayoffRate,
             // daysOff : daysOff ,
             workplaceAddress: workplaceAddress
-            
+
             // workplaceId: workplaceId,
             // workplaceName: workplaceName,
             // workplaceArea: workplaceArea,
@@ -316,9 +316,9 @@ const [sickLeaveRate , setSickLeaveRate] = useState(''); //จ่ายเงิ
             try {
                 const response = await axios.post(endpoint + '/workplace/create', data);
                 // setEmployeesResult(response.data.employees);
-if(response ){
-    alert("บันทึกสำเร็จ");
-}
+                if (response) {
+                    alert("บันทึกสำเร็จ");
+                }
 
             } catch (error) {
                 alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');

@@ -12,8 +12,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 function Employee() {
     const [storedEmp, setStoredEmp] = useState([]);
     const [newEmp, setNewEmp] = useState(true);
-    const [employeeselection  , setEmployeeselection  ] = useState([]);
-const [buttonValue ,setButtonValue] = useState('');
+    const [employeeselection, setEmployeeselection] = useState([]);
+    const [buttonValue, setButtonValue] = useState('');
 
     //employee data
     const [employeeId, setEmployeeId] = useState('');
@@ -47,46 +47,46 @@ const [buttonValue ,setButtonValue] = useState('');
     const [copyAddress, setCopyAddress] = useState(false);
 
     const handleCheckboxChange = () => {
-      setCopyAddress(!copyAddress); // Toggle the value of copyAddress
-      if (!copyAddress) {
-        setCurrentAddress(address); // Copy address to currentAddress
-      } else {
-        setCurrentAddress(''); // Reset currentAddress
-      }
+        setCopyAddress(!copyAddress); // Toggle the value of copyAddress
+        if (!copyAddress) {
+            setCurrentAddress(address); // Copy address to currentAddress
+        } else {
+            setCurrentAddress(''); // Reset currentAddress
+        }
     };
 
-function onEmployeeSelect(empSelect){
-// alert(empSelect.dateOfBirth);
-setEmployeeselection(empSelect);
-    setEmployeeId(empSelect.employeeId);
-setPosition(empSelect.position);
-setDepartment(empSelect.department);
-setWorkplace(empSelect.workplace);
-setJobtype(empSelect.jobtype);
-setStartjob( new Date(empSelect.startjob) );
-setExceptjob(new Date(empSelect.exceptjob));
-setPrefix(empSelect.prefix);
-setName(empSelect.name);
-setLastName(empSelect.lastName);
-setNickName(empSelect.nickName);
-setGender(empSelect.gender);
+    function onEmployeeSelect(empSelect) {
+        // alert(empSelect.dateOfBirth);
+        setEmployeeselection(empSelect);
+        setEmployeeId(empSelect.employeeId);
+        setPosition(empSelect.position);
+        setDepartment(empSelect.department);
+        setWorkplace(empSelect.workplace);
+        setJobtype(empSelect.jobtype);
+        setStartjob(new Date(empSelect.startjob));
+        setExceptjob(new Date(empSelect.exceptjob));
+        setPrefix(empSelect.prefix);
+        setName(empSelect.name);
+        setLastName(empSelect.lastName);
+        setNickName(empSelect.nickName);
+        setGender(empSelect.gender);
 
- setDateOfBirth( new Date(empSelect.dateOfBirth) );
-setAge(empSelect.age);
-setIdCard(empSelect.idCard);
-setEthnicity(empSelect.ethnicity);
-setReligion(empSelect.religion);
-setMaritalStatus(empSelect.maritalStatus);
-setMilitaryStatus(empSelect.militaryStatus);
-setAddress(empSelect.address);
-setCurrentAddress(empSelect.currentAddress);
-setPhoneNumber(empSelect.phoneNumber);
-setEmergencyContactNumber(empSelect.emergencyContactNumber);
-setIdLine(empSelect.idLine);
-setVaccination(empSelect.vaccination);
-setTreatmentRights(empSelect.treatmentRights);
+        setDateOfBirth(new Date(empSelect.dateOfBirth));
+        setAge(empSelect.age);
+        setIdCard(empSelect.idCard);
+        setEthnicity(empSelect.ethnicity);
+        setReligion(empSelect.religion);
+        setMaritalStatus(empSelect.maritalStatus);
+        setMilitaryStatus(empSelect.militaryStatus);
+        setAddress(empSelect.address);
+        setCurrentAddress(empSelect.currentAddress);
+        setPhoneNumber(empSelect.phoneNumber);
+        setEmergencyContactNumber(empSelect.emergencyContactNumber);
+        setIdLine(empSelect.idLine);
+        setVaccination(empSelect.vaccination);
+        setTreatmentRights(empSelect.treatmentRights);
 
-}
+    }
 
     async function handleManageEmployee(event) {
         event.preventDefault();
@@ -136,7 +136,7 @@ setTreatmentRights(empSelect.treatmentRights);
             }
 
         } else {
-            if(buttonValue == 'save') {
+            if (buttonValue == 'save') {
                 alert('update user');
 
             }
@@ -175,9 +175,9 @@ setTreatmentRights(empSelect.treatmentRights);
     //check create employee or update employee by click select employee
     useEffect(() => {
         // setNewEmp(true);
-        if (employeeselection.length >0 ) {
+        if (employeeselection.length > 0) {
             setNewEmp(true);
-        } else{
+        } else {
             setNewEmp(false);
         }
 
@@ -344,13 +344,13 @@ setTreatmentRights(empSelect.treatmentRights);
                                     </div>
                                     <div class="col-md-3">
                                         <section class="Frame">
-<EmployeesSelected onEmployeeSelect={onEmployeeSelect} />
+                                            <EmployeesSelected onEmployeeSelect={onEmployeeSelect} />
 
-</section>
+                                        </section>
 
                                     </div>
                                 </div>
-                                
+
                                 <h2 class="title">ข้อมูลส่วนบุคคลพนักงาน</h2>
                                 <div class="row">
                                     <div class="col-md-9">
@@ -466,7 +466,7 @@ setTreatmentRights(empSelect.treatmentRights);
                                                             <label role="currentAddress">ที่อยู่ปัจจุบัน</label>
                                                             <div class="icheck-primary d-inline">
                                                                 <input type="checkbox" checked={copyAddress} id="" name="radio1" onChange={handleCheckboxChange}
-        /> ใช้ที่อยู่ตามบัตรประชาชน
+                                                                /> ใช้ที่อยู่ตามบัตรประชาชน
                                                             </div>
                                                             <textarea name="currentAddress" id="currentAddress" class="form-control" rows="3" value={currentAddress} onChange={(e) => setCurrentAddress(e.target.value)} ></textarea>
                                                         </div>
