@@ -16,6 +16,27 @@ import Calendar from 'react-calendar';
 function Setting() {
     const [newWorkplace, setNewWorkplace] = useState(true);
 
+
+    const [daysOff, setDaysOff] = useState(Array(10).fill(''));
+    const [holidayComment, setHolidayComment] = useState('');
+    const handleDayOffChange = (index, value) => {
+        const updatedDaysOff = [...daysOff];
+        updatedDaysOff[index] = value;
+        setDaysOff(updatedDaysOff);
+      };
+    
+      const handleAddDayOff = () => {
+        setDaysOff([...daysOff, '']);
+      };
+    
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        // Perform any necessary actions with the daysOff and holidayComment data
+        console.log(daysOff);
+        console.log(holidayComment);
+      };    
+
+      
     //Workplace data
     const [workplaceId, setWorkplaceId] = useState(''); //รหัสหน่วยงาน
     const [workplaceName, setWorkplaceName] = useState(''); //ชื่อหน่วยงาน
@@ -47,10 +68,10 @@ const [sickLeave , setSickLeave] = useState(''); //วันลาป่วย
 const [sickLeaveRate , setSickLeaveRate] = useState(''); //จ่ายเงินวันลาป่วย
     const [workRateDayoff, setWorkRateDayoff] = useState(''); //ค่าจ้างวันหยุด ต่อวัน
     const [workRateDayoffRate , setworkRateDayoffRate] = useState('');
-    const [daysOff , setDaysOff] = useState([{ date: '' }]);
+    // const [daysOff , setDaysOff] = useState([{ date: '' }]);
     const [workplaceAddress, setWorkplaceAddress] = useState(''); //ที่อยู่หน่วยงาน
 
-    const [workRateDayoffHour, setWorkRateDayoffHour] = useState(''); //ค่าจ้างวันหยุดต่อชั่วโมง
+    // const [workRateDayoffHour, setWorkRateDayoffHour] = useState(''); //ค่าจ้างวันหยุดต่อชั่วโมง
 
     const [holidaycomment, setHolidaycomment] = useState(''); //วันหยุด
     const [holidaycomment2, setHolidaycomment2] = useState(''); //วันหยุด
@@ -64,21 +85,21 @@ const [sickLeaveRate , setSickLeaveRate] = useState(''); //จ่ายเงิ
     const [holidaycomment10, setHolidaycomment10] = useState(''); //วันหยุด
 
 
-    const [travelRate, setTravelRate] = useState(''); //ค่ารถ
-    const [mealRate, setMealRate] = useState(''); //ค่าอาหาร
-    const [workOT, setWorkOT] = useState(''); //เบี้ยขยัน
-    const [workanything, setWorkanything] = useState(''); //เงินพิเศษอื่นๆ
-    const [phonebill, setPhoneBill] = useState(''); //ค่าโทรศัพท์
-    const [workPosition, setWorkPosition] = useState(''); //เงินประจำตำแนหง
+    // const [travelRate, setTravelRate] = useState(''); //ค่ารถ
+    // const [mealRate, setMealRate] = useState(''); //ค่าอาหาร
+    // const [workOT, setWorkOT] = useState(''); //เบี้ยขยัน
+    // const [workanything, setWorkanything] = useState(''); //เงินพิเศษอื่นๆ
+    // const [phonebill, setPhoneBill] = useState(''); //ค่าโทรศัพท์
+    // const [workPosition, setWorkPosition] = useState(''); //เงินประจำตำแนหง
 
-    const [remainbusinessleave, setRemainbusinessleave] = useState(''); //ลาคงเหลือ วันลากิจคงเหลือ 
-    const [businessleavesalary, setBusinessleavesalary] = useState(''); //ลาคงเหลือ จำนวนเงินต่อวัน
+    // const [remainbusinessleave, setRemainbusinessleave] = useState(''); //ลาคงเหลือ วันลากิจคงเหลือ 
+    // const [businessleavesalary, setBusinessleavesalary] = useState(''); //ลาคงเหลือ จำนวนเงินต่อวัน
 
-    const [remainsickleave, setRemainsickleave] = useState(''); //ลาคงเหลือ วันลาป่วยคงเหลือ 
-    const [sickleavesalary, setSickleavesalary] = useState(''); //ลาคงเหลือ จำนวนเงินต่อวัน
+    // const [remainsickleave, setRemainsickleave] = useState(''); //ลาคงเหลือ วันลาป่วยคงเหลือ 
+    // const [sickleavesalary, setSickleavesalary] = useState(''); //ลาคงเหลือ จำนวนเงินต่อวัน
 
-    const [remainvacation, setRemainvacation] = useState(''); //ลาคงเหลือ วันลาพักร้อนคงเหลือ 
-    const [vacationsalary, setVacationsalary] = useState(''); //ลาคงเหลือ จำนวนเงินต่อวัน 
+    // const [remainvacation, setRemainvacation] = useState(''); //ลาคงเหลือ วันลาพักร้อนคงเหลือ 
+    // const [vacationsalary, setVacationsalary] = useState(''); //ลาคงเหลือ จำนวนเงินต่อวัน 
 
 
 
@@ -132,33 +153,66 @@ const [sickLeaveRate , setSickLeaveRate] = useState(''); //จ่ายเงิ
         setWorkplaceName(workplace.workplaceName);
         setWorkplaceArea(workplace.workplaceArea);
         setWorkOfWeek(workplace.workOfWeek);
-        setWorkStart1(workplace.workkStart1);
+        setWorkStart1(workplace.workStart1);
         setWorkEnd1(workplace.workEnd1);
-
-        setWorkStart2(workplace.workkStart2);
+        setWorkStart2(workplace.workStart2);
         setWorkEnd2(workplace.workEnd2);
         setWorkStart3(workplace.workStart3);
         setWorkEnd3(workplace.workEnd3);
         setWorkOfHour(workplace.workOfHour);
         setWorkOfOT(workplace.workOfOT);
-
         setWorkRate(workplace.workRate);
         setWorkRateOT(workplace.workRateOT);
         setWorkTotalPeople(workplace.workTotalPeople);
+        setHoliday(workplace.holiday );
+        setHolidayHour(workplace.holidayHour );
+        setSalaryadd1(workplace.salaryadd1 );
+        setSalaryadd2(workplace. salaryadd2 );
+        setSalaryadd3(workplace.salaryadd3 );
+        setSalaryadd4(workplace.salaryadd4 );
+        setSalaryadd5(workplace.salaryadd5 );
+        setSalaryadd6(workplace.salaryadd6 );
+        setPersonalLeave(workplace.personalLeave );
+        setPersonalLeaveRate(workplace.personalLeaveRate );
+        setSickLeave(workplace.sickLeave );
+        setSickLeaveRate(workplace.sickLeaveRate );
         setWorkRateDayoff(workplace.workRateDayoff);
-        setWorkRateDayoffHour(workplace.workRateDayoffHour);
+        setworkRateDayoffRate(workplace.workRateDayoffRate );
+        // setDaysOff(workplace.daysOff );
         setWorkplaceAddress(workplace.workplaceAddress);
 
-        setHolidaycomment(workplace.holidaycomment);
-        setHolidaycomment2(workplace.holidaycomment2);
-        setHolidaycomment3(workplace.holidaycomment3);
-        setHolidaycomment4(workplace.holidaycomment4);
-        setHolidaycomment5(workplace.holidaycomment5);
-        setHolidaycomment6(workplace.holidaycomment6);
-        setHolidaycomment7(workplace.holidaycomment7);
-        setHolidaycomment8(workplace.holidaycomment8);
-        setHolidaycomment9(workplace.holidaycomment9);
-        setHolidaycomment10(workplace.holidaycomment10);
+
+        // setWorkplaceId(workplace.workplaceId);
+        // setWorkplaceName(workplace.workplaceName);
+        // setWorkplaceArea(workplace.workplaceArea);
+        // setWorkOfWeek(workplace.workOfWeek);
+        // setWorkStart1(workplace.workkStart1);
+        // setWorkEnd1(workplace.workEnd1);
+
+        // setWorkStart2(workplace.workkStart2);
+        // setWorkEnd2(workplace.workEnd2);
+        // setWorkStart3(workplace.workStart3);
+        // setWorkEnd3(workplace.workEnd3);
+        // setWorkOfHour(workplace.workOfHour);
+        // setWorkOfOT(workplace.workOfOT);
+
+        // setWorkRate(workplace.workRate);
+        // setWorkRateOT(workplace.workRateOT);
+        // setWorkTotalPeople(workplace.workTotalPeople);
+        // setWorkRateDayoff(workplace.workRateDayoff);
+        // setWorkRateDayoffHour(workplace.workRateDayoffHour);
+        // setWorkplaceAddress(workplace.workplaceAddress);
+
+        // setHolidaycomment(workplace.holidaycomment);
+        // setHolidaycomment2(workplace.holidaycomment2);
+        // setHolidaycomment3(workplace.holidaycomment3);
+        // setHolidaycomment4(workplace.holidaycomment4);
+        // setHolidaycomment5(workplace.holidaycomment5);
+        // setHolidaycomment6(workplace.holidaycomment6);
+        // setHolidaycomment7(workplace.holidaycomment7);
+        // setHolidaycomment8(workplace.holidaycomment8);
+        // setHolidaycomment9(workplace.holidaycomment9);
+        // setHolidaycomment10(workplace.holidaycomment10);
 
     }
 
@@ -216,11 +270,43 @@ const [sickLeaveRate , setSickLeaveRate] = useState(''); //จ่ายเงิ
             workRate: workRate,
             workRateOT: workRateOT,
             workTotalPeople: workTotalPeople,
+            holiday : holiday ,
+            holidayHour : holidayHour ,
+            salaryadd1 : salaryadd1 ,
+            salaryadd2 : salaryadd2 ,
+            salaryadd3 : salaryadd3 ,
+            salaryadd4 : salaryadd4 ,
+            salaryadd5 : salaryadd5 ,
+            salaryadd6 : salaryadd6 ,
+            personalLeave : personalLeave ,
+            personalLeaveRate : personalLeaveRate ,
+            sickLeave : sickLeave ,
+            sickLeaveRate : sickLeaveRate ,
             workRateDayoff: workRateDayoff,
-            workRateDayoffHour: workRateDayoffHour,
-            workplaceAddress: workplaceAddress,
+            workRateDayoffRate : workRateDayoffRate ,
+            // daysOff : daysOff ,
+            workplaceAddress: workplaceAddress
+            
+            // workplaceId: workplaceId,
+            // workplaceName: workplaceName,
+            // workplaceArea: workplaceArea,
+            // workOfWeek: workOfWeek,
+            // workStart1: workStart1,
+            // workEnd1: workEnd1,
+            // workStart2: workStart2,
+            // workEnd2: workEnd2,
+            // workStart3: workStart3,
+            // workEnd3: workEnd3,
+            // workOfHour: workOfHour,
+            // workOfOT: workOfOT,
+            // workRate: workRate,
+            // workRateOT: workRateOT,
+            // workTotalPeople: workTotalPeople,
+            // workRateDayoff: workRateDayoff,
+            // workRateDayoffHour: workRateDayoffHour,
+            // workplaceAddress: workplaceAddress,
 
-            holidaycomment: holidaycomment
+            // holidaycomment: holidaycomment
         };
 
 
@@ -230,6 +316,9 @@ const [sickLeaveRate , setSickLeaveRate] = useState(''); //จ่ายเงิ
             try {
                 const response = await axios.post(endpoint + '/workplace/create', data);
                 // setEmployeesResult(response.data.employees);
+if(response ){
+    alert("บันทึกสำเร็จ");
+}
 
             } catch (error) {
                 alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
@@ -581,14 +670,14 @@ const [sickLeaveRate , setSickLeaveRate] = useState(''); //จ่ายเงิ
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="workRateDayoff">วันลาพักร้อน</label>
-                                                            <input type="text" class="form-control" id="workRateDayoff" placeholder="จำนวนเงินต่อวัน" value={workRateDayoff} onChange={(e) => setWorkRateDayoff(e.target.value)} />
+                                                            <input type="text" class="form-control" id="workRateDayoff" placeholder="วันลาพักร้อน" value={workRateDayoff} onChange={(e) => setWorkRateDayoff(e.target.value)} />
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="workRateDayoffRate">จำนวนเงินต่อวัน</label>
-                                                            <input type="text" class="form-control" id="workRateDayoffRate" placeholder="จำนวนเงินต่อวัน" value={workRateDayoffRate} onChange={(e) => setVacationsalary(e.target.value)} />
+                                                            <input type="text" class="form-control" id="workRateDayoffRate" placeholder="จำนวนเงินต่อวัน" value={workRateDayoffRate} onChange={(e) => setworkRateDayoffRate(e.target.value)} />
                                                         </div>
                                                     </div>
                                                 </div>
