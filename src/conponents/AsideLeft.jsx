@@ -273,9 +273,15 @@ function AsideLeft() {
               </li> 
                 */}
 
-              <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon fas fa fa-cog"></i>
+              {/* <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon fas fa fa-cog"></i>
                 <p> การแจ้งเตือน</p>
-              </a></li>
+              </a></li> */}
+
+              <li class="nav-item">
+                <Link to="/testPDF" className="nav-link"><i class="nav-icon fas fa fa-cog" style={{ fontSize: "14px" }}></i> การแจ้งเตือน</Link>
+
+              </li>
+
               {/* <li class="nav-item"><Link to="/countday" className="nav-link"><i class="nav-icon fas fa fa-cog"></i> Testcount</Link></li> */}
               {/* <li class="nav-item"><Link to="/time" className="nav-link"><i class="nav-icon fas fa fa-cog"></i> Test</Link></li> */}
             </ul>

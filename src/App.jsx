@@ -42,6 +42,8 @@ import Addsettime from "./conponents/componentsAside/Addsettime";
 import Salarysummary from "./conponents/componentsAside/Salarysummary";
 import Worktimesheet from "./conponents/componentsAside/worktimesheet";
 
+import TestPDF from "./conponents/componentsAside/TestPDF";
+
 
 // import Time from "./conponents/Time";
 import Testcal from "./conponents/Testcal";
@@ -137,7 +139,7 @@ function App() {
           <Route path="/applicatio4" element={<Application4 />} />
           <Route path="/application_summary" element={<ApplicationSummary />} />
 
-
+          <Route path="/testPDF" element={<TestPDF />} />
 
           <Route path="/time" element={<Testcal />} />
           <Route path="/countday" element={<Countday />} />
