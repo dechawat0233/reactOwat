@@ -17,6 +17,33 @@ function Setting() {
     const [newWorkplace, setNewWorkplace] = useState(true);
 
 
+
+    const [selectedDates, setSelectedDates] = useState([]);
+    const [reason, setReason] = useState('');
+  
+    const handleDateChange = (date) => {
+      setSelectedDates((prevDates) => [...prevDates, date]);
+    };
+  
+    const handleRemoveDate = (dateToRemove) => {
+      setSelectedDates((prevDates) =>
+        prevDates.filter((date) => date !== dateToRemove)
+      );
+    };
+  
+    const handleReasonChange = (event) => {
+      setReason(event.target.value);
+    };
+  
+    // const handleSubmit = (event) => {
+    //   event.preventDefault();
+    //   // Here you can perform any action with the selectedDates and reason.
+    //   // For this example, we'll just log the values.
+    //   console.log('Selected Dates:', selectedDates);
+    //   console.log('Reason:', reason);
+    //   // You can make an API call to submit the day-off request or perform any other actions here.
+    // };
+
     const [daysOff, setDaysOff] = useState(Array(10).fill(''));
     const [holidayComment, setHolidayComment] = useState('');
     const handleDayOffChange = (index, value) => {
@@ -957,6 +984,39 @@ function Setting() {
 
                                     <button class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
                                 </div>
+
+
+            <div>
+        <label>เลือกวันหยุดของหน่วยงาน:</label>
+        <DatePicker
+          selected={null}
+          onChange={handleDateChange}
+          dateFormat="MMMM d, yyyy"
+          minDate={new Date()}
+          isClearable
+          placeholderText="Select a date"
+        />
+        {selectedDates.length > 0 && (
+          <div>
+            <h3>วันหยุดหน่วยงาน</h3>
+            <ul>
+              {selectedDates.map((date) => (
+                <li key={date.toString()}>
+                  {date.toLocaleDateString()}{' '}
+                  <button type="button" onClick={() => handleRemoveDate(date)}>
+                    Remove
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+      <div>
+        <label>หมายเหตุ:</label>
+        <input type="text" value={reason} onChange={handleReasonChange} />
+      </div>
+      <button type="submit">Submit</button>
 
                             </form>
                         </div>

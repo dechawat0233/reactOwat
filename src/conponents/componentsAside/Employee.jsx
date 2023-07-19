@@ -56,7 +56,7 @@ function Employee() {
     };
 
     function onEmployeeSelect(empSelect) {
-        // alert(empSelect.dateOfBirth);
+         alert(empSelect.dateOfBirth);
         setEmployeeselection(empSelect);
         setEmployeeId(empSelect.employeeId);
         setPosition(empSelect.position);
