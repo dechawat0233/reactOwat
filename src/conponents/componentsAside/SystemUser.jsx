@@ -25,7 +25,7 @@ function SystemUser() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
-    const [passwork, setPasswork] = useState('');
+    const [password, setPassword] = useState('');
     const [role, setRole] = useState('');
 
     function onEmployeeSelect(empSelect) {
@@ -68,7 +68,7 @@ function SystemUser() {
             name: name,
             email: email,
             username: username,
-            passwork: passwork,
+            password: password,
             role: role,
         };
 
@@ -256,7 +256,7 @@ function SystemUser() {
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label role="Passwork">Passwork</label>
-                                                    <input type="text" class="form-control" id="Passwork" placeholder="Passwork" value={passwork} onChange={(e) => setPasswork(e.target.value)} />
+                                                    <input type="text" class="form-control" id="Passwork" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
