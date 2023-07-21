@@ -37,6 +37,7 @@ import Application4 from "./conponents/componentsAside/Application4";
 import ApplicationSummary from "./conponents/componentsAside/ApplicationSummary";
 
 import Setting from "./conponents/componentsAside/Setting";
+import SystemUser from "./conponents/componentsAside/SystemUser";
 import Addsettime from "./conponents/componentsAside/Addsettime";
 
 import Salarysummary from "./conponents/componentsAside/Salarysummary";
@@ -130,6 +131,8 @@ function App() {
           <Route path="/other_expenses" element={<OtherExpenses />} />
           <Route path="/search_results" element={<SearchResults />} />
           <Route path="/setting" element={<Setting />} />
+          <Route path="/systemuser" element={<SystemUser />} />
+
           <Route path="/addsettime" element={<Addsettime />} />
 
           <Route path="/application" element={<Application />} />
