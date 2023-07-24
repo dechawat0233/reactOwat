@@ -673,7 +673,7 @@ function Setting() {
                                             selected={null}
                                             onChange={handleDateChange}
                                             dateFormat="MMMM d, yyyy"
-                                            minDate={new Date()}
+                                            // minDate={new Date()}
                                             isClearable
                                             placeholderText="Select a date"
                                         />
