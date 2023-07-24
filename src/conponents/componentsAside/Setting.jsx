@@ -126,6 +126,7 @@ set_id(workplace._id);
 //setSelectedDates([...selectedDates, workplace.daysOff]);
 const dates = workplace.daysOff.map((dateString) => new Date(dateString));
 setSelectedDates(dates );
+setReason(workplace.reason);
 
     }
 
@@ -194,7 +195,8 @@ setSelectedDates(dates );
             workRateDayoff: workRateDayoff,
             workRateDayoffRate: workRateDayoffRate,
             workplaceAddress: workplaceAddress,
-            daysOff : selectedDates
+            daysOff : selectedDates,
+            reason: reason
         };
 
 
@@ -587,7 +589,7 @@ setSelectedDates(dates );
                                                         <li key={date.toString()}>
                                                             {date.toLocaleDateString()}{' '}
                                                             <button type="button" onClick={() => handleRemoveDate(date)} class="btn clean" style={{ margin: '0.5rem' }}>
-                                                                Remove
+                                                                ลบออก
                                                             </button>
                                                         </li>
                                                     ))}
