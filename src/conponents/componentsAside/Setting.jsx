@@ -124,8 +124,9 @@ set_id(workplace._id);
         setworkRateDayoffRate(workplace.workRateDayoffRate);
         setWorkplaceAddress(workplace.workplaceAddress);
 //setSelectedDates([...selectedDates, workplace.daysOff]);
-const newDate = workplace.daysOff.toLocaleDateString(); // Get the current date as a string
-setSelectedDates([...selectedDates, newDate]);
+const dates = workplace.daysOff.map((dateString) => new Date(dateString));
+setSelectedDates(dates );
+
     }
 
     //data for search
