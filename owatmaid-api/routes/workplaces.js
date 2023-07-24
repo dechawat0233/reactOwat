@@ -264,4 +264,33 @@ workplaceAddress,
 });
 
 
+
+// Update a workplace by its workplaceId
+router.put('/update/:workplaceId', async (req, res) => {
+    console.log('hello');
+    const workplaceIdToUpdate = req.params.workplaceId;
+    const updateFields = req.body;
+
+    try {
+        // Find the resource by ID and update it
+        const updatedResource = await Workplace.findByIdAndUpdate(
+            workplaceIdToUpdate ,
+            updateFields ,
+            { new: true } // To get the updated document as the result
+        );
+        if (!updatedResource) {
+            return res.status(404).json({ message: 'Resource not found' });
+        }
+
+        // Send the updated resource as the response
+        res.json(updatedResource);
+
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+
 module.exports = router;
