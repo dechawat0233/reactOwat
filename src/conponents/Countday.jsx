@@ -1,5 +1,6 @@
-import React from 'react'
-import React, { useState } from "react";
+// import React from 'react'
+// import React, { useState } from "react";
+import React, { useEffect, useState } from 'react';
 
 function Countday() {
     const [startDate, setStartDate] = useState("");
@@ -50,6 +51,8 @@ function Countday() {
                     <button type="submit">Submit</button>
                 </form>
                 {result && <div>{result}</div>}
+
+
             </div>
         </div >
     )
