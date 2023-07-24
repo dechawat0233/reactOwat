@@ -53,6 +53,7 @@ function Setting() {
 
 
     //Workplace data
+    const [ _id , set_id] = useState('');
     const [workplaceId, setWorkplaceId] = useState(''); //รหัสหน่วยงาน
     const [workplaceName, setWorkplaceName] = useState(''); //ชื่อหน่วยงาน
     const [workplaceArea, setWorkplaceArea] = useState(''); //สถานที่ปฏิบัติงาน
@@ -91,7 +92,7 @@ function Setting() {
     //set data to form
     function handleClickResult(workplace) {
         setNewWorkplace(false);
-
+set_id(workplace._id);
         setWorkplaceId(workplace.workplaceId);
         setWorkplaceName(workplace.workplaceName);
         setWorkplaceArea(workplace.workplaceArea);
@@ -209,6 +210,20 @@ function Setting() {
                 // window.location.reload();
             }
         } else {
+//update workplace data
+
+      // Make the API call to update the resource by ID
+      try {
+
+        const response = await axios.put(endpoint + '/workplace/update/' +_id , data);
+        // setEmployeesResult(response.data.employees);
+        if (response) {
+            alert("บันทึกสำเร็จ");
+        }
+    } catch (error) {
+        alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+        // window.location.reload();
+    }
 
         }
     }
