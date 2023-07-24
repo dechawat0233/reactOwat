@@ -582,7 +582,6 @@ function Setting() {
                                         <label>หมายเหตุ:</label>
                                         <input type="text" class="form-control" value={reason} onChange={handleReasonChange} />
                                     </div>
-                                    <button type="submit" class="btn b_save">Submit</button>
                                 </section>
                                 {/* <!--Frame--> */}
                                 <div class="line_btn">
