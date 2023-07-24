@@ -237,15 +237,11 @@ function Employee() {
                     <section class="content">
                         <div class="container-fluid">
                             <form onSubmit={handleManageEmployee}>
-
                                 <h2 class="title">ข้อมูลพนักงาน</h2>
                                 <div class="row">
                                     <div class="col-md-9">
                                         <section class="Frame">
-
                                             <div class="col-md-12">
-
-
                                                 <div class="row">
                                                     <div class="col-md-3">
                                                         <div class="form-group">
@@ -294,8 +290,8 @@ function Employee() {
                                                             <label role="startjob">วันที่เริ่มงาน</label>
                                                             <div style={{ position: 'relative', zIndex: 9999 }}>
                                                                 <DatePicker id="startjob" name="startjob"
-                                                                    className="form-control" // Apply Bootstrap form-control class
-                                                                    popperClassName="datepicker-popper" // Apply custom popper class if needed
+                                                                    className="form-control" 
+                                                                    popperClassName="datepicker-popper" 
                                                                     selected={startjob}
                                                                     onChange={handleStartDateChange}
                                                                     dateFormat="dd/MM/yyyy" />
@@ -308,8 +304,8 @@ function Employee() {
                                                             <label role="exceptjob">วันที่บรรจุ</label>
                                                             <div style={{ position: 'relative', zIndex: 9999 }}>
                                                                 <DatePicker id="exceptjob" name="exceptjob"
-                                                                    className="form-control" // Apply Bootstrap form-control class
-                                                                    popperClassName="datepicker-popper" // Apply custom popper class if needed
+                                                                    className="form-control" 
+                                                                    popperClassName="datepicker-popper" 
                                                                     selected={exceptjob}
                                                                     onChange={handleExceptDateChange}
                                                                     dateFormat="dd/MM/yyyy" />
@@ -340,17 +336,13 @@ function Employee() {
                                             </div>
                                         </section>
                                         {/* <!--Frame--> */}
-
                                     </div>
                                     <div class="col-md-3">
                                         <section class="Frame">
                                             <EmployeesSelected onEmployeeSelect={onEmployeeSelect} />
-
                                         </section>
-
                                     </div>
                                 </div>
-
                                 <h2 class="title">ข้อมูลส่วนบุคคลพนักงาน</h2>
                                 <div class="row">
                                     <div class="col-md-9">
@@ -406,7 +398,6 @@ function Employee() {
                                                                 selected={dateOfBirth}
                                                                 onChange={handleDateOfBirth}
                                                                 dateFormat="dd/MM/yyyy" />
-
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
@@ -529,23 +520,17 @@ function Employee() {
                                     </div>
                                 </div>
                                 <div class="line_btn">
-
                                     {newEmp ? (
                                         <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;สร้างพนักงานใหม่</button>
-
                                     ) : (
                                         <button type="submit" name="save" value="save" onClick={() => setButtonValue('save')} class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
                                     )}
-
-                                    {/* <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button> */}
-
                                     <button class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
                                 </div>
 
                             </form>
                         </div>
                         {/* <!-- /.container-fluid --> */}
-
                     </section>
                     {/* <!-- /.content --> */}
                 </div>

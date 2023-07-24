@@ -8,7 +8,6 @@ function Worktimesheet() {
       minWidth: "3rem"
     }
   };
-
   return (
     // <div>
     <body class="hold-transition sidebar-mini">
@@ -76,8 +75,6 @@ function Worktimesheet() {
                                 <li >
                                   ไทยยั่งยืน
                                 </li>
-
-
                               </ul>
                             </div>
                           </div>

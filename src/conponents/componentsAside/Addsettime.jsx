@@ -8,10 +8,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import EmployeesSelected from './EmployeesSelected';
 
-// import { DayPilotCalendar, DayPilotNavigator } from "@daypilot/daypilot-lite-react";
-// import "./CalendarStyles.css";
-import Calendar from 'react-calendar';
-
 function Addsettime() {
 
     const [newWorkplace, setNewWorkplace] = useState(true);
@@ -63,12 +59,6 @@ function Addsettime() {
     const handleStartDateChange3 = (date) => {
         setStartjob3(date);
     };
-
-    // const [workplace, setWorkplace] = useState(''); //หน่วยงาน
-    // setWorkplace(empSelect.workplace);
-    // const handleWorkplace = (event) => {
-    //     setWorkplace(event.target.value);
-    // };
 
     async function handleManageWorkplace(event) {
         event.preventDefault();
@@ -262,20 +252,6 @@ function Addsettime() {
                                 <input type="text" class="form-control" id="agencyname" placeholder="หน่วยงานที่สังกัด" value={workplacestay} onChange={(e) => setWorkplacestay(e.target.value)} />
                             </div>
                         </div>
-                        {/* <div class="col-md-3">
-                            <div class="form-group">
-                                <label role="datetime">วันที่</label>
-                                <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
-                                    <DatePicker id="datetime" name="datetime"
-                                        className="form-control" // Apply Bootstrap form-control class
-                                        popperClassName="datepicker-popper" // Apply custom popper class if needed
-                                        selected={startjob}
-                                        onChange={handleStartDateChange}
-                                        dateFormat="dd/MM/yyyy" />
-                                </div>
-                            </div>
-
-                        </div> */}
                     </div>
 
                 </form>
@@ -497,21 +473,6 @@ function Addsettime() {
                                 </section>
                             </div>
                         </div>
-                        {/* <div>
-                            <select value={selectedOption} onChange={handleOptionChange}>
-                                <option value="">Select an option</option>
-                                <option value="option1">Option 1</option>
-                                <option value="option2">Option 2</option>
-                                <option value="option3">Option 3</option>
-                            </select>
-
-                            {selectedOption && (
-                                <form onSubmit={handleSubmit}>
-                                    {renderInputField()}
-                                    <button type="submit">Submit</button>
-                                </form>
-                            )}
-                        </div> */}
                         {/* <!-- /.container-fluid --> */}
                     </section>
                     {/* <!-- /.content --> */}

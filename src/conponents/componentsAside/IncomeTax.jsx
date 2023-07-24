@@ -60,7 +60,6 @@ function IncomeTax() {
                                                     </div>
                                                 </div>
                                                 {/* <!-- row --> */}
-
                                                 <div class="line_btn_search">
                                                     <button type="submit" value="Submit" class="btn_search"><i class="fa fa-search"></i>  &nbsp;ค้นหา</button>
                                                 </div>
@@ -70,7 +69,6 @@ function IncomeTax() {
                                 </div>
                                 <div class="col-md-3">
                                     <section class="Frame"><EmployeesSelected /></section>
-
                                 </div>
                             </div>
                         </div>

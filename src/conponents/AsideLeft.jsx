@@ -1,10 +1,8 @@
 import { useState } from 'react';
 import jwt_decode from 'jwt-decode';
 
-// import React from 'react'
 import React, { Component } from 'react'
 import Navitems from './Navitems'
-// import { Link } from 'react-router-dom';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function AsideLeft() {
@@ -44,11 +42,8 @@ function AsideLeft() {
     setShowSubMenu3(!showSubMenu3);
   }
 
-
   return (
-
     <>
-
       <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <div class="sidebar">
           <div class="Logo-w">
@@ -76,23 +71,12 @@ function AsideLeft() {
                 <Link to="/addsettime" className="nav-link"><i class="nav-icon fas fa-business-time"></i> ระบบลงเวลา</Link>
               </li>
 
-
-              {/* <li class="nav-item">
-                <a href="#" class="nav-link"><i class="nav-icon fas fa-file-invoice-dollar"></i>
-                  <p> ระบบเงินเดือน</p>
-                </a>
-              </li> */}
-
               <li class="nav-item">
                 <a href="#" class="nav-link" onClick={toggleSubMenu3}>
                   <i class="nav-icon fas fa-file-invoice-dollar"></i>
                   <p> ระบบเงินเดือน<i class="right fas fa-angle-left"></i><i class=""></i></p>
                 </a>
-                {/* <ul class="nav nav-treeview"> */}
-                {/* <ul className="nav nav-treeview"> */}
-
                 {showSubMenu3 && (
-
                   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <>
                       <li class="nav-item">
@@ -101,13 +85,10 @@ function AsideLeft() {
                       <li class="nav-item">
                         <Link to="/salarysummary" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> สรุปเงินเดือน</Link>
                       </li>
-
                     </>
                   </ul>
                 )}
-
               </li>
-
 
               <li class="nav-item">
                 <a href="#" class="nav-link"><i class="nav-icon fas fa-file-import"></i>
@@ -124,14 +105,11 @@ function AsideLeft() {
                   <i class="nav-icon fas fa-network-wired"></i>
                   <p> ระบบจัดการพนักงาน <i class="right fas fa-angle-left"></i><i class=""></i></p>
                 </a>
-
                 {showSubMenu && (
-
                   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <li class="nav-item">
                       <Link to="/search" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ค้นหาพนักงาน</Link>
                     </li>
-
                     {isEmployeeLinkDisabled ? (
                       <>
                         <li class="nav-item">
@@ -205,31 +183,20 @@ function AsideLeft() {
                         </li>
                       </>
                     )}
-
                   </ul>
                 )}
-
               </li>
-
-
               <li class="nav-item">
                 <a href="#" class="nav-link" onClick={toggleSubMenu2}>
                   <i class="nav-icon fas fa-shopping-cart"></i>
                   <p> การตั้งค่า<i class="right fas fa-angle-left"></i><i class=""></i></p>
                 </a>
-                {/* <ul class="nav nav-treeview"> */}
-                {/* <ul className="nav nav-treeview"> */}
-
                 {showSubMenu2 && (
 
                   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <>
-
-
                       <li class="nav-item">
-                        <a href="#" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
-                          <p>ผู้ใช้งานระบบ</p>
-                        </a>
+                        <Link to="/systemuser" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ผู้ใช้งานระบบ</Link>
                       </li>
                       <li class="nav-item">
                         <a href="#" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
@@ -239,50 +206,13 @@ function AsideLeft() {
                       <li class="nav-item">
                         <Link to="/setting" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ตั้งค่าหน่วยงาน</Link>
                       </li>
-                      <li class="nav-item">
-                        <Link to="/systemuser" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ผู้ใช้งานระบบ</Link>
-                      </li>
                     </>
                   </ul>
                 )}
-
               </li>
-
-              {/* <li className="nav-item">
-                <a href="#" class="nav-link" >
-                  <i class="nav-icon fas fa-shopping-cart"></i>
-                  <p> การตั้งค่า <i class="right fas fa-angle-left"></i><i class=""></i></p>
-                </a>
-                <ul className="nav nav-treeview">
-
-                  <li class="nav-item">
-                    <a href="#" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
-                      <p>ผู้ใช้งานระบบ</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
-                      <p>กำหนดสิทธิ์ใช้งาน</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <Link to="/setting" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ตั้งค่าหน่วยงาน</Link>
-                  </li>
-                </ul>
-              </li> 
-                */}
-
-              {/* <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon fas fa fa-cog"></i>
-                <p> การแจ้งเตือน</p>
-              </a></li> */}
-
               <li class="nav-item">
                 <Link to="/testPDF" className="nav-link"><i class="nav-icon fas fa fa-cog" style={{ fontSize: "14px" }}></i> การแจ้งเตือน</Link>
-
               </li>
-
-              {/* <li class="nav-item"><Link to="/countday" className="nav-link"><i class="nav-icon fas fa fa-cog"></i> Testcount</Link></li> */}
-              {/* <li class="nav-item"><Link to="/time" className="nav-link"><i class="nav-icon fas fa fa-cog"></i> Test</Link></li> */}
             </ul>
           </nav>
         </div>

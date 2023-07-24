@@ -176,29 +176,11 @@ function Salary() {
         setDateOfBirth(date);
     };
 
-
     async function handleManageSalary(event) {
         event.preventDefault();
-
-
     }
 
-
-    //check create employee or update employee by click select employee
-    // useEffect(() => {
-    //     // setNewEmp(true);
-    //     if (employeeselection.length >0 ) {
-    //         setNewEmp(true);
-    //     } else{
-    //         setNewEmp(false);
-    //     }
-
-    // }, [employeeselection]);
-
-
     function onEmployeeSelect(empSelect) {
-        // alert(empSelect.dateOfBirth);
-        // setEmployeeselection(empSelect);
         setEmployeeId(empSelect.employeeId);
         setPosition(empSelect.position);
         setDepartment(empSelect.department);
@@ -350,7 +332,6 @@ function Salary() {
                                                                 value={worktimerecord} onChange={handleWorktimerecord}>
                                                                 <option value="บันทึกผ่านเว็บ">บันทึกผ่านเว็บ</option>
                                                             </select>
-
                                                         </div>
                                                     </div>
                                                 </div>
@@ -367,7 +348,6 @@ function Salary() {
                                                                 <option value="รายวัน">รายวัน</option>
                                                                 <option value="รายครั้ง">รายครั้ง</option>
                                                             </select>
-
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
@@ -378,7 +358,6 @@ function Salary() {
                                                                 <option value="บริษัท ไทย เอ็นโอเค จำกัด (โรงงานบางประกง)">บริษัท ไทย เอ็นโอเค จำกัด (โรงงานบางประกง)</option>
                                                                 <option value="Gulf สำนักงานใหญ่">Gulf สำนักงานใหญ่</option>
                                                             </select>
-
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
@@ -415,17 +394,6 @@ function Salary() {
                                                                 onChange={handleStartDateChange}
                                                                 dateFormat="dd/MM/yyyy" />
                                                         </div>
-
-                                                        {/* <label class="col-sm-3 col-form-label">วันที่เริ่มงาน</label>
-                                                        <div class="col-sm-9">
-                                                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                                                <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" value="28/11/2022" />
-                                                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                                                                    <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
-                                                                </div>
-                                                            </div>
-                                                        </div> */}
-
                                                     </div>
                                                     <div class="form-group row">
                                                         <label role="exceptjob">วันที่บรรจุ</label>
@@ -437,17 +405,6 @@ function Salary() {
                                                                 onChange={handleExceptDateChange}
                                                                 dateFormat="dd/MM/yyyy" />
                                                         </div>
-
-                                                        {/* <label class="col-sm-3 col-form-label">วันที่บรรจุ</label>
-                                                        <div class="col-sm-9">
-                                                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                                                <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" value="01/12/2022" />
-                                                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                                                                    <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
-                                                                </div>
-                                                            </div>
-                                                        </div> */}
-
                                                     </div>
                                                     <div class="form-group row">
                                                         <label role="startcount">วันที่เริ่มต้นคำนวณ</label>
@@ -459,17 +416,6 @@ function Salary() {
                                                                 onChange={handleStartcount}
                                                                 dateFormat="dd/MM/yyyy" />
                                                         </div>
-
-                                                        {/* <label class="col-sm-3 col-form-label">วันที่เริ่มต้นคำนวณ</label>
-                                                        <div class="col-sm-9">
-                                                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                                                <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" value="15/12/2022" />
-                                                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                                                                    <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
-                                                                </div>
-                                                            </div>
-                                                        </div> */}
-
                                                     </div>
                                                 </div>
                                                 {/* <!--col-md-6--> */}
@@ -494,12 +440,6 @@ function Salary() {
                                                                         <option value="ต่อวัน">ต่อวัน</option>
                                                                         <option value="ต่อเดือน">ต่อเดือน</option>
                                                                     </select>
-
-                                                                    {/* <select class="form-control">
-                                                                        <option>ต่อวัน</option>
-                                                                        <option></option>
-                                                                        <option></option>
-                                                                    </select> */}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -519,7 +459,6 @@ function Salary() {
                                                     <div class="form-group row">
                                                         <label role="salaryupdate" class="col-sm-3 col-form-label">วันที่ปรับปรุง</label>
                                                         <div class="col-sm-9">
-
                                                             <div style={{ position: 'relative', zIndex: 9999 }}>
                                                                 <DatePicker id="salaryupdate" name="salaryupdate"
                                                                     className="form-control" // Apply Bootstrap form-control class
@@ -528,24 +467,14 @@ function Salary() {
                                                                     onChange={handleSalaryupdate}
                                                                     dateFormat="dd/MM/yyyy" />
                                                             </div>
-
-                                                            {/* <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                                                <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" value="30/01/2023" />
-                                                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                                                                    <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
-                                                                </div>
-                                                            </div> */}
-
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {/* <!--col-md-6--> */}
                                             </div>
                                             {/* <!--row--> */}
                                             <div class="form-group row">
                                                 <label role="salaryout" class="col-sm-1">งวดจ่ายเงิน</label>
                                                 <div class="col-sm-9">
-
                                                     <select id="salaryout" name="salaryout" class="form-control"
                                                         value={salaryout} onChange={handleSalaryout}>
                                                         <option value="เดือน">เดือน</option>
@@ -553,25 +482,7 @@ function Salary() {
                                                         <option value="สัปดาห์">สัปดาห์</option>
                                                         <option value="10 วัน">10 วัน</option>
                                                         <option value="งวดพิเศษ">งวดพิเศษ</option>
-
                                                     </select>
-
-                                                    {/* <div class="icheck-primary d-inline">
-                                                        <input type="radio" id="" name="" checked="" /> เดือน
-                                                    </div>
-                                                    <div class="icheck-primary d-inline">
-                                                        <input type="radio" id="" name="" />  ครึ่งเดือน
-                                                    </div>
-                                                    <div class="icheck-primary d-inline">
-                                                        <input type="radio" id="" name="" checked="" /> สัปดาห์
-                                                    </div>
-                                                    <div class="icheck-primary d-inline">
-                                                        <input type="radio" id="" name="" />  งวดพิเศษ
-                                                    </div>
-                                                    <div class="icheck-primary d-inline">
-                                                        <input type="radio" id="" name="" />  10 วัน
-                                                    </div> */}
-
                                                 </div>
                                             </div>
                                             {/* <!--row--> */}
@@ -591,7 +502,6 @@ function Salary() {
                                                             checked={salarypayment === 'โอนผ่านธนาคาร'}
                                                             onChange={handleSalarypayment}
                                                         /> โอนผ่านธนาคาร
-
                                                     </div>
                                                 </div>
                                             </div>
@@ -622,26 +532,17 @@ function Salary() {
                                                                 <option value="ธนาคารออมสิน">ธนาคารออมสิน</option>
                                                                 <option value="ธนาคารอาคารสงเคราะห์">ธนาคารอาคารสงเคราะห์</option>
                                                             </select>
-
-                                                            {/* <select class="form-control">
-                                                                <option>กสิกรไทย</option>
-                                                                <option>กสิกรไทย</option>
-                                                                <option>กสิกรไทย</option>
-                                                            </select> */}
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {/* <!--col-md-6--> */}
                                                 <div class="col-md-6">
                                                     <div class="form-group row">
                                                         <label role="banknumber" class="col-sm-2 col-form-label">เลขที่บัญชี</label>
                                                         <div class="col-sm-10">
                                                             <input type="text" class="form-control" id="banknumber" placeholder="เลขที่บัญชี" value={banknumber} onChange={(e) => setBanknumber(e.target.value)} />
-
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {/* <!--col-md-6--> */}
                                             </div>
                                             {/* <!--row--> */}
                                         </section>
@@ -689,13 +590,6 @@ function Salary() {
                                                                 />
                                                                 เงินประจำตำแหน่ง
                                                             </label>
-
-                                                            {/* <select class="form-control">
-                                                                <option>ไม่กำหนด</option>
-                                                                <option></option>
-                                                                <option></option>
-                                                            </select> */}
-
                                                         </div>
                                                     </div>
 
@@ -707,12 +601,6 @@ function Salary() {
                                                                 <option value="ต่อวัน">ต่อวัน</option>
                                                                 <option value="ต่อเดือน">ต่อเดือน</option>
                                                             </select>
-
-                                                            {/* <select class="form-control">
-                                                                <option>ไม่ได้ใช้งาน</option>
-                                                                <option></option>
-                                                                <option></option>
-                                                            </select> */}
                                                         </div>
                                                     </div>
 
@@ -756,51 +644,9 @@ function Salary() {
                                                         <div class="form-group">
                                                             <label role="salaryaddsum">เงินเพิ่มพิเศษรวม</label>
                                                             <input type="text" class="form-control" id="salaryaddsum" placeholder="จำนวนเงิน" value={salaryaddsum} onChange={(e) => setSalaryaddsum(e.target.value)} />
-
-                                                            {/* <select class="form-control">
-                                                                <option>บันทึกผ่านเว็บ</option>
-                                                                <option></option>
-                                                                <option></option>
-                                                            </select> */}
-
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {/* <!--row--> */}
-
-                                                {/* <div class="row"><h2 class="title">สถานที่ปฎิบัติงานประจำ</h2></div>
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label>ประเภทการจ้าง</label>
-                                                            <select class="form-control">
-                                                                <option>รายวัน</option>
-                                                                <option></option>
-                                                                <option></option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label>เป็นหน่วยงาน</label>
-                                                            <select class="form-control">
-                                                                <option>ไม่จำกัด</option>
-                                                                <option></option>
-                                                                <option></option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label>ผู้บันทึกข้มูลแทน</label>
-                                                            <select class="form-control">
-                                                                <option>บันทึกผ่านเว็บ</option>
-                                                                <option></option>
-                                                                <option></option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div> */}
                                                 {/* <!--row--> */}
                                             </div>
                                             {/* <!--col-md-12--> */}
@@ -808,8 +654,6 @@ function Salary() {
                                         {/* <!--Frame--> */}
                                     </div>
                                 </div>
-
-
                                 <h2 class="title">เงินเพิ่มพิเศษ</h2>
                                 <div class="row">
                                     <div class="col-md-9">
@@ -869,8 +713,6 @@ function Salary() {
                                         {/* <!--Frame--> */}
                                     </div>
                                 </div>
-
-
                                 <div class="line_btn">
                                     <button type="submit" class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
                                     <button type="reset" class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>

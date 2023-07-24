@@ -77,14 +77,6 @@ function OtherExpenses() {
     const [hatcount, setHatcount] = useState(0);
     const [custom, setcustom] = useState(0);
 
-    // const handlesetShirt = (event) => {
-    //     const newShirt = Number(event.target.value);
-    //     setShirt(newShirt);
-    //     setcustom((prevCustom) =>
-    //       calculateCostume(newShirt, shirtcount, trousers, trouserscount, wholeset, wholesetcount, saveftyShoes, saveftyShoescount, apron, aproncount, hat, hatcount)
-    //     );
-    //   };
-
     const handlesetShirt = (event) => {
         const newShirt = Number(event.target.value);
         setShirt(newShirt);
@@ -179,10 +171,6 @@ function OtherExpenses() {
             calculateCostume(shirt, shirtcount, trousers, trouserscount, wholeset, wholesetcount, saveftyShoes, saveftyShoescount, apron, aproncount, hat, newHatcount)
         );
     };
-
-    // const calculateCostume = (shirt, shirtcount, trousers, trouserscount, wholeset, wholesetcount, saveftyShoes, saveftyShoescount, apron, aproncount, hat, hatcount) => {
-    //     return (shirt * shirtcount) + (trousers * trouserscount) + (wholeset * wholesetcount) + (saveftyShoes * saveftyShoescount) + (apron * aproncount) + (hat * hatcount);
-    // };
 
     const calculateCostume = (shirt, shirtcount, trousers, trouserscount, wholeset, wholesetcount, saveftyShoes, saveftyShoescount, apron, aproncount, hat, hatcount) => {
         return (
@@ -313,12 +301,7 @@ function OtherExpenses() {
                                                     <div class="form-group row">
                                                         <div class="col-md-4 col-form-label"><span class="txt-w">ทำบัตรใหม่ </span><span class="txt-label">อันละ</span></div>
                                                         <div class="col-md-4">
-
                                                             <input type="number" class="form-control" pattern="[0-9]*" value={number1} onChange={handleNumber1Change} />
-                                                            {/* <input type="number" pattern="[0-9]*" value={number2} onChange={handleNumber2Change} /> */}
-
-
-                                                            {/* <input type=""  id="" placeholder="00.00" /> */}
                                                         </div>
                                                         <label class="col-md-1 col-form-label">บาท</label>
                                                     </div>
@@ -345,18 +328,12 @@ function OtherExpenses() {
                                                 <label class="col-md-4 col-form-label">ตรวจสุขภาพก่อนเริ่มงาน</label>
                                                 <div class="col-md-2">
                                                     <input type="text" class="form-control" value={input1} onChange={handleInputChange1} />
-                                                    {/* <input type="text" class="form-control" value={input2} onChange={handleInputChange2} />
-                                                    <input type="text" class="form-control" value={input3} onChange={handleInputChange3} /> */}
-                                                    {/* <p>Sum: {sum2}</p> */}
-                                                    {/* <input type="" class="form-control" id="" placeholder="00.00" /> */}
-                                                    {/* <input type="text" value={input1} onChange={handleInputChange1} /> */}
                                                 </div>
                                                 <label class="col-md-1 col-form-label">บาท</label>
                                             </div>
                                             <div class="row form-group">
                                                 <label class="col-md-4 col-form-label">ตรวจสุขภาพประจำปี</label>
                                                 <div class="col-md-2">
-                                                    {/* <input type="" class="form-control" id="" placeholder="00.00" /> */}
                                                     <input type="text" class="form-control" value={input2} onChange={handleInputChange2} />
                                                 </div>
                                                 <label class="col-md-1 col-form-label">บาท</label>
@@ -368,7 +345,6 @@ function OtherExpenses() {
 
                                                 </div>
                                                 <div class="col-md-2">
-                                                    {/* <input type="" class="form-control" id="" placeholder="00.00" /> */}
                                                     <input type="text" class="form-control" value={input3} onChange={handleInputChange3} />
                                                 </div>
                                                 <label class="col-md-1 col-form-label">บาท</label>
@@ -385,7 +361,6 @@ function OtherExpenses() {
                                                 <label class="col-md-2 col-form-label">รวมเป็นเงิน</label>
                                                 <div class="col-md-3">
                                                     <input type="" class="form-control" id="" placeholder="00.00" value={crimeinvestigation} onChange={handleInputCrimeChange} />
-
                                                 </div>
                                                 <div class="col-md-1 col-form-label">บาท</div>
                                             </div>
@@ -410,13 +385,6 @@ function OtherExpenses() {
                                                     <div class="row">
                                                         <label class="col-md-2 col-form-label">จำนวน</label>
                                                         <div class="col-md-3">
-                                                            {/* <select class="form-control">
-                                                                <option>1</option>
-                                                                <option>option 2</option>
-                                                                <option>option 3</option>
-                                                                <option>option 4</option>
-                                                                <option>option 5</option>
-                                                            </select> */}
                                                             <input type="" class="form-control" id="" placeholder="00.00" value={shirtcount} onChange={handlesetShirtcount} />
                                                         </div>
                                                         <label class="col-md-1 col-form-label">ตัว</label>
@@ -437,13 +405,6 @@ function OtherExpenses() {
                                                     <div class="row">
                                                         <label class="col-md-2 col-form-label">จำนวน</label>
                                                         <div class="col-md-3">
-                                                            {/* <select class="form-control">
-                                                                <option>1</option>
-                                                                <option>option 2</option>
-                                                                <option>option 3</option>
-                                                                <option>option 4</option>
-                                                                <option>option 5</option>
-                                                            </select> */}
                                                             <input type="" class="form-control" id="" placeholder="00.00" value={trouserscount} onChange={handlesetTrouserscount} />
                                                         </div>
                                                         <label class="col-md-1 col-form-label">ตัว</label>
@@ -464,13 +425,6 @@ function OtherExpenses() {
                                                     <div class="row">
                                                         <label class="col-md-2 col-form-label">จำนวน</label>
                                                         <div class="col-md-3">
-                                                            {/* <select class="form-control">
-                                                                <option>1</option>
-                                                                <option>option 2</option>
-                                                                <option>option 3</option>
-                                                                <option>option 4</option>
-                                                                <option>option 5</option>
-                                                            </select> */}
                                                             <input type="" class="form-control" id="" placeholder="00.00" value={wholesetcount} onChange={handlesetWholesetcount} />
                                                         </div>
                                                         <label class="col-md-1 col-form-label">ชุด</label>
@@ -491,13 +445,6 @@ function OtherExpenses() {
                                                     <div class="row">
                                                         <label class="col-md-2 col-form-label">จำนวน</label>
                                                         <div class="col-md-3">
-                                                            {/* <select class="form-control">
-                                                                <option>1</option>
-                                                                <option>option 2</option>
-                                                                <option>option 3</option>
-                                                                <option>option 4</option>
-                                                                <option>option 5</option>
-                                                            </select> */}
                                                             <input type="" class="form-control" id="" placeholder="00.00" value={saveftyShoescount} onChange={handlesetSaveftyShoescount} />
                                                         </div>
                                                         <label class="col-md-1 col-form-label">คู่</label>
@@ -510,7 +457,6 @@ function OtherExpenses() {
                                                         <div class="col-md-5 col-form-label"><span class="txt-w">ผ้ากันเปื้อน </span><span class="txt-label">ชุดละ</span></div>
                                                         <div class="col-md-4">
                                                             <input type="" class="form-control" id="" placeholder="00.00" value={apron} onChange={handlesetApron} />
-
                                                         </div>
                                                         <label class="col-md-1 col-form-label">บาท</label>
                                                     </div>
@@ -519,13 +465,6 @@ function OtherExpenses() {
                                                     <div class="row">
                                                         <label class="col-md-2 col-form-label">จำนวน</label>
                                                         <div class="col-md-3">
-                                                            {/* <select class="form-control">
-                                                                <option>1</option>
-                                                                <option>option 2</option>
-                                                                <option>option 3</option>
-                                                                <option>option 4</option>
-                                                                <option>option 5</option>
-                                                            </select> */}
                                                             <input type="" class="form-control" id="" placeholder="00.00" value={aproncount} onChange={handlesetAproncount} />
                                                         </div>
                                                         <label class="col-md-1 col-form-label">ชุด</label>
@@ -546,20 +485,9 @@ function OtherExpenses() {
                                                     <div class="row">
                                                         <label class="col-md-2 col-form-label">จำนวน</label>
                                                         <div class="col-md-3">
-                                                            {/* <select class="form-control">
-                                                                <option>1</option>
-                                                                <option>option 2</option>
-                                                                <option>option 3</option>
-                                                                <option>option 4</option>
-                                                                <option>option 5</option>
-                                                            </select> */}
                                                             <input type="" class="form-control" id="" placeholder="00.00" value={hatcount} onChange={handlesetHatcount} />
                                                         </div>
                                                         <label class="col-md-1 col-form-label">ใบ
-                                                            {/* {(shirt * shirtcount) + (trousers * trouserscount) + (wholeset * wholesetcount) + (saveftyShoes * saveftyShoescount) + (apron * aproncount) + (hat * hatcount)}
-                                                            <br />
-                                                            {custom}
-                                                            <br /> */}
                                                         </label>
                                                     </div>
                                                 </div>

@@ -260,7 +260,6 @@ function SearchResults() {
                                         </div>
                                     </div>
                                 </div>
-                                {/* <!--col-md-12--> */}
                             </section>
                             {/* <!--Frame--> */}
                             <h2 class="title">ข้อมูลสุขภาพ</h2>

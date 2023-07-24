@@ -8,8 +8,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import EmployeesSelected from './EmployeesSelected';
 
-// import { DayPilotCalendar, DayPilotNavigator } from "@daypilot/daypilot-lite-react";
-// import "./CalendarStyles.css";
 import Calendar from 'react-calendar';
 
 
@@ -18,8 +16,6 @@ function SystemUser() {
     const [newEmp, setNewEmp] = useState(true);
     const [employeeselection, setEmployeeselection] = useState([]);
     const [buttonValue, setButtonValue] = useState('');
-
-
 
     //register data
     const [name, setName] = useState('');
@@ -75,26 +71,17 @@ function SystemUser() {
 
         //check create or update Employee
         if (newEmp) {
-            // alert('create employee');
-
             try {
                 const response = await axios.post(endpoint + '/users/create', data);
-                // setEmployeesResult(response.data.employees);
-
             } catch (error) {
                 alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
-                // window.location.reload();
-
             }
 
         } else {
             if (buttonValue == 'save') {
                 alert('update user');
-
             }
-
         }
-
     }
 
 
@@ -151,10 +138,7 @@ function SystemUser() {
             console.log('Item does not exist');
             setNewEmp(true);
         }
-
-
     }, []);
-
 
     useEffect(() => {
         // Listen for the custom event when selectedEmployees change in localStorage
@@ -162,15 +146,12 @@ function SystemUser() {
             const { selectedEmployees } = event.detail;
             setStoredEmp(selectedEmployees);
         };
-
         window.addEventListener('selectedEmployeesChanged', handleSelectedEmployeesChange);
 
         return () => {
             window.removeEventListener('selectedEmployeesChanged', handleSelectedEmployeesChange);
         };
     }, []);
-
-
 
     const [users, setUsers] = useState([]);
 
@@ -239,7 +220,6 @@ function SystemUser() {
                                 </table>
                             </section>
                             {/* <!--Frame--> */}
-
                             <form onSubmit={handleRegister}>
                                 <h2 class="title">เพิ่มผู้ใช้งานระบบ</h2>
                                 <section class="Frame">
@@ -257,7 +237,6 @@ function SystemUser() {
                                                     <input type="text" class="form-control" id="Email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} />
                                                 </div>
                                             </div>
-
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
@@ -282,21 +261,15 @@ function SystemUser() {
                                                     </select>
                                                 </div>
                                             </div>
-
                                         </div>
-
                                     </div>
                                     <div class="line_btn">
 
                                         {newEmp ? (
                                             <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;เพิ่มผู้ใช้งานระบบ</button>
-
                                         ) : (
                                             <button type="submit" name="save" value="save" onClick={() => setButtonValue('save')} class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
                                         )}
-
-                                        {/* <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button> */}
-
                                         <button class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
                                     </div>
                                 </section>

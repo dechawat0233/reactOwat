@@ -7,7 +7,6 @@ function Salarysummary() {
             minWidth: "5rem"
         }
     };
-
     return (
         // <div>
         <body class="hold-transition sidebar-mini">
@@ -27,8 +26,7 @@ function Salarysummary() {
                         </div>
                     </div>
                     {/* <!-- /.content-header -->
-<!-- Main content --> */}
-
+                    <!-- Main content --> */}
                     <section class="content">
                         <div class="row">
                             <div class="col-md-6">
@@ -61,7 +59,6 @@ function Salarysummary() {
                                                         <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้าหา</button>
                                                     </div>
                                                 </div>
-
                                             </div>
                                             <div class="d-flex justify-content-center">
                                                 <h2 class="title">ผลลัพธ์</h2>
@@ -75,8 +72,6 @@ function Salarysummary() {
                                                                 <li >
                                                                     ไทยยั่งยืน
                                                                 </li>
-
-
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -129,7 +124,6 @@ function Salarysummary() {
                                                         <td>1000</td>
                                                         <td>500</td>
                                                         <td>1000</td>
-
                                                     </tr>
                                                     <tr>
                                                         <td>66</td>

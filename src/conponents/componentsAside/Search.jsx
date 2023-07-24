@@ -42,31 +42,6 @@ function Search() {
     };
   }, [selectedEmployees]);
 
-
-  /*
-  useEffect(() => {
-    // Function to handle changes in localStorage
-    const handleStorageChange = () => {
-      // Get the updated user list from localStorage
-      const updatedEmployeeList = JSON.parse(localStorage.getItem('selectedEmployees')) || [];
-      // setSelectedEmployees(updatedEmployeeList );
-
-    };
-
-        // Add event listener for the storage event
-        window.addEventListener('storage', handleStorageChange);
-
-            // Get the initial user list from localStorage
-    const initialEmployeeList = JSON.parse(localStorage.getItem('selectedEmployees')) || [];
-    setSelectedEmployees(initialEmployeeList);
-
-        // Clean up the event listener when the component unmounts
-        return () => {
-          window.removeEventListener('storage', handleStorageChange);
-        };
-  }, []);
-*/
-
   async function handleClickResult(employee) {
     const updatedEmployeeList = await JSON.parse(localStorage.getItem('selectedEmployees')) || [];
     await setSelectedEmployees(updatedEmployeeList);
@@ -86,26 +61,6 @@ function Search() {
     window.dispatchEvent(event);
     // Do any additional processing or redirection as needed
   }
-
-  /*
-    function handleRemoveEmployee(employeeId) {
-      const updatedSelectedEmployees = selectedEmployees.filter(
-        employee => employee.id !== employeeId
-      );
-      const selectedEmployeeCount = updatedSelectedEmployees.length;
-      setSelectedEmployees(updatedSelectedEmployees);
-      setSelectedCount(selectedEmployeeCount);
-      localStorage.setItem('selectedEmployees', JSON.stringify(updatedSelectedEmployees));
-      localStorage.setItem('selectedEmployeeCount', selectedEmployeeCount);
-  
-      // Dispatch a custom event to notify other components about the change
-      const event = new CustomEvent('selectedEmployeesChanged', {
-        detail: { selectedEmployees: updatedSelectedEmployees },
-      });
-      window.dispatchEvent(event);
-  
-    }
-  */
 
   async function handleSearch(event) {
     event.preventDefault();
@@ -250,23 +205,6 @@ function Search() {
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-
-                      {/* {selectedCount > 0 && (
-                    <div>
-                      <h2>จำนวนพนักงานที่เลือก: {selectedCount}</h2>
-                      <ul style ={{listStyle:'none'}}>
-                        {selectedEmployees.map(employee => (
-                          <li key={employee.id}>
-                            {employee.name}
-                            <button onClick={() => handleRemoveEmployee(employee.id)} style={{
-                              width: '5rem', height: '2rem', margin: '0.2rem',borderRadius: '8px'
-                              }}>นำออก</button>
-                          </li>
-                        ))}
-                    </ul>
-                    </div>
-                  )}
- */}
                       <h2>{message}</h2>
 
                       <ul style={{ listStyle: 'none' }}>
@@ -284,7 +222,6 @@ function Search() {
                 </div>
                 <div class="col-md-3">
                   <section class="Frame"><EmployeesSelected /></section>
-
                 </div>
               </div>
             </div>

@@ -7,9 +7,6 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import EmployeesSelected from './EmployeesSelected';
-
-// import { DayPilotCalendar, DayPilotNavigator } from "@daypilot/daypilot-lite-react";
-// import "./CalendarStyles.css";
 import Calendar from 'react-calendar';
 
 
@@ -34,15 +31,6 @@ function Setting() {
     const handleReasonChange = (event) => {
         setReason(event.target.value);
     };
-
-    // const handleSubmit = (event) => {
-    //   event.preventDefault();
-    //   // Here you can perform any action with the selectedDates and reason.
-    //   // For this example, we'll just log the values.
-    //   console.log('Selected Dates:', selectedDates);
-    //   console.log('Reason:', reason);
-    //   // You can make an API call to submit the day-off request or perform any other actions here.
-    // };
 
     const [daysOff, setDaysOff] = useState(Array(10).fill(''));
     const [holidayComment, setHolidayComment] = useState('');
@@ -100,24 +88,6 @@ function Setting() {
 
     // const [workRateDayoffHour, setWorkRateDayoffHour] = useState(''); //ค่าจ้างวันหยุดต่อชั่วโมง
 
-
-
-    // const [travelRate, setTravelRate] = useState(''); //ค่ารถ
-    // const [mealRate, setMealRate] = useState(''); //ค่าอาหาร
-    // const [workOT, setWorkOT] = useState(''); //เบี้ยขยัน
-    // const [workanything, setWorkanything] = useState(''); //เงินพิเศษอื่นๆ
-    // const [phonebill, setPhoneBill] = useState(''); //ค่าโทรศัพท์
-    // const [workPosition, setWorkPosition] = useState(''); //เงินประจำตำแนหง
-
-    // const [remainbusinessleave, setRemainbusinessleave] = useState(''); //ลาคงเหลือ วันลากิจคงเหลือ 
-    // const [businessleavesalary, setBusinessleavesalary] = useState(''); //ลาคงเหลือ จำนวนเงินต่อวัน
-
-    // const [remainsickleave, setRemainsickleave] = useState(''); //ลาคงเหลือ วันลาป่วยคงเหลือ 
-    // const [sickleavesalary, setSickleavesalary] = useState(''); //ลาคงเหลือ จำนวนเงินต่อวัน
-
-    // const [remainvacation, setRemainvacation] = useState(''); //ลาคงเหลือ วันลาพักร้อนคงเหลือ 
-    // const [vacationsalary, setVacationsalary] = useState(''); //ลาคงเหลือ จำนวนเงินต่อวัน 
-
     //set data to form
     function handleClickResult(workplace) {
         setNewWorkplace(false);
@@ -151,41 +121,8 @@ function Setting() {
         setSickLeaveRate(workplace.sickLeaveRate);
         setWorkRateDayoff(workplace.workRateDayoff);
         setworkRateDayoffRate(workplace.workRateDayoffRate);
-        // setDaysOff(workplace.daysOff );
         setWorkplaceAddress(workplace.workplaceAddress);
 
-
-        // setWorkplaceId(workplace.workplaceId);
-        // setWorkplaceName(workplace.workplaceName);
-        // setWorkplaceArea(workplace.workplaceArea);
-        // setWorkOfWeek(workplace.workOfWeek);
-        // setWorkStart1(workplace.workkStart1);
-        // setWorkEnd1(workplace.workEnd1);
-
-        // setWorkStart2(workplace.workkStart2);
-        // setWorkEnd2(workplace.workEnd2);
-        // setWorkStart3(workplace.workStart3);
-        // setWorkEnd3(workplace.workEnd3);
-        // setWorkOfHour(workplace.workOfHour);
-        // setWorkOfOT(workplace.workOfOT);
-
-        // setWorkRate(workplace.workRate);
-        // setWorkRateOT(workplace.workRateOT);
-        // setWorkTotalPeople(workplace.workTotalPeople);
-        // setWorkRateDayoff(workplace.workRateDayoff);
-        // setWorkRateDayoffHour(workplace.workRateDayoffHour);
-        // setWorkplaceAddress(workplace.workplaceAddress);
-
-        // setHolidaycomment(workplace.holidaycomment);
-        // setHolidaycomment2(workplace.holidaycomment2);
-        // setHolidaycomment3(workplace.holidaycomment3);
-        // setHolidaycomment4(workplace.holidaycomment4);
-        // setHolidaycomment5(workplace.holidaycomment5);
-        // setHolidaycomment6(workplace.holidaycomment6);
-        // setHolidaycomment7(workplace.holidaycomment7);
-        // setHolidaycomment8(workplace.holidaycomment8);
-        // setHolidaycomment9(workplace.holidaycomment9);
-        // setHolidaycomment10(workplace.holidaycomment10);
 
     }
 
@@ -196,8 +133,6 @@ function Setting() {
 
     async function handleSearch(event) {
         event.preventDefault();
-        // alert(searchWorkplaceId);
-        // alert(searchWorkplaceName);
 
         //get value from form search        
         const data = {
@@ -208,8 +143,6 @@ function Setting() {
         try {
             const response = await axios.post(endpoint + '/workplace/search', data);
             setSearchResult(response.data.workplaces);
-            // setMessage(`ผลการค้นหา ${response.data.employees.length} รายการ`);
-            // alert(response.data.workplaces.length);
             if (response.data.workplaces.length < 1) {
                 window.location.reload();
 
@@ -257,29 +190,8 @@ function Setting() {
             sickLeaveRate: sickLeaveRate,
             workRateDayoff: workRateDayoff,
             workRateDayoffRate: workRateDayoffRate,
-            // daysOff : daysOff ,
             workplaceAddress: workplaceAddress
 
-            // workplaceId: workplaceId,
-            // workplaceName: workplaceName,
-            // workplaceArea: workplaceArea,
-            // workOfWeek: workOfWeek,
-            // workStart1: workStart1,
-            // workEnd1: workEnd1,
-            // workStart2: workStart2,
-            // workEnd2: workEnd2,
-            // workStart3: workStart3,
-            // workEnd3: workEnd3,
-            // workOfHour: workOfHour,
-            // workOfOT: workOfOT,
-            // workRate: workRate,
-            // workRateOT: workRateOT,
-            // workTotalPeople: workTotalPeople,
-            // workRateDayoff: workRateDayoff,
-            // workRateDayoffHour: workRateDayoffHour,
-            // workplaceAddress: workplaceAddress,
-
-            // holidaycomment: holidaycomment
         };
 
 
@@ -292,17 +204,13 @@ function Setting() {
                 if (response) {
                     alert("บันทึกสำเร็จ");
                 }
-
             } catch (error) {
                 alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
                 // window.location.reload();
-
             }
-
         } else {
 
         }
-
     }
 
     return (
@@ -327,15 +235,10 @@ function Setting() {
                     <!-- Main content --> */}
                     <section class="content">
                         <div class="container-fluid">
-
-
-
                             <h2 class="title">ตั้งค่าหน่วยงาน</h2>
                             <section class="Frame">
                                 <div class="col-md-12">
-
                                     <form onSubmit={handleSearch}>
-
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
@@ -349,20 +252,17 @@ function Setting() {
                                                     <input type="text" class="form-control" id="searchWorkplaceName" placeholder="ชื่อหน่วยงาน" value={searchWorkplaceName} onChange={(e) => setSearchWorkplaceName(e.target.value)} />
                                                 </div>
                                             </div>
-
                                         </div>
                                         <div class="d-flex justify-content-center">
                                             <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา</button>
                                         </div>
                                     </form>
-
                                     <br />
                                     <div class="d-flex justify-content-center">
                                         <h2 class="title">ผลลัพธ์ {searchResult.length} รายการ</h2>
                                     </div>
                                     <div class="d-flex justify-content-center">
                                         <div class="row">
-
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
@@ -374,8 +274,6 @@ function Setting() {
                                                                 รหัส {workplace.workplaceId} หน่วยงาน {workplace.workplaceName}
                                                             </li>
                                                         ))}
-
-
                                                     </ul>
                                                 </div>
                                             </div>
@@ -384,7 +282,6 @@ function Setting() {
                                 </div>
                             </section>
                             {/* <!--Frame--> */}
-
                             <form onSubmit={handleManageWorkplace}>
                                 <h2 class="title">ตั้งค่าหน่วยงาน</h2>
                                 <section class="Frame">
@@ -402,7 +299,6 @@ function Setting() {
                                                     <input type="text" class="form-control" id="workplaceName" placeholder="ชื่อหน่วยงาน" value={workplaceName} onChange={(e) => setWorkplaceName(e.target.value)} />
                                                 </div>
                                             </div>
-
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
@@ -417,9 +313,7 @@ function Setting() {
                                                     <input type="text" class="form-control" id="workOfWeek" placeholder="จำนวนวันทำงานต่อสัปดาห์" value={workOfWeek} onChange={(e) => setWorkOfWeek(e.target.value)} />
                                                 </div>
                                             </div>
-
                                         </div>
-
                                     </div>
                                 </section>
                                 {/* <!--Frame--> */}
@@ -469,7 +363,6 @@ function Setting() {
                                                 </div>
                                                 {/* <!--row--> */}
                                             </div>
-                                            {/* <!--col-md-12--> */}
                                         </section>
                                         {/* <!--Frame--> */}
                                     </div>
@@ -493,7 +386,6 @@ function Setting() {
                                                 </div>
                                                 {/* <!--row--> */}
                                             </div>
-                                            {/* <!--col-md-12--> */}
                                         </section>
                                         {/* <!--Frame--> */}
                                     </div>
@@ -517,7 +409,6 @@ function Setting() {
                                     </div>
                                 </section>
                                 {/* <!--Frame--> */}
-
                                 <h2 class="title">ค่าจ้าง</h2>
                                 <section class="Frame">
                                     <div class="row">
@@ -556,7 +447,6 @@ function Setting() {
                                     </div>
                                 </section>
                                 {/* <!--Frame--> */}
-
                                 <h2 class="title">สวัสดิการเงินเพิ่มพนักงาน</h2>
                                 <section class="Frame">
                                     <div class="row">
@@ -601,7 +491,6 @@ function Setting() {
                                     </div>
                                 </section>
                                 {/* <!--Frame--> */}
-
                                 <h2 class="title">สวัสดิการวันหยุดพนักงาน</h2>
                                 <div class="row">
                                     <div class="col-md-9">
@@ -656,13 +545,10 @@ function Setting() {
                                                 </div>
                                                 {/* <!--row--> */}
                                             </div>
-                                            {/* <!--col-md-12--> */}
                                         </section>
                                         {/* <!--Frame--> */}
                                     </div>
                                 </div>
-
-
                                 <h2 class="title">ที่อยู่หน่วยงาน</h2>
                                 <section class="Frame">
                                     <div>
@@ -673,11 +559,9 @@ function Setting() {
                                             selected={null}
                                             onChange={handleDateChange}
                                             dateFormat="MMMM d, yyyy"
-                                            // minDate={new Date()}
                                             isClearable
                                             placeholderText="Select a date"
                                         />
-
                                         {selectedDates.length > 0 && (
                                             <div>
                                                 <h3>วันหยุดหน่วยงาน</h3>
@@ -704,18 +588,12 @@ function Setting() {
                                 <div class="line_btn">
                                     {newWorkplace ? (
                                         <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;สร้างหน่วยงานใหม่</button>
-
                                     ) : (
                                         <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
 
                                     )}
-
                                     <button class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
                                 </div>
-
-
-
-
                             </form>
                         </div>
                         {/* <!-- /.container-fluid --> */}
