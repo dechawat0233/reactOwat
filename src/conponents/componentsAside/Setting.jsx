@@ -32,24 +32,24 @@ function Setting() {
         setReason(event.target.value);
     };
 
-    const [daysOff, setDaysOff] = useState(Array(10).fill(''));
+    // const [daysOff, setDaysOff] = useState(Array(10).fill(''));
     const [holidayComment, setHolidayComment] = useState('');
-    const handleDayOffChange = (index, value) => {
-        const updatedDaysOff = [...daysOff];
-        updatedDaysOff[index] = value;
-        setDaysOff(updatedDaysOff);
-    };
+    // const handleDayOffChange = (index, value) => {
+    //     const updatedDaysOff = [...daysOff];
+    //     updatedDaysOff[index] = value;
+    //     setDaysOff(updatedDaysOff);
+    // };
 
-    const handleAddDayOff = () => {
-        setDaysOff([...daysOff, '']);
-    };
+    // const handleAddDayOff = () => {
+    //     setDaysOff([...daysOff, '']);
+    // };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Perform any necessary actions with the daysOff and holidayComment data
-        console.log(daysOff);
-        console.log(holidayComment);
-    };
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     // Perform any necessary actions with the daysOff and holidayComment data
+    //     console.log(daysOff);
+    //     console.log(holidayComment);
+    // };
 
 
     //Workplace data
@@ -123,8 +123,9 @@ set_id(workplace._id);
         setWorkRateDayoff(workplace.workRateDayoff);
         setworkRateDayoffRate(workplace.workRateDayoffRate);
         setWorkplaceAddress(workplace.workplaceAddress);
-
-
+//setSelectedDates([...selectedDates, workplace.daysOff]);
+const newDate = workplace.daysOff.toLocaleDateString(); // Get the current date as a string
+setSelectedDates([...selectedDates, newDate]);
     }
 
     //data for search
@@ -191,8 +192,8 @@ set_id(workplace._id);
             sickLeaveRate: sickLeaveRate,
             workRateDayoff: workRateDayoff,
             workRateDayoffRate: workRateDayoffRate,
-            workplaceAddress: workplaceAddress
-
+            workplaceAddress: workplaceAddress,
+            daysOff : selectedDates
         };
 
 
