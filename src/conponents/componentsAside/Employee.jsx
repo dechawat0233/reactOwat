@@ -45,16 +45,16 @@ function Employee() {
 
 
     const [newVaccination, setNewVaccination] = useState('');
-    const handleVaccination= (event) => {
+    const handleVaccination = (event) => {
         setNewVaccination(event.target.value);
     };
 
     const handleAddVaccination = () => {
         if (newVaccination.trim() !== '') {
-          setVaccination([...vaccination, newVaccination]);
-          setNewVaccination('');
+            setVaccination([...vaccination, newVaccination]);
+            setNewVaccination('');
         }
-      };
+    };
 
     const [copyAddress, setCopyAddress] = useState(false);
 
@@ -302,8 +302,8 @@ function Employee() {
                                                             <label role="startjob">วันที่เริ่มงาน</label>
                                                             <div style={{ position: 'relative', zIndex: 9999 }}>
                                                                 <DatePicker id="startjob" name="startjob"
-                                                                    className="form-control" 
-                                                                    popperClassName="datepicker-popper" 
+                                                                    className="form-control"
+                                                                    popperClassName="datepicker-popper"
                                                                     selected={startjob}
                                                                     onChange={handleStartDateChange}
                                                                     dateFormat="dd/MM/yyyy" />
@@ -316,8 +316,8 @@ function Employee() {
                                                             <label role="exceptjob">วันที่บรรจุ</label>
                                                             <div style={{ position: 'relative', zIndex: 9999 }}>
                                                                 <DatePicker id="exceptjob" name="exceptjob"
-                                                                    className="form-control" 
-                                                                    popperClassName="datepicker-popper" 
+                                                                    className="form-control"
+                                                                    popperClassName="datepicker-popper"
                                                                     selected={exceptjob}
                                                                     onChange={handleExceptDateChange}
                                                                     dateFormat="dd/MM/yyyy" />
@@ -507,33 +507,36 @@ function Employee() {
                                     <div class="col-md-9">
                                         <section class="Frame">
 
-    <div>
-    <label role="vaccination">การรับวัคซีน:</label>
-      <input
-        type="text"
-        name="vaccination"
-        id="vaccination"
-        value={newVaccination}
-        onChange={handleVaccination}
-        placeholder="เพิ่มวัคซีนที่ได้รับ"
-      />
-      <button type="button" onClick={handleAddVaccination}>เพิ่มวัคซีน</button>
+                                            <div>
+                                                <label role="vaccination">การรับวัคซีน:</label>
+                                                <input
+                                                    class="form-control"
+                                                    type="text"
+                                                    name="vaccination"
+                                                    id="vaccination"
+                                                    value={newVaccination}
+                                                    onChange={handleVaccination}
+                                                    placeholder="เพิ่มวัคซีนที่ได้รับ"
+                                                />
+                                                <br/>
+                                                <button type="button" class="btn btn-primary" onClick={handleAddVaccination}>เพิ่มวัคซีน</button>
+                                                <br />
+                                                <br />
+                                                <h2>วัคซีนที่ได้รับ</h2>
+                                                <ul>
+                                                    {vaccination.map((item, index) => (
+                                                        <li key={index}>{item}</li>
+                                                    ))}
+                                                </ul>
+                                            </div>
 
-      <h2>วัคซีนที่ได้รับ</h2>
-      <ul>
-        {vaccination.map((item, index) => (
-          <li key={index}>{item}</li>
-        ))}
-      </ul>
-    </div>
-  
 
                                             <div class="row">
                                                 <div class="form-group">
                                                     <label style={{ paddingLeft: "10px" }}>การรับวัคซีน</label>
                                                     <div class="col-md-12" style={{ marginTop: "10px" }}>
                                                         <div class="icheck-primary d-inline">
-                                                            <input type="radio" id="radioPrimary1" name="r1" checked="" /> ได้รับวัคซีนแล้ว
+                                                            <input type="radio" id="radioPrimary1" name="r1" /> ได้รับวัคซีนแล้ว
                                                         </div>
                                                         <div class="icheck-primary d-inline">
                                                             <input type="radio" id="radioPrimary2" name="r1" />  ยังไม่ได้รับวัคซีน
