@@ -518,14 +518,14 @@ function Employee() {
                                                     onChange={handleVaccination}
                                                     placeholder="เพิ่มวัคซีนที่ได้รับ"
                                                 />
-                                                <br/>
+                                                <br />
                                                 <button type="button" class="btn btn-primary" onClick={handleAddVaccination}>เพิ่มวัคซีน</button>
                                                 <br />
                                                 <br />
                                                 <h2>วัคซีนที่ได้รับ</h2>
                                                 <ul>
                                                     {vaccination.map((item, index) => (
-                                                        <li key={index}>{item}</li>
+                                                        <li key={index}>{item}<button class="btn btn-info" style={{ margin: '0.5rem' ,width:"4rem"}}>ลบ</button></li>
                                                     ))}
                                                 </ul>
                                             </div>
