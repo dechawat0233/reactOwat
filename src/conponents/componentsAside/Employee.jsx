@@ -40,9 +40,21 @@ function Employee() {
     const [phoneNumber, setPhoneNumber] = useState(''); //เบอร์โทรศัพท์
     const [emergencyContactNumber, setEmergencyContactNumber] = useState(''); //เบอร์ติดต่อกรณีฉุกเฉิน
     const [idLine, setIdLine] = useState(''); //ไอดีไลน์
-    const [vaccination, setVaccination] = useState(''); //การรับวัคซีน
+    const [vaccination, setVaccination] = useState([]); //การรับวัคซีน
     const [treatmentRights, setTreatmentRights] = useState(''); //สิทธิการรักษาพยาบาล
 
+
+    const [newVaccination, setNewVaccination] = useState('');
+    const handleVaccination= (event) => {
+        setNewVaccination(event.target.value);
+    };
+
+    const handleAddVaccination = () => {
+        if (newVaccination.trim() !== '') {
+          setVaccination([...vaccination, newVaccination]);
+          setNewVaccination('');
+        }
+      };
 
     const [copyAddress, setCopyAddress] = useState(false);
 
@@ -56,7 +68,7 @@ function Employee() {
     };
 
     function onEmployeeSelect(empSelect) {
-        alert(empSelect.dateOfBirth);
+        // alert(empSelect.dateOfBirth);
         setEmployeeselection(empSelect);
         setEmployeeId(empSelect.employeeId);
         setPosition(empSelect.position);
@@ -494,6 +506,28 @@ function Employee() {
                                 <div class="row">
                                     <div class="col-md-9">
                                         <section class="Frame">
+
+    <div>
+    <label role="vaccination">การรับวัคซีน:</label>
+      <input
+        type="text"
+        name="vaccination"
+        id="vaccination"
+        value={newVaccination}
+        onChange={handleVaccination}
+        placeholder="เพิ่มวัคซีนที่ได้รับ"
+      />
+      <button type="button" onClick={handleAddVaccination}>เพิ่มวัคซีน</button>
+
+      <h2>วัคซีนที่ได้รับ</h2>
+      <ul>
+        {vaccination.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
+    </div>
+  
+
                                             <div class="row">
                                                 <div class="form-group">
                                                     <label style={{ paddingLeft: "10px" }}>การรับวัคซีน</label>
@@ -521,7 +555,7 @@ function Employee() {
                                 </div>
                                 <div class="line_btn">
                                     {newEmp ? (
-                                        <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;สร้างพนักงานใหม่</button>
+                                        <button type="submit" name="save" value="create" onClick={() => setButtonValue('create')} class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;สร้างพนักงานใหม่</button>
                                     ) : (
                                         <button type="submit" name="save" value="save" onClick={() => setButtonValue('save')} class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
                                     )}

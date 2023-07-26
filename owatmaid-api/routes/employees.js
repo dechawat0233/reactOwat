@@ -102,6 +102,7 @@ const employeeSchema = new mongoose.Schema({
   treatmentRights: {
     type: String
   }
+  
 });
 
 // Create the Employee model based on the schema
