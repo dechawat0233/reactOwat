@@ -32,24 +32,24 @@ function Setting() {
         setReason(event.target.value);
     };
 
-    const [daysOff, setDaysOff] = useState(Array(10).fill(''));
+    // const [daysOff, setDaysOff] = useState(Array(10).fill(''));
     const [holidayComment, setHolidayComment] = useState('');
-    const handleDayOffChange = (index, value) => {
-        const updatedDaysOff = [...daysOff];
-        updatedDaysOff[index] = value;
-        setDaysOff(updatedDaysOff);
-    };
+    // const handleDayOffChange = (index, value) => {
+    //     const updatedDaysOff = [...daysOff];
+    //     updatedDaysOff[index] = value;
+    //     setDaysOff(updatedDaysOff);
+    // };
 
-    const handleAddDayOff = () => {
-        setDaysOff([...daysOff, '']);
-    };
+    // const handleAddDayOff = () => {
+    //     setDaysOff([...daysOff, '']);
+    // };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Perform any necessary actions with the daysOff and holidayComment data
-        console.log(daysOff);
-        console.log(holidayComment);
-    };
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     // Perform any necessary actions with the daysOff and holidayComment data
+    //     console.log(daysOff);
+    //     console.log(holidayComment);
+    // };
 
 
     //Workplace data
@@ -123,7 +123,10 @@ set_id(workplace._id);
         setWorkRateDayoff(workplace.workRateDayoff);
         setworkRateDayoffRate(workplace.workRateDayoffRate);
         setWorkplaceAddress(workplace.workplaceAddress);
-
+//setSelectedDates([...selectedDates, workplace.daysOff]);
+const dates = workplace.daysOff.map((dateString) => new Date(dateString));
+setSelectedDates(dates );
+setReason(workplace.reason);
 
     }
 
@@ -191,8 +194,9 @@ set_id(workplace._id);
             sickLeaveRate: sickLeaveRate,
             workRateDayoff: workRateDayoff,
             workRateDayoffRate: workRateDayoffRate,
-            workplaceAddress: workplaceAddress
-
+            workplaceAddress: workplaceAddress,
+            daysOff : selectedDates,
+            reason: reason
         };
 
 
@@ -219,6 +223,8 @@ set_id(workplace._id);
         // setEmployeesResult(response.data.employees);
         if (response) {
             alert("บันทึกสำเร็จ");
+        window.location.reload();
+
         }
     } catch (error) {
         alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
@@ -585,7 +591,7 @@ set_id(workplace._id);
                                                         <li key={date.toString()}>
                                                             {date.toLocaleDateString()}{' '}
                                                             <button type="button" onClick={() => handleRemoveDate(date)} class="btn clean" style={{ margin: '0.5rem' }}>
-                                                                Remove
+                                                                ลบออก
                                                             </button>
                                                         </li>
                                                     ))}

@@ -18,25 +18,25 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // Define workplace schema
 const workplaceSchema = new mongoose.Schema({
-  workplaceId: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  workplaceName: {
-    type: String
-  },
-  workplaceArea: {
-    type: String
-  },
+    workplaceId: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    workplaceName: {
+        type: String
+    },
+    workplaceArea: {
+        type: String
+    },
     workOfWeek: {
         type: String
-  },
-  workStart1: {
-    type: String
-  },
-  workEnd1: {
-    type: String
+    },
+    workStart1: {
+        type: String
+    },
+    workEnd1: {
+        type: String
     },
     workStart2: {
         type: String
@@ -50,20 +50,20 @@ const workplaceSchema = new mongoose.Schema({
     workEnd3: {
         type: String
     },
-  workOfHour: {
-    type: String
-  },
-  workOfOT: {
-    type: String
-  },
-  workRate: {
-    type: String 
-  },
-  workRateOT: {
-    type: String
-  },
-  workTotalPeople: {
-    type: String,
+    workOfHour: {
+        type: String
+    },
+    workOfOT: {
+        type: String
+    },
+    workRate: {
+        type: String
+    },
+    workRateOT: {
+        type: String
+    },
+    workTotalPeople: {
+        type: String,
     },
     holiday: {
         type: String
@@ -110,9 +110,12 @@ const workplaceSchema = new mongoose.Schema({
     daysOff: [{
         type: Date
     }],
-  workplaceAddress: {
-    type: String
-    }
+    workplaceAddress: {
+        type: String
+    },
+    reason: {
+        type: String
+}
 });
 
 // Create the workplace model based on the schema
@@ -214,7 +217,8 @@ sickLeaveRate,
 workRateDayoff,
 workRateDayoffRate,
 daysOff,
-workplaceAddress,
+        workplaceAddress,
+        reason,
     } = req.body;
 
     
@@ -250,7 +254,8 @@ workplaceAddress,
         workRateDayoff,
         workRateDayoffRate,
         daysOff,
-        workplaceAddress
+        workplaceAddress,
+        reason
     });
 
     try {
