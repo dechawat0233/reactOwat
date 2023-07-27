@@ -1,7 +1,53 @@
-import React from 'react'
+// import React from 'react'
+import React, { useState, useEffect } from 'react';
 import EmployeesSelected from './EmployeesSelected';
 
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
 function SocialSecurity() {
+
+    const options = [
+        { value: 'option1', label: 'Option 17' },
+        { value: 'option2', label: 'Option 92' },
+        { value: 'option3', label: 'Option 34' },
+        // Add more options as needed
+    ];
+
+    // Step 4: Use useState to manage the selected option
+    const [selectedOption, setSelectedOption] = useState('');
+    const [startjob, setStartjob] = useState(''); //วันที่เริ่มงาน
+    const [idPerson, setIdPerson] = useState(''); //เลขบัตรประชาชน
+    const [name, setName] = useState(''); //ชื่อ
+    const [salary, setSalary] = useState(''); //เลือนเดือน
+    const [socialsecurity, setSocialSecurity] = useState(''); //หักประกันสังคม
+
+
+    useEffect(() => {
+        if (salary === '') {
+          setSocialSecurity(0); // If salary is empty, set socialSecurity to 0
+        } else {
+          const parsedSalary = parseFloat(salary);
+          if (parsedSalary < 1650) {
+            setSocialSecurity(83);
+          } else if (parsedSalary >= 1650 && parsedSalary <= 15000) {
+            setSocialSecurity(parsedSalary * 0.05);
+          } else {
+            setSocialSecurity(15000 * 0.05);
+          }
+        }
+      }, [salary]);
+
+    // Step 5: Event handler to update the selected option
+    const handleOptionChange = (event) => {
+        setSelectedOption(event.target.value);
+    };
+    const handleStartDateChange = (date) => {
+        setStartjob(date);
+    };
+    function onEmployeeSelect(empSelect) {
+        setStartjob(new Date(empSelect.startjob));
+    }
     return (
         <body class="hold-transition sidebar-mini">
             <div class="wrapper">
@@ -32,7 +78,7 @@ function SocialSecurity() {
                                                 <label class="col-md-3 ">หักประกันสังคม</label>
                                                 <div class="col-md-5">
                                                     <div class="icheck-primary d-inline">
-                                                        <input type="radio" id="radioPrimary1" name="r1" checked="" /> หักประกันสังคม
+                                                        <input type="radio" id="radioPrimary1" name="r1" /> หักประกันสังคม
                                                     </div>
                                                     <div class="icheck-primary d-inline">
                                                         <input type="radio" id="radioPrimary2" name="r1" /> ไม่หักประกันสังคม
@@ -42,36 +88,52 @@ function SocialSecurity() {
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">วิธีหัก</label>
                                                 <div class="col-md-5">
-                                                    <select class="form-control">
+                                                    <select class="form-control" value={selectedOption} onChange={handleOptionChange}>
                                                         <option>พนักงานจ่ายเอง</option>
-                                                        <option>option 2</option>
-                                                        <option>option 3</option>
-                                                        <option>option 4</option>
-                                                        <option>option 5</option>
+                                                        {options.map((option) => (
+                                                            <option key={option.value} value={option.value}>
+                                                                {option.label}
+                                                            </option>
+                                                        ))}
                                                     </select>
                                                 </div>
                                             </div>
+                                            
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">วันที่เริ่มงาน</label>
                                                 <div class="col-md-5">
-                                                    <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" />
-                                                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                                                            <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
-                                                        </div>
+                                                    <div style={{ position: 'relative', zIndex: 9999 }}>
+                                                        <DatePicker id="startjob" name="startjob"
+                                                            className="form-control"
+                                                            popperClassName="datepicker-popper"
+                                                            selected={startjob}
+                                                            onChange={handleStartDateChange}
+                                                            dateFormat="dd/MM/yyyy" />
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">เลขที่บัตรประชาชน</label>
                                                 <div class="col-md-5">
-                                                    <input type="" class="form-control" id="" placeholder="เลขที่บัตรประชาชน" />
+                                                    <input type="" class="form-control" id="" placeholder="เลขที่บัตรประชาชน" value={idPerson} onChange={(e) => setIdPerson(e.target.value)} />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-md-3 col-form-label">คำนำหน้าชื่อ</label>
+                                                <label class="col-md-3 col-form-label">ชื่อ - นามสุกล</label>
                                                 <div class="col-md-5">
-                                                    <input type="" class="form-control" id="" placeholder="คำนำหน้าชื่อ" />
+                                                    <input type="" class="form-control" id="" placeholder="ชื่อ - นามสุกล" value={name} onChange={(e) => setName(e.target.value)} />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">เงินเดือน</label>
+                                                <div class="col-md-5">
+                                                    <input type="" class="form-control" id="" placeholder="เงินเดือน" value={salary} onChange={(e) => setSalary(e.target.value)} />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">หักประกันสังคม</label>
+                                                <div class="col-md-5">
+                                                    <input type="" class="form-control" id="" placeholder="หักประกันสังคม" value={socialsecurity} onChange={(e) => setSocialSecurity(e.target.value)} />
                                                 </div>
                                             </div>
                                         </section>
@@ -127,7 +189,7 @@ function SocialSecurity() {
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">อัตราพนักงานหักเข้ากองทุนประกันสังคม</label>
                                                 <div class="col-md-5">
-                                                    <input type="" class="form-control" id="" placeholder="" />
+                                                    <input type="" class="form-control" id="" placeholder="" value='5' />
                                                 </div>
                                                 <label class="col-form-label">%</label>
                                             </div>
