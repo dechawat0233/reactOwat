@@ -23,6 +23,9 @@ function SocialSecurity() {
     const [minus, setMinus] = useState('5'); //หัห
     const [socialsecurity, setSocialSecurity] = useState(''); //หักประกันสังคม
 
+    const [minusemployer, setMinusEmployer] = useState('5'); //หัห
+    const [socialsecurityemployer, setSocialSecurityEmployer] = useState(''); //หักประกันสังคม
+
 
     useEffect(() => {
         if (salary === '') {
@@ -39,6 +42,22 @@ function SocialSecurity() {
             }
         }
     }, [salary, minus]);
+
+    useEffect(() => {
+        if (salary === '') {
+            setSocialSecurityEmployer(0);
+        } else {
+            const parsedSalary = parseFloat(salary);
+            const parsedMinusEmpoyor = parseFloat(minusemployer) / 100; // Convert the minus percentage to a decimal
+            if (parsedSalary < 1650) {
+                setSocialSecurityEmployer(1650 * parsedMinusEmpoyor);
+            } else if (parsedSalary >= 1650 && parsedSalary <= 15000) {
+                setSocialSecurityEmployer(parsedSalary * parsedMinusEmpoyor);
+            } else {
+                setSocialSecurityEmployer(15000 * parsedMinusEmpoyor);
+            }
+        }
+    }, [salary, minusemployer]);
 
     // Step 5: Event handler to update the selected option
     const handleOptionChange = (event) => {
@@ -143,6 +162,19 @@ function SocialSecurity() {
                                                     <input type="" class="form-control" id="" placeholder="หักประกันสังคม" value={socialsecurity} onChange={(e) => setSocialSecurity(e.target.value)} />
                                                 </div>
                                             </div>
+                                            <h4>นายจ้าง</h4>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">หักประกันสังคม</label>
+                                                <div class="col-md-5">
+                                                    <input type="" class="form-control" id="" placeholder="หักประกันสังคม" value={socialsecurityemployer} onChange={(e) => setSocialSecurityEmployer(e.target.value)} />
+                                                </div>
+                                                <label class="col-md-1 col-form-label">หัก%</label>
+                                                <div class="col-md-2">
+                                                    <input type="" class="form-control" id="" placeholder="เงินเดือน" value={minusemployer} onChange={(e) => setMinusEmployer(e.target.value)} />
+                                                </div>
+                                                <label class="col-md-1 col-form-label">%</label>
+                                            </div>
+
                                         </section>
                                         {/* <!--Frame--> */}
                                     </div>
