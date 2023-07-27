@@ -19,24 +19,26 @@ function SocialSecurity() {
     const [startjob, setStartjob] = useState(''); //วันที่เริ่มงาน
     const [idPerson, setIdPerson] = useState(''); //เลขบัตรประชาชน
     const [name, setName] = useState(''); //ชื่อ
-    const [salary, setSalary] = useState(''); //เลือนเดือน
+    const [salary, setSalary] = useState(''); //เงินเดือน
+    const [minus, setMinus] = useState('5'); //หัห
     const [socialsecurity, setSocialSecurity] = useState(''); //หักประกันสังคม
 
 
     useEffect(() => {
         if (salary === '') {
-          setSocialSecurity(0); // If salary is empty, set socialSecurity to 0
+            setSocialSecurity(0);
         } else {
-          const parsedSalary = parseFloat(salary);
-          if (parsedSalary < 1650) {
-            setSocialSecurity(83);
-          } else if (parsedSalary >= 1650 && parsedSalary <= 15000) {
-            setSocialSecurity(parsedSalary * 0.05);
-          } else {
-            setSocialSecurity(15000 * 0.05);
-          }
+            const parsedSalary = parseFloat(salary);
+            const parsedMinus = parseFloat(minus) / 100; // Convert the minus percentage to a decimal
+            if (parsedSalary < 1650) {
+                setSocialSecurity(1650 * parsedMinus);
+            } else if (parsedSalary >= 1650 && parsedSalary <= 15000) {
+                setSocialSecurity(parsedSalary * parsedMinus);
+            } else {
+                setSocialSecurity(15000 * parsedMinus);
+            }
         }
-      }, [salary]);
+    }, [salary, minus]);
 
     // Step 5: Event handler to update the selected option
     const handleOptionChange = (event) => {
@@ -98,7 +100,7 @@ function SocialSecurity() {
                                                     </select>
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">วันที่เริ่มงาน</label>
                                                 <div class="col-md-5">
@@ -119,7 +121,7 @@ function SocialSecurity() {
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-md-3 col-form-label">ชื่อ - นามสุกล</label>
+                                                <label class="col-md-3 col-form-label">ชื่อ - นามสกุล</label>
                                                 <div class="col-md-5">
                                                     <input type="" class="form-control" id="" placeholder="ชื่อ - นามสุกล" value={name} onChange={(e) => setName(e.target.value)} />
                                                 </div>
@@ -129,6 +131,11 @@ function SocialSecurity() {
                                                 <div class="col-md-5">
                                                     <input type="" class="form-control" id="" placeholder="เงินเดือน" value={salary} onChange={(e) => setSalary(e.target.value)} />
                                                 </div>
+                                                <label class="col-md-1 col-form-label">หัก%</label>
+                                                <div class="col-md-2">
+                                                    <input type="" class="form-control" id="" placeholder="เงินเดือน" value={minus} onChange={(e) => setMinus(e.target.value)} />
+                                                </div>
+                                                <label class="col-md-1 col-form-label">%</label>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">หักประกันสังคม</label>
