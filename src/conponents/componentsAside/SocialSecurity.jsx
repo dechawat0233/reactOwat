@@ -240,7 +240,6 @@ function SocialSecurity() {
                                                 <label class="col-form-label">%</label>
                                             </div>
                                         </section>
-                                        {/* <!--Frame--> */}
                                     </div>
                                 </div> */}
                                 <h2 class="title">เฉพาะกรณีไม่ได้เป็นพนักงานตั้งแต่ต้นปี</h2>
