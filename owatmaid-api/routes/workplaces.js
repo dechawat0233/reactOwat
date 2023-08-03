@@ -221,6 +221,8 @@ workRateDayoffRate,
 daysOff,
         workplaceAddress,
         reason,
+        employeeIdList,
+        employeeNameList
     } = req.body;
 
     
@@ -257,7 +259,9 @@ daysOff,
         workRateDayoffRate,
         daysOff,
         workplaceAddress,
-        reason
+        reason,
+        employeeIdList,
+        employeeNameList
     });
 
     try {
