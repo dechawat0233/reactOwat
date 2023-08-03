@@ -16,26 +16,26 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 
-// Define workplace schema
-const workplaceSchema = new mongoose.Schema({
-    workplaceId: {
+// Define time record schema
+const timerecordSchema = new mongoose.Schema({
+    timerecordId: {
         type: String,
         required: true,
         unique: true
     },
+    timerecordType: {
+        type: String
+    },
+    employeeId: {
+        type: String
+    },
+    employeeName: {
+        type: String
+    },
+    workplaceId: {
+        type: String
+    },
     workplaceName: {
-        type: String
-    },
-    workplaceArea: {
-        type: String
-    },
-    workOfWeek: {
-        type: String
-    },
-    workStart1: {
-        type: String
-    },
-    workEnd1: {
         type: String
     },
     workStart2: {
@@ -115,9 +115,7 @@ const workplaceSchema = new mongoose.Schema({
     },
     reason: {
         type: String
-    },
-    employeeIdList: []
-    employeeNameList: []
+}
 });
 
 // Create the workplace model based on the schema

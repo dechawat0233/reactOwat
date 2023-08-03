@@ -16,6 +16,7 @@ function Employee() {
     const [buttonValue, setButtonValue] = useState('');
 
     //employee data
+    const [_id , set_id] = useState('');
     const [employeeId, setEmployeeId] = useState('');
     const [position, setPosition] = useState(''); //ตำแหน่ง
     const [department, setDepartment] = useState(''); //แผนก
@@ -56,6 +57,14 @@ function Employee() {
         }
     };
 
+
+    const handleRemoveVaccination  = (vaccinationToRemove) => {
+        setVaccination((prevVaccination) =>
+        prevVaccination.filter((v) => v !== vaccinationToRemove )
+        );
+    };
+
+
     const [copyAddress, setCopyAddress] = useState(false);
 
     const handleCheckboxChange = () => {
@@ -69,14 +78,15 @@ function Employee() {
 
     function onEmployeeSelect(empSelect) {
         // alert(empSelect.dateOfBirth);
+        set_id(empSelect._id);
         setEmployeeselection(empSelect);
         setEmployeeId(empSelect.employeeId);
         setPosition(empSelect.position);
         setDepartment(empSelect.department);
         setWorkplace(empSelect.workplace);
         setJobtype(empSelect.jobtype);
-        setStartjob(new Date(empSelect.startjob));
-        setExceptjob(new Date(empSelect.exceptjob));
+        setStartjob(empSelect.startjob ? new Date(empSelect.startjob): '');
+        setExceptjob(empSelect.exceptjob ? new Date(empSelect.exceptjob): '');
         setPrefix(empSelect.prefix);
         setName(empSelect.name);
         setLastName(empSelect.lastName);
@@ -97,7 +107,7 @@ function Employee() {
         setIdLine(empSelect.idLine);
         // setVaccination(empSelect.vaccination);
         const temp = empSelect.vaccination.map((item) => [...item]);
-        alert(temp);
+//        alert(temp);
         setVaccination(temp);
         setTreatmentRights(empSelect.treatmentRights);
 
@@ -152,7 +162,21 @@ function Employee() {
 
         } else {
             if (buttonValue == 'save') {
-                alert('update user');
+      // Make the API call to update the resource by ID
+      try {
+        const response = await axios.put(endpoint + '/employee/update/' + _id, data);
+        // setEmployeesResult(response.data.employees);
+        if (response) {
+            alert("บันทึกสำเร็จ");
+        window.location.reload();
+
+        }
+    } catch (error) {
+        alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+        alert(error);
+        window.location.reload();
+    }
+
 
             }
 
@@ -528,7 +552,8 @@ function Employee() {
                                                 <h2>วัคซีนที่ได้รับ</h2>
                                                 <ul>
                                                     {vaccination.map((item, index) => (
-                                                        <li key={index}>{item}<button class="btn btn-info" style={{ margin: '0.5rem' ,width:"4rem"}}>ลบ</button></li>
+                                                        <li key={index}>{item} 
+                                                        <button type="button" onClick={() => handleRemoveVaccination(item)} class="btn btn-info" style={{ margin: '0.5rem' ,width:"4rem"}}>ลบ</button></li>
                                                     ))}
                                                 </ul>
                                             </div>
@@ -551,7 +576,7 @@ function Employee() {
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>สิทธิการรักษาพยาบาล</label>
-                                                        <input type="" class="form-control" id="" placeholder="สิทธิการรักษาพยาบาล" value="" />
+                                                        <input type="text" name="treatmentRights" class="form-control" id="treatmentRights" placeholder="สิทธิการรักษาพยาบาล" value={treatmentRights} onChange={(e) => setTreatmentRights(e.target.value)} />
                                                     </div>
                                                 </div>
                                             </div>

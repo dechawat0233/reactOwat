@@ -96,9 +96,7 @@ const employeeSchema = new mongoose.Schema({
   idLine: {
     type: String
   },
-  vaccination: {
-    type: String
-  },
+  vaccination: [] ,
   treatmentRights: {
     type: String
   }
@@ -274,6 +272,33 @@ router.post('/create', async (req, res) => {
     res.status(400).json({ error: err.message });
   }
  
+});
+
+
+//Update Employee data
+router.put('/update/:_id', async (req, res) => {
+    const employeeIdToUpdate = req.params._id;
+    const updateFields = req.body;
+
+    try {
+        // Find the resource by ID and update it
+        const updatedResource = await Employee.findByIdAndUpdate(
+            employeeIdToUpdate,
+            updateFields,
+            { new: true } // To get the updated document as the result
+        );
+        if (!updatedResource) {
+            return res.status(404).json({ message: 'Resource not found' });
+        }
+
+        // Send the updated resource as the response
+        res.json(updatedResource);
+
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
 });
 
 

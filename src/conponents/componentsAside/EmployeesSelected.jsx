@@ -46,8 +46,26 @@ function EmployeesSelected({ onEmployeeSelect }) {
     const updatedSelectedEmployees = await storedEmp.filter(
       employee => employee.employeeId !== employeeId
     );
-
     // const selectedEmployeeCount = updatedSelectedEmployees.length;
+
+    await localStorage.setItem('selectedEmployees', JSON.stringify(updatedSelectedEmployees));
+
+    await setStoredEmp(updatedSelectedEmployees);
+
+    // Dispatch a custom event to notify other components about the change
+    const event = new CustomEvent('selectedEmployeesChanged', {
+      detail: { selectedEmployees: updatedSelectedEmployees },
+    });
+    window.dispatchEvent(event);
+    // Do any additional processing or redirection as needed
+
+  }
+
+
+  async function handleRemoveEmployeeAll() {
+    const updatedSelectedEmployees = await storedEmp.filter(
+      employee => employee.employeeId === ''
+    );
 
     await localStorage.setItem('selectedEmployees', JSON.stringify(updatedSelectedEmployees));
 
@@ -80,6 +98,12 @@ function EmployeesSelected({ onEmployeeSelect }) {
                   }}>นำออก</button>
                 </li>
               ))}
+              
+              <li> ล้างรายการ
+                  <button type="button" onClick={() => handleRemoveEmployeeAll()} style={{
+                    width: '5rem', height: '2rem', margin: '0.2rem', borderRadius: '8px'
+                  }}>นำออกทั้งหมด</button>
+                </li>
             </ul>
           </div>
         </div>
