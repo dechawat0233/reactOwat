@@ -569,16 +569,10 @@ function Employee() {
                                                 <h2>วัคซีนที่ได้รับ</h2>
                                                 <ul>
                                                     {vaccination.map((item, index) => (
-<<<<<<< HEAD
-<<<<<<< HEAD
                                                         <li key={index}>{item} 
                                                         <button type="button" onClick={() => handleRemoveVaccination(item)} class="btn btn-info" style={{ margin: '0.5rem' ,width:"4rem"}}>ลบ</button></li>
-=======
-                                                        <li key={index}>{item}<button class="btn btn-info" style={{ margin: '0.5rem', width: "4rem" }}>ลบ</button></li>
->>>>>>> 3444749a22d17034454d96d7957afc7022b9f87d
-=======
-                                                        <li key={index}>{item}<button class="btn btn-info" style={{ margin: '0.5rem', width: "4rem" }}>ลบ</button></li>
->>>>>>> 3444749a22d17034454d96d7957afc7022b9f87d
+                                                        // <li key={index}>{item}<button class="btn btn-info" style={{ margin: '0.5rem', width: "4rem" }}>ลบ</button></li>
+                                                        // <li key={index}>{item}<button class="btn btn-info" style={{ margin: '0.5rem', width: "4rem" }}>ลบ</button></li>
                                                     ))}
                                                 </ul>
                                             </div>

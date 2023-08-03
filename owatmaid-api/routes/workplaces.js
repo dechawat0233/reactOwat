@@ -116,7 +116,7 @@ const workplaceSchema = new mongoose.Schema({
     reason: {
         type: String
     },
-    employeeIdList: []
+    employeeIdList: [],
     employeeNameList: []
 });
 
