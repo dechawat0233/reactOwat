@@ -241,7 +241,7 @@ function SocialSecurity() {
                                             </div>
                                         </section>
                                     </div>
-                                </div> */}
+                                </div> */}  
                                 <h2 class="title">เฉพาะกรณีไม่ได้เป็นพนักงานตั้งแต่ต้นปี</h2>
                                 <div class="form-group row">
                                     <div class="col-md-9">

@@ -44,6 +44,20 @@ function Employee() {
     const [vaccination, setVaccination] = useState([]); //การรับวัคซีน
     const [treatmentRights, setTreatmentRights] = useState(''); //สิทธิการรักษาพยาบาล
 
+    const [images, setImages] = useState([]);//อัพรูป
+    const [imageURLs, setImageURLs] = useState([]);
+
+    useEffect(() => {
+        if (images.length < 1) return;
+        const newImageUrls = [];
+        images.forEach((image) => newImageUrls.push(URL.createObjectURL(image)))
+
+        setImageURLs(newImageUrls);
+    }, [images]);
+
+    function onImageChange(e) {
+        setImages([...e.target.files]);
+    }
 
     const [newVaccination, setNewVaccination] = useState('');
     const handleVaccination = (event) => {
@@ -56,10 +70,10 @@ function Employee() {
             setNewVaccination('');
         }
     };
-
+ 
 
     const handleRemoveVaccination  = (vaccinationToRemove) => {
-        setVaccination((prevVaccination) =>
+            setVaccination((prevVaccination) =>
         prevVaccination.filter((v) => v !== vaccinationToRemove )
         );
     };
@@ -366,10 +380,13 @@ function Employee() {
                                                         <div class="form-group">
                                                             <label>อัพโหลดใบหน้า</label>
                                                             <div class="custom-file">
-                                                                <input type="file" class="custom-file-input " id="customFile" />
+                                                                <input type="file" class="custom-file-input " id="customFile" multiple accept='image/*' onChange={onImageChange} />
                                                                 <label class="custom-file-label" for="customFile">เลือกไฟล์</label>
                                                             </div>
                                                         </div>
+                                                        {imageURLs.map((imageSrc, idx) => (
+                                                            <img key={idx} width="150rem" height="250rem" src={imageSrc} />
+                                                        ))}
                                                     </div>
                                                 </div>
                                             </div>
@@ -552,8 +569,12 @@ function Employee() {
                                                 <h2>วัคซีนที่ได้รับ</h2>
                                                 <ul>
                                                     {vaccination.map((item, index) => (
+<<<<<<< HEAD
                                                         <li key={index}>{item} 
                                                         <button type="button" onClick={() => handleRemoveVaccination(item)} class="btn btn-info" style={{ margin: '0.5rem' ,width:"4rem"}}>ลบ</button></li>
+=======
+                                                        <li key={index}>{item}<button class="btn btn-info" style={{ margin: '0.5rem', width: "4rem" }}>ลบ</button></li>
+>>>>>>> 3444749a22d17034454d96d7957afc7022b9f87d
                                                     ))}
                                                 </ul>
                                             </div>
