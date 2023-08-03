@@ -43,6 +43,20 @@ function Employee() {
     const [vaccination, setVaccination] = useState([]); //การรับวัคซีน
     const [treatmentRights, setTreatmentRights] = useState(''); //สิทธิการรักษาพยาบาล
 
+    const [images, setImages] = useState([]);//อัพรูป
+    const [imageURLs, setImageURLs] = useState([]);
+
+    useEffect(() => {
+        if (images.length < 1) return;
+        const newImageUrls = [];
+        images.forEach((image) => newImageUrls.push(URL.createObjectURL(image)))
+
+        setImageURLs(newImageUrls);
+    }, [images]);
+
+    function onImageChange(e) {
+        setImages([...e.target.files]);
+    }
 
     const [newVaccination, setNewVaccination] = useState('');
     const handleVaccination = (event) => {
@@ -342,10 +356,13 @@ function Employee() {
                                                         <div class="form-group">
                                                             <label>อัพโหลดใบหน้า</label>
                                                             <div class="custom-file">
-                                                                <input type="file" class="custom-file-input " id="customFile" />
+                                                                <input type="file" class="custom-file-input " id="customFile" multiple accept='image/*' onChange={onImageChange} />
                                                                 <label class="custom-file-label" for="customFile">เลือกไฟล์</label>
                                                             </div>
                                                         </div>
+                                                        {imageURLs.map((imageSrc, idx) => (
+                                                            <img key={idx} width="150rem" height="250rem" src={imageSrc} />
+                                                        ))}
                                                     </div>
                                                 </div>
                                             </div>
@@ -528,7 +545,7 @@ function Employee() {
                                                 <h2>วัคซีนที่ได้รับ</h2>
                                                 <ul>
                                                     {vaccination.map((item, index) => (
-                                                        <li key={index}>{item}<button class="btn btn-info" style={{ margin: '0.5rem' ,width:"4rem"}}>ลบ</button></li>
+                                                        <li key={index}>{item}<button class="btn btn-info" style={{ margin: '0.5rem', width: "4rem" }}>ลบ</button></li>
                                                     ))}
                                                 </ul>
                                             </div>
