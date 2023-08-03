@@ -51,9 +51,52 @@ function Setting() {
     //     console.log(holidayComment);
     // };
 
+    const [employeeIdList, setEmployeeIdList] = useState([]); //รหัสพนักงาน
+    const [employeeNameList, setEmployeeNameList] = useState([]); //ชื่อพนักงานที่สังกัด
+
+    const [newEmployeeIdList, setNewEmployeeIdList] = useState('');
+    const [newEmployeeNameList, setNewEmployeeNameList] = useState('');
+
+    const handleVaccination = (event) => {
+        setNewEmployeeIdList(event.target.value);
+    };
+
+    const handleVaccination2 = (event) => {
+        setNewEmployeeNameList(event.target.value);
+    };
+
+    const handleAddVaccination = () => {
+        if (newEmployeeIdList.trim() !== '') {
+            setEmployeeIdList([...employeeIdList, newEmployeeIdList]);
+            setNewEmployeeIdList('');
+        };
+
+        if (newEmployeeNameList.trim() !== '') {
+            setEmployeeNameList([...employeeNameList, newEmployeeNameList]);
+            setNewEmployeeNameList('');
+        }
+    };
+
+
+
+    
+    const handleRemoveVaccination = (vaccinationToRemove) => {
+        setEmployeeIdList((prevVaccination) =>
+            prevVaccination.filter((v) => v !== vaccinationToRemove)
+        );
+
+        setEmployeeNameList((prevVaccination2) =>
+            prevVaccination2.filter((v) => v !== vaccinationToRemove)
+        );
+    };
+
+
+
+
+
 
     //Workplace data
-    const [ _id , set_id] = useState('');
+    const [_id, set_id] = useState('');
     const [workplaceId, setWorkplaceId] = useState(''); //รหัสหน่วยงาน
     const [workplaceName, setWorkplaceName] = useState(''); //ชื่อหน่วยงาน
     const [workplaceArea, setWorkplaceArea] = useState(''); //สถานที่ปฏิบัติงาน
@@ -92,7 +135,7 @@ function Setting() {
     //set data to form
     function handleClickResult(workplace) {
         setNewWorkplace(false);
-set_id(workplace._id);
+        set_id(workplace._id);
         setWorkplaceId(workplace.workplaceId);
         setWorkplaceName(workplace.workplaceName);
         setWorkplaceArea(workplace.workplaceArea);
@@ -123,10 +166,10 @@ set_id(workplace._id);
         setWorkRateDayoff(workplace.workRateDayoff);
         setworkRateDayoffRate(workplace.workRateDayoffRate);
         setWorkplaceAddress(workplace.workplaceAddress);
-//setSelectedDates([...selectedDates, workplace.daysOff]);
-const dates = workplace.daysOff.map((dateString) => new Date(dateString));
-setSelectedDates(dates );
-setReason(workplace.reason);
+        //setSelectedDates([...selectedDates, workplace.daysOff]);
+        const dates = workplace.daysOff.map((dateString) => new Date(dateString));
+        setSelectedDates(dates);
+        setReason(workplace.reason);
 
     }
 
@@ -195,7 +238,7 @@ setReason(workplace.reason);
             workRateDayoff: workRateDayoff,
             workRateDayoffRate: workRateDayoffRate,
             workplaceAddress: workplaceAddress,
-            daysOff : selectedDates,
+            daysOff: selectedDates,
             reason: reason
         };
 
@@ -214,22 +257,22 @@ setReason(workplace.reason);
                 // window.location.reload();
             }
         } else {
-//update workplace data
+            //update workplace data
 
-      // Make the API call to update the resource by ID
-      try {
+            // Make the API call to update the resource by ID
+            try {
 
-        const response = await axios.put(endpoint + '/workplace/update/' +_id , data);
-        // setEmployeesResult(response.data.employees);
-        if (response) {
-            alert("บันทึกสำเร็จ");
-        window.location.reload();
+                const response = await axios.put(endpoint + '/workplace/update/' + _id, data);
+                // setEmployeesResult(response.data.employees);
+                if (response) {
+                    alert("บันทึกสำเร็จ");
+                    window.location.reload();
 
-        }
-    } catch (error) {
-        alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
-        // window.location.reload();
-    }
+                }
+            } catch (error) {
+                alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+                // window.location.reload();
+            }
 
         }
     }
@@ -570,7 +613,7 @@ setReason(workplace.reason);
                                         {/* <!--Frame--> */}
                                     </div>
                                 </div>
-                                <h2 class="title">ที่อยู่หน่วยงาน</h2>
+                                <h2 class="title">วันหยุดหน่วยงาน</h2>
                                 <section class="Frame">
                                     <div>
                                         <label>เลือกวันหยุดของหน่วยงาน:</label>
@@ -598,6 +641,63 @@ setReason(workplace.reason);
                                                 </ul>
                                             </div>
                                         )}
+                                    </div>
+                                    <div>
+                                        <label>หมายเหตุ:</label>
+                                        <input type="text" class="form-control" value={reason} onChange={handleReasonChange} />
+                                    </div>
+                                </section>
+
+                                <h2 class="title">พนักงานในสังกัด</h2>
+                                <section class="Frame">
+                                    <div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label role="vaccination">รหัสพนักงาน:</label>
+                                                <input
+                                                    class="form-control"
+                                                    type="text"
+                                                    name="vaccination"
+                                                    id="vaccination"
+                                                    value={newEmployeeIdList}
+                                                    onChange={handleVaccination}
+                                                    placeholder="รหัสพนักงาน"
+                                                />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label role="vaccination">ชื่อพนักงานที่สังกัด:</label>
+                                                <input
+                                                    class="form-control"
+                                                    type="text"
+                                                    name="EmployeeNameList"
+                                                    id="EmployeeNameList"
+                                                    value={newEmployeeNameList}
+                                                    onChange={handleVaccination2}
+                                                    placeholder="ชื่อพนักงานที่สังกัด"
+                                                />
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <button type="button" class="btn btn-primary" onClick={handleAddVaccination}>เพิ่ม</button>
+                                        <br />
+                                        <br />
+                                        <h2>วัคซีนที่ได้รับ</h2>
+                                        <ul>
+                                            {employeeIdList.map((employeeId, index) => (
+                                                <li key={index}>
+                                                    {employeeId} - {employeeNameList[index]} {/* Display both employeeId and employeeName */}
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleRemoveVaccination(employeeId)}
+                                                        className="btn btn-info"
+                                                        style={{ margin: '0.5rem', width: "4rem" }}
+                                                    >
+                                                        ลบ
+                                                    </button>
+                                                </li>
+                                            ))}
+
+                                        </ul>
                                     </div>
                                     <div>
                                         <label>หมายเหตุ:</label>
