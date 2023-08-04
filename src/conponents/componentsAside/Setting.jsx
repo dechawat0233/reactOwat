@@ -173,14 +173,11 @@ function Setting() {
 
         // employeeIdLists
 
-        // const temp = empSelect.vaccination.map((item) => [...item]);
-        // //        alert(temp);
-        // setVaccination(temp);
 
-        const employeeIdLists = empSelect.employeeIdList.map((item) => [...item]);
+        const employeeIdLists = workplace.employeeIdList.map((item) => [...item]);
         setEmployeeIdList(employeeIdLists);
 
-        const employeeNameLists = empSelect.employeeNameList.map((item) => [...item]);
+        const employeeNameLists = workplace.employeeNameList.map((item) => [...item]);
         setEmployeeNameList(employeeNameLists);
 
 
