@@ -79,7 +79,7 @@ function Setting() {
 
 
 
-    
+
     const handleRemoveVaccination = (vaccinationToRemove) => {
         setEmployeeIdList((prevVaccination) =>
             prevVaccination.filter((v) => v !== vaccinationToRemove)
@@ -171,6 +171,19 @@ function Setting() {
         setSelectedDates(dates);
         setReason(workplace.reason);
 
+        // employeeIdLists
+
+        // const temp = empSelect.vaccination.map((item) => [...item]);
+        // //        alert(temp);
+        // setVaccination(temp);
+
+        const employeeIdLists = empSelect.employeeIdList.map((item) => [...item]);
+        setEmployeeIdList(employeeIdLists);
+
+        const employeeNameLists = empSelect.employeeNameList.map((item) => [...item]);
+        setEmployeeNameList(employeeNameLists);
+
+
     }
 
     //data for search
@@ -239,7 +252,10 @@ function Setting() {
             workRateDayoffRate: workRateDayoffRate,
             workplaceAddress: workplaceAddress,
             daysOff: selectedDates,
-            reason: reason
+            reason: reason,
+
+            employeeIdList: employeeIdList,
+            employeeNameList: employeeNameList,
         };
 
 
@@ -681,11 +697,12 @@ function Setting() {
                                         <button type="button" class="btn btn-primary" onClick={handleAddVaccination}>เพิ่ม</button>
                                         <br />
                                         <br />
-                                        <h2>วัคซีนที่ได้รับ</h2>
+                                        {/* {employeeIdList.length > 0 && (
+                                        <h2>รายการที่เพิ่ม</h2>
                                         <ul>
                                             {employeeIdList.map((employeeId, index) => (
                                                 <li key={index}>
-                                                    {employeeId} - {employeeNameList[index]} {/* Display both employeeId and employeeName */}
+                                                    {employeeId} - {employeeNameList[index]}
                                                     <button
                                                         type="button"
                                                         onClick={() => handleRemoveVaccination(employeeId)}
@@ -698,10 +715,28 @@ function Setting() {
                                             ))}
 
                                         </ul>
-                                    </div>
-                                    <div>
-                                        <label>หมายเหตุ:</label>
-                                        <input type="text" class="form-control" value={reason} onChange={handleReasonChange} />
+                                        )} */}
+
+                                        {employeeIdList.length > 0 && (
+                                            <div>
+                                                <h2>รายการที่เพิ่ม</h2>
+                                                <ul>
+                                                {employeeIdList.map((employeeId, index) => (
+                                                <li key={index}>
+                                                    {employeeId} - {employeeNameList[index]}
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleRemoveVaccination(employeeId)}
+                                                        className="btn btn-info"
+                                                        style={{ margin: '0.5rem', width: "4rem" }}
+                                                    >
+                                                        ลบ
+                                                    </button>
+                                                </li>
+                                            ))}
+                                                </ul>
+                                            </div>
+                                        )}
                                     </div>
                                 </section>
                                 {/* <!--Frame--> */}
