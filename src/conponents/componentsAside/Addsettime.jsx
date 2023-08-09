@@ -60,6 +60,65 @@ function Addsettime() {
         setStartjob3(date);
     };
 
+
+
+    const numberOfRows = 30; // Fixed number of rows
+    const initialRowData = {
+        staffId: '',
+        staffName: '',
+        shift: 'morning_shift',
+        startTime: '',
+        endTime: '',
+        allTime: '',
+        otTime: '',
+        selectotTimeotTime: '',
+    };
+
+    const [rowDataList, setRowDataList] = useState(new Array(numberOfRows).fill(initialRowData));
+
+    const handleFieldChange = (index, fieldName, value) => {
+        setRowDataList(prevDataList => {
+            const newDataList = [...prevDataList];
+            newDataList[index] = {
+                ...newDataList[index],
+                [fieldName]: value,
+            };
+            return newDataList;
+        });
+    };
+
+    const numberOfRows2 = 30; // Fixed number of rows
+    const initialRowData2 = {
+        staffId: '',
+        staffName: '',
+        startjob: null, // Use null as initial value for DatePicker
+        shift: 'morning_shift',
+        startTime: '',
+        endTime: '',
+        allTime: '',
+        otTime: '',
+        selectotTime: '',
+    };
+
+    const [rowDataList2, setRowDataList2] = useState(new Array(numberOfRows2).fill(initialRowData2));
+
+    const handleFieldChange2 = (index2, fieldName2, value) => {
+        setRowDataList2(prevDataList => {
+            const newDataList2 = [...prevDataList];
+            newDataList2[index2] = {
+                ...newDataList2[index2],
+                [fieldName2]: value,
+            };
+            return newDataList2;
+        });
+    };
+
+    const handleStartDateChange4 = (index2, date) => {
+        handleFieldChange2(index2, 'startjob', date);
+    };
+
+
+
     async function handleManageWorkplace(event) {
         event.preventDefault();
 
@@ -173,51 +232,30 @@ function Addsettime() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td><input type="text" class="form-control" name='staffId' value={staffId} onChange={(e) => setStaffId(e.target.value)} /></td>
-                                        <td><input type="text" class="form-control" name='staffName' value={staffName} onChange={(e) => setStaffName(e.target.value)} /></td>
-                                        <td>
-                                            <select id="formsettime" name="formsettime" class="form-control">
-                                                <option value="morning_shift">กะเช้า</option>
-                                                <option value="afternoon_shift">กะบ่าย</option>
-                                                <option value="night_shift">กะดึก</option>
-                                            </select></td>
-                                        <td><input type="time" class="form-control" name='startTime' value={startTime} onChange={(e) => setStartTime(e.target.value)}  style={{ width: '7rem' }}/></td>
-                                        <td><input type="time" class="form-control" name='endTime' value={endTime} onChange={(e) => setEndTime(e.target.value)} style={{ width: '7rem' }}/></td>
-                                        <td><input type="text" class="form-control" name='allTime' value={allTime} onChange={(e) => setAllTime(e.target.value)} /></td>
-                                        <td><input type="text" class="form-control" name='otTime' value={otTime} onChange={(e) => setOtTime(e.target.value)} /></td>
-                                        <td><input type="time" class="form-control" name='' value='' style={{ width: '7rem' }} /></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="text" class="form-control" name='' value='' /></td>
-                                        <td><input type="text" class="form-control" name='' value='' /></td>
-                                        <td>
-                                            <select id="formsettime" name="formsettime" class="form-control">
-                                                <option value="morning_shift">กะเช้า</option>
-                                                <option value="afternoon_shift">กะบ่าย</option>
-                                                <option value="night_shift">กะดึก</option>
-                                            </select></td>
-                                        <td><input type="time" class="form-control" name='' value='' style={{ width: '7rem' }}/></td>
-                                        <td><input type="time" class="form-control" name='' value='' style={{ width: '7rem' }}/></td>
-                                        <td><input type="text" class="form-control" name='' value='' /></td>
-                                        <td><input type="text" class="form-control" name='' value='' /></td>
-                                        <td><input type="time" class="form-control" name='' value='' style={{ width: '7rem' }} /></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="text" class="form-control" name='' value='' /></td>
-                                        <td><input type="text" class="form-control" name='' value='' /></td>
-                                        <td>
-                                            <select id="formsettime" name="formsettime" class="form-control">
-                                                <option value="morning_shift">กะเช้า</option>
-                                                <option value="afternoon_shift">กะบ่าย</option>
-                                                <option value="night_shift">กะดึก</option>
-                                            </select></td>
-                                        <td><input type="time" class="form-control" name='' value='' style={{ width: '7rem' }}/></td>
-                                        <td><input type="time" class="form-control" name='' value='' style={{ width: '7rem' }}/></td>
-                                        <td><input type="text" class="form-control" name='' value='' /></td>
-                                        <td><input type="text" class="form-control" name='' value='' /></td>
-                                        <td><input type="time" class="form-control" name='' value='' style={{ width: '7rem' }}/></td>
-                                    </tr>
+
+                                    {rowDataList.map((rowData, index) => (
+                                        <tr key={index}>
+                                            {/* <td>
+                                                <input type="text" className="form-control" name="staffId" value={rowData.staffId} onChange={(e) => handleFieldChange(index, 'staffId', e.target.value)} />
+                                            </td> */}
+                                            <td><input type="text" className="form-control" name="staffId" value={rowData.staffId} onChange={(e) => handleFieldChange(index, 'staffId', e.target.value)} /></td>
+                                            <td><input type="text" className="form-control" name="staffName" value={rowData.staffName} onChange={(e) => handleFieldChange(index, 'staffName', e.target.value)} /></td>
+                                            <td>
+                                                <select className="form-control" value={rowData.shift} onChange={(e) => handleFieldChange(index, 'shift', e.target.value)} style={{ width: '5.5rem' }} >
+                                                    <option value="morning_shift">กะเช้า</option>
+                                                    <option value="afternoon_shift">กะบ่าย</option>
+                                                    <option value="night_shift">กะดึก</option>
+                                                </select>
+                                            </td>
+                                            <td><input type="time" className="form-control" name="startTime" value={rowData.startTime} onChange={(e) => handleFieldChange(index, 'startTime', e.target.value)} style={{ width: '7rem' }} /></td>
+                                            <td><input type="time" className="form-control" name="endTime" value={rowData.endTime} onChange={(e) => handleFieldChange(index, 'endTime', e.target.value)} style={{ width: '7rem' }} /></td>
+                                            <td><input type="text" className="form-control" name="allTime" value={rowData.allTime} onChange={(e) => handleFieldChange(index, 'allTime', e.target.value)} style={{ width: '4rem' }} /></td>
+                                            <td><input type="text" className="form-control" name="otTime" value={rowData.otTime} onChange={(e) => handleFieldChange(index, 'otTime', e.target.value)} style={{ width: '4rem' }} /></td>
+                                            <td><input type="time" className="form-control" name="selectotTime" value={rowData.selectotTime} onChange={(e) => handleFieldChange(index, 'selectotTime', e.target.value)} /> </td>
+                                            {/* ... other input fields */}
+                                            {/* ... other input fields */}
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>
@@ -273,81 +311,62 @@ function Addsettime() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td><input type="text" class="form-control" name='staffId' value={staffId} onChange={(e) => setStaffId(e.target.value)} /></td>
-                                        <td><input type="text" class="form-control" name='staffName' value={staffName} onChange={(e) => setStaffName(e.target.value)} /></td>
-                                        <td>
-                                            <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
-                                                <DatePicker id="datetime1" name="datetime1"
-                                                    className="form-control" // Apply Bootstrap form-control class
-                                                    popperClassName="datepicker-popper" // Apply custom popper class if needed
-                                                    selected={startjob1}
-                                                    onChange={handleStartDateChange1}
-                                                    dateFormat="dd/MM/yyyy" />
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <select id="formsettime" name="formsettime" class="form-control">
-                                                <option value="morning_shift">กะเช้า</option>
-                                                <option value="afternoon_shift">กะบ่าย</option>
-                                                <option value="night_shift">กะดึก</option>
-                                            </select></td>
-                                        <td><input type="time" class="form-control" name='startTime' value={startTime} onChange={(e) => setStartTime(e.target.value)} /></td>
-                                        <td><input type="time" class="form-control" name='endTime' value={endTime} onChange={(e) => setEndTime(e.target.value)} /></td>
-                                        <td><input type="text" class="form-control" name='allTime' value={allTime} onChange={(e) => setAllTime(e.target.value)} /></td>
-                                        <td><input type="text" class="form-control" name='otTime' value={otTime} onChange={(e) => setOtTime(e.target.value)} /></td>
-                                        <td><input type="time" class="form-control" name='startTime' value={startTime} onChange={(e) => setStartTime(e.target.value)} /></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="text" class="form-control" name='' value='' /></td>
-                                        <td><input type="text" class="form-control" name='' value='' /></td>
-                                        <td>
-                                            <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
-                                                <DatePicker id="datetime2" name="datetime2"
-                                                    className="form-control" // Apply Bootstrap form-control class
-                                                    popperClassName="datepicker-popper" // Apply custom popper class if needed
-                                                    selected={startjob2}
-                                                    onChange={handleStartDateChange2}
-                                                    dateFormat="dd/MM/yyyy" />
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <select id="formsettime" name="formsettime" class="form-control">
-                                                <option value="morning_shift">กะเช้า</option>
-                                                <option value="afternoon_shift">กะบ่าย</option>
-                                                <option value="night_shift">กะดึก</option>
-                                            </select></td>
-                                        <td><input type="time" class="form-control" name='' value='' /></td>
-                                        <td><input type="time" class="form-control" name='' value='' /></td>
-                                        <td><input type="text" class="form-control" name='' value='' /></td>
-                                        <td><input type="text" class="form-control" name='' value='' /></td>
-                                        <td><input type="time" class="form-control" name='' value='' /></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="text" class="form-control" name='' value='' /></td>
-                                        <td><input type="text" class="form-control" name='' value='' /></td>
-                                        <td>
-                                            <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
-                                                <DatePicker id="datetime3" name="datetime3"
-                                                    className="form-control" // Apply Bootstrap form-control class
-                                                    popperClassName="datepicker-popper" // Apply custom popper class if needed
-                                                    selected={startjob3}
-                                                    onChange={handleStartDateChange3}
-                                                    dateFormat="dd/MM/yyyy" />
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <select id="formsettime" name="formsettime" class="form-control">
-                                                <option value="morning_shift">กะเช้า</option>
-                                                <option value="afternoon_shift">กะบ่าย</option>
-                                                <option value="night_shift">กะดึก</option>
-                                            </select></td>
-                                        <td><input type="time" class="form-control" name='' value='' /></td>
-                                        <td><input type="time" class="form-control" name='' value='' /></td>
-                                        <td><input type="text" class="form-control" name='' value='' /></td>
-                                        <td><input type="text" class="form-control" name='' value='' /></td>
-                                        <td><input type="time" class="form-control" name='' value='' /></td>
-                                    </tr>
+
+
+                                    {rowDataList2.map((rowData2, index2) => (
+                                        <tr key={index2}>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    name="staffId"
+                                                    value={rowData2.staffId}
+                                                    onChange={(e) => handleFieldChange2(index2, 'staffId', e.target.value)}
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    name="staffName"
+                                                    value={rowData2.staffName}
+                                                    onChange={(e) => handleFieldChange2(index2, 'staffName', e.target.value)}
+                                                />
+                                            </td>
+                                            <td>
+                                                <div style={{ position: 'relative', zIndex: 9999, marginLeft: '0rem' }}>
+                                                    <DatePicker
+                                                        id={`datetime${index2}`}
+                                                        name={`datetime${index2}`} // 
+                                                        className="form-control"
+                                                        popperClassName="datepicker-popper"
+                                                        selected={rowData2.startjob}
+                                                        onChange={date => handleStartDateChange4(index2, date)}
+                                                        dateFormat="dd/MM/yyyy"
+                                                        popperPlacement="top-start"
+                                                        popperModifiers={{
+                                                            preventOverflow: {
+                                                                enabled: true,
+                                                                boundariesElement: 'viewport',
+                                                            },
+                                                        }}
+                                                    />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <select className="form-control" value={rowData2.shift} onChange={(e) => handleFieldChange2(index2, 'shift', e.target.value)} style={{ width: '5.5rem' }} >
+                                                    <option value="morning_shift">กะเช้า</option>
+                                                    <option value="afternoon_shift">กะบ่าย</option>
+                                                    <option value="night_shift">กะดึก</option>
+                                                </select></td>
+                                            <td><input type="time" class="form-control" name='startTime' value={rowData2.startTime} onChange={(e) => handleFieldChange2(index2, 'startTime', e.target.value)} /></td>
+                                            <td><input type="time" class="form-control" name='endTime' value={rowData2.endTime} onChange={(e) => handleFieldChange2(index2, 'endTime', e.target.value)} /></td>
+                                            <td><input type="text" class="form-control" name='allTime' value={rowData2.allTime} onChange={(e) => handleFieldChange2(index2, 'allTime', e.target.value)} /></td>
+                                            <td><input type="text" class="form-control" name='otTime' value={rowData2.otTime} onChange={(e) => handleFieldChange2(index2, 'otTime', e.target.value)} /></td>
+                                            <td><input type="time" className="form-control" name="selectotTime" value={rowData2.selectotTime} onChange={(e) => handleFieldChange2(index2, 'selectotTime', e.target.value)} /> </td>
+                                            {/* ... other input fields */}
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>
@@ -358,13 +377,8 @@ function Addsettime() {
                     <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp; บันทึก</button>
                 </div>
             </form>
-
-
         );
     }
-
-
-
     return (
         <body class="hold-transition sidebar-mini">
             <div class="wrapper">
@@ -410,7 +424,6 @@ function Addsettime() {
                                             {formToShow}
                                         </div>
                                     )}
-
                                 </div>
                             </div>
                             <div class="col-md-2">
@@ -427,8 +440,6 @@ function Addsettime() {
                                                         <option value="employeeId">รหัสพนักงาน</option>
                                                         <option value="persontime">ชื่อพนักงาน</option>
                                                     </select>
-
-
                                                 </div>
                                             </div>
 
@@ -440,7 +451,6 @@ function Addsettime() {
                                                     <input type='text' class="form-control" name='search' />
                                                 </div>
                                             </div>
-
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
@@ -448,7 +458,6 @@ function Addsettime() {
                                                     <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้าหา</button>
                                                 </div>
                                             </div>
-
                                         </div>
                                         <div class="d-flex justify-content-center">
                                             <h2 class="title">ผลลัพธ์</h2>
@@ -462,8 +471,6 @@ function Addsettime() {
                                                             <li >
                                                                 ไทยยั่งยืน
                                                             </li>
-
-
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -477,7 +484,6 @@ function Addsettime() {
                     </section>
                     {/* <!-- /.content --> */}
                 </div>
-
             </div>
         </body>
     )
