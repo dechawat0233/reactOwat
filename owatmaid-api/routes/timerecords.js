@@ -23,9 +23,7 @@ const timerecordSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    timerecordType: {
-        type: String
-    },
+    timerecordType: String ,
     employeeId: {
         type: String
     },
@@ -38,6 +36,7 @@ const timerecordSchema = new mongoose.Schema({
     workplaceName: {
         type: String
     },
+
     workStart2: {
         type: String
     },
