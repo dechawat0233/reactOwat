@@ -401,9 +401,64 @@ function Addsettime() {
 
                     <section class="content">
                         <div class="row">
-                            <div class="col-md-10">
+                            <div class="col-md-12">
                                 <div class="container-fluid">
                                     <h2 class="title">ข้อมูลการลงเวลาทำงานของพนักงาน</h2>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <section class="Frame">
+                                                <h2 class="title">ค้นหา</h2>
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label role="formsettime">ค้นหาด้วย</label>
+                                                                <select id="formsettime" name="formsettime" class="form-control" value={selectedOption} onChange={handleOptionChange}>
+                                                                    <option value="workplaceId">รหัสหน่วยงาน</option>
+                                                                    <option value="agencytime">ชื่อหน่วยงาน</option>
+                                                                    <option value="employeeId">รหัสพนักงาน</option>
+                                                                    <option value="persontime">ชื่อพนักงาน</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label role="formsettime">ชื่อ</label>
+                                                                <input type='text' class="form-control" name='search' />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้าหา</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex justify-content-center">
+                                                        <h2 class="title">ผลลัพธ์</h2>
+                                                    </div>
+                                                    <div class="d-flex justify-content-center">
+                                                        <div class="row">
+
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
+                                                                        <li >
+                                                                            ไทยยั่งยืน
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </div>
                                     <div class="col-md-12">
                                         <div class="row">
                                             <div class="col-md-4">
@@ -425,59 +480,6 @@ function Addsettime() {
                                         </div>
                                     )}
                                 </div>
-                            </div>
-                            <div class="col-md-2">
-                                <section class="Frame">
-                                    <h2 class="title">ค้นหา</h2>
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label role="formsettime">ค้นหาด้วย</label>
-                                                    <select id="formsettime" name="formsettime" class="form-control" value={selectedOption} onChange={handleOptionChange}>
-                                                        <option value="workplaceId">รหัสหน่วยงาน</option>
-                                                        <option value="agencytime">ชื่อหน่วยงาน</option>
-                                                        <option value="employeeId">รหัสพนักงาน</option>
-                                                        <option value="persontime">ชื่อพนักงาน</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label role="formsettime">ชื่อ</label>
-                                                    <input type='text' class="form-control" name='search' />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้าหา</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex justify-content-center">
-                                            <h2 class="title">ผลลัพธ์</h2>
-                                        </div>
-                                        <div class="d-flex justify-content-center">
-                                            <div class="row">
-
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
-                                                            <li >
-                                                                ไทยยั่งยืน
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
                             </div>
                         </div>
                         {/* <!-- /.container-fluid --> */}
