@@ -71,7 +71,8 @@ function Addsettime() {
         endTime: '',
         allTime: '',
         otTime: '',
-        selectotTimeotTime: '',
+        selectotTime: '',
+        selectotTimeOut: '',
     };
 
     const [rowDataList, setRowDataList] = useState(new Array(numberOfRows).fill(initialRowData));
@@ -98,6 +99,7 @@ function Addsettime() {
         allTime: '',
         otTime: '',
         selectotTime: '',
+        selectotTimeOut: '',
     };
 
     const [rowDataList2, setRowDataList2] = useState(new Array(numberOfRows2).fill(initialRowData2));
@@ -251,7 +253,9 @@ function Addsettime() {
                                             <td><input type="time" className="form-control" name="endTime" value={rowData.endTime} onChange={(e) => handleFieldChange(index, 'endTime', e.target.value)} style={{ width: '7rem' }} /></td>
                                             <td><input type="text" className="form-control" name="allTime" value={rowData.allTime} onChange={(e) => handleFieldChange(index, 'allTime', e.target.value)} style={{ width: '4rem' }} /></td>
                                             <td><input type="text" className="form-control" name="otTime" value={rowData.otTime} onChange={(e) => handleFieldChange(index, 'otTime', e.target.value)} style={{ width: '4rem' }} /></td>
-                                            <td><input type="time" className="form-control" name="selectotTime" value={rowData.selectotTime} onChange={(e) => handleFieldChange(index, 'selectotTime', e.target.value)} /> </td>
+                                            <td><input type="time" className="form-control" name="selectotTime" value={rowData.selectotTime} onChange={(e) => handleFieldChange(index, 'selectotTime', e.target.value)} style={{ width: '7rem' }} /> </td>
+                                            <td><input type="time" className="form-control" name="selectotTimeOut" value={rowData.selectotTimeOut} onChange={(e) => handleFieldChange(index, 'selectotTimeOut', e.target.value)} style={{ width: '7rem' }} /> </td>
+
                                             {/* ... other input fields */}
                                             {/* ... other input fields */}
                                         </tr>
@@ -316,21 +320,11 @@ function Addsettime() {
                                     {rowDataList2.map((rowData2, index2) => (
                                         <tr key={index2}>
                                             <td>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    name="staffId"
-                                                    value={rowData2.staffId}
-                                                    onChange={(e) => handleFieldChange2(index2, 'staffId', e.target.value)}
+                                                <input type="text" className="form-control" name="staffId" value={rowData2.staffId} onChange={(e) => handleFieldChange2(index2, 'staffId', e.target.value)}
                                                 />
                                             </td>
                                             <td>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    name="staffName"
-                                                    value={rowData2.staffName}
-                                                    onChange={(e) => handleFieldChange2(index2, 'staffName', e.target.value)}
+                                                <input type="text" className="form-control" name="staffName" value={rowData2.staffName} onChange={(e) => handleFieldChange2(index2, 'staffName', e.target.value)}
                                                 />
                                             </td>
                                             <td>
@@ -361,9 +355,11 @@ function Addsettime() {
                                                 </select></td>
                                             <td><input type="time" class="form-control" name='startTime' value={rowData2.startTime} onChange={(e) => handleFieldChange2(index2, 'startTime', e.target.value)} /></td>
                                             <td><input type="time" class="form-control" name='endTime' value={rowData2.endTime} onChange={(e) => handleFieldChange2(index2, 'endTime', e.target.value)} /></td>
-                                            <td><input type="text" class="form-control" name='allTime' value={rowData2.allTime} onChange={(e) => handleFieldChange2(index2, 'allTime', e.target.value)} /></td>
-                                            <td><input type="text" class="form-control" name='otTime' value={rowData2.otTime} onChange={(e) => handleFieldChange2(index2, 'otTime', e.target.value)} /></td>
-                                            <td><input type="time" className="form-control" name="selectotTime" value={rowData2.selectotTime} onChange={(e) => handleFieldChange2(index2, 'selectotTime', e.target.value)} /> </td>
+                                            <td><input type="text" class="form-control" name='allTime' value={rowData2.allTime} onChange={(e) => handleFieldChange2(index2, 'allTime', e.target.value)} style={{ width: '4rem' }}/></td>
+                                            <td><input type="text" class="form-control" name='otTime' value={rowData2.otTime} onChange={(e) => handleFieldChange2(index2, 'otTime', e.target.value)} style={{ width: '4rem' }}/></td>
+                                            <td><input type="time" className="form-control" name="selectotTime" value={rowData2.selectotTime} onChange={(e) => handleFieldChange2(index2, 'selectotTime', e.target.value)} style={{ width: '7rem' }}/> </td>
+                                            <td><input type="time" className="form-control" name="selectotTimeOut" value={rowData2.selectotTimeOut} onChange={(e) => handleFieldChange2(index2, 'selectotTimeOut', e.target.value)} style={{ width: '7rem' }}/> </td>
+
                                             {/* ... other input fields */}
                                         </tr>
                                     ))}
