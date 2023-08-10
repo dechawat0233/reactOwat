@@ -80,13 +80,31 @@ function Addsettime() {
     const handleFieldChange = (index, fieldName, value) => {
         setRowDataList(prevDataList => {
             const newDataList = [...prevDataList];
+
+            // Map option values to corresponding workStart values
+            let selectedStartTime = '';
+            let selectedEndTime = '';
+            if (value === 'morning_shift') {
+                selectedStartTime = searchResult[0]?.workStart1 || '';
+                selectedEndTime = searchResult[0]?.workEnd1 || '';
+            } else if (value === 'afternoon_shift') {
+                selectedStartTime = searchResult[0]?.workStart2 || '';
+                selectedEndTime = searchResult[0]?.workEnd2 || '';
+            } else if (value === 'night_shift') {
+                selectedStartTime = searchResult[0]?.workStart3 || '';
+                selectedEndTime = searchResult[0]?.workEnd3 || '';
+            }
+
             newDataList[index] = {
                 ...newDataList[index],
                 [fieldName]: value,
+                startTime: selectedStartTime,
+                endTime: selectedEndTime,
             };
             return newDataList;
         });
     };
+
 
     const numberOfRows2 = 30; // Fixed number of rows
     const initialRowData2 = {
@@ -125,6 +143,9 @@ function Addsettime() {
     function handleClickResult(workplace) {
         setSearchWorkplaceId(workplace.workplaceId);
         setSearchWorkplaceName(workplace.workplaceName);
+        //
+        setWorkplaceId(workplace.workplaceId);
+        setWorkplaceName(workplace.workplaceName);
 
         // Populate all the startTime input fields with the search result value
         const updatedRowDataList = rowDataList.map(rowData => ({
@@ -136,8 +157,6 @@ function Addsettime() {
         // Update the state
         setRowDataList(updatedRowDataList);
     }
-
-
 
 
     //data for search
@@ -169,6 +188,9 @@ function Addsettime() {
                 setRowDataList(updatedRowDataList);
 
                 // Set search values
+                setWorkplaceId(response.data.workplaces[0].workplaceId);
+                setWorkplaceName(response.data.workplaces[0].workplaceName);
+
                 setSearchWorkplaceId(response.data.workplaces[0].workplaceId);
                 setSearchWorkplaceName(response.data.workplaces[0].workplaceName);
             }
@@ -282,7 +304,7 @@ function Addsettime() {
     if (selectedOption === 'agencytime') {
         formToShow = (
             <form onSubmit={handleSubmitForm1}>
-                <form >
+                <form onSubmit={handleManageWorkplace}>
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
@@ -293,7 +315,7 @@ function Addsettime() {
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label role="agencyname">ชื่อหน่วยงาน</label>
-                                <input type="text" class="form-control" id="agencyname" placeholder="ชื่อหน่วยงาน" value={workplaceId} onChange={(e) => setWorkplaceId(e.target.value)} />
+                                <input type="text" class="form-control" id="agencyname" placeholder="ชื่อหน่วยงาน" value={workplaceName} onChange={(e) => setWorkplaceName(e.target.value)} />
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -311,9 +333,6 @@ function Addsettime() {
 
                         </div>
                     </div>
-
-                </form>
-                <form onSubmit={handleManageWorkplace}>
                     <section class="Frame">
                         <div class="container">
                             <table class="table">
@@ -497,6 +516,7 @@ function Addsettime() {
                                     <h2 class="title">ข้อมูลการลงเวลาทำงานของพนักงาน</h2>
                                     <div class="row">
                                         <div class="col-md-12">
+                                            {/* save */}
                                             {/* <section class="Frame">
                                                 <h2 class="title">ค้นหา</h2>
                                                 <div class="col-md-12">
@@ -548,6 +568,8 @@ function Addsettime() {
                                                     </div>
                                                 </div>
                                             </section> */}
+
+                                            {/* save */}
                                             <section class="Frame">
                                                 <div class="col-md-12">
                                                     <form onSubmit={handleSearch}>
