@@ -121,6 +121,67 @@ function Addsettime() {
 
 
 
+    ///////////////////
+    function handleClickResult(workplace) {
+        setSearchWorkplaceId(workplace.workplaceId);
+        setSearchWorkplaceName(workplace.workplaceName);
+
+        // Populate all the startTime input fields with the search result value
+        const updatedRowDataList = rowDataList.map(rowData => ({
+            ...rowData,
+            startTime: workplace.workStart1,
+            endTime: workplace.workEnd1,
+        }));
+
+        // Update the state
+        setRowDataList(updatedRowDataList);
+    }
+
+
+
+
+    //data for search
+    const [searchWorkplaceId, setSearchWorkplaceId] = useState(''); //รหัสหน่วยงาน
+    const [searchWorkplaceName, setSearchWorkplaceName] = useState(''); //ชื่อหน่วยงาน
+    const [searchResult, setSearchResult] = useState([]);
+
+    async function handleSearch(event) {
+        event.preventDefault();
+
+        // get value from form search
+        const data = {
+            searchWorkplaceId: searchWorkplaceId,
+            searchWorkplaceName: searchWorkplaceName,
+        };
+
+        try {
+            const response = await axios.post(endpoint + '/workplace/search', data);
+            setSearchResult(response.data.workplaces);
+            if (response.data.workplaces.length < 1) {
+                window.location.reload();
+            } else {
+                // Populate all the startTime input fields with the search result value
+                const updatedRowDataList = rowDataList.map(rowData => ({
+                    ...rowData,
+                    startTime: response.data.workplaces[0].workStart1,
+                    endTime: response.data.workplaces[0].workEnd1,
+                }));
+                setRowDataList(updatedRowDataList);
+
+                // Set search values
+                setSearchWorkplaceId(response.data.workplaces[0].workplaceId);
+                setSearchWorkplaceName(response.data.workplaces[0].workplaceName);
+            }
+        } catch (error) {
+            alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
+            window.location.reload();
+        }
+    }
+
+
+
+
+
     async function handleManageWorkplace(event) {
         event.preventDefault();
 
@@ -130,9 +191,9 @@ function Addsettime() {
             workplaceName: workplaceName,
             workplaceArea: workplaceArea,
             workOfWeek: workOfWeek,
-            workkStart1: workkStart1,
+            workStart1: workkStart1,
             workEnd1: workEnd1,
-            workkStart2: workkStart2,
+            workStart2: workkStart2,
             workEnd2: workEnd2,
             workStart3: workStart3,
             workEnd3: workEnd3,
@@ -141,10 +202,28 @@ function Addsettime() {
             workRate: workRate,
             workRateOT: workRateOT,
             workTotalPeople: workTotalPeople,
+            holiday: holiday,
+            holidayHour: holidayHour,
+            salaryadd1: salaryadd1,
+            salaryadd2: salaryadd2,
+            salaryadd3: salaryadd3,
+            salaryadd4: salaryadd4,
+            salaryadd5: salaryadd5,
+            salaryadd6: salaryadd6,
+            personalLeave: personalLeave,
+            personalLeaveRate: personalLeaveRate,
+            sickLeave: sickLeave,
+            sickLeaveRate: sickLeaveRate,
             workRateDayoff: workRateDayoff,
-            workRateDayoffHour: workRateDayoffHour,
-            workplaceAddress: workplaceAddress
+            workRateDayoffRate: workRateDayoffRate,
+            workplaceAddress: workplaceAddress,
+            daysOff: selectedDates,
+            reason: reason,
+
+            employeeIdList: employeeIdList,
+            employeeNameList: employeeNameList,
         };
+
 
         //check create or update Employee
         if (newWorkplace) {
@@ -152,21 +231,38 @@ function Addsettime() {
             try {
                 const response = await axios.post(endpoint + '/workplace/create', data);
                 // setEmployeesResult(response.data.employees);
-
+                if (response) {
+                    alert("บันทึกสำเร็จ");
+                }
             } catch (error) {
                 alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
                 // window.location.reload();
+            }
+        } else {
+            //update workplace data
 
+            // Make the API call to update the resource by ID
+            try {
+
+                const response = await axios.put(endpoint + '/workplace/update/' + _id, data);
+                // setEmployeesResult(response.data.employees);
+                if (response) {
+                    alert("บันทึกสำเร็จ");
+                    window.location.reload();
+
+                }
+            } catch (error) {
+                alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+                // window.location.reload();
             }
 
-        } else {
-
         }
-
     }
 
+
+
     /////////////////
-    const [selectedOption, setSelectedOption] = useState('');
+    const [selectedOption, setSelectedOption] = useState('agencytime');
 
     const handleOptionChange = (event) => {
         setSelectedOption(event.target.value);
@@ -230,16 +326,14 @@ function Addsettime() {
                                         <th>เวลาออกงาน</th>
                                         <th>ชั่วโมงทำงาน</th>
                                         <th>ชั่วโมง OT</th>
-                                        <th>เวลา OT</th>
+                                        <th>เวลาเข้า OT</th>
+                                        <th>เวลาออก OT</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     {rowDataList.map((rowData, index) => (
                                         <tr key={index}>
-                                            {/* <td>
-                                                <input type="text" className="form-control" name="staffId" value={rowData.staffId} onChange={(e) => handleFieldChange(index, 'staffId', e.target.value)} />
-                                            </td> */}
                                             <td><input type="text" className="form-control" name="staffId" value={rowData.staffId} onChange={(e) => handleFieldChange(index, 'staffId', e.target.value)} /></td>
                                             <td><input type="text" className="form-control" name="staffName" value={rowData.staffName} onChange={(e) => handleFieldChange(index, 'staffName', e.target.value)} /></td>
                                             <td>
@@ -249,12 +343,12 @@ function Addsettime() {
                                                     <option value="night_shift">กะดึก</option>
                                                 </select>
                                             </td>
-                                            <td><input type="time" className="form-control" name="startTime" value={rowData.startTime} onChange={(e) => handleFieldChange(index, 'startTime', e.target.value)} style={{ width: '7rem' }} /></td>
-                                            <td><input type="time" className="form-control" name="endTime" value={rowData.endTime} onChange={(e) => handleFieldChange(index, 'endTime', e.target.value)} style={{ width: '7rem' }} /></td>
+                                            <td><input type="text" className="form-control" name="startTime" value={rowData.startTime} onChange={(e) => handleFieldChange(index, 'startTime', e.target.value)} style={{ width: '7rem' }} /></td>
+                                            <td><input type="text" className="form-control" name="endTime" value={rowData.endTime} onChange={(e) => handleFieldChange(index, 'endTime', e.target.value)} style={{ width: '7rem' }} /></td>
                                             <td><input type="text" className="form-control" name="allTime" value={rowData.allTime} onChange={(e) => handleFieldChange(index, 'allTime', e.target.value)} style={{ width: '4rem' }} /></td>
                                             <td><input type="text" className="form-control" name="otTime" value={rowData.otTime} onChange={(e) => handleFieldChange(index, 'otTime', e.target.value)} style={{ width: '4rem' }} /></td>
-                                            <td><input type="time" className="form-control" name="selectotTime" value={rowData.selectotTime} onChange={(e) => handleFieldChange(index, 'selectotTime', e.target.value)} style={{ width: '7rem' }} /> </td>
-                                            <td><input type="time" className="form-control" name="selectotTimeOut" value={rowData.selectotTimeOut} onChange={(e) => handleFieldChange(index, 'selectotTimeOut', e.target.value)} style={{ width: '7rem' }} /> </td>
+                                            <td><input type="text" className="form-control" name="selectotTime" value={rowData.selectotTime} onChange={(e) => handleFieldChange(index, 'selectotTime', e.target.value)} style={{ width: '7rem' }} /> </td>
+                                            <td><input type="text" className="form-control" name="selectotTimeOut" value={rowData.selectotTimeOut} onChange={(e) => handleFieldChange(index, 'selectotTimeOut', e.target.value)} style={{ width: '7rem' }} /> </td>
 
                                             {/* ... other input fields */}
                                             {/* ... other input fields */}
@@ -311,7 +405,8 @@ function Addsettime() {
                                         <th>เวลาออกงาน</th>
                                         <th>ชั่วโมงทำงาน</th>
                                         <th>ชั่วโมง OT</th>
-                                        <th>เวลา OT</th>
+                                        <th>เวลาเข้า OT</th>
+                                        <th>เวลาออก OT</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -353,12 +448,12 @@ function Addsettime() {
                                                     <option value="afternoon_shift">กะบ่าย</option>
                                                     <option value="night_shift">กะดึก</option>
                                                 </select></td>
-                                            <td><input type="time" class="form-control" name='startTime' value={rowData2.startTime} onChange={(e) => handleFieldChange2(index2, 'startTime', e.target.value)} /></td>
-                                            <td><input type="time" class="form-control" name='endTime' value={rowData2.endTime} onChange={(e) => handleFieldChange2(index2, 'endTime', e.target.value)} /></td>
-                                            <td><input type="text" class="form-control" name='allTime' value={rowData2.allTime} onChange={(e) => handleFieldChange2(index2, 'allTime', e.target.value)} style={{ width: '4rem' }}/></td>
-                                            <td><input type="text" class="form-control" name='otTime' value={rowData2.otTime} onChange={(e) => handleFieldChange2(index2, 'otTime', e.target.value)} style={{ width: '4rem' }}/></td>
-                                            <td><input type="time" className="form-control" name="selectotTime" value={rowData2.selectotTime} onChange={(e) => handleFieldChange2(index2, 'selectotTime', e.target.value)} style={{ width: '7rem' }}/> </td>
-                                            <td><input type="time" className="form-control" name="selectotTimeOut" value={rowData2.selectotTimeOut} onChange={(e) => handleFieldChange2(index2, 'selectotTimeOut', e.target.value)} style={{ width: '7rem' }}/> </td>
+                                            <td><input type="text" class="form-control" name='startTime' value={rowData2.startTime} onChange={(e) => handleFieldChange2(index2, 'startTime', e.target.value)} /></td>
+                                            <td><input type="text" class="form-control" name='endTime' value={rowData2.endTime} onChange={(e) => handleFieldChange2(index2, 'endTime', e.target.value)} /></td>
+                                            <td><input type="text" class="form-control" name='allTime' value={rowData2.allTime} onChange={(e) => handleFieldChange2(index2, 'allTime', e.target.value)} style={{ width: '4rem' }} /></td>
+                                            <td><input type="text" class="form-control" name='otTime' value={rowData2.otTime} onChange={(e) => handleFieldChange2(index2, 'otTime', e.target.value)} style={{ width: '4rem' }} /></td>
+                                            <td><input type="text" className="form-control" name="selectotTime" value={rowData2.selectotTime} onChange={(e) => handleFieldChange2(index2, 'selectotTime', e.target.value)} style={{ width: '7rem' }} /> </td>
+                                            <td><input type="text" className="form-control" name="selectotTimeOut" value={rowData2.selectotTimeOut} onChange={(e) => handleFieldChange2(index2, 'selectotTimeOut', e.target.value)} style={{ width: '7rem' }} /> </td>
 
                                             {/* ... other input fields */}
                                         </tr>
@@ -402,7 +497,7 @@ function Addsettime() {
                                     <h2 class="title">ข้อมูลการลงเวลาทำงานของพนักงาน</h2>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <section class="Frame">
+                                            {/* <section class="Frame">
                                                 <h2 class="title">ค้นหา</h2>
                                                 <div class="col-md-12">
                                                     <div class="row">
@@ -452,7 +547,53 @@ function Addsettime() {
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </section> */}
+                                            <section class="Frame">
+                                                <div class="col-md-12">
+                                                    <form onSubmit={handleSearch}>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label role="searchWorkplaceId">รหัสหน่วยงาน</label>
+                                                                    <input type="text" class="form-control" id="searchWorkplaceId" placeholder="รหัสหน่วยงาน" value={searchWorkplaceId} onChange={(e) => setSearchWorkplaceId(e.target.value)} />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label role="searchWorkplaceName">ชื่อหน่วยงาน</label>
+                                                                    <input type="text" class="form-control" id="searchWorkplaceName" placeholder="ชื่อหน่วยงาน" value={searchWorkplaceName} onChange={(e) => setSearchWorkplaceName(e.target.value)} />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex justify-content-center">
+                                                            <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา</button>
+                                                        </div>
+                                                    </form>
+                                                    <br />
+                                                    <div class="d-flex justify-content-center">
+                                                        <h2 class="title">ผลลัพธ์ {searchResult.length} รายการ</h2>
+                                                    </div>
+                                                    <div class="d-flex justify-content-center">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
+                                                                        {searchResult.map(workplace => (
+                                                                            <li
+                                                                                key={workplace.id}
+                                                                                onClick={() => handleClickResult(workplace)}
+                                                                            >
+                                                                                รหัส {workplace.workplaceId} หน่วยงาน {workplace.workplaceName}
+                                                                            </li>
+                                                                        ))}
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </section>
+                                            {/* <!--Frame--> */}
                                         </div>
                                     </div>
                                     <div class="col-md-12">
