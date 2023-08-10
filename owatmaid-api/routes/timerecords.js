@@ -17,24 +17,16 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 
 // Define time record schema
-const timerecordSchema = new mongoose.Schema({
-    timerecordId: {
-        type: String,
-        required: true,
-        unique: true
-    },
+const workplaceTimerecordSchema = new mongoose.Schema({
     timerecordType: String ,
-    employeeId: {
-        type: String
-    },
-    employeeName: {
-        type: String
-    },
-    workplaceId: {
-        type: String
-    },
-    workplaceName: {
-        type: String
+    workplaceId: String ,
+    workplaceName: String ,
+    date: Date,
+    employeeRecord: {
+        employeeId: String,
+        employeeName: String,
+shift: String,
+
     },
 
     workStart2: {
