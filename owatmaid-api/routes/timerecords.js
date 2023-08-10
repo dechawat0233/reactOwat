@@ -16,9 +16,9 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 
-// Define time record schema
+// Define time record schema for workplace
 const workplaceTimerecordSchema = new mongoose.Schema({
-    timerecordType: String ,
+    timerecordId: String ,
     workplaceId: String ,
     workplaceName: String ,
     date: Date,
@@ -26,105 +26,31 @@ const workplaceTimerecordSchema = new mongoose.Schema({
         employeeId: String,
         employeeName: String,
 shift: String,
-
-    },
-
-    workStart2: {
-        type: String
-    },
-    workEnd2: {
-        type: String
-    },
-    workStart3: {
-        type: String
-    },
-    workEnd3: {
-        type: String
-    },
-    workOfHour: {
-        type: String
-    },
-    workOfOT: {
-        type: String
-    },
-    workRate: {
-        type: String
-    },
-    workRateOT: {
-        type: String
-    },
-    workTotalPeople: {
-        type: String,
-    },
-    holiday: {
-        type: String
-    },
-    holidayHour: {
-        type: String
-    },
-    salaryadd1: {
-        type: String
-    },
-    salaryadd2: {
-        type: String
-    },
-    salaryadd3: {
-        type: String
-    },
-    salaryadd4: {
-        type: String
-    },
-    salaryadd5: {
-        type: String
-    },
-    salaryadd6: {
-        type: String
-    },
-    personalLeave: {
-        type: String
-    },
-    personalLeaveRate: {
-        type: String
-    },
-    sickLeave: {
-        type: String
-    },
-    sickLeaveRate: {
-        type: String
-    },
-    workRateDayoff: {
-        type: String
-    },
-    workRateDayoffRate: {
-        type: String
-    },
-    daysOff: [{
-        type: Date
-    }],
-    workplaceAddress: {
-        type: String
-    },
-    reason: {
-        type: String
-}
+workStart: Date,
+workEnd: Date,
+workTime: String,
+otTime: String,
+otStart: Date,
+otEnd: Date,
+    }
 });
 
-// Create the workplace model based on the schema
-const Workplace = mongoose.model('Workplace', workplaceSchema);
+// Create the workplace record time model based on the schema
+const workplaceTimerecord = mongoose.model('workplaceTimerecord', workplaceTimerecordSchema );
 
 
-// Get list of workplaces
+// Get list of workplaceTimerecords
   router.get('/list',  async (req, res) => {
-      const workplaces = await Workplace.find();
-      res.json(workplaces);
+      const workplaceTimeRecordData  = await workplaceTimerecord.find();
+      res.json(workplaceTimeRecordData  );
   });
 
-  // Get  workplace by Id
-router.get('/:workplaceId',  async (req, res) => {
+  // Get  workplace time record by WorkplaceTimeRecord Id
+router.get('/:workplaceTimeRecordId',  async (req, res) => {
       try {
-          const workplace = await Workplace.findOne({ workplaceId: req.params.workplaceId });
-          if (workplace) {
-              res.json(workplace);
+          const workplaceTimeRecordData = await workplaceTimerecord.findOne({ workplaceTimeRecordId: req.params.workplaceTimeRecordId});
+          if (workplaceTimeRecordData ) {
+              res.json(workplaceTimeRecordData );
         } else {
               res.status(404).json({ error: 'workplace not found' });
         }
@@ -161,12 +87,12 @@ router.post('/search', async (req, res) => {
 }
 
     // Query the workplace collection for matching documents
-      const workplaces = await Workplace.find(query);
+      const workplacesTimeRecord = await workplaceTimerecord.find(query);
 
       await console.log('Search Results:');
-      await console.log(workplaces );
+      await console.log(workplacesTimeRecord );
       let textSearch = 'workplace';
-      await res.status(200).json({ workplaces });
+      await res.status(200).json({ workplacesTimeRecord });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
@@ -178,80 +104,26 @@ router.post('/search', async (req, res) => {
 router.post('/create', async (req, res) => {
   
     const {
+        timerecordId,
         workplaceId,
-workplaceName,
-workplaceArea,
-workOfWeek,
-workStart1,
-workEnd1,
-workStart2,
-workEnd2,
-workStart3,
-workEnd3,
-workOfHour,
-workOfOT,
-workRate,
-workRateOT,
-workTotalPeople,
-holiday,
-holidayHour,
-salaryadd1,
-salaryadd2,
-salaryadd3,
-salaryadd4,
-salaryadd5,
-salaryadd6,
-personalLeave,
-personalLeaveRate,
-sickLeave,
-sickLeaveRate,
-workRateDayoff,
-workRateDayoffRate,
-daysOff,
-        workplaceAddress,
-        reason,
-    } = req.body;
+        workplaceName,
+        date,
+        employeeRecord
+            } = req.body;
 
     
     // Create workplace
-    const workplace = new Workplace({
+    const workplaceTimeRecordData  = new workplaceTimerecord({
+        timerecordId,
         workplaceId,
         workplaceName,
-        workplaceArea,
-        workOfWeek,
-        workStart1,
-        workEnd1,
-        workStart2,
-        workEnd2,
-        workStart3,
-        workEnd3,
-        workOfHour,
-        workOfOT,
-        workRate,
-        workRateOT,
-        workTotalPeople,
-        holiday,
-        holidayHour,
-        salaryadd1,
-        salaryadd2,
-        salaryadd3,
-        salaryadd4,
-        salaryadd5,
-        salaryadd6,
-        personalLeave,
-        personalLeaveRate,
-        sickLeave,
-        sickLeaveRate,
-        workRateDayoff,
-        workRateDayoffRate,
-        daysOff,
-        workplaceAddress,
-        reason
+        date,
+        employeeRecord
     });
 
     try {
-        await workplace.save();
-        res.json(workplace );
+        await workplaceTimeRecordData .save();
+        res.json(workplaceTimeRecordData  );
   } catch (err) {
     console.log(err);
     res.status(400).json({ error: err.message });
@@ -261,32 +133,34 @@ daysOff,
 
 
 
-// Update a workplace by its workplaceId
-router.put('/update/:workplaceId', async (req, res) => {
-//    console.log('hello');
-    const workplaceIdToUpdate = req.params.workplaceId;
-    const updateFields = req.body;
+// Update a workplaceTimeRecordData  by its workplaceTimeRecordData  
+// router.put('/update/:workplaceRecordId', async (req, res) => {
+// //    console.log('hello');
+//     const workplaceIdToUpdate = req.params.workplaceId;
+//     const updateFields = req.body;
 
-    try {
-        // Find the resource by ID and update it
-        const updatedResource = await Workplace.findByIdAndUpdate(
-            workplaceIdToUpdate ,
-            updateFields ,
-            { new: true } // To get the updated document as the result
-        );
-        if (!updatedResource) {
-            return res.status(404).json({ message: 'Resource not found' });
-        }
+//     try {
+//         // Find the resource by ID and update it
+//         const updatedResource = await Workplace.findByIdAndUpdate(
+//             workplaceIdToUpdate ,
+//             updateFields ,
+//             { new: true } // To get the updated document as the result
+//         );
+//         if (!updatedResource) {
+//             return res.status(404).json({ message: 'Resource not found' });
+//         }
 
-        // Send the updated resource as the response
-        res.json(updatedResource);
+//         // Send the updated resource as the response
+//         res.json(updatedResource);
 
 
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-});
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ error: 'Internal server error' });
+//     }
+// });
 
 
 module.exports = router;
+
+ 
