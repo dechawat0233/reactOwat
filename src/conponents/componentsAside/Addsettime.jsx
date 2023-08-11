@@ -81,30 +81,69 @@ function Addsettime() {
         setRowDataList(prevDataList => {
             const newDataList = [...prevDataList];
 
-            // Map option values to corresponding workStart values
-            let selectedStartTime = '';
-            let selectedEndTime = '';
-            if (value === 'morning_shift') {
-                selectedStartTime = searchResult[0]?.workStart1 || '';
-                selectedEndTime = searchResult[0]?.workEnd1 || '';
-            } else if (value === 'afternoon_shift') {
-                selectedStartTime = searchResult[0]?.workStart2 || '';
-                selectedEndTime = searchResult[0]?.workEnd2 || '';
-            } else if (value === 'night_shift') {
-                selectedStartTime = searchResult[0]?.workStart3 || '';
-                selectedEndTime = searchResult[0]?.workEnd3 || '';
-            }
-
             newDataList[index] = {
                 ...newDataList[index],
                 [fieldName]: value,
-                startTime: selectedStartTime,
-                endTime: selectedEndTime,
             };
+
+            // Calculate time difference for allTime
+            const startHours = parseFloat(newDataList[index].startTime.split('.')[0]);
+            const startMinutes = parseFloat(newDataList[index].startTime.split('.')[1] || 0);
+            const endHours = parseFloat(newDataList[index].endTime.split('.')[0]);
+            const endMinutes = parseFloat(newDataList[index].endTime.split('.')[1] || 0);
+
+            let hours = endHours - startHours;
+            let minutes = endMinutes - startMinutes;
+
+            if (minutes < 0) {
+                hours -= 1;
+                minutes += 60;
+            }
+
+            // Handle cases where endTime is on the next day
+            if (hours < 0) {
+                hours += 24;
+            }
+
+            const timeDiffFormatted = `${hours}.${minutes}`;
+
+            // Calculate otTime based on selectotTimeOut and endTime
+            const otHours = parseFloat(newDataList[index].selectotTimeOut.split('.')[0]);
+            const otMinutes = parseFloat(newDataList[index].selectotTimeOut.split('.')[1] || 0);
+
+            let otHoursDiff = otHours - endHours;
+            let otMinutesDiff = otMinutes - endMinutes;
+
+            if (otMinutesDiff < 0) {
+                otHoursDiff -= 1;
+                otMinutesDiff += 60;
+            }
+
+            // Handle cases where otTime is on the next day
+            if (otHoursDiff < 0) {
+                otHoursDiff += 24;
+            }
+
+            const maxOTHours = parseFloat(newDataList[index].workOfOT);
+            const maxOTMinutes = 0; // If maxOTHours is always whole numbers
+
+            const totalOTMinutes = otHoursDiff * 60 + otMinutesDiff;
+
+            if (totalOTMinutes > maxOTHours * 60) {
+                otHoursDiff = maxOTHours;
+                otMinutesDiff = maxOTMinutes;
+            }
+            const otTimeFormatted = `${otHoursDiff}.${otMinutesDiff}`;
+
+            newDataList[index] = {
+                ...newDataList[index],
+                allTime: timeDiffFormatted,
+                otTime: otTimeFormatted,
+            };
+
             return newDataList;
         });
     };
-
 
     const numberOfRows2 = 30; // Fixed number of rows
     const initialRowData2 = {
@@ -179,11 +218,36 @@ function Addsettime() {
             if (response.data.workplaces.length < 1) {
                 window.location.reload();
             } else {
+                // Calculate the time difference
+                const startTime = response.data.workplaces[0].workStart1;
+                const endTime = response.data.workplaces[0].workEnd1;
+                const workOfOT = response.data.workplaces[0].workOfOT;
+
+                const [startHours, startMinutes] = startTime.split('.').map(parseFloat);
+                const [endHours, endMinutes] = endTime.split('.').map(parseFloat);
+
+                let hours = endHours - startHours;
+                let minutes = endMinutes - startMinutes;
+
+                if (minutes < 0) {
+                    hours -= 1;
+                    minutes += 60;
+                }
+
+                // Handle cases where endTime is on the next day
+                if (hours < 0) {
+                    hours += 24;
+                }
+
+                const timeDiffFormatted = `${hours}.${minutes}`;
+
                 // Populate all the startTime input fields with the search result value
                 const updatedRowDataList = rowDataList.map(rowData => ({
                     ...rowData,
-                    startTime: response.data.workplaces[0].workStart1,
-                    endTime: response.data.workplaces[0].workEnd1,
+                    startTime: startTime,
+                    endTime: endTime,
+                    allTime: timeDiffFormatted,
+                    workOfOT: workOfOT,
                 }));
                 setRowDataList(updatedRowDataList);
 
@@ -193,14 +257,16 @@ function Addsettime() {
 
                 setSearchWorkplaceId(response.data.workplaces[0].workplaceId);
                 setSearchWorkplaceName(response.data.workplaces[0].workplaceName);
+
+                // console.log('workOfOT:', response.data.workplaces[0].workOfOT);
+                // console.log('workOfOT:', endTime);
+
             }
         } catch (error) {
             alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
             window.location.reload();
         }
     }
-
-
 
 
 
@@ -300,6 +366,41 @@ function Addsettime() {
         // Handle submission for Form 2
     };
 
+    //////////////////////////////////
+    // const [startTimetest, setStartTimeTest] = useState('');
+    // const [endTimetest, setEndTimeTest] = useState('');
+    // const [timeDifference, setTimeDifference] = useState('');
+
+    // useEffect(() => {
+    //     calculateTimeDifference();
+    // }, [startTimetest, endTimetest]);
+
+    // const calculateTimeDifference = () => {
+    //     const startTimeArray = startTime.split('.').map(parseFloat);
+    //     const endTimeArray = endTime.split('.').map(parseFloat);
+
+    //     if (startTimeArray.length !== 2 || endTimeArray.length !== 2) {
+    //         setTimeDifference('Invalid input format. Please use hh.mm format.');
+    //         return;
+    //     }
+
+    //     const startMinutes = startTimeArray[0] * 60 + startTimeArray[1];
+    //     const endMinutes = endTimeArray[0] * 60 + endTimeArray[1];
+
+    //     let timeDiffMinutes = endMinutes - startMinutes;
+    //     if (timeDiffMinutes < 0) {
+    //         timeDiffMinutes += 24 * 60; // Adding 24 hours in minutes if end time is before start time
+    //     }
+
+    //     const hours = Math.floor(timeDiffMinutes / 60);
+    //     const minutes = timeDiffMinutes % 60;
+
+    //     setTimeDifference(`${hours.toString().padStart(2, '0')}.${minutes.toString().padStart(2, '0')}`);
+    // };
+
+
+
+
     let formToShow = null;
     if (selectedOption === 'agencytime') {
         formToShow = (
@@ -344,9 +445,10 @@ function Addsettime() {
                                         <th>เวลาเข้างาน</th>
                                         <th>เวลาออกงาน</th>
                                         <th>ชั่วโมงทำงาน</th>
-                                        <th>ชั่วโมง OT</th>
-                                        <th>เวลาเข้า OT</th>
                                         <th>เวลาออก OT</th>
+                                        <th>ชั่วโมง OT</th>
+                                        {/* <th>เวลาเข้า OT</th>
+                                        <th>เวลาออก OT</th> */}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -365,14 +467,17 @@ function Addsettime() {
                                             <td><input type="text" className="form-control" name="startTime" value={rowData.startTime} onChange={(e) => handleFieldChange(index, 'startTime', e.target.value)} style={{ width: '7rem' }} /></td>
                                             <td><input type="text" className="form-control" name="endTime" value={rowData.endTime} onChange={(e) => handleFieldChange(index, 'endTime', e.target.value)} style={{ width: '7rem' }} /></td>
                                             <td><input type="text" className="form-control" name="allTime" value={rowData.allTime} onChange={(e) => handleFieldChange(index, 'allTime', e.target.value)} style={{ width: '4rem' }} /></td>
-                                            <td><input type="text" className="form-control" name="otTime" value={rowData.otTime} onChange={(e) => handleFieldChange(index, 'otTime', e.target.value)} style={{ width: '4rem' }} /></td>
-                                            <td><input type="text" className="form-control" name="selectotTime" value={rowData.selectotTime} onChange={(e) => handleFieldChange(index, 'selectotTime', e.target.value)} style={{ width: '7rem' }} /> </td>
                                             <td><input type="text" className="form-control" name="selectotTimeOut" value={rowData.selectotTimeOut} onChange={(e) => handleFieldChange(index, 'selectotTimeOut', e.target.value)} style={{ width: '7rem' }} /> </td>
+                                            <td><input type="text" className="form-control" name="otTime" value={rowData.otTime} onChange={(e) => handleFieldChange(index, 'otTime', e.target.value)} style={{ width: '4rem' }} /></td>
+                                            {/* <td><input type="text" className="form-control" name="selectotTime" value={rowData.selectotTime} onChange={(e) => handleFieldChange(index, 'selectotTime', e.target.value)} style={{ width: '7rem' }} /> </td> */}
+                                            {/* <td><input type="text" className="form-control" name="selectotTimeOut" value={rowData.selectotTimeOut} onChange={(e) => handleFieldChange(index, 'selectotTimeOut', e.target.value)} style={{ width: '7rem' }} /> </td> */}
 
                                             {/* ... other input fields */}
                                             {/* ... other input fields */}
                                         </tr>
                                     ))}
+
+
                                 </tbody>
                             </table>
                         </div>
@@ -514,6 +619,23 @@ function Addsettime() {
                             <div class="col-md-12">
                                 <div class="container-fluid">
                                     <h2 class="title">ข้อมูลการลงเวลาทำงานของพนักงาน</h2>
+                                    {/* <div>
+                                        <label>Start Time (hh.mm): </label>
+                                        <input
+                                            type="text"
+                                            value={startTimetest}
+                                            onChange={(e) => setStartTimeTest(e.target.value)}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label>End Time (hh.mm): </label>
+                                        <input
+                                            type="text"
+                                            value={endTimetest}
+                                            onChange={(e) => setEndTimeTest(e.target.value)}
+                                        />
+                                    </div>
+                                    {timeDifference && <div>Time Difference: {timeDifference}</div>} */}
                                     <div class="row">
                                         <div class="col-md-12">
                                             {/* save */}
