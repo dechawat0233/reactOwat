@@ -18,9 +18,9 @@ function Addsettime() {
     const [workplacestay, setWorkplacestay] = useState(''); //สังกัด
     const [workplaceArea, setWorkplaceArea] = useState(''); //สถานที่ปฏิบัติงาน
     const [workOfWeek, setWorkOfWeek] = useState(''); //วันทำงานต่อสัปดาห์
-    const [workkStart1, setWorkkStart1] = useState(''); //เวลาเริ่มกะเช้า
+    const [workStart1, setWorkStart1] = useState(''); //เวลาเริ่มกะเช้า
     const [workEnd1, setWorkEnd1] = useState(''); //เวลาออกกะเช้า
-    const [workkStart2, setWorkkStart2] = useState(''); //เวลาเข้ากะบ่าย
+    const [workStart2, setWorkStart2] = useState(''); //เวลาเข้ากะบ่าย
     const [workEnd2, setWorkEnd2] = useState(''); //เวลาออกกะบ่าย
     const [workStart3, setWorkStart3] = useState(''); //เวลาเข้ากะเย็น
     const [workEnd3, setWorkEnd3] = useState(''); //เวลาออกกะเย็น
@@ -279,9 +279,9 @@ function Addsettime() {
             workplaceName: workplaceName,
             workplaceArea: workplaceArea,
             workOfWeek: workOfWeek,
-            workStart1: workkStart1,
+            workStart1: workStart1,
             workEnd1: workEnd1,
-            workStart2: workkStart2,
+            workStart2: workStart2,
             workEnd2: workEnd2,
             workStart3: workStart3,
             workEnd3: workEnd3,
