@@ -34,6 +34,22 @@ function Addsettime() {
     const [workRateDayoffHour, setWorkRateDayoffHour] = useState(''); //ค่าจ้างวันหยุดต่อชั่วโมง
     const [workplaceAddress, setWorkplaceAddress] = useState(''); //ที่อยู่หน่วยงาน
 
+    //////////////////////////////
+    const [employeeList, setEmployeeList] = useState([]);
+
+    useEffect(() => {
+      // Fetch data from the API when the component mounts
+      fetch(endpoint  + '/employee/list')
+        .then(response => response.json())
+        .then(data => {
+          // Update the state with the fetched data
+          setEmployeeList(data);
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    }, []); // The empty array [] ensures that the effect runs only once after the initial render
+  
     /////////////////////////////////////////////
     const [staffId, setStaffId] = useState(''); //รหัสหน่วยงาน
     const [staffName, setStaffName] = useState(''); //รหัสหน่วยงาน
@@ -93,6 +109,31 @@ const [shift3end , setShift3end] = useState('');
                 ...newDataList[index],
                 [fieldName]: value,
             };
+
+
+            //Search Employee  by id
+            if(fieldName == 'staffId') {
+
+                const employeesearch = employeeList.find(employee => employee.employeeId  === value);
+//                 alert(JSON.stringify(employeeList, null, 2));
+// alert( employeeList.length);
+                if (employeesearch ) {
+                //   setEmployeeName(employee.name);
+                newDataList[index] = {
+                    ...newDataList[index],
+                    ['staffName']: employeesearch.name +'',
+                };
+
+                } else {
+                //   setEmployeeName('Employee not found');
+                newDataList[index] = {
+                    ...newDataList[index],
+                    ['staffName']: 'ไม่พบชื่อพนักงาน',
+                };
+
+                }
+
+            }
 
 if(fieldName == 'shift') {
 
