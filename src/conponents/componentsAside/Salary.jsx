@@ -569,6 +569,15 @@ function Salary() {
                                                             <label>
                                                                 <input
                                                                     type="checkbox"
+                                                                    checked={salaryadd1}
+                                                                    onChange={handleSalaryadd1}
+                                                                />
+                                                                ค่าอาหาร
+                                                            </label>
+
+                                                            <label>
+                                                                <input
+                                                                    type="checkbox"
                                                                     checked={salaryadd3}
                                                                     onChange={handleSalaryadd3}
                                                                 />
@@ -654,7 +663,7 @@ function Salary() {
                                         {/* <!--Frame--> */}
                                     </div>
                                 </div>
-                                <h2 class="title">เงินเพิ่มพิเศษ</h2>
+                                <h2 class="title">วันลา</h2>
                                 <div class="row">
                                     <div class="col-md-9">
                                         <section class="Frame">

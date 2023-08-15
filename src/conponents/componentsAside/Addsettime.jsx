@@ -34,6 +34,22 @@ function Addsettime() {
     const [workRateDayoffHour, setWorkRateDayoffHour] = useState(''); //ค่าจ้างวันหยุดต่อชั่วโมง
     const [workplaceAddress, setWorkplaceAddress] = useState(''); //ที่อยู่หน่วยงาน
 
+    //////////////////////////////
+    const [employeeList, setEmployeeList] = useState([]);
+
+    useEffect(() => {
+      // Fetch data from the API when the component mounts
+      fetch(endpoint  + '/employee/list')
+        .then(response => response.json())
+        .then(data => {
+          // Update the state with the fetched data
+          setEmployeeList(data);
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    }, []); // The empty array [] ensures that the effect runs only once after the initial render
+  
     /////////////////////////////////////////////
     const [staffId, setStaffId] = useState(''); //รหัสหน่วยงาน
     const [staffName, setStaffName] = useState(''); //รหัสหน่วยงาน
@@ -41,6 +57,13 @@ function Addsettime() {
     const [endTime, setEndTime] = useState(''); //รหัสหน่วยงาน
     const [allTime, setAllTime] = useState(''); //รหัสหน่วยงาน
     const [otTime, setOtTime] = useState(''); //รหัสหน่วยงาน
+    const [shift1start , setShift1start] = useState('');
+const [shift2start , setShift2start] = useState('');
+const [shift3start , setShift3start] = useState('');
+const [shift1end , setShift1end] = useState('');
+const [shift2end , setShift2end] = useState('');
+const [shift3end , setShift3end] = useState('');
+
 
     const [startjob, setStartjob] = useState(''); //วันที่เริ่มงาน
     const handleStartDateChange = (date) => {
@@ -78,19 +101,81 @@ function Addsettime() {
     const [rowDataList, setRowDataList] = useState(new Array(numberOfRows).fill(initialRowData));
 
     const handleFieldChange = (index, fieldName, value) => {
+
         setRowDataList(prevDataList => {
             const newDataList = [...prevDataList];
 
-            newDataList[index] = {
+             newDataList[index] = {
                 ...newDataList[index],
                 [fieldName]: value,
             };
 
+
+            //Search Employee  by id
+            if(fieldName == 'staffId') {
+
+                const employeesearch = employeeList.find(employee => employee.employeeId  === value);
+//                 alert(JSON.stringify(employeeList, null, 2));
+// alert( employeeList.length);
+                if (employeesearch ) {
+                //   setEmployeeName(employee.name);
+                newDataList[index] = {
+                    ...newDataList[index],
+                    ['staffName']: employeesearch.name +'',
+                };
+
+                } else {
+                //   setEmployeeName('Employee not found');
+                newDataList[index] = {
+                    ...newDataList[index],
+                    ['staffName']: 'ไม่พบชื่อพนักงาน',
+                };
+
+                }
+
+            }
+
+if(fieldName == 'shift') {
+
+    if(value == 'morning_shift' && shift1start != null ) {
+        newDataList[index] = {
+            ...newDataList[index],
+            ['startTime']: shift1start +'' ,
+            ['endTime']: shift1end  + '',
+        };
+    }
+
+    //check shift is afternoon
+    if(value == 'afternoon_shift' && shift2start != null ) {
+        newDataList[index] = {
+            ...newDataList[index],
+            ['startTime']: shift2start +'' ,
+            ['endTime']: shift2end  + '',
+        };
+    }
+
+//Check shift is night
+     if(value == 'night_shift' && shift3start != null ) {
+        newDataList[index] = {
+            ...newDataList[index],
+            ['startTime']: shift3start +'' ,
+            ['endTime']: shift3end  + '',
+        };
+    }
+
+//
+    }
+
+
+
+            
             // Calculate time difference for allTime
-            const startHours = parseFloat(newDataList[index].startTime.split('.')[0]);
+        const startHours = parseFloat(newDataList[index].startTime.split('.')[0]);
             const startMinutes = parseFloat(newDataList[index].startTime.split('.')[1] || 0);
             const endHours = parseFloat(newDataList[index].endTime.split('.')[0]);
             const endMinutes = parseFloat(newDataList[index].endTime.split('.')[1] || 0);
+
+            
 
             let hours = endHours - startHours;
             let minutes = endMinutes - startMinutes;
@@ -223,6 +308,19 @@ function Addsettime() {
                 const endTime = response.data.workplaces[0].workEnd1;
                 const workOfOT = response.data.workplaces[0].workOfOT;
 
+                //get start time and end time for afternoon and night
+                const startTime2 = response.data.workplaces[0].workStart2;
+                const endTime2 = response.data.workplaces[0].workEnd2;
+                const startTime3 = response.data.workplaces[0].workStart3;
+                const endTime3 = response.data.workplaces[0].workEnd3;
+
+                setShift1start(startTime );
+                setShift1end(endTime );
+                setShift2start(startTime2 );
+                setShift2end(endTime2 );
+                setShift3start(startTime3 );
+                setShift3end(endTime3 );
+
                 const [startHours, startMinutes] = startTime.split('.').map(parseFloat);
                 const [endHours, endMinutes] = endTime.split('.').map(parseFloat);
 
@@ -248,6 +346,10 @@ function Addsettime() {
                     endTime: endTime,
                     allTime: timeDiffFormatted,
                     workOfOT: workOfOT,
+                    startTime2 : startTime2 ,
+                    endTime2 : endTime2 ,
+                    startTime3: startTime3,
+                    endTime3 : endTime3 ,
                 }));
                 setRowDataList(updatedRowDataList);
 
