@@ -18,9 +18,9 @@ function Addsettime() {
     const [workplacestay, setWorkplacestay] = useState(''); //สังกัด
     const [workplaceArea, setWorkplaceArea] = useState(''); //สถานที่ปฏิบัติงาน
     const [workOfWeek, setWorkOfWeek] = useState(''); //วันทำงานต่อสัปดาห์
-    const [workkStart1, setWorkkStart1] = useState(''); //เวลาเริ่มกะเช้า
+    const [workStart1, setWorkStart1] = useState(''); //เวลาเริ่มกะเช้า
     const [workEnd1, setWorkEnd1] = useState(''); //เวลาออกกะเช้า
-    const [workkStart2, setWorkkStart2] = useState(''); //เวลาเข้ากะบ่าย
+    const [workStart2, setWorkStart2] = useState(''); //เวลาเข้ากะบ่าย
     const [workEnd2, setWorkEnd2] = useState(''); //เวลาออกกะบ่าย
     const [workStart3, setWorkStart3] = useState(''); //เวลาเข้ากะเย็น
     const [workEnd3, setWorkEnd3] = useState(''); //เวลาออกกะเย็น
@@ -38,18 +38,18 @@ function Addsettime() {
     const [employeeList, setEmployeeList] = useState([]);
 
     useEffect(() => {
-      // Fetch data from the API when the component mounts
-      fetch(endpoint  + '/employee/list')
-        .then(response => response.json())
-        .then(data => {
-          // Update the state with the fetched data
-          setEmployeeList(data);
-        })
-        .catch(error => {
-          console.error('Error fetching data:', error);
-        });
+        // Fetch data from the API when the component mounts
+        fetch(endpoint + '/employee/list')
+            .then(response => response.json())
+            .then(data => {
+                // Update the state with the fetched data
+                setEmployeeList(data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
     }, []); // The empty array [] ensures that the effect runs only once after the initial render
-  
+
     /////////////////////////////////////////////
     const [staffId, setStaffId] = useState(''); //รหัสหน่วยงาน
     const [staffName, setStaffName] = useState(''); //รหัสหน่วยงาน
@@ -57,12 +57,14 @@ function Addsettime() {
     const [endTime, setEndTime] = useState(''); //รหัสหน่วยงาน
     const [allTime, setAllTime] = useState(''); //รหัสหน่วยงาน
     const [otTime, setOtTime] = useState(''); //รหัสหน่วยงาน
-    const [shift1start , setShift1start] = useState('');
-const [shift2start , setShift2start] = useState('');
-const [shift3start , setShift3start] = useState('');
-const [shift1end , setShift1end] = useState('');
-const [shift2end , setShift2end] = useState('');
-const [shift3end , setShift3end] = useState('');
+    const [shift1start, setShift1start] = useState('');
+    const [shift2start, setShift2start] = useState('');
+    const [shift3start, setShift3start] = useState('');
+    const [shift4start, setShift4start] = useState('');
+    const [shift1end, setShift1end] = useState('');
+    const [shift2end, setShift2end] = useState('');
+    const [shift3end, setShift3end] = useState('');
+    const [shift4end, setShift4end] = useState('');
 
 
     const [startjob, setStartjob] = useState(''); //วันที่เริ่มงาน
@@ -105,77 +107,89 @@ const [shift3end , setShift3end] = useState('');
         setRowDataList(prevDataList => {
             const newDataList = [...prevDataList];
 
-             newDataList[index] = {
+            newDataList[index] = {
                 ...newDataList[index],
                 [fieldName]: value,
             };
 
 
             //Search Employee  by id
-            if(fieldName == 'staffId') {
+            if (fieldName == 'staffId') {
 
-                const employeesearch = employeeList.find(employee => employee.employeeId  === value);
-//                 alert(JSON.stringify(employeeList, null, 2));
-// alert( employeeList.length);
-                if (employeesearch ) {
-                //   setEmployeeName(employee.name);
-                newDataList[index] = {
-                    ...newDataList[index],
-                    ['staffName']: employeesearch.name +'',
-                };
+                const employeesearch = employeeList.find(employee => employee.employeeId === value);
+                //                 alert(JSON.stringify(employeeList, null, 2));
+                // alert( employeeList.length);
+                if (employeesearch) {
+                    //   setEmployeeName(employee.name);
+                    newDataList[index] = {
+                        ...newDataList[index],
+                        ['staffName']: employeesearch.name + '',
+                    };
 
                 } else {
-                //   setEmployeeName('Employee not found');
-                newDataList[index] = {
-                    ...newDataList[index],
-                    ['staffName']: 'ไม่พบชื่อพนักงาน',
-                };
+                    //   setEmployeeName('Employee not found');
+                    newDataList[index] = {
+                        ...newDataList[index],
+                        ['staffName']: 'ไม่พบชื่อพนักงาน',
+                    };
 
                 }
 
             }
 
-if(fieldName == 'shift') {
+            if (fieldName == 'shift') {
 
-    if(value == 'morning_shift' && shift1start != null ) {
-        newDataList[index] = {
-            ...newDataList[index],
-            ['startTime']: shift1start +'' ,
-            ['endTime']: shift1end  + '',
-        };
-    }
+                if (value == 'morning_shift' && shift1start != null) {
+                    newDataList[index] = {
+                        ...newDataList[index],
+                        ['startTime']: shift1start + '',
+                        ['endTime']: shift1end + '',
+                        ['selectotTime']: shift1end + '',
+                    };
+                }
 
-    //check shift is afternoon
-    if(value == 'afternoon_shift' && shift2start != null ) {
-        newDataList[index] = {
-            ...newDataList[index],
-            ['startTime']: shift2start +'' ,
-            ['endTime']: shift2end  + '',
-        };
-    }
+                //check shift is afternoon
+                if (value == 'afternoon_shift' && shift2start != null) {
+                    newDataList[index] = {
+                        ...newDataList[index],
+                        ['startTime']: shift2start + '',
+                        ['endTime']: shift2end + '',
+                        ['selectotTime']: shift2end + '',
+                    };
+                }
 
-//Check shift is night
-     if(value == 'night_shift' && shift3start != null ) {
-        newDataList[index] = {
-            ...newDataList[index],
-            ['startTime']: shift3start +'' ,
-            ['endTime']: shift3end  + '',
-        };
-    }
+                //Check shift is night
+                if (value == 'night_shift' && shift3start != null) {
+                    newDataList[index] = {
+                        ...newDataList[index],
+                        ['startTime']: shift3start + '',
+                        ['endTime']: shift3end + '',
+                        ['selectotTime']: shift3end + '',
+                    };
+                }
 
-//
-    }
+                if (value == 'specialt_shift' && shift4start != null) {
+                    newDataList[index] = {
+                        ...newDataList[index],
+                        ['startTime']: shift4start + '',
+                        ['endTime']: shift4end + '',
+                        ['selectotTime']: shift4end + '',
+                    };
+                }
+
+                //specialt_shift
+            }
 
 
 
-            
+
             // Calculate time difference for allTime
-        const startHours = parseFloat(newDataList[index].startTime.split('.')[0]);
+            const startHours = parseFloat(newDataList[index].startTime.split('.')[0]);
             const startMinutes = parseFloat(newDataList[index].startTime.split('.')[1] || 0);
             const endHours = parseFloat(newDataList[index].endTime.split('.')[0]);
             const endMinutes = parseFloat(newDataList[index].endTime.split('.')[1] || 0);
 
-            
+
 
             let hours = endHours - startHours;
             let minutes = endMinutes - startMinutes;
@@ -193,11 +207,13 @@ if(fieldName == 'shift') {
             const timeDiffFormatted = `${hours}.${minutes}`;
 
             // Calculate otTime based on selectotTimeOut and endTime
+            const otselectHours = parseFloat(newDataList[index].selectotTime.split('.')[0]);
+            const otselectMinutes = parseFloat(newDataList[index].selectotTime.split('.')[1] || 0);
             const otHours = parseFloat(newDataList[index].selectotTimeOut.split('.')[0]);
             const otMinutes = parseFloat(newDataList[index].selectotTimeOut.split('.')[1] || 0);
 
-            let otHoursDiff = otHours - endHours;
-            let otMinutesDiff = otMinutes - endMinutes;
+            let otHoursDiff = otHours - otselectHours;
+            let otMinutesDiff = otMinutes - otselectMinutes;
 
             if (otMinutesDiff < 0) {
                 otHoursDiff -= 1;
@@ -208,23 +224,39 @@ if(fieldName == 'shift') {
             if (otHoursDiff < 0) {
                 otHoursDiff += 24;
             }
-
+            const otTimeFormatted1 = `${otHoursDiff}.${otMinutesDiff}`;
             const maxOTHours = parseFloat(newDataList[index].workOfOT);
             const maxOTMinutes = 0; // If maxOTHours is always whole numbers
 
             const totalOTMinutes = otHoursDiff * 60 + otMinutesDiff;
-
             if (totalOTMinutes > maxOTHours * 60) {
                 otHoursDiff = maxOTHours;
                 otMinutesDiff = maxOTMinutes;
             }
-            const otTimeFormatted = `${otHoursDiff}.${otMinutesDiff}`;
+            const otTimeFormatted2 = `${otHoursDiff}.${otMinutesDiff}`;
 
-            newDataList[index] = {
-                ...newDataList[index],
-                allTime: timeDiffFormatted,
-                otTime: otTimeFormatted,
-            };
+
+            if (fieldName === 'shift') {
+                newDataList[index] = {
+                    ...newDataList[index],
+                    allTime: timeDiffFormatted,
+                    otTime: otTimeFormatted2,
+                };
+            } else {
+                newDataList[index] = {
+                    ...newDataList[index],
+                    allTime: timeDiffFormatted,
+                    otTime: otTimeFormatted1,
+                };
+            }
+            // newDataList[index] = {
+            //     ...newDataList[index],
+            //     allTime: timeDiffFormatted + '1111',
+            //     otTime: otTimeFormatted + '3333',
+            // };
+
+
+            // }
 
             return newDataList;
         });
@@ -276,6 +308,7 @@ if(fieldName == 'shift') {
             ...rowData,
             startTime: workplace.workStart1,
             endTime: workplace.workEnd1,
+            selectotTime: workplace.workEnd1,
         }));
 
         // Update the state
@@ -306,6 +339,7 @@ if(fieldName == 'shift') {
                 // Calculate the time difference
                 const startTime = response.data.workplaces[0].workStart1;
                 const endTime = response.data.workplaces[0].workEnd1;
+                const selectotTime = response.data.workplaces[0].workEnd1;
                 const workOfOT = response.data.workplaces[0].workOfOT;
 
                 //get start time and end time for afternoon and night
@@ -313,13 +347,18 @@ if(fieldName == 'shift') {
                 const endTime2 = response.data.workplaces[0].workEnd2;
                 const startTime3 = response.data.workplaces[0].workStart3;
                 const endTime3 = response.data.workplaces[0].workEnd3;
+                const startTime4 = '';
+                const endTime4 = '';
 
-                setShift1start(startTime );
-                setShift1end(endTime );
-                setShift2start(startTime2 );
-                setShift2end(endTime2 );
-                setShift3start(startTime3 );
-                setShift3end(endTime3 );
+                setShift1start(startTime);
+                setShift1end(endTime);
+                setShift2start(startTime2);
+                setShift2end(endTime2);
+                setShift3start(startTime3);
+                setShift3end(endTime3);
+
+                setShift4start(startTime4);
+                setShift4end(endTime4);
 
                 const [startHours, startMinutes] = startTime.split('.').map(parseFloat);
                 const [endHours, endMinutes] = endTime.split('.').map(parseFloat);
@@ -344,12 +383,13 @@ if(fieldName == 'shift') {
                     ...rowData,
                     startTime: startTime,
                     endTime: endTime,
+                    selectotTime: selectotTime,
                     allTime: timeDiffFormatted,
                     workOfOT: workOfOT,
-                    startTime2 : startTime2 ,
-                    endTime2 : endTime2 ,
+                    startTime2: startTime2,
+                    endTime2: endTime2,
                     startTime3: startTime3,
-                    endTime3 : endTime3 ,
+                    endTime3: endTime3,
                 }));
                 setRowDataList(updatedRowDataList);
 
@@ -381,9 +421,9 @@ if(fieldName == 'shift') {
             workplaceName: workplaceName,
             workplaceArea: workplaceArea,
             workOfWeek: workOfWeek,
-            workStart1: workkStart1,
+            workStart1: workStart1,
             workEnd1: workEnd1,
-            workStart2: workkStart2,
+            workStart2: workStart2,
             workEnd2: workEnd2,
             workStart3: workStart3,
             workEnd3: workEnd3,
@@ -547,6 +587,7 @@ if(fieldName == 'shift') {
                                         <th>เวลาเข้างาน</th>
                                         <th>เวลาออกงาน</th>
                                         <th>ชั่วโมงทำงาน</th>
+                                        <th>เวลาเข้า OT</th>
                                         <th>เวลาออก OT</th>
                                         <th>ชั่วโมง OT</th>
                                         {/* <th>เวลาเข้า OT</th>
@@ -564,11 +605,13 @@ if(fieldName == 'shift') {
                                                     <option value="morning_shift">กะเช้า</option>
                                                     <option value="afternoon_shift">กะบ่าย</option>
                                                     <option value="night_shift">กะดึก</option>
+                                                    <option value="specialt_shift">กะพิเศษ</option>
                                                 </select>
                                             </td>
                                             <td><input type="text" className="form-control" name="startTime" value={rowData.startTime} onChange={(e) => handleFieldChange(index, 'startTime', e.target.value)} style={{ width: '7rem' }} /></td>
                                             <td><input type="text" className="form-control" name="endTime" value={rowData.endTime} onChange={(e) => handleFieldChange(index, 'endTime', e.target.value)} style={{ width: '7rem' }} /></td>
                                             <td><input type="text" className="form-control" name="allTime" value={rowData.allTime} onChange={(e) => handleFieldChange(index, 'allTime', e.target.value)} style={{ width: '4rem' }} /></td>
+                                            <td><input type="text" className="form-control" name="selectotTime" value={rowData.selectotTime} onChange={(e) => handleFieldChange(index, 'selectotTime', e.target.value)} style={{ width: '7rem' }} /> </td>
                                             <td><input type="text" className="form-control" name="selectotTimeOut" value={rowData.selectotTimeOut} onChange={(e) => handleFieldChange(index, 'selectotTimeOut', e.target.value)} style={{ width: '7rem' }} /> </td>
                                             <td><input type="text" className="form-control" name="otTime" value={rowData.otTime} onChange={(e) => handleFieldChange(index, 'otTime', e.target.value)} style={{ width: '4rem' }} /></td>
                                             {/* <td><input type="text" className="form-control" name="selectotTime" value={rowData.selectotTime} onChange={(e) => handleFieldChange(index, 'selectotTime', e.target.value)} style={{ width: '7rem' }} /> </td> */}

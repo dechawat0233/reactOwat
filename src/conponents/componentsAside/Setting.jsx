@@ -11,6 +11,13 @@ import Calendar from 'react-calendar';
 
 
 function Setting() {
+
+    const styles = {
+        th: {
+            minWidth: "3rem"
+        }
+    };
+
     const [newWorkplace, setNewWorkplace] = useState(true);
 
 
@@ -101,12 +108,21 @@ function Setting() {
     const [workplaceName, setWorkplaceName] = useState(''); //ชื่อหน่วยงาน
     const [workplaceArea, setWorkplaceArea] = useState(''); //สถานที่ปฏิบัติงาน
     const [workOfWeek, setWorkOfWeek] = useState(''); //วันทำงานต่อสัปดาห์
+
     const [workStart1, setWorkStart1] = useState(''); //เวลาเริ่มกะเช้า
     const [workEnd1, setWorkEnd1] = useState(''); //เวลาออกกะเช้า
     const [workStart2, setWorkStart2] = useState(''); //เวลาเข้ากะบ่าย
     const [workEnd2, setWorkEnd2] = useState(''); //เวลาออกกะบ่าย
     const [workStart3, setWorkStart3] = useState(''); //เวลาเข้ากะเย็น
     const [workEnd3, setWorkEnd3] = useState(''); //เวลาออกกะเย็น
+///start end OT
+    const [workStartOt1, setWorkStartOt1] = useState(''); //เวลาเริ่มกะเช้า
+    const [workEndOt1, setWorkEndOt1] = useState(''); //เวลาออกกะเช้า
+    const [workStartOt2, setWorkStartOt2] = useState(''); //เวลาเข้ากะบ่าย
+    const [workEndOt2, setWorkEndOt2] = useState(''); //เวลาออกกะบ่าย
+    const [workStartOt3, setWorkStartOt3] = useState(''); //เวลาเข้ากะเย็น
+    const [workEndOt3, setWorkEndOt3] = useState(''); //เวลาออกกะเย็น
+
     const [workOfHour, setWorkOfHour] = useState(''); //ชั่วโมงทำงานต่อสัปดาห์
     const [workOfOT, setWorkOfOT] = useState(''); //ชั่วโมง OT ต่อสัปดาห์
 
@@ -132,6 +148,24 @@ function Setting() {
 
     // const [workRateDayoffHour, setWorkRateDayoffHour] = useState(''); //ค่าจ้างวันหยุดต่อชั่วโมง
 
+    ///////////////////// 7 day work
+    const [workday1, setWorkday1] = useState('');
+    const [workday2, setWorkday2] = useState('');
+    const [workday3, setWorkday3] = useState('');
+    const [workday4, setWorkday4] = useState('');
+    const [workday5, setWorkday5] = useState('');
+    const [workday6, setWorkday6] = useState('');
+    const [workday7, setWorkday7] = useState('');
+
+    const [workcount1, setWorkcount1] = useState('');
+    const [workcount2, setWorkcount2] = useState('');
+    const [workcount3, setWorkcount3] = useState('');
+    const [workcount4, setWorkcount4] = useState('');
+    const [workcount5, setWorkcount5] = useState('');
+    const [workcount6, setWorkcount6] = useState('');
+    const [workcount7, setWorkcount7] = useState('');
+    // const [daysOff , setDaysOff] = useState([{ date: '' }]);
+
     //set data to form
     function handleClickResult(workplace) {
         setNewWorkplace(false);
@@ -140,12 +174,21 @@ function Setting() {
         setWorkplaceName(workplace.workplaceName);
         setWorkplaceArea(workplace.workplaceArea);
         setWorkOfWeek(workplace.workOfWeek);
+
         setWorkStart1(workplace.workStart1);
         setWorkEnd1(workplace.workEnd1);
         setWorkStart2(workplace.workStart2);
         setWorkEnd2(workplace.workEnd2);
         setWorkStart3(workplace.workStart3);
         setWorkEnd3(workplace.workEnd3);
+
+        setWorkStartOt1(workplace.workStartOt1);
+        setWorkEndOt1(workplace.workEndOt1);
+        setWorkStartOt2(workplace.workStartOt2);
+        setWorkEndOt2(workplace.workEndOt2);
+        setWorkStartOt3(workplace.workStartOt3);
+        setWorkEndOt3(workplace.workEndOt3);
+
         setWorkOfHour(workplace.workOfHour);
         setWorkOfOT(workplace.workOfOT);
         setWorkRate(workplace.workRate);
@@ -167,6 +210,15 @@ function Setting() {
         setworkRateDayoffRate(workplace.workRateDayoffRate);
         setWorkplaceAddress(workplace.workplaceAddress);
         //setSelectedDates([...selectedDates, workplace.daysOff]);
+
+        ////////work day
+        setWorkday1(!isChecked);
+        setWorkday2(!isChecked);
+        setWorkday3(!isChecked);
+        setWorkday4(!isChecked);
+        setWorkday5(!isChecked);
+        setWorkday6(!isChecked);
+        setWorkday7(!isChecked);
         const dates = workplace.daysOff.map((dateString) => new Date(dateString));
         setSelectedDates(dates);
         setReason(workplace.reason);
@@ -182,6 +234,28 @@ function Setting() {
 
 
     }
+
+    const handleCheckboxChange1 = () => {
+        setWorkday1(!workday1);
+      };
+      const handleCheckboxChange2 = () => {
+        setWorkday2(!workday2);
+      };
+      const handleCheckboxChange3 = () => {
+        setWorkday3(!workday3);
+      };
+      const handleCheckboxChange4 = () => {
+        setWorkday4(!workday4);
+      };
+      const handleCheckboxChange5 = () => {
+        setWorkday5(!workday5);
+      };
+      const handleCheckboxChange6 = () => {
+        setWorkday6(!workday6);
+      };
+      const handleCheckboxChange7 = () => {
+        setWorkday7(!workday7);
+      };
 
     //data for search
     const [searchWorkplaceId, setSearchWorkplaceId] = useState(''); //รหัสหน่วยงาน
@@ -222,12 +296,21 @@ function Setting() {
             workplaceName: workplaceName,
             workplaceArea: workplaceArea,
             workOfWeek: workOfWeek,
+
             workStart1: workStart1,
             workEnd1: workEnd1,
             workStart2: workStart2,
             workEnd2: workEnd2,
             workStart3: workStart3,
             workEnd3: workEnd3,
+
+            workStartOt1: workStartOt1,
+            workEndOt1: workEndOt1,
+            workStartOt2: workStartOt2,
+            workEndOt2: workEndOt2,
+            workStartOt3: workStartOt3,
+            workEndOt3: workEndOt3,
+
             workOfHour: workOfHour,
             workOfOT: workOfOT,
             workRate: workRate,
@@ -467,6 +550,79 @@ function Setting() {
                                         {/* <!--Frame--> */}
                                     </div>
                                 </div>
+                                <h2 class="title">เวลา เข้า-ออก งาน OT</h2>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <section class="Frame">
+                                            <label>OT กะเช้า</label>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="workStart1">เวลาเข้างาน</label>
+                                                            <input type="text" class="form-control" id="workStartOt1" placeholder="เวลาเข้างาน" value={workStartOt1} onChange={(e) => setWorkStartOt1(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="workEnd1">เวลาออกงาน</label>
+                                                            <input type="text" class="form-control" id="workEndOt1" placeholder="เวลาออกงาน" value={workEndOt1} onChange={(e) => setWorkEndOt1(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/* <!--row--> */}
+                                            </div>
+                                            {/* <!--col-md-12--> */}
+                                        </section>
+                                        {/* <!--Frame--> */}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <section class="Frame">
+                                            <label>OT กะบ่าย</label>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="workStart2">เวลาเข้างาน</label>
+                                                            <input type="text" class="form-control" id="workStartOt2" placeholder="เวลาเข้างาน" value={workStartOt2} onChange={(e) => setWorkStartOt2(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="workEnd2">เวลาออกงาน</label>
+                                                            <input type="text" class="form-control" id="workEndOt2" placeholder="เวลาออกงาน" value={workEndOt2} onChange={(e) => setWorkEndOt2(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/* <!--row--> */}
+                                            </div>
+                                        </section>
+                                        {/* <!--Frame--> */}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <section class="Frame">
+                                            <label>OT กะดึก</label>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="workStart3">เวลาเข้างาน</label>
+                                                            <input type="text" class="form-control" id="workStartOt3" placeholder="เวลาเข้างาน" value={workStartOt3} onChange={(e) => setWorkStartOt3(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="workEnd3">เวลาออกงาน</label>
+                                                            <input type="text" class="form-control" id="workEndOt3" placeholder="เวลาออกงาน" value={workEndOt3} onChange={(e) => setWorkEndOt3(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/* <!--row--> */}
+                                            </div>
+                                        </section>
+                                        {/* <!--Frame--> */}
+                                    </div>
+                                </div>
 
                                 <h2 class="title">เวลาทำงาน</h2>
                                 <section class="Frame">
@@ -570,7 +726,7 @@ function Setting() {
                                 {/* <!--Frame--> */}
                                 <h2 class="title">สวัสดิการวันหยุดพนักงาน</h2>
                                 <div class="row">
-                                    <div class="col-md-9">
+                                    <div class="col-md-6">
                                         <section class="Frame">
                                             <div class="col-md-12">
                                                 <div class="row">
@@ -617,6 +773,57 @@ function Setting() {
                                                         <div class="form-group">
                                                             <label role="workRateDayoffRate">จำนวนเงินต่อวัน</label>
                                                             <input type="text" class="form-control" id="workRateDayoffRate" placeholder="จำนวนเงินต่อวัน" value={workRateDayoffRate} onChange={(e) => setworkRateDayoffRate(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/* <!--row--> */}
+                                            </div>
+                                        </section>
+                                        {/* <!--Frame--> */}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <section class="Frame">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label role="personalLeave">วันทำงาน</label>
+                                                            <div class="container" style={{ overflowX: 'scroll' }}>
+                                                                <table id="" class="table table-bordered ">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th style={styles.th} id="test">วันจันทร์</th>
+                                                                            <th style={styles.th} id="test">อังคาร</th>
+                                                                            <th style={styles.th} id="test">พุธ</th>
+                                                                            <th style={styles.th} id="test">พฤหัส</th>
+                                                                            <th style={styles.th} id="test">ศุกร์</th>
+                                                                            <th style={styles.th} id="test">เสาร์</th>
+                                                                            <th style={styles.th} id="test">อาทิตย์</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td><input type="checkbox" class="form-control" name='' checked={workday1} onChange={handleCheckboxChange1} /></td>
+                                                                            <td><input type="checkbox" class="form-control" name='' checked={workday2} onChange={handleCheckboxChange2} /></td>
+                                                                            <td><input type="checkbox" class="form-control" name='' checked={workday3} onChange={handleCheckboxChange3} /></td>
+                                                                            <td><input type="checkbox" class="form-control" name='' checked={workday4} onChange={handleCheckboxChange4} /></td>
+                                                                            <td><input type="checkbox" class="form-control" name='' checked={workday5} onChange={handleCheckboxChange5} /></td>
+                                                                            <td><input type="checkbox" class="form-control" name='' checked={workday6} onChange={handleCheckboxChange6} /></td>
+                                                                            <td><input type="checkbox" class="form-control" name='' checked={workday7} onChange={handleCheckboxChange7} /></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td><input type="text" class="form-control" name='' value={workcount1} onChange={(e) => setWorkcount1(e.target.value)} /></td>
+                                                                            <td><input type="text" class="form-control" name='' value={workcount2} onChange={(e) => setWorkcount2(e.target.value)} /></td>
+                                                                            <td><input type="text" class="form-control" name='' value={workcount3} onChange={(e) => setWorkcount3(e.target.value)} /></td>
+                                                                            <td><input type="text" class="form-control" name='' value={workcount4} onChange={(e) => setWorkcount4(e.target.value)} /></td>
+                                                                            <td><input type="text" class="form-control" name='' value={workcount5} onChange={(e) => setWorkcount5(e.target.value)} /></td>
+                                                                            <td><input type="text" class="form-control" name='' value={workcount6} onChange={(e) => setWorkcount6(e.target.value)} /></td>
+                                                                            <td><input type="text" class="form-control" name='' value={workcount7} onChange={(e) => setWorkcount7(e.target.value)} /></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -718,19 +925,19 @@ function Setting() {
                                             <div>
                                                 <h2>รายการที่เพิ่ม</h2>
                                                 <ul>
-                                                {employeeIdList.map((employeeId, index) => (
-                                                <li key={index}>
-                                                    {employeeId} - {employeeNameList[index]}
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => handleRemoveVaccination(employeeId)}
-                                                        className="btn btn-info"
-                                                        style={{ margin: '0.5rem', width: "4rem" }}
-                                                    >
-                                                        ลบ
-                                                    </button>
-                                                </li>
-                                            ))}
+                                                    {employeeIdList.map((employeeId, index) => (
+                                                        <li key={index}>
+                                                            {employeeId} - {employeeNameList[index]}
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => handleRemoveVaccination(employeeId)}
+                                                                className="btn btn-info"
+                                                                style={{ margin: '0.5rem', width: "4rem" }}
+                                                            >
+                                                                ลบ
+                                                            </button>
+                                                        </li>
+                                                    ))}
                                                 </ul>
                                             </div>
                                         )}
