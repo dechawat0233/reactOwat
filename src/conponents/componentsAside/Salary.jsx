@@ -67,6 +67,16 @@ function Salary() {
     const [remainvacation, setRemainvacation] = useState(''); //ลาคงเหลือ วันลาพักร้อนคงเหลือ 
     const [vacationsalary, setVacationsalary] = useState(''); //ลาคงเหลือ จำนวนเงินต่อวัน 
 
+    const [maternityleave, setMaternityLeave] = useState(''); //ลาคงเหลือ วันลาคลอดคงเหลือ 
+    const [maternityleavesalary, setMaternityleavesalary] = useState(''); //ลาคงเหลือ จำนวนเงินต่อวัน 
+    const [militaryleave, setMilitaryleave] = useState(''); //ลาคงเหลือ วันลาเพื่อเกณฑ์ทหารคงเหลือ 
+    const [militaryleavesalary, setMilitaryleavesalary] = useState(''); //ลาคงเหลือ จำนวนเงินต่อวัน 
+    const [sterilization, setSterilization] = useState(''); //ลาคงเหลือ วันลาเพื่อทำหมันคงเหลือ 
+    const [sterilizationsalary, setSterilizationsalary] = useState(''); //ลาคงเหลือ จำนวนเงินต่อวัน 
+    const [leavefortraining, setLeavefortraining] = useState(''); //ลาคงเหลือ วันลาเพื่อฝึกอบรมคงเหลือ 
+    const [leavefortrainingsalary, setLeavefortrainingsalary] = useState(''); //ลาคงเหลือ จำนวนเงินต่อวัน 
+
+
 
     const [prefix, setPrefix] = useState(''); //นำหน้าชื่อ
     const [name, setName] = useState(''); //ชื่อ
@@ -710,8 +720,72 @@ function Salary() {
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
+                                                            <label role="maternityleave">จำนวนเงินต่อวัน</label>
+                                                            <input type="text" class="form-control" id="maternityleave" placeholder="จำนวนเงินต่อวัน" value={maternityleave} onChange={(e) => setMaternityLeave(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/* <!--row--> */}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="maternityleavesalary">วันลาคลอดคงเหลือ</label>
+                                                            <input type="text" class="form-control" id="maternityleavesalary" placeholder="จำนวนเงินต่อวัน" value={maternityleavesalary} onChange={(e) => setMaternityleavesalary(e.target.value)} />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
                                                             <label role="vacationsalary">จำนวนเงินต่อวัน</label>
                                                             <input type="text" class="form-control" id="vacationsalary" placeholder="จำนวนเงินต่อวัน" value={vacationsalary} onChange={(e) => setVacationsalary(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/* <!--row--> */}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="militaryleave">วันลาเพื่อเกณฑ์ทหารคงเหลือ</label>
+                                                            <input type="text" class="form-control" id="militaryleave" placeholder="จำนวนเงินต่อวัน" value={militaryleave} onChange={(e) => setMilitaryleave(e.target.value)} />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="militaryleavesalary">จำนวนเงินต่อวัน</label>
+                                                            <input type="text" class="form-control" id="militaryleavesalary" placeholder="จำนวนเงินต่อวัน" value={militaryleavesalary} onChange={(e) => setMilitaryleavesalary(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/* <!--row--> */}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="sterilization">วันลาเพื่อทำหมันคงเหลือ</label>
+                                                            <input type="text" class="form-control" id="sterilization" placeholder="จำนวนเงินต่อวัน" value={sterilization} onChange={(e) => setSterilization(e.target.value)} />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="sterilizationsalary">จำนวนเงินต่อวัน</label>
+                                                            <input type="text" class="form-control" id="sterilizationsalary" placeholder="จำนวนเงินต่อวัน" value={sterilizationsalary} onChange={(e) => setSterilizationsalary(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/* <!--row--> */}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="leavefortraining">วันลาเพื่อฝึกอบรมคงเหลือ</label>
+                                                            <input type="text" class="form-control" id="leavefortraining" placeholder="จำนวนเงินต่อวัน" value={leavefortraining} onChange={(e) => setLeavefortraining(e.target.value)} />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="[leavefortrainingsalary, ">จำนวนเงินต่อวัน</label>
+                                                            <input type="text" class="form-control" id="[leavefortrainingsalary, " placeholder="จำนวนเงินต่อวัน" value={leavefortrainingsalary} onChange={(e) => setLeavefortrainingsalary(e.target.value)} />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -722,6 +796,7 @@ function Salary() {
                                         {/* <!--Frame--> */}
                                     </div>
                                 </div>
+                                
                                 <div class="line_btn">
                                     <button type="submit" class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
                                     <button type="reset" class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
