@@ -37,8 +37,8 @@ function Addsettime() {
                     <div class="row">
                         <div class="col-md-4" style={{marginLeft:'2rem'}}>
                             <select id="selectOption" class="form-control" vvalue={selectedOption} onChange={handleOptionChange}>
-                                <option value="workplace">Add Set Time for Workplace</option>
-                                <option value="employee">Add Set Time for Employee</option>
+                                <option value="workplace">รูปแบบหน่วยงาน</option>
+                                <option value="employee">รูปแบบบุคคล</option>
                             </select>
                         </div>
                     </div>
