@@ -547,6 +547,52 @@ function Addsettime() {
     if (selectedOption === 'agencytime') {
         formToShow = (
             <form onSubmit={handleSubmitForm1}>
+                <section class="Frame">
+                    <div class="col-md-12">
+                        <form onSubmit={handleSearch}>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label role="searchWorkplaceId">รหัสหน่วยงาน</label>
+                                        <input type="text" class="form-control" id="searchWorkplaceId" placeholder="รหัสหน่วยงาน" value={searchWorkplaceId} onChange={(e) => setSearchWorkplaceId(e.target.value)} />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label role="searchWorkplaceName">ชื่อหน่วยงาน</label>
+                                        <input type="text" class="form-control" id="searchWorkplaceName" placeholder="ชื่อหน่วยงาน" value={searchWorkplaceName} onChange={(e) => setSearchWorkplaceName(e.target.value)} />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา</button>
+                            </div>
+                        </form>
+                        <br />
+                        <div class="d-flex justify-content-center">
+                            <h2 class="title">ผลลัพธ์ {searchResult.length} รายการ</h2>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
+                                            {searchResult.map(workplace => (
+                                                <li
+                                                    key={workplace.id}
+                                                    onClick={() => handleClickResult(workplace)}
+                                                >
+                                                    รหัส {workplace.workplaceId} หน่วยงาน {workplace.workplaceName}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                {/* <!--Frame--> */}
                 <form onSubmit={handleManageWorkplace}>
                     <div class="row">
                         <div class="col-md-3">
@@ -636,7 +682,54 @@ function Addsettime() {
         );
     } else if (selectedOption === 'persontime') {
         formToShow = (
+
             <form onSubmit={handleSubmitForm2}>
+                <section class="Frame">
+                    <div class="col-md-12">
+                        <form onSubmit={handleSearch}>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label role="searchWorkplaceId">รหัสพนักงาน</label>
+                                        <input type="text" class="form-control" id="searchWorkplaceId" placeholder="รหัสหน่วยงาน" value={searchWorkplaceId} onChange={(e) => setSearchWorkplaceId(e.target.value)} />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label role="searchWorkplaceName">ชื่อหนักงาน</label>
+                                        <input type="text" class="form-control" id="searchWorkplaceName" placeholder="ชื่อหน่วยงาน" value={searchWorkplaceName} onChange={(e) => setSearchWorkplaceName(e.target.value)} />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา</button>
+                            </div>
+                        </form>
+                        <br />
+                        <div class="d-flex justify-content-center">
+                            <h2 class="title">ผลลัพธ์ {searchResult.length} รายการ</h2>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
+                                            {searchResult.map(workplace => (
+                                                <li
+                                                    key={workplace.id}
+                                                    onClick={() => handleClickResult(workplace)}
+                                                >
+                                                    รหัส {workplace.workplaceId} หน่วยงาน {workplace.workplaceName}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                {/* <!--Frame--> */}
                 <form >
                     <div class="row">
                         <div class="col-md-3">
@@ -764,23 +857,6 @@ function Addsettime() {
                             <div class="col-md-12">
                                 <div class="container-fluid">
                                     <h2 class="title">ข้อมูลการลงเวลาทำงานของพนักงาน</h2>
-                                    {/* <div>
-                                        <label>Start Time (hh.mm): </label>
-                                        <input
-                                            type="text"
-                                            value={startTimetest}
-                                            onChange={(e) => setStartTimeTest(e.target.value)}
-                                        />
-                                    </div>
-                                    <div>
-                                        <label>End Time (hh.mm): </label>
-                                        <input
-                                            type="text"
-                                            value={endTimetest}
-                                            onChange={(e) => setEndTimeTest(e.target.value)}
-                                        />
-                                    </div>
-                                    {timeDifference && <div>Time Difference: {timeDifference}</div>} */}
                                     <div class="row">
                                         <div class="col-md-12">
                                             {/* save */}
@@ -837,7 +913,7 @@ function Addsettime() {
                                             </section> */}
 
                                             {/* save */}
-                                            <section class="Frame">
+                                            {/* <section class="Frame">
                                                 <div class="col-md-12">
                                                     <form onSubmit={handleSearch}>
                                                         <div class="row">
@@ -882,7 +958,7 @@ function Addsettime() {
                                                     </div>
                                                 </div>
                                             </section>
-                                            {/* <!--Frame--> */}
+                                            <!--Frame--> */}
                                         </div>
                                     </div>
                                     <div class="col-md-12">
