@@ -15,4 +15,5 @@ const database = 'admin';
 const connectionString = `mongodb://${username}:${password}@${host}:${port}/${database}`;
 
 
+
 module.exports = connectionString;
