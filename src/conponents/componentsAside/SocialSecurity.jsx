@@ -15,6 +15,18 @@ function SocialSecurity() {
     ];
 
     // Step 4: Use useState to manage the selected option
+    const LopBuri = ['รพ.บ้านหมี่(สธ)', 'รพ.พระนารายณ์มหาราช', 'รพ.อานันทมหิดล']
+    const NakhonPathom = ['รพ.จันทรุเบกษา', 'รพ.นครปฐม(สธ)', 'รพ.เมตตาประชารักษ์ วัดไร่ขิง(สธ)', 'รพ.เทพากรโรงพยาบาลทั่วไปขนาดใหญ่']
+    const Nonthaburi = ['รพ.พระนั่งเกล้า(สธ)', 'รพ.ศูนย์การแพทย์ปัญญานันทภิกขุ ชลประทาน', 'รพ.สถาบันบำราศนราดูร', 'รพ.กรุงไทยโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.กรุงไทยโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ทั่วไปขนาดใหญ่เกษมราษฎร์ รัตนาธิเบศร์', 'รพ.วิภารามปากเกร็ด โรงพยาบาลทั่วไปขนาดใหญ่']
+    const SamutSakhon = ['รพ.กระทุ่มแบน(สธ)', 'รพ.บ้านแพ้ว(สธ)', 'รพ.สมุทรสาคร(สธ)', 'รพ.มหาชัย 2 โรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.มหาชัย 3 โรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.วิภาราม สมุทรสาครโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ทั่วไปขนาดใหญ่วิชัยเวช ฯ อ้อมน้อย', 'รพ.ทั่วไปขนาดใหญ่วิชัยเวช ฯ สมุทรสาคร']
+    const Chachoengsao = ['รพ.พุทธโสธร(สธ)', 'รพ.เกษมราษฎร์ ฉะเชิงเทราโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.จุฬารัตน์ 11 อินเตอร์โรงพยาบาลทั่วไปขนาดใหญ่']
+    const Rayong = ['รพ.ระยอง(สธ)', 'รพ.เฉลิมพระเกียรติสมเด็จพระเทพรัตนราชสุดาฯ สยามบรมราชกุมารี ระยอง(สธ)', 'รพ.มงกุฎระยอง', 'รพ.จุฬารัตน์ระยองโรงพยาบาลทั่วไปขนาดกลาง']
+    const SamutPrakan = ['รพ.พ.บางบ่อ(สธ)', 'รพ.บางพลี(สธ)', 'รพ..สมุทรปราการ(สธ)', 'รพ.ทั่วไปขนาดใหญ่จุฬารัตน์ 3 อินเตอร์', 'รพ.ทั่วไปขนาดใหญ่จุฬารัตน์ 9 แอร์พอร์ต', 'รพ.ทั่วไปขนาดใหญ่โรงพยาบาลเซ็นทรัล ปาร์ค', 'รพ.ทั่วไปขนาดใหญ่บางนา 2', 'รพ.ทั่วไปขนาดใหญ่บางนา 5', 'รพ..บางปะกอก 3 โรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ทั่วไปขนาดใหญ่เปาโล สมุทรปราการ', 'รพ..เมืองสมุทรปากน าโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ..เมืองสมุทรปู่เจ้าฯ โรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ทั่วไปขนาดใหญ่รวมชัยประชารักษ์', 'รพ.ทั่วไปขนาดใหญ่ศิครินทร์ สมุทรปราการ', 'รพ.ทั่วไปขนาดใหญ่ส าโรงการแพทย์', 'รพ.รามาธิบดีจักรีนฤบดินทร์', 'รพ..เปาโล พระประแดงโรงพยาบาลทั่วไปขนาดกลาง']
+    const Saraburi = ['รพ.พระพุทธบาท(สธ)', 'รพ.สระบุรี(สธ)', 'รพ.เกษมราษฎร์ สระบุรีโรงพยาบาลทั่วไปขนาดใหญ่']
+    const PrachinBuri = ['รพ.กบินทร์บุรี(สธ)', 'รพ.เกษมราษฎร์ ปราจีนบุรีโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ค่ายจักรพงษ์', 'รพ.เจ้าพระยาอภัยภูเบศร(สธ)', 'รพ.ทั่วไปขนาดกลางจุฬารัตน์ 304 อินเตอร์']
+    const KamphaengPhet = ['รพ.กำแพงเพชร(สธ)']
+    const Ayutthaya = ['รพ.พระนครศรีอยุธยา(สธ)', 'รพ.เสนา(สธ)', 'รพ.การุญเวช อยุธยาโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ราชธานีโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ราชธานี โรจนะโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.เอเชียอินเตอร์เนชั่นแนล โรงพยาบาลทั่วไปขนาดกลาง']
+    // Step 4: Use useState to manage the selected option
     const [selectedOption, setSelectedOption] = useState('');
     const [startjob, setStartjob] = useState(''); //วันที่เริ่มงาน
     const [idPerson, setIdPerson] = useState(''); //เลขบัตรประชาชน
@@ -26,6 +38,24 @@ function SocialSecurity() {
     const [minusemployer, setMinusEmployer] = useState('5'); //หัห
     const [socialsecurityemployer, setSocialSecurityEmployer] = useState(''); //หักประกันสังคม
 
+    ///////select hospitel
+    const [selectedHospDf, setSelectedHospDf] = useState('');
+    const [selectedHosp1, setSelectedHosp1] = useState('');
+    const [selectedHosp2, setSelectedHosp2] = useState('');
+    const [selectedHosp3, setSelectedHosp3] = useState('');
+
+    const handleselectedHospDfChange = (event) => {
+        setSelectedHospDf(event.target.value);
+    };
+    const handleselectedHosp1Change = (event) => {
+        setSelectedHosp1(event.target.value);
+    };
+    const handleselectedHosp2Change = (event) => {
+        setSelectedHosp2(event.target.value);
+    };
+    const handleselectedHosp3Change = (event) => {
+        setSelectedHosp3(event.target.value);
+    };
 
     useEffect(() => {
         if (salary === '') {
@@ -162,7 +192,7 @@ function SocialSecurity() {
                                                     <input type="" class="form-control" id="" placeholder="หักประกันสังคม" value={socialsecurity} onChange={(e) => setSocialSecurity(e.target.value)} />
                                                 </div>
                                             </div>
-                                            <h4>นายจ้าง</h4>
+                                            <h5>นายจ้าง</h5>
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">หักประกันสังคม</label>
                                                 <div class="col-md-5">
@@ -190,7 +220,7 @@ function SocialSecurity() {
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">ชื่อสถานรักษาพยาลบาลปัจจุบัน</label>
                                                 <div class="col-md-5">
-                                                    <select class="form-control">
+                                                    <select class="form-control" value={selectedHospDf} onChange={handleselectedHospDfChange}>
                                                         <option>ยังไม่ได้ระบุ</option>
                                                         <option>option 2</option>
                                                         <option>option 3</option>
@@ -202,19 +232,40 @@ function SocialSecurity() {
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">ต้องการเลือกลำดับที่ 1</label>
                                                 <div class="col-md-5">
-                                                    <input type="" class="form-control" id="" placeholder="" />
+                                                    {/* <input type="" class="form-control" id="" placeholder="" /> */}
+                                                    <select class="form-control" value={selectedHosp1} onChange={handleselectedHosp1Change}>
+                                                        <option>ยังไม่ได้ระบุ</option>
+                                                        <option>option 2</option>
+                                                        <option>option 3</option>
+                                                        <option>option 4</option>
+                                                        <option>option 5</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">ต้องการเลือกลำดับที่ 2</label>
                                                 <div class="col-md-5">
-                                                    <input type="" class="form-control" id="" placeholder="" />
+                                                    {/* <input type="" class="form-control" id="" placeholder="" /> */}
+                                                    <select class="form-control" value={selectedHosp2} onChange={handleselectedHosp2Change}>
+                                                        <option>ยังไม่ได้ระบุ</option>
+                                                        <option>option 2</option>
+                                                        <option>option 3</option>
+                                                        <option>option 4</option>
+                                                        <option>option 5</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">ต้องการเลือกลำดับที่ 3</label>
                                                 <div class="col-md-5">
-                                                    <input type="" class="form-control" id="" placeholder="" />
+                                                    {/* <input type="" class="form-control" id="" placeholder="" /> */}
+                                                    <select class="form-control" value={selectedHosp3} onChange={handleselectedHosp3Change}>
+                                                        <option>ยังไม่ได้ระบุ</option>
+                                                        <option>option 2</option>
+                                                        <option>option 3</option>
+                                                        <option>option 4</option>
+                                                        <option>option 5</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </section>
@@ -241,7 +292,7 @@ function SocialSecurity() {
                                             </div>
                                         </section>
                                     </div>
-                                </div> */}  
+                                </div> */}
                                 <h2 class="title">เฉพาะกรณีไม่ได้เป็นพนักงานตั้งแต่ต้นปี</h2>
                                 <div class="form-group row">
                                     <div class="col-md-9">

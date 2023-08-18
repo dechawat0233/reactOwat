@@ -559,8 +559,8 @@ function Salary() {
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group row">
-                                                        <label role="banknumber" class="col-sm-2 col-form-label">เลขที่บัญชี</label>
-                                                        <div class="col-sm-10">
+                                                        <label role="banknumber" class="col-sm-3 col-form-label">เลขที่บัญชี</label>
+                                                        <div class="col-sm-9">
                                                             <input type="text" class="form-control" id="banknumber" placeholder="เลขที่บัญชี" value={banknumber} onChange={(e) => setBanknumber(e.target.value)} />
                                                         </div>
                                                     </div>
