@@ -13,8 +13,8 @@ function AddsettimeEmployee() {
     const [newWorkplace, setNewWorkplace] = useState(true);
 
     //Workplace data
-    const [workplaceId, setWorkplaceId] = useState(''); //รหัสหน่วยงาน
-    const [workplaceName, setWorkplaceName] = useState(''); //ชื่อหน่วยงาน
+    const [employeeId, setEmployeeId] = useState(''); //รหัสหน่วยงาน
+    const [name, setName] = useState(''); //ชื่อหน่วยงาน
     const [workplacestay, setWorkplacestay] = useState(''); //สังกัด
     const [workplaceArea, setWorkplaceArea] = useState(''); //สถานที่ปฏิบัติงาน
     const [workOfWeek, setWorkOfWeek] = useState(''); //วันทำงานต่อสัปดาห์
@@ -297,11 +297,11 @@ function AddsettimeEmployee() {
 
     ///////////////////
     function handleClickResult(workplace) {
-        setSearchWorkplaceId(workplace.workplaceId);
-        setSearchWorkplaceName(workplace.workplaceName);
+        setSearchWorkplaceId(workplace.employeeId);
+        setSearchWorkplaceName(workplace.name);
         //
-        setWorkplaceId(workplace.workplaceId);
-        setWorkplaceName(workplace.workplaceName);
+        setEmployeeId(workplace.employeeId);
+        setName(workplace.name);
 
         // Populate all the startTime input fields with the search result value
         const updatedRowDataList = rowDataList.map(rowData => ({
@@ -331,7 +331,7 @@ function AddsettimeEmployee() {
         };
 
         try {
-            const response = await axios.post(endpoint + '/workplace/search', data);
+            const response = await axios.post(endpoint + '/employee/search', data);
             setSearchResult(response.data.workplaces);
             if (response.data.workplaces.length < 1) {
                 window.location.reload();
@@ -394,11 +394,11 @@ function AddsettimeEmployee() {
                 setRowDataList(updatedRowDataList);
 
                 // Set search values
-                setWorkplaceId(response.data.workplaces[0].workplaceId);
-                setWorkplaceName(response.data.workplaces[0].workplaceName);
+                setEmployeeId(response.data.workplaces[0].employeeId);
+                setName(response.data.workplaces[0].name);
 
-                setSearchWorkplaceId(response.data.workplaces[0].workplaceId);
-                setSearchWorkplaceName(response.data.workplaces[0].workplaceName);
+                setSearchWorkplaceId(response.data.workplaces[0].employeeId);
+                setSearchWorkplaceName(response.data.workplaces[0].name);
 
                 // console.log('workOfOT:', response.data.workplaces[0].workOfOT);
                 // console.log('workOfOT:', endTime);
@@ -417,8 +417,8 @@ function AddsettimeEmployee() {
 
         //get data from input in useState to data 
         const data = {
-            workplaceId: workplaceId,
-            workplaceName: workplaceName,
+            employeeId: employeeId,
+            name: name,
             workplaceArea: workplaceArea,
             workOfWeek: workOfWeek,
             workStart1: workStart1,
@@ -459,7 +459,7 @@ function AddsettimeEmployee() {
         if (newWorkplace) {
             // alert('Create Workplace');
             try {
-                const response = await axios.post(endpoint + '/workplace/create', data);
+                const response = await axios.post(endpoint + '/employee/create', data);
                 // setEmployeesResult(response.data.employees);
                 if (response) {
                     alert("บันทึกสำเร็จ");
@@ -474,7 +474,7 @@ function AddsettimeEmployee() {
             // Make the API call to update the resource by ID
             try {
 
-                const response = await axios.put(endpoint + '/workplace/update/' + _id, data);
+                const response = await axios.put(endpoint + '/employee/update/' + _id, data);
                 // setEmployeesResult(response.data.employees);
                 if (response) {
                     alert("บันทึกสำเร็จ");
@@ -517,14 +517,14 @@ function AddsettimeEmployee() {
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label role="searchWorkplaceId">รหัสพนักงาน</label>
-                                                        <input type="text" class="form-control" id="searchWorkplaceId" placeholder="รหัสหน่วยงาน" value={searchWorkplaceId} onChange={(e) => setSearchWorkplaceId(e.target.value)} />
+                                                        <label role="searchEmployeeId">รหัสพนักงาน</label>
+                                                        <input type="text" class="form-control" id="searchEmployeeId" placeholder="รหัสหน่วยงาน" value={searchWorkplaceId} onChange={(e) => setSearchWorkplaceId(e.target.value)} />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label role="searchWorkplaceName">ชื่อพนักงาน</label>
-                                                        <input type="text" class="form-control" id="searchWorkplaceName" placeholder="ชื่อหน่วยงาน" value={searchWorkplaceName} onChange={(e) => setSearchWorkplaceName(e.target.value)} />
+                                                        <label role="searchname">ชื่อพนักงาน</label>
+                                                        <input type="text" class="form-control" id="searchname" placeholder="ชื่อหน่วยงาน" value={searchWorkplaceName} onChange={(e) => setSearchWorkplaceName(e.target.value)} />
                                                     </div>
                                                 </div>
                                             </div>
@@ -546,7 +546,7 @@ function AddsettimeEmployee() {
                                                                     key={workplace.id}
                                                                     onClick={() => handleClickResult(workplace)}
                                                                 >
-                                                                    รหัส {workplace.workplaceId} หน่วยงาน {workplace.workplaceName}
+                                                                    รหัส {workplace.employeeId} หน่วยงาน {workplace.name}
                                                                 </li>
                                                             ))}
                                                         </ul>
@@ -564,13 +564,13 @@ function AddsettimeEmployee() {
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label role="agencynumber">รหัสหน่วยงาน</label>
-                                        <input type="text" class="form-control" id="agencynumber" placeholder="รหัสหน่วยงาน" value={workplaceId} onChange={(e) => setWorkplaceId(e.target.value)} />
+                                        <input type="text" class="form-control" id="agencynumber" placeholder="รหัสหน่วยงาน" value={employeeId} onChange={(e) => setEmployeeId(e.target.value)} />
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label role="agencyname">ชื่อหน่วยงาน</label>
-                                        <input type="text" class="form-control" id="agencyname" placeholder="ชื่อหน่วยงาน" value={workplaceName} onChange={(e) => setWorkplaceName(e.target.value)} />
+                                        <input type="text" class="form-control" id="agencyname" placeholder="ชื่อหน่วยงาน" value={name} onChange={(e) => setname(e.target.value)} />
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -590,72 +590,72 @@ function AddsettimeEmployee() {
                             </div>
                             <section class="Frame">
                                 <div class="container">
-                                <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>รหัสหน่วยงาน</th>
-                                        <th>ชื่อหน่วยงาน</th>
-                                        <th>วันที่</th>
-                                        <th>กะการทำงาน</th>
-                                        <th>เวลาเข้างาน</th>
-                                        <th>เวลาออกงาน</th>
-                                        <th>ชั่วโมงทำงาน</th>
-                                        <th>ชั่วโมง OT</th>
-                                        <th>เวลาเข้า OT</th>
-                                        <th>เวลาออก OT</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>รหัสหน่วยงาน</th>
+                                                <th>ชื่อหน่วยงาน</th>
+                                                <th>วันที่</th>
+                                                <th>กะการทำงาน</th>
+                                                <th>เวลาเข้างาน</th>
+                                                <th>เวลาออกงาน</th>
+                                                <th>ชั่วโมงทำงาน</th>
+                                                <th>ชั่วโมง OT</th>
+                                                <th>เวลาเข้า OT</th>
+                                                <th>เวลาออก OT</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
 
-                                    {rowDataList2.map((rowData2, index2) => (
-                                        <tr key={index2}>
-                                            <td>
-                                                <input type="text" className="form-control" name="staffId" value={rowData2.staffId} onChange={(e) => handleFieldChange2(index2, 'staffId', e.target.value)}
-                                                />
-                                            </td>
-                                            <td>
-                                                <input type="text" className="form-control" name="staffName" value={rowData2.staffName} onChange={(e) => handleFieldChange2(index2, 'staffName', e.target.value)}
-                                                />
-                                            </td>
-                                            <td>
-                                                <div style={{ position: 'relative', zIndex: 9999, marginLeft: '0rem' }}>
-                                                    <DatePicker
-                                                        id={`datetime${index2}`}
-                                                        name={`datetime${index2}`} // 
-                                                        className="form-control"
-                                                        popperClassName="datepicker-popper"
-                                                        selected={rowData2.startjob}
-                                                        onChange={date => handleStartDateChange4(index2, date)}
-                                                        dateFormat="dd/MM/yyyy"
-                                                        popperPlacement="top-start"
-                                                        popperModifiers={{
-                                                            preventOverflow: {
-                                                                enabled: true,
-                                                                boundariesElement: 'viewport',
-                                                            },
-                                                        }}
-                                                    />
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <select className="form-control" value={rowData2.shift} onChange={(e) => handleFieldChange2(index2, 'shift', e.target.value)} style={{ width: '5.5rem' }} >
-                                                    <option value="morning_shift">กะเช้า</option>
-                                                    <option value="afternoon_shift">กะบ่าย</option>
-                                                    <option value="night_shift">กะดึก</option>
-                                                </select></td>
-                                            <td><input type="text" class="form-control" name='startTime' value={rowData2.startTime} onChange={(e) => handleFieldChange2(index2, 'startTime', e.target.value)} /></td>
-                                            <td><input type="text" class="form-control" name='endTime' value={rowData2.endTime} onChange={(e) => handleFieldChange2(index2, 'endTime', e.target.value)} /></td>
-                                            <td><input type="text" class="form-control" name='allTime' value={rowData2.allTime} onChange={(e) => handleFieldChange2(index2, 'allTime', e.target.value)} style={{ width: '4rem' }} /></td>
-                                            <td><input type="text" class="form-control" name='otTime' value={rowData2.otTime} onChange={(e) => handleFieldChange2(index2, 'otTime', e.target.value)} style={{ width: '4rem' }} /></td>
-                                            <td><input type="text" className="form-control" name="selectotTime" value={rowData2.selectotTime} onChange={(e) => handleFieldChange2(index2, 'selectotTime', e.target.value)} style={{ width: '7rem' }} /> </td>
-                                            <td><input type="text" className="form-control" name="selectotTimeOut" value={rowData2.selectotTimeOut} onChange={(e) => handleFieldChange2(index2, 'selectotTimeOut', e.target.value)} style={{ width: '7rem' }} /> </td>
+                                            {rowDataList2.map((rowData2, index2) => (
+                                                <tr key={index2}>
+                                                    <td>
+                                                        <input type="text" className="form-control" name="staffId" value={rowData2.staffId} onChange={(e) => handleFieldChange2(index2, 'staffId', e.target.value)}
+                                                        />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" className="form-control" name="staffName" value={rowData2.staffName} onChange={(e) => handleFieldChange2(index2, 'staffName', e.target.value)}
+                                                        />
+                                                    </td>
+                                                    <td>
+                                                        <div style={{ position: 'relative', zIndex: 9999, marginLeft: '0rem' }}>
+                                                            <DatePicker
+                                                                id={`datetime${index2}`}
+                                                                name={`datetime${index2}`} // 
+                                                                className="form-control"
+                                                                popperClassName="datepicker-popper"
+                                                                selected={rowData2.startjob}
+                                                                onChange={date => handleStartDateChange4(index2, date)}
+                                                                dateFormat="dd/MM/yyyy"
+                                                                popperPlacement="top-start"
+                                                                popperModifiers={{
+                                                                    preventOverflow: {
+                                                                        enabled: true,
+                                                                        boundariesElement: 'viewport',
+                                                                    },
+                                                                }}
+                                                            />
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <select className="form-control" value={rowData2.shift} onChange={(e) => handleFieldChange2(index2, 'shift', e.target.value)} style={{ width: '5.5rem' }} >
+                                                            <option value="morning_shift">กะเช้า</option>
+                                                            <option value="afternoon_shift">กะบ่าย</option>
+                                                            <option value="night_shift">กะดึก</option>
+                                                        </select></td>
+                                                    <td><input type="text" class="form-control" name='startTime' value={rowData2.startTime} onChange={(e) => handleFieldChange2(index2, 'startTime', e.target.value)} /></td>
+                                                    <td><input type="text" class="form-control" name='endTime' value={rowData2.endTime} onChange={(e) => handleFieldChange2(index2, 'endTime', e.target.value)} /></td>
+                                                    <td><input type="text" class="form-control" name='allTime' value={rowData2.allTime} onChange={(e) => handleFieldChange2(index2, 'allTime', e.target.value)} style={{ width: '4rem' }} /></td>
+                                                    <td><input type="text" class="form-control" name='otTime' value={rowData2.otTime} onChange={(e) => handleFieldChange2(index2, 'otTime', e.target.value)} style={{ width: '4rem' }} /></td>
+                                                    <td><input type="text" className="form-control" name="selectotTime" value={rowData2.selectotTime} onChange={(e) => handleFieldChange2(index2, 'selectotTime', e.target.value)} style={{ width: '7rem' }} /> </td>
+                                                    <td><input type="text" className="form-control" name="selectotTimeOut" value={rowData2.selectotTimeOut} onChange={(e) => handleFieldChange2(index2, 'selectotTimeOut', e.target.value)} style={{ width: '7rem' }} /> </td>
 
-                                            {/* ... other input fields */}
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                                                    {/* ... other input fields */}
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </section>
 
