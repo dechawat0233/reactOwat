@@ -44,7 +44,7 @@ function Salary() {
     const [banknumber, setBanknumber] = useState(''); //เลขบัญชี
 
     const [salaryadd1, setSalaryadd1] = useState(''); //เงินเพิ่มพิเศษ ค่ารถ
-    // const [salaryadd2, setSalaryadd2] = useState(''); //เงินเพิ่มพิเศษ ค่าอาหาร
+    const [salaryadd2, setSalaryadd2] = useState(''); //เงินเพิ่มพิเศษ ค่าอาหาร
     const [salaryadd3, setSalaryadd3] = useState(''); //เงินเพิ่มพิเศษ เบี้ยขยัน
     const [salaryadd4, setSalaryadd4] = useState(''); //เงินเพิ่มพิเศษ โทรศัพท์
     const [salaryadd5, setSalaryadd5] = useState(''); //เงินเพิ่มพิเศษ เงินประจำตำแหน่ง
@@ -53,7 +53,7 @@ function Salary() {
     const [salaryaddsum, setSalaryaddsum] = useState(''); //เพิ่มพิเศษแบบ ต่อวัน ต่อเดือน
 
     const [salaryadd1v, setSalaryadd1v] = useState(''); //จำนวนเงินเพิ่มพิเศษ ค่ารถ 
-    // const [salaryadd2v, setSalaryadd2v] = useState(''); //จำนวนเงินเพิ่มพิเศษ ค่าอาหาร
+    const [salaryadd2v, setSalaryadd2v] = useState(''); //จำนวนเงินเพิ่มพิเศษ ค่าอาหาร
     const [salaryadd3v, setSalaryadd3v] = useState(''); //จำนวนเงินเพิ่มพิเศษ เบี้ยขยัน 
     const [salaryadd4v, setSalaryadd4v] = useState(''); //จำนวนเงินเพิ่มพิเศษ โทรศัพท์
     const [salaryadd5v, setSalaryadd5v] = useState(''); //จำนวนเงินเพิ่มพิเศษ เงินประจำตำแหน่ง 
@@ -232,8 +232,8 @@ function Salary() {
                         <div class="container-fluid">
                             <form onSubmit={handleManageSalary}>
 
-                                <h2 class="head-title">ข้อมูลพนักงาน</h2>
-                                <h2 class="title">สังกัดหน่วยงาน</h2>
+                                <h2 class="head-title">เงินเดือนและสวัสดิการ</h2>
+                                <h2 class="title">ข้อมูลพนักงาน</h2>
                                 <div class="row">
                                     <div class="col-md-9">
                                         <section class="Frame">
@@ -270,6 +270,15 @@ function Salary() {
                                                             </select>
                                                         </div>
                                                     </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label role="workrecord">สถานที่ปฏิบัติงาน</label>
+                                                            <input type="text" class="form-control" id="workrecord" placeholder="สถานที่ปฏิบัติงาน" value={workrecord} onChange={(e) => setWorkrecord(e.target.value)} />
+
+                                                        </div>
+                                                    </div>
+
+
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label role="jobtype">ประเภทการจ้าง</label>
@@ -310,7 +319,7 @@ function Salary() {
                                     </div>
                                 </div>
                                 {/* <!--Frame--> */}
-                                <h2 class="title">ระบบบันทึกเวลาและระบบลา</h2>
+                                <h2 class="title">การบันทึกเวลาและการลา</h2>
                                 <div class="row">
                                     <div class="col-md-9">
                                         <section class="Frame">
@@ -346,9 +355,10 @@ function Salary() {
                                                     </div>
                                                 </div>
                                                 {/* <!--row--> */}
-                                                <div class="row"><h2 class="title">สถานที่ปฏิบัติงาน</h2></div>
-                                                <div class="row">
-                                                    <div class="col-md-4">
+                                                {/* <div class="row"><h2 class="title">             ปฏิบัติงาน</h2></div> */}
+                                                {/* <div class="row"> */}
+
+                                                    {/* <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label role="jobtype">ประเภทการจ้าง</label>
                                                             <select id="jobtype" name="jobtype" class="form-control"
@@ -376,8 +386,8 @@ function Salary() {
                                                             <input type="text" class="form-control" id="workrecord" placeholder="ผู้บันทึกข้อมูลแทน" value={workrecord} onChange={(e) => setWorkrecord(e.target.value)} />
 
                                                         </div>
-                                                    </div>
-                                                </div>
+                                                    </div> */}
+                                                {/* </div> */}
                                                 {/* <!--row--> */}
                                             </div>
                                             {/* <!--col-md-12--> */}
@@ -459,8 +469,10 @@ function Salary() {
                                                                 <div class="col-sm-6">
                                                                     <select class="form-control">
                                                                         <option>บาท</option>
-                                                                        <option></option>
-                                                                        <option></option>
+                                                                        <option>จ๊าต - พม่า</option>
+                                                                        <option>เรียล - กัมพูชา</option>
+                                                                        <option>กีบ - ลาว</option>
+
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -579,8 +591,8 @@ function Salary() {
                                                             <label>
                                                                 <input
                                                                     type="checkbox"
-                                                                    checked={salaryadd1}
-                                                                    onChange={handleSalaryadd1}
+                                                                    checked={salaryadd2}
+                                                                    onChange={handleSalaryadd2}
                                                                 />
                                                                 ค่าอาหาร
                                                             </label>
@@ -617,8 +629,8 @@ function Salary() {
                                                             <label role="salaryaddtype">เพิ่มพิเศษแบบ</label>
                                                             <select id="salaryaddtype" name="salaryaddtype" class="form-control"
                                                                 value={salaryaddtype} onChange={handleSalaryaddtype}>
-                                                                <option value="ต่อวัน">ต่อวัน</option>
                                                                 <option value="ต่อเดือน">ต่อเดือน</option>
+                                                                <option value="ต่อวัน">ต่อวัน</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -628,6 +640,15 @@ function Salary() {
                                                             <div class="form-group">
                                                                 <label role="salaryadd1v">เงินเพิ่มค่ารถ</label>
                                                                 <input type="text" class="form-control" id="salaryadd1v" placeholder="ค่ารถ" value={salaryadd1v} onChange={(e) => setSalaryadd1v(e.target.value)} />
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    {salaryadd2 && (
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label role="salaryadd2v">เงินเพิ่มค่าอาหาร</label>
+                                                                <input type="text" class="form-control" id="salaryadd2v" placeholder="ค่าอาหาร" value={salaryadd2v} onChange={(e) => setSalaryadd1v(e.target.value)} />
                                                             </div>
                                                         </div>
                                                     )}
@@ -673,7 +694,7 @@ function Salary() {
                                         {/* <!--Frame--> */}
                                     </div>
                                 </div>
-                                <h2 class="title">วันลา</h2>
+                                <h2 class="title">สวัสดิการวันลา</h2>
                                 <div class="row">
                                     <div class="col-md-9">
                                         <section class="Frame">
@@ -698,7 +719,7 @@ function Salary() {
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="remainsickleave">วันลาป่วยคงเหลือ</label>
-                                                            <input type="text" class="form-control" id="remainsickleave" placeholder="จำนวนเงินต่อวัน" value={remainsickleave} onChange={(e) => setRemainsickleave(e.target.value)} />
+                                                            <input type="text" class="form-control" id="remainsickleave" placeholder="วันลาป่วยคงเหลือ" value={remainsickleave} onChange={(e) => setRemainsickleave(e.target.value)} />
                                                         </div>
                                                     </div>
 
@@ -714,7 +735,7 @@ function Salary() {
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="remainvacation">วันลาพักร้อนคงเหลือ</label>
-                                                            <input type="text" class="form-control" id="remainvacation" placeholder="จำนวนเงินต่อวัน" value={remainvacation} onChange={(e) => setRemainvacation(e.target.value)} />
+                                                            <input type="text" class="form-control" id="remainvacation" placeholder="วันลาพักร้อนคงเหลือ" value={remainvacation} onChange={(e) => setRemainvacation(e.target.value)} />
                                                         </div>
                                                     </div>
 
@@ -730,7 +751,7 @@ function Salary() {
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="maternityleavesalary">วันลาคลอดคงเหลือ</label>
-                                                            <input type="text" class="form-control" id="maternityleavesalary" placeholder="จำนวนเงินต่อวัน" value={maternityleavesalary} onChange={(e) => setMaternityleavesalary(e.target.value)} />
+                                                            <input type="text" class="form-control" id="maternityleavesalary" placeholder="วันลาคลอดคงเหลือ" value={maternityleavesalary} onChange={(e) => setMaternityleavesalary(e.target.value)} />
                                                         </div>
                                                     </div>
 
@@ -746,7 +767,7 @@ function Salary() {
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="militaryleave">วันลาเพื่อเกณฑ์ทหารคงเหลือ</label>
-                                                            <input type="text" class="form-control" id="militaryleave" placeholder="จำนวนเงินต่อวัน" value={militaryleave} onChange={(e) => setMilitaryleave(e.target.value)} />
+                                                            <input type="text" class="form-control" id="militaryleave" placeholder="วันลาเพื่อเกณฑ์ทหารคงเหลือ" value={militaryleave} onChange={(e) => setMilitaryleave(e.target.value)} />
                                                         </div>
                                                     </div>
 
@@ -762,7 +783,7 @@ function Salary() {
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="sterilization">วันลาเพื่อทำหมันคงเหลือ</label>
-                                                            <input type="text" class="form-control" id="sterilization" placeholder="จำนวนเงินต่อวัน" value={sterilization} onChange={(e) => setSterilization(e.target.value)} />
+                                                            <input type="text" class="form-control" id="sterilization" placeholder="วันลาเพื่อทำหมันคงเหลือ" value={sterilization} onChange={(e) => setSterilization(e.target.value)} />
                                                         </div>
                                                     </div>
 
@@ -778,7 +799,7 @@ function Salary() {
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="leavefortraining">วันลาเพื่อฝึกอบรมคงเหลือ</label>
-                                                            <input type="text" class="form-control" id="leavefortraining" placeholder="จำนวนเงินต่อวัน" value={leavefortraining} onChange={(e) => setLeavefortraining(e.target.value)} />
+                                                            <input type="text" class="form-control" id="leavefortraining" placeholder="วันลาเพื่อฝึกอบรมคงเหลือ" value={leavefortraining} onChange={(e) => setLeavefortraining(e.target.value)} />
                                                         </div>
                                                     </div>
 
