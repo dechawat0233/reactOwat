@@ -2,6 +2,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import EmployeesSelected from './EmployeesSelected';
+import '../editwindowcss.css';
 
 function OtherExpenses() {
     const [id, setId] = useState('');
@@ -231,7 +232,7 @@ function OtherExpenses() {
         setDivideAll(divideAllValue);
     }, [sumall, divide]);
     return (
-        <body class="hold-transition sidebar-mini">
+        <body class="hold-transition sidebar-mini" className='editlaout'>
             <div class="wrapper">
                 <div class="content-wrapper">
                     {/* <!-- Content Header (Page header) --> */}

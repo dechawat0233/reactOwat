@@ -8,6 +8,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import EmployeesSelected from './EmployeesSelected';
 
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import '../editwindowcss.css';
+
 
 function Employee() {
     const [storedEmp, setStoredEmp] = useState([]);
@@ -278,7 +280,7 @@ function Employee() {
     }, []);
 
     return (
-        <body class="hold-transition sidebar-mini">
+        <body class="hold-transition sidebar-mini" className='editlaout'>
             <div class="wrapper">
                 <div class="content-wrapper">
                     <ol class="breadcrumb">

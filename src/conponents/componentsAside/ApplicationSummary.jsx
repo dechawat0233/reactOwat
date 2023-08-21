@@ -1,8 +1,10 @@
 import React from 'react'
 
+import '../editwindowcss.css';
+
 function application_summary() {
     return (
-        <body class="hold-transition sidebar-mini">
+        <body class="hold-transition sidebar-mini" className='editlaout'>
             <div class="wrapper">
                 <div class="content-wrapper">
                     {/* <!-- Content Header (Page header) --> */}

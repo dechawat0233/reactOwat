@@ -91,17 +91,17 @@ function EmployeesSelected({ onEmployeeSelect }) {
                 <li key={employee.employeeId}>
                   {employee.name}
                   <button onClick={() => handleEmployeeSelect(employee)} style={{
-                    width: '5rem', height: '2rem', margin: '0.2rem', borderRadius: '8px'
-                  }}>เลือก</button>
+                    width: '2rem', height: '2rem', margin: '0.1rem', borderRadius: '8px'
+                  }}>&#10003;</button>
                   <button type="button" onClick={() => handleRemoveEmployee(employee.employeeId)} style={{
-                    width: '5rem', height: '2rem', margin: '0.2rem', borderRadius: '8px'
-                  }}>นำออก</button>
+                    width: '2rem', height: '2rem', margin: '0.1rem', borderRadius: '8px'
+                  }}>-</button>
                 </li>
               ))}
               
               <li> ล้างรายการ
                   <button type="button" onClick={() => handleRemoveEmployeeAll()} style={{
-                    width: '5rem', height: '2rem', margin: '0.2rem', borderRadius: '8px'
+                     margin: '0.2rem', borderRadius: '8px'
                   }}>นำออกทั้งหมด</button>
                 </li>
             </ul>

@@ -1,9 +1,10 @@
 import React from 'react'
 import EmployeesSelected from './EmployeesSelected';
+import '../editwindowcss.css';
 
 function provident_fund() {
     return (
-        <body class="hold-transition sidebar-mini">
+        <body class="hold-transition sidebar-mini" className='editlaout'>
             <div class="wrapper">
                 <div class="content-wrapper">
                     {/* <!-- Content Header (Page header) --> */}

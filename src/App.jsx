@@ -72,92 +72,92 @@ function App() {
     );
   }
 
-    //const [loggedIn, setLoggedIn] = useState(false);
+  //const [loggedIn, setLoggedIn] = useState(false);
 
-    const [loggedIn, setLoggedIn] = useState(
-        localStorage.getItem('loggedIn') === 'true'
-    );
+  const [loggedIn, setLoggedIn] = useState(
+    localStorage.getItem('loggedIn') === 'true'
+  );
 
-    function handleLogin(username, password) {
-        // TODO: Implement the login process
-        // For now, just set loggedIn to true
-    
-        //setLoggedIn(true);
-    }
+  function handleLogin(username, password) {
+    // TODO: Implement the login process
+    // For now, just set loggedIn to true
 
-    function handleLogout() {
-        setLoggedIn(false);
-    }
+    //setLoggedIn(true);
+  }
+
+  function handleLogout() {
+    setLoggedIn(false);
+  }
 
   return (
-      <div>
-    {            loggedIn?(
+    <div>
+      {loggedIn ? (
 
-    <Router>
-      <>
-        {/* <ul>
+        <Router>
+          <>
+            {/* <ul>
           <li><Link to="/">Home</Link></li>
           <li><Link to="/posts">Posts</Link></li>
           <li><Link to="/profile">Profile</Link></li>
           <li><Link to="/dashboard">Dashboard</Link></li>
         </ul> */}
-        <Top />
-        <AsideLeft />
-        <Routes>
-          {/* <Route path="/" element={<Home />} />
+            <Top />
+            <AsideLeft />
+            <Routes>
+              {/* <Route path="/" element={<Home />} />
           <Route path="/posts" element={<Posts />} />
           <Route path="/profile" element={<Profile />} /> */}
-          {/* <Route path="/login" element={<Login />} />
+              {/* <Route path="/login" element={<Login />} />
           <Route path="/registration" element={<Registration />} /> */}
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/employee" element={<Employee />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/employee" element={<Employee />} />
 
-          <Route path="/salary" element={<Salary />} />
-          <Route path="/salarysummary" element={<Salarysummary />} />
-          <Route path="/worktimesheet" element={<Worktimesheet />} />
-
-
-
-          <Route path="/income_tax" element={<IncomeTax />} />
-          <Route path="/social_security" element={<SocialSecurity />} />
-          <Route path="/provident_fund" element={<ProvidentFund />} />
-          <Route path="/collateral" element={<Collateral />} />
-          <Route path="/document" element={<Document />} />
+              <Route path="/salary" element={<Salary />} />
+              <Route path="/salarysummary" element={<Salarysummary />} />
+              <Route path="/worktimesheet" element={<Worktimesheet />} />
 
 
-          <Route path="/calculate_tax" element={<CalculateTax />} />
-          <Route path="/calculate_tax_deductions" element={<CalculateTaxDeductions />} />
-          <Route path="/other_expenses" element={<OtherExpenses />} />
-          <Route path="/search_results" element={<SearchResults />} />
-          <Route path="/setting" element={<Setting />} />
-          <Route path="/systemuser" element={<SystemUser />} />
 
-          <Route path="/addsettime" element={<Addsettime />} />
+              <Route path="/income_tax" element={<IncomeTax />} />
+              <Route path="/social_security" element={<SocialSecurity />} />
+              <Route path="/provident_fund" element={<ProvidentFund />} />
+              <Route path="/collateral" element={<Collateral />} />
+              <Route path="/document" element={<Document />} />
 
-          <Route path="/application" element={<Application />} />
-          <Route path="/applicatio1" element={<Application1 />} />
-          <Route path="/applicatio2" element={<Application2 />} />
-          <Route path="/applicatio3" element={<Application3 />} />
-          <Route path="/applicatio4" element={<Application4 />} />
-          <Route path="/application_summary" element={<ApplicationSummary />} />
 
-          <Route path="/testPDF" element={<TestPDF />} />
+              <Route path="/calculate_tax" element={<CalculateTax />} />
+              <Route path="/calculate_tax_deductions" element={<CalculateTaxDeductions />} />
+              <Route path="/other_expenses" element={<OtherExpenses />} />
+              <Route path="/search_results" element={<SearchResults />} />
+              <Route path="/setting" element={<Setting />} />
+              <Route path="/systemuser" element={<SystemUser />} />
 
-          <Route path="/time" element={<Testcal />} />
-          <Route path="/countday" element={<Countday />} />
-        </Routes>
-        {/* <EmployeesSelected /> */}
+              <Route path="/addsettime" element={<Addsettime />} />
 
-      </>
-    </Router>
- ) : (
-  <LoginForm onLogin={handleLogin} />
-)
+              <Route path="/application" element={<Application />} />
+              <Route path="/applicatio1" element={<Application1 />} />
+              <Route path="/applicatio2" element={<Application2 />} />
+              <Route path="/applicatio3" element={<Application3 />} />
+              <Route path="/applicatio4" element={<Application4 />} />
+              <Route path="/application_summary" element={<ApplicationSummary />} />
+
+              <Route path="/testPDF" element={<TestPDF />} />
+
+              <Route path="/time" element={<Testcal />} />
+              <Route path="/countday" element={<Countday />} />
+            </Routes>
+            {/* <EmployeesSelected /> */}
+
+          </>
+        </Router>
+      ) : (
+        <LoginForm onLogin={handleLogin} />
+      )
+      }
+    </div>
+  );
 }
-      </div>
-);
-}
-        
+
 
 export default App;

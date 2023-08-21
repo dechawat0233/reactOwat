@@ -4,6 +4,7 @@ import endpoint from '../../config';
 import React, { useEffect, useState } from 'react';
 import EmployeesSelected from './EmployeesSelected';
 import axios from 'axios';
+import '../editwindowcss.css';
 
 function Search() {
   //   const endpoint = 'YOUR_API_ENDPOINT'; // Replace with your API endpoint
@@ -109,8 +110,8 @@ function Search() {
     localStorage.removeItem('selectedEmployees');
   }
   return (
-    <body class="hold-transition sidebar-mini">
-      <div class="wrapper">
+    <body class="hold-transition sidebar-mini" className='editlaout'>
+      <div class="wrapper" >
         <div class="content-wrapper">
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
