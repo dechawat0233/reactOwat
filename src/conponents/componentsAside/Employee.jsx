@@ -530,10 +530,10 @@ function Employee() {
                                                         <div class="form-group">
                                                             <label role="militaryStatus">สถานภาพทางการทหาร</label>
                                                             <select name="militaryStatus" id="militaryStatus" class="form-control"
-                                                                value="militaryStatus" onChange={handleMilitaryStatus}>
-                                                                <option>ยกเว้นการเกณฑ์ทหาร</option>
-                                                                <option>ผ่านการเกณฑ์ทหารแล้ว</option>
-                                                                <option>ไม่ผ่านการเกณฑ์ทหาร</option>
+                                                                value={militaryStatus} onChange={handleMilitaryStatus}>
+                                                                <option value="ยกเว้นการเกณฑ์ทหาร">ยกเว้นการเกณฑ์ทหาร</option>
+                                                                <option value="ผ่านการเกณฑ์ทหารแล้ว">ผ่านการเกณฑ์ทหารแล้ว</option>
+                                                                <option value="ไม่ผ่านการเกณฑ์ทหาร">ไม่ผ่านการเกณฑ์ทหาร</option>
                                                             </select>
                                                         </div>
                                                     </div>
