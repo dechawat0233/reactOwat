@@ -23,6 +23,7 @@ function Employee() {
     const [workplace, setWorkplace] = useState(''); //หน่วยงาน
     const [jobtype, setJobtype] = useState(''); //ประเภทการจ้าง
     const [startjob, setStartjob] = useState(''); //วันที่เริ่มงาน
+    const [endjob, setEndjob] = useState(''); //วันที่ลาออก
     const [exceptjob, setExceptjob] = useState(''); //วันที่บรรจุ
     const [prefix, setPrefix] = useState(''); //นำหน้าชื่อ
     const [name, setName] = useState(''); //ชื่อ
@@ -100,6 +101,7 @@ function Employee() {
         setWorkplace(empSelect.workplace);
         setJobtype(empSelect.jobtype);
         setStartjob(empSelect.startjob ? new Date(empSelect.startjob): '');
+        setEndjob(empSelect.endjob ? new Date(empSelect.startjob): '');
         setExceptjob(empSelect.exceptjob ? new Date(empSelect.exceptjob): '');
         setPrefix(empSelect.prefix);
         setName(empSelect.name);
@@ -137,6 +139,7 @@ function Employee() {
             workplace: workplace,
             jobtype: jobtype,
             startjob: startjob,
+            endjob: endjob,
             exceptjob: exceptjob,
             prefix: prefix,
             name: name,
@@ -217,6 +220,9 @@ function Employee() {
 
     const handleStartDateChange = (date) => {
         setStartjob(date);
+    };
+    const handleEndDateChange = (date) => {
+        setEndjob(date);
     };
     const handleExceptDateChange = (date) => {
         setExceptjob(date);
@@ -354,6 +360,21 @@ function Employee() {
 
                                                     <div class="col-md-3">
                                                         <div class="form-group">
+                                                            <label role="endjob">วันที่ลาออก/หมดสัญญา</label>
+                                                            <div style={{ position: 'relative', zIndex: 9999 }}>
+                                                                <DatePicker id="endjob" name="endjob"
+                                                                    className="form-control"
+                                                                    popperClassName="datepicker-popper"
+                                                                    selected={endjob}
+                                                                    onChange={handleEndDateChange}
+                                                                    dateFormat="dd/MM/yyyy" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
                                                             <label role="exceptjob">วันที่บรรจุ</label>
                                                             <div style={{ position: 'relative', zIndex: 9999 }}>
                                                                 <DatePicker id="exceptjob" name="exceptjob"
@@ -447,7 +468,22 @@ function Employee() {
                                                             </select>
                                                         </div>
                                                     </div>
+
                                                     <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label role="dateOfBirth">วันเดือนปีเกิด</label>
+                                                            <div style={{ position: 'relative', zIndex: 9999 }}>
+                                                                <DatePicker id="dateOfBirth" name="dateOfBirth"
+                                                                    className="form-control"
+                                                                    popperClassName="datepicker-popper"
+                                                                    selected={dateOfBirth}
+                                                                    onChange={handleDateOfBirth}
+                                                                    dateFormat="dd/MM/yyyy" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label role="dateOfBirth">วันเดือนปีเกิด</label>
                                                             <DatePicker id="dateOfBirth" name="dateOfBirth"
@@ -455,7 +491,8 @@ function Employee() {
                                                                 onChange={handleDateOfBirth}
                                                                 dateFormat="dd/MM/yyyy" />
                                                         </div>
-                                                    </div>
+                                                    </div> */}
+
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label role="age">อายุ</label>
@@ -566,7 +603,9 @@ function Employee() {
                                                 <button type="button" class="btn btn-primary" onClick={handleAddVaccination}>เพิ่มวัคซีน</button>
                                                 <br />
                                                 <br />
-                                                <h2>วัคซีนที่ได้รับ</h2>
+                                                {/* <h2 class="title">วัคซีนที่ได้รับ</h2> */}
+                                                <label style={{ paddingLeft: "10px" }}>วัคซีนที่ได้รับ</label>
+
                                                 <ul>
                                                     {vaccination.map((item, index) => (
                                                         <li key={index}>{item} 
