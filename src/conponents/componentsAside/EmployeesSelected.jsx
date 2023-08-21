@@ -127,14 +127,8 @@ function EmployeesSelected({ onEmployeeSelect }) {
                 </li>
               ))}
 
-              <li
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
-              >
-                ล้างรายการ
+
+                
                 <button
                   type="button"
                   onClick={() => handleRemoveEmployeeAll()}
@@ -143,9 +137,9 @@ function EmployeesSelected({ onEmployeeSelect }) {
                     borderRadius: '8px',
                   }}
                 >
-                  นำออกทั้งหมด
+                  ล้างรายการ
                 </button>
-              </li>
+              
             </ul>
 
           </div>
