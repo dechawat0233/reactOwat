@@ -85,26 +85,69 @@ function EmployeesSelected({ onEmployeeSelect }) {
       {storedEmp.length > 0 && (
         <div style={{ textAlign: 'center' }}>
           <div>
-            <h3>จำนวนพนักงานที่เลือก: {storedEmp.length}</h3>
-            <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
+            <h7>จำนวนพนักงานที่เลือก: {storedEmp.length}</h7>
+            <ul style={{ listStyle: 'none', paddingLeft: 0 }}>
               {storedEmp.map((employee) => (
-                <li key={employee.employeeId}>
-                  {employee.name}
-                  <button onClick={() => handleEmployeeSelect(employee)} style={{
-                    width: '2rem', height: '2rem', margin: '0.1rem', borderRadius: '8px'
-                  }}>&#10003;</button>
-                  <button type="button" onClick={() => handleRemoveEmployee(employee.employeeId)} style={{
-                    width: '2rem', height: '2rem', margin: '0.1rem', borderRadius: '8px'
-                  }}>-</button>
+                <li
+                  key={employee.employeeId}
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: '0.5rem',
+                    marginLeft: '-3rem',
+                  }}
+                >
+                  <span style={{ flex: 1 }}>{employee.name}</span>
+                  <div>
+                    <button
+                      onClick={() => handleEmployeeSelect(employee)}
+                      style={{
+                        width: '2rem',
+                        height: '2rem',
+                        margin: '0.1rem',
+                        borderRadius: '8px',
+                      }}
+                    >
+                      &#10003;
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveEmployee(employee.employeeId)}
+                      style={{
+                        width: '2rem',
+                        height: '2rem',
+                        margin: '0.1rem',
+                        borderRadius: '8px',
+                      }}
+                    >
+                      -
+                    </button>
+                  </div>
                 </li>
               ))}
-              
-              <li> ล้างรายการ
-                  <button type="button" onClick={() => handleRemoveEmployeeAll()} style={{
-                     margin: '0.2rem', borderRadius: '8px'
-                  }}>นำออกทั้งหมด</button>
-                </li>
+
+              <li
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                ล้างรายการ
+                <button
+                  type="button"
+                  onClick={() => handleRemoveEmployeeAll()}
+                  style={{
+                    margin: '0.2rem',
+                    borderRadius: '8px',
+                  }}
+                >
+                  นำออกทั้งหมด
+                </button>
+              </li>
             </ul>
+
           </div>
         </div>
       )}
