@@ -7,6 +7,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import EmployeesSelected from './EmployeesSelected';
+import '../editwindowcss.css';
+
 
 function Salary() {
     const [storedEmp, setStoredEmp] = useState([]);
@@ -210,7 +212,7 @@ function Salary() {
 
 
     return (
-        <body class="hold-transition sidebar-mini">
+        <body class="hold-transition sidebar-mini" className='editlaout'>
             <div class="wrapper">
                 <div class="content-wrapper">
                     {/* <!-- Content Header (Page header) --> */}

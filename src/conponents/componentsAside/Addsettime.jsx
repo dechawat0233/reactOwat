@@ -10,6 +10,8 @@ import EmployeesSelected from './EmployeesSelected';
 
 import AddsettimeWorkplace from './AddsettimeWorkplace';
 import AddsettimeEmployee from './AddsettimeEmployee';
+import '../editwindowcss.css';
+
 
 function Addsettime() {
     const [selectedOption, setSelectedOption] = useState('workplace');
@@ -19,7 +21,7 @@ function Addsettime() {
     };
 
     return (
-        <body class="hold-transition sidebar-mini">
+        <body class="hold-transition sidebar-mini" className='editlaout'>
             <div class="wrapper">
                 <div class="content-wrapper">
                     {/* <!-- Content Header (Page header) --> */}

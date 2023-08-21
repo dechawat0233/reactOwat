@@ -7,6 +7,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import EmployeesSelected from './EmployeesSelected';
+import '../editwindowcss.css';
 
 import Calendar from 'react-calendar';
 
@@ -174,7 +175,7 @@ function SystemUser() {
     }, []);
 
     return (
-        <body class="hold-transition sidebar-mini">
+        <body class="hold-transition sidebar-mini" className='editlaout'>
             <div class="wrapper">
 
                 <div class="content-wrapper">

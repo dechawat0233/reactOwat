@@ -1,6 +1,8 @@
 // import React from 'react'
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import '../editwindowcss.css';
+
 
 function application() {
     const [showInput, setShowInput] = useState(false);
@@ -9,7 +11,7 @@ function application() {
         setShowInput(event.target.checked);
     };
     return (
-        <body class="hold-transition sidebar-mini">
+        <body class="hold-transition sidebar-mini" className='editlaout'>
             <div class="wrapper">
                 <div class="content-wrapper">
                     <ol class="breadcrumb">

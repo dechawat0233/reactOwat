@@ -2,10 +2,12 @@ import React from 'react'
 // import Top from "./Top"
 // import AsideLeft from './AsideLeft'
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import '../editwindowcss.css';
+
 
 function Dashboard() {
   return (
-    <body class="hold-transition sidebar-mini">
+    <body class="hold-transition sidebar-mini" className='editlaout'>
       <div class="wrapper">
         <div class="content-wrapper">
           {/* <!-- Content Header (Page header) --> */}

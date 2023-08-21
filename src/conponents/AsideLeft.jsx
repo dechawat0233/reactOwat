@@ -44,12 +44,12 @@ function AsideLeft() {
 
   return (
     <>
-      <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <aside class="main-sidebar sidebar-dark-primary elevation-4" style={{width:'13rem'}}>
         <div class="sidebar">
           <div class="Logo-w">
             <a href="dashboard.php" class="brand-link logo-switch">
               <img src="assets/images/logo-xs.png" alt="Logo Small" class="brand-image-xl logo-xs" />
-              <img src="assets/images/logo.png" alt=" Docs Logo Large" class="brand-image-xl logo-xl" style={{ borderRadius: "8px" }} />
+              <img src="assets/images/logo.png" alt=" Docs Logo Large" class="brand-image-xl logo-xl" style={{ borderRadius: "8px",width:'92%' }} />
             </a>
           </div>
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">

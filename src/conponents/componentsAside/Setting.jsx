@@ -8,6 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import EmployeesSelected from './EmployeesSelected';
 import Calendar from 'react-calendar';
+import '../editwindowcss.css';
 
 
 function Setting() {
@@ -374,7 +375,7 @@ function Setting() {
     }
 
     return (
-        <body class="hold-transition sidebar-mini">
+        <body class="hold-transition sidebar-mini" className='editlaout'>
             <div class="wrapper">
 
                 <div class="content-wrapper">
