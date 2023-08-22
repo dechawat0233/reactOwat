@@ -106,6 +106,11 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
 
     const handleWorkplace = (event) => {
         setWorkplace(event.target.value);
+        const filtered = workplaceSelection.filter(wp => 
+            event.target.value === '' || wp.workplaceName === event.target.value 
+            )
+            alert(filtered);
+            setWorkplacearia(filtered.workplaceName );
     };
 
     const handleWorktable = (event) => {
