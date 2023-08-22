@@ -508,7 +508,7 @@ function AddsettimeEmployee() {
             <div class="row">
                 <div class="col-md-12">
                     <div class="container-fluid">
-                        <h2 class="title">ข้อมูลการลงเวลาทำงานของพนักงาน</h2>
+                        {/* <h2 class="title">ข้อมูลการลงเวลาทำงานของพนักงาน</h2> */}
                         <div class="row">
                             <div class="col-md-12">
                                 <section class="Frame">
