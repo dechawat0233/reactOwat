@@ -102,8 +102,20 @@ const employeeSchema = new mongoose.Schema({
   vaccination: [] ,
   treatmentRights: {
     type: String
-  }
-  
+  },
+
+  salaryData: {
+    startcount: String,
+    salary: String,
+    salarytype: String,
+    money: String,
+        salaryupdate: Date,
+    salarypayment: String,
+    paymentType: String,
+        salarybank: String,
+        banknumber: String,
+          }
+
 });
 
 // Create the Employee model based on the schema

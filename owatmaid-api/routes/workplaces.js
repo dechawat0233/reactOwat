@@ -130,6 +130,19 @@ const Workplace = mongoose.model('Workplace', workplaceSchema);
       res.json(workplaces);
   });
 
+// Get list id name and address of workplaces
+router.get('/listselect',  async (req, res) => {
+    try{
+        const workplaces = await Workplace.find({},'workplaceId workplaceName workplaceArea' );
+                res.json(workplaces);
+    
+    } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+
+});
+
+
   // Get  workplace by Id
 router.get('/:workplaceId',  async (req, res) => {
       try {

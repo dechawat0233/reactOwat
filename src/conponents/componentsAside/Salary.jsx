@@ -14,12 +14,21 @@ function Salary() {
     const [storedEmp, setStoredEmp] = useState([]);
     const [newEmp, setNewEmp] = useState(true);
     // const [employeeselection , setEmployeeselection] = useState([]);
+const [workplaceSelection , setWorkplaceSelection] = useState([]);
 
     useEffect(() => {
         const storedValue = sessionStorage.getItem('empSelect');
         if (storedValue) {
             // setEmployeeselection(storedValue);
         }
+
+        fetch(endpoint + '/workplace/listselect') // Update with your API endpoint
+        .then(response => response.json())
+        .then(data => {setWorkplaceSelection(data);
+}
+        )
+        .catch(error => console.error('Error fetching employees:', error));
+  
     }, []);
 
     //employee data
@@ -27,6 +36,7 @@ function Salary() {
     const [position, setPosition] = useState(''); //ตำแหน่ง
     const [department, setDepartment] = useState(''); //แผนก
     const [workplace, setWorkplace] = useState(''); //หน่วยงาน
+    const [workplacearia , setWorkplacearia ] = useState('');
     const [costtype, setCosttype] = useState(''); //ลงบัญชีเป็นค่าใช้จ่าย
     const [worktable, setWorktable] = useState(''); //ตารางงาน
     const [workexcept, setWorkexcept] = useState(''); //ผู้อนุมัต
@@ -36,12 +46,17 @@ function Salary() {
     const [jobtype, setJobtype] = useState(''); //ประเภทการจ้าง
     const [startjob, setStartjob] = useState(''); //วันที่เริ่มงาน
     const [exceptjob, setExceptjob] = useState(''); //วันที่บรรจุ
-    const [startcount, setStartcount] = useState(''); //วันที่บรรจุ
+
+    //Salary Data
+
+    const [startcount, setStartcount] = useState(''); //วันเริ่มคำนวน
     const [salary, setSalary] = useState(''); //อัตราเงินเดือน
     const [salarytype, setSalarytype] = useState(''); //อัตราเงินเดือน
+    const [money , setMoney] = useState(''); //หน่วยของเงิน
     const [salaryupdate, setSalaryupdate] = useState(''); //เงินเดือนปรับเมื่อ
     const [salaryout, setSalaryout] = useState(''); //เงินเดือนปรับเมื่อ
     const [salarypayment, setSalarypayment] = useState(''); //วิธีจ่ายเงิน
+    const [ paymentType , setPaymentType] = useState(''); //วิธีจ่ายเงิน
     const [salarybank, setSalarybank] = useState(''); //ธนาคาร
     const [banknumber, setBanknumber] = useState(''); //เลขบัญชี
 
@@ -266,17 +281,18 @@ function Salary() {
                                                             <label role="workplace">หน่วยงาน</label>
                                                             <select id="workplace" name="workplace" class="form-control"
                                                                 value={workplace} onChange={handleWorkplace}>
-                                                                <option value="ยังไม่มีหน่วยงาน">ยังไม่มีหน่วยงาน</option>
-                                                                <option value="บริษัท ไทย เอ็นโอเค จำกัด (โรงงานบางประกง)">บริษัท ไทย เอ็นโอเค จำกัด (โรงงานบางประกง)</option>
-                                                                <option value="Gulf สำนักงานใหญ่">Gulf สำนักงานใหญ่</option>
+                                                                <option value="ยังไม่ระบุหน่วยงาน">ยังไม่ระบุหน่วยงาน</option>
+                                                                {workplaceSelection.map(wp => (
+                                                                <option key={wp._id} value={wp.workplaceName}>{wp.workplaceName}</option>
+    
+))}
                                                             </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label role="workrecord">สถานที่ปฏิบัติงาน</label>
-                                                            <input type="text" class="form-control" id="workrecord" placeholder="สถานที่ปฏิบัติงาน" value={workrecord} onChange={(e) => setWorkrecord(e.target.value)} />
-
+                                                            <label role="workplacearia">สถานที่ปฏิบัติงาน</label>
+                                                            <input type="text" class="form-control" id="workplacearia" placeholder="สถานที่ปฏิบัติงาน" value={workplacearia} onChange={(e) => setWorkplacearia(e.target.value)} />
                                                         </div>
                                                     </div>
 
