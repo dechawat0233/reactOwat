@@ -23,6 +23,7 @@ function Addsettime() {
     return (
         <body class="hold-transition sidebar-mini" className='editlaout'>
             <div class="wrapper">
+
                 <div class="content-wrapper">
                     {/* <!-- Content Header (Page header) --> */}
                     <ol class="breadcrumb">
@@ -36,22 +37,49 @@ function Addsettime() {
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4" style={{marginLeft:'2rem'}}>
-                            <select id="selectOption" class="form-control" vvalue={selectedOption} onChange={handleOptionChange}>
-                                <option value="workplace">รูปแบบหน่วยงาน</option>
-                                <option value="employee">รูปแบบบุคคล</option>
-                            </select>
-                        </div>
-                    </div>
-
                     {/* <!-- /.content-header -->
                     <!-- Main content --> */}
-                    {selectedOption === 'workplace' && <AddsettimeWorkplace />}
-                    {selectedOption === 'employee' && <AddsettimeEmployee />}
+
+                    <section class="content">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="container-fluid">
+                                    <h2 class="title">ข้อมูลการลงเวลาทำงานของพนักงาน</h2>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label role="formsettime">รูปแบบการลงเวลา</label>
+                                                    <select id="selectOption" class="form-control" vvalue={selectedOption} onChange={handleOptionChange}>
+                                                        <option value="workplace">รูปแบบหน่วยงาน</option>
+                                                        <option value="employee">รูปแบบบุคคล</option>
+                                                    </select>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {/* {selectedOption && (
+                                        <div>
+                                            {formToShow}
+                                        </div>
+                                    )} */}
+                                    {selectedOption === 'workplace' && <AddsettimeWorkplace />}
+                                    {selectedOption === 'employee' && <AddsettimeEmployee />}
+                                </div>
+                            </div>
+                        </div>
+                        {/* <!-- /.container-fluid --> */}
+                    </section>
+                    {/* <!-- /.content --> */}
                 </div>
-            </div >
-        </body >
+            </div>
+        </body>
     )
 }
 
