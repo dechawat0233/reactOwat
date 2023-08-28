@@ -115,8 +115,6 @@ function AddsettimeWorkplace() {
 
         setRowDataList(prevDataList => {
             const newDataList = [...prevDataList];
-            // const timeDiffFormatted = ''; // Initialize timeDiffFormatted
-            // const otTimeFormatted2 = ''; // Initialize otTimeFormatted2
 
             newDataList[index] = {
                 ...newDataList[index],
@@ -147,15 +145,15 @@ function AddsettimeWorkplace() {
                 }
 
             }
-            if (fieldName === 'startTime' || fieldName === 'endTime' || fieldName === 'shift') {
+
+            if (fieldName == 'shift') {
+
                 if (value == 'morning_shift' && shift1start != null) {
                     newDataList[index] = {
                         ...newDataList[index],
                         ['startTime']: shift1start + '',
                         ['endTime']: shift1end + '',
                         ['selectotTime']: shift1end + '',
-                        // allTime: timeDiffFormatted,
-                        // otTime: otTimeFormatted2 + '2222',
                     };
                 }
 
@@ -166,14 +164,11 @@ function AddsettimeWorkplace() {
                         ['startTime']: shift2start + '',
                         ['endTime']: shift2end + '',
                         ['selectotTime']: shift2end + '',
-                        // allTime: timeDiffFormatted,
-                        // otTime: otTimeFormatted2 + '2222',
                     };
                 }
 
                 //Check shift is night
                 if (value == 'night_shift' && shift3start != null) {
-
                     newDataList[index] = {
                         ...newDataList[index],
                         ['startTime']: shift3start + '',
@@ -184,72 +179,17 @@ function AddsettimeWorkplace() {
                 }
 
                 if (value == 'specialt_shift' && shift4start != null) {
-                    const workOfHour = parseFloat(newDataList[index].workOfHour);
-
-                    const startHours = parseFloat(newDataList[index].startTime.split('.')[0]);
-                    const startMinutes = parseFloat(newDataList[index].startTime.split('.')[1] || 0);
-                    const endHours = parseFloat(newDataList[index].endTime.split('.')[0]);
-                    const endMinutes = parseFloat(newDataList[index].endTime.split('.')[1] || 0);
-
-                    let hours = endHours - startHours;
-                    let minutes = endMinutes - startMinutes;
-
-                    if (minutes < 0) {
-                        hours -= 1;
-                        minutes += 60;
-                    }
-
-                    // Handle cases where endTime is on the next day
-                    if (hours < 0) {
-                        hours += 24;
-                    }
-
-                    const timeDiffFormatted = `${hours}.${minutes}`;
-
-                    // Calculate otTime based on selectotTimeOut and endTime
-                    const otselectHours = parseFloat(newDataList[index].selectotTime.split('.')[0]);
-                    const otselectMinutes = parseFloat(newDataList[index].selectotTime.split('.')[1] || 0);
-                    const otHours = parseFloat(newDataList[index].selectotTimeOut.split('.')[0]);
-                    const otMinutes = parseFloat(newDataList[index].selectotTimeOut.split('.')[1] || 0);
-
-                    let otHoursDiff = otHours - otselectHours;
-                    let otMinutesDiff = otMinutes - otselectMinutes;
-
-                    if (otMinutesDiff < 0) {
-                        otHoursDiff -= 1;
-                        otMinutesDiff += 60;
-                    }
-
-                    // Handle cases where otTime is on the next day
-                    if (otHoursDiff < 0) {
-                        otHoursDiff += 24;
-                    }
-                    const otTimeFormatted1 = `${otHoursDiff}.${otMinutesDiff}`;
-
-                    const maxOTHours = parseFloat(newDataList[index].workOfOT);
-                    const maxOTMinutes = 0; // If maxOTHours is always whole numbers
-
-                    const totalOTMinutes = otHoursDiff * 60 + otMinutesDiff;
-                    if (totalOTMinutes > maxOTHours * 60) {
-                        otHoursDiff = maxOTHours;
-                        otMinutesDiff = maxOTMinutes;
-                    }
-                    const otTimeFormatted2 = `${otHoursDiff}.${otMinutesDiff}`;
                     newDataList[index] = {
                         ...newDataList[index],
                         ['startTime']: shift4start + '',
                         ['endTime']: shift4end + '',
                         ['selectotTime']: shift4end + '',
                         maxOTHours: '',
-                        allTime: timeDiffFormatted, // Assign your custom allTime value here
-                        otTime: otTimeFormatted2 + '2222', // Assign your custom otTime value here
                     };
                 }
 
                 //specialt_shift
             }
-
-
 
 
 
@@ -341,23 +281,23 @@ function AddsettimeWorkplace() {
             }
             const otTimeFormatted2 = `${otHoursDiff}.${otMinutesDiff}`;
 
-            // if (fieldName === 'shift') {
-            //     newDataList[index] = {
-            //         ...newDataList[index],
-            //         allTime: timeDiffFormatted,
-            //         otTime: otTimeFormatted2 + '2222',
-            //     };
-            //     // return newDataList;
-            // }
-            // else {
-            //     newDataList[index] = {
-            //         ...newDataList[index],
-            //         allTime: timeDiffFormatted,
-            //         otTime: otTimeFormatted1 + '1111',
+            if (fieldName === 'shift') {
+                newDataList[index] = {
+                    ...newDataList[index],
+                    allTime: timeDiffFormatted,
+                    otTime: otTimeFormatted2 + '2222',
+                };
+                // return newDataList;
+            } 
+            else {
+                newDataList[index] = {
+                    ...newDataList[index],
+                    allTime: timeDiffFormatted,
+                    otTime: otTimeFormatted1 + '1111',
 
-            //     };
-            //     // return newDataList;
-            // }
+                };
+                // return newDataList;
+            }
             // newDataList[index] = {
             //     ...newDataList[index],
             //     allTime: timeDiffFormatted + '1111',
@@ -366,13 +306,6 @@ function AddsettimeWorkplace() {
 
 
             // }
-
-            newDataList[index] = {
-                ...newDataList[index],
-                allTime: timeDiffFormatted,
-                otTime: otTimeFormatted2 + '2222',
-            };
-
 
             return newDataList;
         });
@@ -753,14 +686,6 @@ function AddsettimeWorkplace() {
                                                     <td><input type="text" className="form-control" name="selectotTime" value={rowData.selectotTime} onChange={(e) => handleFieldChange(index, 'selectotTime', e.target.value)} style={{ width: '7rem' }} /> </td>
                                                     <td><input type="text" className="form-control" name="selectotTimeOut" value={rowData.selectotTimeOut} onChange={(e) => handleFieldChange(index, 'selectotTimeOut', e.target.value)} style={{ width: '7rem' }} /> </td>
                                                     <td><input type="text" className="form-control" name="otTime" value={rowData.otTime} onChange={(e) => handleFieldChange(index, 'otTime', e.target.value)} style={{ width: '4rem' }} readOnly /></td>
-                                                    {rowData.shift == 'specialt_shift' && (
-                                                        <div>
-                                                            <td><input type="text" className="form-control" name="otTime" value={rowData.otTime} onChange={(e) => handleFieldChange(index, 'otTime', e.target.value)} style={{ width: '4rem' }} readOnly /></td>
-                                                            <td><input type="text" className="form-control" name="otTime" value={rowData.otTime} onChange={(e) => handleFieldChange(index, 'otTime', e.target.value)} style={{ width: '4rem' }} readOnly /></td>
-
-                                                        </div>
-                                                    )}
-                                                    
                                                     {/* <td><input type="text" className="form-control" name="otTime" value={rowData.otTime} onChange={(e) => handleFieldChange(index, 'otTime', e.target.value)} style={{ width: '4rem' }} min={rowData.otTime} max={rowData.otTime}
                                                     /></td> */}
                                                     {/* <td><input type="text" className="form-control" name="selectotTime" value={rowData.selectotTime} onChange={(e) => handleFieldChange(index, 'selectotTime', e.target.value)} style={{ width: '7rem' }} /> </td> */}
