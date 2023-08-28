@@ -560,13 +560,13 @@ function Setting() {
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label role="workStart1">เวลาเข้างาน</label>
+                                                            <label role="workStartOt1">เวลาเข้างาน</label>
                                                             <input type="text" class="form-control" id="workStartOt1" placeholder="เวลาเข้างาน" value={workStartOt1} onChange={(e) => setWorkStartOt1(e.target.value)} />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label role="workEnd1">เวลาออกงาน</label>
+                                                            <label role="workEndOt1">เวลาออกงาน</label>
                                                             <input type="text" class="form-control" id="workEndOt1" placeholder="เวลาออกงาน" value={workEndOt1} onChange={(e) => setWorkEndOt1(e.target.value)} />
                                                         </div>
                                                     </div>
@@ -584,13 +584,13 @@ function Setting() {
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label role="workStart2">เวลาเข้างาน</label>
+                                                            <label role="workStartOt2">เวลาเข้างาน</label>
                                                             <input type="text" class="form-control" id="workStartOt2" placeholder="เวลาเข้างาน" value={workStartOt2} onChange={(e) => setWorkStartOt2(e.target.value)} />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label role="workEnd2">เวลาออกงาน</label>
+                                                            <label role="workEndOt2">เวลาออกงาน</label>
                                                             <input type="text" class="form-control" id="workEndOt2" placeholder="เวลาออกงาน" value={workEndOt2} onChange={(e) => setWorkEndOt2(e.target.value)} />
                                                         </div>
                                                     </div>
@@ -607,13 +607,13 @@ function Setting() {
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label role="workStart3">เวลาเข้างาน</label>
+                                                            <label role="workStartOt3">เวลาเข้างาน</label>
                                                             <input type="text" class="form-control" id="workStartOt3" placeholder="เวลาเข้างาน" value={workStartOt3} onChange={(e) => setWorkStartOt3(e.target.value)} />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label role="workEnd3">เวลาออกงาน</label>
+                                                            <label role="workEndOt3">เวลาออกงาน</label>
                                                             <input type="text" class="form-control" id="workEndOt3" placeholder="เวลาออกงาน" value={workEndOt3} onChange={(e) => setWorkEndOt3(e.target.value)} />
                                                         </div>
                                                     </div>
