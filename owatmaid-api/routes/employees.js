@@ -125,6 +125,20 @@ salaryadd4v: String,
 salaryadd5:String,
 salaryadd5v: String,
 
+remainbusinessleave: String,
+businessleavesalary: String,
+remainsickleave: String,
+sickleavesalary: String,
+remainvacation: String,
+maternityleave: String,
+maternityleavesalary: String,
+vacationsalary: String,
+militaryleave: String,
+militaryleavesalary: String,
+sterilization: String,
+sterilizationsalary: String,
+leavefortraining: String,
+leavefortrainingsalary: String,
 
 
 });
