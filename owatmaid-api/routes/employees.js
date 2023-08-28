@@ -104,17 +104,28 @@ const employeeSchema = new mongoose.Schema({
     type: String
   },
 
-  salaryData: {
     startcount: String,
     salary: String,
     salarytype: String,
     money: String,
-        salaryupdate: Date,
+    salaryupdate: Date,
+    salaryout: String,
     salarypayment: String,
-    paymentType: String,
-        salarybank: String,
-        banknumber: String,
-          }
+    salarybank: String,
+    banknumber: String,
+
+    salaryadd1: String,
+salaryadd1v: String,
+salaryadd2:String,
+salaryadd2v: String,
+salaryadd3: String,
+salaryadd3v: String,
+salaryadd4:String,
+salaryadd4v: String,
+salaryadd5:String,
+salaryadd5v: String,
+
+
 
 });
 

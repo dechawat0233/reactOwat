@@ -15,6 +15,7 @@ function Salary() {
     const [newEmp, setNewEmp] = useState(true);
     // const [employeeselection , setEmployeeselection] = useState([]);
 const [workplaceSelection , setWorkplaceSelection] = useState([]);
+const [employeeData , setEmployeeData] = useState({});
 
     useEffect(() => {
         const storedValue = sessionStorage.getItem('empSelect');
@@ -22,6 +23,7 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
             // setEmployeeselection(storedValue);
         }
 
+        //get all Workplace from API
         fetch(endpoint + '/workplace/listselect') // Update with your API endpoint
         .then(response => response.json())
         .then(data => {setWorkplaceSelection(data);
@@ -31,12 +33,19 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
   
     }, []);
 
+    const handleChange = (e, field) => {
+        setEmployeeData(prevData => ({
+          ...prevData,
+          [field]: e.target.value
+        }));
+      };
+
     //employee data
     const [employeeId, setEmployeeId] = useState('');
     const [position, setPosition] = useState(''); //ตำแหน่ง
     const [department, setDepartment] = useState(''); //แผนก
     const [workplace, setWorkplace] = useState(''); //หน่วยงาน
-    const [workplacearia , setWorkplacearia ] = useState('');
+    const [workplacearea , setWorkplacearea ] = useState('');
     const [costtype, setCosttype] = useState(''); //ลงบัญชีเป็นค่าใช้จ่าย
     const [worktable, setWorktable] = useState(''); //ตารางงาน
     const [workexcept, setWorkexcept] = useState(''); //ผู้อนุมัต
@@ -48,7 +57,6 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
     const [exceptjob, setExceptjob] = useState(''); //วันที่บรรจุ
 
     //Salary Data
-
     const [startcount, setStartcount] = useState(''); //วันเริ่มคำนวน
     const [salary, setSalary] = useState(''); //อัตราเงินเดือน
     const [salarytype, setSalarytype] = useState(''); //อัตราเงินเดือน
@@ -56,7 +64,6 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
     const [salaryupdate, setSalaryupdate] = useState(''); //เงินเดือนปรับเมื่อ
     const [salaryout, setSalaryout] = useState(''); //เงินเดือนปรับเมื่อ
     const [salarypayment, setSalarypayment] = useState(''); //วิธีจ่ายเงิน
-    const [ paymentType , setPaymentType] = useState(''); //วิธีจ่ายเงิน
     const [salarybank, setSalarybank] = useState(''); //ธนาคาร
     const [banknumber, setBanknumber] = useState(''); //เลขบัญชี
 
@@ -106,11 +113,27 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
 
     const handleWorkplace = (event) => {
         setWorkplace(event.target.value);
+        setEmployeeData(prevData => ({
+            ...prevData,
+            ['workplace']: workplace
+          }));
+
         const filtered = workplaceSelection.filter(wp => 
             event.target.value === '' || wp.workplaceName === event.target.value 
             )
-            alert(filtered);
-            setWorkplacearia(filtered.workplaceName );
+            // alert(JSON.stringify(filtered , null, 2) );
+            // alert(filtered[0].workplaceArea );
+            if(filtered !== ''){
+                if(employeeData.workplace == '') {
+                    setWorkplacearea('');
+                  }else{
+                    setWorkplacearea(filtered[0].workplaceArea );
+                 }
+                
+            } else {
+                setWorkplacearea('');
+            }
+            // setWorkplacearea(filtered[0].workplaceArea );
     };
 
     const handleWorktable = (event) => {
@@ -129,9 +152,15 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
     const handleSalarytype = (event) => {
         setSalarytype(event.target.value);
     };
-    const handleSalaryupdate = (event) => {
-        setSalaryupdate(event.target.value);
+    const handleMoney = (event) => {
+        setMoney(event.target.value);
     };
+
+    const handleSalaryupdate = (date) => {
+        setSalaryupdate(date);
+    };
+
+
     const handleSalaryout = (event) => {
         setSalaryout(event.target.value);
     };
@@ -213,6 +242,8 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
     }
 
     function onEmployeeSelect(empSelect) {
+        setEmployeeData(empSelect);
+
         setEmployeeId(empSelect.employeeId);
         setPosition(empSelect.position);
         setDepartment(empSelect.department);
@@ -264,19 +295,19 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label role="employeeId">รหัสพนักงาน</label>
-                                                            <input type="text" class="form-control" id="employeeId" placeholder="รหัสพนักงาน" value={employeeId} onChange={(e) => setEmployeeId(e.target.value)} />
+                                                            <input type="text" class="form-control" id="employeeId" placeholder="รหัสพนักงาน" value={employeeData.employeeId || ''} onChange={(e) => handleChange(e, 'employeeId')} />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label role="position">ตำแหน่ง</label>
-                                                            <input type="text" class="form-control" id="position" placeholder="ตำแหน่ง" value={position} onChange={(e) => setPosition(e.target.value)} />
+                                                            <input type="text" class="form-control" id="position" placeholder="ตำแหน่ง" value={employeeData.position || ''} onChange={(e) => handleChange(e, 'position')} />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label role="department">แผนก</label>
-                                                            <input type="text" class="form-control" id="department" placeholder="แผนก" value={department} onChange={(e) => setDepartment(e.target.value)} />
+                                                            <input type="text" class="form-control" id="department" placeholder="แผนก" value={employeeData.department || ''} onChange={(e) => handleChange(e, 'department')} />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -286,7 +317,7 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
                                                             <label role="workplace">หน่วยงาน</label>
                                                             <select id="workplace" name="workplace" class="form-control"
                                                                 value={workplace} onChange={handleWorkplace}>
-                                                                <option value="ยังไม่ระบุหน่วยงาน">ยังไม่ระบุหน่วยงาน</option>
+                                                                <option value="">ยังไม่ระบุหน่วยงาน</option>
                                                                 {workplaceSelection.map(wp => (
                                                                 <option key={wp._id} value={wp.workplaceName}>{wp.workplaceName}</option>
     
@@ -296,8 +327,8 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label role="workplacearia">สถานที่ปฏิบัติงาน</label>
-                                                            <input type="text" class="form-control" id="workplacearia" placeholder="สถานที่ปฏิบัติงาน" value={workplacearia} onChange={(e) => setWorkplacearia(e.target.value)} />
+                                                            <label role="workplacearea">สถานที่ปฏิบัติงาน</label>
+                                                            <input type="text" class="form-control" id="workplacearea" placeholder="สถานที่ปฏิบัติงาน" value={workplacearea} readonly />
                                                         </div>
                                                     </div>
 
@@ -306,7 +337,8 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
                                                         <div class="form-group">
                                                             <label role="jobtype">ประเภทการจ้าง</label>
                                                             <select id="jobtype" name="jobtype" class="form-control"
-                                                                value={jobtype} onChange={handleJobtype}>
+                                                                value={employeeData.jobtype || ''} onChange={(e) => handleChange(e, 'jobtype')} >
+                                                                                                                                    <option value="">ไม่ระบุ</option>
                                                                 <option value="ประจำ">ประจำ</option>
                                                                 <option value="ไม่ประจำ">ไม่ประจำ</option>
                                                                 <option value="รายวัน">รายวัน</option>
@@ -319,11 +351,11 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
                                                             <label role="costtype">ลงบัญชีเป็นค่าใช้จ่าย</label>
                                                             <div class="" style={{ marginTop: "10px" }}>
                                                                 <div class="icheck-primary d-inline">
-                                                                    <input type="radio" id="costtype" name="costtype" value="ทางตรง" checked={costtype === "ทางตรง"} onChange={() => setCosttype("ทางตรง")}
+                                                                    <input type="radio" id="costtype" name="costtype" value="ทางตรง" checked={employeeData.costtype === "ทางตรง"} onChange={(e) => handleChange(e, 'costtype')} 
                                                                     /> ทางตรง
                                                                 </div>
                                                                 <div class="icheck-primary d-inline">
-                                                                    <input type="radio" id="costtype" name="costtype" value="ทางอ้อม" checked={costtype === "ทางอ้อม"} onChange={() => setCosttype("ทางอ้อม")}
+                                                                    <input type="radio" id="costtype" name="costtype" value="ทางอ้อม" checked={employeeData.costtype === "ทางอ้อม"} onChange={(e) => handleChange(e, 'costtype')} 
                                                                     /> ทางอ้อม
                                                                 </div>
                                                             </div>
@@ -352,18 +384,19 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
                                                         <div class="form-group">
                                                             <label role="worktable">ตารางงาน</label>
                                                             <select id="worktable" name="worktable" class="form-control"
-                                                                value={worktable} onChange={handleWorktable}>
-                                                                <option value="ไม่ระบุ">ไม่ระบุ</option>
+                                                                value={employeeData.worktable || ''} onChange={(e) => handleChange(e, 'worktable')} 
+                                                                >
+                                                                <option value="">ไม่ระบุ</option>
                                                             </select>
-
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label role="workexcept">ผู้อนุมัติ</label>
                                                             <select id="workexcept" name="workexcept" class="form-control"
-                                                                value={workexcept} onChange={handleWorkexcept}>
-                                                                <option value="ไม่ระบุ">ไม่ระบุ</option>
+                                                                value={employeeData.workexcept || ''} onChange={(e) => handleChange(e, 'workexcept')} 
+                                                                >
+                                                                <option value="">ไม่ระบุ</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -371,7 +404,8 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
                                                         <div class="form-group">
                                                             <label role="worktimerecord">ผู้บันทึกเวลา</label>
                                                             <select id="worktimerecord" name="worktimerecord" class="form-control"
-                                                                value={worktimerecord} onChange={handleWorktimerecord}>
+                                                                value={employeeData.worktimerecord || ''} onChange={(e) => handleChange(e, 'worktimerecord')} 
+                                                                >
                                                                 <option value="บันทึกผ่านเว็บ">บันทึกผ่านเว็บ</option>
                                                             </select>
                                                         </div>
@@ -381,35 +415,7 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
                                                 {/* <div class="row"><h2 class="title">             ปฏิบัติงาน</h2></div> */}
                                                 {/* <div class="row"> */}
 
-                                                    {/* <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label role="jobtype">ประเภทการจ้าง</label>
-                                                            <select id="jobtype" name="jobtype" class="form-control"
-                                                                value={jobtype} onChange={handleJobtype}>
-                                                                <option value="ประจำ">ประจำ</option>
-                                                                <option value="ไม่ประจำ">ไม่ประจำ</option>
-                                                                <option value="รายวัน">รายวัน</option>
-                                                                <option value="รายครั้ง">รายครั้ง</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label role="workplace">หน่วยงาน</label>
-                                                            <select id="workplace" name="workplace" class="form-control"
-                                                                value={workplace} onChange={handleWorkplace}>
-                                                                <option value="บริษัท ไทย เอ็นโอเค จำกัด (โรงงานบางประกง)">บริษัท ไทย เอ็นโอเค จำกัด (โรงงานบางประกง)</option>
-                                                                <option value="Gulf สำนักงานใหญ่">Gulf สำนักงานใหญ่</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label role="workrecord">ผู้บันทึกข้อมูลแทน</label>
-                                                            <input type="text" class="form-control" id="workrecord" placeholder="ผู้บันทึกข้อมูลแทน" value={workrecord} onChange={(e) => setWorkrecord(e.target.value)} />
-
-                                                        </div>
-                                                    </div> */}
+                                                    
                                                 {/* </div> */}
                                                 {/* <!--row--> */}
                                             </div>
@@ -469,7 +475,8 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
                                                     <div class="form-group row">
                                                         <label role="salary" class="col-sm-2 col-form-label">*อัตรา</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="salary" placeholder="จำนวนเงิน" value={salary} onChange={(e) => setSalary(e.target.value)} />
+                                                            <input type="text" class="form-control" id="salary" placeholder="จำนวนเงิน" value={employeeData.salary || ''} onChange={(e) => handleChange(e, 'salary')} 
+/>
 
                                                         </div>
                                                     </div>
@@ -479,7 +486,8 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
                                                                 <label role="salarytype" class="col-sm-3 col-form-label">*ต่อ</label>
                                                                 <div class="col-sm-6">
                                                                     <select id="salarytype" name="salarytype" class="form-control"
-                                                                        value={salarytype} onChange={handleSalarytype}>
+                                                                        value={employeeData.salarytype || ''} onChange={(e) => handleChange(e, 'salarytype')} >
+                                                                        <option value="">ไม่ระบุ</option>
                                                                         <option value="ต่อวัน">ต่อวัน</option>
                                                                         <option value="ต่อเดือน">ต่อเดือน</option>
                                                                     </select>
@@ -488,14 +496,14 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="row">
-                                                                <label class="col-sm-6 col-form-label">สกุลเงิน</label>
+                                                                <label role="money" class="col-sm-6 col-form-label">สกุลเงิน</label>
                                                                 <div class="col-sm-6">
-                                                                    <select class="form-control">
-                                                                        <option>บาท</option>
-                                                                        <option>จ๊าต - พม่า</option>
-                                                                        <option>เรียล - กัมพูชา</option>
-                                                                        <option>กีบ - ลาว</option>
-
+                                                                    <select id="money" name="money" class="form-control" value={employeeData.money || ''} onChange={(e) => handleChange(e, 'money')} >
+                                                                    <option value="">ไม่ระบุ</option>
+                                                                        <option value="บาท">บาท</option>
+                                                                        <option value="จ๊าต">จ๊าต - พม่า</option>
+                                                                        <option value="เรียล">เรียล - กัมพูชา</option>
+                                                                        <option value="กีบ">กีบ - ลาว</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -510,7 +518,7 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
                                                                     popperClassName="datepicker-popper" // Apply custom popper class if needed
                                                                     selected={salaryupdate}
                                                                     onChange={handleSalaryupdate}
-                                                                    dateFormat="dd/MM/yyyy" />
+                                                                        dateFormat="dd/MM/yyyy" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -521,7 +529,8 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
                                                 <label role="salaryout" class="col-sm-1">งวดจ่ายเงิน</label>
                                                 <div class="col-sm-9">
                                                     <select id="salaryout" name="salaryout" class="form-control"
-                                                        value={salaryout} onChange={handleSalaryout}>
+                                                        value={employeeData.salaryout || ''} onChange={(e) => handleChange(e, 'salaryout')} >
+                                                        <option value="">ไม่ระบุ</option>
                                                         <option value="เดือน">เดือน</option>
                                                         <option value="ครึ่งเดือน">ครึ่งเดือน</option>
                                                         <option value="สัปดาห์">สัปดาห์</option>
@@ -537,15 +546,15 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
                                                     <div class="icheck-primary d-inline">
                                                         <input type="radio" id="salarypayment" name="salarypayment"
                                                             value="เงินสด"
-                                                            checked={salarypayment === 'เงินสด'}
-                                                            onChange={handleSalarypayment}
+                                                            checked={employeeData.salarypayment === 'เงินสด'}
+                                                            onChange={(e) => handleChange(e, 'salarypayment')} 
                                                         /> เงินสด
                                                     </div>
                                                     <div class="icheck-primary d-inline">
                                                         <input type="radio" id="salarypayment" name="salarypayment"
                                                             value="โอนผ่านธนาคาร"
-                                                            checked={salarypayment === 'โอนผ่านธนาคาร'}
-                                                            onChange={handleSalarypayment}
+                                                            checked={employeeData.salarypayment === 'โอนผ่านธนาคาร'}
+                                                            onChange={(e) => handleChange(e, 'salarypayment')} 
                                                         /> โอนผ่านธนาคาร
                                                     </div>
                                                 </div>
@@ -557,7 +566,8 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
                                                         <label role="salarybank" class="col-sm-3 col-form-label">ชื่อธนาคาร</label>
                                                         <div class="col-sm-9">
                                                             <select id="salarybank" name="salarybank" class="form-control"
-                                                                value={salarybank} onChange={handleSalarybank}>
+                                                                value={employeeData.salarybank || ''} onChange={(e) => handleChange(e, 'salarybank')} >
+                                                                <option value="">ไม่ระบุ</option>
                                                                 <option value="ธนาคารกรุงเทพ">ธนาคารกรุงเทพ</option>
                                                                 <option value="ธนาคารกสิกรไทย">ธนาคารกสิกรไทย</option>
                                                                 <option value="ธนาคารกรุงไทย">ธนาคารกรุงไทย</option>
@@ -584,7 +594,8 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
                                                     <div class="form-group row">
                                                         <label role="banknumber" class="col-sm-3 col-form-label">เลขที่บัญชี</label>
                                                         <div class="col-sm-9">
-                                                            <input type="text" class="form-control" id="banknumber" placeholder="เลขที่บัญชี" value={banknumber} onChange={(e) => setBanknumber(e.target.value)} />
+                                                            <input type="text" class="form-control" id="banknumber" placeholder="เลขที่บัญชี" value={employeeData.banknumber || ''} onChange={(e) => handleChange(e, 'banknumber')} 
+/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -598,6 +609,7 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
                                 <div class="row">
                                     <div class="col-md-9">
                                         <section class="Frame">
+
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <div class="col-md-4">
@@ -606,16 +618,16 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
                                                             <label>
                                                                 <input
                                                                     type="checkbox"
-                                                                    checked={salaryadd1}
-                                                                    onChange={handleSalaryadd1}
+                                                                    checked={employeeData.salaryadd1}
+                                                                    onChange={(e) => handleChange(e, 'salaryadd1')} 
                                                                 />
                                                                 ค่ารถ
                                                             </label>
                                                             <label>
                                                                 <input
                                                                     type="checkbox"
-                                                                    checked={salaryadd2}
-                                                                    onChange={handleSalaryadd2}
+                                                                    checked={employeeData.salaryadd2}
+                                                                    onChange={(e) => handleChange(e, 'salaryadd2')} 
                                                                 />
                                                                 ค่าอาหาร
                                                             </label>
@@ -623,24 +635,24 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
                                                             <label>
                                                                 <input
                                                                     type="checkbox"
-                                                                    checked={salaryadd3}
-                                                                    onChange={handleSalaryadd3}
+                                                                    checked={employeeData.salaryadd3}
+                                                                    onChange={(e) => handleChange(e, 'salaryadd3')} 
                                                                 />
                                                                 เบี้ยขยัน
                                                             </label>
                                                             <label>
                                                                 <input
                                                                     type="checkbox"
-                                                                    checked={salaryadd4}
-                                                                    onChange={handleSalaryadd4}
+                                                                    checked={employeeData.salaryadd4}
+                                                                    onChange={(e) => handleChange(e, 'salaryadd4')} 
                                                                 />
                                                                 ค่าโทรศัพท์
                                                             </label>
                                                             <label>
                                                                 <input
                                                                     type="checkbox"
-                                                                    checked={salaryadd5}
-                                                                    onChange={handleSalaryadd5}
+                                                                    checked={employeeData.salaryadd5}
+                                                                    onChange={(e) => handleChange(e, 'salaryadd5')} 
                                                                 />
                                                                 เงินประจำตำแหน่ง
                                                             </label>
@@ -651,18 +663,20 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
                                                         <div class="form-group">
                                                             <label role="salaryaddtype">เพิ่มพิเศษแบบ</label>
                                                             <select id="salaryaddtype" name="salaryaddtype" class="form-control"
-                                                                value={salaryaddtype} onChange={handleSalaryaddtype}>
+                                                                value={employeeData.salaryaddtype || ''}                                                                     onChange={(e) => handleChange(e, 'salaryaddtype')} >
+                                                                <option value="">ไม่ระบุ</option>
                                                                 <option value="ต่อเดือน">ต่อเดือน</option>
                                                                 <option value="ต่อวัน">ต่อวัน</option>
                                                             </select>
                                                         </div>
                                                     </div>
 
-                                                    {salaryadd1 && (
+                                                    {employeeData.salaryadd1 && (
                                                         <div class="col-md-4">
                                                             <div class="form-group">
                                                                 <label role="salaryadd1v">เงินเพิ่มค่ารถ</label>
-                                                                <input type="text" class="form-control" id="salaryadd1v" placeholder="ค่ารถ" value={salaryadd1v} onChange={(e) => setSalaryadd1v(e.target.value)} />
+                                                                <input type="text" class="form-control" id="salaryadd1v" placeholder="ค่ารถ" value={employeeData.salaryadd1v} onChange={(e) => handleChange(e, 'salaryadd1v')} 
+ />
                                                             </div>
                                                         </div>
                                                     )}
@@ -671,7 +685,8 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
                                                         <div class="col-md-4">
                                                             <div class="form-group">
                                                                 <label role="salaryadd2v">เงินเพิ่มค่าอาหาร</label>
-                                                                <input type="text" class="form-control" id="salaryadd2v" placeholder="ค่าอาหาร" value={salaryadd2v} onChange={(e) => setSalaryadd1v(e.target.value)} />
+                                                                <input type="text" class="form-control" id="salaryadd2v" placeholder="ค่าอาหาร" value={employeeData.salaryadd2v} onChange={(e) => handleChange(e, 'salaryadd2v')} 
+ />
                                                             </div>
                                                         </div>
                                                     )}
@@ -680,7 +695,8 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
                                                         <div class="col-md-4">
                                                             <div class="form-group">
                                                                 <label role="salaryadd3v">ค่าเบี้ยขยัน</label>
-                                                                <input type="text" class="form-control" id="salaryadd3v" placeholder="ค่าเบี้ยขยัน" value={salaryadd3v} onChange={(e) => setSalaryadd3v(e.target.value)} />
+                                                                <input type="text" class="form-control" id="salaryadd3v" placeholder="ค่าเบี้ยขยัน" value={employeeData.salaryadd3v} onChange={(e) => handleChange(e, 'salaryadd3v')} 
+/>
                                                             </div>
                                                         </div>
                                                     )}
@@ -689,7 +705,8 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
                                                         <div class="col-md-4">
                                                             <div class="form-group">
                                                                 <label role="salaryadd4v">ค่าโทรศัพท์</label>
-                                                                <input type="text" class="form-control" id="salaryadd4v" placeholder="โทรศัพท์" value={salaryadd4v} onChange={(e) => setSalaryadd4v(e.target.value)} />
+                                                                <input type="text" class="form-control" id="salaryadd4v" placeholder="โทรศัพท์" value={employeeData.salaryadd4v} onChange={(e) => handleChange(e, 'salaryadd4v')} 
+/>
                                                             </div>
                                                         </div>
                                                     )}
@@ -698,7 +715,8 @@ const [workplaceSelection , setWorkplaceSelection] = useState([]);
                                                         <div class="col-md-4">
                                                             <div class="form-group">
                                                                 <label role="salaryadd5v">เงินประจำตำแหน่ง</label>
-                                                                <input type="text" class="form-control" id="salaryadd5v" placeholder="เงินประจำตำแหน่ง" value={salaryadd5v} onChange={(e) => setSalaryadd5v(e.target.value)} />
+                                                                <input type="text" class="form-control" id="salaryadd5v" placeholder="เงินประจำตำแหน่ง" value={employeeData.salaryadd5v} onChange={(e) => handleChange(e, 'salaryadd5v')} 
+/>
                                                             </div>
                                                         </div>
                                                     )}
