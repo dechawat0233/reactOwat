@@ -239,7 +239,44 @@ const [employeeData , setEmployeeData] = useState({});
 
     async function handleManageSalary(event) {
         event.preventDefault();
+        // alert(employeeData._id);
+                  // Make the API call to update the resource by ID
+                //   if(){
+
+                  try {
+                    const response = await axios.put(endpoint + '/employee/update/' + employeeData._id , employeeData);
+                    // setEmployeesResult(response.data.employees);
+                    if (response) {
+                        alert("บันทึกสำเร็จ");
+                    // window.location.reload();
+            
+                    }
+                } catch (error) {
+                    alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+                    alert(error);
+                    // window.location.reload();
+                }
+            // }
+        
     }
+
+    async  function updateEmployee(_id){
+          // Make the API call to update the resource by ID
+          try {
+            const response = await axios.put(endpoint + '/employee/update/' + _id, employeeData);
+            // setEmployeesResult(response.data.employees);
+            if (response) {
+                alert("บันทึกสำเร็จ");
+            window.location.reload();
+    
+            }
+        } catch (error) {
+            alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+            alert(error);
+            window.location.reload();
+        }
+    
+}
 
     function onEmployeeSelect(empSelect) {
         setEmployeeData(empSelect);
@@ -724,7 +761,7 @@ const [employeeData , setEmployeeData] = useState({});
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label role="salaryaddsum">เงินเพิ่มพิเศษรวม</label>
-                                                            <input type="text" class="form-control" id="salaryaddsum" placeholder="จำนวนเงิน" value={salaryaddsum} onChange={(e) => setSalaryaddsum(e.target.value)} />
+                                                            <input type="text" class="form-control" id="salaryaddsum" placeholder="จำนวนเงิน" value={salaryaddsum} readOnly />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -744,14 +781,16 @@ const [employeeData , setEmployeeData] = useState({});
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="remainbusinessleave">วันลากิจคงเหลือ</label>
-                                                            <input type="text" class="form-control" id="remainbusinessleave" placeholder="วันลากิจคงเหลือ" value={remainbusinessleave} onChange={(e) => setRemainbusinessleave(e.target.value)} />
+                                                            <input type="text" class="form-control" id="remainbusinessleave" placeholder="วันลากิจคงเหลือ" value={employeeData.remainbusinessleave} onChange={(e) => handleChange(e, 'remainbusinessleave')} 
+/>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="businessleavesalary">จำนวนเงินต่อวัน</label>
-                                                            <input type="text" class="form-control" id="businessleavesalary" placeholder="จำนวนเงินต่อวัน" value={businessleavesalary} onChange={(e) => setBusinessleavesalary(e.target.value)} />
+                                                            <input type="text" class="form-control" id="businessleavesalary" placeholder="จำนวนเงินต่อวัน" value={employeeData.businessleavesalary} onChange={(e) => handleChange(e, 'businessleavesalary')} 
+/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -760,14 +799,16 @@ const [employeeData , setEmployeeData] = useState({});
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="remainsickleave">วันลาป่วยคงเหลือ</label>
-                                                            <input type="text" class="form-control" id="remainsickleave" placeholder="วันลาป่วยคงเหลือ" value={remainsickleave} onChange={(e) => setRemainsickleave(e.target.value)} />
+                                                            <input type="text" class="form-control" id="remainsickleave" placeholder="วันลาป่วยคงเหลือ" value={employeeData.remainsickleave} onChange={(e) => handleChange(e, 'remainsickleave')} 
+/>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="sickleavesalary">จำนวนเงินต่อวัน</label>
-                                                            <input type="text" class="form-control" id="sickleavesalary" placeholder="จำนวนเงินต่อวัน" value={sickleavesalary} onChange={(e) => setSickleavesalary(e.target.value)} />
+                                                            <input type="text" class="form-control" id="sickleavesalary" placeholder="จำนวนเงินต่อวัน" value={employeeData.sickleavesalary}  onChange={(e) => handleChange(e, 'sickleavesalary')} 
+/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -776,14 +817,16 @@ const [employeeData , setEmployeeData] = useState({});
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="remainvacation">วันลาพักร้อนคงเหลือ</label>
-                                                            <input type="text" class="form-control" id="remainvacation" placeholder="วันลาพักร้อนคงเหลือ" value={remainvacation} onChange={(e) => setRemainvacation(e.target.value)} />
+                                                            <input type="text" class="form-control" id="remainvacation" placeholder="วันลาพักร้อนคงเหลือ" value={employeeData.remainvacation} onChange={(e) => handleChange(e, 'remainvacation')} 
+ />
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="maternityleave">จำนวนเงินต่อวัน</label>
-                                                            <input type="text" class="form-control" id="maternityleave" placeholder="จำนวนเงินต่อวัน" value={maternityleave} onChange={(e) => setMaternityLeave(e.target.value)} />
+                                                            <input type="text" class="form-control" id="maternityleave" placeholder="จำนวนเงินต่อวัน" value={employeeData.maternityleave} onChange={(e) => handleChange(e, 'maternityleave')} 
+ />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -792,14 +835,16 @@ const [employeeData , setEmployeeData] = useState({});
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="maternityleavesalary">วันลาคลอดคงเหลือ</label>
-                                                            <input type="text" class="form-control" id="maternityleavesalary" placeholder="วันลาคลอดคงเหลือ" value={maternityleavesalary} onChange={(e) => setMaternityleavesalary(e.target.value)} />
+                                                            <input type="text" class="form-control" id="maternityleavesalary" placeholder="วันลาคลอดคงเหลือ" value={employeeData.maternityleavesalary} onChange={(e) => handleChange(e, 'maternityleavesalary')} 
+ />
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="vacationsalary">จำนวนเงินต่อวัน</label>
-                                                            <input type="text" class="form-control" id="vacationsalary" placeholder="จำนวนเงินต่อวัน" value={vacationsalary} onChange={(e) => setVacationsalary(e.target.value)} />
+                                                            <input type="text" class="form-control" id="vacationsalary" placeholder="จำนวนเงินต่อวัน" value={employeeData.vacationsalary} onChange={(e) => handleChange(e, 'vacationsalary')} 
+ />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -808,14 +853,16 @@ const [employeeData , setEmployeeData] = useState({});
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="militaryleave">วันลาเพื่อเกณฑ์ทหารคงเหลือ</label>
-                                                            <input type="text" class="form-control" id="militaryleave" placeholder="วันลาเพื่อเกณฑ์ทหารคงเหลือ" value={militaryleave} onChange={(e) => setMilitaryleave(e.target.value)} />
+                                                            <input type="text" class="form-control" id="militaryleave" placeholder="วันลาเพื่อเกณฑ์ทหารคงเหลือ" value={employeeData.militaryleave} onChange={(e) => handleChange(e, 'militaryleave')} 
+ />
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="militaryleavesalary">จำนวนเงินต่อวัน</label>
-                                                            <input type="text" class="form-control" id="militaryleavesalary" placeholder="จำนวนเงินต่อวัน" value={militaryleavesalary} onChange={(e) => setMilitaryleavesalary(e.target.value)} />
+                                                            <input type="text" class="form-control" id="militaryleavesalary" placeholder="จำนวนเงินต่อวัน" value={employeeData.militaryleavesalary} onChange={(e) => handleChange(e, 'militaryleavesalary')} 
+ />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -824,14 +871,16 @@ const [employeeData , setEmployeeData] = useState({});
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="sterilization">วันลาเพื่อทำหมันคงเหลือ</label>
-                                                            <input type="text" class="form-control" id="sterilization" placeholder="วันลาเพื่อทำหมันคงเหลือ" value={sterilization} onChange={(e) => setSterilization(e.target.value)} />
+                                                            <input type="text" class="form-control" id="sterilization" placeholder="วันลาเพื่อทำหมันคงเหลือ" value={employeeData.sterilization} onChange={(e) => handleChange(e, 'sterilization')} 
+ />
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="sterilizationsalary">จำนวนเงินต่อวัน</label>
-                                                            <input type="text" class="form-control" id="sterilizationsalary" placeholder="จำนวนเงินต่อวัน" value={sterilizationsalary} onChange={(e) => setSterilizationsalary(e.target.value)} />
+                                                            <input type="text" class="form-control" id="sterilizationsalary" placeholder="จำนวนเงินต่อวัน" value={employeeData.sterilizationsalary} onChange={(e) => handleChange(e, 'sterilizationsalary')} 
+ />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -840,14 +889,16 @@ const [employeeData , setEmployeeData] = useState({});
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="leavefortraining">วันลาเพื่อฝึกอบรมคงเหลือ</label>
-                                                            <input type="text" class="form-control" id="leavefortraining" placeholder="วันลาเพื่อฝึกอบรมคงเหลือ" value={leavefortraining} onChange={(e) => setLeavefortraining(e.target.value)} />
+                                                            <input type="text" class="form-control" id="leavefortraining" placeholder="วันลาเพื่อฝึกอบรมคงเหลือ" value={employeeData.leavefortraining} onChange={(e) => handleChange(e, 'leavefortraining')} 
+ />
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="[leavefortrainingsalary, ">จำนวนเงินต่อวัน</label>
-                                                            <input type="text" class="form-control" id="[leavefortrainingsalary, " placeholder="จำนวนเงินต่อวัน" value={leavefortrainingsalary} onChange={(e) => setLeavefortrainingsalary(e.target.value)} />
+                                                            <input type="text" class="form-control" id="[leavefortrainingsalary, " placeholder="จำนวนเงินต่อวัน" value={employeeData.leavefortrainingsalary} onChange={(e) => handleChange(e, 'leavefortrainingsalary')} 
+ />
                                                         </div>
                                                     </div>
                                                 </div>
