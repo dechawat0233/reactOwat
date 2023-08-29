@@ -718,7 +718,7 @@ const [employeeData , setEmployeeData] = useState({});
                                                         </div>
                                                     )}
 
-                                                    {salaryadd2 && (
+                                                    {employeeData.salaryadd2 && (
                                                         <div class="col-md-4">
                                                             <div class="form-group">
                                                                 <label role="salaryadd2v">เงินเพิ่มค่าอาหาร</label>
@@ -728,7 +728,7 @@ const [employeeData , setEmployeeData] = useState({});
                                                         </div>
                                                     )}
 
-                                                    {salaryadd3 && (
+                                                    {employeeData.salaryadd3 && (
                                                         <div class="col-md-4">
                                                             <div class="form-group">
                                                                 <label role="salaryadd3v">ค่าเบี้ยขยัน</label>
@@ -738,7 +738,7 @@ const [employeeData , setEmployeeData] = useState({});
                                                         </div>
                                                     )}
 
-                                                    {salaryadd4 && (
+                                                    {employeeData.salaryadd4 && (
                                                         <div class="col-md-4">
                                                             <div class="form-group">
                                                                 <label role="salaryadd4v">ค่าโทรศัพท์</label>
@@ -748,7 +748,7 @@ const [employeeData , setEmployeeData] = useState({});
                                                         </div>
                                                     )}
 
-                                                    {salaryadd5 && (
+                                                    {employeeData.salaryadd5 && (
                                                         <div class="col-md-4">
                                                             <div class="form-group">
                                                                 <label role="salaryadd5v">เงินประจำตำแหน่ง</label>
