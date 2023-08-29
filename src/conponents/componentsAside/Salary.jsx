@@ -281,6 +281,8 @@ const [employeeData , setEmployeeData] = useState({});
 
     function onEmployeeSelect(empSelect) {
         setEmployeeData(empSelect);
+setWorkplace(employeeData.workplace);
+alert(employeeData.workplace);
 
         const filtered = workplaceSelection.filter(wp => 
             employeeData.workplace === '' || wp.workplaceName === employeeData.workplace
