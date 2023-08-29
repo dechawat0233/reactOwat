@@ -115,7 +115,7 @@ const [employeeData , setEmployeeData] = useState({});
         setWorkplace(event.target.value);
         setEmployeeData(prevData => ({
             ...prevData,
-            ['workplace']: workplace
+            ['workplace'] : event.target.value
           }));
 
         const filtered = workplaceSelection.filter(wp => 
@@ -279,16 +279,13 @@ const [employeeData , setEmployeeData] = useState({});
     
 }
 
-    function onEmployeeSelect(empSelect) {
-        setEmployeeData(empSelect);
-setWorkplace(employeeData.workplace);
-alert(employeeData.workplace);
+    async function onEmployeeSelect(empSelect) {
+        await setEmployeeData(empSelect);
+await setWorkplace(empSelect.workplace);
 
-        const filtered = workplaceSelection.filter(wp => 
-            employeeData.workplace === '' || wp.workplaceName === employeeData.workplace
+        const filtered = await workplaceSelection.filter(wp => 
+            empSelect.workplace === '' || wp.workplaceName === empSelect.workplace
             )
-            // alert(JSON.stringify(filtered , null, 2) );
-            // alert(filtered[0].workplaceArea );
             if(filtered !== ''){
                 if(employeeData.workplace == '') {
                     setWorkplacearea('');
@@ -299,20 +296,9 @@ alert(employeeData.workplace);
                 setWorkplacearea('');
             }
 
-        setEmployeeId(empSelect.employeeId);
-        setPosition(empSelect.position);
-        setDepartment(empSelect.department);
-        setWorkplace(empSelect.workplace);
-        setJobtype(empSelect.jobtype);
-        setStartjob(new Date(empSelect.startjob));
-        setExceptjob(new Date(empSelect.exceptjob));
-        setPrefix(empSelect.prefix);
-        setName(empSelect.name);
-        setLastName(empSelect.lastName);
-        setNickName(empSelect.nickName);
-        setGender(empSelect.gender);
+        await setStartjob(new Date(empSelect.startjob));
+        await setExceptjob(new Date(empSelect.exceptjob));
 
-        setIdCard(empSelect.idCard);
 
     }
 
