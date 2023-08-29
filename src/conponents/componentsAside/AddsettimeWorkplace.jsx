@@ -466,6 +466,14 @@ function AddsettimeWorkplace() {
                 const startTime4 = '';
                 const endTime4 = '';
 
+                const startTimeOt1 = response.data.workplaces[0].workStartOt1;
+                const endTimeOt1 = response.data.workplaces[0].workEndOt1;
+                const startTimeOt2 = response.data.workplaces[0].workStartOt1;
+                const endTimeOt2 = response.data.workplaces[0].workEndOt1;
+                const startTimeOt3 = response.data.workplaces[0].workStartOt1;
+                const endTimeOt3 = response.data.workplaces[0].workEndOt1;
+                
+
                 setShift1start(startTime);
                 setShift1end(endTime);
                 setShift2start(startTime2);
@@ -517,6 +525,13 @@ function AddsettimeWorkplace() {
                     endTime2: endTime2,
                     startTime3: startTime3,
                     endTime3: endTime3,
+
+                    startTimeOt1: startTimeOt1,
+                    endTimeOt1: endTimeOt1,
+                    startTimeOt2: startTimeOt2,
+                    endTimeOt2: endTimeOt2,
+                    startTimeOt3: startTimeOt3,
+                    endTimeOt3: endTimeOt3,
                 }));
                 setRowDataList(updatedRowDataList);
 
