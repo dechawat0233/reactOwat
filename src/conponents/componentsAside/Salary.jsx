@@ -133,6 +133,7 @@ const [employeeData , setEmployeeData] = useState({});
             } else {
                 setWorkplacearea('');
             }
+
             // setWorkplacearea(filtered[0].workplaceArea );
     };
 
@@ -280,6 +281,23 @@ const [employeeData , setEmployeeData] = useState({});
 
     function onEmployeeSelect(empSelect) {
         setEmployeeData(empSelect);
+setWorkplace(employeeData.workplace);
+alert(employeeData.workplace);
+
+        const filtered = workplaceSelection.filter(wp => 
+            employeeData.workplace === '' || wp.workplaceName === employeeData.workplace
+            )
+            // alert(JSON.stringify(filtered , null, 2) );
+            // alert(filtered[0].workplaceArea );
+            if(filtered !== ''){
+                if(employeeData.workplace == '') {
+                    setWorkplacearea('');
+                  }else{
+                    setWorkplacearea(filtered[0].workplaceArea );
+                 }
+                            } else {
+                setWorkplacearea('');
+            }
 
         setEmployeeId(empSelect.employeeId);
         setPosition(empSelect.position);
