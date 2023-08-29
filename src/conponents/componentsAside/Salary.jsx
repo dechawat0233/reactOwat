@@ -14,8 +14,8 @@ function Salary() {
     const [storedEmp, setStoredEmp] = useState([]);
     const [newEmp, setNewEmp] = useState(true);
     // const [employeeselection , setEmployeeselection] = useState([]);
-const [workplaceSelection , setWorkplaceSelection] = useState([]);
-const [employeeData , setEmployeeData] = useState({});
+    const [workplaceSelection, setWorkplaceSelection] = useState([]);
+    const [employeeData, setEmployeeData] = useState({});
 
     useEffect(() => {
         const storedValue = sessionStorage.getItem('empSelect');
@@ -25,27 +25,28 @@ const [employeeData , setEmployeeData] = useState({});
 
         //get all Workplace from API
         fetch(endpoint + '/workplace/listselect') // Update with your API endpoint
-        .then(response => response.json())
-        .then(data => {setWorkplaceSelection(data);
-}
-        )
-        .catch(error => console.error('Error fetching employees:', error));
-  
+            .then(response => response.json())
+            .then(data => {
+                setWorkplaceSelection(data);
+            }
+            )
+            .catch(error => console.error('Error fetching employees:', error));
+
     }, []);
 
     const handleChange = (e, field) => {
         setEmployeeData(prevData => ({
-          ...prevData,
-          [field]: e.target.value
+            ...prevData,
+            [field]: e.target.value
         }));
-      };
+    };
 
     //employee data
     const [employeeId, setEmployeeId] = useState('');
     const [position, setPosition] = useState(''); //ตำแหน่ง
     const [department, setDepartment] = useState(''); //แผนก
     const [workplace, setWorkplace] = useState(''); //หน่วยงาน
-    const [workplacearea , setWorkplacearea ] = useState('');
+    const [workplacearea, setWorkplacearea] = useState('');
     const [costtype, setCosttype] = useState(''); //ลงบัญชีเป็นค่าใช้จ่าย
     const [worktable, setWorktable] = useState(''); //ตารางงาน
     const [workexcept, setWorkexcept] = useState(''); //ผู้อนุมัต
@@ -60,7 +61,7 @@ const [employeeData , setEmployeeData] = useState({});
     const [startcount, setStartcount] = useState(''); //วันเริ่มคำนวน
     const [salary, setSalary] = useState(''); //อัตราเงินเดือน
     const [salarytype, setSalarytype] = useState(''); //อัตราเงินเดือน
-    const [money , setMoney] = useState(''); //หน่วยของเงิน
+    const [money, setMoney] = useState(''); //หน่วยของเงิน
     const [salaryupdate, setSalaryupdate] = useState(''); //เงินเดือนปรับเมื่อ
     const [salaryout, setSalaryout] = useState(''); //เงินเดือนปรับเมื่อ
     const [salarypayment, setSalarypayment] = useState(''); //วิธีจ่ายเงิน
@@ -81,7 +82,7 @@ const [employeeData , setEmployeeData] = useState({});
     const [salaryadd3v, setSalaryadd3v] = useState(''); //จำนวนเงินเพิ่มพิเศษ เบี้ยขยัน 
     const [salaryadd4v, setSalaryadd4v] = useState(''); //จำนวนเงินเพิ่มพิเศษ โทรศัพท์
     const [salaryadd5v, setSalaryadd5v] = useState(''); //จำนวนเงินเพิ่มพิเศษ เงินประจำตำแหน่ง 
-//////
+    //////
     const [remainbusinessleave, setRemainbusinessleave] = useState(''); //ลาคงเหลือ วันลากิจคงเหลือ 
     const [businessleavesalary, setBusinessleavesalary] = useState(''); //ลาคงเหลือ จำนวนเงินต่อวัน
 
@@ -115,26 +116,26 @@ const [employeeData , setEmployeeData] = useState({});
         setWorkplace(event.target.value);
         setEmployeeData(prevData => ({
             ...prevData,
-            ['workplace'] : event.target.value
-          }));
+            ['workplace']: event.target.value
+        }));
 
-        const filtered = workplaceSelection.filter(wp => 
-            event.target.value === '' || wp.workplaceName === event.target.value 
-            )
-            // alert(JSON.stringify(filtered , null, 2) );
-            // alert(filtered[0].workplaceArea );
-            if(filtered !== ''){
-                if(employeeData.workplace == '') {
-                    setWorkplacearea('');
-                  }else{
-                    setWorkplacearea(filtered[0].workplaceArea );
-                 }
-                
-            } else {
+        const filtered = workplaceSelection.filter(wp =>
+            event.target.value === '' || wp.workplaceName === event.target.value
+        )
+        // alert(JSON.stringify(filtered , null, 2) );
+        // alert(filtered[0].workplaceArea );
+        if (filtered !== '') {
+            if (employeeData.workplace == '') {
                 setWorkplacearea('');
+            } else {
+                setWorkplacearea(filtered[0].workplaceArea);
             }
 
-            // setWorkplacearea(filtered[0].workplaceArea );
+        } else {
+            setWorkplacearea('');
+        }
+
+        // setWorkplacearea(filtered[0].workplaceArea );
     };
 
     const handleWorktable = (event) => {
@@ -241,60 +242,60 @@ const [employeeData , setEmployeeData] = useState({});
     async function handleManageSalary(event) {
         event.preventDefault();
         // alert(employeeData._id);
-                  // Make the API call to update the resource by ID
-                //   if(){
+        // Make the API call to update the resource by ID
+        //   if(){
 
-                  try {
-                    const response = await axios.put(endpoint + '/employee/update/' + employeeData._id , employeeData);
-                    // setEmployeesResult(response.data.employees);
-                    if (response) {
-                        alert("บันทึกสำเร็จ");
-                    // window.location.reload();
-            
-                    }
-                } catch (error) {
-                    alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
-                    alert(error);
-                    // window.location.reload();
-                }
-            // }
-        
+        try {
+            const response = await axios.put(endpoint + '/employee/update/' + employeeData._id, employeeData);
+            // setEmployeesResult(response.data.employees);
+            if (response) {
+                alert("บันทึกสำเร็จ");
+                // window.location.reload();
+
+            }
+        } catch (error) {
+            alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+            alert(error);
+            // window.location.reload();
+        }
+        // }
+
     }
 
-    async  function updateEmployee(_id){
-          // Make the API call to update the resource by ID
-          try {
+    async function updateEmployee(_id) {
+        // Make the API call to update the resource by ID
+        try {
             const response = await axios.put(endpoint + '/employee/update/' + _id, employeeData);
             // setEmployeesResult(response.data.employees);
             if (response) {
                 alert("บันทึกสำเร็จ");
-            window.location.reload();
-    
+                window.location.reload();
+
             }
         } catch (error) {
             alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
             alert(error);
             window.location.reload();
         }
-    
-}
+
+    }
 
     async function onEmployeeSelect(empSelect) {
         await setEmployeeData(empSelect);
-await setWorkplace(empSelect.workplace);
+        await setWorkplace(empSelect.workplace);
 
-        const filtered = await workplaceSelection.filter(wp => 
+        const filtered = await workplaceSelection.filter(wp =>
             empSelect.workplace === '' || wp.workplaceName === empSelect.workplace
-            )
-            if(filtered !== ''){
-                if(employeeData.workplace == '') {
-                    setWorkplacearea('');
-                  }else{
-                    setWorkplacearea(filtered[0].workplaceArea );
-                 }
-                            } else {
+        )
+        if (filtered !== '') {
+            if (employeeData.workplace == '') {
                 setWorkplacearea('');
+            } else {
+                setWorkplacearea(filtered[0].workplaceArea);
             }
+        } else {
+            setWorkplacearea('');
+        }
 
         await setStartjob(new Date(empSelect.startjob));
         await setExceptjob(new Date(empSelect.exceptjob));
@@ -360,9 +361,9 @@ await setWorkplace(empSelect.workplace);
                                                                 value={workplace} onChange={handleWorkplace}>
                                                                 <option value="">ยังไม่ระบุหน่วยงาน</option>
                                                                 {workplaceSelection.map(wp => (
-                                                                <option key={wp._id} value={wp.workplaceName}>{wp.workplaceName}</option>
-    
-))}
+                                                                    <option key={wp._id} value={wp.workplaceName}>{wp.workplaceName}</option>
+
+                                                                ))}
                                                             </select>
                                                         </div>
                                                     </div>
@@ -379,7 +380,7 @@ await setWorkplace(empSelect.workplace);
                                                             <label role="jobtype">ประเภทการจ้าง</label>
                                                             <select id="jobtype" name="jobtype" class="form-control"
                                                                 value={employeeData.jobtype || ''} onChange={(e) => handleChange(e, 'jobtype')} >
-                                                                                                                                    <option value="">ไม่ระบุ</option>
+                                                                <option value="">ไม่ระบุ</option>
                                                                 <option value="ประจำ">ประจำ</option>
                                                                 <option value="ไม่ประจำ">ไม่ประจำ</option>
                                                                 <option value="รายวัน">รายวัน</option>
@@ -392,11 +393,11 @@ await setWorkplace(empSelect.workplace);
                                                             <label role="costtype">ลงบัญชีเป็นค่าใช้จ่าย</label>
                                                             <div class="" style={{ marginTop: "10px" }}>
                                                                 <div class="icheck-primary d-inline">
-                                                                    <input type="radio" id="costtype" name="costtype" value="ทางตรง" checked={employeeData.costtype === "ทางตรง"} onChange={(e) => handleChange(e, 'costtype')} 
+                                                                    <input type="radio" id="costtype" name="costtype" value="ทางตรง" checked={employeeData.costtype === "ทางตรง"} onChange={(e) => handleChange(e, 'costtype')}
                                                                     /> ทางตรง
                                                                 </div>
                                                                 <div class="icheck-primary d-inline">
-                                                                    <input type="radio" id="costtype" name="costtype" value="ทางอ้อม" checked={employeeData.costtype === "ทางอ้อม"} onChange={(e) => handleChange(e, 'costtype')} 
+                                                                    <input type="radio" id="costtype" name="costtype" value="ทางอ้อม" checked={employeeData.costtype === "ทางอ้อม"} onChange={(e) => handleChange(e, 'costtype')}
                                                                     /> ทางอ้อม
                                                                 </div>
                                                             </div>
@@ -425,8 +426,8 @@ await setWorkplace(empSelect.workplace);
                                                         <div class="form-group">
                                                             <label role="worktable">ตารางงาน</label>
                                                             <select id="worktable" name="worktable" class="form-control"
-                                                                value={employeeData.worktable || ''} onChange={(e) => handleChange(e, 'worktable')} 
-                                                                >
+                                                                value={employeeData.worktable || ''} onChange={(e) => handleChange(e, 'worktable')}
+                                                            >
                                                                 <option value="">ไม่ระบุ</option>
                                                             </select>
                                                         </div>
@@ -435,8 +436,8 @@ await setWorkplace(empSelect.workplace);
                                                         <div class="form-group">
                                                             <label role="workexcept">ผู้อนุมัติ</label>
                                                             <select id="workexcept" name="workexcept" class="form-control"
-                                                                value={employeeData.workexcept || ''} onChange={(e) => handleChange(e, 'workexcept')} 
-                                                                >
+                                                                value={employeeData.workexcept || ''} onChange={(e) => handleChange(e, 'workexcept')}
+                                                            >
                                                                 <option value="">ไม่ระบุ</option>
                                                             </select>
                                                         </div>
@@ -445,8 +446,8 @@ await setWorkplace(empSelect.workplace);
                                                         <div class="form-group">
                                                             <label role="worktimerecord">ผู้บันทึกเวลา</label>
                                                             <select id="worktimerecord" name="worktimerecord" class="form-control"
-                                                                value={employeeData.worktimerecord || ''} onChange={(e) => handleChange(e, 'worktimerecord')} 
-                                                                >
+                                                                value={employeeData.worktimerecord || ''} onChange={(e) => handleChange(e, 'worktimerecord')}
+                                                            >
                                                                 <option value="บันทึกผ่านเว็บ">บันทึกผ่านเว็บ</option>
                                                             </select>
                                                         </div>
@@ -456,7 +457,7 @@ await setWorkplace(empSelect.workplace);
                                                 {/* <div class="row"><h2 class="title">             ปฏิบัติงาน</h2></div> */}
                                                 {/* <div class="row"> */}
 
-                                                    
+
                                                 {/* </div> */}
                                                 {/* <!--row--> */}
                                             </div>
@@ -516,8 +517,8 @@ await setWorkplace(empSelect.workplace);
                                                     <div class="form-group row">
                                                         <label role="salary" class="col-sm-2 col-form-label">*อัตรา</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="salary" placeholder="จำนวนเงิน" value={employeeData.salary || ''} onChange={(e) => handleChange(e, 'salary')} 
-/>
+                                                            <input type="text" class="form-control" id="salary" placeholder="จำนวนเงิน" value={employeeData.salary || ''} onChange={(e) => handleChange(e, 'salary')}
+                                                            />
 
                                                         </div>
                                                     </div>
@@ -540,7 +541,7 @@ await setWorkplace(empSelect.workplace);
                                                                 <label role="money" class="col-sm-6 col-form-label">สกุลเงิน</label>
                                                                 <div class="col-sm-6">
                                                                     <select id="money" name="money" class="form-control" value={employeeData.money || ''} onChange={(e) => handleChange(e, 'money')} >
-                                                                    <option value="">ไม่ระบุ</option>
+                                                                        <option value="">ไม่ระบุ</option>
                                                                         <option value="บาท">บาท</option>
                                                                         <option value="จ๊าต">จ๊าต - พม่า</option>
                                                                         <option value="เรียล">เรียล - กัมพูชา</option>
@@ -559,7 +560,7 @@ await setWorkplace(empSelect.workplace);
                                                                     popperClassName="datepicker-popper" // Apply custom popper class if needed
                                                                     selected={salaryupdate}
                                                                     onChange={handleSalaryupdate}
-                                                                        dateFormat="dd/MM/yyyy" />
+                                                                    dateFormat="dd/MM/yyyy" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -588,14 +589,14 @@ await setWorkplace(empSelect.workplace);
                                                         <input type="radio" id="salarypayment" name="salarypayment"
                                                             value="เงินสด"
                                                             checked={employeeData.salarypayment === 'เงินสด'}
-                                                            onChange={(e) => handleChange(e, 'salarypayment')} 
+                                                            onChange={(e) => handleChange(e, 'salarypayment')}
                                                         /> เงินสด
                                                     </div>
                                                     <div class="icheck-primary d-inline">
                                                         <input type="radio" id="salarypayment" name="salarypayment"
                                                             value="โอนผ่านธนาคาร"
                                                             checked={employeeData.salarypayment === 'โอนผ่านธนาคาร'}
-                                                            onChange={(e) => handleChange(e, 'salarypayment')} 
+                                                            onChange={(e) => handleChange(e, 'salarypayment')}
                                                         /> โอนผ่านธนาคาร
                                                     </div>
                                                 </div>
@@ -635,8 +636,8 @@ await setWorkplace(empSelect.workplace);
                                                     <div class="form-group row">
                                                         <label role="banknumber" class="col-sm-3 col-form-label">เลขที่บัญชี</label>
                                                         <div class="col-sm-9">
-                                                            <input type="text" class="form-control" id="banknumber" placeholder="เลขที่บัญชี" value={employeeData.banknumber || ''} onChange={(e) => handleChange(e, 'banknumber')} 
-/>
+                                                            <input type="text" class="form-control" id="banknumber" placeholder="เลขที่บัญชี" value={employeeData.banknumber || ''} onChange={(e) => handleChange(e, 'banknumber')}
+                                                            />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -660,7 +661,7 @@ await setWorkplace(empSelect.workplace);
                                                                 <input
                                                                     type="checkbox"
                                                                     checked={employeeData.salaryadd1}
-                                                                    onChange={(e) => handleChange(e, 'salaryadd1')} 
+                                                                    onChange={(e) => handleChange(e, 'salaryadd1')}
                                                                 />
                                                                 ค่ารถ
                                                             </label>
@@ -668,7 +669,7 @@ await setWorkplace(empSelect.workplace);
                                                                 <input
                                                                     type="checkbox"
                                                                     checked={employeeData.salaryadd2}
-                                                                    onChange={(e) => handleChange(e, 'salaryadd2')} 
+                                                                    onChange={(e) => handleChange(e, 'salaryadd2')}
                                                                 />
                                                                 ค่าอาหาร
                                                             </label>
@@ -677,7 +678,7 @@ await setWorkplace(empSelect.workplace);
                                                                 <input
                                                                     type="checkbox"
                                                                     checked={employeeData.salaryadd3}
-                                                                    onChange={(e) => handleChange(e, 'salaryadd3')} 
+                                                                    onChange={(e) => handleChange(e, 'salaryadd3')}
                                                                 />
                                                                 เบี้ยขยัน
                                                             </label>
@@ -685,7 +686,7 @@ await setWorkplace(empSelect.workplace);
                                                                 <input
                                                                     type="checkbox"
                                                                     checked={employeeData.salaryadd4}
-                                                                    onChange={(e) => handleChange(e, 'salaryadd4')} 
+                                                                    onChange={(e) => handleChange(e, 'salaryadd4')}
                                                                 />
                                                                 ค่าโทรศัพท์
                                                             </label>
@@ -693,7 +694,7 @@ await setWorkplace(empSelect.workplace);
                                                                 <input
                                                                     type="checkbox"
                                                                     checked={employeeData.salaryadd5}
-                                                                    onChange={(e) => handleChange(e, 'salaryadd5')} 
+                                                                    onChange={(e) => handleChange(e, 'salaryadd5')}
                                                                 />
                                                                 เงินประจำตำแหน่ง
                                                             </label>
@@ -704,7 +705,7 @@ await setWorkplace(empSelect.workplace);
                                                         <div class="form-group">
                                                             <label role="salaryaddtype">เพิ่มพิเศษแบบ</label>
                                                             <select id="salaryaddtype" name="salaryaddtype" class="form-control"
-                                                                value={employeeData.salaryaddtype || ''}                                                                     onChange={(e) => handleChange(e, 'salaryaddtype')} >
+                                                                value={employeeData.salaryaddtype || ''} onChange={(e) => handleChange(e, 'salaryaddtype')} >
                                                                 <option value="">ไม่ระบุ</option>
                                                                 <option value="ต่อเดือน">ต่อเดือน</option>
                                                                 <option value="ต่อวัน">ต่อวัน</option>
@@ -716,8 +717,8 @@ await setWorkplace(empSelect.workplace);
                                                         <div class="col-md-4">
                                                             <div class="form-group">
                                                                 <label role="salaryadd1v">เงินเพิ่มค่ารถ</label>
-                                                                <input type="text" class="form-control" id="salaryadd1v" placeholder="ค่ารถ" value={employeeData.salaryadd1v} onChange={(e) => handleChange(e, 'salaryadd1v')} 
- />
+                                                                <input type="text" class="form-control" id="salaryadd1v" placeholder="ค่ารถ" value={employeeData.salaryadd1v} onChange={(e) => handleChange(e, 'salaryadd1v')}
+                                                                />
                                                             </div>
                                                         </div>
                                                     )}
@@ -726,8 +727,8 @@ await setWorkplace(empSelect.workplace);
                                                         <div class="col-md-4">
                                                             <div class="form-group">
                                                                 <label role="salaryadd2v">เงินเพิ่มค่าอาหาร</label>
-                                                                <input type="text" class="form-control" id="salaryadd2v" placeholder="ค่าอาหาร" value={employeeData.salaryadd2v} onChange={(e) => handleChange(e, 'salaryadd2v')} 
- />
+                                                                <input type="text" class="form-control" id="salaryadd2v" placeholder="ค่าอาหาร" value={employeeData.salaryadd2v} onChange={(e) => handleChange(e, 'salaryadd2v')}
+                                                                />
                                                             </div>
                                                         </div>
                                                     )}
@@ -736,8 +737,8 @@ await setWorkplace(empSelect.workplace);
                                                         <div class="col-md-4">
                                                             <div class="form-group">
                                                                 <label role="salaryadd3v">ค่าเบี้ยขยัน</label>
-                                                                <input type="text" class="form-control" id="salaryadd3v" placeholder="ค่าเบี้ยขยัน" value={employeeData.salaryadd3v} onChange={(e) => handleChange(e, 'salaryadd3v')} 
-/>
+                                                                <input type="text" class="form-control" id="salaryadd3v" placeholder="ค่าเบี้ยขยัน" value={employeeData.salaryadd3v} onChange={(e) => handleChange(e, 'salaryadd3v')}
+                                                                />
                                                             </div>
                                                         </div>
                                                     )}
@@ -746,8 +747,8 @@ await setWorkplace(empSelect.workplace);
                                                         <div class="col-md-4">
                                                             <div class="form-group">
                                                                 <label role="salaryadd4v">ค่าโทรศัพท์</label>
-                                                                <input type="text" class="form-control" id="salaryadd4v" placeholder="โทรศัพท์" value={employeeData.salaryadd4v} onChange={(e) => handleChange(e, 'salaryadd4v')} 
-/>
+                                                                <input type="text" class="form-control" id="salaryadd4v" placeholder="โทรศัพท์" value={employeeData.salaryadd4v} onChange={(e) => handleChange(e, 'salaryadd4v')}
+                                                                />
                                                             </div>
                                                         </div>
                                                     )}
@@ -756,8 +757,8 @@ await setWorkplace(empSelect.workplace);
                                                         <div class="col-md-4">
                                                             <div class="form-group">
                                                                 <label role="salaryadd5v">เงินประจำตำแหน่ง</label>
-                                                                <input type="text" class="form-control" id="salaryadd5v" placeholder="เงินประจำตำแหน่ง" value={employeeData.salaryadd5v} onChange={(e) => handleChange(e, 'salaryadd5v')} 
-/>
+                                                                <input type="text" class="form-control" id="salaryadd5v" placeholder="เงินประจำตำแหน่ง" value={employeeData.salaryadd5v} onChange={(e) => handleChange(e, 'salaryadd5v')}
+                                                                />
                                                             </div>
                                                         </div>
                                                     )}
@@ -785,16 +786,16 @@ await setWorkplace(empSelect.workplace);
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="remainbusinessleave">วันลากิจคงเหลือ</label>
-                                                            <input type="text" class="form-control" id="remainbusinessleave" placeholder="วันลากิจคงเหลือ" value={employeeData.remainbusinessleave} onChange={(e) => handleChange(e, 'remainbusinessleave')} 
-/>
+                                                            <input type="text" class="form-control" id="remainbusinessleave" placeholder="วันลากิจคงเหลือ" value={employeeData.remainbusinessleave} onChange={(e) => handleChange(e, 'remainbusinessleave')}
+                                                            />
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="businessleavesalary">จำนวนเงินต่อวัน</label>
-                                                            <input type="text" class="form-control" id="businessleavesalary" placeholder="จำนวนเงินต่อวัน" value={employeeData.businessleavesalary} onChange={(e) => handleChange(e, 'businessleavesalary')} 
-/>
+                                                            <input type="text" class="form-control" id="businessleavesalary" placeholder="จำนวนเงินต่อวัน" value={employeeData.businessleavesalary} onChange={(e) => handleChange(e, 'businessleavesalary')}
+                                                            />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -803,16 +804,16 @@ await setWorkplace(empSelect.workplace);
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="remainsickleave">วันลาป่วยคงเหลือ</label>
-                                                            <input type="text" class="form-control" id="remainsickleave" placeholder="วันลาป่วยคงเหลือ" value={employeeData.remainsickleave} onChange={(e) => handleChange(e, 'remainsickleave')} 
-/>
+                                                            <input type="text" class="form-control" id="remainsickleave" placeholder="วันลาป่วยคงเหลือ" value={employeeData.remainsickleave} onChange={(e) => handleChange(e, 'remainsickleave')}
+                                                            />
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="sickleavesalary">จำนวนเงินต่อวัน</label>
-                                                            <input type="text" class="form-control" id="sickleavesalary" placeholder="จำนวนเงินต่อวัน" value={employeeData.sickleavesalary}  onChange={(e) => handleChange(e, 'sickleavesalary')} 
-/>
+                                                            <input type="text" class="form-control" id="sickleavesalary" placeholder="จำนวนเงินต่อวัน" value={employeeData.sickleavesalary} onChange={(e) => handleChange(e, 'sickleavesalary')}
+                                                            />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -821,16 +822,16 @@ await setWorkplace(empSelect.workplace);
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="remainvacation">วันลาพักร้อนคงเหลือ</label>
-                                                            <input type="text" class="form-control" id="remainvacation" placeholder="วันลาพักร้อนคงเหลือ" value={employeeData.remainvacation} onChange={(e) => handleChange(e, 'remainvacation')} 
- />
+                                                            <input type="text" class="form-control" id="remainvacation" placeholder="วันลาพักร้อนคงเหลือ" value={employeeData.remainvacation} onChange={(e) => handleChange(e, 'remainvacation')}
+                                                            />
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="maternityleave">จำนวนเงินต่อวัน</label>
-                                                            <input type="text" class="form-control" id="maternityleave" placeholder="จำนวนเงินต่อวัน" value={employeeData.maternityleave} onChange={(e) => handleChange(e, 'maternityleave')} 
- />
+                                                            <input type="text" class="form-control" id="maternityleave" placeholder="จำนวนเงินต่อวัน" value={employeeData.maternityleave} onChange={(e) => handleChange(e, 'maternityleave')}
+                                                            />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -839,16 +840,16 @@ await setWorkplace(empSelect.workplace);
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="maternityleavesalary">วันลาคลอดคงเหลือ</label>
-                                                            <input type="text" class="form-control" id="maternityleavesalary" placeholder="วันลาคลอดคงเหลือ" value={employeeData.maternityleavesalary} onChange={(e) => handleChange(e, 'maternityleavesalary')} 
- />
+                                                            <input type="text" class="form-control" id="maternityleavesalary" placeholder="วันลาคลอดคงเหลือ" value={employeeData.maternityleavesalary} onChange={(e) => handleChange(e, 'maternityleavesalary')}
+                                                            />
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="vacationsalary">จำนวนเงินต่อวัน</label>
-                                                            <input type="text" class="form-control" id="vacationsalary" placeholder="จำนวนเงินต่อวัน" value={employeeData.vacationsalary} onChange={(e) => handleChange(e, 'vacationsalary')} 
- />
+                                                            <input type="text" class="form-control" id="vacationsalary" placeholder="จำนวนเงินต่อวัน" value={employeeData.vacationsalary} onChange={(e) => handleChange(e, 'vacationsalary')}
+                                                            />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -857,16 +858,16 @@ await setWorkplace(empSelect.workplace);
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="militaryleave">วันลาเพื่อเกณฑ์ทหารคงเหลือ</label>
-                                                            <input type="text" class="form-control" id="militaryleave" placeholder="วันลาเพื่อเกณฑ์ทหารคงเหลือ" value={employeeData.militaryleave} onChange={(e) => handleChange(e, 'militaryleave')} 
- />
+                                                            <input type="text" class="form-control" id="militaryleave" placeholder="วันลาเพื่อเกณฑ์ทหารคงเหลือ" value={employeeData.militaryleave} onChange={(e) => handleChange(e, 'militaryleave')}
+                                                            />
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="militaryleavesalary">จำนวนเงินต่อวัน</label>
-                                                            <input type="text" class="form-control" id="militaryleavesalary" placeholder="จำนวนเงินต่อวัน" value={employeeData.militaryleavesalary} onChange={(e) => handleChange(e, 'militaryleavesalary')} 
- />
+                                                            <input type="text" class="form-control" id="militaryleavesalary" placeholder="จำนวนเงินต่อวัน" value={employeeData.militaryleavesalary} onChange={(e) => handleChange(e, 'militaryleavesalary')}
+                                                            />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -875,16 +876,16 @@ await setWorkplace(empSelect.workplace);
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="sterilization">วันลาเพื่อทำหมันคงเหลือ</label>
-                                                            <input type="text" class="form-control" id="sterilization" placeholder="วันลาเพื่อทำหมันคงเหลือ" value={employeeData.sterilization} onChange={(e) => handleChange(e, 'sterilization')} 
- />
+                                                            <input type="text" class="form-control" id="sterilization" placeholder="วันลาเพื่อทำหมันคงเหลือ" value={employeeData.sterilization} onChange={(e) => handleChange(e, 'sterilization')}
+                                                            />
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="sterilizationsalary">จำนวนเงินต่อวัน</label>
-                                                            <input type="text" class="form-control" id="sterilizationsalary" placeholder="จำนวนเงินต่อวัน" value={employeeData.sterilizationsalary} onChange={(e) => handleChange(e, 'sterilizationsalary')} 
- />
+                                                            <input type="text" class="form-control" id="sterilizationsalary" placeholder="จำนวนเงินต่อวัน" value={employeeData.sterilizationsalary} onChange={(e) => handleChange(e, 'sterilizationsalary')}
+                                                            />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -893,16 +894,16 @@ await setWorkplace(empSelect.workplace);
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="leavefortraining">วันลาเพื่อฝึกอบรมคงเหลือ</label>
-                                                            <input type="text" class="form-control" id="leavefortraining" placeholder="วันลาเพื่อฝึกอบรมคงเหลือ" value={employeeData.leavefortraining} onChange={(e) => handleChange(e, 'leavefortraining')} 
- />
+                                                            <input type="text" class="form-control" id="leavefortraining" placeholder="วันลาเพื่อฝึกอบรมคงเหลือ" value={employeeData.leavefortraining} onChange={(e) => handleChange(e, 'leavefortraining')}
+                                                            />
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label role="[leavefortrainingsalary, ">จำนวนเงินต่อวัน</label>
-                                                            <input type="text" class="form-control" id="[leavefortrainingsalary, " placeholder="จำนวนเงินต่อวัน" value={employeeData.leavefortrainingsalary} onChange={(e) => handleChange(e, 'leavefortrainingsalary')} 
- />
+                                                            <input type="text" class="form-control" id="[leavefortrainingsalary, " placeholder="จำนวนเงินต่อวัน" value={employeeData.leavefortrainingsalary} onChange={(e) => handleChange(e, 'leavefortrainingsalary')}
+                                                            />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -913,7 +914,7 @@ await setWorkplace(empSelect.workplace);
                                         {/* <!--Frame--> */}
                                     </div>
                                 </div>
-                                
+
                                 <div class="line_btn">
                                     <button type="submit" class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
                                     <button type="reset" class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>

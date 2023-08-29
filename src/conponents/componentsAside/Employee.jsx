@@ -17,12 +17,32 @@ function Employee() {
     const [employeeselection, setEmployeeselection] = useState([]);
     const [buttonValue, setButtonValue] = useState('');
 
+    const [workplaceSelection, setWorkplaceSelection] = useState([]);
+
+    useEffect(() => {
+        const storedValue = sessionStorage.getItem('empSelect');
+        if (storedValue) {
+            // setEmployeeselection(storedValue);
+        }
+
+        //get all Workplace from API
+        fetch(endpoint + '/workplace/listselect') // Update with your API endpoint
+            .then(response => response.json())
+            .then(data => {
+                setWorkplaceSelection(data);
+            }
+            )
+            .catch(error => console.error('Error fetching employees:', error));
+
+    }, []);
+    
     //employee data
-    const [_id , set_id] = useState('');
+    const [_id, set_id] = useState('');
     const [employeeId, setEmployeeId] = useState('');
     const [position, setPosition] = useState(''); //ตำแหน่ง
     const [department, setDepartment] = useState(''); //แผนก
     const [workplace, setWorkplace] = useState(''); //หน่วยงาน
+    const [employeeData , setEmployeeData] = useState({});
     const [jobtype, setJobtype] = useState(''); //ประเภทการจ้าง
     const [startjob, setStartjob] = useState(''); //วันที่เริ่มงาน
     const [endjob, setEndjob] = useState(''); //วันที่ลาออก
@@ -50,6 +70,13 @@ function Employee() {
     const [images, setImages] = useState([]);//อัพรูป
     const [imageURLs, setImageURLs] = useState([]);
 
+    const handleChange = (e, field) => {
+        setEmployeeData(prevData => ({
+          ...prevData,
+          [field]: e.target.value
+        }));
+      };
+
     useEffect(() => {
         if (images.length < 1) return;
         const newImageUrls = [];
@@ -73,11 +100,11 @@ function Employee() {
             setNewVaccination('');
         }
     };
- 
 
-    const handleRemoveVaccination  = (vaccinationToRemove) => {
-            setVaccination((prevVaccination) =>
-        prevVaccination.filter((v) => v !== vaccinationToRemove )
+
+    const handleRemoveVaccination = (vaccinationToRemove) => {
+        setVaccination((prevVaccination) =>
+            prevVaccination.filter((v) => v !== vaccinationToRemove)
         );
     };
 
@@ -102,9 +129,9 @@ function Employee() {
         setDepartment(empSelect.department);
         setWorkplace(empSelect.workplace);
         setJobtype(empSelect.jobtype);
-        setStartjob(empSelect.startjob ? new Date(empSelect.startjob): '');
-        setEndjob(empSelect.endjob ? new Date(empSelect.startjob): '');
-        setExceptjob(empSelect.exceptjob ? new Date(empSelect.exceptjob): '');
+        setStartjob(empSelect.startjob ? new Date(empSelect.startjob) : '');
+        setEndjob(empSelect.endjob ? new Date(empSelect.startjob) : '');
+        setExceptjob(empSelect.exceptjob ? new Date(empSelect.exceptjob) : '');
         setPrefix(empSelect.prefix);
         setName(empSelect.name);
         setLastName(empSelect.lastName);
@@ -125,7 +152,7 @@ function Employee() {
         setIdLine(empSelect.idLine);
         // setVaccination(empSelect.vaccination);
         const temp = empSelect.vaccination.map((item) => [...item]);
-//        alert(temp);
+        //        alert(temp);
         setVaccination(temp);
         setTreatmentRights(empSelect.treatmentRights);
 
@@ -181,20 +208,20 @@ function Employee() {
 
         } else {
             if (buttonValue == 'save') {
-      // Make the API call to update the resource by ID
-      try {
-        const response = await axios.put(endpoint + '/employee/update/' + _id, data);
-        // setEmployeesResult(response.data.employees);
-        if (response) {
-            alert("บันทึกสำเร็จ");
-        window.location.reload();
+                // Make the API call to update the resource by ID
+                try {
+                    const response = await axios.put(endpoint + '/employee/update/' + _id, data);
+                    // setEmployeesResult(response.data.employees);
+                    if (response) {
+                        alert("บันทึกสำเร็จ");
+                        window.location.reload();
 
-        }
-    } catch (error) {
-        alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
-        alert(error);
-        window.location.reload();
-    }
+                    }
+                } catch (error) {
+                    alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+                    alert(error);
+                    window.location.reload();
+                }
 
 
             }
@@ -206,6 +233,28 @@ function Employee() {
 
     const handleWorkplace = (event) => {
         setWorkplace(event.target.value);
+        setEmployeeData(prevData => ({
+            ...prevData,
+            ['workplace']: event.target.value
+        }));
+
+        const filtered = workplaceSelection.filter(wp =>
+            event.target.value === '' || wp.workplaceName === event.target.value
+        )
+        // alert(JSON.stringify(filtered , null, 2) );
+        // alert(filtered[0].workplaceArea );
+        if (filtered !== '') {
+            if (employeeData.workplace == '') {
+                setWorkplacearea('');
+            } else {
+                setWorkplacearea(filtered[0].workplaceArea);
+            }
+
+        } else {
+            setWorkplacearea('');
+        }
+
+        // setWorkplacearea(filtered[0].workplaceArea );
     };
     const handleJobtype = (event) => {
         setJobtype(event.target.value);
@@ -325,10 +374,18 @@ function Employee() {
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label role="workplace">หน่วยงาน</label>
-                                                            <select id="workplace" name="workplace" class="form-control"
+                                                            {/* <select id="workplace" name="workplace" class="form-control"
                                                                 value={workplace} onChange={handleWorkplace}>
                                                                 <option value="บริษัท ไทย เอ็นโอเค จำกัด (โรงงานบางประกง)">บริษัท ไทย เอ็นโอเค จำกัด (โรงงานบางประกง)</option>
                                                                 <option value="Gulf สำนักงานใหญ่">Gulf สำนักงานใหญ่</option>
+                                                            </select> */}
+                                                            <select id="workplace" name="workplace" class="form-control"
+                                                                value={workplace} onChange={handleWorkplace}>
+                                                                <option value="">ยังไม่ระบุหน่วยงาน</option>
+                                                                {workplaceSelection.map(wp => (
+                                                                    <option key={wp._id} value={wp.workplaceName}>{wp.workplaceName}</option>
+
+                                                                ))}
                                                             </select>
                                                         </div>
                                                     </div>
@@ -610,8 +667,8 @@ function Employee() {
 
                                                 <ul>
                                                     {vaccination.map((item, index) => (
-                                                        <li key={index}>{item} 
-                                                        <button type="button" onClick={() => handleRemoveVaccination(item)} class="btn btn-info" style={{ margin: '0.5rem' ,width:"4rem"}}>ลบ</button></li>
+                                                        <li key={index}>{item}
+                                                            <button type="button" onClick={() => handleRemoveVaccination(item)} class="btn btn-info" style={{ margin: '0.5rem', width: "4rem" }}>ลบ</button></li>
                                                         // <li key={index}>{item}<button class="btn btn-info" style={{ margin: '0.5rem', width: "4rem" }}>ลบ</button></li>
                                                         // <li key={index}>{item}<button class="btn btn-info" style={{ margin: '0.5rem', width: "4rem" }}>ลบ</button></li>
                                                     ))}
