@@ -124,6 +124,7 @@ salaryadd4:String,
 salaryadd4v: String,
 salaryadd5:String,
 salaryadd5v: String,
+salaryaddtype: String,
 
 remainbusinessleave: String,
 businessleavesalary: String,
