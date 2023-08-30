@@ -123,7 +123,7 @@ function EmployeesSelected({ onEmployeeSelect }) {
                         borderRadius: '8px',
                       }}
                     >
-                      x
+                      &#8722;
                     </button>
                   </div>
                 </li>
