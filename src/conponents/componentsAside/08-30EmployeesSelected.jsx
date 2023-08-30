@@ -101,7 +101,6 @@ function EmployeesSelected({ onEmployeeSelect }) {
                   <span style={{ flex: 1 }}>{employee.name}</span>
                   <div>
                     <button
-                      ariaLabel="choose"
                       onClick={() => handleEmployeeSelect(employee)}
                       style={{
                         width: '2rem',
@@ -113,7 +112,6 @@ function EmployeesSelected({ onEmployeeSelect }) {
                       &#10003;
                     </button>
                     <button
-                      ariaLabel="remove"
                       type="button"
                       onClick={() => handleRemoveEmployee(employee.employeeId)}
                       style={{
@@ -123,25 +121,25 @@ function EmployeesSelected({ onEmployeeSelect }) {
                         borderRadius: '8px',
                       }}
                     >
-                      x
+                      -
                     </button>
                   </div>
                 </li>
               ))}
 
 
-
-              <button
-                type="button"
-                onClick={() => handleRemoveEmployeeAll()}
-                style={{
-                  margin: '0.2rem',
-                  borderRadius: '8px',
-                }}
-              >
-                ล้างรายการ
-              </button>
-
+                
+                <button
+                  type="button"
+                  onClick={() => handleRemoveEmployeeAll()}
+                  style={{
+                    margin: '0.2rem',
+                    borderRadius: '8px',
+                  }}
+                >
+                  ล้างรายการ
+                </button>
+              
             </ul>
 
           </div>
