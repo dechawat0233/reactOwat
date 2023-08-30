@@ -21,6 +21,8 @@ function Search() {
 
   //working when start component
   useEffect(() => {
+    // localStorage.clear();
+
     const updatedEmployeeList = JSON.parse(localStorage.getItem('selectedEmployees')) || [];
     setSelectedEmployees(updatedEmployeeList);
 

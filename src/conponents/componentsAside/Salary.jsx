@@ -151,79 +151,75 @@ function Salary() {
     };
 
 
-    const handleSalarytype = (event) => {
-        setSalarytype(event.target.value);
-    };
-    const handleMoney = (event) => {
-        setMoney(event.target.value);
-    };
-
-    const handleSalaryupdate = (date) => {
-        setSalaryupdate(date);
-    };
+    // const handleSalarytype = (event) => {
+    //     setSalarytype(event.target.value);
+    // };
+    // const handleMoney = (event) => {
+    //     setMoney(event.target.value);
+    // };
 
 
-    const handleSalaryout = (event) => {
-        setSalaryout(event.target.value);
-    };
-    const handleSalarypayment = (event) => {
-        setSalarypayment(event.target.value);
-    };
-    const handleSalarybank = (event) => {
-        setSalarybank(event.target.value);
-    };
+    // const handleSalaryout = (event) => {
+    //     setSalaryout(event.target.value);
+    // };
+    // const handleSalarypayment = (event) => {
+    //     setSalarypayment(event.target.value);
+    // };
+    // const handleSalarybank = (event) => {
+    //     setSalarybank(event.target.value);
+    // };
 
-    const handleSalaryadd1 = (event) => {
-        if (salaryadd1 !== '') {
-            setSalaryadd1('');
-        } else {
-            setSalaryadd1(event.target.value);
-        }
-    };
-    const handleSalaryadd2 = (event) => {
-        if (salaryadd2 !== '') {
-            setSalaryadd2('');
-        } else {
-            setSalaryadd2(event.target.value);
-        }
-    };
-    const handleSalaryadd3 = (event) => {
-        if (salaryadd3 !== '') {
-            setSalaryadd3('');
-        } else {
-            setSalaryadd3(event.target.value);
-        }
-    };
-    const handleSalaryadd4 = (event) => {
-        if (salaryadd4 !== '') {
-            setSalaryadd4('');
-        } else {
-            setSalaryadd4(event.target.value);
-        }
-    };
-    const handleSalaryadd5 = (event) => {
-        if (salaryadd5 !== '') {
-            setSalaryadd5('');
-        } else {
-            setSalaryadd5(event.target.value);
-        }
-    };
-    const handleSalaryaddtype = (event) => {
-        setSalaryaddtype(event.target.value);
-    };
+    // const handleSalaryadd1 = (event) => {
+    //     if (salaryadd1 !== '') {
+    //         setSalaryadd1('');
+    //     } else {
+    //         setSalaryadd1(event.target.value);
+    //     }
+    // };
+    // const handleSalaryadd2 = (event) => {
+    //     if (salaryadd2 !== '') {
+    //         setSalaryadd2('');
+    //     } else {
+    //         setSalaryadd2(event.target.value);
+    //     }
+    // };
+    // const handleSalaryadd3 = (event) => {
+    //     if (salaryadd3 !== '') {
+    //         setSalaryadd3('');
+    //     } else {
+    //         setSalaryadd3(event.target.value);
+    //     }
+    // };
+    // const handleSalaryadd4 = (event) => {
+    //     if (salaryadd4 !== '') {
+    //         setSalaryadd4('');
+    //     } else {
+    //         setSalaryadd4(event.target.value);
+    //     }
+    // };
+    // const handleSalaryadd5 = (event) => {
+    //     if (salaryadd5 !== '') {
+    //         setSalaryadd5('');
+    //     } else {
+    //         setSalaryadd5(event.target.value);
+    //     }
+    // };
+    // const handleSalaryaddtype = (event) => {
+    //     setSalaryaddtype(event.target.value);
+    // };
 
-    const handleJobtype = (event) => {
-        setJobtype(event.target.value);
-    };
-    const handlePrefix = (event) => {
-        setPrefix(event.target.value);
-    };
-    const handleGender = (event) => {
-        setGender(event.target.value);
-    };
-    const handleMilitaryStatus = (event) => {
-        setMilitaryStatus(event.target.value);
-    };
+    // const handleJobtype = (event) => {
+    //     setJobtype(event.target.value);
+    // };
+    // const handlePrefix = (event) => {
+    //     setPrefix(event.target.value);
+    // };
+    // const handleGender = (event) => {
+    //     setGender(event.target.value);
+    // };
+    // const handleMilitaryStatus = (event) => {
+    //     setMilitaryStatus(event.target.value);
+    // };
 
     const handleStartDateChange = (date) => {
         setStartjob(date);
@@ -233,11 +229,16 @@ function Salary() {
     };
     const handleStartcount = (date) => {
         setStartcount(date);
-    };
+            };
 
-    const handleDateOfBirth = (date) => {
-        setDateOfBirth(date);
-    };
+            const handleSalaryupdate = (date) => {
+                setSalaryupdate(date);
+            };
+        
+        
+    // const handleDateOfBirth = (date) => {
+    //     setDateOfBirth(date);
+    // };
 
     async function handleManageSalary(event) {
         event.preventDefault();
@@ -245,11 +246,18 @@ function Salary() {
         // Make the API call to update the resource by ID
         //   if(){
 
+        await setEmployeeData(prevData => ({
+            ...prevData,
+            ['startcount']: startcount 
+        }));
+
         try {
             const response = await axios.put(endpoint + '/employee/update/' + employeeData._id, employeeData);
             // setEmployeesResult(response.data.employees);
             if (response) {
                 alert("บันทึกสำเร็จ");
+                // localStorage.setItem('selectedEmployees' , JSON.stringify(response.data.employees));
+
                 // window.location.reload();
 
             }
@@ -299,7 +307,9 @@ function Salary() {
 
         await setStartjob(new Date(empSelect.startjob));
         await setExceptjob(new Date(empSelect.exceptjob));
-
+        await setStartcount(new Date(empSelect.startcount));
+        await setSalaryupdate(new Date(empSelect.salaryupdate) || '');
+// alert(employeeData.startcount);
 
     }
 
