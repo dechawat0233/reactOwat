@@ -213,13 +213,21 @@ function Setting() {
         //setSelectedDates([...selectedDates, workplace.daysOff]);
 
         ////////work day
-        setWorkday1(!isChecked);
-        setWorkday2(!isChecked);
-        setWorkday3(!isChecked);
-        setWorkday4(!isChecked);
-        setWorkday5(!isChecked);
-        setWorkday6(!isChecked);
-        setWorkday7(!isChecked);
+        setWorkday1(workplace.workday1);
+        setWorkday2(workplace.workday2);
+        setWorkday3(workplace.workday3);
+        setWorkday4(workplace.workday4);
+        setWorkday5(workplace.workday5);
+        setWorkday6(workplace.workday6);
+        setWorkday7(workplace.workday7);
+
+        setWorkcount1(workplace.workcount1);
+        setWorkcount2(workplace.workcount2);
+        setWorkcount3(workplace.workcount3);
+        setWorkcount4(workplace.workcount4);
+        setWorkcount5(workplace.workcount5);
+        setWorkcount6(workplace.workcount6);
+        setWorkcount7(workplace.workcount7);
         const dates = workplace.daysOff.map((dateString) => new Date(dateString));
         setSelectedDates(dates);
         setReason(workplace.reason);
@@ -337,6 +345,22 @@ function Setting() {
 
             employeeIdList: employeeIdList,
             employeeNameList: employeeNameList,
+
+            workday1: workday1,
+            workday2: workday2,
+            workday3: workday3,
+            workday4: workday4,
+            workday5: workday5,
+            workday6: workday6,
+            workday7: workday7,
+    
+            workcount1: workcount1,
+            workcount2: workcount2,
+            workcount3: workcount3,
+            workcount4: workcount4,
+            workcount5: workcount5,
+            workcount6: workcount6,
+            workcount7: workcount7,
         };
 
 
