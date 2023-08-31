@@ -72,15 +72,12 @@ function SocialSecurity() {
     const handleStartDateChange = (date) => {
         setStartjob(date);
     };
-    // function onEmployeeSelect(empSelect) {
-    //     setStartjob(new Date(empSelect.startjob));
-    // }
 
-    // async 
-    function onEmployeeSelect(empSelect) {
+        function onEmployeeSelect(empSelect) {
         // setEmployeeselection(empSelect);
+        alert(empSelect.salary);
         setStartjob(empSelect.startjob ? new Date(empSelect.startjob) : '');
-        setIdPerson(empSelect.idPerson);
+        setIdPerson(empSelect.idCard);
         setName(empSelect.name);
         setSalary(empSelect.salary);
         // alert(employeeData.startcount);
@@ -94,15 +91,17 @@ function SocialSecurity() {
         }
 
         //get all Workplace from API
-        fetch(endpoint + '/workplace/listselect') // Update with your API endpoint
-            .then(response => response.json())
-            .then(data => {
-                setWorkplaceSelection(data);
-            }
-            )
-            .catch(error => console.error('Error fetching employees:', error));
+        // fetch(endpoint + '/workplace/listselect') // Update with your API endpoint
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         setWorkplaceSelection(data);
+        //     }
+        //     )
+        //     .catch(error => console.error('Error fetching employees:', error));
 
     }, []);
+
+    const [storedEmp, setStoredEmp] = useState([]);
 
     useEffect(() => {
         if (salary === '') {
@@ -136,6 +135,21 @@ function SocialSecurity() {
         }
     }, [salary, minusemployer]);
 
+    useEffect(() => {
+        // Listen for the custom event when selectedEmployees change in localStorage
+        const handleSelectedEmployeesChange = (event) => {
+            const { selectedEmployees } = event.detail;
+            setStoredEmp(selectedEmployees);
+        };
+
+        window.addEventListener('selectedEmployeesChanged', handleSelectedEmployeesChange);
+
+        return () => {
+            window.removeEventListener('selectedEmployeesChanged', handleSelectedEmployeesChange);
+        };
+    }, []);
+
+    
     // Step 5: Event handler to update the selected option
 
 
@@ -212,7 +226,7 @@ function SocialSecurity() {
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">ชื่อ - นามสกุล</label>
                                                 <div class="col-md-5">
-                                                    <input type="" class="form-control" id="" placeholder="ชื่อ - นามสุกล" value={name} onChange={(e) => setName(e.target.value)} />
+                                                    <input type="" class="form-control" id="" placeholder="ชื่อ - นามสกุล" value={name} onChange={(e) => setName(e.target.value)} />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -389,6 +403,8 @@ function SocialSecurity() {
             </div>
         </body>
     )
+    
+
 }
 
 export default SocialSecurity
