@@ -1,3 +1,4 @@
+import endpoint from '../../config';
 // import React from 'react'
 import React, { useState, useEffect } from 'react';
 import EmployeesSelected from './EmployeesSelected';
@@ -29,6 +30,8 @@ function SocialSecurity() {
     const PrachinBuri = ['รพ.กบินทร์บุรี(สธ)', 'รพ.เกษมราษฎร์ ปราจีนบุรีโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ค่ายจักรพงษ์', 'รพ.เจ้าพระยาอภัยภูเบศร(สธ)', 'รพ.ทั่วไปขนาดกลางจุฬารัตน์ 304 อินเตอร์']
     const KamphaengPhet = ['รพ.กำแพงเพชร(สธ)']
     const Ayutthaya = ['รพ.พระนครศรีอยุธยา(สธ)', 'รพ.เสนา(สธ)', 'รพ.การุญเวช อยุธยาโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ราชธานีโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ราชธานี โรจนะโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.เอเชียอินเตอร์เนชั่นแนล โรงพยาบาลทั่วไปขนาดกลาง']
+
+
     // Step 4: Use useState to manage the selected option
     const [selectedOption, setSelectedOption] = useState('');
     const [startjob, setStartjob] = useState(''); //วันที่เริ่มงาน
@@ -37,6 +40,9 @@ function SocialSecurity() {
     const [salary, setSalary] = useState(''); //เงินเดือน
     const [minus, setMinus] = useState('5'); //หัห
     const [socialsecurity, setSocialSecurity] = useState(''); //หักประกันสังคม
+
+    const [employeeselection, setEmployeeselection] = useState([]);
+    const [workplaceSelection, setWorkplaceSelection] = useState([]);
 
     const [minusemployer, setMinusEmployer] = useState('5'); //หัห
     const [socialsecurityemployer, setSocialSecurityEmployer] = useState(''); //หักประกันสังคม
@@ -59,6 +65,44 @@ function SocialSecurity() {
     const handleselectedHosp3Change = (event) => {
         setSelectedHosp3(event.target.value);
     };
+
+    const handleOptionChange = (event) => {
+        setSelectedOption(event.target.value);
+    };
+    const handleStartDateChange = (date) => {
+        setStartjob(date);
+    };
+    // function onEmployeeSelect(empSelect) {
+    //     setStartjob(new Date(empSelect.startjob));
+    // }
+
+    // async 
+    function onEmployeeSelect(empSelect) {
+        // setEmployeeselection(empSelect);
+        setStartjob(empSelect.startjob ? new Date(empSelect.startjob) : '');
+        setIdPerson(empSelect.idPerson);
+        setName(empSelect.name);
+        setSalary(empSelect.salary);
+        // alert(employeeData.startcount);
+        // console.log(empSelect.startjob);
+    }
+    
+    useEffect(() => {
+        const storedValue = sessionStorage.getItem('empSelect');
+        if (storedValue) {
+            // setEmployeeselection(storedValue);
+        }
+
+        //get all Workplace from API
+        fetch(endpoint + '/workplace/listselect') // Update with your API endpoint
+            .then(response => response.json())
+            .then(data => {
+                setWorkplaceSelection(data);
+            }
+            )
+            .catch(error => console.error('Error fetching employees:', error));
+
+    }, []);
 
     useEffect(() => {
         if (salary === '') {
@@ -93,15 +137,8 @@ function SocialSecurity() {
     }, [salary, minusemployer]);
 
     // Step 5: Event handler to update the selected option
-    const handleOptionChange = (event) => {
-        setSelectedOption(event.target.value);
-    };
-    const handleStartDateChange = (date) => {
-        setStartjob(date);
-    };
-    function onEmployeeSelect(empSelect) {
-        setStartjob(new Date(empSelect.startjob));
-    }
+
+
     return (
         <body class="hold-transition sidebar-mini" className='editlaout'>
             <div class="wrapper">
@@ -212,7 +249,7 @@ function SocialSecurity() {
                                         {/* <!--Frame--> */}
                                     </div>
                                     <div class="col-md-3">
-                                        <section class="Frame"><EmployeesSelected /></section>
+                                        <section class="Frame"><EmployeesSelected onEmployeeSelect={onEmployeeSelect} /></section>
                                     </div>
                                 </div>
 

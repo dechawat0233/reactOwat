@@ -229,13 +229,13 @@ function Salary() {
     };
     const handleStartcount = (date) => {
         setStartcount(date);
-            };
+    };
 
-            const handleSalaryupdate = (date) => {
-                setSalaryupdate(date);
-            };
-        
-        
+    const handleSalaryupdate = (date) => {
+        setSalaryupdate(date);
+    };
+
+
     // const handleDateOfBirth = (date) => {
     //     setDateOfBirth(date);
     // };
@@ -250,8 +250,8 @@ function Salary() {
             ...prevData,
             ['startcount']: startcount,
             ['salaryupdate']: new Date(salaryupdate),
-['startjob']: startjob,
-['exceptjob']: exceptjob
+            ['startjob']: startjob,
+            ['exceptjob']: exceptjob
         }));
 
         try {
@@ -309,10 +309,10 @@ function Salary() {
         }
 
         await setStartjob(new Date(empSelect.startjob || ''));
-        await setExceptjob(new Date(empSelect.exceptjob || '') );
-        await setStartcount(empSelect.startcount ? new Date(empSelect.startcount): '' );
-        await setSalaryupdate( empSelect.salaryupdate ? new Date(empSelect.salaryupdate) : '' );
-// alert(employeeData.startcount);
+        await setExceptjob(new Date(empSelect.exceptjob || ''));
+        await setStartcount(empSelect.startcount ? new Date(empSelect.startcount) : '');
+        await setSalaryupdate(empSelect.salaryupdate ? new Date(empSelect.salaryupdate) : '');
+        // alert(employeeData.startcount);
 
     }
 
@@ -490,7 +490,7 @@ function Salary() {
                                                     <div class="form-group row">
 
                                                         <label role="startjob">วันที่เริ่มงาน</label>
-                                                        <div 
+                                                        <div
                                                         // style={{ position: 'relative', zIndex: 9999, marginLeft: "2rem" }}
                                                         >
                                                             <DatePicker id="startjob" name="startjob"
@@ -503,7 +503,7 @@ function Salary() {
                                                     </div>
                                                     <div class="form-group row">
                                                         <label role="exceptjob">วันที่บรรจุ</label>
-                                                        <div 
+                                                        <div
                                                         // style={{ position: 'relative', zIndex: 9999, marginLeft: "2rem" }}
                                                         >
                                                             <DatePicker id="exceptjob" name="exceptjob"
@@ -516,7 +516,7 @@ function Salary() {
                                                     </div>
                                                     <div class="form-group row">
                                                         <label role="startcount">วันที่เริ่มต้นคำนวณ</label>
-                                                        <div 
+                                                        <div
                                                         // style={{ position: 'relative', zIndex: 9999, marginLeft: "2rem" }}
                                                         >
                                                             <DatePicker id="startcount" name="startcount"
@@ -573,7 +573,7 @@ function Salary() {
                                                     <div class="form-group row">
                                                         <label role="salaryupdate" class="col-sm-3 col-form-label">วันที่ปรับปรุง</label>
                                                         <div class="col-sm-9">
-                                                            <div 
+                                                            <div
                                                             // style={{ position: 'relative', zIndex: 9999 }}
                                                             >
                                                                 <DatePicker id="salaryupdate" name="salaryupdate"

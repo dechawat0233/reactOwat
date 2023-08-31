@@ -35,14 +35,14 @@ function Employee() {
             .catch(error => console.error('Error fetching employees:', error));
 
     }, []);
-    
+
     //employee data
     const [_id, set_id] = useState('');
     const [employeeId, setEmployeeId] = useState('');
     const [position, setPosition] = useState(''); //ตำแหน่ง
     const [department, setDepartment] = useState(''); //แผนก
     const [workplace, setWorkplace] = useState(''); //หน่วยงาน
-    const [employeeData , setEmployeeData] = useState({});
+    const [employeeData, setEmployeeData] = useState({});
     const [jobtype, setJobtype] = useState(''); //ประเภทการจ้าง
     const [startjob, setStartjob] = useState(''); //วันที่เริ่มงาน
     const [endjob, setEndjob] = useState(''); //วันที่ลาออก
@@ -72,10 +72,10 @@ function Employee() {
 
     const handleChange = (e, field) => {
         setEmployeeData(prevData => ({
-          ...prevData,
-          [field]: e.target.value
+            ...prevData,
+            [field]: e.target.value
         }));
-      };
+    };
 
     useEffect(() => {
         if (images.length < 1) return;
@@ -309,8 +309,6 @@ function Employee() {
             console.log('Item does not exist');
             setNewEmp(true);
         }
-
-
     }, []);
 
 

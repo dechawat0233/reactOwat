@@ -9,8 +9,10 @@ const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 
 //Connect mongodb
-mongoose.connect(connectionString ,{ useNewUrlParser: true, useUnifiedTopology: 
-true });
+mongoose.connect(connectionString, {
+  useNewUrlParser: true, useUnifiedTopology:
+    true
+});
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
@@ -37,10 +39,10 @@ const employeeSchema = new mongoose.Schema({
   },
   startjob: {
     type: String
-    },
-    endjob: {
-        type: String
-    },
+  },
+  endjob: {
+    type: String
+  },
   exceptjob: {
     type: String
   },
@@ -48,10 +50,10 @@ const employeeSchema = new mongoose.Schema({
     type: String
   },
   name: {
-    type: String 
+    type: String //// use SocialSecurity
   },
   lastName: {
-    type: String
+    type: String //// use SocialSecurity
   },
   nickName: {
     type: String,
@@ -67,7 +69,7 @@ const employeeSchema = new mongoose.Schema({
   },
   idCard: {
     type: String,
-    required: true,
+    required: true,  //// use SocialSecurity
     unique: true
   },
   ethnicity: {
@@ -99,47 +101,46 @@ const employeeSchema = new mongoose.Schema({
   idLine: {
     type: String
   },
-  vaccination: [] ,
+  vaccination: [],
   treatmentRights: {
     type: String
   },
+  startcount: String,
+  salary: String,  //// use SocialSecurity
+  salarytype: String,
+  money: String,
+  salaryupdate: Date,
+  salaryout: String,
+  salarypayment: String,
+  salarybank: String,
+  banknumber: String,
 
-    startcount: String,
-    salary: String,
-    salarytype: String,
-    money: String,
-    salaryupdate: Date,
-    salaryout: String,
-    salarypayment: String,
-    salarybank: String,
-    banknumber: String,
+  salaryadd1: String,
+  salaryadd1v: String,
+  salaryadd2: String,
+  salaryadd2v: String,
+  salaryadd3: String,
+  salaryadd3v: String,
+  salaryadd4: String,
+  salaryadd4v: String,
+  salaryadd5: String,
+  salaryadd5v: String,
+  salaryaddtype: String,
 
-    salaryadd1: String,
-salaryadd1v: String,
-salaryadd2:String,
-salaryadd2v: String,
-salaryadd3: String,
-salaryadd3v: String,
-salaryadd4:String,
-salaryadd4v: String,
-salaryadd5:String,
-salaryadd5v: String,
-salaryaddtype: String,
-
-remainbusinessleave: String,
-businessleavesalary: String,
-remainsickleave: String,
-sickleavesalary: String,
-remainvacation: String,
-maternityleave: String,
-maternityleavesalary: String,
-vacationsalary: String,
-militaryleave: String,
-militaryleavesalary: String,
-sterilization: String,
-sterilizationsalary: String,
-leavefortraining: String,
-leavefortrainingsalary: String,
+  remainbusinessleave: String,
+  businessleavesalary: String,
+  remainsickleave: String,
+  sickleavesalary: String,
+  remainvacation: String,
+  maternityleave: String,
+  maternityleavesalary: String,
+  vacationsalary: String,
+  militaryleave: String,
+  militaryleavesalary: String,
+  sterilization: String,
+  sterilizationsalary: String,
+  leavefortraining: String,
+  leavefortrainingsalary: String,
 
 
 });
@@ -149,25 +150,25 @@ const Employee = mongoose.model('Employee', employeeSchema);
 
 
 // Get list of employees
-  router.get('/list',  async (req, res) => {
-    const employees = await Employee.find();
-    res.json(employees);
-  });
+router.get('/list', async (req, res) => {
+  const employees = await Employee.find();
+  res.json(employees);
+});
 
-  // Get  employee by Id
-  router.get('/:employeeId',  async (req, res) => {
-      try {
-        const employee = await Employee.findOne({ employeeId: req.params.employeeId });
-        if (employee) {
-          res.json(employee);
-        } else {
-          res.status(404).json({ error: 'Employee not found' });
-        }
-      } catch (error) {
-        res.status(500).json({ error: 'Internal server error' });
-      }
-    
-  });
+// Get  employee by Id
+router.get('/:employeeId', async (req, res) => {
+  try {
+    const employee = await Employee.findOne({ employeeId: req.params.employeeId });
+    if (employee) {
+      res.json(employee);
+    } else {
+      res.status(404).json({ error: 'Employee not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+
+});
 
 
 router.post('/search', async (req, res) => {
@@ -183,7 +184,7 @@ router.post('/search', async (req, res) => {
 
     if (name) {
       query.name = { $regex: new RegExp(name, 'i') };
-//{ $regex: name, $options: 'i' };
+      //{ $regex: name, $options: 'i' };
     }
 
     if (idCard) {
@@ -199,16 +200,16 @@ router.post('/search', async (req, res) => {
 
     console.log('Constructed Query:');
     console.log(query);
-if(employeeId == '' && name  == '' && idCard  == '' && workPlace  == ''){
-    res.status(200).json({ });
-}
+    if (employeeId == '' && name == '' && idCard == '' && workPlace == '') {
+      res.status(200).json({});
+    }
 
     // Query the employee collection for matching documents
     const employees = await Employee.find(query);
 
     console.log('Search Results:');
     console.log(employees);
-let textSearch  = 'test';
+    let textSearch = 'test';
     res.status(200).json({ employees });
   } catch (error) {
     console.error(error);
@@ -219,48 +220,15 @@ let textSearch  = 'test';
 
 // Create new employee
 router.post('/create', async (req, res) => {
-  
+
   const {
     employeeId,
-    position ,
-     department ,
-         workplace, 
-    jobtype ,
+    position,
+    department,
+    workplace,
+    jobtype,
     startjob,
     endjob,
-   exceptjob,
-   prefix,
-   name,
-   lastName,
-   nickName,
-   gender,
-   dateOfBirth,
-   age,
-   idCard,
-   ethnicity,
-   religion,
-   maritalStatus,
-   militaryStatus,
-   address,
-   currentAddress,
-   phoneNumber,
-   emergencyContactNumber,
-   idLine,
-   vaccination,
-   treatmentRights
-       } = req.body;
-  console.log(`Name: ${name}, Id card: ${idCard}`);
-
-
-  // Create employee
-  const employee = new Employee({ 
-     employeeId,
-     position ,
-      department ,
-          workplace, 
-     jobtype ,
-     startjob,
-     endjob,
     exceptjob,
     prefix,
     name,
@@ -281,7 +249,40 @@ router.post('/create', async (req, res) => {
     idLine,
     vaccination,
     treatmentRights
-    });
+  } = req.body;
+  console.log(`Name: ${name}, Id card: ${idCard}`);
+
+
+  // Create employee
+  const employee = new Employee({
+    employeeId,
+    position,
+    department,
+    workplace,
+    jobtype,
+    startjob,
+    endjob,
+    exceptjob,
+    prefix,
+    name,
+    lastName,
+    nickName,
+    gender,
+    dateOfBirth,
+    age,
+    idCard,
+    ethnicity,
+    religion,
+    maritalStatus,
+    militaryStatus,
+    address,
+    currentAddress,
+    phoneNumber,
+    emergencyContactNumber,
+    idLine,
+    vaccination,
+    treatmentRights
+  });
 
   try {
     await employee.save();
@@ -290,34 +291,34 @@ router.post('/create', async (req, res) => {
     console.log(err);
     res.status(400).json({ error: err.message });
   }
- 
+
 });
 
 
 //Update Employee data
 router.put('/update/:_id', async (req, res) => {
-    const employeeIdToUpdate = req.params._id;
-    const updateFields = req.body;
+  const employeeIdToUpdate = req.params._id;
+  const updateFields = req.body;
 
-    try {
-        // Find the resource by ID and update it
-        const updatedResource = await Employee.findByIdAndUpdate(
-            employeeIdToUpdate,
-            updateFields,
-            { new: true } // To get the updated document as the result
-        );
-        if (!updatedResource) {
-            return res.status(404).json({ message: 'Resource not found' });
-        }
-
-        // Send the updated resource as the response
-        res.json(updatedResource);
-
-
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+  try {
+    // Find the resource by ID and update it
+    const updatedResource = await Employee.findByIdAndUpdate(
+      employeeIdToUpdate,
+      updateFields,
+      { new: true } // To get the updated document as the result
+    );
+    if (!updatedResource) {
+      return res.status(404).json({ message: 'Resource not found' });
     }
+
+    // Send the updated resource as the response
+    res.json(updatedResource);
+
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 

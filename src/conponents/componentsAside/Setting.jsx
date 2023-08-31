@@ -116,7 +116,7 @@ function Setting() {
     const [workEnd2, setWorkEnd2] = useState(''); //เวลาออกกะบ่าย
     const [workStart3, setWorkStart3] = useState(''); //เวลาเข้ากะเย็น
     const [workEnd3, setWorkEnd3] = useState(''); //เวลาออกกะเย็น
-///start end OT
+    ///start end OT
     const [workStartOt1, setWorkStartOt1] = useState(''); //เวลาเริ่มกะเช้า
     const [workEndOt1, setWorkEndOt1] = useState(''); //เวลาออกกะเช้า
     const [workStartOt2, setWorkStartOt2] = useState(''); //เวลาเข้ากะบ่าย
@@ -246,25 +246,25 @@ function Setting() {
 
     const handleCheckboxChange1 = () => {
         setWorkday1(!workday1);
-      };
-      const handleCheckboxChange2 = () => {
+    };
+    const handleCheckboxChange2 = () => {
         setWorkday2(!workday2);
-      };
-      const handleCheckboxChange3 = () => {
+    };
+    const handleCheckboxChange3 = () => {
         setWorkday3(!workday3);
-      };
-      const handleCheckboxChange4 = () => {
+    };
+    const handleCheckboxChange4 = () => {
         setWorkday4(!workday4);
-      };
-      const handleCheckboxChange5 = () => {
+    };
+    const handleCheckboxChange5 = () => {
         setWorkday5(!workday5);
-      };
-      const handleCheckboxChange6 = () => {
+    };
+    const handleCheckboxChange6 = () => {
         setWorkday6(!workday6);
-      };
-      const handleCheckboxChange7 = () => {
+    };
+    const handleCheckboxChange7 = () => {
         setWorkday7(!workday7);
-      };
+    };
 
     //data for search
     const [searchWorkplaceId, setSearchWorkplaceId] = useState(''); //รหัสหน่วยงาน
@@ -353,7 +353,7 @@ function Setting() {
             workday5: workday5,
             workday6: workday6,
             workday7: workday7,
-    
+
             workcount1: workcount1,
             workcount2: workcount2,
             workcount3: workcount3,
