@@ -1,4 +1,4 @@
-    const connectionString = require('../config');
+const connectionString = require('../config');
 
 var express = require('express');
 var router = express.Router();
@@ -9,8 +9,10 @@ const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 
 //Connect mongodb
-mongoose.connect(connectionString ,{ useNewUrlParser: true, useUnifiedTopology: 
-true });
+mongoose.connect(connectionString, {
+    useNewUrlParser: true, useUnifiedTopology:
+        true
+});
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
@@ -53,9 +55,9 @@ const workplaceSchema = new mongoose.Schema({
     workStartOt1: String,
     workEndOt1: String,
     workStartOt2: String,
-workEndOt2: String,
-workStartOt3: String,
-workEndOt3: String,
+    workEndOt2: String,
+    workStartOt3: String,
+    workEndOt3: String,
     workOfHour: {
         type: String
     },
@@ -123,7 +125,24 @@ workEndOt3: String,
         type: String
     },
     employeeIdList: [],
-    employeeNameList: []
+    employeeNameList: [],
+
+    workday1: String,
+    workday2: String,
+    workday3: String,
+    workday4: String,
+    workday5: String,
+    workday6: String,
+    workday7: String,
+
+    workcount1: String,
+    workcount2: String,
+    workcount3: String,
+    workcount4: String,
+    workcount5: String,
+    workcount6: String,
+    workcount7: String,
+
 });
 
 // Create the workplace model based on the schema
@@ -131,126 +150,141 @@ const Workplace = mongoose.model('Workplace', workplaceSchema);
 
 
 // Get list of workplaces
-  router.get('/list',  async (req, res) => {
-      const workplaces = await Workplace.find();
-      res.json(workplaces);
-  });
+router.get('/list', async (req, res) => {
+    const workplaces = await Workplace.find();
+    res.json(workplaces);
+});
 
 // Get list id name and address of workplaces
-router.get('/listselect',  async (req, res) => {
-    try{
-        const workplaces = await Workplace.find({},'workplaceId workplaceName workplaceArea' );
-                res.json(workplaces);
-    
+router.get('/listselect', async (req, res) => {
+    try {
+        const workplaces = await Workplace.find({}, 'workplaceId workplaceName workplaceArea');
+        res.json(workplaces);
+
     } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+        res.status(500).json({ error: error.message });
+    }
 
 });
 
 
-  // Get  workplace by Id
-router.get('/:workplaceId',  async (req, res) => {
-      try {
-          const workplace = await Workplace.findOne({ workplaceId: req.params.workplaceId });
-          if (workplace) {
-              res.json(workplace);
+// Get  workplace by Id
+router.get('/:workplaceId', async (req, res) => {
+    try {
+        const workplace = await Workplace.findOne({ workplaceId: req.params.workplaceId });
+        if (workplace) {
+            res.json(workplace);
         } else {
-              res.status(404).json({ error: 'workplace not found' });
+            res.status(404).json({ error: 'workplace not found' });
         }
-      } catch (error) {
+    } catch (error) {
         res.status(500).json({ error: 'Internal server error' });
-      }
-    
-  });
+    }
+
+});
 
 
 router.post('/search', async (req, res) => {
-  try {
-      const { searchWorkplaceId, searchWorkplaceName } = req.body;
+    try {
+        const { searchWorkplaceId, searchWorkplaceName } = req.body;
 
-    // Construct the search query based on the provided parameters
-    const query = {};
+        // Construct the search query based on the provided parameters
+        const query = {};
 
-      if (searchWorkplaceId !== '') {
-          query.workplaceId = searchWorkplaceId;
+        if (searchWorkplaceId !== '') {
+            query.workplaceId = searchWorkplaceId;
+        }
+
+
+        if (searchWorkplaceName !== '') {
+            query.workplaceName = { $regex: new RegExp(searchWorkplaceName, 'i') };
+            //{ $regex: name, $options: 'i' };
+        }
+        //    query.searchWorkplaceId = '1001';
+        //    console.log({ employeeId, name, idCard, workPlace });
+
+        console.log('Constructed Query:');
+        console.log(query);
+        if (searchWorkplaceId == '' && searchWorkplaceName == '') {
+            res.status(200).json({});
+        }
+
+        // Query the workplace collection for matching documents
+        const workplaces = await Workplace.find(query);
+
+        await console.log('Search Results:');
+        await console.log(workplaces);
+        let textSearch = 'workplace';
+        await res.status(200).json({ workplaces });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
     }
-
-
-      if (searchWorkplaceName !== '') {
-          query.workplaceName = { $regex: new RegExp(searchWorkplaceName , 'i') };
-//{ $regex: name, $options: 'i' };
-      }
-//    query.searchWorkplaceId = '1001';
-//    console.log({ employeeId, name, idCard, workPlace });
-
-    console.log('Constructed Query:');
-    console.log(query);
-      if (searchWorkplaceId == '' && searchWorkplaceName == '') {
-    res.status(200).json({ });
-}
-
-    // Query the workplace collection for matching documents
-      const workplaces = await Workplace.find(query);
-
-      await console.log('Search Results:');
-      await console.log(workplaces );
-      let textSearch = 'workplace';
-      await res.status(200).json({ workplaces });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
 });
 
 
 // Create new workplace 
 router.post('/create', async (req, res) => {
-  
+
     const {
         workplaceId,
-workplaceName,
-workplaceArea,
-workOfWeek,
-workStart1,
-workEnd1,
-workStart2,
-workEnd2,
-workStart3,
-workEnd3,
-workStartOt1,
-workEndOt1,
-workStartOt2,
-workEndOt2,
-workStartOt3,
-workEndOt3,
-workOfHour,
-workOfOT,
-workRate,
-workRateOT,
-workTotalPeople,
-holiday,
-holidayHour,
-salaryadd1,
-salaryadd2,
-salaryadd3,
-salaryadd4,
-salaryadd5,
-salaryadd6,
-personalLeave,
-personalLeaveRate,
-sickLeave,
-sickLeaveRate,
-workRateDayoff,
-workRateDayoffRate,
-daysOff,
+        workplaceName,
+        workplaceArea,
+        workOfWeek,
+        workStart1,
+        workEnd1,
+        workStart2,
+        workEnd2,
+        workStart3,
+        workEnd3,
+        workStartOt1,
+        workEndOt1,
+        workStartOt2,
+        workEndOt2,
+        workStartOt3,
+        workEndOt3,
+        workOfHour,
+        workOfOT,
+        workRate,
+        workRateOT,
+        workTotalPeople,
+        holiday,
+        holidayHour,
+        salaryadd1,
+        salaryadd2,
+        salaryadd3,
+        salaryadd4,
+        salaryadd5,
+        salaryadd6,
+        personalLeave,
+        personalLeaveRate,
+        sickLeave,
+        sickLeaveRate,
+        workRateDayoff,
+        workRateDayoffRate,
+        daysOff,
         workplaceAddress,
         reason,
         employeeIdList,
-        employeeNameList
+        employeeNameList,
+        workday1,
+        workday2,
+        workday3,
+        workday4,
+        workday5,
+        workday6,
+        workday7,
+
+        workcount1,
+        workcount2,
+        workcount3,
+        workcount4,
+        workcount5,
+        workcount6,
+        workcount7,
     } = req.body;
 
-    
+
     // Create workplace
     const workplace = new Workplace({
         workplaceId,
@@ -264,11 +298,11 @@ daysOff,
         workStart3,
         workEnd3,
         workStartOt1,
-workEndOt1,
-workStartOt2,
-workEndOt2,
-workStartOt3,
-workEndOt3,
+        workEndOt1,
+        workStartOt2,
+        workEndOt2,
+        workStartOt3,
+        workEndOt3,
         workOfHour,
         workOfOT,
         workRate,
@@ -297,27 +331,27 @@ workEndOt3,
 
     try {
         await workplace.save();
-        res.json(workplace );
-  } catch (err) {
-    console.log(err);
-    res.status(400).json({ error: err.message });
-  }
- 
+        res.json(workplace);
+    } catch (err) {
+        console.log(err);
+        res.status(400).json({ error: err.message });
+    }
+
 });
 
 
 
 // Update a workplace by its workplaceId
 router.put('/update/:workplaceId', async (req, res) => {
-//    console.log('hello');
+    //    console.log('hello');
     const workplaceIdToUpdate = req.params.workplaceId;
     const updateFields = req.body;
 
     try {
         // Find the resource by ID and update it
         const updatedResource = await Workplace.findByIdAndUpdate(
-            workplaceIdToUpdate ,
-            updateFields ,
+            workplaceIdToUpdate,
+            updateFields,
             { new: true } // To get the updated document as the result
         );
         if (!updatedResource) {
