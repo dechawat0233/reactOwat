@@ -293,7 +293,7 @@ function Salary() {
 
     async function onEmployeeSelect(empSelect) {
         await setEmployeeData(empSelect);
-        await setWorkplace(empSelect.workplace);
+        await setWorkplace(empSelect.workplace || '');
 
         const filtered = await workplaceSelection.filter(wp =>
             empSelect.workplace === '' || wp.workplaceName === empSelect.workplace
@@ -302,16 +302,16 @@ function Salary() {
             if (employeeData.workplace == '') {
                 setWorkplacearea('');
             } else {
-                setWorkplacearea(filtered[0].workplaceArea);
+                setWorkplacearea(filtered[0].workplaceArea || '');
             }
         } else {
             setWorkplacearea('');
         }
 
-        await setStartjob(new Date(empSelect.startjob));
-        await setExceptjob(new Date(empSelect.exceptjob));
-        await setStartcount(new Date(empSelect.startcount));
-        await setSalaryupdate(new Date(empSelect.salaryupdate) || '');
+        await setStartjob(new Date(empSelect.startjob || ''));
+        await setExceptjob(new Date(empSelect.exceptjob || '') );
+        await setStartcount(empSelect.startcount ? new Date(empSelect.startcount): '' );
+        await setSalaryupdate( empSelect.salaryupdate ? new Date(empSelect.salaryupdate) : '' );
 // alert(employeeData.startcount);
 
     }
