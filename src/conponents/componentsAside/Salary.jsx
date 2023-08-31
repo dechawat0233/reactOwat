@@ -490,10 +490,12 @@ function Salary() {
                                                     <div class="form-group row">
 
                                                         <label role="startjob">วันที่เริ่มงาน</label>
-                                                        <div style={{ position: 'relative', zIndex: 9999, marginLeft: "2rem" }}>
+                                                        <div 
+                                                        // style={{ position: 'relative', zIndex: 9999, marginLeft: "2rem" }}
+                                                        >
                                                             <DatePicker id="startjob" name="startjob"
                                                                 className="form-control" // Apply Bootstrap form-control class
-                                                                popperClassName="datepicker-popper" // Apply custom popper class if needed
+                                                                // popperClassName="datepicker-popper" // Apply custom popper class if needed
                                                                 selected={startjob}
                                                                 onChange={handleStartDateChange}
                                                                 dateFormat="dd/MM/yyyy" />
@@ -501,10 +503,12 @@ function Salary() {
                                                     </div>
                                                     <div class="form-group row">
                                                         <label role="exceptjob">วันที่บรรจุ</label>
-                                                        <div style={{ position: 'relative', zIndex: 9999, marginLeft: "2rem" }}>
+                                                        <div 
+                                                        // style={{ position: 'relative', zIndex: 9999, marginLeft: "2rem" }}
+                                                        >
                                                             <DatePicker id="exceptjob" name="exceptjob"
                                                                 className="form-control" // Apply Bootstrap form-control class
-                                                                popperClassName="datepicker-popper" // Apply custom popper class if needed
+                                                                // popperClassName="datepicker-popper" // Apply custom popper class if needed
                                                                 selected={exceptjob}
                                                                 onChange={handleExceptDateChange}
                                                                 dateFormat="dd/MM/yyyy" />
@@ -512,7 +516,9 @@ function Salary() {
                                                     </div>
                                                     <div class="form-group row">
                                                         <label role="startcount">วันที่เริ่มต้นคำนวณ</label>
-                                                        <div style={{ position: 'relative', zIndex: 9999, marginLeft: "2rem" }}>
+                                                        <div 
+                                                        // style={{ position: 'relative', zIndex: 9999, marginLeft: "2rem" }}
+                                                        >
                                                             <DatePicker id="startcount" name="startcount"
                                                                 className="form-control" // Apply Bootstrap form-control class
                                                                 popperClassName="datepicker-popper" // Apply custom popper class if needed
@@ -567,7 +573,9 @@ function Salary() {
                                                     <div class="form-group row">
                                                         <label role="salaryupdate" class="col-sm-3 col-form-label">วันที่ปรับปรุง</label>
                                                         <div class="col-sm-9">
-                                                            <div style={{ position: 'relative', zIndex: 9999 }}>
+                                                            <div 
+                                                            // style={{ position: 'relative', zIndex: 9999 }}
+                                                            >
                                                                 <DatePicker id="salaryupdate" name="salaryupdate"
                                                                     className="form-control" // Apply Bootstrap form-control class
                                                                     popperClassName="datepicker-popper" // Apply custom popper class if needed
