@@ -1,6 +1,5 @@
 import endpoint from '../../config';
 // import React from 'react'
-import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import EmployeesSelected from './EmployeesSelected';
 
@@ -80,83 +79,12 @@ function SocialSecurity() {
 
     async function onEmployeeSelect(empSelect) {
         // setEmployeeselection(empSelect);
-        // setStartjob(empSelect.startjob ? new Date(empSelect.startjob) : '');
+        setStartjob(empSelect.startjob ? new Date(empSelect.startjob) : '');
         setIdPerson(empSelect.idCard);
         setName(empSelect.name);
         setSalary(empSelect.salary);
         // alert(employeeData.startcount);
         // console.log(empSelect.startjob);
-    }
-    async function handleManageEmployee(event) {
-        event.preventDefault();
-
-        const data = {
-            employeeId: employeeId,
-            position: position,
-            department: department,
-            workplace: workplace,
-            jobtype: jobtype,
-            startjob: startjob,
-            endjob: endjob,
-            exceptjob: exceptjob,
-            prefix: prefix,
-            name: name,
-            lastName: lastName,
-            nickName: nickName,
-            gender: gender,
-            dateOfBirth: dateOfBirth,
-            age: age,
-            idCard: idCard,
-            ethnicity: ethnicity,
-            religion: religion,
-            maritalStatus: maritalStatus,
-            militaryStatus: militaryStatus,
-            address: address,
-            currentAddress: currentAddress,
-            phoneNumber: phoneNumber,
-            emergencyContactNumber: emergencyContactNumber,
-            idLine: idLine,
-            vaccination: vaccination,
-            treatmentRights: treatmentRights,
-        };
-
-
-        //check create or update Employee
-        if (newEmp) {
-            // alert('create employee');
-
-            try {
-                const response = await axios.post(endpoint + '/employee/create', data);
-                // setEmployeesResult(response.data.employees);
-
-            } catch (error) {
-                alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
-                // window.location.reload();
-
-            }
-
-        } else {
-            if (buttonValue == 'save') {
-                // Make the API call to update the resource by ID
-                try {
-                    const response = await axios.put(endpoint + '/employee/update/' + _id, data);
-                    // setEmployeesResult(response.data.employees);
-                    if (response) {
-                        alert("บันทึกสำเร็จ");
-                        window.location.reload();
-
-                    }
-                } catch (error) {
-                    alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
-                    alert(error);
-                    window.location.reload();
-                }
-
-
-            }
-
-        }
-
     }
 
     useEffect(() => {
@@ -232,7 +160,7 @@ function SocialSecurity() {
                     <!-- Main content --> */}
                     <section class="content">
                         <div class="container-fluid">
-                            <form onSubmit={handleManageEmployee}>
+                            <form action="">
                                 <h2 class="title">รายละเอียดประกันสังคม</h2>
                                 <div class="form-group row">
                                     <div class="col-md-9">
