@@ -248,7 +248,10 @@ function Salary() {
 
         await setEmployeeData(prevData => ({
             ...prevData,
-            ['startcount']: startcount 
+            ['startcount']: startcount,
+            ['salaryupdate']: new Date(salaryupdate),
+['startjob']: startjob,
+['exceptjob']: exceptjob
         }));
 
         try {
