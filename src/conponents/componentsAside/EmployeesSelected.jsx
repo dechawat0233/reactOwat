@@ -101,7 +101,7 @@ function EmployeesSelected({ onEmployeeSelect }) {
                   <span style={{ flex: 1 }}>{employee.name}</span>
                   <div>
                     <button
-                      ariaLabel="choose"
+                      aria-label="choose"
                       onClick={() => handleEmployeeSelect(employee)}
                       style={{
                         width: '2rem',
@@ -113,7 +113,7 @@ function EmployeesSelected({ onEmployeeSelect }) {
                       &#10003;
                     </button>
                     <button
-                      ariaLabel="remove"
+                      aria-label="remove"
                       type="button"
                       onClick={() => handleRemoveEmployee(employee.employeeId)}
                       style={{
