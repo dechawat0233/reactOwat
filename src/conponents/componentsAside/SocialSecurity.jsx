@@ -85,9 +85,10 @@ function SocialSecurity() {
     // }
 
     async function updateEmployee(_id) {
+        alert('hi');
         // Make the API call to update the resource by ID
         try {
-            const response = await axios.put(endpoint + '/employee/update/' + _id, employeeData);
+            const response = await axios.put(endpoint + '/employee/update/' + employeeData._id, employeeData);
             // setEmployeesResult(response.data.employees);
             if (response) {
                 alert("บันทึกสำเร็จ");
@@ -237,6 +238,13 @@ function SocialSecurity() {
     }, []);
 
 
+    const handleChange = (e, field) => {
+        setEmployeeData(prevData => ({
+            ...prevData,
+            [field]: e.target.value
+        }));
+    };
+
     // Step 5: Event handler to update the selected option
 
 
@@ -319,11 +327,11 @@ function SocialSecurity() {
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">เงินเดือน</label>
                                                 <div class="col-md-5">
-                                                    <input type="" class="form-control" id="" placeholder="เงินเดือน" value={salary} onChange={(e) => setSalary(e.target.value)} />
+                                                    <input type="" class="form-control" id="" placeholder="เงินเดือน" value={employeeData.salary} onChange={(e) => handleChange(e, 'salary')}/>
                                                 </div>
                                                 <label class="col-md-1 col-form-label">หัก%</label>
                                                 <div class="col-md-2">
-                                                    <input type="" class="form-control" id="" placeholder="เงินเดือน" value={minus} onChange={(e) => setMinus(e.target.value)} />
+                                                    <input type="" class="form-control" id="" placeholder="เงินเดือน" value={employeeData.minus} onChange={(e) => handleChange(e, 'minus')}/>
                                                 </div>
                                                 <label class="col-md-1 col-form-label">%</label>
                                             </div>
@@ -478,7 +486,7 @@ function SocialSecurity() {
                                     </div>
                                 </div>
                                 <div class="line_btn">
-                                    <button type="submit" class="btn b_save"><i class="nav-icon fas fa-save" onClick={() => setButtonValue('save')}></i> &nbsp;บันทึก</button>
+                                    <button type="submit" class="btn b_save" onClick={updateEmployee}><i class="nav-icon fas fa-save" onClick={() => setButtonValue('save')}></i> &nbsp;บันทึก</button>
                                     <button type="reset" class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
                                 </div>
                             </form>
