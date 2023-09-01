@@ -10,6 +10,7 @@ import '../editwindowcss.css';
 
 function SocialSecurity() {
     const [buttonValue, setButtonValue] = useState('');
+    const [employeeData, setEmployeeData] = useState({});
     const options = [
         { value: 'option1', label: 'Option 17' },
         { value: 'option2', label: 'Option 92' },
@@ -34,10 +35,10 @@ function SocialSecurity() {
 
 
     //////////
-const [beforebecomeEmployee, setBeforebecomeEmployee] = useState('');
-const [wagesbeforeusingProgram, setWagesbeforeusingProgram] = useState('');
-const [wagesafterusingProgram, setWagesafterusingProgram] = useState('');
-const [companybeforeusingProgram, setCompanybeforeusingProgram] = useState('');
+    const [beforebecomeEmployee, setBeforebecomeEmployee] = useState('');
+    const [wagesbeforeusingProgram, setWagesbeforeusingProgram] = useState('');
+    const [wagesafterusingProgram, setWagesafterusingProgram] = useState('');
+    const [companybeforeusingProgram, setCompanybeforeusingProgram] = useState('');
     // Step 4: Use useState to manage the selected option
     const [selectedOption, setSelectedOption] = useState('');
     const [startjob, setStartjob] = useState(''); //วันที่เริ่มงาน
@@ -83,8 +84,28 @@ const [companybeforeusingProgram, setCompanybeforeusingProgram] = useState('');
     //     setStartjob(new Date(empSelect.startjob));
     // }
 
+    async function updateEmployee(_id) {
+        // Make the API call to update the resource by ID
+        try {
+            const response = await axios.put(endpoint + '/employee/update/' + _id, employeeData);
+            // setEmployeesResult(response.data.employees);
+            if (response) {
+                alert("บันทึกสำเร็จ");
+                window.location.reload();
+
+            }
+        } catch (error) {
+            alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+            alert(error);
+            window.location.reload();
+        }
+
+    }
+
+
     async function onEmployeeSelect(empSelect) {
         // setEmployeeselection(empSelect);
+        await setEmployeeData(empSelect);
         setStartjob(empSelect.startjob ? new Date(empSelect.startjob) : '');
         setIdPerson(empSelect.idCard);
         setName(empSelect.name);
@@ -92,6 +113,7 @@ const [companybeforeusingProgram, setCompanybeforeusingProgram] = useState('');
         // alert(empSelect._id);
         // console.log(empSelect.startjob);
     }
+
     async function handleManageEmployee(event) {
         event.preventDefault();
 
@@ -112,40 +134,40 @@ const [companybeforeusingProgram, setCompanybeforeusingProgram] = useState('');
         };
 
         //check create or update Employee
-        if (newEmp) {
-            // alert('create employee');
+        // if (newEmp) {
+        //     // alert('create employee');
 
-            try {
-                const response = await axios.post(endpoint + '/employee/create', data);
-                // setEmployeesResult(response.data.employees);
+        //     try {
+        //         const response = await axios.post(endpoint + '/employee/create', data);
+        //         // setEmployeesResult(response.data.employees);
 
-            } catch (error) {
-                alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
-                // window.location.reload();
+        //     } catch (error) {
+        //         alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+        //         // window.location.reload();
 
-            }
+        //     }
 
-        } else {
-            if (buttonValue == 'save') {
-                // Make the API call to update the resource by ID
-                try {
-                    const response = await axios.put(endpoint + '/employee/update/' + _id, data);
-                    // setEmployeesResult(response.data.employees);
-                    if (response) {
-                        alert("บันทึกสำเร็จ");
-                        window.location.reload();
+        // } else {
+        // if (buttonValue == 'save') {
+        //     // Make the API call to update the resource by ID
+        //     try {
+        //         const response = await axios.put(endpoint + '/employee/update/' + _id, data);
+        //         // setEmployeesResult(response.data.employees);
+        //         if (response) {
+        //             alert("บันทึกสำเร็จ");
+        //             window.location.reload();
 
-                    }
-                } catch (error) {
-                    alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
-                    alert(error);
-                    window.location.reload();
-                }
+        //         }
+        //     } catch (error) {
+        //         alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+        //         alert(error);
+        //         window.location.reload();
+        //     }
 
 
-            }
+        // }
 
-        }
+        // }
 
     }
 
@@ -419,7 +441,7 @@ const [companybeforeusingProgram, setCompanybeforeusingProgram] = useState('');
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">ยอดเงินประกันสังคมถูกหักก่อนเป็นพนักงาน</label>
                                                 <div class="col-md-5">
-                                                    <input type="" class="form-control" id="" placeholder="" value={beforebecomeEmployee} onChange={(e) => setBeforebecomeEmployee(e.target.value)}/>
+                                                    <input type="" class="form-control" id="" placeholder="" value={beforebecomeEmployee} onChange={(e) => setBeforebecomeEmployee(e.target.value)} />
                                                 </div>
                                             </div>
                                         </section>
@@ -433,21 +455,21 @@ const [companybeforeusingProgram, setCompanybeforeusingProgram] = useState('');
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">ค่าจ้างก่อนใช้โปรแกรม</label>
                                                 <div class="col-md-5">
-                                                    <input type="" class="form-control" id="" placeholder="" value={wagesbeforeusingProgram} onChange={(e) => setWagesafterusingProgram(e.target.value)}/>
+                                                    <input type="" class="form-control" id="" placeholder="" value={wagesbeforeusingProgram} onChange={(e) => setWagesafterusingProgram(e.target.value)} />
                                                 </div>
                                                 <label class="col-form-label">%</label>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">ยอดเงินประกันสังคมถูกหักก่อนใช้โปรแกรม</label>
                                                 <div class="col-md-5">
-                                                    <input type="" class="form-control" id="" placeholder="" value={wagesafterusingProgram} onChange={(e) => setWagesafterusingProgram(e.target.value)}/>
+                                                    <input type="" class="form-control" id="" placeholder="" value={wagesafterusingProgram} onChange={(e) => setWagesafterusingProgram(e.target.value)} />
                                                 </div>
                                                 <label class="col-form-label">%</label>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">ยอดเงินประกันสังคมบริษัทสมทบก่อนใช้โปรแกรม</label>
                                                 <div class="col-md-5">
-                                                    <input type="" class="form-control" id="" placeholder="" value={companybeforeusingProgram} onChange={(e) => setCompanybeforeusingProgram(e.target.value)}/>
+                                                    <input type="" class="form-control" id="" placeholder="" value={companybeforeusingProgram} onChange={(e) => setCompanybeforeusingProgram(e.target.value)} />
                                                 </div>
                                                 <label class="col-form-label">%</label>
                                             </div>
