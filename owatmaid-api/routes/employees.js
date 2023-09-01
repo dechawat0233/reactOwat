@@ -142,8 +142,21 @@ const employeeSchema = new mongoose.Schema({
   leavefortraining: String,
   leavefortrainingsalary: String,
 
+  selectedOption: String,
+  idPerson: String,
+  salary: String,
   minus: String,
   socialsecurity: String,
+  socialsecurityemployer: String,
+  minusemployer: String,
+  selectedHospDf: String,
+  selectedHosp1: String,
+  selectedHosp2: String,
+  selectedHosp3: String,
+  beforebecomeEmployee: String,
+  wagesbeforeusingProgram: String,
+  wagesafterusingProgram: String,
+  companybeforeusingProgram: String,
 
 
 });
@@ -251,7 +264,24 @@ router.post('/create', async (req, res) => {
     emergencyContactNumber,
     idLine,
     vaccination,
-    treatmentRights
+    treatmentRights,
+
+    selectedOption,
+    idPerson,
+    salary,
+    minus,
+    socialsecurity,
+    socialsecurityemployer,
+    minusemployer,
+    selectedHospDf,
+    selectedHosp1,
+    selectedHosp2,
+    selectedHosp3,
+
+    beforebecomeEmployee,
+    wagesbeforeusingProgram,
+    wagesafterusingProgram,
+    companybeforeusingProgram,
   } = req.body;
   console.log(`Name: ${name}, Id card: ${idCard}`);
 
@@ -284,7 +314,24 @@ router.post('/create', async (req, res) => {
     emergencyContactNumber,
     idLine,
     vaccination,
-    treatmentRights
+    treatmentRights,
+
+    selectedOption,
+    idPerson,
+    salary,
+    minus,
+    socialsecurity,
+    socialsecurityemployer,
+    minusemployer,
+    selectedHospDf,
+    selectedHosp1,
+    selectedHosp2,
+    selectedHosp3,
+
+    beforebecomeEmployee,
+    wagesbeforeusingProgram,
+    wagesafterusingProgram,
+    companybeforeusingProgram,
   });
 
   try {

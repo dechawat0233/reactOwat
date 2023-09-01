@@ -9,7 +9,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import '../editwindowcss.css';
 
 function SocialSecurity() {
-
+    const [buttonValue, setButtonValue] = useState('');
     const options = [
         { value: 'option1', label: 'Option 17' },
         { value: 'option2', label: 'Option 92' },
@@ -33,6 +33,11 @@ function SocialSecurity() {
     const Ayutthaya = ['รพ.พระนครศรีอยุธยา(สธ)', 'รพ.เสนา(สธ)', 'รพ.การุญเวช อยุธยาโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ราชธานีโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ราชธานี โรจนะโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.เอเชียอินเตอร์เนชั่นแนล โรงพยาบาลทั่วไปขนาดกลาง']
 
 
+    //////////
+const [beforebecomeEmployee, setBeforebecomeEmployee] = useState('');
+const [wagesbeforeusingProgram, setWagesbeforeusingProgram] = useState('');
+const [wagesafterusingProgram, setWagesafterusingProgram] = useState('');
+const [companybeforeusingProgram, setCompanybeforeusingProgram] = useState('');
     // Step 4: Use useState to manage the selected option
     const [selectedOption, setSelectedOption] = useState('');
     const [startjob, setStartjob] = useState(''); //วันที่เริ่มงาน
@@ -84,7 +89,7 @@ function SocialSecurity() {
         setIdPerson(empSelect.idCard);
         setName(empSelect.name);
         setSalary(empSelect.salary);
-        // alert(employeeData.startcount);
+        // alert(empSelect._id);
         // console.log(empSelect.startjob);
     }
     async function handleManageEmployee(event) {
@@ -209,7 +214,7 @@ function SocialSecurity() {
         };
     }, []);
 
-    
+
     // Step 5: Event handler to update the selected option
 
 
@@ -414,7 +419,7 @@ function SocialSecurity() {
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">ยอดเงินประกันสังคมถูกหักก่อนเป็นพนักงาน</label>
                                                 <div class="col-md-5">
-                                                    <input type="" class="form-control" id="" placeholder="" />
+                                                    <input type="" class="form-control" id="" placeholder="" value={beforebecomeEmployee} onChange={(e) => setBeforebecomeEmployee(e.target.value)}/>
                                                 </div>
                                             </div>
                                         </section>
@@ -428,21 +433,21 @@ function SocialSecurity() {
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">ค่าจ้างก่อนใช้โปรแกรม</label>
                                                 <div class="col-md-5">
-                                                    <input type="" class="form-control" id="" placeholder="" />
+                                                    <input type="" class="form-control" id="" placeholder="" value={wagesbeforeusingProgram} onChange={(e) => setWagesafterusingProgram(e.target.value)}/>
                                                 </div>
                                                 <label class="col-form-label">%</label>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">ยอดเงินประกันสังคมถูกหักก่อนใช้โปรแกรม</label>
                                                 <div class="col-md-5">
-                                                    <input type="" class="form-control" id="" placeholder="" />
+                                                    <input type="" class="form-control" id="" placeholder="" value={wagesafterusingProgram} onChange={(e) => setWagesafterusingProgram(e.target.value)}/>
                                                 </div>
                                                 <label class="col-form-label">%</label>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">ยอดเงินประกันสังคมบริษัทสมทบก่อนใช้โปรแกรม</label>
                                                 <div class="col-md-5">
-                                                    <input type="" class="form-control" id="" placeholder="" />
+                                                    <input type="" class="form-control" id="" placeholder="" value={companybeforeusingProgram} onChange={(e) => setCompanybeforeusingProgram(e.target.value)}/>
                                                 </div>
                                                 <label class="col-form-label">%</label>
                                             </div>
@@ -451,7 +456,7 @@ function SocialSecurity() {
                                     </div>
                                 </div>
                                 <div class="line_btn">
-                                    <button type="submit" class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
+                                    <button type="submit" class="btn b_save"><i class="nav-icon fas fa-save" onClick={() => setButtonValue('save')}></i> &nbsp;บันทึก</button>
                                     <button type="reset" class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
                                 </div>
                             </form>
@@ -463,7 +468,7 @@ function SocialSecurity() {
             </div>
         </body>
     )
-    
+
 
 }
 
