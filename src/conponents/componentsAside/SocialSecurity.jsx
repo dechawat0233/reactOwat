@@ -73,13 +73,6 @@ function SocialSecurity() {
     const handleStartDateChange = (date) => {
         setStartjob(date);
     };
-<<<<<<< HEAD
-
-        function onEmployeeSelect(empSelect) {
-        // setEmployeeselection(empSelect);
-        alert(empSelect.salary);
-        setStartjob(empSelect.startjob ? new Date(empSelect.startjob) : '');
-=======
 
     // function onEmployeeSelect(empSelect) {
     //     setStartjob(new Date(empSelect.startjob));
@@ -88,7 +81,6 @@ function SocialSecurity() {
     async function onEmployeeSelect(empSelect) {
         // setEmployeeselection(empSelect);
         // setStartjob(empSelect.startjob ? new Date(empSelect.startjob) : '');
->>>>>>> f52097ccd2a9e5449837a3c0f2552cf5f4dea11f
         setIdPerson(empSelect.idCard);
         setName(empSelect.name);
         setSalary(empSelect.salary);
