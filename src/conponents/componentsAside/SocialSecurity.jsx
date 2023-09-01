@@ -80,7 +80,7 @@ function SocialSecurity() {
 
     async function onEmployeeSelect(empSelect) {
         // setEmployeeselection(empSelect);
-        // setStartjob(empSelect.startjob ? new Date(empSelect.startjob) : '');
+        setStartjob(empSelect.startjob ? new Date(empSelect.startjob) : '');
         setIdPerson(empSelect.idCard);
         setName(empSelect.name);
         setSalary(empSelect.salary);
@@ -91,35 +91,20 @@ function SocialSecurity() {
         event.preventDefault();
 
         const data = {
-            employeeId: employeeId,
-            position: position,
-            department: department,
-            workplace: workplace,
-            jobtype: jobtype,
+            selectedOption: selectedOption,
             startjob: startjob,
-            endjob: endjob,
-            exceptjob: exceptjob,
-            prefix: prefix,
+            idPerson: idPerson,
             name: name,
-            lastName: lastName,
-            nickName: nickName,
-            gender: gender,
-            dateOfBirth: dateOfBirth,
-            age: age,
-            idCard: idCard,
-            ethnicity: ethnicity,
-            religion: religion,
-            maritalStatus: maritalStatus,
-            militaryStatus: militaryStatus,
-            address: address,
-            currentAddress: currentAddress,
-            phoneNumber: phoneNumber,
-            emergencyContactNumber: emergencyContactNumber,
-            idLine: idLine,
-            vaccination: vaccination,
-            treatmentRights: treatmentRights,
+            salary: salary,
+            minus: minus,
+            socialsecurity: socialsecurity,
+            socialsecurityemployer: socialsecurityemployer,
+            minusemployer: minusemployer,
+            selectedHospDf: selectedHospDf,
+            selectedHosp1: selectedHosp1,
+            selectedHosp2: selectedHosp2,
+            selectedHosp3: selectedHosp3,
         };
-
 
         //check create or update Employee
         if (newEmp) {

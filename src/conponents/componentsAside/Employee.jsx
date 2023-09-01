@@ -162,6 +162,7 @@ function Employee() {
         event.preventDefault();
 
         const data = {
+            
             employeeId: employeeId,
             position: position,
             department: department,
