@@ -111,6 +111,7 @@ function SocialSecurity() {
         setIdPerson(empSelect.idCard);
         setName(empSelect.name);
         setSalary(empSelect.salary);
+        setMinus(empSelect.minus);
         // alert(empSelect._id);
         // console.log(empSelect.startjob);
     }
@@ -192,11 +193,11 @@ function SocialSecurity() {
     const [storedEmp, setStoredEmp] = useState([]);
 
     useEffect(() => {
-        if (salary === '') {
+        if (employeeData.salary === '') {
             setSocialSecurity(0);
         } else {
-            const parsedSalary = parseFloat(salary);
-            const parsedMinus = parseFloat(minus) / 100; // Convert the minus percentage to a decimal
+            const parsedSalary = parseFloat(employeeData.salary);
+            const parsedMinus = parseFloat(employeeData.minus) / 100; // Convert the minus percentage to a decimal
             if (parsedSalary < 1650) {
                 setSocialSecurity(1650 * parsedMinus);
             } else if (parsedSalary >= 1650 && parsedSalary <= 15000) {
@@ -205,14 +206,14 @@ function SocialSecurity() {
                 setSocialSecurity(15000 * parsedMinus);
             }
         }
-    }, [salary, minus]);
+    }, [employeeData.salary, employeeData.minus]);
 
     useEffect(() => {
-        if (salary === '') {
+        if (employeeData.salary === '') {
             setSocialSecurityEmployer(0);
         } else {
-            const parsedSalary = parseFloat(salary);
-            const parsedMinusEmpoyor = parseFloat(minusemployer) / 100; // Convert the minus percentage to a decimal
+            const parsedSalary = parseFloat(employeeData.salary);
+            const parsedMinusEmpoyor = parseFloat(employeeData.minusemployer) / 100; // Convert the minus percentage to a decimal
             if (parsedSalary < 1650) {
                 setSocialSecurityEmployer(1650 * parsedMinusEmpoyor);
             } else if (parsedSalary >= 1650 && parsedSalary <= 15000) {
@@ -221,7 +222,7 @@ function SocialSecurity() {
                 setSocialSecurityEmployer(15000 * parsedMinusEmpoyor);
             }
         }
-    }, [salary, minusemployer]);
+    }, [employeeData.salary, employeeData.minusemployer]);
 
     useEffect(() => {
         // Listen for the custom event when selectedEmployees change in localStorage
@@ -338,18 +339,18 @@ function SocialSecurity() {
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">หักประกันสังคม</label>
                                                 <div class="col-md-5">
-                                                    <input type="" class="form-control" id="" placeholder="หักประกันสังคม" value={socialsecurity} onChange={(e) => setSocialSecurity(e.target.value)} />
+                                                    <input type="" class="form-control" id="" placeholder="หักประกันสังคม" value={socialsecurity} onChange={(e) => handleChange(e, 'socialsecurity')} readOnly />
                                                 </div>
                                             </div>
                                             <h5>นายจ้าง</h5>
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">หักประกันสังคม</label>
                                                 <div class="col-md-5">
-                                                    <input type="" class="form-control" id="" placeholder="หักประกันสังคม" value={socialsecurityemployer} onChange={(e) => setSocialSecurityEmployer(e.target.value)} />
+                                                    <input type="" class="form-control" id="" placeholder="หักประกันสังคม" value={socialsecurityemployer} onChange={(e) => handleChange(e, 'socialsecurityemployer')} readOnly />
                                                 </div>
                                                 <label class="col-md-1 col-form-label">หัก%</label>
                                                 <div class="col-md-2">
-                                                    <input type="" class="form-control" id="" placeholder="เงินเดือน" value={minusemployer} onChange={(e) => setMinusEmployer(e.target.value)} />
+                                                    <input type="" class="form-control" id="" placeholder="เงินเดือน" value={employeeData.minusemployer} onChange={(e) => handleChange(e, 'minusemployer')} />
                                                 </div>
                                                 <label class="col-md-1 col-form-label">%</label>
                                             </div>
@@ -369,7 +370,7 @@ function SocialSecurity() {
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">ชื่อสถานรักษาพยาลบาลปัจจุบัน</label>
                                                 <div class="col-md-5">
-                                                    <select class="form-control" value={selectedHospDf} onChange={handleselectedHospDfChange}>
+                                                    <select class="form-control" value={employeeData.selectedHospDf} onChange={(e) => handleChange(e, 'selectedHospDf')}>
                                                         <option>ยังไม่ได้ระบุ</option>
                                                         <option>option 2</option>
                                                         <option>option 3</option>
@@ -382,7 +383,7 @@ function SocialSecurity() {
                                                 <label class="col-md-3 col-form-label">ต้องการเลือกลำดับที่ 1</label>
                                                 <div class="col-md-5">
                                                     {/* <input type="" class="form-control" id="" placeholder="" /> */}
-                                                    <select class="form-control" value={selectedHosp1} onChange={handleselectedHosp1Change}>
+                                                    <select class="form-control" value={employeeData.selectedHosp1} onChange={(e) => handleChange(e, 'selectedHosp1')}>
                                                         <option>ยังไม่ได้ระบุ</option>
                                                         <option>option 2</option>
                                                         <option>option 3</option>
@@ -395,7 +396,7 @@ function SocialSecurity() {
                                                 <label class="col-md-3 col-form-label">ต้องการเลือกลำดับที่ 2</label>
                                                 <div class="col-md-5">
                                                     {/* <input type="" class="form-control" id="" placeholder="" /> */}
-                                                    <select class="form-control" value={selectedHosp2} onChange={handleselectedHosp2Change}>
+                                                    <select class="form-control" value={employeeData.selectedHosp2} onChange={(e) => handleChange(e, 'selectedHosp2')}>
                                                         <option>ยังไม่ได้ระบุ</option>
                                                         <option>option 2</option>
                                                         <option>option 3</option>
@@ -408,7 +409,7 @@ function SocialSecurity() {
                                                 <label class="col-md-3 col-form-label">ต้องการเลือกลำดับที่ 3</label>
                                                 <div class="col-md-5">
                                                     {/* <input type="" class="form-control" id="" placeholder="" /> */}
-                                                    <select class="form-control" value={selectedHosp3} onChange={handleselectedHosp3Change}>
+                                                    <select class="form-control" value={employeeData.selectedHosp3} onChange={(e) => handleChange(e, 'selectedHosp3')}>
                                                         <option>ยังไม่ได้ระบุ</option>
                                                         <option>option 2</option>
                                                         <option>option 3</option>
