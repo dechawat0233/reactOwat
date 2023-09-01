@@ -151,89 +151,41 @@ function Salary() {
     };
 
 
-    // const handleSalarytype = (event) => {
-    //     setSalarytype(event.target.value);
-    // };
-    // const handleMoney = (event) => {
-    //     setMoney(event.target.value);
-    // };
-
-
-    // const handleSalaryout = (event) => {
-    //     setSalaryout(event.target.value);
-    // };
-    // const handleSalarypayment = (event) => {
-    //     setSalarypayment(event.target.value);
-    // };
-    // const handleSalarybank = (event) => {
-    //     setSalarybank(event.target.value);
-    // };
-
-    // const handleSalaryadd1 = (event) => {
-    //     if (salaryadd1 !== '') {
-    //         setSalaryadd1('');
-    //     } else {
-    //         setSalaryadd1(event.target.value);
-    //     }
-    // };
-    // const handleSalaryadd2 = (event) => {
-    //     if (salaryadd2 !== '') {
-    //         setSalaryadd2('');
-    //     } else {
-    //         setSalaryadd2(event.target.value);
-    //     }
-    // };
-    // const handleSalaryadd3 = (event) => {
-    //     if (salaryadd3 !== '') {
-    //         setSalaryadd3('');
-    //     } else {
-    //         setSalaryadd3(event.target.value);
-    //     }
-    // };
-    // const handleSalaryadd4 = (event) => {
-    //     if (salaryadd4 !== '') {
-    //         setSalaryadd4('');
-    //     } else {
-    //         setSalaryadd4(event.target.value);
-    //     }
-    // };
-    // const handleSalaryadd5 = (event) => {
-    //     if (salaryadd5 !== '') {
-    //         setSalaryadd5('');
-    //     } else {
-    //         setSalaryadd5(event.target.value);
-    //     }
-    // };
-    // const handleSalaryaddtype = (event) => {
-    //     setSalaryaddtype(event.target.value);
-    // };
-
-    // const handleJobtype = (event) => {
-    //     setJobtype(event.target.value);
-    // };
-    // const handlePrefix = (event) => {
-    //     setPrefix(event.target.value);
-    // };
-    // const handleGender = (event) => {
-    //     setGender(event.target.value);
-    // };
-    // const handleMilitaryStatus = (event) => {
-    //     setMilitaryStatus(event.target.value);
-    // };
-
     const handleStartDateChange = (date) => {
         setStartjob(date);
+
+//add new startjob to employeeData
+        setEmployeeData(prevData => ({
+            ...prevData,
+            ['startjob']: date
+        }));
     };
+
     const handleExceptDateChange = (date) => {
         setExceptjob(date);
+        //add new exceptjob to employeeData
+        setEmployeeData(prevData => ({
+            ...prevData,
+            ['exceptjob']: date
+        }));
     };
     const handleStartcount = (date) => {
         setStartcount(date);
-    };
+                //add new startcount to employeeData
+                setEmployeeData(prevData => ({
+                    ...prevData,
+                    ['startcount']: date 
+                }));
+            };
 
     const handleSalaryupdate = (date) => {
         setSalaryupdate(date);
-    };
+                        //add new salaryupdate to employeeData
+                        setEmployeeData(prevData => ({
+                            ...prevData,
+                            ['salaryupdate']: date 
+                        }));
+            };
 
 
     // const handleDateOfBirth = (date) => {
@@ -246,15 +198,30 @@ function Salary() {
         // Make the API call to update the resource by ID
         //   if(){
 
-        await setEmployeeData(prevData => ({
-            ...prevData,
-            ['startcount']: startcount,
-            ['salaryupdate']: new Date(salaryupdate),
-            ['startjob']: startjob,
-            ['exceptjob']: exceptjob
-        }));
+    
+        // try {
+        //     const response = await axios.put(endpoint + '/employee/update/' + employeeData._id, employeeData);
+        //     // setEmployeesResult(response.data.employees);
+        //     if (response) {
+        //         alert("บันทึกสำเร็จ");
+        //         // localStorage.setItem('selectedEmployees' , JSON.stringify(response.data.employees));
 
-        try {
+        //         // window.location.reload();
+
+        //     }
+        // } catch (error) {
+        //     alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+        //     alert(error);
+        //     // window.location.reload();
+        // }
+        // // }
+
+    }
+
+    async function updateEmployee(_id) {
+        alert('hi');
+        // Make the API call to update the resource by ID
+                try {
             const response = await axios.put(endpoint + '/employee/update/' + employeeData._id, employeeData);
             // setEmployeesResult(response.data.employees);
             if (response) {
@@ -269,25 +236,20 @@ function Salary() {
             alert(error);
             // window.location.reload();
         }
+
+        // try {
+        //     const response = await axios.put(endpoint + '/employee/update/' + _id, employeeData);
+        //     // setEmployeesResult(response.data.employees);
+        //     if (response) {
+        //         alert("บันทึกสำเร็จ");
+        //         window.location.reload();
+
+        //     }
+        // } catch (error) {
+        //     alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+        //     alert(error);
+        //     window.location.reload();
         // }
-
-    }
-
-    async function updateEmployee(_id) {
-        // Make the API call to update the resource by ID
-        try {
-            const response = await axios.put(endpoint + '/employee/update/' + _id, employeeData);
-            // setEmployeesResult(response.data.employees);
-            if (response) {
-                alert("บันทึกสำเร็จ");
-                window.location.reload();
-
-            }
-        } catch (error) {
-            alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
-            alert(error);
-            window.location.reload();
-        }
 
     }
 
@@ -316,6 +278,10 @@ function Salary() {
 
     }
 
+function test(){
+    event.preventDefault();
+
+}
 
     return (
         <body class="hold-transition sidebar-mini" className='editlaout'>
@@ -937,7 +903,7 @@ function Salary() {
                                 </div>
 
                                 <div class="line_btn">
-                                    <button type="submit" class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
+                                    <button type="submit" class="btn b_save" onClick={updateEmployee}><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
                                     <button type="reset" class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
                                 </div>
                             </form>
