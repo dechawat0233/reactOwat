@@ -149,6 +149,12 @@ const employeeSchema = new mongoose.Schema({
   socialsecurity: String,
   socialsecurityemployer: String,
   minusemployer: String,
+
+  selectedHospDFSelect: String,
+  selectedHospSelect1: String,
+  selectedHospSelect2: String,
+  selectedHospSelect3: String,
+
   selectedHospDf: String,
   selectedHosp1: String,
   selectedHosp2: String,
@@ -273,6 +279,12 @@ router.post('/create', async (req, res) => {
     socialsecurity,
     socialsecurityemployer,
     minusemployer,
+
+    selectedHospDFSelect,
+    selectedHospSelect1,
+    selectedHospSelect2,
+    selectedHospSelect3,
+
     selectedHospDf,
     selectedHosp1,
     selectedHosp2,
@@ -323,6 +335,12 @@ router.post('/create', async (req, res) => {
     socialsecurity,
     socialsecurityemployer,
     minusemployer,
+
+    selectedHospDFSelect,
+    selectedHospSelect1,
+    selectedHospSelect2,
+    selectedHospSelect3,
+
     selectedHospDf,
     selectedHosp1,
     selectedHosp2,

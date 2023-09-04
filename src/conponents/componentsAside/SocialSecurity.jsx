@@ -32,6 +32,52 @@ function SocialSecurity() {
     const PrachinBuri = ['รพ.กบินทร์บุรี(สธ)', 'รพ.เกษมราษฎร์ ปราจีนบุรีโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ค่ายจักรพงษ์', 'รพ.เจ้าพระยาอภัยภูเบศร(สธ)', 'รพ.ทั่วไปขนาดกลางจุฬารัตน์ 304 อินเตอร์']
     const KamphaengPhet = ['รพ.กำแพงเพชร(สธ)']
     const Ayutthaya = ['รพ.พระนครศรีอยุธยา(สธ)', 'รพ.เสนา(สธ)', 'รพ.การุญเวช อยุธยาโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ราชธานีโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ราชธานี โรจนะโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.เอเชียอินเตอร์เนชั่นแนล โรงพยาบาลทั่วไปขนาดกลาง']
+    const [inputValue, setInputValue] = useState('');
+    const [selectedLocation, setSelectedLocation] = useState('Bangkok');
+
+    const [selectedHospDFSelect, setSelectedHospDFSelect] = useState('');
+    const [selectedHospSelect1, setSelectedHospSelect1] = useState('');
+    const [selectedHospSelect2, setSelectedHospSelect2] = useState('');
+    const [selectedHospSelect3, setSelectedHospSelect3] = useState('');
+
+    const handleInputChange = (event) => {
+        const value = event.target.value;
+        setInputValue(value);
+    };
+
+    const handleSelectLocation = (event) => {
+        const location = event.target.value;
+        setSelectedLocation(location);
+    };
+
+    const filteredHospitals = selectedLocation === 'Bangkok'
+        ? Bangkok.filter(hospital => hospital.includes(inputValue))
+        : selectedLocation === 'BangkokPrivate'
+            ? BangkokPrivate.filter(hospital => hospital.includes(inputValue))
+            : selectedLocation === 'LopBuri'
+                ? LopBuri.filter(hospital => hospital.includes(inputValue))
+                : selectedLocation === 'NakhonPathom'
+                    ? NakhonPathom.filter(hospital => hospital.includes(inputValue))
+                    : selectedLocation === 'Nonthaburi'
+                        ? Nonthaburi.filter(hospital => hospital.includes(inputValue))
+                        : selectedLocation === 'SamutSakhon'
+                            ? SamutSakhon.filter(hospital => hospital.includes(inputValue))
+                            : selectedLocation === 'Chachoengsao'
+                                ? Chachoengsao.filter(hospital => hospital.includes(inputValue))
+                                : selectedLocation === 'Rayong'
+                                    ? Rayong.filter(hospital => hospital.includes(inputValue))
+                                    : selectedLocation === 'SamutPrakan'
+                                        ? SamutPrakan.filter(hospital => hospital.includes(inputValue))
+                                        : selectedLocation === 'Saraburi'
+                                            ? Saraburi.filter(hospital => hospital.includes(inputValue))
+                                            : selectedLocation === 'PrachinBuri'
+                                                ? PrachinBuri.filter(hospital => hospital.includes(inputValue))
+                                                : selectedLocation === 'KamphaengPhet'
+                                                    ? KamphaengPhet.filter(hospital => hospital.includes(inputValue))
+                                                    : selectedLocation === 'Ayutthaya'
+                                                        ? Ayutthaya.filter(hospital => hospital.includes(inputValue))
+                                                        : [];
+
 
 
     //////////
@@ -61,16 +107,20 @@ function SocialSecurity() {
     const [selectedHosp3, setSelectedHosp3] = useState('');
 
     const handleselectedHospDfChange = (event) => {
-        setSelectedHospDf(event.target.value);
+        const value = event.target.value;
+        setSelectedHospDf(value);
     };
     const handleselectedHosp1Change = (event) => {
-        setSelectedHosp1(event.target.value);
+        const value = event.target.value;
+        setSelectedHosp1(value);
     };
     const handleselectedHosp2Change = (event) => {
-        setSelectedHosp2(event.target.value);
+        const value = event.target.value;
+        setSelectedHosp2(value);
     };
     const handleselectedHosp3Change = (event) => {
-        setSelectedHosp3(event.target.value);
+        const value = event.target.value;
+        setSelectedHosp3(value);
     };
 
     const handleOptionChange = (event) => {
@@ -328,11 +378,11 @@ function SocialSecurity() {
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">เงินเดือน</label>
                                                 <div class="col-md-5">
-                                                    <input type="" class="form-control" id="" placeholder="เงินเดือน" value={employeeData.salary} onChange={(e) => handleChange(e, 'salary')}/>
+                                                    <input type="" class="form-control" id="" placeholder="เงินเดือน" value={employeeData.salary} onChange={(e) => handleChange(e, 'salary')} />
                                                 </div>
                                                 <label class="col-md-1 col-form-label">หัก%</label>
                                                 <div class="col-md-2">
-                                                    <input type="" class="form-control" id="" placeholder="เงินเดือน" value={employeeData.minus} onChange={(e) => handleChange(e, 'minus')}/>
+                                                    <input type="" class="form-control" id="" placeholder="เงินเดือน" value={employeeData.minus} onChange={(e) => handleChange(e, 'minus')} />
                                                 </div>
                                                 <label class="col-md-1 col-form-label">%</label>
                                             </div>
@@ -369,53 +419,526 @@ function SocialSecurity() {
                                         <section class="Frame">
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">ชื่อสถานรักษาพยาลบาลปัจจุบัน</label>
-                                                <div class="col-md-5">
-                                                    <select class="form-control" value={employeeData.selectedHospDf} onChange={(e) => handleChange(e, 'selectedHospDf')}>
-                                                        <option>ยังไม่ได้ระบุ</option>
-                                                        <option>option 2</option>
-                                                        <option>option 3</option>
-                                                        <option>option 4</option>
-                                                        <option>option 5</option>
-                                                    </select>
+                                                <div class="col-md-9">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <select
+                                                                value={employeeData.selectedHospDFSelect || ''}
+                                                                onChange={(e) => {
+                                                                    handleChange(e, 'selectedHospDFSelect');
+                                                                    handleSelectLocation(e);
+                                                                }}
+                                                                class="form-control">
+                                                                <option value="Bangkok">กรุงเทพ</option>
+                                                                <option value="BangkokPrivate">เอกชนกรุงเทพ</option>
+                                                                <option value="LopBuri">ลพบุรี</option>
+                                                                <option value="NakhonPathom">นครปฐม</option>
+                                                                <option value="Nonthaburi">นนทบุรี</option>
+                                                                <option value="SamutSakhon">สมุทรสาคร</option>
+                                                                <option value="Chachoengsao">ฉะเชิงเทรา</option>
+                                                                <option value="Rayong">ระยอง</option>
+                                                                <option value="SamutPrakan">สมุทรปราการ</option>
+                                                                <option value="Saraburi">สระบุรี</option>
+                                                                <option value="PrachinBuri">ปราจีนบุรี</option>
+                                                                <option value="KamphaengPhet">กำแพงเพชร</option>
+                                                                <option value="Ayutthaya">อยุธยา</option>
+                                                                {/* Add options for other locations if needed */}
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <input
+                                                                type="text" class="form-control"
+                                                                value={employeeData.selectedHospDf}
+                                                                onInput={handleselectedHospDfChange}
+                                                                onChange={(e) => handleChange(e, 'selectedHospDf')}
+                                                                list="hospitalList"
+                                                            />
+                                                        </div>
+                                                        {selectedLocation === 'Bangkok' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'BangkokPrivate' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'LopBuri' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'NakhonPathom' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'Nonthaburi' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'SamutSakhon' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'Chachoengsao' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'Rayong' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'SamutPrakan' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'Saraburi' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'PrachinBuri' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'KamphaengPhet' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'Ayutthaya' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">ต้องการเลือกลำดับที่ 1</label>
-                                                <div class="col-md-5">
-                                                    {/* <input type="" class="form-control" id="" placeholder="" /> */}
-                                                    <select class="form-control" value={employeeData.selectedHosp1} onChange={(e) => handleChange(e, 'selectedHosp1')}>
-                                                        <option>ยังไม่ได้ระบุ</option>
-                                                        <option>option 2</option>
-                                                        <option>option 3</option>
-                                                        <option>option 4</option>
-                                                        <option>option 5</option>
-                                                    </select>
+                                                <div class="col-md-9">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <select
+                                                                value={employeeData.selectedHospSelect1 || ''}
+                                                                onChange={(e) => {
+                                                                    handleChange(e, 'selectedHospSelect1');
+                                                                    handleSelectLocation(e);
+                                                                }} class="form-control">
+                                                                <option value="Bangkok">กรุงเทพ</option>
+                                                                <option value="BangkokPrivate">เอกชนกรุงเทพ</option>
+                                                                <option value="LopBuri">ลพบุรี</option>
+                                                                <option value="NakhonPathom">นครปฐม</option>
+                                                                <option value="Nonthaburi">นนทบุรี</option>
+                                                                <option value="SamutSakhon">สมุทรสาคร</option>
+                                                                <option value="Chachoengsao">ฉะเชิงเทรา</option>
+                                                                <option value="Rayong">ระยอง</option>
+                                                                <option value="SamutPrakan">สมุทรปราการ</option>
+                                                                <option value="Saraburi">สระบุรี</option>
+                                                                <option value="PrachinBuri">ปราจีนบุรี</option>
+                                                                <option value="KamphaengPhet">กำแพงเพชร</option>
+                                                                <option value="Ayutthaya">อยุธยา</option>
+                                                                {/* Add options for other locations if needed */}
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <input
+                                                                type="text" class="form-control"
+                                                                value={employeeData.selectedHosp1}
+                                                                onInput={handleselectedHosp1Change}
+                                                                onChange={(e) => handleChange(e, 'selectedHosp1')}
+                                                                list="hospitalList"
+                                                            />
+                                                        </div>
+                                                        {selectedLocation === 'Bangkok' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'BangkokPrivate' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'LopBuri' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'NakhonPathom' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'Nonthaburi' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'SamutSakhon' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'Chachoengsao' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'Rayong' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'SamutPrakan' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'Saraburi' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'PrachinBuri' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'KamphaengPhet' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'Ayutthaya' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">ต้องการเลือกลำดับที่ 2</label>
-                                                <div class="col-md-5">
-                                                    {/* <input type="" class="form-control" id="" placeholder="" /> */}
-                                                    <select class="form-control" value={employeeData.selectedHosp2} onChange={(e) => handleChange(e, 'selectedHosp2')}>
-                                                        <option>ยังไม่ได้ระบุ</option>
-                                                        <option>option 2</option>
-                                                        <option>option 3</option>
-                                                        <option>option 4</option>
-                                                        <option>option 5</option>
-                                                    </select>
+                                                <div class="col-md-9">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <select
+                                                                value={employeeData.selectedHospSelect2 || ''}
+                                                                onChange={(e) => {
+                                                                    handleChange(e, 'selectedHospSelect2');
+                                                                    handleSelectLocation(e);
+                                                                }}
+                                                                class="form-control">
+                                                                <option value="Bangkok">กรุงเทพ</option>
+                                                                <option value="BangkokPrivate">เอกชนกรุงเทพ</option>
+                                                                <option value="LopBuri">ลพบุรี</option>
+                                                                <option value="NakhonPathom">นครปฐม</option>
+                                                                <option value="Nonthaburi">นนทบุรี</option>
+                                                                <option value="SamutSakhon">สมุทรสาคร</option>
+                                                                <option value="Chachoengsao">ฉะเชิงเทรา</option>
+                                                                <option value="Rayong">ระยอง</option>
+                                                                <option value="SamutPrakan">สมุทรปราการ</option>
+                                                                <option value="Saraburi">สระบุรี</option>
+                                                                <option value="PrachinBuri">ปราจีนบุรี</option>
+                                                                <option value="KamphaengPhet">กำแพงเพชร</option>
+                                                                <option value="Ayutthaya">อยุธยา</option>
+                                                                {/* Add options for other locations if needed */}
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <input
+                                                                type="text" class="form-control"
+                                                                value={employeeData.selectedHosp2}
+                                                                onInput={handleselectedHosp2Change}
+                                                                onChange={(e) => handleChange(e, 'selectedHosp2')}
+                                                                list="hospitalList"
+                                                            />
+                                                        </div>
+                                                        {selectedLocation === 'Bangkok' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'BangkokPrivate' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'LopBuri' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'NakhonPathom' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'Nonthaburi' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'SamutSakhon' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'Chachoengsao' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'Rayong' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'SamutPrakan' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'Saraburi' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'PrachinBuri' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'KamphaengPhet' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'Ayutthaya' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label">ต้องการเลือกลำดับที่ 3</label>
-                                                <div class="col-md-5">
-                                                    {/* <input type="" class="form-control" id="" placeholder="" /> */}
-                                                    <select class="form-control" value={employeeData.selectedHosp3} onChange={(e) => handleChange(e, 'selectedHosp3')}>
-                                                        <option>ยังไม่ได้ระบุ</option>
-                                                        <option>option 2</option>
-                                                        <option>option 3</option>
-                                                        <option>option 4</option>
-                                                        <option>option 5</option>
-                                                    </select>
+                                                <div class="col-md-9">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <select
+                                                                // value={employeeData.selectedHospSelect3} onChange={(e) => handleChange(e, "selectedHospSelect3")} // Pass the field name as an argument
+                                                                value={employeeData.selectedHospSelect3 || ''}
+                                                                onChange={(e) => {
+                                                                    handleChange(e, 'selectedHospSelect3');
+                                                                    handleSelectLocation(e);
+                                                                }} class="form-control"
+                                                            >
+                                                                <option value="Bangkok">กรุงเทพ</option>
+                                                                <option value="BangkokPrivate">เอกชนกรุงเทพ</option>
+                                                                <option value="LopBuri">ลพบุรี</option>
+                                                                <option value="NakhonPathom">นครปฐม</option>
+                                                                <option value="Nonthaburi">นนทบุรี</option>
+                                                                <option value="SamutSakhon">สมุทรสาคร</option>
+                                                                <option value="Chachoengsao">ฉะเชิงเทรา</option>
+                                                                <option value="Rayong">ระยอง</option>
+                                                                <option value="SamutPrakan">สมุทรปราการ</option>
+                                                                <option value="Saraburi">สระบุรี</option>
+                                                                <option value="PrachinBuri">ปราจีนบุรี</option>
+                                                                <option value="KamphaengPhet">กำแพงเพชร</option>
+                                                                <option value="Ayutthaya">อยุธยา</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <input
+                                                                type="text" class="form-control"
+                                                                value={employeeData.selectedHosp3}
+                                                                onInput={handleselectedHosp3Change}
+                                                                onChange={(e) => handleChange(e, 'selectedHosp3')}
+                                                                list="hospitalList"
+                                                            />
+                                                        </div>
+                                                        {selectedLocation === 'Bangkok' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'BangkokPrivate' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'LopBuri' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'NakhonPathom' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'Nonthaburi' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'SamutSakhon' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'Chachoengsao' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'Rayong' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'SamutPrakan' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'Saraburi' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'PrachinBuri' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'KamphaengPhet' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                        {selectedLocation === 'Ayutthaya' && (
+                                                            <datalist id="hospitalList">
+                                                                {filteredHospitals.map((hospital, index) => (
+                                                                    <option key={index} value={hospital} />
+                                                                ))}
+                                                            </datalist>
+                                                        )}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </section>
