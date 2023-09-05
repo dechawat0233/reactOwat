@@ -196,6 +196,7 @@ const employeeSchema = new mongoose.Schema({
   commentadmoney2: String,
   commentadmoney3: String,
   PriceType:String,
+  divide:String,
 
 
 });
@@ -360,6 +361,7 @@ router.post('/create', async (req, res) => {
     commentadmoney2,
     commentadmoney3,
     PriceType,
+    divide,
 
   } = req.body;
   console.log(`Name: ${name}, Id card: ${idCard}`);
@@ -450,6 +452,7 @@ router.post('/create', async (req, res) => {
     commentadmoney2,
     commentadmoney3,
     PriceType,
+    divide,
   });
 
   try {
