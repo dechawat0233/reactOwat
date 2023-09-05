@@ -11,7 +11,7 @@ import '../editwindowcss.css';
 
 
 function Salary() {
-    const [storedEmp, setStoredEmp] = useState([]);
+     const [storedEmp, setStoredEmp] = useState([]);
     const [newEmp, setNewEmp] = useState(true);
     // const [employeeselection , setEmployeeselection] = useState([]);
     const [workplaceSelection, setWorkplaceSelection] = useState([]);
@@ -188,10 +188,6 @@ function Salary() {
             };
 
 
-    // const handleDateOfBirth = (date) => {
-    //     setDateOfBirth(date);
-    // };
-
     async function handleManageSalary(event) {
         event.preventDefault();
         // alert(employeeData._id);
@@ -219,7 +215,7 @@ function Salary() {
     }
 
     async function updateEmployee(_id) {
-        alert('hi');
+        // alert('hi');
         // Make the API call to update the resource by ID
                 try {
             const response = await axios.put(endpoint + '/employee/update/' + employeeData._id, employeeData);
@@ -236,20 +232,6 @@ function Salary() {
             alert(error);
             // window.location.reload();
         }
-
-        // try {
-        //     const response = await axios.put(endpoint + '/employee/update/' + _id, employeeData);
-        //     // setEmployeesResult(response.data.employees);
-        //     if (response) {
-        //         alert("บันทึกสำเร็จ");
-        //         window.location.reload();
-
-        //     }
-        // } catch (error) {
-        //     alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
-        //     alert(error);
-        //     window.location.reload();
-        // }
 
     }
 
@@ -274,14 +256,9 @@ function Salary() {
         await setExceptjob(new Date(empSelect.exceptjob || ''));
         await setStartcount(empSelect.startcount ? new Date(empSelect.startcount) : '');
         await setSalaryupdate(empSelect.salaryupdate ? new Date(empSelect.salaryupdate) : '');
-        // alert(employeeData.startcount);
 
     }
 
-function test(){
-    event.preventDefault();
-
-}
 
     return (
         <body class="hold-transition sidebar-mini" className='editlaout'>

@@ -135,7 +135,6 @@ function SocialSecurity() {
     // }
 
     async function updateEmployee(_id) {
-        alert('hi');
         // Make the API call to update the resource by ID
         try {
             const response = await axios.put(endpoint + '/employee/update/' + employeeData._id, employeeData);
