@@ -163,6 +163,36 @@ const employeeSchema = new mongoose.Schema({
   wagesbeforeusingProgram: String,
   wagesafterusingProgram: String,
   companybeforeusingProgram: String,
+  ////otherExp
+  number1: String,
+  number2: String,
+
+  input1: String,
+  input2: String,
+  input3: String,
+  anything: String,
+
+  shirt: String,
+  shirtcount: String,
+  trousers: String,
+  trouserscount: String,
+  wholeset: String,
+  wholesetcount: String,
+  saveftyShoes: String,
+  saveftyShoescount: String,
+  apron: String,
+  aproncount: String,
+  hat: String,
+  hatcount: String,
+  custom: String,
+
+  admoney1: String,
+  admoney2: String,
+  admoney3: String,
+
+  commentadmoney1: String,
+  commentadmoney2: String,
+  commentadmoney3: String,
 
 
 });
@@ -294,6 +324,38 @@ router.post('/create', async (req, res) => {
     wagesbeforeusingProgram,
     wagesafterusingProgram,
     companybeforeusingProgram,
+
+    ////otherExp
+    number1,
+    number2,
+
+    input1,
+    input2,
+    input3,
+    anything,
+
+    shirt,
+    shirtcount,
+    trousers,
+    trouserscount,
+    wholeset,
+    wholesetcount,
+    saveftyShoes,
+    saveftyShoescount,
+    apron,
+    aproncount,
+    hat,
+    hatcount,
+    custom,
+
+    admoney1,
+    admoney2,
+    admoney3,
+
+    commentadmoney1,
+    commentadmoney2,
+    commentadmoney3,
+
   } = req.body;
   console.log(`Name: ${name}, Id card: ${idCard}`);
 
@@ -350,6 +412,38 @@ router.post('/create', async (req, res) => {
     wagesbeforeusingProgram,
     wagesafterusingProgram,
     companybeforeusingProgram,
+
+    ////otherExp
+    number1,
+    number2,
+
+    input1,
+    input2,
+    input3,
+    anything,
+
+    shirt,
+    shirtcount,
+    trousers,
+    trouserscount,
+    wholeset,
+    wholesetcount,
+    saveftyShoes,
+    saveftyShoescount,
+    apron,
+    aproncount,
+    hat,
+    hatcount,
+    custom,
+
+    admoney1,
+    admoney2,
+    admoney3,
+
+    commentadmoney1,
+    commentadmoney2,
+    commentadmoney3,
+
   });
 
   try {
