@@ -142,6 +142,7 @@ const employeeSchema = new mongoose.Schema({
   leavefortraining: String,
   leavefortrainingsalary: String,
 
+  SocialSecurityCheck: String,
   selectedOption: String,
   idPerson: String,
   salary: String,

@@ -328,10 +328,10 @@ function SocialSecurity() {
                                                 <label class="col-md-3 ">หักประกันสังคม</label>
                                                 <div class="col-md-5">
                                                     <div class="icheck-primary d-inline">
-                                                        <input type="radio" id="radioPrimary1" name="r1" /> หักประกันสังคม
+                                                        <input type="radio" id="radioPrimary1" name="r1" value="หักประกันสังคม" checked={employeeData.SocialSecurityCheck === "หักประกันสังคม"} onChange={(e) => handleChange(e, 'SocialSecurityCheck')} /> หักประกันสังคม
                                                     </div>
                                                     <div class="icheck-primary d-inline">
-                                                        <input type="radio" id="radioPrimary2" name="r1" /> ไม่หักประกันสังคม
+                                                        <input type="radio" id="radioPrimary2" name="r1" value="ไม่หักประกันสังคม" checked={employeeData.SocialSecurityCheck === "ไม่หักประกันสังคม"} onChange={(e) => handleChange(e, 'SocialSecurityCheck')} /> ไม่หักประกันสังคม
                                                     </div>
                                                 </div>
                                             </div>
