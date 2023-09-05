@@ -1,3 +1,4 @@
+import endpoint from '../../config';
 
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -18,17 +19,17 @@ function OtherExpenses() {
     const handleNumber1Change = (event) => {
         const value = Number(event.target.value);
         setNumber1(value);
-        calculateSum(value, number2);
+        calculateSum(value, employeeData.number2);
     };
 
     const handleNumber2Change = (event) => {
         const value = Number(event.target.value);
         setNumber2(value);
-        calculateSum(number1, value);
+        calculateSum(employeeData.number1, value);
     };
 
     const calculateSum = (num1, num2) => {
-        const result = num1 * num2;
+        const result = employeeData.num1 * employeeData.num2;
         setSum(result);
     };
     ////////////////////////////////////
@@ -237,7 +238,7 @@ function OtherExpenses() {
 
     async function onEmployeeSelect(empSelect) {
         await setEmployeeData(empSelect);
-        setId(empSelect.idCard);
+        setId(empSelect.employeeId);
         setName(empSelect.name);
         setAgency(empSelect.workplace);
 
@@ -247,6 +248,7 @@ function OtherExpenses() {
         setInput2(empSelect.input2);
         setInput3(empSelect.input3);
         setAnything(empSelect.anything);
+        setCrimeinvestigation(empSelect.crimeinvestigation);
         setShirt(empSelect.shirt);
         setShirtcount(empSelect.shirtcount);
         setTrousers(empSelect.trousers);
@@ -277,10 +279,85 @@ function OtherExpenses() {
     const [sumall2, setSumAll2] = useState(0);
     const [divide, setDivide] = useState(0);
     const [divideall, setDivideAll] = useState(0);
+
     useEffect(() => {
-        const sumall = Number(employeeData.sum) + Number(sum2) + Number(crimeinvestigation) + Number(custom);
+        if (employeeData.number1 === '' && employeeData.number2) {
+            setNumber1(0);
+            setNumber2(0);
+        } else {
+            const number1 = parseFloat(employeeData.number1);
+            const number2 = parseFloat(employeeData.number2); // Convert the minus percentage to a decimal
+            setSum(number1 * number2);
+        }
+    }, [employeeData.number1, employeeData.number2]);
+    useEffect(() => {
+        if (employeeData.input1 === '' && employeeData.input2 === '' && employeeData.input3 === '') {
+            setInput1(0);
+            setInput2(0);
+            setInput3(0);
+        } else {
+            const number1 = parseFloat(employeeData.input1);
+            const number2 = parseFloat(employeeData.input2);
+            const number3 = parseFloat(employeeData.input3);
+            setSum2(number1 + number2 + number3);
+        }
+    }, [employeeData.input1, employeeData.input2, employeeData.input3]);
+
+    useEffect(() => {
+        if (employeeData.shirt === '' && employeeData.shirtcount === '' && employeeData.trousers === '' && employeeData.trouserscount === '' && employeeData.wholeset === '' &&
+            employeeData.wholesetcount === '' && employeeData.saveftyShoes === '' &&
+            employeeData.saveftyShoescount === '' && employeeData.apron === '' && employeeData.aproncount === '' && employeeData.hat === '' && employeeData.hatcount) {
+            setShirt(0);
+            setShirtcount(0);
+            setTrousers(0);
+            setTrouserscount(0);
+            setWholeset(0);
+            setWholesetcount(0);
+            setSaveftyShoes(0);
+            setSaveftyShoescount(0);
+            setApron(0);
+            setAproncount(0);
+            setHat(0);
+            setHatcount(0);
+        } else {
+            const shirt = parseFloat(employeeData.shirt);
+            const shirtcount = parseFloat(employeeData.shirtcount);
+            const trousers = parseFloat(employeeData.trousers);
+            const trouserscount = parseFloat(employeeData.trouserscount);
+            const wholeset = parseFloat(employeeData.wholeset);
+            const wholesetcount = parseFloat(employeeData.wholesetcount);
+            const saveftyShoes = parseFloat(employeeData.saveftyShoes);
+            const saveftyShoescount = parseFloat(employeeData.saveftyShoescount);
+            const apron = parseFloat(employeeData.apron);
+            const aproncount = parseFloat(employeeData.aproncount);
+            const hat = parseFloat(employeeData.hat);
+            const hatcount = parseFloat(employeeData.hatcount);
+            setcustom(shirt * shirtcount +
+                trousers * trouserscount +
+                wholeset * wholesetcount +
+                saveftyShoes * saveftyShoescount +
+                apron * aproncount +
+                hat * hatcount);
+        }
+    }, [shirt, shirtcount, trousers, trouserscount, wholeset, wholesetcount, saveftyShoes, saveftyShoescount, apron, aproncount, hat, hatcount]);
+
+    useEffect(() => {
+        if (employeeData.admoney1 === '' && employeeData.admoney2 === '' && employeeData.admoney3 === '') {
+            setAdmoney1(0);
+            setAdmoney2(0);
+            setAdmoney3(0);
+        } else {
+            const admoney1 = parseFloat(employeeData.admoney1);
+            const admoney2 = parseFloat(employeeData.admoney2);
+            const admoney3 = parseFloat(employeeData.admoney3);
+            setSumAdmoney(admoney1 + admoney2 + admoney3);
+        }
+    }, [employeeData.admoney1, employeeData.admoney2, employeeData.admoney3]);
+
+    useEffect(() => {
+        const sumall = Number(sum) + Number(sum2) + Number(crimeinvestigation) + Number(custom);
         setSumAll(sumall);
-    }, [employeeData.sum, sum2, crimeinvestigation, custom]);
+    }, [sum, sum2, crimeinvestigation, custom]);
 
     useEffect(() => {
         const sumall2 = Number(sum) + Number(sum2) + Number(crimeinvestigation) + Number(custom) + Number(sumadmoney);

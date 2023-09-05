@@ -172,6 +172,7 @@ const employeeSchema = new mongoose.Schema({
   input3: String,
   anything: String,
 
+  crimeinvestigation: String,
   shirt: String,
   shirtcount: String,
   trousers: String,
@@ -334,6 +335,7 @@ router.post('/create', async (req, res) => {
     input3,
     anything,
 
+    crimeinvestigation,
     shirt,
     shirtcount,
     trousers,
@@ -422,6 +424,7 @@ router.post('/create', async (req, res) => {
     input3,
     anything,
 
+    crimeinvestigation,
     shirt,
     shirtcount,
     trousers,
