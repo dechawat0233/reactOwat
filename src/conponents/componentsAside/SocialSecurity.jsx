@@ -429,6 +429,7 @@ function SocialSecurity() {
                                                                     handleSelectLocation(e);
                                                                 }}
                                                                 class="form-control">
+                                                                <option value="">ไม่ระบุ</option>
                                                                 <option value="Bangkok">กรุงเทพ</option>
                                                                 <option value="BangkokPrivate">เอกชนกรุงเทพ</option>
                                                                 <option value="LopBuri">ลพบุรี</option>
@@ -560,6 +561,7 @@ function SocialSecurity() {
                                                                     handleChange(e, 'selectedHospSelect1');
                                                                     handleSelectLocation(e);
                                                                 }} class="form-control">
+                                                                <option value="">ไม่ระบุ</option>
                                                                 <option value="Bangkok">กรุงเทพ</option>
                                                                 <option value="BangkokPrivate">เอกชนกรุงเทพ</option>
                                                                 <option value="LopBuri">ลพบุรี</option>
@@ -691,6 +693,7 @@ function SocialSecurity() {
                                                                     handleSelectLocation(e);
                                                                 }}
                                                                 class="form-control">
+                                                                <option value="">ไม่ระบุ</option>
                                                                 <option value="Bangkok">กรุงเทพ</option>
                                                                 <option value="BangkokPrivate">เอกชนกรุงเทพ</option>
                                                                 <option value="LopBuri">ลพบุรี</option>
@@ -823,6 +826,7 @@ function SocialSecurity() {
                                                                     handleSelectLocation(e);
                                                                 }} class="form-control"
                                                             >
+                                                                <option value="">ไม่ระบุ</option>
                                                                 <option value="Bangkok">กรุงเทพ</option>
                                                                 <option value="BangkokPrivate">เอกชนกรุงเทพ</option>
                                                                 <option value="LopBuri">ลพบุรี</option>
