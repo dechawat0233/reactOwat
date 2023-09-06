@@ -12,6 +12,9 @@ function AddsettimeWorkplace() {
 
     const [newWorkplace, setNewWorkplace] = useState(true);
 
+//Workplace Record data
+    const [workDate , setWorkDate] = useState('');
+
     //Workplace data
     const [workplaceId, setWorkplaceId] = useState(''); //รหัสหน่วยงาน
     const [workplaceName, setWorkplaceName] = useState(''); //ชื่อหน่วยงาน
@@ -76,9 +79,9 @@ function AddsettimeWorkplace() {
     const [shift4end, setShift4end] = useState('');
 
 
-    const [startjob, setStartjob] = useState(''); //วันที่เริ่มงาน
-    const handleStartDateChange = (date) => {
-        setStartjob(date);
+    // const [startjob, setStartjob] = useState(''); //วันที่เริ่มงาน
+    const handleWorkDateChange = (date) => {
+        setWorkDate(date);
     };
 
     const [startjob1, setStartjob1] = useState(''); //วันที่เริ่มงาน
@@ -562,47 +565,16 @@ function AddsettimeWorkplace() {
         const data = {
             workplaceId: workplaceId,
             workplaceName: workplaceName,
-            workplaceArea: workplaceArea,
-            workOfWeek: workOfWeek,
-            workStart1: workStart1,
-            workEnd1: workEnd1,
-            workStart2: workStart2,
-            workEnd2: workEnd2,
-            workStart3: workStart3,
-            workEnd3: workEnd3,
-            workOfHour: workOfHour,
-            workOfOT: workOfOT,
-            workRate: workRate,
-            workRateOT: workRateOT,
-            workTotalPeople: workTotalPeople,
-            holiday: holiday,
-            holidayHour: holidayHour,
-            salaryadd1: salaryadd1,
-            salaryadd2: salaryadd2,
-            salaryadd3: salaryadd3,
-            salaryadd4: salaryadd4,
-            salaryadd5: salaryadd5,
-            salaryadd6: salaryadd6,
-            personalLeave: personalLeave,
-            personalLeaveRate: personalLeaveRate,
-            sickLeave: sickLeave,
-            sickLeaveRate: sickLeaveRate,
-            workRateDayoff: workRateDayoff,
-            workRateDayoffRate: workRateDayoffRate,
-            workplaceAddress: workplaceAddress,
-            daysOff: selectedDates,
-            reason: reason,
-
-            employeeIdList: employeeIdList,
-            employeeNameList: employeeNameList,
+            date: workDate,
+            employeeRecord: rowDataList
         };
 
 
         //check create or update Employee
-        if (newWorkplace) {
+        // if (newWorkplace) {
             // alert('Create Workplace');
             try {
-                const response = await axios.post(endpoint + '/workplace/create', data);
+                const response = await axios.post(endpoint + '/timerecord/create', data);
                 // setEmployeesResult(response.data.employees);
                 if (response) {
                     alert("บันทึกสำเร็จ");
@@ -611,25 +583,25 @@ function AddsettimeWorkplace() {
                 alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
                 // window.location.reload();
             }
-        } else {
+        // } else {
             //update workplace data
 
             // Make the API call to update the resource by ID
-            try {
+    //         try {
 
-                const response = await axios.put(endpoint + '/workplace/update/' + _id, data);
-                // setEmployeesResult(response.data.employees);
-                if (response) {
-                    alert("บันทึกสำเร็จ");
-                    window.location.reload();
+    //             const response = await axios.put(endpoint + '/workplace/update/' + _id, data);
+    //             // setEmployeesResult(response.data.employees);
+    //             if (response) {
+    //                 alert("บันทึกสำเร็จ");
+    //                 window.location.reload();
 
-                }
-            } catch (error) {
-                alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
-                // window.location.reload();
-            }
+    //             }
+    //         } catch (error) {
+    //             alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+    //             // window.location.reload();
+    //         }
 
-        }
+    //     }
     }
 
 
@@ -723,8 +695,8 @@ function AddsettimeWorkplace() {
                                             <DatePicker id="datetime" name="datetime"
                                                 className="form-control" // Apply Bootstrap form-control class
                                                 popperClassName="datepicker-popper" // Apply custom popper class if needed
-                                                selected={startjob}
-                                                onChange={handleStartDateChange}
+                                                selected={workDate}
+                                                onChange={handleWorkDateChange}
                                                 dateFormat="dd/MM/yyyy" />
                                         </div>
                                     </div>
