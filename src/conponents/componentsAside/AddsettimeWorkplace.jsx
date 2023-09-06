@@ -114,6 +114,7 @@ function AddsettimeWorkplace() {
 
     const [rowDataList, setRowDataList] = useState(new Array(numberOfRows).fill(initialRowData));
 
+
     const handleFieldChange = (index, fieldName, value) => {
 
         setRowDataList(prevDataList => {
@@ -148,8 +149,32 @@ function AddsettimeWorkplace() {
                     };
 
                 }
-
             }
+
+            //Search Employee  by name
+            if (fieldName == 'staffName') {
+
+                const employeesearch = employeeList.find(employee => employee.name=== value);
+                //                 alert(JSON.stringify(employeeList, null, 2));
+                // alert( employeeList.length);
+                if (employeesearch) {
+                    //   setEmployeeName(employee.name);
+                    newDataList[index] = {
+                        ...newDataList[index],
+                        ['staffId']: employeesearch.employeeId + '',
+                    };
+
+                } else {
+                    //   setEmployeeName('Employee not found');
+                    newDataList[index] = {
+                        ...newDataList[index],
+                        ['staffId']: 'ไม่พบรหัสพนักงาน',
+                    };
+
+                }
+            }
+
+
             if (fieldName === 'startTime' || fieldName === 'endTime' || fieldName === 'shift') {
                 if (value == 'morning_shift' && shift1start != null) {
                     newDataList[index] = {
