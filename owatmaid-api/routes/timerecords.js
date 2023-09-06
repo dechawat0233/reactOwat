@@ -94,12 +94,12 @@ router.post('/search', async (req, res) => {
     }
 
     // Query the workplace collection for matching documents
-    const workplacesTimeRecord = await workplaceTimerecord.find(query);
+    const recordworkplace  = await workplaceTimerecord.find(query);
 
     await console.log('Search Results:');
     await console.log(workplacesTimeRecord);
     let textSearch = 'workplace';
-    await res.status(200).json({ workplacesTimeRecord });
+    await res.status(200).json({ recordworkplace  });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
