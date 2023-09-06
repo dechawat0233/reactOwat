@@ -584,8 +584,8 @@ function AddsettimeWorkplace() {
     async function  handleCheckTimerecord(){
 
         const data = {
-            searchWorkplaceId: searchWorkplaceId,
-            searchWorkplaceName: searchWorkplaceName,
+            workplaceId : searchWorkplaceId,
+            workplaceName : searchWorkplaceName,
             date: workDate
         };
 

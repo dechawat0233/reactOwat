@@ -66,19 +66,20 @@ router.get('/:workplaceTimeRecordId', async (req, res) => {
 
 router.post('/search', async (req, res) => {
   try {
-    const { searchTimerecordId, searchTimerecordName , date} = req.body;
+    const { workplaceId,
+      workplaceName,
+      date} = req.body;
 
     // Construct the search query based on the provided parameters
     const query = {};
 
-    if (searchTimerecordId !== '') {
-      query.searchTimerecordId= searchTimerecordId;
+    if (workplaceId !== '') {
+      query.workplaceId = workplaceId;
     }
 
 
-    if (searchTimerecordName !== '') {
-      query.searchTimerecordName = { $regex: new RegExp(searchTimerecordName , 'i') };
-      //{ $regex: name, $options: 'i' };
+    if (workplaceName !== '') {
+      query.workplaceName = { $regex: new RegExp(workplaceName, 'i') };
     }
 
     if (date !== '') {
@@ -87,7 +88,7 @@ router.post('/search', async (req, res) => {
 
     console.log('Constructed Query:');
     console.log(query);
-    
+
     if (searchTimerecordId == '' && searchTimerecordName == '' && workDate == '') {
       res.status(200).json({});
     }
