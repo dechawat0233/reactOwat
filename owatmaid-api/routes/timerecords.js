@@ -22,7 +22,7 @@ const workplaceTimerecordSchema = new mongoose.Schema({
     workplaceId: String ,
     workplaceName: String ,
     date: Date,
-    employeeRecord: {
+    employeeRecord: [{
         employeeId: String,
         employeeName: String,
 shift: String,
@@ -32,7 +32,7 @@ workTime: String,
 otTime: String,
 otStart: Date,
 otEnd: Date,
-    }
+    }]
 });
 
 // Create the workplace record time model based on the schema
