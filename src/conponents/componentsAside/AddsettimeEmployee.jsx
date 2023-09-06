@@ -12,8 +12,8 @@ function AddsettimeEmployee() {
 
     const [newWorkplace, setNewWorkplace] = useState(true);
 
-    const [searchEmployeeId , setSearchEmployeeId] = useState('');
-    const [searchEmployeeName , setSearchEmployeeName] = useState('');
+    const [searchEmployeeId, setSearchEmployeeId] = useState('');
+    const [searchEmployeeName, setSearchEmployeeName] = useState('');
 
     //Workplace data
     const [employeeId, setEmployeeId] = useState(''); //รหัสหน่วยงาน
@@ -39,7 +39,7 @@ function AddsettimeEmployee() {
 
     //////////////////////////////
     const [employeeList, setEmployeeList] = useState([]);
-    const [workplaceList , setWorkplaceList] = useState([]);
+    const [workplaceList, setWorkplaceList] = useState([]);
 
 
     useEffect(() => {
@@ -335,18 +335,18 @@ function AddsettimeEmployee() {
             employeeId: searchEmployeeId,
             name: searchEmployeeName,
             idCard: '',
-            workPlace : '',
+            workPlace: '',
         };
 
         try {
             const response = await axios.post(endpoint + '/employee/search', data);
-            setSearchResult(response.data.employees );
+            setSearchResult(response.data.employees);
             // alert(response.data.employees.length);
             if (response.data.employees.length < 1) {
                 // window.location.reload();
                 alert('ไม่พบข้อมูล');
             } else {
-            // alert(response.data.employees.length);
+                // alert(response.data.employees.length);
 
 
                 // Set search values
@@ -614,11 +614,11 @@ function AddsettimeEmployee() {
                                     </table>
                                 </div>
                             </section>
-
+                            <div class="form-group">
+                                <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp; บันทึก</button>
+                            </div>
                         </form>
-                        <div class="form-group">
-                            <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp; บันทึก</button>
-                        </div>
+
                     </div>
                 </div>
             </div>

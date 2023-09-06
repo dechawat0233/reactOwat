@@ -556,7 +556,7 @@ function AddsettimeWorkplace() {
 
     async function handleManageWorkplace(event) {
         event.preventDefault();
-alert('test');
+        alert('test');
 
         //get data from input in useState to data 
         const data = {
@@ -792,11 +792,11 @@ alert('test');
                                     </table>
                                 </div>
                             </section>
-
+                            <div class="form-group">
+                                <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp; บันทึก</button>
+                            </div>
                         </form>
-                        <div class="form-group">
-                            <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp; บันทึก</button>
-                        </div>
+
                     </div>
                 </div>
             </div>
