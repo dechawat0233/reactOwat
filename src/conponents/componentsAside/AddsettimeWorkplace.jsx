@@ -556,6 +556,7 @@ function AddsettimeWorkplace() {
 
     async function handleManageWorkplace(event) {
         event.preventDefault();
+alert('test');
 
         //get data from input in useState to data 
         const data = {
