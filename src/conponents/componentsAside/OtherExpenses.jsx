@@ -268,6 +268,7 @@ function OtherExpenses() {
         setCommentAdmoney1(empSelect.commentadmoney1);
         setCommentAdmoney2(empSelect.commentadmoney2);
         setCommentAdmoney3(empSelect.commentadmoney3);
+        setDivide(empSelect.divide);
 
     }
 
@@ -354,6 +355,7 @@ function OtherExpenses() {
         }
     }, [employeeData.admoney1, employeeData.admoney2, employeeData.admoney3]);
 
+   
     useEffect(() => {
         const sumall = Number(sum) + Number(sum2) + Number(crimeinvestigation) + Number(custom);
         setSumAll(sumall);
@@ -375,6 +377,11 @@ function OtherExpenses() {
             [field]: e.target.value
         }));
     };
+//  useEffect(() => {
+//         const sumall2 = parseFloat(employeeData.sumall2);
+//         const divide = parseFloat(employeeData.divide);
+//         setDivideAll(sumall2 / divide);
+//     }, [employeeData.sumall2, employeeData.divide]);
 
     return (
         <body class="hold-transition sidebar-mini" className='editlaout'>
@@ -914,7 +921,7 @@ function OtherExpenses() {
                                             <div class="row form-group">
                                                 {/* <input type="radio" class="form-check-input" style={{ marginLeft: "8px" }} id="radio1" name="optradio" value="option1" /> */}
                                                 <input type="radio" class="form-input" style={{ marginLeft: "8px" }} id="radioPrimary1" name="r1" value="จ่ายจำนวนเต็ม" checked={employeeData.PriceType === "จ่ายจำนวนเต็ม"} onChange={(e) => handleChange(e, 'PriceType')} />
-                                                <label class="form-label col-md-3" style={{ paddingLeft: "20px",paddingTop: "10px" }} for="radio1">จ่ายจำนวนเต็ม</label>
+                                                <label class="form-label col-md-3" style={{ paddingLeft: "20px", paddingTop: "10px" }} for="radio1">จ่ายจำนวนเต็ม</label>
                                                 <div class="col-md-3">
                                                     <input type="" class="form-control" style={{ marginLeft: "-21px" }} id="" placeholder="00.00" value={sumall2} onChange={(e) => handleChange(e, 'sumall2')} readOnly />
                                                 </div>
@@ -924,14 +931,14 @@ function OtherExpenses() {
                                                 {/* <input type="radio" class="form-check-input" style={{ marginLeft: "8px" }} id="radio1" name="optradio" value="option1" /> */}
                                                 <input type="radio" class="form-input" style={{ marginLeft: "8px" }} id="radioPrimary1" name="r1" value="หักเป็นจำนวน" checked={employeeData.PriceType === "หักเป็นจำนวน"} onChange={(e) => handleChange(e, 'PriceType')} />
 
-                                                <label class="form-check-label col-md-3 col" style={{ paddingLeft: "20px",paddingTop: "10px"  }} for="radio1">หักเป็นจำนวน</label>
-                                                
+                                                <label class="form-check-label col-md-3 col" style={{ paddingLeft: "20px", paddingTop: "10px" }} for="radio1">หักเป็นจำนวน</label>
+
                                                 <div class="col-md-3">
-                                                    <input type="" class="form-control" style={{ marginLeft: "-21px" }} placeholder="00.00" value={divide}
+                                                    <input type="" class="form-control" style={{ marginLeft: "-21px" }} placeholder="00.00" value={employeeData.divide}
                                                         // onChange={(event) => setDivide(Number(event.target.value))} 
                                                         onChange={(e) => {
                                                             handleChange(e, 'divide');
-                                                            setDivide(Number(event.target.value));
+                                                            setDivide(Number(e.target.value));
                                                         }}
                                                     />
                                                 </div>
