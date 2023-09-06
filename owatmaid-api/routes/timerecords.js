@@ -83,7 +83,7 @@ router.post('/search', async (req, res) => {
     }
 
     if (date !== '') {
-      query.date= { $regex: new RegExp(date, 'i') };
+      query.date= new Date(date);
     }
 
     console.log('Constructed Query:');

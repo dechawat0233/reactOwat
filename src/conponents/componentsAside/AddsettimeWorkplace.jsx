@@ -605,7 +605,7 @@ alert(response.data.workplacesTimeRecord .length );
             }
         } catch (error) {
             alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
-            alert(error);
+            alert(error.message);
             window.location.reload();
         }
 
