@@ -585,10 +585,8 @@ function AddsettimeWorkplace() {
 
         const data = {
             workplaceId : searchWorkplaceId,
-            workplaceName : '',
-            // searchWorkplaceName,
-            date: ''
-            // workDate
+            workplaceName : searchWorkplaceName,
+            date: workDate
         };
 
         try {

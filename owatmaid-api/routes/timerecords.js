@@ -89,7 +89,7 @@ router.post('/search', async (req, res) => {
     console.log('Constructed Query:');
     console.log(query);
 
-    if (searchTimerecordId == '' && searchTimerecordName == '' && workDate == '') {
+    if (workplaceId == '' && workplaceName == '' && date == '') {
       res.status(200).json({});
     }
 
