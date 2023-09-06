@@ -12,6 +12,9 @@ function AddsettimeEmployee() {
 
     const [newWorkplace, setNewWorkplace] = useState(true);
 
+    const [searchEmployeeId , setSearchEmployeeId] = useState('');
+    const [searchEmployeeName , setSearchEmployeeName] = useState('');
+
     //Workplace data
     const [employeeId, setEmployeeId] = useState(''); //รหัสหน่วยงาน
     const [name, setName] = useState(''); //ชื่อหน่วยงาน
@@ -36,14 +39,17 @@ function AddsettimeEmployee() {
 
     //////////////////////////////
     const [employeeList, setEmployeeList] = useState([]);
+    const [workplaceList , setWorkplaceList] = useState([]);
+
 
     useEffect(() => {
         // Fetch data from the API when the component mounts
-        fetch(endpoint + '/employee/list')
+        fetch(endpoint + '/workplace/list')
             .then(response => response.json())
             .then(data => {
                 // Update the state with the fetched data
-                setEmployeeList(data);
+                setWorkplaceList(data);
+                // alert(data[0].workplaceName);
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -326,79 +332,29 @@ function AddsettimeEmployee() {
 
         // get value from form search
         const data = {
-            searchWorkplaceId: searchWorkplaceId,
-            searchWorkplaceName: searchWorkplaceName,
+            employeeId: searchEmployeeId,
+            name: searchEmployeeName,
+            idCard: '',
+            workPlace : '',
         };
 
         try {
             const response = await axios.post(endpoint + '/employee/search', data);
-            setSearchResult(response.data.workplaces);
-            if (response.data.workplaces.length < 1) {
-                window.location.reload();
+            setSearchResult(response.data.employees );
+            // alert(response.data.employees.length);
+            if (response.data.employees.length < 1) {
+                // window.location.reload();
+                alert('ไม่พบข้อมูล');
             } else {
-                // Calculate the time difference
-                const startTime = response.data.workplaces[0].workStart1;
-                const endTime = response.data.workplaces[0].workEnd1;
-                const selectotTime = response.data.workplaces[0].workEnd1;
-                const workOfOT = response.data.workplaces[0].workOfOT;
+            // alert(response.data.employees.length);
 
-                //get start time and end time for afternoon and night
-                const startTime2 = response.data.workplaces[0].workStart2;
-                const endTime2 = response.data.workplaces[0].workEnd2;
-                const startTime3 = response.data.workplaces[0].workStart3;
-                const endTime3 = response.data.workplaces[0].workEnd3;
-                const startTime4 = '';
-                const endTime4 = '';
-
-                setShift1start(startTime);
-                setShift1end(endTime);
-                setShift2start(startTime2);
-                setShift2end(endTime2);
-                setShift3start(startTime3);
-                setShift3end(endTime3);
-
-                setShift4start(startTime4);
-                setShift4end(endTime4);
-
-                const [startHours, startMinutes] = startTime.split('.').map(parseFloat);
-                const [endHours, endMinutes] = endTime.split('.').map(parseFloat);
-
-                let hours = endHours - startHours;
-                let minutes = endMinutes - startMinutes;
-
-                if (minutes < 0) {
-                    hours -= 1;
-                    minutes += 60;
-                }
-
-                // Handle cases where endTime is on the next day
-                if (hours < 0) {
-                    hours += 24;
-                }
-
-                const timeDiffFormatted = `${hours}.${minutes}`;
-
-                // Populate all the startTime input fields with the search result value
-                const updatedRowDataList = rowDataList.map(rowData => ({
-                    ...rowData,
-                    startTime: startTime,
-                    endTime: endTime,
-                    selectotTime: selectotTime,
-                    allTime: timeDiffFormatted,
-                    workOfOT: workOfOT,
-                    startTime2: startTime2,
-                    endTime2: endTime2,
-                    startTime3: startTime3,
-                    endTime3: endTime3,
-                }));
-                setRowDataList(updatedRowDataList);
 
                 // Set search values
-                setEmployeeId(response.data.workplaces[0].employeeId);
-                setName(response.data.workplaces[0].name);
+                setEmployeeId(response.data.employees[0].employeeId);
+                setName(response.data.employees[0].name);
 
-                setSearchWorkplaceId(response.data.workplaces[0].employeeId);
-                setSearchWorkplaceName(response.data.workplaces[0].name);
+                setSearchEmployeeId(response.data.employees[0].employeeId);
+                setSearchEmployeeName(response.data.employees[0].name);
 
                 // console.log('workOfOT:', response.data.workplaces[0].workOfOT);
                 // console.log('workOfOT:', endTime);
@@ -406,7 +362,7 @@ function AddsettimeEmployee() {
             }
         } catch (error) {
             alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
-            window.location.reload();
+            // window.location.reload();
         }
     }
 
@@ -518,13 +474,13 @@ function AddsettimeEmployee() {
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label role="searchEmployeeId">รหัสพนักงาน</label>
-                                                        <input type="text" class="form-control" id="searchEmployeeId" placeholder="รหัสหน่วยงาน" value={searchWorkplaceId} onChange={(e) => setSearchWorkplaceId(e.target.value)} />
+                                                        <input type="text" class="form-control" id="searchEmployeeId" placeholder="รหัสพนักงาน" value={searchEmployeeId} onChange={(e) => setSearchEmployeeId(e.target.value)} />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label role="searchname">ชื่อพนักงาน</label>
-                                                        <input type="text" class="form-control" id="searchname" placeholder="ชื่อหน่วยงาน" value={searchWorkplaceName} onChange={(e) => setSearchWorkplaceName(e.target.value)} />
+                                                        <input type="text" class="form-control" id="searchname" placeholder="ชื่อพนักงาน" value={searchEmployeeName} onChange={(e) => setSearchEmployeeName(e.target.value)} />
                                                     </div>
                                                 </div>
                                             </div>
@@ -546,7 +502,7 @@ function AddsettimeEmployee() {
                                                                     key={workplace.id}
                                                                     onClick={() => handleClickResult(workplace)}
                                                                 >
-                                                                    รหัส {workplace.employeeId} หน่วยงาน {workplace.name}
+                                                                    รหัส {workplace.employeeId} ชื่อ{workplace.name}
                                                                 </li>
                                                             ))}
                                                         </ul>
@@ -563,13 +519,13 @@ function AddsettimeEmployee() {
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label role="agencynumber">รหัสหน่วยงาน</label>
+                                        <label role="agencynumber">รหัสพนักงาน</label>
                                         <input type="text" class="form-control" id="agencynumber" placeholder="รหัสหน่วยงาน" value={employeeId} onChange={(e) => setEmployeeId(e.target.value)} />
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label role="agencyname">ชื่อหน่วยงาน</label>
+                                        <label role="agencyname">ชื่อพนักงาน</label>
                                         <input type="text" class="form-control" id="agencyname" placeholder="ชื่อหน่วยงาน" value={name} onChange={(e) => setname(e.target.value)} />
                                     </div>
                                 </div>
