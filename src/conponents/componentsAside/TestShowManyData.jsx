@@ -7,68 +7,73 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import EmployeesSelected from './EmployeesSelected';
+import TestJson from './Testjson.json';
 
 function TestShowManyData() {
-    const [searchWorkplaceId, setSearchWorkplaceId] = useState('');
-    const [employeeId, setEmployeeId] = useState('');
-    const [searchResult, setSearchResult] = useState([]);
 
-    const endpoint = 'YOUR_API_ENDPOINT'; // Replace with your API endpoint
+    console.log(TestJson);
 
-    async function handleSearch(event) {
-        event.preventDefault();
+    // Define the columns for your table
+    const columns = React.useMemo(
+        () => [
+            {
+                Header: 'Workplace Name',
+                accessor: 'workplaceName',
+            },
+            {
+                Header: 'Date',
+                accessor: 'date',
+            },
+            {
+                Header: 'Shift',
+                accessor: 'employeeRecord[0].shift', // Assuming you want the shift from the first employeeRecord item
+            },
+            {
+                Header: 'OT Time',
+                accessor: 'employeeRecord[0].otTime', // Assuming you want the OT time from the first employeeRecord item
+            },
+        ],
+        []
+    );
 
-        // get value from form search
-        const data = {
-            workplaceId: searchWorkplaceId,
-            idCard: '',
-            workPlace: '',
-        };
+    // Create a table instance
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        rows,
+        prepareRow,
+    } = useTable({
+        columns,
+        data: TestJson, // Pass the JSON data to the table
+    });
 
-        try {
-            const response = await axios.post(endpoint + '/workplace/search', data);
-            setSearchResult(response.data.workplace);
-
-            if (response.data.workplace.length < 1) {
-                alert('ไม่พบข้อมูล');
-            } else {
-                // Extract the list of matching employeeIds
-                const matchingEmployeeIds = response.data.workplace.map(
-                    (employee) => employee.employeeId
-                );
-
-                // Set search values
-                setEmployeeId(matchingEmployeeIds.join(', '));
-
-                setSearchWorkplaceId(searchWorkplaceId);
-            }
-        } catch (error) {
-            alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
-        }
-    }
     return (
         <div>
-            <h1>Employee Search</h1>
-            <form onSubmit={handleSearch}>
-                <label>
-                    Employee ID:
-                    <input
-                        type="text"
-                        value={searchWorkplaceId}
-                        onChange={(e) => setSearchWorkplaceId(e.target.value)}
-                    />
-                </label>
-                <button type="submit">Search</button>
-            </form>
-            <h2>Search Results:</h2>
-            <p>Employee ID: {employeeId}</p>
-            <ul>
-                {searchResult.map((employee) => (
-                    <li key={employee.employeeId}>
-                        Employee ID: {employee.employeeId}, Name: {employee.name}
-                    </li>
-                ))}
-            </ul>
+            <h1>Table from JSON Data</h1>
+            <table {...getTableProps()} className="table">
+                <thead>
+                    {headerGroups.map((headerGroup) => (
+                        <tr {...headerGroup.getHeaderGroupProps()}>
+                            {headerGroup.headers.map((column) => (
+                                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                            ))}
+                        </tr>
+                    ))}
+                </thead>
+                <tbody {...getTableBodyProps()}>
+                    {rows.map((row) => {
+                        prepareRow(row);
+                        return (
+                            <tr {...row.getRowProps()}>
+                                {row.cells.map((cell) => {
+                                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+                                })}
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
         </div>
     )
 }
