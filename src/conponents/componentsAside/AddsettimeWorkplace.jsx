@@ -12,8 +12,8 @@ function AddsettimeWorkplace() {
 
     const [newWorkplace, setNewWorkplace] = useState(true);
 
-//Workplace Record data
-    const [workDate , setWorkDate] = useState('');
+    //Workplace Record data
+    const [workDate, setWorkDate] = useState('');
 
     //Workplace data
     const [workplaceId, setWorkplaceId] = useState(''); //รหัสหน่วยงาน
@@ -154,7 +154,7 @@ function AddsettimeWorkplace() {
             //Search Employee  by name
             if (fieldName == 'staffName') {
 
-                const employeesearch = employeeList.find(employee => employee.name=== value);
+                const employeesearch = employeeList.find(employee => employee.name === value);
                 //                 alert(JSON.stringify(employeeList, null, 2));
                 // alert( employeeList.length);
                 if (employeesearch) {
@@ -597,36 +597,36 @@ function AddsettimeWorkplace() {
 
         //check create or update Employee
         // if (newWorkplace) {
-            // alert('Create Workplace');
-            try {
-                const response = await axios.post(endpoint + '/timerecord/create', data);
-                // setEmployeesResult(response.data.employees);
-                if (response) {
-                    alert("บันทึกสำเร็จ");
-                }
-            } catch (error) {
-                alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
-                // window.location.reload();
+        // alert('Create Workplace');
+        try {
+            const response = await axios.post(endpoint + '/timerecord/create', data);
+            // setEmployeesResult(response.data.employees);
+            if (response) {
+                alert("บันทึกสำเร็จ");
             }
+        } catch (error) {
+            alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+            // window.location.reload();
+        }
         // } else {
-            //update workplace data
+        //update workplace data
 
-            // Make the API call to update the resource by ID
-    //         try {
+        // Make the API call to update the resource by ID
+        //         try {
 
-    //             const response = await axios.put(endpoint + '/workplace/update/' + _id, data);
-    //             // setEmployeesResult(response.data.employees);
-    //             if (response) {
-    //                 alert("บันทึกสำเร็จ");
-    //                 window.location.reload();
+        //             const response = await axios.put(endpoint + '/workplace/update/' + _id, data);
+        //             // setEmployeesResult(response.data.employees);
+        //             if (response) {
+        //                 alert("บันทึกสำเร็จ");
+        //                 window.location.reload();
 
-    //             }
-    //         } catch (error) {
-    //             alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
-    //             // window.location.reload();
-    //         }
+        //             }
+        //         } catch (error) {
+        //             alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+        //             // window.location.reload();
+        //         }
 
-    //     }
+        //     }
     }
 
 
@@ -713,7 +713,7 @@ function AddsettimeWorkplace() {
                                         <input type="text" class="form-control" id="agencyname" placeholder="ชื่อหน่วยงาน" value={workplaceName} onChange={(e) => setWorkplaceName(e.target.value)} />
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label role="datetime">วันที่</label>
                                         <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
@@ -725,7 +725,12 @@ function AddsettimeWorkplace() {
                                                 dateFormat="dd/MM/yyyy" />
                                         </div>
                                     </div>
-
+                                </div>
+                                <div class="col-md-3">
+                                    <label role="button"></label>
+                                    <div class="d-flex align-items-end">
+                                        <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ตรวจสอบ</button>
+                                    </div>
                                 </div>
                             </div>
                             <section class="Frame">

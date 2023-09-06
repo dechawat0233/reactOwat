@@ -529,7 +529,7 @@ function AddsettimeEmployee() {
                                         <input type="text" class="form-control" id="agencyname" placeholder="ชื่อหน่วยงาน" value={name} onChange={(e) => setname(e.target.value)} />
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label role="datetime">วันที่</label>
                                         <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
@@ -542,6 +542,12 @@ function AddsettimeEmployee() {
                                         </div>
                                     </div>
 
+                                </div>
+                                <div class="col-md-3">
+                                    <label role="button"></label>
+                                    <div class="d-flex align-items-end">
+                                        <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ตรวจสอบ</button>
+                                    </div>
                                 </div>
                             </div>
                             <section class="Frame">

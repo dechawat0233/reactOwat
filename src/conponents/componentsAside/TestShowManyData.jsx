@@ -1,7 +1,5 @@
-import endpoint from '../../config';
-
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useTable } from 'react-table'; // Add this import
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -10,8 +8,7 @@ import EmployeesSelected from './EmployeesSelected';
 import TestJson from './Testjson.json';
 
 function TestShowManyData() {
-
-    console.log(TestJson);
+  console.log(TestJson);
 
     // Define the columns for your table
     const columns = React.useMemo(
