@@ -97,7 +97,7 @@ router.post('/search', async (req, res) => {
     const recordworkplace  = await workplaceTimerecord.find(query);
 
     await console.log('Search Results:');
-    await console.log(workplacesTimeRecord);
+    await console.log(recordworkplace  );
     let textSearch = 'workplace';
     await res.status(200).json({ recordworkplace  });
   } catch (error) {
