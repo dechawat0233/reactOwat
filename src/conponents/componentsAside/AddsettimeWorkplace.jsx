@@ -591,16 +591,16 @@ function AddsettimeWorkplace() {
 
         try {
             const response = await axios.post(endpoint + '/timerecord/search', data);
-            setSearchResult(response.data.workplacesTimeRecord );
+            // setSearchResult(response.data.workplacesTimeRecord );
+alert(response.data);
+//             if (response.data.workplacesTimeRecord .length < 1) {
+//                 alert('no data');
+//                 window.location.reload();
+//             } else {
+// // alert(JSON.stringify(response.data.workplacesTimeRecord  , null, 2));
+// alert(response.data.workplacesTimeRecord .length );
 
-            if (response.data.workplacesTimeRecord .length < 1) {
-                alert('no data');
-                window.location.reload();
-            } else {
-// alert(JSON.stringify(response.data.workplacesTimeRecord  , null, 2));
-alert(response.data.workplacesTimeRecord .length );
-
-            }
+//             }
         } catch (error) {
             alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
             alert(error.message);
