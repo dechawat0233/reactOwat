@@ -8,13 +8,16 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import EmployeesSelected from './EmployeesSelected';
 
-function AddsettimeWorkplace() {
+function AddsettimeEmployee() {
 
     const [newWorkplace, setNewWorkplace] = useState(true);
 
+    const [searchEmployeeId , setSearchEmployeeId] = useState('');
+    const [searchEmployeeName , setSearchEmployeeName] = useState('');
+
     //Workplace data
-    const [workplaceId, setWorkplaceId] = useState(''); //รหัสหน่วยงาน
-    const [workplaceName, setWorkplaceName] = useState(''); //ชื่อหน่วยงาน
+    const [employeeId, setEmployeeId] = useState(''); //รหัสหน่วยงาน
+    const [name, setName] = useState(''); //ชื่อหน่วยงาน
     const [workplacestay, setWorkplacestay] = useState(''); //สังกัด
     const [workplaceArea, setWorkplaceArea] = useState(''); //สถานที่ปฏิบัติงาน
     const [workOfWeek, setWorkOfWeek] = useState(''); //วันทำงานต่อสัปดาห์
@@ -35,24 +38,18 @@ function AddsettimeWorkplace() {
     const [workplaceAddress, setWorkplaceAddress] = useState(''); //ที่อยู่หน่วยงาน
 
     //////////////////////////////
-
-    const [workStartOt1, setWorkStartOt1] = useState('18.00'); //เวลาเริ่มกะเช้า
-    const [workEndOt1, setWorkEndOt1] = useState('21.00'); //เวลาออกกะเช้า
-    const [workStartOt2, setWorkStartOt2] = useState('22.00'); //เวลาเข้ากะบ่าย
-    const [workEndOt2, setWorkEndOt2] = useState('01.00'); //เวลาออกกะบ่าย
-    const [workStartOt3, setWorkStartOt3] = useState('19.00'); //เวลาเข้ากะเย็น
-    const [workEndOt3, setWorkEndOt3] = useState('22.00'); //เวลาออกกะเย็น
-
-    /////////////////////////////////
     const [employeeList, setEmployeeList] = useState([]);
+    const [workplaceList , setWorkplaceList] = useState([]);
+
 
     useEffect(() => {
         // Fetch data from the API when the component mounts
-        fetch(endpoint + '/employee/list')
+        fetch(endpoint + '/workplace/list')
             .then(response => response.json())
             .then(data => {
                 // Update the state with the fetched data
-                setEmployeeList(data);
+                setWorkplaceList(data);
+                // alert(data[0].workplaceName);
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -115,8 +112,6 @@ function AddsettimeWorkplace() {
 
         setRowDataList(prevDataList => {
             const newDataList = [...prevDataList];
-            // const timeDiffFormatted = ''; // Initialize timeDiffFormatted
-            // const otTimeFormatted2 = ''; // Initialize otTimeFormatted2
 
             newDataList[index] = {
                 ...newDataList[index],
@@ -147,15 +142,15 @@ function AddsettimeWorkplace() {
                 }
 
             }
-            if (fieldName === 'startTime' || fieldName === 'endTime' || fieldName === 'shift') {
+
+            if (fieldName == 'shift') {
+
                 if (value == 'morning_shift' && shift1start != null) {
                     newDataList[index] = {
                         ...newDataList[index],
                         ['startTime']: shift1start + '',
                         ['endTime']: shift1end + '',
                         ['selectotTime']: shift1end + '',
-                        // allTime: timeDiffFormatted,
-                        // otTime: otTimeFormatted2 + '2222',
                     };
                 }
 
@@ -166,83 +161,25 @@ function AddsettimeWorkplace() {
                         ['startTime']: shift2start + '',
                         ['endTime']: shift2end + '',
                         ['selectotTime']: shift2end + '',
-                        // allTime: timeDiffFormatted,
-                        // otTime: otTimeFormatted2 + '2222',
                     };
                 }
 
                 //Check shift is night
                 if (value == 'night_shift' && shift3start != null) {
-
                     newDataList[index] = {
                         ...newDataList[index],
                         ['startTime']: shift3start + '',
                         ['endTime']: shift3end + '',
-                        ['selectotTime']: '' + '',
-                        ['selectotTimeOut']: workEndOt3 + '',
+                        ['selectotTime']: shift3end + '',
                     };
                 }
 
                 if (value == 'specialt_shift' && shift4start != null) {
-                    const workOfHour = parseFloat(newDataList[index].workOfHour);
-
-                    const startHours = parseFloat(newDataList[index].startTime.split('.')[0]);
-                    const startMinutes = parseFloat(newDataList[index].startTime.split('.')[1] || 0);
-                    const endHours = parseFloat(newDataList[index].endTime.split('.')[0]);
-                    const endMinutes = parseFloat(newDataList[index].endTime.split('.')[1] || 0);
-
-                    let hours = endHours - startHours;
-                    let minutes = endMinutes - startMinutes;
-
-                    if (minutes < 0) {
-                        hours -= 1;
-                        minutes += 60;
-                    }
-
-                    // Handle cases where endTime is on the next day
-                    if (hours < 0) {
-                        hours += 24;
-                    }
-
-                    const timeDiffFormatted = `${hours}.${minutes}`;
-
-                    // Calculate otTime based on selectotTimeOut and endTime
-                    const otselectHours = parseFloat(newDataList[index].selectotTime.split('.')[0]);
-                    const otselectMinutes = parseFloat(newDataList[index].selectotTime.split('.')[1] || 0);
-                    const otHours = parseFloat(newDataList[index].selectotTimeOut.split('.')[0]);
-                    const otMinutes = parseFloat(newDataList[index].selectotTimeOut.split('.')[1] || 0);
-
-                    let otHoursDiff = otHours - otselectHours;
-                    let otMinutesDiff = otMinutes - otselectMinutes;
-
-                    if (otMinutesDiff < 0) {
-                        otHoursDiff -= 1;
-                        otMinutesDiff += 60;
-                    }
-
-                    // Handle cases where otTime is on the next day
-                    if (otHoursDiff < 0) {
-                        otHoursDiff += 24;
-                    }
-                    const otTimeFormatted1 = `${otHoursDiff}.${otMinutesDiff}`;
-
-                    const maxOTHours = parseFloat(newDataList[index].workOfOT);
-                    const maxOTMinutes = 0; // If maxOTHours is always whole numbers
-
-                    const totalOTMinutes = otHoursDiff * 60 + otMinutesDiff;
-                    if (totalOTMinutes > maxOTHours * 60) {
-                        otHoursDiff = maxOTHours;
-                        otMinutesDiff = maxOTMinutes;
-                    }
-                    const otTimeFormatted2 = `${otHoursDiff}.${otMinutesDiff}`;
                     newDataList[index] = {
                         ...newDataList[index],
                         ['startTime']: shift4start + '',
                         ['endTime']: shift4end + '',
                         ['selectotTime']: shift4end + '',
-                        maxOTHours: '',
-                        allTime: timeDiffFormatted, // Assign your custom allTime value here
-                        otTime: otTimeFormatted2 + '2222', // Assign your custom otTime value here
                     };
                 }
 
@@ -252,37 +189,13 @@ function AddsettimeWorkplace() {
 
 
 
-
-
             // Calculate time difference for allTime
-            // const startHours = parseFloat(newDataList[index].startTime.split('.')[0]);
-            // const startMinutes = parseFloat(newDataList[index].startTime.split('.')[1] || 0);
-            // const endHours = parseFloat(newDataList[index].endTime.split('.')[0]);
-            // const endMinutes = parseFloat(newDataList[index].endTime.split('.')[1] || 0);
-
-
-
-            // let hours = endHours - startHours;
-            // let minutes = endMinutes - startMinutes;
-
-            // if (minutes < 0) {
-            //     hours -= 1;
-            //     minutes += 60;
-            // }
-
-            // // Handle cases where endTime is on the next day
-            // if (hours < 0) {
-            //     hours += 24;
-            // }
-
-            // const timeDiffFormatted = `${hours}.${minutes}`;
-
-            const workOfHour = parseFloat(newDataList[index].workOfHour);
-
             const startHours = parseFloat(newDataList[index].startTime.split('.')[0]);
             const startMinutes = parseFloat(newDataList[index].startTime.split('.')[1] || 0);
             const endHours = parseFloat(newDataList[index].endTime.split('.')[0]);
             const endMinutes = parseFloat(newDataList[index].endTime.split('.')[1] || 0);
+
+
 
             let hours = endHours - startHours;
             let minutes = endMinutes - startMinutes;
@@ -297,19 +210,7 @@ function AddsettimeWorkplace() {
                 hours += 24;
             }
 
-            // Calculate the total time difference in minutes
-            const totalMinutes = hours * 60 + minutes;
-
-            // Cap the time difference at the maximum work hours
-            const cappedTotalMinutes = Math.min(totalMinutes, workOfHour * 60);
-
-            // Convert the capped time difference back to hours and minutes
-            const cappedHours = Math.floor(cappedTotalMinutes / 60);
-            const cappedMinutes = cappedTotalMinutes % 60;
-
-            const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
-
-
+            const timeDiffFormatted = `${hours}.${minutes}`;
 
             // Calculate otTime based on selectotTimeOut and endTime
             const otselectHours = parseFloat(newDataList[index].selectotTime.split('.')[0]);
@@ -330,7 +231,6 @@ function AddsettimeWorkplace() {
                 otHoursDiff += 24;
             }
             const otTimeFormatted1 = `${otHoursDiff}.${otMinutesDiff}`;
-
             const maxOTHours = parseFloat(newDataList[index].workOfOT);
             const maxOTMinutes = 0; // If maxOTHours is always whole numbers
 
@@ -341,23 +241,20 @@ function AddsettimeWorkplace() {
             }
             const otTimeFormatted2 = `${otHoursDiff}.${otMinutesDiff}`;
 
-            // if (fieldName === 'shift') {
-            //     newDataList[index] = {
-            //         ...newDataList[index],
-            //         allTime: timeDiffFormatted,
-            //         otTime: otTimeFormatted2 + '2222',
-            //     };
-            //     // return newDataList;
-            // }
-            // else {
-            //     newDataList[index] = {
-            //         ...newDataList[index],
-            //         allTime: timeDiffFormatted,
-            //         otTime: otTimeFormatted1 + '1111',
 
-            //     };
-            //     // return newDataList;
-            // }
+            if (fieldName === 'shift') {
+                newDataList[index] = {
+                    ...newDataList[index],
+                    allTime: timeDiffFormatted,
+                    otTime: otTimeFormatted2,
+                };
+            } else {
+                newDataList[index] = {
+                    ...newDataList[index],
+                    allTime: timeDiffFormatted,
+                    otTime: otTimeFormatted1,
+                };
+            }
             // newDataList[index] = {
             //     ...newDataList[index],
             //     allTime: timeDiffFormatted + '1111',
@@ -366,13 +263,6 @@ function AddsettimeWorkplace() {
 
 
             // }
-
-            newDataList[index] = {
-                ...newDataList[index],
-                allTime: timeDiffFormatted,
-                otTime: otTimeFormatted2,
-            };
-
 
             return newDataList;
         });
@@ -413,11 +303,11 @@ function AddsettimeWorkplace() {
 
     ///////////////////
     function handleClickResult(workplace) {
-        setSearchWorkplaceId(workplace.workplaceId);
-        setSearchWorkplaceName(workplace.workplaceName);
+        setSearchWorkplaceId(workplace.employeeId);
+        setSearchWorkplaceName(workplace.name);
         //
-        setWorkplaceId(workplace.workplaceId);
-        setWorkplaceName(workplace.workplaceName);
+        setEmployeeId(workplace.employeeId);
+        setName(workplace.name);
 
         // Populate all the startTime input fields with the search result value
         const updatedRowDataList = rowDataList.map(rowData => ({
@@ -442,105 +332,29 @@ function AddsettimeWorkplace() {
 
         // get value from form search
         const data = {
-            searchWorkplaceId: searchWorkplaceId,
-            searchWorkplaceName: searchWorkplaceName,
+            employeeId: searchEmployeeId,
+            name: searchEmployeeName,
+            idCard: '',
+            workPlace : '',
         };
 
         try {
-            const response = await axios.post(endpoint + '/workplace/search', data);
-            setSearchResult(response.data.workplaces);
-            if (response.data.workplaces.length < 1) {
-                window.location.reload();
+            const response = await axios.post(endpoint + '/employee/search', data);
+            setSearchResult(response.data.employees );
+            // alert(response.data.employees.length);
+            if (response.data.employees.length < 1) {
+                // window.location.reload();
+                alert('ไม่พบข้อมูล');
             } else {
-                // Calculate the time difference
-                const startTime = response.data.workplaces[0].workStart1;
-                const endTime = response.data.workplaces[0].workEnd1;
-                const workOfHour = response.data.workplaces[0].workOfHour;
-                const selectotTime = response.data.workplaces[0].workEnd1;
-                const workOfOT = response.data.workplaces[0].workOfOT;
-                //get start time and end time for afternoon and night
-                const startTime2 = response.data.workplaces[0].workStart2;
-                const endTime2 = response.data.workplaces[0].workEnd2;
-                const startTime3 = response.data.workplaces[0].workStart3;
-                const endTime3 = response.data.workplaces[0].workEnd3;
-                const startTime4 = '';
-                const endTime4 = '';
+            // alert(response.data.employees.length);
 
-                const startTimeOt1 = response.data.workplaces[0].workStartOt1;
-                const endTimeOt1 = response.data.workplaces[0].workEndOt1;
-                const startTimeOt2 = response.data.workplaces[0].workStartOt1;
-                const endTimeOt2 = response.data.workplaces[0].workEndOt1;
-                const startTimeOt3 = response.data.workplaces[0].workStartOt1;
-                const endTimeOt3 = response.data.workplaces[0].workEndOt1;
-
-
-                setShift1start(startTime);
-                setShift1end(endTime);
-                setShift2start(startTime2);
-                setShift2end(endTime2);
-                setShift3start(startTime3);
-                setShift3end(endTime3);
-
-                setShift4start(startTime4);
-                setShift4end(endTime4);
-
-                const [startHours, startMinutes] = startTime.split('.').map(parseFloat);
-                const [endHours, endMinutes] = endTime.split('.').map(parseFloat);
-
-                let hours = endHours - startHours;
-                let minutes = endMinutes - startMinutes;
-
-                if (minutes < 0) {
-                    hours -= 1;
-                    minutes += 60;
-                }
-
-                // Handle cases where endTime is on the next day
-                if (hours < 0) {
-                    hours += 24;
-                }
-                const totalMinutes = hours * 60 + minutes;
-
-                // Cap the time difference at the maximum work hours
-                const cappedTotalMinutes = Math.min(totalMinutes, workOfHour * 60);
-
-                // Convert the capped time difference back to hours and minutes
-                const cappedHours = Math.floor(cappedTotalMinutes / 60);
-                const cappedMinutes = cappedTotalMinutes % 60;
-
-                const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
-
-                // const timeDiffFormatted = `${hours}.${minutes}`;
-
-                // Populate all the startTime input fields with the search result value
-                const updatedRowDataList = rowDataList.map(rowData => ({
-                    ...rowData,
-                    startTime: startTime,
-                    endTime: endTime,
-                    workOfHour: workOfHour,
-                    selectotTime: selectotTime,
-                    allTime: timeDiffFormatted,
-                    workOfOT: workOfOT,
-                    startTime2: startTime2,
-                    endTime2: endTime2,
-                    startTime3: startTime3,
-                    endTime3: endTime3,
-
-                    startTimeOt1: startTimeOt1,
-                    endTimeOt1: endTimeOt1,
-                    startTimeOt2: startTimeOt2,
-                    endTimeOt2: endTimeOt2,
-                    startTimeOt3: startTimeOt3,
-                    endTimeOt3: endTimeOt3,
-                }));
-                setRowDataList(updatedRowDataList);
 
                 // Set search values
-                setWorkplaceId(response.data.workplaces[0].workplaceId);
-                setWorkplaceName(response.data.workplaces[0].workplaceName);
+                setEmployeeId(response.data.employees[0].employeeId);
+                setName(response.data.employees[0].name);
 
-                setSearchWorkplaceId(response.data.workplaces[0].workplaceId);
-                setSearchWorkplaceName(response.data.workplaces[0].workplaceName);
+                setSearchEmployeeId(response.data.employees[0].employeeId);
+                setSearchEmployeeName(response.data.employees[0].name);
 
                 // console.log('workOfOT:', response.data.workplaces[0].workOfOT);
                 // console.log('workOfOT:', endTime);
@@ -548,7 +362,7 @@ function AddsettimeWorkplace() {
             }
         } catch (error) {
             alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
-            window.location.reload();
+            // window.location.reload();
         }
     }
 
@@ -556,12 +370,11 @@ function AddsettimeWorkplace() {
 
     async function handleManageWorkplace(event) {
         event.preventDefault();
-alert('test');
 
         //get data from input in useState to data 
         const data = {
-            workplaceId: workplaceId,
-            workplaceName: workplaceName,
+            employeeId: employeeId,
+            name: name,
             workplaceArea: workplaceArea,
             workOfWeek: workOfWeek,
             workStart1: workStart1,
@@ -602,7 +415,7 @@ alert('test');
         if (newWorkplace) {
             // alert('Create Workplace');
             try {
-                const response = await axios.post(endpoint + '/workplace/create', data);
+                const response = await axios.post(endpoint + '/employee/create', data);
                 // setEmployeesResult(response.data.employees);
                 if (response) {
                     alert("บันทึกสำเร็จ");
@@ -617,7 +430,7 @@ alert('test');
             // Make the API call to update the resource by ID
             try {
 
-                const response = await axios.put(endpoint + '/workplace/update/' + _id, data);
+                const response = await axios.put(endpoint + '/employee/update/' + _id, data);
                 // setEmployeesResult(response.data.employees);
                 if (response) {
                     alert("บันทึกสำเร็จ");
@@ -660,14 +473,14 @@ alert('test');
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label role="searchWorkplaceId">รหัสหน่วยงาน</label>
-                                                        <input type="text" class="form-control" id="searchWorkplaceId" placeholder="รหัสหน่วยงาน" value={searchWorkplaceId} onChange={(e) => setSearchWorkplaceId(e.target.value)} />
+                                                        <label role="searchEmployeeId">รหัสพนักงาน</label>
+                                                        <input type="text" class="form-control" id="searchEmployeeId" placeholder="รหัสพนักงาน" value={searchEmployeeId} onChange={(e) => setSearchEmployeeId(e.target.value)} />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label role="searchWorkplaceName">ชื่อหน่วยงาน</label>
-                                                        <input type="text" class="form-control" id="searchWorkplaceName" placeholder="ชื่อหน่วยงาน" value={searchWorkplaceName} onChange={(e) => setSearchWorkplaceName(e.target.value)} />
+                                                        <label role="searchname">ชื่อพนักงาน</label>
+                                                        <input type="text" class="form-control" id="searchname" placeholder="ชื่อพนักงาน" value={searchEmployeeName} onChange={(e) => setSearchEmployeeName(e.target.value)} />
                                                     </div>
                                                 </div>
                                             </div>
@@ -689,7 +502,7 @@ alert('test');
                                                                     key={workplace.id}
                                                                     onClick={() => handleClickResult(workplace)}
                                                                 >
-                                                                    รหัส {workplace.workplaceId} หน่วยงาน {workplace.workplaceName}
+                                                                    รหัส {workplace.employeeId} ชื่อ{workplace.name}
                                                                 </li>
                                                             ))}
                                                         </ul>
@@ -706,14 +519,14 @@ alert('test');
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label role="agencynumber">รหัสหน่วยงาน</label>
-                                        <input type="text" class="form-control" id="agencynumber" placeholder="รหัสหน่วยงาน" value={workplaceId} onChange={(e) => setWorkplaceId(e.target.value)} />
+                                        <label role="agencynumber">รหัสพนักงาน</label>
+                                        <input type="text" class="form-control" id="agencynumber" placeholder="รหัสหน่วยงาน" value={employeeId} onChange={(e) => setEmployeeId(e.target.value)} />
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label role="agencyname">ชื่อหน่วยงาน</label>
-                                        <input type="text" class="form-control" id="agencyname" placeholder="ชื่อหน่วยงาน" value={workplaceName} onChange={(e) => setWorkplaceName(e.target.value)} />
+                                        <label role="agencyname">ชื่อพนักงาน</label>
+                                        <input type="text" class="form-control" id="agencyname" placeholder="ชื่อหน่วยงาน" value={name} onChange={(e) => setname(e.target.value)} />
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -736,58 +549,67 @@ alert('test');
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>รหัสพนักงาน</th>
-                                                <th>ชื่อพนักงาน</th>
+                                                <th>รหัสหน่วยงาน</th>
+                                                <th>ชื่อหน่วยงาน</th>
+                                                <th>วันที่</th>
                                                 <th>กะการทำงาน</th>
                                                 <th>เวลาเข้างาน</th>
                                                 <th>เวลาออกงาน</th>
                                                 <th>ชั่วโมงทำงาน</th>
+                                                <th>ชั่วโมง OT</th>
                                                 <th>เวลาเข้า OT</th>
                                                 <th>เวลาออก OT</th>
-                                                <th>ชั่วโมง OT</th>
-                                                {/* <th>เวลาเข้า OT</th>
-                                        <th>เวลาออก OT</th> */}
                                             </tr>
                                         </thead>
                                         <tbody>
 
-                                            {rowDataList.map((rowData, index) => (
-                                                <tr key={index}>
-                                                    <td><input type="text" className="form-control" name="staffId" value={rowData.staffId} onChange={(e) => handleFieldChange(index, 'staffId', e.target.value)} /></td>
-                                                    <td><input type="text" className="form-control" name="staffName" value={rowData.staffName} onChange={(e) => handleFieldChange(index, 'staffName', e.target.value)} /></td>
+
+                                            {rowDataList2.map((rowData2, index2) => (
+                                                <tr key={index2}>
                                                     <td>
-                                                        <select className="form-control" value={rowData.shift} onChange={(e) => handleFieldChange(index, 'shift', e.target.value)} style={{ width: '5.5rem' }} >
+                                                        <input type="text" className="form-control" name="staffId" value={rowData2.staffId} onChange={(e) => handleFieldChange2(index2, 'staffId', e.target.value)}
+                                                        />
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" className="form-control" name="staffName" value={rowData2.staffName} onChange={(e) => handleFieldChange2(index2, 'staffName', e.target.value)}
+                                                        />
+                                                    </td>
+                                                    <td>
+                                                        <div style={{ position: 'relative', zIndex: 9999, marginLeft: '0rem' }}>
+                                                            <DatePicker
+                                                                id={`datetime${index2}`}
+                                                                name={`datetime${index2}`} // 
+                                                                className="form-control"
+                                                                popperClassName="datepicker-popper"
+                                                                selected={rowData2.startjob}
+                                                                onChange={date => handleStartDateChange4(index2, date)}
+                                                                dateFormat="dd/MM/yyyy"
+                                                                popperPlacement="top-start"
+                                                                popperModifiers={{
+                                                                    preventOverflow: {
+                                                                        enabled: true,
+                                                                        boundariesElement: 'viewport',
+                                                                    },
+                                                                }}
+                                                            />
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <select className="form-control" value={rowData2.shift} onChange={(e) => handleFieldChange2(index2, 'shift', e.target.value)} style={{ width: '5.5rem' }} >
                                                             <option value="morning_shift">กะเช้า</option>
                                                             <option value="afternoon_shift">กะบ่าย</option>
                                                             <option value="night_shift">กะดึก</option>
-                                                            <option value="specialt_shift">กะพิเศษ</option>
-                                                        </select>
-                                                    </td>
-                                                    <td><input type="text" className="form-control" name="startTime" value={rowData.startTime} onChange={(e) => handleFieldChange(index, 'startTime', e.target.value)} style={{ width: '7rem' }} /></td>
-                                                    <td><input type="text" className="form-control" name="endTime" value={rowData.endTime} onChange={(e) => handleFieldChange(index, 'endTime', e.target.value)} style={{ width: '7rem' }} /></td>
-                                                    <td><input type="text" className="form-control" name="allTime" value={rowData.allTime} onChange={(e) => handleFieldChange(index, 'allTime', e.target.value)} style={{ width: '4rem' }} /></td>
-                                                    <td><input type="text" className="form-control" name="selectotTime" value={rowData.selectotTime} onChange={(e) => handleFieldChange(index, 'selectotTime', e.target.value)} style={{ width: '7rem' }} /> </td>
-                                                    <td><input type="text" className="form-control" name="selectotTimeOut" value={rowData.selectotTimeOut} onChange={(e) => handleFieldChange(index, 'selectotTimeOut', e.target.value)} style={{ width: '7rem' }} /> </td>
-                                                    <td><input type="text" className="form-control" name="otTime" value={rowData.otTime} onChange={(e) => handleFieldChange(index, 'otTime', e.target.value)} style={{ width: '4rem' }} readOnly /></td>
-                                                    {rowData.shift == 'specialt_shift' && (
-                                                        <div>
-                                                            <td><input type="text" className="form-control" name="otTime" value={rowData.otTime} onChange={(e) => handleFieldChange(index, 'otTime', e.target.value)} style={{ width: '4rem' }} readOnly /></td>
-                                                            <td><input type="text" className="form-control" name="otTime" value={rowData.otTime} onChange={(e) => handleFieldChange(index, 'otTime', e.target.value)} style={{ width: '4rem' }} readOnly /></td>
+                                                        </select></td>
+                                                    <td><input type="text" class="form-control" name='startTime' value={rowData2.startTime} onChange={(e) => handleFieldChange2(index2, 'startTime', e.target.value)} /></td>
+                                                    <td><input type="text" class="form-control" name='endTime' value={rowData2.endTime} onChange={(e) => handleFieldChange2(index2, 'endTime', e.target.value)} /></td>
+                                                    <td><input type="text" class="form-control" name='allTime' value={rowData2.allTime} onChange={(e) => handleFieldChange2(index2, 'allTime', e.target.value)} style={{ width: '4rem' }} /></td>
+                                                    <td><input type="text" class="form-control" name='otTime' value={rowData2.otTime} onChange={(e) => handleFieldChange2(index2, 'otTime', e.target.value)} style={{ width: '4rem' }} /></td>
+                                                    <td><input type="text" className="form-control" name="selectotTime" value={rowData2.selectotTime} onChange={(e) => handleFieldChange2(index2, 'selectotTime', e.target.value)} style={{ width: '7rem' }} /> </td>
+                                                    <td><input type="text" className="form-control" name="selectotTimeOut" value={rowData2.selectotTimeOut} onChange={(e) => handleFieldChange2(index2, 'selectotTimeOut', e.target.value)} style={{ width: '7rem' }} /> </td>
 
-                                                        </div>
-                                                    )}
-
-                                                    {/* <td><input type="text" className="form-control" name="otTime" value={rowData.otTime} onChange={(e) => handleFieldChange(index, 'otTime', e.target.value)} style={{ width: '4rem' }} min={rowData.otTime} max={rowData.otTime}
-                                                    /></td> */}
-                                                    {/* <td><input type="text" className="form-control" name="selectotTime" value={rowData.selectotTime} onChange={(e) => handleFieldChange(index, 'selectotTime', e.target.value)} style={{ width: '7rem' }} /> </td> */}
-                                                    {/* <td><input type="text" className="form-control" name="selectotTimeOut" value={rowData.selectotTimeOut} onChange={(e) => handleFieldChange(index, 'selectotTimeOut', e.target.value)} style={{ width: '7rem' }} /> </td> */}
-
-                                                    {/* ... other input fields */}
                                                     {/* ... other input fields */}
                                                 </tr>
                                             ))}
-
-
                                         </tbody>
                                     </table>
                                 </div>
@@ -806,4 +628,4 @@ alert('test');
     )
 }
 
-export default AddsettimeWorkplace
+export default AddsettimeEmployee

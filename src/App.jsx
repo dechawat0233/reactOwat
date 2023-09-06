@@ -49,6 +49,7 @@ import TestPDF from "./conponents/componentsAside/TestPDF";
 // import Time from "./conponents/Time";
 import Testcal from "./conponents/Testcal";
 import Countday from "./conponents/Countday";
+import TestShowManyData from "./conponents/componentsAside/TestShowManyData";
 
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 // import Login from "./conponents/Login";
@@ -142,7 +143,7 @@ function App() {
               <Route path="/applicatio4" element={<Application4 />} />
               <Route path="/application_summary" element={<ApplicationSummary />} />
 
-              <Route path="/testPDF" element={<TestPDF />} />
+              <Route path="/testPDF" element={<TestShowManyData />} />
 
               <Route path="/time" element={<Testcal />} />
               <Route path="/countday" element={<Countday />} />
