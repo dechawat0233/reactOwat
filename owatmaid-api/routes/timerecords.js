@@ -66,26 +66,29 @@ router.get('/:workplaceTimeRecordId', async (req, res) => {
 
 router.post('/search', async (req, res) => {
   try {
-    const { searchWorkplaceId, searchWorkplaceName } = req.body;
+    const { searchTimerecordId, searchTimerecordName , workDate} = req.body;
 
     // Construct the search query based on the provided parameters
     const query = {};
 
-    if (searchWorkplaceId !== '') {
-      query.workplaceId = searchWorkplaceId;
+    if (searchTimerecordId !== '') {
+      query.searchTimerecordId= searchTimerecordId;
     }
 
 
-    if (searchWorkplaceName !== '') {
-      query.workplaceName = { $regex: new RegExp(searchWorkplaceName, 'i') };
+    if (searchTimerecordName !== '') {
+      query.searchTimerecordName = { $regex: new RegExp(searchTimerecordName , 'i') };
       //{ $regex: name, $options: 'i' };
     }
-    //    query.searchWorkplaceId = '1001';
-    //    console.log({ employeeId, name, idCard, workPlace });
+
+    if (workDate !== '') {
+      query.workDate= { $regex: new RegExp(workDate , 'i') };
+    }
 
     console.log('Constructed Query:');
     console.log(query);
-    if (searchWorkplaceId == '' && searchWorkplaceName == '') {
+    searchTimerecordId, searchTimerecordName , workDate
+    if (searchTimerecordId == '' && searchTimerecordName == '' && workDate == '') {
       res.status(200).json({});
     }
 
