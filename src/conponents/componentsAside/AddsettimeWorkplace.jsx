@@ -14,6 +14,7 @@ function AddsettimeWorkplace() {
 
     //Workplace Record data
     const [workDate, setWorkDate] = useState('');
+const [timeRecord_id , setTimeRecord_id ] = useState('');
 
     //Workplace data
     const [workplaceId, setWorkplaceId] = useState(''); //รหัสหน่วยงาน
@@ -623,12 +624,14 @@ function AddsettimeWorkplace() {
             const response = await axios.post(endpoint + '/timerecord/search', data);
 
             if (response.data.recordworkplace.length < 1) {
-                alert('no data');
+                alert('ไม่พบข้อมูล');
                 // Set the state to false if no data is found
                 setUpdateButton(false);
+                setTimeRecord_id('');
             } else {
                 // Set the state to true if data is found
                 setUpdateButton(true);
+                setTimeRecord_id(response.data.recordworkplace[0]._id);
                 setRowDataList(response.data.recordworkplace[0].employeeRecord);
             }
         } catch (error) {
@@ -686,6 +689,36 @@ function AddsettimeWorkplace() {
 
         //     }
     }
+
+
+    async function handleUpdateWorkplaceTimerecord(event) {
+        event.preventDefault();
+alert('hi');
+                //get data from input in useState to data 
+                const data = {
+                    workplaceId: workplaceId,
+                    workplaceName: workplaceName,
+                    date: workDate,
+                    employeeRecord: rowDataList
+                };
+
+                try {
+
+                    const response = await axios.put(endpoint + '/timerecord/update/' + timeRecord_id , data);
+                    // setEmployeesResult(response.data.employees);
+                    if (response) {
+                        alert("บันทึกสำเร็จ");
+                        window.location.reload();
+    
+                    }
+                } catch (error) {
+                    alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+                    // window.location.reload();
+                }
+    
+
+    }
+
 
 
     async function handleManageWorkplace(event) {
@@ -860,7 +893,7 @@ function AddsettimeWorkplace() {
                             <div class="form-group">
                                 {/* <button class="btn b_save" onClick={handleCreateWorkplaceTimerecord}><i class="nav-icon fas fa-save"></i> &nbsp; บันทึก</button> */}
                                 {updateButton ? (
-                                    <button class="btn b_save">
+                                    <button class="btn b_save" onClick={handleUpdateWorkplaceTimerecord} >
                                         <i class="nav-icon fas fa-save"></i> &nbsp; อัพเดท
                                     </button>
                                 ) : (
