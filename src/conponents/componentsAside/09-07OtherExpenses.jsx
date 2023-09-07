@@ -282,71 +282,80 @@ function OtherExpenses() {
     const [divideall, setDivideAll] = useState(0);
 
     useEffect(() => {
-        const number1 = parseFloat(employeeData.number1) || 0;
-        const number2 = parseFloat(employeeData.number2) || 0;
-
-        if (!isNaN(number1) || !isNaN(number2)) {
+        const number1 = parseFloat(employeeData.number1);
+        const number2 = parseFloat(employeeData.number2);
+    
+        if (!isNaN(number1) && !isNaN(number2)) {
             setSum(number1 * number2);
         } else {
             setSum(0); // or any other default value you prefer
         }
     }, [employeeData.number1, employeeData.number2]);
     useEffect(() => {
-        const number1 = parseFloat(employeeData.input1) || 0;
-        const number2 = parseFloat(employeeData.input2) || 0;
-        const number3 = parseFloat(employeeData.input3) || 0;
-
-        // if (number1 > 0 || number2 > 0 || number3 > 0) {
-        if (!isNaN(number1) && !isNaN(number2) && !isNaN(number3)) {
-            setSum2(number1 + number2 + number3);
+        if (employeeData.input1 === '' && employeeData.input2 === '' && employeeData.input3 === '') {
+            setInput1(0);
+            setInput2(0);
+            setInput3(0);
         } else {
-            setSum2(0); // or any other default value you prefer
+            const number1 = parseFloat(employeeData.input1);
+            const number2 = parseFloat(employeeData.input2);
+            const number3 = parseFloat(employeeData.input3);
+            setSum2(number1 + number2 + number3);
         }
     }, [employeeData.input1, employeeData.input2, employeeData.input3]);
 
     useEffect(() => {
-        const shirt = parseFloat(employeeData.shirt) || 0;
-        const shirtcount = parseFloat(employeeData.shirtcount) || 0;
-        const trousers = parseFloat(employeeData.trousers) || 0;
-        const trouserscount = parseFloat(employeeData.trouserscount) || 0;
-        const wholeset = parseFloat(employeeData.wholeset) || 0;
-        const wholesetcount = parseFloat(employeeData.wholesetcount) || 0;
-        const saveftyShoes = parseFloat(employeeData.saveftyShoes) || 0;
-        const saveftyShoescount = parseFloat(employeeData.saveftyShoescount) || 0;
-        const apron = parseFloat(employeeData.apron) || 0;
-        const aproncount = parseFloat(employeeData.aproncount) || 0;
-        const hat = parseFloat(employeeData.hat) || 0;
-        const hatcount = parseFloat(employeeData.hatcount) || 0;
-
-        if (!isNaN(shirt) || !isNaN(shirtcount) || !isNaN(trousers) ||
-            !isNaN(trouserscount) || !isNaN(wholeset) || !isNaN(wholesetcount) ||
-            !isNaN(saveftyShoes) || !isNaN(saveftyShoescount) || !isNaN(apron) ||
-            !isNaN(aproncount) || !isNaN(hat) || !isNaN(hatcount)) {
+        if (employeeData.shirt === '' && employeeData.shirtcount === '' && employeeData.trousers === '' && employeeData.trouserscount === '' && employeeData.wholeset === '' &&
+            employeeData.wholesetcount === '' && employeeData.saveftyShoes === '' &&
+            employeeData.saveftyShoescount === '' && employeeData.apron === '' && employeeData.aproncount === '' && employeeData.hat === '' && employeeData.hatcount) {
+            setShirt(0);
+            setShirtcount(0);
+            setTrousers(0);
+            setTrouserscount(0);
+            setWholeset(0);
+            setWholesetcount(0);
+            setSaveftyShoes(0);
+            setSaveftyShoescount(0);
+            setApron(0);
+            setAproncount(0);
+            setHat(0);
+            setHatcount(0);
+        } else {
+            const shirt = parseFloat(employeeData.shirt);
+            const shirtcount = parseFloat(employeeData.shirtcount);
+            const trousers = parseFloat(employeeData.trousers);
+            const trouserscount = parseFloat(employeeData.trouserscount);
+            const wholeset = parseFloat(employeeData.wholeset);
+            const wholesetcount = parseFloat(employeeData.wholesetcount);
+            const saveftyShoes = parseFloat(employeeData.saveftyShoes);
+            const saveftyShoescount = parseFloat(employeeData.saveftyShoescount);
+            const apron = parseFloat(employeeData.apron);
+            const aproncount = parseFloat(employeeData.aproncount);
+            const hat = parseFloat(employeeData.hat);
+            const hatcount = parseFloat(employeeData.hatcount);
             setcustom(shirt * shirtcount +
                 trousers * trouserscount +
                 wholeset * wholesetcount +
                 saveftyShoes * saveftyShoescount +
                 apron * aproncount +
                 hat * hatcount);
-        } else {
-            setcustom(0); // or any other default value you prefer
         }
-
     }, [shirt, shirtcount, trousers, trouserscount, wholeset, wholesetcount, saveftyShoes, saveftyShoescount, apron, aproncount, hat, hatcount]);
 
     useEffect(() => {
-        const admoney1 = parseFloat(employeeData.admoney1) || 0;
-        const admoney2 = parseFloat(employeeData.admoney2) || 0;
-        const admoney3 = parseFloat(employeeData.admoney3) || 0;
-
-        if (!isNaN(admoney1) || !isNaN(admoney2) || !isNaN(admoney3)) {
-            setSumAdmoney(admoney1 + admoney2 + admoney3);
+        if (employeeData.admoney1 === '' && employeeData.admoney2 === '' && employeeData.admoney3 === '') {
+            setAdmoney1(0);
+            setAdmoney2(0);
+            setAdmoney3(0);
         } else {
-            setSumAdmoney(0); // or any other default value you prefer
+            const admoney1 = parseFloat(employeeData.admoney1);
+            const admoney2 = parseFloat(employeeData.admoney2);
+            const admoney3 = parseFloat(employeeData.admoney3);
+            setSumAdmoney(admoney1 + admoney2 + admoney3);
         }
     }, [employeeData.admoney1, employeeData.admoney2, employeeData.admoney3]);
 
-
+   
     useEffect(() => {
         const sumall = Number(sum) + Number(sum2) + Number(crimeinvestigation) + Number(custom);
         setSumAll(sumall);
@@ -368,11 +377,12 @@ function OtherExpenses() {
             [field]: e.target.value
         }));
     };
-    //  useEffect(() => {
-    //         const sumall2 = parseFloat(employeeData.sumall2);
-    //         const divide = parseFloat(employeeData.divide);
-    //         setDivideAll(sumall2 / divide);
-    //     }, [employeeData.sumall2, employeeData.divide]);
+//  useEffect(() => {
+//         const sumall2 = parseFloat(employeeData.sumall2);
+//         const divide = parseFloat(employeeData.divide);
+//         setDivideAll(sumall2 / divide);
+//     }, [employeeData.sumall2, employeeData.divide]);
+
     return (
         <body class="hold-transition sidebar-mini" className='editlaout'>
             <div class="wrapper">

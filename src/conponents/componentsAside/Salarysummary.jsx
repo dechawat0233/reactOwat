@@ -1,3 +1,5 @@
+import endpoint from '../../config';
+
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import '../editwindowcss.css';
@@ -9,6 +11,98 @@ function Salarysummary() {
             minWidth: "5rem"
         }
     };
+
+    const [employeeId, setEmployeeId] = useState('');
+    const [name, setName] = useState('');
+
+
+    const [searchWorkplaceId, setSearchWorkplaceId] = useState(''); //รหัสหน่วยงาน
+    const [searchWorkplaceName, setSearchWorkplaceName] = useState(''); //ชื่อหน่วยงาน
+    const [searchEmployeeId, setSearchEmployeeId] = useState('');
+    const [searchEmployeeName, setSearchEmployeeName] = useState('');
+    const [searchResult, setSearchResult] = useState([]);
+
+    const [salary, setSalary] = useState(''); //อัตราเงินเดือน
+    const [salaryadd1v, setSalaryadd1v] = useState(''); //เงินเพิ่มพิเศษ ค่ารถ
+    const [salaryadd2v, setSalaryadd2v] = useState(''); //เงินเพิ่มพิเศษ ค่าอาหาร
+    const [salaryadd3v, setSalaryadd3v] = useState(''); //เงินเพิ่มพิเศษ เบี้ยขยัน
+    const [salaryadd4v, setSalaryadd4v] = useState(''); //เงินเพิ่มพิเศษ โทรศัพท์
+    const [salaryadd5v, setSalaryadd5v] = useState(''); //เงินเพิ่มพิเศษ เงินประจำตำแหน่ง
+    const [remainbusinessleave, setRemainbusinessleave] = useState(''); //ลาคงเหลือ วันลากิจคงเหลือ 
+    const [secialany, setSecialany] = useState(''); //เงินพิเศษอื่นๆ	
+
+    ///ประกันสังคม
+    const [minus, setMinus] = useState('5'); //หัห
+    const [minusemployer, setMinusEmployer] = useState('5'); //หัห
+
+
+    async function handleSearch(event) {
+        event.preventDefault();
+
+        // get value from form search
+        const data = {
+            employeeId: searchEmployeeId,
+            name: searchEmployeeName,
+            idCard: '',
+            workPlace: '',
+
+            salary: salary,
+            salaryadd1v: salaryadd1v,
+            salaryadd2v: salaryadd2v,
+            salaryadd3v: salaryadd3v,
+            salaryadd4v: salaryadd4v,
+            salaryadd5v: salaryadd5v,
+            remainbusinessleave: remainbusinessleave,
+            secialany: secialany,
+
+            minus: minus,
+            minusemployer: minusemployer,
+        };
+
+        try {
+            const response = await axios.post(endpoint + '/employee/search', data);
+            setSearchResult(response.data.employees);
+            // alert(response.data.employees.length);
+            if (response.data.employees.length < 1) {
+                window.location.reload();
+                alert('ไม่พบข้อมูล');
+            } else {
+                // alert(response.data.employees.length);
+
+
+                // Set search values
+                setEmployeeId(response.data.employees[0].employeeId);
+                setName(response.data.employees[0].name);
+
+                setSalary(response.data.employees[0].salary);
+                setSalaryadd1v(response.data.employees[0].salaryadd1v);
+                setSalaryadd2v(response.data.employees[0].salaryadd2v);
+                setSalaryadd3v(response.data.employees[0].salaryadd3v);
+                setSalaryadd4v(response.data.employees[0].salaryadd4v);
+                setSalaryadd5v(response.data.employees[0].salaryadd5v);
+                setRemainbusinessleave(response.data.employees[0].remainbusinessleave);
+                setSecialany(response.data.employees[0].secialany);
+
+                setMinus(response.data.employees[0].minus);
+                setMinusEmployer(response.data.employees[0].minusemployer);
+
+                setSearchEmployeeId(response.data.employees[0].employeeId);
+                setSearchEmployeeName(response.data.employees[0].name);
+
+                // console.log('workOfOT:', response.data.workplaces[0].workOfOT);
+                // console.log('workOfOT:', endTime);
+
+            }
+        } catch (error) {
+            alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
+            window.location.reload();
+        }
+    }
+
+    async function handleManageWorkplace(event) {
+        event.preventDefault();
+
+    }
     return (
         // <div>
         <body class="hold-transition sidebar-mini" className='editlaout'>
@@ -36,33 +130,133 @@ function Salarysummary() {
                                     <div class="col-md-12">
                                         <h2 class="title">ค้นหา</h2>
                                         <div class="col-md-12">
+                                            <form onSubmit={handleSearch}>
+                                                <div class="row">
+                                                    {/* 
+                                                        <div class="form-group">
+                                                            <label role="formsettime">ค้นหาด้วย</label>
+                                                            <select id="formsettime" name="formsettime" class="form-control" >
+                                                                <option value="workplaceId">รหัสหน่วยงาน</option>
+                                                                <option value="agencytime">ชื่อหน่วยงาน</option>
+                                                                <option value="employeeId">รหัสพนักงาน</option>
+                                                                <option value="persontime">ชื่อพนักงาน</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="formsettime">ชื่อ</label>
+                                                            <input type="text" class="form-control" id="searchWorkplaceId" placeholder="รหัสหน่วยงาน" value={searchWorkplaceId} onChange={(e) => setSearchWorkplaceId(e.target.value)} />
+                                                        </div>
+                                                    </div> */}
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="searchEmployeeId">รหัสพนักงาน</label>
+                                                            <input type="text" class="form-control" id="searchEmployeeId" placeholder="รหัสพนักงาน" value={searchEmployeeId} onChange={(e) => setSearchEmployeeId(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="searchname">ชื่อพนักงาน</label>
+                                                            <input type="text" class="form-control" id="searchname" placeholder="ชื่อพนักงาน" value={searchEmployeeName} onChange={(e) => setSearchEmployeeName(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้าหา</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label role="formsettime">ค้นหาด้วย</label>
-                                                        <select id="formsettime" name="formsettime" class="form-control" >
-                                                            <option value="workplaceId">รหัสหน่วยงาน</option>
-                                                            <option value="agencytime">ชื่อหน่วยงาน</option>
-                                                            <option value="employeeId">รหัสพนักงาน</option>
-                                                            <option value="persontime">ชื่อพนักงาน</option>
-                                                        </select>
+                                                        <label role="agencynumber">รหัสพนักงาน</label>
+                                                        <input type="text" class="form-control" id="agencynumber" placeholder="รหัสหน่วยงาน" value={employeeId} onChange={(e) => setEmployeeId(e.target.value)} />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label role="formsettime">ชื่อ</label>
-                                                        <input type='text' class="form-control" name='search' value='' />
+                                                        <label role="agencyname">ชื่อพนักงาน</label>
+                                                        <input type="text" class="form-control" id="agencyname" placeholder="ชื่อหน่วยงาน" value={name} onChange={(e) => setname(e.target.value)} />
+                                                    </div>
+                                                </div>
+                                            </div>
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label role="agencynumber">รหัสพนักงาน</label>
+                                                        <input type="text" class="form-control" id="agencynumber" placeholder="รหัสหน่วยงาน" value={salary} onChange={(e) => setSalary(e.target.value)} />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label role="agencyname">ชื่อพนักงาน</label>
+                                                        <input type="text" class="form-control" id="agencyname" placeholder="ชื่อหน่วยงาน" value={salaryadd1v} onChange={(e) => setSalaryadd1v(e.target.value)} />
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-12">
+                                                <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้าหา</button>
+                                                        <label role="agencynumber">รหัสพนักงาน</label>
+                                                        <input type="text" class="form-control" id="agencynumber" placeholder="รหัสหน่วยงาน" value={salaryadd2v} onChange={(e) => setSalaryadd2v(e.target.value)} />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label role="agencyname">ชื่อพนักงาน</label>
+                                                        <input type="text" class="form-control" id="agencyname" placeholder="ชื่อหน่วยงาน" value={salaryadd3v} onChange={(e) => setSalaryadd3v(e.target.value)} />
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="d-flex justify-content-center">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label role="agencynumber">รหัสพนักงาน</label>
+                                                        <input type="text" class="form-control" id="agencynumber" placeholder="รหัสหน่วยงาน" value={salaryadd4v} onChange={(e) => setSalaryadd4v(e.target.value)} />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label role="agencyname">ชื่อพนักงาน</label>
+                                                        <input type="text" class="form-control" id="agencyname" placeholder="ชื่อหน่วยงาน" value={salaryadd5v} onChange={(e) => setSalaryadd5v(e.target.value)} />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label role="agencynumber">รหัสพนักงาน</label>
+                                                        <input type="text" class="form-control" id="agencynumber" placeholder="รหัสหน่วยงาน" value={remainbusinessleave} onChange={(e) => setRemainbusinessleave(e.target.value)} />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label role="agencyname">ชื่อพนักงาน</label>
+                                                        <input type="text" class="form-control" id="agencyname" placeholder="ชื่อหน่วยงาน" value={secialany} onChange={(e) => setSecialany(e.target.value)} />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label role="agencynumber">รหัสพนักงาน</label>
+                                                        <input type="text" class="form-control" id="agencynumber" placeholder="รหัสหน่วยงาน" value={minus} onChange={(e) => setMinus(e.target.value)} />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label role="agencyname">ชื่อพนักงาน</label>
+                                                        <input type="text" class="form-control" id="agencyname" placeholder="ชื่อหน่วยงาน" value={minusemployer} onChange={(e) => setMinusEmployer(e.target.value)} />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {/* <div class="d-flex justify-content-center">
                                                 <h2 class="title">ผลลัพธ์</h2>
                                             </div>
                                             <div class="d-flex justify-content-center">
@@ -74,6 +268,27 @@ function Salarysummary() {
                                                                 <li >
                                                                     ไทยยั่งยืน
                                                                 </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> */}
+                                            <div class="d-flex justify-content-center">
+                                                <h2 class="title">ผลลัพธ์ {searchResult.length} รายการ</h2>
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
+                                                                {searchResult.map(workplace => (
+                                                                    <li
+                                                                        key={workplace.id}
+                                                                        onClick={() => handleClickResult(workplace)}
+                                                                    >
+                                                                        รหัส {workplace.workplaceId} หน่วยงาน {workplace.workplaceName}
+                                                                    </li>
+                                                                ))}
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -96,7 +311,7 @@ function Salarysummary() {
                                 ทั้งหมด 22 วัน
                             </div>
                         </div>
-                        <form>
+                        <form onSubmit={handleManageWorkplace}>
                             <div class="row">
                                 <div class="col-md-9">
                                     <section class="Frame">
