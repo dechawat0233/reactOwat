@@ -66,36 +66,40 @@ router.get('/:workplaceTimeRecordId', async (req, res) => {
 
 router.post('/search', async (req, res) => {
   try {
-    const { searchWorkplaceId, searchWorkplaceName } = req.body;
+    const { workplaceId,
+      workplaceName,
+      date} = req.body;
 
     // Construct the search query based on the provided parameters
     const query = {};
 
-    if (searchWorkplaceId !== '') {
-      query.workplaceId = searchWorkplaceId;
+    if (workplaceId !== '') {
+      query.workplaceId = workplaceId;
     }
 
 
-    if (searchWorkplaceName !== '') {
-      query.workplaceName = { $regex: new RegExp(searchWorkplaceName, 'i') };
-      //{ $regex: name, $options: 'i' };
+    if (workplaceName !== '') {
+      query.workplaceName = { $regex: new RegExp(workplaceName, 'i') };
     }
-    //    query.searchWorkplaceId = '1001';
-    //    console.log({ employeeId, name, idCard, workPlace });
+
+    if (date !== '') {
+      query.date= new Date(date);
+    }
 
     console.log('Constructed Query:');
     console.log(query);
-    if (searchWorkplaceId == '' && searchWorkplaceName == '') {
+
+    if (workplaceId == '' && workplaceName == '' && date == '') {
       res.status(200).json({});
     }
 
     // Query the workplace collection for matching documents
-    const workplacesTimeRecord = await workplaceTimerecord.find(query);
+    const recordworkplace  = await workplaceTimerecord.find(query);
 
     await console.log('Search Results:');
-    await console.log(workplacesTimeRecord);
+    await console.log(recordworkplace  );
     let textSearch = 'workplace';
-    await res.status(200).json({ workplacesTimeRecord });
+    await res.status(200).json({ recordworkplace  });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });

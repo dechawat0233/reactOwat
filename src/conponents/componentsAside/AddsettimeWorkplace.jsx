@@ -581,10 +581,42 @@ function AddsettimeWorkplace() {
     }
 
 
+    async function  handleCheckTimerecord(){
 
-    async function handleManageWorkplace(event) {
+        const data = {
+            workplaceId : searchWorkplaceId,
+            workplaceName : searchWorkplaceName,
+            date: workDate
+        };
+
+        try {
+            const response = await axios.post(endpoint + '/timerecord/search', data);
+            // setSearchResult(response.data.workplacesTimeRecord );
+// alert(response.data.recordworkplace[0].employeeRecord.length);
+// alert(response.data.recordworkplace.length);
+            if(response.data.recordworkplace.length < 1) {
+                alert('no data');
+//                 window.location.reload();
+            } else {
+// alert(response.data.recordworkplace.length);
+// alert(response.data.recordworkplace[0].employeeRecord.length);
+
+setRowDataList(response.data.recordworkplace[0].employeeRecord);
+
+            }
+        } catch (error) {
+            alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
+            alert(error.message);
+            window.location.reload();
+        }
+
+    }
+
+
+
+    async function handleCreateWorkplaceTimerecord(event) {
         event.preventDefault();
-        alert('test');
+        // alert('test');
 
         //get data from input in useState to data 
         const data = {
@@ -630,6 +662,10 @@ function AddsettimeWorkplace() {
     }
 
 
+    async function handleManageWorkplace(event) {
+        event.preventDefault();
+
+    }
 
     /////////////////
     const [selectedOption, setSelectedOption] = useState('agencytime');
@@ -642,6 +678,7 @@ function AddsettimeWorkplace() {
         event.preventDefault();
         // Handle submission for Form 1
     };
+
 
     return (
         <section class="content">
@@ -729,7 +766,7 @@ function AddsettimeWorkplace() {
                                 <div class="col-md-3">
                                     <label role="button"></label>
                                     <div class="d-flex align-items-end">
-                                        <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ตรวจสอบ</button>
+                                        <button class="btn b_save" onClick={handleCheckTimerecord}><i class="nav-icon fas fa-search"></i> &nbsp; ตรวจสอบ</button>
                                     </div>
                                 </div>
                             </div>
@@ -795,7 +832,7 @@ function AddsettimeWorkplace() {
                                 </div>
                             </section>
                             <div class="form-group">
-                                <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp; บันทึก</button>
+                                <button class="btn b_save" onClick={handleCreateWorkplaceTimerecord}><i class="nav-icon fas fa-save"></i> &nbsp; บันทึก</button>
                             </div>
                         </form>
 
