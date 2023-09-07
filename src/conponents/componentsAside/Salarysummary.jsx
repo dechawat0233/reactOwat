@@ -333,14 +333,14 @@ function Salarysummary() {
                                                 <tbody>
                                                     <tr>
                                                         <td>22 วัน</td>
-                                                        <td>7200</td>
-                                                        <td>1000</td>
-                                                        <td>500</td>
-                                                        <td>300</td>
-                                                        <td>300</td>
-                                                        <td>1000</td>
-                                                        <td>500</td>
-                                                        <td>1000</td>
+                                                        <td>{salary}</td>
+                                                        <td>{salaryadd1v}</td>
+                                                        <td>{salaryadd2v}</td>
+                                                        <td>{salaryadd3v}</td>
+                                                        <td>{remainbusinessleave}</td>
+                                                        <td>{secialany}</td>
+                                                        <td>{salaryadd4v}</td>
+                                                        <td>{salaryadd5v}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>66</td>
@@ -373,19 +373,19 @@ function Salarysummary() {
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td>0</td>
-                                                        <td>0</td>
-                                                        <td>399</td>
-                                                        <td>0</td>
-                                                        <td>0</td>
+                                                        <td></td>
+                                                        <td>{minus} %</td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
                                                     </tr>
                                                     <tr>
                                                         <td>เป็นเงินทั้งสิ้น</td>
-                                                        <td>399</td>
+                                                        <td></td>
                                                     </tr>
                                                     <tr>
                                                         <td>สุทธิ</td>
-                                                        <td>12101</td>
+                                                        <td></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
