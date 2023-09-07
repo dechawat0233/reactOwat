@@ -9,7 +9,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import EmployeesSelected from './EmployeesSelected';
 
 function AddsettimeWorkplace() {
-
+    const [updateButton, setUpdateButton] = useState(false); // Initially, set to false
     const [newWorkplace, setNewWorkplace] = useState(true);
 
     //Workplace Record data
@@ -581,35 +581,61 @@ function AddsettimeWorkplace() {
     }
 
 
-    async function  handleCheckTimerecord(){
+    // async function handleCheckTimerecord() {
 
+    //     const data = {
+    //         workplaceId: searchWorkplaceId,
+    //         workplaceName: searchWorkplaceName,
+    //         date: workDate
+    //     };
+
+    //     try {
+    //         const response = await axios.post(endpoint + '/timerecord/search', data);
+    //         // setSearchResult(response.data.workplacesTimeRecord );
+    //         // alert(response.data.recordworkplace[0].employeeRecord.length);
+    //         // alert(response.data.recordworkplace.length);
+    //         if (response.data.recordworkplace.length < 1) {
+    //             alert('no data');
+    //             //                 window.location.reload();
+    //         } else {
+    //             // alert(response.data.recordworkplace.length);
+    //             // alert(response.data.recordworkplace[0].employeeRecord.length);
+
+    //             setRowDataList(response.data.recordworkplace[0].employeeRecord);
+
+    //         }
+    //     } catch (error) {
+    //         alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
+    //         alert(error.message);
+    //         window.location.reload();
+    //     }
+
+    // }
+
+    async function handleCheckTimerecord() {
         const data = {
-            workplaceId : searchWorkplaceId,
-            workplaceName : searchWorkplaceName,
-            date: workDate
+            workplaceId: searchWorkplaceId,
+            workplaceName: searchWorkplaceName,
+            date: workDate,
         };
 
         try {
             const response = await axios.post(endpoint + '/timerecord/search', data);
-            // setSearchResult(response.data.workplacesTimeRecord );
-// alert(response.data.recordworkplace[0].employeeRecord.length);
-// alert(response.data.recordworkplace.length);
-            if(response.data.recordworkplace.length < 1) {
+
+            if (response.data.recordworkplace.length < 1) {
                 alert('no data');
-//                 window.location.reload();
+                // Set the state to false if no data is found
+                setUpdateButton(false);
             } else {
-// alert(response.data.recordworkplace.length);
-// alert(response.data.recordworkplace[0].employeeRecord.length);
-
-setRowDataList(response.data.recordworkplace[0].employeeRecord);
-
+                // Set the state to true if data is found
+                setUpdateButton(true);
+                setRowDataList(response.data.recordworkplace[0].employeeRecord);
             }
         } catch (error) {
             alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
             alert(error.message);
             window.location.reload();
         }
-
     }
 
 
@@ -832,7 +858,16 @@ setRowDataList(response.data.recordworkplace[0].employeeRecord);
                                 </div>
                             </section>
                             <div class="form-group">
-                                <button class="btn b_save" onClick={handleCreateWorkplaceTimerecord}><i class="nav-icon fas fa-save"></i> &nbsp; บันทึก</button>
+                                {/* <button class="btn b_save" onClick={handleCreateWorkplaceTimerecord}><i class="nav-icon fas fa-save"></i> &nbsp; บันทึก</button> */}
+                                {updateButton ? (
+                                    <button class="btn b_save">
+                                        <i class="nav-icon fas fa-save"></i> &nbsp; อัพเดท
+                                    </button>
+                                ) : (
+                                    <button class="btn b_save" onClick={handleCreateWorkplaceTimerecord}>
+                                        <i class="nav-icon fas fa-save"></i> &nbsp; บันทึก
+                                    </button>
+                                )}
                             </div>
                         </form>
 
