@@ -595,12 +595,13 @@ function AddsettimeWorkplace() {
 // alert(response.data.recordworkplace[0].employeeRecord.length);
 // alert(response.data.recordworkplace.length);
             if(response.data.recordworkplace.length < 1) {
-                alert('no data');
+                alert('ไม่พบข้อมูล');
 //                 window.location.reload();
             } else {
 // alert(response.data.recordworkplace.length);
 // alert(response.data.recordworkplace[0].employeeRecord.length);
 
+//get data from api and set data to table
 setRowDataList(response.data.recordworkplace[0].employeeRecord);
 
             }
