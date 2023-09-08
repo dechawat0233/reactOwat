@@ -103,6 +103,24 @@ function Salarysummary() {
         event.preventDefault();
 
     }
+
+    const [socialsecurity, setSocialSecurity] = useState(''); //หักประกันสังคม
+
+    useEffect(() => {
+        if (salary === '') {
+            setSocialSecurity(0);
+        } else {
+            const parsedSalary = parseFloat(salary);
+            const parsedMinus = parseFloat(minus) / 100; // Convert the minus percentage to a decimal
+            if (parsedSalary < 1650) {
+                setSocialSecurity(1650 * parsedMinus);
+            } else if (parsedSalary >= 1650 && parsedSalary <= 15000) {
+                setSocialSecurity(parsedSalary * parsedMinus);
+            } else {
+                setSocialSecurity(15000 * parsedMinus);
+            }
+        }
+    }, [salary, minus]);
     return (
         // <div>
         <body class="hold-transition sidebar-mini" className='editlaout'>
@@ -170,91 +188,6 @@ function Salarysummary() {
                                                     </div>
                                                 </div>
                                             </form>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label role="agencynumber">รหัสพนักงาน</label>
-                                                        <input type="text" class="form-control" id="agencynumber" placeholder="รหัสหน่วยงาน" value={employeeId} onChange={(e) => setEmployeeId(e.target.value)} />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label role="agencyname">ชื่อพนักงาน</label>
-                                                        <input type="text" class="form-control" id="agencyname" placeholder="ชื่อหน่วยงาน" value={name} onChange={(e) => setname(e.target.value)} />
-                                                    </div>
-                                                </div>
-                                            </div>
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label role="agencynumber">รหัสพนักงาน</label>
-                                                        <input type="text" class="form-control" id="agencynumber" placeholder="รหัสหน่วยงาน" value={salary} onChange={(e) => setSalary(e.target.value)} />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label role="agencyname">ชื่อพนักงาน</label>
-                                                        <input type="text" class="form-control" id="agencyname" placeholder="ชื่อหน่วยงาน" value={salaryadd1v} onChange={(e) => setSalaryadd1v(e.target.value)} />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label role="agencynumber">รหัสพนักงาน</label>
-                                                        <input type="text" class="form-control" id="agencynumber" placeholder="รหัสหน่วยงาน" value={salaryadd2v} onChange={(e) => setSalaryadd2v(e.target.value)} />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label role="agencyname">ชื่อพนักงาน</label>
-                                                        <input type="text" class="form-control" id="agencyname" placeholder="ชื่อหน่วยงาน" value={salaryadd3v} onChange={(e) => setSalaryadd3v(e.target.value)} />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label role="agencynumber">รหัสพนักงาน</label>
-                                                        <input type="text" class="form-control" id="agencynumber" placeholder="รหัสหน่วยงาน" value={salaryadd4v} onChange={(e) => setSalaryadd4v(e.target.value)} />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label role="agencyname">ชื่อพนักงาน</label>
-                                                        <input type="text" class="form-control" id="agencyname" placeholder="ชื่อหน่วยงาน" value={salaryadd5v} onChange={(e) => setSalaryadd5v(e.target.value)} />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label role="agencynumber">รหัสพนักงาน</label>
-                                                        <input type="text" class="form-control" id="agencynumber" placeholder="รหัสหน่วยงาน" value={remainbusinessleave} onChange={(e) => setRemainbusinessleave(e.target.value)} />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label role="agencyname">ชื่อพนักงาน</label>
-                                                        <input type="text" class="form-control" id="agencyname" placeholder="ชื่อหน่วยงาน" value={secialany} onChange={(e) => setSecialany(e.target.value)} />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label role="agencynumber">รหัสพนักงาน</label>
-                                                        <input type="text" class="form-control" id="agencynumber" placeholder="รหัสหน่วยงาน" value={minus} onChange={(e) => setMinus(e.target.value)} />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label role="agencyname">ชื่อพนักงาน</label>
-                                                        <input type="text" class="form-control" id="agencyname" placeholder="ชื่อหน่วยงาน" value={minusemployer} onChange={(e) => setMinusEmployer(e.target.value)} />
-                                                    </div>
-                                                </div>
-                                            </div>
 
                                             {/* <div class="d-flex justify-content-center">
                                                 <h2 class="title">ผลลัพธ์</h2>
@@ -308,7 +241,7 @@ function Salarysummary() {
                         <br />
                         <div class="row">
                             <div class="col-md-2">
-                                ทั้งหมด 22 วัน
+                                ทั้งหมด 0 วัน
                             </div>
                         </div>
                         <form onSubmit={handleManageWorkplace}>
@@ -343,8 +276,8 @@ function Salarysummary() {
                                                         <td>{salaryadd5v}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>66</td>
-                                                        <td>3000</td>
+                                                        <td>ot 0 ช.ม.</td>
+                                                        <td>เงิน ot 0</td>
                                                     </tr>
                                                     <tr>
                                                         <td>เป็นเงินทั้งสิ้น</td>
@@ -374,8 +307,8 @@ function Salarysummary() {
                                                 <tbody>
                                                     <tr>
                                                         <td></td>
-                                                        <td>{minus} %</td>
                                                         <td></td>
+                                                        <td>{socialsecurity} ({minus} %)</td>
                                                         <td></td>
                                                         <td></td>
                                                     </tr>
