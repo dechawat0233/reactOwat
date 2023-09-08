@@ -645,11 +645,10 @@ function AddsettimeWorkplace() {
 
                 // alert(JSON.stringify( rowDataList[0] ) );
                 //count work of time and set to table 
-                for (let i = 0; i < response.data.recordworkplace[0].employeeRecord.length; i++) {
+                // for (let i = 0; i < response.data.recordworkplace[0].employeeRecord.length; i++) {
                     // alert(response.data.recordworkplace[0].employeeRecord[i].shift );
-                    handleFieldChange(i, 'shift', response.data.recordworkplace[0].employeeRecord[i].shift);
-
-                }
+                    // handleFieldChange(i, 'shift', response.data.recordworkplace[0].employeeRecord[i].shift);
+                // }
 
             }
         } catch (error) {
