@@ -290,7 +290,7 @@ const [timeRecord_id , setTimeRecord_id ] = useState('');
 
             // const timeDiffFormatted = `${hours}.${minutes}`;
 
-            const workOfHour = parseFloat(newDataList[index].workOfHour);
+            // const workOfHour = parseFloat(newDataList[index].workOfHour);
 
             const startHours = parseFloat(newDataList[index].startTime.split('.')[0]);
             const startMinutes = parseFloat(newDataList[index].startTime.split('.')[1] || 0);
@@ -315,8 +315,8 @@ const [timeRecord_id , setTimeRecord_id ] = useState('');
             const totalMinutes = hours * 60 + minutes;
 
             // Cap the time difference at the maximum work hours
-            const cappedTotalMinutes = Math.min(totalMinutes, 1440);
-
+            const cappedTotalMinutes = Math.min(totalMinutes, workOfHour * 60);
+// alert(workOfHour );
             // Convert the capped time difference back to hours and minutes
             const cappedHours = Math.floor(cappedTotalMinutes / 60);
             const cappedMinutes = cappedTotalMinutes % 60;
@@ -433,6 +433,7 @@ const [timeRecord_id , setTimeRecord_id ] = useState('');
         //
         setWorkplaceId(workplace.workplaceId);
         setWorkplaceName(workplace.workplaceName);
+// alert(workplace.workOfHour);
 
         // Populate all the startTime input fields with the search result value
         const updatedRowDataList = rowDataList.map(rowData => ({
@@ -468,6 +469,8 @@ const [timeRecord_id , setTimeRecord_id ] = useState('');
                 window.location.reload();
             } else {
                 // Calculate the time difference
+                setWorkOfHour(response.data.workplaces[0].workOfHour);
+
                 const startTime = response.data.workplaces[0].workStart1;
                 const endTime = response.data.workplaces[0].workEnd1;
                 const workOfHour = response.data.workplaces[0].workOfHour;
@@ -629,14 +632,6 @@ let endTime = response.data.recordworkplace[0].employeeRecord[i].endTime;
 let allTime = endTime  - startTime;
 // alert(allTime );
 
-// setRowDataList(prevDataList => {
-//     const newDataList = [...prevDataList];
-
-//     newDataList[i] = {
-//         ...newDataList[i],
-//         ['allTime']: allTime ,
-//     };
-// });
 
                 }
 
