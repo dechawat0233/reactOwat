@@ -27,7 +27,6 @@ const workplaceTimerecordSchema = new mongoose.Schema({
   employeeRecord: [{
     staffId: String,
     staffName: String,
-    startjob: String, 
     shift: String,
     startTime: String,
     endTime: String,

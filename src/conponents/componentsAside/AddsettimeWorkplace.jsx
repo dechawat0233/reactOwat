@@ -711,7 +711,7 @@ function AddsettimeWorkplace() {
 
     async function handleUpdateWorkplaceTimerecord(event) {
         event.preventDefault();
-        alert('hi');
+        // alert('hi');
         //get data from input in useState to data 
         const data = {
             workplaceId: workplaceId,
