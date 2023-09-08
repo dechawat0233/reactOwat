@@ -298,7 +298,7 @@ function AddsettimeWorkplace() {
             const endMinutes = parseFloat(newDataList[index].endTime.split('.')[1] || 0);
 
             // console.log(workOfHour);
-            // console.log(endHours);
+            // console.log(startHours);
 
             let hours = endHours - startHours;
             let minutes = endMinutes - startMinutes;
