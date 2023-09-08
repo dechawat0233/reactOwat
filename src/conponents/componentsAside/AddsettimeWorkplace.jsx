@@ -639,11 +639,7 @@ function AddsettimeWorkplace() {
                 //count work of time and set to table 
                 for (let i = 0; i < response.data.recordworkplace[0].employeeRecord.length; i++) {
                     // alert(response.data.recordworkplace[0].employeeRecord[i].shift );
-                    let startTime = response.data.recordworkplace[0].employeeRecord[i].startTime;
-                    let endTime = response.data.recordworkplace[0].employeeRecord[i].endTime;
-                    let allTime = endTime - startTime;
-                    // alert(allTime );
-
+handleFieldChange(i, 'shift' , response.data.recordworkplace[0].employeeRecord[i].shift );
 
                 }
 
