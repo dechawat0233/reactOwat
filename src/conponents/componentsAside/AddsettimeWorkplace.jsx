@@ -117,12 +117,9 @@ const [timeRecord_id , setTimeRecord_id ] = useState('');
 
 
     const handleFieldChange = (index, fieldName, value) => {
-// alert(index);
 
         setRowDataList(prevDataList => {
             const newDataList = [...prevDataList];
-            // const timeDiffFormatted = ''; // Initialize timeDiffFormatted
-            // const otTimeFormatted2 = ''; // Initialize otTimeFormatted2
 
             newDataList[index] = {
                 ...newDataList[index],
@@ -134,45 +131,32 @@ const [timeRecord_id , setTimeRecord_id ] = useState('');
             if (fieldName == 'staffId') {
 
                 const employeesearch = employeeList.find(employee => employee.employeeId === value);
-                //                 alert(JSON.stringify(employeeList, null, 2));
-                // alert( employeeList.length);
                 if (employeesearch) {
-                    //   setEmployeeName(employee.name);
                     newDataList[index] = {
                         ...newDataList[index],
                         ['staffName']: employeesearch.name + '',
                     };
-
                 } else {
-                    //   setEmployeeName('Employee not found');
                     newDataList[index] = {
                         ...newDataList[index],
                         ['staffName']: 'ไม่พบชื่อพนักงาน',
                     };
-
                 }
             }
 
             //Search Employee  by name
             if (fieldName == 'staffName') {
-
                 const employeesearch = employeeList.find(employee => employee.name === value);
-                //                 alert(JSON.stringify(employeeList, null, 2));
-                // alert( employeeList.length);
                 if (employeesearch) {
-                    //   setEmployeeName(employee.name);
                     newDataList[index] = {
                         ...newDataList[index],
                         ['staffId']: employeesearch.employeeId + '',
                     };
-
                 } else {
-                    //   setEmployeeName('Employee not found');
                     newDataList[index] = {
                         ...newDataList[index],
                         ['staffId']: 'ไม่พบรหัสพนักงาน',
                     };
-
                 }
             }
 
@@ -215,7 +199,6 @@ const [timeRecord_id , setTimeRecord_id ] = useState('');
 
                 if (value == 'specialt_shift' && shift4start != null) {
                     const workOfHour = parseFloat(newDataList[index].workOfHour);
-
                     const startHours = parseFloat(newDataList[index].startTime.split('.')[0]);
                     const startMinutes = parseFloat(newDataList[index].startTime.split('.')[1] || 0);
                     const endHours = parseFloat(newDataList[index].endTime.split('.')[0]);
@@ -314,6 +297,7 @@ const [timeRecord_id , setTimeRecord_id ] = useState('');
             const endHours = parseFloat(newDataList[index].endTime.split('.')[0]);
             const endMinutes = parseFloat(newDataList[index].endTime.split('.')[1] || 0);
 
+
             let hours = endHours - startHours;
             let minutes = endMinutes - startMinutes;
 
@@ -324,14 +308,14 @@ const [timeRecord_id , setTimeRecord_id ] = useState('');
 
             // Handle cases where endTime is on the next day
             if (hours < 0) {
-                hours += 24;
+                hours = hours  + 24;
             }
 
             // Calculate the total time difference in minutes
             const totalMinutes = hours * 60 + minutes;
 
             // Cap the time difference at the maximum work hours
-            const cappedTotalMinutes = Math.min(totalMinutes, workOfHour * 60);
+            const cappedTotalMinutes = Math.min(totalMinutes, 1440);
 
             // Convert the capped time difference back to hours and minutes
             const cappedHours = Math.floor(cappedTotalMinutes / 60);
@@ -396,6 +380,7 @@ const [timeRecord_id , setTimeRecord_id ] = useState('');
 
 
             // }
+            
 
             newDataList[index] = {
                 ...newDataList[index],
@@ -634,6 +619,27 @@ const [timeRecord_id , setTimeRecord_id ] = useState('');
                 setUpdateButton(true);
                 setTimeRecord_id(response.data.recordworkplace[0]._id);
                 setRowDataList(response.data.recordworkplace[0].employeeRecord);
+
+                // alert(JSON.stringify( rowDataList[0] ) );
+                //count work of time and set to table 
+                for(let i =0; i < response.data.recordworkplace[0].employeeRecord.length; i++ ){
+// alert(response.data.recordworkplace[0].employeeRecord[i].shift );
+let startTime = response.data.recordworkplace[0].employeeRecord[i].startTime;
+let endTime = response.data.recordworkplace[0].employeeRecord[i].endTime;
+let allTime = endTime  - startTime;
+// alert(allTime );
+
+// setRowDataList(prevDataList => {
+//     const newDataList = [...prevDataList];
+
+//     newDataList[i] = {
+//         ...newDataList[i],
+//         ['allTime']: allTime ,
+//     };
+// });
+
+                }
+
             }
         } catch (error) {
             alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
