@@ -238,7 +238,6 @@ function AddsettimeWorkplace() {
                         otHoursDiff += 24;
                     }
                     const otTimeFormatted1 = `${otHoursDiff}.${otMinutesDiff}`;
-
                     const maxOTHours = parseFloat(newDataList[index].workOfOT);
                     const maxOTMinutes = 0; // If maxOTHours is always whole numbers
 
@@ -290,15 +289,14 @@ function AddsettimeWorkplace() {
 
             // const timeDiffFormatted = `${hours}.${minutes}`;
 
-            const workOfHour = parseFloat(newDataList[index].workOfHour);
+            // const workOfHour = parseFloat(newDataList[index].workOfHour);
+        
 
             const startHours = parseFloat(newDataList[index].startTime.split('.')[0]);
             const startMinutes = parseFloat(newDataList[index].startTime.split('.')[1] || 0);
             const endHours = parseFloat(newDataList[index].endTime.split('.')[0]);
             const endMinutes = parseFloat(newDataList[index].endTime.split('.')[1] || 0);
 
-            // console.log(workOfHour);
-            // console.log(startHours);
 
             let hours = endHours - startHours;
             let minutes = endMinutes - startMinutes;
@@ -317,10 +315,10 @@ function AddsettimeWorkplace() {
             const totalMinutes = hours * 60 + minutes;
 
             // Cap the time difference at the maximum work hours
-            const cappedTotalMinutes = Math.min(totalMinutes, 1440);
-            // const cappedTotalMinutes = Math.min(totalMinutes, workOfHour * 60);
+            console.log(workOfOT);
 
-
+            const cappedTotalMinutes = Math.min(totalMinutes, workOfHour * 60);
+            // alert(workOfHour );
             // Convert the capped time difference back to hours and minutes
             const cappedHours = Math.floor(cappedTotalMinutes / 60);
             const cappedMinutes = cappedTotalMinutes % 60;
@@ -338,6 +336,9 @@ function AddsettimeWorkplace() {
             let otHoursDiff = otHours - otselectHours;
             let otMinutesDiff = otMinutes - otselectMinutes;
 
+
+
+
             if (otMinutesDiff < 0) {
                 otHoursDiff -= 1;
                 otMinutesDiff += 60;
@@ -347,10 +348,16 @@ function AddsettimeWorkplace() {
             if (otHoursDiff < 0) {
                 otHoursDiff += 24;
             }
+            
+
             const otTimeFormatted1 = `${otHoursDiff}.${otMinutesDiff}`;
 
-            const maxOTHours = parseFloat(newDataList[index].workOfOT);
-            const maxOTMinutes = 0; // If maxOTHours is always whole numbers
+            const cappedTotalMinutes2 = Math.min(totalMinutes, workOfOT * 60);
+            const maxOTHours = Math.floor(cappedTotalMinutes2 / 60);
+            const maxOTMinutes = cappedTotalMinutes2 % 60;
+
+            // const maxOTHours = parseFloat(newDataList[index].workOfOT);
+            // const maxOTMinutes = 0; // If maxOTHours is always whole numbers
 
             const totalOTMinutes = otHoursDiff * 60 + otMinutesDiff;
             if (totalOTMinutes > maxOTHours * 60) {
@@ -437,6 +444,7 @@ function AddsettimeWorkplace() {
         //
         setWorkplaceId(workplace.workplaceId);
         setWorkplaceName(workplace.workplaceName);
+        // alert(workplace.workOfHour);
 
         // Populate all the startTime input fields with the search result value
         const updatedRowDataList = rowDataList.map(rowData => ({
@@ -472,6 +480,9 @@ function AddsettimeWorkplace() {
                 window.location.reload();
             } else {
                 // Calculate the time difference
+                setWorkOfHour(response.data.workplaces[0].workOfHour);
+                setWorkOfOT(response.data.workplaces[0].workOfOT);
+
                 const startTime = response.data.workplaces[0].workStart1;
                 const endTime = response.data.workplaces[0].workEnd1;
                 const workOfHour = response.data.workplaces[0].workOfHour;
@@ -633,14 +644,6 @@ function AddsettimeWorkplace() {
                     let allTime = endTime - startTime;
                     // alert(allTime );
 
-                    // setRowDataList(prevDataList => {
-                    //     const newDataList = [...prevDataList];
-
-                    //     newDataList[i] = {
-                    //         ...newDataList[i],
-                    //         ['allTime']: allTime ,
-                    //     };
-                    // });
 
                 }
 
@@ -749,7 +752,7 @@ function AddsettimeWorkplace() {
         // Handle submission for Form 1
     };
 
-
+    // console.log(workOfOT);
     return (
         <section class="content">
             <div class="row">
