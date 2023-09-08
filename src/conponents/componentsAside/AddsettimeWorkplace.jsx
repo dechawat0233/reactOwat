@@ -290,7 +290,7 @@ function AddsettimeWorkplace() {
             // const timeDiffFormatted = `${hours}.${minutes}`;
 
             // const workOfHour = parseFloat(newDataList[index].workOfHour);
-        
+
 
             const startHours = parseFloat(newDataList[index].startTime.split('.')[0]);
             const startMinutes = parseFloat(newDataList[index].startTime.split('.')[1] || 0);
@@ -348,7 +348,7 @@ function AddsettimeWorkplace() {
             if (otHoursDiff < 0) {
                 otHoursDiff += 24;
             }
-            
+
 
             const otTimeFormatted1 = `${otHoursDiff}.${otMinutesDiff}`;
 
@@ -364,7 +364,15 @@ function AddsettimeWorkplace() {
                 otHoursDiff = maxOTHours;
                 otMinutesDiff = maxOTMinutes;
             }
-            const otTimeFormatted2 = `${otHoursDiff}.${otMinutesDiff}`;
+            // const otTimeFormatted2 = `${otHoursDiff}.${otMinutesDiff}`;
+
+            let otTimeFormatted2;
+
+            if (!isNaN(otHoursDiff) && !isNaN(otMinutesDiff) && (otHoursDiff !== 0 || otMinutesDiff !== 0)) {
+                otTimeFormatted2 = `${otHoursDiff}.${otMinutesDiff}`;
+            } else {
+                otTimeFormatted2 = '0';
+            }
 
             // if (fieldName === 'shift') {
             //     newDataList[index] = {
@@ -639,7 +647,7 @@ function AddsettimeWorkplace() {
                 //count work of time and set to table 
                 for (let i = 0; i < response.data.recordworkplace[0].employeeRecord.length; i++) {
                     // alert(response.data.recordworkplace[0].employeeRecord[i].shift );
-handleFieldChange(i, 'shift' , response.data.recordworkplace[0].employeeRecord[i].shift );
+                    handleFieldChange(i, 'shift', response.data.recordworkplace[0].employeeRecord[i].shift);
 
                 }
 
