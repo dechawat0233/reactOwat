@@ -14,7 +14,7 @@ function AddsettimeWorkplace() {
 
     //Workplace Record data
     const [workDate, setWorkDate] = useState('');
-const [timeRecord_id , setTimeRecord_id ] = useState('');
+    const [timeRecord_id, setTimeRecord_id] = useState('');
 
     //Workplace data
     const [workplaceId, setWorkplaceId] = useState(''); //รหัสหน่วยงาน
@@ -693,29 +693,29 @@ const [timeRecord_id , setTimeRecord_id ] = useState('');
 
     async function handleUpdateWorkplaceTimerecord(event) {
         event.preventDefault();
-alert('hi');
-                //get data from input in useState to data 
-                const data = {
-                    workplaceId: workplaceId,
-                    workplaceName: workplaceName,
-                    date: workDate,
-                    employeeRecord: rowDataList
-                };
+        alert('hi');
+        //get data from input in useState to data 
+        const data = {
+            workplaceId: workplaceId,
+            workplaceName: workplaceName,
+            date: workDate,
+            employeeRecord: rowDataList
+        };
 
-                try {
+        try {
 
-                    const response = await axios.put(endpoint + '/timerecord/update/' + timeRecord_id , data);
-                    // setEmployeesResult(response.data.employees);
-                    if (response) {
-                        alert("บันทึกสำเร็จ");
-                        window.location.reload();
-    
-                    }
-                } catch (error) {
-                    alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
-                    // window.location.reload();
-                }
-    
+            const response = await axios.put(endpoint + '/timerecord/update/' + timeRecord_id, data);
+            // setEmployeesResult(response.data.employees);
+            if (response) {
+                alert("บันทึกสำเร็จ");
+                window.location.reload();
+
+            }
+        } catch (error) {
+            alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+            // window.location.reload();
+        }
+
 
     }
 
