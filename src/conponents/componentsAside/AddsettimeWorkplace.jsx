@@ -297,6 +297,8 @@ function AddsettimeWorkplace() {
             const endHours = parseFloat(newDataList[index].endTime.split('.')[0]);
             const endMinutes = parseFloat(newDataList[index].endTime.split('.')[1] || 0);
 
+            // console.log(workOfHour);
+            // console.log(endHours);
 
             let hours = endHours - startHours;
             let minutes = endMinutes - startMinutes;
@@ -308,7 +310,7 @@ function AddsettimeWorkplace() {
 
             // Handle cases where endTime is on the next day
             if (hours < 0) {
-                hours = hours  + 24;
+                hours = hours + 24;
             }
 
             // Calculate the total time difference in minutes
@@ -316,6 +318,8 @@ function AddsettimeWorkplace() {
 
             // Cap the time difference at the maximum work hours
             const cappedTotalMinutes = Math.min(totalMinutes, 1440);
+            // const cappedTotalMinutes = Math.min(totalMinutes, workOfHour * 60);
+
 
             // Convert the capped time difference back to hours and minutes
             const cappedHours = Math.floor(cappedTotalMinutes / 60);
@@ -380,7 +384,7 @@ function AddsettimeWorkplace() {
 
 
             // }
-            
+
 
             newDataList[index] = {
                 ...newDataList[index],
@@ -622,21 +626,21 @@ function AddsettimeWorkplace() {
 
                 // alert(JSON.stringify( rowDataList[0] ) );
                 //count work of time and set to table 
-                for(let i =0; i < response.data.recordworkplace[0].employeeRecord.length; i++ ){
-// alert(response.data.recordworkplace[0].employeeRecord[i].shift );
-let startTime = response.data.recordworkplace[0].employeeRecord[i].startTime;
-let endTime = response.data.recordworkplace[0].employeeRecord[i].endTime;
-let allTime = endTime  - startTime;
-// alert(allTime );
+                for (let i = 0; i < response.data.recordworkplace[0].employeeRecord.length; i++) {
+                    // alert(response.data.recordworkplace[0].employeeRecord[i].shift );
+                    let startTime = response.data.recordworkplace[0].employeeRecord[i].startTime;
+                    let endTime = response.data.recordworkplace[0].employeeRecord[i].endTime;
+                    let allTime = endTime - startTime;
+                    // alert(allTime );
 
-// setRowDataList(prevDataList => {
-//     const newDataList = [...prevDataList];
+                    // setRowDataList(prevDataList => {
+                    //     const newDataList = [...prevDataList];
 
-//     newDataList[i] = {
-//         ...newDataList[i],
-//         ['allTime']: allTime ,
-//     };
-// });
+                    //     newDataList[i] = {
+                    //         ...newDataList[i],
+                    //         ['allTime']: allTime ,
+                    //     };
+                    // });
 
                 }
 
