@@ -117,6 +117,7 @@ const [timeRecord_id , setTimeRecord_id ] = useState('');
 
 
     const handleFieldChange = (index, fieldName, value) => {
+// alert(index);
 
         setRowDataList(prevDataList => {
             const newDataList = [...prevDataList];
