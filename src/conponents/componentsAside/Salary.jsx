@@ -15,11 +15,7 @@ function Salary() {
     const [newEmp, setNewEmp] = useState(true);
     // const [employeeselection , setEmployeeselection] = useState([]);
     const [workplaceSelection, setWorkplaceSelection] = useState([]);
-    const [employeeData, setEmployeeData] = useState({salaryadd1: false,
-        salaryadd2: false,
-        salaryadd3: false,
-        salaryadd4: false,
-        salaryadd5: false,});
+    const [employeeData, setEmployeeData] = useState({});
 
     useEffect(() => {
         const storedValue = sessionStorage.getItem('empSelect');
@@ -80,11 +76,29 @@ function Salary() {
     // };
 
 
-     const handleChange = async (e, field) => {
 
+    function handleSalaryadd1(){
+alert(employeeData.salaryadd1);
+
+        // const { checked } = await e.target;
+        // awaitsetEmployeeData(prevData => ({
+        //     ...prevData,
+        //     [field]: checked,
+        // }));
+        
+    }
+
+     const handleChange = async (e, field) => {
 if( (field == 'salaryadd1') || (field == 'salaryadd2') || (field == 'salaryadd3') || (field == 'salaryadd4') || (field == 'salaryadd5') ){
-const { checked } = e.target;
-setEmployeeData(prevData => ({
+const { checked } = await e.target;
+if(! checked){
+    checked = '';
+} else{
+    checked = on;
+}
+alert(checked);
+
+awaitsetEmployeeData(prevData => ({
     ...prevData,
     [field]: checked,
 }));
@@ -705,7 +719,7 @@ setEmployeeData(prevData => ({
                                                                 <input
                                                                     type="checkbox"
                                                                     checked={employeeData.salaryadd1}
-                                                                    onChange={(e) => handleChange(e , 'salaryadd1')}
+                                                                    onClick={(e) => handleChange(e , 'salaryadd1')}
 
                                                                 />
                                                                 ค่ารถ
