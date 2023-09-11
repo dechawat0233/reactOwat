@@ -19,21 +19,33 @@ function SocialSecurity() {
     ];
 
     ///////เงินพิเศษ
-    const [salaryadd1Sec, setSalaryadd1Sec] = useState(''); //เงินเพิ่มพิเศษ ค่ารถ
-    const [salaryadd2Sec, setSalaryadd2Sec] = useState(''); //เงินเพิ่มพิเศษ ค่าอาหาร
-    const [salaryadd3Sec, setSalaryadd3Sec] = useState(''); //เงินเพิ่มพิเศษ เบี้ยขยัน
-    const [salaryadd4Sec, setSalaryadd4Sec] = useState(''); //เงินเพิ่มพิเศษ โทรศัพท์
-    const [salaryadd5Sec, setSalaryadd5Sec] = useState(''); //เงินเพิ่มพิเศษ เงินประจำตำแหน่ง
+    const [jobtype, setJobtype] = useState(''); //ประเภทการจ้าง
+
+    const [salaryadd1Sec, setSalaryadd1Sec] = useState(false); //เงินเพิ่มพิเศษ ค่ารถ
+    const [salaryadd2Sec, setSalaryadd2Sec] = useState(false); //เงินเพิ่มพิเศษ ค่าอาหาร
+    const [salaryadd3Sec, setSalaryadd3Sec] = useState(false); //เงินเพิ่มพิเศษ เบี้ยขยัน
+    const [salaryadd4Sec, setSalaryadd4Sec] = useState(false); //เงินเพิ่มพิเศษ โทรศัพท์
+    const [salaryadd5Sec, setSalaryadd5Sec] = useState(false); //เงินเพิ่มพิเศษ เงินประจำตำแหน่ง
+
+
+
+    const [salaryadd1vSec, setSalaryadd1vSec] = useState('100'); //จำนวนเงินเพิ่มพิเศษ ค่ารถ 
+    const [salaryadd2vSec, setSalaryadd2vSec] = useState('200'); //จำนวนเงินเพิ่มพิเศษ ค่าอาหาร
+    const [salaryadd3vSec, setSalaryadd3vSec] = useState('300'); //จำนวนเงินเพิ่มพิเศษ เบี้ยขยัน 
+    const [salaryadd4vSec, setSalaryadd4vSec] = useState('400'); //จำนวนเงินเพิ่มพิเศษ โทรศัพท์
+    const [salaryadd5vSec, setSalaryadd5vSec] = useState('500'); //จำนวนเงินเพิ่มพิเศษ เงินประจำตำแหน่ง 
 
     const [salaryaddtypeSec, setSalaryaddtypeSec] = useState(''); //เพิ่มพิเศษแบบ ต่อวัน ต่อเดือน
-    const [salaryaddsumSec, setSalaryaddsumSec] = useState(''); //เพิ่มพิเศษแบบ ต่อวัน ต่อเดือน
-
-    const [salaryadd1vSec, setSalaryadd1vSec] = useState(''); //จำนวนเงินเพิ่มพิเศษ ค่ารถ 
-    const [salaryadd2vSec, setSalaryadd2vSec] = useState(''); //จำนวนเงินเพิ่มพิเศษ ค่าอาหาร
-    const [salaryadd3vSec, setSalaryadd3vSec] = useState(''); //จำนวนเงินเพิ่มพิเศษ เบี้ยขยัน 
-    const [salaryadd4vSec, setSalaryadd4vSec] = useState(''); //จำนวนเงินเพิ่มพิเศษ โทรศัพท์
-    const [salaryadd5vSec, setSalaryadd5vSec] = useState(''); //จำนวนเงินเพิ่มพิเศษ เงินประจำตำแหน่ง 
-
+    // const [salaryaddsumSec, setSalaryaddsumSec] = useState(0); //เพิ่มพิเศษแบบ ต่อวัน ต่อเดือน
+    const salaryaddsumSec = () => {
+        let total = 0;
+        if (salaryadd1Sec) total += salaryadd1vSec;
+        if (salaryadd2Sec) total += salaryadd2vSec;
+        if (salaryadd3Sec) total += salaryadd3vSec;
+        if (salaryadd4Sec) total += salaryadd4vSec;
+        if (salaryadd5Sec) total += salaryadd5vSec;
+        return total;
+    };
     // Step 4: Use useState to manage the selected option
     const Bangkok = ['คณะแพทยศาสตร์วชิรพยาบาล', 'รพ.กลาง', 'รพ.จุฬาลงกรณ์', 'รพ.เจริญกรุงประชารักษ์', 'รพ.ตากสิน', 'รพ.ตำรวจ ', 'รพ.ทัณฑสถานโรงพยาบาลราชทัณฑ์', 'รพ.นพรัตนราชธานี(สธ)', 'รพ.พระมงกุฎเกล้า', 'รพ.ภูมิพลอดุลยเดช', 'รพ.ราชวิถี(สธ)', 'รพ.รามาธิบดี', 'รพ.ราชพิพัฒน์', 'รพ.เลิดสิน(สธ)', 'รพ.เวชการุณย์รัศมิ์', 'รพ.ศิริราช', 'รพ.สมเด็จพระปิ่นเกล้า', 'รพ.สมเด็จพระปิ่นเกล้า', 'รพ.หลวงพ่อทวีศักดิ์ ชุตินฺธโร อุทิศ', 'รพ.ลาดกระบัง กรุงเทพมหานคร']
     const BangkokPrivate = ['รพ.ทั่วไปขนาดใหญ่กล้วยน้ำไท', 'รพ.เกษมราษฎร์ บางแคโรงพยาบาล ทั่วไปขนาดใหญ่', 'รพ.ทั่วไปขนาดใหญ่เกษมราษฎร์ประชาชื่น', 'รพ..เกษมราษฎร์ รามคำแหงโรงพยาบาลทั่วไปขนาดใหญ่', 'นวมินทร์โรงพยาบาลทั่วไปขนาดใหญ่', 'นวมินทร์ 9 โรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ทั่วไปขนาดใหญ่บางนา 1', 'รพ.บางปะกอก 8 โรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.บางไผ่โรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.บางมดโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ทั่วไปขนาดใหญ่ บี.แคร์ เมดิคอลเซ็นเตอร์', 'รพ.ทั่วไปขนาดใหญ่ เปาโล โชคชัย 4', 'รพ.ทั่วไปขนาดใหญ่เปาโล เกษตร', 'รพ.ทั่วไปขนาดใหญ่ พีเอ็มจี', 'รพ.พญาไท นวมินทร์ โรงพยาบาลทั่วไป ขนาดใหญ่', 'รพ.ทั่วไปขนาดใหญ่มิตรประชา', 'รพ.เพชรเวชโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ทั่วไปขนาดใหญ่แพทย์ปัญญา', 'รพ.มเหสักข์โรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.มงกุฎวัฒนะ', 'รพ.มิชชั่นโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ทั่วไปขนาดใหญ่ราษฎร์บูรณะ', 'รพ.ทั่วไปขนาดใหญ่ลาดพร้าว', 'วิภาราม โรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ทั่วไปขนาดใหญ่ศิครินทร์', 'รพ.ซีจีเอช สายไหม โรงพยาบาล ทั่วไปขนาดใหญ่', 'รพ.สุขสวัสดิ์อินเตอร์โรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.หัวเฉียวโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ไอเอ็มเอช ธนบุรี โรงพยาบาลทั่วไปขนาดใหญ่']
@@ -188,6 +200,9 @@ function SocialSecurity() {
         setSalaryadd3vSec(empSelect.salaryadd3v);
         setSalaryadd4vSec(empSelect.salaryadd4v);
         setSalaryadd5vSec(empSelect.salaryadd5v);
+
+        setJobtype(empSelect.jobtype);
+        jobtype
         console.log(empSelect.salaryadd1v);
         // alert(empSelect._id);
         // console.log(empSelect.startjob);
@@ -332,17 +347,51 @@ function SocialSecurity() {
     }, []);
 
 
-    const handleChange = (e, field) => {
-        setEmployeeData(prevData => ({
-            ...prevData,
-            [field]: e.target.value,
-        }));
-    };
+    // const handleChange = (e, field) => {
+    //     setEmployeeData(prevData => ({
+    //         ...prevData,
+    //         [field]: e.target.value,
+    //     }));
+    // };
 
+    const handleChange = (e, field) => {
+        switch (field) {
+            case 'salaryadd1Sec':
+            case 'salaryadd2Sec':
+            case 'salaryadd3Sec':
+            case 'salaryadd4Sec':
+            case 'salaryadd5Sec':
+                setEmployeeData(prevData => ({
+                    ...prevData,
+                    [field]: !prevData[field],
+                }));
+                break;
+            default:
+                setEmployeeData(prevData => ({
+                    ...prevData,
+                    [field]: e.target.value,
+                }));
+                break;
+        }
+    };
 
     // Step 5: Event handler to update the selected option
 
+    console.log(salaryadd1vSec);
 
+    useEffect(() => {
+        let sum = 0;
+
+        if (salaryadd1Sec) sum += salaryadd1vSec;
+        if (salaryadd2Sec) sum += salaryadd2vSec;
+        if (salaryadd3Sec) sum += salaryadd3vSec;
+        if (salaryadd4Sec) sum += salaryadd4vSec;
+        if (salaryadd5Sec) sum += salaryadd5vSec;
+
+        setSalaryaddsumSec(sum);
+    }, [salaryadd1Sec, salaryadd2Sec, salaryadd3Sec, salaryadd4Sec, salaryadd5Sec]);
+
+    console.log(salaryaddsumSec);
 
 
     return (
@@ -432,6 +481,11 @@ function SocialSecurity() {
                                                 </div>
                                                 <label class="col-md-1 col-form-label">%</label>
                                             </div>
+                                            {jobtype === "รายวัน" && (
+                                                <div>
+                                                    ใช่
+                                                </div>
+                                            )}
                                             <h2 class="title">เงินเพิ่มพิเศษ</h2>
                                             <div class="row">
                                                 <div class="col-md-12">
@@ -445,16 +499,19 @@ function SocialSecurity() {
                                                                         <label>
                                                                             <input
                                                                                 type="checkbox"
-                                                                                checked={employeeData.salaryadd1Sec || false}
-                                                                                onChange={(e) => handleChange(e, 'salaryadd1Sec')}
+                                                                                id="salaryadd1Sec"
+                                                                                checked={checkbox1}
+                                                                                onChange={() => setSalaryadd1Sec(!salaryadd1Sec)
+                                                                                }
                                                                             />
                                                                             ค่ารถ
                                                                         </label>
                                                                         <label>
                                                                             <input
                                                                                 type="checkbox"
-                                                                                checked={employeeData.salaryadd2Sec}
-                                                                                onChange={(e) => handleChange(e, 'salaryadd2Sec')}
+                                                                                id="salaryadd2Sec"
+                                                                                checked={checkbox1}
+                                                                                onChange={() => setSalaryadd2Sec(!salaryadd2Sec)}
                                                                             />
                                                                             ค่าอาหาร
                                                                         </label>
@@ -462,24 +519,27 @@ function SocialSecurity() {
                                                                         <label>
                                                                             <input
                                                                                 type="checkbox"
-                                                                                checked={employeeData.salaryadd3Sec}
-                                                                                onChange={(e) => handleChange(e, 'salaryadd3Sec')}
+                                                                                id="salaryadd3Sec"
+                                                                                checked={checkbox1}
+                                                                                onChange={() => setSalaryadd3Sec(!salaryadd3Sec)}
                                                                             />
                                                                             เบี้ยขยัน
                                                                         </label>
                                                                         <label>
                                                                             <input
                                                                                 type="checkbox"
-                                                                                checked={employeeData.salaryadd4Sec}
-                                                                                onChange={(e) => handleChange(e, 'salaryadd4Sec')}
+                                                                                id="salaryadd4Sec"
+                                                                                checked={checkbox1}
+                                                                                onChange={() => setSalaryadd4Sec(!salaryadd4Sec)}
                                                                             />
                                                                             ค่าโทรศัพท์
                                                                         </label>
                                                                         <label>
                                                                             <input
                                                                                 type="checkbox"
-                                                                                checked={employeeData.salaryadd5Sec}
-                                                                                onChange={(e) => handleChange(e, 'salaryadd5Sec')}
+                                                                                id="salaryadd5Sec"
+                                                                                checked={checkbox1}
+                                                                                onChange={() => setSalaryadd5Sec(!salaryadd5Sec)}
                                                                             />
                                                                             เงินประจำตำแหน่ง
                                                                         </label>
@@ -498,60 +558,60 @@ function SocialSecurity() {
                                                                     </div>
                                                                 </div>
 
-                                                                {employeeData.salaryadd1Sec && (
-                                                                    <div class="col-md-4">
-                                                                        <div class="form-group">
-                                                                            <label role="salaryadd1vSec">เงินเพิ่มค่ารถ</label>
-                                                                            <input type="text" class="form-control" id="salaryadd1vSec" placeholder="ค่ารถ" value={employeeData.salaryadd1vSec} onChange={(e) => handleChange(e, 'salaryadd1vSec')}
-                                                                                readOnly />
-                                                                        </div>
+                                                                {/* {employeeData.salaryadd1Sec && ( */}
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label role="salaryadd1vSec">เงินเพิ่มค่ารถ</label>
+                                                                        <input type="text" class="form-control" id="salaryadd1vSec" placeholder="ค่ารถ" value={salaryadd1vSec} onChange={(e) => handleChange(e, 'salaryadd1vSec')}
+                                                                            readOnly />
                                                                     </div>
-                                                                )}
+                                                                </div>
+                                                                {/* )} */}
 
-                                                                {employeeData.salaryadd2Sec && (
-                                                                    <div class="col-md-4">
-                                                                        <div class="form-group">
-                                                                            <label role="salaryadd2vSec">เงินเพิ่มค่าอาหาร</label>
-                                                                            <input type="text" class="form-control" id="salaryadd2vSec" placeholder="ค่าอาหาร" value={employeeData.salaryadd2vSec} onChange={(e) => handleChange(e, 'salaryadd2vSec')}
-                                                                                readOnly />
-                                                                        </div>
+                                                                {/* {employeeData.salaryadd2Sec && ( */}
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label role="salaryadd2vSec">เงินเพิ่มค่าอาหาร</label>
+                                                                        <input type="text" class="form-control" id="salaryadd2vSec" placeholder="ค่าอาหาร" value={salaryadd2vSec} onChange={(e) => handleChange(e, 'salaryadd2vSec')}
+                                                                            readOnly />
                                                                     </div>
-                                                                )}
+                                                                </div>
+                                                                {/* )} */}
 
-                                                                {employeeData.salaryadd3Sec && (
-                                                                    <div class="col-md-4">
-                                                                        <div class="form-group">
-                                                                            <label role="salaryadd3vSec">ค่าเบี้ยขยัน</label>
-                                                                            <input type="text" class="form-control" id="salaryadd3vSec" placeholder="ค่าเบี้ยขยัน" value={employeeData.salaryadd3vSec} onChange={(e) => handleChange(e, 'salaryadd3vSec')}
-                                                                                readOnly />
-                                                                        </div>
+                                                                {/* {employeeData.salaryadd3Sec && ( */}
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label role="salaryadd3vSec">ค่าเบี้ยขยัน</label>
+                                                                        <input type="text" class="form-control" id="salaryadd3vSec" placeholder="ค่าเบี้ยขยัน" value={salaryadd3vSec} onChange={(e) => handleChange(e, 'salaryadd3vSec')}
+                                                                            readOnly />
                                                                     </div>
-                                                                )}
+                                                                </div>
+                                                                {/* )} */}
 
-                                                                {employeeData.salaryadd4Sec && (
-                                                                    <div class="col-md-4">
-                                                                        <div class="form-group">
-                                                                            <label role="salaryadd4vSec">ค่าโทรศัพท์</label>
-                                                                            <input type="text" class="form-control" id="salaryadd4vSec" placeholder="โทรศัพท์" value={employeeData.salaryadd4vSec} onChange={(e) => handleChange(e, 'salaryadd4vSec')}
-                                                                                readOnly />
-                                                                        </div>
+                                                                {/* {employeeData.salaryadd4Sec && ( */}
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label role="salaryadd4vSec">ค่าโทรศัพท์</label>
+                                                                        <input type="text" class="form-control" id="salaryadd4vSec" placeholder="โทรศัพท์" value={salaryadd4vSec} onChange={(e) => handleChange(e, 'salaryadd4vSec')}
+                                                                            readOnly />
                                                                     </div>
-                                                                )}
+                                                                </div>
+                                                                {/* )} */}
 
-                                                                {employeeData.salaryadd5Sec && (
-                                                                    <div class="col-md-4">
-                                                                        <div class="form-group">
-                                                                            <label role="salaryadd5vSec">เงินประจำตำแหน่ง</label>
-                                                                            <input type="text" class="form-control" id="salaryadd5vSec" placeholder="เงินประจำตำแหน่ง" value={employeeData.salaryadd5vSec} onChange={(e) => handleChange(e, 'salaryadd5vSec')}
-                                                                                readOnly />
-                                                                        </div>
+                                                                {/* {employeeData.salaryadd5Sec && ( */}
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label role="salaryadd5vSec">เงินประจำตำแหน่ง</label>
+                                                                        <input type="text" class="form-control" id="salaryadd5vSec" placeholder="เงินประจำตำแหน่ง" value={salaryadd5vSec} onChange={(e) => handleChange(e, 'salaryadd5vSec')}
+                                                                            readOnly />
                                                                     </div>
-                                                                )}
+                                                                </div>
+                                                                {/* )} */}
 
                                                                 <div class="col-md-4">
                                                                     <div class="form-group">
                                                                         <label role="salaryaddsumSec">เงินเพิ่มพิเศษรวม</label>
-                                                                        <input type="text" class="form-control" id="salaryaddsumSec" placeholder="จำนวนเงิน" value={salaryaddsumSec} readOnly />
+                                                                        <input type="text" class="form-control" id="salaryaddsumSec" placeholder="จำนวนเงิน" value={salaryaddsumSec()} readOnly />
                                                                     </div>
                                                                 </div>
                                                             </div>
