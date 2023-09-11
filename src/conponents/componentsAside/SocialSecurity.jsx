@@ -29,14 +29,21 @@ function SocialSecurity() {
 
 
 
-    const [salaryadd1vSec, setSalaryadd1vSec] = useState('100'); //จำนวนเงินเพิ่มพิเศษ ค่ารถ 
-    const [salaryadd2vSec, setSalaryadd2vSec] = useState('200'); //จำนวนเงินเพิ่มพิเศษ ค่าอาหาร
-    const [salaryadd3vSec, setSalaryadd3vSec] = useState('300'); //จำนวนเงินเพิ่มพิเศษ เบี้ยขยัน 
-    const [salaryadd4vSec, setSalaryadd4vSec] = useState('400'); //จำนวนเงินเพิ่มพิเศษ โทรศัพท์
-    const [salaryadd5vSec, setSalaryadd5vSec] = useState('500'); //จำนวนเงินเพิ่มพิเศษ เงินประจำตำแหน่ง 
+    // const [salaryadd1vSec, setSalaryadd1vSec] = useState(100); //จำนวนเงินเพิ่มพิเศษ ค่ารถ 
+    // const [salaryadd2vSec, setSalaryadd2vSec] = useState(200); //จำนวนเงินเพิ่มพิเศษ ค่าอาหาร
+    // const [salaryadd3vSec, setSalaryadd3vSec] = useState(300); //จำนวนเงินเพิ่มพิเศษ เบี้ยขยัน 
+    // const [salaryadd4vSec, setSalaryadd4vSec] = useState(400); //จำนวนเงินเพิ่มพิเศษ โทรศัพท์
+    // const [salaryadd5vSec, setSalaryadd5vSec] = useState(500); //จำนวนเงินเพิ่มพิเศษ เงินประจำตำแหน่ง 
+
+    const [salaryadd1vSec, setSalaryadd1vSec] = useState(0); //จำนวนเงินเพิ่มพิเศษ ค่ารถ 
+    const [salaryadd2vSec, setSalaryadd2vSec] = useState(0); //จำนวนเงินเพิ่มพิเศษ ค่าอาหาร
+    const [salaryadd3vSec, setSalaryadd3vSec] = useState(0); //จำนวนเงินเพิ่มพิเศษ เบี้ยขยัน 
+    const [salaryadd4vSec, setSalaryadd4vSec] = useState(0); //จำนวนเงินเพิ่มพิเศษ โทรศัพท์
+    const [salaryadd5vSec, setSalaryadd5vSec] = useState(0); //จำนวนเงินเพิ่มพิเศษ เงินประจำตำแหน่ง 
 
     const [salaryaddtypeSec, setSalaryaddtypeSec] = useState(''); //เพิ่มพิเศษแบบ ต่อวัน ต่อเดือน
     // const [salaryaddsumSec, setSalaryaddsumSec] = useState(0); //เพิ่มพิเศษแบบ ต่อวัน ต่อเดือน
+
     const salaryaddsumSec = () => {
         let total = 0;
         if (salaryadd1Sec) total += salaryadd1vSec;
@@ -46,6 +53,7 @@ function SocialSecurity() {
         if (salaryadd5Sec) total += salaryadd5vSec;
         return total;
     };
+
     // Step 4: Use useState to manage the selected option
     const Bangkok = ['คณะแพทยศาสตร์วชิรพยาบาล', 'รพ.กลาง', 'รพ.จุฬาลงกรณ์', 'รพ.เจริญกรุงประชารักษ์', 'รพ.ตากสิน', 'รพ.ตำรวจ ', 'รพ.ทัณฑสถานโรงพยาบาลราชทัณฑ์', 'รพ.นพรัตนราชธานี(สธ)', 'รพ.พระมงกุฎเกล้า', 'รพ.ภูมิพลอดุลยเดช', 'รพ.ราชวิถี(สธ)', 'รพ.รามาธิบดี', 'รพ.ราชพิพัฒน์', 'รพ.เลิดสิน(สธ)', 'รพ.เวชการุณย์รัศมิ์', 'รพ.ศิริราช', 'รพ.สมเด็จพระปิ่นเกล้า', 'รพ.สมเด็จพระปิ่นเกล้า', 'รพ.หลวงพ่อทวีศักดิ์ ชุตินฺธโร อุทิศ', 'รพ.ลาดกระบัง กรุงเทพมหานคร']
     const BangkokPrivate = ['รพ.ทั่วไปขนาดใหญ่กล้วยน้ำไท', 'รพ.เกษมราษฎร์ บางแคโรงพยาบาล ทั่วไปขนาดใหญ่', 'รพ.ทั่วไปขนาดใหญ่เกษมราษฎร์ประชาชื่น', 'รพ..เกษมราษฎร์ รามคำแหงโรงพยาบาลทั่วไปขนาดใหญ่', 'นวมินทร์โรงพยาบาลทั่วไปขนาดใหญ่', 'นวมินทร์ 9 โรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ทั่วไปขนาดใหญ่บางนา 1', 'รพ.บางปะกอก 8 โรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.บางไผ่โรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.บางมดโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ทั่วไปขนาดใหญ่ บี.แคร์ เมดิคอลเซ็นเตอร์', 'รพ.ทั่วไปขนาดใหญ่ เปาโล โชคชัย 4', 'รพ.ทั่วไปขนาดใหญ่เปาโล เกษตร', 'รพ.ทั่วไปขนาดใหญ่ พีเอ็มจี', 'รพ.พญาไท นวมินทร์ โรงพยาบาลทั่วไป ขนาดใหญ่', 'รพ.ทั่วไปขนาดใหญ่มิตรประชา', 'รพ.เพชรเวชโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ทั่วไปขนาดใหญ่แพทย์ปัญญา', 'รพ.มเหสักข์โรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.มงกุฎวัฒนะ', 'รพ.มิชชั่นโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ทั่วไปขนาดใหญ่ราษฎร์บูรณะ', 'รพ.ทั่วไปขนาดใหญ่ลาดพร้าว', 'วิภาราม โรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ทั่วไปขนาดใหญ่ศิครินทร์', 'รพ.ซีจีเอช สายไหม โรงพยาบาล ทั่วไปขนาดใหญ่', 'รพ.สุขสวัสดิ์อินเตอร์โรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.หัวเฉียวโรงพยาบาลทั่วไปขนาดใหญ่', 'รพ.ไอเอ็มเอช ธนบุรี โรงพยาบาลทั่วไปขนาดใหญ่']
@@ -122,11 +130,16 @@ function SocialSecurity() {
     const [minus, setMinus] = useState('5'); //หัห
     const [socialsecurity, setSocialSecurity] = useState(''); //หักประกันสังคม
 
+    // parsedSalaryFinal
+    const [parsedSalaryFinalv, setParsedSalaryFinal] = useState(0); //หักประกันสังคม
+
+
     const [employeeselection, setEmployeeselection] = useState([]);
     const [workplaceSelection, setWorkplaceSelection] = useState([]);
 
     const [minusemployer, setMinusEmployer] = useState('5'); //หัห
     const [socialsecurityemployer, setSocialSecurityEmployer] = useState(''); //หักประกันสังคม
+
 
     ///////select hospitel
     const [selectedHospDf, setSelectedHospDf] = useState('');
@@ -189,21 +202,25 @@ function SocialSecurity() {
         setName(empSelect.name);
         setSalary(empSelect.salary);
         setMinus(empSelect.minus);
-        setSalaryadd1Sec(empSelect.salaryadd1);
-        setSalaryadd2Sec(empSelect.salaryadd2);
-        setSalaryadd3Sec(empSelect.salaryadd3);
-        setSalaryadd4Sec(empSelect.salaryadd4);
-        setSalaryadd5Sec(empSelect.salaryadd5);
+        // setSalaryadd1Sec(empSelect.salaryadd1);
+        // setSalaryadd2Sec(empSelect.salaryadd2);
+        // setSalaryadd3Sec(empSelect.salaryadd3);
+        // setSalaryadd4Sec(empSelect.salaryadd4);
+        // setSalaryadd5Sec(empSelect.salaryadd5);
 
-        setSalaryadd1vSec(empSelect.salaryadd1v);
-        setSalaryadd2vSec(empSelect.salaryadd2v);
-        setSalaryadd3vSec(empSelect.salaryadd3v);
-        setSalaryadd4vSec(empSelect.salaryadd4v);
-        setSalaryadd5vSec(empSelect.salaryadd5v);
+        // setSalaryadd1vSec(empSelect.salaryadd1v) || 0;
+        // setSalaryadd2vSec(empSelect.salaryadd2v) || 0;
+        // setSalaryadd3vSec(empSelect.salaryadd3v) || 0;
+        // setSalaryadd4vSec(empSelect.salaryadd4v) || 0;
+        // setSalaryadd5vSec(empSelect.salaryadd5v) || 0;
+
+        setSalaryadd1vSec(parseFloat(empSelect.salaryadd1v) || 0);
+        setSalaryadd2vSec(parseFloat(empSelect.salaryadd2v) || 0);
+        setSalaryadd3vSec(parseFloat(empSelect.salaryadd3v) || 0);
+        setSalaryadd4vSec(parseFloat(empSelect.salaryadd4v) || 0);
+        setSalaryadd5vSec(parseFloat(empSelect.salaryadd5v) || 0);
 
         setJobtype(empSelect.jobtype);
-        jobtype
-        console.log(empSelect.salaryadd1v);
         // alert(empSelect._id);
         // console.log(empSelect.startjob);
     }
@@ -303,18 +320,25 @@ function SocialSecurity() {
     useEffect(() => {
         if (employeeData.salary === '') {
             setSocialSecurity(0);
+            setParsedSalaryFinal(0);
         } else {
             const parsedSalary = parseFloat(employeeData.salary);
+            const parsedSalarySS = parseFloat(salaryaddsumSec());
+            const parsedSalaryFinal = parsedSalary + parsedSalarySS;
             const parsedMinus = parseFloat(employeeData.minus) / 100; // Convert the minus percentage to a decimal
-            if (parsedSalary < 1650) {
+            console.log(parsedSalarySS);
+            if (parsedSalaryFinal < 1650) {
                 setSocialSecurity(1650 * parsedMinus);
-            } else if (parsedSalary >= 1650 && parsedSalary <= 15000) {
-                setSocialSecurity(parsedSalary * parsedMinus);
+                setParsedSalaryFinal(parsedSalaryFinal);
+            } else if (parsedSalaryFinal >= 1650 && parsedSalaryFinal <= 15000) {
+                setSocialSecurity(parsedSalaryFinal * parsedMinus);
+                setParsedSalaryFinal(parsedSalaryFinal);
             } else {
                 setSocialSecurity(15000 * parsedMinus);
+                setParsedSalaryFinal(parsedSalaryFinal);
             }
         }
-    }, [employeeData.salary, employeeData.minus]);
+    }, [employeeData.salary, employeeData.minus, salaryaddsumSec]);
 
     useEffect(() => {
         if (employeeData.salary === '') {
@@ -376,23 +400,6 @@ function SocialSecurity() {
     };
 
     // Step 5: Event handler to update the selected option
-
-    console.log(salaryadd1vSec);
-
-    useEffect(() => {
-        let sum = 0;
-
-        if (salaryadd1Sec) sum += salaryadd1vSec;
-        if (salaryadd2Sec) sum += salaryadd2vSec;
-        if (salaryadd3Sec) sum += salaryadd3vSec;
-        if (salaryadd4Sec) sum += salaryadd4vSec;
-        if (salaryadd5Sec) sum += salaryadd5vSec;
-
-        setSalaryaddsumSec(sum);
-    }, [salaryadd1Sec, salaryadd2Sec, salaryadd3Sec, salaryadd4Sec, salaryadd5Sec]);
-
-    console.log(salaryaddsumSec);
-
 
     return (
         <body class="hold-transition sidebar-mini" className='editlaout'>
@@ -500,7 +507,7 @@ function SocialSecurity() {
                                                                             <input
                                                                                 type="checkbox"
                                                                                 id="salaryadd1Sec"
-                                                                                checked={checkbox1}
+                                                                                checked={salaryadd1Sec}
                                                                                 onChange={() => setSalaryadd1Sec(!salaryadd1Sec)
                                                                                 }
                                                                             />
@@ -510,7 +517,7 @@ function SocialSecurity() {
                                                                             <input
                                                                                 type="checkbox"
                                                                                 id="salaryadd2Sec"
-                                                                                checked={checkbox1}
+                                                                                checked={salaryadd2Sec}
                                                                                 onChange={() => setSalaryadd2Sec(!salaryadd2Sec)}
                                                                             />
                                                                             ค่าอาหาร
@@ -520,7 +527,7 @@ function SocialSecurity() {
                                                                             <input
                                                                                 type="checkbox"
                                                                                 id="salaryadd3Sec"
-                                                                                checked={checkbox1}
+                                                                                checked={salaryadd3Sec}
                                                                                 onChange={() => setSalaryadd3Sec(!salaryadd3Sec)}
                                                                             />
                                                                             เบี้ยขยัน
@@ -529,7 +536,7 @@ function SocialSecurity() {
                                                                             <input
                                                                                 type="checkbox"
                                                                                 id="salaryadd4Sec"
-                                                                                checked={checkbox1}
+                                                                                checked={salaryadd4Sec}
                                                                                 onChange={() => setSalaryadd4Sec(!salaryadd4Sec)}
                                                                             />
                                                                             ค่าโทรศัพท์
@@ -538,7 +545,7 @@ function SocialSecurity() {
                                                                             <input
                                                                                 type="checkbox"
                                                                                 id="salaryadd5Sec"
-                                                                                checked={checkbox1}
+                                                                                checked={salaryadd5Sec}
                                                                                 onChange={() => setSalaryadd5Sec(!salaryadd5Sec)}
                                                                             />
                                                                             เงินประจำตำแหน่ง
@@ -614,6 +621,13 @@ function SocialSecurity() {
                                                                         <input type="text" class="form-control" id="salaryaddsumSec" placeholder="จำนวนเงิน" value={salaryaddsumSec()} readOnly />
                                                                     </div>
                                                                 </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label role="salaryaddsumSec">เงินสุทธิทั้งหมด</label>
+                                                                        <input type="text" class="form-control" id="salaryaddsumSec" placeholder="จำนวนเงิน" value={parsedSalaryFinalv} readOnly />
+                                                                    </div>
+                                                                </div>
+
                                                             </div>
                                                             {/* <!--row--> */}
                                                         </div>

@@ -15,11 +15,13 @@ function Salary() {
     const [newEmp, setNewEmp] = useState(true);
     // const [employeeselection , setEmployeeselection] = useState([]);
     const [workplaceSelection, setWorkplaceSelection] = useState([]);
-    const [employeeData, setEmployeeData] = useState({salaryadd1: false,
+    const [employeeData, setEmployeeData] = useState({
+        salaryadd1: false,
         salaryadd2: false,
         salaryadd3: false,
         salaryadd4: false,
-        salaryadd5: false,});
+        salaryadd5: false,
+    });
 
     useEffect(() => {
         const storedValue = sessionStorage.getItem('empSelect');
@@ -80,41 +82,41 @@ function Salary() {
     // };
 
 
-     const handleChange = async (e, field) => {
+    const handleChange = async (e, field) => {
 
-if( (field == 'salaryadd1') || (field == 'salaryadd2') || (field == 'salaryadd3') || (field == 'salaryadd4') || (field == 'salaryadd5') ){
-const { checked } = e.target;
-setEmployeeData(prevData => ({
-    ...prevData,
-    [field]: checked,
-}));
-}else {
-    setEmployeeData(prevData => ({
-        ...prevData,
-        [field]: e.target.value,
-    }));
+        if ((field == 'salaryadd1') || (field == 'salaryadd2') || (field == 'salaryadd3') || (field == 'salaryadd4') || (field == 'salaryadd5')) {
+            const { checked } = e.target;
+            setEmployeeData(prevData => ({
+                ...prevData,
+                [field]: checked,
+            }));
+        } else {
+            setEmployeeData(prevData => ({
+                ...prevData,
+                [field]: e.target.value,
+            }));
 
-}
+        }
 
 
-    //     switch (field) {
-    //         case 'salaryadd1':
-    //         case 'salaryadd2':
-    //         case 'salaryadd3':
-    //         case 'salaryadd4':
-    //         case 'salaryadd5':
-    //             setEmployeeData(prevData => ({
-    //                 ...prevData,
-    //                 [field]: !prevData[field],
-    //             }));
-    //             break;
-    //         default:
-    //             setEmployeeData(prevData => ({
-    //                 ...prevData,
-    //                 [field]: e.target.value,
-    //             }));
-    //             break;
-    //     }
+        //     switch (field) {
+        //         case 'salaryadd1':
+        //         case 'salaryadd2':
+        //         case 'salaryadd3':
+        //         case 'salaryadd4':
+        //         case 'salaryadd5':
+        //             setEmployeeData(prevData => ({
+        //                 ...prevData,
+        //                 [field]: !prevData[field],
+        //             }));
+        //             break;
+        //         default:
+        //             setEmployeeData(prevData => ({
+        //                 ...prevData,
+        //                 [field]: e.target.value,
+        //             }));
+        //             break;trun
+        //     }
 
     };
 
@@ -336,7 +338,7 @@ setEmployeeData(prevData => ({
 
         setSalaryadd5(empSelect.salaryadd5);
         setSalaryadd5v(empSelect.salaryadd5v);
-        
+
     }
     console.log(salaryadd5 + " 1");
     console.log(salaryadd5v + " 2");
@@ -705,7 +707,7 @@ setEmployeeData(prevData => ({
                                                                 <input
                                                                     type="checkbox"
                                                                     checked={employeeData.salaryadd1}
-                                                                    onChange={(e) => handleChange(e , 'salaryadd1')}
+                                                                    onChange={(e) => handleChange(e, 'salaryadd1')}
 
                                                                 />
                                                                 ค่ารถ
