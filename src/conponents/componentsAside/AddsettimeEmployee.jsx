@@ -73,9 +73,10 @@ function AddsettimeEmployee() {
     const [shift4end, setShift4end] = useState('');
 
 
-    const [startjob, setStartjob] = useState(''); //วันที่เริ่มงาน
-    const handleStartDateChange = (date) => {
-        setStartjob(date);
+    const [tmp_date , setTmp_date ] = useState(''); //วันที่เริ่มงาน
+
+    const handleDateChange = (date) => {
+        setTmp_date (date);
     };
 
     const [startjob1, setStartjob1] = useState(''); //วันที่เริ่มงาน
@@ -95,8 +96,8 @@ function AddsettimeEmployee() {
 
     const numberOfRows = 30; // Fixed number of rows
     const initialRowData = {
-        staffId: '',
-        staffName: '',
+        employeeId: '',
+     employeeName: '',
         shift: 'morning_shift',
         startTime: '',
         endTime: '',
@@ -119,24 +120,24 @@ function AddsettimeEmployee() {
             };
 
 
-            //Search Employee  by id
-            if (fieldName == 'staffId') {
+            //Search workplace by id
+            if (fieldName == 'employeeId') {
 
-                const employeesearch = employeeList.find(employee => employee.employeeId === value);
+                const workplaceIdSearch= workplaceList.find(workplace => workplace.workplaceId=== value);
                 //                 alert(JSON.stringify(employeeList, null, 2));
                 // alert( employeeList.length);
-                if (employeesearch) {
+                if (workplaceIdSearch) {
                     //   setEmployeeName(employee.name);
                     newDataList[index] = {
                         ...newDataList[index],
-                        ['staffName']: employeesearch.name + '',
+                        ['workplaceName']: workplaceIdSearch.name + '',
                     };
 
                 } else {
                     //   setEmployeeName('Employee not found');
                     newDataList[index] = {
                         ...newDataList[index],
-                        ['staffName']: 'ไม่พบชื่อพนักงาน',
+                        ['workplaceName']: 'ไม่พบชื่อพนักงาน',
                     };
 
                 }
@@ -270,9 +271,9 @@ function AddsettimeEmployee() {
 
     const numberOfRows2 = 30; // Fixed number of rows
     const initialRowData2 = {
-        staffId: '',
-        staffName: '',
-        startjob: null, // Use null as initial value for DatePicker
+        workplaceId: '',
+        workplaceName: '',
+        date: null, // Use null as initial value for DatePicker
         shift: 'morning_shift',
         startTime: '',
         endTime: '',
@@ -291,12 +292,67 @@ function AddsettimeEmployee() {
                 ...newDataList2[index2],
                 [fieldName2]: value,
             };
+
+
+            //Search workplace by id
+            if (fieldName2 == 'workplaceId') {
+                const workplaceIdSearch= workplaceList.find(workplace => workplace.workplaceId === value);
+                //                 alert(JSON.stringify(employeeList, null, 2));
+                // alert( employeeList.length);
+                if (workplaceIdSearch) {
+                    //   setEmployeeName(employee.name);
+                    newDataList2[index2] = {
+                        ...newDataList2[index2],
+                        ['workplaceName']: workplaceIdSearch.workplaceName   + '',
+                    };
+                } else {
+                    //   setEmployeeName('Employee not found');
+                    newDataList2[index2] = {
+                        ...newDataList2[index2],
+                        ['workplaceName']: 'ไม่พบชื่อหน่วยงาน',
+                    };
+                }
+            }
+
+            //Search workplace by name
+            if (fieldName2 == 'workplaceName') {
+                const workplaceNameSearch= workplaceList.find(workplace => workplace.workplaceName === value);
+                //                 alert(JSON.stringify(employeeList, null, 2));
+                // alert( employeeList.length);
+                if (workplaceNameSearch) {
+                    //   setEmployeeName(employee.name);
+                    newDataList2[index2] = {
+                        ...newDataList2[index2],
+                        ['workplaceId']: workplaceNameSearch.workplaceId   + '',
+                    };
+                } else {
+                    //   setEmployeeName('Employee not found');
+                    newDataList2[index2] = {
+                        ...newDataList2[index2],
+                        ['workplaceId']: 'ไม่พบรหัสหน่วยงาน',
+                    };
+                }
+            }
+
+
+            
+                        //Select shift then set time of work 
+                        if (fieldName2 == 'shift') {
+                            // alert(value);
+                            //Check Selected workplace by workplaceId is notnull
+                            if(newDataList2[index2].workplaceId !== ''){
+// alert(newDataList2[index2].workplaceId );
+
+                            }
+                        }
+
             return newDataList2;
         });
     };
 
     const handleStartDateChange4 = (index2, date) => {
-        handleFieldChange2(index2, 'startjob', date);
+alert(index2);
+        handleFieldChange2(index2, 'date', date);
     };
 
 
@@ -520,16 +576,16 @@ function AddsettimeEmployee() {
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label role="agencynumber">รหัสพนักงาน</label>
-                                        <input type="text" class="form-control" id="agencynumber" placeholder="รหัสหน่วยงาน" value={employeeId} onChange={(e) => setEmployeeId(e.target.value)} />
+                                        <input type="text" class="form-control" id="agencynumber" placeholder="รหัสพนักงาน" value={employeeId} onChange={(e) => setEmployeeId(e.target.value)} />
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label role="agencyname">ชื่อพนักงาน</label>
-                                        <input type="text" class="form-control" id="agencyname" placeholder="ชื่อหน่วยงาน" value={name} onChange={(e) => setname(e.target.value)} />
+                                        <input type="text" class="form-control" id="agencyname" placeholder="ชื่อพนักงาน" value={name} onChange={(e) => setname(e.target.value)} />
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                {/* <div class="col-md-2">
                                     <div class="form-group">
                                         <label role="datetime">วันที่</label>
                                         <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
@@ -542,7 +598,7 @@ function AddsettimeEmployee() {
                                         </div>
                                     </div>
 
-                                </div>
+                                </div> */}
                                 <div class="col-md-3">
                                     <label role="button"></label>
                                     <div class="d-flex align-items-end">
@@ -573,11 +629,11 @@ function AddsettimeEmployee() {
                                             {rowDataList2.map((rowData2, index2) => (
                                                 <tr key={index2}>
                                                     <td>
-                                                        <input type="text" className="form-control" name="staffId" value={rowData2.staffId} onChange={(e) => handleFieldChange2(index2, 'staffId', e.target.value)}
+                                                        <input type="text" className="form-control" name="workplaceId" value={rowData2.workplaceId} onChange={(e) => handleFieldChange2(index2, 'workplaceId', e.target.value)}
                                                         />
                                                     </td>
                                                     <td>
-                                                        <input type="text" className="form-control" name="staffName" value={rowData2.staffName} onChange={(e) => handleFieldChange2(index2, 'staffName', e.target.value)}
+                                                        <input type="text" className="form-control" name="workplaceName" value={rowData2.workplaceName} onChange={(e) => handleFieldChange2(index2, 'workplaceName', e.target.value)}
                                                         />
                                                     </td>
                                                     <td>
@@ -587,7 +643,7 @@ function AddsettimeEmployee() {
                                                                 name={`datetime${index2}`} // 
                                                                 className="form-control"
                                                                 popperClassName="datepicker-popper"
-                                                                selected={rowData2.startjob}
+                                                                selected={rowData2.date}
                                                                 onChange={date => handleStartDateChange4(index2, date)}
                                                                 dateFormat="dd/MM/yyyy"
                                                                 popperPlacement="top-start"

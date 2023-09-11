@@ -39,6 +39,7 @@ function Salary() {
             ...prevData,
             [field]: e.target.value
         }));
+    
     };
 
     //employee data
@@ -625,7 +626,7 @@ function Salary() {
                                                                 <input
                                                                     type="checkbox"
                                                                     checked={employeeData.salaryadd1}
-                                                                    onChange={(e) => handleChange(e, 'salaryadd1')}
+                                                                    onChange={(e) => handleChange(e , 'salaryadd1')}
                                                                 />
                                                                 ค่ารถ
                                                             </label>
