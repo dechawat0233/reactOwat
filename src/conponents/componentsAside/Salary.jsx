@@ -11,11 +11,15 @@ import '../editwindowcss.css';
 
 
 function Salary() {
-     const [storedEmp, setStoredEmp] = useState([]);
+    const [storedEmp, setStoredEmp] = useState([]);
     const [newEmp, setNewEmp] = useState(true);
     // const [employeeselection , setEmployeeselection] = useState([]);
     const [workplaceSelection, setWorkplaceSelection] = useState([]);
-    const [employeeData, setEmployeeData] = useState({});
+    const [employeeData, setEmployeeData] = useState({salaryadd1: false,
+        salaryadd2: false,
+        salaryadd3: false,
+        salaryadd4: false,
+        salaryadd5: false,});
 
     useEffect(() => {
         const storedValue = sessionStorage.getItem('empSelect');
@@ -34,12 +38,84 @@ function Salary() {
 
     }, []);
 
-    const handleChange = (e, field) => {
-        setEmployeeData(prevData => ({
-            ...prevData,
-            [field]: e.target.value
-        }));
-    
+    // const handleChange = (e, field) => {
+    //     // setEmployeeData(prevData => ({
+    //     //     ...prevData,
+    //     //     [field]: e.target.value,
+    //     //     [field]: !prevData[field],
+    //     // }));
+
+    //     if (field === 'salaryadd1') {
+    //         setEmployeeData(prevData => ({
+    //             ...prevData,
+    //             [field]: !prevData[field],
+    //         }));
+    //     } if (field === 'salaryadd2') {
+    //         setEmployeeData(prevData => ({
+    //             ...prevData,
+    //             [field]: !prevData[field],
+    //         }));
+    //     } if (field === 'salaryadd3') {
+    //         setEmployeeData(prevData => ({
+    //             ...prevData,
+    //             [field]: !prevData[field],
+    //         }));
+    //     } if (field === 'salaryadd4') {
+    //         setEmployeeData(prevData => ({
+    //             ...prevData,
+    //             [field]: !prevData[field],
+    //         }));
+    //     } if (field === 'salaryadd5') {
+    //         setEmployeeData(prevData => ({
+    //             ...prevData,
+    //             [field]: !prevData[field],
+    //         }));
+    //     } else {
+    //         setEmployeeData(prevData => ({
+    //             ...prevData,
+    //             [field]: e.target.value,
+    //         }));
+    //     }
+
+    // };
+
+
+     const handleChange = async (e, field) => {
+
+if( (field == 'salaryadd1') || (field == 'salaryadd2') || (field == 'salaryadd3') || (field == 'salaryadd4') || (field == 'salaryadd5') ){
+const { checked } = e.target;
+setEmployeeData(prevData => ({
+    ...prevData,
+    [field]: checked,
+}));
+}else {
+    setEmployeeData(prevData => ({
+        ...prevData,
+        [field]: e.target.value,
+    }));
+
+}
+
+
+    //     switch (field) {
+    //         case 'salaryadd1':
+    //         case 'salaryadd2':
+    //         case 'salaryadd3':
+    //         case 'salaryadd4':
+    //         case 'salaryadd5':
+    //             setEmployeeData(prevData => ({
+    //                 ...prevData,
+    //                 [field]: !prevData[field],
+    //             }));
+    //             break;
+    //         default:
+    //             setEmployeeData(prevData => ({
+    //                 ...prevData,
+    //                 [field]: e.target.value,
+    //             }));
+    //             break;
+    //     }
+
     };
 
     //employee data
@@ -155,7 +231,7 @@ function Salary() {
     const handleStartDateChange = (date) => {
         setStartjob(date);
 
-//add new startjob to employeeData
+        //add new startjob to employeeData
         setEmployeeData(prevData => ({
             ...prevData,
             ['startjob']: date
@@ -172,21 +248,21 @@ function Salary() {
     };
     const handleStartcount = (date) => {
         setStartcount(date);
-                //add new startcount to employeeData
-                setEmployeeData(prevData => ({
-                    ...prevData,
-                    ['startcount']: date 
-                }));
-            };
+        //add new startcount to employeeData
+        setEmployeeData(prevData => ({
+            ...prevData,
+            ['startcount']: date
+        }));
+    };
 
     const handleSalaryupdate = (date) => {
         setSalaryupdate(date);
-                        //add new salaryupdate to employeeData
-                        setEmployeeData(prevData => ({
-                            ...prevData,
-                            ['salaryupdate']: date 
-                        }));
-            };
+        //add new salaryupdate to employeeData
+        setEmployeeData(prevData => ({
+            ...prevData,
+            ['salaryupdate']: date
+        }));
+    };
 
 
     async function handleManageSalary(event) {
@@ -195,7 +271,7 @@ function Salary() {
         // Make the API call to update the resource by ID
         //   if(){
 
-    
+
         // try {
         //     const response = await axios.put(endpoint + '/employee/update/' + employeeData._id, employeeData);
         //     // setEmployeesResult(response.data.employees);
@@ -218,7 +294,7 @@ function Salary() {
     async function updateEmployee(_id) {
         // alert('hi');
         // Make the API call to update the resource by ID
-                try {
+        try {
             const response = await axios.put(endpoint + '/employee/update/' + employeeData._id, employeeData);
             // setEmployeesResult(response.data.employees);
             if (response) {
@@ -258,9 +334,12 @@ function Salary() {
         await setStartcount(empSelect.startcount ? new Date(empSelect.startcount) : '');
         await setSalaryupdate(empSelect.salaryupdate ? new Date(empSelect.salaryupdate) : '');
 
+        setSalaryadd5(empSelect.salaryadd5);
+        setSalaryadd5v(empSelect.salaryadd5v);
+        
     }
-
-
+    console.log(salaryadd5 + " 1");
+    console.log(salaryadd5v + " 2");
     return (
         <body class="hold-transition sidebar-mini" className='editlaout'>
             <div class="wrapper">
@@ -627,6 +706,7 @@ function Salary() {
                                                                     type="checkbox"
                                                                     checked={employeeData.salaryadd1}
                                                                     onChange={(e) => handleChange(e , 'salaryadd1')}
+
                                                                 />
                                                                 ค่ารถ
                                                             </label>
@@ -663,6 +743,7 @@ function Salary() {
                                                                 />
                                                                 เงินประจำตำแหน่ง
                                                             </label>
+                                                            {console.log(salaryadd5 + 'test')}
                                                         </div>
                                                     </div>
 
