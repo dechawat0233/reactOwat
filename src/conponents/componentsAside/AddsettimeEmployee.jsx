@@ -304,6 +304,14 @@ function AddsettimeEmployee() {
                     newDataList2[index2] = {
                         ...newDataList2[index2],
                         ['workplaceName']: workplaceIdSearch.workplaceName   + '',
+                        ['shift']: 'morning_shift',
+
+                            ['startTime']: workplaceIdSearch.workStart1 + '',
+                            ['endTime']: workplaceIdSearch.workEnd1 + '',
+                            ['allTime']: 'x' + '',
+                            ['otTime']: 'x' + '',
+                            ['selectotTime']:  workplaceIdSearch.workStartOt1 + '',
+                            ['selectotTimeOut']:  workplaceIdSearch.workEndOt1 + '',
                     };
                 } else {
                     //   setEmployeeName('Employee not found');
@@ -336,16 +344,81 @@ function AddsettimeEmployee() {
 
 
             
-                        //Select shift then set time of work 
-                        if (fieldName2 == 'shift') {
+                            //Select shift then set time of work 
+            if (fieldName2 == 'shift') {
                             // alert(value);
+
                             //Check Selected workplace by workplaceId is notnull
                             if(newDataList2[index2].workplaceId !== ''){
 // alert(newDataList2[index2].workplaceId );
 
-                            }
+//get workplace data by  workplaceId from select workplace and search workplace then set worktime to row of table
+const workplaceIdSearch= workplaceList.find(workplace => workplace.workplaceId === newDataList2[index2].workplaceId );
+
+if (workplaceIdSearch) {
+
+    //check shift by switch case
+switch(value){
+    case 'morning_shift':
+    newDataList2[index2] = {
+        ...newDataList2[index2],
+        ['startTime']: workplaceIdSearch.workStart1 + '',
+        ['endTime']: workplaceIdSearch.workEnd1 + '',
+        ['allTime']: 'x' + '',
+        ['otTime']: 'x' + '',
+        ['selectotTime']:  workplaceIdSearch.workStartOt1 + '',
+        ['selectotTimeOut']:  workplaceIdSearch.workEndOt1 + '',
+    };
+    break;
+        case 'afternoon_shift':
+            newDataList2[index2] = {
+                ...newDataList2[index2],
+                ['startTime']: workplaceIdSearch.workStart2 + '',
+                ['endTime']: workplaceIdSearch.workEnd2 + '',
+                ['allTime']: 'x' + '',
+                ['otTime']: 'x' + '',
+                ['selectotTime']:  workplaceIdSearch.workStartOt2 + '',
+                ['selectotTimeOut']:  workplaceIdSearch.workEndOt2 + '',
+            };
+                break;
+        case 'night_shift':
+            newDataList2[index2] = {
+                ...newDataList2[index2],
+                ['startTime']: workplaceIdSearch.workStart3 + '',
+                ['endTime']: workplaceIdSearch.workEnd3 + '',
+                ['allTime']: 'x' + '',
+                ['otTime']: 'x' + '',
+                ['selectotTime']:  workplaceIdSearch.workStartOt3 + '',
+                ['selectotTimeOut']:  workplaceIdSearch.workEndOt3 + '',
+            };
+                break;
+default:
+    newDataList2[index2] = {
+        ...newDataList2[index2],
+        ['startTime']: '',
+        ['endTime']: '',
+        ['allTime']: '',
+        ['otTime']: '',
+        ['selectotTime']: '',
+        ['selectotTimeOut']: '',
+    };
+} //end switch
+
+}
+
+
+                        } else{
+                            //emty workplaceId 
+                                newDataList2[index2] = {
+        ...newDataList2[index2],
+        ['workplaceId']: 'กรุณาระบุหน่วยงาน',
+        ['workplaceName']: 'กรุณาระบุหน่วยงาน',
+    };
                         }
 
+
+                    }
+                
             return newDataList2;
         });
     };
@@ -359,11 +432,10 @@ alert(index2);
 
     ///////////////////
     function handleClickResult(workplace) {
-        setSearchWorkplaceId(workplace.employeeId);
-        setSearchWorkplaceName(workplace.name);
-        //
-        setEmployeeId(workplace.employeeId);
-        setName(workplace.name);
+        // setSearchWorkplaceId(workplace.employeeId);
+        // setSearchWorkplaceName(workplace.name);
+        // setEmployeeId(workplace.employeeId);
+        // setName(workplace.name);
 
         // Populate all the startTime input fields with the search result value
         const updatedRowDataList = rowDataList.map(rowData => ({
@@ -661,6 +733,7 @@ alert(index2);
                                                             <option value="morning_shift">กะเช้า</option>
                                                             <option value="afternoon_shift">กะบ่าย</option>
                                                             <option value="night_shift">กะดึก</option>
+                                                            <option value="specialt_shift">กะพิเศษ</option>
                                                         </select></td>
                                                     <td><input type="text" class="form-control" name='startTime' value={rowData2.startTime} onChange={(e) => handleFieldChange2(index2, 'startTime', e.target.value)} /></td>
                                                     <td><input type="text" class="form-control" name='endTime' value={rowData2.endTime} onChange={(e) => handleFieldChange2(index2, 'endTime', e.target.value)} /></td>
