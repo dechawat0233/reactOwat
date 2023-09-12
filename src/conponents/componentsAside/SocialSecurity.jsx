@@ -379,27 +379,64 @@ function SocialSecurity() {
     // };
 
     const handleChange = (e, field) => {
-        switch (field) {
-            case 'salaryadd1Sec':
-            case 'salaryadd2Sec':
-            case 'salaryadd3Sec':
-            case 'salaryadd4Sec':
-            case 'salaryadd5Sec':
-                setEmployeeData(prevData => ({
-                    ...prevData,
-                    [field]: !prevData[field],
-                }));
-                break;
-            default:
-                setEmployeeData(prevData => ({
-                    ...prevData,
-                    [field]: e.target.value,
-                }));
-                break;
-        }
+        const newValue = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+
+        setEmployeeData(prevData => ({
+            ...prevData,
+            [field]: newValue,
+        }));
     };
 
+    // const handleChange = (e, field) => {
+    //     switch (field) {
+    //         case 'salaryadd1Sec':
+    //         case 'salaryadd2Sec':
+    //         case 'salaryadd3Sec':
+    //         case 'salaryadd4Sec':
+    //         case 'salaryadd5Sec':
+    //             setEmployeeData(prevData => ({
+    //                 ...prevData,
+    //                 [field]: !prevData[field],
+    //             }));
+    //             break;
+    //         default:
+    //             setEmployeeData(prevData => ({
+    //                 ...prevData,
+    //                 [field]: e.target.value,
+    //             }));
+    //             break;
+    //     }
+    // };
+
     // Step 5: Event handler to update the selected option
+
+    const toggleCheckbox1 = () => {
+        setSalaryadd1Sec(prevValue => !prevValue); // Toggle the checkbox state
+        handleChange({ target: { type: 'checkbox', checked: !salaryadd1Sec } }, 'salaryadd1Sec');
+    };
+
+    const toggleCheckbox2 = () => {
+        setSalaryadd2Sec(prevValue => !prevValue); // Toggle the checkbox state
+        handleChange({ target: { type: 'checkbox', checked: !salaryadd2Sec } }, 'salaryadd2Sec');
+    };
+
+    const toggleCheckbox3 = () => {
+        setSalaryadd3Sec(prevValue => !prevValue); // Toggle the checkbox state
+        handleChange({ target: { type: 'checkbox', checked: !salaryadd3Sec } }, 'salaryadd3Sec');
+    };
+
+    const toggleCheckbox4 = () => {
+        setSalaryadd4Sec(prevValue => !prevValue); // Toggle the checkbox state
+        handleChange({ target: { type: 'checkbox', checked: !salaryadd4Sec } }, 'salaryadd4Sec');
+    };
+
+    const toggleCheckbox5 = () => {
+        setSalaryadd5Sec(prevValue => !prevValue); // Toggle the checkbox state
+        handleChange({ target: { type: 'checkbox', checked: !salaryadd5Sec } }, 'salaryadd5Sec');
+    };
+
+
+
 
     return (
         <body class="hold-transition sidebar-mini" className='editlaout'>
@@ -502,53 +539,57 @@ function SocialSecurity() {
                                                             <div class="row">
                                                                 <div class="col-md-12">
                                                                     <div class="form-group">
+
                                                                         <label>รายการเงินเพิ่มพิเศษ</label>
+                                                                        <button onClick={() => toggleCheckbox1('salaryadd1Sec')} style={{ margin: '0.5rem' }}>ค่ารถ</button>
                                                                         <label>
                                                                             <input
                                                                                 type="checkbox"
                                                                                 id="salaryadd1Sec"
                                                                                 checked={salaryadd1Sec}
-                                                                                onChange={() => setSalaryadd1Sec(!salaryadd1Sec)
-                                                                                }
+                                                                                onChange={e => handleChange(e, 'salaryadd1Sec')}
+                                                                                style={{ display: 'none' }}
                                                                             />
-                                                                            ค่ารถ
                                                                         </label>
+                                                                        <button onClick={() => toggleCheckbox2('salaryadd2Sec')} style={{ margin: '0.5rem' }}>ค่าอาหาร</button>
                                                                         <label>
                                                                             <input
                                                                                 type="checkbox"
                                                                                 id="salaryadd2Sec"
                                                                                 checked={salaryadd2Sec}
-                                                                                onChange={() => setSalaryadd2Sec(!salaryadd2Sec)}
-                                                                            />
-                                                                            ค่าอาหาร
+                                                                                onChange={e => handleChange(e, 'salaryadd2Sec')}
+                                                                                style={{ display: 'none' }} />
                                                                         </label>
-
+                                                                        <button onClick={() => toggleCheckbox3('salaryadd3Sec')} style={{ margin: '0.5rem' }}>เบี้ยขยัน</button>
                                                                         <label>
                                                                             <input
                                                                                 type="checkbox"
                                                                                 id="salaryadd3Sec"
                                                                                 checked={salaryadd3Sec}
-                                                                                onChange={() => setSalaryadd3Sec(!salaryadd3Sec)}
-                                                                            />
-                                                                            เบี้ยขยัน
+                                                                                onChange={e => handleChange(e, 'salaryadd3Sec')}
+                                                                                style={{ display: 'none' }} />
                                                                         </label>
+                                                                        <button onClick={() => toggleCheckbox4('salaryadd4Sec')} style={{ margin: '0.5rem' }}>ค่าโทรศัพท์</button>
+
                                                                         <label>
                                                                             <input
                                                                                 type="checkbox"
                                                                                 id="salaryadd4Sec"
                                                                                 checked={salaryadd4Sec}
-                                                                                onChange={() => setSalaryadd4Sec(!salaryadd4Sec)}
+                                                                                onChange={e => handleChange(e, 'salaryadd4Sec')}
+                                                                                style={{ display: 'none' }}
                                                                             />
-                                                                            ค่าโทรศัพท์
                                                                         </label>
-                                                                        <label>
+
+                                                                        <button onClick={() => toggleCheckbox5('salaryadd5Sec')} style={{ margin: '0.5rem' }}>เงินประจำตำแหน่ง</button>
+
+                                                                        <label >
                                                                             <input
                                                                                 type="checkbox"
                                                                                 id="salaryadd5Sec"
                                                                                 checked={salaryadd5Sec}
-                                                                                onChange={() => setSalaryadd5Sec(!salaryadd5Sec)}
-                                                                            />
-                                                                            เงินประจำตำแหน่ง
+                                                                                onChange={e => handleChange(e, 'salaryadd5Sec')}
+                                                                                style={{ display: 'none' }} />
                                                                         </label>
                                                                     </div>
                                                                 </div>
@@ -569,6 +610,11 @@ function SocialSecurity() {
                                                                 <div class="col-md-4">
                                                                     <div class="form-group">
                                                                         <label role="salaryadd1vSec">เงินเพิ่มค่ารถ</label>
+                                                                        <label htmlFor="salaryadd1Sec" style={{ cursor: 'pointer' }}>
+                                                                            <div className={`custom-checkbox ${salaryadd1Sec ? 'checked' : ''}`}>
+                                                                                <i className={`fa ${salaryadd1Sec ? 'fa-check' : 'fa-times'}`} />
+                                                                            </div>
+                                                                        </label>
                                                                         <input type="text" class="form-control" id="salaryadd1vSec" placeholder="ค่ารถ" value={salaryadd1vSec} onChange={(e) => handleChange(e, 'salaryadd1vSec')}
                                                                             readOnly />
                                                                     </div>
@@ -579,6 +625,11 @@ function SocialSecurity() {
                                                                 <div class="col-md-4">
                                                                     <div class="form-group">
                                                                         <label role="salaryadd2vSec">เงินเพิ่มค่าอาหาร</label>
+                                                                        <label htmlFor="salaryadd2Sec" style={{ cursor: 'pointer' }}>
+                                                                            <div className={`custom-checkbox ${salaryadd2Sec ? 'checked' : ''}`}>
+                                                                                <i className={`fa ${salaryadd2Sec ? 'fa-check' : 'fa-times'}`} />
+                                                                            </div>
+                                                                        </label>
                                                                         <input type="text" class="form-control" id="salaryadd2vSec" placeholder="ค่าอาหาร" value={salaryadd2vSec} onChange={(e) => handleChange(e, 'salaryadd2vSec')}
                                                                             readOnly />
                                                                     </div>
@@ -589,6 +640,11 @@ function SocialSecurity() {
                                                                 <div class="col-md-4">
                                                                     <div class="form-group">
                                                                         <label role="salaryadd3vSec">ค่าเบี้ยขยัน</label>
+                                                                        <label htmlFor="salaryadd3Sec" style={{ cursor: 'pointer' }}>
+                                                                            <div className={`custom-checkbox ${salaryadd3Sec ? 'checked' : ''}`}>
+                                                                                <i className={`fa ${salaryadd3Sec ? 'fa-check' : 'fa-times'}`} />
+                                                                            </div>
+                                                                        </label>
                                                                         <input type="text" class="form-control" id="salaryadd3vSec" placeholder="ค่าเบี้ยขยัน" value={salaryadd3vSec} onChange={(e) => handleChange(e, 'salaryadd3vSec')}
                                                                             readOnly />
                                                                     </div>
@@ -599,6 +655,11 @@ function SocialSecurity() {
                                                                 <div class="col-md-4">
                                                                     <div class="form-group">
                                                                         <label role="salaryadd4vSec">ค่าโทรศัพท์</label>
+                                                                        <label htmlFor="salaryadd4Sec" style={{ cursor: 'pointer' }}>
+                                                                            <div className={`custom-checkbox ${salaryadd4Sec ? 'checked' : ''}`}>
+                                                                                <i className={`fa ${salaryadd4Sec ? 'fa-check' : 'fa-times'}`} />
+                                                                            </div>
+                                                                        </label>
                                                                         <input type="text" class="form-control" id="salaryadd4vSec" placeholder="โทรศัพท์" value={salaryadd4vSec} onChange={(e) => handleChange(e, 'salaryadd4vSec')}
                                                                             readOnly />
                                                                     </div>
@@ -609,6 +670,11 @@ function SocialSecurity() {
                                                                 <div class="col-md-4">
                                                                     <div class="form-group">
                                                                         <label role="salaryadd5vSec">เงินประจำตำแหน่ง</label>
+                                                                        <label htmlFor="salaryadd5Sec" style={{ cursor: 'pointer' }}>
+                                                                            <div className={`custom-checkbox ${salaryadd5Sec ? 'checked' : ''}`}>
+                                                                                <i className={`fa ${salaryadd5Sec ? 'fa-check' : 'fa-times'}`} />
+                                                                            </div>
+                                                                        </label>
                                                                         <input type="text" class="form-control" id="salaryadd5vSec" placeholder="เงินประจำตำแหน่ง" value={salaryadd5vSec} onChange={(e) => handleChange(e, 'salaryadd5vSec')}
                                                                             readOnly />
                                                                     </div>

@@ -126,6 +126,12 @@ const employeeSchema = new mongoose.Schema({
   salaryadd5: String,
   salaryadd5v: String,
   salaryaddtype: String,
+  ///socielsecurity
+  salaryadd1Sec: String,
+  salaryadd2Sec: String,
+  salaryadd3Sec: String,
+  salaryadd4Sec: String,
+  salaryadd5Sec: String,
 
   remainbusinessleave: String,
   businessleavesalary: String,
@@ -195,8 +201,8 @@ const employeeSchema = new mongoose.Schema({
   commentadmoney1: String,
   commentadmoney2: String,
   commentadmoney3: String,
-  PriceType:String,
-  divide:String,
+  PriceType: String,
+  divide: String,
 
 
 });
@@ -329,6 +335,12 @@ router.post('/create', async (req, res) => {
     wagesafterusingProgram,
     companybeforeusingProgram,
 
+    salaryadd1Sec,
+    salaryadd2Sec,
+    salaryadd3Sec,
+    salaryadd4Sec,
+    salaryadd5Sec,
+
     ////otherExp
     number1,
     number2,
@@ -419,6 +431,12 @@ router.post('/create', async (req, res) => {
     wagesbeforeusingProgram,
     wagesafterusingProgram,
     companybeforeusingProgram,
+
+    salaryadd1Sec,
+    salaryadd2Sec,
+    salaryadd3Sec,
+    salaryadd4Sec,
+    salaryadd5Sec,
 
     ////otherExp
     number1,
