@@ -108,27 +108,27 @@ awaitsetEmployeeData(prevData => ({
         [field]: e.target.value,
     }));
 
-}
+        }
 
 
-    //     switch (field) {
-    //         case 'salaryadd1':
-    //         case 'salaryadd2':
-    //         case 'salaryadd3':
-    //         case 'salaryadd4':
-    //         case 'salaryadd5':
-    //             setEmployeeData(prevData => ({
-    //                 ...prevData,
-    //                 [field]: !prevData[field],
-    //             }));
-    //             break;
-    //         default:
-    //             setEmployeeData(prevData => ({
-    //                 ...prevData,
-    //                 [field]: e.target.value,
-    //             }));
-    //             break;
-    //     }
+        //     switch (field) {
+        //         case 'salaryadd1':
+        //         case 'salaryadd2':
+        //         case 'salaryadd3':
+        //         case 'salaryadd4':
+        //         case 'salaryadd5':
+        //             setEmployeeData(prevData => ({
+        //                 ...prevData,
+        //                 [field]: !prevData[field],
+        //             }));
+        //             break;
+        //         default:
+        //             setEmployeeData(prevData => ({
+        //                 ...prevData,
+        //                 [field]: e.target.value,
+        //             }));
+        //             break;trun
+        //     }
 
     };
 
@@ -350,7 +350,7 @@ awaitsetEmployeeData(prevData => ({
 
         setSalaryadd5(empSelect.salaryadd5);
         setSalaryadd5v(empSelect.salaryadd5v);
-        
+
     }
     console.log(salaryadd5 + " 1");
     console.log(salaryadd5v + " 2");
