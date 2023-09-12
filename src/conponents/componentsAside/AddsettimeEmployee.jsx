@@ -14,6 +14,7 @@ function AddsettimeEmployee() {
 
     const [searchEmployeeId, setSearchEmployeeId] = useState('');
     const [searchEmployeeName, setSearchEmployeeName] = useState('');
+const [month , setMonth] = useState('');
 
     //Workplace data
     const [employeeId, setEmployeeId] = useState(''); //รหัสหน่วยงาน
@@ -57,217 +58,6 @@ function AddsettimeEmployee() {
     }, []); // The empty array [] ensures that the effect runs only once after the initial render
 
     /////////////////////////////////////////////
-    const [staffId, setStaffId] = useState(''); //รหัสหน่วยงาน
-    const [staffName, setStaffName] = useState(''); //รหัสหน่วยงาน
-    const [startTime, setStartTime] = useState(''); //รหัสหน่วยงาน
-    const [endTime, setEndTime] = useState(''); //รหัสหน่วยงาน
-    const [allTime, setAllTime] = useState(''); //รหัสหน่วยงาน
-    const [otTime, setOtTime] = useState(''); //รหัสหน่วยงาน
-    const [shift1start, setShift1start] = useState('');
-    const [shift2start, setShift2start] = useState('');
-    const [shift3start, setShift3start] = useState('');
-    const [shift4start, setShift4start] = useState('');
-    const [shift1end, setShift1end] = useState('');
-    const [shift2end, setShift2end] = useState('');
-    const [shift3end, setShift3end] = useState('');
-    const [shift4end, setShift4end] = useState('');
-
-
-    const [tmp_date , setTmp_date ] = useState(''); //วันที่เริ่มงาน
-
-    const handleDateChange = (date) => {
-        setTmp_date (date);
-    };
-
-    const [startjob1, setStartjob1] = useState(''); //วันที่เริ่มงาน
-    const handleStartDateChange1 = (date) => {
-        setStartjob1(date);
-    };
-    const [startjob2, setStartjob2] = useState(''); //วันที่เริ่มงาน
-    const handleStartDateChange2 = (date) => {
-        setStartjob2(date);
-    };
-    const [startjob3, setStartjob3] = useState(''); //วันที่เริ่มงาน
-    const handleStartDateChange3 = (date) => {
-        setStartjob3(date);
-    };
-
-
-
-    const numberOfRows = 30; // Fixed number of rows
-    const initialRowData = {
-        employeeId: '',
-     employeeName: '',
-        shift: 'morning_shift',
-        startTime: '',
-        endTime: '',
-        allTime: '',
-        otTime: '',
-        selectotTime: '',
-        selectotTimeOut: '',
-    };
-
-    const [rowDataList, setRowDataList] = useState(new Array(numberOfRows).fill(initialRowData));
-
-    const handleFieldChange = (index, fieldName, value) => {
-
-        setRowDataList(prevDataList => {
-            const newDataList = [...prevDataList];
-
-            newDataList[index] = {
-                ...newDataList[index],
-                [fieldName]: value,
-            };
-
-
-            //Search workplace by id
-            if (fieldName == 'employeeId') {
-
-                const workplaceIdSearch= workplaceList.find(workplace => workplace.workplaceId=== value);
-                //                 alert(JSON.stringify(employeeList, null, 2));
-                // alert( employeeList.length);
-                if (workplaceIdSearch) {
-                    //   setEmployeeName(employee.name);
-                    newDataList[index] = {
-                        ...newDataList[index],
-                        ['workplaceName']: workplaceIdSearch.name + '',
-                    };
-
-                } else {
-                    //   setEmployeeName('Employee not found');
-                    newDataList[index] = {
-                        ...newDataList[index],
-                        ['workplaceName']: 'ไม่พบชื่อพนักงาน',
-                    };
-
-                }
-
-            }
-
-            if (fieldName == 'shift') {
-
-                if (value == 'morning_shift' && shift1start != null) {
-                    newDataList[index] = {
-                        ...newDataList[index],
-                        ['startTime']: shift1start + '',
-                        ['endTime']: shift1end + '',
-                        ['selectotTime']: shift1end + '',
-                    };
-                }
-
-                //check shift is afternoon
-                if (value == 'afternoon_shift' && shift2start != null) {
-                    newDataList[index] = {
-                        ...newDataList[index],
-                        ['startTime']: shift2start + '',
-                        ['endTime']: shift2end + '',
-                        ['selectotTime']: shift2end + '',
-                    };
-                }
-
-                //Check shift is night
-                if (value == 'night_shift' && shift3start != null) {
-                    newDataList[index] = {
-                        ...newDataList[index],
-                        ['startTime']: shift3start + '',
-                        ['endTime']: shift3end + '',
-                        ['selectotTime']: shift3end + '',
-                    };
-                }
-
-                if (value == 'specialt_shift' && shift4start != null) {
-                    newDataList[index] = {
-                        ...newDataList[index],
-                        ['startTime']: shift4start + '',
-                        ['endTime']: shift4end + '',
-                        ['selectotTime']: shift4end + '',
-                    };
-                }
-
-                //specialt_shift
-            }
-
-
-
-
-            // Calculate time difference for allTime
-            const startHours = parseFloat(newDataList[index].startTime.split('.')[0]);
-            const startMinutes = parseFloat(newDataList[index].startTime.split('.')[1] || 0);
-            const endHours = parseFloat(newDataList[index].endTime.split('.')[0]);
-            const endMinutes = parseFloat(newDataList[index].endTime.split('.')[1] || 0);
-
-
-
-            let hours = endHours - startHours;
-            let minutes = endMinutes - startMinutes;
-
-            if (minutes < 0) {
-                hours -= 1;
-                minutes += 60;
-            }
-
-            // Handle cases where endTime is on the next day
-            if (hours < 0) {
-                hours += 24;
-            }
-
-            const timeDiffFormatted = `${hours}.${minutes}`;
-
-            // Calculate otTime based on selectotTimeOut and endTime
-            const otselectHours = parseFloat(newDataList[index].selectotTime.split('.')[0]);
-            const otselectMinutes = parseFloat(newDataList[index].selectotTime.split('.')[1] || 0);
-            const otHours = parseFloat(newDataList[index].selectotTimeOut.split('.')[0]);
-            const otMinutes = parseFloat(newDataList[index].selectotTimeOut.split('.')[1] || 0);
-
-            let otHoursDiff = otHours - otselectHours;
-            let otMinutesDiff = otMinutes - otselectMinutes;
-
-            if (otMinutesDiff < 0) {
-                otHoursDiff -= 1;
-                otMinutesDiff += 60;
-            }
-
-            // Handle cases where otTime is on the next day
-            if (otHoursDiff < 0) {
-                otHoursDiff += 24;
-            }
-            const otTimeFormatted1 = `${otHoursDiff}.${otMinutesDiff}`;
-            const maxOTHours = parseFloat(newDataList[index].workOfOT);
-            const maxOTMinutes = 0; // If maxOTHours is always whole numbers
-
-            const totalOTMinutes = otHoursDiff * 60 + otMinutesDiff;
-            if (totalOTMinutes > maxOTHours * 60) {
-                otHoursDiff = maxOTHours;
-                otMinutesDiff = maxOTMinutes;
-            }
-            const otTimeFormatted2 = `${otHoursDiff}.${otMinutesDiff}`;
-
-
-            if (fieldName === 'shift') {
-                newDataList[index] = {
-                    ...newDataList[index],
-                    allTime: timeDiffFormatted,
-                    otTime: otTimeFormatted2,
-                };
-            } else {
-                newDataList[index] = {
-                    ...newDataList[index],
-                    allTime: timeDiffFormatted,
-                    otTime: otTimeFormatted1,
-                };
-            }
-            // newDataList[index] = {
-            //     ...newDataList[index],
-            //     allTime: timeDiffFormatted + '1111',
-            //     otTime: otTimeFormatted + '3333',
-            // };
-
-
-            // }
-
-            return newDataList;
-        });
-    };
 
     const numberOfRows2 = 30; // Fixed number of rows
     const initialRowData2 = {
@@ -305,11 +95,10 @@ function AddsettimeEmployee() {
                         ...newDataList2[index2],
                         ['workplaceName']: workplaceIdSearch.workplaceName   + '',
                         ['shift']: 'morning_shift',
-
                             ['startTime']: workplaceIdSearch.workStart1 + '',
                             ['endTime']: workplaceIdSearch.workEnd1 + '',
-                            ['allTime']: 'x' + '',
-                            ['otTime']: 'x' + '',
+                            ['allTime']: workplaceIdSearch.workOfHour + '',
+                            ['otTime']: workplaceIdSearch.workOfOT + '',
                             ['selectotTime']:  workplaceIdSearch.workStartOt1 + '',
                             ['selectotTimeOut']:  workplaceIdSearch.workEndOt1 + '',
                     };
@@ -342,21 +131,16 @@ function AddsettimeEmployee() {
                 }
             }
 
-
             
                             //Select shift then set time of work 
             if (fieldName2 == 'shift') {
                             // alert(value);
-
                             //Check Selected workplace by workplaceId is notnull
                             if(newDataList2[index2].workplaceId !== ''){
 // alert(newDataList2[index2].workplaceId );
-
 //get workplace data by  workplaceId from select workplace and search workplace then set worktime to row of table
 const workplaceIdSearch= workplaceList.find(workplace => workplace.workplaceId === newDataList2[index2].workplaceId );
-
 if (workplaceIdSearch) {
-
     //check shift by switch case
 switch(value){
     case 'morning_shift':
@@ -364,8 +148,8 @@ switch(value){
         ...newDataList2[index2],
         ['startTime']: workplaceIdSearch.workStart1 + '',
         ['endTime']: workplaceIdSearch.workEnd1 + '',
-        ['allTime']: 'x' + '',
-        ['otTime']: 'x' + '',
+        ['allTime']: calTime(workplaceIdSearch.workStart1  , workplaceIdSearch.workEnd1 , workplaceIdSearch.workOfHour) + '',
+        ['otTime']: calTime(workplaceIdSearch.workStartOt1 , workplaceIdSearch.workEndOt1 , workplaceIdSearch.workOfOT) + '',
         ['selectotTime']:  workplaceIdSearch.workStartOt1 + '',
         ['selectotTimeOut']:  workplaceIdSearch.workEndOt1 + '',
     };
@@ -375,9 +159,9 @@ switch(value){
                 ...newDataList2[index2],
                 ['startTime']: workplaceIdSearch.workStart2 + '',
                 ['endTime']: workplaceIdSearch.workEnd2 + '',
-                ['allTime']: 'x' + '',
-                ['otTime']: 'x' + '',
-                ['selectotTime']:  workplaceIdSearch.workStartOt2 + '',
+                ['allTime']: calTime(workplaceIdSearch.workStart2  , workplaceIdSearch.workEnd2 , workplaceIdSearch.workOfHour) + '',
+                ['otTime']: calTime(workplaceIdSearch.workStartOt2 , workplaceIdSearch.workEndOt2 , workplaceIdSearch.workOfOT) + '',
+                       ['selectotTime']:  workplaceIdSearch.workStartOt2 + '',
                 ['selectotTimeOut']:  workplaceIdSearch.workEndOt2 + '',
             };
                 break;
@@ -386,9 +170,9 @@ switch(value){
                 ...newDataList2[index2],
                 ['startTime']: workplaceIdSearch.workStart3 + '',
                 ['endTime']: workplaceIdSearch.workEnd3 + '',
-                ['allTime']: 'x' + '',
-                ['otTime']: 'x' + '',
-                ['selectotTime']:  workplaceIdSearch.workStartOt3 + '',
+                ['allTime']: calTime(workplaceIdSearch.workStart3  , workplaceIdSearch.workEnd3 , workplaceIdSearch.workOfHour) + '',
+                ['otTime']: calTime(workplaceIdSearch.workStartOt3 , workplaceIdSearch.workEndOt3 , workplaceIdSearch.workOfOT) + '',
+                        ['selectotTime']:  workplaceIdSearch.workStartOt3 + '',
                 ['selectotTimeOut']:  workplaceIdSearch.workEndOt3 + '',
             };
                 break;
@@ -403,7 +187,6 @@ default:
         ['selectotTimeOut']: '',
     };
 } //end switch
-
 }
 
 
@@ -415,14 +198,100 @@ default:
         ['workplaceName']: 'กรุณาระบุหน่วยงาน',
     };
                         }
-
-
                     }
-                
+
+                    //update time of work 
+                    if((fieldName2 == 'startTime') ||
+                    (fieldName2 == 'endTime') ||
+                    (fieldName2 == 'selectotTime') ||
+                    (fieldName2 == 'selectotTimeOut')
+                    ){
+                            //Check Selected workplace by workplaceId is notnull
+                            if(newDataList2[index2].workplaceId !== ''){
+                                // alert(newDataList2[index2].workplaceId );
+                                //get workplace data by  workplaceId from select workplace and search workplace then set worktime to row of table
+                                const workplaceIdSearch= workplaceList.find(workplace => workplace.workplaceId === newDataList2[index2].workplaceId );
+                                if (workplaceIdSearch) {
+//check specialt_shift 
+if(newDataList2[index2].shift !== 'specialt_shift'){
+                                    newDataList2[index2] = {
+                                        ...newDataList2[index2],
+                                        ['startTime']: newDataList2[index2].startTime + '',
+                                        ['endTime']: newDataList2[index2].endTime + '',
+                                        ['allTime']: calTime(newDataList2[index2].startTime ,newDataList2[index2].endTime  , workplaceIdSearch.workOfHour) + '',
+                                        ['otTime']: calTime(newDataList2[index2].selectotTime , newDataList2[index2].selectotTimeOut , workplaceIdSearch.workOfOT) + '',
+                                        ['selectotTime']:  newDataList2[index2].selectotTime + '',
+                                        ['selectotTimeOut']:  newDataList2[index2].selectotTimeOut + '',
+                                    };
+} else{
+    newDataList2[index2] = {
+        ...newDataList2[index2],
+        ['startTime']: newDataList2[index2].startTime + '',
+        ['endTime']: newDataList2[index2].endTime + '',
+        ['allTime']: calTime(newDataList2[index2].startTime ,newDataList2[index2].endTime  , 24) + '',
+        ['otTime']: calTime(newDataList2[index2].selectotTime , newDataList2[index2].selectotTimeOut , 24 ) + '',
+        ['selectotTime']:  newDataList2[index2].selectotTime + '',
+        ['selectotTimeOut']:  newDataList2[index2].selectotTimeOut + '',
+    };
+}
+
+                                                        } else{
+                                                            //emty workplaceId 
+                                                                newDataList2[index2] = {
+                                        ...newDataList2[index2],
+                                        ['workplaceId']: 'กรุณาระบุหน่วยงาน',
+                                        ['workplaceName']: 'กรุณาระบุหน่วยงาน',
+                                    };
+                                                        }
+                                
+                                }
+                                
+                    }
+            
             return newDataList2;
         });
     };
 
+
+    function calTime(start , end , limit ){
+
+        const startHours = parseFloat(start.split('.')[0]);
+        const startMinutes = parseFloat(start.split('.')[1] || 0);
+        const endHours = parseFloat(end.split('.')[0]);
+        const endMinutes = parseFloat(end.split('.')[1] || 0);
+        let hours = endHours - startHours;
+        let minutes = endMinutes - startMinutes;
+        if (minutes < 0) {
+            hours -= 1;
+            minutes += 60;
+        }
+        // Handle cases where endTime is on the next day
+        if (hours < 0) {
+            hours += 24;
+        }
+        //check employee working >= 5 hours 
+        if(hours >= 5){
+            hours  -= 1;
+        }
+
+            // Calculate the total time difference in minutes
+            const totalMinutes = hours * 60 + minutes;
+            // check employee working > 5 hours
+            // Cap the time difference at the maximum work hours
+            const cappedTotalMinutes = Math.min(totalMinutes, limit * 60);
+            // Convert the capped time difference back to hours and minutes
+            const cappedHours = Math.floor(cappedTotalMinutes / 60);
+            const cappedMinutes = cappedTotalMinutes % 60;
+            const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
+if(isNaN(timeDiffFormatted) ){
+    return '0';
+}
+
+return timeDiffFormatted;
+}
+
+
+        
     const handleStartDateChange4 = (index2, date) => {
 alert(index2);
         handleFieldChange2(index2, 'date', date);
@@ -432,11 +301,6 @@ alert(index2);
 
     ///////////////////
     function handleClickResult(workplace) {
-        // setSearchWorkplaceId(workplace.employeeId);
-        // setSearchWorkplaceName(workplace.name);
-        // setEmployeeId(workplace.employeeId);
-        // setName(workplace.name);
-
         // Populate all the startTime input fields with the search result value
         const updatedRowDataList = rowDataList.map(rowData => ({
             ...rowData,
@@ -458,6 +322,7 @@ alert(index2);
     async function handleSearch(event) {
         event.preventDefault();
 
+
         // get value from form search
         const data = {
             employeeId: searchEmployeeId,
@@ -472,17 +337,22 @@ alert(index2);
             // alert(response.data.employees.length);
             if (response.data.employees.length < 1) {
                 // window.location.reload();
+                setEmployeeId('');
+                setName('');
                 alert('ไม่พบข้อมูล');
             } else {
                 // alert(response.data.employees.length);
 
+//clean form 
+setSearchEmployeeId('');
+setSearchEmployeeName('');
 
                 // Set search values
                 setEmployeeId(response.data.employees[0].employeeId);
                 setName(response.data.employees[0].name);
 
-                setSearchEmployeeId(response.data.employees[0].employeeId);
-                setSearchEmployeeName(response.data.employees[0].name);
+                // setSearchEmployeeId(response.data.employees[0].employeeId);
+                // setSearchEmployeeName(response.data.employees[0].name);
 
                 // console.log('workOfOT:', response.data.workplaces[0].workOfOT);
                 // console.log('workOfOT:', endTime);
@@ -500,79 +370,35 @@ alert(index2);
         event.preventDefault();
 
         //get data from input in useState to data 
+    }
+
+
+
+    async function handleCreateWorkplaceTimerecord(event) {
+        event.preventDefault();
+        // alert('test');
+
+        //get data from input in useState to data 
         const data = {
             employeeId: employeeId,
-            name: name,
-            workplaceArea: workplaceArea,
-            workOfWeek: workOfWeek,
-            workStart1: workStart1,
-            workEnd1: workEnd1,
-            workStart2: workStart2,
-            workEnd2: workEnd2,
-            workStart3: workStart3,
-            workEnd3: workEnd3,
-            workOfHour: workOfHour,
-            workOfOT: workOfOT,
-            workRate: workRate,
-            workRateOT: workRateOT,
-            workTotalPeople: workTotalPeople,
-            holiday: holiday,
-            holidayHour: holidayHour,
-            salaryadd1: salaryadd1,
-            salaryadd2: salaryadd2,
-            salaryadd3: salaryadd3,
-            salaryadd4: salaryadd4,
-            salaryadd5: salaryadd5,
-            salaryadd6: salaryadd6,
-            personalLeave: personalLeave,
-            personalLeaveRate: personalLeaveRate,
-            sickLeave: sickLeave,
-            sickLeaveRate: sickLeaveRate,
-            workRateDayoff: workRateDayoff,
-            workRateDayoffRate: workRateDayoffRate,
-            workplaceAddress: workplaceAddress,
-            daysOff: selectedDates,
-            reason: reason,
-
-            employeeIdList: employeeIdList,
-            employeeNameList: employeeNameList,
+            employeeName : name,
+            month: month,
+            employee_workplaceRecord: rowDataList2
         };
 
 
-        //check create or update Employee
-        if (newWorkplace) {
-            // alert('Create Workplace');
-            try {
-                const response = await axios.post(endpoint + '/employee/create', data);
-                // setEmployeesResult(response.data.employees);
-                if (response) {
-                    alert("บันทึกสำเร็จ");
-                }
-            } catch (error) {
-                alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
-                // window.location.reload();
+        try {
+            const response = await axios.post(endpoint + '/timerecord/create', data);
+            // setEmployeesResult(response.data.employees);
+            if (response) {
+                alert("บันทึกสำเร็จ");
             }
-        } else {
-            //update workplace data
-
-            // Make the API call to update the resource by ID
-            try {
-
-                const response = await axios.put(endpoint + '/employee/update/' + _id, data);
-                // setEmployeesResult(response.data.employees);
-                if (response) {
-                    alert("บันทึกสำเร็จ");
-                    window.location.reload();
-
-                }
-            } catch (error) {
-                alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
-                // window.location.reload();
-            }
-
+        } catch (error) {
+            alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+            // window.location.reload();
         }
-    }
 
+    }
 
 
     /////////////////
@@ -657,6 +483,25 @@ alert(index2);
                                         <input type="text" class="form-control" id="agencyname" placeholder="ชื่อพนักงาน" value={name} onChange={(e) => setname(e.target.value)} />
                                     </div>
                                 </div>
+
+                                <div class="col-md-2">
+                                <select className="form-control" value={month} onChange={(e) => setMonth(e.target.value)} >
+                                                            <option value="01">มกราคม</option>
+                                                            <option value="02">กุมภาพันธ์</option>
+                                                            <option value="03">มีนาคม</option>
+                                                            <option value="04">เมษายน</option>
+                                                            <option value="05">พฤษภาคม</option>
+                                                            <option value="06">มิถุนายน</option>
+                                                            <option value="07">กรกฎาคม</option>
+                                                            <option value="08">สิงหาคม</option>
+                                                            <option value="09">กันยายน</option>
+                                                            <option value="10">ตุลาคม</option>
+                                                            <option value="11">พฤศจิกายน</option>
+                                                            <option value="12">ธันวาคม</option>
+                                                        </select>
+                                </div>
+
+
                                 {/* <div class="col-md-2">
                                     <div class="form-group">
                                         <label role="datetime">วันที่</label>
