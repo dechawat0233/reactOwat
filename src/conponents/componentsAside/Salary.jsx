@@ -77,36 +77,36 @@ function Salary() {
 
 
 
-    function handleSalaryadd1(){
-alert(employeeData.salaryadd1);
+    function handleSalaryadd1() {
+        alert(employeeData.salaryadd1);
 
         // const { checked } = await e.target;
         // awaitsetEmployeeData(prevData => ({
         //     ...prevData,
         //     [field]: checked,
         // }));
-        
+
     }
 
-     const handleChange = async (e, field) => {
-if( (field == 'salaryadd1') || (field == 'salaryadd2') || (field == 'salaryadd3') || (field == 'salaryadd4') || (field == 'salaryadd5') ){
-const { checked } = await e.target;
-if(! checked){
-    checked = '';
-} else{
-    checked = on;
-}
-alert(checked);
+    const handleChange = async (e, field) => {
+        if ((field == 'salaryadd1') || (field == 'salaryadd2') || (field == 'salaryadd3') || (field == 'salaryadd4') || (field == 'salaryadd5')) {
+            const { checked } = await e.target;
+            if (!checked) {
+                checked = '';
+            } else {
+                checked = on;
+            }
+            alert(checked);
 
-awaitsetEmployeeData(prevData => ({
-    ...prevData,
-    [field]: checked,
-}));
-}else {
-    setEmployeeData(prevData => ({
-        ...prevData,
-        [field]: e.target.value,
-    }));
+            await setEmployeeData(prevData => ({
+                ...prevData,
+                [field]: checked,
+            }));
+        } else {
+            setEmployeeData(prevData => ({
+                ...prevData,
+                [field]: e.target.value,
+            }));
 
         }
 
@@ -719,7 +719,7 @@ awaitsetEmployeeData(prevData => ({
                                                                 <input
                                                                     type="checkbox"
                                                                     checked={employeeData.salaryadd1}
-                                                                    onClick={(e) => handleChange(e , 'salaryadd1')}
+                                                                    onClick={(e) => handleChange(e, 'salaryadd1')}
 
                                                                 />
                                                                 ค่ารถ
