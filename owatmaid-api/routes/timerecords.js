@@ -40,10 +40,42 @@ const workplaceTimerecordSchema = new mongoose.Schema({
 // Create the workplace record time model based on the schema
 const workplaceTimerecord = mongoose.model('workplaceTimerecord', workplaceTimerecordSchema);
 
+// Define time record schema for employee
+const employeeTimerecordSchema = new mongoose.Schema({
+  timerecordId: String,
+  employeeId: String,
+  employeeName: String,
+  month: String,
+  employee_workplaceRecord: [{
+    workplaceId: String,
+    workplaceName: String,
+    date: Date,
+    shift: String,
+    startTime: String,
+    endTime: String,
+    allTime: String,
+    otTime: String,
+    selectotTime: String,
+    selectotTimeOut: String,
+}]
+});
+
+// Create the workplace record time model based on the schema
+const workplaceTimerecordEmp = mongoose.model('employeeTimerecord', employeeTimerecordSchema );
+
+
+
 
 // Get list of workplaceTimerecords
 router.get('/list', async (req, res) => {
   const workplaceTimeRecordData = await workplaceTimerecord.find();
+  res.json(workplaceTimeRecordData);
+});
+
+
+// Get list of employeeTimerecords
+router.get('/listemp', async (req, res) => {
+  const workplaceTimeRecordData = await workplaceTimerecordEmp.find();
   res.json(workplaceTimeRecordData);
 });
 

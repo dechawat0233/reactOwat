@@ -388,7 +388,7 @@ setSearchEmployeeName('');
 
 
         try {
-            const response = await axios.post(endpoint + '/timerecord/create', data);
+            const response = await axios.post(endpoint + '/timerecord/createemp', data);
             // setEmployeesResult(response.data.employees);
             if (response) {
                 alert("บันทึกสำเร็จ");
@@ -595,7 +595,7 @@ setSearchEmployeeName('');
                                 </div>
                             </section>
                             <div class="form-group">
-                                <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp; บันทึก</button>
+                                <button class="btn b_save" onClick={handleCreateWorkplaceTimerecord}><i class="nav-icon fas fa-save"></i> &nbsp; บันทึก</button>
                             </div>
                         </form>
 
