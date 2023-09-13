@@ -170,6 +170,37 @@ router.post('/create', async (req, res) => {
 });
 
 
+// Create new employee timerecord 
+router.post('/createemp', async (req, res) => {
+
+  const {
+    employeeId,
+    employeeName,
+    month,
+    employee_workplaceRecord
+  } = req.body;
+
+
+  // Create workplace
+  const workplaceTimeRecordData = new workplaceTimerecordEmp({
+    timerecordId,
+    employeeId,
+    employeeName,
+    month,
+    employee_workplaceRecord
+  });
+
+  try {
+    await workplaceTimeRecordData.save();
+    res.json(workplaceTimeRecordData);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ error: err.message });
+  }
+
+});
+
+
 
 // Update a workplaceTimeRecordData  by its workplaceTimeRecordData  
 router.put('/update/:workplaceRecordId', async (req, res) => {
