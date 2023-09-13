@@ -138,6 +138,52 @@ router.post('/search', async (req, res) => {
 });
 
 
+//search employee timerecord 
+router.post('/searchemp', async (req, res) => {
+  try {
+    const { employeeId,
+      employeeName,
+      month} = req.body;
+
+    // Construct the search query based on the provided parameters
+    const query = {};
+
+    if (
+employeeId !== '') {
+      query.employeeId= employeeId;
+    }
+
+
+    if (employeeName !== '') {
+      query.employeeName = { $regex: new RegExp(employeeName, 'i') };
+    }
+
+    if (month !== '') {
+      //query.month = new Date(date);
+      query.month = { $regex: new RegExp(month , 'i') };
+    }
+
+    console.log('Constructed Query:');
+    console.log(query);
+
+    if (employeeId == '' && employeeName == '' && month == '') {
+      res.status(200).json({});
+    }
+
+    // Query the workplace collection for matching documents
+    const recordworkplace  = await workplaceTimerecordEmp.find(query);
+
+    await console.log('Search Results:');
+    await console.log(recordworkplace  );
+    let textSearch = 'workplace';
+    await res.status(200).json({ recordworkplace  });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
 // Create new workplace 
 router.post('/create', async (req, res) => {
 
