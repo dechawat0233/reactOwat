@@ -17,22 +17,22 @@ function Salary() {
     const [workplaceSelection, setWorkplaceSelection] = useState([]);
     const [employeeData, setEmployeeData] = useState({});
 
-    // useEffect(() => {
-    //     const storedValue = sessionStorage.getItem('empSelect');
-    //     if (storedValue) {
-    //         // setEmployeeselection(storedValue);
-    //     }
+    useEffect(() => {
+        const storedValue = sessionStorage.getItem('empSelect');
+        if (storedValue) {
+            // setEmployeeselection(storedValue);
+        }
 
-    //     //get all Workplace from API
-    //     fetch(endpoint + '/workplace/listselect') // Update with your API endpoint
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             setWorkplaceSelection(data);
-    //         }
-    //         )
-    //         .catch(error => console.error('Error fetching employees:', error));
+        //get all Workplace from API
+        fetch(endpoint + '/workplace/listselect') // Update with your API endpoint
+            .then(response => response.json())
+            .then(data => {
+                setWorkplaceSelection(data);
+            }
+            )
+            .catch(error => console.error('Error fetching employees:', error));
 
-    // }, []);
+    }, []);
 
 
     function handleSalaryadd1() {
@@ -264,6 +264,7 @@ function Salary() {
         }
 
     }
+    console.log(employeeData);
 
     async function onEmployeeSelect(empSelect) {
         await setEmployeeData(empSelect);
@@ -323,7 +324,11 @@ function Salary() {
 
     const toggleCheckbox4 = () => {
         setSalaryadd4(prevValue => !prevValue); // Toggle the checkbox state
-        handleChange({ target: { type: 'checkbox', checked: !employeeData.salaryadd4 } }, 'salaryadd4');
+        // handleChange({ target: { type: 'checkbox', checked: !employeeData.salaryadd4 } }, 'salaryadd4');
+        setEmployeeData((prevData) => ({
+            ...prevData,
+            salaryadd4: !prevData.salaryadd4,
+        }));
     };
 
     const toggleCheckbox5 = () => {
@@ -331,7 +336,7 @@ function Salary() {
         handleChange({ target: { type: 'checkbox', checked: !employeeData.salaryadd5 } }, 'salaryadd5');
     };
 
-    console.log(salaryadd1 + " 1");
+    // console.log(salaryadd1 + " 1");
     return (
         <body class="hold-transition sidebar-mini" className='editlaout'>
             <div class="wrapper">
