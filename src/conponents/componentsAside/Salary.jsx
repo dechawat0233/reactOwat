@@ -322,9 +322,17 @@ function Salary() {
         handleChange({ target: { type: 'checkbox', checked: !employeeData.salaryadd3 } }, 'salaryadd3');
     };
 
+    // const toggleCheckbox4 = () => {
+    //     setSalaryadd4(prevValue => !prevValue); // Toggle the checkbox state
+    //     // handleChange({ target: { type: 'checkbox', checked: !employeeData.salaryadd4 } }, 'salaryadd4');
+    //     setEmployeeData((prevData) => ({
+    //         ...prevData,
+    //         salaryadd4: !prevData.salaryadd4,
+    //     }));
+    // };
+
     const toggleCheckbox4 = () => {
-        setSalaryadd4(prevValue => !prevValue); // Toggle the checkbox state
-        // handleChange({ target: { type: 'checkbox', checked: !employeeData.salaryadd4 } }, 'salaryadd4');
+        setSalaryadd4((prevValue) => !prevValue); // Toggle the checkbox state
         setEmployeeData((prevData) => ({
             ...prevData,
             salaryadd4: !prevData.salaryadd4,
@@ -488,7 +496,7 @@ function Salary() {
                                                     {/* )} */}
 
                                                     {/* {employeeData.salaryadd4 && ( */}
-                                                    <div class="col-md-4">
+                                                    {/* <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label role="salaryadd4v">ค่าโทรศัพท์</label>
                                                             <label htmlFor="salaryadd4" style={{ cursor: 'pointer' }}>
@@ -513,7 +521,32 @@ function Salary() {
                                                             </label>
 
                                                         </div>
+                                                    </div> */}
+                                                    <div className="col-md-4">
+                                                        <div class="form-group">
+                                                            <label role="salaryadd4v">ค่าโทรศัพท์</label>
+                                                            <label htmlFor="salaryadd4" style={{ cursor: 'pointer' }}>
+                                                                <div className={`custom-checkbox ${salaryadd4 ? 'checked' : ''}`}>
+                                                                    <i className={`fa ${salaryadd4 ? 'fa-check' : 'fa-times'}`} />
+                                                                </div>
+                                                            </label>
+                                                            {salaryadd4 ? (
+                                                                <label htmlFor="salaryadd4" style={{ cursor: 'pointer' }}>
+                                                                    <div className={`custom-checkbox ${salaryadd4 ? 'checked' : ''}`}>
+                                                                        <input
+                                                                            type="text"
+                                                                            className="form-control"
+                                                                            id="salaryadd4v"
+                                                                            placeholder="ค่ารถ"
+                                                                            value={employeeData.salaryadd4v}
+                                                                            onChange={(e) => handleChange(e, 'salaryadd4v')}
+                                                                        />
+                                                                    </div>
+                                                                </label>
+                                                            ) : null}
+                                                        </div>
                                                     </div>
+
                                                     {/* )} */}
 
                                                     {/* {employeeData.salaryadd5 && ( */}
