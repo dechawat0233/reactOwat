@@ -95,6 +95,22 @@ router.get('/:workplaceTimeRecordId', async (req, res) => {
 });
 
 
+
+// Get  employee time record by employeeTimeRecord Id
+router.get('/searchid/:employeeTimeRecordId', async (req, res) => {
+  try {
+    const employeeTimeRecordData = await workplaceTimerecordEmp.findOne({ employeeTimeRecordId: req.params.employeeTimeRecordId});
+    if (workplaceTimeRecordData) {
+      res.json(employeeTimeRecordData);
+    } else {
+      res.status(404).json({ error: 'workplace not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+
+});
+
 router.post('/search', async (req, res) => {
   try {
     const { workplaceId,
