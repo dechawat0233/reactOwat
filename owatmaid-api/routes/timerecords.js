@@ -174,6 +174,7 @@ router.post('/create', async (req, res) => {
 router.post('/createemp', async (req, res) => {
 
   const {
+    timerecordId,  
     employeeId,
     employeeName,
     month,
