@@ -95,6 +95,22 @@ router.get('/:workplaceTimeRecordId', async (req, res) => {
 });
 
 
+
+// Get  employee time record by employeeTimeRecord Id
+router.get('/searchid/:employeeTimeRecordId', async (req, res) => {
+  try {
+    const employeeTimeRecordData = await workplaceTimerecordEmp.findOne({ employeeTimeRecordId: req.params.employeeTimeRecordId});
+    if (workplaceTimeRecordData) {
+      res.json(employeeTimeRecordData);
+    } else {
+      res.status(404).json({ error: 'workplace not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+
+});
+
 router.post('/search', async (req, res) => {
   try {
     const { workplaceId,
@@ -126,6 +142,52 @@ router.post('/search', async (req, res) => {
 
     // Query the workplace collection for matching documents
     const recordworkplace  = await workplaceTimerecord.find(query);
+
+    await console.log('Search Results:');
+    await console.log(recordworkplace  );
+    let textSearch = 'workplace';
+    await res.status(200).json({ recordworkplace  });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+//search employee timerecord 
+router.post('/searchemp', async (req, res) => {
+  try {
+    const { employeeId,
+      employeeName,
+      month} = req.body;
+
+    // Construct the search query based on the provided parameters
+    const query = {};
+
+    if (
+employeeId !== '') {
+      query.employeeId= employeeId;
+    }
+
+
+    if (employeeName !== '') {
+      query.employeeName = { $regex: new RegExp(employeeName, 'i') };
+    }
+
+    if (month !== '') {
+      //query.month = new Date(date);
+      query.month = { $regex: new RegExp(month , 'i') };
+    }
+
+    console.log('Constructed Query:');
+    console.log(query);
+
+    if (employeeId == '' && employeeName == '' && month == '') {
+      res.status(200).json({});
+    }
+
+    // Query the workplace collection for matching documents
+    const recordworkplace  = await workplaceTimerecordEmp.find(query);
 
     await console.log('Search Results:');
     await console.log(recordworkplace  );
