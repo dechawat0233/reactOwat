@@ -16,6 +16,10 @@ function AddsettimeEmployee() {
     const [searchEmployeeName, setSearchEmployeeName] = useState('');
     const [month, setMonth] = useState('');
 
+    useEffect(() => {
+       setMonth("01");
+    }, []);
+
     //Workplace data
     const [employeeId, setEmployeeId] = useState(''); //รหัสหน่วยงาน
     const [name, setName] = useState(''); //ชื่อหน่วยงาน

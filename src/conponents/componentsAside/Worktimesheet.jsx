@@ -15,6 +15,10 @@ function Worktimesheet() {
   const [name, setName] = useState('');
   const [month, setMonth] = useState('');
 
+  useEffect(() => {
+    setMonth("01");
+ }, []);
+
   const [searchWorkplaceId, setSearchWorkplaceId] = useState(''); //รหัสหน่วยงาน
   const [searchWorkplaceName, setSearchWorkplaceName] = useState(''); //ชื่อหน่วยงาน
   const [searchEmployeeId, setSearchEmployeeId] = useState('');
