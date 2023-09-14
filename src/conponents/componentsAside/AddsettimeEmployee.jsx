@@ -485,21 +485,25 @@ function AddsettimeEmployee() {
                                 </div>
 
                                 <div class="col-md-2">
-                                    <select className="form-control" value={month} onChange={(e) => setMonth(e.target.value)} >
-                                        <option value="01">มกราคม</option>
-                                        <option value="02">กุมภาพันธ์</option>
-                                        <option value="03">มีนาคม</option>
-                                        <option value="04">เมษายน</option>
-                                        <option value="05">พฤษภาคม</option>
-                                        <option value="06">มิถุนายน</option>
-                                        <option value="07">กรกฎาคม</option>
-                                        <option value="08">สิงหาคม</option>
-                                        <option value="09">กันยายน</option>
-                                        <option value="10">ตุลาคม</option>
-                                        <option value="11">พฤศจิกายน</option>
-                                        <option value="12">ธันวาคม</option>
-                                    </select>
+                                    <div class="form-group">
+                                        <label role="agencyname">เดือน</label>
+                                        <select className="form-control" value={month} onChange={(e) => setMonth(e.target.value)} >
+                                            <option value="01">มกราคม</option>
+                                            <option value="02">กุมภาพันธ์</option>
+                                            <option value="03">มีนาคม</option>
+                                            <option value="04">เมษายน</option>
+                                            <option value="05">พฤษภาคม</option>
+                                            <option value="06">มิถุนายน</option>
+                                            <option value="07">กรกฎาคม</option>
+                                            <option value="08">สิงหาคม</option>
+                                            <option value="09">กันยายน</option>
+                                            <option value="10">ตุลาคม</option>
+                                            <option value="11">พฤศจิกายน</option>
+                                            <option value="12">ธันวาคม</option>
+                                        </select>
+                                    </div>
                                 </div>
+
 
 
                                 {/* <div class="col-md-2">

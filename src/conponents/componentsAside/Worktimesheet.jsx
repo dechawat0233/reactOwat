@@ -13,7 +13,7 @@ function Worktimesheet() {
 
   const [employeeId, setEmployeeId] = useState('');
   const [name, setName] = useState('');
-const [ month , setMonth] = useState('');
+  const [month, setMonth] = useState('');
 
   const [searchWorkplaceId, setSearchWorkplaceId] = useState(''); //รหัสหน่วยงาน
   const [searchWorkplaceName, setSearchWorkplaceName] = useState(''); //ชื่อหน่วยงาน
@@ -28,8 +28,8 @@ const [ month , setMonth] = useState('');
     const data = {
       employeeId: searchEmployeeId,
       employeeName: searchEmployeeName,
-month : '02'
-    };    console.log(searchEmployeeId);
+      month: '02'
+    }; console.log(searchEmployeeId);
     try {
       // const response = await axios.post(endpoint + '/timerecord/searchemp', data);
       // const response = await axios.post(endpoint + '/timerecord/search', data);
@@ -37,10 +37,10 @@ month : '02'
 
       const response = await axios.post(endpoint + '/timerecord/searchemp', data);
 
-      setSearchResult(response.data.recordworkplace  );
+      setSearchResult(response.data.recordworkplace);
       // alert(response.data.employees.length);
       alert(response.data.recordworkplace.length);
-      if (response.data.recordworkplace .length < 1) {
+      if (response.data.recordworkplace.length < 1) {
         window.location.reload();
         alert('ไม่พบข้อมูล');
       } else {
@@ -91,16 +91,35 @@ month : '02'
                     <div class="col-md-12">
                       <form onSubmit={handleSearch}>
                         <div class="row">
-                          <div class="col-md-6">
+                          <div class="col-md-3">
                             <div class="form-group">
                               <label role="searchEmployeeId">รหัสพนักงาน</label>
                               <input type="text" class="form-control" id="searchEmployeeId" placeholder="รหัสพนักงาน" value={searchEmployeeId} onChange={(e) => setSearchEmployeeId(e.target.value)} />
                             </div>
                           </div>
-                          <div class="col-md-6">
+                          <div class="col-md-3">
                             <div class="form-group">
                               <label role="searchname">ชื่อพนักงาน</label>
                               <input type="text" class="form-control" id="searchname" placeholder="ชื่อพนักงาน" value={searchEmployeeName} onChange={(e) => setSearchEmployeeName(e.target.value)} />
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="form-group">
+                              <label role="searchEmployeeId">เดือน</label>
+                              <select className="form-control" value={month} onChange={(e) => setMonth(e.target.value)} >
+                                <option value="01">มกราคม</option>
+                                <option value="02">กุมภาพันธ์</option>
+                                <option value="03">มีนาคม</option>
+                                <option value="04">เมษายน</option>
+                                <option value="05">พฤษภาคม</option>
+                                <option value="06">มิถุนายน</option>
+                                <option value="07">กรกฎาคม</option>
+                                <option value="08">สิงหาคม</option>
+                                <option value="09">กันยายน</option>
+                                <option value="10">ตุลาคม</option>
+                                <option value="11">พฤศจิกายน</option>
+                                <option value="12">ธันวาคม</option>
+                              </select>
                             </div>
                           </div>
                           <div class="row">
