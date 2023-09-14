@@ -34,6 +34,49 @@ function Salary() {
 
     }, []);
 
+    // const handleChange = (e, field) => {
+    //     // setEmployeeData(prevData => ({
+    //     //     ...prevData,
+    //     //     [field]: e.target.value,
+    //     //     [field]: !prevData[field],
+    //     // }));
+
+    //     if (field === 'salaryadd1') {
+    //         setEmployeeData(prevData => ({
+    //             ...prevData,
+    //             [field]: !prevData[field],
+    //         }));
+    //     } if (field === 'salaryadd2') {
+    //         setEmployeeData(prevData => ({
+    //             ...prevData,
+    //             [field]: !prevData[field],
+    //         }));
+    //     } if (field === 'salaryadd3') {
+    //         setEmployeeData(prevData => ({
+    //             ...prevData,
+    //             [field]: !prevData[field],
+    //         }));
+    //     } if (field === 'salaryadd4') {
+    //         setEmployeeData(prevData => ({
+    //             ...prevData,
+    //             [field]: !prevData[field],
+    //         }));
+    //     } if (field === 'salaryadd5') {
+    //         setEmployeeData(prevData => ({
+    //             ...prevData,
+    //             [field]: !prevData[field],
+    //         }));
+    //     } else {
+    //         setEmployeeData(prevData => ({
+    //             ...prevData,
+    //             [field]: e.target.value,
+    //         }));
+    //     }
+
+    // };
+
+
+
     function handleSalaryadd1() {
         alert(employeeData.salaryadd1);
 
@@ -46,29 +89,48 @@ function Salary() {
     }
 
     const handleChange = async (e, field) => {
-        // if ((field == 'salaryadd1') || (field == 'salaryadd2') || (field == 'salaryadd3') || (field == 'salaryadd4') || (field == 'salaryadd5')) {
-        //     const { checked } = await e.target;
-        //     if (!checked) {
-        //         checked = '';
-        //     } else {
-        //         checked = on;
+        if ((field == 'salaryadd1') || (field == 'salaryadd2') || (field == 'salaryadd3') || (field == 'salaryadd4') || (field == 'salaryadd5')) {
+            const { checked } = await e.target;
+            if (!checked) {
+                checked = '';
+            } else {
+                checked = on;
+            }
+            alert(checked);
+
+            await setEmployeeData(prevData => ({
+                ...prevData,
+                [field]: checked,
+            }));
+        } else {
+            setEmployeeData(prevData => ({
+                ...prevData,
+                [field]: e.target.value,
+            }));
+
+        }
+
+
+        //     switch (field) {
+        //         case 'salaryadd1':
+        //         case 'salaryadd2':
+        //         case 'salaryadd3':
+        //         case 'salaryadd4':
+        //         case 'salaryadd5':
+        //             setEmployeeData(prevData => ({
+        //                 ...prevData,
+        //                 [field]: !prevData[field],
+        //             }));
+        //             break;
+        //         default:
+        //             setEmployeeData(prevData => ({
+        //                 ...prevData,
+        //                 [field]: e.target.value,
+        //             }));
+        //             break;trun
         //     }
-        //     alert(checked);
-
-        //     await setEmployeeData(prevData => ({
-        //         ...prevData,
-        //         [field]: checked,
-        //     }));
-        // } else {
-        setEmployeeData(prevData => ({
-            ...prevData,
-            [field]: e.target.value,
-        }));
-
-        // }
 
     };
-
 
     //employee data
     const [employeeId, setEmployeeId] = useState('');
@@ -97,14 +159,11 @@ function Salary() {
     const [salarybank, setSalarybank] = useState(''); //ธนาคาร
     const [banknumber, setBanknumber] = useState(''); //เลขบัญชี
 
-    const [salaryadd1, setSalaryadd1] = useState(false); //เงินเพิ่มพิเศษ ค่ารถ
-    const [salaryadd2, setSalaryadd2] = useState(false); //เงินเพิ่มพิเศษ ค่าอาหาร
-    const [salaryadd3, setSalaryadd3] = useState(false); //เงินเพิ่มพิเศษ เบี้ยขยัน
-    const [salaryadd4, setSalaryadd4] = useState(false); //เงินเพิ่มพิเศษ โทรศัพท์
-    // const initialSalaryAdd4 = salaryadd4 === "true";
-    // const [salaryadd4, setSalaryadd4] = useState(initialSalaryAdd4);
-
-    const [salaryadd5, setSalaryadd5] = useState(false); //เงินเพิ่มพิเศษ เงินประจำตำแหน่ง
+    const [salaryadd1, setSalaryadd1] = useState(''); //เงินเพิ่มพิเศษ ค่ารถ
+    const [salaryadd2, setSalaryadd2] = useState(''); //เงินเพิ่มพิเศษ ค่าอาหาร
+    const [salaryadd3, setSalaryadd3] = useState(''); //เงินเพิ่มพิเศษ เบี้ยขยัน
+    const [salaryadd4, setSalaryadd4] = useState(''); //เงินเพิ่มพิเศษ โทรศัพท์
+    const [salaryadd5, setSalaryadd5] = useState(''); //เงินเพิ่มพิเศษ เงินประจำตำแหน่ง
 
     const [salaryaddtype, setSalaryaddtype] = useState(''); //เพิ่มพิเศษแบบ ต่อวัน ต่อเดือน
     const [salaryaddsum, setSalaryaddsum] = useState(''); //เพิ่มพิเศษแบบ ต่อวัน ต่อเดือน
@@ -266,7 +325,6 @@ function Salary() {
         }
 
     }
-    console.log(employeeData);
 
     async function onEmployeeSelect(empSelect) {
         await setEmployeeData(empSelect);
@@ -290,122 +348,12 @@ function Salary() {
         await setStartcount(empSelect.startcount ? new Date(empSelect.startcount) : '');
         await setSalaryupdate(empSelect.salaryupdate ? new Date(empSelect.salaryupdate) : '');
 
-        setSalaryadd1(empSelect.salaryadd1) || false;
-        setSalaryadd1v(parseFloat(empSelect.salaryadd1v) || 0);
-        setSalaryadd2(empSelect.salaryadd2 || false);
-        setSalaryadd2v(parseFloat(empSelect.salaryadd2v) || 0);
-        setSalaryadd3(empSelect.salaryadd3 || false);
-        setSalaryadd3v(parseFloat(empSelect.salaryadd3v) || 0);
-        setSalaryadd4(empSelect.salaryadd4 || false);
-        setSalaryadd4v(parseFloat(empSelect.salaryadd4v) || 0);
-        setSalaryadd5(empSelect.salaryadd5 || false);
-        setSalaryadd5v(parseFloat(empSelect.salaryadd5v) || 0);
+        setSalaryadd5(empSelect.salaryadd5);
+        setSalaryadd5v(empSelect.salaryadd5v);
 
     }
-    // console.log(salaryadd1v + " 1");
-    // console.log(salaryadd2v + " 2");
-    // console.log(salaryadd3v + " 3");
-    // console.log(salaryadd4v + " 4");
-    // console.log(salaryadd5v + " 5x");
-
-    // const toggleCheckbox1 = () => {
-    //     setSalaryadd1(prevValue => !prevValue); // Toggle the checkbox state
-    //     handleChange({ target: { type: 'checkbox', checked: !employeeData.salaryadd1 } }, 'salaryadd1');
-    //     // alert('1');
-    // };
-
-    const toggleCheckbox1 = () => {
-        setSalaryadd1((prevValue) => {
-            const newValue = !prevValue;
-            setEmployeeData((prevData) => ({
-                ...prevData,
-                salaryadd1: newValue,
-            }));
-            return newValue;
-        });
-    };
-
-    const toggleCheckbox2 = () => {
-        setSalaryadd2((prevValue) => {
-            const newValue = !prevValue;
-            setEmployeeData((prevData) => ({
-                ...prevData,
-                salaryadd2: newValue,
-            }));
-            return newValue;
-        });
-    };
-
-    const toggleCheckbox3 = () => {
-        setSalaryadd3((prevValue) => {
-            const newValue = !prevValue;
-            setEmployeeData((prevData) => ({
-                ...prevData,
-                salaryadd3: newValue,
-            }));
-            return newValue;
-        });
-    };
-
-    // const toggleCheckbox4 = () => {
-    //     setSalaryadd4(prevValue => !prevValue); // Toggle the checkbox state
-    //     // handleChange({ target: { type: 'checkbox', checked: !employeeData.salaryadd4 } }, 'salaryadd4');
-    //     setEmployeeData((prevData) => ({
-    //         ...prevData,
-    //         salaryadd4: !prevData.salaryadd4,
-    //     }));
-    // };
-
-    // const toggleCheckbox4 = () => {
-    //     setSalaryadd4((prevValue) => !prevValue); // Toggle the checkbox state
-    //     setEmployeeData((prevData) => ({
-    //         ...prevData,
-    //         salaryadd4: !prevData.salaryadd4,
-    //     }));
-    // };
-
-    const toggleCheckbox4 = () => {
-        setSalaryadd4((prevValue) => {
-            const newValue = !prevValue;
-            setEmployeeData((prevData) => ({
-                ...prevData,
-                salaryadd4: newValue,
-            }));
-            return newValue;
-        });
-    };
-
-
-    const toggleCheckbox5 = () => {
-        setSalaryadd5((prevValue) => {
-            const newValue = !prevValue;
-            setEmployeeData((prevData) => ({
-                ...prevData,
-                salaryadd5: newValue,
-            }));
-            return newValue;
-        });
-    };
-
-
-    useEffect(() => {
-        if (salaryadd1 == 'false') {
-            setSalaryadd1(false);
-        }
-        if (salaryadd2 == 'false') {
-            setSalaryadd2(false);
-        }
-        if (salaryadd3 == 'false') {
-            setSalaryadd3(false);
-        }
-        if (salaryadd4 == 'false') {
-            setSalaryadd4(false);
-        }
-        if (salaryadd5 == 'false') {
-            setSalaryadd5(false);
-        }
-    }, [salaryadd1, salaryadd2, salaryadd3, salaryadd4, salaryadd5]);
-    // console.log(salaryadd1 + " 1");
+    console.log(salaryadd5 + " 1");
+    console.log(salaryadd5v + " 2");
     return (
         <body class="hold-transition sidebar-mini" className='editlaout'>
             <div class="wrapper">
@@ -427,14 +375,7 @@ function Salary() {
                     <!-- Main content --> */}
                     <section class="content">
                         <div class="container-fluid">
-                            <div class="col-md-3">
-                                <section class="Frame">
-                                    <EmployeesSelected onEmployeeSelect={onEmployeeSelect} />
-                                </section>
-
-                            </div>
                             <form onSubmit={handleManageSalary}>
-
 
                                 <h2 class="head-title">เงินเดือนและสวัสดิการ</h2>
                                 <h2 class="title">ข้อมูลพนักงาน</h2>
@@ -768,62 +709,55 @@ function Salary() {
                                 <div class="row">
                                     <div class="col-md-9">
                                         <section class="Frame">
+
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>รายการเงินเพิ่มพิเศษ</label>
-                                                            <label>รายการเงินเพิ่มพิเศษ</label>
-                                                            <button onClick={() => toggleCheckbox1('salaryadd1')} style={{ margin: '0.5rem' }}>ค่ารถ <i className={`fa ${salaryadd1 ? 'fa-check' : 'fa-times'}`} /></button>
                                                             <label>
                                                                 <input
                                                                     type="checkbox"
-                                                                    id="salaryadd1"
                                                                     checked={employeeData.salaryadd1}
-                                                                    // onChange={e => handleChange(e, 'salaryadd1')}
-                                                                    style={{ display: 'none' }}
+                                                                    onClick={(e) => handleChange(e, 'salaryadd1')}
+
                                                                 />
+                                                                ค่ารถ
                                                             </label>
-                                                            <button onClick={() => toggleCheckbox2('salaryadd2')} style={{ margin: '0.5rem' }}>ค่าอาหาร <i className={`fa ${salaryadd2 ? 'fa-check' : 'fa-times'}`} /></button>
                                                             <label>
                                                                 <input
                                                                     type="checkbox"
-                                                                    id="salaryadd2"
                                                                     checked={employeeData.salaryadd2}
-                                                                    // onChange={e => handleChange(e, 'salaryadd2')}
-                                                                    style={{ display: 'none' }} />
-                                                            </label>
-                                                            <button onClick={() => toggleCheckbox3('salaryadd3')} style={{ margin: '0.5rem' }}>เบี้ยขยัน <i className={`fa ${salaryadd3 ? 'fa-check' : 'fa-times'}`} /></button>
-                                                            <label>
-                                                                <input
-                                                                    type="checkbox"
-                                                                    id="salaryadd3"
-                                                                    checked={employeeData.salaryadd3}
-                                                                    // onChange={e => handleChange(e, 'salaryadd3')}
-                                                                    style={{ display: 'none' }} />
-                                                            </label>
-                                                            <button onClick={() => toggleCheckbox4('salaryadd4')} style={{ margin: '0.5rem' }}>ค่าโทรศัพท์ <i className={`fa ${salaryadd4 ? 'fa-check' : 'fa-times'}`} /></button>
-
-                                                            <label>
-                                                                <input
-                                                                    type="checkbox"
-                                                                    id="salaryadd4"
-                                                                    checked={employeeData.salaryadd4}
-                                                                    // onChange={e => handleChange(e, 'salaryadd4')}
-                                                                    style={{ display: 'none' }}
+                                                                    onChange={(e) => handleChange(e, 'salaryadd2')}
                                                                 />
+                                                                ค่าอาหาร
                                                             </label>
 
-                                                            <button onClick={() => toggleCheckbox5('salaryadd5')} style={{ margin: '0.5rem' }}>เงินประจำตำแหน่ง <i className={`fa ${salaryadd5 ? 'fa-check' : 'fa-times'}`} /></button>
-
-                                                            <label >
+                                                            <label>
                                                                 <input
                                                                     type="checkbox"
-                                                                    id="salaryadd5"
-                                                                    checked={employeeData.salaryadd5}
-                                                                    // onChange={e => handleChange(e, 'salaryadd5')}
-                                                                    style={{ display: 'none' }} />
+                                                                    checked={employeeData.salaryadd3}
+                                                                    onChange={(e) => handleChange(e, 'salaryadd3')}
+                                                                />
+                                                                เบี้ยขยัน
                                                             </label>
+                                                            <label>
+                                                                <input
+                                                                    type="checkbox"
+                                                                    checked={employeeData.salaryadd4}
+                                                                    onChange={(e) => handleChange(e, 'salaryadd4')}
+                                                                />
+                                                                ค่าโทรศัพท์
+                                                            </label>
+                                                            <label>
+                                                                <input
+                                                                    type="checkbox"
+                                                                    checked={employeeData.salaryadd5}
+                                                                    onChange={(e) => handleChange(e, 'salaryadd5')}
+                                                                />
+                                                                เงินประจำตำแหน่ง
+                                                            </label>
+                                                            {console.log(salaryadd5 + 'test')}
                                                         </div>
                                                     </div>
 
@@ -839,343 +773,200 @@ function Salary() {
                                                         </div>
                                                     </div>
 
-                                                    {/* {employeeData.salaryadd1 && ( */}
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label role="salaryadd1v">เงินเพิ่มค่ารถ</label>
-                                                            <label htmlFor="salaryadd1" style={{ cursor: 'pointer' }}>
-                                                                <div className={`custom-checkbox ${salaryadd1 ? 'checked' : ''}`}>
-                                                                    <i className={`fa ${salaryadd1 ? 'fa-check' : 'fa-times'}`} />
-                                                                </div>
-                                                            </label><br/>
-                                                            {salaryadd1 && (
-                                                                <label htmlFor="salaryadd1" style={{ cursor: 'pointer' }}>
-                                                                    <div className={`custom-checkbox ${salaryadd1 ? 'checked' : ''}`}>
-                                                                        <input
-                                                                            type="text"
-                                                                            className="form-control"
-                                                                            id="salaryadd1v"
-                                                                            placeholder="ค่ารถ"
-                                                                            value={employeeData.salaryadd1v}
-                                                                            onChange={(e) => handleChange(e, 'salaryadd1v')}
-                                                                        />
-                                                                    </div>
-                                                                </label>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                    {/* )} */}
-
-                                                    {/* {employeeData.salaryadd2 && ( */}
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label role="salaryadd2v">เงินเพิ่มค่าอาหาร</label>
-                                                            <label htmlFor="salaryadd2" style={{ cursor: 'pointer' }}>
-                                                                <div className={`custom-checkbox ${salaryadd2 ? 'checked' : ''}`}>
-                                                                    <i className={`fa ${salaryadd2 ? 'fa-check' : 'fa-times'}`} />
-                                                                </div>
-                                                            </label><br/>
-                                                            {salaryadd2 && (
-                                                                <label htmlFor="salaryadd2" style={{ cursor: 'pointer' }}>
-                                                                    <div className={`custom-checkbox ${salaryadd2 ? 'checked' : ''}`}>
-                                                                        <input
-                                                                            type="text"
-                                                                            className="form-control"
-                                                                            id="salaryadd2v"
-                                                                            placeholder="ค่ารถ"
-                                                                            value={employeeData.salaryadd2v}
-                                                                            onChange={(e) => handleChange(e, 'salaryadd2v')}
-                                                                        />
-                                                                    </div>
-                                                                </label>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                    {/* )} */}
-
-                                                    {/* {employeeData.salaryadd3 && ( */}
-
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label role="salaryadd3v">ค่าเบี้ยขยัน</label>
-                                                            <label htmlFor="salaryadd3" style={{ cursor: 'pointer' }}>
-                                                                <div className={`custom-checkbox ${salaryadd3 ? 'checked' : ''}`}>
-                                                                    <i className={`fa ${salaryadd3 ? 'fa-check' : 'fa-times'}`} />
-                                                                </div>
-                                                            </label><br/>
-                                                            {salaryadd3 && (
-
-                                                                <label htmlFor="salaryadd3" style={{ cursor: 'pointer' }}>
-                                                                    <div className={`custom-checkbox ${salaryadd3 ? 'checked' : ''}`}>
-                                                                        <input
-                                                                            type="text"
-                                                                            className="form-control"
-                                                                            id="salaryadd3v"
-                                                                            placeholder="ค่ารถ"
-                                                                            value={employeeData.salaryadd3v}
-                                                                            onChange={(e) => handleChange(e, 'salaryadd3v')}
-                                                                        />
-                                                                    </div>
-                                                                </label>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                    {/* )} */}
-
-                                                    {/* {employeeData.salaryadd4 && ( */}
-                                                    {/* <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label role="salaryadd4v">ค่าโทรศัพท์</label>
-                                                            <label htmlFor="salaryadd4" style={{ cursor: 'pointer' }}>
-                                                                <div className={`custom-checkbox ${salaryadd4 ? 'checked' : ''}`}>
-                                                                    <i className={`fa ${salaryadd4 ? 'fa-check' : 'fa-times'}`} />
-                                                                </div>
-                                                            </label>
-                                                            <label htmlFor="salaryadd4" style={{ cursor: 'pointer' }}>
-                                                                <div className={`custom-checkbox ${salaryadd4 ? 'checked' : ''}`}>
-                                                                    {salaryadd4 ? (
-                                                                        <input
-                                                                            type="text"
-                                                                            className="form-control"
-                                                                            id="salaryadd4v"
-                                                                            placeholder="ค่ารถ"
-                                                                            value={employeeData.salaryadd4v}
-                                                                            onChange={(e) => handleChange(e, 'salaryadd4v')}
-
-                                                                        />
-                                                                    ) : null}
-                                                                </div>
-                                                            </label>
-
-                                                        </div>
-                                                    </div> */}
-                                                    {/* <div className="col-md-4">
-                                                        <div class="form-group">
-                                                            <label role="salaryadd4v">ค่าโทรศัพท์</label>
-                                                            <label htmlFor="salaryadd4" style={{ cursor: 'pointer' }}>
-                                                                <div className={`custom-checkbox ${salaryadd4 ? 'checked' : ''}`}>
-                                                                    <i className={`fa ${salaryadd4 ? 'fa-check' : 'fa-times'}`} />
-                                                                </div>
-                                                            </label>
-                                                            {salaryadd4 ? (
-                                                                <label htmlFor="salaryadd4" style={{ cursor: 'pointer' }}>
-                                                                    <div className={`custom-checkbox ${salaryadd4 ? 'checked' : ''}`}>
-                                                                        <input
-                                                                            type="text"
-                                                                            className="form-control"
-                                                                            id="salaryadd4v"
-                                                                            placeholder="ค่ารถ"
-                                                                            value={employeeData.salaryadd4v}
-                                                                            onChange={(e) => handleChange(e, 'salaryadd4v')}
-                                                                        />
-                                                                    </div>
-                                                                </label>
-                                                            ) : null}
-                                                        </div>
-                                                    </div> */}
-
-                                                    <div className="col-md-4">
-                                                        <div class="form-group">
-                                                            <label role="salaryadd4v">ค่าโทรศัพท์</label>
-                                                            <label htmlFor="salaryadd4" style={{ cursor: 'pointer' }}>
-                                                                <div className={`custom-checkbox ${salaryadd4 ? 'checked' : ''}`}>
-                                                                    <i className={`fa ${salaryadd4 ? 'fa-check' : 'fa-times'}`} />
-                                                                </div>
-                                                            </label><br/>
-                                                            {salaryadd4 && (
-                                                                <label htmlFor="salaryadd4" style={{ cursor: 'pointer' }}>
-                                                                    <div className={`custom-checkbox ${salaryadd4 ? 'checked' : ''}`}>
-                                                                        <input
-                                                                            type="text"
-                                                                            className="form-control"
-                                                                            id="salaryadd4v"
-                                                                            placeholder="ค่ารถ"
-                                                                            value={employeeData.salaryadd4v}
-                                                                            onChange={(e) => handleChange(e, 'salaryadd4v')}
-                                                                        />
-                                                                    </div>
-                                                                </label>
-                                                            )}
-
-                                                        </div>
-                                                    </div>
-
-
-                                                    {/* )} */}
-
-                                                    {/* {employeeData.salaryadd5 && ( */}
-
-                                                    {salaryadd5 && (
+                                                    {employeeData.salaryadd1 && (
                                                         <div class="col-md-4">
                                                             <div class="form-group">
-                                                                <label role="salaryadd5v">เงินประจำตำแหน่ง</label>
-                                                                <label htmlFor="salaryadd5v" style={{ cursor: 'pointer' }}>
-                                                                    <div className={`custom-checkbox ${salaryadd5 ? 'checked' : ''}`}>
-                                                                        <i className={`fa ${salaryadd5 ? 'fa-check' : 'fa-times'}`} />
-                                                                    </div>
-                                                                </label><br/>
-                                                                <label htmlFor="salaryadd5" style={{ cursor: 'pointer' }}>
-                                                                    <div className={`custom-checkbox ${salaryadd5 ? 'checked' : ''}`}>
-                                                                        <input
-                                                                            type="text"
-                                                                            className="form-control"
-                                                                            id="salaryadd5v"
-                                                                            placeholder="ค่ารถ"
-                                                                            value={employeeData.salaryadd5v}
-                                                                            onChange={(e) => handleChange(e, 'salaryadd5v')}
-                                                                        />
-                                                                    </div>
-                                                                </label>
+                                                                <label role="salaryadd1v">เงินเพิ่มค่ารถ</label>
+                                                                <input type="text" class="form-control" id="salaryadd1v" placeholder="ค่ารถ" value={employeeData.salaryadd1v} onChange={(e) => handleChange(e, 'salaryadd1v')}
+                                                                />
                                                             </div>
                                                         </div>
                                                     )}
 
-                                                    {/* )} */}
+                                                    {employeeData.salaryadd2 && (
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label role="salaryadd2v">เงินเพิ่มค่าอาหาร</label>
+                                                                <input type="text" class="form-control" id="salaryadd2v" placeholder="ค่าอาหาร" value={employeeData.salaryadd2v} onChange={(e) => handleChange(e, 'salaryadd2v')}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    {employeeData.salaryadd3 && (
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label role="salaryadd3v">ค่าเบี้ยขยัน</label>
+                                                                <input type="text" class="form-control" id="salaryadd3v" placeholder="ค่าเบี้ยขยัน" value={employeeData.salaryadd3v} onChange={(e) => handleChange(e, 'salaryadd3v')}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    {employeeData.salaryadd4 && (
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label role="salaryadd4v">ค่าโทรศัพท์</label>
+                                                                <input type="text" class="form-control" id="salaryadd4v" placeholder="โทรศัพท์" value={employeeData.salaryadd4v} onChange={(e) => handleChange(e, 'salaryadd4v')}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    {employeeData.salaryadd5 && (
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label role="salaryadd5v">เงินประจำตำแหน่ง</label>
+                                                                <input type="text" class="form-control" id="salaryadd5v" placeholder="เงินประจำตำแหน่ง" value={employeeData.salaryadd5v} onChange={(e) => handleChange(e, 'salaryadd5v')}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    )}
+
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label role="salaryaddsum">เงินเพิ่มพิเศษรวม</label>
-                                                            <input type="text" class="form-control" id="salaryaddsum" placeholder="จำนวนเงิน" value={employeeData.salaryaddsum} readOnly />
+                                                            <input type="text" class="form-control" id="salaryaddsum" placeholder="จำนวนเงิน" value={salaryaddsum} readOnly />
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <h2 class="title">สวัสดิการวันลา</h2>
+                                                {/* <!--row--> */}
+                                            </div>
+                                            {/* <!--col-md-12--> */}
+                                        </section>
+                                        {/* <!--Frame--> */}
+                                    </div>
+                                </div>
+                                <h2 class="title">สวัสดิการวันลา</h2>
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <section class="Frame">
+                                            <div class="col-md-12">
                                                 <div class="row">
-                                                    <div class="col-md-9">
-                                                        <section class="Frame">
-                                                            <div class="col-md-12">
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group">
-                                                                            <label role="remainbusinessleave">วันลากิจคงเหลือ</label>
-                                                                            <input type="text" class="form-control" id="remainbusinessleave" placeholder="วันลากิจคงเหลือ" value={employeeData.remainbusinessleave} onChange={(e) => handleChange(e, 'remainbusinessleave')}
-                                                                            />
-                                                                        </div>
-                                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="remainbusinessleave">วันลากิจคงเหลือ</label>
+                                                            <input type="text" class="form-control" id="remainbusinessleave" placeholder="วันลากิจคงเหลือ" value={employeeData.remainbusinessleave} onChange={(e) => handleChange(e, 'remainbusinessleave')}
+                                                            />
+                                                        </div>
+                                                    </div>
 
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group">
-                                                                            <label role="businessleavesalary">จำนวนเงินต่อวัน</label>
-                                                                            <input type="text" class="form-control" id="businessleavesalary" placeholder="จำนวนเงินต่อวัน" value={employeeData.businessleavesalary} onChange={(e) => handleChange(e, 'businessleavesalary')}
-                                                                            />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                {/* <!--row--> */}
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group">
-                                                                            <label role="remainsickleave">วันลาป่วยคงเหลือ</label>
-                                                                            <input type="text" class="form-control" id="remainsickleave" placeholder="วันลาป่วยคงเหลือ" value={employeeData.remainsickleave} onChange={(e) => handleChange(e, 'remainsickleave')}
-                                                                            />
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group">
-                                                                            <label role="sickleavesalary">จำนวนเงินต่อวัน</label>
-                                                                            <input type="text" class="form-control" id="sickleavesalary" placeholder="จำนวนเงินต่อวัน" value={employeeData.sickleavesalary} onChange={(e) => handleChange(e, 'sickleavesalary')}
-                                                                            />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                {/* <!--row--> */}
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group">
-                                                                            <label role="remainvacation">วันลาพักร้อนคงเหลือ</label>
-                                                                            <input type="text" class="form-control" id="remainvacation" placeholder="วันลาพักร้อนคงเหลือ" value={employeeData.remainvacation} onChange={(e) => handleChange(e, 'remainvacation')}
-                                                                            />
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group">
-                                                                            <label role="maternityleave">จำนวนเงินต่อวัน</label>
-                                                                            <input type="text" class="form-control" id="maternityleave" placeholder="จำนวนเงินต่อวัน" value={employeeData.maternityleave} onChange={(e) => handleChange(e, 'maternityleave')}
-                                                                            />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                {/* <!--row--> */}
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group">
-                                                                            <label role="maternityleavesalary">วันลาคลอดคงเหลือ</label>
-                                                                            <input type="text" class="form-control" id="maternityleavesalary" placeholder="วันลาคลอดคงเหลือ" value={employeeData.maternityleavesalary} onChange={(e) => handleChange(e, 'maternityleavesalary')}
-                                                                            />
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group">
-                                                                            <label role="vacationsalary">จำนวนเงินต่อวัน</label>
-                                                                            <input type="text" class="form-control" id="vacationsalary" placeholder="จำนวนเงินต่อวัน" value={employeeData.vacationsalary} onChange={(e) => handleChange(e, 'vacationsalary')}
-                                                                            />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                {/* <!--row--> */}
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group">
-                                                                            <label role="militaryleave">วันลาเพื่อเกณฑ์ทหารคงเหลือ</label>
-                                                                            <input type="text" class="form-control" id="militaryleave" placeholder="วันลาเพื่อเกณฑ์ทหารคงเหลือ" value={employeeData.militaryleave} onChange={(e) => handleChange(e, 'militaryleave')}
-                                                                            />
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group">
-                                                                            <label role="militaryleavesalary">จำนวนเงินต่อวัน</label>
-                                                                            <input type="text" class="form-control" id="militaryleavesalary" placeholder="จำนวนเงินต่อวัน" value={employeeData.militaryleavesalary} onChange={(e) => handleChange(e, 'militaryleavesalary')}
-                                                                            />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                {/* <!--row--> */}
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group">
-                                                                            <label role="sterilization">วันลาเพื่อทำหมันคงเหลือ</label>
-                                                                            <input type="text" class="form-control" id="sterilization" placeholder="วันลาเพื่อทำหมันคงเหลือ" value={employeeData.sterilization} onChange={(e) => handleChange(e, 'sterilization')}
-                                                                            />
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group">
-                                                                            <label role="sterilizationsalary">จำนวนเงินต่อวัน</label>
-                                                                            <input type="text" class="form-control" id="sterilizationsalary" placeholder="จำนวนเงินต่อวัน" value={employeeData.sterilizationsalary} onChange={(e) => handleChange(e, 'sterilizationsalary')}
-                                                                            />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                {/* <!--row--> */}
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group">
-                                                                            <label role="leavefortraining">วันลาเพื่อฝึกอบรมคงเหลือ</label>
-                                                                            <input type="text" class="form-control" id="leavefortraining" placeholder="วันลาเพื่อฝึกอบรมคงเหลือ" value={employeeData.leavefortraining} onChange={(e) => handleChange(e, 'leavefortraining')}
-                                                                            />
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-md-6">
-                                                                        <div class="form-group">
-                                                                            <label role="[leavefortrainingsalary, ">จำนวนเงินต่อวัน</label>
-                                                                            <input type="text" class="form-control" id="[leavefortrainingsalary, " placeholder="จำนวนเงินต่อวัน" value={employeeData.leavefortrainingsalary} onChange={(e) => handleChange(e, 'leavefortrainingsalary')}
-                                                                            />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                {/* <!--row--> */}
-                                                            </div>
-                                                            {/* <!--col-md-12--> */}
-                                                        </section>
-                                                        {/* <!--Frame--> */}
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="businessleavesalary">จำนวนเงินต่อวัน</label>
+                                                            <input type="text" class="form-control" id="businessleavesalary" placeholder="จำนวนเงินต่อวัน" value={employeeData.businessleavesalary} onChange={(e) => handleChange(e, 'businessleavesalary')}
+                                                            />
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                {/* <!--row--> */}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="remainsickleave">วันลาป่วยคงเหลือ</label>
+                                                            <input type="text" class="form-control" id="remainsickleave" placeholder="วันลาป่วยคงเหลือ" value={employeeData.remainsickleave} onChange={(e) => handleChange(e, 'remainsickleave')}
+                                                            />
+                                                        </div>
+                                                    </div>
 
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="sickleavesalary">จำนวนเงินต่อวัน</label>
+                                                            <input type="text" class="form-control" id="sickleavesalary" placeholder="จำนวนเงินต่อวัน" value={employeeData.sickleavesalary} onChange={(e) => handleChange(e, 'sickleavesalary')}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/* <!--row--> */}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="remainvacation">วันลาพักร้อนคงเหลือ</label>
+                                                            <input type="text" class="form-control" id="remainvacation" placeholder="วันลาพักร้อนคงเหลือ" value={employeeData.remainvacation} onChange={(e) => handleChange(e, 'remainvacation')}
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="maternityleave">จำนวนเงินต่อวัน</label>
+                                                            <input type="text" class="form-control" id="maternityleave" placeholder="จำนวนเงินต่อวัน" value={employeeData.maternityleave} onChange={(e) => handleChange(e, 'maternityleave')}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/* <!--row--> */}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="maternityleavesalary">วันลาคลอดคงเหลือ</label>
+                                                            <input type="text" class="form-control" id="maternityleavesalary" placeholder="วันลาคลอดคงเหลือ" value={employeeData.maternityleavesalary} onChange={(e) => handleChange(e, 'maternityleavesalary')}
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="vacationsalary">จำนวนเงินต่อวัน</label>
+                                                            <input type="text" class="form-control" id="vacationsalary" placeholder="จำนวนเงินต่อวัน" value={employeeData.vacationsalary} onChange={(e) => handleChange(e, 'vacationsalary')}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/* <!--row--> */}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="militaryleave">วันลาเพื่อเกณฑ์ทหารคงเหลือ</label>
+                                                            <input type="text" class="form-control" id="militaryleave" placeholder="วันลาเพื่อเกณฑ์ทหารคงเหลือ" value={employeeData.militaryleave} onChange={(e) => handleChange(e, 'militaryleave')}
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="militaryleavesalary">จำนวนเงินต่อวัน</label>
+                                                            <input type="text" class="form-control" id="militaryleavesalary" placeholder="จำนวนเงินต่อวัน" value={employeeData.militaryleavesalary} onChange={(e) => handleChange(e, 'militaryleavesalary')}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/* <!--row--> */}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="sterilization">วันลาเพื่อทำหมันคงเหลือ</label>
+                                                            <input type="text" class="form-control" id="sterilization" placeholder="วันลาเพื่อทำหมันคงเหลือ" value={employeeData.sterilization} onChange={(e) => handleChange(e, 'sterilization')}
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="sterilizationsalary">จำนวนเงินต่อวัน</label>
+                                                            <input type="text" class="form-control" id="sterilizationsalary" placeholder="จำนวนเงินต่อวัน" value={employeeData.sterilizationsalary} onChange={(e) => handleChange(e, 'sterilizationsalary')}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/* <!--row--> */}
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="leavefortraining">วันลาเพื่อฝึกอบรมคงเหลือ</label>
+                                                            <input type="text" class="form-control" id="leavefortraining" placeholder="วันลาเพื่อฝึกอบรมคงเหลือ" value={employeeData.leavefortraining} onChange={(e) => handleChange(e, 'leavefortraining')}
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="[leavefortrainingsalary, ">จำนวนเงินต่อวัน</label>
+                                                            <input type="text" class="form-control" id="[leavefortrainingsalary, " placeholder="จำนวนเงินต่อวัน" value={employeeData.leavefortrainingsalary} onChange={(e) => handleChange(e, 'leavefortrainingsalary')}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 {/* <!--row--> */}
                                             </div>
                                             {/* <!--col-md-12--> */}
@@ -1184,14 +975,12 @@ function Salary() {
                                     </div>
                                 </div>
 
-
                                 <div class="line_btn">
                                     <button type="submit" class="btn b_save" onClick={updateEmployee}><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
                                     <button type="reset" class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
                                 </div>
                             </form>
                         </div>
-
                         {/* <!-- /.container-fluid --> */}
                     </section>
                     {/* <!-- /.content --> */}

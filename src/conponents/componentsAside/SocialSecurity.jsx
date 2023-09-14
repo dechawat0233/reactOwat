@@ -660,8 +660,22 @@ function SocialSecurity() {
                                                                                 <i className={`fa ${salaryadd4Sec ? 'fa-check' : 'fa-times'}`} />
                                                                             </div>
                                                                         </label>
-                                                                        <input type="text" class="form-control" id="salaryadd4vSec" placeholder="โทรศัพท์" value={salaryadd4vSec} onChange={(e) => handleChange(e, 'salaryadd4vSec')}
-                                                                            readOnly />
+                                                                        <label htmlFor="salaryadd4Sec" style={{ cursor: 'pointer' }}>
+                                                                            <div className={`custom-checkbox ${salaryadd4Sec ? 'checked' : ''}`}>
+                                                                                {salaryadd4Sec ? (
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        className="form-control"
+                                                                                        id="salaryadd4vSec"
+                                                                                        placeholder="ค่ารถ"
+                                                                                        value={salaryadd4vSec}
+                                                                                        onChange={(e) => handleChange(e, 'salaryadd4vSec')}
+                                                                                        readOnly
+                                                                                    />
+                                                                                ) : null}
+                                                                            </div>
+                                                                        </label>
+
                                                                     </div>
                                                                 </div>
                                                                 {/* )} */}
