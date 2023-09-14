@@ -427,12 +427,6 @@ function Salary() {
                     <!-- Main content --> */}
                     <section class="content">
                         <div class="container-fluid">
-                            <div class="col-md-3">
-                                <section class="Frame">
-                                    <EmployeesSelected onEmployeeSelect={onEmployeeSelect} />
-                                </section>
-
-                            </div>
                             <form onSubmit={handleManageSalary}>
 
 
@@ -772,8 +766,8 @@ function Salary() {
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>รายการเงินเพิ่มพิเศษ</label>
-                                                            <label>รายการเงินเพิ่มพิเศษ</label>
+                                                            {/* <label>รายการเงินเพิ่มพิเศษ</label> */}
+                                                            {/* <label>รายการเงินเพิ่มพิเศษ</label> */}
                                                             <button onClick={() => toggleCheckbox1('salaryadd1')} style={{ margin: '0.5rem' }}>ค่ารถ <i className={`fa ${salaryadd1 ? 'fa-check' : 'fa-times'}`} /></button>
                                                             <label>
                                                                 <input
