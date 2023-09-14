@@ -13,7 +13,7 @@ function Worktimesheet() {
 
   const [employeeId, setEmployeeId] = useState('');
   const [name, setName] = useState('');
-
+const [ month , setMonth] = useState('');
 
   const [searchWorkplaceId, setSearchWorkplaceId] = useState(''); //รหัสหน่วยงาน
   const [searchWorkplaceName, setSearchWorkplaceName] = useState(''); //ชื่อหน่วยงาน
@@ -26,33 +26,33 @@ function Worktimesheet() {
 
     // get value from form search
     const data = {
-      // employeeId: searchEmployeeId,
-      searchEmployeeId: searchEmployeeId,
-
-      // employeeName: searchEmployeeName,
-
-    };
-    console.log(searchEmployeeId);
+      employeeId: searchEmployeeId,
+      employeeName: searchEmployeeName,
+month : '02'
+    };    console.log(searchEmployeeId);
     try {
       // const response = await axios.post(endpoint + '/timerecord/searchemp', data);
       // const response = await axios.post(endpoint + '/timerecord/search', data);
       // const response = await axios.post(endpoint + '/workplace/search', data);
 
-      const response = await axios.post(endpoint + '/employee/search', data);
+      const response = await axios.post(endpoint + '/timerecord/searchemp', data);
 
-      setSearchResult(response.data.employees);
+      setSearchResult(response.data.recordworkplace  );
       // alert(response.data.employees.length);
-      if (response.data.employees.length < 1) {
+      alert(response.data.recordworkplace.length);
+      if (response.data.recordworkplace .length < 1) {
         window.location.reload();
         alert('ไม่พบข้อมูล');
       } else {
 
         // Set search values
-        setEmployeeId(response.data.employees[0].employeeId);
-        setName(response.data.employees[0].name);
+        setEmployeeId(response.data.recordworkplace[0].employeeId);
+        setName(response.data.recordworkplace[0].name);
 
-        setSearchEmployeeId(response.data.employees[0].employeeId);
-        setSearchEmployeeName(response.data.employees[0].name);
+        // setSearchEmployeeId(response.data.employees[0].employeeId);
+        // setSearchEmployeeName(response.data.employees[0].name);
+        setSearchEmployeeId('');
+        setSearchEmployeeName('');
 
       }
     } catch (error) {
