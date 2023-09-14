@@ -27,23 +27,18 @@ function Worktimesheet() {
 
   async function handleSearch(event) {
     event.preventDefault();
-
     // get value from form search
     const data = {
       employeeId: searchEmployeeId,
       employeeName: searchEmployeeName,
-      month: '02'
+      month: month
     }; console.log(searchEmployeeId);
     try {
-      // const response = await axios.post(endpoint + '/timerecord/searchemp', data);
-      // const response = await axios.post(endpoint + '/timerecord/search', data);
-      // const response = await axios.post(endpoint + '/workplace/search', data);
 
       const response = await axios.post(endpoint + '/timerecord/searchemp', data);
 
       setSearchResult(response.data.recordworkplace);
-      // alert(response.data.employees.length);
-      alert(response.data.recordworkplace.length);
+      // alert(response.data.recordworkplace.length);
       if (response.data.recordworkplace.length < 1) {
         window.location.reload();
         alert('ไม่พบข้อมูล');
