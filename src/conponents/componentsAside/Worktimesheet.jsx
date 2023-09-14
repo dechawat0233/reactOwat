@@ -1,3 +1,4 @@
+import endpoint from '../../config';
 
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -9,6 +10,57 @@ function Worktimesheet() {
       minWidth: "3rem"
     }
   };
+
+  const [employeeId, setEmployeeId] = useState('');
+  const [name, setName] = useState('');
+
+
+  const [searchWorkplaceId, setSearchWorkplaceId] = useState(''); //รหัสหน่วยงาน
+  const [searchWorkplaceName, setSearchWorkplaceName] = useState(''); //ชื่อหน่วยงาน
+  const [searchEmployeeId, setSearchEmployeeId] = useState('');
+  const [searchEmployeeName, setSearchEmployeeName] = useState('');
+  const [searchResult, setSearchResult] = useState([]);
+
+  async function handleSearch(event) {
+    event.preventDefault();
+
+    // get value from form search
+    const data = {
+      // employeeId: searchEmployeeId,
+      searchEmployeeId: searchEmployeeId,
+
+      // employeeName: searchEmployeeName,
+
+    };
+    console.log(searchEmployeeId);
+    try {
+      // const response = await axios.post(endpoint + '/timerecord/searchemp', data);
+      // const response = await axios.post(endpoint + '/timerecord/search', data);
+      // const response = await axios.post(endpoint + '/workplace/search', data);
+
+      const response = await axios.post(endpoint + '/employee/search', data);
+
+      setSearchResult(response.data.employees);
+      // alert(response.data.employees.length);
+      if (response.data.employees.length < 1) {
+        window.location.reload();
+        alert('ไม่พบข้อมูล');
+      } else {
+
+        // Set search values
+        setEmployeeId(response.data.employees[0].employeeId);
+        setName(response.data.employees[0].name);
+
+        setSearchEmployeeId(response.data.employees[0].employeeId);
+        setSearchEmployeeName(response.data.employees[0].name);
+
+      }
+    } catch (error) {
+      alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
+      window.location.reload();
+    }
+  }
+
   return (
     // <div>
     <body class="hold-transition sidebar-mini" className='editlaout'>
@@ -37,45 +89,45 @@ function Worktimesheet() {
                   <div class="col-md-12">
                     <h2 class="title">ค้นหา</h2>
                     <div class="col-md-12">
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label role="formsettime">ค้นหาด้วย</label>
-                            <select id="formsettime" name="formsettime" class="form-control" >
-                              <option value="workplaceId">รหัสหน่วยงาน</option>
-                              <option value="agencytime">ชื่อหน่วยงาน</option>
-                              <option value="employeeId">รหัสพนักงาน</option>
-                              <option value="persontime">ชื่อพนักงาน</option>
-                            </select>
+                      <form onSubmit={handleSearch}>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label role="searchEmployeeId">รหัสพนักงาน</label>
+                              <input type="text" class="form-control" id="searchEmployeeId" placeholder="รหัสพนักงาน" value={searchEmployeeId} onChange={(e) => setSearchEmployeeId(e.target.value)} />
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label role="searchname">ชื่อพนักงาน</label>
+                              <input type="text" class="form-control" id="searchname" placeholder="ชื่อพนักงาน" value={searchEmployeeName} onChange={(e) => setSearchEmployeeName(e.target.value)} />
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้าหา</button>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label role="formsettime">ชื่อ</label>
-                            <input type='text' class="form-control" name='search' value='' />
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12">
-                          <div class="form-group">
-                            <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้าหา</button>
-                          </div>
-                        </div>
-
-                      </div>
+                      </form>
                       <div class="d-flex justify-content-center">
-                        <h2 class="title">ผลลัพธ์</h2>
+                        <h2 class="title">ผลลัพธ์ {searchResult.length} รายการ</h2>
                       </div>
                       <div class="d-flex justify-content-center">
                         <div class="row">
-
                           <div class="col-md-12">
                             <div class="form-group">
                               <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
-                                <li >
-                                  ไทยยั่งยืน
-                                </li>
+                                {searchResult.map(workplace => (
+                                  <li
+                                    key={workplace.id}
+                                    onClick={() => handleClickResult(workplace)}
+                                  >
+                                    รหัส {workplace.workplaceId} หน่วยงาน {workplace.workplaceName}
+                                  </li>
+                                ))}
                               </ul>
                             </div>
                           </div>
@@ -92,7 +144,7 @@ function Worktimesheet() {
                 1001 : รักกันดี จำกัด
               </div>
             </div>
-            <br/>
+            <br />
             <div class="row">
               <div class="col-md-2">
                 ชื่อ : ไทยยั่งยืน
@@ -228,7 +280,7 @@ function Worktimesheet() {
             {/* </form> */}
           </section>
           {/* <!-- /.content --> */}
-        </div>
+        </div >
       </div >
     </body >
   )
