@@ -10,6 +10,13 @@ function Worktimesheet() {
       minWidth: "3rem"
     }
   };
+  const [checked1, setChecked1] = useState(false);
+  const [checked2, setChecked2] = useState(false);
+  const [checked3, setChecked3] = useState(false);
+
+  const [checked28, setChecked28] = useState(false);
+  const [checked31, setChecked31] = useState(false);
+
 
   const [employeeId, setEmployeeId] = useState('');
   const [name, setName] = useState('');
@@ -17,13 +24,15 @@ function Worktimesheet() {
 
   useEffect(() => {
     setMonth("01");
- }, []);
+  }, []);
 
   const [searchWorkplaceId, setSearchWorkplaceId] = useState(''); //รหัสหน่วยงาน
   const [searchWorkplaceName, setSearchWorkplaceName] = useState(''); //ชื่อหน่วยงาน
   const [searchEmployeeId, setSearchEmployeeId] = useState('');
   const [searchEmployeeName, setSearchEmployeeName] = useState('');
   const [searchResult, setSearchResult] = useState([]);
+
+  const [woekplace, setWoekplace] = useState([]);
 
   async function handleSearch(event) {
     event.preventDefault();
@@ -37,7 +46,74 @@ function Worktimesheet() {
 
       const response = await axios.post(endpoint + '/timerecord/searchemp', data);
 
+
       setSearchResult(response.data.recordworkplace);
+      // setWoekplace(response.data.recordworkplace.employee_workplaceRecord.workplaceName);
+      const employeeWorkplaceRecords = response.data.recordworkplace[0].employee_workplaceRecord;
+
+      if (employeeWorkplaceRecords.length > 0) {
+        // Extract all workplaceId values from employee_workplaceRecord
+        // const thailandTimeZone = 'Asia/Bangkok'; // Thailand time zone
+        // const dates = employeeWorkplaceRecords.map(record => {
+        //   const utcDate = new Date(record.date); // Assume the date is in UTC
+        //   const thailandDate = new Date(utcDate.toLocaleString('en-US', { timeZone: thailandTimeZone }));
+        //   if (isNaN(thailandDate.getTime())) {
+        //     console.log(`Invalid date found: ${record.date}`);
+        //     return null; // Set date to null if it's not a valid date
+        //   }
+        //   const formattedDate = thailandDate.toISOString().split('T')[0]; // Get date in 'YYYY-MM-DD' format
+        //   return formattedDate;
+        // });
+
+        const thailandTimeZone = 'Asia/Bangkok'; // Thailand time zone
+        const dates = employeeWorkplaceRecords.map(record => {
+          const inputTimeZone = 'Asia/Bangkok'; // Replace 'Your_Input_TimeZone' with the actual time zone of the input data
+          const inputDate = new Date(record.date).toLocaleString('en-US', { timeZone: inputTimeZone });
+          const thailandDate = new Date(inputDate);
+        
+          if (isNaN(thailandDate.getTime())) {
+            console.log(`Invalid date found: ${record.date}`);
+            return null; // Set date to null if it's not a valid date
+          }
+        
+          const formattedDate = thailandDate.toISOString().split('T')[0]; // Get date in 'YYYY-MM-DD' format
+          return formattedDate;
+        });
+        
+
+
+        const dates2 = employeeWorkplaceRecords.map(record => {
+          const utcDate = new Date(record.date); // Assume the date is in UTC
+          const thailandDate = new Date(utcDate.toLocaleString('en-US', { timeZone: thailandTimeZone }));
+          if (isNaN(thailandDate.getTime())) {
+            console.log(`Invalid date found: ${record.date}`);
+            return null; // Set date to null if it's not a valid date
+          }
+          const dayOfMonth = thailandDate.getDate(); // Get the day of the month
+          return dayOfMonth.toString(); // Convert it to a string
+        });
+
+        // Set the workplaceIds array in the state
+        setWoekplace(dates);
+
+        if (dates.includes('1970-01-01')) {
+
+        } else {
+          if (dates2.includes('28')) {
+            setChecked28(true);
+          }
+          if (dates2.includes('31')) {
+            setChecked31(true);
+          }
+        }
+
+        console.log(checked31);
+        console.log('Dates:', dates);
+        console.log('TEST:', dates2);
+
+
+      }
+
       // alert(response.data.recordworkplace.length);
       if (response.data.recordworkplace.length < 1) {
         window.location.reload();
@@ -47,6 +123,8 @@ function Worktimesheet() {
         // Set search values
         setEmployeeId(response.data.recordworkplace[0].employeeId);
         setName(response.data.recordworkplace[0].name);
+
+        // setWoekplace(response.data.recordworkplace[0].employee_workplaceRecord[0].workplaceName);
 
         // setSearchEmployeeId(response.data.employees[0].employeeId);
         // setSearchEmployeeName(response.data.employees[0].name);
@@ -59,6 +137,19 @@ function Worktimesheet() {
       window.location.reload();
     }
   }
+  console.log(searchResult);
+  console.log(woekplace);
+
+  const handleCheckboxChange = (event) => {
+    const { name, checked } = event.target;
+    if (name === 'checked28') {
+      setChecked28(checked);
+    } else if (name === 'checked31') {
+      setChecked31(checked);
+    }
+  };
+
+
 
   return (
     // <div>
@@ -291,6 +382,32 @@ function Worktimesheet() {
                         </tbody>
                       </table>
                     </div>
+                    <label>
+                      <input
+                        type="checkbox"
+                        name="checked28"
+                        checked={checked28}
+                        onChange={handleCheckboxChange}
+                      />
+                      Checked 28
+                    </label>
+                    <br />
+                    <label>
+                      <input
+                        type="checkbox"
+                        name="checked31"
+                        checked={checked31}
+                        onChange={handleCheckboxChange}
+                      />
+                      Checked 31
+                    </label>
+                    {/* Add more checkboxes as needed */}
+
+                    <ul>
+                      {woekplace.map((date, index) => (
+                        <li key={index}><input type="date" value={date}/></li>
+                      ))}
+                    </ul>
                   </section>
                 </div>
               </div>
