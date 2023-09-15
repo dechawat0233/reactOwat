@@ -49,7 +49,7 @@ const employeeTimerecordSchema = new mongoose.Schema({
   employee_workplaceRecord: [{
     workplaceId: String,
     workplaceName: String,
-    date: Date,
+    date: String,
     shift: String,
     startTime: String,
     endTime: String,
@@ -68,6 +68,7 @@ const workplaceTimerecordEmp = mongoose.model('employeeTimerecord', employeeTime
 
 // Get list of workplaceTimerecords
 router.get('/list', async (req, res) => {
+
   const workplaceTimeRecordData = await workplaceTimerecord.find();
   res.json(workplaceTimeRecordData);
 });
@@ -133,8 +134,8 @@ router.post('/search', async (req, res) => {
       query.date= new Date(date);
     }
 
-    console.log('Constructed Query:');
-    console.log(query);
+    // console.log('Constructed Query:');
+    // console.log(query);
 
     if (workplaceId == '' && workplaceName == '' && date == '') {
       res.status(200).json({});
@@ -142,6 +143,7 @@ router.post('/search', async (req, res) => {
 
     // Query the workplace collection for matching documents
     const recordworkplace  = await workplaceTimerecord.find(query);
+    setToEmployee(workplaceId , date , recordworkplace);
 
     await console.log('Search Results:');
     await console.log(recordworkplace  );
@@ -164,8 +166,7 @@ router.post('/searchemp', async (req, res) => {
     // Construct the search query based on the provided parameters
     const query = {};
 
-    if (
-employeeId !== '') {
+    if (employeeId !== '') {
       query.employeeId= employeeId;
     }
 
@@ -223,6 +224,8 @@ router.post('/create', async (req, res) => {
 
   try {
     await workplaceTimeRecordData.save();
+    // setToEmployee(id , month);
+
     res.json(workplaceTimeRecordData);
   } catch (err) {
     console.log(err);
@@ -292,5 +295,79 @@ router.put('/update/:workplaceRecordId', async (req, res) => {
 });
 
 
-module.exports = router;
+// Update a employeeTimeRecordData  by its employeeTimeRecordData  
+router.put('/updateemp/:employeeRecordId', async (req, res) => {
+  const employeeIdToUpdate = req.params.employeeRecordId;
+  const updateFields = req.body;
 
+  try {
+    // Find the resource by ID and update it
+    const updatedResource = await employeeTimerecord.findByIdAndUpdate(
+      employeeIdToUpdate,
+      updateFields,
+      { new: true } // To get the updated document as the result
+    );
+    if (!updatedResource) {
+      return res.status(404).json({ message: 'Resource not found' });
+    }
+
+    // Send the updated resource as the response
+    res.json(updatedResource);
+
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+async function setToEmployee(selectWorkplaceId , selectMonth , workplaceTimeRecordData ){
+  console.log('setToEmployee working');
+  //set employee id and month of record
+const employeeId = '';
+const workplaceId = await selectWorkplaceId;
+ const month =await selectMonth;
+ const query = {};
+
+//  console.log(workplaceTimeRecordData );
+const date = await new Date(month);
+const monthIndex = await date.getMonth();
+const month2 = await (monthIndex + 1).toString().padStart(2, '0');
+await console.log('workplace ID: '+ workplaceId );
+await console.log('month: '+ month2);
+
+workplaceTimeRecordData.forEach(element => {
+  // console.log(element['employeeRecord'] );
+  // console.log('========');
+  element['employeeRecord'].forEach(element1 => {
+    if(element1.staffId  !== ''){
+      // console.log('employee: '+ element1.staffId );
+      // console.log('month: '+ month2)
+      // console.log('========');
+
+//    
+try {
+  //check employee timerecord from database
+  query.employeeId= element1.staffId;
+  query.month = { $regex: new RegExp(month2, 'i') };
+  
+    // const recordworkplace  = awworkplaceTimerecordEmp.find(query);
+  // console.log(recordworkplace  .length);
+ 
+ } catch (error) {
+   console.error(error);
+ }
+ 
+ 
+    } //end if
+
+
+  }); //end sub loop
+
+}); //end  loop
+
+//end function
+}
+
+module.exports = router;
