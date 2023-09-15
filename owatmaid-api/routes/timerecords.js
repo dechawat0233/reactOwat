@@ -143,7 +143,6 @@ router.post('/search', async (req, res) => {
 
     // Query the workplace collection for matching documents
     const recordworkplace  = await workplaceTimerecord.find(query);
-    setToEmployee(workplaceId , date , recordworkplace);
 
     await console.log('Search Results:');
     await console.log(recordworkplace  );
@@ -225,6 +224,7 @@ router.post('/create', async (req, res) => {
   try {
     await workplaceTimeRecordData.save();
     // setToEmployee(id , month);
+    await setToEmployee(workplaceId, workplaceName, date, employeeRecord);
 
     res.json(workplaceTimeRecordData);
   } catch (err) {
@@ -322,11 +322,11 @@ router.put('/updateemp/:employeeRecordId', async (req, res) => {
 });
 
 
-async function setToEmployee(selectWorkplaceId , selectMonth , workplaceTimeRecordData ){
+async function setToEmployee(selectWorkplaceId , selectworkplaceName ,selectMonth , workplaceTimeRecordData ){
   console.log('setToEmployee working');
   //set employee id and month of record
-const employeeId = '';
 const workplaceId = await selectWorkplaceId;
+const workplaceName = await selectworkplaceName;
  const month =await selectMonth;
  const query = {};
 
@@ -340,26 +340,69 @@ await console.log('month: '+ month2);
 workplaceTimeRecordData.forEach(element => {
   // console.log(element['employeeRecord'] );
   // console.log('========');
-  element['employeeRecord'].forEach(element1 => {
+  element['employeeRecord'].forEach(async element1 => {
     if(element1.staffId  !== ''){
-      // console.log('employee: '+ element1.staffId );
-      // console.log('month: '+ month2)
-      // console.log('========');
+      console.log('employee: '+ element1.staffId);
+      console.log('month: '+ month2)
+      console.log('========');
+      try {
+        //check employee timerecord from database
+        query.employeeId= await element1.staffId;
+        query.month = await { $regex: new RegExp(month2, 'i') };
+        
+          const recordworkplace  = await workplaceTimerecordEmp.find(query);
+        // await console.log(recordworkplace  .length);
 
-//    
-try {
-  //check employee timerecord from database
-  query.employeeId= element1.staffId;
-  query.month = { $regex: new RegExp(month2, 'i') };
-  
-    // const recordworkplace  = awworkplaceTimerecordEmp.find(query);
-  // console.log(recordworkplace  .length);
- 
- } catch (error) {
-   console.error(error);
- }
- 
- 
+        //check employee timerecord 
+        if(recordworkplace  .length > 0){
+// employee timerecord is created
+
+        } else {
+          // employee timerecord is no data
+            const timerecordId = '';
+            const employeeId = await element1.staffId;
+            const  employeeName = element1.staffName;
+            const  month = await month2;
+            const employee_workplaceRecord = {
+              'workplaceId': workplaceId,
+              'workplaceName': workplaceName,
+              'date': selectMonth,
+              'shift': element1.shift,
+              'startTime': element1.startTime,
+              'endTime': element1.endTime,
+              'allTime': element1.allTime,
+              'otTime': element1.otTime,
+              'selectotTime': element1.selectotTime,
+              'selectotTimeOut': element1.selectotTimeOut,
+            };
+
+          
+      
+          // Create employee record
+          const workplaceTimeRecordData = new workplaceTimerecordEmp({
+            timerecordId,
+            employeeId,
+            employeeName,
+            month,
+            employee_workplaceRecord
+          });
+console.log('testxxxxx');
+console.log(workplaceTimeRecordData );        
+
+          try {
+            await workplaceTimeRecordData.save();
+            // res.json(workplaceTimeRecordData);
+          } catch (err) {
+            console.log(err);
+            // res.status(400).json({ error: err.message });
+          }
+        
+        
+        }
+       } catch (error) {
+         console.error(error);
+       }
+      
     } //end if
 
 
@@ -369,5 +412,7 @@ try {
 
 //end function
 }
+
+
 
 module.exports = router;
