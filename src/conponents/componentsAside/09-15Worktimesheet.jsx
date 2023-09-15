@@ -7,7 +7,7 @@ import '../editwindowcss.css';
 function Worktimesheet() {
   const styles = {
     th: {
-      minWidth: "4rem"
+      minWidth: "3rem"
     }
   };
   const [checked1, setChecked1] = useState(false);
@@ -70,51 +70,72 @@ function Worktimesheet() {
 
       const response = await axios.post(endpoint + '/timerecord/searchemp', data);
 
-      // otTime
+
       setSearchResult(response.data.recordworkplace);
       // setWoekplace(response.data.recordworkplace.employee_workplaceRecord.workplaceName);
       const employeeWorkplaceRecords = response.data.recordworkplace[0].employee_workplaceRecord;
 
       if (employeeWorkplaceRecords.length > 0) {
-        const dates = employeeWorkplaceRecords.map(record => record.date);
-        // const otTime = employeeWorkplaceRecords.map(record => record.otTime);
-        const otTime = employeeWorkplaceRecords.map((record) => record.otTime);
-
-        setTableData((prevState) => {
-          const updatedData = [...prevState];
-          dates.forEach((date, index) => {
-            const dataIndex = parseInt(date, 10) - 1; // Subtract 1 because indices are zero-based
-            if (dataIndex >= 0 && dataIndex < updatedData.length) {
-              updatedData[dataIndex].isChecked = true;
-              updatedData[dataIndex].textValue = otTime[index]; // Set otTime at the same index as dates
-            }
-          });
-          return updatedData;
-        });
-
-        // setTableData((prevState) => {
-        //   const updatedData = [...prevState];
-        //   dates.forEach((date) => {
-        //     const index = parseInt(date, 10) - 1; // Subtract 1 because indices are zero-based
-        //     if (index >= 0 && index < updatedData.length) {
-        //       updatedData[index].isChecked = true;
-        //     }
-        //   });
-        //   return updatedData;
+        // Extract all workplaceId values from employee_workplaceRecord
+        // const thailandTimeZone = 'Asia/Bangkok'; // Thailand time zone
+        // const dates = employeeWorkplaceRecords.map(record => {
+        //   const utcDate = new Date(record.date); // Assume the date is in UTC
+        //   const thailandDate = new Date(utcDate.toLocaleString('en-US', { timeZone: thailandTimeZone }));
+        //   if (isNaN(thailandDate.getTime())) {
+        //     console.log(`Invalid date found: ${record.date}`);
+        //     return null; // Set date to null if it's not a valid date
+        //   }
+        //   const formattedDate = thailandDate.toISOString().split('T')[0]; // Get date in 'YYYY-MM-DD' format
+        //   return formattedDate;
         // });
 
-        // const updatedTableData = tableData.map((data, index) => ({
-        //   ...data,
-        //   textValue: otTime[index] || '', // Use the otTime value if available, or an empty string if not
-        // }));
+        const thailandTimeZone = 'Asia/Bangkok'; // Thailand time zone
+        const dates = employeeWorkplaceRecords.map(record => {
+          const inputTimeZone = 'Asia/Bangkok'; // Replace 'Your_Input_TimeZone' with the actual time zone of the input data
+          const inputDate = new Date(record.date).toLocaleString('en-US', { timeZone: inputTimeZone });
+          const thailandDate = new Date(inputDate);
 
-        // Set the updated tableData state
-        // setTableData(updatedTableData);
+          if (isNaN(thailandDate.getTime())) {
+            console.log(`Invalid date found: ${record.date}`);
+            return null; // Set date to null if it's not a valid date
+          }
 
+          const formattedDate = thailandDate.toISOString().split('T')[0]; // Get date in 'YYYY-MM-DD' format
+          return formattedDate;
+        });
+
+
+
+        const dates2 = employeeWorkplaceRecords.map(record => {
+          const utcDate = new Date(record.date); // Assume the date is in UTC
+          const thailandDate = new Date(utcDate.toLocaleString('en-US', { timeZone: thailandTimeZone }));
+          if (isNaN(thailandDate.getTime())) {
+            console.log(`Invalid date found: ${record.date}`);
+            return null; // Set date to null if it's not a valid date
+          }
+          const dayOfMonth = thailandDate.getDate(); // Get the day of the month
+          return dayOfMonth.toString(); // Convert it to a string
+        });
+
+        // Set the workplaceIds array in the state
         setWoekplace(dates);
 
+        if (dates.includes('1970-01-01')) {
+
+        } else {
+          if (dates2.includes('28')) {
+            setChecked28(true);
+          }
+          if (dates2.includes('31')) {
+            setChecked31(true);
+          }
+        }
+
+        console.log(checked31);
         console.log('Dates:', dates);
-        console.log('time:', otTime);
+        console.log('TEST:', dates2);
+
+
       }
 
       // alert(response.data.recordworkplace.length);
@@ -162,20 +183,20 @@ function Worktimesheet() {
     }))
   );
 
-  // useEffect(() => {
-  //   const dates = ['28', '29']; // Example dates
+  useEffect(() => {
+    const dates2 = ['28', '29']; // Example dates
 
-  //   setTableData((prevState) => {
-  //     const updatedData = [...prevState];
-  //     dates.forEach((date) => {
-  //       const index = parseInt(date, 10) - 1; // Subtract 1 because indices are zero-based
-  //       if (index >= 0 && index < updatedData.length) {
-  //         updatedData[index].isChecked = true;
-  //       }
-  //     });
-  //     return updatedData;
-  //   });
-  // }, []); // The empty dependency array ensures this effect runs only once on component mount
+    setTableData((prevState) => {
+      const updatedData = [...prevState];
+      dates2.forEach((date) => {
+        const index = parseInt(date, 10) - 1; // Subtract 1 because indices are zero-based
+        if (index >= 0 && index < updatedData.length) {
+          updatedData[index].isChecked = true;
+        }
+      });
+      return updatedData;
+    });
+  }, []); // The empty dependency array ensures this effect runs only once on component mount
 
   const handleCheckboxChange = (index) => {
     setTableData((prevState) => {
@@ -317,6 +338,118 @@ function Worktimesheet() {
                 <div class="col-md-9">
                   <section class="Frame">
                     <div class="container" style={{ overflowX: 'scroll' }}>
+                      <table id="" class="table table-bordered ">
+                        <thead>
+                          <tr>
+                            <th style={styles.th} id="test">สรุป</th>
+                            <th style={styles.th} id="test">21</th>
+                            <th style={styles.th} id="test">22</th>
+                            <th style={styles.th} id="test">23</th>
+                            <th style={styles.th} id="test">24</th>
+                            <th style={styles.th} id="test">25</th>
+                            <th style={styles.th} id="test">26</th>
+                            <th style={styles.th} id="test">27</th>
+                            <th style={styles.th} id="test">28</th>
+                            <th style={styles.th} id="test">29</th>
+                            <th style={styles.th} id="test">30</th>
+                            <th style={styles.th} id="test">1</th>
+                            <th style={styles.th} id="test">2</th>
+                            <th style={styles.th} id="test">3</th>
+                            <th style={styles.th} id="test">4</th>
+                            <th style={styles.th} id="test">5</th>
+                            <th style={styles.th} id="test">6</th>
+                            <th style={styles.th} id="test">7</th>
+                            <th style={styles.th} id="test">8</th>
+                            <th style={styles.th} id="test">9</th>
+                            <th style={styles.th} id="test">10</th>
+                            <th style={styles.th} id="test">11</th>
+                            <th style={styles.th} id="test">12</th>
+                            <th style={styles.th} id="test">13</th>
+                            <th style={styles.th} id="test">14</th>
+                            <th style={styles.th} id="test">15</th>
+                            <th style={styles.th} id="test">16</th>
+                            <th style={styles.th} id="test">17</th>
+                            <th style={styles.th} id="test">18</th>
+                            <th style={styles.th} id="test">19</th>
+                            <th style={styles.th} id="test">20</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>22 วัน</td>
+                            <td><input type="checkbox" class="form-control" name='' value='' checked /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' checked /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' checked /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' checked /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' checked /></td>
+                            <td>
+                              1006
+                              <br /><input type="checkbox" class="form-control" name='' value='' checked /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' checked /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' checked /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' checked /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' checked /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' checked /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' checked /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' checked /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' checked /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' checked /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' checked /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' checked /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' checked /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' checked /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' checked /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' checked /></td>
+                            <td><input type="checkbox" class="form-control" name='' value='' checked /></td>
+
+                          </tr>
+                          <tr>
+                            <td>66</td>
+                            <td><input type="text" class="form-control" name='' value='3' /></td>
+                            <td><input type="text" class="form-control" name='' value='3' /></td>
+                            <td><input type="text" class="form-control" name='' value='' /></td>
+                            <td><input type="text" class="form-control" name='' value='' /></td>
+                            <td><input type="text" class="form-control" name='' value='3' /></td>
+                            <td><input type="text" class="form-control" name='' value='3' /></td>
+                            <td><input type="text" class="form-control" name='' value='3' /></td>
+                            <td><input type="text" class="form-control" name='' value='3' /></td>
+                            <td><input type="text" class="form-control" name='' value='3' /></td>
+                            <td><input type="text" class="form-control" name='' value='3' /></td>
+                            <td><input type="text" class="form-control" name='' value='' /></td>
+                            <td><input type="text" class="form-control" name='' value='' /></td>
+                            <td><input type="text" class="form-control" name='' value='3' /></td>
+                            <td><input type="text" class="form-control" name='' value='3' /></td>
+                            <td><input type="text" class="form-control" name='' value='3' /></td>
+                            <td><input type="text" class="form-control" name='' value='3' /></td>
+                            <td><input type="text" class="form-control" name='' value='3' /></td>
+                            <td><input type="text" class="form-control" name='' value='' /></td>
+                            <td><input type="text" class="form-control" name='' value='' /></td>
+                            <td><input type="text" class="form-control" name='' value='3' /></td>
+                            <td><input type="text" class="form-control" name='' value='3' /></td>
+                            <td><input type="text" class="form-control" name='' value='3' /></td>
+                            <td><input type="text" class="form-control" name='' value='3' /></td>
+                            <td><input type="text" class="form-control" name='' value='3' /></td>
+                            <td><input type="text" class="form-control" name='' value='' /></td>
+                            <td><input type="text" class="form-control" name='' value='' /></td>
+                            <td><input type="text" class="form-control" name='' value='3' /></td>
+                            <td><input type="text" class="form-control" name='' value='3' /></td>
+                            <td><input type="text" class="form-control" name='' value='3' /></td>
+                            <td><input type="text" class="form-control" name='' value='3' /></td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+
+
+
                       <table class="table table-bordered ">
                         <thead>
                           <tr>
@@ -337,7 +470,7 @@ function Worktimesheet() {
                                   checked={data.isChecked}
                                   disabled={true}
                                   onChange={() => handleCheckboxChange(index)}
-                                  style={{ color: 'black' }}
+                                  style={{color: 'black' }}
                                 />
                               </td>
                             ))}

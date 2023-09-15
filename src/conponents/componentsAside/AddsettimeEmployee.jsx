@@ -17,8 +17,16 @@ function AddsettimeEmployee() {
     const [month, setMonth] = useState('');
 
     useEffect(() => {
-       setMonth("01");
+        setMonth("01");
     }, []);
+
+    const options = [];
+
+    for (let i = 1; i <= 31; i++) {
+        // Use padStart to add leading zeros to numbers less than 10
+        const formattedValue = i.toString().padStart(2, '0');
+        options.push(<option key={i} value={formattedValue}>{formattedValue}</option>);
+    }
 
     //Workplace data
     const [employeeId, setEmployeeId] = useState(''); //รหัสหน่วยงาน
@@ -67,7 +75,7 @@ function AddsettimeEmployee() {
     const initialRowData2 = {
         workplaceId: '',
         workplaceName: '',
-        date: null, // Use null as initial value for DatePicker
+        date: '', // Use null as initial value for DatePicker
         shift: 'morning_shift',
         startTime: '',
         endTime: '',
@@ -507,9 +515,6 @@ function AddsettimeEmployee() {
                                         </select>
                                     </div>
                                 </div>
-
-
-
                                 {/* <div class="col-md-2">
                                     <div class="form-group">
                                         <label role="datetime">วันที่</label>
@@ -549,8 +554,6 @@ function AddsettimeEmployee() {
                                             </tr>
                                         </thead>
                                         <tbody>
-
-
                                             {rowDataList2.map((rowData2, index2) => (
                                                 <tr key={index2}>
                                                     <td>
@@ -562,7 +565,7 @@ function AddsettimeEmployee() {
                                                         />
                                                     </td>
                                                     <td>
-                                                        <div style={{ position: 'relative', zIndex: 9999, marginLeft: '0rem' }}>
+                                                        {/* <div style={{ position: 'relative', zIndex: 9999, marginLeft: '0rem' }}>
                                                             <DatePicker
                                                                 id={`datetime${index2}`}
                                                                 name={`datetime${index2}`} // 
@@ -579,7 +582,11 @@ function AddsettimeEmployee() {
                                                                     },
                                                                 }}
                                                             />
-                                                        </div>
+                                                        </div> */}
+                                                        <select className="form-control" value={rowData2.date} onChange={(e) => handleFieldChange2(index2, 'date', e.target.value)} style={{ width: '5.5rem' }} >
+                                                            <option value="">เลือกวัน</option>
+                                                            {options}
+                                                        </select>
                                                     </td>
                                                     <td>
                                                         <select className="form-control" value={rowData2.shift} onChange={(e) => handleFieldChange2(index2, 'shift', e.target.value)} style={{ width: '5.5rem' }} >
@@ -587,7 +594,8 @@ function AddsettimeEmployee() {
                                                             <option value="afternoon_shift">กะบ่าย</option>
                                                             <option value="night_shift">กะดึก</option>
                                                             <option value="specialt_shift">กะพิเศษ</option>
-                                                        </select></td>
+                                                        </select>
+                                                    </td>
                                                     <td><input type="text" class="form-control" name='startTime' value={rowData2.startTime} onChange={(e) => handleFieldChange2(index2, 'startTime', e.target.value)} /></td>
                                                     <td><input type="text" class="form-control" name='endTime' value={rowData2.endTime} onChange={(e) => handleFieldChange2(index2, 'endTime', e.target.value)} /></td>
                                                     <td><input type="text" class="form-control" name='allTime' value={rowData2.allTime} onChange={(e) => handleFieldChange2(index2, 'allTime', e.target.value)} style={{ width: '4rem' }} /></td>
