@@ -318,7 +318,7 @@ function Worktimesheet() {
               {searchResult.map((
                 employeerecord) => (
                   'ประจำเดือน ' + getMonthName( employeerecord.month) 
-                +'ตั้งแต่วันที่ 21 ' + getMonthName( 12) 
+                +'ตั้งแต่วันที่ 21 ' + getMonthName(  parseInt(employeerecord.month , 10) -1) 
 +'ถึง 20 ' + getMonthName( employeerecord.month) )
 +'  ' + (parseInt(employeerecord.timerecordId , 10) +543)
                )}
