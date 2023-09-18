@@ -45,7 +45,7 @@ function Worktimesheet() {
   const [employeeId, setEmployeeId] = useState('');
   const [name, setName] = useState('');
   const [month, setMonth] = useState('');
-
+  
   useEffect(() => {
     setMonth("01");
   }, []);
@@ -61,7 +61,7 @@ function Worktimesheet() {
   async function handleSearch(event) {
     event.preventDefault();
     // get value from form search
-    const data = {
+    const data = await {
       employeeId: searchEmployeeId,
       employeeName: searchEmployeeName,
       month: month
@@ -70,10 +70,13 @@ function Worktimesheet() {
 
       const response = await axios.post(endpoint + '/timerecord/searchemp', data);
 
-      // otTime
-      setSearchResult(response.data.recordworkplace);
-      // setWoekplace(response.data.recordworkplace.employee_workplaceRecord.workplaceName);
-      const employeeWorkplaceRecords = response.data.recordworkplace[0].employee_workplaceRecord;
+      await setSearchResult(response.data.recordworkplace);
+
+      // alert(JSON.stringify(response.data , null, 2) );
+      // await alert(searchResult[0].employee_workplaceRecord[0].workplaceId );
+
+      const employeeWorkplaceRecords = await response.data.recordworkplace[0].employee_workplaceRecord;
+// alert(employeeWorkplaceRecords );
 
       if (employeeWorkplaceRecords.length > 0) {
         const dates = employeeWorkplaceRecords.map(record => record.date);
@@ -124,8 +127,9 @@ function Worktimesheet() {
       } else {
 
         // Set search values
-        setEmployeeId(response.data.recordworkplace[0].employeeId);
-        setName(response.data.recordworkplace[0].name);
+        await setEmployeeId(response.data.recordworkplace[0].employeeId);
+        await setName(response.data.recordworkplace[0].employeeName);
+
 
         // setWoekplace(response.data.recordworkplace[0].employee_workplaceRecord[0].workplaceName);
 
@@ -259,7 +263,7 @@ function Worktimesheet() {
                           <div class="row">
                             <div class="col-md-12">
                               <div class="form-group">
-                                <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้าหา</button>
+                                <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา</button>
                               </div>
                             </div>
                           </div>
@@ -275,11 +279,11 @@ function Worktimesheet() {
                               <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
                                 {searchResult.map(workplace => (
                                   <li
-                                    key={workplace.id}
+                                    key={workplace.employeeId}
                                     onClick={() => handleClickResult(workplace)}
                                   >
-                                    รหัส {workplace.workplaceId} หน่วยงาน {workplace.workplaceName}
-                                  </li>
+                                    รหัส {workplace.employeeId || ''} ชื่อพนักงาน {workplace.employeeName ||''}
+                                  </li> 
                                 ))}
                               </ul>
                             </div>
@@ -292,18 +296,32 @@ function Worktimesheet() {
               </div>
 
             </div>
+
             <div class="row">
               <div class="col-md-2">
-                1001 : รักกันดี จำกัด
+               {searchResult.map((
+                employeerecord) => (
+                  employeerecord.employeeId +': ชื่อพนักงาน ' + employeerecord.employeeName)
+               )}
               </div>
             </div>
             <br />
+
             <div class="row">
               <div class="col-md-2">
-                ชื่อ : ไทยยั่งยืน
+                {searchResult.map((
+                employeerecord) => (
+                  '                ชื่อ :                   ' + employeerecord.employeeName)
+               )}
               </div>
               <div class="col-md-3">
-                ประจำเดือน กรกฏาคม ตั้งแต่วันที่ 21 มิถุนายน ถึง 20 กรกฏาคม 2566
+              {searchResult.map((
+                employeerecord) => (
+                  'ประจำเดือน ' + getMonthName( employeerecord.month) 
+                +'ตั้งแต่วันที่ 21 ' + getMonthName( 12) 
++'ถึง 20 ' + getMonthName( employeerecord.month) )
++'  ' + (parseInt(employeerecord.timerecordId , 10) +543)
+               )}
               </div>
             </div>
             <br />
@@ -312,6 +330,7 @@ function Worktimesheet() {
                 ทั้งหมด 22 วัน
               </div>
             </div>
+            
             <form>
               <div class="row">
                 <div class="col-md-9">
@@ -394,8 +413,26 @@ function Worktimesheet() {
           {/* <!-- /.content --> */}
         </div >
       </div >
+      
+
     </body >
   )
 }
 
+function getMonthName(monthNumber) {
+  const months = [
+    'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
+    'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
+  ];
+
+
+  // Ensure the monthNumber is within a valid range (1-12)
+  if (monthNumber >= 1 && monthNumber <= 12) {
+    return months[monthNumber - 1]; // Months array is 0-based
+  } else {
+    // return 'Invalid Month';
+    return months[12]; // Months array is 12 -based
+
+  }
+}
 export default Worktimesheet
