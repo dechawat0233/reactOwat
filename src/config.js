@@ -7,7 +7,7 @@
 
 //config for server
 
-  const endpoint = 'http://192.168.1.189:3000'
+  const endpoint = 'http://10.10.110.7:3000'
 //   const endpoint = 'http://192.168.1.189:3000'
 
 
