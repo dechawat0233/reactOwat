@@ -158,34 +158,34 @@ function AddsettimeEmployee() {
                             case 'morning_shift':
                                 newDataList2[index2] = {
                                     ...newDataList2[index2],
-                                    ['startTime']: workplaceIdSearch.workStart1 + '',
-                                    ['endTime']: workplaceIdSearch.workEnd1 + '',
-                                    ['allTime']: calTime(workplaceIdSearch.workStart1, workplaceIdSearch.workEnd1, workplaceIdSearch.workOfHour) + '',
-                                    ['otTime']: calTime(workplaceIdSearch.workStartOt1, workplaceIdSearch.workEndOt1, workplaceIdSearch.workOfOT) + '',
-                                    ['selectotTime']: workplaceIdSearch.workStartOt1 + '',
-                                    ['selectotTimeOut']: workplaceIdSearch.workEndOt1 + '',
+                                    ['startTime']: workplaceIdSearch.workStart1 || '' + '',
+                                    ['endTime']: workplaceIdSearch.workEnd1 || ''+ '',
+                                    ['allTime']: calTime(workplaceIdSearch.workStart1 || '', workplaceIdSearch.workEnd1|| '', workplaceIdSearch.workOfHour || '') || '' + '',
+                                    ['otTime']: calTime(workplaceIdSearch.workStartOt1 || '', workplaceIdSearch.workEndOt1 || '', workplaceIdSearch.workOfOT || '') || '' + '',
+                                    ['selectotTime']: workplaceIdSearch.workStartOt1 || ''+ '',
+                                    ['selectotTimeOut']: workplaceIdSearch.workEndOt1 || '' + '',
                                 };
                                 break;
                             case 'afternoon_shift':
                                 newDataList2[index2] = {
                                     ...newDataList2[index2],
-                                    ['startTime']: workplaceIdSearch.workStart2 + '',
-                                    ['endTime']: workplaceIdSearch.workEnd2 + '',
-                                    ['allTime']: calTime(workplaceIdSearch.workStart2, workplaceIdSearch.workEnd2, workplaceIdSearch.workOfHour) + '',
-                                    ['otTime']: calTime(workplaceIdSearch.workStartOt2, workplaceIdSearch.workEndOt2, workplaceIdSearch.workOfOT) + '',
-                                    ['selectotTime']: workplaceIdSearch.workStartOt2 + '',
-                                    ['selectotTimeOut']: workplaceIdSearch.workEndOt2 + '',
+                                    ['startTime']: workplaceIdSearch.workStart2 || '' + '',
+                                    ['endTime']: workplaceIdSearch.workEnd2 || '' + '',
+                                    ['allTime']: calTime(workplaceIdSearch.workStart2 || '', workplaceIdSearch.workEnd2 || '', workplaceIdSearch.workOfHour || '') || '' + '',
+                                    ['otTime']: calTime(workplaceIdSearch.workStartOt2 || '', workplaceIdSearch.workEndOt2 || '', workplaceIdSearch.workOfOT || '') || '' + '',
+                                    ['selectotTime']: workplaceIdSearch.workStartOt2 || '' + '',
+                                    ['selectotTimeOut']: workplaceIdSearch.workEndOt2 || '' + '',
                                 };
                                 break;
                             case 'night_shift':
                                 newDataList2[index2] = {
                                     ...newDataList2[index2],
-                                    ['startTime']: workplaceIdSearch.workStart3 + '',
-                                    ['endTime']: workplaceIdSearch.workEnd3 + '',
-                                    ['allTime']: calTime(workplaceIdSearch.workStart3, workplaceIdSearch.workEnd3, workplaceIdSearch.workOfHour) + '',
-                                    ['otTime']: calTime(workplaceIdSearch.workStartOt3, workplaceIdSearch.workEndOt3, workplaceIdSearch.workOfOT) + '',
-                                    ['selectotTime']: workplaceIdSearch.workStartOt3 + '',
-                                    ['selectotTimeOut']: workplaceIdSearch.workEndOt3 + '',
+                                    ['startTime']: workplaceIdSearch.workStart3 || '' + '',
+                                    ['endTime']: workplaceIdSearch.workEnd3 || '' + '',
+                                    ['allTime']: calTime(workplaceIdSearch.workStart3 || '', workplaceIdSearch.workEnd3 || '', workplaceIdSearch.workOfHour || '') || '' + '',
+                                    ['otTime']: calTime(workplaceIdSearch.workStartOt3 || '', workplaceIdSearch.workEndOt3 || '', workplaceIdSearch.workOfOT || '') || ''+ '',
+                                    ['selectotTime']: workplaceIdSearch.workStartOt3 || '' + '',
+                                    ['selectotTimeOut']: workplaceIdSearch.workEndOt3 || '' + '',
                                 };
                                 break;
                             default:
