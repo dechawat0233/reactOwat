@@ -45,7 +45,7 @@ function Worktimesheet() {
   const [employeeId, setEmployeeId] = useState('');
   const [name, setName] = useState('');
   const [month, setMonth] = useState('');
-  
+
   useEffect(() => {
     setMonth("01");
   }, []);
@@ -76,7 +76,7 @@ function Worktimesheet() {
       // await alert(searchResult[0].employee_workplaceRecord[0].workplaceId );
 
       const employeeWorkplaceRecords = await response.data.recordworkplace[0].employee_workplaceRecord;
-// alert(employeeWorkplaceRecords );
+      // alert(employeeWorkplaceRecords );
 
       if (employeeWorkplaceRecords.length > 0) {
         const dates = employeeWorkplaceRecords.map(record => record.date);
@@ -282,8 +282,8 @@ function Worktimesheet() {
                                     key={workplace.employeeId}
                                     onClick={() => handleClickResult(workplace)}
                                   >
-                                    รหัส {workplace.employeeId || ''} ชื่อพนักงาน {workplace.employeeName ||''}
-                                  </li> 
+                                    รหัส {workplace.employeeId || ''} ชื่อพนักงาน {workplace.employeeName || ''}
+                                  </li>
                                 ))}
                               </ul>
                             </div>
@@ -299,10 +299,10 @@ function Worktimesheet() {
 
             <div class="row">
               <div class="col-md-2">
-               {searchResult.map((
-                employeerecord) => (
-                  employeerecord.employeeId +': ชื่อพนักงาน ' + employeerecord.employeeName)
-               )}
+                {searchResult.map((
+                  employeerecord) => (
+                  employeerecord.employeeId + ': ชื่อพนักงาน ' + employeerecord.employeeName)
+                )}
               </div>
             </div>
             <br />
@@ -310,18 +310,18 @@ function Worktimesheet() {
             <div class="row">
               <div class="col-md-2">
                 {searchResult.map((
-                employeerecord) => (
+                  employeerecord) => (
                   '                ชื่อ :                   ' + employeerecord.employeeName)
-               )}
+                )}
               </div>
               <div class="col-md-3">
-              {searchResult.map((
-                employeerecord) => (
-                  'ประจำเดือน ' + getMonthName( employeerecord.month) 
-                +'ตั้งแต่วันที่ 21 ' + getMonthName( 12) 
-+'ถึง 20 ' + getMonthName( employeerecord.month) )
-+'  ' + (parseInt(employeerecord.timerecordId , 10) +543)
-               )}
+                {searchResult.map((
+                  employeerecord) => (
+                    'ประจำเดือน ' + getMonthName(employeerecord.month)
+                    + 'ตั้งแต่วันที่ 21 ' + getMonthName(12)
+                    + 'ถึง 20 ' + getMonthName(employeerecord.month))
+                  + '  ' + (parseInt(employeerecord.timerecordId, 10) + 543)
+                )}
               </div>
             </div>
             <br />
@@ -330,7 +330,7 @@ function Worktimesheet() {
                 ทั้งหมด 22 วัน
               </div>
             </div>
-            
+
             <form>
               <div class="row">
                 <div class="col-md-9">
@@ -413,7 +413,7 @@ function Worktimesheet() {
           {/* <!-- /.content --> */}
         </div >
       </div >
-      
+
 
     </body >
   )
