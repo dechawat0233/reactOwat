@@ -7,7 +7,6 @@ const cors = require('cors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
-const { format } = require('date-fns');
 
 
 //Connect mongodb
@@ -354,7 +353,7 @@ const workplaceName = await selectworkplaceName;
  const query = {};
 
 //  console.log(workplaceTimeRecordData );
-const date = await new Date(month + 'T00:00:00Z');
+const date = await new Date(month );
 const monthIndex = await date.getMonth();
 const month2 = await (monthIndex + 1).toString().padStart(2, '0');
 await console.log('workplace ID: '+ workplaceId );
