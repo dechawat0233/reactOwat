@@ -241,7 +241,7 @@ router.post('/create', async (req, res) => {
   try {
     await workplaceTimeRecordData.save();
     // setToEmployee(id , month);
-    await setToEmployee(workplaceId, workplaceName, formatDateToYYYYMMDD(date) , employeeRecord);
+    await setToEmployee(workplaceId, workplaceName, date, employeeRecord);
 x
     res.json(workplaceTimeRecordData);
   } catch (err) {
@@ -354,7 +354,7 @@ const workplaceName = await selectworkplaceName;
  const query = {};
 
 //  console.log(workplaceTimeRecordData );
-const date = await new Date(month);
+const date = await new Date(month + 'T00:00:00Z');
 const monthIndex = await date.getMonth();
 const month2 = await (monthIndex + 1).toString().padStart(2, '0');
 await console.log('workplace ID: '+ workplaceId );
@@ -484,18 +484,5 @@ try {
 }
 
 
-const formatDateToYYYYMMDD = (date) => {
-  try {
-    if (!(date instanceof Date) || isNaN(date)) {
-      throw new Error('Invalid Date');
-    }
-
-    return format(date, 'yyyy/MM/dd');
-  } catch (error) {
-    console.error('Error in formatDateToYYYYMMDD:', error.message);
-    // Handle the error as needed
-    return 'Error Formatting Date';
-  }
-};
 
 module.exports = router;
