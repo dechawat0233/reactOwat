@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import moment from 'moment';
 
 import EmployeesSelected from './EmployeesSelected';
 
@@ -13,7 +14,9 @@ function AddsettimeWorkplace() {
     const [newWorkplace, setNewWorkplace] = useState(true);
 
     //Workplace Record data
-    const [workDate, setWorkDate] = useState('');
+    const [workDate, setWorkDate] = useState(new Date());
+    const formattedWorkDate = moment(workDate).format('DD/MM/YYYY');
+
     const [timeRecord_id, setTimeRecord_id] = useState('');
 
     //Workplace data
@@ -84,6 +87,7 @@ function AddsettimeWorkplace() {
     const handleWorkDateChange = (date) => {
         setWorkDate(date);
     };
+
 
     const [startjob1, setStartjob1] = useState(''); //วันที่เริ่มงาน
     const handleStartDateChange1 = (date) => {
@@ -663,12 +667,13 @@ function AddsettimeWorkplace() {
     async function handleCreateWorkplaceTimerecord(event) {
         event.preventDefault();
         // alert('test');
+alert(formattedWorkDate);
 
         //get data from input in useState to data 
         const data = {
             workplaceId: workplaceId,
             workplaceName: workplaceName,
-            date: workDate,
+            date: formattedWorkDate,
             employeeRecord: rowDataList
         };
 

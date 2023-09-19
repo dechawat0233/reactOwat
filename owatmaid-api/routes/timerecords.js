@@ -8,6 +8,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 
+
 //Connect mongodb
 mongoose.connect(connectionString, {
   useNewUrlParser: true, useUnifiedTopology:
@@ -82,6 +83,24 @@ router.get('/listemp', async (req, res) => {
 
     // Delete all data
     // await workplaceTimerecordEmp.deleteMany();
+
+    // console.log(`Deleted ${workplaceTimeRecordData.length} records.`);
+    res.json(workplaceTimeRecordData);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
+//======test 
+router.get('/listempdelete', async (req, res) => {
+  try {
+    // Fetch the data first
+    const workplaceTimeRecordData = await workplaceTimerecordEmp.find();
+
+    // Delete all data
+    await workplaceTimerecordEmp.deleteMany();
 
     // console.log(`Deleted ${workplaceTimeRecordData.length} records.`);
     res.json(workplaceTimeRecordData);
@@ -225,6 +244,7 @@ router.post('/create', async (req, res) => {
     date,
     employeeRecord
   } = req.body;
+  console.log(date);
 
 
   // Create workplace
@@ -236,16 +256,15 @@ router.post('/create', async (req, res) => {
     employeeRecord
   });
 
-  try {
-    await workplaceTimeRecordData.save();
-    // setToEmployee(id , month);
-    await setToEmployee(workplaceId, workplaceName, date, employeeRecord);
+  // try {
+  //   await workplaceTimeRecordData.save();
+  //   // await setToEmployee(workplaceId, workplaceName, date, employeeRecord);
 
-    res.json(workplaceTimeRecordData);
-  } catch (err) {
-    console.log(err);
-    res.status(400).json({ error: err.message });
-  }
+  //   res.json(workplaceTimeRecordData);
+  // } catch (err) {
+  //   console.log(err);
+  //   res.status(400).json({ error: err.message });
+  // }
 
 });
 
@@ -341,10 +360,7 @@ router.put('/updateemp/:employeeRecordId', async (req, res) => {
 
 async function setToEmployee(selectWorkplaceId , selectworkplaceName ,selectMonth , workplaceTimeRecordData ){
   console.log('setToEmployee working');
-  const currentDate = await new Date();
-  const currentYear = await currentDate.getFullYear();
-  const timerecordId_year = await currentYear;
-
+console.log(selectMonth );
   //set employee id and month of record
 const workplaceId = await selectWorkplaceId;
 const workplaceName = await selectworkplaceName;
@@ -352,11 +368,16 @@ const workplaceName = await selectworkplaceName;
  const query = {};
 
 //  console.log(workplaceTimeRecordData );
-const date = await new Date(month);
+const date = await new Date(month );
+const currentYear = await date.getFullYear();
+const timerecordId_year = await currentYear;
+
 const monthIndex = await date.getMonth();
 const month2 = await (monthIndex + 1).toString().padStart(2, '0');
+// const day  = await String(date.getDate()).padStart(2, '0') 
 await console.log('workplace ID: '+ workplaceId );
 await console.log('month: '+ month2);
+// await console.log('day ' + day);
 
 await workplaceTimeRecordData.forEach(async element => {
   // console.log(element['employeeRecord'] );
@@ -381,13 +402,14 @@ await workplaceTimeRecordData.forEach(async element => {
 // employee timerecord is created
 
 //update employeeTimerecord Data
-await console.log('recordworkplace _id '+ recordworkplace[0]._id );
+// await console.log('recordworkplace _id '+ recordworkplace[0]._id );
 
 //push data to employee_workplaceRecord in employee timerecord 
+
 await recordworkplace[0].employee_workplaceRecord.push({
   'workplaceId': workplaceId,
   'workplaceName': workplaceName,
-  'date': date.getDate().toString().padStart(2, '0'),
+  'date':   String(date.getDate()).padStart(2, '0') ,
   'shift': element.shift,
   'startTime': element.startTime,
   'endTime': element.endTime,
@@ -396,7 +418,7 @@ await recordworkplace[0].employee_workplaceRecord.push({
   'selectotTime': element.selectotTime,
   'selectotTimeOut': element.selectotTimeOut,
 });
-await console.log(recordworkplace);
+// await console.log(recordworkplace);
 
 const employeeIdToUpdate = await recordworkplace[0]._id;
 const updateFields = await recordworkplace;
@@ -404,19 +426,6 @@ await console.log('updateFields ' +updateFields );
 
 try {
   // Find the resource by ID and update it
-  // const updatedResource = await workplaceTimerecordEmp.findByIdAndUpdate(
-  //   employeeIdToUpdate ,
-  //   updateFields,
-  //   { new: true } // To get the updated document as the result
-  // );
-  // if (!updatedResource) {
-  // await console.log('Resource not found');
-  // } else{
-  //   await console.log('update success');
-  // }
-
-console.log('_id '+ employeeIdToUpdate);
-console.log('r:'+ recordworkplace[0]);
 
   const updatedDocument = await workplaceTimerecordEmp.findByIdAndUpdate(
     employeeIdToUpdate,
@@ -447,7 +456,7 @@ console.log('r:'+ recordworkplace[0]);
             const employee_workplaceRecord = {
               'workplaceId': workplaceId,
               'workplaceName': workplaceName,
-              'date': selectMonth,
+              'date':   String(date.getDate()).padStart(2, '0') ,
               'shift': element.shift,
               'startTime': element.startTime,
               'endTime': element.endTime,
@@ -488,7 +497,6 @@ console.log('r:'+ recordworkplace[0]);
 
 //end function
 }
-
 
 
 
