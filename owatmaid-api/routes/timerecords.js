@@ -242,7 +242,7 @@ router.post('/create', async (req, res) => {
     await workplaceTimeRecordData.save();
     // setToEmployee(id , month);
     await setToEmployee(workplaceId, workplaceName, formatDateToYYYYMMDD(date) , employeeRecord);
-
+x
     res.json(workplaceTimeRecordData);
   } catch (err) {
     console.log(err);
@@ -485,7 +485,8 @@ try {
 
 
 const formatDateToYYYYMMDD = (date) => {
-  return format(date, 'yyyy/MM/dd');
+  console.log(format(date, 'yyyy/MM/dd'));
+    return format(date, 'yyyy/MM/dd');
 };
 
 module.exports = router;
