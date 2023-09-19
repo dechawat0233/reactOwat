@@ -257,8 +257,8 @@ router.post('/create', async (req, res) => {
 
   try {
     await workplaceTimeRecordData.save();
-
-    await setToEmployee(workplaceId, workplaceName, date, employeeRecord);
+console.log(date);
+    // await setToEmployee(workplaceId, workplaceName, date, employeeRecord);
 
     res.json(workplaceTimeRecordData);
   } catch (err) {
