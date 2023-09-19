@@ -318,8 +318,8 @@ function Worktimesheet() {
                 {searchResult.map((
                   employeerecord) => (
                     'ประจำเดือน ' + getMonthName(employeerecord.month)
-                    + 'ตั้งแต่วันที่ 21 ' + getMonthName(12)
-                    + 'ถึง 20 ' + getMonthName(employeerecord.month))
+                    + 'ตั้งแต่วันที่ 21 ' + getMonthName(parseInt(employeerecord.month, 10) - 1)
+                    + ' ถึง 20 ' + getMonthName(employeerecord.month))
                   + '  ' + (parseInt(employeerecord.timerecordId, 10) + 543)
                 )}
               </div>
@@ -347,7 +347,7 @@ function Worktimesheet() {
                         </thead>
                         <tbody>
                           <tr>
-                            <td>Text</td>
+                            <td>วันทำงาน</td>
                             {tableData.map((data, index) => (
                               <td key={index}>
                                 <input
@@ -362,7 +362,20 @@ function Worktimesheet() {
                             ))}
                           </tr>
                           <tr>
-                            <td>Input</td>
+                            <td>ช.ม. ทำงาน</td>
+                            {tableData.map((data, index) => (
+                              <td key={index}>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  value={data.textValue}
+                                  onChange={(event) => handleTextChange(index, event)}
+                                />
+                              </td>
+                            ))}
+                          </tr>
+                          <tr>
+                            <td>ช.ม. โอที</td>
                             {tableData.map((data, index) => (
                               <td key={index}>
                                 <input
