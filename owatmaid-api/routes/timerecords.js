@@ -485,8 +485,17 @@ try {
 
 
 const formatDateToYYYYMMDD = (date) => {
-  console.log(format("2023/01/01", 'yyyy/MM/dd'));
+  try {
+    if (!(date instanceof Date) || isNaN(date)) {
+      throw new Error('Invalid Date');
+    }
+
     return format(date, 'yyyy/MM/dd');
+  } catch (error) {
+    console.error('Error in formatDateToYYYYMMDD:', error.message);
+    // Handle the error as needed
+    return 'Error Formatting Date';
+  }
 };
 
 module.exports = router;
