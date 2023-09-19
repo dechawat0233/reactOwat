@@ -240,9 +240,9 @@ router.post('/create', async (req, res) => {
 
   try {
     await workplaceTimeRecordData.save();
-    // setToEmployee(id , month);
+
     await setToEmployee(workplaceId, workplaceName, date, employeeRecord);
-x
+
     res.json(workplaceTimeRecordData);
   } catch (err) {
     console.log(err);
@@ -383,7 +383,7 @@ await workplaceTimeRecordData.forEach(async element => {
 // employee timerecord is created
 
 //update employeeTimerecord Data
-await console.log('recordworkplace _id '+ recordworkplace[0]._id );
+// await console.log('recordworkplace _id '+ recordworkplace[0]._id );
 
 //push data to employee_workplaceRecord in employee timerecord 
 const timerecordId = await timerecordId_year ;
@@ -403,7 +403,7 @@ await recordworkplace[0].employee_workplaceRecord.push({
   'selectotTime': element.selectotTime,
   'selectotTimeOut': element.selectotTimeOut,
 });
-await console.log(recordworkplace);
+// await console.log(recordworkplace);
 
 const employeeIdToUpdate = await recordworkplace[0]._id;
 const updateFields = await recordworkplace;
