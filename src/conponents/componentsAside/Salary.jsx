@@ -294,7 +294,7 @@ function Salary() {
         // setSalaryadd5v(parseFloat(empSelect.salaryadd5v) || 0);
         // setSalaryadd5v("");
     }
-    // console.log(salaryadd1v);
+    console.log(employeeData);
     // save
     console.log(salaryadd1v + " 1");
     console.log(salaryadd2v + " 2");
@@ -483,7 +483,7 @@ function Salary() {
                                                                 value={workplace} onChange={handleWorkplace}>
                                                                 <option value="">ยังไม่ระบุหน่วยงาน</option>
                                                                 {workplaceSelection.map(wp => (
-                                                                    <option key={wp._id} value={wp.workplaceName}>{wp.workplaceName}</option>
+                                                                    <option key={wp._id} value={wp.workplaceId}>{wp.workplaceName}</option>
 
                                                                 ))}
                                                             </select>
