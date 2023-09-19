@@ -360,7 +360,7 @@ router.put('/updateemp/:employeeRecordId', async (req, res) => {
 
 async function setToEmployee(selectWorkplaceId , selectworkplaceName ,selectMonth , workplaceTimeRecordData ){
   console.log('setToEmployee working');
-
+console.log(selectMonth );
   //set employee id and month of record
 const workplaceId = await selectWorkplaceId;
 const workplaceName = await selectworkplaceName;
@@ -374,10 +374,11 @@ const timerecordId_year = await currentYear;
 
 const monthIndex = await date.getMonth();
 const month2 = await (monthIndex + 1).toString().padStart(2, '0');
-const day  = await String(date.getDate()).padStart(2, '0') 
+// const day  = await String(date.getDate()).padStart(2, '0') 
 await console.log('workplace ID: '+ workplaceId );
 await console.log('month: '+ month2);
-await console.log('day ' + day);
+// await console.log('day ' + day);
+
 await workplaceTimeRecordData.forEach(async element => {
   // console.log(element['employeeRecord'] );
   // console.log('========');
