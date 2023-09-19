@@ -9,6 +9,47 @@ import 'react-datepicker/dist/react-datepicker.css';
 import '../editwindowcss.css';
 
 function SocialSecurity() {
+
+    // save
+    
+    // const [workplaceId, setWorkplaceId] = useState('');
+    // const [workplaceSelection, setWorkplaceSelection] = useState([]);
+    // const [filteredWorkplaces, setFilteredWorkplaces] = useState([]);
+    // const targetWorkplace = '1001'; // Replace with your target workplace value
+
+    // useEffect(() => {
+    //     const storedValue = sessionStorage.getItem('empSelect');
+    //     if (storedValue) {
+    //         // setEmployeeselection(storedValue);
+    //     }
+
+    //     // Get all Workplace from API
+    //     fetch(endpoint + '/workplace/list') // Update with your API endpoint
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             setWorkplaceSelection(data);
+    //         })
+    //         .catch(error => console.error('Error fetching workplaces:', error));
+    // }, []);
+
+    // useEffect(() => {
+    //     // Filter the workplaceSelection array based on the target workplace
+    //     const filteredWorkplaces = workplaceSelection.filter(workplace => workplace.workplaceId === workplaceId);
+    //     setFilteredWorkplaces(filteredWorkplaces);
+    //     if (filteredWorkplaces.length > 0) {
+    //         const firstFilteredWorkplace = filteredWorkplaces[0];
+    //         setSalaryadd1vSec(parseFloat(firstFilteredWorkplace.salaryadd1) || 0);
+    //         setSalaryadd2vSec(parseFloat(firstFilteredWorkplace.salaryadd2) || 0);
+    //         setSalaryadd3vSec(parseFloat(firstFilteredWorkplace.salaryadd3) || 0);
+    //         setSalaryadd4vSec(parseFloat(firstFilteredWorkplace.salaryadd4) || 0);
+    //         setSalaryadd5vSec(parseFloat(firstFilteredWorkplace.salaryadd5) || 0);
+    //     }
+    // }, [workplaceId, workplaceSelection]);
+    // console.log(workplaceSelection);
+    // console.log(filteredWorkplaces);
+
+    // save
+
     const [buttonValue, setButtonValue] = useState('');
     const [employeeData, setEmployeeData] = useState({});
     const options = [
@@ -135,7 +176,6 @@ function SocialSecurity() {
 
 
     const [employeeselection, setEmployeeselection] = useState([]);
-    const [workplaceSelection, setWorkplaceSelection] = useState([]);
 
     const [minusemployer, setMinusEmployer] = useState('5'); //หัห
     const [socialsecurityemployer, setSocialSecurityEmployer] = useState(''); //หักประกันสังคม
@@ -202,6 +242,9 @@ function SocialSecurity() {
         setName(empSelect.name);
         setSalary(empSelect.salary);
         setMinus(empSelect.minus);
+
+
+        setWorkplaceId(empSelect.workplace);
         // setSalaryadd1Sec(empSelect.salaryadd1);
         // setSalaryadd2Sec(empSelect.salaryadd2);
         // setSalaryadd3Sec(empSelect.salaryadd3);
@@ -222,7 +265,7 @@ function SocialSecurity() {
 
         setJobtype(empSelect.jobtype);
         // alert(empSelect._id);
-        // console.log(empSelect.startjob);
+        console.log(empSelect.workplace);
     }
 
     async function handleManageEmployee(event) {
@@ -326,7 +369,7 @@ function SocialSecurity() {
             const parsedSalarySS = parseFloat(salaryaddsumSec());
             const parsedSalaryFinal = parsedSalary + parsedSalarySS;
             const parsedMinus = parseFloat(employeeData.minus) / 100; // Convert the minus percentage to a decimal
-            console.log(parsedSalarySS);
+            // console.log(parsedSalarySS);
             if (parsedSalaryFinal < 1650) {
                 setSocialSecurity(1650 * parsedMinus);
                 setParsedSalaryFinal(parsedSalaryFinal);
@@ -662,17 +705,17 @@ function SocialSecurity() {
                                                                         </label>
                                                                         <label htmlFor="salaryadd4Sec" style={{ cursor: 'pointer' }}>
                                                                             <div className={`custom-checkbox ${salaryadd4Sec ? 'checked' : ''}`}>
-                                                                                {salaryadd4Sec ? (
-                                                                                    <input
-                                                                                        type="text"
-                                                                                        className="form-control"
-                                                                                        id="salaryadd4vSec"
-                                                                                        placeholder="ค่ารถ"
-                                                                                        value={salaryadd4vSec}
-                                                                                        onChange={(e) => handleChange(e, 'salaryadd4vSec')}
-                                                                                        readOnly
-                                                                                    />
-                                                                                ) : null}
+                                                                                {/* {salaryadd4Sec ? ( */}
+                                                                                <input
+                                                                                    type="text"
+                                                                                    className="form-control"
+                                                                                    id="salaryadd4vSec"
+                                                                                    placeholder="ค่ารถ"
+                                                                                    value={salaryadd4vSec}
+                                                                                    onChange={(e) => handleChange(e, 'salaryadd4vSec')}
+                                                                                    readOnly
+                                                                                />
+                                                                                {/* ) : null} */}
                                                                             </div>
                                                                         </label>
 

@@ -34,17 +34,6 @@ function Salary() {
 
     }, []);
 
-    function handleSalaryadd1() {
-        alert(employeeData.salaryadd1);
-
-        // const { checked } = await e.target;
-        // awaitsetEmployeeData(prevData => ({
-        //     ...prevData,
-        //     [field]: checked,
-        // }));
-
-    }
-
     const handleChange = async (e, field) => {
         // if ((field == 'salaryadd1') || (field == 'salaryadd2') || (field == 'salaryadd3') || (field == 'salaryadd4') || (field == 'salaryadd5')) {
         //     const { checked } = await e.target;
@@ -71,6 +60,7 @@ function Salary() {
 
 
     //employee data
+    const [workplaceId, setWorkplaceId] = useState('');
     const [employeeId, setEmployeeId] = useState('');
     const [position, setPosition] = useState(''); //ตำแหน่ง
     const [department, setDepartment] = useState(''); //แผนก
@@ -266,7 +256,7 @@ function Salary() {
         }
 
     }
-    console.log(employeeData);
+    // console.log(employeeData + "test");
 
     async function onEmployeeSelect(empSelect) {
         await setEmployeeData(empSelect);
@@ -290,23 +280,27 @@ function Salary() {
         await setStartcount(empSelect.startcount ? new Date(empSelect.startcount) : '');
         await setSalaryupdate(empSelect.salaryupdate ? new Date(empSelect.salaryupdate) : '');
 
-        setSalaryadd1(empSelect.salaryadd1) || false;
-        setSalaryadd1v(parseFloat(empSelect.salaryadd1v) || 0);
-        setSalaryadd2(empSelect.salaryadd2 || false);
-        setSalaryadd2v(parseFloat(empSelect.salaryadd2v) || 0);
-        setSalaryadd3(empSelect.salaryadd3 || false);
-        setSalaryadd3v(parseFloat(empSelect.salaryadd3v) || 0);
-        setSalaryadd4(empSelect.salaryadd4 || false);
-        setSalaryadd4v(parseFloat(empSelect.salaryadd4v) || 0);
-        setSalaryadd5(empSelect.salaryadd5 || false);
-        setSalaryadd5v(parseFloat(empSelect.salaryadd5v) || 0);
+        setWorkplaceId(empSelect.employeeId);
 
+        // setSalaryadd1(empSelect.salaryadd1) || false;
+        // setSalaryadd1v(parseFloat(empSelect.salaryadd1v) || 0);
+        // setSalaryadd2(empSelect.salaryadd2 || false);
+        // setSalaryadd2v(parseFloat(empSelect.salaryadd2v) || 0);
+        // setSalaryadd3(empSelect.salaryadd3 || false);
+        // setSalaryadd3v(parseFloat(empSelect.salaryadd3v) || 0);
+        // setSalaryadd4(empSelect.salaryadd4 || false);
+        // setSalaryadd4v(parseFloat(empSelect.salaryadd4v) || 0);
+        // setSalaryadd5(empSelect.salaryadd5 || false);
+        // setSalaryadd5v(parseFloat(empSelect.salaryadd5v) || 0);
+        // setSalaryadd5v("");
     }
-    // console.log(salaryadd1v + " 1");
-    // console.log(salaryadd2v + " 2");
-    // console.log(salaryadd3v + " 3");
-    // console.log(salaryadd4v + " 4");
-    // console.log(salaryadd5v + " 5x");
+    console.log(employeeData);
+    // save
+    console.log(salaryadd1v + " 1");
+    console.log(salaryadd2v + " 2");
+    console.log(salaryadd3v + " 3");
+    console.log(salaryadd4v + " 4");
+    console.log(salaryadd5v + " 5x");
 
     // const toggleCheckbox1 = () => {
     //     setSalaryadd1(prevValue => !prevValue); // Toggle the checkbox state
@@ -346,23 +340,6 @@ function Salary() {
             return newValue;
         });
     };
-
-    // const toggleCheckbox4 = () => {
-    //     setSalaryadd4(prevValue => !prevValue); // Toggle the checkbox state
-    //     // handleChange({ target: { type: 'checkbox', checked: !employeeData.salaryadd4 } }, 'salaryadd4');
-    //     setEmployeeData((prevData) => ({
-    //         ...prevData,
-    //         salaryadd4: !prevData.salaryadd4,
-    //     }));
-    // };
-
-    // const toggleCheckbox4 = () => {
-    //     setSalaryadd4((prevValue) => !prevValue); // Toggle the checkbox state
-    //     setEmployeeData((prevData) => ({
-    //         ...prevData,
-    //         salaryadd4: !prevData.salaryadd4,
-    //     }));
-    // };
 
     const toggleCheckbox4 = () => {
         setSalaryadd4((prevValue) => {
@@ -406,6 +383,48 @@ function Salary() {
         }
     }, [salaryadd1, salaryadd2, salaryadd3, salaryadd4, salaryadd5]);
     // console.log(salaryadd1 + " 1");
+
+    // save
+    const [workplaceSelectionV2, setWorkplaceSelectionV2] = useState([]);
+    const [filteredWorkplaces, setFilteredWorkplaces] = useState([]);
+    const targetWorkplace = '1001'; // Replace with your target workplace value
+
+    useEffect(() => {
+        const storedValue = sessionStorage.getItem('empSelect');
+        if (storedValue) {
+            // setEmployeeselection(storedValue);
+        }
+
+        // Get all Workplace from API
+        fetch(endpoint + '/workplace/list') // Update with your API endpoint
+            .then(response => response.json())
+            .then(data => {
+                setWorkplaceSelectionV2(data);
+            })
+            .catch(error => console.error('Error fetching workplaces:', error));
+    }, []);
+
+    useEffect(() => {
+        // Filter the workplaceSelection array based on the target workplace
+        const filteredWorkplaces = workplaceSelectionV2.filter(workplace => workplace.workplaceId === targetWorkplace);
+        setFilteredWorkplaces(filteredWorkplaces);
+        if (filteredWorkplaces.length > 0) {
+            const firstFilteredWorkplace = filteredWorkplaces[0];
+            setSalaryadd1v(parseFloat(firstFilteredWorkplace.salaryadd1) || 0);
+            setSalaryadd2v(parseFloat(firstFilteredWorkplace.salaryadd2) || 0);
+            setSalaryadd3v(parseFloat(firstFilteredWorkplace.salaryadd3) || 0);
+            setSalaryadd4v(parseFloat(firstFilteredWorkplace.salaryadd4) || 0);
+            setSalaryadd5v(parseFloat(firstFilteredWorkplace.salaryadd5) || 0);
+        }
+    }, [workplaceId, workplaceSelectionV2]);
+    // console.log(workplaceSelectionV2);
+    // console.log(filteredWorkplaces);
+    // console.log(salaryadd1v + " 1");
+    // console.log(salaryadd2v + " 2");
+    // console.log(salaryadd3v + " 3");
+    // console.log(salaryadd4v + " 4");
+    // console.log(salaryadd5v + " 5");
+
     return (
         <body class="hold-transition sidebar-mini" className='editlaout'>
             <div class="wrapper">
@@ -464,7 +483,7 @@ function Salary() {
                                                                 value={workplace} onChange={handleWorkplace}>
                                                                 <option value="">ยังไม่ระบุหน่วยงาน</option>
                                                                 {workplaceSelection.map(wp => (
-                                                                    <option key={wp._id} value={wp.workplaceName}>{wp.workplaceName}</option>
+                                                                    <option key={wp._id} value={wp.workplaceId}>{wp.workplaceName}</option>
 
                                                                 ))}
                                                             </select>
@@ -834,15 +853,16 @@ function Salary() {
                                                     </div>
 
                                                     {/* {employeeData.salaryadd1 && ( */}
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label role="salaryadd1v">เงินเพิ่มค่ารถ</label>
-                                                            <label htmlFor="salaryadd1" style={{ cursor: 'pointer' }}>
-                                                                <div className={`custom-checkbox ${salaryadd1 ? 'checked' : ''}`}>
-                                                                    <i className={`fa ${salaryadd1 ? 'fa-check' : 'fa-times'}`} />
-                                                                </div>
-                                                            </label><br/>
-                                                            {salaryadd1 && (
+
+                                                    {salaryadd1 && (
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label role="salaryadd1v">เงินเพิ่มค่ารถ</label>
+                                                                <label htmlFor="salaryadd1" style={{ cursor: 'pointer' }}>
+                                                                    <div className={`custom-checkbox ${salaryadd1 ? 'checked' : ''}`}>
+                                                                        <i className={`fa ${salaryadd1 ? 'fa-check' : 'fa-times'}`} />
+                                                                    </div>
+                                                                </label><br />
                                                                 <label htmlFor="salaryadd1" style={{ cursor: 'pointer' }}>
                                                                     <div className={`custom-checkbox ${salaryadd1 ? 'checked' : ''}`}>
                                                                         <input
@@ -855,21 +875,23 @@ function Salary() {
                                                                         />
                                                                     </div>
                                                                 </label>
-                                                            )}
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    )}
+
                                                     {/* )} */}
 
                                                     {/* {employeeData.salaryadd2 && ( */}
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label role="salaryadd2v">เงินเพิ่มค่าอาหาร</label>
-                                                            <label htmlFor="salaryadd2" style={{ cursor: 'pointer' }}>
-                                                                <div className={`custom-checkbox ${salaryadd2 ? 'checked' : ''}`}>
-                                                                    <i className={`fa ${salaryadd2 ? 'fa-check' : 'fa-times'}`} />
-                                                                </div>
-                                                            </label><br/>
-                                                            {salaryadd2 && (
+
+                                                    {salaryadd2 && (
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label role="salaryadd2v">เงินเพิ่มค่าอาหาร</label>
+                                                                <label htmlFor="salaryadd2" style={{ cursor: 'pointer' }}>
+                                                                    <div className={`custom-checkbox ${salaryadd2 ? 'checked' : ''}`}>
+                                                                        <i className={`fa ${salaryadd2 ? 'fa-check' : 'fa-times'}`} />
+                                                                    </div>
+                                                                </label><br />
                                                                 <label htmlFor="salaryadd2" style={{ cursor: 'pointer' }}>
                                                                     <div className={`custom-checkbox ${salaryadd2 ? 'checked' : ''}`}>
                                                                         <input
@@ -882,23 +904,24 @@ function Salary() {
                                                                         />
                                                                     </div>
                                                                 </label>
-                                                            )}
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    )}
+
                                                     {/* )} */}
 
                                                     {/* {employeeData.salaryadd3 && ( */}
 
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label role="salaryadd3v">ค่าเบี้ยขยัน</label>
-                                                            <label htmlFor="salaryadd3" style={{ cursor: 'pointer' }}>
-                                                                <div className={`custom-checkbox ${salaryadd3 ? 'checked' : ''}`}>
-                                                                    <i className={`fa ${salaryadd3 ? 'fa-check' : 'fa-times'}`} />
-                                                                </div>
-                                                            </label><br/>
-                                                            {salaryadd3 && (
 
+                                                    {salaryadd3 && (
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label role="salaryadd3v">ค่าเบี้ยขยัน</label>
+                                                                <label htmlFor="salaryadd3" style={{ cursor: 'pointer' }}>
+                                                                    <div className={`custom-checkbox ${salaryadd3 ? 'checked' : ''}`}>
+                                                                        <i className={`fa ${salaryadd3 ? 'fa-check' : 'fa-times'}`} />
+                                                                    </div>
+                                                                </label><br />
                                                                 <label htmlFor="salaryadd3" style={{ cursor: 'pointer' }}>
                                                                     <div className={`custom-checkbox ${salaryadd3 ? 'checked' : ''}`}>
                                                                         <input
@@ -910,10 +933,10 @@ function Salary() {
                                                                             onChange={(e) => handleChange(e, 'salaryadd3v')}
                                                                         />
                                                                     </div>
-                                                                </label>
-                                                            )}
+                                                                </label></div>
                                                         </div>
-                                                    </div>
+                                                    )}
+
                                                     {/* )} */}
 
                                                     {/* {employeeData.salaryadd4 && ( */}
@@ -968,15 +991,16 @@ function Salary() {
                                                         </div>
                                                     </div> */}
 
-                                                    <div className="col-md-4">
-                                                        <div class="form-group">
-                                                            <label role="salaryadd4v">ค่าโทรศัพท์</label>
-                                                            <label htmlFor="salaryadd4" style={{ cursor: 'pointer' }}>
-                                                                <div className={`custom-checkbox ${salaryadd4 ? 'checked' : ''}`}>
-                                                                    <i className={`fa ${salaryadd4 ? 'fa-check' : 'fa-times'}`} />
-                                                                </div>
-                                                            </label><br/>
-                                                            {salaryadd4 && (
+
+                                                    {salaryadd4 && (
+                                                        <div className="col-md-4">
+                                                            <div class="form-group">
+                                                                <label role="salaryadd4v">ค่าโทรศัพท์</label>
+                                                                <label htmlFor="salaryadd4" style={{ cursor: 'pointer' }}>
+                                                                    <div className={`custom-checkbox ${salaryadd4 ? 'checked' : ''}`}>
+                                                                        <i className={`fa ${salaryadd4 ? 'fa-check' : 'fa-times'}`} />
+                                                                    </div>
+                                                                </label><br />
                                                                 <label htmlFor="salaryadd4" style={{ cursor: 'pointer' }}>
                                                                     <div className={`custom-checkbox ${salaryadd4 ? 'checked' : ''}`}>
                                                                         <input
@@ -989,10 +1013,11 @@ function Salary() {
                                                                         />
                                                                     </div>
                                                                 </label>
-                                                            )}
-
+                                                            </div>
                                                         </div>
-                                                    </div>
+
+                                                    )}
+
 
 
                                                     {/* )} */}
@@ -1007,7 +1032,7 @@ function Salary() {
                                                                     <div className={`custom-checkbox ${salaryadd5 ? 'checked' : ''}`}>
                                                                         <i className={`fa ${salaryadd5 ? 'fa-check' : 'fa-times'}`} />
                                                                     </div>
-                                                                </label><br/>
+                                                                </label><br />
                                                                 <label htmlFor="salaryadd5" style={{ cursor: 'pointer' }}>
                                                                     <div className={`custom-checkbox ${salaryadd5 ? 'checked' : ''}`}>
                                                                         <input

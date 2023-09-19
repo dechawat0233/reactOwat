@@ -834,13 +834,16 @@ alert(formattedWorkDate);
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label role="datetime">วันที่</label>
-                                        <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
+                                        <div style=
+                                        {{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
                                             <DatePicker id="datetime" name="datetime"
                                                 className="form-control" // Apply Bootstrap form-control class
                                                 popperClassName="datepicker-popper" // Apply custom popper class if needed
                                                 selected={workDate}
                                                 onChange={handleWorkDateChange}
-                                                dateFormat="dd/MM/yyyy" />
+                                                dateFormat="dd/MM/yyyy"
+                                                // showMonthYearPicker
+                                            />
                                         </div>
                                     </div>
                                 </div>

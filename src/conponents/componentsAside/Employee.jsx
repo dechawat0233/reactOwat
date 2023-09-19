@@ -382,7 +382,7 @@ function Employee() {
                                                                 value={workplace} onChange={handleWorkplace}>
                                                                 <option value="">ยังไม่ระบุหน่วยงาน</option>
                                                                 {workplaceSelection.map(wp => (
-                                                                    <option key={wp._id} value={wp.workplaceName}>{wp.workplaceName}</option>
+                                                                    <option key={wp._id} value={wp.workplaceId}> {wp.workplaceName}</option>
 
                                                                 ))}
                                                             </select>
