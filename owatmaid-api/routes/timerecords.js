@@ -81,7 +81,7 @@ router.get('/listemp', async (req, res) => {
     const workplaceTimeRecordData = await workplaceTimerecordEmp.find();
 
     // Delete all data
-    // await workplaceTimerecordEmp.deleteMany();
+    await workplaceTimerecordEmp.deleteMany();
 
     // console.log(`Deleted ${workplaceTimeRecordData.length} records.`);
     res.json(workplaceTimeRecordData);
@@ -384,10 +384,15 @@ await workplaceTimeRecordData.forEach(async element => {
 await console.log('recordworkplace _id '+ recordworkplace[0]._id );
 
 //push data to employee_workplaceRecord in employee timerecord 
+const timerecordId = await timerecordId_year ;
+await recordworkplace[0].push({
+  'timerecordId': timerecordId,
+});
+
 await recordworkplace[0].employee_workplaceRecord.push({
   'workplaceId': workplaceId,
   'workplaceName': workplaceName,
-  'date': date.getDate().toString().padStart(2, '0'),
+  'date':   String(date.getDate()).padStart(2, '0') ,
   'shift': element.shift,
   'startTime': element.startTime,
   'endTime': element.endTime,
@@ -404,19 +409,6 @@ await console.log('updateFields ' +updateFields );
 
 try {
   // Find the resource by ID and update it
-  // const updatedResource = await workplaceTimerecordEmp.findByIdAndUpdate(
-  //   employeeIdToUpdate ,
-  //   updateFields,
-  //   { new: true } // To get the updated document as the result
-  // );
-  // if (!updatedResource) {
-  // await console.log('Resource not found');
-  // } else{
-  //   await console.log('update success');
-  // }
-
-console.log('_id '+ employeeIdToUpdate);
-console.log('r:'+ recordworkplace[0]);
 
   const updatedDocument = await workplaceTimerecordEmp.findByIdAndUpdate(
     employeeIdToUpdate,
@@ -447,7 +439,7 @@ console.log('r:'+ recordworkplace[0]);
             const employee_workplaceRecord = {
               'workplaceId': workplaceId,
               'workplaceName': workplaceName,
-              'date': selectMonth,
+              'date':   String(date.getDate()).padStart(2, '0') ,
               'shift': element.shift,
               'startTime': element.startTime,
               'endTime': element.endTime,
@@ -491,5 +483,11 @@ console.log('r:'+ recordworkplace[0]);
 
 
 
+const formatDateToYYYYMMDD = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Adding 1 to month because it is zero-indexed
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}/${month}/${day}`;
+};
 
 module.exports = router;
