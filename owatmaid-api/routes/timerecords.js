@@ -82,6 +82,24 @@ router.get('/listemp', async (req, res) => {
     const workplaceTimeRecordData = await workplaceTimerecordEmp.find();
 
     // Delete all data
+    // await workplaceTimerecordEmp.deleteMany();
+
+    // console.log(`Deleted ${workplaceTimeRecordData.length} records.`);
+    res.json(workplaceTimeRecordData);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
+//======test 
+router.get('/listempdelete', async (req, res) => {
+  try {
+    // Fetch the data first
+    const workplaceTimeRecordData = await workplaceTimerecordEmp.find();
+
+    // Delete all data
     await workplaceTimerecordEmp.deleteMany();
 
     // console.log(`Deleted ${workplaceTimeRecordData.length} records.`);
