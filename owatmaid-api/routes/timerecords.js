@@ -359,7 +359,7 @@ const monthIndex = await date.getMonth();
 const month2 = await (monthIndex + 1).toString().padStart(2, '0');
 await console.log('workplace ID: '+ workplaceId );
 await console.log('month: '+ month2);
-
+await console.log('monthIndex  ' + monthIndex )
 await workplaceTimeRecordData.forEach(async element => {
   // console.log(element['employeeRecord'] );
   // console.log('========');
@@ -386,10 +386,6 @@ await workplaceTimeRecordData.forEach(async element => {
 // await console.log('recordworkplace _id '+ recordworkplace[0]._id );
 
 //push data to employee_workplaceRecord in employee timerecord 
-const timerecordId = await timerecordId_year ;
-await recordworkplace[0].push({
-  'timerecordId': timerecordId,
-});
 
 await recordworkplace[0].employee_workplaceRecord.push({
   'workplaceId': workplaceId,
