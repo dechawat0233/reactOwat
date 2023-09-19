@@ -7,6 +7,8 @@ const cors = require('cors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
+const { format } = require('date-fns');
+
 
 //Connect mongodb
 mongoose.connect(connectionString, {
@@ -239,7 +241,7 @@ router.post('/create', async (req, res) => {
   try {
     await workplaceTimeRecordData.save();
     // setToEmployee(id , month);
-    await setToEmployee(workplaceId, workplaceName, date, employeeRecord);
+    await setToEmployee(workplaceId, workplaceName, formatDateToYYYYMMDD(date) , employeeRecord);
 
     res.json(workplaceTimeRecordData);
   } catch (err) {
@@ -482,12 +484,8 @@ try {
 }
 
 
-
 const formatDateToYYYYMMDD = (date) => {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0'); // Adding 1 to month because it is zero-indexed
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}/${month}/${day}`;
+  return format(date, 'yyyy/MM/dd');
 };
 
 module.exports = router;
