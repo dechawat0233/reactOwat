@@ -485,7 +485,7 @@ try {
 
 
 const formatDateToYYYYMMDD = (date) => {
-  console.log(format(date, 'yyyy/MM/dd'));
+  console.log(format("2023/01/01", 'yyyy/MM/dd'));
     return format(date, 'yyyy/MM/dd');
 };
 
