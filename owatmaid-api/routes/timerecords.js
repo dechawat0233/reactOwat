@@ -256,15 +256,15 @@ router.post('/create', async (req, res) => {
     employeeRecord
   });
 
-  try {
-    await workplaceTimeRecordData.save();
-    // await setToEmployee(workplaceId, workplaceName, date, employeeRecord);
+  // try {
+  //   await workplaceTimeRecordData.save();
+  //   // await setToEmployee(workplaceId, workplaceName, date, employeeRecord);
 
-    res.json(workplaceTimeRecordData);
-  } catch (err) {
-    console.log(err);
-    res.status(400).json({ error: err.message });
-  }
+  //   res.json(workplaceTimeRecordData);
+  // } catch (err) {
+  //   console.log(err);
+  //   res.status(400).json({ error: err.message });
+  // }
 
 });
 
