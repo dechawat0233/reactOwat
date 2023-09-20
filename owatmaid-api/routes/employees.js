@@ -43,8 +43,7 @@ const employeeSchema = new mongoose.Schema({
   endjob: {
     type: String
   },
-  exceptjob: {
-    type: String
+  exceptjob: {    type: String
   },
   prefix: {
     type: String
