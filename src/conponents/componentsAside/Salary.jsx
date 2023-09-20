@@ -284,15 +284,15 @@ function Salary() {
         const filtered = await workplaceSelection.filter(wp =>
             empSelect.workplace === '' || wp.workplaceId === empSelect.workplace
         )
-        // if (filtered !== '') {
-        //     if (employeeData.workplace == '') {
-        //         setWorkplacearea('');
-        //     } else {
-        //         setWorkplacearea(filtered[0].workplaceArea || '');
-        //     }
-        // } else {
-        //     setWorkplacearea('');
-        // }
+        if (filtered !== '') {
+            if (employeeData.workplace == '') {
+                setWorkplacearea('');
+            } else {
+                setWorkplacearea(filtered[0].workplaceArea || '');
+            }
+        } else {
+            setWorkplacearea('');
+        }
 
         await setStartjob(new Date(empSelect.startjob || ''));
         await setExceptjob(new Date(empSelect.exceptjob || ''));
