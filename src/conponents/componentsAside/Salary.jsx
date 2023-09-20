@@ -156,7 +156,7 @@ function Salary() {
             ...prevData,
             ['workplace']: event.target.value
         }));
-alert(event.target.value);
+// alert(event.target.value);
 
         const filtered = workplaceSelection.filter(wp =>
             event.target.value === '' || wp.workplaceId === event.target.value
