@@ -7,6 +7,7 @@ const cors = require('cors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
+const { months } = require('moment');
 
 
 //Connect mongodb
@@ -81,10 +82,7 @@ router.get('/listemp', async (req, res) => {
     // Fetch the data first
     const workplaceTimeRecordData = await workplaceTimerecordEmp.find();
 
-    // Delete all data
-    // await workplaceTimerecordEmp.deleteMany();
-
-    // console.log(`Deleted ${workplaceTimeRecordData.length} records.`);
+console.log(workplaceTimeRecordData.length);
     res.json(workplaceTimeRecordData);
   } catch (err) {
     console.error(err);
@@ -258,11 +256,12 @@ router.post('/create', async (req, res) => {
 
   try {
     const ans = await workplaceTimeRecordData.save();
-    // await setToEmployee(workplaceId, workplaceName, date, employeeRecord);
 if(ans){
   console.log('create workplace time record success');
+      await setToEmployee(workplaceId, workplaceName, date, employeeRecord);
+
 }
-    res.json(workplaceTimeRecordData);
+    await res.json(workplaceTimeRecordData);
   } catch (err) {
     console.log(err);
     res.status(400).json({ error: err.message });
@@ -363,23 +362,20 @@ router.put('/updateemp/:employeeRecordId', async (req, res) => {
 async function setToEmployee(selectWorkplaceId , selectworkplaceName ,selectMonth , workplaceTimeRecordData ){
   console.log('setToEmployee working');
 console.log(selectMonth );
+const dateParts = await selectMonth.split('/');
   //set employee id and month of record
 const workplaceId = await selectWorkplaceId;
 const workplaceName = await selectworkplaceName;
- const month =await selectMonth;
+ const month =await dateParts[1];
  const query = {};
 
 //  console.log(workplaceTimeRecordData );
-const date = await new Date(month );
-const currentYear = await date.getFullYear();
-const timerecordId_year = await currentYear;
-
-const monthIndex = await date.getMonth();
-const month2 = await (monthIndex + 1).toString().padStart(2, '0');
-// const day  = await String(date.getDate()).padStart(2, '0') 
+const timerecordId_year = await dateParts[2];
+const day  = await dateParts[0];
 await console.log('workplace ID: '+ workplaceId );
-await console.log('month: '+ month2);
-// await console.log('day ' + day);
+await console.log('year '+ timerecordId_year );
+await console.log('month: '+ month);
+await console.log('day ' + day);
 
 await workplaceTimeRecordData.forEach(async element => {
   // console.log(element['employeeRecord'] );
@@ -388,13 +384,13 @@ await workplaceTimeRecordData.forEach(async element => {
 //check emty from input record
     if(element.staffId  !== ''){
 //       await console.log('employee: '+ element1.staffId);
-//       await console.log('month: '+ month2)
+//       await console.log('month: '+ month)
 //       await console.log('========');
 
       try {
         //check employee timerecord from database
          query.employeeId= await element.staffId;
-        query.month = await { $regex: new RegExp(month2, 'i') };
+        query.month = await { $regex: new RegExp(month, 'i') };
         
           const recordworkplace  = await workplaceTimerecordEmp.find(query);
         // await console.log(recordworkplace  .length);
@@ -411,7 +407,7 @@ await workplaceTimeRecordData.forEach(async element => {
 await recordworkplace[0].employee_workplaceRecord.push({
   'workplaceId': workplaceId,
   'workplaceName': workplaceName,
-  'date':   String(date.getDate()).padStart(2, '0') ,
+  'date':  day,
   'shift': element.shift,
   'startTime': element.startTime,
   'endTime': element.endTime,
@@ -424,7 +420,7 @@ await recordworkplace[0].employee_workplaceRecord.push({
 
 const employeeIdToUpdate = await recordworkplace[0]._id;
 const updateFields = await recordworkplace;
-await console.log('updateFields ' +updateFields );
+// await console.log('updateFields ' +updateFields );
 
 try {
   // Find the resource by ID and update it
@@ -454,11 +450,11 @@ try {
             const timerecordId = await timerecordId_year ;
             const employeeId = await element.staffId;
             const  employeeName = element.staffName;
-            const  month = await month2;
+            const  month = await dateParts[1];
             const employee_workplaceRecord = {
               'workplaceId': workplaceId,
               'workplaceName': workplaceName,
-              'date':   String(date.getDate()).padStart(2, '0') ,
+              'date': day,
               'shift': element.shift,
               'startTime': element.startTime,
               'endTime': element.endTime,
