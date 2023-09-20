@@ -48,7 +48,7 @@ function Salary() {
                 console.error('Error fetching data:', error);
             });
     }, []);
-    console.log(workplaceSelectionSalary);
+    // console.log(workplaceSelectionSalary);
 
     const handleChange = async (e, field) => {
         // if ((field == 'salaryadd1') || (field == 'salaryadd2') || (field == 'salaryadd3') || (field == 'salaryadd4') || (field == 'salaryadd5')) {
@@ -175,7 +175,7 @@ function Salary() {
 
         // setWorkplacearea(filtered[0].workplaceArea );
     };
-    console.log(workplaceSelection);
+    // console.log(workplaceSelection);
 
     const handleWorktable = (event) => {
         setWorktable(event.target.value);
@@ -225,6 +225,7 @@ function Salary() {
             ['salaryupdate']: date
         }));
     };
+    console.log(employeeData);
 
 
     async function handleManageSalary(event) {
@@ -282,15 +283,15 @@ function Salary() {
         const filtered = await workplaceSelection.filter(wp =>
             empSelect.workplace === '' || wp.workplaceName === empSelect.workplace
         )
-        if (filtered !== '') {
-            if (employeeData.workplace == '') {
-                setWorkplacearea('');
-            } else {
-                setWorkplacearea(filtered[0].workplaceArea || '');
-            }
-        } else {
-            setWorkplacearea('');
-        }
+        // if (filtered !== '') {
+        //     if (employeeData.workplace == '') {
+        //         setWorkplacearea('');
+        //     } else {
+        //         setWorkplacearea(filtered[0].workplaceArea || '');
+        //     }
+        // } else {
+        //     setWorkplacearea('');
+        // }
 
         await setStartjob(new Date(empSelect.startjob || ''));
         await setExceptjob(new Date(empSelect.exceptjob || ''));

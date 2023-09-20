@@ -76,12 +76,14 @@ function Worktimesheet() {
       // await alert(searchResult[0].employee_workplaceRecord[0].workplaceId );
 
       const employeeWorkplaceRecords = await response.data.recordworkplace[0].employee_workplaceRecord;
-      // alert(employeeWorkplaceRecords );
+      // alert(employeeWorkplaceRecords.workplaceId);
 
       if (employeeWorkplaceRecords.length > 0) {
         const dates = employeeWorkplaceRecords.map(record => record.date);
         // const otTime = employeeWorkplaceRecords.map(record => record.otTime);
         const otTime = employeeWorkplaceRecords.map((record) => record.otTime);
+
+        const workplaceId = employeeWorkplaceRecords.map(record => record.workplaceId);
 
         setTableData((prevState) => {
           const updatedData = [...prevState];
@@ -89,35 +91,20 @@ function Worktimesheet() {
             const dataIndex = parseInt(date, 10) - 1; // Subtract 1 because indices are zero-based
             if (dataIndex >= 0 && dataIndex < updatedData.length) {
               updatedData[dataIndex].isChecked = true;
-              updatedData[dataIndex].textValue = otTime[index]; // Set otTime at the same index as dates
+              updatedData[dataIndex].textValue = otTime[index]; 
+              updatedData[dataIndex].workplaceId = workplaceId[index]; // Set otTime at the same index as dates
+              // Set otTime at the same index as dates
             }
           });
           return updatedData;
         });
 
-        // setTableData((prevState) => {
-        //   const updatedData = [...prevState];
-        //   dates.forEach((date) => {
-        //     const index = parseInt(date, 10) - 1; // Subtract 1 because indices are zero-based
-        //     if (index >= 0 && index < updatedData.length) {
-        //       updatedData[index].isChecked = true;
-        //     }
-        //   });
-        //   return updatedData;
-        // });
-
-        // const updatedTableData = tableData.map((data, index) => ({
-        //   ...data,
-        //   textValue: otTime[index] || '', // Use the otTime value if available, or an empty string if not
-        // }));
-
-        // Set the updated tableData state
-        // setTableData(updatedTableData);
-
         setWoekplace(dates);
 
-        console.log('Dates:', dates);
-        console.log('time:', otTime);
+        // console.log('Dates:', dates);
+        // console.log('time:', otTime);
+        console.log('workplaceId:', workplaceId);
+
       }
 
       // alert(response.data.recordworkplace.length);
@@ -358,8 +345,12 @@ function Worktimesheet() {
                                   onChange={() => handleCheckboxChange(index)}
                                   style={{ color: 'black' }}
                                 />
+                                {data.workplaceId}
+
                               </td>
+
                             ))}
+
                           </tr>
                           <tr>
                             <td>ช.ม. ทำงาน</td>
