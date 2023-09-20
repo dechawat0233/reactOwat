@@ -282,7 +282,7 @@ function Salary() {
         await setWorkplace(empSelect.workplace || '');
 
         const filtered = await workplaceSelection.filter(wp =>
-            empSelect.workplace === '' || wp.workplaceName === empSelect.workplace
+            empSelect.workplace === '' || wp.workplaceId === empSelect.workplace
         )
         // if (filtered !== '') {
         //     if (employeeData.workplace == '') {
