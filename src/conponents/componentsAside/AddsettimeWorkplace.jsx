@@ -630,8 +630,9 @@ function AddsettimeWorkplace() {
         const data = {
             workplaceId: searchWorkplaceId,
             workplaceName: searchWorkplaceName,
-            date: workDate,
+            date: formattedWorkDate,
         };
+// alert('' + formattedWorkDate)
 
         try {
             const response = await axios.post(endpoint + '/timerecord/search', data);
@@ -667,7 +668,7 @@ function AddsettimeWorkplace() {
     async function handleCreateWorkplaceTimerecord(event) {
         event.preventDefault();
         // alert('test');
-alert(formattedWorkDate);
+// alert(formattedWorkDate);
 
         //get data from input in useState to data 
         const data = {

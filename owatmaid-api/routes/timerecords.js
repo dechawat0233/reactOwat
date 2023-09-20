@@ -24,7 +24,7 @@ const workplaceTimerecordSchema = new mongoose.Schema({
   timerecordId: String,
   workplaceId: String,
   workplaceName: String,
-  date: Date,
+  date: String,
   employeeRecord: [{
     staffId: String,
     staffName: String,
@@ -149,7 +149,6 @@ router.post('/search', async (req, res) => {
     const { workplaceId,
       workplaceName,
       date} = req.body;
-
     // Construct the search query based on the provided parameters
     const query = {};
 
@@ -163,9 +162,9 @@ router.post('/search', async (req, res) => {
     }
 
     if (date !== '') {
-      query.date= new Date(date);
+      query.date= date;
     }
-
+console.log('query.date ' + query.date);
     // console.log('Constructed Query:');
     // console.log(query);
 
@@ -234,17 +233,18 @@ router.post('/searchemp', async (req, res) => {
 
 // Create new workplace 
 router.post('/create', async (req, res) => {
-  const currentDate = new Date();
-  const currentYear = currentDate.getFullYear();
-  const timerecordId = currentYear;
   
   const {
     workplaceId,
     workplaceName,
     date,
     employeeRecord
-  } = req.body;
-  console.log(date);
+  } = await req.body;
+  // console.log(date);
+
+  const currentDate = new Date(date);
+  const currentYear = currentDate.getFullYear();
+  const timerecordId = currentYear;
 
 
   // Create workplace
@@ -256,15 +256,17 @@ router.post('/create', async (req, res) => {
     employeeRecord
   });
 
-  // try {
-  //   await workplaceTimeRecordData.save();
-  //   // await setToEmployee(workplaceId, workplaceName, date, employeeRecord);
-
-  //   res.json(workplaceTimeRecordData);
-  // } catch (err) {
-  //   console.log(err);
-  //   res.status(400).json({ error: err.message });
-  // }
+  try {
+    const ans = await workplaceTimeRecordData.save();
+    // await setToEmployee(workplaceId, workplaceName, date, employeeRecord);
+if(ans){
+  console.log('create workplace time record success');
+}
+    res.json(workplaceTimeRecordData);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ error: err.message });
+  }
 
 });
 
