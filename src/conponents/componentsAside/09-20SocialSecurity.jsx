@@ -68,7 +68,7 @@ function SocialSecurity() {
     const [salaryadd4Sec, setSalaryadd4Sec] = useState(false); //เงินเพิ่มพิเศษ โทรศัพท์
     const [salaryadd5Sec, setSalaryadd5Sec] = useState(false); //เงินเพิ่มพิเศษ เงินประจำตำแหน่ง
 
-
+    
 
 
     // const [salaryadd1vSec, setSalaryadd1vSec] = useState(100); //จำนวนเงินเพิ่มพิเศษ ค่ารถ 
@@ -245,7 +245,7 @@ function SocialSecurity() {
 
         setSalary(empSelect.salary);
         setMinus(empSelect.minus);
-        // setWorkplaceId(empSelect.workplace);
+        setWorkplaceId(empSelect.workplace);
 
         // setSalaryadd1vSec(parseFloat(empSelect.salaryadd1v) || 0);
         // setSalaryadd2vSec(parseFloat(empSelect.salaryadd2v) || 0);

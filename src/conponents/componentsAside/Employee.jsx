@@ -30,12 +30,14 @@ function Employee() {
             .then(response => response.json())
             .then(data => {
                 setWorkplaceSelection(data);
+                console.log(data);
+
             }
             )
             .catch(error => console.error('Error fetching employees:', error));
 
     }, []);
-
+    
     //employee data
     const [_id, set_id] = useState('');
     const [employeeId, setEmployeeId] = useState('');
@@ -162,7 +164,7 @@ function Employee() {
         event.preventDefault();
 
         const data = {
-            
+
             employeeId: employeeId,
             position: position,
             department: department,

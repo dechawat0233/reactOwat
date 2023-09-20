@@ -34,6 +34,22 @@ function Salary() {
 
     }, []);
 
+    const [workplaceSelectionSalary, setWorkplaceSelectionSalary] = useState([]);
+
+    useEffect(() => {
+
+        // Fetch data from the API
+        fetch(endpoint + '/workplace/list')
+            .then((response) => response.json())
+            .then((data2) => {
+                setWorkplaceSelectionSalary(data2);
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+            });
+    }, []);
+    console.log(workplaceSelectionSalary);
+
     const handleChange = async (e, field) => {
         // if ((field == 'salaryadd1') || (field == 'salaryadd2') || (field == 'salaryadd3') || (field == 'salaryadd4') || (field == 'salaryadd5')) {
         //     const { checked } = await e.target;
@@ -159,6 +175,7 @@ function Salary() {
 
         // setWorkplacearea(filtered[0].workplaceArea );
     };
+    console.log(workplaceSelection);
 
     const handleWorktable = (event) => {
         setWorktable(event.target.value);
@@ -280,27 +297,27 @@ function Salary() {
         await setStartcount(empSelect.startcount ? new Date(empSelect.startcount) : '');
         await setSalaryupdate(empSelect.salaryupdate ? new Date(empSelect.salaryupdate) : '');
 
-        setWorkplaceId(empSelect.employeeId);
+        // setWorkplaceId(empSelect.employeeId);
 
-        // setSalaryadd1(empSelect.salaryadd1) || false;
-        // setSalaryadd1v(parseFloat(empSelect.salaryadd1v) || 0);
-        // setSalaryadd2(empSelect.salaryadd2 || false);
-        // setSalaryadd2v(parseFloat(empSelect.salaryadd2v) || 0);
-        // setSalaryadd3(empSelect.salaryadd3 || false);
-        // setSalaryadd3v(parseFloat(empSelect.salaryadd3v) || 0);
-        // setSalaryadd4(empSelect.salaryadd4 || false);
-        // setSalaryadd4v(parseFloat(empSelect.salaryadd4v) || 0);
-        // setSalaryadd5(empSelect.salaryadd5 || false);
-        // setSalaryadd5v(parseFloat(empSelect.salaryadd5v) || 0);
+        setSalaryadd1(empSelect.salaryadd1) || false;
+        setSalaryadd1v(parseFloat(empSelect.salaryadd1v) || 0);
+        setSalaryadd2(empSelect.salaryadd2 || false);
+        setSalaryadd2v(parseFloat(empSelect.salaryadd2v) || 0);
+        setSalaryadd3(empSelect.salaryadd3 || false);
+        setSalaryadd3v(parseFloat(empSelect.salaryadd3v) || 0);
+        setSalaryadd4(empSelect.salaryadd4 || false);
+        setSalaryadd4v(parseFloat(empSelect.salaryadd4v) || 0);
+        setSalaryadd5(empSelect.salaryadd5 || false);
+        setSalaryadd5v(parseFloat(empSelect.salaryadd5v) || 0);
         // setSalaryadd5v("");
     }
-    console.log(employeeData);
+    // console.log(employeeData);
     // save
-    console.log(salaryadd1v + " 1");
-    console.log(salaryadd2v + " 2");
-    console.log(salaryadd3v + " 3");
-    console.log(salaryadd4v + " 4");
-    console.log(salaryadd5v + " 5x");
+    // console.log(salaryadd1v + " 1");
+    // console.log(salaryadd2v + " 2");
+    // console.log(salaryadd3v + " 3");
+    // console.log(salaryadd4v + " 4");
+    // console.log(salaryadd5v + " 5x");
 
     // const toggleCheckbox1 = () => {
     //     setSalaryadd1(prevValue => !prevValue); // Toggle the checkbox state
@@ -383,47 +400,6 @@ function Salary() {
         }
     }, [salaryadd1, salaryadd2, salaryadd3, salaryadd4, salaryadd5]);
     // console.log(salaryadd1 + " 1");
-
-    // save
-    const [workplaceSelectionV2, setWorkplaceSelectionV2] = useState([]);
-    const [filteredWorkplaces, setFilteredWorkplaces] = useState([]);
-    const targetWorkplace = '1001'; // Replace with your target workplace value
-
-    useEffect(() => {
-        const storedValue = sessionStorage.getItem('empSelect');
-        if (storedValue) {
-            // setEmployeeselection(storedValue);
-        }
-
-        // Get all Workplace from API
-        fetch(endpoint + '/workplace/list') // Update with your API endpoint
-            .then(response => response.json())
-            .then(data => {
-                setWorkplaceSelectionV2(data);
-            })
-            .catch(error => console.error('Error fetching workplaces:', error));
-    }, []);
-
-    useEffect(() => {
-        // Filter the workplaceSelection array based on the target workplace
-        const filteredWorkplaces = workplaceSelectionV2.filter(workplace => workplace.workplaceId === targetWorkplace);
-        setFilteredWorkplaces(filteredWorkplaces);
-        if (filteredWorkplaces.length > 0) {
-            const firstFilteredWorkplace = filteredWorkplaces[0];
-            setSalaryadd1v(parseFloat(firstFilteredWorkplace.salaryadd1) || 0);
-            setSalaryadd2v(parseFloat(firstFilteredWorkplace.salaryadd2) || 0);
-            setSalaryadd3v(parseFloat(firstFilteredWorkplace.salaryadd3) || 0);
-            setSalaryadd4v(parseFloat(firstFilteredWorkplace.salaryadd4) || 0);
-            setSalaryadd5v(parseFloat(firstFilteredWorkplace.salaryadd5) || 0);
-        }
-    }, [workplaceId, workplaceSelectionV2]);
-    // console.log(workplaceSelectionV2);
-    // console.log(filteredWorkplaces);
-    // console.log(salaryadd1v + " 1");
-    // console.log(salaryadd2v + " 2");
-    // console.log(salaryadd3v + " 3");
-    // console.log(salaryadd4v + " 4");
-    // console.log(salaryadd5v + " 5");
 
     return (
         <body class="hold-transition sidebar-mini" className='editlaout'>
