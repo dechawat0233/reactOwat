@@ -263,6 +263,7 @@ alert(event.target.value);
         await setEmployeeData(empSelect);
         await setWorkplace(empSelect.workplace || '');
 
+        //set workplace to show
         const filtered = await workplaceSelection.filter(wp =>
             empSelect.workplace === '' || wp.workplaceId === empSelect.workplace
         )
