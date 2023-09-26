@@ -209,8 +209,8 @@ function Worktimesheet() {
 
   ///PDF///////////////////////
   // const [dataset, setDataset] = useState([]);
-  const [monthset, setMonthset] = useState(2); // Example: February (you can set it dynamically)
-  const [year, setYear] = useState(2024); // Example year (you can set it dynamically)
+  const [monthset, setMonthset] = useState('02'); // Example: February (you can set it dynamically)
+  const [year, setYear] = useState(2022); // Example year (you can set it dynamically)
   const [calendarData, setCalendarData] = useState([]);
 
   console.log(dataset);
@@ -248,51 +248,99 @@ function Worktimesheet() {
 
       doc.text('ฮ่าโหลๆ ได้ไหม', 10, 10);
 
-      const getDaysInMonth = (monthset, year) => {
-        return new Date(year, monthset, 0).getDate();
-      };
+      // Calculate the number of days in the month, considering February and leap years
+      const daysInMonth = (monthset === '02' && ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0)) ? 29 :
+        (monthset === '02') ? 28 :
+          [4, 6, 9, 11].includes(monthset) ? 30 : 31;
 
-      // Function to generate the calendar data for the given month and year
-      const generateCalendarData = () => {
-        const daysInMonth = getDaysInMonth(monthset, year);
-        const calendarArray = [];
+      // Calculate the starting point for the table header
+      let startingDay = 21;
 
-        // Create an array with the days of the month
-        for (let day = 1; day <= daysInMonth; day++) {
-          calendarArray.push(day);
+      // Generate the header with a single cycle of "01" to "20" followed by "21" to the last day of the month
+      const header = Array.from({ length: daysInMonth }, (_, index) => {
+        const day = (index + startingDay) > daysInMonth ? (index + startingDay - daysInMonth) : (index + startingDay);
+
+        // Add leading zeros for days 1 to 9
+        const formattedDay = day < 10 ? `0${day}` : day.toString();
+
+        return formattedDay;
+      });
+
+      // Assuming that 'date' contains values like '01', '02', ..., '28', '29', '30', '31'
+      // You can replace 'date' with the actual field name containing the date information in your data
+      const dateFieldName = 'date';
+
+      // Create an object to store data rows by date
+      const rowDataByDate = {};
+
+      // Organize the dataset into the rowDataByDate object
+      dataset.forEach((data) => {
+        const date = data[dateFieldName];
+        if (!rowDataByDate[date]) {
+          rowDataByDate[date] = { workplaceId: [], otTime: [], dateFieldName: [] };
         }
+        rowDataByDate[date].workplaceId.push(data.workplaceId);
+        rowDataByDate[date].otTime.push(data.otTime);
+        rowDataByDate[date].dateFieldName.push(data[dateFieldName]);
+      });
 
-        setCalendarData(calendarArray);
-      };
+      // Map the header to transposedTableData using the rowDataByDate object
+      const transposedTableData = header.map((headerDay) => {
+        const rowData = rowDataByDate[headerDay];
 
-      // Call the function to generate the calendar data
-      generateCalendarData();
+        if (rowData) {
+          return [
+            rowData.workplaceId.join(', '),
+            rowData.otTime.join(', '),
+            rowData.dateFieldName.join(', '),
+          ];
+        } else {
+          return ['', '', ''];
+        }
+      });
 
-      const header = [
-        ...Array.from({ length: getDaysInMonth(monthset, year) }, (_, index) => (index + 1).toString())
-      ];
-
-      // Transpose the tableData so that rows become columns
-      const tableData = dataset.map(({ workplaceId, allTime, date }) => [workplaceId, allTime, date, /* ... your data columns here ... */]);
-      const transposedTableData = dataset.map((_, columnIndex) =>
-        tableData.map((row) => row[columnIndex])
+      // Transpose the transposedTableData to sort horizontally
+      const sortedTableData = Array.from({ length: 3 }, (_, index) =>
+        transposedTableData.map((row) => row[index])
       );
 
-      console.log(header);
-      console.log(transposedTableData); // Check if the header and tableData are formed correctly
+      const textColumn = ['workplace', 'ot', 'day'];
+
+      const sortedTableDataWithText = sortedTableData.map((data, index) => {
+        const text = [textColumn[index]];
+        return [...text, ...data];
+      });
+
+      // Now, sortedTableDataWithText contains the text column followed by sorted data columns.
+
 
       // Add header and data to the table
+      // doc.autoTable({
+      //   head: [['head', ...header]],
+      //   body: sortedTableData,
+      //   ...tableOptions,
+      // });
+
+      const customHeaders = [
+        ['', ...header],
+      ];
+
+
+      // Add custom headers and data to the table
       doc.autoTable({
-        head: [header],
-        body: transposedTableData,
+        head: customHeaders,
+        body: sortedTableDataWithText,
         ...tableOptions,
       });
+
 
       doc.save('example.pdf');
     } catch (error) {
       console.error('Error generating PDF:', error);
     }
   };
+
+
 
   return (
     // <div>
@@ -527,7 +575,7 @@ function Worktimesheet() {
                     <TestPDF />
                   </div> */}
                   <div>
-                    <button onClick={generatePDF}>Generate PDF</button>
+                    <button id="generatePdfButton" onClick={generatePDF}>Generate PDF</button>
                   </div>
                 </div>
               </div>
