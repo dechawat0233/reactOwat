@@ -3,6 +3,10 @@ import endpoint from '../../config';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import '../editwindowcss.css';
+import TestPDF from './TestPDF';
+
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
 
 function Worktimesheet() {
   const styles = {
@@ -10,6 +14,8 @@ function Worktimesheet() {
       minWidth: "4rem"
     }
   };
+  const [dataset, setDataset] = useState([]);
+
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
   const [checked3, setChecked3] = useState(false);
@@ -81,17 +87,28 @@ function Worktimesheet() {
       if (employeeWorkplaceRecords.length > 0) {
         const dates = employeeWorkplaceRecords.map(record => record.date);
         // const otTime = employeeWorkplaceRecords.map(record => record.otTime);
-        const otTime = employeeWorkplaceRecords.map((record) => record.otTime);
+
+        const allTimeA = employeeWorkplaceRecords.map((record) => record.allTime);
 
         const workplaceId = employeeWorkplaceRecords.map(record => record.workplaceId);
 
+        const otTime = employeeWorkplaceRecords.map((record) => record.otTime);
+
+        setDataset(
+          employeeWorkplaceRecords
+            .filter((record) => record.date) // Filter out records with null or undefined dates
+            .map((record) => {
+              return record;
+            })
+        );
         setTableData((prevState) => {
           const updatedData = [...prevState];
           dates.forEach((date, index) => {
             const dataIndex = parseInt(date, 10) - 1; // Subtract 1 because indices are zero-based
             if (dataIndex >= 0 && dataIndex < updatedData.length) {
               updatedData[dataIndex].isChecked = true;
-              updatedData[dataIndex].textValue = otTime[index]; 
+              updatedData[dataIndex].textValue = otTime[index];
+              updatedData[dataIndex].allTimeA = allTimeA[index];
               updatedData[dataIndex].workplaceId = workplaceId[index]; // Set otTime at the same index as dates
               // Set otTime at the same index as dates
             }
@@ -133,6 +150,10 @@ function Worktimesheet() {
   }
   console.log(searchResult);
   console.log(woekplace);
+
+
+  console.log(dataset);
+
 
   // const handleCheckboxChange = (event) => {
   //   const { name, checked } = event.target;
@@ -186,6 +207,93 @@ function Worktimesheet() {
   };
 
 
+  ///PDF///////////////////////
+  // const [dataset, setDataset] = useState([]);
+  const [monthset, setMonthset] = useState(2); // Example: February (you can set it dynamically)
+  const [year, setYear] = useState(2024); // Example year (you can set it dynamically)
+  const [calendarData, setCalendarData] = useState([]);
+
+  console.log(dataset);
+
+  const generatePDF = async () => {
+    try {
+      const doc = new jsPDF('landscape');
+
+      // Load the Thai font
+      const fontPath = '/assets/fonts/THSarabunNew.ttf';
+      doc.addFileToVFS(fontPath);
+      doc.addFont(fontPath, 'THSarabunNew', 'normal');
+
+      // Override the default styles for jspdf-autotable
+      const styles = {
+        font: 'THSarabunNew',
+        fontStyle: 'normal',
+        fontSize: 10,
+      };
+      const tableOptions = {
+        styles: styles,
+        startY: 20,
+        // margin: { top: 10 },
+      };
+
+      const title = 'Sample PDF Title';
+
+      // Set title with the Thai font
+      doc.setFont('THSarabunNew');
+      doc.setFontSize(16);
+      const titleWidth = doc.getStringUnitWidth(title) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const titleX = (pageWidth - titleWidth) / 2;
+      doc.text(title, titleX, 10);
+
+      doc.text('ฮ่าโหลๆ ได้ไหม', 10, 10);
+
+      const getDaysInMonth = (monthset, year) => {
+        return new Date(year, monthset, 0).getDate();
+      };
+
+      // Function to generate the calendar data for the given month and year
+      const generateCalendarData = () => {
+        const daysInMonth = getDaysInMonth(monthset, year);
+        const calendarArray = [];
+
+        // Create an array with the days of the month
+        for (let day = 1; day <= daysInMonth; day++) {
+          calendarArray.push(day);
+        }
+
+        setCalendarData(calendarArray);
+      };
+
+      // Call the function to generate the calendar data
+      generateCalendarData();
+
+      const header = [
+        ...Array.from({ length: getDaysInMonth(monthset, year) }, (_, index) => (index + 1).toString())
+      ];
+
+      // Transpose the tableData so that rows become columns
+      const tableData = dataset.map(({ workplaceId, allTime, date }) => [workplaceId, allTime, date, /* ... your data columns here ... */]);
+      const transposedTableData = dataset.map((_, columnIndex) =>
+        tableData.map((row) => row[columnIndex])
+      );
+
+      console.log(header);
+      console.log(transposedTableData); // Check if the header and tableData are formed correctly
+
+      // Add header and data to the table
+      doc.autoTable({
+        head: [header],
+        body: transposedTableData,
+        ...tableOptions,
+      });
+
+      doc.save('example.pdf');
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+    }
+  };
+
   return (
     // <div>
     <body class="hold-transition sidebar-mini" className='editlaout'>
@@ -209,7 +317,7 @@ function Worktimesheet() {
 
           <section class="content">
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-7">
                 <section class="Frame">
                   <div class="col-md-12">
                     <h2 class="title">ค้นหา</h2>
@@ -359,7 +467,7 @@ function Worktimesheet() {
                                 <input
                                   type="text"
                                   class="form-control"
-                                  value={data.textValue}
+                                  value={data.allTimeA}
                                   onChange={(event) => handleTextChange(index, event)}
                                 />
                               </td>
@@ -409,6 +517,18 @@ function Worktimesheet() {
                     </ul> */}
 
                   </section>
+                </div>
+                <div class="col-md-3">
+                  {/* <div style={{
+                    position: "absolute",
+                    bottom: "2rem",
+                    right: "0px"
+                  }}>
+                    <TestPDF />
+                  </div> */}
+                  <div>
+                    <button onClick={generatePDF}>Generate PDF</button>
+                  </div>
                 </div>
               </div>
             </form>

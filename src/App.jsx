@@ -143,7 +143,9 @@ function App() {
               <Route path="/applicatio4" element={<Application4 />} />
               <Route path="/application_summary" element={<ApplicationSummary />} />
 
-              <Route path="/testPDF" element={<TestShowManyData />} />
+              {/* <Route path="/testPDF" element={<TestShowManyData />} /> */}
+              <Route path="/testPDF" element={<TestPDF />} />
+
 
               <Route path="/time" element={<Testcal />} />
               <Route path="/countday" element={<Countday />} />
