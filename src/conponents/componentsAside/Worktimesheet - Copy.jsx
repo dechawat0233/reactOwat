@@ -72,17 +72,6 @@ function Worktimesheet() {
       employeeName: searchEmployeeName,
       month: month
     }; console.log(searchEmployeeId);
-
-    const parsedNumber = await parseInt(month , 10) -1;
-    const formattedResult = await String(parsedNumber ).padStart(2, '0');
-// await alert(formattedResult );
-
-    const data1 = await {
-      employeeId: searchEmployeeId,
-      employeeName: searchEmployeeName,
-      month: formattedResult 
-    }; console.log(searchEmployeeId);
-// alert(data1.month);
     try {
 
       const response = await axios.post(endpoint + '/timerecord/searchemp', data);
