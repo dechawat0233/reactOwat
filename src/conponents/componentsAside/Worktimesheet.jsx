@@ -16,6 +16,17 @@ function Worktimesheet() {
   };
   const [dataset, setDataset] = useState([]);
 
+
+  // Generate an array containing numbers from 21 to 31
+  const range1 = Array.from({ length: 11 }, (_, i) => i + 21);
+
+  // Generate an array containing numbers from 1 to 20
+  const range2 = Array.from({ length: 20 }, (_, i) => i + 1);
+
+  // Combine the two ranges into a single array
+  const combinedRange = [...range1, ...range2];
+
+
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
   const [checked3, setChecked3] = useState(false);
@@ -61,6 +72,7 @@ function Worktimesheet() {
   const [searchEmployeeId, setSearchEmployeeId] = useState('');
   const [searchEmployeeName, setSearchEmployeeName] = useState('');
   const [searchResult, setSearchResult] = useState([]);
+  const [searchResult1, setSearchResult1] = useState([]);
 
   const [woekplace, setWoekplace] = useState([]);
 
@@ -73,27 +85,90 @@ function Worktimesheet() {
       month: month
     }; console.log(searchEmployeeId);
 
-    const parsedNumber = await parseInt(month , 10) -1;
-    const formattedResult = await String(parsedNumber ).padStart(2, '0');
-// await alert(formattedResult );
+    const parsedNumber = await parseInt(month, 10) - 1;
+    const formattedResult = await String(parsedNumber).padStart(2, '0');
+    // await alert(formattedResult );
 
     const data1 = await {
       employeeId: searchEmployeeId,
       employeeName: searchEmployeeName,
-      month: formattedResult 
+      month: formattedResult
     }; console.log(searchEmployeeId);
-// alert(data1.month);
+    // alert(data1.month);
+
     try {
 
       const response = await axios.post(endpoint + '/timerecord/searchemp', data);
 
-      await setSearchResult(response.data.recordworkplace);
+      if (response.data.recordworkplace.length >= 1) {
+        await setSearchResult(response.data.recordworkplace);
+      } else {
+        alert("ไม่พบข้อมูล");
+      }
+
+      if (data1.month == '00') {
+        data1.month = '12';
+      }
+      const response1 = await axios.post(endpoint + '/timerecord/searchemp', data1);
+      if (response1.data.recordworkplace.length >= 1) {
+        await setSearchResult1(response1.data.recordworkplace);
+      }
+
+      // await alert(data1.month + ' : '+ response1.data.recordworkplace.length )
+      // await alert(data.month + ' : '+ response.data.recordworkplace.length )
+
+      // await alert(searchResult[0].employee_workplaceRecord.length);
 
       // alert(JSON.stringify(response.data , null, 2) );
       // await alert(searchResult[0].employee_workplaceRecord[0].workplaceId );
 
       const employeeWorkplaceRecords = await response.data.recordworkplace[0].employee_workplaceRecord;
-      // alert(employeeWorkplaceRecords.workplaceId);
+      const employeeWorkplaceRecords1 = await response1.data.recordworkplace[0].employee_workplaceRecord;
+
+// xx
+      if (employeeWorkplaceRecords1.length > 0) {
+        const dates1 = employeeWorkplaceRecords1.map(record => record.date);
+        // const otTime = employeeWorkplaceRecords.map(record => record.otTime);
+
+        const allTimeA1 = employeeWorkplaceRecords1.map((record) => record.allTime);
+
+        const workplaceId1 = employeeWorkplaceRecords1.map(record => record.workplaceId);
+
+        const otTime1 = employeeWorkplaceRecords1.map((record) => record.otTime);
+
+        setDataset(
+          employeeWorkplaceRecords1.filter((record) => record.date) // Filter out records with null or undefined dates
+            .map((record) => {
+              return record;
+            })
+        );
+
+        setTableData((prevState) => {
+          const updatedData = [...prevState];
+          dates1.forEach((date1, index) => {
+            const dataIndex1 = parseInt(date1, 10) - 1; // Subtract 1 because indices are zero-based
+            if (dataIndex1 >= 0 && dataIndex1 < updatedData.length) {
+              
+              if (dataIndex1 >= 21 && dataIndex1 <= 31) {
+// alert(dataIndex1 +' .');
+
+                updatedData[(dataIndex1 - 21)].isChecked = true;
+                updatedData[(dataIndex1 - 21)].textValue = otTime1[index];
+                updatedData[(dataIndex1 - 21)].allTimeA = allTimeA1[index];
+                updatedData[(dataIndex1 - 21)].workplaceId = workplaceId1[index]; // Set otTime at the same index as dates
+                // Set otTime at the same index as dates
+
+              }
+
+            }
+          });
+          return updatedData;
+        });
+
+        // setWoekplace(dates);
+
+      }
+      // xx
 
       if (employeeWorkplaceRecords.length > 0) {
         const dates = employeeWorkplaceRecords.map(record => record.date);
@@ -116,12 +191,18 @@ function Worktimesheet() {
           const updatedData = [...prevState];
           dates.forEach((date, index) => {
             const dataIndex = parseInt(date, 10) - 1; // Subtract 1 because indices are zero-based
+            alert(index);
             if (dataIndex >= 0 && dataIndex < updatedData.length) {
-              updatedData[dataIndex].isChecked = true;
-              updatedData[dataIndex].textValue = otTime[index];
-              updatedData[dataIndex].allTimeA = allTimeA[index];
-              updatedData[dataIndex].workplaceId = workplaceId[index]; // Set otTime at the same index as dates
-              // Set otTime at the same index as dates
+              if (dataIndex <= 20) {
+
+                updatedData[(dataIndex + 11)].isChecked = true;
+                updatedData[(dataIndex + 11)].textValue = otTime[index];
+                updatedData[(dataIndex + 11)].allTimeA = allTimeA[index];
+                updatedData[(dataIndex + 11)].workplaceId = workplaceId[index]; // Set otTime at the same index as dates
+                // Set otTime at the same index as dates
+
+              }
+
             }
           });
           return updatedData;
@@ -134,6 +215,8 @@ function Worktimesheet() {
         console.log('workplaceId:', workplaceId);
 
       }
+
+      /////////
 
       // alert(response.data.recordworkplace.length);
       if (response.data.recordworkplace.length < 1) {
@@ -177,13 +260,19 @@ function Worktimesheet() {
 
 
 
-
   const [tableData, setTableData] = useState(
-    new Array(31).fill('').map((_, index) => ({
-      isChecked: false,
-      textValue: '',
+    combinedRange.map((index) => ({
+      isChecked: false, // Initial state of the checkbox
+      textValue: '',    // Initial state of the text value
+      workplaceId: index, // Store the workplaceId
     }))
   );
+  // const [tableData, setTableData] = useState(
+  //   new Array(31).fill('').map((_, index) => ({
+  //     isChecked: false,
+  //     textValue: '',
+  //   }))
+  // );
 
   // useEffect(() => {
   //   const dates = ['28', '29']; // Example dates
@@ -494,8 +583,8 @@ function Worktimesheet() {
                         <thead>
                           <tr>
                             <th style={styles.th}>Number</th>
-                            {Array.from({ length: 31 }, (_, index) => (
-                              <th key={index} style={styles.th}>{index + 1}</th>
+                            {combinedRange.map((number, index) => (
+                              <th key={index} style={styles.th}>{number}</th>
                             ))}
                           </tr>
                         </thead>
