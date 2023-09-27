@@ -3,6 +3,10 @@ import endpoint from '../../config';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import '../editwindowcss.css';
+import TestPDF from './TestPDF';
+
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
 
 function Worktimesheet() {
   const styles = {
@@ -10,6 +14,8 @@ function Worktimesheet() {
       minWidth: "4rem"
     }
   };
+  const [dataset, setDataset] = useState([]);
+
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
   const [checked3, setChecked3] = useState(false);
@@ -81,17 +87,28 @@ function Worktimesheet() {
       if (employeeWorkplaceRecords.length > 0) {
         const dates = employeeWorkplaceRecords.map(record => record.date);
         // const otTime = employeeWorkplaceRecords.map(record => record.otTime);
-        const otTime = employeeWorkplaceRecords.map((record) => record.otTime);
+
+        const allTimeA = employeeWorkplaceRecords.map((record) => record.allTime);
 
         const workplaceId = employeeWorkplaceRecords.map(record => record.workplaceId);
 
+        const otTime = employeeWorkplaceRecords.map((record) => record.otTime);
+
+        setDataset(
+          employeeWorkplaceRecords
+            .filter((record) => record.date) // Filter out records with null or undefined dates
+            .map((record) => {
+              return record;
+            })
+        );
         setTableData((prevState) => {
           const updatedData = [...prevState];
           dates.forEach((date, index) => {
             const dataIndex = parseInt(date, 10) - 1; // Subtract 1 because indices are zero-based
             if (dataIndex >= 0 && dataIndex < updatedData.length) {
               updatedData[dataIndex].isChecked = true;
-              updatedData[dataIndex].textValue = otTime[index]; 
+              updatedData[dataIndex].textValue = otTime[index];
+              updatedData[dataIndex].allTimeA = allTimeA[index];
               updatedData[dataIndex].workplaceId = workplaceId[index]; // Set otTime at the same index as dates
               // Set otTime at the same index as dates
             }
@@ -133,6 +150,10 @@ function Worktimesheet() {
   }
   console.log(searchResult);
   console.log(woekplace);
+
+
+  console.log(dataset);
+
 
   // const handleCheckboxChange = (event) => {
   //   const { name, checked } = event.target;
@@ -186,6 +207,141 @@ function Worktimesheet() {
   };
 
 
+  ///PDF///////////////////////
+  // const [dataset, setDataset] = useState([]);
+  const [monthset, setMonthset] = useState('02'); // Example: February (you can set it dynamically)
+  const [year, setYear] = useState(2022); // Example year (you can set it dynamically)
+  const [calendarData, setCalendarData] = useState([]);
+
+  console.log(dataset);
+
+  const generatePDF = async () => {
+    try {
+      const doc = new jsPDF('landscape');
+
+      // Load the Thai font
+      const fontPath = '/assets/fonts/THSarabunNew.ttf';
+      doc.addFileToVFS(fontPath);
+      doc.addFont(fontPath, 'THSarabunNew', 'normal');
+
+      // Override the default styles for jspdf-autotable
+      const styles = {
+        font: 'THSarabunNew',
+        fontStyle: 'normal',
+        fontSize: 10,
+      };
+      const tableOptions = {
+        styles: styles,
+        startY: 20,
+        // margin: { top: 10 },
+      };
+
+      const title = 'Sample PDF Title';
+
+      // Set title with the Thai font
+      doc.setFont('THSarabunNew');
+      doc.setFontSize(16);
+      const titleWidth = doc.getStringUnitWidth(title) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const titleX = (pageWidth - titleWidth) / 2;
+      doc.text(title, titleX, 10);
+
+      doc.text('ฮ่าโหลๆ ได้ไหม', 10, 10);
+
+      // Calculate the number of days in the month, considering February and leap years
+      const daysInMonth = (monthset === '02' && ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0)) ? 29 :
+        (monthset === '02') ? 28 :
+          [4, 6, 9, 11].includes(monthset) ? 30 : 31;
+
+      // Calculate the starting point for the table header
+      let startingDay = 21;
+
+      // Generate the header with a single cycle of "01" to "20" followed by "21" to the last day of the month
+      const header = Array.from({ length: daysInMonth }, (_, index) => {
+        const day = (index + startingDay) > daysInMonth ? (index + startingDay - daysInMonth) : (index + startingDay);
+
+        // Add leading zeros for days 1 to 9
+        const formattedDay = day < 10 ? `0${day}` : day.toString();
+
+        return formattedDay;
+      });
+
+      // Assuming that 'date' contains values like '01', '02', ..., '28', '29', '30', '31'
+      // You can replace 'date' with the actual field name containing the date information in your data
+      const dateFieldName = 'date';
+
+      // Create an object to store data rows by date
+      const rowDataByDate = {};
+
+      // Organize the dataset into the rowDataByDate object
+      dataset.forEach((data) => {
+        const date = data[dateFieldName];
+        if (!rowDataByDate[date]) {
+          rowDataByDate[date] = { workplaceId: [], otTime: [], dateFieldName: [] };
+        }
+        rowDataByDate[date].workplaceId.push(data.workplaceId);
+        rowDataByDate[date].otTime.push(data.otTime);
+        rowDataByDate[date].dateFieldName.push(data[dateFieldName]);
+      });
+
+      // Map the header to transposedTableData using the rowDataByDate object
+      const transposedTableData = header.map((headerDay) => {
+        const rowData = rowDataByDate[headerDay];
+
+        if (rowData) {
+          return [
+            rowData.workplaceId.join(', '),
+            rowData.otTime.join(', '),
+            rowData.dateFieldName.join(', '),
+          ];
+        } else {
+          return ['', '', ''];
+        }
+      });
+
+      // Transpose the transposedTableData to sort horizontally
+      const sortedTableData = Array.from({ length: 3 }, (_, index) =>
+        transposedTableData.map((row) => row[index])
+      );
+
+      const textColumn = ['workplace', 'ot', 'day'];
+
+      const sortedTableDataWithText = sortedTableData.map((data, index) => {
+        const text = [textColumn[index]];
+        return [...text, ...data];
+      });
+
+      // Now, sortedTableDataWithText contains the text column followed by sorted data columns.
+
+
+      // Add header and data to the table
+      // doc.autoTable({
+      //   head: [['head', ...header]],
+      //   body: sortedTableData,
+      //   ...tableOptions,
+      // });
+
+      const customHeaders = [
+        ['', ...header],
+      ];
+
+
+      // Add custom headers and data to the table
+      doc.autoTable({
+        head: customHeaders,
+        body: sortedTableDataWithText,
+        ...tableOptions,
+      });
+
+
+      doc.save('example.pdf');
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+    }
+  };
+
+
+
   return (
     // <div>
     <body class="hold-transition sidebar-mini" className='editlaout'>
@@ -209,7 +365,7 @@ function Worktimesheet() {
 
           <section class="content">
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-7">
                 <section class="Frame">
                   <div class="col-md-12">
                     <h2 class="title">ค้นหา</h2>
@@ -359,7 +515,7 @@ function Worktimesheet() {
                                 <input
                                   type="text"
                                   class="form-control"
-                                  value={data.textValue}
+                                  value={data.allTimeA}
                                   onChange={(event) => handleTextChange(index, event)}
                                 />
                               </td>
@@ -409,6 +565,18 @@ function Worktimesheet() {
                     </ul> */}
 
                   </section>
+                </div>
+                <div class="col-md-3">
+                  {/* <div style={{
+                    position: "absolute",
+                    bottom: "2rem",
+                    right: "0px"
+                  }}>
+                    <TestPDF />
+                  </div> */}
+                  <div>
+                    <button id="generatePdfButton" onClick={generatePDF}>Generate PDF</button>
+                  </div>
                 </div>
               </div>
             </form>

@@ -1,6 +1,7 @@
 import React from 'react'
 import EmployeesSelected from './EmployeesSelected';
 import '../editwindowcss.css';
+import TestPDF from './TestPDF';
 
 function IncomeTax() {
     return (
@@ -70,6 +71,7 @@ function IncomeTax() {
                                 </div>
                                 <div class="col-md-3">
                                     <section class="Frame"><EmployeesSelected /></section>
+                                    {/* <TestPDF /> */}
                                 </div>
                             </div>
                         </div>
