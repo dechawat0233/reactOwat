@@ -37,7 +37,7 @@ function Employee() {
             .catch(error => console.error('Error fetching employees:', error));
 
     }, []);
-
+    
     //employee data
     const [_id, set_id] = useState('');
     const [employeeId, setEmployeeId] = useState('');
@@ -380,33 +380,14 @@ function Employee() {
                                                                 <option value="บริษัท ไทย เอ็นโอเค จำกัด (โรงงานบางประกง)">บริษัท ไทย เอ็นโอเค จำกัด (โรงงานบางประกง)</option>
                                                                 <option value="Gulf สำนักงานใหญ่">Gulf สำนักงานใหญ่</option>
                                                             </select> */}
-                                                            {/* <select id="workplace" name="workplace" class="form-control"
+                                                            <select id="workplace" name="workplace" class="form-control"
                                                                 value={workplace} onChange={handleWorkplace}>
                                                                 <option value="">ยังไม่ระบุหน่วยงาน</option>
                                                                 {workplaceSelection.map(wp => (
                                                                     <option key={wp._id} value={wp.workplaceId}> {wp.workplaceName}</option>
 
                                                                 ))}
-                                                            </select> */}
-                                                            <input
-                                                                type="text"
-                                                                id="workplace"
-                                                                name="workplace"
-                                                                list="workplaces"
-                                                                className="form-control"
-                                                                value={workplace}
-                                                                onChange={handleWorkplace}
-                                                            />
-
-                                                            <datalist id="workplaces">
-                                                                <option value="">ยังไม่ระบุหน่วยงาน</option>
-                                                                {workplaceSelection.map((wp) => (
-                                                                    <option key={wp._id} value={wp.workplaceName}>
-                                                                        {wp.workplaceName}
-                                                                    </option>
-                                                                ))}
-                                                            </datalist>
-
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>

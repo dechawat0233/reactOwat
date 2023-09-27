@@ -54,6 +54,7 @@ function AddsettimeEmployee() {
     const [employeeList, setEmployeeList] = useState([]);
     const [workplaceList, setWorkplaceList] = useState([]);
 
+
     useEffect(() => {
         // Fetch data from the API when the component mounts
         fetch(endpoint + '/workplace/list')
@@ -68,14 +69,9 @@ function AddsettimeEmployee() {
             });
     }, []); // The empty array [] ensures that the effect runs only once after the initial render
 
-    console.log(workplaceList);
-
-    //search employee name by employeeId
-    // console.log(workplaceList);
-    // console.log(workplaceList);
 
 
-
+    
     /////////////////////////////////////////////
     const [wId, setWId] = useState('');
     const [wName, setWName] = useState('');
@@ -88,102 +84,6 @@ function AddsettimeEmployee() {
     const [wSelectOtTime, setWSelectOtTime] = useState('');
     const [wSelectOtTimeout, setWSelectOtTimeout] = useState('');
 
-
-    // This useEffect listens for changes in wId and wShift
-useEffect(() => {
-    if (wId !== '') {
-        const workplacesearch = workplaceList.find(workplace => workplace.workplaceId === wId);
-        if (workplacesearch) {
-            setWName(workplacesearch.workplaceName);
-            switch (wShift) {
-                case 'morning_shift':
-                    setWStartTime(workplacesearch.workStart1);
-                    setWEndTime(workplacesearch.workEnd1);
-                    setWAllTime(workplacesearch.workOfHour);
-                    setWSelectOtTime(workplacesearch.workEndOt1);
-                    setWSelectOtTimeout(workplacesearch.workEndOt2);
-                    setWOtTime(workplacesearch.workOfOT);
-                    break;
-                case 'afternoon_shift':
-                    setWStartTime(workplacesearch.workStart2);
-                    setWEndTime(workplacesearch.workEnd2);
-                    setWAllTime(workplacesearch.workOfHour);
-                    setWSelectOtTime(workplacesearch.workEndOt2);
-                    setWSelectOtTimeout(workplacesearch.workEndOt2);
-                    setWOtTime(workplacesearch.workOfOT);
-                    break;
-                case 'night_shift':
-                    setWStartTime(workplacesearch.workStart3);
-                    setWEndTime(workplacesearch.workEnd3);
-                    setWAllTime(workplacesearch.workOfHour);
-                    setWSelectOtTime(workplacesearch.workEndOt3);
-                    setWSelectOtTimeout(workplacesearch.workEndOt3);
-                    setWOtTime(workplacesearch.workOfOT);
-                    break;
-                default:
-                    setWStartTime('');
-                    setWEndTime('');
-                    setWAllTime('');
-                    setWSelectOtTime('');
-                    setWSelectOtTimeout('');
-                    setWOtTime('');
-            }
-        } else {
-            setWName('');
-        }
-    }
-}, [wId, wShift]);
-
-
-
-    //search employeeId by employeeName 
-    useEffect(() => {
-        //Search Employee  by name
-        if (wName != '') {
-            const workplacesearch = workplaceList.find(workplace => workplace.workplaceName === wName);
-            if (workplacesearch) {
-                setWId(workplacesearch.workplaceId);
-
-                switch (wShift) {
-                    case 'morning_shift':
-                        setWStartTime(workplacesearch.workStart1);
-                        setWEndTime(workplacesearch.workEnd1);
-                        setWAllTime(workplacesearch.workOfHour);
-                        setWSelectOtTime(workplacesearch.workEndOt1);
-                        setWSelectOtTimeout(workplacesearch.workEndOt2);
-                        setWOtTime(workplacesearch.workOfOT);
-                        break;
-                    case 'afternoon_shift':
-                        setWStartTime(workplacesearch.workStart2);
-                        setWEndTime(workplacesearch.workEnd2);
-                        setWAllTime(workplacesearch.workOfHour);
-                        setWSelectOtTime(workplacesearch.workEndOt2);
-                        setWSelectOtTimeout(workplacesearch.workEndOt2);
-                        setWOtTime(workplacesearch.workOfOT);
-                        break;
-                    case 'night_shift':
-                        setWStartTime(workplacesearch.workStart3);
-                        setWEndTime(workplacesearch.workEnd3);
-                        setWAllTime(workplacesearch.workOfHour);
-                        setWSelectOtTime(workplacesearch.workEndOt3);
-                        setWSelectOtTimeout(workplacesearch.workEndOt3);
-                        setWOtTime(workplacesearch.workOfOT);
-                        break;
-                    default:
-                        setWStartTime('');
-                        setWEndTime('');
-                        setWAllTime('');
-                        setWSelectOtTime('');
-                        setWSelectOtTimeout('');
-                        setWOtTime('');
-                }
-            } else {
-                setWId('');
-            }
-            console.log(workplacesearch);
-
-        }
-    }, [wName,wShift])
 
     const numberOfRows2 = 30; // Fixed number of rows
     const initialRowData2 = {
@@ -213,8 +113,8 @@ useEffect(() => {
             //Search workplace by id
             if (fieldName2 == 'workplaceId') {
                 const workplaceIdSearch = workplaceList.find(workplace => workplace.workplaceId === value);
-                //                 alert(JSON.stringify(workplaceList, null, 2));
-                // alert( workplaceList.length);
+                //                 alert(JSON.stringify(employeeList, null, 2));
+                // alert( employeeList.length);
                 if (workplaceIdSearch) {
                     //   setEmployeeName(employee.name);
                     newDataList2[index2] = {
@@ -240,8 +140,8 @@ useEffect(() => {
             //Search workplace by name
             if (fieldName2 == 'workplaceName') {
                 const workplaceNameSearch = workplaceList.find(workplace => workplace.workplaceName === value);
-                //                 alert(JSON.stringify(workplaceList, null, 2));
-                // alert( workplaceList.length);
+                //                 alert(JSON.stringify(employeeList, null, 2));
+                // alert( employeeList.length);
                 if (workplaceNameSearch) {
                     //   setEmployeeName(employee.name);
                     newDataList2[index2] = {
@@ -606,7 +506,7 @@ useEffect(() => {
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label role="agencyname">ชื่อพนักงาน</label>
-                                        <input type="text" class="form-control" id="agencyname" placeholder="ชื่อพนักงาน" value={name} onChange={(e) => setName(e.target.value)} />
+                                        <input type="text" class="form-control" id="agencyname" placeholder="ชื่อพนักงาน" value={name} onChange={(e) => setname(e.target.value)} />
                                     </div>
                                 </div>
 
