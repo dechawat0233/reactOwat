@@ -70,6 +70,7 @@ function AddsettimeWorkplace() {
                 console.error('Error fetching data:', error);
             });
     }, []); // The empty array [] ensures that the effect runs only once after the initial render
+    console.log(employeeList);
 
     /////////////////////////////////////////////
     const [staffId, setStaffId] = useState(''); //รหัสหน่วยงาน
