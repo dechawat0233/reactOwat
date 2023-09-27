@@ -70,16 +70,16 @@ function AddsettimeEmployee() {
     }, []); // The empty array [] ensures that the effect runs only once after the initial render
 
     /////////////////////////////////////////////
-const [wId , setWId] = useState('');
-const [wName , setWName] = useState('');
-const [wDate , setWDate] = useState('');
-const [wShift , setWShift] = useState('');
-const [wStartTime , setWStartTime] = useState('');
-const [wEndTime , setWEndTime] = useState('');
-const [wAllTime , setWAllTime] = useState('');
-const [wOtTime , setWOtTime] = useState('');
-const [wSelectOtTime , setWSelectOtTime] = useState('');
-const [wSelectOtTimeout , setWSelectOtTimeout] = useState('');
+    const [wId, setWId] = useState('');
+    const [wName, setWName] = useState('');
+    const [wDate, setWDate] = useState('');
+    const [wShift, setWShift] = useState('');
+    const [wStartTime, setWStartTime] = useState('');
+    const [wEndTime, setWEndTime] = useState('');
+    const [wAllTime, setWAllTime] = useState('');
+    const [wOtTime, setWOtTime] = useState('');
+    const [wSelectOtTime, setWSelectOtTime] = useState('');
+    const [wSelectOtTimeout, setWSelectOtTimeout] = useState('');
 
 
     const numberOfRows2 = 30; // Fixed number of rows
@@ -170,10 +170,10 @@ const [wSelectOtTimeout , setWSelectOtTimeout] = useState('');
                                 newDataList2[index2] = {
                                     ...newDataList2[index2],
                                     ['startTime']: workplaceIdSearch.workStart1 || '' + '',
-                                    ['endTime']: workplaceIdSearch.workEnd1 || ''+ '',
-                                    ['allTime']: calTime(workplaceIdSearch.workStart1 || '', workplaceIdSearch.workEnd1|| '', workplaceIdSearch.workOfHour || '') || '' + '',
+                                    ['endTime']: workplaceIdSearch.workEnd1 || '' + '',
+                                    ['allTime']: calTime(workplaceIdSearch.workStart1 || '', workplaceIdSearch.workEnd1 || '', workplaceIdSearch.workOfHour || '') || '' + '',
                                     ['otTime']: calTime(workplaceIdSearch.workStartOt1 || '', workplaceIdSearch.workEndOt1 || '', workplaceIdSearch.workOfOT || '') || '' + '',
-                                    ['selectotTime']: workplaceIdSearch.workStartOt1 || ''+ '',
+                                    ['selectotTime']: workplaceIdSearch.workStartOt1 || '' + '',
                                     ['selectotTimeOut']: workplaceIdSearch.workEndOt1 || '' + '',
                                 };
                                 break;
@@ -194,7 +194,7 @@ const [wSelectOtTimeout , setWSelectOtTimeout] = useState('');
                                     ['startTime']: workplaceIdSearch.workStart3 || '' + '',
                                     ['endTime']: workplaceIdSearch.workEnd3 || '' + '',
                                     ['allTime']: calTime(workplaceIdSearch.workStart3 || '', workplaceIdSearch.workEnd3 || '', workplaceIdSearch.workOfHour || '') || '' + '',
-                                    ['otTime']: calTime(workplaceIdSearch.workStartOt3 || '', workplaceIdSearch.workEndOt3 || '', workplaceIdSearch.workOfOT || '') || ''+ '',
+                                    ['otTime']: calTime(workplaceIdSearch.workStartOt3 || '', workplaceIdSearch.workEndOt3 || '', workplaceIdSearch.workOfOT || '') || '' + '',
                                     ['selectotTime']: workplaceIdSearch.workStartOt3 || '' + '',
                                     ['selectotTimeOut']: workplaceIdSearch.workEndOt3 || '' + '',
                                 };
@@ -564,20 +564,20 @@ const [wSelectOtTimeout , setWSelectOtTimeout] = useState('');
                                 </div>
 
                                 <div class="col-md-1">
-                                <select className="form-control" value={wDate} onChange={(e) => setWDate(e.target.value)} style={{ width: '5.5rem' }} >
-                                                            <option value="">เลือกวัน</option>
-                                                            {options}
-                                                        </select>
+                                    <select className="form-control" value={wDate} onChange={(e) => setWDate(e.target.value)} style={{ width: '5.5rem' }} >
+                                        <option value="">เลือกวัน</option>
+                                        {options}
+                                    </select>
                                 </div>
 
                                 <div class="col-md-1">
-                                <select className="form-control" value={wShift} onChange={(e) => setWShift(e.target.value)} style={{ width: '5.5rem' }} >
-                                <option value="">เลือกกะ</option>
-                                                            <option value="morning_shift">กะเช้า</option>
-                                                            <option value="afternoon_shift">กะบ่าย</option>
-                                                            <option value="night_shift">กะดึก</option>
-                                                            <option value="specialt_shift">กะพิเศษ</option>
-                                                        </select>
+                                    <select className="form-control" value={wShift} onChange={(e) => setWShift(e.target.value)} style={{ width: '5.5rem' }} >
+                                        <option value="">เลือกกะ</option>
+                                        <option value="morning_shift">กะเช้า</option>
+                                        <option value="afternoon_shift">กะบ่าย</option>
+                                        <option value="night_shift">กะดึก</option>
+                                        <option value="specialt_shift">กะพิเศษ</option>
+                                    </select>
                                 </div>
 
                                 <div class="col-md-1">
@@ -625,11 +625,11 @@ const [wSelectOtTimeout , setWSelectOtTimeout] = useState('');
                                 <div class="col-md-1">
                                     <label role="button"></label>
                                     <div class="d-flex align-items-end">
-                                        <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; เพิ่ม</button>
+                                        <button class="btn b_save"><i class="fas fa-check"></i> &nbsp; เพิ่ม</button>
                                     </div>
                                 </div>
 
-</div>
+                            </div>
 
 
 

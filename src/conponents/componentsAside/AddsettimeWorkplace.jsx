@@ -10,6 +10,9 @@ import moment from 'moment';
 import EmployeesSelected from './EmployeesSelected';
 
 function AddsettimeWorkplace() {
+    const bordertable = {
+        borderLeft: '2px solid #000'
+    };
     const [updateButton, setUpdateButton] = useState(false); // Initially, set to false
     const [newWorkplace, setNewWorkplace] = useState(true);
 
@@ -212,26 +215,26 @@ function AddsettimeWorkplace() {
     };
 
 
-      // Function to handle editing a row
-  const handleEditRow = async (index) => {
-    // You can implement the edit logic here, e.g., open a modal for editing
-    // console.log('Edit row at index:', index);
-    const tmp = await rowDataList[index];
-    alert(tmp.staffId);
-await setStaffId(tmp.staffId );
-await setStaffName(tmp.staffName);
+    // Function to handle editing a row
+    const handleEditRow = async (index) => {
+        // You can implement the edit logic here, e.g., open a modal for editing
+        // console.log('Edit row at index:', index);
+        const tmp = await rowDataList[index];
+        alert(tmp.staffId);
+        await setStaffId(tmp.staffId);
+        await setStaffName(tmp.staffName);
 
-  };
+    };
 
-  // Function to handle deleting a row
-  const handleDeleteRow = (index) => {
-    // Create a copy of the current state
-    const newDataList = [...rowDataList];
-    // Remove the row at the specified index
-    newDataList.splice(index, 1);
-    // Update the state with the new data
-    setRowDataList(newDataList);
-  };
+    // Function to handle deleting a row
+    const handleDeleteRow = (index) => {
+        // Create a copy of the current state
+        const newDataList = [...rowDataList];
+        // Remove the row at the specified index
+        newDataList.splice(index, 1);
+        // Update the state with the new data
+        setRowDataList(newDataList);
+    };
 
 
     const handleWorkDateChange = (date) => {
@@ -998,8 +1001,8 @@ await setStaffName(tmp.staffName);
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label role="shift">กะการทำงาน</label>
-                                            <select className="form-control" value={shift} onChange={(e) => setShift(e.target.value)} style={{ width: '5.5rem' }} >
-                                            <option value="">เลือกกะการทำงาน</option>
+                                            <select className="form-control" value={shift} onChange={(e) => setShift(e.target.value)}  >
+                                                <option value="">เลือกกะการทำงาน</option>
                                                 <option value="morning_shift">กะเช้า</option>
                                                 <option value="afternoon_shift">กะบ่าย</option>
                                                 <option value="night_shift">กะดึก</option>
@@ -1051,35 +1054,54 @@ await setStaffName(tmp.staffName);
 
                             <div class="form-group">
                                 <button class="btn b_save" >
-                                    <i class="nav-icon fas fa-save"></i> &nbsp; เพิ่ม
+                                    <i class="fas fa-check"></i> &nbsp; เพิ่ม
                                 </button>
                             </div>
 
                         </form>
 
                         <form onSubmit={handleManageWorkplace}>
-    
+
                             <section class="Frame">
                                 <div class="row">
-                                    {rowDataList.map((rowData, index) => (
-                                                rowData.staffId && ( // Check if staffId is set (truthy)
-                                    <div key={index}><div class="col-md-2"> {rowData.staffId} </div>
-                                    <div class="col-md-2"> {rowData.staffName} </div>
-                                    <div class="col-md-1"> {rowData.startTime} </div>
-                                    <div class="col-md-1"> {rowData.endTime} </div>
-                                    <div class="col-md-1"> {rowData.allTime} </div>
-                                    <div class="col-md-1"> {rowData.selectotTime} </div>
-                                    <div class="col-md-1"> {rowData.selectotTimeOut} </div>
-                                    <div class="col-md-1"> {rowData.otTime} </div>
-
-                                    <div class="col-md-2"> 
-                                    {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
-                <button onClick={() => handleDeleteRow(index)}>Delete</button>                                    
-                </div>
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-2"> รหัสพนักงาน </div>
+                                            <div class="col-md-2"> ชื่อพนักงาน </div>
+                                            <div class="col-md-1"> กะการทำงาน </div>
+                                            <div class="col-md-1"> เวลาเข้างาน </div>
+                                            <div class="col-md-1"> เวลาออกงาน </div>
+                                            <div class="col-md-1"> ชั่วโมงทำงาน </div>
+                                            <div class="col-md-1"> เวลาเข้า OT </div>
+                                            <div class="col-md-1"> เวลาออก OT</div>
+                                        </div>
                                     </div>
-                                                )
-                                    ))}
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
 
+                                        {rowDataList.map((rowData, index) => (
+                                            rowData.staffId && ( // Check if staffId is set (truthy)
+                                                <div key={index}>
+                                                    <div class="row" style={{ marginBottom: '1rem', borderBottom: '2px solid #000' }}>
+                                                        <div class="col-md-2" style={ bordertable }> {rowData.staffId} </div>
+                                                        <div class="col-md-2" style={ bordertable }> {rowData.staffName} </div>
+                                                        <div class="col-md-1" style={ bordertable }> {rowData.startTime} </div>
+                                                        <div class="col-md-1" style={ bordertable }> {rowData.endTime} </div>
+                                                        <div class="col-md-1" style={ bordertable }> {rowData.allTime} </div>
+                                                        <div class="col-md-1" style={ bordertable }> {rowData.selectotTime} </div>
+                                                        <div class="col-md-1" style={ bordertable }> {rowData.selectotTimeOut} </div>
+                                                        <div class="col-md-1" style={ bordertable }> {rowData.otTime} </div>
+
+                                                        <div class="col-md-2" style={ bordertable }>
+                                                            {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
+                                                            <button class="btn btn-xs btn-danger" style={{ padding: '0.3rem ' }} onClick={() => handleDeleteRow(index)}>Delete</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )
+                                        ))}
+                                    </div>
                                 </div>
                             </section>
 
