@@ -160,7 +160,7 @@ function SystemUser() {
         // Function to fetch data from the API
         const fetchData = async () => {
             try {
-                const response = await fetch('http://68.183.230.164:3000/users/list');
+                const response = await fetch(endpoint + '/users/list');
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }

@@ -50,8 +50,6 @@ function AddsettimeWorkplace() {
     const [workStartOt3, setWorkStartOt3] = useState('19.00'); //เวลาเข้ากะเย็น
     const [workEndOt3, setWorkEndOt3] = useState('22.00'); //เวลาออกกะเย็น
 
-
-
     /////////////////////////////////
     const [employeeList, setEmployeeList] = useState([]);
 
@@ -71,14 +69,10 @@ function AddsettimeWorkplace() {
     /////////////////////////////////////////////
     const [staffId, setStaffId] = useState(''); //รหัสหน่วยงาน
     const [staffName, setStaffName] = useState(''); //รหัสหน่วยงาน
-    const [shift, setShift] = useState('');
     const [startTime, setStartTime] = useState(''); //รหัสหน่วยงาน
     const [endTime, setEndTime] = useState(''); //รหัสหน่วยงาน
     const [allTime, setAllTime] = useState(''); //รหัสหน่วยงาน
     const [otTime, setOtTime] = useState(''); //รหัสหน่วยงาน
-    const [selectotTime, setSelectotTime] = useState('');
-    const [selectotTimeOut, setSelectotTimeOut] = useState('');
-
     const [shift1start, setShift1start] = useState('');
     const [shift2start, setShift2start] = useState('');
     const [shift3start, setShift3start] = useState('');
@@ -87,153 +81,9 @@ function AddsettimeWorkplace() {
     const [shift2end, setShift2end] = useState('');
     const [shift3end, setShift3end] = useState('');
     const [shift4end, setShift4end] = useState('');
-    const [startTimeOt1, setStartTimeOt1] = useState('');
-    const [endTimeOt1, setEndTimeOt1] = useState('');
-    const [startTimeOt2, setStartTimeOt2] = useState('');
-    const [endTimeOt2, setEndTimeOt2] = useState('');
-    const [startTimeOt3, setStartTimeOt3] = useState('');
-    const [endTimeOt3, setEndTimeOt3] = useState('');
 
 
-    //search employee name by employeeId
-    useEffect(() => {
-        //Search Employee  by id
-        if (staffId != '') {
-            const employeesearch = employeeList.find(employee => employee.employeeId === staffId);
-            if (employeesearch) {
-                setStaffName(employeesearch.name);
-            } else {
-                setStaffName('');
-            }
-        }
-    }, [staffId]);
-
-
-    //search employeeId by employeeName 
-    useEffect(() => {
-        //Search Employee  by name
-        if (staffName != '') {
-            const employeesearch = employeeList.find(employee => employee.name === staffName);
-            if (employeesearch) {
-                setStaffId(employeesearch.employeeId);
-            } else {
-                setStaffId('');
-            }
-        }
-    }, [staffName])
-
-
-    //check ship and set time of work to start time and end time
-    useEffect(() => {
-        switch (shift) {
-            case 'morning_shift':
-                setStartTime(shift1start || '');
-                setEndTime(shift1end || '');
-                setAllTime(calTime(shift1start || '', shift1end || '', workOfHour || '') || '');
-                setOtTime(calTime(startTimeOt1 || '', endTimeOt1 || '', workOfOT || '') || '');
-                setSelectotTime(startTimeOt1 || '');
-                setSelectotTimeOut(endTimeOt1 || '');
-                break;
-            case 'afternoon_shift':
-                setStartTime(shift2start || '');
-                setEndTime(shift2end || '');
-                setAllTime(calTime(shift2start || '', shift2end || '', workOfHour || '') || '');
-                setOtTime(calTime(startTimeOt2 || '', endTimeOt2 || '', workOfOT || '') || '');
-                setSelectotTime(startTimeOt2 || '');
-                setSelectotTimeOut(endTimeOt2 || '');
-                break;
-            case 'night_shift':
-                setStartTime(shift3start || '');
-                setEndTime(shift3end || '');
-                setAllTime(calTime(shift3start || '', shift3end || '', workOfHour || '') || '');
-                setOtTime(calTime(startTimeOt3 || '', endTimeOt3 || '', workOfOT || '') || '');
-                setSelectotTime(startTimeOt3 || '');
-                setSelectotTimeOut(endTimeOt3 || '');
-                break;
-            default:
-                setStartTime('');
-                setEndTime('');
-                setAllTime('');
-                setOtTime('');
-                setSelectotTime('');
-                setSelectotTimeOut('');
-        }
-    }, [shift]);
-
-
-
-    function calTime(start, end, limit) {
-        const startHours = parseFloat(start.split('.')[0]);
-        const startMinutes = parseFloat(start.split('.')[1] || 0);
-        const endHours = parseFloat(end.split('.')[0]);
-        const endMinutes = parseFloat(end.split('.')[1] || 0);
-        let hours = endHours - startHours;
-        let minutes = endMinutes - startMinutes;
-        if (minutes < 0) {
-            hours -= 1;
-            minutes += 60;
-        }
-        // Handle cases where endTime is on the next day
-        if (hours < 0) {
-            hours += 24;
-        }
-        //check employee working >= 5 hours 
-        if (hours >= 5) {
-            hours -= 1;
-        }
-
-        // Calculate the total time difference in minutes
-        const totalMinutes = hours * 60 + minutes;
-        // check employee working > 5 hours
-        // Cap the time difference at the maximum work hours
-        const cappedTotalMinutes = Math.min(totalMinutes, limit * 60);
-        // Convert the capped time difference back to hours and minutes
-        const cappedHours = Math.floor(cappedTotalMinutes / 60);
-        const cappedMinutes = cappedTotalMinutes % 60;
-        const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
-        if (isNaN(timeDiffFormatted)) {
-            return '0';
-        }
-
-        return timeDiffFormatted;
-    }
-
-
-    // Function to add a new row to the rowDataList with specific values
-    const addRow = (newRowData) => {
-        // Create a copy of the current state
-        const newDataList = [...rowDataList];
-        // Push a new row with specific data
-        // newDataList.push({ ...initialRowData, ...newRowData });
-        newDataList.unshift(newRowData);
-
-        // Update the state with the new data
-        setRowDataList(newDataList);
-    };
-
-
-      // Function to handle editing a row
-  const handleEditRow = async (index) => {
-    // You can implement the edit logic here, e.g., open a modal for editing
-    // console.log('Edit row at index:', index);
-    const tmp = await rowDataList[index];
-    alert(tmp.staffId);
-await setStaffId(tmp.staffId );
-await setStaffName(tmp.staffName);
-
-  };
-
-  // Function to handle deleting a row
-  const handleDeleteRow = (index) => {
-    // Create a copy of the current state
-    const newDataList = [...rowDataList];
-    // Remove the row at the specified index
-    newDataList.splice(index, 1);
-    // Update the state with the new data
-    setRowDataList(newDataList);
-  };
-
-
+    // const [startjob, setStartjob] = useState(''); //วันที่เริ่มงาน
     const handleWorkDateChange = (date) => {
         setWorkDate(date);
     };
@@ -254,13 +104,11 @@ await setStaffName(tmp.staffName);
 
 
 
-    // const numberOfRows = 30; // Fixed number of rows
-    const numberOfRows = 1; // Fixed number of rows
-
+    const numberOfRows = 30; // Fixed number of rows
     const initialRowData = {
         staffId: '',
         staffName: '',
-        shift: '',
+        shift: 'morning_shift',
         startTime: '',
         endTime: '',
         allTime: '',
@@ -419,6 +267,35 @@ await setStaffName(tmp.staffName);
 
 
 
+
+
+
+            // Calculate time difference for allTime
+            // const startHours = parseFloat(newDataList[index].startTime.split('.')[0]);
+            // const startMinutes = parseFloat(newDataList[index].startTime.split('.')[1] || 0);
+            // const endHours = parseFloat(newDataList[index].endTime.split('.')[0]);
+            // const endMinutes = parseFloat(newDataList[index].endTime.split('.')[1] || 0);
+
+
+
+            // let hours = endHours - startHours;
+            // let minutes = endMinutes - startMinutes;
+
+            // if (minutes < 0) {
+            //     hours -= 1;
+            //     minutes += 60;
+            // }
+
+            // // Handle cases where endTime is on the next day
+            // if (hours < 0) {
+            //     hours += 24;
+            // }
+
+            // const timeDiffFormatted = `${hours}.${minutes}`;
+
+            // const workOfHour = parseFloat(newDataList[index].workOfHour);
+
+
             const startHours = parseFloat(newDataList[index].startTime.split('.')[0]);
             const startMinutes = parseFloat(newDataList[index].startTime.split('.')[1] || 0);
             const endHours = parseFloat(newDataList[index].endTime.split('.')[0]);
@@ -501,6 +378,32 @@ await setStaffName(tmp.staffName);
                 otTimeFormatted2 = '0';
             }
 
+            // if (fieldName === 'shift') {
+            //     newDataList[index] = {
+            //         ...newDataList[index],
+            //         allTime: timeDiffFormatted,
+            //         otTime: otTimeFormatted2 + '2222',
+            //     };
+            //     // return newDataList;
+            // }
+            // else {
+            //     newDataList[index] = {
+            //         ...newDataList[index],
+            //         allTime: timeDiffFormatted,
+            //         otTime: otTimeFormatted1 + '1111',
+
+            //     };
+            //     // return newDataList;
+            // }
+            // newDataList[index] = {
+            //     ...newDataList[index],
+            //     allTime: timeDiffFormatted + '1111',
+            //     otTime: otTimeFormatted + '3333',
+            // };
+
+
+            // }
+
 
             newDataList[index] = {
                 ...newDataList[index],
@@ -575,6 +478,7 @@ await setStaffName(tmp.staffName);
 
     async function handleSearch(event) {
         event.preventDefault();
+
         // get value from form search
         const data = {
             searchWorkplaceId: searchWorkplaceId,
@@ -604,12 +508,12 @@ await setStaffName(tmp.staffName);
                 const startTime4 = '';
                 const endTime4 = '';
 
-                setStartTimeOt1(response.data.workplaces[0].workStartOt1);
-                setEndTimeOt1(response.data.workplaces[0].workEndOt1);
-                setStartTimeOt2(response.data.workplaces[0].workStartOt1);
-                setEndTimeOt2(response.data.workplaces[0].workEndOt1);
-                setStartTimeOt3(response.data.workplaces[0].workStartOt1);
-                setEndTimeOt3(response.data.workplaces[0].workEndOt1);
+                const startTimeOt1 = response.data.workplaces[0].workStartOt1;
+                const endTimeOt1 = response.data.workplaces[0].workEndOt1;
+                const startTimeOt2 = response.data.workplaces[0].workStartOt1;
+                const endTimeOt2 = response.data.workplaces[0].workEndOt1;
+                const startTimeOt3 = response.data.workplaces[0].workStartOt1;
+                const endTimeOt3 = response.data.workplaces[0].workEndOt1;
 
 
                 setShift1start(startTime);
@@ -671,7 +575,7 @@ await setStaffName(tmp.staffName);
                     startTimeOt3: startTimeOt3,
                     endTimeOt3: endTimeOt3,
                 }));
-                // setRowDataList(updatedRowDataList);
+                setRowDataList(updatedRowDataList);
 
                 // Set search values
                 setWorkplaceId(response.data.workplaces[0].workplaceId);
@@ -728,7 +632,7 @@ await setStaffName(tmp.staffName);
             workplaceName: searchWorkplaceName,
             date: formattedWorkDate,
         };
-
+        
         try {
             const response = await axios.post(endpoint + '/timerecord/search', data);
 
@@ -761,9 +665,9 @@ await setStaffName(tmp.staffName);
 
 
     async function handleCreateWorkplaceTimerecord(event) {
-        // event.preventDefault();
+        event.preventDefault();
         // alert('test');
-        // alert(formattedWorkDate);
+// alert(formattedWorkDate);
 
         //get data from input in useState to data 
         const data = {
@@ -842,32 +746,6 @@ await setStaffName(tmp.staffName);
     async function handleManageWorkplace(event) {
         event.preventDefault();
 
-        const newRowData = {
-            staffId: staffId || '',
-            staffName: staffName || '',
-            shift: shift || '',
-            startTime: startTime || '',
-            endTime: endTime || '',
-            allTime: allTime || '',
-            otTime: otTime || '',
-            selectotTime: selectotTime || '',
-            selectotTimeOut: selectotTimeOut || '',
-        };
-
-        addRow(newRowData);
-
-        //clean form
-        setStaffId('');
-        setShift('');
-        setStaffName('');
-        setStartTime('');
-        setEndTime('');
-        setAllTime('');
-        setOtTime('');
-        setSelectotTime('');
-        setSelectotTimeOut('');
-        // alert(rowDataList.length);
-
     }
 
     /////////////////
@@ -881,7 +759,6 @@ await setStaffName(tmp.staffName);
         event.preventDefault();
         // Handle submission for Form 1
     };
-
 
     // console.log(workOfOT);
     return (
@@ -958,14 +835,14 @@ await setStaffName(tmp.staffName);
                                     <div class="form-group">
                                         <label role="datetime">วันที่</label>
                                         <div style=
-                                            {{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
+                                        {{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
                                             <DatePicker id="datetime" name="datetime"
                                                 className="form-control" // Apply Bootstrap form-control class
                                                 popperClassName="datepicker-popper" // Apply custom popper class if needed
                                                 selected={workDate}
                                                 onChange={handleWorkDateChange}
                                                 dateFormat="dd/MM/yyyy"
-                                            // showMonthYearPicker
+                                                // showMonthYearPicker
                                             />
                                         </div>
                                     </div>
@@ -977,112 +854,67 @@ await setStaffName(tmp.staffName);
                                     </div>
                                 </div>
                             </div>
-                        </form>
-
-                        <form onSubmit={handleManageWorkplace}>
-
                             <section class="Frame">
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label role="staffId">รหัสพนักงาน</label>
-                                            <input type="text" class="form-control" id="staffId" placeholder="รหัสพนักงาน" value={staffId} onChange={(e) => setStaffId(e.target.value)} />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label role="staffName">ชื่อพนักงาน</label>
-                                            <input type="text" class="form-control" id="staffName" placeholder="ชื่อพนักงาน" value={staffName} onChange={(e) => setStaffName(e.target.value)} />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label role="shift">กะการทำงาน</label>
-                                            <select className="form-control" value={shift} onChange={(e) => setShift(e.target.value)} style={{ width: '5.5rem' }} >
-                                            <option value="">เลือกกะการทำงาน</option>
-                                                <option value="morning_shift">กะเช้า</option>
-                                                <option value="afternoon_shift">กะบ่าย</option>
-                                                <option value="night_shift">กะดึก</option>
-                                                <option value="specialt_shift">กะพิเศษ</option>
-                                            </select>
+                                <div class="container">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>รหัสพนักงาน</th>
+                                                <th>ชื่อพนักงาน</th>
+                                                <th>กะการทำงาน</th>
+                                                <th>เวลาเข้างาน</th>
+                                                <th>เวลาออกงาน</th>
+                                                <th>ชั่วโมงทำงาน</th>
+                                                <th>เวลาเข้า OT</th>
+                                                <th>เวลาออก OT</th>
+                                                <th>ชั่วโมง OT</th>
+                                                {/* <th>เวลาเข้า OT</th>
+                                        <th>เวลาออก OT</th> */}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <label role="startTime">เวลาเข้างาน</label>
-                                            <input type="text" class="form-control" id="startTime" placeholder="เวลาเข้างาน" value={startTime} onChange={(e) => setStartTime(e.target.value)} />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <label role="endTime">เวลาออกงาน</label>
-                                            <input type="text" class="form-control" id="endTime" placeholder="เวลาออกงาน" value={endTime} onChange={(e) => setEndTime(e.target.value)} />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <label role="allTime">ชั่วโมงทำงาน</label>
-                                            <input type="text" class="form-control" id="allTime" placeholder="ชั่วโมงทำงาน" value={allTime} onChange={(e) => setAllTime(e.target.value)} />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <label role="selectotTime">เวลาเข้า OT</label>
-                                            <input type="text" class="form-control" id="selectotTime" placeholder="เวลาเข้า OT" value={selectotTime} onChange={(e) => setSelectotTime(e.target.value)} />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <label role="selectotTimeOut">เวลาออก OT</label>
-                                            <input type="text" class="form-control" id="selectotTimeOut" placeholder="เวลาออก OT" value={selectotTimeOut} onChange={(e) => setSelectotTimeOut(e.target.value)} />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <label role="otTime">ชั่วโมง OT</label>
-                                            <input type="text" class="form-control" id="otTime" placeholder="ชั่วโมง OT" value={otTime} onChange={(e) => setOtTime(e.target.value)} />
-                                        </div>
-                                    </div>
+                                            {rowDataList.map((rowData, index) => (
+                                                <tr key={index}>
+                                                    <td><input type="text" className="form-control" name="staffId" value={rowData.staffId} onChange={(e) => handleFieldChange(index, 'staffId', e.target.value)} /></td>
+                                                    <td><input type="text" className="form-control" name="staffName" value={rowData.staffName} onChange={(e) => handleFieldChange(index, 'staffName', e.target.value)} /></td>
+                                                    <td>
+                                                        <select className="form-control" value={rowData.shift} onChange={(e) => handleFieldChange(index, 'shift', e.target.value)} style={{ width: '5.5rem' }} >
+                                                            <option value="morning_shift">กะเช้า</option>
+                                                            <option value="afternoon_shift">กะบ่าย</option>
+                                                            <option value="night_shift">กะดึก</option>
+                                                            <option value="specialt_shift">กะพิเศษ</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" className="form-control" name="startTime" value={rowData.startTime} onChange={(e) => handleFieldChange(index, 'startTime', e.target.value)} style={{ width: '7rem' }} /></td>
+                                                    <td><input type="text" className="form-control" name="endTime" value={rowData.endTime} onChange={(e) => handleFieldChange(index, 'endTime', e.target.value)} style={{ width: '7rem' }} /></td>
+                                                    <td><input type="text" className="form-control" name="allTime" value={rowData.allTime} onChange={(e) => handleFieldChange(index, 'allTime', e.target.value)} style={{ width: '4rem' }} /></td>
+                                                    <td><input type="text" className="form-control" name="selectotTime" value={rowData.selectotTime} onChange={(e) => handleFieldChange(index, 'selectotTime', e.target.value)} style={{ width: '7rem' }} /> </td>
+                                                    <td><input type="text" className="form-control" name="selectotTimeOut" value={rowData.selectotTimeOut} onChange={(e) => handleFieldChange(index, 'selectotTimeOut', e.target.value)} style={{ width: '7rem' }} /> </td>
+                                                    <td><input type="text" className="form-control" name="otTime" value={rowData.otTime} onChange={(e) => handleFieldChange(index, 'otTime', e.target.value)} style={{ width: '4rem' }} readOnly /></td>
+                                                    {rowData.shift == 'specialt_shift' && (
+                                                        <div>
+                                                            <td><input type="text" className="form-control" name="otTime" value={rowData.otTime} onChange={(e) => handleFieldChange(index, 'otTime', e.target.value)} style={{ width: '4rem' }} readOnly /></td>
+                                                            <td><input type="text" className="form-control" name="otTime" value={rowData.otTime} onChange={(e) => handleFieldChange(index, 'otTime', e.target.value)} style={{ width: '4rem' }} readOnly /></td>
 
-                                </div>
+                                                        </div>
+                                                    )}
 
-                            </section>
+                                                    {/* <td><input type="text" className="form-control" name="otTime" value={rowData.otTime} onChange={(e) => handleFieldChange(index, 'otTime', e.target.value)} style={{ width: '4rem' }} min={rowData.otTime} max={rowData.otTime}
+                                                    /></td> */}
+                                                    {/* <td><input type="text" className="form-control" name="selectotTime" value={rowData.selectotTime} onChange={(e) => handleFieldChange(index, 'selectotTime', e.target.value)} style={{ width: '7rem' }} /> </td> */}
+                                                    {/* <td><input type="text" className="form-control" name="selectotTimeOut" value={rowData.selectotTimeOut} onChange={(e) => handleFieldChange(index, 'selectotTimeOut', e.target.value)} style={{ width: '7rem' }} /> </td> */}
 
-                            <div class="form-group">
-                                <button class="btn b_save" >
-                                    <i class="nav-icon fas fa-save"></i> &nbsp; เพิ่ม
-                                </button>
-                            </div>
+                                                    {/* ... other input fields */}
+                                                    {/* ... other input fields */}
+                                                </tr>
+                                            ))}
 
-                        </form>
 
-                        <form onSubmit={handleManageWorkplace}>
-    
-                            <section class="Frame">
-                                <div class="row">
-                                    {rowDataList.map((rowData, index) => (
-                                                rowData.staffId && ( // Check if staffId is set (truthy)
-                                    <div key={index}><div class="col-md-2"> {rowData.staffId} </div>
-                                    <div class="col-md-2"> {rowData.staffName} </div>
-                                    <div class="col-md-1"> {rowData.startTime} </div>
-                                    <div class="col-md-1"> {rowData.endTime} </div>
-                                    <div class="col-md-1"> {rowData.allTime} </div>
-                                    <div class="col-md-1"> {rowData.selectotTime} </div>
-                                    <div class="col-md-1"> {rowData.selectotTimeOut} </div>
-                                    <div class="col-md-1"> {rowData.otTime} </div>
-
-                                    <div class="col-md-2"> 
-                                    {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
-                <button onClick={() => handleDeleteRow(index)}>Delete</button>                                    
-                </div>
-                                    </div>
-                                                )
-                                    ))}
-
+                                        </tbody>
+                                    </table>
                                 </div>
                             </section>
-
                             <div class="form-group">
                                 {/* <button class="btn b_save" onClick={handleCreateWorkplaceTimerecord}><i class="nav-icon fas fa-save"></i> &nbsp; บันทึก</button> */}
                                 {updateButton ? (
@@ -1102,6 +934,7 @@ await setStaffName(tmp.staffName);
             </div>
             {/* <!-- /.container-fluid --> */}
         </section>
+
     )
 }
 
