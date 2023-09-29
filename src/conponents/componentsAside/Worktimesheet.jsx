@@ -125,7 +125,7 @@ function Worktimesheet() {
       const employeeWorkplaceRecords = await response.data.recordworkplace[0].employee_workplaceRecord;
       const employeeWorkplaceRecords1 = await response1.data.recordworkplace[0].employee_workplaceRecord;
 
-// xx
+      // xx
       if (employeeWorkplaceRecords1.length > 0) {
         const dates1 = employeeWorkplaceRecords1.map(record => record.date);
         // const otTime = employeeWorkplaceRecords.map(record => record.otTime);
@@ -136,26 +136,28 @@ function Worktimesheet() {
 
         const otTime1 = employeeWorkplaceRecords1.map((record) => record.otTime);
 
-        setDataset(
-          employeeWorkplaceRecords1.filter((record) => record.date) // Filter out records with null or undefined dates
-            .map((record) => {
-              return record;
-            })
-        );
+        // setDataset(
+        //   employeeWorkplaceRecords1.filter((record) => record.date) // Filter out records with null or undefined dates
+        //     .map((record) => {
+        //       return record;
+        //     })
+        // );
 
         setTableData((prevState) => {
           const updatedData = [...prevState];
           dates1.forEach((date1, index) => {
             const dataIndex1 = parseInt(date1, 10) - 1; // Subtract 1 because indices are zero-based
             if (dataIndex1 >= 0 && dataIndex1 < updatedData.length) {
-              
+
               if (dataIndex1 >= 21 && dataIndex1 <= 31) {
-// alert(dataIndex1 +' .');
+                // alert(dataIndex1 +' .');
 
                 updatedData[(dataIndex1 - 21)].isChecked = true;
                 updatedData[(dataIndex1 - 21)].textValue = otTime1[index];
                 updatedData[(dataIndex1 - 21)].allTimeA = allTimeA1[index];
                 updatedData[(dataIndex1 - 21)].workplaceId = workplaceId1[index]; // Set otTime at the same index as dates
+                updatedData[(dataIndex1 - 21)].date = dates1[index]; // Set otTime at the same index as dates
+
                 // Set otTime at the same index as dates
 
               }
@@ -180,18 +182,18 @@ function Worktimesheet() {
 
         const otTime = employeeWorkplaceRecords.map((record) => record.otTime);
 
-        setDataset(
-          employeeWorkplaceRecords
-            .filter((record) => record.date) // Filter out records with null or undefined dates
-            .map((record) => {
-              return record;
-            })
-        );
+        // setDataset(
+        //   employeeWorkplaceRecords
+        //     .filter((record) => record.date) // Filter out records with null or undefined dates
+        //     .map((record) => {
+        //       return record;
+        //     })
+        // );
         setTableData((prevState) => {
           const updatedData = [...prevState];
           dates.forEach((date, index) => {
             const dataIndex = parseInt(date, 10) - 1; // Subtract 1 because indices are zero-based
-            alert(index);
+            // alert(index);
             if (dataIndex >= 0 && dataIndex < updatedData.length) {
               if (dataIndex <= 20) {
 
@@ -199,6 +201,8 @@ function Worktimesheet() {
                 updatedData[(dataIndex + 11)].textValue = otTime[index];
                 updatedData[(dataIndex + 11)].allTimeA = allTimeA[index];
                 updatedData[(dataIndex + 11)].workplaceId = workplaceId[index]; // Set otTime at the same index as dates
+                updatedData[(dataIndex + 11)].date = dates[index]; // Set otTime at the same index as dates
+
                 // Set otTime at the same index as dates
 
               }
@@ -209,6 +213,8 @@ function Worktimesheet() {
         });
 
         setWoekplace(dates);
+        console.log(tableData);
+
 
         // console.log('Dates:', dates);
         // console.log('time:', otTime);
@@ -248,7 +254,6 @@ function Worktimesheet() {
 
   console.log(dataset);
 
-
   // const handleCheckboxChange = (event) => {
   //   const { name, checked } = event.target;
   //   if (name === 'checked28') {
@@ -265,6 +270,7 @@ function Worktimesheet() {
       isChecked: false, // Initial state of the checkbox
       textValue: '',    // Initial state of the text value
       workplaceId: index, // Store the workplaceId
+      date: '', // Store the workplaceId
     }))
   );
   // const [tableData, setTableData] = useState(
@@ -309,11 +315,40 @@ function Worktimesheet() {
 
   ///PDF///////////////////////
   // const [dataset, setDataset] = useState([]);
-  const [monthset, setMonthset] = useState('02'); // Example: February (you can set it dynamically)
-  const [year, setYear] = useState(2022); // Example year (you can set it dynamically)
+  const [monthset, setMonthset] = useState(''); // Example: February (you can set it dynamically)
+
+  useEffect(() => {
+    setMonthset(month);
+  }, [month]);
+
+  // useState(() => {
+  //   const tableDataDate = tableData.filter(item => item.date !== null && item.date !== '');
+  //   setDataset(tableDataDate);
+  // }, [tableData]);
+
+  useState(() => {
+    const filteredData = tableData.filter((record) => record.date !== null && record.date !== undefined);
+    setDataset(filteredData);
+  }, [tableData]);
+
+
+  // setDataset(
+  //   employeeWorkplaceRecords
+  //     .filter((record) => record.date) // Filter out records with null or undefined dates
+  //     .map((record) => {
+  //       return record;
+  //     })
+  // );
+
+
+  const [year, setYear] = useState(2023); // Example year (you can set it dynamically)
   const [calendarData, setCalendarData] = useState([]);
 
-  console.log(dataset);
+  // console.log(tableData);
+  console.log("dataset", dataset);
+  console.log("tableData", tableData);
+  console.log("month " + monthset);
+
 
   const generatePDF = async () => {
     try {
@@ -375,6 +410,8 @@ function Worktimesheet() {
 
       // Organize the dataset into the rowDataByDate object
       dataset.forEach((data) => {
+        // dataset.forEach((data) => {
+
         const date = data[dateFieldName];
         if (!rowDataByDate[date]) {
           rowDataByDate[date] = { workplaceId: [], otTime: [], dateFieldName: [] };
@@ -433,7 +470,7 @@ function Worktimesheet() {
         ...tableOptions,
       });
 
-
+      console.log(dataset);
       doc.save('example.pdf');
     } catch (error) {
       console.error('Error generating PDF:', error);
