@@ -153,7 +153,7 @@ function Worktimesheet() {
                 // alert(dataIndex1 +' .');
 
                 updatedData[(dataIndex1 - 21)].isChecked = true;
-                updatedData[(dataIndex1 - 21)].textValue = otTime1[index];
+                updatedData[(dataIndex1 - 21)].otTime = otTime1[index];
                 updatedData[(dataIndex1 - 21)].allTimeA = allTimeA1[index];
                 updatedData[(dataIndex1 - 21)].workplaceId = workplaceId1[index]; // Set otTime at the same index as dates
                 updatedData[(dataIndex1 - 21)].date = dates1[index]; // Set otTime at the same index as dates
@@ -164,7 +164,10 @@ function Worktimesheet() {
 
             }
           });
+          const filteredData = updatedData.filter((record) => record.isChecked == true);
+          setDataset(filteredData);
           return updatedData;
+
         });
 
         // setWoekplace(dates);
@@ -198,10 +201,11 @@ function Worktimesheet() {
               if (dataIndex <= 20) {
 
                 updatedData[(dataIndex + 11)].isChecked = true;
-                updatedData[(dataIndex + 11)].textValue = otTime[index];
+                updatedData[(dataIndex + 11)].otTime = otTime[index];
                 updatedData[(dataIndex + 11)].allTimeA = allTimeA[index];
                 updatedData[(dataIndex + 11)].workplaceId = workplaceId[index]; // Set otTime at the same index as dates
                 updatedData[(dataIndex + 11)].date = dates[index]; // Set otTime at the same index as dates
+
 
                 // Set otTime at the same index as dates
 
@@ -209,6 +213,8 @@ function Worktimesheet() {
 
             }
           });
+          const filteredData = updatedData.filter((record) => record.isChecked == true);
+          setDataset(filteredData);
           return updatedData;
         });
 
@@ -248,7 +254,8 @@ function Worktimesheet() {
       window.location.reload();
     }
   }
-  console.log(searchResult);
+
+  console.log("searchResult", searchResult);
   console.log(woekplace);
 
 
@@ -326,11 +333,10 @@ function Worktimesheet() {
   //   setDataset(tableDataDate);
   // }, [tableData]);
 
-  useState(() => {
-    const filteredData = tableData.filter((record) => record.date !== null && record.date !== undefined);
-    setDataset(filteredData);
-  }, [tableData]);
-
+  // useState(() => {
+  //   const filteredData = tableData.filter((record) => record.isChecked == false);
+  //   setDataset(filteredData);
+  // }, [tableData]);
 
   // setDataset(
   //   employeeWorkplaceRecords
@@ -349,6 +355,22 @@ function Worktimesheet() {
   console.log("tableData", tableData);
   console.log("month " + monthset);
 
+  const [workMonth, setWorkMonth] = useState([]);
+
+  const generateText = () => {
+    return searchResult.map((employeerecord) => (
+      'ประจำเดือน ' + getMonthName(employeerecord.month) +
+      ' ตั้งแต่วันที่ 21 ' + getMonthName(parseInt(employeerecord.month, 10) - 1) +
+      ' ถึง 20 ' + getMonthName(employeerecord.month) +
+      ' ' + (parseInt(employeerecord.timerecordId, 10) + 543)
+    )).join(' '); // Join the generated text into a single string
+  };
+
+  // Call generateText when the component mounts or when searchResult changes
+  useEffect(() => {
+    const text = generateText();
+    setWorkMonth(text);
+  }, [searchResult]);
 
   const generatePDF = async () => {
     try {
@@ -367,11 +389,11 @@ function Worktimesheet() {
       };
       const tableOptions = {
         styles: styles,
-        startY: 20,
+        startY: 25,
         // margin: { top: 10 },
       };
 
-      const title = 'Sample PDF Title';
+      const title = ' ใบลงเวลาการปฏิบัติงาน';
 
       // Set title with the Thai font
       doc.setFont('THSarabunNew');
@@ -381,7 +403,11 @@ function Worktimesheet() {
       const titleX = (pageWidth - titleWidth) / 2;
       doc.text(title, titleX, 10);
 
-      doc.text('ฮ่าโหลๆ ได้ไหม', 10, 10);
+      const subTitle = workMonth; // Replace with your desired subtitle text
+      doc.setFontSize(12); // You can adjust the font size for the subtitle
+      const subTitleWidth = doc.getStringUnitWidth(subTitle) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+      const subTitleX = (pageWidth - subTitleWidth) / 2;
+      doc.text(subTitle, subTitleX, 20); // Adjust the vertical position as needed
 
       // Calculate the number of days in the month, considering February and leap years
       const daysInMonth = (monthset === '02' && ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0)) ? 29 :
@@ -441,7 +467,7 @@ function Worktimesheet() {
         transposedTableData.map((row) => row[index])
       );
 
-      const textColumn = ['workplace', 'ot', 'day'];
+      const textColumn = [name, 'ot', 'day'];
 
       const sortedTableDataWithText = sortedTableData.map((data, index) => {
         const text = [textColumn[index]];
@@ -458,8 +484,11 @@ function Worktimesheet() {
       //   ...tableOptions,
       // });
 
+      // style table
+      // style table
+
       const customHeaders = [
-        ['', ...header],
+        ['วันที่', ...header],
       ];
 
 
@@ -468,6 +497,24 @@ function Worktimesheet() {
         head: customHeaders,
         body: sortedTableDataWithText,
         ...tableOptions,
+      });
+
+      const additionalTableData = [
+        ['Cell 1', 'Cell 2', 'Cell 3'],
+        ['Cell 4', 'Cell 5', 'Cell 6'],
+        ['Cell 7', 'Cell 8', 'Cell 9'],
+      ];
+
+      // Define options for the additional table
+      const additionalTableOptions = {
+        startY: 80, // Adjust the vertical position as needed
+        styles: styles,
+      };
+
+      // Add the additional table to the PDF
+      doc.autoTable({
+        body: additionalTableData,
+        ...additionalTableOptions,
       });
 
       console.log(dataset);
