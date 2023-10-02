@@ -27,7 +27,7 @@ function Worktimesheet() {
   const combinedRange = [...range1, ...range2];
 
 
-  const [ countWork , setCountWork ] = useState(0);
+  const [countWork, setCountWork] = useState(0);
 
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
@@ -105,7 +105,7 @@ function Worktimesheet() {
       if (response.data.recordworkplace.length >= 1) {
         await setSearchResult(response.data.recordworkplace);
       } else {
-        alert("ไม่พบข้อมูล 1 ถึง 20 " + getMonthName(data.month ) );
+        alert("ไม่พบข้อมูล 1 ถึง 20 " + getMonthName(data.month));
       }
 
       // if (data1.month == '00') {
@@ -203,7 +203,7 @@ function Worktimesheet() {
             // alert(index);
             if (dataIndex >= 0 && dataIndex < updatedData.length) {
               if (dataIndex <= 20) {
-setCountWork(countWork +1);
+                setCountWork(countWork + 1);
 
                 updatedData[(dataIndex + 11)].isChecked = true;
                 updatedData[(dataIndex + 11)].otTime = otTime[index];
@@ -256,7 +256,7 @@ setCountWork(countWork +1);
       }
     } catch (error) {
       alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
-      window.location.reload();
+      // window.location.reload();
     }
 
     try {
@@ -268,7 +268,7 @@ setCountWork(countWork +1);
       if (response1.data.recordworkplace.length >= 1) {
         await setSearchResult1(response1.data.recordworkplace);
       } else {
-        alert("ไม่พบข้อมูล 21 ถึง สิ้นเดือน " + getMonthName(data1.month ) );
+        alert("ไม่พบข้อมูล 21 ถึง สิ้นเดือน " + getMonthName(data1.month));
       }
 
       // await alert(data1.month + ' : '+ response1.data.recordworkplace.length )
@@ -286,7 +286,7 @@ setCountWork(countWork +1);
 
         const otTime1 = await employeeWorkplaceRecords1.map((record) => record.otTime);
 
-        await setTableData( async (prevState) => {
+        await setTableData(async (prevState) => {
           const updatedData = await [...prevState];
           dates1.forEach(async (date1, index) => {
             const dataIndex1 = await parseInt(date1, 10) - 1; // Subtract 1 because indices are zero-based
@@ -294,8 +294,8 @@ setCountWork(countWork +1);
 
               if (dataIndex1 >= 20 && dataIndex1 <= 31) {
                 // alert(dataIndex1 +' .');
-                await setCountWork(countWork +1);
-alert((dataIndex1 - 20) );
+                await setCountWork(countWork + 1);
+                // alert((dataIndex1 - 20));
 
                 updatedData[(dataIndex1 - 20)].isChecked = await true;
                 updatedData[(dataIndex1 - 20)].otTime = await otTime1[index];
@@ -309,7 +309,7 @@ alert((dataIndex1 - 20) );
 
             }
           });
-          const filteredData = await  updatedData.filter((record) => record.isChecked == true);
+          const filteredData = await updatedData.filter((record) => record.isChecked == true);
           await setDataset(filteredData);
           return updatedData;
 
@@ -319,7 +319,8 @@ alert((dataIndex1 - 20) );
 
       }
 
-    } catch (error) {
+    } 
+    catch (error) {
       alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
       window.location.reload();
     }
