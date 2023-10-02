@@ -45,6 +45,8 @@ import Worktimesheet from "./conponents/componentsAside/Worktimesheet";
 
 import TestPDF from "./conponents/componentsAside/TestPDF";
 
+import Testapp from "./conponents/componentsAside/Test";
+
 // import Time from "./conponents/Time";
 import Testcal from "./conponents/Testcal";
 import Countday from "./conponents/Countday";
@@ -143,8 +145,10 @@ function App() {
               <Route path="/application_summary" element={<ApplicationSummary />} />
 
               {/* <Route path="/testPDF" element={<TestShowManyData />} /> */}
-              <Route path="/testPDF" element={<TestPDF />} />
+              {/* <Route path="/testPDF" element={<TestPDF />} /> */}
               {/* <Route path="/testPDF" element={<PdfGenerator />} /> */}
+              <Route path="/testPDF" element={<Testapp />} />
+
 
 
 

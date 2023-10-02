@@ -398,45 +398,6 @@ function Setting() {
         }
     }
 
-    const bordertable = {
-        borderLeft: '2px solid #000'
-    };
-
-    const [formData, setFormData] = useState([]);
-    const [showAdditionalInput, setShowAdditionalInput] = useState(false);
-
-    const handleSelectChange = (e, index) => {
-        const selectedValue = e.target.value;
-        handleChange(e, index, 'StaffType');
-
-        // Check if "Option3" is selected, and then show the additional input
-        if (selectedValue === 'Option3') {
-            setShowAdditionalInput(true);
-        } else {
-            setShowAdditionalInput(false);
-        }
-    };
-
-    const handleChangeSpSalary = (e, index, key) => {
-        const selectedValue = formData[index].StaffType; // Get the StaffType value from formData
-        const newFormData = [...formData];
-        newFormData[index] = {
-            ...newFormData[index],
-            [key]: e.target.value,
-        };
-        if (selectedValue === 'Option3') {
-            setShowAdditionalInput(true);
-        } else {
-            setShowAdditionalInput(false);
-        }
-        setFormData(newFormData);
-    };
-
-    const handleAddInput = () => {
-        setFormData([...formData, { name: '', SpSalary: '', StaffType: '', nameTpty: '' }]);
-    };
-
-    console.log(formData);
     return (
         <body class="hold-transition sidebar-mini" className='editlaout'>
             <div class="wrapper">
@@ -786,65 +747,6 @@ function Setting() {
                                             </div>
                                         </div>
                                     </div> */}
-
-                                    {formData.map((data, index) => (
-                                        <div class="row" key={index}>
-                                            <div key={index}>
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <label role="salaryadd6">ชื่อรายการ</label>
-                                                        <input
-                                                            type="text"
-                                                            name="name"
-                                                            class="form-control"
-                                                            value={data.name}
-                                                            onChange={(e) => handleChangeSpSalary(e, index, 'name')}
-                                                        />
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <label role="salaryadd6">จำนวนเงิน</label>
-                                                        <input
-                                                            type="text"
-                                                            name="SpSalary"
-                                                            class="form-control"
-                                                            value={data.SpSalary}
-                                                            onChange={(e) => handleChangeSpSalary(e, index, 'SpSalary')}
-                                                        />
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <label role="salaryadd6">ประเภทพนักงาน</label>
-                                                        <select
-                                                            name="tell"
-                                                            className="form-control"
-                                                            value={data.StaffType}
-                                                            onChange={(e) => handleSelectChange(e, index)}
-                                                        >
-                                                            <option value="">เลือกกะการทำงาน</option>
-                                                            <option value="Option1">ทั้งหมด</option>
-                                                            <option value="Option2">หัวหน้างาน</option>
-                                                            <option value="Option3">กำหนดเอง</option>
-                                                        </select>
-                                                    </div>
-                                                    {showAdditionalInput && data.StaffType === 'Option3' && (
-                                                        <div className="col-md-4">
-                                                            <label>Additional Input</label>
-                                                            <input
-                                                                type="text"
-                                                                name="additionalInput"
-                                                                className="form-control"
-                                                                value={data.nameTpty}
-                                                                onChange={(e) => handleChangeSpSalary(e, index, 'nameTpty')}
-                                                            />
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-
-
-                                    <button onClick={handleAddInput}>Add Input</button>
-                                    {/* <pre>{JSON.stringify(formData, null, 2)}</pre> */}
                                 </section>
                                 {/* <!--Frame--> */}
                                 <h2 class="title">สวัสดิการวันหยุดพนักงาน</h2>

@@ -1140,7 +1140,7 @@ function AddsettimeWorkplace() {
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="row">
-                                            <div class="col-md-2"> รหัสพนักงาน </div>
+                                            <div class="col-md-1"> รหัสพนักงาน </div>
                                             <div class="col-md-2"> ชื่อพนักงาน </div>
                                             <div class="col-md-1"> กะการทำงาน </div>
                                             <div class="col-md-1"> เวลาเข้างาน </div>
@@ -1148,6 +1148,8 @@ function AddsettimeWorkplace() {
                                             <div class="col-md-1"> ชั่วโมงทำงาน </div>
                                             <div class="col-md-1"> เวลาเข้า OT </div>
                                             <div class="col-md-1"> เวลาออก OT</div>
+                                            <div class="col-md-1"> ชั่วโมง OT</div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -1158,8 +1160,21 @@ function AddsettimeWorkplace() {
                                             rowData.staffId && ( // Check if staffId is set (truthy)
                                                 <div key={index}>
                                                     <div class="row" style={{ marginBottom: '1rem', borderBottom: '2px solid #000' }}>
-                                                        <div class="col-md-2" style={bordertable}> {rowData.staffId} </div>
+                                                        <div class="col-md-1" style={bordertable}> {rowData.staffId} </div>
                                                         <div class="col-md-2" style={bordertable}> {rowData.staffName} </div>
+                                                        <div class="col-md-1" style={bordertable}>
+                                                            {rowData.shift === 'morning_shift' ? (
+                                                                <p>กะเช้า</p>
+                                                            ) : rowData.shift === 'afternoon_shift' ? (
+                                                                <p>กะบ่าย</p>
+                                                            ) : rowData.shift === 'night_shift' ? (
+                                                                <p>กะดึก</p>
+                                                            ) : rowData.shift === 'specialt_shift' ? (
+                                                                <p>กะพิเศษ</p>
+                                                            ) : (
+                                                                <div></div>
+                                                            )}
+                                                        </div>
                                                         <div class="col-md-1" style={bordertable}> {rowData.startTime} </div>
                                                         <div class="col-md-1" style={bordertable}> {rowData.endTime} </div>
                                                         <div class="col-md-1" style={bordertable}> {rowData.allTime} </div>
@@ -1167,9 +1182,9 @@ function AddsettimeWorkplace() {
                                                         <div class="col-md-1" style={bordertable}> {rowData.selectotTimeOut} </div>
                                                         <div class="col-md-1" style={bordertable}> {rowData.otTime} </div>
 
-                                                        <div class="col-md-2" style={bordertable}>
+                                                        <div class="col-md-1" style={bordertable}>
                                                             {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
-                                                            <button class="btn btn-xs btn-danger" style={{ padding: '0.3rem ' }} onClick={() => handleDeleteRow(index)}>Delete</button>
+                                                            <button class="btn btn-xs btn-danger" style={{ padding: '0.3rem ', width: '8rem' }} onClick={() => handleDeleteRow(index)}>Delete</button>
                                                         </div>
                                                     </div>
                                                 </div>

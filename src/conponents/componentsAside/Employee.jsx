@@ -329,6 +329,7 @@ function Employee() {
         };
     }, []);
 
+    console.log(vaccination);
     return (
         <body class="hold-transition sidebar-mini" className='editlaout'>
             <div class="wrapper">
