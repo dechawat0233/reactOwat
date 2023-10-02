@@ -152,11 +152,11 @@ function Worktimesheet() {
               if (dataIndex1 >= 21 && dataIndex1 <= 31) {
                 // alert(dataIndex1 +' .');
 
-                updatedData[(dataIndex1 - 21)].isChecked = true;
-                updatedData[(dataIndex1 - 21)].otTime = otTime1[index];
-                updatedData[(dataIndex1 - 21)].allTimeA = allTimeA1[index];
-                updatedData[(dataIndex1 - 21)].workplaceId = workplaceId1[index]; // Set otTime at the same index as dates
-                updatedData[(dataIndex1 - 21)].date = dates1[index]; // Set otTime at the same index as dates
+                updatedData[(dataIndex1 - 20)].isChecked = true;
+                updatedData[(dataIndex1 - 20)].otTime = otTime1[index];
+                updatedData[(dataIndex1 - 20)].allTimeA = allTimeA1[index];
+                updatedData[(dataIndex1 - 20)].workplaceId = workplaceId1[index]; // Set otTime at the same index as dates
+                updatedData[(dataIndex1 - 20)].date = dates1[index]; // Set otTime at the same index as dates
 
                 // Set otTime at the same index as dates
 
