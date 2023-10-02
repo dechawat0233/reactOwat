@@ -183,7 +183,7 @@ function AddsettimeWorkplace() {
         if (hours >= 5) {
             hours -= 1;
         }
-    
+
         // Calculate the total time difference in minutes
         const totalMinutes = hours * 60 + minutes;
         // Check if the employee worked > 5 hours
@@ -219,7 +219,7 @@ function AddsettimeWorkplace() {
         if (hours >= 5) {
             hours -= 1;
         }
-    
+
         // Calculate the total time difference in minutes
         const totalMinutes = hours * 60 + minutes;
         // Check if the employee worked > 5 hours
@@ -235,7 +235,7 @@ function AddsettimeWorkplace() {
             setOtTime(timeDiffFormatted);
         }
     }, [selectotTime, selectotTimeOut, otTime]);
-    
+
 
 
 
