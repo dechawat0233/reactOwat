@@ -27,6 +27,8 @@ function Worktimesheet() {
   const combinedRange = [...range1, ...range2];
 
 
+  const [ countWork , setCountWork ] = useState(0);
+
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
   const [checked3, setChecked3] = useState(false);
@@ -103,77 +105,79 @@ function Worktimesheet() {
       if (response.data.recordworkplace.length >= 1) {
         await setSearchResult(response.data.recordworkplace);
       } else {
-        alert("ไม่พบข้อมูล");
+        alert("ไม่พบข้อมูล 1 ถึง 20 " + getMonthName(data.month ) );
       }
 
-      if (data1.month == '00') {
-        data1.month = '12';
-      }
-      const response1 = await axios.post(endpoint + '/timerecord/searchemp', data1);
-      if (response1.data.recordworkplace.length >= 1) {
-        await setSearchResult1(response1.data.recordworkplace);
-      }
+      // if (data1.month == '00') {
+      //   data1.month = '12';
+      // }
+      // const response1 = await axios.post(endpoint + '/timerecord/searchemp', data1);
+      // if (response1.data.recordworkplace.length >= 1) {
+      //   await setSearchResult1(response1.data.recordworkplace);
+      // } else {
+      //   alert("ไม่พบข้อมูล 21 ถึง สิ้นเดือน " + getMonthName(data1.month ) );
+      // }
 
-      // await alert(data1.month + ' : '+ response1.data.recordworkplace.length )
-      // await alert(data.month + ' : '+ response.data.recordworkplace.length )
+      // // await alert(data1.month + ' : '+ response1.data.recordworkplace.length )
+      // // await alert(data.month + ' : '+ response.data.recordworkplace.length )
 
-      // await alert(searchResult[0].employee_workplaceRecord.length);
+      // // await alert(searchResult[0].employee_workplaceRecord.length);
 
-      // alert(JSON.stringify(response.data , null, 2) );
-      // await alert(searchResult[0].employee_workplaceRecord[0].workplaceId );
+      // // alert(JSON.stringify(response.data , null, 2) );
+      // // await alert(searchResult[0].employee_workplaceRecord[0].workplaceId );
 
-      const employeeWorkplaceRecords = await response.data.recordworkplace[0].employee_workplaceRecord;
-      const employeeWorkplaceRecords1 = await response1.data.recordworkplace[0].employee_workplaceRecord;
+      const employeeWorkplaceRecords = await response.data.recordworkplace[0].employee_workplaceRecord || '';
+      // const employeeWorkplaceRecords1 = await response1.data.recordworkplace[0].employee_workplaceRecord || '';
 
-      // xx
-      if (employeeWorkplaceRecords1.length > 0) {
-        const dates1 = employeeWorkplaceRecords1.map(record => record.date);
-        // const otTime = employeeWorkplaceRecords.map(record => record.otTime);
+      // // xx
+      // if (employeeWorkplaceRecords1.length > 0) {
+      //   const dates1 = employeeWorkplaceRecords1.map(record => record.date);
+      //   // const otTime = employeeWorkplaceRecords.map(record => record.otTime);
 
-        const allTimeA1 = employeeWorkplaceRecords1.map((record) => record.allTime);
+      //   const allTimeA1 = employeeWorkplaceRecords1.map((record) => record.allTime);
 
-        const workplaceId1 = employeeWorkplaceRecords1.map(record => record.workplaceId);
+      //   const workplaceId1 = employeeWorkplaceRecords1.map(record => record.workplaceId);
 
-        const otTime1 = employeeWorkplaceRecords1.map((record) => record.otTime);
+      //   const otTime1 = employeeWorkplaceRecords1.map((record) => record.otTime);
 
-        // setDataset(
-        //   employeeWorkplaceRecords1.filter((record) => record.date) // Filter out records with null or undefined dates
-        //     .map((record) => {
-        //       return record;
-        //     })
-        // );
+      //   // setDataset(
+      //   //   employeeWorkplaceRecords1.filter((record) => record.date) // Filter out records with null or undefined dates
+      //   //     .map((record) => {
+      //   //       return record;
+      //   //     })
+      //   // );
 
-        setTableData((prevState) => {
-          const updatedData = [...prevState];
-          dates1.forEach((date1, index) => {
-            const dataIndex1 = parseInt(date1, 10) - 1; // Subtract 1 because indices are zero-based
-            if (dataIndex1 >= 0 && dataIndex1 < updatedData.length) {
+      //   setTableData((prevState) => {
+      //     const updatedData = [...prevState];
+      //     dates1.forEach((date1, index) => {
+      //       const dataIndex1 = parseInt(date1, 10) - 1; // Subtract 1 because indices are zero-based
+      //       if (dataIndex1 >= 0 && dataIndex1 < updatedData.length) {
 
-              if (dataIndex1 >= 21 && dataIndex1 <= 31) {
-                // alert(dataIndex1 +' .');
+      //         if (dataIndex1 >= 21 && dataIndex1 <= 31) {
+      //           // alert(dataIndex1 +' .');
 
-                updatedData[(dataIndex1 - 20)].isChecked = true;
-                updatedData[(dataIndex1 - 20)].otTime = otTime1[index];
-                updatedData[(dataIndex1 - 20)].allTimeA = allTimeA1[index];
-                updatedData[(dataIndex1 - 20)].workplaceId = workplaceId1[index]; // Set otTime at the same index as dates
-                updatedData[(dataIndex1 - 20)].date = dates1[index]; // Set otTime at the same index as dates
+      //           updatedData[(dataIndex1 - 20)].isChecked = true;
+      //           updatedData[(dataIndex1 - 20)].otTime = otTime1[index];
+      //           updatedData[(dataIndex1 - 20)].allTimeA = allTimeA1[index];
+      //           updatedData[(dataIndex1 - 20)].workplaceId = workplaceId1[index]; // Set otTime at the same index as dates
+      //           updatedData[(dataIndex1 - 20)].date = dates1[index]; // Set otTime at the same index as dates
 
-                // Set otTime at the same index as dates
+      //           // Set otTime at the same index as dates
 
-              }
+      //         }
 
-            }
-          });
-          const filteredData = updatedData.filter((record) => record.isChecked == true);
-          setDataset(filteredData);
-          return updatedData;
+      //       }
+      //     });
+      //     const filteredData = updatedData.filter((record) => record.isChecked == true);
+      //     setDataset(filteredData);
+      //     return updatedData;
 
-        });
+      //   });
 
-        // setWoekplace(dates);
+      //   // setWoekplace(dates);
 
-      }
-      // xx
+      // }
+      // // xx
 
       if (employeeWorkplaceRecords.length > 0) {
         const dates = employeeWorkplaceRecords.map(record => record.date);
@@ -199,6 +203,7 @@ function Worktimesheet() {
             // alert(index);
             if (dataIndex >= 0 && dataIndex < updatedData.length) {
               if (dataIndex <= 20) {
+setCountWork(countWork +1);
 
                 updatedData[(dataIndex + 11)].isChecked = true;
                 updatedData[(dataIndex + 11)].otTime = otTime[index];
@@ -253,6 +258,72 @@ function Worktimesheet() {
       alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
       window.location.reload();
     }
+
+    try {
+
+      if (data1.month == '00') {
+        data1.month = '12';
+      }
+      const response1 = await axios.post(endpoint + '/timerecord/searchemp', data1);
+      if (response1.data.recordworkplace.length >= 1) {
+        await setSearchResult1(response1.data.recordworkplace);
+      } else {
+        alert("ไม่พบข้อมูล 21 ถึง สิ้นเดือน " + getMonthName(data1.month ) );
+      }
+
+      // await alert(data1.month + ' : '+ response1.data.recordworkplace.length )
+      // await alert(data.month + ' : '+ response.data.recordworkplace.length )
+
+      const employeeWorkplaceRecords1 = await response1.data.recordworkplace[0].employee_workplaceRecord || '';
+
+      if (employeeWorkplaceRecords1.length > 0) {
+        const dates1 = await employeeWorkplaceRecords1.map(record => record.date);
+        // const otTime = employeeWorkplaceRecords.map(record => record.otTime);
+
+        const allTimeA1 = await employeeWorkplaceRecords1.map((record) => record.allTime);
+
+        const workplaceId1 = await employeeWorkplaceRecords1.map(record => record.workplaceId);
+
+        const otTime1 = await employeeWorkplaceRecords1.map((record) => record.otTime);
+
+        await setTableData( async (prevState) => {
+          const updatedData = await [...prevState];
+          dates1.forEach(async (date1, index) => {
+            const dataIndex1 = await parseInt(date1, 10) - 1; // Subtract 1 because indices are zero-based
+            if (dataIndex1 >= 0 && dataIndex1 < updatedData.length) {
+
+              if (dataIndex1 >= 20 && dataIndex1 <= 31) {
+                // alert(dataIndex1 +' .');
+                await setCountWork(countWork +1);
+alert((dataIndex1 - 20) );
+
+                updatedData[(dataIndex1 - 20)].isChecked = await true;
+                updatedData[(dataIndex1 - 20)].otTime = await otTime1[index];
+                updatedData[(dataIndex1 - 20)].allTimeA = await allTimeA1[index];
+                updatedData[(dataIndex1 - 20)].workplaceId = await workplaceId1[index]; // Set otTime at the same index as dates
+                updatedData[(dataIndex1 - 20)].date = await dates1[index]; // Set otTime at the same index as dates
+
+                // Set otTime at the same index as dates
+
+              }
+
+            }
+          });
+          const filteredData = await  updatedData.filter((record) => record.isChecked == true);
+          await setDataset(filteredData);
+          return updatedData;
+
+        });
+        setWoekplace(dates);
+
+
+      }
+
+    } catch (error) {
+      alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
+      window.location.reload();
+    }
+
   }
 
   console.log("searchResult", searchResult);
@@ -654,7 +725,7 @@ function Worktimesheet() {
             <br />
             <div class="row">
               <div class="col-md-2">
-                ทั้งหมด 22 วัน
+                วันทำงานทั้งหมด {countWork} วัน
               </div>
             </div>
 
