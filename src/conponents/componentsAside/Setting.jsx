@@ -440,6 +440,8 @@ function Setting() {
     };
 
     console.log(formData);
+    console.log(showAdditionalInput);
+
     return (
         <body class="hold-transition sidebar-mini" className='editlaout'>
             <div class="wrapper">
@@ -820,7 +822,7 @@ function Setting() {
                                                     value={data.StaffType}
                                                     onChange={(e) => handleChangeSpSalary(e, index, 'StaffType')}
                                                 >
-                                                    <option value="">เลือกกะการทำงาน</option>
+                                                    <option value="">เลือกตำแหน่งที่จะมอบให้</option>
                                                     <option value="all">ทั้งหมด</option>
                                                     <option value="header">หัวหน้างาน</option>
                                                     <option value="custom">กำหนดเอง</option>
