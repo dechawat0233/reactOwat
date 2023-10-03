@@ -203,15 +203,14 @@ function Worktimesheet() {
             // alert(index);
             if (dataIndex >= 0 && dataIndex < updatedData.length) {
               if (dataIndex <= 20) {
-                setCountWork(countWork + 1);
+                setCountWork((countWork + 1) );
+// alert((dataIndex + 11));
 
                 updatedData[(dataIndex + 11)].isChecked = true;
                 updatedData[(dataIndex + 11)].otTime = otTime[index];
                 updatedData[(dataIndex + 11)].allTimeA = allTimeA[index];
                 updatedData[(dataIndex + 11)].workplaceId = workplaceId[index]; // Set otTime at the same index as dates
                 updatedData[(dataIndex + 11)].date = dates[index]; // Set otTime at the same index as dates
-
-
                 // Set otTime at the same index as dates
 
               }
@@ -223,7 +222,7 @@ function Worktimesheet() {
           return updatedData;
         });
 
-        setWoekplace(dates);
+        // setWoekplace(dates);
         console.log(tableData);
 
 
@@ -286,22 +285,22 @@ function Worktimesheet() {
 
         const otTime1 = await employeeWorkplaceRecords1.map((record) => record.otTime);
 
-        await setTableData(async (prevState) => {
-          const updatedData = await [...prevState];
-          dates1.forEach(async (date1, index) => {
-            const dataIndex1 = await parseInt(date1, 10) - 1; // Subtract 1 because indices are zero-based
+        await setTableData((prevState) => {
+          const updatedData = [...prevState];
+          dates1.forEach((date1, index) => {
+            const dataIndex1 = parseInt(date1, 10) - 1; // Subtract 1 because indices are zero-based
             if (dataIndex1 >= 0 && dataIndex1 < updatedData.length) {
 
               if (dataIndex1 >= 20 && dataIndex1 <= 31) {
                 // alert(dataIndex1 +' .');
-                await setCountWork(countWork + 1);
+                setCountWork((countWork + 1) );
                 // alert((dataIndex1 - 20));
 
-                updatedData[(dataIndex1 - 20)].isChecked = await true;
-                updatedData[(dataIndex1 - 20)].otTime = await otTime1[index];
-                updatedData[(dataIndex1 - 20)].allTimeA = await allTimeA1[index];
-                updatedData[(dataIndex1 - 20)].workplaceId = await workplaceId1[index]; // Set otTime at the same index as dates
-                updatedData[(dataIndex1 - 20)].date = await dates1[index]; // Set otTime at the same index as dates
+                updatedData[(dataIndex1 - 20)].isChecked = true;
+                updatedData[(dataIndex1 - 20)].otTime = otTime1[index];
+                updatedData[(dataIndex1 - 20)].allTimeA = allTimeA1[index];
+                updatedData[(dataIndex1 - 20)].workplaceId = workplaceId1[index]; // Set otTime at the same index as dates
+                updatedData[(dataIndex1 - 20)].date = dates1[index]; // Set otTime at the same index as dates
 
                 // Set otTime at the same index as dates
 
@@ -309,12 +308,12 @@ function Worktimesheet() {
 
             }
           });
-          const filteredData = await updatedData.filter((record) => record.isChecked == true);
-          await setDataset(filteredData);
+          const filteredData = updatedData.filter((record) => record.isChecked == true);
+          setDataset(filteredData);
           return updatedData;
 
         });
-        setWoekplace(dates);
+        // setWoekplace(dates);
 
 
       }

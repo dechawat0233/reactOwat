@@ -1,9 +1,9 @@
 // config.js
 //config for local
-      // const endpoint = 'http://localhost:3000';
+      //const endpoint = 'http://localhost:3000';
 
 //config for server test
-const endpoint = 'http://68.183.230.164:3000';
+ const endpoint = 'http://68.183.230.164:3000';
 
 //config for server
 

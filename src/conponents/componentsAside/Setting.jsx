@@ -361,6 +361,7 @@ function Setting() {
             workcount5: workcount5,
             workcount6: workcount6,
             workcount7: workcount7,
+            addSalary: formData,
         };
 
 
@@ -425,7 +426,7 @@ function Setting() {
     };
 
     const handleAddInput = () => {
-        setFormData([...formData, { name: '', SpSalary: '', StaffType: '', nameTpty: '' }]);
+        setFormData([...formData, { name: '', SpSalary: '', StaffType: '', nameType: '' }]);
         setShowAdditionalInput([...showAdditionalInput, false]);
     };
 
@@ -843,7 +844,7 @@ function Setting() {
                                             </div>
                                         </div>
                                     ))}
-                                    <button onClick={handleAddInput} class="btn btn-primary" >เพิ่ม</button>
+                                    <button type='button' onClick={handleAddInput} class="btn btn-primary" >เพิ่ม</button>
                                     {/* <pre>{JSON.stringify(formData, null, 2)}</pre> */}
                                 </section>
                                 {/* <!--Frame--> */}
