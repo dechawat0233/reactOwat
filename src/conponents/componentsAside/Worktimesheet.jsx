@@ -385,10 +385,10 @@ function Worktimesheet() {
           // const workplaceIds = filteredData.map((record) => record.workplaceId)
 
           const filteredData = [
-            { isChecked: true, textValue: '', workplaceId: '1001', date: '30', otTime: '1.0' },
-            { isChecked: true, textValue: '', workplaceId: '1001', date: '01', otTime: '2.0' },
-            { isChecked: true, textValue: '', workplaceId: '1002', date: '03', otTime: '6.0' },
-            { isChecked: false, textValue: '', workplaceId: '1003', date: '04', otTime: '2.0' }
+            { isChecked: true, textValue: '', workplaceId: '1001', date: '30', otTime: '1.0', allTime: '8.0' },
+            { isChecked: true, textValue: '', workplaceId: '1001', date: '01', otTime: '2.0', allTime: '4.0' },
+            { isChecked: true, textValue: '', workplaceId: '1002', date: '03', otTime: '6.0', allTime: '8.0' },
+            { isChecked: false, textValue: '', workplaceId: '1003', date: '04', otTime: '2.0', allTime: '8.0' }
           ];
 
           const workplaceIds = [...new Set(filteredData.map((record) => record.workplaceId))];
