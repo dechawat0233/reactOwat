@@ -167,6 +167,83 @@ function Setting() {
     const [workcount7, setWorkcount7] = useState('');
     // const [daysOff , setDaysOff] = useState([{ date: '' }]);
 
+
+    const [formData, setFormData] = useState([]);
+    const [showAdditionalInput, setShowAdditionalInput] = useState([]);
+
+    const handleSelectChange = (e, index) => {
+        const selectedValue = e.target.value;
+        handleChange(e, index, 'StaffType');
+
+        // Check if "Option3" is selected, and then show the additional input
+        const newShowAdditionalInput = [...showAdditionalInput];
+        newShowAdditionalInput[index] = selectedValue === 'Option3';
+        setShowAdditionalInput(newShowAdditionalInput);
+    };
+
+    // const handleChangeSpSalary = (e, index, key) => {
+    //     const newFormData = [...formData];
+    //     newFormData[index] = {
+    //         ...newFormData[index],
+    //         [key]: e.target.value,
+    //     };
+    //     setFormData(newFormData);
+    // };
+    const handleChangeSpSalary = (e, index, key) => {
+        const newAddSalary = [...formData.addSalary];
+        newAddSalary[index] = {
+            ...newAddSalary[index],
+            [key]: e.target.value,
+        };
+
+        setFormData({
+            ...formData,
+            addSalary: newAddSalary
+        });
+    };
+
+    // const handleAddInput = () => {
+    //     setFormData([...formData, { name: '', SpSalary: '', StaffType: '', nameType: '' }]);
+    //     setShowAdditionalInput([...showAdditionalInput, false]);
+    // };
+    const handleAddInput = () => {
+        setFormData({
+            ...formData,
+            addSalary: [
+                ...formData.addSalary,
+                { name: '', SpSalary: '', StaffType: '', nameType: '' }
+            ]
+        });
+        setShowAdditionalInput([...showAdditionalInput, false]);
+    };
+
+    // const handleDeleteInput = (index) => {
+    //     const newFormData = [...formData];
+    //     newFormData.splice(index, 1);
+    //     setFormData(newFormData);
+
+    //     const newShowAdditionalInput = [...showAdditionalInput];
+    //     newShowAdditionalInput.splice(index, 1);
+    //     setShowAdditionalInput(newShowAdditionalInput);
+    // };
+
+    const handleDeleteInput = (index) => {
+        const newAddSalary = [...formData.addSalary];
+        newAddSalary.splice(index, 1);
+
+        setFormData({
+            ...formData,
+            addSalary: newAddSalary
+        });
+
+        const newShowAdditionalInput = [...showAdditionalInput];
+        newShowAdditionalInput.splice(index, 1);
+        setShowAdditionalInput(newShowAdditionalInput);
+    };
+
+
+  
+
     //set data to form
     function handleClickResult(workplace) {
         setNewWorkplace(false);
@@ -229,10 +306,25 @@ function Setting() {
         setWorkcount6(workplace.workcount6);
         setWorkcount7(workplace.workcount7);
         const dates = workplace.daysOff.map((dateString) => new Date(dateString));
+
         setSelectedDates(dates);
         setReason(workplace.reason);
 
         // employeeIdLists
+
+
+        const initialFormData = {
+            addSalary: workplace.addSalary.map((item) => ({
+                name: item.name || '',
+                SpSalary: item.SpSalary || '',
+                StaffType: item.StaffType || '',
+                nameType: item.nameType || '',
+            })),
+        };
+
+        setFormData(initialFormData);
+        // setFormData(workplace.addSalary);
+
 
 
         const employeeIdLists = workplace.employeeIdList.map((item) => [...item]);
@@ -240,6 +332,11 @@ function Setting() {
 
         const employeeNameLists = workplace.employeeNameList.map((item) => [...item]);
         setEmployeeNameList(employeeNameLists);
+
+        // console.log(workplace);
+        // // console.log(initialFormData);
+        // console.log("formData", formData);
+
 
 
     }
@@ -361,7 +458,7 @@ function Setting() {
             workcount5: workcount5,
             workcount6: workcount6,
             workcount7: workcount7,
-            addSalary: formData,
+            addSalary: formData.addSalary,
         };
 
 
@@ -403,44 +500,47 @@ function Setting() {
         borderLeft: '2px solid #000'
     };
 
-    const [formData, setFormData] = useState([]);
-    const [showAdditionalInput, setShowAdditionalInput] = useState([]);
+    // const [formData, setFormData] = useState([]);
+    // const [showAdditionalInput, setShowAdditionalInput] = useState([]);
 
-    const handleSelectChange = (e, index) => {
-        const selectedValue = e.target.value;
-        handleChange(e, index, 'StaffType');
+    // const handleSelectChange = (e, index) => {
+    //     const selectedValue = e.target.value;
+    //     handleChange(e, index, 'StaffType');
 
-        // Check if "Option3" is selected, and then show the additional input
-        const newShowAdditionalInput = [...showAdditionalInput];
-        newShowAdditionalInput[index] = selectedValue === 'Option3';
-        setShowAdditionalInput(newShowAdditionalInput);
-    };
+    //     // Check if "Option3" is selected, and then show the additional input
+    //     const newShowAdditionalInput = [...showAdditionalInput];
+    //     newShowAdditionalInput[index] = selectedValue === 'Option3';
+    //     setShowAdditionalInput(newShowAdditionalInput);
+    // };
 
-    const handleChangeSpSalary = (e, index, key) => {
-        const newFormData = [...formData];
-        newFormData[index] = {
-            ...newFormData[index],
-            [key]: e.target.value,
-        };
-        setFormData(newFormData);
-    };
+    // const handleChangeSpSalary = (e, index, key) => {
+    //     const newFormData = [...formData];
+    //     newFormData[index] = {
+    //         ...newFormData[index],
+    //         [key]: e.target.value,
+    //     };
+    //     setFormData(newFormData);
+    // };
 
-    const handleAddInput = () => {
-        setFormData([...formData, { name: '', SpSalary: '', StaffType: '', nameType: '' }]);
-        setShowAdditionalInput([...showAdditionalInput, false]);
-    };
+    // const handleAddInput = () => {
+    //     setFormData([...formData, { name: '', SpSalary: '', StaffType: '', nameType: '' }]);
+    //     setShowAdditionalInput([...showAdditionalInput, false]);
+    // };
 
-    const handleDeleteInput = (index) => {
-        const newFormData = [...formData];
-        newFormData.splice(index, 1);
-        setFormData(newFormData);
+    // const handleDeleteInput = (index) => {
+    //     const newFormData = [...formData];
+    //     newFormData.splice(index, 1);
+    //     setFormData(newFormData);
 
-        const newShowAdditionalInput = [...showAdditionalInput];
-        newShowAdditionalInput.splice(index, 1);
-        setShowAdditionalInput(newShowAdditionalInput);
-    };
+    //     const newShowAdditionalInput = [...showAdditionalInput];
+    //     newShowAdditionalInput.splice(index, 1);
+    //     setShowAdditionalInput(newShowAdditionalInput);
+    // };
 
     console.log(formData);
+    // // console.log(showAdditionalInput);
+
+
     return (
         <body class="hold-transition sidebar-mini" className='editlaout'>
             <div class="wrapper">
@@ -790,8 +890,7 @@ function Setting() {
                                             </div>
                                         </div>
                                     </div> */}
-
-                                    {formData.map((data, index) => (
+                                    {formData.addSalary && formData.addSalary.length > 0 && formData.addSalary.map((data, index) => (
                                         <div className="row" key={index}>
                                             <div className="col-md-3">
                                                 <label role="salaryadd6">ชื่อรายการ</label>
@@ -821,7 +920,7 @@ function Setting() {
                                                     value={data.StaffType}
                                                     onChange={(e) => handleChangeSpSalary(e, index, 'StaffType')}
                                                 >
-                                                    <option value="">เลือกกะการทำงาน</option>
+                                                    <option value="">เลือกตำแหน่งที่จะมอบให้</option>
                                                     <option value="all">ทั้งหมด</option>
                                                     <option value="header">หัวหน้างาน</option>
                                                     <option value="custom">กำหนดเอง</option>
@@ -834,17 +933,18 @@ function Setting() {
                                                         type="text"
                                                         name="additionalInput"
                                                         className="form-control"
-                                                        value={data.nameTpty}
-                                                        onChange={(e) => handleChangeSpSalary(e, index, 'nameTpty')}
+                                                        value={data.nameType}
+                                                        onChange={(e) => handleChangeSpSalary(e, index, 'nameType')}
                                                     />
                                                 </div>
                                             )}
-                                            <div className="col-md-1" >
-                                                <button onClick={() => handleDeleteInput(index)} class="btn btn-danger" style={{ width: "3rem", position: 'absolute', bottom: '0' }}>ลบ</button>
+                                            <div className="col-md-1">
+                                                <button onClick={() => handleDeleteInput(index)} className="btn btn-danger" style={{ width: "3rem", position: 'absolute', bottom: '0' }}>ลบ</button>
                                             </div>
                                         </div>
                                     ))}
-                                    <button type='button' onClick={handleAddInput} class="btn btn-primary" >เพิ่ม</button>
+
+                                    < button type='button' onClick={handleAddInput} class="btn btn-primary" >เพิ่ม</button>
                                     {/* <pre>{JSON.stringify(formData, null, 2)}</pre> */}
                                 </section>
                                 {/* <!--Frame--> */}
@@ -1084,8 +1184,8 @@ function Setting() {
                     {/* <!-- /.content --> */}
                 </div>
 
-            </div>
-        </body>
+            </div >
+        </body >
     );
 }
 

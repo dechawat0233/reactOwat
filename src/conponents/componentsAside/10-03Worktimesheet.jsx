@@ -63,8 +63,6 @@ function Worktimesheet() {
 
   const [employeeId, setEmployeeId] = useState('');
   const [name, setName] = useState('');
-  const [workplaceIdList, setWorkplaceIdList] = useState([]);
-
   const [month, setMonth] = useState('');
 
   useEffect(() => {
@@ -206,14 +204,15 @@ function Worktimesheet() {
             // alert(index);
             if (dataIndex >= 0 && dataIndex < updatedData.length) {
               if (dataIndex <= 20) {
-                setCountWork((countWork + 1));
-                // alert((dataIndex + 11));
+                setCountWork(countWork + 1);
 
                 updatedData[(dataIndex + 11)].isChecked = true;
                 updatedData[(dataIndex + 11)].otTime = otTime[index];
                 updatedData[(dataIndex + 11)].allTimeA = allTimeA[index];
                 updatedData[(dataIndex + 11)].workplaceId = workplaceId[index]; // Set otTime at the same index as dates
                 updatedData[(dataIndex + 11)].date = dates[index]; // Set otTime at the same index as dates
+
+
                 // Set otTime at the same index as dates
 
               }
@@ -221,17 +220,17 @@ function Worktimesheet() {
             }
           });
           const filteredData = updatedData.filter((record) => record.isChecked == true);
-          // const workplaceIds = filteredData.map((record) => record.workplaceId)
-          const workplaceIds = [...new Set(filteredData.map((record) => record.workplaceId))];
-
           setDataset(filteredData);
-
-          const count = filteredData.length;
-          setCountWork((count));
-          setWorkplaceIdList(workplaceIds);
-
           return updatedData;
         });
+
+        setWoekplace(dates);
+        console.log('tableData1',tableData);
+
+
+        // console.log('Dates:', dates);
+        // console.log('time:', otTime);
+        console.log('workplaceId:', workplaceId);
 
       }
 
@@ -246,7 +245,7 @@ function Worktimesheet() {
         // Set search values
         await setEmployeeId(response.data.recordworkplace[0].employeeId);
         await setName(response.data.recordworkplace[0].employeeName);
-        console.log(name);
+
 
         // setWoekplace(response.data.recordworkplace[0].employee_workplaceRecord[0].workplaceName);
 
@@ -288,22 +287,22 @@ function Worktimesheet() {
 
         const otTime1 = await employeeWorkplaceRecords1.map((record) => record.otTime);
 
-        await setTableData((prevState) => {
-          const updatedData = [...prevState];
-          dates1.forEach((date1, index) => {
-            const dataIndex1 = parseInt(date1, 10) - 1; // Subtract 1 because indices are zero-based
+        await setTableData(async (prevState) => {
+          const updatedData = await [...prevState];
+          dates1.forEach(async (date1, index) => {
+            const dataIndex1 = await parseInt(date1, 10) - 1; // Subtract 1 because indices are zero-based
             if (dataIndex1 >= 0 && dataIndex1 < updatedData.length) {
 
               if (dataIndex1 >= 20 && dataIndex1 <= 31) {
                 // alert(dataIndex1 +' .');
-                setCountWork((countWork + 1));
+                await setCountWork(countWork + 1);
                 // alert((dataIndex1 - 20));
 
-                updatedData[(dataIndex1 - 20)].isChecked = true;
-                updatedData[(dataIndex1 - 20)].otTime = otTime1[index];
-                updatedData[(dataIndex1 - 20)].allTimeA = allTimeA1[index];
-                updatedData[(dataIndex1 - 20)].workplaceId = workplaceId1[index]; // Set otTime at the same index as dates
-                updatedData[(dataIndex1 - 20)].date = dates1[index]; // Set otTime at the same index as dates
+                updatedData[(dataIndex1 - 20)].isChecked = await true;
+                updatedData[(dataIndex1 - 20)].otTime = await otTime1[index];
+                updatedData[(dataIndex1 - 20)].allTimeA = await allTimeA1[index];
+                updatedData[(dataIndex1 - 20)].workplaceId = await workplaceId1[index]; // Set otTime at the same index as dates
+                updatedData[(dataIndex1 - 20)].date = await dates1[index]; // Set otTime at the same index as dates
 
                 // Set otTime at the same index as dates
 
@@ -311,23 +310,14 @@ function Worktimesheet() {
 
             }
           });
-          const filteredData = updatedData.filter((record) => record.isChecked == true);
-          // const workplaceIds = filteredData.map((record) => record.workplaceId)
-          const workplaceIds = [...new Set(filteredData.map((record) => record.workplaceId))];
-
-          // const uniqueWorkplaceIds = [...new Set(updatedData.map((record) => record.workplaceId))];
-
-          const count = filteredData.length;
-
-          setDataset(filteredData);
-          setCountWork((count));
-
-          setWorkplaceIdList(workplaceIds);
-
+          const filteredData = await updatedData.filter((record) => record.isChecked == true);
+          await setDataset(filteredData);
           return updatedData;
 
         });
-        // setWoekplace(dates);
+        setWoekplace(dates);
+        console.log('tableData2',tableData);
+
 
 
       }
@@ -339,8 +329,12 @@ function Worktimesheet() {
     }
 
   }
-  console.log(workplaceIdList);
 
+  console.log("searchResult", searchResult);
+  console.log(woekplace);
+
+
+  console.log(dataset);
 
   // const handleCheckboxChange = (event) => {
   //   const { name, checked } = event.target;
@@ -430,6 +424,11 @@ function Worktimesheet() {
 
   const [year, setYear] = useState(2023); // Example year (you can set it dynamically)
   const [calendarData, setCalendarData] = useState([]);
+
+  // console.log(tableData);
+  console.log("dataset", dataset);
+  console.log("tableData", tableData);
+  console.log("month " + monthset);
 
   const [workMonth, setWorkMonth] = useState([]);
 
@@ -593,6 +592,7 @@ function Worktimesheet() {
         ...additionalTableOptions,
       });
 
+      console.log(dataset);
       doc.save('example.pdf');
     } catch (error) {
       console.error('Error generating PDF:', error);
@@ -728,7 +728,7 @@ function Worktimesheet() {
             </div>
             <br />
             <div class="row">
-              <div class="col-md-3">
+              <div class="col-md-2">
                 วันทำงานทั้งหมด {countWork} วัน
               </div>
             </div>
