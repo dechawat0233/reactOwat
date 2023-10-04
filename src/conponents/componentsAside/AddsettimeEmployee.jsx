@@ -10,6 +10,10 @@ import EmployeesSelected from './EmployeesSelected';
 
 function AddsettimeEmployee() {
 
+    const bordertable = {
+        borderLeft: '2px solid #000'
+    };
+
     const [newWorkplace, setNewWorkplace] = useState(true);
 
     const [searchEmployeeId, setSearchEmployeeId] = useState('');
@@ -199,7 +203,9 @@ useEffect(() => {
 
 
 
-    const numberOfRows2 = 30; // Fixed number of rows
+    // const numberOfRows2 = 30; // Fixed number of rows
+    const numberOfRows2 = 1; // Fixed number of rows
+
     const initialRowData2 = {
         workplaceId: '',
         workplaceName: '',
@@ -803,6 +809,68 @@ useEffect(() => {
 
                             </div>
 
+
+                            <section class="Frame">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-1"> รหัสหน่วยงาน</div>
+                                            <div class="col-md-2"> ชื่อหน่วยงาน </div>
+                                            <div class="col-md-1"> วันที่</div>
+                                            <div class="col-md-1"> กะการทำงาน </div>
+                                            <div class="col-md-1"> เวลาเข้างาน </div>
+                                            <div class="col-md-1"> เวลาออกงาน </div>
+                                            <div class="col-md-1"> ชั่วโมงทำงาน </div>
+                                            <div class="col-md-1"> ชั่วโมง OT</div>
+                                            <div class="col-md-1"> เวลาเข้า OT </div>
+                                            <div class="col-md-1"> เวลาออก OT</div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+
+                                    {rowDataList2.map((rowData2, index) => (
+                                            rowData2.workplaceId && ( 
+                                                <div key={index}>
+                                                    <div class="row" style={{ marginBottom: '1rem', borderBottom: '2px solid #000' }}>
+                                                        <div class="col-md-1" style={bordertable}> {rowData2.workplaceId }</div>
+                                                        <div class="col-md-2" style={bordertable}> {rowData2.workplaceName} </div> 
+                                                        <div class="col-md-1" style={bordertable}> {rowData2.date} </div>
+                                                        <div class="col-md-1" style={bordertable}>
+                                                            {rowData2.shift === 'morning_shift' ? (
+                                                                <p>กะเช้า</p>
+                                                            ) : rowData2.shift === 'afternoon_shift' ? (
+                                                                <p>กะบ่าย</p>
+                                                            ) : rowData2.shift === 'night_shift' ? (
+                                                                <p>กะดึก</p>
+                                                            ) : rowData2.shift === 'specialt_shift' ? (
+                                                                <p>กะพิเศษ</p>
+                                                            ) : (
+                                                                <div></div>
+                                                            )}
+                                                        </div> 
+                                                        <div class="col-md-1" style={bordertable}> {rowData2.startTime} </div> 
+                                                        <div class="col-md-1" style={bordertable}> {rowData2.endTime} </div>
+                                                        <div class="col-md-1" style={bordertable}> {rowData2.allTime} </div>
+                                                        <div class="col-md-1" style={bordertable}> {rowData2.otTime} </div>
+                                                        <div class="col-md-1" style={bordertable}> {rowData2.selectotTime} </div>
+                                                        <div class="col-md-1" style={bordertable}> {rowData2.selectotTimeOut} </div>
+
+                                                        <div class="col-md-1" style={bordertable}>
+                                                            {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
+                                                            <button class="btn btn-xs btn-danger" style={{ padding: '0.3rem ', width: '8rem' }} onClick={() => handleDeleteRow(index)}>Delete</button>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            )
+                                        ))}
+
+                                    </div>
+                                </div>
+                            </section>
 
 
                             <div class="form-group">
