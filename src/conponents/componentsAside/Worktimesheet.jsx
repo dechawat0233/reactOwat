@@ -16,6 +16,23 @@ function Worktimesheet() {
   };
   const [dataset, setDataset] = useState([]);
 
+  const [workplaceList, setWorkplaceList] = useState([]);
+
+  useEffect(() => {
+    // Fetch data from the API when the component mounts
+    fetch(endpoint + '/workplace/list')
+      .then(response => response.json())
+      .then(data => {
+        // Update the state with the fetched data
+        setWorkplaceList(data);
+        // alert(data[0].workplaceName);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []); // The empty array [] ensures that the effect runs only once after the initial render
+
+  console.log(workplaceList);
 
   // Generate an array containing numbers from 21 to 31
   const range1 = Array.from({ length: 11 }, (_, i) => i + 21);
@@ -224,6 +241,23 @@ function Worktimesheet() {
           // const workplaceIds = filteredData.map((record) => record.workplaceId)
           const workplaceIds = [...new Set(filteredData.map((record) => record.workplaceId))];
 
+          const workplaceIdCounts = {};
+
+          // Extract unique workplaceId values and count occurrences
+          filteredData.forEach((record) => {
+            if (record.isChecked) {
+              const { workplaceId } = record;
+              if (workplaceIdCounts[workplaceId]) {
+                workplaceIdCounts[workplaceId]++;
+              } else {
+                workplaceIdCounts[workplaceId] = 1;
+              }
+            }
+          });
+          // const uniqueWorkplaceIds = [...new Set(updatedData.map((record) => record.workplaceId))];
+          const result = Object.entries(workplaceIdCounts).map(([workplaceId, count]) => ({ workplaceId, count }));
+
+
           setDataset(filteredData);
 
           const count = filteredData.length;
@@ -234,7 +268,8 @@ function Worktimesheet() {
         });
 
       }
-
+      console.log('Result:');
+      console.log(result);
       /////////
 
       // alert(response.data.recordworkplace.length);
@@ -315,7 +350,22 @@ function Worktimesheet() {
           // const workplaceIds = filteredData.map((record) => record.workplaceId)
           const workplaceIds = [...new Set(filteredData.map((record) => record.workplaceId))];
 
+          const workplaceIdCounts = {};
+
+          // Extract unique workplaceId values and count occurrences
+          filteredData.forEach((record) => {
+            if (record.isChecked) {
+              const { workplaceId } = record;
+              if (workplaceIdCounts[workplaceId]) {
+                workplaceIdCounts[workplaceId]++;
+              } else {
+                workplaceIdCounts[workplaceId] = 1;
+              }
+            }
+          });
           // const uniqueWorkplaceIds = [...new Set(updatedData.map((record) => record.workplaceId))];
+          const result = Object.entries(workplaceIdCounts).map(([workplaceId, count]) => ({ workplaceId, count }));
+
 
           const count = filteredData.length;
 
@@ -323,6 +373,8 @@ function Worktimesheet() {
           setCountWork((count));
 
           setWorkplaceIdList(workplaceIds);
+          console.log('Result:');
+          console.log(result);
 
           return updatedData;
 
@@ -333,6 +385,7 @@ function Worktimesheet() {
       }
 
     }
+
     catch (error) {
       alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา', error);
       // window.location.reload();
@@ -341,6 +394,31 @@ function Worktimesheet() {
   }
   console.log(workplaceIdList);
 
+  //set salaty calculate
+  const [workRate, setWorkRate] = useState(''); //ค่าจ้างต่อวัน
+  const [workRateOT, setWorkRateOT] = useState(''); //ค่าจ้าง OT ต่อชั่วโมง
+  const [holiday, setHoliday] = useState(''); //ค่าจ้างวันหยุดนักขัตฤกษ์ 
+  const [holidayHour, setHolidayHour] = useState(''); //ค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง
+
+  useEffect(() => {
+    if (workplaceIdList !== '') {
+      const workplacesearch = workplaceList.find(workplace => workplace.workplaceId === workplaceIdList);
+      if (workplacesearch) {
+        setWorkRate(workplacesearch.workRate);
+        setWorkRateOT(workplacesearch.workRateOT);
+        setHoliday(workplacesearch.holiday);
+        setHolidayHour(workplacesearch.holidayHour);
+
+
+      } else {
+        setWorkRate('');
+        setWorkRateOT('');
+        setHoliday('');
+        setHolidayHour('');
+      }
+    }
+  }, [workplaceIdList]);
+  console.log('workRate', workplaceIdList);
 
   // const handleCheckboxChange = (event) => {
   //   const { name, checked } = event.target;
