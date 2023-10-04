@@ -223,7 +223,7 @@ function Worktimesheet() {
             // alert(index);
             if (dataIndex >= 0 && dataIndex < updatedData.length) {
               if (dataIndex <= 20) {
-                setCountWork((countWork + 1));
+                // setCountWork((countWork + 1));
                 // alert((dataIndex + 11));
 
                 updatedData[(dataIndex + 11)].isChecked = true;
@@ -237,32 +237,66 @@ function Worktimesheet() {
 
             }
           });
-          const filteredData = updatedData.filter((record) => record.isChecked == true);
+          // const filteredData = updatedData.filter((record) => record.isChecked == true);
+
+          const filteredData = [
+            { isChecked: true, textValue: '', workplaceId: '1001', date: '30', otTime: '1.0', allTime: '8.0' },
+            { isChecked: true, textValue: '', workplaceId: '1001', date: '01', otTime: '2.0', allTime: '4.0' },
+            { isChecked: true, textValue: '', workplaceId: '1002', date: '03', otTime: '6.0', allTime: '8.0' },
+            { isChecked: false, textValue: '', workplaceId: '1003', date: '04', otTime: '2.0', allTime: '8.0' }
+          ];
           // const workplaceIds = filteredData.map((record) => record.workplaceId)
           const workplaceIds = [...new Set(filteredData.map((record) => record.workplaceId))];
 
-          const workplaceIdCounts = {};
-
+          // const workplaceIdCounts = {};
+          // 
           // Extract unique workplaceId values and count occurrences
+          // filteredData.forEach((record) => {
+          //   if (record.isChecked) {
+          //     const { workplaceId } = record;
+          //     if (workplaceIdCounts[workplaceId]) {
+          //       workplaceIdCounts[workplaceId]++;
+          //     } else {
+          //       workplaceIdCounts[workplaceId] = 1;
+          //     }
+          //   }
+          // });
+          // // const uniqueWorkplaceIds = [...new Set(updatedData.map((record) => record.workplaceId))];
+          // const result = Object.entries(workplaceIdCounts).map(([workplaceId, count]) => ({ workplaceId, count }));
+
+          const workplaceIdCounts = {};
+          const workplaceIdAllTimes = {}; // Create an object to store otTime for each workplaceId
+
           filteredData.forEach((record) => {
             if (record.isChecked) {
-              const { workplaceId } = record;
+              const { workplaceId, allTime } = record;
               if (workplaceIdCounts[workplaceId]) {
                 workplaceIdCounts[workplaceId]++;
+                workplaceIdAllTimes[workplaceId] += parseFloat(allTime); // Convert otTime to a number and add it
               } else {
                 workplaceIdCounts[workplaceId] = 1;
+                workplaceIdAllTimes[workplaceId] = parseFloat(allTime); // Initialize otTime
               }
             }
           });
-          // const uniqueWorkplaceIds = [...new Set(updatedData.map((record) => record.workplaceId))];
-          const result = Object.entries(workplaceIdCounts).map(([workplaceId, count]) => ({ workplaceId, count }));
 
+          const result = Object.entries(workplaceIdCounts).map(([workplaceId, count]) => ({
+            workplaceId,
+            count,
+            allTime: workplaceIdAllTimes[workplaceId].toFixed(1), // Convert otTime back to string with 1 decimal place
+          }));
 
+          // Calculate the total otTime
+          const totalAllTime = Object.values(workplaceIdAllTimes).reduce((sum, allTime) => sum + allTime, 0).toFixed(1);
+
+          console.log('Result:', result);
+          console.log('Total AllTime:', totalAllTime);
           setDataset(filteredData);
 
           const count = filteredData.length;
           setCountWork((count));
-          setWorkplaceIdList(workplaceIds);
+          setWorkplaceIdList(result);
+
 
           return updatedData;
         });
@@ -331,7 +365,7 @@ function Worktimesheet() {
 
               if (dataIndex1 >= 20 && dataIndex1 <= 31) {
                 // alert(dataIndex1 +' .');
-                setCountWork((countWork + 1));
+                // setCountWork((countWork + 1));
                 // alert((dataIndex1 - 20));
 
                 updatedData[(dataIndex1 - 20)].isChecked = true;
@@ -346,25 +380,62 @@ function Worktimesheet() {
 
             }
           });
-          const filteredData = updatedData.filter((record) => record.isChecked == true);
+          // const filteredData = updatedData.filter((record) => record.isChecked == true);
+
           // const workplaceIds = filteredData.map((record) => record.workplaceId)
+
+          const filteredData = [
+            { isChecked: true, textValue: '', workplaceId: '1001', date: '30', otTime: '1.0' },
+            { isChecked: true, textValue: '', workplaceId: '1001', date: '01', otTime: '2.0' },
+            { isChecked: true, textValue: '', workplaceId: '1002', date: '03', otTime: '6.0' },
+            { isChecked: false, textValue: '', workplaceId: '1003', date: '04', otTime: '2.0' }
+          ];
+
           const workplaceIds = [...new Set(filteredData.map((record) => record.workplaceId))];
 
-          const workplaceIdCounts = {};
-
+          // const workplaceIdCounts = {};
+          // const workplaceIdOtTimes = {};
           // Extract unique workplaceId values and count occurrences
+          // filteredData.forEach((record) => {
+          //   if (record.isChecked) {
+          //     const { workplaceId } = record;
+          //     if (workplaceIdCounts[workplaceId]) {
+          //       workplaceIdCounts[workplaceId]++;
+          //     } else {
+          //       workplaceIdCounts[workplaceId] = 1;
+          //     }
+          //   }
+          // });
+          // // const uniqueWorkplaceIds = [...new Set(updatedData.map((record) => record.workplaceId))];
+          // const result = Object.entries(workplaceIdCounts).map(([workplaceId, count, allTime, otTime]) => ({ workplaceId, count, allTime, otTime }));
+
+          const workplaceIdCounts = {};
+          const workplaceIdAllTimes = {}; // Create an object to store otTime for each workplaceId
+
           filteredData.forEach((record) => {
             if (record.isChecked) {
-              const { workplaceId } = record;
+              const { workplaceId, allTime } = record;
               if (workplaceIdCounts[workplaceId]) {
                 workplaceIdCounts[workplaceId]++;
+                workplaceIdAllTimes[workplaceId] += parseFloat(allTime); // Convert otTime to a number and add it
               } else {
                 workplaceIdCounts[workplaceId] = 1;
+                workplaceIdAllTimes[workplaceId] = parseFloat(allTime); // Initialize otTime
               }
             }
           });
-          // const uniqueWorkplaceIds = [...new Set(updatedData.map((record) => record.workplaceId))];
-          const result = Object.entries(workplaceIdCounts).map(([workplaceId, count]) => ({ workplaceId, count }));
+
+          const result = Object.entries(workplaceIdCounts).map(([workplaceId, count]) => ({
+            workplaceId,
+            count,
+            allTime: workplaceIdAllTimes[workplaceId].toFixed(1), // Convert otTime back to string with 1 decimal place
+          }));
+
+          // Calculate the total otTime
+          const totalAllTime = Object.values(workplaceIdAllTimes).reduce((sum, allTime) => sum + allTime, 0).toFixed(1);
+
+          console.log('Result:', result);
+          console.log('Total AllTime:', totalAllTime);
 
 
           const count = filteredData.length;
@@ -372,9 +443,7 @@ function Worktimesheet() {
           setDataset(filteredData);
           setCountWork((count));
 
-          setWorkplaceIdList(workplaceIds);
-          console.log('Result:');
-          console.log(result);
+          setWorkplaceIdList(result);
 
           return updatedData;
 
@@ -400,25 +469,52 @@ function Worktimesheet() {
   const [holiday, setHoliday] = useState(''); //ค่าจ้างวันหยุดนักขัตฤกษ์ 
   const [holidayHour, setHolidayHour] = useState(''); //ค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง
 
+  const [workplaceIdListSearch, setWorkplaceIdListSearch] = useState([]); //หน่วยงานที่ค้นหาและทำงาน
+  const [calculatedValues, setCalculatedValues] = useState([]);
+
   useEffect(() => {
-    if (workplaceIdList !== '') {
-      const workplacesearch = workplaceList.find(workplace => workplace.workplaceId === workplaceIdList);
-      if (workplacesearch) {
-        setWorkRate(workplacesearch.workRate);
-        setWorkRateOT(workplacesearch.workRateOT);
-        setHoliday(workplacesearch.holiday);
-        setHolidayHour(workplacesearch.holidayHour);
+    // Extract workplaceId values from workplaceIdList
+    const selectedWorkplaceIds = workplaceIdList.map((item) => item.workplaceId);
 
+    // Filter workplaceList based on selected workplaceIds
+    const filteredWorkplaces = workplaceList.filter((workplace) =>
+      selectedWorkplaceIds.includes(workplace.workplaceId)
+    );
 
-      } else {
-        setWorkRate('');
-        setWorkRateOT('');
-        setHoliday('');
-        setHolidayHour('');
+    // Extract the filtered workplaceIds
+    // const filteredWorkplaceIds = filteredWorkplaces.map((workplace) => workplace.workplaceId);
+
+    // Set the result in workplaceIdListSearch 
+
+    setWorkplaceIdListSearch(filteredWorkplaces);
+
+    const calculatedResults = workplaceIdList.map((item) => {
+      const workplaceId = item.workplaceId;
+      const count = item.count;
+
+      const workplace = workplaceList.find((w) => w.workplaceId === workplaceId);
+      if (workplace) {
+        const workRate = workplace.workRate;
+        return { workplaceId, calculatedValue: workRate * count };
       }
-    }
-  }, [workplaceIdList]);
-  console.log('workRate', workplaceIdList);
+      return null;
+    });
+
+    // Remove null values from the result
+    const filteredResults = calculatedResults.filter((result) => result !== null);
+
+    // Calculate the total sum
+    const totalSum = filteredResults.reduce((sum, result) => sum + result.calculatedValue, 0);
+
+    setCalculatedValues(filteredResults);
+    console.log('Total Sum:', totalSum);
+    setWorkRate(totalSum);
+
+  }, [workplaceList, workplaceIdList]);
+
+  // console.log('workRate', workplaceIdListSearch);
+  // console.log('allworkRate', calculatedValues);
+
 
   // const handleCheckboxChange = (event) => {
   //   const { name, checked } = event.target;
@@ -865,7 +961,7 @@ function Worktimesheet() {
                                 <input
                                   type="text"
                                   class="form-control"
-                                  value={data.textValue}
+                                  value={data.otTime}
                                   onChange={(event) => handleTextChange(index, event)}
                                 />
                               </td>
