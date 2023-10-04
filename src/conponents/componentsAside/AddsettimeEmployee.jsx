@@ -508,10 +508,65 @@ useEffect(() => {
 
     async function handleManageWorkplace(event) {
         event.preventDefault();
-
         //get data from input in useState to data 
+
+        const newRowData = await {
+            workplaceId: wId|| '',
+            workplaceName: wName || '',
+            date: wDate || '',
+            shift: wShift || '',
+            startTime: wStartTime || '',
+            endTime: wEndTime || '',
+            allTime: wAllTime || '',
+            otTime: wOtTime || '',
+            selectotTime: wSelectOtTime || '',
+            selectotTimeOut: wSelectOtTimeout || '',
+        };
+
+        await addRow(newRowData);
+
+        await setWId('');
+        await setWName('');
+        await setWStartTime('');
+        await setWEndTime('');
+        await setWAllTime('');
+        await setWOtTime('');
+        await setWSelectOtTime('');
+        await setWSelectOtTimeout('');
     }
 
+
+    // Function to add a new row to the rowDataList with specific values
+    const addRow = (newRowData) => {
+        // Create a copy of the current state
+        const newDataList = [...rowDataList2];
+        // Push a new row with specific data
+        // newDataList.push({ ...initialRowData, ...newRowData });
+        newDataList.unshift(newRowData);
+        // Update the state with the new data
+        setRowDataList2(newDataList);
+    };
+
+    // Function to handle editing a row
+    const handleEditRow = async (index) => {
+        // You can implement the edit logic here, e.g., open a modal for editing
+        // console.log('Edit row at index:', index);
+        const tmp = await rowDataList2[index];
+        // alert(tmp.staffId);
+        await setWId(tmp.workplaceId);
+        await setWName(tmp.workplaceName);
+
+    };
+
+    // Function to handle deleting a row
+    const handleDeleteRow = (index) => {
+        // Create a copy of the current state
+        const newDataList = [...rowDataList2];
+        // Remove the row at the specified index
+        newDataList.splice(index, 1);
+        // Update the state with the new data
+        setRowDataList2(newDataList);
+    };
 
 
     async function handleCreateWorkplaceTimerecord(event) {
