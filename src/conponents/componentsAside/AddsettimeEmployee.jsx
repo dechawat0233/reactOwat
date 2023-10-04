@@ -89,52 +89,98 @@ function AddsettimeEmployee() {
     const [wSelectOtTimeout, setWSelectOtTimeout] = useState('');
 
 
-    // This useEffect listens for changes in wId and wShift
+    // This useEffect listens for changes in wShift
     useEffect(() => {
-        if (wId !== '') {
-            const workplacesearch = workplaceList.find(workplace => workplace.workplaceId === wId);
-            if (workplacesearch) {
-                setWName(workplacesearch.workplaceName);
+if(wId !== '' && wName !== '') {
+    const workplacesearch = workplaceList.find(workplace => workplace.workplaceId === wId);
+    if (workplacesearch) {
                 switch (wShift) {
                     case 'morning_shift':
-                        setWStartTime(workplacesearch.workStart1);
-                        setWEndTime(workplacesearch.workEnd1);
-                        setWAllTime(workplacesearch.workOfHour);
-                        setWSelectOtTime(workplacesearch.workEndOt1);
-                        setWSelectOtTimeout(workplacesearch.workEndOt2);
-                        setWOtTime(workplacesearch.workOfOT);
+                        setWStartTime(workplacesearch.workStart1 || '');
+                        setWEndTime(workplacesearch.workEnd1 || '');
+                        setWAllTime(calTime(workplacesearch.workStart1 || '', workplacesearch.workEnd1 || '', workplacesearch.workOfHour) || '');
+                        setWOtTime(calTime(workplacesearch.workStartOt1 || '' , workplacesearch.workEndOt1 || '', workplacesearch.workOfOT || '') || '');
+                        setWSelectOtTime(workplacesearch.workStartOt1 || '');
+                        setWSelectOtTimeout(workplacesearch.workEndOt1 || '');
                         break;
                     case 'afternoon_shift':
-                        setWStartTime(workplacesearch.workStart2);
-                        setWEndTime(workplacesearch.workEnd2);
-                        setWAllTime(workplacesearch.workOfHour);
-                        setWSelectOtTime(workplacesearch.workEndOt2);
-                        setWSelectOtTimeout(workplacesearch.workEndOt2);
-                        setWOtTime(workplacesearch.workOfOT);
+                        setWStartTime(workplacesearch.workStart2 || '');
+                        setWEndTime(workplacesearch.workEnd2 || '');
+                        setWAllTime(calTime(workplacesearch.workStart2 || '', workplacesearch.workEnd2 || '', workplacesearch.workOfHour) || '');
+                        setWOtTime(calTime(workplacesearch.workStartOt2 || '' , workplacesearch.workEndOt2 || '', workplacesearch.workOfOT || '') || '');
+                        setWSelectOtTime(workplacesearch.workStartOt2 || '');
+                        setWSelectOtTimeout(workplacesearch.workEndOt2 || '');
                         break;
                     case 'night_shift':
-                        setWStartTime(workplacesearch.workStart3);
-                        setWEndTime(workplacesearch.workEnd3);
-                        setWAllTime(workplacesearch.workOfHour);
-                        setWSelectOtTime(workplacesearch.workEndOt3);
-                        setWSelectOtTimeout(workplacesearch.workEndOt3);
-                        setWOtTime(workplacesearch.workOfOT);
-                        break;
+setWStartTime(workplacesearch.workStart3 || '');
+setWEndTime(workplacesearch.workEnd3 || '');
+setWAllTime(calTime(workplacesearch.workStart3 || '', workplacesearch.workEnd3 || '', workplacesearch.workOfHour) || '');
+setWOtTime(calTime(workplacesearch.workStartOt3 || '' , workplacesearch.workEndOt3 || '', workplacesearch.workOfOT || '') || '');
+setWSelectOtTime(workplacesearch.workStartOt3 || '');
+setWSelectOtTimeout(workplacesearch.workEndOt1 || '');
+
+                    break;
                     default:
                         setWStartTime('');
                         setWEndTime('');
                         setWAllTime('');
+                        setWOtTime('');
                         setWSelectOtTime('');
                         setWSelectOtTimeout('');
-                        setWOtTime('');
                 }
-            } else {
-                setWName('');
             }
+
+            }
+
+
+    }, [wShift] );
+
+
+    //calculate time of work
+    useEffect(() => {
+if(wStartTime  !== '' && wEndTime !== '') {
+    if(wId !== '' && wName !== '') {
+        const workplacesearch = workplaceList.find(workplace => workplace.workplaceId === wId);
+        if (workplacesearch) {
+    setWAllTime(calTime(wStartTime || '', wEndTime || '', workplacesearch.workOfHour || '') );
         }
-    }, [wId, wShift]);
+    }
+
+} else {
+    setWAllTime(0);
+}
+    } , [wStartTime , wEndTime] );
 
 
+    useEffect(() => {
+if(wSelectOtTime !== '' &&  wSelectOtTimeout !== '') {
+    if(wId !== '' && wName !== '') {
+        const workplacesearch = workplaceList.find(workplace => workplace.workplaceId === wId);
+        if (workplacesearch) {
+    setWOtTime(calTime(wSelectOtTime || '', wSelectOtTimeout || '', workplacesearch.workOfOT || '') );
+        }
+    }
+
+} else {
+    setWOtTime(0);
+}
+    }, [wSelectOtTime , wSelectOtTimeout] )
+
+    
+        //search employee Name by employeeId 
+useEffect(() => {
+    if (wId !== '') {
+        const workplacesearch = workplaceList.find(workplace => workplace.workplaceId === wId);
+        if (workplacesearch) {
+            setWName(workplacesearch.workplaceName);
+        } else {
+            setWName('');
+        }
+
+
+    }
+        
+} , [wId] );
 
     //search employeeId by employeeName 
     useEffect(() => {
@@ -143,119 +189,15 @@ function AddsettimeEmployee() {
             const workplacesearch = workplaceList.find(workplace => workplace.workplaceName === wName);
             if (workplacesearch) {
                 setWId(workplacesearch.workplaceId);
-
-                switch (wShift) {
-                    case 'morning_shift':
-                        setWStartTime(workplacesearch.workStart1);
-                        setWEndTime(workplacesearch.workEnd1);
-                        setWAllTime(workplacesearch.workOfHour);
-                        setWSelectOtTime(workplacesearch.workEndOt1);
-                        setWSelectOtTimeout(workplacesearch.workEndOt2);
-                        setWOtTime(workplacesearch.workOfOT);
-                        break;
-                    case 'afternoon_shift':
-                        setWStartTime(workplacesearch.workStart2);
-                        setWEndTime(workplacesearch.workEnd2);
-                        setWAllTime(workplacesearch.workOfHour);
-                        setWSelectOtTime(workplacesearch.workEndOt2);
-                        setWSelectOtTimeout(workplacesearch.workEndOt2);
-                        setWOtTime(workplacesearch.workOfOT);
-                        break;
-                    case 'night_shift':
-                        setWStartTime(workplacesearch.workStart3);
-                        setWEndTime(workplacesearch.workEnd3);
-                        setWAllTime(workplacesearch.workOfHour);
-                        setWSelectOtTime(workplacesearch.workEndOt3);
-                        setWSelectOtTimeout(workplacesearch.workEndOt3);
-                        setWOtTime(workplacesearch.workOfOT);
-                        break;
-                    default:
-                        setWStartTime('');
-                        setWEndTime('');
-                        setWAllTime('');
-                        setWSelectOtTime('');
-                        setWSelectOtTimeout('');
-                        setWOtTime('');
-                }
             } else {
                 setWId('');
             }
             console.log(workplacesearch);
 
         }
-    }, [wName, wShift])
+    }, [wName]);
 
-    useEffect(() => {
-        const startHours = parseFloat(wStartTime.split('.')[0]);
-        const startMinutes = parseFloat(wStartTime.split('.')[1] || 0);
-        const endHours = parseFloat(wEndTime.split('.')[0]);
-        const endMinutes = parseFloat(wEndTime.split('.')[1] || 0);
-        let hours = endHours - startHours;
-        let minutes = endMinutes - startMinutes;
-        if (minutes < 0) {
-            hours -= 1;
-            minutes += 60;
-        }
-        // Handle cases where endTime is on the next day
-        if (hours < 0) {
-            hours += 24;
-        }
-        // Check if the employee worked >= 5 hours 
-        if (hours >= 5) {
-            hours -= 1;
-        }
 
-        // Calculate the total time difference in minutes
-        const totalMinutes = hours * 60 + minutes;
-        // Check if the employee worked > 5 hours
-        // Cap the time difference at the maximum work hours
-        const cappedTotalMinutes = Math.min(totalMinutes, wAllTime * 60);
-        // Convert the capped time difference back to hours and minutes
-        const cappedHours = Math.floor(cappedTotalMinutes / 60);
-        const cappedMinutes = cappedTotalMinutes % 60;
-        const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
-        if (isNaN(timeDiffFormatted)) {
-            setWAllTime('0.0');
-        } else {
-            setWAllTime(timeDiffFormatted);
-        }
-    }, [wStartTime, wEndTime, wAllTime]);
-
-    useEffect(() => {
-        const startHours = parseFloat(wSelectOtTime.split('.')[0]);
-        const startMinutes = parseFloat(wSelectOtTime.split('.')[1] || 0);
-        const endHours = parseFloat(wSelectOtTimeout.split('.')[0]);
-        const endMinutes = parseFloat(wSelectOtTimeout.split('.')[1] || 0);
-        let hours = endHours - startHours;
-        let minutes = endMinutes - startMinutes;
-        if (minutes < 0) {
-            hours -= 1;
-            minutes += 60;
-        }
-        // Handle cases where endTime is on the next day
-        if (hours < 0) {
-            hours += 24;
-        }
-        // Check if the employee worked >= 5 hours 
-        if (hours >= 5) {
-            hours -= 1;
-        }
-
-        // Calculate the total time difference in minutes
-        const totalMinutes = hours * 60 + minutes;
-        // Check if the employee worked > 5 hours
-        // Cap the time difference at the maximum work hours
-        const cappedTotalMinutes = Math.min(totalMinutes, wOtTime * 60);
-        // Convert the capped time difference back to hours and minutes
-        const cappedHours = Math.floor(cappedTotalMinutes / 60);
-        const cappedMinutes = cappedTotalMinutes % 60;
-        const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
-        if (isNaN(timeDiffFormatted)) {
-            setWOtTime('0');
-        } else {
-            setWOtTime(timeDiffFormatted);
-        }
-    }, [wSelectOtTime, wSelectOtTimeout, wOtTime]);
 
     const numberOfRows2 = 30; // Fixed number of rows
     const initialRowData2 = {
@@ -566,10 +508,65 @@ function AddsettimeEmployee() {
 
     async function handleManageWorkplace(event) {
         event.preventDefault();
-
         //get data from input in useState to data 
+
+        const newRowData = await {
+            workplaceId: wId|| '',
+            workplaceName: wName || '',
+            date: wDate || '',
+            shift: wShift || '',
+            startTime: wStartTime || '',
+            endTime: wEndTime || '',
+            allTime: wAllTime || '',
+            otTime: wOtTime || '',
+            selectotTime: wSelectOtTime || '',
+            selectotTimeOut: wSelectOtTimeout || '',
+        };
+
+        await addRow(newRowData);
+
+        await setWId('');
+        await setWName('');
+        await setWStartTime('');
+        await setWEndTime('');
+        await setWAllTime('');
+        await setWOtTime('');
+        await setWSelectOtTime('');
+        await setWSelectOtTimeout('');
     }
 
+
+    // Function to add a new row to the rowDataList with specific values
+    const addRow = (newRowData) => {
+        // Create a copy of the current state
+        const newDataList = [...rowDataList2];
+        // Push a new row with specific data
+        // newDataList.push({ ...initialRowData, ...newRowData });
+        newDataList.unshift(newRowData);
+        // Update the state with the new data
+        setRowDataList2(newDataList);
+    };
+
+    // Function to handle editing a row
+    const handleEditRow = async (index) => {
+        // You can implement the edit logic here, e.g., open a modal for editing
+        // console.log('Edit row at index:', index);
+        const tmp = await rowDataList2[index];
+        // alert(tmp.staffId);
+        await setWId(tmp.workplaceId);
+        await setWName(tmp.workplaceName);
+
+    };
+
+    // Function to handle deleting a row
+    const handleDeleteRow = (index) => {
+        // Create a copy of the current state
+        const newDataList = [...rowDataList2];
+        // Remove the row at the specified index
+        newDataList.splice(index, 1);
+        // Update the state with the new data
+        setRowDataList2(newDataList);
+    };
 
 
     async function handleCreateWorkplaceTimerecord(event) {
