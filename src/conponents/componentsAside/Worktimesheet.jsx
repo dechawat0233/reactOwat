@@ -239,14 +239,14 @@ function Worktimesheet() {
 
             }
           });
-          // const filteredData = updatedData.filter((record) => record.isChecked == true);
+          const filteredData = updatedData.filter((record) => record.isChecked == true);
 
-          const filteredData = [
-            { isChecked: true, textValue: '', workplaceId: '1001', date: '30', otTime: '1.0', allTime: '8.0' },
-            { isChecked: true, textValue: '', workplaceId: '1001', date: '01', otTime: '2.0', allTime: '4.0' },
-            { isChecked: true, textValue: '', workplaceId: '1002', date: '03', otTime: '6.0', allTime: '8.0' },
-            { isChecked: false, textValue: '', workplaceId: '1003', date: '04', otTime: '2.0', allTime: '8.0' }
-          ];
+          // const filteredData = [
+          //   { isChecked: true, textValue: '', workplaceId: '1001', date: '30', otTime: '1.0', allTime: '8.0' },
+          //   { isChecked: true, textValue: '', workplaceId: '1001', date: '01', otTime: '2.0', allTime: '4.0' },
+          //   { isChecked: true, textValue: '', workplaceId: '1002', date: '03', otTime: '6.0', allTime: '8.0' },
+          //   { isChecked: false, textValue: '', workplaceId: '1003', date: '04', otTime: '2.0', allTime: '8.0' }
+          // ];
           // const workplaceIds = filteredData.map((record) => record.workplaceId)
           const workplaceIds = [...new Set(filteredData.map((record) => record.workplaceId))];
 
@@ -268,13 +268,17 @@ function Worktimesheet() {
 
           const workplaceIdCounts = {};
           const workplaceIdAllTimes = {};
+          const workplaceIdOtTimes = {};
+
 
           filteredData.forEach((record) => {
             if (record.isChecked) {
-              const { workplaceId, allTime } = record;
+              const { workplaceId, otTime, allTime } = record;
               if (workplaceIdCounts[workplaceId]) {
                 workplaceIdCounts[workplaceId]++;
                 const allTimeAsNumber = parseFloat(allTime); // Parse allTime to a number
+                const otTimeAsNumber = parseFloat(otTime); // Parse otTime to a number
+
                 if (!isNaN(allTimeAsNumber)) {
                   if (allTimeAsNumber > 5.0) {
                     workplaceIdAllTimes[workplaceId] += 1;
@@ -282,15 +286,22 @@ function Worktimesheet() {
                     workplaceIdAllTimes[workplaceId] += 0.5;
                   }
                 }
+                if (!isNaN(otTimeAsNumber)) {
+                  workplaceIdOtTimes[workplaceId] += otTimeAsNumber;
+                }
               } else {
                 workplaceIdCounts[workplaceId] = 1;
                 const allTimeAsNumber = parseFloat(allTime); // Parse allTime to a number
+                const otTimeAsNumber = parseFloat(otTime); // Parse otTime to a number
                 if (!isNaN(allTimeAsNumber)) {
                   if (allTimeAsNumber > 5.0) {
                     workplaceIdAllTimes[workplaceId] = 1;
                   } else {
                     workplaceIdAllTimes[workplaceId] = 0.5;
                   }
+                }
+                if (!isNaN(otTimeAsNumber)) {
+                  workplaceIdOtTimes[workplaceId] = otTimeAsNumber;
                 }
               }
             }
@@ -300,6 +311,7 @@ function Worktimesheet() {
             workplaceId,
             count,
             allTime: workplaceIdAllTimes[workplaceId].toFixed(1),
+            otTime: workplaceIdOtTimes[workplaceId].toFixed(2), // Format otTime to 2 decimal places
           }));
 
           // Calculate the total allTime
@@ -397,16 +409,16 @@ function Worktimesheet() {
 
             }
           });
-          // const filteredData = updatedData.filter((record) => record.isChecked == true);
+          const filteredData = updatedData.filter((record) => record.isChecked == true);
 
           // const workplaceIds = filteredData.map((record) => record.workplaceId)
 
-          const filteredData = [
-            { isChecked: true, textValue: '', workplaceId: '1001', date: '30', otTime: '1.0', allTime: '8.0' },
-            { isChecked: true, textValue: '', workplaceId: '1001', date: '01', otTime: '2.0', allTime: '4.0' },
-            { isChecked: true, textValue: '', workplaceId: '1002', date: '03', otTime: '6.0', allTime: '8.0' },
-            { isChecked: false, textValue: '', workplaceId: '1003', date: '04', otTime: '2.0', allTime: '8.0' }
-          ];
+          // const filteredData = [
+          //   { isChecked: true, textValue: '', workplaceId: '1001', date: '30', otTime: '1.0', allTime: '8.0' },
+          //   { isChecked: true, textValue: '', workplaceId: '1001', date: '01', otTime: '2.0', allTime: '4.0' },
+          //   { isChecked: true, textValue: '', workplaceId: '1002', date: '03', otTime: '6.0', allTime: '8.0' },
+          //   { isChecked: false, textValue: '', workplaceId: '1003', date: '04', otTime: '2.0', allTime: '8.0' }
+          // ];
 
           const workplaceIds = [...new Set(filteredData.map((record) => record.workplaceId))];
 
@@ -428,13 +440,17 @@ function Worktimesheet() {
 
           const workplaceIdCounts = {};
           const workplaceIdAllTimes = {};
+          const workplaceIdOtTimes = {};
+
 
           filteredData.forEach((record) => {
             if (record.isChecked) {
-              const { workplaceId, allTime } = record;
+              const { workplaceId, otTime, allTime } = record;
               if (workplaceIdCounts[workplaceId]) {
                 workplaceIdCounts[workplaceId]++;
                 const allTimeAsNumber = parseFloat(allTime); // Parse allTime to a number
+                const otTimeAsNumber = parseFloat(otTime); // Parse otTime to a number
+
                 if (!isNaN(allTimeAsNumber)) {
                   if (allTimeAsNumber > 5.0) {
                     workplaceIdAllTimes[workplaceId] += 1;
@@ -442,15 +458,22 @@ function Worktimesheet() {
                     workplaceIdAllTimes[workplaceId] += 0.5;
                   }
                 }
+                if (!isNaN(otTimeAsNumber)) {
+                  workplaceIdOtTimes[workplaceId] += otTimeAsNumber;
+                }
               } else {
                 workplaceIdCounts[workplaceId] = 1;
                 const allTimeAsNumber = parseFloat(allTime); // Parse allTime to a number
+                const otTimeAsNumber = parseFloat(otTime); // Parse otTime to a number
                 if (!isNaN(allTimeAsNumber)) {
                   if (allTimeAsNumber > 5.0) {
                     workplaceIdAllTimes[workplaceId] = 1;
                   } else {
                     workplaceIdAllTimes[workplaceId] = 0.5;
                   }
+                }
+                if (!isNaN(otTimeAsNumber)) {
+                  workplaceIdOtTimes[workplaceId] = otTimeAsNumber;
                 }
               }
             }
@@ -460,6 +483,7 @@ function Worktimesheet() {
             workplaceId,
             count,
             allTime: workplaceIdAllTimes[workplaceId].toFixed(1),
+            otTime: workplaceIdOtTimes[workplaceId].toFixed(2), // Format otTime to 2 decimal places
           }));
 
           // Calculate the total allTime
@@ -493,7 +517,7 @@ function Worktimesheet() {
     }
 
   }
-  // console.log('workplaceIdList',workplaceIdList);
+  console.log('workplaceIdList', workplaceIdList);
 
   //set salaty calculate
   const [workRate, setWorkRate] = useState(''); //ค่าจ้างต่อวัน
@@ -524,12 +548,16 @@ function Worktimesheet() {
       const workplaceId = item.workplaceId;
       const count = item.count;
       const allTime = item.allTime;
+      const otTime = item.otTime;
+
 
 
       const workplace = workplaceList.find((w) => w.workplaceId === workplaceId);
       if (workplace) {
         const workRate = workplace.workRate;
-        return { workplaceId, calculatedValue: workRate * allTime, allTime };
+        const workRateOT = workplace.workRateOT;
+
+        return { workplaceId, calculatedValue: workRate * allTime, allTime, otTime, calculatedOT: workRateOT * otTime };
       }
       return null;
     });
@@ -539,8 +567,11 @@ function Worktimesheet() {
 
     // Calculate the total sum
     const totalSum = filteredResults.reduce((sum, result) => sum + result.calculatedValue, 0);
+    // const totalSum = filteredResults.reduce((sum, result) => sum + result.calculatedValue, 0);
+
 
     setWorkRate(totalSum);
+
     setCalculatedValues(filteredResults);
     console.log('Total Sum:', totalSum);
     console.log('Total Sum2:', filteredResults);
@@ -987,7 +1018,7 @@ function Worktimesheet() {
                                 <input
                                   type="text"
                                   class="form-control"
-                                  value={data.allTimeA}
+                                  value={data.allTime}
                                   onChange={(event) => handleTextChange(index, event)}
                                 />
                               </td>
@@ -1064,12 +1095,26 @@ function Worktimesheet() {
                         </tr>
                       </thead>
                       <tbody>
-                        {calculatedValues.map((value, index) => (
+                        <tr>
                           <td>
-                            รวมวันทำงาน || {value.workplaceId}, {value.calculatedValue} ({value.allTime})
+                            รวมวันทำงาน
                           </td>
-                        ))}
-
+                          {calculatedValues.map((value, index) => (
+                            <td>
+                              {value.workplaceId}, {value.calculatedValue} ({value.allTime})
+                            </td>
+                          ))}
+                        </tr>
+                        <tr>
+                          <td>
+                            รวมวันทำงาน OT
+                          </td>
+                          {calculatedValues.map((value, index) => (
+                            <td>
+                              {value.calculatedOT} ({value.otTime})
+                            </td>
+                          ))}
+                        </tr>
                       </tbody>
                     </table>
                   </div>
