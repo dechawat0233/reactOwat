@@ -171,15 +171,15 @@ function Setting() {
     const [formData, setFormData] = useState([]);
     const [showAdditionalInput, setShowAdditionalInput] = useState([]);
 
-    const handleSelectChange = (e, index) => {
-        const selectedValue = e.target.value;
-        handleChange(e, index, 'StaffType');
+    // const handleSelectChange = (e, index) => {
+    //     const selectedValue = e.target.value;
+    //     handleChange(e, index, 'StaffType');
 
-        // Check if "Option3" is selected, and then show the additional input
-        const newShowAdditionalInput = [...showAdditionalInput];
-        newShowAdditionalInput[index] = selectedValue === 'Option3';
-        setShowAdditionalInput(newShowAdditionalInput);
-    };
+    //     // Check if "Option3" is selected, and then show the additional input
+    //     const newShowAdditionalInput = [...showAdditionalInput];
+    //     newShowAdditionalInput[index] = selectedValue === 'Option3';
+    //     setShowAdditionalInput(newShowAdditionalInput);
+    // };
 
     // const handleChangeSpSalary = (e, index, key) => {
     //     const newFormData = [...formData];
@@ -211,7 +211,7 @@ function Setting() {
             ...formData,
             addSalary: [
                 ...formData.addSalary,
-                { name: '', SpSalary: '', StaffType: '', nameType: '' }
+                { name: '', SpSalary: '', roundOfSalary: '', StaffType: '', nameType: '' }
             ]
         });
         setShowAdditionalInput([...showAdditionalInput, false]);
@@ -242,7 +242,7 @@ function Setting() {
     };
 
 
-  
+
 
     //set data to form
     function handleClickResult(workplace) {
@@ -911,6 +911,18 @@ function Setting() {
                                                     value={data.SpSalary}
                                                     onChange={(e) => handleChangeSpSalary(e, index, 'SpSalary')}
                                                 />
+                                            </div>
+                                            <div className="col-md-2">
+                                                <label role="salaryadd6">ประเภทพนักงาน</label>
+                                                <select
+                                                    name="roundOfSalary"
+                                                    className="form-control"
+                                                    value={data.roundOfSalary}
+                                                    onChange={(e) => handleChangeSpSalary(e, index, 'roundOfSalary')}
+                                                >
+                                                    <option value="daily">รายวัน</option>
+                                                    <option value="monthly">รายเดือน</option>
+                                                </select>
                                             </div>
                                             <div className="col-md-2">
                                                 <label role="salaryadd6">ประเภทพนักงาน</label>

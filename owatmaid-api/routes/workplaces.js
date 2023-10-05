@@ -146,6 +146,7 @@ const workplaceSchema = new mongoose.Schema({
     addSalary: [{
         name: String,
         SpSalary: String,
+        roundOfSalary: String,
         StaffType: String,
         nameType: String,
     }],
@@ -334,7 +335,7 @@ router.post('/create', async (req, res) => {
         reason,
         employeeIdList,
         employeeNameList,
-addSalary
+        addSalary
     });
 
     try {
