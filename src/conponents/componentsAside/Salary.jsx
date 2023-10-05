@@ -210,6 +210,7 @@ function Salary() {
     //     setShowAdditionalInput(newShowAdditionalInput);
     // };
 
+
     const handleDeleteInput = (index) => {
         const newAddSalary = [...formData.addSalary];
         newAddSalary.splice(index, 1);
@@ -219,6 +220,8 @@ function Salary() {
             addSalary: newAddSalary
         });
 
+
+        
         const newShowAdditionalInput = [...showAdditionalInput];
         newShowAdditionalInput.splice(index, 1);
         setShowAdditionalInput(newShowAdditionalInput);
@@ -229,6 +232,45 @@ function Salary() {
     const [addSalary, setAddSalary] = useState([]);
     const [addSalaryWorkplace, setAddSalaryWorkplace] = useState([]);
 
+
+    const handleAddSalary = async (data) => {
+        // alert(JSON.stringify(data, null, 2) );
+        const isUnique = await !addSalary.some(item => JSON.stringify(item) === JSON.stringify(data));        
+
+        if (isUnique) {
+            await setAddSalary(prevState => [...prevState, data]);
+// await alert(JSON.stringify(addSalary , null ,2));
+//             await setEmployeeData(prevData => ({
+//                 ...prevData,
+//                 ['addSalary']: addSalary
+//             }));
+
+      // If data is unique, create a new array by adding the new salary data
+      const updatedSalaries = [...employeeData.addSalary, data];
+
+      // Update the state with the new array
+      setEmployeeData((prevData) => ({
+        ...prevData,
+        addSalary: updatedSalaries,
+      }));
+
+        } else {
+            console.log('Data is not unique.');
+        }
+
+    };
+
+      // Function to remove data from the addSalary list
+  const handleRemoveAddSalary = async dataIndex => {
+    await setAddSalary(prevAddSalary => prevAddSalary.filter((item, index) => index !== dataIndex));
+    if(addSalary.length >0 ){
+        await setEmployeeData(prevData => ({
+            ...prevData,
+            ['addSalary']: addSalary
+        }));
+    }
+
+  };
 
     const handleWorkplace = (event) => {
         setWorkplace(event.target.value);
@@ -250,6 +292,20 @@ function Salary() {
                 setWorkplacearea(filtered[0].workplaceArea);
                 //set add Salary from workplace 
                 setAddSalaryWorkplace(filtered[0].addSalary);
+
+                const initialFormData = {
+                    addSalary: filtered[0].addSalary.map((item) => ({
+                        name: item.name || '',
+                        SpSalary: item.SpSalary || '',
+                        roundOfSalary: item.SpSalary || '',
+                        StaffType: item.StaffType || '',
+                        nameType: item.nameType || '',
+                    })),
+                };
+
+                setFormData(initialFormData);
+                
+
             }
 
         } else {
@@ -363,6 +419,7 @@ function Salary() {
         await setEmployeeData(empSelect);
         await setWorkplace(empSelect.workplace || '');
         await setAddSalary(empSelect.addSalary);
+// await alert(JSON.stringify(addSalary, null , 2));
 
         //set workplace to show
         const filtered = await workplaceSelection.filter(wp =>
@@ -862,6 +919,8 @@ function Salary() {
                                         <h2 class="title">เงินเพิ่มพิเศษ</h2>
                                         <section class="Frame">
 
+{/* {JSON.stringify(addSalary , null ,2) } */}
+
                                             {formData.addSalary && formData.addSalary.length > 0 && formData.addSalary.map((data, index) => (
                                                 <div className="row" key={index}>
                                                     <div className="col-md-3">
@@ -883,6 +942,7 @@ function Salary() {
                                                             value={data.SpSalary}
                                                             onChange={(e) => handleChangeSpSalary(e, index, 'SpSalary')}
                                                         />
+
                                                     </div>
                                                     <div className="col-md-2">
                                                         <label role="salaryadd6">ประเภทพนักงาน</label>
@@ -910,6 +970,7 @@ function Salary() {
                                                             <option value="custom">กำหนดเอง</option>
                                                         </select>
                                                     </div>
+
                                                     {data.StaffType === 'custom' && (
                                                         <div className="col-md-2">
                                                             <label>ตำแหน่ง</label>
@@ -922,13 +983,28 @@ function Salary() {
                                                             />
                                                         </div>
                                                     )}
-                                                    <div className="col-md-1">
-                                                        <button onClick={() => handleDeleteInput(index)} className="btn btn-danger" style={{ width: "3rem", position: 'absolute', bottom: '0' }}>ลบ</button>
+
+
+{employeeData.addSalary && employeeData.addSalary.length > 0 && employeeData.addSalary.filter(empData => JSON.stringify(empData.name) === JSON.stringify(data.name)).map((filteredData, index1) => (
+  <div key={index1}>
+    {/* Render your data here */}
+    {/* {filteredData} */}
+    <div className="col-md-1">
+                                                        <button onClick={() => handleRemoveAddSalary(index1)} className="btn btn-danger" style={{ width: "3rem", position: 'absolute', bottom: '0' }}>นำออก</button>
                                                     </div>
+  </div>
+)
+ )}
+
+<div className="col-md-1">
+                                                        <button onClick={() => handleAddSalary(data)} className="btn btn-danger" style={{ width: "3rem", position: 'absolute', bottom: '0' }}>ให้สวัสดิการ</button>
+                                                    </div>
+
+
                                                 </div>
                                             ))}
 
-                                            < button type='button' onClick={handleAddInput} class="btn btn-primary" >เพิ่ม</button>
+                                            {/* < button type='button' onClick={handleAddInput} class="btn btn-primary" >เพิ่ม</button> */}
                                             {/* <pre>{JSON.stringify(formData, null, 2)}</pre> */}
                                             {/* m1 */}
 
