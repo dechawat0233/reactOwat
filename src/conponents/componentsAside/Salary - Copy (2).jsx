@@ -150,11 +150,6 @@ function Salary() {
     const [copyAddress, setCopyAddress] = useState(false);
 
 
-    //add salary
-    const [addSalary , setAddSalary] = useState([]);
-const [addSalaryWorkplace , setAddSalaryWorkplace] = useState([]);
-
-
     const handleWorkplace = (event) => {
         setWorkplace(event.target.value);
         setEmployeeData(prevData => ({
@@ -173,9 +168,6 @@ const [addSalaryWorkplace , setAddSalaryWorkplace] = useState([]);
                 setWorkplacearea('');
             } else {
                 setWorkplacearea(filtered[0].workplaceArea);
-                //set add Salary from workplace 
-                setAddSalaryWorkplace(filtered[0].addSalary);
-
             }
 
         } else {
