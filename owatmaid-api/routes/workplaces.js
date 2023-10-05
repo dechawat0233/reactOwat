@@ -165,7 +165,7 @@ router.get('/list', async (req, res) => {
 // Get list id name and address of workplaces
 router.get('/listselect', async (req, res) => {
     try {
-        const workplaces = await Workplace.find({}, 'workplaceId workplaceName workplaceArea');
+        const workplaces = await Workplace.find({}, 'workplaceId workplaceName workplaceArea addSalary');
         res.json(workplaces);
 
     } catch (error) {
