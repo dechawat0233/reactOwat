@@ -226,8 +226,8 @@ function Salary() {
 
 
     //add salary
-    const [addSalary, setAddSalary] = useState([]);
-    const [addSalaryWorkplace, setAddSalaryWorkplace] = useState([]);
+    const [addSalary , setAddSalary] = useState([]);
+const [addSalaryWorkplace , setAddSalaryWorkplace] = useState([]);
 
 
     const handleWorkplace = (event) => {
@@ -236,7 +236,7 @@ function Salary() {
             ...prevData,
             ['workplace']: event.target.value
         }));
-        // alert(event.target.value);
+// alert(event.target.value);
 
         const filtered = workplaceSelection.filter(wp =>
             event.target.value === '' || wp.workplaceId === event.target.value
@@ -362,7 +362,7 @@ function Salary() {
     async function onEmployeeSelect(empSelect) {
         await setEmployeeData(empSelect);
         await setWorkplace(empSelect.workplace || '');
-        await setAddSalary(empSelect.addSalary);
+await setAddSalary(empSelect.addSalary);
 
         //set workplace to show
         const filtered = await workplaceSelection.filter(wp =>
@@ -384,11 +384,11 @@ function Salary() {
                         nameType: item.nameType || '',
                     })),
                 };
-
+        
                 setFormData(initialFormData);
                 // setFormData(workplace.addSalary);
-
-
+        
+        
             }
         } else {
             setWorkplacearea('');
@@ -857,91 +857,357 @@ function Salary() {
                                         {/* <!--Frame--> */}
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-9">
-                                        <h2 class="title">เงินเพิ่มพิเศษ</h2>
-                                        <section class="Frame">
-
-                                            {formData.addSalary && formData.addSalary.length > 0 && formData.addSalary.map((data, index) => (
-                                                <div className="row" key={index}>
-                                                    <div className="col-md-3">
-                                                        <label role="salaryadd6">ชื่อรายการ</label>
-                                                        <input
-                                                            type="text"
-                                                            name="name"
-                                                            className="form-control"
-                                                            value={data.name}
-                                                            onChange={(e) => handleChangeSpSalary(e, index, 'name')}
-                                                        />
-                                                    </div>
-                                                    <div className="col-md-2">
-                                                        <label role="salaryadd6">จำนวนเงิน</label>
-                                                        <input
-                                                            type="text"
-                                                            name="SpSalary"
-                                                            className="form-control"
-                                                            value={data.SpSalary}
-                                                            onChange={(e) => handleChangeSpSalary(e, index, 'SpSalary')}
-                                                        />
-                                                    </div>
-                                                    <div className="col-md-2">
-                                                        <label role="salaryadd6">ประเภทพนักงาน</label>
-                                                        <select
-                                                            name="roundOfSalary"
-                                                            className="form-control"
-                                                            value={data.roundOfSalary}
-                                                            onChange={(e) => handleChangeSpSalary(e, index, 'roundOfSalary')}
-                                                        >
-                                                            <option value="daily">รายวัน</option>
-                                                            <option value="monthly">รายเดือน</option>
-                                                        </select>
-                                                    </div>
-                                                    <div className="col-md-2">
-                                                        <label role="salaryadd6">ประเภทพนักงาน</label>
-                                                        <select
-                                                            name="StaffType"
-                                                            className="form-control"
-                                                            value={data.StaffType}
-                                                            onChange={(e) => handleChangeSpSalary(e, index, 'StaffType')}
-                                                        >
-                                                            <option value="">เลือกตำแหน่งที่จะมอบให้</option>
-                                                            <option value="all">ทั้งหมด</option>
-                                                            <option value="header">หัวหน้างาน</option>
-                                                            <option value="custom">กำหนดเอง</option>
-                                                        </select>
-                                                    </div>
-                                                    {data.StaffType === 'custom' && (
-                                                        <div className="col-md-2">
-                                                            <label>ตำแหน่ง</label>
-                                                            <input
-                                                                type="text"
-                                                                name="additionalInput"
-                                                                className="form-control"
-                                                                value={data.nameType}
-                                                                onChange={(e) => handleChangeSpSalary(e, index, 'nameType')}
-                                                            />
-                                                        </div>
-                                                    )}
-                                                    <div className="col-md-1">
-                                                        <button onClick={() => handleDeleteInput(index)} className="btn btn-danger" style={{ width: "3rem", position: 'absolute', bottom: '0' }}>ลบ</button>
-                                                    </div>
+                                <h2 class="title">เงินเพิ่มพิเศษ</h2>
+                                {formData.addSalary && formData.addSalary.length > 0 && formData.addSalary.map((data, index) => (
+                                        <div className="row" key={index}>
+                                            <div className="col-md-3">
+                                                <label role="salaryadd6">ชื่อรายการ</label>
+                                                <input
+                                                    type="text"
+                                                    name="name"
+                                                    className="form-control"
+                                                    value={data.name}
+                                                    onChange={(e) => handleChangeSpSalary(e, index, 'name')}
+                                                />
+                                            </div>
+                                            <div className="col-md-2">
+                                                <label role="salaryadd6">จำนวนเงิน</label>
+                                                <input
+                                                    type="text"
+                                                    name="SpSalary"
+                                                    className="form-control"
+                                                    value={data.SpSalary}
+                                                    onChange={(e) => handleChangeSpSalary(e, index, 'SpSalary')}
+                                                />
+                                            </div>
+                                            <div className="col-md-2">
+                                                <label role="salaryadd6">ประเภทพนักงาน</label>
+                                                <select
+                                                    name="roundOfSalary"
+                                                    className="form-control"
+                                                    value={data.roundOfSalary}
+                                                    onChange={(e) => handleChangeSpSalary(e, index, 'roundOfSalary')}
+                                                >
+                                                    <option value="daily">รายวัน</option>
+                                                    <option value="monthly">รายเดือน</option>
+                                                </select>
+                                            </div>
+                                            <div className="col-md-2">
+                                                <label role="salaryadd6">ประเภทพนักงาน</label>
+                                                <select
+                                                    name="StaffType"
+                                                    className="form-control"
+                                                    value={data.StaffType}
+                                                    onChange={(e) => handleChangeSpSalary(e, index, 'StaffType')}
+                                                >
+                                                    <option value="">เลือกตำแหน่งที่จะมอบให้</option>
+                                                    <option value="all">ทั้งหมด</option>
+                                                    <option value="header">หัวหน้างาน</option>
+                                                    <option value="custom">กำหนดเอง</option>
+                                                </select>
+                                            </div>
+                                            {data.StaffType === 'custom' && (
+                                                <div className="col-md-2">
+                                                    <label>ตำแหน่ง</label>
+                                                    <input
+                                                        type="text"
+                                                        name="additionalInput"
+                                                        className="form-control"
+                                                        value={data.nameType}
+                                                        onChange={(e) => handleChangeSpSalary(e, index, 'nameType')}
+                                                    />
                                                 </div>
-                                            ))}
+                                            )}
+                                            <div className="col-md-1">
+                                                <button onClick={() => handleDeleteInput(index)} className="btn btn-danger" style={{ width: "3rem", position: 'absolute', bottom: '0' }}>ลบ</button>
+                                            </div>
+                                        </div>
+                                    ))}
 
-                                            < button type='button' onClick={handleAddInput} class="btn btn-primary" >เพิ่ม</button>
-                                            {/* <pre>{JSON.stringify(formData, null, 2)}</pre> */}
-                                            {/* m1 */}
+                                    < button type='button' onClick={handleAddInput} class="btn btn-primary" >เพิ่ม</button>
+                                    {/* <pre>{JSON.stringify(formData, null, 2)}</pre> */}
+{/* m1 */}
 
-
-
-                                        </section>
-                                    </div>
-                                </div>
 
                                 <div class="row">
                                     <div class="col-md-9">
                                         <section class="Frame">
                                             <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            {/* <label>รายการเงินเพิ่มพิเศษ</label> */}
+                                                            {/* <label>รายการเงินเพิ่มพิเศษ</label> */}
+                                                            <button onClick={() => toggleCheckbox1('salaryadd1')} style={{ margin: '0.5rem' }}>ค่ารถ <i className={`fa ${salaryadd1 ? 'fa-check' : 'fa-times'}`} /></button>
+                                                            <label>
+                                                                <input
+                                                                    type="checkbox"
+                                                                    id="salaryadd1"
+                                                                    checked={employeeData.salaryadd1}
+                                                                    // onChange={e => handleChange(e, 'salaryadd1')}
+                                                                    style={{ display: 'none' }}
+                                                                />
+                                                            </label>
+                                                            <button onClick={() => toggleCheckbox2('salaryadd2')} style={{ margin: '0.5rem' }}>ค่าอาหาร <i className={`fa ${salaryadd2 ? 'fa-check' : 'fa-times'}`} /></button>
+                                                            <label>
+                                                                <input
+                                                                    type="checkbox"
+                                                                    id="salaryadd2"
+                                                                    checked={employeeData.salaryadd2}
+                                                                    // onChange={e => handleChange(e, 'salaryadd2')}
+                                                                    style={{ display: 'none' }} />
+                                                            </label>
+                                                            <button onClick={() => toggleCheckbox3('salaryadd3')} style={{ margin: '0.5rem' }}>เบี้ยขยัน <i className={`fa ${salaryadd3 ? 'fa-check' : 'fa-times'}`} /></button>
+                                                            <label>
+                                                                <input
+                                                                    type="checkbox"
+                                                                    id="salaryadd3"
+                                                                    checked={employeeData.salaryadd3}
+                                                                    // onChange={e => handleChange(e, 'salaryadd3')}
+                                                                    style={{ display: 'none' }} />
+                                                            </label>
+                                                            <button onClick={() => toggleCheckbox4('salaryadd4')} style={{ margin: '0.5rem' }}>ค่าโทรศัพท์ <i className={`fa ${salaryadd4 ? 'fa-check' : 'fa-times'}`} /></button>
+
+                                                            <label>
+                                                                <input
+                                                                    type="checkbox"
+                                                                    id="salaryadd4"
+                                                                    checked={employeeData.salaryadd4}
+                                                                    // onChange={e => handleChange(e, 'salaryadd4')}
+                                                                    style={{ display: 'none' }}
+                                                                />
+                                                            </label>
+
+                                                            <button onClick={() => toggleCheckbox5('salaryadd5')} style={{ margin: '0.5rem' }}>เงินประจำตำแหน่ง <i className={`fa ${salaryadd5 ? 'fa-check' : 'fa-times'}`} /></button>
+
+                                                            <label >
+                                                                <input
+                                                                    type="checkbox"
+                                                                    id="salaryadd5"
+                                                                    checked={employeeData.salaryadd5}
+                                                                    // onChange={e => handleChange(e, 'salaryadd5')}
+                                                                    style={{ display: 'none' }} />
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label role="salaryaddtype">เพิ่มพิเศษแบบ</label>
+                                                            <select id="salaryaddtype" name="salaryaddtype" class="form-control"
+                                                                value={employeeData.salaryaddtype || ''} onChange={(e) => handleChange(e, 'salaryaddtype')} >
+                                                                <option value="">ไม่ระบุ</option>
+                                                                <option value="ต่อเดือน">ต่อเดือน</option>
+                                                                <option value="ต่อวัน">ต่อวัน</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* {employeeData.salaryadd1 && ( */}
+
+                                                    {salaryadd1 && (
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label role="salaryadd1v">เงินเพิ่มค่ารถ</label>
+                                                                <label htmlFor="salaryadd1" style={{ cursor: 'pointer' }}>
+                                                                    <div className={`custom-checkbox ${salaryadd1 ? 'checked' : ''}`}>
+                                                                        <i className={`fa ${salaryadd1 ? 'fa-check' : 'fa-times'}`} />
+                                                                    </div>
+                                                                </label><br />
+                                                                <label htmlFor="salaryadd1" style={{ cursor: 'pointer' }}>
+                                                                    <div className={`custom-checkbox ${salaryadd1 ? 'checked' : ''}`}>
+                                                                        <input
+                                                                            type="text"
+                                                                            className="form-control"
+                                                                            id="salaryadd1v"
+                                                                            placeholder="ค่ารถ"
+                                                                            value={employeeData.salaryadd1v}
+                                                                            onChange={(e) => handleChange(e, 'salaryadd1v')}
+                                                                        />
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    {/* )} */}
+
+                                                    {/* {employeeData.salaryadd2 && ( */}
+
+                                                    {salaryadd2 && (
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label role="salaryadd2v">เงินเพิ่มค่าอาหาร</label>
+                                                                <label htmlFor="salaryadd2" style={{ cursor: 'pointer' }}>
+                                                                    <div className={`custom-checkbox ${salaryadd2 ? 'checked' : ''}`}>
+                                                                        <i className={`fa ${salaryadd2 ? 'fa-check' : 'fa-times'}`} />
+                                                                    </div>
+                                                                </label><br />
+                                                                <label htmlFor="salaryadd2" style={{ cursor: 'pointer' }}>
+                                                                    <div className={`custom-checkbox ${salaryadd2 ? 'checked' : ''}`}>
+                                                                        <input
+                                                                            type="text"
+                                                                            className="form-control"
+                                                                            id="salaryadd2v"
+                                                                            placeholder="ค่ารถ"
+                                                                            value={employeeData.salaryadd2v}
+                                                                            onChange={(e) => handleChange(e, 'salaryadd2v')}
+                                                                        />
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    {/* )} */}
+
+                                                    {/* {employeeData.salaryadd3 && ( */}
+
+
+                                                    {salaryadd3 && (
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label role="salaryadd3v">ค่าเบี้ยขยัน</label>
+                                                                <label htmlFor="salaryadd3" style={{ cursor: 'pointer' }}>
+                                                                    <div className={`custom-checkbox ${salaryadd3 ? 'checked' : ''}`}>
+                                                                        <i className={`fa ${salaryadd3 ? 'fa-check' : 'fa-times'}`} />
+                                                                    </div>
+                                                                </label><br />
+                                                                <label htmlFor="salaryadd3" style={{ cursor: 'pointer' }}>
+                                                                    <div className={`custom-checkbox ${salaryadd3 ? 'checked' : ''}`}>
+                                                                        <input
+                                                                            type="text"
+                                                                            className="form-control"
+                                                                            id="salaryadd3v"
+                                                                            placeholder="ค่ารถ"
+                                                                            value={employeeData.salaryadd3v}
+                                                                            onChange={(e) => handleChange(e, 'salaryadd3v')}
+                                                                        />
+                                                                    </div>
+                                                                </label></div>
+                                                        </div>
+                                                    )}
+
+                                                    {/* )} */}
+
+                                                    {/* {employeeData.salaryadd4 && ( */}
+                                                    {/* <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label role="salaryadd4v">ค่าโทรศัพท์</label>
+                                                            <label htmlFor="salaryadd4" style={{ cursor: 'pointer' }}>
+                                                                <div className={`custom-checkbox ${salaryadd4 ? 'checked' : ''}`}>
+                                                                    <i className={`fa ${salaryadd4 ? 'fa-check' : 'fa-times'}`} />
+                                                                </div>
+                                                            </label>
+                                                            <label htmlFor="salaryadd4" style={{ cursor: 'pointer' }}>
+                                                                <div className={`custom-checkbox ${salaryadd4 ? 'checked' : ''}`}>
+                                                                    {salaryadd4 ? (
+                                                                        <input
+                                                                            type="text"
+                                                                            className="form-control"
+                                                                            id="salaryadd4v"
+                                                                            placeholder="ค่ารถ"
+                                                                            value={employeeData.salaryadd4v}
+                                                                            onChange={(e) => handleChange(e, 'salaryadd4v')}
+
+                                                                        />
+                                                                    ) : null}
+                                                                </div>
+                                                            </label>
+
+                                                        </div>
+                                                    </div> */}
+                                                    {/* <div className="col-md-4">
+                                                        <div class="form-group">
+                                                            <label role="salaryadd4v">ค่าโทรศัพท์</label>
+                                                            <label htmlFor="salaryadd4" style={{ cursor: 'pointer' }}>
+                                                                <div className={`custom-checkbox ${salaryadd4 ? 'checked' : ''}`}>
+                                                                    <i className={`fa ${salaryadd4 ? 'fa-check' : 'fa-times'}`} />
+                                                                </div>
+                                                            </label>
+                                                            {salaryadd4 ? (
+                                                                <label htmlFor="salaryadd4" style={{ cursor: 'pointer' }}>
+                                                                    <div className={`custom-checkbox ${salaryadd4 ? 'checked' : ''}`}>
+                                                                        <input
+                                                                            type="text"
+                                                                            className="form-control"
+                                                                            id="salaryadd4v"
+                                                                            placeholder="ค่ารถ"
+                                                                            value={employeeData.salaryadd4v}
+                                                                            onChange={(e) => handleChange(e, 'salaryadd4v')}
+                                                                        />
+                                                                    </div>
+                                                                </label>
+                                                            ) : null}
+                                                        </div>
+                                                    </div> */}
+
+
+                                                    {salaryadd4 && (
+                                                        <div className="col-md-4">
+                                                            <div class="form-group">
+                                                                <label role="salaryadd4v">ค่าโทรศัพท์</label>
+                                                                <label htmlFor="salaryadd4" style={{ cursor: 'pointer' }}>
+                                                                    <div className={`custom-checkbox ${salaryadd4 ? 'checked' : ''}`}>
+                                                                        <i className={`fa ${salaryadd4 ? 'fa-check' : 'fa-times'}`} />
+                                                                    </div>
+                                                                </label><br />
+                                                                <label htmlFor="salaryadd4" style={{ cursor: 'pointer' }}>
+                                                                    <div className={`custom-checkbox ${salaryadd4 ? 'checked' : ''}`}>
+                                                                        <input
+                                                                            type="text"
+                                                                            className="form-control"
+                                                                            id="salaryadd4v"
+                                                                            placeholder="ค่ารถ"
+                                                                            value={employeeData.salaryadd4v}
+                                                                            onChange={(e) => handleChange(e, 'salaryadd4v')}
+                                                                        />
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+
+                                                    )}
+
+
+
+                                                    {/* )} */}
+
+                                                    {/* {employeeData.salaryadd5 && ( */}
+
+                                                    {salaryadd5 && (
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label role="salaryadd5v">เงินประจำตำแหน่ง</label>
+                                                                <label htmlFor="salaryadd5v" style={{ cursor: 'pointer' }}>
+                                                                    <div className={`custom-checkbox ${salaryadd5 ? 'checked' : ''}`}>
+                                                                        <i className={`fa ${salaryadd5 ? 'fa-check' : 'fa-times'}`} />
+                                                                    </div>
+                                                                </label><br />
+                                                                <label htmlFor="salaryadd5" style={{ cursor: 'pointer' }}>
+                                                                    <div className={`custom-checkbox ${salaryadd5 ? 'checked' : ''}`}>
+                                                                        <input
+                                                                            type="text"
+                                                                            className="form-control"
+                                                                            id="salaryadd5v"
+                                                                            placeholder="ค่ารถ"
+                                                                            value={employeeData.salaryadd5v}
+                                                                            onChange={(e) => handleChange(e, 'salaryadd5v')}
+                                                                        />
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    {/* )} */}
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label role="salaryaddsum">เงินเพิ่มพิเศษรวม</label>
+                                                            <input type="text" class="form-control" id="salaryaddsum" placeholder="จำนวนเงิน" value={employeeData.salaryaddsum} readOnly />
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <h2 class="title">สวัสดิการวันลา</h2>
                                                 <div class="row">
                                                     <div class="col-md-9">
