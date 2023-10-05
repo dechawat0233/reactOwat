@@ -149,6 +149,81 @@ function Salary() {
     const [idCard, setIdCard] = useState(''); //บัตรประชาชน
     const [copyAddress, setCopyAddress] = useState(false);
 
+    const [formData, setFormData] = useState([]);
+    const [showAdditionalInput, setShowAdditionalInput] = useState([]);
+
+    // const handleSelectChange = (e, index) => {
+    //     const selectedValue = e.target.value;
+    //     handleChange(e, index, 'StaffType');
+
+    //     // Check if "Option3" is selected, and then show the additional input
+    //     const newShowAdditionalInput = [...showAdditionalInput];
+    //     newShowAdditionalInput[index] = selectedValue === 'Option3';
+    //     setShowAdditionalInput(newShowAdditionalInput);
+    // };
+
+    // const handleChangeSpSalary = (e, index, key) => {
+    //     const newFormData = [...formData];
+    //     newFormData[index] = {
+    //         ...newFormData[index],
+    //         [key]: e.target.value,
+    //     };
+    //     setFormData(newFormData);
+    // };
+    const handleChangeSpSalary = (e, index, key) => {
+        const newAddSalary = [...formData.addSalary];
+        newAddSalary[index] = {
+            ...newAddSalary[index],
+            [key]: e.target.value,
+        };
+
+        setFormData({
+            ...formData,
+            addSalary: newAddSalary
+        });
+    };
+
+    // const handleAddInput = () => {
+    //     setFormData([...formData, { name: '', SpSalary: '', StaffType: '', nameType: '' }]);
+    //     setShowAdditionalInput([...showAdditionalInput, false]);
+    // };
+    const handleAddInput = () => {
+        alert(formData.length);
+
+        setFormData({
+            ...formData,
+            addSalary: [
+                ...formData.addSalary,
+                { name: '', SpSalary: '', roundOfSalary: '', StaffType: '', nameType: '' }
+            ]
+        });
+        setShowAdditionalInput([...showAdditionalInput, false]);
+    };
+
+    // const handleDeleteInput = (index) => {
+    //     const newFormData = [...formData];
+    //     newFormData.splice(index, 1);
+    //     setFormData(newFormData);
+
+    //     const newShowAdditionalInput = [...showAdditionalInput];
+    //     newShowAdditionalInput.splice(index, 1);
+    //     setShowAdditionalInput(newShowAdditionalInput);
+    // };
+
+    const handleDeleteInput = (index) => {
+        const newAddSalary = [...formData.addSalary];
+        newAddSalary.splice(index, 1);
+
+        setFormData({
+            ...formData,
+            addSalary: newAddSalary
+        });
+
+        const newShowAdditionalInput = [...showAdditionalInput];
+        newShowAdditionalInput.splice(index, 1);
+        setShowAdditionalInput(newShowAdditionalInput);
+    };
+
 
     //add salary
     const [addSalary , setAddSalary] = useState([]);
@@ -175,7 +250,6 @@ const [addSalaryWorkplace , setAddSalaryWorkplace] = useState([]);
                 setWorkplacearea(filtered[0].workplaceArea);
                 //set add Salary from workplace 
                 setAddSalaryWorkplace(filtered[0].addSalary);
-
             }
 
         } else {
@@ -288,6 +362,7 @@ const [addSalaryWorkplace , setAddSalaryWorkplace] = useState([]);
     async function onEmployeeSelect(empSelect) {
         await setEmployeeData(empSelect);
         await setWorkplace(empSelect.workplace || '');
+await setAddSalary(empSelect.addSalary);
 
         //set workplace to show
         const filtered = await workplaceSelection.filter(wp =>
@@ -298,6 +373,22 @@ const [addSalaryWorkplace , setAddSalaryWorkplace] = useState([]);
                 setWorkplacearea('');
             } else {
                 setWorkplacearea(filtered[0].workplaceArea || '');
+                setAddSalaryWorkplace(filtered[0].addSalary);
+
+                const initialFormData = {
+                    addSalary: filtered[0].addSalary.map((item) => ({
+                        name: item.name || '',
+                        SpSalary: item.SpSalary || '',
+                        roundOfSalary: item.SpSalary || '',
+                        StaffType: item.StaffType || '',
+                        nameType: item.nameType || '',
+                    })),
+                };
+        
+                setFormData(initialFormData);
+                // setFormData(workplace.addSalary);
+        
+        
             }
         } else {
             setWorkplacearea('');
@@ -307,6 +398,7 @@ const [addSalaryWorkplace , setAddSalaryWorkplace] = useState([]);
         await setExceptjob(new Date(empSelect.exceptjob || ''));
         await setStartcount(empSelect.startcount ? new Date(empSelect.startcount) : '');
         await setSalaryupdate(empSelect.salaryupdate ? new Date(empSelect.salaryupdate) : '');
+
 
         // setWorkplaceId(empSelect.employeeId);
 
@@ -321,6 +413,7 @@ const [addSalaryWorkplace , setAddSalaryWorkplace] = useState([]);
         setSalaryadd5(empSelect.salaryadd5 || false);
         setSalaryadd5v(parseFloat(empSelect.salaryadd5v) || 0);
         // setSalaryadd5v("");
+
     }
     // console.log(employeeData);
     // save
@@ -765,6 +858,77 @@ const [addSalaryWorkplace , setAddSalaryWorkplace] = useState([]);
                                     </div>
                                 </div>
                                 <h2 class="title">เงินเพิ่มพิเศษ</h2>
+                                {formData.addSalary && formData.addSalary.length > 0 && formData.addSalary.map((data, index) => (
+                                        <div className="row" key={index}>
+                                            <div className="col-md-3">
+                                                <label role="salaryadd6">ชื่อรายการ</label>
+                                                <input
+                                                    type="text"
+                                                    name="name"
+                                                    className="form-control"
+                                                    value={data.name}
+                                                    onChange={(e) => handleChangeSpSalary(e, index, 'name')}
+                                                />
+                                            </div>
+                                            <div className="col-md-2">
+                                                <label role="salaryadd6">จำนวนเงิน</label>
+                                                <input
+                                                    type="text"
+                                                    name="SpSalary"
+                                                    className="form-control"
+                                                    value={data.SpSalary}
+                                                    onChange={(e) => handleChangeSpSalary(e, index, 'SpSalary')}
+                                                />
+                                            </div>
+                                            <div className="col-md-2">
+                                                <label role="salaryadd6">ประเภทพนักงาน</label>
+                                                <select
+                                                    name="roundOfSalary"
+                                                    className="form-control"
+                                                    value={data.roundOfSalary}
+                                                    onChange={(e) => handleChangeSpSalary(e, index, 'roundOfSalary')}
+                                                >
+                                                    <option value="daily">รายวัน</option>
+                                                    <option value="monthly">รายเดือน</option>
+                                                </select>
+                                            </div>
+                                            <div className="col-md-2">
+                                                <label role="salaryadd6">ประเภทพนักงาน</label>
+                                                <select
+                                                    name="StaffType"
+                                                    className="form-control"
+                                                    value={data.StaffType}
+                                                    onChange={(e) => handleChangeSpSalary(e, index, 'StaffType')}
+                                                >
+                                                    <option value="">เลือกตำแหน่งที่จะมอบให้</option>
+                                                    <option value="all">ทั้งหมด</option>
+                                                    <option value="header">หัวหน้างาน</option>
+                                                    <option value="custom">กำหนดเอง</option>
+                                                </select>
+                                            </div>
+                                            {data.StaffType === 'custom' && (
+                                                <div className="col-md-2">
+                                                    <label>ตำแหน่ง</label>
+                                                    <input
+                                                        type="text"
+                                                        name="additionalInput"
+                                                        className="form-control"
+                                                        value={data.nameType}
+                                                        onChange={(e) => handleChangeSpSalary(e, index, 'nameType')}
+                                                    />
+                                                </div>
+                                            )}
+                                            <div className="col-md-1">
+                                                <button onClick={() => handleDeleteInput(index)} className="btn btn-danger" style={{ width: "3rem", position: 'absolute', bottom: '0' }}>ลบ</button>
+                                            </div>
+                                        </div>
+                                    ))}
+
+                                    < button type='button' onClick={handleAddInput} class="btn btn-primary" >เพิ่ม</button>
+                                    {/* <pre>{JSON.stringify(formData, null, 2)}</pre> */}
+{/* m1 */}
+
+
                                 <div class="row">
                                     <div class="col-md-9">
                                         <section class="Frame">
