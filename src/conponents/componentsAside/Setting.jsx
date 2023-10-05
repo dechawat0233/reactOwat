@@ -317,6 +317,7 @@ function Setting() {
             addSalary: workplace.addSalary.map((item) => ({
                 name: item.name || '',
                 SpSalary: item.SpSalary || '',
+                roundOfSalary: item.roundOfSalary || '',
                 StaffType: item.StaffType || '',
                 nameType: item.nameType || '',
             })),
@@ -893,7 +894,7 @@ function Setting() {
                                     {formData.addSalary && formData.addSalary.length > 0 && formData.addSalary.map((data, index) => (
                                         <div className="row" key={index}>
                                             <div className="col-md-3">
-                                                <label role="salaryadd6">ชื่อรายการ</label>
+                                                <label role="name">ชื่อรายการ</label>
                                                 <input
                                                     type="text"
                                                     name="name"
@@ -903,7 +904,7 @@ function Setting() {
                                                 />
                                             </div>
                                             <div className="col-md-2">
-                                                <label role="salaryadd6">จำนวนเงิน</label>
+                                                <label role="SpSalary">จำนวนเงิน</label>
                                                 <input
                                                     type="text"
                                                     name="SpSalary"
@@ -913,7 +914,7 @@ function Setting() {
                                                 />
                                             </div>
                                             <div className="col-md-2">
-                                                <label role="salaryadd6">ประเภทพนักงาน</label>
+                                                <label role="roundOfSalary">ประเภทพนักงาน</label>
                                                 <select
                                                     name="roundOfSalary"
                                                     className="form-control"
@@ -925,7 +926,7 @@ function Setting() {
                                                 </select>
                                             </div>
                                             <div className="col-md-2">
-                                                <label role="salaryadd6">ประเภทพนักงาน</label>
+                                                <label role="StaffType">ประเภทพนักงาน</label>
                                                 <select
                                                     name="StaffType"
                                                     className="form-control"

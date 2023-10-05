@@ -45,6 +45,8 @@ function Worktimesheet() {
 
 
   const [countWork, setCountWork] = useState(0);
+  const [countWorkSTime, setCountWorkSTime] = useState(0);
+
 
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
@@ -228,7 +230,7 @@ function Worktimesheet() {
 
                 updatedData[(dataIndex + 11)].isChecked = true;
                 updatedData[(dataIndex + 11)].otTime = otTime[index];
-                updatedData[(dataIndex + 11)].allTimeA = allTimeA[index];
+                updatedData[(dataIndex + 11)].allTime = allTimeA[index];
                 updatedData[(dataIndex + 11)].workplaceId = workplaceId[index]; // Set otTime at the same index as dates
                 updatedData[(dataIndex + 11)].date = dates[index]; // Set otTime at the same index as dates
                 // Set otTime at the same index as dates
@@ -265,17 +267,31 @@ function Worktimesheet() {
           // const result = Object.entries(workplaceIdCounts).map(([workplaceId, count]) => ({ workplaceId, count }));
 
           const workplaceIdCounts = {};
-          const workplaceIdAllTimes = {}; // Create an object to store otTime for each workplaceId
+          const workplaceIdAllTimes = {};
 
           filteredData.forEach((record) => {
             if (record.isChecked) {
               const { workplaceId, allTime } = record;
               if (workplaceIdCounts[workplaceId]) {
                 workplaceIdCounts[workplaceId]++;
-                workplaceIdAllTimes[workplaceId] += parseFloat(allTime); // Convert otTime to a number and add it
+                const allTimeAsNumber = parseFloat(allTime); // Parse allTime to a number
+                if (!isNaN(allTimeAsNumber)) {
+                  if (allTimeAsNumber > 5.0) {
+                    workplaceIdAllTimes[workplaceId] += 1;
+                  } else {
+                    workplaceIdAllTimes[workplaceId] += 0.5;
+                  }
+                }
               } else {
                 workplaceIdCounts[workplaceId] = 1;
-                workplaceIdAllTimes[workplaceId] = parseFloat(allTime); // Initialize otTime
+                const allTimeAsNumber = parseFloat(allTime); // Parse allTime to a number
+                if (!isNaN(allTimeAsNumber)) {
+                  if (allTimeAsNumber > 5.0) {
+                    workplaceIdAllTimes[workplaceId] = 1;
+                  } else {
+                    workplaceIdAllTimes[workplaceId] = 0.5;
+                  }
+                }
               }
             }
           });
@@ -283,10 +299,10 @@ function Worktimesheet() {
           const result = Object.entries(workplaceIdCounts).map(([workplaceId, count]) => ({
             workplaceId,
             count,
-            allTime: workplaceIdAllTimes[workplaceId].toFixed(1), // Convert otTime back to string with 1 decimal place
+            allTime: workplaceIdAllTimes[workplaceId].toFixed(1),
           }));
 
-          // Calculate the total otTime
+          // Calculate the total allTime
           const totalAllTime = Object.values(workplaceIdAllTimes).reduce((sum, allTime) => sum + allTime, 0).toFixed(1);
 
           console.log('Result:', result);
@@ -295,6 +311,7 @@ function Worktimesheet() {
 
           const count = filteredData.length;
           setCountWork((count));
+          setCountWorkSTime(totalAllTime);
           setWorkplaceIdList(result);
 
 
@@ -370,7 +387,7 @@ function Worktimesheet() {
 
                 updatedData[(dataIndex1 - 20)].isChecked = true;
                 updatedData[(dataIndex1 - 20)].otTime = otTime1[index];
-                updatedData[(dataIndex1 - 20)].allTimeA = allTimeA1[index];
+                updatedData[(dataIndex1 - 20)].allTime = allTimeA1[index];
                 updatedData[(dataIndex1 - 20)].workplaceId = workplaceId1[index]; // Set otTime at the same index as dates
                 updatedData[(dataIndex1 - 20)].date = dates1[index]; // Set otTime at the same index as dates
 
@@ -410,17 +427,31 @@ function Worktimesheet() {
           // const result = Object.entries(workplaceIdCounts).map(([workplaceId, count, allTime, otTime]) => ({ workplaceId, count, allTime, otTime }));
 
           const workplaceIdCounts = {};
-          const workplaceIdAllTimes = {}; // Create an object to store otTime for each workplaceId
+          const workplaceIdAllTimes = {};
 
           filteredData.forEach((record) => {
             if (record.isChecked) {
               const { workplaceId, allTime } = record;
               if (workplaceIdCounts[workplaceId]) {
                 workplaceIdCounts[workplaceId]++;
-                workplaceIdAllTimes[workplaceId] += parseFloat(allTime); // Convert otTime to a number and add it
+                const allTimeAsNumber = parseFloat(allTime); // Parse allTime to a number
+                if (!isNaN(allTimeAsNumber)) {
+                  if (allTimeAsNumber > 5.0) {
+                    workplaceIdAllTimes[workplaceId] += 1;
+                  } else {
+                    workplaceIdAllTimes[workplaceId] += 0.5;
+                  }
+                }
               } else {
                 workplaceIdCounts[workplaceId] = 1;
-                workplaceIdAllTimes[workplaceId] = parseFloat(allTime); // Initialize otTime
+                const allTimeAsNumber = parseFloat(allTime); // Parse allTime to a number
+                if (!isNaN(allTimeAsNumber)) {
+                  if (allTimeAsNumber > 5.0) {
+                    workplaceIdAllTimes[workplaceId] = 1;
+                  } else {
+                    workplaceIdAllTimes[workplaceId] = 0.5;
+                  }
+                }
               }
             }
           });
@@ -428,21 +459,22 @@ function Worktimesheet() {
           const result = Object.entries(workplaceIdCounts).map(([workplaceId, count]) => ({
             workplaceId,
             count,
-            allTime: workplaceIdAllTimes[workplaceId].toFixed(1), // Convert otTime back to string with 1 decimal place
+            allTime: workplaceIdAllTimes[workplaceId].toFixed(1),
           }));
 
-          // Calculate the total otTime
+          // Calculate the total allTime
           const totalAllTime = Object.values(workplaceIdAllTimes).reduce((sum, allTime) => sum + allTime, 0).toFixed(1);
 
           console.log('Result:', result);
           console.log('Total AllTime:', totalAllTime);
 
+          console.log('filteredData', filteredData);
 
           const count = filteredData.length;
 
           setDataset(filteredData);
           setCountWork((count));
-
+          setCountWorkSTime(totalAllTime);
           setWorkplaceIdList(result);
 
           return updatedData;
@@ -461,7 +493,7 @@ function Worktimesheet() {
     }
 
   }
-  console.log(workplaceIdList);
+  // console.log('workplaceIdList',workplaceIdList);
 
   //set salaty calculate
   const [workRate, setWorkRate] = useState(''); //ค่าจ้างต่อวัน
@@ -491,11 +523,13 @@ function Worktimesheet() {
     const calculatedResults = workplaceIdList.map((item) => {
       const workplaceId = item.workplaceId;
       const count = item.count;
+      const allTime = item.allTime;
+
 
       const workplace = workplaceList.find((w) => w.workplaceId === workplaceId);
       if (workplace) {
         const workRate = workplace.workRate;
-        return { workplaceId, calculatedValue: workRate * count };
+        return { workplaceId, calculatedValue: workRate * allTime, allTime };
       }
       return null;
     });
@@ -506,9 +540,12 @@ function Worktimesheet() {
     // Calculate the total sum
     const totalSum = filteredResults.reduce((sum, result) => sum + result.calculatedValue, 0);
 
+    setWorkRate(totalSum);
     setCalculatedValues(filteredResults);
     console.log('Total Sum:', totalSum);
-    setWorkRate(totalSum);
+    console.log('Total Sum2:', filteredResults);
+    console.log('Total Sum3:', calculatedResults);
+
 
   }, [workplaceList, workplaceIdList]);
 
@@ -690,10 +727,11 @@ function Worktimesheet() {
 
         const date = data[dateFieldName];
         if (!rowDataByDate[date]) {
-          rowDataByDate[date] = { workplaceId: [], otTime: [], dateFieldName: [] };
+          rowDataByDate[date] = { workplaceId: [], otTime: [], dateFieldName: [], allTime: [] };
         }
         rowDataByDate[date].workplaceId.push(data.workplaceId);
         rowDataByDate[date].otTime.push(data.otTime);
+        rowDataByDate[date].allTime.push(data.allTime);
         rowDataByDate[date].dateFieldName.push(data[dateFieldName]);
       });
 
@@ -704,8 +742,9 @@ function Worktimesheet() {
         if (rowData) {
           return [
             rowData.workplaceId.join(', '),
+            rowData.allTime.join(', '),
             rowData.otTime.join(', '),
-            rowData.dateFieldName.join(', '),
+            // rowData.dateFieldName.join(', '),
           ];
         } else {
           return ['', '', ''];
@@ -717,7 +756,7 @@ function Worktimesheet() {
         transposedTableData.map((row) => row[index])
       );
 
-      const textColumn = [name, 'ot', 'day'];
+      const textColumn = [name, 'เวลา ทำงาน', 'เวลา OT'];
 
       const sortedTableDataWithText = sortedTableData.map((data, index) => {
         const text = [textColumn[index]];
@@ -915,7 +954,7 @@ function Worktimesheet() {
                       <table class="table table-bordered ">
                         <thead>
                           <tr>
-                            <th style={styles.th}>Number</th>
+                            <th style={styles.th}></th>
                             {combinedRange.map((number, index) => (
                               <th key={index} style={styles.th}>{number}</th>
                             ))}
@@ -1014,7 +1053,31 @@ function Worktimesheet() {
               </div>
             </form>
             {/* </form> */}
+            <div class="row">
+              <div class="col-md-9">
+                <section class="Frame">
+                  <div class="container" style={{ overflowX: 'scroll' }}>
+                    <table class="table table-bordered ">
+                      <thead>
+                        <tr>
+                          <th>workplaceId</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {calculatedValues.map((value, index) => (
+                          <td>
+                            รวมวันทำงาน || {value.workplaceId}, {value.calculatedValue} ({value.allTime})
+                          </td>
+                        ))}
+
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
+              </div>
+            </div>
           </section>
+
           {/* <!-- /.content --> */}
         </div >
       </div >
