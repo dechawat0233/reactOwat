@@ -965,7 +965,7 @@ function Salary() {
 
                                                     </div>
                                                     <div className="col-md-2">
-                                                        <label role="salaryadd6">ประเภทพนักงาน</label>
+                                                        <label role="salaryadd6">ได้เป็นราย</label>
                                                         <select
                                                             name="roundOfSalary"
                                                             className="form-control"
