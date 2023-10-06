@@ -1011,15 +1011,16 @@ function Salary() {
 
 
 
-                                                    <div className="col-md-1">
-                                                        <button onClick={() => handleAddSalary(data)} className="btn btn-primary" style={{ width: "3rem", position: 'absolute', bottom: '0' }}>ให้สวัสดิการ</button>
+                                                    <div className="col-md-2">
+                                                        <button onClick={() => handleAddSalary(data)} className="btn btn-primary" style={{ width: "8rem", position: 'absolute', bottom: '0' }}>ให้สวัสดิการ</button>
+                                                        
                                                     </div>
                                                     {employeeData.addSalary && employeeData.addSalary.length > 0 && employeeData.addSalary.filter(empData => JSON.stringify(empData.name) === JSON.stringify(data.name)).map((filteredData, index1) => (
                                                         <div key={index1} className="col-md-1">
                                                             {/* Render your data here */}
                                                             {/* {filteredData} */}
                                                             <div>
-                                                                <button onClick={() => handleRemoveAddSalary(data.name)} className="btn btn-danger" style={{ width: "3rem", position: 'absolute', bottom: '0' }}>นำออก</button>
+                                                                <button onClick={() => handleRemoveAddSalary(data.name)} className="btn btn-danger" style={{ width: "5rem", position: 'absolute', bottom: '0' }}>นำออก</button>
                                                             </div>
                                                         </div>
                                                     )
