@@ -891,7 +891,7 @@ function Setting() {
                                             </div>
                                         </div>
                                     </div> */}
-                                    
+
                                     {formData.addSalary && formData.addSalary.length > 0 && formData.addSalary.map((data, index) => (
                                         <div className="row" key={index}>
                                             <div className="col-md-3">
@@ -922,6 +922,7 @@ function Setting() {
                                                     value={data.roundOfSalary}
                                                     onChange={(e) => handleChangeSpSalary(e, index, 'roundOfSalary')}
                                                 >
+                                                    <option value="">เลือก</option>
                                                     <option value="daily">รายวัน</option>
                                                     <option value="monthly">รายเดือน</option>
                                                 </select>
