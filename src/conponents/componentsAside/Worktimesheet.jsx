@@ -1145,7 +1145,7 @@ function Worktimesheet() {
                     <table class="table table-bordered ">
                       <thead>
                         <tr>
-                          <th>เงินเพิ่มพิเศษ</th>
+                          <th>เงินค่าจ้าง</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1169,6 +1169,9 @@ function Worktimesheet() {
                             </td>
                           ))}
                         </tr>
+                        <tr>
+                          <th>เงินค่าจ้าง</th>
+                        </tr>
                         {addSalary.map((innerArray, outerIndex) => (
                           innerArray.map((value, innerIndex) => (
                             <tr key={`${outerIndex}-${innerIndex}`}>
@@ -1177,6 +1180,18 @@ function Worktimesheet() {
                             </tr>
                           ))
                         ))}
+                        <tr>
+                          <td>วันหยุดนักขัตฤกษ์</td>
+                        </tr>
+                        <tr>
+                          <td>จ่ายป่วย</td>
+                        </tr>
+                        <tr>
+                          <td>ชดเชยพักร้อน</td>
+                        </tr>
+                        <tr>
+                          <td>หักประกันสังคม</td>
+                        </tr>
                       </tbody>
                     </table>
                   </div>
