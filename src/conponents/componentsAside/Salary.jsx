@@ -234,7 +234,7 @@ function Salary() {
 
 
     const handleAddSalary = async (data) => {
-        // alert(JSON.stringify(data, null, 2) );
+        alert(JSON.stringify(data, null, 2) );
         const isUnique = await !addSalary.some(item => JSON.stringify(item) === JSON.stringify(data));
 
         if (isUnique || employeeData.addSalary.length <=0) {
@@ -312,12 +312,16 @@ function Salary() {
                 setWorkplacearea(filtered[0].workplaceArea);
                 //set add Salary from workplace 
                 setAddSalaryWorkplace(filtered[0].addSalary);
-
+                setEmployeeData(prevData => ({
+                    ...prevData,
+                    ['addSalary']: [],
+                }));
+        
                 const initialFormData = {
                     addSalary: filtered[0].addSalary.map((item) => ({
                         name: item.name || '',
                         SpSalary: item.SpSalary || '',
-                        roundOfSalary: item.SpSalary || '',
+                        roundOfSalary: item.roundOfSalary || '',
                         StaffType: item.StaffType || '',
                         nameType: item.nameType || '',
                     })),
@@ -456,7 +460,7 @@ function Salary() {
                     addSalary: filtered[0].addSalary.map((item) => ({
                         name: item.name || '',
                         SpSalary: item.SpSalary || '',
-                        roundOfSalary: item.SpSalary || '',
+                        roundOfSalary: item.roundOfSalary || '',
                         StaffType: item.StaffType || '',
                         nameType: item.nameType || '',
                     })),
