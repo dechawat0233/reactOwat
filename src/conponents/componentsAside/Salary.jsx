@@ -237,7 +237,7 @@ function Salary() {
         // alert(JSON.stringify(data, null, 2) );
         const isUnique = await !addSalary.some(item => JSON.stringify(item) === JSON.stringify(data));
 
-        if (isUnique) {
+        if (isUnique || employeeData.addSalary.length <=0) {
             await setAddSalary(prevState => [...prevState, data]);
             // await alert(JSON.stringify(addSalary , null ,2));
             //             await setEmployeeData(prevData => ({
@@ -246,7 +246,7 @@ function Salary() {
             //             }));
 
             // If data is unique, create a new array by adding the new salary data
-            const updatedSalaries = [...employeeData.addSalary, data];
+                        const updatedSalaries = [...employeeData.addSalary, data];
 
             // Update the state with the new array
             setEmployeeData((prevData) => ({
@@ -261,16 +261,36 @@ function Salary() {
     };
 
     // Function to remove data from the addSalary list
-    const handleRemoveAddSalary = async dataIndex => {
-        await setAddSalary(prevAddSalary => prevAddSalary.filter((item, index) => index !== dataIndex));
-        if (addSalary.length > 0) {
-            await setEmployeeData(prevData => ({
-                ...prevData,
-                ['addSalary']: addSalary
-            }));
-        }
+    const handleRemoveAddSalary = (dataIndex) => {
+        const updatedSalaries = employeeData.addSalary.filter((data) => data.name !== dataIndex);
+        // Update the state with the new array
+        setEmployeeData((prevData) => ({
+          ...prevData,
+          addSalary: updatedSalaries,
+        }));
+      };
+      
+    // const handleRemoveAddSalary = async dataIndex => {
+    //     // alert(dataIndex);
 
-    };
+    //     const updatedSalaries = [...employeeData.addSalary];
+    //     const updatedSalariesFiltered = updatedSalaries.map((data) => {
+    //       if (data.name !== dataIndex) {
+    //         return data;
+    //       } else {
+    //         return null; // Exclude the item from the array
+    //       }
+    //     }).filter((data) => data !== null); // Filter out null values to remove excluded items
+        
+    //     // alert(JSON.stringify(updatedSalariesFiltered, null, 2));
+        
+    //     // Update the state with the new array
+    //     setEmployeeData((prevData) => ({
+    //         ...prevData,
+    //         addSalary: updatedSalariesFiltered,
+    //     }));
+
+    // };
 
     const handleWorkplace = (event) => {
         setWorkplace(event.target.value);
@@ -995,7 +1015,7 @@ function Salary() {
                                                             {/* Render your data here */}
                                                             {/* {filteredData} */}
                                                             <div>
-                                                                <button onClick={() => handleRemoveAddSalary(index1)} className="btn btn-danger" style={{ width: "3rem", position: 'absolute', bottom: '0' }}>นำออก</button>
+                                                                <button onClick={() => handleRemoveAddSalary(data.name)} className="btn btn-danger" style={{ width: "3rem", position: 'absolute', bottom: '0' }}>นำออก</button>
                                                             </div>
                                                         </div>
                                                     )
