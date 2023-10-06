@@ -34,6 +34,27 @@ function Worktimesheet() {
 
   console.log(workplaceList);
 
+  const [employeelist, setEmployeelist] = useState([]);
+  const [employee, setEmployee] = useState([]);
+
+
+  useEffect(() => {
+    // Fetch data from the API when the component mounts
+    fetch(endpoint + '/employee/list')
+      .then(response => response.json())
+      .then(data => {
+        // Update the state with the fetched data
+        setEmployeelist(data);
+        // alert(data[0].workplaceName);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []); // The empty array [] ensures that the effect runs only once after the initial render
+
+  console.log('employeelist', employeelist);
+
+
   // Generate an array containing numbers from 21 to 31
   const range1 = Array.from({ length: 11 }, (_, i) => i + 21);
 
@@ -95,6 +116,8 @@ function Worktimesheet() {
   const [searchEmployeeId, setSearchEmployeeId] = useState('');
   const [searchEmployeeName, setSearchEmployeeName] = useState('');
   const [searchResult, setSearchResult] = useState([]);
+  const [empId, setEmpId] = useState([]);
+
   const [searchResult1, setSearchResult1] = useState([]);
 
   const [woekplace, setWoekplace] = useState([]);
@@ -129,6 +152,13 @@ function Worktimesheet() {
       } else {
         alert("ไม่พบข้อมูล 1 ถึง 20 " + getMonthName(data.month));
       }
+      // const empId = await axios.post(endpoint + '/employee/search', searchResult.employeeId);
+      // if (empId.data.recordworkplace.length >= 1) {
+      //   await setEmpId(empId.data.recordworkplace);
+      // } else {
+      //   alert("ไม่พบข้อมูล 1 ถึง 20 " + getMonthName(data.month));
+      // }
+      // console.log('empId',empId);
 
       // if (data1.month == '00') {
       //   data1.month = '12';
@@ -344,7 +374,7 @@ function Worktimesheet() {
         // Set search values
         await setEmployeeId(response.data.recordworkplace[0].employeeId);
         await setName(response.data.recordworkplace[0].employeeName);
-        console.log(name);
+        console.log('Name', name);
 
         // setWoekplace(response.data.recordworkplace[0].employee_workplaceRecord[0].workplaceName);
 
@@ -524,6 +554,7 @@ function Worktimesheet() {
   const [workRateOT, setWorkRateOT] = useState(''); //ค่าจ้าง OT ต่อชั่วโมง
   const [holiday, setHoliday] = useState(''); //ค่าจ้างวันหยุดนักขัตฤกษ์ 
   const [holidayHour, setHolidayHour] = useState(''); //ค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง
+  const [addSalary, setAddSalary] = useState([]); //เงิ่นเพิ่มพิเศษ
 
   const [workplaceIdListSearch, setWorkplaceIdListSearch] = useState([]); //หน่วยงานที่ค้นหาและทำงาน
   const [calculatedValues, setCalculatedValues] = useState([]);
@@ -579,6 +610,29 @@ function Worktimesheet() {
 
 
   }, [workplaceList, workplaceIdList]);
+  console.log(workplaceList);
+
+  console.log('searchResult', searchResult);
+  // get employee data
+
+  useEffect(() => {
+    // Extract employeeIds from searchResult
+    const employeeIds = searchResult.map((obj) => obj.employeeId);
+
+    // Filter employeelist based on employeeIds
+    const filteredEmployeeList = employeelist.filter((employee) =>
+      employeeIds.includes(employee.employeeId)
+    );
+    const addSalary = filteredEmployeeList.map((obj) => obj.addSalary);
+
+    // Update the state with the filtered data using setEmployee
+    setEmployee(filteredEmployeeList);
+    setAddSalary(addSalary);
+  }, [searchResult, employeelist]);
+  console.log('employee', employee);
+  console.log('addSalary', addSalary);
+
+
 
   // console.log('workRate', workplaceIdListSearch);
   // console.log('allworkRate', calculatedValues);
@@ -1091,7 +1145,7 @@ function Worktimesheet() {
                     <table class="table table-bordered ">
                       <thead>
                         <tr>
-                          <th>workplaceId</th>
+                          <th>เงินเพิ่มพิเศษ</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1115,6 +1169,14 @@ function Worktimesheet() {
                             </td>
                           ))}
                         </tr>
+                        {addSalary.map((innerArray, outerIndex) => (
+                          innerArray.map((value, innerIndex) => (
+                            <tr key={`${outerIndex}-${innerIndex}`}>
+                              <td>{value.name}</td>
+                              <td>{value.SpSalary} บาท</td>
+                            </tr>
+                          ))
+                        ))}
                       </tbody>
                     </table>
                   </div>

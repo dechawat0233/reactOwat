@@ -991,7 +991,7 @@ function Salary() {
                                                         <button onClick={() => handleAddSalary(data)} className="btn btn-primary" style={{ width: "3rem", position: 'absolute', bottom: '0' }}>ให้สวัสดิการ</button>
                                                     </div>
                                                     {employeeData.addSalary && employeeData.addSalary.length > 0 && employeeData.addSalary.filter(empData => JSON.stringify(empData.name) === JSON.stringify(data.name)).map((filteredData, index1) => (
-                                                        <div key={index1}className="col-md-1">
+                                                        <div key={index1} className="col-md-1">
                                                             {/* Render your data here */}
                                                             {/* {filteredData} */}
                                                             <div>
