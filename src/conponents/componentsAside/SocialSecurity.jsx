@@ -14,11 +14,14 @@ function SocialSecurity() {
 
     const [checkedItems, setCheckedItems] = useState([]);
 
-    const handleCheckboxChange = (id) => {
+    const handleCheckboxChange = (id , SpSalary) => {
       if (checkedItems.includes(id)) {
         setCheckedItems(checkedItems.filter(item => item !== id));
+        setTempSpSalary(parseInt(- SpSalary, 10));
+
       } else {
         setCheckedItems([...checkedItems, id]);
+        setTempSpSalary(parseInt(SpSalary, 10));
       }
     };
   
@@ -108,15 +111,22 @@ function SocialSecurity() {
     };
 
 const [sumAddSalary , setSumAddSalary] = useState(0);
+const [tempSpSalary , setTempSpSalary ] = useState(0);
 
     //sum salaryaddsumSec by using sumAddSalary
-    useEffect(() => {
+    useEffect( () => {
 // alert(checkedItems );
 // alert(JSON.stringify( employeeData.addSalary, null , 2));
 const sum = sumAddSalary || 0;
 
 if(employeeData.addSalary){
-
+const x = employeeData.addSalary.filter(item => item._id == checkedItems );
+// alert(JSON.stringify(x,null,2));
+if(x){
+    setSumAddSalary(sum + tempSpSalary );
+    // alert(x.SpSalary);
+    
+}
 }
 
     } , [checkedItems]);
@@ -619,7 +629,7 @@ if(employeeData.addSalary){
 <input
             type="checkbox"
             checked={checkedItems.includes(item._id)}
-            onChange={() => handleCheckboxChange(item._id)}
+            onChange={() => handleCheckboxChange(item._id , item.SpSalary)}
           />
 <p>{item.name} {item.SpSalary} บาท</p>
 </div>
@@ -634,7 +644,7 @@ if(employeeData.addSalary){
                                                                 <div class="col-md-4">
                                                                     <div class="form-group">
                                                                         <label role="salaryaddsumSec">เงินเพิ่มพิเศษรวม</label>
-                                                                        <input type="text" class="form-control" id="salaryaddsumSec" placeholder="จำนวนเงิน" value={salaryaddsumSec()} readOnly />
+                                                                        <input type="text" class="form-control" id="salaryaddsumSec" placeholder="จำนวนเงิน" value={sumAddSalary} readOnly />
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-4">
