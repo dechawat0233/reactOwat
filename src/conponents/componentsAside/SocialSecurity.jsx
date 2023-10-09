@@ -14,24 +14,26 @@ function SocialSecurity() {
 
     const [checkedItems, setCheckedItems] = useState([]);
 
-<<<<<<< HEAD
     const handleCheckboxChange = (id , SpSalary) => {
       if (checkedItems.includes(id)) {
         setCheckedItems(checkedItems.filter(item => item !== id));
         setTempSpSalary(parseInt(- SpSalary, 10));
+        setEmployeeData(prevData => ({
+            ...prevData,
+            ['selectAddSalary']: checkedItems,
+            ['sumAddSalary']: sumAddSalary,
+        }));
 
       } else {
         setCheckedItems([...checkedItems, id]);
         setTempSpSalary(parseInt(SpSalary, 10));
+
+        setEmployeeData(prevData => ({
+            ...prevData,
+            ['selectAddSalary']: checkedItems,
+            ['sumAddSalary']: sumAddSalary,
+        }));
       }
-=======
-    const handleCheckboxChange = (id) => {
-        if (checkedItems.includes(id)) {
-            setCheckedItems(checkedItems.filter(item => item !== id));
-        } else {
-            setCheckedItems([...checkedItems, id]);
-        }
->>>>>>> c67855df434f1eb04fd2716cb96c57925b5c17e5
     };
 
     // save
@@ -119,7 +121,6 @@ function SocialSecurity() {
         return total;
     };
 
-<<<<<<< HEAD
 const [sumAddSalary , setSumAddSalary] = useState(0);
 const [tempSpSalary , setTempSpSalary ] = useState(0);
 
@@ -133,24 +134,13 @@ if(employeeData.addSalary){
 const x = employeeData.addSalary.filter(item => item._id == checkedItems );
 // alert(JSON.stringify(x,null,2));
 if(x){
-    setSumAddSalary(sum + tempSpSalary );
+    setSumAddSalary(parseInt(sum , 10) + tempSpSalary );
     // alert(x.SpSalary);
     
 }
+} else{
+    alert('hi');
 }
-=======
-    const [sumAddSalary, setSumAddSalary] = useState(0);
-
-    //sum salaryaddsumSec by using sumAddSalary
-    useEffect(() => {
-        // alert(checkedItems );
-        // alert(JSON.stringify( employeeData.addSalary, null , 2));
-        const sum = sumAddSalary || 0;
-
-        if (employeeData.addSalary) {
-
-        }
->>>>>>> c67855df434f1eb04fd2716cb96c57925b5c17e5
 
     }, [checkedItems]);
 
@@ -321,9 +311,16 @@ if(x){
         setSalaryadd5vSec(empSelect.salaryadd5v || 0);
 
         setJobtype(empSelect.jobtype);
+
+        //set checkbox is selection 
+        setCheckedItems(empSelect.selectAddSalary ||'');
+        //set sum addSalary
+        setSumAddSalary(empSelect.sumAddSalary || '');
+
         // alert(empSelect._id);
         console.log(employeeData);
     }
+
     async function handleManageEmployee(event) {
         event.preventDefault();
 
@@ -648,28 +645,15 @@ if(x){
                                                                         {employeeData.addSalary && employeeData.addSalary.map((item) => (
                                                                             <div key={item._id} style={{ display: "flex", alignItems: "left" }}>
 
-<<<<<<< HEAD
-{employeeData.addSalary && employeeData.addSalary .map((item) => (
-<div key={item._id}>
-<input
-            type="checkbox"
-            checked={checkedItems.includes(item._id)}
-            onChange={() => handleCheckboxChange(item._id , item.SpSalary)}
-          />
-<p>{item.name} {item.SpSalary} บาท</p>
-</div>
-) )}
-=======
                                                                                 <input
                                                                                     type="checkbox"
                                                                                     checked={checkedItems.includes(item._id)}
-                                                                                    onChange={() => handleCheckboxChange(item._id)}
+                                                                                    onChange={() => handleCheckboxChange(item._id , item.SpSalary)}
                                                                                 />
                                                                                 ค่า {item.name} {item.SpSalary} บาท
 
                                                                             </div>
                                                                         ))}
->>>>>>> c67855df434f1eb04fd2716cb96c57925b5c17e5
 
                                                                     </div>
                                                                 </div>

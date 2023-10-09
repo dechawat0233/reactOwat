@@ -210,6 +210,8 @@ const employeeSchema = new mongoose.Schema({
     StaffType: String,
     nameType: String,
 }],
+selectAddSalary: [],
+sumAddSalary: String,
 
 });
 
@@ -382,6 +384,8 @@ router.post('/create', async (req, res) => {
     divide,
 
     addSalary,
+    selectAddSalary,
+    sumAddSalary,
   } = req.body;
   console.log(`Name: ${name}, Id card: ${idCard}`);
 
@@ -479,6 +483,8 @@ router.post('/create', async (req, res) => {
     PriceType,
     divide,
     addSalary,
+    selectAddSalary,
+    sumAddSalary,
   });
 
   try {
