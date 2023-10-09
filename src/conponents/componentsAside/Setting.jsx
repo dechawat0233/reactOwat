@@ -542,6 +542,18 @@ function Setting() {
     // // console.log(showAdditionalInput);
 
 
+    useEffect(() => {
+let d = holiday || 0;
+let h = workOfHour || 0;
+if(d < 10) {
+    let wr = workRate || 0;
+d = wr * d;
+}
+        let wrh = d / h;
+        setHolidayHour(wrh );
+    } , [holiday , workOfHour ] );
+
+
     return (
         <body class="hold-transition sidebar-mini" className='editlaout'>
             <div class="wrapper">

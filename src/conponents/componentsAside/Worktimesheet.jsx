@@ -361,8 +361,8 @@ function Worktimesheet() {
         });
 
       }
-      console.log('Result:');
-      console.log(result);
+      // console.log('Result:');
+      // console.log(result);
       /////////
 
       // alert(response.data.recordworkplace.length);
@@ -374,7 +374,7 @@ function Worktimesheet() {
         // Set search values
         await setEmployeeId(response.data.recordworkplace[0].employeeId);
         await setName(response.data.recordworkplace[0].employeeName);
-        console.log('Name', name);
+        // console.log('Name', name);
 
         // setWoekplace(response.data.recordworkplace[0].employee_workplaceRecord[0].workplaceName);
 
@@ -385,7 +385,7 @@ function Worktimesheet() {
 
       }
     } catch (error) {
-      alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
+      alert('กรุณาตรวจสอบข้อมูลในช่องค้นหาx');
       // window.location.reload();
     }
 
@@ -1191,6 +1191,7 @@ function Worktimesheet() {
                         </tr>
                         <tr>
                           <td>หักประกันสังคม</td>
+                          
                         </tr>
                       </tbody>
                     </table>

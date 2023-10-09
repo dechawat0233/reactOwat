@@ -234,7 +234,7 @@ function Salary() {
 
 
     const handleAddSalary = async (data) => {
-        alert(JSON.stringify(data, null, 2) );
+        // alert(JSON.stringify(data, null, 2) );
         const isUnique = await !addSalary.some(item => JSON.stringify(item) === JSON.stringify(data));
 
         if (isUnique || employeeData.addSalary.length <=0) {

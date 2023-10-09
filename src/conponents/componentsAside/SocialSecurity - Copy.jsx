@@ -11,17 +11,6 @@ import '../editwindowcss.css';
 
 function SocialSecurity() {
 
-
-    const [checkedItems, setCheckedItems] = useState([]);
-
-    const handleCheckboxChange = (id) => {
-      if (checkedItems.includes(id)) {
-        setCheckedItems(checkedItems.filter(item => item !== id));
-      } else {
-        setCheckedItems([...checkedItems, id]);
-      }
-    };
-  
     // save
 
     // const [workplaceId, setWorkplaceId] = useState('');
@@ -106,20 +95,6 @@ function SocialSecurity() {
         if (salaryadd5Sec) total += salaryadd5vSec;
         return total;
     };
-
-const [sumAddSalary , setSumAddSalary] = useState(0);
-
-    //sum salaryaddsumSec by using sumAddSalary
-    useEffect(() => {
-// alert(checkedItems );
-// alert(JSON.stringify( employeeData.addSalary, null , 2));
-const sum = sumAddSalary || 0;
-
-if(employeeData.addSalary){
-
-}
-
-    } , [checkedItems]);
 
     // Step 4: Use useState to manage the selected option
     const Bangkok = ['คณะแพทยศาสตร์วชิรพยาบาล', 'รพ.กลาง', 'รพ.จุฬาลงกรณ์', 'รพ.เจริญกรุงประชารักษ์', 'รพ.ตากสิน', 'รพ.ตำรวจ ', 'รพ.ทัณฑสถานโรงพยาบาลราชทัณฑ์', 'รพ.นพรัตนราชธานี(สธ)', 'รพ.พระมงกุฎเกล้า', 'รพ.ภูมิพลอดุลยเดช', 'รพ.ราชวิถี(สธ)', 'รพ.รามาธิบดี', 'รพ.ราชพิพัฒน์', 'รพ.เลิดสิน(สธ)', 'รพ.เวชการุณย์รัศมิ์', 'รพ.ศิริราช', 'รพ.สมเด็จพระปิ่นเกล้า', 'รพ.สมเด็จพระปิ่นเกล้า', 'รพ.หลวงพ่อทวีศักดิ์ ชุตินฺธโร อุทิศ', 'รพ.ลาดกระบัง กรุงเทพมหานคร']
@@ -614,22 +589,160 @@ if(employeeData.addSalary){
                                                                     <div class="form-group">
                                                                         
 
-{employeeData.addSalary && employeeData.addSalary .map((item) => (
-<div key={item._id}>
-<input
-            type="checkbox"
-            checked={checkedItems.includes(item._id)}
-            onChange={() => handleCheckboxChange(item._id)}
-          />
-<p>{item.name} {item.SpSalary} บาท</p>
-</div>
-) )}
+                                                                        <label>รายการเงินเพิ่มพิเศษ</label>
+                                                                        <button onClick={() => toggleCheckbox1('salaryadd1Sec')} style={{ margin: '0.5rem' }}>ค่ารถ</button>
+                                                                        <label>
+                                                                            <input
+                                                                                type="checkbox"
+                                                                                id="salaryadd1Sec"
+                                                                                checked={salaryadd1Sec}
+                                                                                onChange={e => handleChange(e, 'salaryadd1Sec')}
+                                                                                style={{ display: 'none' }}
+                                                                            />
+                                                                        </label>
+                                                                        <button onClick={() => toggleCheckbox2('salaryadd2Sec')} style={{ margin: '0.5rem' }}>ค่าอาหาร</button>
+                                                                        <label>
+                                                                            <input
+                                                                                type="checkbox"
+                                                                                id="salaryadd2Sec"
+                                                                                checked={salaryadd2Sec}
+                                                                                onChange={e => handleChange(e, 'salaryadd2Sec')}
+                                                                                style={{ display: 'none' }} />
+                                                                        </label>
+                                                                        <button onClick={() => toggleCheckbox3('salaryadd3Sec')} style={{ margin: '0.5rem' }}>เบี้ยขยัน</button>
+                                                                        <label>
+                                                                            <input
+                                                                                type="checkbox"
+                                                                                id="salaryadd3Sec"
+                                                                                checked={salaryadd3Sec}
+                                                                                onChange={e => handleChange(e, 'salaryadd3Sec')}
+                                                                                style={{ display: 'none' }} />
+                                                                        </label>
+                                                                        <button onClick={() => toggleCheckbox4('salaryadd4Sec')} style={{ margin: '0.5rem' }}>ค่าโทรศัพท์</button>
 
+                                                                        <label>
+                                                                            <input
+                                                                                type="checkbox"
+                                                                                id="salaryadd4Sec"
+                                                                                checked={salaryadd4Sec}
+                                                                                onChange={e => handleChange(e, 'salaryadd4Sec')}
+                                                                                style={{ display: 'none' }}
+                                                                            />
+                                                                        </label>
+
+                                                                        <button onClick={() => toggleCheckbox5('salaryadd5Sec')} style={{ margin: '0.5rem' }}>เงินประจำตำแหน่ง</button>
+
+                                                                        <label >
+                                                                            <input
+                                                                                type="checkbox"
+                                                                                id="salaryadd5Sec"
+                                                                                checked={salaryadd5Sec}
+                                                                                onChange={e => handleChange(e, 'salaryadd5Sec')}
+                                                                                style={{ display: 'none' }} />
+                                                                        </label>
                                                                     </div>
                                                                 </div>
 
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label role="salaryaddtypeSec">เพิ่มพิเศษแบบ</label>
+                                                                        <select id="salaryaddtypeSec" name="salaryaddtypeSec" class="form-control"
+                                                                            value={employeeData.salaryaddtypeSec || ''} onChange={(e) => handleChange(e, 'salaryaddtypeSec')} >
+                                                                            <option value="">ไม่ระบุ</option>
+                                                                            <option value="ต่อเดือน">ต่อเดือน</option>
+                                                                            <option value="ต่อวัน">ต่อวัน</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
 
+                                                                {/* {employeeData.salaryadd1Sec && ( */}
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label role="salaryadd1vSec">เงินเพิ่มค่ารถ</label>
+                                                                        <label htmlFor="salaryadd1Sec" style={{ cursor: 'pointer' }}>
+                                                                            <div className={`custom-checkbox ${salaryadd1Sec ? 'checked' : ''}`}>
+                                                                                <i className={`fa ${salaryadd1Sec ? 'fa-check' : 'fa-times'}`} />
+                                                                            </div>
+                                                                        </label>
+                                                                        <input type="text" class="form-control" id="salaryadd1vSec" placeholder="ค่ารถ" value={salaryadd1vSec} onChange={(e) => handleChange(e, 'salaryadd1vSec')}
+                                                                            readOnly />
+                                                                    </div>
+                                                                </div>
+                                                                {/* )} */}
 
+                                                                {/* {employeeData.salaryadd2Sec && ( */}
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label role="salaryadd2vSec">เงินเพิ่มค่าอาหาร</label>
+                                                                        <label htmlFor="salaryadd2Sec" style={{ cursor: 'pointer' }}>
+                                                                            <div className={`custom-checkbox ${salaryadd2Sec ? 'checked' : ''}`}>
+                                                                                <i className={`fa ${salaryadd2Sec ? 'fa-check' : 'fa-times'}`} />
+                                                                            </div>
+                                                                        </label>
+                                                                        <input type="text" class="form-control" id="salaryadd2vSec" placeholder="ค่าอาหาร" value={salaryadd2vSec} onChange={(e) => handleChange(e, 'salaryadd2vSec')}
+                                                                            readOnly />
+                                                                    </div>
+                                                                </div>
+                                                                {/* )} */}
+
+                                                                {/* {employeeData.salaryadd3Sec && ( */}
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label role="salaryadd3vSec">ค่าเบี้ยขยัน</label>
+                                                                        <label htmlFor="salaryadd3Sec" style={{ cursor: 'pointer' }}>
+                                                                            <div className={`custom-checkbox ${salaryadd3Sec ? 'checked' : ''}`}>
+                                                                                <i className={`fa ${salaryadd3Sec ? 'fa-check' : 'fa-times'}`} />
+                                                                            </div>
+                                                                        </label>
+                                                                        <input type="text" class="form-control" id="salaryadd3vSec" placeholder="ค่าเบี้ยขยัน" value={salaryadd3vSec} onChange={(e) => handleChange(e, 'salaryadd3vSec')}
+                                                                            readOnly />
+                                                                    </div>
+                                                                </div>
+                                                                {/* )} */}
+
+                                                                {/* {employeeData.salaryadd4Sec && ( */}
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label role="salaryadd4vSec">ค่าโทรศัพท์</label>
+                                                                        <label htmlFor="salaryadd4Sec" style={{ cursor: 'pointer' }}>
+                                                                            <div className={`custom-checkbox ${salaryadd4Sec ? 'checked' : ''}`}>
+                                                                                <i className={`fa ${salaryadd4Sec ? 'fa-check' : 'fa-times'}`} />
+                                                                            </div>
+                                                                        </label>
+                                                                        <label htmlFor="salaryadd4Sec" style={{ cursor: 'pointer' }}>
+                                                                            <div className={`custom-checkbox ${salaryadd4Sec ? 'checked' : ''}`}>
+                                                                                {/* {salaryadd4Sec ? ( */}
+                                                                                <input
+                                                                                    type="text"
+                                                                                    className="form-control"
+                                                                                    id="salaryadd4vSec"
+                                                                                    placeholder="ค่ารถ"
+                                                                                    value={salaryadd4vSec}
+                                                                                    onChange={(e) => handleChange(e, 'salaryadd4vSec')}
+                                                                                    readOnly
+                                                                                />
+                                                                                {/* ) : null} */}
+                                                                            </div>
+                                                                        </label>
+
+                                                                    </div>
+                                                                </div>
+                                                                {/* )} */}
+
+                                                                {/* {employeeData.salaryadd5Sec && ( */}
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label role="salaryadd5vSec">เงินประจำตำแหน่ง</label>
+                                                                        <label htmlFor="salaryadd5Sec" style={{ cursor: 'pointer' }}>
+                                                                            <div className={`custom-checkbox ${salaryadd5Sec ? 'checked' : ''}`}>
+                                                                                <i className={`fa ${salaryadd5Sec ? 'fa-check' : 'fa-times'}`} />
+                                                                            </div>
+                                                                        </label>
+                                                                        <input type="text" class="form-control" id="salaryadd5vSec" placeholder="เงินประจำตำแหน่ง" value={salaryadd5vSec} onChange={(e) => handleChange(e, 'salaryadd5vSec')}
+                                                                            readOnly />
+                                                                    </div>
+                                                                </div>
+                                                                {/* )} */}
 
                                                                 <div class="col-md-4">
                                                                     <div class="form-group">
