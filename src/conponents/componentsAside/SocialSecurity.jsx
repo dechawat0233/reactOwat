@@ -15,13 +15,13 @@ function SocialSecurity() {
     const [checkedItems, setCheckedItems] = useState([]);
 
     const handleCheckboxChange = (id) => {
-      if (checkedItems.includes(id)) {
-        setCheckedItems(checkedItems.filter(item => item !== id));
-      } else {
-        setCheckedItems([...checkedItems, id]);
-      }
+        if (checkedItems.includes(id)) {
+            setCheckedItems(checkedItems.filter(item => item !== id));
+        } else {
+            setCheckedItems([...checkedItems, id]);
+        }
     };
-  
+
     // save
 
     // const [workplaceId, setWorkplaceId] = useState('');
@@ -107,19 +107,19 @@ function SocialSecurity() {
         return total;
     };
 
-const [sumAddSalary , setSumAddSalary] = useState(0);
+    const [sumAddSalary, setSumAddSalary] = useState(0);
 
     //sum salaryaddsumSec by using sumAddSalary
     useEffect(() => {
-// alert(checkedItems );
-// alert(JSON.stringify( employeeData.addSalary, null , 2));
-const sum = sumAddSalary || 0;
+        // alert(checkedItems );
+        // alert(JSON.stringify( employeeData.addSalary, null , 2));
+        const sum = sumAddSalary || 0;
 
-if(employeeData.addSalary){
+        if (employeeData.addSalary) {
 
-}
+        }
 
-    } , [checkedItems]);
+    }, [checkedItems]);
 
     // Step 4: Use useState to manage the selected option
     const Bangkok = ['คณะแพทยศาสตร์วชิรพยาบาล', 'รพ.กลาง', 'รพ.จุฬาลงกรณ์', 'รพ.เจริญกรุงประชารักษ์', 'รพ.ตากสิน', 'รพ.ตำรวจ ', 'รพ.ทัณฑสถานโรงพยาบาลราชทัณฑ์', 'รพ.นพรัตนราชธานี(สธ)', 'รพ.พระมงกุฎเกล้า', 'รพ.ภูมิพลอดุลยเดช', 'รพ.ราชวิถี(สธ)', 'รพ.รามาธิบดี', 'รพ.ราชพิพัฒน์', 'รพ.เลิดสิน(สธ)', 'รพ.เวชการุณย์รัศมิ์', 'รพ.ศิริราช', 'รพ.สมเด็จพระปิ่นเกล้า', 'รพ.สมเด็จพระปิ่นเกล้า', 'รพ.หลวงพ่อทวีศักดิ์ ชุตินฺธโร อุทิศ', 'รพ.ลาดกระบัง กรุงเทพมหานคร']
@@ -552,7 +552,7 @@ if(employeeData.addSalary){
                                                 <label class="col-md-3 col-form-label">วิธีหัก</label>
                                                 <div class="col-md-5">
                                                     <select class="form-control" value={selectedOption} onChange={handleOptionChange}>
-                                                    <option value="">เลือกวิธีการ</option>
+                                                        <option value="">เลือกวิธีการ</option>
                                                         {options.map((option) => (
                                                             <option key={option.value} value={option.value}>
                                                                 {option.label}
@@ -612,25 +612,23 @@ if(employeeData.addSalary){
                                                             <div class="row">
                                                                 <div class="col-md-12">
                                                                     <div class="form-group">
-                                                                        
+                                                                        {employeeData.addSalary && employeeData.addSalary.map((item) => (
+                                                                            <div key={item._id} style={{ display: "flex", alignItems: "left" }}>
 
-{employeeData.addSalary && employeeData.addSalary .map((item) => (
-<div key={item._id}>
-<input
-            type="checkbox"
-            checked={checkedItems.includes(item._id)}
-            onChange={() => handleCheckboxChange(item._id)}
-          />
-<p>{item.name} {item.SpSalary} บาท</p>
-</div>
-) )}
+                                                                                <input
+                                                                                    type="checkbox"
+                                                                                    checked={checkedItems.includes(item._id)}
+                                                                                    onChange={() => handleCheckboxChange(item._id)}
+                                                                                />
+                                                                                ค่า {item.name} {item.SpSalary} บาท
+
+                                                                            </div>
+                                                                        ))}
 
                                                                     </div>
                                                                 </div>
-
-
-
-
+                                                            </div>
+                                                            <div class="row">
                                                                 <div class="col-md-4">
                                                                     <div class="form-group">
                                                                         <label role="salaryaddsumSec">เงินเพิ่มพิเศษรวม</label>
