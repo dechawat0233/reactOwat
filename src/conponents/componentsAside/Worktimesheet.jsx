@@ -888,15 +888,18 @@ function Worktimesheet() {
 
       const combinedTableData = [...additionalTableData, ...calculatedValuesAllTime, ...calculatedValuesOt];
 
-      // const columnstylestable = {
-      //   0: { columnWidth: firstColumnWidth }, // Index 0 corresponds to the first column
-      // };
+      const firstColumnWidth = 30; // Adjust the width as needed
+
+      // Define column styles, including the width of the first column
+      const columnStyles = {
+        0: { columnWidth: firstColumnWidth }, // Index 0 corresponds to the first column
+      };
 
       // Define options for the additional table
       const additionalTableOptions = {
         startY: 80, // Adjust the vertical position as needed
         margin: { top: 10 },
-        // columnstylestable: columnstylestable, // Assign the column stylestable here
+        columnStyles: columnStyles, // Assign the column stylestable here
         styles: stylestable,
       };
 
