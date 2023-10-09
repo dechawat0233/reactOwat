@@ -623,13 +623,23 @@ function Worktimesheet() {
     const filteredEmployeeList = employeelist.filter((employee) =>
       employeeIds.includes(employee.employeeId)
     );
-    const addSalary = filteredEmployeeList.map((obj) => obj.addSalary);
 
-    // Update the state with the filtered data using setEmployee
-    setEmployee(filteredEmployeeList);
-    setAddSalary(addSalary);
+    const selectedAddSalaryIds = filteredEmployeeList.map((obj) => obj.selectAddSalary).flat();
+    const filteredAddSalary = [];
+
+    filteredEmployeeList.forEach((employee) => {
+      employee.addSalary.forEach((salary) => {
+        if (selectedAddSalaryIds.includes(salary._id)) {
+          filteredAddSalary.push(salary);
+        }
+      });
+    });
+
+    console.log('test', filteredAddSalary);
+
+    setAddSalary(filteredAddSalary);
   }, [searchResult, employeelist]);
-  console.log('employee', employee);
+  // console.log('employee', employee);
   console.log('addSalary', addSalary);
 
 
@@ -703,7 +713,23 @@ function Worktimesheet() {
 
   useEffect(() => {
     setMonthset(month);
-  }, [month]);
+    // const calculatedValuesAllTime = calculatedValues.map((value) => value.calculatedValue);
+
+    const calculatedValuesAllTime = calculatedValues.map((value) => parseFloat(value.calculatedValue));
+    const calculatedValuesOtTime = calculatedValues.map((value) => parseFloat(value.calculatedOT));
+    const calculatedValuesaddSalary = addSalary.map((value) => parseFloat(value.SpSalary));
+
+    const sumAlltime = calculatedValuesAllTime.reduce((total, currentValue) => total + currentValue, 0);
+    const sumOtTime = calculatedValuesOtTime.reduce((total, currentValue) => total + currentValue, 0);
+    const sumSalary = calculatedValuesaddSalary.reduce((total, currentValue) => total + currentValue, 0);
+
+
+    setMonthset(sumAlltime + sumSalary + sumOtTime);
+    // countWork
+    console.log('testcal ++', monthset);
+
+  }, [month, calculatedValues, addSalary]);
+  console.log('testcal', monthset);
 
   // useState(() => {
   //   const tableDataDate = tableData.filter(item => item.date !== null && item.date !== '');
@@ -1188,15 +1214,13 @@ function Worktimesheet() {
                           ))}
                         </tr>
                         <tr>
-                          <th>เงินค่าจ้าง</th>
+                          <th>เงินเพิ่มพิเศษ</th>
                         </tr>
-                        {addSalary.map((innerArray, outerIndex) => (
-                          innerArray.map((value, innerIndex) => (
-                            <tr key={`${outerIndex}-${innerIndex}`}>
-                              <td>{value.name}</td>
-                              <td>{value.SpSalary} บาท</td>
-                            </tr>
-                          ))
+                        {addSalary.map((value, index) => (
+                          <tr key={index}>
+                            <td>{value.name}</td>
+                            <td>{value.SpSalary} บาท</td>
+                          </tr>
                         ))}
                         <tr>
                           <td>วันหยุดนักขัตฤกษ์</td>
@@ -1210,6 +1234,10 @@ function Worktimesheet() {
                         <tr>
                           <td>หักประกันสังคม</td>
 
+                        </tr>
+                        <tr>
+                          <td>เงินสุทธิ</td>
+                          <td>{monthset}</td>
                         </tr>
                       </tbody>
                     </table>
