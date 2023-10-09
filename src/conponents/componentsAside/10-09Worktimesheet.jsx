@@ -753,14 +753,14 @@ function Worktimesheet() {
       doc.addFileToVFS(fontPath);
       doc.addFont(fontPath, 'THSarabunNew', 'normal');
 
-      // Override the default stylestable for jspdf-autotable
-      const stylestable = {
+      // Override the default styles for jspdf-autotable
+      const styles = {
         font: 'THSarabunNew',
         fontStyle: 'normal',
         fontSize: 10,
       };
       const tableOptions = {
-        styles: stylestable,
+        styles: styles,
         startY: 25,
         // margin: { top: 10 },
       };
@@ -874,35 +874,20 @@ function Worktimesheet() {
       });
 
       const additionalTableData = [
-        ['เงินค่าจ้าง', '', '', '', '', '', '55'],
+        ['Cell 1', 'Cell 2', 'Cell 3'],
         ['Cell 4', 'Cell 5', 'Cell 6'],
         ['Cell 7', 'Cell 8', 'Cell 9'],
       ];
 
-      const calculatedValuesAllTime = calculatedValues.map((value) => [
-        `รวมวันทำงาน:`, ` ${value.workplaceId}, ${value.calculatedValue} (${value.allTime})`
-      ]);
-      const calculatedValuesOt = calculatedValues.map((value) => [
-        `รวมวันทำงาน OT:`, ` ${value.calculatedOT} (${value.otTime})`
-      ]);
-
-      const combinedTableData = [...additionalTableData, ...calculatedValuesAllTime, ...calculatedValuesOt];
-
-      // const columnstylestable = {
-      //   0: { columnWidth: firstColumnWidth }, // Index 0 corresponds to the first column
-      // };
-
       // Define options for the additional table
       const additionalTableOptions = {
         startY: 80, // Adjust the vertical position as needed
-        margin: { top: 10 },
-        // columnstylestable: columnstylestable, // Assign the column stylestable here
-        styles: stylestable,
+        styles: styles,
       };
 
       // Add the additional table to the PDF
       doc.autoTable({
-        body: combinedTableData,
+        body: additionalTableData,
         ...additionalTableOptions,
       });
 
@@ -1206,7 +1191,7 @@ function Worktimesheet() {
                         </tr>
                         <tr>
                           <td>หักประกันสังคม</td>
-
+                          
                         </tr>
                       </tbody>
                     </table>
