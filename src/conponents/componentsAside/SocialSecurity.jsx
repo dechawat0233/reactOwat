@@ -14,12 +14,26 @@ function SocialSecurity() {
 
     const [checkedItems, setCheckedItems] = useState([]);
 
-    const handleCheckboxChange = (id) => {
-        if (checkedItems.includes(id)) {
-            setCheckedItems(checkedItems.filter(item => item !== id));
-        } else {
-            setCheckedItems([...checkedItems, id]);
-        }
+    const handleCheckboxChange = (id , SpSalary) => {
+      if (checkedItems.includes(id)) {
+        setCheckedItems(checkedItems.filter(item => item !== id));
+        setTempSpSalary(parseInt(- SpSalary, 10));
+        setEmployeeData(prevData => ({
+            ...prevData,
+            ['selectAddSalary']: checkedItems,
+            ['sumAddSalary']: sumAddSalary,
+        }));
+
+      } else {
+        setCheckedItems([...checkedItems, id]);
+        setTempSpSalary(parseInt(SpSalary, 10));
+
+        setEmployeeData(prevData => ({
+            ...prevData,
+            ['selectAddSalary']: checkedItems,
+            ['sumAddSalary']: sumAddSalary,
+        }));
+      }
     };
 
     // save
@@ -107,17 +121,26 @@ function SocialSecurity() {
         return total;
     };
 
-    const [sumAddSalary, setSumAddSalary] = useState(0);
+const [sumAddSalary , setSumAddSalary] = useState(0);
+const [tempSpSalary , setTempSpSalary ] = useState(0);
 
     //sum salaryaddsumSec by using sumAddSalary
-    useEffect(() => {
-        // alert(checkedItems );
-        // alert(JSON.stringify( employeeData.addSalary, null , 2));
-        const sum = sumAddSalary || 0;
+    useEffect( () => {
+// alert(checkedItems );
+// alert(JSON.stringify( employeeData.addSalary, null , 2));
+const sum = sumAddSalary || 0;
 
-        if (employeeData.addSalary) {
-
-        }
+if(employeeData.addSalary){
+const x = employeeData.addSalary.filter(item => item._id == checkedItems );
+// alert(JSON.stringify(x,null,2));
+if(x){
+    setSumAddSalary(parseInt(sum , 10) + tempSpSalary );
+    // alert(x.SpSalary);
+    
+}
+} else{
+    alert('hi');
+}
 
     }, [checkedItems]);
 
@@ -288,9 +311,16 @@ function SocialSecurity() {
         setSalaryadd5vSec(empSelect.salaryadd5v || 0);
 
         setJobtype(empSelect.jobtype);
+
+        //set checkbox is selection 
+        setCheckedItems(empSelect.selectAddSalary ||'');
+        //set sum addSalary
+        setSumAddSalary(empSelect.sumAddSalary || '');
+
         // alert(empSelect._id);
         console.log(employeeData);
     }
+
     async function handleManageEmployee(event) {
         event.preventDefault();
 
@@ -618,7 +648,7 @@ function SocialSecurity() {
                                                                                 <input
                                                                                     type="checkbox"
                                                                                     checked={checkedItems.includes(item._id)}
-                                                                                    onChange={() => handleCheckboxChange(item._id)}
+                                                                                    onChange={() => handleCheckboxChange(item._id , item.SpSalary)}
                                                                                 />
                                                                                 ค่า {item.name} {item.SpSalary} บาท
 
@@ -632,7 +662,7 @@ function SocialSecurity() {
                                                                 <div class="col-md-4">
                                                                     <div class="form-group">
                                                                         <label role="salaryaddsumSec">เงินเพิ่มพิเศษรวม</label>
-                                                                        <input type="text" class="form-control" id="salaryaddsumSec" placeholder="จำนวนเงิน" value={salaryaddsumSec()} readOnly />
+                                                                        <input type="text" class="form-control" id="salaryaddsumSec" placeholder="จำนวนเงิน" value={sumAddSalary} readOnly />
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-4">
