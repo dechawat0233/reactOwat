@@ -201,7 +201,7 @@ function AddsettimeWorkplace() {
     }, [startTime, endTime, workOfHour]);
     useEffect(() => {
         try {
-          const ot = calTime(selectotTime || 0, selectotTimeOut || 0, workOfOT || 0) || 0;
+          const ot = calTime(selectotTime || 0, selectotTimeOut || 0, 24) || 0;
           setOtTime(ot);
         } catch (error) {
           // Handle the error here, you can log it or show an error message.
