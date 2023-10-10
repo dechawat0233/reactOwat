@@ -954,7 +954,7 @@ function Salary() {
                                         <h2 class="title">เงินเพิ่มพิเศษ</h2>
                                         <section class="Frame">
 
-                                            {/* {JSON.stringify(addSalary , null ,2) } */}
+                                            {JSON.stringify(addSalary , null ,2) }
 
                                             {formData.addSalary && formData.addSalary.length > 0 && formData.addSalary.map((data, index) => (
                                                 <div className="row" key={index}>
