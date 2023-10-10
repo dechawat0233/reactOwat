@@ -402,7 +402,7 @@ function Employee() {
                                                             <datalist id="workplaces">
                                                                 <option value="">ยังไม่ระบุหน่วยงาน</option>
                                                                 {workplaceSelection.map((wp) => (
-                                                                    <option key={wp._id} value={wp.workplaceName}>
+                                                                    <option key={wp._id} value={wp.workplaceId}>
                                                                         {wp.workplaceName}
                                                                     </option>
                                                                 ))}
