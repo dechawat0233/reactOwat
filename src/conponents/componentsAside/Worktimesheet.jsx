@@ -36,6 +36,10 @@ function Worktimesheet() {
 
   const [employeelist, setEmployeelist] = useState([]);
   const [employee, setEmployee] = useState([]);
+const [listDayOff , setListDayOff] = useState([]);
+const [y , setY] = useState('');
+const [m , setM] = useState('');
+const [m1 , setM1] = useState('');
 
 
   useEffect(() => {
@@ -55,6 +59,44 @@ function Worktimesheet() {
   console.log('employeelist', employeelist);
 
 
+
+  function getListDayOff( month , month1 , res) {
+    setM(month);
+    setM1(month1);
+setY(searchResult[0].timerecordId);
+
+    const emp_workplace = employeelist.find(item => item.employeeId === searchResult[0].employeeId);
+const wid = emp_workplace.workplace;
+const empWorkplace = workplaceList.find(item => item.workplaceId === wid);
+
+const df = [];
+if(!empWorkplace.workday7 ){
+  df.push('7');
+}
+if(!empWorkplace.workday6 ){
+  df.push('6');
+}
+if(!empWorkplace.workday5 ){
+  df.push('5');
+}
+if(!empWorkplace.workday4 ){
+  df.push('4');
+}
+if(!empWorkplace.workday3 ){
+  df.push('3');
+}
+if(!empWorkplace.workday2 ){
+  df.push('2');
+}
+if(!empWorkplace.workday1 ){
+  df.push('1');
+}
+
+setListDayOff(df);
+
+    }
+    
+    
   // Generate an array containing numbers from 21 to 31
   const range1 = Array.from({ length: 11 }, (_, i) => i + 21);
 
@@ -385,7 +427,7 @@ function Worktimesheet() {
 
       }
     } catch (error) {
-      alert('กรุณาตรวจสอบข้อมูลในช่องค้นหาx');
+      alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
       // window.location.reload();
     }
 
@@ -545,6 +587,9 @@ function Worktimesheet() {
       alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา', error);
       // window.location.reload();
     }
+
+    //check day off form select month
+    getListDayOff(data.month , data1.month );
 
   }
   console.log('workplaceIdList', workplaceIdList);
@@ -1262,14 +1307,28 @@ function getMonthName(monthNumber) {
     'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
   ];
 
-
   // Ensure the monthNumber is within a valid range (1-12)
   if (monthNumber >= 1 && monthNumber <= 12) {
     return months[monthNumber - 1]; // Months array is 0-based
   } else {
     // return 'Invalid Month';
     return months[12]; // Months array is 12 -based
-
   }
 }
+
+const getDateDayOfWeek = (dateString) => {
+  // Create a Date object with the input date string in the format YYYY/mm/dd
+  const date = new Date(dateString);
+  
+  // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+  const dayOfWeek = date.getDay();
+  // Return the day of the week (Sunday, Monday, etc.)
+  // const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+//overide
+const daysOfWeek = ['7', '1', '2', '3', '4', '5', '6'];
+  return daysOfWeek[dayOfWeek];
+};
+
+
+
 export default Worktimesheet
