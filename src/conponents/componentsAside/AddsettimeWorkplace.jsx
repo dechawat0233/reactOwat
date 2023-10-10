@@ -204,12 +204,12 @@ function AddsettimeWorkplace() {
             if(shift == 'night_shift' ||
 shift == 'afternoon_shift' ||
 shift == 'morning_shift' ) {
-    const ot = calTime(startTime || 0, endTime || 0, workOfHour || 0) || 0;
-    setOtTime(ot);
+    const allt = calTime(startTime || 0, endTime || 0, workOfHour || 0) || 0;
+    setAllTime(allt);
 
 }else {
-    const ot = calTime(startTime || 0, endTime || 0, 24) || 0;
-    setOtTime(ot);
+    const allt = calTime(startTime || 0, endTime || 0, 24) || 0;
+    setAllTime(allt);
 
 }
 
