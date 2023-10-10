@@ -165,40 +165,52 @@ function AddsettimeWorkplace() {
     }, [shift]);
 
     useEffect(() => {
-        const startHours = parseFloat(startTime.split('.')[0]);
-        const startMinutes = parseFloat(startTime.split('.')[1] || 0);
-        const endHours = parseFloat(endTime.split('.')[0]);
-        const endMinutes = parseFloat(endTime.split('.')[1] || 0);
-        let hours = endHours - startHours;
-        let minutes = endMinutes - startMinutes;
-        if (minutes < 0) {
-            hours -= 1;
-            minutes += 60;
-        }
-        // Handle cases where endTime is on the next day
-        if (hours < 0) {
-            hours += 24;
-        }
-        // Check if the employee worked >= 5 hours 
-        if (hours >= 5) {
-            hours -= 1;
-        }
 
-        // Calculate the total time difference in minutes
-        const totalMinutes = hours * 60 + minutes;
-        // Check if the employee worked > 5 hours
-        // Cap the time difference at the maximum work hours
-        const cappedTotalMinutes = Math.min(totalMinutes, workOfHour * 60);
-        // Convert the capped time difference back to hours and minutes
-        const cappedHours = Math.floor(cappedTotalMinutes / 60);
-        const cappedMinutes = cappedTotalMinutes % 60;
-        const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
-        if (isNaN(timeDiffFormatted)) {
-            setAllTime('0');
-        } else {
-            setAllTime(timeDiffFormatted);
-        }
+        // const startHours = parseFloat(startTime.split('.')[0]);
+        // const startMinutes = parseFloat(startTime.split('.')[1] || 0);
+        // const endHours = parseFloat(endTime.split('.')[0]);
+        // const endMinutes = parseFloat(endTime.split('.')[1] || 0);
+        // let hours = endHours - startHours;
+        // let minutes = endMinutes - startMinutes;
+        // if (minutes < 0) {
+        //     hours -= 1;
+        //     minutes += 60;
+        // }
+        // // Handle cases where endTime is on the next day
+        // if (hours < 0) {
+        //     hours += 24;
+        // }
+        // // Check if the employee worked >= 5 hours 
+        // if (hours >= 5) {
+        //     hours -= 1;
+        // }
+
+        // // Calculate the total time difference in minutes
+        // const totalMinutes = hours * 60 + minutes;
+        // // Check if the employee worked > 5 hours
+        // // Cap the time difference at the maximum work hours
+        // const cappedTotalMinutes = Math.min(totalMinutes, workOfHour * 60);
+        // // Convert the capped time difference back to hours and minutes
+        // const cappedHours = Math.floor(cappedTotalMinutes / 60);
+        // const cappedMinutes = cappedTotalMinutes % 60;
+        // const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
+        // if (isNaN(timeDiffFormatted)) {
+        //     setAllTime('0');
+        // } else {
+        //     setAllTime(timeDiffFormatted);
+        // }
+
+        try {
+            const ot = calTime(startTime || 0, endTime || 0, 24) || 0;
+            setOtTime(ot);
+          } catch (error) {
+            // Handle the error here, you can log it or show an error message.
+            console.error(error);
+          //   alert(error);
+          }
+  
     }, [startTime, endTime, workOfHour]);
+
     useEffect(() => {
         try {
           const ot = calTime(selectotTime || 0, selectotTimeOut || 0, 24) || 0;
