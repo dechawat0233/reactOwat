@@ -201,8 +201,18 @@ function AddsettimeWorkplace() {
         // }
 
         try {
-            const ot = calTime(startTime || 0, endTime || 0, 24) || 0;
-            setOtTime(ot);
+            if(shift == 'night_shift' ||
+shift == 'afternoon_shift' ||
+shift == 'morning_shift' ) {
+    const ot = calTime(startTime || 0, endTime || 0, workOfHour || 0) || 0;
+    setOtTime(ot);
+
+}else {
+    const ot = calTime(startTime || 0, endTime || 0, 24) || 0;
+    setOtTime(ot);
+
+}
+
           } catch (error) {
             // Handle the error here, you can log it or show an error message.
             console.error(error);
@@ -213,8 +223,17 @@ function AddsettimeWorkplace() {
 
     useEffect(() => {
         try {
-          const ot = calTime(selectotTime || 0, selectotTimeOut || 0, 24) || 0;
-          setOtTime(ot);
+            if(shift == 'night_shift' ||
+shift == 'afternoon_shift' ||
+shift == 'morning_shift' ) {
+    const ot = calTime(selectotTime || 0, selectotTimeOut || 0, workOfOT || 0) || 0;
+    setOtTime(ot);
+
+} else {
+    const ot = calTime(selectotTime || 0, selectotTimeOut || 0, 24) || 0;
+    setOtTime(ot);
+
+}
         } catch (error) {
           // Handle the error here, you can log it or show an error message.
           console.error(error);
