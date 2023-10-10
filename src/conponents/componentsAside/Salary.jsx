@@ -237,7 +237,7 @@ function Salary() {
         // alert(JSON.stringify(data, null, 2) );
         const isUnique = await !addSalary.some(item => JSON.stringify(item) === JSON.stringify(data));
 
-        if (isUnique || employeeData.addSalary.length <=0) {
+        if (isUnique || employeeData.addSalary.length <= 0) {
             await setAddSalary(prevState => [...prevState, data]);
             // await alert(JSON.stringify(addSalary , null ,2));
             //             await setEmployeeData(prevData => ({
@@ -246,7 +246,7 @@ function Salary() {
             //             }));
 
             // If data is unique, create a new array by adding the new salary data
-                        const updatedSalaries = [...employeeData.addSalary, data];
+            const updatedSalaries = [...employeeData.addSalary, data];
 
             // Update the state with the new array
             setEmployeeData((prevData) => ({
@@ -265,11 +265,11 @@ function Salary() {
         const updatedSalaries = employeeData.addSalary.filter((data) => data.name !== dataIndex);
         // Update the state with the new array
         setEmployeeData((prevData) => ({
-          ...prevData,
-          addSalary: updatedSalaries,
+            ...prevData,
+            addSalary: updatedSalaries,
         }));
-      };
-      
+    };
+
     // const handleRemoveAddSalary = async dataIndex => {
     //     // alert(dataIndex);
 
@@ -281,9 +281,9 @@ function Salary() {
     //         return null; // Exclude the item from the array
     //       }
     //     }).filter((data) => data !== null); // Filter out null values to remove excluded items
-        
+
     //     // alert(JSON.stringify(updatedSalariesFiltered, null, 2));
-        
+
     //     // Update the state with the new array
     //     setEmployeeData((prevData) => ({
     //         ...prevData,
@@ -316,7 +316,7 @@ function Salary() {
                     ...prevData,
                     ['addSalary']: [],
                 }));
-        
+
                 const initialFormData = {
                     addSalary: filtered[0].addSalary.map((item) => ({
                         name: item.name || '',
@@ -474,11 +474,22 @@ function Salary() {
         } else {
             setWorkplacearea('');
         }
+        if (empSelect.startjob) {
+            await setStartjob(new Date(empSelect.startjob || ''));
+        };
 
-        await setStartjob(new Date(empSelect.startjob || ''));
-        await setExceptjob(new Date(empSelect.exceptjob || ''));
-        await setStartcount(empSelect.startcount ? new Date(empSelect.startcount) : '');
-        await setSalaryupdate(empSelect.salaryupdate ? new Date(empSelect.salaryupdate) : '');
+        if (empSelect.exceptjob) {
+            await setExceptjob(new Date(empSelect.exceptjob || ''));
+        };
+        if (empSelect.startcount) {
+            await setStartcount(empSelect.startcount ? new Date(empSelect.startcount) : '');
+        };
+        if (empSelect.salaryupdate) {
+            await setSalaryupdate(empSelect.salaryupdate ? new Date(empSelect.salaryupdate) : '');
+        };
+        // await setExceptjob(new Date(empSelect.exceptjob || ''));
+        // await setStartcount(empSelect.startcount ? new Date(empSelect.startcount) : '');
+        // await setSalaryupdate(empSelect.salaryupdate ? new Date(empSelect.salaryupdate) : '');
 
 
         // setWorkplaceId(empSelect.employeeId);
@@ -1013,7 +1024,7 @@ function Salary() {
 
                                                     <div className="col-md-2">
                                                         <button onClick={() => handleAddSalary(data)} className="btn btn-primary" style={{ width: "8rem", position: 'absolute', bottom: '0' }}>ให้สวัสดิการ</button>
-                                                        
+
                                                     </div>
                                                     {employeeData.addSalary && employeeData.addSalary.length > 0 && employeeData.addSalary.filter(empData => JSON.stringify(empData.name) === JSON.stringify(data.name)).map((filteredData, index1) => (
                                                         <div key={index1} className="col-md-1">
