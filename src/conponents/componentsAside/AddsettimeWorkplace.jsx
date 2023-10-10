@@ -199,50 +199,64 @@ function AddsettimeWorkplace() {
             setAllTime(timeDiffFormatted);
         }
     }, [startTime, endTime, workOfHour]);
-
     useEffect(() => {
-        const startHours = parseFloat(selectotTime.split('.')[0]);
-        const startMinutes = parseFloat(selectotTime.split('.')[1] || 0);
-        const endHours = parseFloat(selectotTimeOut.split('.')[0]);
-        const endMinutes = parseFloat(selectotTimeOut.split('.')[1] || 0);
-        let hours = endHours - startHours;
-        let minutes = endMinutes - startMinutes;
-        if (minutes < 0) {
-            hours -= 1;
-            minutes += 60;
+        try {
+          const ot = calTime(selectotTime || 0, selectotTimeOut || 0, workOfOT || 0) || 0;
+          setOtTime(ot);
+        } catch (error) {
+          // Handle the error here, you can log it or show an error message.
+          console.error(error);
+        //   alert(error);
         }
-        // Handle cases where endTime is on the next day
-        if (hours < 0) {
-            hours += 24;
-        }
-        // Check if the employee worked >= 5 hours 
-        if (hours >= 5) {
-            hours -= 1;
-        }
+      }, [selectotTime, selectotTimeOut, workOfOT]);
+      
+//     useEffect(() => {
+// const ot = calTime( selectotTime || 0, selectotTimeOut || 0 , workOfOT  || 0) || 0;
+// setOtTime(ot );
+        // const startHours = parseFloat(selectotTime.split('.')[0]);
+        // const startMinutes = parseFloat(selectotTime.split('.')[1] || 0);
+        // const endHours = parseFloat(selectotTimeOut.split('.')[0]);
+        // const endMinutes = parseFloat(selectotTimeOut.split('.')[1] || 0);
+        // let hours = endHours - startHours;
+        // let minutes = endMinutes - startMinutes;
+        // if (minutes < 0) {
+        //     hours -= 1;
+        //     minutes += 60;
+        // }
+        // // Handle cases where endTime is on the next day
+        // if (hours < 0) {
+        //     hours += 24;
+        // }
+        // // Check if the employee worked >= 5 hours 
+        // if (hours >= 5) {
+        //     hours -= 1;
+        // }
 
-        // Calculate the total time difference in minutes
-        const totalMinutes = hours * 60 + minutes;
-        // Check if the employee worked > 5 hours
-        // Cap the time difference at the maximum work hours
-        const cappedTotalMinutes = Math.min(totalMinutes, otTime * 60);
-        // Convert the capped time difference back to hours and minutes
-        const cappedHours = Math.floor(cappedTotalMinutes / 60);
-        const cappedMinutes = cappedTotalMinutes % 60;
-        const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
-        if (isNaN(timeDiffFormatted)) {
-            setOtTime('0');
-        } else {
-            setOtTime(timeDiffFormatted);
-        }
-    }, [selectotTime, selectotTimeOut, otTime]);
+        // // Calculate the total time difference in minutes
+        // const totalMinutes = hours * 60 + minutes;
+        // // Check if the employee worked > 5 hours
+        // // Cap the time difference at the maximum work hours
+        // const cappedTotalMinutes = Math.min(totalMinutes, otTime * 60);
+        // // Convert the capped time difference back to hours and minutes
+        // const cappedHours = Math.floor(cappedTotalMinutes / 60);
+        // const cappedMinutes = cappedTotalMinutes % 60;
+
+        // const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
+        // // alert(timeDiffFormatted);
+        // if (isNaN(timeDiffFormatted)) {
+        //     setOtTime('0');
+        // } else {
+        //     setOtTime(timeDiffFormatted);
+        // }
+    // }, [selectotTime, selectotTimeOut, otTime]);
 
 
 
 
     function calTime(start, end, limit) {
-        const startHours = parseFloat(start.split('.')[0]);
+        const startHours = parseFloat(start.split('.')[0] || 0);
         const startMinutes = parseFloat(start.split('.')[1] || 0);
-        const endHours = parseFloat(end.split('.')[0]);
+        const endHours = parseFloat(end.split('.')[0] || 0);
         const endMinutes = parseFloat(end.split('.')[1] || 0);
         let hours = endHours - startHours;
         let minutes = endMinutes - startMinutes;
