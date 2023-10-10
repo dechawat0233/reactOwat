@@ -188,7 +188,7 @@ function Salary() {
     //     setShowAdditionalInput([...showAdditionalInput, false]);
     // };
     const handleAddInput = () => {
-        alert(formData.length);
+        // alert(formData.length);
 
         setFormData({
             ...formData,
@@ -292,9 +292,9 @@ function Salary() {
 
     // };
 
-    const handleWorkplace = (event) => {
-        setWorkplace(event.target.value);
-        setEmployeeData(prevData => ({
+    const handleWorkplace = async (event) => {
+        await setWorkplace(event.target.value);
+        await setEmployeeData(prevData => ({
             ...prevData,
             ['workplace']: event.target.value
         }));
@@ -328,7 +328,6 @@ function Salary() {
                 };
 
                 setFormData(initialFormData);
-
 
             }
 
@@ -954,7 +953,7 @@ function Salary() {
                                         <h2 class="title">เงินเพิ่มพิเศษ</h2>
                                         <section class="Frame">
 
-                                            {JSON.stringify(formData.addSalary , null ,2) }
+                                            {/* {JSON.stringify(formData.addSalary , null ,2) } */}
 
                                             {formData.addSalary && formData.addSalary.length > 0 && formData.addSalary.map((data, index) => (
                                                 <div className="row" key={index}>
