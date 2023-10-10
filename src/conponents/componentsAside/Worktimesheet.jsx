@@ -614,6 +614,7 @@ function Worktimesheet() {
 
   console.log('searchResult', searchResult);
   // get employee data
+  const [MinusSearch, setMinusSearch] = useState(0); // Example: February (you can set it dynamically)
 
   useEffect(() => {
     // Extract employeeIds from searchResult
@@ -625,6 +626,11 @@ function Worktimesheet() {
     );
 
     const selectedAddSalaryIds = filteredEmployeeList.map((obj) => obj.selectAddSalary).flat();
+    const selectedMinus = filteredEmployeeList.map((obj) => obj.minus);
+    // const selectedMinus = filteredEmployeeList.map((obj) => obj.minus.toFixed(2));
+    // const selectedMinus = filteredEmployeeList.map((obj) => parseFloat(obj.minus.toFixed(2)));
+    console.log('selectedMinus', selectedMinus);
+
     const filteredAddSalary = [];
 
     filteredEmployeeList.forEach((employee) => {
@@ -635,8 +641,8 @@ function Worktimesheet() {
       });
     });
 
-    console.log('test', filteredAddSalary);
-
+    console.log('test', filteredEmployeeList);
+    setMinusSearch(selectedMinus);
     setAddSalary(filteredAddSalary);
   }, [searchResult, employeelist]);
   // console.log('employee', employee);
@@ -711,25 +717,47 @@ function Worktimesheet() {
   // const [dataset, setDataset] = useState([]);
   const [monthset, setMonthset] = useState(''); // Example: February (you can set it dynamically)
 
+  const [MinusSS, setMinusSS] = useState(0); // Example: February (you can set it dynamically)
+
+  const [result, setResult] = useState(''); // Example: February (you can set it dynamically)
+
   useEffect(() => {
     setMonthset(month);
     // const calculatedValuesAllTime = calculatedValues.map((value) => value.calculatedValue);
+    // const calculatedValuesminus = EmployeeSearch.map((value) => parseFloat(value.minus));
 
     const calculatedValuesAllTime = calculatedValues.map((value) => parseFloat(value.calculatedValue));
     const calculatedValuesOtTime = calculatedValues.map((value) => parseFloat(value.calculatedOT));
     const calculatedValuesaddSalary = addSalary.map((value) => parseFloat(value.SpSalary));
 
+    const calculatedValuesminus = calculatedValues.map((value) => parseFloat(value.minus));
+
+    // const testre = EmployeeSearch.map((value) => parseFloat(value.minus));
+
     const sumAlltime = calculatedValuesAllTime.reduce((total, currentValue) => total + currentValue, 0);
     const sumOtTime = calculatedValuesOtTime.reduce((total, currentValue) => total + currentValue, 0);
     const sumSalary = calculatedValuesaddSalary.reduce((total, currentValue) => total + currentValue, 0);
+    // const summinus = calculatedValuesminus.reduce((total, currentValue) => total + currentValue, 0);
+
+    const Sumall = sumAlltime + sumSalary + sumOtTime;
+    const Minus = parseFloat((Sumall * (MinusSearch / 100)).toFixed(2));
+
+    console.log('testRe1', Sumall);
+    console.log('testRe2', Minus);
+    console.log('testRe3', MinusSearch);
 
 
-    setMonthset(sumAlltime + sumSalary + sumOtTime);
+    // console.log('all', calculatedValues);
+
+    setMinusSS(Minus);
+    setResult(Sumall - Minus);
     // countWork
     console.log('testcal ++', monthset);
 
   }, [month, calculatedValues, addSalary]);
   console.log('testcal', monthset);
+  console.log('testRe', result);
+
 
   // useState(() => {
   //   const tableDataDate = tableData.filter(item => item.date !== null && item.date !== '');
@@ -1233,11 +1261,12 @@ function Worktimesheet() {
                         </tr>
                         <tr>
                           <td>หักประกันสังคม</td>
+                          <td>{MinusSS} ({MinusSearch} %)</td>
 
                         </tr>
                         <tr>
                           <td>เงินสุทธิ</td>
-                          <td>{monthset}</td>
+                          <td>{result}</td>
                         </tr>
                       </tbody>
                     </table>
