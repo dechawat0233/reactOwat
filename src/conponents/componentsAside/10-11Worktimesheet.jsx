@@ -36,10 +36,10 @@ function Worktimesheet() {
 
   const [employeelist, setEmployeelist] = useState([]);
   const [employee, setEmployee] = useState([]);
-  const [listDayOff, setListDayOff] = useState([]);
-  const [y, setY] = useState('');
-  const [m, setM] = useState('');
-  const [m1, setM1] = useState('');
+const [listDayOff , setListDayOff] = useState([]);
+const [y , setY] = useState('');
+const [m , setM] = useState('');
+const [m1 , setM1] = useState('');
 
 
   useEffect(() => {
@@ -60,43 +60,43 @@ function Worktimesheet() {
 
 
 
-  function getListDayOff(month, month1, res) {
+  function getListDayOff( month , month1 , res) {
     setM(month);
     setM1(month1);
-    setY(searchResult[0].timerecordId);
+setY(searchResult[0].timerecordId);
 
     const emp_workplace = employeelist.find(item => item.employeeId === searchResult[0].employeeId);
-    const wid = emp_workplace.workplace;
-    const empWorkplace = workplaceList.find(item => item.workplaceId === wid);
+const wid = emp_workplace.workplace;
+const empWorkplace = workplaceList.find(item => item.workplaceId === wid);
 
-    const df = [];
-    if (!empWorkplace.workday7) {
-      df.push('7');
-    }
-    if (!empWorkplace.workday6) {
-      df.push('6');
-    }
-    if (!empWorkplace.workday5) {
-      df.push('5');
-    }
-    if (!empWorkplace.workday4) {
-      df.push('4');
-    }
-    if (!empWorkplace.workday3) {
-      df.push('3');
-    }
-    if (!empWorkplace.workday2) {
-      df.push('2');
-    }
-    if (!empWorkplace.workday1) {
-      df.push('1');
-    }
+const df = [];
+if(!empWorkplace.workday7 ){
+  df.push('7');
+}
+if(!empWorkplace.workday6 ){
+  df.push('6');
+}
+if(!empWorkplace.workday5 ){
+  df.push('5');
+}
+if(!empWorkplace.workday4 ){
+  df.push('4');
+}
+if(!empWorkplace.workday3 ){
+  df.push('3');
+}
+if(!empWorkplace.workday2 ){
+  df.push('2');
+}
+if(!empWorkplace.workday1 ){
+  df.push('1');
+}
 
-    setListDayOff(df);
+setListDayOff(df);
 
-  }
-
-
+    }
+    
+    
   // Generate an array containing numbers from 21 to 31
   const range1 = Array.from({ length: 11 }, (_, i) => i + 21);
 
@@ -164,10 +164,6 @@ function Worktimesheet() {
 
   const [woekplace, setWoekplace] = useState([]);
 
-  const [calendarData1, setCalendarData1] = useState([]);
-  const [calendarData2, setCalendarData2] = useState([]);
-  const yeartest = 2023;
-  const monthtest = 3; // 3 represents March using 1-based indexing
   async function handleSearch(event) {
     event.preventDefault();
     // get value from form search
@@ -186,89 +182,9 @@ function Worktimesheet() {
       employeeName: searchEmployeeName,
       month: formattedResult
     };
-    console.log('data1', data1.month);
-    console.log('data2', data.month);
+    // console.log(searchEmployeeId);
+    // alert(data1.month);
 
-    // date day
-
-    // Calculate the formatted month based on data1.month
-    const parsedNumber1 = parseInt(data1.month, 10) - 1;
-    const formattedResult1 = String(parsedNumber1).padStart(2, '0');
-
-    // Calculate the formatted month based on data.month
-    const parsedNumber2 = parseInt(data.month, 10) - 1;
-    const formattedResult2 = String(parsedNumber2).padStart(2, '0');
-
-
-    // Create a Date object for the first day of data1.month
-    const firstDayOfMonth1 = new Date(yeartest, parsedNumber1, 1);
-
-    // Create a Date object for the first day of data.month
-    const firstDayOfMonth2 = new Date(yeartest, parsedNumber2, 1);
-
-    console.log('formattedResult1', firstDayOfMonth1);
-    console.log('formattedResult2', firstDayOfMonth2);
-    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const dates1 = [];
-    const dates2 = [];
-
-    // Loop through the days of the week
-    for (let i = 0; i < 7; i++) {
-      const day = daysOfWeek[i];
-      const dayDates1 = [];
-      const dayDates2 = [];
-
-      // Start from the first day of data1.month
-      let currentDate1 = new Date(firstDayOfMonth1);
-      let currentDate2 = new Date(firstDayOfMonth2);
-
-      // Find the first day of the week
-      while (currentDate1.getDay() !== i) {
-        currentDate1.setDate(currentDate1.getDate() + 1);
-      }
-      while (currentDate2.getDay() !== i) {
-        currentDate2.setDate(currentDate2.getDate() + 1);
-      }
-
-      // Continue adding dates while still in the same month for data1.month
-      while (currentDate1.getMonth() === parsedNumber1) {
-        dayDates1.push(currentDate1.getDate());
-        currentDate1.setDate(currentDate1.getDate() + 7); // Move to the next occurrence of the day
-      }
-
-      // Continue adding dates while still in the same month for data.month
-      while (currentDate2.getMonth() === parsedNumber2) {
-        dayDates2.push(currentDate2.getDate());
-        currentDate2.setDate(currentDate2.getDate() + 7); // Move to the next occurrence of the day
-      }
-
-      dates1.push({ day, dates: dayDates1 });
-      dates2.push({ day, dates: dayDates2 });
-      console.log('dates1', dates1);
-      console.log('dates2', dates2);
-
-    }
-
-    // Set the calendar data in the state
-    // setCalendarData1(dates1); 
-    // setCalendarData2(dates2);
-    // console.log('calendarData1', calendarData1);
-    // console.log('calendarData2', calendarData2);
-    const filteredDates1 = dates1.map((dayData) => ({
-      ...dayData,
-      dates: dayData.dates.filter((date) => date >= 21 && date <= 31), // Adjusted filtering condition
-    })).filter((dayData) => dayData.dates.length > 0);
-
-
-    const filteredDates2 = dates2.map((dayData) => ({
-      ...dayData,
-      dates: dayData.dates.filter((date) => date < 20), // Adjusted filtering condition
-    })).filter((dayData) => dayData.dates.length > 0);
-
-    console.log('calendarData1 filteredDates1:', filteredDates1);
-    console.log('calendarData2 filteredDates2:', filteredDates2);
-    setCalendarData1(filteredDates1); // Assuming you have a separate state for data1.month
-    setCalendarData2(filteredDates2);
     try {
 
       const response = await axios.post(endpoint + '/timerecord/searchemp', data);
@@ -278,8 +194,6 @@ function Worktimesheet() {
       } else {
         alert("ไม่พบข้อมูล 1 ถึง 20 " + getMonthName(data.month));
       }
-
-
       // const empId = await axios.post(endpoint + '/employee/search', searchResult.employeeId);
       // if (empId.data.recordworkplace.length >= 1) {
       //   await setEmpId(empId.data.recordworkplace);
@@ -376,7 +290,6 @@ function Worktimesheet() {
         //       return record;
         //     })
         // );
-
         setTableData((prevState) => {
           const updatedData = [...prevState];
           dates.forEach((date, index) => {
@@ -393,6 +306,7 @@ function Worktimesheet() {
                 updatedData[(dataIndex + 11)].workplaceId = workplaceId[index]; // Set otTime at the same index as dates
                 updatedData[(dataIndex + 11)].date = dates[index]; // Set otTime at the same index as dates
                 // Set otTime at the same index as dates
+
               }
 
             }
@@ -560,19 +474,15 @@ function Worktimesheet() {
                 updatedData[(dataIndex1 - 20)].allTime = allTimeA1[index];
                 updatedData[(dataIndex1 - 20)].workplaceId = workplaceId1[index]; // Set otTime at the same index as dates
                 updatedData[(dataIndex1 - 20)].date = dates1[index]; // Set otTime at the same index as dates
-                // updatedData[(dataIndex1 - 20)].month = month[index]; // Set otTime at the same index as dates
-
 
                 // Set otTime at the same index as dates
+
               }
 
             }
-
           });
-          console.log('updatedData', updatedData);
-
           const filteredData = updatedData.filter((record) => record.isChecked == true);
-          // console.log('updatedData', updatedData);
+
           // const workplaceIds = filteredData.map((record) => record.workplaceId)
 
           // const filteredData = [
@@ -583,6 +493,7 @@ function Worktimesheet() {
           // ];
 
           const workplaceIds = [...new Set(filteredData.map((record) => record.workplaceId))];
+
           // const workplaceIdCounts = {};
           // const workplaceIdOtTimes = {};
           // Extract unique workplaceId values and count occurrences
@@ -677,14 +588,10 @@ function Worktimesheet() {
     }
 
     //check day off form select month
-    getListDayOff(data.month, data1.month);
+    getListDayOff(data.month , data1.month );
 
   }
   console.log('workplaceIdList', workplaceIdList);
-
-
-  console.log('calendarData1 updated:', calendarData1);
-  console.log('calendarData2 updated:', calendarData2);
 
   //set salaty calculate
   const [workRate, setWorkRate] = useState(''); //ค่าจ้างต่อวัน
@@ -718,13 +625,14 @@ function Worktimesheet() {
       const allTime = item.allTime;
       const otTime = item.otTime;
 
+
+
       const workplace = workplaceList.find((w) => w.workplaceId === workplaceId);
       if (workplace) {
         const workRate = workplace.workRate;
         const workRateOT = workplace.workRateOT;
-        const workOfHour = workplace.workOfHour;
 
-        return { workplaceId, calculatedValue: workRate * allTime, allTime, otTime, calculatedOT: (workRate/workOfHour) * workRateOT * otTime };
+        return { workplaceId, calculatedValue: workRate * allTime, allTime, otTime, calculatedOT: workRateOT * otTime };
       }
       return null;
     });
@@ -736,7 +644,6 @@ function Worktimesheet() {
     const totalSum = filteredResults.reduce((sum, result) => sum + result.calculatedValue, 0);
     // const totalSum = filteredResults.reduce((sum, result) => sum + result.calculatedValue, 0);
 
-    
 
     setWorkRate(totalSum);
 
@@ -916,7 +823,7 @@ function Worktimesheet() {
 
 
   const [year, setYear] = useState(2023); // Example year (you can set it dynamically)
-  // const [calendarData, setCalendarData] = useState([]);
+  const [calendarData, setCalendarData] = useState([]);
 
   const [workMonth, setWorkMonth] = useState([]);
 
@@ -1105,6 +1012,8 @@ function Worktimesheet() {
       console.error('Error generating PDF:', error);
     }
   };
+
+
 
   return (
     // <div>
@@ -1438,17 +1347,16 @@ function getMonthName(monthNumber) {
 const getDateDayOfWeek = (dateString) => {
   // Create a Date object with the input date string in the format YYYY/mm/dd
   const date = new Date(dateString);
-
+  
   // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
   const dayOfWeek = date.getDay();
   // Return the day of the week (Sunday, Monday, etc.)
   // const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  //overide
-  const daysOfWeek = ['7', '1', '2', '3', '4', '5', '6'];
+//overide
+const daysOfWeek = ['7', '1', '2', '3', '4', '5', '6'];
   return daysOfWeek[dayOfWeek];
-  // console.log('dayOfWeek',dayOfWeek);
 };
-// console.log('',getDateDayOfWeek);
+
 
 
 export default Worktimesheet

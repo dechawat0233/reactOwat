@@ -150,13 +150,13 @@ function Setting() {
     // const [workRateDayoffHour, setWorkRateDayoffHour] = useState(''); //ค่าจ้างวันหยุดต่อชั่วโมง
 
     ///////////////////// 7 day work
-    const [workday1, setWorkday1] = useState('');
-    const [workday2, setWorkday2] = useState('');
-    const [workday3, setWorkday3] = useState('');
-    const [workday4, setWorkday4] = useState('');
-    const [workday5, setWorkday5] = useState('');
-    const [workday6, setWorkday6] = useState('');
-    const [workday7, setWorkday7] = useState('');
+    const [workday1, setWorkday1] = useState(false);
+    const [workday2, setWorkday2] = useState(false);
+    const [workday3, setWorkday3] = useState(false);
+    const [workday4, setWorkday4] = useState(false);
+    const [workday5, setWorkday5] = useState(false);
+    const [workday6, setWorkday6] = useState(false);
+    const [workday7, setWorkday7] = useState(false);
 
     const [workcount1, setWorkcount1] = useState('');
     const [workcount2, setWorkcount2] = useState('');
@@ -290,13 +290,47 @@ function Setting() {
         //setSelectedDates([...selectedDates, workplace.daysOff]);
 
         ////////work day
-        setWorkday1(workplace.workday1);
-        setWorkday2(workplace.workday2);
-        setWorkday3(workplace.workday3);
-        setWorkday4(workplace.workday4);
-        setWorkday5(workplace.workday5);
-        setWorkday6(workplace.workday6);
-        setWorkday7(workplace.workday7);
+        if(workplace.workday1 == 'false'){
+            setWorkday1(false)
+        }else{
+            setWorkday1(workplace.workday1);
+        }
+        if(workplace.workday2 == 'false'){
+            setWorkday2(false)
+        }else{
+            setWorkday2(workplace.workday2);
+        }
+        if(workplace.workday3 == 'false'){
+            setWorkday3(false)
+        }else{
+            setWorkday3(workplace.workday3);
+        }
+        if(workplace.workday4 == 'false'){
+            setWorkday4(false)
+        }else{
+            setWorkday4(workplace.workday4);
+        }
+        if(workplace.workday5 == 'false'){
+            setWorkday5(false)
+        }else{
+            setWorkday5(workplace.workday5);
+        }
+        if(workplace.workday6 == 'false'){
+            setWorkday6(false)
+        }else{
+            setWorkday6(workplace.workday6);
+        }
+        if(workplace.workday7 == 'false'){
+            setWorkday7(false)
+        }else{
+            setWorkday7(workplace.workday7);
+        }
+        // setWorkday2(workplace.workday2);
+        // setWorkday3(workplace.workday3);
+        // setWorkday4(workplace.workday4);
+        // setWorkday5(workplace.workday5);
+        // setWorkday6(workplace.workday6);
+        // setWorkday7(workplace.workday7);
 
         setWorkcount1(workplace.workcount1);
         setWorkcount2(workplace.workcount2);
