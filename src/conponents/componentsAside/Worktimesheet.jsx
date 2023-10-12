@@ -17,6 +17,7 @@ function Worktimesheet() {
   const [dataset, setDataset] = useState([]);
 
   const [workplaceList, setWorkplaceList] = useState([]);
+const [result_data , setResult_data ] = useState([]);
 
   useEffect(() => {
     // Fetch data from the API when the component mounts
@@ -275,6 +276,7 @@ function Worktimesheet() {
 
       if (response.data.recordworkplace.length >= 1) {
         await setSearchResult(response.data.recordworkplace);
+        await setResult_data(response.data.recordworkplace);
       } else {
         alert("ไม่พบข้อมูล 1 ถึง 20 " + getMonthName(data.month));
       }
@@ -525,6 +527,10 @@ function Worktimesheet() {
       const response1 = await axios.post(endpoint + '/timerecord/searchemp', data1);
       if (response1.data.recordworkplace.length >= 1) {
         await setSearchResult1(response1.data.recordworkplace);
+        if(!result_data) {
+          await setResult_data(response1.data.recordworkplace);
+        }
+
       } else {
         alert("ไม่พบข้อมูล 21 ถึง สิ้นเดือน " + getMonthName(data1.month));
       }
@@ -535,6 +541,7 @@ function Worktimesheet() {
       const employeeWorkplaceRecords1 = await response1.data.recordworkplace[0].employee_workplaceRecord || '';
 
       if (employeeWorkplaceRecords1.length > 0) {
+
         const dates1 = await employeeWorkplaceRecords1.map(record => record.date);
         // const otTime = employeeWorkplaceRecords.map(record => record.otTime);
 
@@ -548,7 +555,7 @@ function Worktimesheet() {
           const updatedData = [...prevState];
           dates1.forEach((date1, index) => {
             const dataIndex1 = parseInt(date1, 10) - 1; // Subtract 1 because indices are zero-based
-            if (dataIndex1 >= 0 && dataIndex1 < updatedData.length) {
+            // if (dataIndex1 >= 0 && dataIndex1 < updatedData.length) {
 
               if (dataIndex1 >= 20 && dataIndex1 <= 31) {
                 // alert(dataIndex1 +' .');
@@ -566,7 +573,7 @@ function Worktimesheet() {
                 // Set otTime at the same index as dates
               }
 
-            }
+            // }
 
           });
           console.log('updatedData', updatedData);
@@ -1177,14 +1184,14 @@ function Worktimesheet() {
                         </div>
                       </form>
                       <div class="d-flex justify-content-center">
-                        <h2 class="title">ผลลัพธ์ {searchResult.length} รายการ</h2>
+                        <h2 class="title">ผลลัพธ์ {result_data.length} รายการ</h2>
                       </div>
                       <div class="d-flex justify-content-center">
                         <div class="row">
                           <div class="col-md-12">
                             <div class="form-group">
                               <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
-                                {searchResult.map(workplace => (
+                                {result_data.map(workplace => (
                                   <li
                                     key={workplace.employeeId}
                                     onClick={() => handleClickResult(workplace)}
@@ -1206,7 +1213,7 @@ function Worktimesheet() {
 
             <div class="row">
               <div class="col-md-2">
-                {searchResult.map((
+                {result_data.map((
                   employeerecord) => (
                   employeerecord.employeeId + ': ชื่อพนักงาน ' + employeerecord.employeeName)
                 )}
@@ -1216,17 +1223,17 @@ function Worktimesheet() {
 
             <div class="row">
               <div class="col-md-2">
-                {searchResult.map((
+                {result_data.map((
                   employeerecord) => (
                   '                ชื่อ :                   ' + employeerecord.employeeName)
                 )}
               </div>
               <div class="col-md-3">
-                {searchResult.map((
+                {result_data.map((
                   employeerecord) => (
-                    'ประจำเดือน ' + getMonthName(employeerecord.month)
-                    + 'ตั้งแต่วันที่ 21 ' + getMonthName(parseInt(employeerecord.month, 10) - 1)
-                    + ' ถึง 20 ' + getMonthName(employeerecord.month))
+                    'ประจำเดือน ' + getMonthName(month)
+                    + 'ตั้งแต่วันที่ 21 ' + getMonthName(parseInt(month, 10) - 1)
+                    + ' ถึง 20 ' + getMonthName(month))
                   + '  ' + (parseInt(employeerecord.timerecordId, 10) + 543)
                 )}
               </div>
