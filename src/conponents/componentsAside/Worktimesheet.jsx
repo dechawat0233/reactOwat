@@ -32,7 +32,7 @@ function Worktimesheet() {
       });
   }, []); // The empty array [] ensures that the effect runs only once after the initial render
 
-  console.log(workplaceList);
+  // console.log(workplaceList);
 
   const [employeelist, setEmployeelist] = useState([]);
   const [employee, setEmployee] = useState([]);
@@ -56,7 +56,7 @@ function Worktimesheet() {
       });
   }, []); // The empty array [] ensures that the effect runs only once after the initial render
 
-  console.log('employeelist', employeelist);
+  // console.log('employeelist', employeelist);
 
 
 
@@ -175,7 +175,8 @@ function Worktimesheet() {
       employeeId: searchEmployeeId,
       employeeName: searchEmployeeName,
       month: month
-    }; console.log(searchEmployeeId);
+    };
+    console.log('searchEmployeeId', searchEmployeeId);
 
     const parsedNumber = await parseInt(month, 10) - 1;
     const formattedResult = await String(parsedNumber).padStart(2, '0');
@@ -186,8 +187,8 @@ function Worktimesheet() {
       employeeName: searchEmployeeName,
       month: formattedResult
     };
-    console.log('data1', data1.month);
-    console.log('data2', data.month);
+    // console.log('data1', data1.month);
+    // console.log('data2', data.month);
 
     // date day
 
@@ -206,8 +207,8 @@ function Worktimesheet() {
     // Create a Date object for the first day of data.month
     const firstDayOfMonth2 = new Date(yeartest, parsedNumber2, 1);
 
-    console.log('formattedResult1', firstDayOfMonth1);
-    console.log('formattedResult2', firstDayOfMonth2);
+    // console.log('formattedResult1', firstDayOfMonth1);
+    // console.log('formattedResult2', firstDayOfMonth2);
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const dates1 = [];
     const dates2 = [];
@@ -265,8 +266,8 @@ function Worktimesheet() {
       dates: dayData.dates.filter((date) => date < 20), // Adjusted filtering condition
     })).filter((dayData) => dayData.dates.length > 0);
 
-    console.log('calendarData1 filteredDates1:', filteredDates1);
-    console.log('calendarData2 filteredDates2:', filteredDates2);
+    // console.log('calendarData1 filteredDates1:', filteredDates1);
+    // console.log('calendarData2 filteredDates2:', filteredDates2);
     setCalendarData1(filteredDates1); // Assuming you have a separate state for data1.month
     setCalendarData2(filteredDates2);
     try {
@@ -724,7 +725,7 @@ function Worktimesheet() {
         const workRateOT = workplace.workRateOT;
         const workOfHour = workplace.workOfHour;
 
-        return { workplaceId, calculatedValue: workRate * allTime, allTime, otTime, calculatedOT: (workRate/workOfHour) * workRateOT * otTime };
+        return { workplaceId, calculatedValue: workRate * allTime, allTime, otTime, calculatedOT: (workRate / workOfHour) * workRateOT * otTime };
       }
       return null;
     });
@@ -736,7 +737,7 @@ function Worktimesheet() {
     const totalSum = filteredResults.reduce((sum, result) => sum + result.calculatedValue, 0);
     // const totalSum = filteredResults.reduce((sum, result) => sum + result.calculatedValue, 0);
 
-    
+
 
     setWorkRate(totalSum);
 
@@ -750,6 +751,8 @@ function Worktimesheet() {
   console.log(workplaceList);
 
   console.log('searchResult', searchResult);
+  console.log('searchResult1', searchResult1);
+
   // get employee data
   const [MinusSearch, setMinusSearch] = useState(0); // Example: February (you can set it dynamically)
 
