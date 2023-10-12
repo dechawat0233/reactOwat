@@ -935,10 +935,11 @@ shift == 'morning_shift' ) {
         event.preventDefault();
         // alert('hi');
         //get data from input in useState to data 
+        
         const data = {
             workplaceId: workplaceId,
             workplaceName: workplaceName,
-            date: workDate,
+            date: formattedWorkDate,
             employeeRecord: rowDataList
         };
 

@@ -108,6 +108,18 @@ router.get('/listempdelete', async (req, res) => {
   }
 });
 
+router.get('/listdelete', async (req, res) => {
+
+  const workplaceTimeRecordData = await workplaceTimerecord.find();
+      // Delete all data
+      await workplaceTimeRecordData.deleteMany();
+
+      // console.log(`Deleted ${workplaceTimeRecordData.length} records.`);
+  
+  res.json(workplaceTimeRecordData);
+});
+
+
 
 // Get  workplace time record by WorkplaceTimeRecord Id
 router.get('/:workplaceTimeRecordId', async (req, res) => {
