@@ -258,13 +258,13 @@ router.post('/create', async (req, res) => {
   } = await req.body;
   // console.log(date);
 
-  const currentDate = new Date(date);
-  const currentYear = currentDate.getFullYear();
-  const timerecordId = currentYear;
+  const currentDate = await new Date(date);
+  const currentYear = await currentDate.getFullYear();
+  const timerecordId = await currentYear;
 
 
   // Create workplace
-  const workplaceTimeRecordData = new workplaceTimerecord({
+  const workplaceTimeRecordData = await new workplaceTimerecord({
     timerecordId,
     workplaceId,
     workplaceName,

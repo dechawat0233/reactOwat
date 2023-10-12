@@ -556,7 +556,7 @@ const [result_data , setResult_data ] = useState([]);
           dates1.forEach((date1, index) => {
             const dataIndex1 = parseInt(date1, 10) - 1; // Subtract 1 because indices are zero-based
             // if (dataIndex1 >= 0 && dataIndex1 < updatedData.length) {
-
+alert(index);
               if (dataIndex1 >= 20 && dataIndex1 <= 31) {
                 // alert(dataIndex1 +' .');
                 // setCountWork((countWork + 1));
