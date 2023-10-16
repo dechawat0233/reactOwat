@@ -248,44 +248,84 @@ router.post('/searchemp', async (req, res) => {
 
 
 // Create new workplace 
-router.post('/create', async (req, res) => {
+// router.post('/create', async (req, res) => {
   
-  const {
-    workplaceId,
-    workplaceName,
-    date,
-    employeeRecord
-  } = await req.body;
-  // console.log(date);
+//   const {
+//     workplaceId,
+//     workplaceName,
+//     date,
+//     employeeRecord
+//   } = await req.body;
+//   // console.log(date);
 
-  const currentDate = new Date(date);
-  const currentYear = currentDate.getFullYear();
-  const timerecordId = currentYear;
+//   const currentDate = await new Date(date);
+//   const currentYear = await currentDate.getFullYear();
+//   const timerecordId = await currentYear;
 
 
-  // Create workplace
-  const workplaceTimeRecordData = new workplaceTimerecord({
-    timerecordId,
-    workplaceId,
-    workplaceName,
-    date,
-    employeeRecord
-  });
+//   // Create workplace
+//   const workplaceTimeRecordData = await new workplaceTimerecord({
+//     timerecordId,
+//     workplaceId,
+//     workplaceName,
+//     date,
+//     employeeRecord
+//   });
 
-  try {
-    const ans = await workplaceTimeRecordData.save();
-if(ans){
-  console.log('create workplace time record success');
-      await setToEmployee(workplaceId, workplaceName, date, employeeRecord);
+//   try {
+//     const ans = await workplaceTimeRecordData.save();
+// if(ans){
+//   console.log('create workplace time record success');
+//       await setToEmployee(workplaceId, workplaceName, date, employeeRecord);
 
-}
-    await res.json(workplaceTimeRecordData);
-  } catch (err) {
-    console.log(err);
-    res.status(400).json({ error: err.message });
-  }
+// }
+//     await res.json(workplaceTimeRecordData);
+//   } catch (err) {
+//     console.log(err);
+//     res.status(400).json({ error: err.message });
+//   }
 
-});
+// });
+
+
+// Create new workplace
+// router.post('/create', async (req, res) => {
+//   try {
+//     const {
+//       workplaceId,
+//       workplaceName,
+//       date,
+//       employeeRecord
+//     } = req.body;
+
+//     // Filter out employeeRecord objects where staffId is null
+//     const filteredEmployeeRecord = employeeRecord.filter(record => record.staffId !== null);
+
+//     const currentDate = new Date(date);
+//     const currentYear = currentDate.getFullYear();
+//     const timerecordId = currentYear;
+
+//     // Create workplace with filtered employeeRecord array
+//     const workplaceTimeRecordData = new workplaceTimerecord({
+//       timerecordId,
+//       workplaceId,
+//       workplaceName,
+//       date,
+//       employeeRecord: filteredEmployeeRecord
+//     });
+
+//     const ans = await workplaceTimeRecordData.save();
+//     if (ans) {
+//       console.log('Create workplace time record success');
+//       // Call your setToEmployee function here if needed
+//     }
+
+//     res.json(workplaceTimeRecordData);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(400).json({ error: err.message });
+//   }
+// });
 
 
 // Create new employee timerecord 
@@ -377,143 +417,256 @@ router.put('/updateemp/:employeeRecordId', async (req, res) => {
 });
 
 
-async function setToEmployee(selectWorkplaceId , selectworkplaceName ,selectMonth , workplaceTimeRecordData ){
-  console.log('setToEmployee working');
-console.log(selectMonth );
-const dateParts = await selectMonth.split('/');
-  //set employee id and month of record
-const workplaceId = await selectWorkplaceId;
-const workplaceName = await selectworkplaceName;
- const month =await dateParts[1];
- const query = {};
+// async function setToEmployee(selectWorkplaceId , selectworkplaceName ,selectMonth , workplaceTimeRecordData ){
+//   console.log('setToEmployee working');
+// console.log(selectMonth );
+// const dateParts = await selectMonth.split('/');
+//   //set employee id and month of record
+// const workplaceId = await selectWorkplaceId;
+// const workplaceName = await selectworkplaceName;
+//  const month =await dateParts[1];
+//  const query = {};
 
-//  console.log(workplaceTimeRecordData );
-const timerecordId_year = await dateParts[2];
-const day  = await dateParts[0];
-await console.log('workplace ID: '+ workplaceId );
-await console.log('year '+ timerecordId_year );
-await console.log('month: '+ month);
-await console.log('day ' + day);
+// //  console.log(workplaceTimeRecordData );
+// const timerecordId_year = await dateParts[2];
+// const day  = await dateParts[0];
+// await console.log('workplace ID: '+ workplaceId );
+// await console.log('year '+ timerecordId_year );
+// await console.log('month: '+ month);
+// await console.log('day ' + day);
 
-await workplaceTimeRecordData.forEach(async element => {
-  // console.log(element['employeeRecord'] );
-  // console.log('========');
+// await workplaceTimeRecordData.forEach(async element => {
+//   // console.log(element['employeeRecord'] );
+//   // console.log('========');
 
-//check emty from input record
-    if(element.staffId  !== ''){
-//       await console.log('employee: '+ element1.staffId);
-//       await console.log('month: '+ month)
-//       await console.log('========');
+// //check emty from input record
+//     if(element.staffId  !== ''){
+// //       await console.log('employee: '+ element1.staffId);
+// //       await console.log('month: '+ month)
+// //       await console.log('========');
 
-      try {
-        //check employee timerecord from database
-         query.employeeId= await element.staffId;
-        query.month = await { $regex: new RegExp(month, 'i') };
+//       try {
+//         //check employee timerecord from database
+//          query.employeeId= await element.staffId;
+//         query.month = await { $regex: new RegExp(month, 'i') };
         
-          const recordworkplace  = await workplaceTimerecordEmp.find(query);
-        // await console.log(recordworkplace  .length);
+//           const recordworkplace  = await workplaceTimerecordEmp.find(query);
+//         // await console.log(recordworkplace  .length);
 
-        //check employee timerecord 
-        if(recordworkplace  .length > 0){
-// employee timerecord is created
+//         //check employee timerecord 
+//         if(recordworkplace  .length > 0){
+// // employee timerecord is created
 
-//update employeeTimerecord Data
-// await console.log('recordworkplace _id '+ recordworkplace[0]._id );
+// //update employeeTimerecord Data
+// // await console.log('recordworkplace _id '+ recordworkplace[0]._id );
 
-//push data to employee_workplaceRecord in employee timerecord 
+// //push data to employee_workplaceRecord in employee timerecord 
 
-await recordworkplace[0].employee_workplaceRecord.push({
-  'workplaceId': workplaceId,
-  'workplaceName': workplaceName,
-  'date':  day,
-  'shift': element.shift,
-  'startTime': element.startTime,
-  'endTime': element.endTime,
-  'allTime': element.allTime,
-  'otTime': element.otTime,
-  'selectotTime': element.selectotTime,
-  'selectotTimeOut': element.selectotTimeOut,
-});
-// await console.log(recordworkplace);
+// await recordworkplace[0].employee_workplaceRecord.push({
+//   'workplaceId': workplaceId,
+//   'workplaceName': workplaceName,
+//   'date':  day,
+//   'shift': element.shift,
+//   'startTime': element.startTime,
+//   'endTime': element.endTime,
+//   'allTime': element.allTime,
+//   'otTime': element.otTime,
+//   'selectotTime': element.selectotTime,
+//   'selectotTimeOut': element.selectotTimeOut,
+// });
+// // await console.log(recordworkplace);
 
-const employeeIdToUpdate = await recordworkplace[0]._id;
-const updateFields = await recordworkplace;
-// await console.log('updateFields ' +updateFields );
+// const employeeIdToUpdate = await recordworkplace[0]._id;
+// const updateFields = await recordworkplace;
+// // await console.log('updateFields ' +updateFields );
 
-try {
-  // Find the resource by ID and update it
+// try {
+//   // Find the resource by ID and update it
 
-  const updatedDocument = await workplaceTimerecordEmp.findByIdAndUpdate(
-    employeeIdToUpdate,
-    recordworkplace[0],
-    { new: true } // Return the updated document
-  );
+//   const updatedDocument = await workplaceTimerecordEmp.findByIdAndUpdate(
+//     employeeIdToUpdate,
+//     recordworkplace[0],
+//     { new: true } // Return the updated document
+//   );
 
-  if (updatedDocument) {
-    console.log('Document updated successfully.');
-    // res.json(updatedDocument);
-  } else {
-    console.log('Document not found.');
-    // res.status(404).json({ error: 'Document not found' });
-  }
+//   if (updatedDocument) {
+//     console.log('Document updated successfully.');
+//     // res.json(updatedDocument);
+//   } else {
+//     console.log('Document not found.');
+//     // res.status(404).json({ error: 'Document not found' });
+//   }
 
 
-} catch (error) {
-  console.error('error '+ error);
-}
+// } catch (error) {
+//   console.error('error '+ error);
+// }
 
-//
-        } else {
-          // employee timerecord is no data
-            const timerecordId = await timerecordId_year ;
-            const employeeId = await element.staffId;
-            const  employeeName = element.staffName;
-            const  month = await dateParts[1];
-            const employee_workplaceRecord = {
-              'workplaceId': workplaceId,
-              'workplaceName': workplaceName,
-              'date': day,
-              'shift': element.shift,
-              'startTime': element.startTime,
-              'endTime': element.endTime,
-              'allTime': element.allTime,
-              'otTime': element.otTime,
-              'selectotTime': element.selectotTime,
-              'selectotTimeOut': element.selectotTimeOut,
-            };
+// //
+//         } else {
+//           // employee timerecord is no data
+//             const timerecordId = await timerecordId_year ;
+//             const employeeId = await element.staffId;
+//             const  employeeName = element.staffName;
+//             const  month = await dateParts[1];
+//             const employee_workplaceRecord = {
+//               'workplaceId': workplaceId,
+//               'workplaceName': workplaceName,
+//               'date': day,
+//               'shift': element.shift,
+//               'startTime': element.startTime,
+//               'endTime': element.endTime,
+//               'allTime': element.allTime,
+//               'otTime': element.otTime,
+//               'selectotTime': element.selectotTime,
+//               'selectotTimeOut': element.selectotTimeOut,
+//             };
       
-          // Create employee record
-          const workplaceTimeRecordData = await new workplaceTimerecordEmp({
+//           // Create employee record
+//           const workplaceTimeRecordData = await new workplaceTimerecordEmp({
+//             timerecordId,
+//             employeeId,
+//             employeeName,
+//             month,
+//             employee_workplaceRecord
+//           });
+// // console.log(workplaceTimeRecordData );        
+
+//           try {
+//             await workplaceTimeRecordData.save();
+//             // res.json(workplaceTimeRecordData);
+//           } catch (err) {
+//             await console.log(err);
+//             // res.status(400).json({ error: err.message });
+//           }
+        
+        
+//         }
+//        } catch (error) {
+//          console.error(error);
+//        }
+      
+//     } //end if
+
+
+// }); //end  loop
+
+// //end function
+// }
+
+
+async function setToEmployee(selectWorkplaceId, selectworkplaceName, selectMonth, workplaceTimeRecordData) {
+  console.log('setToEmployee working');
+  const dateParts = selectMonth.split('/');
+  const workplaceId = selectWorkplaceId;
+  const workplaceName = selectworkplaceName;
+  const month = dateParts[1];
+  const day = dateParts[0];
+
+  for (const element of workplaceTimeRecordData) {
+    if (element.staffId !== '') {
+      try {
+        const query = {
+          employeeId: element.staffId,
+          month: { $regex: new RegExp(month, 'i') }
+        };
+
+        const recordworkplace = await workplaceTimerecordEmp.findOne(query);
+
+        if (recordworkplace) {
+          // Employee time record exists, update employee_workplaceRecord
+          recordworkplace.employee_workplaceRecord.push({
+            'workplaceId': workplaceId,
+            'workplaceName': workplaceName,
+            'date': day,
+            'shift': element.shift,
+            'startTime': element.startTime,
+            'endTime': element.endTime,
+            'allTime': element.allTime,
+            'otTime': element.otTime,
+            'selectotTime': element.selectotTime,
+            'selectotTimeOut': element.selectotTimeOut,
+          });
+
+          await recordworkplace.save();
+          console.log('Employee time record updated successfully.');
+        } else {
+          // Employee time record does not exist, create a new one
+          const timerecordId_year = dateParts[2];
+          const timerecordId = timerecordId_year;
+          const employeeId = element.staffId;
+          const employeeName = element.staffName;
+
+          const employee_workplaceRecord = {
+            'workplaceId': workplaceId,
+            'workplaceName': workplaceName,
+            'date': day,
+            'shift': element.shift,
+            'startTime': element.startTime,
+            'endTime': element.endTime,
+            'allTime': element.allTime,
+            'otTime': element.otTime,
+            'selectotTime': element.selectotTime,
+            'selectotTimeOut': element.selectotTimeOut,
+          };
+
+          // Create new employee time record
+          const newEmployeeTimeRecord = new workplaceTimerecordEmp({
             timerecordId,
             employeeId,
             employeeName,
             month,
             employee_workplaceRecord
           });
-// console.log(workplaceTimeRecordData );        
 
-          try {
-            await workplaceTimeRecordData.save();
-            // res.json(workplaceTimeRecordData);
-          } catch (err) {
-            await console.log(err);
-            // res.status(400).json({ error: err.message });
-          }
-        
-        
+          await newEmployeeTimeRecord.save();
+          console.log('New employee time record created successfully.');
         }
-       } catch (error) {
-         console.error(error);
-       }
-      
-    } //end if
-
-
-}); //end  loop
-
-//end function
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
 }
 
+// Create new workplace
+router.post('/create', async (req, res) => {
+  try {
+    const {
+      workplaceId,
+      workplaceName,
+      date,
+      employeeRecord
+    } = req.body;
+
+    // Filter out employeeRecord objects where staffId is null
+    const filteredEmployeeRecord = employeeRecord.filter(record => record.staffId !== '');
+
+    const currentDate = new Date(date);
+    const currentYear = currentDate.getFullYear();
+    const timerecordId = currentYear;
+
+    // Create workplace with filtered employeeRecord array
+    const workplaceTimeRecordData = new workplaceTimerecord({
+      timerecordId,
+      workplaceId,
+      workplaceName,
+      date,
+      employeeRecord: filteredEmployeeRecord
+    });
+
+    const ans = await workplaceTimeRecordData.save();
+    if (ans) {
+      console.log('Create workplace time record success');
+      await setToEmployee(workplaceId, workplaceName, date, filteredEmployeeRecord);
+    }
+
+    res.json(workplaceTimeRecordData);
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ error: err.message });
+  }
+});
 
 
 module.exports = router;

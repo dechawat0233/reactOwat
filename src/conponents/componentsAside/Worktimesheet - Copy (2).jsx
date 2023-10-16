@@ -33,7 +33,7 @@ const [result_data , setResult_data ] = useState([]);
       });
   }, []); // The empty array [] ensures that the effect runs only once after the initial render
 
-  // console.log(workplaceList);
+  console.log(workplaceList);
 
   const [employeelist, setEmployeelist] = useState([]);
   const [employee, setEmployee] = useState([]);
@@ -57,96 +57,47 @@ const [result_data , setResult_data ] = useState([]);
       });
   }, []); // The empty array [] ensures that the effect runs only once after the initial render
 
-  // console.log('employeelist', employeelist);
+  console.log('employeelist', employeelist);
 
 
 
-  //array 31 for day off
-  let arrayOfObjects = Array(31).fill({});
-
-  async function getListDayOff(month, month1, res) {
-
-    //get employee data by employeeId
-    const emp = await employeelist.find(employee => employee.employeeId === result_data[0].employeeId || '');
-    // alert(JSON.stringify(emp.workplace , null , 2));
-// alert(emp.workplace );
-
-    //get day off from workplace by employeeId
-    const wp = await workplaceList.find(item => item.workplaceId === emp.workplace );
-// alert(JSON.stringify(wp , null , 2));
-
-  
+  function getListDayOff(month, month1, res) {
     setM(month);
     setM1(month1);
     setY(searchResult[0].timerecordId);
-const startDate = new Date(y + '/' + month1 + '/20');
-const endDate = new Date(y + '/' + month1 + '/30');
 
-//check  day off in workplace week
-//and set number of day to Sunday is 1 ...7
+    const emp_workplace = employeelist.find(item => item.employeeId === searchResult[0].employeeId);
+    const wid = emp_workplace.workplace;
+    const empWorkplace = workplaceList.find(item => item.workplaceId === wid);
+
     const df = [];
-    if (!wp .workday7) {
-      df.push('1');
-    }
-    if (! wp.workday6) {
+    if (!empWorkplace.workday7) {
       df.push('7');
     }
-    if (! wp.workday5) {
+    if (!empWorkplace.workday6) {
       df.push('6');
     }
-    if (! wp.workday4) {
+    if (!empWorkplace.workday5) {
       df.push('5');
     }
-    if(! wp.workday3) {
+    if (!empWorkplace.workday4) {
       df.push('4');
     }
-    if (! wp.workday2) {
+    if (!empWorkplace.workday3) {
       df.push('3');
     }
-    if (! wp.workday1) {
+    if (!empWorkplace.workday2) {
       df.push('2');
     }
+    if (!empWorkplace.workday1) {
+      df.push('1');
+    }
 
-    if(df.length > 0){
-      const dayOffDate = [];
-      const weekdays = ['1', '2', '3', '4', '5', '6', '7'];
-        let currentDate = startDate;
-        let dCount = 20;
-  
-        while (currentDate <= endDate) {
-          const dayOfWeek = weekdays[currentDate.getDay()];          await dayOffDate.push({[dayOfWeek]: dCount });
-  // alert(JSON.stringify(dayOffDate,null,2));
+    setListDayOff(df);
 
-          dCount = dCount + 1;
-          // Move to the next day
-          currentDate.setDate(currentDate.getDate() + 1);
-        }
-    await setListDayOff(dayOffDate);
-    
-}
-
-Object.entries(listDayOff).forEach(([key, value]) => {
-  // console.log(`Key: ${key}, Value: ${value}`);
-  Object.entries(value).forEach(([key, value]) => {
-// alert(key);
-if(df.includes(key) ) {
-alert("หยุด"+ value);
-//xx
-// arrayOfObjects[value].number = "stop";
-
-}
-
-  });
-
-// alert(value[0]);
-});
-
-//     setListDayOff(); 
-alert(JSON.stringify(listDayOff , null , 2));
   }
 
 
-  
   // Generate an array containing numbers from 21 to 31
   const range1 = Array.from({ length: 11 }, (_, i) => i + 21);
 
@@ -225,8 +176,7 @@ alert(JSON.stringify(listDayOff , null , 2));
       employeeId: searchEmployeeId,
       employeeName: searchEmployeeName,
       month: month
-    };
-    console.log('searchEmployeeId', searchEmployeeId);
+    }; console.log(searchEmployeeId);
 
     const parsedNumber = await parseInt(month, 10) - 1;
     const formattedResult = await String(parsedNumber).padStart(2, '0');
@@ -237,8 +187,8 @@ alert(JSON.stringify(listDayOff , null , 2));
       employeeName: searchEmployeeName,
       month: formattedResult
     };
-    // console.log('data1', data1.month);
-    // console.log('data2', data.month);
+    console.log('data1', data1.month);
+    console.log('data2', data.month);
 
     // date day
 
@@ -257,8 +207,8 @@ alert(JSON.stringify(listDayOff , null , 2));
     // Create a Date object for the first day of data.month
     const firstDayOfMonth2 = new Date(yeartest, parsedNumber2, 1);
 
-    // console.log('formattedResult1', firstDayOfMonth1);
-    // console.log('formattedResult2', firstDayOfMonth2);
+    console.log('formattedResult1', firstDayOfMonth1);
+    console.log('formattedResult2', firstDayOfMonth2);
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const dates1 = [];
     const dates2 = [];
@@ -316,8 +266,8 @@ alert(JSON.stringify(listDayOff , null , 2));
       dates: dayData.dates.filter((date) => date < 20), // Adjusted filtering condition
     })).filter((dayData) => dayData.dates.length > 0);
 
-    // console.log('calendarData1 filteredDates1:', filteredDates1);
-    // console.log('calendarData2 filteredDates2:', filteredDates2);
+    console.log('calendarData1 filteredDates1:', filteredDates1);
+    console.log('calendarData2 filteredDates2:', filteredDates2);
     setCalendarData1(filteredDates1); // Assuming you have a separate state for data1.month
     setCalendarData2(filteredDates2);
     try {
@@ -332,7 +282,84 @@ alert(JSON.stringify(listDayOff , null , 2));
       }
 
 
+      // const empId = await axios.post(endpoint + '/employee/search', searchResult.employeeId);
+      // if (empId.data.recordworkplace.length >= 1) {
+      //   await setEmpId(empId.data.recordworkplace);
+      // } else {
+      //   alert("ไม่พบข้อมูล 1 ถึง 20 " + getMonthName(data.month));
+      // }
+      // console.log('empId',empId);
+
+      // if (data1.month == '00') {
+      //   data1.month = '12';
+      // }
+      // const response1 = await axios.post(endpoint + '/timerecord/searchemp', data1);
+      // if (response1.data.recordworkplace.length >= 1) {
+      //   await setSearchResult1(response1.data.recordworkplace);
+      // } else {
+      //   alert("ไม่พบข้อมูล 21 ถึง สิ้นเดือน " + getMonthName(data1.month ) );
+      // }
+
+      // // await alert(data1.month + ' : '+ response1.data.recordworkplace.length )
+      // // await alert(data.month + ' : '+ response.data.recordworkplace.length )
+
+      // // await alert(searchResult[0].employee_workplaceRecord.length);
+
+      // // alert(JSON.stringify(response.data , null, 2) );
+      // // await alert(searchResult[0].employee_workplaceRecord[0].workplaceId );
+
       const employeeWorkplaceRecords = await response.data.recordworkplace[0].employee_workplaceRecord || '';
+      // const employeeWorkplaceRecords1 = await response1.data.recordworkplace[0].employee_workplaceRecord || '';
+
+      // // xx
+      // if (employeeWorkplaceRecords1.length > 0) {
+      //   const dates1 = employeeWorkplaceRecords1.map(record => record.date);
+      //   // const otTime = employeeWorkplaceRecords.map(record => record.otTime);
+
+      //   const allTimeA1 = employeeWorkplaceRecords1.map((record) => record.allTime);
+
+      //   const workplaceId1 = employeeWorkplaceRecords1.map(record => record.workplaceId);
+
+      //   const otTime1 = employeeWorkplaceRecords1.map((record) => record.otTime);
+
+      //   // setDataset(
+      //   //   employeeWorkplaceRecords1.filter((record) => record.date) // Filter out records with null or undefined dates
+      //   //     .map((record) => {
+      //   //       return record;
+      //   //     })
+      //   // );
+
+      //   setTableData((prevState) => {
+      //     const updatedData = [...prevState];
+      //     dates1.forEach((date1, index) => {
+      //       const dataIndex1 = parseInt(date1, 10) - 1; // Subtract 1 because indices are zero-based
+      //       if (dataIndex1 >= 0 && dataIndex1 < updatedData.length) {
+
+      //         if (dataIndex1 >= 21 && dataIndex1 <= 31) {
+      //           // alert(dataIndex1 +' .');
+
+      //           updatedData[(dataIndex1 - 20)].isChecked = true;
+      //           updatedData[(dataIndex1 - 20)].otTime = otTime1[index];
+      //           updatedData[(dataIndex1 - 20)].allTimeA = allTimeA1[index];
+      //           updatedData[(dataIndex1 - 20)].workplaceId = workplaceId1[index]; // Set otTime at the same index as dates
+      //           updatedData[(dataIndex1 - 20)].date = dates1[index]; // Set otTime at the same index as dates
+
+      //           // Set otTime at the same index as dates
+
+      //         }
+
+      //       }
+      //     });
+      //     const filteredData = updatedData.filter((record) => record.isChecked == true);
+      //     setDataset(filteredData);
+      //     return updatedData;
+
+      //   });
+
+      //   // setWoekplace(dates);
+
+      // }
+      // // xx
 
       if (employeeWorkplaceRecords.length > 0) {
         const dates = employeeWorkplaceRecords.map(record => record.date);
@@ -383,6 +410,21 @@ alert(JSON.stringify(listDayOff , null , 2));
           // const workplaceIds = filteredData.map((record) => record.workplaceId)
           const workplaceIds = [...new Set(filteredData.map((record) => record.workplaceId))];
 
+          // const workplaceIdCounts = {};
+          // 
+          // Extract unique workplaceId values and count occurrences
+          // filteredData.forEach((record) => {
+          //   if (record.isChecked) {
+          //     const { workplaceId } = record;
+          //     if (workplaceIdCounts[workplaceId]) {
+          //       workplaceIdCounts[workplaceId]++;
+          //     } else {
+          //       workplaceIdCounts[workplaceId] = 1;
+          //     }
+          //   }
+          // });
+          // // const uniqueWorkplaceIds = [...new Set(updatedData.map((record) => record.workplaceId))];
+          // const result = Object.entries(workplaceIdCounts).map(([workplaceId, count]) => ({ workplaceId, count }));
 
           const workplaceIdCounts = {};
           const workplaceIdAllTimes = {};
@@ -514,7 +556,7 @@ alert(JSON.stringify(listDayOff , null , 2));
           dates1.forEach((date1, index) => {
             const dataIndex1 = parseInt(date1, 10) - 1; // Subtract 1 because indices are zero-based
             // if (dataIndex1 >= 0 && dataIndex1 < updatedData.length) {
-// alert(index);
+alert(index);
               if (dataIndex1 >= 20 && dataIndex1 <= 31) {
                 // alert(dataIndex1 +' .');
                 // setCountWork((countWork + 1));
@@ -537,9 +579,32 @@ alert(JSON.stringify(listDayOff , null , 2));
           console.log('updatedData', updatedData);
 
           const filteredData = updatedData.filter((record) => record.isChecked == true);
+          // console.log('updatedData', updatedData);
+          // const workplaceIds = filteredData.map((record) => record.workplaceId)
+
+          // const filteredData = [
+          //   { isChecked: true, textValue: '', workplaceId: '1001', date: '30', otTime: '1.0', allTime: '8.0' },
+          //   { isChecked: true, textValue: '', workplaceId: '1001', date: '01', otTime: '2.0', allTime: '4.0' },
+          //   { isChecked: true, textValue: '', workplaceId: '1002', date: '03', otTime: '6.0', allTime: '8.0' },
+          //   { isChecked: false, textValue: '', workplaceId: '1003', date: '04', otTime: '2.0', allTime: '8.0' }
+          // ];
 
           const workplaceIds = [...new Set(filteredData.map((record) => record.workplaceId))];
-
+          // const workplaceIdCounts = {};
+          // const workplaceIdOtTimes = {};
+          // Extract unique workplaceId values and count occurrences
+          // filteredData.forEach((record) => {
+          //   if (record.isChecked) {
+          //     const { workplaceId } = record;
+          //     if (workplaceIdCounts[workplaceId]) {
+          //       workplaceIdCounts[workplaceId]++;
+          //     } else {
+          //       workplaceIdCounts[workplaceId] = 1;
+          //     }
+          //   }
+          // });
+          // // const uniqueWorkplaceIds = [...new Set(updatedData.map((record) => record.workplaceId))];
+          // const result = Object.entries(workplaceIdCounts).map(([workplaceId, count, allTime, otTime]) => ({ workplaceId, count, allTime, otTime }));
 
           const workplaceIdCounts = {};
           const workplaceIdAllTimes = {};
@@ -666,7 +731,7 @@ alert(JSON.stringify(listDayOff , null , 2));
         const workRateOT = workplace.workRateOT;
         const workOfHour = workplace.workOfHour;
 
-        return { workplaceId, calculatedValue: workRate * allTime, allTime, otTime, calculatedOT: (workRate / workOfHour) * workRateOT * otTime };
+        return { workplaceId, calculatedValue: workRate * allTime, allTime, otTime, calculatedOT: (workRate/workOfHour) * workRateOT * otTime };
       }
       return null;
     });
@@ -678,7 +743,7 @@ alert(JSON.stringify(listDayOff , null , 2));
     const totalSum = filteredResults.reduce((sum, result) => sum + result.calculatedValue, 0);
     // const totalSum = filteredResults.reduce((sum, result) => sum + result.calculatedValue, 0);
 
-
+    
 
     setWorkRate(totalSum);
 
@@ -692,8 +757,6 @@ alert(JSON.stringify(listDayOff , null , 2));
   console.log(workplaceList);
 
   console.log('searchResult', searchResult);
-  console.log('searchResult1', searchResult1);
-
   // get employee data
   const [MinusSearch, setMinusSearch] = useState(0); // Example: February (you can set it dynamically)
 
@@ -1216,7 +1279,6 @@ alert(JSON.stringify(listDayOff , null , 2));
                             ))}
 
                           </tr>
-
                           <tr>
                             <td>ช.ม. ทำงาน</td>
                             {tableData.map((data, index) => (
