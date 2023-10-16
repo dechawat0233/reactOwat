@@ -17,7 +17,7 @@ function Worktimesheet() {
   const [dataset, setDataset] = useState([]);
 
   const [workplaceList, setWorkplaceList] = useState([]);
-const [result_data , setResult_data ] = useState([]);
+  const [result_data, setResult_data] = useState([]);
 
   useEffect(() => {
     // Fetch data from the API when the component mounts
@@ -69,85 +69,85 @@ const [result_data , setResult_data ] = useState([]);
     //get employee data by employeeId
     const emp = await employeelist.find(employee => employee.employeeId === result_data[0].employeeId || '');
     // alert(JSON.stringify(emp.workplace , null , 2));
-// alert(emp.workplace );
+    // alert(emp.workplace );
 
     //get day off from workplace by employeeId
-    const wp = await workplaceList.find(item => item.workplaceId === emp.workplace );
-// alert(JSON.stringify(wp , null , 2));
+    const wp = await workplaceList.find(item => item.workplaceId === emp.workplace);
+    // alert(JSON.stringify(wp , null , 2));
 
-  
+
     setM(month);
     setM1(month1);
     setY(searchResult[0].timerecordId);
-const startDate = new Date(y + '/' + month1 + '/20');
-const endDate = new Date(y + '/' + month1 + '/30');
+    const startDate = new Date(y + '/' + month1 + '/20');
+    const endDate = new Date(y + '/' + month1 + '/30');
 
-//check  day off in workplace week
-//and set number of day to Sunday is 1 ...7
+    //check  day off in workplace week
+    //and set number of day to Sunday is 1 ...7
     const df = [];
-    if (!wp .workday7) {
+    if (!wp.workday7) {
       df.push('1');
     }
-    if (! wp.workday6) {
+    if (!wp.workday6) {
       df.push('7');
     }
-    if (! wp.workday5) {
+    if (!wp.workday5) {
       df.push('6');
     }
-    if (! wp.workday4) {
+    if (!wp.workday4) {
       df.push('5');
     }
-    if(! wp.workday3) {
+    if (!wp.workday3) {
       df.push('4');
     }
-    if (! wp.workday2) {
+    if (!wp.workday2) {
       df.push('3');
     }
-    if (! wp.workday1) {
+    if (!wp.workday1) {
       df.push('2');
     }
 
-    if(df.length > 0){
+    if (df.length > 0) {
       const dayOffDate = [];
       const weekdays = ['1', '2', '3', '4', '5', '6', '7'];
-        let currentDate = startDate;
-        let dCount = 20;
-  
-        while (currentDate <= endDate) {
-          const dayOfWeek = weekdays[currentDate.getDay()];          await dayOffDate.push({[dayOfWeek]: dCount });
-  // alert(JSON.stringify(dayOffDate,null,2));
+      let currentDate = startDate;
+      let dCount = 20;
 
-          dCount = dCount + 1;
-          // Move to the next day
-          currentDate.setDate(currentDate.getDate() + 1);
+      while (currentDate <= endDate) {
+        const dayOfWeek = weekdays[currentDate.getDay()]; await dayOffDate.push({ [dayOfWeek]: dCount });
+        // alert(JSON.stringify(dayOffDate,null,2));
+
+        dCount = dCount + 1;
+        // Move to the next day
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
+      await setListDayOff(dayOffDate);
+
+    }
+
+    Object.entries(listDayOff).forEach(([key, value]) => {
+      // console.log(`Key: ${key}, Value: ${value}`);
+      Object.entries(value).forEach(([key, value]) => {
+        // alert(key);
+        if (df.includes(key)) {
+          alert("หยุด" + value);
+          //xx
+
+          // arrayOfObjects[value].number = "stop";
+
         }
-    await setListDayOff(dayOffDate);
-    
-}
 
-Object.entries(listDayOff).forEach(([key, value]) => {
-  // console.log(`Key: ${key}, Value: ${value}`);
-  Object.entries(value).forEach(([key, value]) => {
-// alert(key);
-if(df.includes(key) ) {
-alert("หยุด"+ value);
-//xx
+      });
 
-// arrayOfObjects[value].number = "stop";
+      // alert(value[0]);
+    });
 
-}
-
-  });
-
-// alert(value[0]);
-});
-
-//     setListDayOff(); 
-alert(JSON.stringify(listDayOff , null , 2));
+    //     setListDayOff(); 
+    alert(JSON.stringify(listDayOff, null, 2));
   }
 
 
-  
+
   // Generate an array containing numbers from 21 to 31
   const range1 = Array.from({ length: 11 }, (_, i) => i + 21);
 
@@ -486,7 +486,7 @@ alert(JSON.stringify(listDayOff , null , 2));
       const response1 = await axios.post(endpoint + '/timerecord/searchemp', data1);
       if (response1.data.recordworkplace.length >= 1) {
         await setSearchResult1(response1.data.recordworkplace);
-        if(!result_data) {
+        if (!result_data) {
           await setResult_data(response1.data.recordworkplace);
         }
 
@@ -515,22 +515,22 @@ alert(JSON.stringify(listDayOff , null , 2));
           dates1.forEach((date1, index) => {
             const dataIndex1 = parseInt(date1, 10) - 1; // Subtract 1 because indices are zero-based
             // if (dataIndex1 >= 0 && dataIndex1 < updatedData.length) {
-// alert(index);
-              if (dataIndex1 >= 20 && dataIndex1 <= 31) {
-                // alert(dataIndex1 +' .');
-                // setCountWork((countWork + 1));
-                // alert((dataIndex1 - 20));
+            // alert(index);
+            if (dataIndex1 >= 20 && dataIndex1 <= 31) {
+              // alert(dataIndex1 +' .');
+              // setCountWork((countWork + 1));
+              // alert((dataIndex1 - 20));
 
-                updatedData[(dataIndex1 - 20)].isChecked = true;
-                updatedData[(dataIndex1 - 20)].otTime = otTime1[index];
-                updatedData[(dataIndex1 - 20)].allTime = allTimeA1[index];
-                updatedData[(dataIndex1 - 20)].workplaceId = workplaceId1[index]; // Set otTime at the same index as dates
-                updatedData[(dataIndex1 - 20)].date = dates1[index]; // Set otTime at the same index as dates
-                // updatedData[(dataIndex1 - 20)].month = month[index]; // Set otTime at the same index as dates
+              updatedData[(dataIndex1 - 20)].isChecked = true;
+              updatedData[(dataIndex1 - 20)].otTime = otTime1[index];
+              updatedData[(dataIndex1 - 20)].allTime = allTimeA1[index];
+              updatedData[(dataIndex1 - 20)].workplaceId = workplaceId1[index]; // Set otTime at the same index as dates
+              updatedData[(dataIndex1 - 20)].date = dates1[index]; // Set otTime at the same index as dates
+              // updatedData[(dataIndex1 - 20)].month = month[index]; // Set otTime at the same index as dates
 
 
-                // Set otTime at the same index as dates
-              }
+              // Set otTime at the same index as dates
+            }
 
             // }
 
@@ -937,6 +937,8 @@ alert(JSON.stringify(listDayOff , null , 2));
 
       // Assuming that 'date' contains values like '01', '02', ..., '28', '29', '30', '31'
       // You can replace 'date' with the actual field name containing the date information in your data
+      const dateOt = ['25', '09', '10'];
+
       const dateFieldName = 'date';
 
       // Create an object to store data rows by date
@@ -986,28 +988,36 @@ alert(JSON.stringify(listDayOff , null , 2));
 
       // Now, sortedTableDataWithText contains the text column followed by sorted data columns.
 
-
-      // Add header and data to the table
-      // doc.autoTable({
-      //   head: [['head', ...header]],
-      //   body: sortedTableData,
-      //   ...tableOptions,
-      // });
-
-      // style table
-      // style table
-
       const customHeaders = [
         ['วันที่', ...header],
       ];
 
 
       // Add custom headers and data to the table
+      // doc.autoTable({
+      //   head: customHeaders,
+      //   body: sortedTableDataWithText,
+      //   ...tableOptions,
+      // });
+      // Create a function to check if the cell should have a background color
+      function shouldHighlightCell(text) {
+        return dateOt.includes(text);
+      }
+
       doc.autoTable({
         head: customHeaders,
         body: sortedTableDataWithText,
         ...tableOptions,
+        didDrawCell: function (data) {
+          if (data.cell.section === 'head' && shouldHighlightCell(data.cell.raw)) {
+            // Set the background color for header cells with the location number found in dateOt
+            doc.setFillColor(255, 255, 0); // Yellow background color
+            doc.rect(data.cell.x, data.cell.y, data.cell.width, data.cell.height, 'F');
+          }
+        },
       });
+
+
 
       const additionalTableData = [
         ['เงินค่าจ้าง', '', '', '', '', '', '55'],
@@ -1015,14 +1025,37 @@ alert(JSON.stringify(listDayOff , null , 2));
         ['Cell 7', 'Cell 8', 'Cell 9'],
       ];
 
-      const calculatedValuesAllTime = calculatedValues.map((value) => [
-        `รวมวันทำงาน:`, ` ${value.workplaceId}, ${value.calculatedValue} (${value.allTime})`
-      ]);
+      // const calculatedValuesAllTime = calculatedValues.map((value) => [
+      //   `รวมวันทำงาน:`, ` ${value.workplaceId}, ${value.calculatedValue} (${value.allTime})`
+      // ]);
+
+      // const calculatedValuesOt = calculatedValues.map((value) => [
+      //   `รวมวันทำงาน OT:`, ` ${value.calculatedOT} (${value.otTime})`
+      // ]);
+      // const combinedTableData = [...additionalTableData, ...calculatedValuesAllTime, ...calculatedValuesOt];
+      // /////////////////////////////////////////////////////////////////
+      // const calculatedValuesAllTime = calculatedValues.map((value) => [
+      //   `รวมวันทำงาน:`, ` ${value.workplaceId}, ${value.calculatedValue} (${value.allTime})`,
+      // ]);
+
+      const calculatedValuesAllTime = calculatedValues.map((value) =>
+        `${value.workplaceId}, ${value.calculatedValue} (${value.allTime})`
+      );
+
+      // Combine the calculated values into a single array
+      const combinedCalculatedValues = ['รวมวันทำงาน:', ...calculatedValuesAllTime];
+
       const calculatedValuesOt = calculatedValues.map((value) => [
-        `รวมวันทำงาน OT:`, ` ${value.calculatedOT} (${value.otTime})`
+        `${value.calculatedOT} (${value.otTime})`,
       ]);
 
-      const combinedTableData = [...additionalTableData, ...calculatedValuesAllTime, ...calculatedValuesOt];
+      const combinedCalculatedValuesOt = ['รวมวันทำงาน OT:', ...calculatedValuesOt];
+
+      const combinedTableData = [...additionalTableData, combinedCalculatedValues, combinedCalculatedValuesOt];
+      // Combine the calculated values into a single array
+      // const combinedCalculatedValues = calculatedValuesAllTime.map((value, index) => [value, calculatedValuesOt[index]]);
+
+      // const combinedTableData = [...additionalTableData, ...combinedCalculatedValues, ...calculatedValuesOt];
 
       const firstColumnWidth = 30; // Adjust the width as needed
 
@@ -1040,10 +1073,42 @@ alert(JSON.stringify(listDayOff , null , 2));
       };
 
       // Add the additional table to the PDF
+      // doc.autoTable({
+      //   body: combinedTableData,
+      //   ...additionalTableOptions,
+      // });
+
+      // Define the text to add background color to
+      const textWithBackgroundColor = ['รวมวันทำงาน:', 'รวมวันทำงาน OT:'];
+
+      // Add the additional table to the PDF
       doc.autoTable({
         body: combinedTableData,
         ...additionalTableOptions,
+        didDrawCell: function (data) {
+          if (data.cell.section === 'body') {
+            // Check if the cell contains text that should have a background color
+            const text = data.cell.raw;
+            if (textWithBackgroundColor.includes(text)) {
+              // Set the background color
+              doc.setFillColor(255, 255, 0); // Yellow background color
+              doc.rect(data.cell.x, data.cell.y, data.cell.width, data.cell.height, 'F');
+
+              // Reset text color for better visibility
+              doc.setTextColor(0, 0, 0);
+            }
+          }
+        },
       });
+      const titletest = 'รวมวันทำงาน:';
+      const titletest2 = 'รวมวันทำงาน OT:';
+
+      // Set title with the Thai font
+      doc.setFont('THSarabunNew');
+      doc.setFontSize(14);
+      doc.text(titletest, 15, 108);
+      doc.text(titletest2, 15, 115);
+
 
       doc.save('example.pdf');
     } catch (error) {
