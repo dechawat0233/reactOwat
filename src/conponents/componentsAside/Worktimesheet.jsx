@@ -79,61 +79,135 @@ const [result_data , setResult_data ] = useState([]);
     setM(month);
     setM1(month1);
     setY(searchResult[0].timerecordId);
-const startDate = new Date(y + '/' + month1 + '/20');
-const endDate = new Date(y + '/' + month1 + '/30');
+
 
 //check  day off in workplace week
 //and set number of day to Sunday is 1 ...7
-    const df = [];
-    if (!wp .workday7) {
-      df.push('1');
+    const df = await [];
+    if (wp.workday7 !== "true") {
+df.push('1');
     }
-    if (! wp.workday6) {
-      df.push('7');
+    if (wp.workday6  !== "true") {
+df.push('7');
     }
-    if (! wp.workday5) {
-      df.push('6');
+    if (wp.workday5  !== "true") {
+df.push('6');
     }
-    if (! wp.workday4) {
-      df.push('5');
+    if (wp.workday4 !== "true") {
+df.push('5');
     }
-    if(! wp.workday3) {
-      df.push('4');
+    if( wp.workday3 !== "true") {
+df.push('4');
     }
-    if (! wp.workday2) {
-      df.push('3');
+    if ( wp.workday2 !== "true") {
+df.push('3');
     }
-    if (! wp.workday1) {
-      df.push('2');
+    if ( wp.workday1 !== "true") {
+df.push('2');
     }
 
+    const data_dayOff = [];
+        let startDate, endDate , startDate1, endDate1;
+
+    startDate = await new Date(y + '/' + month + '/01');
+      endDate = await new Date(y + '/' + month + '/20');
+
+if(month1 === '01' || month1  === '03' || month1  === '05' || month1  === '07' || month1  === '08' || month1  === '10' || month1  === '12') {
+  startDate1 = new Date(y + '/' + month1 + '/20');
+  endDate1 = new Date(y + '/' + month1 + '/31');
+} else {
+  if(month1 === '02') {
+    startDate1 = new Date(y + '/' + month1 + '/20');
+    endDate1 = new Date(y + '/' + month1 + '/29');
+  } else {
+    startDate1 = new Date(y + '/' + month1 + '/20');
+    endDate1 = new Date(y + '/' + month1 + '/30');
+  }
+}
+    
     if(df.length > 0){
       const dayOffDate = [];
       const weekdays = ['1', '2', '3', '4', '5', '6', '7'];
-        let currentDate = startDate;
+        let currentDate = await startDate1;
         let dCount = 20;
   
-        while (currentDate <= endDate) {
-          const dayOfWeek = weekdays[currentDate.getDay()];          await dayOffDate.push({[dayOfWeek]: dCount });
+        while (currentDate <= endDate1) {
+          const dayOfWeek = await weekdays[currentDate.getDay()];          
+          await dayOffDate.push({[dayOfWeek]: dCount });
   // alert(JSON.stringify(dayOffDate,null,2));
 
           dCount = dCount + 1;
           // Move to the next day
           currentDate.setDate(currentDate.getDate() + 1);
         }
-    await setListDayOff(dayOffDate);
-    
-}
+    // await setListDayOff(dayOffDate);
+// }
 
-Object.entries(listDayOff).forEach(([key, value]) => {
+
+Object.entries(dayOffDate).forEach(([key, value]) => {
   // console.log(`Key: ${key}, Value: ${value}`);
-  Object.entries(value).forEach(([key, value]) => {
+  Object.entries(value).forEach(([key1, value1]) => {
 // alert(key);
-if(df.includes(key) ) {
-alert("หยุด"+ value);
-//xx
+if(df.includes(key1) ) {
+// alert("หยุด"+ value1);
 
 // arrayOfObjects[value].number = "stop";
+data_dayOff.push({[value1] : 'หยุด'});
+
+} else {
+  data_dayOff.push({[value1] : ' ' });
+}
+
+  });
+
+// alert(value[0]);
+});
+
+//month is 29 day +1
+if(month1 == '02'){
+  data_dayOff.push({["30"] : ' ' });
+  data_dayOff.push({["31"] : ' ' });
+}
+//month is 30 day +1
+if(month1 === '01' || month1  === '03' || month1  === '05' || month1  === '07' || month1  === '08' || month1  === '10' || month1  === '12') {
+console.log('');
+} else {
+  data_dayOff.push({["31"] : ' ' });
+}
+// }
+
+
+const dayOffDate1 = [];
+let currentDate1 = await startDate;
+let dCount1 = 1;
+
+while (currentDate1 <= endDate) {
+  const dayOfWeek1 = await weekdays[currentDate1.getDay()];          
+  await dayOffDate1.push({[dayOfWeek1]: dCount1 });
+// alert(JSON.stringify(dayOffDate1,null,2));
+
+// alert(dCount1 );
+
+  dCount1 = dCount1 + 1;
+
+  // Move to the next day
+  currentDate1.setDate(currentDate1.getDate() + 1);
+}
+// alert(dayOffDate1);
+
+
+Object.entries(dayOffDate1).forEach(([key, value]) => {
+  // console.log(`Key: ${key}, Value: ${value}`);
+  Object.entries(value).forEach(([key1, value1]) => {
+// alert(key);
+if(df.includes(key1) ) {
+// alert("หยุด"+ value1);
+
+// arrayOfObjects[value].number = "stop";
+data_dayOff.push({[value1] : 'หยุด'});
+
+} else {
+  data_dayOff.push({[value1] : ' '});
 
 }
 
@@ -142,7 +216,12 @@ alert("หยุด"+ value);
 // alert(value[0]);
 });
 
-//     setListDayOff(); 
+
+await setListDayOff(dayOffDate);
+}
+
+// alert(JSON.stringify(data_dayOff,null,2));
+    setListDayOff(data_dayOff); 
 alert(JSON.stringify(listDayOff , null , 2));
   }
 
@@ -1147,6 +1226,20 @@ alert(JSON.stringify(listDayOff , null , 2));
                               </td>
                             ))}
                           </tr>
+
+                          <tr>
+                            {listDayOff.map((data , index) =>{
+                                      const [key, value] = Object.entries(data)[0]; // Extracting key and value
+
+                                      return (
+                                        <td key={index}>
+                                        {value}
+                                    </td>
+                                      );
+                            } 
+                            )}
+                          </tr>
+                          
                           <tr>
                             <td>ช.ม. โอที</td>
                             {tableData.map((data, index) => (
@@ -1277,7 +1370,7 @@ alert(JSON.stringify(listDayOff , null , 2));
         </div >
       </div >
 
-
+{JSON.stringify(listDayOff,null,2)}
     </body >
   )
 }
