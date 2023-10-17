@@ -61,7 +61,8 @@ function Worktimesheet() {
 
 
 
-  function getListDayOff(month, month1, res) {
+  function getListDayOff(month, month1, errorCallback ) {
+    alert('hi');
     setM(month);
     setM1(month1);
     setY(searchResult[0].timerecordId);
@@ -71,30 +72,30 @@ function Worktimesheet() {
     const empWorkplace = workplaceList.find(item => item.workplaceId === wid);
 
     const df = [];
-    if (!empWorkplace.workday7) {
+    if (empWorkplace.workday7 !== "true") {
+      df.push('1');
+    }
+    if (empWorkplace.workday6 !== "true") {
       df.push('7');
     }
-    if (!empWorkplace.workday6) {
+    if (empWorkplace.workday5 !== "true") {
       df.push('6');
     }
-    if (!empWorkplace.workday5) {
+    if (empWorkplace.workday4 !== "true") {
       df.push('5');
     }
-    if (!empWorkplace.workday4) {
+    if (empWorkplace.workday3 !== "true") {
       df.push('4');
     }
-    if (!empWorkplace.workday3) {
+    if (empWorkplace.workday2 !== "true") {
       df.push('3');
     }
-    if (!empWorkplace.workday2) {
+    if (empWorkplace.workday1 !== "true") {
       df.push('2');
-    }
-    if (!empWorkplace.workday1) {
-      df.push('1');
     }
 
     setListDayOff(df);
-
+// alert(listDayOff);
   }
 
 
@@ -694,7 +695,9 @@ function Worktimesheet() {
     }
 
     //check day off form select month
-    // getListDayOff(data.month, data1.month);
+    getListDayOff(data.month, data1.month , () =>{
+      // alert(listDayOff.length);
+    });
 
   }
   console.log('workplaceIdList', workplaceIdList);
