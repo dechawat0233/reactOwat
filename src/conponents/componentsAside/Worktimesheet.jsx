@@ -17,7 +17,7 @@ function Worktimesheet() {
   const [dataset, setDataset] = useState([]);
 
   const [workplaceList, setWorkplaceList] = useState([]);
-const [result_data , setResult_data ] = useState([]);
+  const [result_data, setResult_data] = useState([]);
 
   useEffect(() => {
     // Fetch data from the API when the component mounts
@@ -172,6 +172,15 @@ const [result_data , setResult_data ] = useState([]);
   async function handleSearch(event) {
     event.preventDefault();
     // get value from form search
+    if (searchEmployeeId === '' && searchEmployeeName === '') {
+      // Both employeeId and employeeName are null
+      alert("error");
+      // You can use window.location.reload() to reload the web page
+      window.location.reload();
+    } else {
+      // At least one of them is not null
+      console.log(searchEmployeeId);
+    }
     const data = await {
       employeeId: searchEmployeeId,
       employeeName: searchEmployeeName,
@@ -187,6 +196,7 @@ const [result_data , setResult_data ] = useState([]);
       employeeName: searchEmployeeName,
       month: formattedResult
     };
+
     console.log('data1', data1.month);
     console.log('data2', data.month);
 
@@ -527,7 +537,7 @@ const [result_data , setResult_data ] = useState([]);
       const response1 = await axios.post(endpoint + '/timerecord/searchemp', data1);
       if (response1.data.recordworkplace.length >= 1) {
         await setSearchResult1(response1.data.recordworkplace);
-        if(!result_data) {
+        if (!result_data) {
           await setResult_data(response1.data.recordworkplace);
         }
 
@@ -556,22 +566,22 @@ const [result_data , setResult_data ] = useState([]);
           dates1.forEach((date1, index) => {
             const dataIndex1 = parseInt(date1, 10) - 1; // Subtract 1 because indices are zero-based
             // if (dataIndex1 >= 0 && dataIndex1 < updatedData.length) {
-// alert(index);
-              if (dataIndex1 >= 20 && dataIndex1 <= 31) {
-                // alert(dataIndex1 +' .');
-                // setCountWork((countWork + 1));
-                // alert((dataIndex1 - 20));
+            // alert(index);
+            if (dataIndex1 >= 20 && dataIndex1 <= 31) {
+              // alert(dataIndex1 +' .');
+              // setCountWork((countWork + 1));
+              // alert((dataIndex1 - 20));
 
-                updatedData[(dataIndex1 - 20)].isChecked = true;
-                updatedData[(dataIndex1 - 20)].otTime = otTime1[index];
-                updatedData[(dataIndex1 - 20)].allTime = allTimeA1[index];
-                updatedData[(dataIndex1 - 20)].workplaceId = workplaceId1[index]; // Set otTime at the same index as dates
-                updatedData[(dataIndex1 - 20)].date = dates1[index]; // Set otTime at the same index as dates
-                // updatedData[(dataIndex1 - 20)].month = month[index]; // Set otTime at the same index as dates
+              updatedData[(dataIndex1 - 20)].isChecked = true;
+              updatedData[(dataIndex1 - 20)].otTime = otTime1[index];
+              updatedData[(dataIndex1 - 20)].allTime = allTimeA1[index];
+              updatedData[(dataIndex1 - 20)].workplaceId = workplaceId1[index]; // Set otTime at the same index as dates
+              updatedData[(dataIndex1 - 20)].date = dates1[index]; // Set otTime at the same index as dates
+              // updatedData[(dataIndex1 - 20)].month = month[index]; // Set otTime at the same index as dates
 
 
-                // Set otTime at the same index as dates
-              }
+              // Set otTime at the same index as dates
+            }
 
             // }
 
@@ -731,7 +741,7 @@ const [result_data , setResult_data ] = useState([]);
         const workRateOT = workplace.workRateOT;
         const workOfHour = workplace.workOfHour;
 
-        return { workplaceId, calculatedValue: workRate * allTime, allTime, otTime, calculatedOT: (workRate/workOfHour) * workRateOT * otTime };
+        return { workplaceId, calculatedValue: workRate * allTime, allTime, otTime, calculatedOT: (workRate / workOfHour) * workRateOT * otTime };
       }
       return null;
     });
@@ -743,7 +753,7 @@ const [result_data , setResult_data ] = useState([]);
     const totalSum = filteredResults.reduce((sum, result) => sum + result.calculatedValue, 0);
     // const totalSum = filteredResults.reduce((sum, result) => sum + result.calculatedValue, 0);
 
-    
+
 
     setWorkRate(totalSum);
 
