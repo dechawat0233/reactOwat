@@ -17,7 +17,7 @@ function Worktimesheet() {
   const [dataset, setDataset] = useState([]);
 
   const [workplaceList, setWorkplaceList] = useState([]);
-const [result_data , setResult_data ] = useState([]);
+  const [result_data, setResult_data] = useState([]);
 
   useEffect(() => {
     // Fetch data from the API when the component mounts
@@ -33,7 +33,7 @@ const [result_data , setResult_data ] = useState([]);
       });
   }, []); // The empty array [] ensures that the effect runs only once after the initial render
 
-  console.log(workplaceList);
+  // console.log(workplaceList);
 
   const [employeelist, setEmployeelist] = useState([]);
   const [employee, setEmployee] = useState([]);
@@ -57,45 +57,171 @@ const [result_data , setResult_data ] = useState([]);
       });
   }, []); // The empty array [] ensures that the effect runs only once after the initial render
 
-  console.log('employeelist', employeelist);
+  // console.log('employeelist', employeelist);
 
 
 
-  function getListDayOff(month, month1, res) {
+  //array 31 for day off
+  let arrayOfObjects = Array(31).fill({});
+
+  async function getListDayOff(month, month1, res) {
+
+    //get employee data by employeeId
+    const emp = await employeelist.find(employee => employee.employeeId === result_data[0].employeeId || '');
+    // alert(JSON.stringify(emp.workplace , null , 2));
+    // alert(emp.workplace );
+
+    //get day off from workplace by employeeId
+    const wp = await workplaceList.find(item => item.workplaceId === emp.workplace);
+    // alert(JSON.stringify(wp , null , 2));
+
+
     setM(month);
     setM1(month1);
     setY(searchResult[0].timerecordId);
 
-    const emp_workplace = employeelist.find(item => item.employeeId === searchResult[0].employeeId);
-    const wid = emp_workplace.workplace;
-    const empWorkplace = workplaceList.find(item => item.workplaceId === wid);
 
-    const df = [];
-    if (!empWorkplace.workday7) {
-      df.push('7');
-    }
-    if (!empWorkplace.workday6) {
-      df.push('6');
-    }
-    if (!empWorkplace.workday5) {
-      df.push('5');
-    }
-    if (!empWorkplace.workday4) {
-      df.push('4');
-    }
-    if (!empWorkplace.workday3) {
-      df.push('3');
-    }
-    if (!empWorkplace.workday2) {
-      df.push('2');
-    }
-    if (!empWorkplace.workday1) {
+    //check  day off in workplace week
+    //and set number of day to Sunday is 1 ...7
+    const df = await [];
+    if (wp.workday7 !== "true") {
       df.push('1');
     }
+    if (wp.workday6 !== "true") {
+      df.push('7');
+    }
+    if (wp.workday5 !== "true") {
+      df.push('6');
+    }
+    if (wp.workday4 !== "true") {
+      df.push('5');
+    }
+    if (wp.workday3 !== "true") {
+      df.push('4');
+    }
+    if (wp.workday2 !== "true") {
+      df.push('3');
+    }
+    if (wp.workday1 !== "true") {
+      df.push('2');
+    }
 
-    setListDayOff(df);
+    const data_dayOff = [];
+    let startDate, endDate, startDate1, endDate1;
 
+    startDate = await new Date(y + '/' + month + '/01');
+    endDate = await new Date(y + '/' + month + '/20');
+
+    if (month1 === '01' || month1 === '03' || month1 === '05' || month1 === '07' || month1 === '08' || month1 === '10' || month1 === '12') {
+      startDate1 = new Date(y + '/' + month1 + '/20');
+      endDate1 = new Date(y + '/' + month1 + '/31');
+    } else {
+      if (month1 === '02') {
+        startDate1 = new Date(y + '/' + month1 + '/20');
+        endDate1 = new Date(y + '/' + month1 + '/29');
+      } else {
+        startDate1 = new Date(y + '/' + month1 + '/20');
+        endDate1 = new Date(y + '/' + month1 + '/30');
+      }
+    }
+
+    if (df.length > 0) {
+      const dayOffDate = [];
+      const weekdays = ['1', '2', '3', '4', '5', '6', '7'];
+      let currentDate = await startDate1;
+      let dCount = 20;
+
+      while (currentDate <= endDate1) {
+        const dayOfWeek = await weekdays[currentDate.getDay()];
+        await dayOffDate.push({ [dayOfWeek]: dCount });
+        // alert(JSON.stringify(dayOffDate,null,2));
+
+      }
+      // await setListDayOff(dayOffDate);
+      // }
+
+
+      // Object.entries(dayOffDate).forEach(([key, value]) => {
+      //   // console.log(`Key: ${key}, Value: ${value}`);
+      //   Object.entries(value).forEach(([key1, value1]) => {
+      //     // alert(key);
+      //     if (df.includes(key1)) {
+      //       // alert("หยุด"+ value1);
+
+      //       // arrayOfObjects[value].number = "stop";
+      //       data_dayOff.push({ [value1]: 'หยุด' });
+
+      //     } else {
+      //       data_dayOff.push({ [value1]: ' ' });
+      //     }
+
+      //   });
+
+      //   // alert(value[0]);
+      // });
+
+      //month is 29 day +1
+      // if (month1 == '02') {
+      //   data_dayOff.push({ ["30"]: ' ' });
+      //   data_dayOff.push({ ["31"]: ' ' });
+      // }
+      //month is 30 day +1
+      // if (month1 === '01' || month1 === '03' || month1 === '05' || month1 === '07' || month1 === '08' || month1 === '10' || month1 === '12') {
+      //   console.log('');
+      // } else {
+      //   data_dayOff.push({ ["31"]: ' ' });
+      // }
+      // }
+
+
+      const dayOffDate1 = [];
+      let currentDate1 = await startDate;
+      let dCount1 = 1;
+
+      while (currentDate1 <= endDate) {
+        const dayOfWeek1 = await weekdays[currentDate1.getDay()];
+        await dayOffDate1.push({ [dayOfWeek1]: dCount1 });
+        // alert(JSON.stringify(dayOffDate1,null,2));
+
+        // alert(dCount1 );
+
+        dCount1 = dCount1 + 1;
+
+        // Move to the next day
+        currentDate1.setDate(currentDate1.getDate() + 1);
+      }
+      // alert(dayOffDate1);
+
+
+      // Object.entries(dayOffDate1).forEach(([key, value]) => {
+      //   // console.log(`Key: ${key}, Value: ${value}`);
+      //   Object.entries(value).forEach(([key1, value1]) => {
+      //     // alert(key);
+      //     if (df.includes(key1)) {
+      //       // alert("หยุด"+ value1);
+
+      //       // arrayOfObjects[value].number = "stop";
+      //       data_dayOff.push({ [value1]: 'หยุด' });
+
+      //     } else {
+      //       data_dayOff.push({ [value1]: ' ' });
+
+      //     }
+
+      //   });
+
+      //   // alert(value[0]);
+      // });
+
+
+      await setListDayOff(dayOffDate);
+    }
+
+    // alert(JSON.stringify(data_dayOff,null,2));
+    setListDayOff(data_dayOff);
+    alert(JSON.stringify(listDayOff, null, 2));
   }
+
 
 
   // Generate an array containing numbers from 21 to 31
@@ -176,7 +302,8 @@ const [result_data , setResult_data ] = useState([]);
       employeeId: searchEmployeeId,
       employeeName: searchEmployeeName,
       month: month
-    }; console.log(searchEmployeeId);
+    };
+    console.log('searchEmployeeId', searchEmployeeId);
 
     const parsedNumber = await parseInt(month, 10) - 1;
     const formattedResult = await String(parsedNumber).padStart(2, '0');
@@ -187,8 +314,8 @@ const [result_data , setResult_data ] = useState([]);
       employeeName: searchEmployeeName,
       month: formattedResult
     };
-    console.log('data1', data1.month);
-    console.log('data2', data.month);
+    // console.log('data1', data1.month);
+    // console.log('data2', data.month);
 
     // date day
 
@@ -207,8 +334,8 @@ const [result_data , setResult_data ] = useState([]);
     // Create a Date object for the first day of data.month
     const firstDayOfMonth2 = new Date(yeartest, parsedNumber2, 1);
 
-    console.log('formattedResult1', firstDayOfMonth1);
-    console.log('formattedResult2', firstDayOfMonth2);
+    // console.log('formattedResult1', firstDayOfMonth1);
+    // console.log('formattedResult2', firstDayOfMonth2);
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const dates1 = [];
     const dates2 = [];
@@ -266,8 +393,8 @@ const [result_data , setResult_data ] = useState([]);
       dates: dayData.dates.filter((date) => date < 20), // Adjusted filtering condition
     })).filter((dayData) => dayData.dates.length > 0);
 
-    console.log('calendarData1 filteredDates1:', filteredDates1);
-    console.log('calendarData2 filteredDates2:', filteredDates2);
+    // console.log('calendarData1 filteredDates1:', filteredDates1);
+    // console.log('calendarData2 filteredDates2:', filteredDates2);
     setCalendarData1(filteredDates1); // Assuming you have a separate state for data1.month
     setCalendarData2(filteredDates2);
     try {
@@ -282,84 +409,7 @@ const [result_data , setResult_data ] = useState([]);
       }
 
 
-      // const empId = await axios.post(endpoint + '/employee/search', searchResult.employeeId);
-      // if (empId.data.recordworkplace.length >= 1) {
-      //   await setEmpId(empId.data.recordworkplace);
-      // } else {
-      //   alert("ไม่พบข้อมูล 1 ถึง 20 " + getMonthName(data.month));
-      // }
-      // console.log('empId',empId);
-
-      // if (data1.month == '00') {
-      //   data1.month = '12';
-      // }
-      // const response1 = await axios.post(endpoint + '/timerecord/searchemp', data1);
-      // if (response1.data.recordworkplace.length >= 1) {
-      //   await setSearchResult1(response1.data.recordworkplace);
-      // } else {
-      //   alert("ไม่พบข้อมูล 21 ถึง สิ้นเดือน " + getMonthName(data1.month ) );
-      // }
-
-      // // await alert(data1.month + ' : '+ response1.data.recordworkplace.length )
-      // // await alert(data.month + ' : '+ response.data.recordworkplace.length )
-
-      // // await alert(searchResult[0].employee_workplaceRecord.length);
-
-      // // alert(JSON.stringify(response.data , null, 2) );
-      // // await alert(searchResult[0].employee_workplaceRecord[0].workplaceId );
-
       const employeeWorkplaceRecords = await response.data.recordworkplace[0].employee_workplaceRecord || '';
-      // const employeeWorkplaceRecords1 = await response1.data.recordworkplace[0].employee_workplaceRecord || '';
-
-      // // xx
-      // if (employeeWorkplaceRecords1.length > 0) {
-      //   const dates1 = employeeWorkplaceRecords1.map(record => record.date);
-      //   // const otTime = employeeWorkplaceRecords.map(record => record.otTime);
-
-      //   const allTimeA1 = employeeWorkplaceRecords1.map((record) => record.allTime);
-
-      //   const workplaceId1 = employeeWorkplaceRecords1.map(record => record.workplaceId);
-
-      //   const otTime1 = employeeWorkplaceRecords1.map((record) => record.otTime);
-
-      //   // setDataset(
-      //   //   employeeWorkplaceRecords1.filter((record) => record.date) // Filter out records with null or undefined dates
-      //   //     .map((record) => {
-      //   //       return record;
-      //   //     })
-      //   // );
-
-      //   setTableData((prevState) => {
-      //     const updatedData = [...prevState];
-      //     dates1.forEach((date1, index) => {
-      //       const dataIndex1 = parseInt(date1, 10) - 1; // Subtract 1 because indices are zero-based
-      //       if (dataIndex1 >= 0 && dataIndex1 < updatedData.length) {
-
-      //         if (dataIndex1 >= 21 && dataIndex1 <= 31) {
-      //           // alert(dataIndex1 +' .');
-
-      //           updatedData[(dataIndex1 - 20)].isChecked = true;
-      //           updatedData[(dataIndex1 - 20)].otTime = otTime1[index];
-      //           updatedData[(dataIndex1 - 20)].allTimeA = allTimeA1[index];
-      //           updatedData[(dataIndex1 - 20)].workplaceId = workplaceId1[index]; // Set otTime at the same index as dates
-      //           updatedData[(dataIndex1 - 20)].date = dates1[index]; // Set otTime at the same index as dates
-
-      //           // Set otTime at the same index as dates
-
-      //         }
-
-      //       }
-      //     });
-      //     const filteredData = updatedData.filter((record) => record.isChecked == true);
-      //     setDataset(filteredData);
-      //     return updatedData;
-
-      //   });
-
-      //   // setWoekplace(dates);
-
-      // }
-      // // xx
 
       if (employeeWorkplaceRecords.length > 0) {
         const dates = employeeWorkplaceRecords.map(record => record.date);
@@ -410,21 +460,6 @@ const [result_data , setResult_data ] = useState([]);
           // const workplaceIds = filteredData.map((record) => record.workplaceId)
           const workplaceIds = [...new Set(filteredData.map((record) => record.workplaceId))];
 
-          // const workplaceIdCounts = {};
-          // 
-          // Extract unique workplaceId values and count occurrences
-          // filteredData.forEach((record) => {
-          //   if (record.isChecked) {
-          //     const { workplaceId } = record;
-          //     if (workplaceIdCounts[workplaceId]) {
-          //       workplaceIdCounts[workplaceId]++;
-          //     } else {
-          //       workplaceIdCounts[workplaceId] = 1;
-          //     }
-          //   }
-          // });
-          // // const uniqueWorkplaceIds = [...new Set(updatedData.map((record) => record.workplaceId))];
-          // const result = Object.entries(workplaceIdCounts).map(([workplaceId, count]) => ({ workplaceId, count }));
 
           const workplaceIdCounts = {};
           const workplaceIdAllTimes = {};
@@ -527,7 +562,7 @@ const [result_data , setResult_data ] = useState([]);
       const response1 = await axios.post(endpoint + '/timerecord/searchemp', data1);
       if (response1.data.recordworkplace.length >= 1) {
         await setSearchResult1(response1.data.recordworkplace);
-        if(!result_data) {
+        if (!result_data) {
           await setResult_data(response1.data.recordworkplace);
         }
 
@@ -556,22 +591,22 @@ const [result_data , setResult_data ] = useState([]);
           dates1.forEach((date1, index) => {
             const dataIndex1 = parseInt(date1, 10) - 1; // Subtract 1 because indices are zero-based
             // if (dataIndex1 >= 0 && dataIndex1 < updatedData.length) {
-// alert(index);
-              if (dataIndex1 >= 20 && dataIndex1 <= 31) {
-                // alert(dataIndex1 +' .');
-                // setCountWork((countWork + 1));
-                // alert((dataIndex1 - 20));
+            // alert(index);
+            if (dataIndex1 >= 20 && dataIndex1 <= 31) {
+              // alert(dataIndex1 +' .');
+              // setCountWork((countWork + 1));
+              // alert((dataIndex1 - 20));
 
-                updatedData[(dataIndex1 - 20)].isChecked = true;
-                updatedData[(dataIndex1 - 20)].otTime = otTime1[index];
-                updatedData[(dataIndex1 - 20)].allTime = allTimeA1[index];
-                updatedData[(dataIndex1 - 20)].workplaceId = workplaceId1[index]; // Set otTime at the same index as dates
-                updatedData[(dataIndex1 - 20)].date = dates1[index]; // Set otTime at the same index as dates
-                // updatedData[(dataIndex1 - 20)].month = month[index]; // Set otTime at the same index as dates
+              updatedData[(dataIndex1 - 20)].isChecked = true;
+              updatedData[(dataIndex1 - 20)].otTime = otTime1[index];
+              updatedData[(dataIndex1 - 20)].allTime = allTimeA1[index];
+              updatedData[(dataIndex1 - 20)].workplaceId = workplaceId1[index]; // Set otTime at the same index as dates
+              updatedData[(dataIndex1 - 20)].date = dates1[index]; // Set otTime at the same index as dates
+              // updatedData[(dataIndex1 - 20)].month = month[index]; // Set otTime at the same index as dates
 
 
-                // Set otTime at the same index as dates
-              }
+              // Set otTime at the same index as dates
+            }
 
             // }
 
@@ -579,32 +614,9 @@ const [result_data , setResult_data ] = useState([]);
           console.log('updatedData', updatedData);
 
           const filteredData = updatedData.filter((record) => record.isChecked == true);
-          // console.log('updatedData', updatedData);
-          // const workplaceIds = filteredData.map((record) => record.workplaceId)
-
-          // const filteredData = [
-          //   { isChecked: true, textValue: '', workplaceId: '1001', date: '30', otTime: '1.0', allTime: '8.0' },
-          //   { isChecked: true, textValue: '', workplaceId: '1001', date: '01', otTime: '2.0', allTime: '4.0' },
-          //   { isChecked: true, textValue: '', workplaceId: '1002', date: '03', otTime: '6.0', allTime: '8.0' },
-          //   { isChecked: false, textValue: '', workplaceId: '1003', date: '04', otTime: '2.0', allTime: '8.0' }
-          // ];
 
           const workplaceIds = [...new Set(filteredData.map((record) => record.workplaceId))];
-          // const workplaceIdCounts = {};
-          // const workplaceIdOtTimes = {};
-          // Extract unique workplaceId values and count occurrences
-          // filteredData.forEach((record) => {
-          //   if (record.isChecked) {
-          //     const { workplaceId } = record;
-          //     if (workplaceIdCounts[workplaceId]) {
-          //       workplaceIdCounts[workplaceId]++;
-          //     } else {
-          //       workplaceIdCounts[workplaceId] = 1;
-          //     }
-          //   }
-          // });
-          // // const uniqueWorkplaceIds = [...new Set(updatedData.map((record) => record.workplaceId))];
-          // const result = Object.entries(workplaceIdCounts).map(([workplaceId, count, allTime, otTime]) => ({ workplaceId, count, allTime, otTime }));
+
 
           const workplaceIdCounts = {};
           const workplaceIdAllTimes = {};
@@ -684,7 +696,7 @@ const [result_data , setResult_data ] = useState([]);
     }
 
     //check day off form select month
-    // getListDayOff(data.month, data1.month);
+    getListDayOff(data.month, data1.month);
 
   }
   console.log('workplaceIdList', workplaceIdList);
@@ -731,7 +743,7 @@ const [result_data , setResult_data ] = useState([]);
         const workRateOT = workplace.workRateOT;
         const workOfHour = workplace.workOfHour;
 
-        return { workplaceId, calculatedValue: workRate * allTime, allTime, otTime, calculatedOT: (workRate/workOfHour) * workRateOT * otTime };
+        return { workplaceId, calculatedValue: workRate * allTime, allTime, otTime, calculatedOT: (workRate / workOfHour) * workRateOT * otTime };
       }
       return null;
     });
@@ -743,7 +755,7 @@ const [result_data , setResult_data ] = useState([]);
     const totalSum = filteredResults.reduce((sum, result) => sum + result.calculatedValue, 0);
     // const totalSum = filteredResults.reduce((sum, result) => sum + result.calculatedValue, 0);
 
-    
+
 
     setWorkRate(totalSum);
 
@@ -757,6 +769,8 @@ const [result_data , setResult_data ] = useState([]);
   console.log(workplaceList);
 
   console.log('searchResult', searchResult);
+  console.log('searchResult1', searchResult1);
+
   // get employee data
   const [MinusSearch, setMinusSearch] = useState(0); // Example: February (you can set it dynamically)
 
@@ -942,176 +956,241 @@ const [result_data , setResult_data ] = useState([]);
     setWorkMonth(text);
   }, [searchResult]);
 
-  const generatePDF = async () => {
-    try {
-      const doc = new jsPDF('landscape');
+  // const generatePDF = async () => {
+  //   try {
+  //     const doc = new jsPDF('landscape');
 
-      // Load the Thai font
-      const fontPath = '/assets/fonts/THSarabunNew.ttf';
-      doc.addFileToVFS(fontPath);
-      doc.addFont(fontPath, 'THSarabunNew', 'normal');
+  //     // Load the Thai font
+  //     const fontPath = '/assets/fonts/THSarabunNew.ttf';
+  //     doc.addFileToVFS(fontPath);
+  //     doc.addFont(fontPath, 'THSarabunNew', 'normal');
 
-      // Override the default stylestable for jspdf-autotable
-      const stylestable = {
-        font: 'THSarabunNew',
-        fontStyle: 'normal',
-        fontSize: 10,
-      };
-      const tableOptions = {
-        styles: stylestable,
-        startY: 25,
-        // margin: { top: 10 },
-      };
+  //     // Override the default stylestable for jspdf-autotable
+  //     const stylestable = {
+  //       font: 'THSarabunNew',
+  //       fontStyle: 'normal',
+  //       fontSize: 10,
+  //     };
+  //     const tableOptions = {
+  //       styles: stylestable,
+  //       startY: 25,
+  //       // margin: { top: 10 },
+  //     };
 
-      const title = ' ใบลงเวลาการปฏิบัติงาน';
+  //     const title = ' ใบลงเวลาการปฏิบัติงาน';
 
-      // Set title with the Thai font
-      doc.setFont('THSarabunNew');
-      doc.setFontSize(16);
-      const titleWidth = doc.getStringUnitWidth(title) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-      const pageWidth = doc.internal.pageSize.getWidth();
-      const titleX = (pageWidth - titleWidth) / 2;
-      doc.text(title, titleX, 10);
+  //     // Set title with the Thai font
+  //     doc.setFont('THSarabunNew');
+  //     doc.setFontSize(16);
+  //     const titleWidth = doc.getStringUnitWidth(title) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+  //     const pageWidth = doc.internal.pageSize.getWidth();
+  //     const titleX = (pageWidth - titleWidth) / 2;
+  //     doc.text(title, titleX, 10);
 
-      const subTitle = workMonth; // Replace with your desired subtitle text
-      doc.setFontSize(12); // You can adjust the font size for the subtitle
-      const subTitleWidth = doc.getStringUnitWidth(subTitle) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-      const subTitleX = (pageWidth - subTitleWidth) / 2;
-      doc.text(subTitle, subTitleX, 20); // Adjust the vertical position as needed
+  //     const subTitle = workMonth; // Replace with your desired subtitle text
+  //     doc.setFontSize(12); // You can adjust the font size for the subtitle
+  //     const subTitleWidth = doc.getStringUnitWidth(subTitle) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+  //     const subTitleX = (pageWidth - subTitleWidth) / 2;
+  //     doc.text(subTitle, subTitleX, 20); // Adjust the vertical position as needed
 
-      // Calculate the number of days in the month, considering February and leap years
-      const daysInMonth = (monthset === '02' && ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0)) ? 29 :
-        (monthset === '02') ? 28 :
-          [4, 6, 9, 11].includes(monthset) ? 30 : 31;
+  //     // Calculate the number of days in the month, considering February and leap years
+  //     const daysInMonth = (monthset === '02' && ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0)) ? 29 :
+  //       (monthset === '02') ? 28 :
+  //         [4, 6, 9, 11].includes(monthset) ? 30 : 31;
 
-      // Calculate the starting point for the table header
-      let startingDay = 21;
+  //     // Calculate the starting point for the table header
+  //     let startingDay = 21;
 
-      // Generate the header with a single cycle of "01" to "20" followed by "21" to the last day of the month
-      const header = Array.from({ length: daysInMonth }, (_, index) => {
-        const day = (index + startingDay) > daysInMonth ? (index + startingDay - daysInMonth) : (index + startingDay);
+  //     // Generate the header with a single cycle of "01" to "20" followed by "21" to the last day of the month
+  //     const header = Array.from({ length: daysInMonth }, (_, index) => {
+  //       const day = (index + startingDay) > daysInMonth ? (index + startingDay - daysInMonth) : (index + startingDay);
 
-        // Add leading zeros for days 1 to 9
-        const formattedDay = day < 10 ? `0${day}` : day.toString();
+  //       // Add leading zeros for days 1 to 9
+  //       const formattedDay = day < 10 ? `0${day}` : day.toString();
 
-        return formattedDay;
-      });
+  //       return formattedDay;
+  //     });
 
-      // Assuming that 'date' contains values like '01', '02', ..., '28', '29', '30', '31'
-      // You can replace 'date' with the actual field name containing the date information in your data
-      const dateFieldName = 'date';
+  //     // Assuming that 'date' contains values like '01', '02', ..., '28', '29', '30', '31'
+  //     // You can replace 'date' with the actual field name containing the date information in your data
+  //     const dateOt = ['25', '09', '10'];
 
-      // Create an object to store data rows by date
-      const rowDataByDate = {};
+  //     const dateFieldName = 'date';
 
-      // Organize the dataset into the rowDataByDate object
-      dataset.forEach((data) => {
-        // dataset.forEach((data) => {
+  //     // Create an object to store data rows by date
+  //     const rowDataByDate = {};
 
-        const date = data[dateFieldName];
-        if (!rowDataByDate[date]) {
-          rowDataByDate[date] = { workplaceId: [], otTime: [], dateFieldName: [], allTime: [] };
-        }
-        rowDataByDate[date].workplaceId.push(data.workplaceId);
-        rowDataByDate[date].otTime.push(data.otTime);
-        rowDataByDate[date].allTime.push(data.allTime);
-        rowDataByDate[date].dateFieldName.push(data[dateFieldName]);
-      });
+  //     // Organize the dataset into the rowDataByDate object
+  //     dataset.forEach((data) => {
+  //       // dataset.forEach((data) => {
 
-      // Map the header to transposedTableData using the rowDataByDate object
-      const transposedTableData = header.map((headerDay) => {
-        const rowData = rowDataByDate[headerDay];
+  //       const date = data[dateFieldName];
+  //       if (!rowDataByDate[date]) {
+  //         rowDataByDate[date] = { workplaceId: [], otTime: [], dateFieldName: [], allTime: [] };
+  //       }
+  //       rowDataByDate[date].workplaceId.push(data.workplaceId);
+  //       rowDataByDate[date].otTime.push(data.otTime);
+  //       rowDataByDate[date].allTime.push(data.allTime);
+  //       rowDataByDate[date].dateFieldName.push(data[dateFieldName]);
+  //     });
 
-        if (rowData) {
-          return [
-            rowData.workplaceId.join(', '),
-            rowData.allTime.join(', '),
-            rowData.otTime.join(', '),
-            // rowData.dateFieldName.join(', '),
-          ];
-        } else {
-          return ['', '', ''];
-        }
-      });
+  //     // Map the header to transposedTableData using the rowDataByDate object
+  //     const transposedTableData = header.map((headerDay) => {
+  //       const rowData = rowDataByDate[headerDay];
 
-      // Transpose the transposedTableData to sort horizontally
-      const sortedTableData = Array.from({ length: 3 }, (_, index) =>
-        transposedTableData.map((row) => row[index])
-      );
+  //       if (rowData) {
+  //         return [
+  //           rowData.workplaceId.join(', '),
+  //           rowData.allTime.join(', '),
+  //           rowData.otTime.join(', '),
+  //           // rowData.dateFieldName.join(', '),
+  //         ];
+  //       } else {
+  //         return ['', '', ''];
+  //       }
+  //     });
 
-      const textColumn = [name, 'เวลา ทำงาน', 'เวลา OT'];
+  //     // Transpose the transposedTableData to sort horizontally
+  //     const sortedTableData = Array.from({ length: 3 }, (_, index) =>
+  //       transposedTableData.map((row) => row[index])
+  //     );
 
-      const sortedTableDataWithText = sortedTableData.map((data, index) => {
-        const text = [textColumn[index]];
-        return [...text, ...data];
-      });
+  //     const textColumn = [name, 'เวลา ทำงาน', 'เวลา OT'];
 
-      // Now, sortedTableDataWithText contains the text column followed by sorted data columns.
+  //     const sortedTableDataWithText = sortedTableData.map((data, index) => {
+  //       const text = [textColumn[index]];
+  //       return [...text, ...data];
+  //     });
 
+  //     // Now, sortedTableDataWithText contains the text column followed by sorted data columns.
 
-      // Add header and data to the table
-      // doc.autoTable({
-      //   head: [['head', ...header]],
-      //   body: sortedTableData,
-      //   ...tableOptions,
-      // });
-
-      // style table
-      // style table
-
-      const customHeaders = [
-        ['วันที่', ...header],
-      ];
+  //     const customHeaders = [
+  //       ['วันที่', ...header],
+  //     ];
 
 
-      // Add custom headers and data to the table
-      doc.autoTable({
-        head: customHeaders,
-        body: sortedTableDataWithText,
-        ...tableOptions,
-      });
+  //     // Add custom headers and data to the table
+  //     // doc.autoTable({
+  //     //   head: customHeaders,
+  //     //   body: sortedTableDataWithText,
+  //     //   ...tableOptions,
+  //     // });
+  //     // Create a function to check if the cell should have a background color
+  //     function shouldHighlightCell(text) {
+  //       return dateOt.includes(text);
+  //     }
 
-      const additionalTableData = [
-        ['เงินค่าจ้าง', '', '', '', '', '', '55'],
-        ['Cell 4', 'Cell 5', 'Cell 6'],
-        ['Cell 7', 'Cell 8', 'Cell 9'],
-      ];
+  //     doc.autoTable({
+  //       head: customHeaders,
+  //       body: sortedTableDataWithText,
+  //       ...tableOptions,
+  //       didDrawCell: function (data) {
+  //         if (data.cell.section === 'head' && shouldHighlightCell(data.cell.raw)) {
+  //           // Set the background color for header cells with the location number found in dateOt
+  //           doc.setFillColor(255, 255, 0); // Yellow background color
+  //           doc.rect(data.cell.x, data.cell.y, data.cell.width, data.cell.height, 'F');
+  //         }
+  //       },
+  //     });
 
-      const calculatedValuesAllTime = calculatedValues.map((value) => [
-        `รวมวันทำงาน:`, ` ${value.workplaceId}, ${value.calculatedValue} (${value.allTime})`
-      ]);
-      const calculatedValuesOt = calculatedValues.map((value) => [
-        `รวมวันทำงาน OT:`, ` ${value.calculatedOT} (${value.otTime})`
-      ]);
 
-      const combinedTableData = [...additionalTableData, ...calculatedValuesAllTime, ...calculatedValuesOt];
 
-      const firstColumnWidth = 30; // Adjust the width as needed
+  //     const additionalTableData = [
+  //       ['เงินค่าจ้าง', '', '', '', '', '', '55'],
+  //       ['Cell 4', 'Cell 5', 'Cell 6'],
+  //       ['Cell 7', 'Cell 8', 'Cell 9'],
+  //     ];
 
-      // Define column styles, including the width of the first column
-      const columnStyles = {
-        0: { columnWidth: firstColumnWidth }, // Index 0 corresponds to the first column
-      };
+  //     // const calculatedValuesAllTime = calculatedValues.map((value) => [
+  //     //   `รวมวันทำงาน:`, ` ${value.workplaceId}, ${value.calculatedValue} (${value.allTime})`
+  //     // ]);
 
-      // Define options for the additional table
-      const additionalTableOptions = {
-        startY: 80, // Adjust the vertical position as needed
-        margin: { top: 10 },
-        columnStyles: columnStyles, // Assign the column stylestable here
-        styles: stylestable,
-      };
+  //     // const calculatedValuesOt = calculatedValues.map((value) => [
+  //     //   `รวมวันทำงาน OT:`, ` ${value.calculatedOT} (${value.otTime})`
+  //     // ]);
+  //     // const combinedTableData = [...additionalTableData, ...calculatedValuesAllTime, ...calculatedValuesOt];
+  //     // /////////////////////////////////////////////////////////////////
+  //     // const calculatedValuesAllTime = calculatedValues.map((value) => [
+  //     //   `รวมวันทำงาน:`, ` ${value.workplaceId}, ${value.calculatedValue} (${value.allTime})`,
+  //     // ]);
 
-      // Add the additional table to the PDF
-      doc.autoTable({
-        body: combinedTableData,
-        ...additionalTableOptions,
-      });
+  //     const calculatedValuesAllTime = calculatedValues.map((value) =>
+  //       `${value.workplaceId}, ${value.calculatedValue} (${value.allTime})`
+  //     );
 
-      doc.save('example.pdf');
-    } catch (error) {
-      console.error('Error generating PDF:', error);
-    }
-  };
+  //     // Combine the calculated values into a single array
+  //     const combinedCalculatedValues = ['รวมวันทำงาน:', ...calculatedValuesAllTime];
+
+  //     const calculatedValuesOt = calculatedValues.map((value) => [
+  //       `${value.calculatedOT} (${value.otTime})`,
+  //     ]);
+
+  //     const combinedCalculatedValuesOt = ['รวมวันทำงาน OT:', ...calculatedValuesOt];
+
+  //     const combinedTableData = [...additionalTableData, combinedCalculatedValues, combinedCalculatedValuesOt];
+  //     // Combine the calculated values into a single array
+  //     // const combinedCalculatedValues = calculatedValuesAllTime.map((value, index) => [value, calculatedValuesOt[index]]);
+
+  //     // const combinedTableData = [...additionalTableData, ...combinedCalculatedValues, ...calculatedValuesOt];
+
+  //     const firstColumnWidth = 30; // Adjust the width as needed
+
+  //     // Define column styles, including the width of the first column
+  //     const columnStyles = {
+  //       0: { columnWidth: firstColumnWidth }, // Index 0 corresponds to the first column
+  //     };
+
+  //     // Define options for the additional table
+  //     const additionalTableOptions = {
+  //       startY: 80, // Adjust the vertical position as needed
+  //       margin: { top: 10 },
+  //       columnStyles: columnStyles, // Assign the column stylestable here
+  //       styles: stylestable,
+  //     };
+
+  //     // Add the additional table to the PDF
+  //     // doc.autoTable({
+  //     //   body: combinedTableData,
+  //     //   ...additionalTableOptions,
+  //     // });
+
+  //     // Define the text to add background color to
+  //     const textWithBackgroundColor = ['รวมวันทำงาน:', 'รวมวันทำงาน OT:'];
+
+  //     // Add the additional table to the PDF
+  //     doc.autoTable({
+  //       body: combinedTableData,
+  //       ...additionalTableOptions,
+  //       didDrawCell: function (data) {
+  //         if (data.cell.section === 'body') {
+  //           // Check if the cell contains text that should have a background color
+  //           const text = data.cell.raw;
+  //           if (textWithBackgroundColor.includes(text)) {
+  //             // Set the background color
+  //             doc.setFillColor(255, 255, 0); // Yellow background color
+  //             doc.rect(data.cell.x, data.cell.y, data.cell.width, data.cell.height, 'F');
+
+  //             // Reset text color for better visibility
+  //             doc.setTextColor(0, 0, 0);
+  //           }
+  //         }
+  //       },
+  //     });
+  //     const titletest = 'รวมวันทำงาน:';
+  //     const titletest2 = 'รวมวันทำงาน OT:';
+
+  //     // Set title with the Thai font
+  //     doc.setFont('THSarabunNew');
+  //     doc.setFontSize(14);
+  //     doc.text(titletest, 15, 108);
+  //     doc.text(titletest2, 15, 115);
+
+
+  //     doc.save('example.pdf');
+  //   } catch (error) {
+  //     console.error('Error generating PDF:', error);
+  //   }
+  // };
 
   return (
     // <div>
@@ -1279,6 +1358,7 @@ const [result_data , setResult_data ] = useState([]);
                             ))}
 
                           </tr>
+
                           <tr>
                             <td>ช.ม. ทำงาน</td>
                             {tableData.map((data, index) => (
@@ -1292,6 +1372,8 @@ const [result_data , setResult_data ] = useState([]);
                               </td>
                             ))}
                           </tr>
+
+
                           <tr>
                             <td>ช.ม. โอที</td>
                             {tableData.map((data, index) => (
@@ -1346,7 +1428,7 @@ const [result_data , setResult_data ] = useState([]);
                     <TestPDF />
                   </div> */}
                   <div>
-                    <button id="generatePdfButton" onClick={generatePDF}>Generate PDF</button>
+                    {/* <button id="generatePdfButton" onClick={generatePDF}>Generate PDF</button> */}
                   </div>
                 </div>
               </div>
@@ -1422,7 +1504,7 @@ const [result_data , setResult_data ] = useState([]);
         </div >
       </div >
 
-
+      {JSON.stringify(listDayOff, null, 2)}
     </body >
   )
 }
