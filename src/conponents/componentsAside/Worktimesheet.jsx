@@ -60,8 +60,10 @@ function Worktimesheet() {
 
   console.log('employeelist', employeelist);
 
-
+//data for show in table
   const [listTableDayoff , setListTableDayoff ] = useState([]);
+//data for check list dayoff
+const [data_listDayoff , setData_listDayoff ] = useState([]);
 
 useEffect(() => {
   setListDayOff({});
@@ -103,16 +105,19 @@ let totalDay = new Date(result_data[0].timerecordId , m ,0).getDate()
 
 let numstartDay = getDateDayOfWeek(result_data[0].timerecordId +'/' + m + '/21');
 let dayoffTable = [];
+let dayoffCheck = [];
 // alert(numstartDay );
 
 for (let i = 21; i <= totalDay; i++) {
-if(numstartDay >7){
+if(numstartDay > 7){
   numstartDay  = 1;
 }
 
 if(df.includes(numstartDay  .toString() ) ){
 // alert(i);
 dayoffTable.push({[i]: "หยุด"});
+dayoffCheck.push(i);  
+
 } else {
   dayoffTable.push({[i]: " "});
 }
@@ -139,6 +144,7 @@ for (let i = 1; i <= 20; i++) {
   if(df.includes(numstartDay1.toString() ) ){
   // alert(i);
   dayoffTable.push({[i]: "หยุด"});
+dayoffCheck.push(i);  
   } else {
     dayoffTable.push({[i]: " "});
   }
@@ -149,6 +155,10 @@ for (let i = 1; i <= 20; i++) {
 // alert(dayoffTable.length);
 
   setListTableDayoff(dayoffTable);
+  setData_listDayoff(dayoffCheck);
+  // alert(dayoffCheck);
+//xx
+
   }
   // const wid = emp_workplace.workplace;
   // const empWorkplace = workplaceList.find(item => item.workplaceId === wid);
@@ -340,6 +350,9 @@ for (let i = 1; i <= 20; i++) {
     console.log('calendarData2 filteredDates2:', filteredDates2);
     setCalendarData1(filteredDates1); // Assuming you have a separate state for data1.month
     setCalendarData2(filteredDates2);
+
+    //check reload page
+    let check = 0;
     try {
 
       const response = await axios.post(endpoint + '/timerecord/searchemp', data);
@@ -349,6 +362,7 @@ for (let i = 1; i <= 20; i++) {
         await setResult_data(response.data.recordworkplace);
       } else {
         alert("ไม่พบข้อมูล 1 ถึง 20 " + getMonthName(data.month));
+
       }
 
 
@@ -603,6 +617,13 @@ for (let i = 1; i <= 20; i++) {
 
       } else {
         alert("ไม่พบข้อมูล 21 ถึง สิ้นเดือน " + getMonthName(data1.month));
+check = check +1;
+check = check +1;
+if(check > 1){
+  // alert('reload');
+  window.location.reload();
+}
+
       }
 
       // await alert(data1.month + ' : '+ response1.data.recordworkplace.length )
