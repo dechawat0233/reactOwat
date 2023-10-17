@@ -132,7 +132,6 @@ function Setting() {
     const [workTotalPeople, setWorkTotalPeople] = useState(''); //จำนวนคนในหน่วยงาน
     const [holiday, setHoliday] = useState(''); //ค่าจ้างวันหยุดนักขัตฤกษ์ 
     const [holidayOT, setHolidayOT] = useState(''); //ค่าจ้างวันหยุดนักขัตฤกษ์ OT
-
     const [holidayHour, setHolidayHour] = useState(''); //ค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง
     const [salaryadd1, setSalaryadd1] = useState(''); //ค่ารถ
     const [salaryadd2, setSalaryadd2] = useState(''); //ค่าอาหาร
@@ -276,7 +275,6 @@ function Setting() {
         setWorkTotalPeople(workplace.workTotalPeople);
         setHoliday(workplace.holiday);
         setHolidayOT(workplace.holidayOT);
-
         setHolidayHour(workplace.holidayHour);
         setSalaryadd1(workplace.salaryadd1);
         setSalaryadd2(workplace.salaryadd2);
@@ -462,6 +460,7 @@ function Setting() {
             workRateOT: workRateOT,
             workTotalPeople: workTotalPeople,
             holiday: holiday,
+            holidayOT: holidayOT,
             holidayHour: holidayHour,
             salaryadd1: salaryadd1,
             salaryadd2: salaryadd2,
@@ -892,8 +891,8 @@ function Setting() {
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label role="holidayHour">อัตราค่าจ้างวันหยุดนักขัตฤกษ์ OT รายชั่วโมง</label>
-                                                <input type="text" class="form-control" id="holidayHour" placeholder="อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง" value={holidayOT} onChange={(e) => setHolidayOT(e.target.value)} />
+                                                <label role="holidayOT">อัตราค่าจ้างวันหยุดนักขัตฤกษ์ OT รายชั่วโมง</label>
+                                                <input type="text" class="form-control" id="holidayOT" placeholder="อัตราค่าจ้างวันหยุดนักขัตฤกษ์ OT รายชั่วโมง" value={holidayOT} onChange={(e) => setHolidayOT(e.target.value)} />
                                             </div>
                                         </div>
                                         <div class="col-md-4">
