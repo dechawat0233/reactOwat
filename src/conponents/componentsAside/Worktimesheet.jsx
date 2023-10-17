@@ -19,6 +19,7 @@ function Worktimesheet() {
   const [workplaceList, setWorkplaceList] = useState([]);
   const [result_data, setResult_data] = useState([]);
 
+  
   useEffect(() => {
     // Fetch data from the API when the component mounts
     fetch(endpoint + '/workplace/list')
@@ -60,43 +61,99 @@ function Worktimesheet() {
   console.log('employeelist', employeelist);
 
 
+  const [listTableDayoff , setListTableDayoff ] = useState([]);
 
-  function getListDayOff(month, month1, errorCallback ) {
-    alert('hi');
-    setM(month);
-    setM1(month1);
-    setY(searchResult[0].timerecordId);
+useEffect(() => {
+  setListDayOff({});
+  const emp_workplace = employeelist.find(item => item.employeeId === result_data[0].employeeId);
+  if(emp_workplace){
+  const wid = emp_workplace.workplace;
+  const empWorkplace = workplaceList.find(item => item.workplaceId === wid);
+// alert(JSON.stringify(empWorkplace ,null,2));
+const df = [];
+if (empWorkplace.workday7 !== "true") {
+  df.push('1');
+}
+if (empWorkplace.workday6 !== "true") {
+  df.push('7');
+}
+if (empWorkplace.workday5 !== "true") {
+  df.push('6');
+}
+if (empWorkplace.workday4 !== "true") {
+  df.push('5');
+}
+if (empWorkplace.workday3 !== "true") {
+  df.push('4');
+}
+if (empWorkplace.workday2 !== "true") {
+  df.push('3');
+}
+if (empWorkplace.workday1 !== "true") {
+  df.push('2');
+}
 
-    const emp_workplace = employeelist.find(item => item.employeeId === searchResult[0].employeeId);
-    const wid = emp_workplace.workplace;
-    const empWorkplace = workplaceList.find(item => item.workplaceId === wid);
+setListDayOff(df);
 
-    const df = [];
-    if (empWorkplace.workday7 !== "true") {
-      df.push('1');
-    }
-    if (empWorkplace.workday6 !== "true") {
-      df.push('7');
-    }
-    if (empWorkplace.workday5 !== "true") {
-      df.push('6');
-    }
-    if (empWorkplace.workday4 !== "true") {
-      df.push('5');
-    }
-    if (empWorkplace.workday3 !== "true") {
-      df.push('4');
-    }
-    if (empWorkplace.workday2 !== "true") {
-      df.push('3');
-    }
-    if (empWorkplace.workday1 !== "true") {
-      df.push('2');
-    }
+//get totalday of month
+let m = parseInt(result_data[0].month , 10) - 1; // Convert month to integer and subtract 1
+let totalDay = new Date(result_data[0].timerecordId , m ,0).getDate()
+// alert(JSON.stringify(result_data , null,2));
+// alert(totalDay );
 
-    setListDayOff(df);
-// alert(listDayOff);
+let numstartDay = getDateDayOfWeek(result_data[0].timerecordId +'/' + m + '/21');
+let dayoffTable = [];
+// alert(numstartDay );
+
+for (let i = 21; i <= totalDay; i++) {
+if(numstartDay >7){
+  numstartDay  = 1;
+}
+
+if(df.includes(numstartDay  .toString() ) ){
+// alert(i);
+dayoffTable.push({[i]: "หยุด"});
+} else {
+  dayoffTable.push({[i]: " "});
+}
+
+//next day
+numstartDay  = numstartDay +1;
+} //end for
+
+//any month < 31 day , add to 31 day for show in table
+if(totalDay < 31){
+for(let j = totalDay +1; j <= 31; j++){
+  dayoffTable.push({[j]: " "});
+}
+}
+// alert(dayoffTable.length);
+
+//next month 1 - 20 
+let numstartDay1 = getDateDayOfWeek(result_data[0].timerecordId +'/' + result_data[0].month + '/1');
+for (let i = 1; i <= 20; i++) {
+  if(numstartDay1 >7){
+    numstartDay1  = 1;
   }
+  
+  if(df.includes(numstartDay1.toString() ) ){
+  // alert(i);
+  dayoffTable.push({[i]: "หยุด"});
+  } else {
+    dayoffTable.push({[i]: " "});
+  }
+  
+  //next day
+  numstartDay1 = numstartDay1 +1;
+  } //end for
+// alert(dayoffTable.length);
+
+  setListTableDayoff(dayoffTable);
+  }
+  // const wid = emp_workplace.workplace;
+  // const empWorkplace = workplaceList.find(item => item.workplaceId === wid);
+
+} , [result_data]);
 
 
   // Generate an array containing numbers from 21 to 31
@@ -201,6 +258,7 @@ function Worktimesheet() {
     console.log('data1', data1.month);
     console.log('data2', data.month);
 
+
     // date day
 
     // Calculate the formatted month based on data1.month
@@ -246,7 +304,7 @@ function Worktimesheet() {
       while (currentDate1.getMonth() === parsedNumber1) {
         dayDates1.push(currentDate1.getDate());
         currentDate1.setDate(currentDate1.getDate() + 7); // Move to the next occurrence of the day
-      }
+              }
 
       // Continue adding dates while still in the same month for data.month
       while (currentDate2.getMonth() === parsedNumber2) {
@@ -277,6 +335,7 @@ function Worktimesheet() {
       dates: dayData.dates.filter((date) => date < 20), // Adjusted filtering condition
     })).filter((dayData) => dayData.dates.length > 0);
 
+//dddd
     console.log('calendarData1 filteredDates1:', filteredDates1);
     console.log('calendarData2 filteredDates2:', filteredDates2);
     setCalendarData1(filteredDates1); // Assuming you have a separate state for data1.month
@@ -687,6 +746,7 @@ function Worktimesheet() {
 
 
       }
+
     }
 
     catch (error) {
@@ -694,12 +754,11 @@ function Worktimesheet() {
       // window.location.reload();
     }
 
-    //check day off form select month
-    getListDayOff(data.month, data1.month , () =>{
-      // alert(listDayOff.length);
-    });
+    //xx
+    // alert(result_data[0].employeeId);
 
   }
+
   console.log('workplaceIdList', workplaceIdList);
 
 
@@ -1358,6 +1417,19 @@ function Worktimesheet() {
 
                           </tr>
                           <tr>
+                            <td></td>
+                            {listTableDayoff.map((item, index) => {
+            const [day, s] = Object.entries(item)[0];                              
+
+            return(
+              <td key={index}>{s}</td>
+            )
+
+                            }
+                           
+                            )}
+                          </tr>
+                          <tr>
                             <td>ช.ม. ทำงาน</td>
                             {tableData.map((data, index) => (
                               <td key={index}>
@@ -1501,6 +1573,7 @@ function Worktimesheet() {
         </div >
       </div >
 
+{/* {JSON.stringify(listDayOff,null,2)} */}
 
     </body >
   )
@@ -1530,7 +1603,7 @@ const getDateDayOfWeek = (dateString) => {
   // Return the day of the week (Sunday, Monday, etc.)
   // const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   //overide
-  const daysOfWeek = ['7', '1', '2', '3', '4', '5', '6'];
+  const daysOfWeek = ['1', '2', '3', '4', '5', '6', '7'];
   return daysOfWeek[dayOfWeek];
   // console.log('dayOfWeek',dayOfWeek);
 };
