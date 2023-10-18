@@ -98,12 +98,18 @@ if (empWorkplace.workday1 !== "true") {
 setListDayOff(df);
 
 //get totalday of month
-let m = parseInt(result_data[0].month , 10) - 1; // Convert month to integer and subtract 1
+let m = parseInt(result_data[0].month , 10); // Convert month to integer and subtract 1
+// alert(result_data[0].month );
 let totalDay = new Date(result_data[0].timerecordId , m ,0).getDate()
 // alert(JSON.stringify(result_data , null,2));
 // alert(totalDay );
 
-let numstartDay = getDateDayOfWeek(result_data[0].timerecordId +'/' + m + '/21');
+let dateString = result_data[0].timerecordId +'/' + m + '/21';
+let dateObj = new Date(dateString );
+// alert(dateObj);
+let numstartDay = getDateDayOfWeek( dateObj );
+numstartDay = parseInt(numstartDay , 10);
+
 let dayoffTable = [];
 let dayoffCheck = [];
 // alert(numstartDay );
@@ -135,27 +141,42 @@ for(let j = totalDay +1; j <= 31; j++){
 // alert(dayoffTable.length);
 
 //next month 1 - 20 
-let numstartDay1 = getDateDayOfWeek(result_data[0].timerecordId +'/' + result_data[0].month + '/1');
-for (let i = 1; i <= 20; i++) {
-  if(numstartDay1 >7){
+// m = m +1;
+ m = parseInt(result_data[0].month , 10); // Convert month to integer and subtract 1
+
+// alert(m);
+let s = result_data[0].timerecordId +'/' + (m + 1) + '/1';
+let sObj = new Date(s);
+// alert(sObj);
+let numstartDay1 = getDateDayOfWeek(sObj );
+numstartDay1 = parseInt(numstartDay1 , 10);
+// alert('x' + numstartDay1 );
+for (let l = 1; l <= 20; l++) {
+  if(numstartDay1 > 7){
     numstartDay1  = 1;
   }
-  
+// alert("วันที่ " + l + "ตัวเลข" + numstartDay1  );  
   if(df.includes(numstartDay1.toString() ) ){
   // alert(i);
-  dayoffTable.push({[i]: "หยุด"});
-dayoffCheck.push(i);  
-  } else {
-    dayoffTable.push({[i]: " "});
-  }
-  
+  dayoffTable.push({[l]: "หยุด"});
+  // alert(l + "หยุด")
+dayoffCheck.push(l);  
   //next day
   numstartDay1 = numstartDay1 +1;
+
+  } else {
+    dayoffTable.push({[l]: " "});
+      //next day
+  numstartDay1 = numstartDay1 +1;
+
+  }
+  
   } //end for
 // alert(dayoffTable.length);
 
   setListTableDayoff(dayoffTable);
   setData_listDayoff(dayoffCheck);
+  // alert(df);
   // alert(dayoffCheck);
 //xx
 
@@ -362,7 +383,7 @@ dayoffCheck.push(i);
         await setResult_data(response.data.recordworkplace);
       } else {
         alert("ไม่พบข้อมูล 1 ถึง 20 " + getMonthName(data.month));
-
+check = check +1;
       }
 
 
@@ -611,13 +632,12 @@ dayoffCheck.push(i);
       const response1 = await axios.post(endpoint + '/timerecord/searchemp', data1);
       if (response1.data.recordworkplace.length >= 1) {
         await setSearchResult1(response1.data.recordworkplace);
-        if (!result_data) {
+        // if (!result_data) {
           await setResult_data(response1.data.recordworkplace);
-        }
+        // }
 
       } else {
         alert("ไม่พบข้อมูล 21 ถึง สิ้นเดือน " + getMonthName(data1.month));
-check = check +1;
 check = check +1;
 if(check > 1){
   // alert('reload');
