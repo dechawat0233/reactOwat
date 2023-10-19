@@ -1,12 +1,16 @@
 import endpoint from '../../config';
+// import React, { useRef } from 'react';
 
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import '../editwindowcss.css';
 // import TestPDF from './TestPDF';
-
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
+import html2pdf from 'html2pdf.js';
+
+
+
 
 function Worktimesheet() {
   const styles = {
@@ -174,7 +178,7 @@ function Worktimesheet() {
     // get value from form search
     if (searchEmployeeId === '' && searchEmployeeName === '') {
       // Both employeeId and employeeName are null
-      alert("error");
+      alert("กรุณากรอกรหัสหรือชื่อพนักงาน");
       // You can use window.location.reload() to reload the web page
       window.location.reload();
     } else {
@@ -1188,6 +1192,74 @@ function Worktimesheet() {
     }
   };
 
+  // const tableRef = useRef(null);
+
+  const tableRef = useRef(null);
+
+  const generatePDFTest = () => {
+    const doc = new jsPDF({
+      orientation: 'landscape',
+      unit: 'mm',
+      format: 'a4',
+    });
+    const table = tableRef.current;
+    const fontPath = '/assets/fonts/THSarabunNew.ttf';
+    doc.addFileToVFS(fontPath);
+    doc.addFont(fontPath, 'THSarabunNew', 'normal');
+
+    // Override the default stylestable for jspdf-autotable
+    const stylestable = {
+      font: 'THSarabunNew',
+      fontStyle: 'normal',
+      fontSize: 10,
+    };
+
+    // Set title with the Thai font
+    const title = ' ใบลงเวลาการปฏิบัติงาน';
+
+    doc.setFont('THSarabunNew');
+    doc.setFontSize(16);
+    const titleWidth = doc.getStringUnitWidth(title) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const titleX = (pageWidth - titleWidth) / 2;
+    doc.text(title, titleX, 10);
+
+    const subTitle = workMonth; // Replace with your desired subtitle text
+    doc.setFontSize(12); // You can adjust the font size for the subtitle
+    const subTitleWidth = doc.getStringUnitWidth(subTitle) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+    const subTitleX = (pageWidth - subTitleWidth) / 2;
+    doc.text(subTitle, subTitleX, 20); // Adjust the vertical position as needed
+
+    // Convert the table to a PDF using jsPDF and jsPDF-AutoTable
+
+    doc.autoTable({
+      html: table,
+      styles: stylestable,
+      margin: { top: 30 },
+    });
+
+    // const tableRows = table.querySelectorAll('tr');
+    // const cellWidth = 190 / 31; // Adjust cell width based on the number of columns
+    // const cellHeight = 10; // Adjust cell height as needed
+
+    // const yStart = 20; // Initial y position for the table
+    // const yOffset = 10; // Space between rows
+
+    // tableRows.forEach((row, i) => {
+    //   const cells = row.querySelectorAll('th, td'); // Include both header and data cells
+    //   const y = yStart + i * yOffset;
+
+    //   cells.forEach((cell, j) => {
+    //     const x = j * cellWidth * 1.5;
+    //     doc.rect(x, y, cellWidth *1.5, cellHeight, 'S'); // Draw cell borders
+    //     doc.text(cell.innerText, x + 2, y + cellHeight / 2); // Adjust cell text position
+    //   });
+    // });
+
+    doc.save('your_table.pdf');
+  };
+
+
   return (
     // <div>
     <body class="hold-transition sidebar-mini" className='editlaout'>
@@ -1325,7 +1397,9 @@ function Worktimesheet() {
                 <div class="col-md-9">
                   <section class="Frame">
                     <div class="container" style={{ overflowX: 'scroll' }}>
-                      <table class="table table-bordered ">
+                      {/* <table class="table table-bordered "> */}
+                      <button onClick={generatePDFTest}>Generate PDF</button>
+                      <table ref={tableRef} className="table table-bordered">
                         <thead>
                           <tr>
                             <th style={styles.th}></th>
@@ -1339,15 +1413,17 @@ function Worktimesheet() {
                             <td>วันทำงาน</td>
                             {tableData.map((data, index) => (
                               <td key={index}>
-                                <input
+                                {/* <input
                                   type="checkbox"
                                   className="form-control custom-checkbox"
                                   checked={data.isChecked}
                                   disabled={true}
                                   onChange={() => handleCheckboxChange(index)}
                                   style={{ color: 'black' }}
-                                />
-                                {data.workplaceId}
+                                /> */}
+                                {/* {data.isChecked}<br/> */}
+                                {/* {data.workplaceId} */}
+                                {data.workplaceId <= 31 ? null : data.workplaceId}
 
                               </td>
 
@@ -1355,15 +1431,18 @@ function Worktimesheet() {
 
                           </tr>
                           <tr>
-                            <td>ช.ม. ทำงาน</td>
+                            <td
+                              // style={{ backgroundColor: "yellow" }}
+                            >ช.ม. ทำงาน</td>
                             {tableData.map((data, index) => (
                               <td key={index}>
-                                <input
+                                {/* <input
                                   type="text"
                                   class="form-control"
                                   value={data.allTime}
                                   onChange={(event) => handleTextChange(index, event)}
-                                />
+                                /> */}
+                                {data.allTime}
                               </td>
                             ))}
                           </tr>
@@ -1371,12 +1450,13 @@ function Worktimesheet() {
                             <td>ช.ม. โอที</td>
                             {tableData.map((data, index) => (
                               <td key={index}>
-                                <input
+                                {/* <input
                                   type="text"
                                   class="form-control"
                                   value={data.otTime}
                                   onChange={(event) => handleTextChange(index, event)}
-                                />
+                                /> */}
+                                {data.otTime}
                               </td>
                             ))}
                           </tr>
@@ -1421,7 +1501,7 @@ function Worktimesheet() {
                     <TestPDF />
                   </div> */}
                   <div>
-                    <button id="generatePdfButton" onClick={generatePDF}>Generate PDF</button>
+                    {/* <button id="generatePdfButton" onClick={generatePDF}>Generate PDF</button> */}
                     {/* <TestPDF /> */}
                   </div>
                 </div>
