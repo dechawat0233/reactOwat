@@ -23,6 +23,7 @@ function Worktimesheet() {
   const [workplaceList, setWorkplaceList] = useState([]);
   const [result_data, setResult_data] = useState([]);
 
+
   useEffect(() => {
     // Fetch data from the API when the component mounts
     fetch(endpoint + '/workplace/list')
@@ -63,43 +64,133 @@ function Worktimesheet() {
 
   console.log('employeelist', employeelist);
 
+  //data for show in table
+  const [listTableDayoff, setListTableDayoff] = useState([]);
+  //data for check list dayoff
+  const [data_listDayoff, setData_listDayoff] = useState([]);
 
+  useEffect(() => {
+    setListDayOff({});
+    const emp_workplace = employeelist.find(item => item.employeeId === result_data[0].employeeId);
+    console.log('emp_workplace', emp_workplace);
 
-  function getListDayOff(month, month1, res) {
-    setM(month);
-    setM1(month1);
-    setY(searchResult[0].timerecordId);
+    if (emp_workplace) {
+      const wid = emp_workplace.workplace;
+      const empWorkplace = workplaceList.find(item => item.workplaceId === wid);
+      // alert(JSON.stringify(empWorkplace ,null,2));
+      const df = [];
+      if (empWorkplace.workday7 !== "true") {
+        df.push('1');
+      }
+      if (empWorkplace.workday6 !== "true") {
+        df.push('7');
+      }
+      if (empWorkplace.workday5 !== "true") {
+        df.push('6');
+      }
+      if (empWorkplace.workday4 !== "true") {
+        df.push('5');
+      }
+      if (empWorkplace.workday3 !== "true") {
+        df.push('4');
+      }
+      if (empWorkplace.workday2 !== "true") {
+        df.push('3');
+      }
+      if (empWorkplace.workday1 !== "true") {
+        df.push('2');
+      }
 
-    const emp_workplace = employeelist.find(item => item.employeeId === searchResult[0].employeeId);
-    const wid = emp_workplace.workplace;
-    const empWorkplace = workplaceList.find(item => item.workplaceId === wid);
+      setListDayOff(df);
 
-    const df = [];
-    if (!empWorkplace.workday7) {
-      df.push('7');
-    }
-    if (!empWorkplace.workday6) {
-      df.push('6');
-    }
-    if (!empWorkplace.workday5) {
-      df.push('5');
-    }
-    if (!empWorkplace.workday4) {
-      df.push('4');
-    }
-    if (!empWorkplace.workday3) {
-      df.push('3');
-    }
-    if (!empWorkplace.workday2) {
-      df.push('2');
-    }
-    if (!empWorkplace.workday1) {
-      df.push('1');
-    }
+      //get totalday of month
+      let m = parseInt(result_data[0].month, 10); // Convert month to integer and subtract 1
+      // alert(result_data[0].month );
+      let totalDay = new Date(result_data[0].timerecordId, m, 0).getDate()
+      // alert(JSON.stringify(result_data , null,2));
+      // alert(totalDay );
 
-    setListDayOff(df);
+      let dateString = result_data[0].timerecordId + '/' + m + '/21';
+      let dateObj = new Date(dateString);
+      // alert(dateObj);
+      let numstartDay = getDateDayOfWeek(dateObj);
+      numstartDay = parseInt(numstartDay, 10);
 
-  }
+      let dayoffTable = [];
+      let dayoffCheck = [];
+      // alert(numstartDay );
+
+      for (let i = 21; i <= totalDay; i++) {
+        if (numstartDay > 7) {
+          numstartDay = 1;
+        }
+
+        if (df.includes(numstartDay.toString())) {
+          // alert(i);
+          dayoffTable.push({ [i]: "หยุด" });
+          dayoffCheck.push(i);
+
+        } else {
+          dayoffTable.push({ [i]: " " });
+        }
+
+        //next day
+        numstartDay = numstartDay + 1;
+      } //end for
+
+      //any month < 31 day , add to 31 day for show in table
+      if (totalDay < 31) {
+        for (let j = totalDay + 1; j <= 31; j++) {
+          dayoffTable.push({ [j]: " " });
+        }
+      }
+      // alert(dayoffTable.length);
+
+      //next month 1 - 20 
+      // m = m +1;
+      m = parseInt(result_data[0].month, 10); // Convert month to integer and subtract 1
+
+      // alert(m);
+      let s = result_data[0].timerecordId + '/' + (m + 1) + '/1';
+      let sObj = new Date(s);
+      // alert(sObj);
+      let numstartDay1 = getDateDayOfWeek(sObj);
+      numstartDay1 = parseInt(numstartDay1, 10);
+      // alert('x' + numstartDay1 );
+      for (let l = 1; l <= 20; l++) {
+        if (numstartDay1 > 7) {
+          numstartDay1 = 1;
+        }
+        // alert("วันที่ " + l + "ตัวเลข" + numstartDay1  );  
+        if (df.includes(numstartDay1.toString())) {
+          // alert(i);
+          dayoffTable.push({ [l]: "หยุด" });
+          // alert(l + "หยุด")
+          dayoffCheck.push(l);
+          //next day
+          numstartDay1 = numstartDay1 + 1;
+
+        } else {
+          dayoffTable.push({ [l]: " " });
+          //next day
+          numstartDay1 = numstartDay1 + 1;
+
+        }
+
+      } //end for
+      // alert(dayoffTable.length);
+
+      setListTableDayoff(dayoffTable);
+      setData_listDayoff(dayoffCheck);
+      // alert(df);
+      // alert(dayoffCheck);
+      //xx
+
+    }
+    // const wid = emp_workplace.workplace;
+    // const empWorkplace = workplaceList.find(item => item.workplaceId === wid);
+
+  }, [result_data]);
 
 
   // Generate an array containing numbers from 21 to 31
@@ -204,6 +295,7 @@ function Worktimesheet() {
     console.log('data1', data1.month);
     console.log('data2', data.month);
 
+
     // date day
 
     // Calculate the formatted month based on data1.month
@@ -280,10 +372,14 @@ function Worktimesheet() {
       dates: dayData.dates.filter((date) => date < 20), // Adjusted filtering condition
     })).filter((dayData) => dayData.dates.length > 0);
 
+    //dddd
     console.log('calendarData1 filteredDates1:', filteredDates1);
     console.log('calendarData2 filteredDates2:', filteredDates2);
     setCalendarData1(filteredDates1); // Assuming you have a separate state for data1.month
     setCalendarData2(filteredDates2);
+
+    //check reload page
+    let check = 0;
     try {
 
       const response = await axios.post(endpoint + '/timerecord/searchemp', data);
@@ -293,6 +389,7 @@ function Worktimesheet() {
         await setResult_data(response.data.recordworkplace);
       } else {
         alert("ไม่พบข้อมูล 1 ถึง 20 " + getMonthName(data.month));
+        check = check + 1;
       }
 
 
@@ -541,12 +638,18 @@ function Worktimesheet() {
       const response1 = await axios.post(endpoint + '/timerecord/searchemp', data1);
       if (response1.data.recordworkplace.length >= 1) {
         await setSearchResult1(response1.data.recordworkplace);
-        if (!result_data) {
-          await setResult_data(response1.data.recordworkplace);
-        }
+        // if (!result_data) {
+        await setResult_data(response1.data.recordworkplace);
+        // }
 
       } else {
         alert("ไม่พบข้อมูล 21 ถึง สิ้นเดือน " + getMonthName(data1.month));
+        check = check + 1;
+        if (check > 1) {
+          // alert('reload');
+          window.location.reload();
+        }
+
       }
 
       // await alert(data1.month + ' : '+ response1.data.recordworkplace.length )
@@ -690,6 +793,7 @@ function Worktimesheet() {
 
 
       }
+
     }
 
     catch (error) {
@@ -697,10 +801,11 @@ function Worktimesheet() {
       // window.location.reload();
     }
 
-    //check day off form select month
-    // getListDayOff(data.month, data1.month);
+    //xx
+    // alert(result_data[0].employeeId);
 
   }
+
   console.log('workplaceIdList', workplaceIdList);
 
 
@@ -717,62 +822,12 @@ function Worktimesheet() {
   const [workplaceIdListSearch, setWorkplaceIdListSearch] = useState([]); //หน่วยงานที่ค้นหาและทำงาน
   const [calculatedValues, setCalculatedValues] = useState([]);
 
-  useEffect(() => {
-    // Extract workplaceId values from workplaceIdList
-    const selectedWorkplaceIds = workplaceIdList.map((item) => item.workplaceId);
-
-    // Filter workplaceList based on selected workplaceIds
-    const filteredWorkplaces = workplaceList.filter((workplace) =>
-      selectedWorkplaceIds.includes(workplace.workplaceId)
-    );
-
-    // Extract the filtered workplaceIds
-    // const filteredWorkplaceIds = filteredWorkplaces.map((workplace) => workplace.workplaceId);
-
-    // Set the result in workplaceIdListSearch 
-
-    setWorkplaceIdListSearch(filteredWorkplaces);
-
-    const calculatedResults = workplaceIdList.map((item) => {
-      const workplaceId = item.workplaceId;
-      const count = item.count;
-      const allTime = item.allTime;
-      const otTime = item.otTime;
-
-      const workplace = workplaceList.find((w) => w.workplaceId === workplaceId);
-      if (workplace) {
-        const workRate = workplace.workRate;
-        const workRateOT = workplace.workRateOT;
-        const workOfHour = workplace.workOfHour;
-
-        return { workplaceId, calculatedValue: workRate * allTime, allTime, otTime, calculatedOT: (workRate / workOfHour) * workRateOT * otTime };
-      }
-      return null;
-    });
-
-    // Remove null values from the result
-    const filteredResults = calculatedResults.filter((result) => result !== null);
-
-    // Calculate the total sum
-    const totalSum = filteredResults.reduce((sum, result) => sum + result.calculatedValue, 0);
-    // const totalSum = filteredResults.reduce((sum, result) => sum + result.calculatedValue, 0);
-
-
-
-    setWorkRate(totalSum);
-
-    setCalculatedValues(filteredResults);
-    console.log('Total Sum:', totalSum);
-    console.log('Total Sum2:', filteredResults);
-    console.log('Total Sum3:', calculatedResults);
-
-
-  }, [workplaceList, workplaceIdList]);
-  console.log(workplaceList);
 
   console.log('searchResult', searchResult);
   // get employee data
   const [MinusSearch, setMinusSearch] = useState(0); // Example: February (you can set it dynamically)
+  const [EmpData, setEmpData] = useState([]); // Example: February (you can set it dynamically)
+  // const [EmpDataWorkplace, setEmpDataWorkplace] = useState([]); // Example: February (you can set it dynamically)
 
   useEffect(() => {
     // Extract employeeIds from searchResult
@@ -798,15 +853,95 @@ function Worktimesheet() {
         }
       });
     });
+    // const testtest2 = filteredEmployeeList.map((item) => item.department);
 
-    console.log('test', filteredEmployeeList);
+    console.log('testtest', filteredEmployeeList);
+    // console.log('testtest2', testtest2);
+
+    setEmpData(filteredEmployeeList);
+    // setEmpDataWorkplace(filteredEmployeeList.department);
+
     setMinusSearch(selectedMinus);
     setAddSalary(filteredAddSalary);
   }, [searchResult, employeelist]);
   // console.log('employee', employee);
   console.log('addSalary', addSalary);
+  // console.log('EmpData', EmpData);
+
+  useEffect(() => {
+    // Extract workplaceId values from workplaceIdList
+    const selectedWorkplaceIds = workplaceIdList.map((item) => item.workplaceId);
+
+    // Filter workplaceList based on selected workplaceIds
+    const filteredWorkplaces = workplaceList.filter((workplace) =>
+      selectedWorkplaceIds.includes(workplace.workplaceId)
+    );
+
+    // Extract the filtered workplaceIds
+    // const filteredWorkplaceIds = filteredWorkplaces.map((workplace) => workplace.workplaceId);
+
+    // Set the result in workplaceIdListSearch 
+
+    setWorkplaceIdListSearch(filteredWorkplaces);
+
+    // const EmpDatamain = EmpData.admoney1; // Declare EmpDatamain within the useEffect
+    // const EmpDatamain = EmpData.map((item) => item.workplace);
+
+    const EmpDatamain = EmpData.map((item) => item.workplace);
+    // const matchingWorkplaceData = workplaceList.filter((w) => EmpDatamain.includes(w.workplaceId));
 
 
+    const workplaceData = workplaceList.find((w) => EmpDatamain.includes(w.workplaceId));
+    const workRate = workplaceData ? workplaceData.workRate : 0;
+    const workRateOT = workplaceData ? workplaceData.workRateOT : 0;
+    const workOfHour = workplaceData ? workplaceData.workOfHour : 1;
+    // const workRate = workplaceData.workRate;
+    // const workRateOT = workplaceData.workRateOT;
+    // const workOfHour = workplaceData.workOfHour;
+    // console.log('workplaceData', workplaceData);
+    console.log('workRate', workRate);
+    console.log('workRateOT', workRateOT);
+    console.log('workOfHour', workOfHour);
+    console.log('EmpData', EmpData);
+    console.log('EmpDatamain', EmpDatamain);
+    // console.log('matchingWorkplaceData', matchingWorkplaceData);
+
+
+    const calculatedResults = workplaceIdList.map((item) => {
+      const workplaceId = item.workplaceId;
+      const allTime = parseFloat(item.allTime); // Convert to a number
+      const otTime = parseFloat(item.otTime); // Convert to a number
+
+      const calculatedValue = workRate * allTime;
+      const calculatedOT = (workRate / workOfHour) * workRateOT * otTime;
+
+      return { workplaceId, calculatedValue, allTime, otTime, calculatedOT };
+    });
+
+    console.log(calculatedResults);
+
+
+
+    // Remove null values from the result
+    const filteredResults = calculatedResults.filter((result) => result !== null);
+
+    // Calculate the total sum
+    const totalSum = filteredResults.reduce((sum, result) => sum + result.calculatedValue, 0);
+    // const totalSum = filteredResults.reduce((sum, result) => sum + result.calculatedValue, 0);
+
+    setWorkRate(totalSum);
+
+    setCalculatedValues(filteredResults);
+    console.log('Total Sum:', totalSum);
+    console.log('Total Sum2:', filteredResults);
+    console.log('Total Sum3:', calculatedResults);
+
+
+  }, [workplaceList, workplaceIdList, EmpData]);
+  console.log('workplaceList', workplaceList);
+  console.log('workplaceIdList', workplaceIdList);
+  console.log('EmpData', EmpData); // Can access EmpData here
+  // console.log('EmpDatamain', EmpDatamain); // Can access EmpDatamain here
 
   // console.log('workRate', workplaceIdListSearch);
   // console.log('allworkRate', calculatedValues);
@@ -899,6 +1034,9 @@ function Worktimesheet() {
 
     const Sumall = sumAlltime + sumSalary + sumOtTime;
     const Minus = parseFloat((Sumall * (MinusSearch / 100)).toFixed(2));
+
+    console.log('testRe11', calculatedValuesAllTime);
+
 
     console.log('testRe1', Sumall);
     console.log('testRe2', Minus);
@@ -1431,9 +1569,20 @@ function Worktimesheet() {
 
                           </tr>
                           <tr>
-                            <td
-                              // style={{ backgroundColor: "yellow" }}
-                            >ช.ม. ทำงาน</td>
+                            <td></td>
+                            {listTableDayoff.map((item, index) => {
+                              const [day, s] = Object.entries(item)[0];
+
+                              return (
+                                <td key={index}>{s}</td>
+                              )
+
+                            }
+
+                            )}
+                          </tr>
+                          <tr>
+                            <td>ช.ม. ทำงาน</td>
                             {tableData.map((data, index) => (
                               <td key={index}>
                                 {/* <input
@@ -1578,6 +1727,7 @@ function Worktimesheet() {
         </div >
       </div >
 
+      {/* {JSON.stringify(listDayOff,null,2)} */}
 
     </body >
   )
@@ -1607,7 +1757,7 @@ const getDateDayOfWeek = (dateString) => {
   // Return the day of the week (Sunday, Monday, etc.)
   // const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   //overide
-  const daysOfWeek = ['7', '1', '2', '3', '4', '5', '6'];
+  const daysOfWeek = ['1', '2', '3', '4', '5', '6', '7'];
   return daysOfWeek[dayOfWeek];
   // console.log('dayOfWeek',dayOfWeek);
 };
