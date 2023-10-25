@@ -44,7 +44,7 @@ import Salarysummary from "./conponents/componentsAside/Salarysummary";
 import Worktimesheet from "./conponents/componentsAside/Worktimesheet";
 
 import TestPDF from "./conponents/componentsAside/TestPDF";
-
+import SendEmployeePDF from "./conponents/componentsAside/sendEmployeePDF";
 import Testapp from "./conponents/componentsAside/Test";
 
 // import Time from "./conponents/Time";
@@ -147,7 +147,9 @@ function App() {
               {/* <Route path="/testPDF" element={<TestShowManyData />} /> */}
               {/* <Route path="/testPDF" element={<TestPDF />} /> */}
               {/* <Route path="/testPDF" element={<PdfGenerator />} /> */}
-              <Route path="/testPDF" element={<Testapp />} />
+              {/* <Route path="/testPDF" element={<Testapp />} /> */}
+              <Route path="/testPDF" element={<SendEmployeePDF />} />
+
 
 
 

@@ -538,68 +538,68 @@ function Worktimesheet() {
           // // const uniqueWorkplaceIds = [...new Set(updatedData.map((record) => record.workplaceId))];
           // const result = Object.entries(workplaceIdCounts).map(([workplaceId, count]) => ({ workplaceId, count }));
 
-          // const workplaceIdCounts = {};
-          // const workplaceIdAllTimes = {};
-          // const workplaceIdOtTimes = {};
+          const workplaceIdCounts = {};
+          const workplaceIdAllTimes = {};
+          const workplaceIdOtTimes = {};
 
 
-          // filteredData.forEach((record) => {
-          //   if (record.isChecked) {
-          //     const { workplaceId, otTime, allTime } = record;
-          //     if (workplaceIdCounts[workplaceId]) {
-          //       workplaceIdCounts[workplaceId]++;
-          //       const allTimeAsNumber = parseFloat(allTime); // Parse allTime to a number
-          //       const otTimeAsNumber = parseFloat(otTime); // Parse otTime to a number
+          filteredData.forEach((record) => {
+            if (record.isChecked) {
+              const { workplaceId, otTime, allTime } = record;
+              if (workplaceIdCounts[workplaceId]) {
+                workplaceIdCounts[workplaceId]++;
+                const allTimeAsNumber = parseFloat(allTime); // Parse allTime to a number
+                const otTimeAsNumber = parseFloat(otTime); // Parse otTime to a number
 
-          //       if (!isNaN(allTimeAsNumber)) {
-          //         if (allTimeAsNumber > 5.0) {
-          //           workplaceIdAllTimes[workplaceId] += 1;
-          //         } else {
-          //           workplaceIdAllTimes[workplaceId] += 0.5;
-          //         }
-          //       }
-          //       if (!isNaN(otTimeAsNumber)) {
-          //         workplaceIdOtTimes[workplaceId] += otTimeAsNumber;
-          //       }
-          //     } else {
-          //       workplaceIdCounts[workplaceId] = 1;
-          //       const allTimeAsNumber = parseFloat(allTime); // Parse allTime to a number
-          //       const otTimeAsNumber = parseFloat(otTime); // Parse otTime to a number
-          //       if (!isNaN(allTimeAsNumber)) {
-          //         if (allTimeAsNumber > 5.0) {
-          //           workplaceIdAllTimes[workplaceId] = 1;
-          //         } else {
-          //           workplaceIdAllTimes[workplaceId] = 0.5;
-          //         }
-          //       }
-          //       if (!isNaN(otTimeAsNumber)) {
-          //         workplaceIdOtTimes[workplaceId] = otTimeAsNumber;
-          //       }
-          //     }
-          //   }
-          // });
+                if (!isNaN(allTimeAsNumber)) {
+                  if (allTimeAsNumber > 5.0) {
+                    workplaceIdAllTimes[workplaceId] += 1;
+                  } else {
+                    workplaceIdAllTimes[workplaceId] += 0.5;
+                  }
+                }
+                if (!isNaN(otTimeAsNumber)) {
+                  workplaceIdOtTimes[workplaceId] += otTimeAsNumber;
+                }
+              } else {
+                workplaceIdCounts[workplaceId] = 1;
+                const allTimeAsNumber = parseFloat(allTime); // Parse allTime to a number
+                const otTimeAsNumber = parseFloat(otTime); // Parse otTime to a number
+                if (!isNaN(allTimeAsNumber)) {
+                  if (allTimeAsNumber > 5.0) {
+                    workplaceIdAllTimes[workplaceId] = 1;
+                  } else {
+                    workplaceIdAllTimes[workplaceId] = 0.5;
+                  }
+                }
+                if (!isNaN(otTimeAsNumber)) {
+                  workplaceIdOtTimes[workplaceId] = otTimeAsNumber;
+                }
+              }
+            }
+          });
 
-          // const result = Object.entries(workplaceIdCounts).map(([workplaceId, count]) => ({
-          //   workplaceId,
-          //   count,
-          //   allTime: workplaceIdAllTimes[workplaceId].toFixed(1),
-          //   otTime: workplaceIdOtTimes[workplaceId].toFixed(2), // Format otTime to 2 decimal places
-          // }));
+          const result = Object.entries(workplaceIdCounts).map(([workplaceId, count]) => ({
+            workplaceId,
+            count,
+            allTime: workplaceIdAllTimes[workplaceId].toFixed(1),
+            otTime: workplaceIdOtTimes[workplaceId].toFixed(2), // Format otTime to 2 decimal places
+          }));
 
-          // // Calculate the total allTime
-          // const totalAllTime = Object.values(workplaceIdAllTimes).reduce((sum, allTime) => sum + allTime, 0).toFixed(1);
+          // Calculate the total allTime
+          const totalAllTime = Object.values(workplaceIdAllTimes).reduce((sum, allTime) => sum + allTime, 0).toFixed(1);
 
-          // console.log('Result:', result);
-          // console.log('Total AllTime:', totalAllTime);
+          console.log('Result:', result);
+          console.log('Total AllTime:', totalAllTime);
+          
 
-
-          // const count = filteredData.length;
-
-          // setCountWork((count));
-          // setCountWorkSTime(totalAllTime);
-          // setWorkplaceIdList(result);
-
+          const count = filteredData.length;
           setDataset(filteredData);
+          setCountWork((count));
+          setCountWorkSTime(totalAllTime);
+          setWorkplaceIdList(result);
+
+
           return updatedData;
         });
 
@@ -725,7 +725,72 @@ function Worktimesheet() {
           // // const uniqueWorkplaceIds = [...new Set(updatedData.map((record) => record.workplaceId))];
           // const result = Object.entries(workplaceIdCounts).map(([workplaceId, count, allTime, otTime]) => ({ workplaceId, count, allTime, otTime }));
 
+          const workplaceIdCounts = {};
+          const workplaceIdAllTimes = {};
+          const workplaceIdOtTimes = {};
+
+
+          filteredData.forEach((record) => {
+            if (record.isChecked) {
+              const { workplaceId, otTime, allTime } = record;
+              if (workplaceIdCounts[workplaceId]) {
+                workplaceIdCounts[workplaceId]++;
+                const allTimeAsNumber = parseFloat(allTime); // Parse allTime to a number
+                const otTimeAsNumber = parseFloat(otTime); // Parse otTime to a number
+
+                if (!isNaN(allTimeAsNumber)) {
+                  if (allTimeAsNumber > 5.0) {
+                    workplaceIdAllTimes[workplaceId] += 1;
+                  } else {
+                    workplaceIdAllTimes[workplaceId] += 0.5;
+                  }
+                }
+                if (!isNaN(otTimeAsNumber)) {
+                  workplaceIdOtTimes[workplaceId] += otTimeAsNumber;
+                }
+              } else {
+                workplaceIdCounts[workplaceId] = 1;
+                const allTimeAsNumber = parseFloat(allTime); // Parse allTime to a number
+                const otTimeAsNumber = parseFloat(otTime); // Parse otTime to a number
+                if (!isNaN(allTimeAsNumber)) {
+                  if (allTimeAsNumber > 5.0) {
+                    workplaceIdAllTimes[workplaceId] = 1;
+                  } else {
+                    workplaceIdAllTimes[workplaceId] = 0.5;
+                  }
+                }
+                if (!isNaN(otTimeAsNumber)) {
+                  workplaceIdOtTimes[workplaceId] = otTimeAsNumber;
+                }
+              }
+            }
+          });
+
+          const result = Object.entries(workplaceIdCounts).map(([workplaceId, count]) => ({
+            workplaceId,
+            count,
+            allTime: workplaceIdAllTimes[workplaceId].toFixed(1),
+            otTime: workplaceIdOtTimes[workplaceId].toFixed(2), // Format otTime to 2 decimal places
+          }));
+
+          // Calculate the total allTime
+          const totalAllTime = Object.values(workplaceIdAllTimes).reduce((sum, allTime) => sum + allTime, 0).toFixed(1);
+
+          console.log('listTableDayofflistTableDayoff:', listTableDayoff);
+
+          console.log('Result:', result);
+          console.log('Total AllTime:', totalAllTime);
+          console.log('filteredData', filteredData);
+
+          const count = filteredData.length;
+
+          // Create a mapping of date to dayoff from listTableDayoff
+
           setDataset(filteredData);
+          setCountWork((count));
+          setCountWorkSTime(totalAllTime);
+          setWorkplaceIdList(result);
+
           return updatedData;
 
         });
@@ -743,7 +808,7 @@ function Worktimesheet() {
   console.log('workplaceIdList', workplaceIdList);
   console.log('calendarData1 updated:', calendarData1);
   console.log('calendarData2 updated:', calendarData2);
-
+  
   const [Datasetsec, setDatasetsec] = useState([]);
 
   useEffect(() => {
@@ -761,76 +826,7 @@ function Worktimesheet() {
     const updatedDataset = dataset.map(item => ({
       ...item,
       dayoff: dayoffMap[item.date] || '' // Add 'dayoff' property if the date exists in the map
-
-      // test set time ot 
-
     }));
-    const workplaceIdCounts = {};
-    const workplaceIdAllTimes = {};
-    const workplaceIdOtTimes = {};
-
-    const workplaceIdDayoffAllTimes = {};
-    const workplaceIdDayoffOtTimes = {};
-
-
-    updatedDataset.forEach((record) => {
-      if (record.isChecked) {
-        const { workplaceId, otTime, allTime, dayoff } = record;
-        const allTimeAsNumber = parseFloat(allTime); // Parse allTime to a number
-        const otTimeAsNumber = parseFloat(otTime); // Parse otTime to a number
-
-        if (!workplaceIdCounts[workplaceId]) {
-          workplaceIdCounts[workplaceId] = 0;
-          workplaceIdAllTimes[workplaceId] = 0;
-          workplaceIdOtTimes[workplaceId] = 0;
-          workplaceIdDayoffAllTimes[workplaceId] = 0;
-          workplaceIdDayoffOtTimes[workplaceId] = 0;
-        }
-
-        workplaceIdCounts[workplaceId]++;
-
-        if (dayoff === 'หยุด' && !isNaN(allTimeAsNumber)) {
-          workplaceIdDayoffAllTimes[workplaceId] += allTimeAsNumber;
-          workplaceIdDayoffOtTimes[workplaceId] += otTimeAsNumber;
-        } else {
-          if (!isNaN(allTimeAsNumber)) {
-            if (allTimeAsNumber > 5.0) {
-              workplaceIdAllTimes[workplaceId] += 1;
-            } else {
-              workplaceIdAllTimes[workplaceId] += 0.5;
-            }
-          }
-          if (!isNaN(otTimeAsNumber)) {
-            workplaceIdOtTimes[workplaceId] += otTimeAsNumber;
-          }
-        }
-      }
-    });
-    const result = Object.entries(workplaceIdCounts).map(([workplaceId, count]) => ({
-      workplaceId,
-      count,
-      allTime: workplaceIdAllTimes[workplaceId].toFixed(1),
-      otTime: workplaceIdOtTimes[workplaceId].toFixed(2), // Format otTime to 2 decimal places
-      dayoffAllTime: workplaceIdDayoffAllTimes[workplaceId].toFixed(2), // Format otTime to 2 decimal places
-      dayoffOtTime: workplaceIdDayoffOtTimes[workplaceId].toFixed(2), // Format otTime to 2 decimal places
-    }));
-
-    // Calculate the total allTime
-    const totalAllTime = Object.values(workplaceIdAllTimes).reduce((sum, allTime) => sum + allTime, 0).toFixed(1);
-
-    console.log('listTableDayofflistTableDayoff:', listTableDayoff);
-
-    console.log('Result:', result);
-    console.log('Total AllTime:', totalAllTime);
-    console.log('datasetdataset', dataset);
-
-    const count = dataset.length;
-
-    // Create a mapping of date to dayoff from listTableDayoff
-
-    setCountWork((count));
-    setCountWorkSTime(totalAllTime);
-    setWorkplaceIdList(result);
 
     setDatasetsec(updatedDataset);
   }, [dataset, listTableDayoff]);
@@ -941,15 +937,11 @@ function Worktimesheet() {
       const workplaceId = item.workplaceId;
       const allTime = parseFloat(item.allTime); // Convert to a number
       const otTime = parseFloat(item.otTime); // Convert to a number
-      const dayoffAllTime = parseFloat(item.dayoffAllTime); // Convert to a number
-      const dayoffOtTime = parseFloat(item.dayoffOtTime); // Convert to a number
 
       const calculatedValue = workRate * allTime;
       const calculatedOT = (workRate / workOfHour) * workRateOT * otTime;
-      const calculatedValueDayoff = (workRate / workOfHour) * holiday * dayoffAllTime;
-      const calculatedValueDayoffOt = (workRate / workOfHour) * holidayOT * dayoffOtTime;
 
-      return { workplaceId, calculatedValue, allTime, otTime, dayoffAllTime, dayoffOtTime, calculatedOT, calculatedValueDayoff, calculatedValueDayoffOt };
+      return { workplaceId, calculatedValue, allTime, otTime, calculatedOT };
     });
 
     console.log('workplaceIdList', workplaceIdList);
@@ -1055,9 +1047,6 @@ function Worktimesheet() {
 
     const calculatedValuesAllTime = calculatedValues.map((value) => parseFloat(value.calculatedValue));
     const calculatedValuesOtTime = calculatedValues.map((value) => parseFloat(value.calculatedOT));
-
-    const calculatedValuesDayoffAllTime = calculatedValues.map((value) => parseFloat(value.calculatedValueDayoff));
-    const calculatedValuesDayoffOtTime = calculatedValues.map((value) => parseFloat(value.calculatedValueDayoffOt));
     const calculatedValuesaddSalary = addSalary.map((value) => parseFloat(value.SpSalary));
 
     const calculatedValuesminus = calculatedValues.map((value) => parseFloat(value.minus));
@@ -1066,14 +1055,10 @@ function Worktimesheet() {
 
     const sumAlltime = calculatedValuesAllTime.reduce((total, currentValue) => total + currentValue, 0);
     const sumOtTime = calculatedValuesOtTime.reduce((total, currentValue) => total + currentValue, 0);
-
-    const sumDayoffAlltime = calculatedValuesDayoffAllTime.reduce((total, currentValue) => total + currentValue, 0);
-    const sumDayoffOtTime = calculatedValuesDayoffOtTime.reduce((total, currentValue) => total + currentValue, 0);
-
     const sumSalary = calculatedValuesaddSalary.reduce((total, currentValue) => total + currentValue, 0);
     // const summinus = calculatedValuesminus.reduce((total, currentValue) => total + currentValue, 0);
 
-    const Sumall = sumAlltime + sumSalary + sumOtTime + sumDayoffAlltime + sumDayoffOtTime;
+    const Sumall = sumAlltime + sumSalary + sumOtTime;
     const Minus = parseFloat((Sumall * (MinusSearch / 100)).toFixed(2));
 
     console.log('testRe11', calculatedValuesAllTime);
@@ -1706,11 +1691,6 @@ function Worktimesheet() {
                       <thead>
                         <tr>
                           <th>เงินค่าจ้าง</th>
-                          {calculatedValues.map((value, index) => (
-                            <th>
-                              {value.workplaceId}
-                            </th>
-                          ))}
                         </tr>
                       </thead>
                       <tbody>
@@ -1720,7 +1700,7 @@ function Worktimesheet() {
                           </td>
                           {calculatedValues.map((value, index) => (
                             <td>
-                              {value.calculatedValue} ({value.allTime} วัน)
+                              {value.workplaceId}, {value.calculatedValue} ({value.allTime})
                             </td>
                           ))}
                         </tr>
@@ -1730,7 +1710,7 @@ function Worktimesheet() {
                           </td>
                           {calculatedValues.map((value, index) => (
                             <td>
-                              {value.calculatedOT} ({value.otTime} ช.ม.)
+                              {value.calculatedOT} ({value.otTime})
                             </td>
                           ))}
                         </tr>
@@ -1745,19 +1725,6 @@ function Worktimesheet() {
                         ))}
                         <tr>
                           <td>วันหยุดนักขัตฤกษ์</td>
-                          {calculatedValues.map((value, index) => (
-                            <td>
-                              {value.calculatedValueDayoff} ({value.dayoffAllTime} ช.ม.)
-                            </td>
-                          ))}
-                        </tr>
-                        <tr>
-                          <td>วันหยุดนักขัตฤกษ์ OT</td>
-                          {calculatedValues.map((value, index) => (
-                            <td>
-                              {value.calculatedValueDayoffOt} ({value.dayoffOtTime} ช.ม.)
-                            </td>
-                          ))}
                         </tr>
                         <tr>
                           <td>จ่ายป่วย</td>
@@ -1781,6 +1748,16 @@ function Worktimesheet() {
               </div>
             </div>
           </section>
+          <table>
+            <tbody>
+              {listTableDayoff.map((day, index) => (
+                <tr key={index}>
+                  <td>{Object.keys(day)[0]}</td>
+                  <td>{Object.values(day)[0]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
           {/* <!-- /.content --> */}
         </div >
       </div >
