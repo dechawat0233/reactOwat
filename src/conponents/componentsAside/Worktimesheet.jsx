@@ -1706,6 +1706,11 @@ function Worktimesheet() {
                       <thead>
                         <tr>
                           <th>เงินค่าจ้าง</th>
+                          {calculatedValues.map((value, index) => (
+                            <th>
+                              {value.workplaceId}
+                            </th>
+                          ))}
                         </tr>
                       </thead>
                       <tbody>
@@ -1715,7 +1720,7 @@ function Worktimesheet() {
                           </td>
                           {calculatedValues.map((value, index) => (
                             <td>
-                              {value.workplaceId}, {value.calculatedValue} ({value.allTime})
+                              {value.calculatedValue} ({value.allTime} วัน)
                             </td>
                           ))}
                         </tr>
@@ -1725,7 +1730,7 @@ function Worktimesheet() {
                           </td>
                           {calculatedValues.map((value, index) => (
                             <td>
-                              {value.calculatedOT} ({value.otTime})
+                              {value.calculatedOT} ({value.otTime} ช.ม.)
                             </td>
                           ))}
                         </tr>
@@ -1742,7 +1747,7 @@ function Worktimesheet() {
                           <td>วันหยุดนักขัตฤกษ์</td>
                           {calculatedValues.map((value, index) => (
                             <td>
-                              {value.calculatedValueDayoff} ({value.dayoffAllTime})
+                              {value.calculatedValueDayoff} ({value.dayoffAllTime} ช.ม.)
                             </td>
                           ))}
                         </tr>
@@ -1750,7 +1755,7 @@ function Worktimesheet() {
                           <td>วันหยุดนักขัตฤกษ์ OT</td>
                           {calculatedValues.map((value, index) => (
                             <td>
-                              {value.calculatedValueDayoffOt} ({value.dayoffOtTime})
+                              {value.calculatedValueDayoffOt} ({value.dayoffOtTime} ช.ม.)
                             </td>
                           ))}
                         </tr>

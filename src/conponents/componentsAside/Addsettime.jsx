@@ -10,6 +10,8 @@ import EmployeesSelected from './EmployeesSelected';
 
 import AddsettimeWorkplace from './AddsettimeWorkplace';
 import AddsettimeEmployee from './AddsettimeEmployee';
+import AddsettimeOutsiderEmployee from './AddsettimeOutsiderEmployee';
+import AddsettimeOutsiderWorkplace from './AddsettimeOutsiderWorkplace';
 import '../editwindowcss.css';
 
 
@@ -54,9 +56,11 @@ function Addsettime() {
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label role="formsettime">รูปแบบการลงเวลา</label>
-                                                    <select id="selectOption" class="form-control" vvalue={selectedOption} onChange={handleOptionChange}>
+                                                    <select id="selectOption" class="form-control" value={selectedOption} onChange={handleOptionChange}>
                                                         <option value="workplace">รูปแบบหน่วยงาน</option>
                                                         <option value="employee">รูปแบบบุคคล</option>
+                                                        <option value="Outsiderworkplace">รูปแบบหน่วยงาน(บุคคลภายนอก)</option>
+                                                        <option value="Outsideremployee">รูปแบบบุคคล(บุคคลภายนอก)</option>
                                                     </select>
 
 
@@ -71,6 +75,9 @@ function Addsettime() {
                                     )} */}
                                     {selectedOption === 'workplace' && <AddsettimeWorkplace />}
                                     {selectedOption === 'employee' && <AddsettimeEmployee />}
+                                    {selectedOption === 'Outsiderworkplace' && <AddsettimeOutsiderWorkplace />}
+                                    {selectedOption === 'Outsideremployee' && <AddsettimeOutsiderEmployee />}
+
                                 </div>
                             </div>
                         </div>
