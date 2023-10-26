@@ -35,6 +35,8 @@ import Application2 from "./conponents/componentsAside/Application2";
 import Application3 from "./conponents/componentsAside/Application3";
 import Application4 from "./conponents/componentsAside/Application4";
 import ApplicationSummary from "./conponents/componentsAside/ApplicationSummary";
+import AddEditEmployee from "./conponents/componentsAside/AddEditEmployee";
+import AddEditSalaryEmployee from "./conponents/componentsAside/AddEditSalaryEmployee";
 
 import Setting from "./conponents/componentsAside/Setting";
 import SystemUser from "./conponents/componentsAside/SystemUser";
@@ -143,6 +145,9 @@ function App() {
               <Route path="/applicatio3" element={<Application3 />} />
               <Route path="/applicatio4" element={<Application4 />} />
               <Route path="/application_summary" element={<ApplicationSummary />} />
+
+              <Route path="/addEdit_Employee" element={<AddEditEmployee />} />
+              <Route path="/addEdit_SalaryEmployee" element={<AddEditSalaryEmployee />} />
 
               {/* <Route path="/testPDF" element={<TestShowManyData />} /> */}
               {/* <Route path="/testPDF" element={<TestPDF />} /> */}

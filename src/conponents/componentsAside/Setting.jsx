@@ -140,10 +140,13 @@ function Setting() {
     const [salaryadd5, setSalaryadd5] = useState(''); //ค่าโทรศัพท์
     const [salaryadd6, setSalaryadd6] = useState(''); //เงินประจำตำแหน่ง
     const [personalLeave, setPersonalLeave] = useState(''); //วันลากิจ
+    const [personalLeaveNumber, setPersonalLeaveNumber] = useState(''); //วันลากิจ
     const [personalLeaveRate, setPersonalLeaveRate] = useState(''); //จ่ายเงินลากิจ
     const [sickLeave, setSickLeave] = useState(''); //วันลาป่วย
+    const [sickLeaveNumber, setSickLeaveNumber] = useState(''); //วันลาป่วย
     const [sickLeaveRate, setSickLeaveRate] = useState(''); //จ่ายเงินวันลาป่วย
     const [workRateDayoff, setWorkRateDayoff] = useState(''); //ค่าจ้างวันหยุด ต่อวัน
+    const [workRateDayoffNumber, setWorkRateDayoffNumber] = useState(''); //ค่าจ้างวันหยุด ต่อวัน
     const [workRateDayoffRate, setworkRateDayoffRate] = useState('');
     // const [daysOff , setDaysOff] = useState([{ date: '' }]);
     const [workplaceAddress, setWorkplaceAddress] = useState(''); //ที่อยู่หน่วยงาน
@@ -212,7 +215,7 @@ function Setting() {
             ...formData,
             addSalary: [
                 ...formData.addSalary,
-                { name: '', SpSalary: '', roundOfSalary: '', StaffType: '', nameType: '' }
+                { codeSpSalary: '', name: '', SpSalary: '', roundOfSalary: '', StaffType: '', nameType: '' }
             ]
         });
         setShowAdditionalInput([...showAdditionalInput, false]);
@@ -283,10 +286,13 @@ function Setting() {
         setSalaryadd5(workplace.salaryadd5);
         setSalaryadd6(workplace.salaryadd6);
         setPersonalLeave(workplace.personalLeave);
+        setPersonalLeaveNumber(workplace.personalLeaveNumber);
         setPersonalLeaveRate(workplace.personalLeaveRate);
         setSickLeave(workplace.sickLeave);
+        setSickLeaveNumber(workplace.sickLeaveNumber);
         setSickLeaveRate(workplace.sickLeaveRate);
         setWorkRateDayoff(workplace.workRateDayoff);
+        setWorkRateDayoffNumber(workplace.workRateDayoffNumber);
         setworkRateDayoffRate(workplace.workRateDayoffRate);
         setWorkplaceAddress(workplace.workplaceAddress);
         //setSelectedDates([...selectedDates, workplace.daysOff]);
@@ -352,6 +358,7 @@ function Setting() {
         const initialFormData = {
             addSalary: workplace.addSalary.map((item) => ({
                 name: item.name || '',
+                codeSpSalary: item.codeSpSalary || '',
                 SpSalary: item.SpSalary || '',
                 roundOfSalary: item.roundOfSalary || '',
                 StaffType: item.StaffType || '',
@@ -469,10 +476,13 @@ function Setting() {
             salaryadd5: salaryadd5,
             salaryadd6: salaryadd6,
             personalLeave: personalLeave,
+            personalLeaveNumber: personalLeaveNumber,
             personalLeaveRate: personalLeaveRate,
             sickLeave: sickLeave,
+            sickLeaveNumber: sickLeaveNumber,
             sickLeaveRate: sickLeaveRate,
             workRateDayoff: workRateDayoff,
+            workRateDayoffNumber: workRateDayoffNumber,
             workRateDayoffRate: workRateDayoffRate,
             workplaceAddress: workplaceAddress,
             daysOff: selectedDates,
@@ -949,7 +959,27 @@ function Setting() {
 
                                     {formData.addSalary && formData.addSalary.length > 0 && formData.addSalary.map((data, index) => (
                                         <div className="row" key={index}>
-                                            <div className="col-md-3">
+                                            <div className="col-md-1">
+                                                <label role="codeSpSalary">รหัส</label>
+                                                <input
+                                                    type="text"
+                                                    name="codeSpSalary"
+                                                    className="form-control"
+                                                    value={data.codeSpSalary}
+                                                    onChange={(e) => handleChangeSpSalary(e, index, 'codeSpSalary')}
+                                                />
+                                            </div>
+                                            <div className="col-md-1">
+                                                <label role="SpSalary">จำนวนเงิน</label>
+                                                <input
+                                                    type="text"
+                                                    name="SpSalary"
+                                                    className="form-control"
+                                                    value={data.SpSalary}
+                                                    onChange={(e) => handleChangeSpSalary(e, index, 'SpSalary')}
+                                                />
+                                            </div>
+                                            <div className="col-md-2">
                                                 <label role="name">ชื่อรายการ</label>
                                                 <input
                                                     type="text"
@@ -959,7 +989,7 @@ function Setting() {
                                                     onChange={(e) => handleChangeSpSalary(e, index, 'name')}
                                                 />
                                             </div>
-                                            <div className="col-md-2">
+                                            <div className="col-md-1">
                                                 <label role="SpSalary">จำนวนเงิน</label>
                                                 <input
                                                     type="text"
@@ -1012,8 +1042,9 @@ function Setting() {
                                                 <button onClick={() => handleDeleteInput(index)} className="btn btn-danger" style={{ width: "3rem", position: 'absolute', bottom: '0' }}>ลบ</button>
                                             </div>
                                         </div>
+                                        
                                     ))}
-
+                                    <br />
                                     < button type='button' onClick={handleAddInput} class="btn btn-primary" >เพิ่ม</button>
                                     {/* <pre>{JSON.stringify(formData, null, 2)}</pre> */}
                                 </section>
@@ -1024,14 +1055,21 @@ function Setting() {
                                         <section class="Frame">
                                             <div class="col-md-12">
                                                 <div class="row">
-                                                    <div class="col-md-6">
+                                                <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label role="personalLeaveNumber">รหัส</label>
+                                                            <input type="text" class="form-control" id="personalLeaveNumber" placeholder="รหัส" value={personalLeaveNumber} onChange={(e) => setPersonalLeaveNumber(e.target.value)} />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label role="personalLeave">วันลากิจ</label>
                                                             <input type="text" class="form-control" id="personalLeave" placeholder="วันลากิจ" value={personalLeave} onChange={(e) => setPersonalLeave(e.target.value)} />
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label role="personalLeaveRate">จำนวนเงินต่อวัน</label>
                                                             <input type="text" class="form-control" id="personalLeaveRate" placeholder="จำนวนเงินต่อวัน" value={personalLeaveRate} onChange={(e) => setPersonalLeaveRate(e.target.value)} />
@@ -1040,14 +1078,21 @@ function Setting() {
                                                 </div>
                                                 {/* <!--row--> */}
                                                 <div class="row">
-                                                    <div class="col-md-6">
+                                                <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label role="SickLeaveNumber">รหัส</label>
+                                                            <input type="text" class="form-control" id="SickLeaveNumber" placeholder="รหัส" value={sickLeaveNumber} onChange={(e) => setSickLeaveNumber(e.target.value)} />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label role="sickLeave">วันลาป่วย</label>
                                                             <input type="text" class="form-control" id="sickLeave" placeholder="วันลาป่วย" value={sickLeave} onChange={(e) => setSickLeave(e.target.value)} />
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label role="sickLeaveRate">จำนวนเงินต่อวัน</label>
                                                             <input type="text" class="form-control" id="sickLeaveRate" placeholder="จำนวนเงินต่อวัน" value={sickLeaveRate} onChange={(e) => setSickLeaveRate(e.target.value)} />
@@ -1056,14 +1101,21 @@ function Setting() {
                                                 </div>
                                                 {/* <!--row--> */}
                                                 <div class="row">
-                                                    <div class="col-md-6">
+                                                <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label role="setWorkRateDayoffNumber">รหัส</label>
+                                                            <input type="text" class="form-control" id="setWorkRateDayoffNumber" placeholder="รหัส" value={setWorkRateDayoffNumber} onChange={(e) => setWorkRateDayoffNumber(e.target.value)} />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label role="workRateDayoff">วันลาพักร้อน</label>
                                                             <input type="text" class="form-control" id="workRateDayoff" placeholder="วันลาพักร้อน" value={workRateDayoff} onChange={(e) => setWorkRateDayoff(e.target.value)} />
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label role="workRateDayoffRate">จำนวนเงินต่อวัน</label>
                                                             <input type="text" class="form-control" id="workRateDayoffRate" placeholder="จำนวนเงินต่อวัน" value={workRateDayoffRate} onChange={(e) => setworkRateDayoffRate(e.target.value)} />

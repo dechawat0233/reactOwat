@@ -86,11 +86,11 @@ const SendEmployeePDF = () => {
         // };
         const positions = {
             input1: { x: 10, y: 20 },
-            input2: { x: 10, y: 0 }, // Adjust the initial y position for input2
+            input2: { x: 10, y: 80 }, // Adjust the initial y position for input2
             input3: { x: 10, y: 0 }, // Adjust the initial y position for input3
             input4: { x: 10, y: 0 }, // Adjust the initial y position for input4
             input5: { x: 10, y: 0 }, // Adjust the initial y position for input5
-            inputValuesTest: { x: 10, y: 0 }, // Adjust the y position
+            inputValuesTest: { x: 10, y: 30 }, // Adjust the y position
             date: { x: 100, y: 30 }, // Adjust the y position
             // Add more positions for additional inputs
         };
@@ -135,33 +135,71 @@ const SendEmployeePDF = () => {
         //         position.y += doc.internal.getFontSize() * textLines.length + 5;
         //     }
         // }
+        // for (const name in inputValues) {
+        //     if (inputValues.hasOwnProperty(name)) {
+        //         const value = inputValues[name];
+        //         const position = positions[name];
+
+        //         // Split text to fit within a specific width (adjust width as needed)
+        //         const maxWidth = 150; // Adjust the width as needed
+        //         const textLines = doc.splitTextToSize(value, maxWidth);
+
+        //         // Add a fixed indentation for all lines
+        //         const initialIndentation = 30; // Adjust the initial indentation as needed
+
+        //         // Calculate the Y position for the current input based on the previous input
+        //         // position.y = positions[previousInput].y + doc.internal.getFontSize() * textLines.length + 5;
+        //         position.y = positions[previousInput].y + doc.internal.getFontSize() * textLines.length + 5;
+
+
+        //         // Iterate through text lines
+        //         textLines.forEach((line, index) => {
+        //             // Calculate indentation based on line index
+        //             const indentation = index === 0 ? initialIndentation : 10;
+
+        //             // Set x-position with indentation
+        //             const x = position.x + indentation;
+
+        //             // Display the line with the calculated position
+        //             doc.text(line, x, position.y + (index * 10));
+        //         });
+
+        //         previousInput = name; // Update the previous input for the next iteration
+        //     }
+        // }
+
         for (const name in inputValues) {
             if (inputValues.hasOwnProperty(name)) {
                 const value = inputValues[name];
                 const position = positions[name];
-
+        
                 // Split text to fit within a specific width (adjust width as needed)
                 const maxWidth = 150; // Adjust the width as needed
                 const textLines = doc.splitTextToSize(value, maxWidth);
-
+        
                 // Add a fixed indentation for all lines
                 const initialIndentation = 30; // Adjust the initial indentation as needed
-
+        
                 // Calculate the Y position for the current input based on the previous input
                 position.y = positions[previousInput].y + doc.internal.getFontSize() * textLines.length + 5;
-
+        
+                // If this is input2, reduce the vertical space from the previous input (input1)
+                if (name === 'input2') {
+                    position.y -= 15; // Adjust the reduction value as needed
+                }
+        
                 // Iterate through text lines
                 textLines.forEach((line, index) => {
                     // Calculate indentation based on line index
                     const indentation = index === 0 ? initialIndentation : 10;
-
+        
                     // Set x-position with indentation
                     const x = position.x + indentation;
-
+        
                     // Display the line with the calculated position
                     doc.text(line, x, position.y + index * 10);
                 });
-
+        
                 previousInput = name; // Update the previous input for the next iteration
             }
         }
