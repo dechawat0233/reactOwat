@@ -157,6 +157,7 @@ const workplaceSchema = new mongoose.Schema({
 
     addSalary: [{
         name: String,
+        codeSpSalary: String,
         SpSalary: String,
         roundOfSalary: String,
         StaffType: String,
