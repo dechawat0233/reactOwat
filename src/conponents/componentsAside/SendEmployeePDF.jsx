@@ -30,8 +30,8 @@ const SendEmployeePDF = () => {
         setInputValuesTest(newInputValues);
     };
     const [inputValues, setInputValues] = useState({
-        input1: 'เรื่อง      ' + 'บริษัท โอวาท โปร แอนด์ ควิก จำกัด ขอขอบพระคุณเป็นอย่างยิ่งที่ท่านได้ไว้วางใจให้บริษัท ฯ ได้รับใช้ทำความสะอาดด้วยดีเสมอมา',
-        input2: 'เรียน      ' + 'โอวาท โปร แอนด์ ควิก จำกัด ขอขอบพระคุณเป็นอย่างยิ่งที่ท่านได้ไว้วางใจให้บริษัท ฯ ได้รับใช้ทำความสะอาดด้วยดีเสมอมา',
+        input1: 'เรื่อง      ' + 'ชี้แจงหนังสือรับรองวุฒิการศึกษาทำงานพนักงานทำความสะอาด',
+        input2: 'เรียน      ' + 'ประธานกรรมการตรวจรับ สัญญาเลขที่ C40180001342(OP) ลงวันที่ 1 กุมภาพันธ์ 2566',
         input3: 'บริษัท โอวาท โปร แอนด์ ควิก จำกัด ขอขอบพระคุณเป็นอย่างยิ่งที่ท่านได้ไว้วางใจให้บริษัท ฯ ได้รับใช้ทำความสะอาดด้วยดีเสมอมา',
         input4: 'บริษัท ฯ ใคร่ขอแจ้งให้ท่านทราบว่าพนักงานที่มีรายชื่อดั้งต่อไปนี้',
         input5: '',
@@ -91,7 +91,7 @@ const SendEmployeePDF = () => {
             input4: { x: 10, y: 0 }, // Adjust the initial y position for input4
             input5: { x: 10, y: 0 }, // Adjust the initial y position for input5
             inputValuesTest: { x: 10, y: 30 }, // Adjust the y position
-            date: { x: 100, y: 30 }, // Adjust the y position
+            date: { x: 100, y: 0 }, // Adjust the y position
             // Add more positions for additional inputs
         };
 
@@ -172,34 +172,34 @@ const SendEmployeePDF = () => {
             if (inputValues.hasOwnProperty(name)) {
                 const value = inputValues[name];
                 const position = positions[name];
-        
+
                 // Split text to fit within a specific width (adjust width as needed)
                 const maxWidth = 150; // Adjust the width as needed
                 const textLines = doc.splitTextToSize(value, maxWidth);
-        
+
                 // Add a fixed indentation for all lines
                 const initialIndentation = 30; // Adjust the initial indentation as needed
-        
+
                 // Calculate the Y position for the current input based on the previous input
                 position.y = positions[previousInput].y + doc.internal.getFontSize() * textLines.length + 5;
-        
+
                 // If this is input2, reduce the vertical space from the previous input (input1)
                 if (name === 'input2') {
-                    position.y -= 15; // Adjust the reduction value as needed
+                    position.y -= 10; // Adjust the reduction value as needed
                 }
-        
+
                 // Iterate through text lines
                 textLines.forEach((line, index) => {
                     // Calculate indentation based on line index
                     const indentation = index === 0 ? initialIndentation : 10;
-        
+
                     // Set x-position with indentation
                     const x = position.x + indentation;
-        
+
                     // Display the line with the calculated position
                     doc.text(line, x, position.y + index * 10);
                 });
-        
+
                 previousInput = name; // Update the previous input for the next iteration
             }
         }
@@ -359,7 +359,7 @@ const SendEmployeePDF = () => {
                                                     </div>
                                                 </div>
 
-
+                                                <br />
                                                 {/* Add more input fields as needed */}
                                                 <textarea
                                                     name="input5"
@@ -369,6 +369,7 @@ const SendEmployeePDF = () => {
                                                     rows="4" // Set the number of visible rows (adjust as needed)
                                                     cols="50" // Set the number of visible columns (adjust as needed)
                                                 ></textarea>
+                                                <br />
                                                 {inputValuesTest.map((value, index) => (
                                                     <div className="row" key={index}>
 
@@ -389,7 +390,9 @@ const SendEmployeePDF = () => {
 
 
                                                     </div>
+
                                                 ))}
+                                                <br />
                                                 <button class="btn b_save" onClick={addInput}>Add Input</button>
                                                 <br />
                                                 <br />

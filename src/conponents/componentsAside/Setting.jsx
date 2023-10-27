@@ -1104,7 +1104,7 @@ function Setting() {
                                                 <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label role="setWorkRateDayoffNumber">รหัส</label>
-                                                            <input type="text" class="form-control" id="setWorkRateDayoffNumber" placeholder="รหัส" value={setWorkRateDayoffNumber} onChange={(e) => setWorkRateDayoffNumber(e.target.value)} />
+                                                            <input type="text" class="form-control" id="setWorkRateDayoffNumber" placeholder="รหัส" value={workRateDayoffNumber} onChange={(e) => setWorkRateDayoffNumber(e.target.value)} />
                                                         </div>
                                                     </div>
 
