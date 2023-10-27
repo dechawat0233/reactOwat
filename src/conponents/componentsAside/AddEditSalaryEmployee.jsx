@@ -1,3 +1,4 @@
+// import React from 'react'
 import endpoint from '../../config';
 
 import axios from 'axios';
@@ -8,7 +9,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import EmployeesSelected from './EmployeesSelected';
 
-function AddsettimeEmployee() {
+function AddEditSalaryEmployee() {
 
     const bordertable = {
         borderLeft: '2px solid #000'
@@ -615,96 +616,114 @@ function AddsettimeEmployee() {
     };
 
     return (
-        <section class="content">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="container-fluid">
-                        {/* <h2 class="title">ข้อมูลการลงเวลาทำงานของพนักงาน</h2> */}
-                        <div class="row">
-                            <div class="col-md-12">
-                                <section class="Frame">
-                                    <div class="col-md-12">
-                                        <form onSubmit={handleSearch}>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label role="searchEmployeeId">รหัสพนักงาน</label>
-                                                        <input type="text" class="form-control" id="searchEmployeeId" placeholder="รหัสพนักงาน" value={searchEmployeeId} onChange={(e) => setSearchEmployeeId(e.target.value)} />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label role="searchname">ชื่อพนักงาน</label>
-                                                        <input type="text" class="form-control" id="searchname" placeholder="ชื่อพนักงาน" value={searchEmployeeName} onChange={(e) => setSearchEmployeeName(e.target.value)} />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex justify-content-center">
-                                                <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา</button>
-                                            </div>
-                                        </form>
-                                        <br />
-                                        <div class="d-flex justify-content-center">
-                                            <h2 class="title">ผลลัพธ์ {searchResult.length} รายการ</h2>
-                                        </div>
-                                        <div class="d-flex justify-content-center">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
-                                                            {searchResult.map(workplace => (
-                                                                <li
-                                                                    key={workplace.id}
-                                                                    onClick={() => handleClickResult(workplace)}
-                                                                >
-                                                                    รหัส {workplace.employeeId} ชื่อ{workplace.name}
-                                                                </li>
-                                                            ))}
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-                                {/* <!--Frame--> */}
+        <body class="hold-transition sidebar-mini" className='editlaout'>
+            <div class="wrapper">
+                <div class="content-wrapper">
+                    {/* <!-- Content Header (Page header) --> */}
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><i class="fas fa-home"></i> <a href="index.php">หน้าหลัก</a></li>
+                        <li class="breadcrumb-item"><a href="#"> ระบบเงินเดือน</a></li>
+                        <li class="breadcrumb-item active">ใบลงเวลาการปฏิบัติงาน</li>
+                    </ol>
+                    <div class="content-header">
+                        <div class="container-fluid">
+                            <div class="row mb-2">
+                                <h1 class="m-0"><i class="far fa-arrow-alt-circle-right"></i> ใบลงเวลาการปฏิบัติงาน</h1>
                             </div>
                         </div>
-                        <form onSubmit={handleManageWorkplace}>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label role="agencynumber">รหัสพนักงาน</label>
-                                        <input type="text" class="form-control" id="agencynumber" placeholder="รหัสพนักงาน" value={employeeId} onChange={(e) => setEmployeeId(e.target.value)} />
+                    </div>
+                    {/* <!-- /.content-header -->
+<!-- Main content --> */}
+                    <section class="content">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="container-fluid">
+                                    {/* <h2 class="title">ข้อมูลการลงเวลาทำงานของพนักงาน</h2> */}
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <section class="Frame">
+                                                <div class="col-md-12">
+                                                    <form onSubmit={handleSearch}>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label role="searchEmployeeId">รหัสพนักงาน</label>
+                                                                    <input type="text" class="form-control" id="searchEmployeeId" placeholder="รหัสพนักงาน" value={searchEmployeeId} onChange={(e) => setSearchEmployeeId(e.target.value)} />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label role="searchname">ชื่อพนักงาน</label>
+                                                                    <input type="text" class="form-control" id="searchname" placeholder="ชื่อพนักงาน" value={searchEmployeeName} onChange={(e) => setSearchEmployeeName(e.target.value)} />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex justify-content-center">
+                                                            <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา</button>
+                                                        </div>
+                                                    </form>
+                                                    <br />
+                                                    <div class="d-flex justify-content-center">
+                                                        <h2 class="title">ผลลัพธ์ {searchResult.length} รายการ</h2>
+                                                    </div>
+                                                    <div class="d-flex justify-content-center">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
+                                                                        {searchResult.map(workplace => (
+                                                                            <li
+                                                                                key={workplace.id}
+                                                                                onClick={() => handleClickResult(workplace)}
+                                                                            >
+                                                                                รหัส {workplace.employeeId} ชื่อ{workplace.name}
+                                                                            </li>
+                                                                        ))}
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                            {/* <!--Frame--> */}
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label role="agencyname">ชื่อพนักงาน</label>
-                                        <input type="text" class="form-control" id="agencyname" placeholder="ชื่อพนักงาน" value={name} onChange={(e) => setName(e.target.value)} />
-                                    </div>
-                                </div>
+                                    <form onSubmit={handleManageWorkplace}>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label role="agencynumber">รหัสพนักงาน</label>
+                                                    <input type="text" class="form-control" id="agencynumber" placeholder="รหัสพนักงาน" value={employeeId} onChange={(e) => setEmployeeId(e.target.value)} />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label role="agencyname">ชื่อพนักงาน</label>
+                                                    <input type="text" class="form-control" id="agencyname" placeholder="ชื่อพนักงาน" value={name} onChange={(e) => setName(e.target.value)} />
+                                                </div>
+                                            </div>
 
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label role="agencyname">เดือน</label>
-                                        <select className="form-control" value={month} onChange={(e) => setMonth(e.target.value)} >
-                                            <option value="01">มกราคม</option>
-                                            <option value="02">กุมภาพันธ์</option>
-                                            <option value="03">มีนาคม</option>
-                                            <option value="04">เมษายน</option>
-                                            <option value="05">พฤษภาคม</option>
-                                            <option value="06">มิถุนายน</option>
-                                            <option value="07">กรกฎาคม</option>
-                                            <option value="08">สิงหาคม</option>
-                                            <option value="09">กันยายน</option>
-                                            <option value="10">ตุลาคม</option>
-                                            <option value="11">พฤศจิกายน</option>
-                                            <option value="12">ธันวาคม</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                {/* <div class="col-md-2">
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label role="agencyname">เดือน</label>
+                                                    <select className="form-control" value={month} onChange={(e) => setMonth(e.target.value)} >
+                                                        <option value="01">มกราคม</option>
+                                                        <option value="02">กุมภาพันธ์</option>
+                                                        <option value="03">มีนาคม</option>
+                                                        <option value="04">เมษายน</option>
+                                                        <option value="05">พฤษภาคม</option>
+                                                        <option value="06">มิถุนายน</option>
+                                                        <option value="07">กรกฎาคม</option>
+                                                        <option value="08">สิงหาคม</option>
+                                                        <option value="09">กันยายน</option>
+                                                        <option value="10">ตุลาคม</option>
+                                                        <option value="11">พฤศจิกายน</option>
+                                                        <option value="12">ธันวาคม</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            {/* <div class="col-md-2">
                                     <div class="form-group">
                                         <label role="datetime">วันที่</label>
                                         <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
@@ -718,236 +737,202 @@ function AddsettimeEmployee() {
                                     </div>
 
                                 </div> */}
-                                <div class="col-md-3">
-                                    <label role="button"></label>
-                                    <div class="d-flex align-items-end">
-                                        <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ตรวจสอบ</button>
-                                    </div>
-                                </div>
-                            </div>
+                                            <div class="col-md-3">
+                                                <label role="button"></label>
+                                                <div class="d-flex align-items-end">
+                                                    <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ตรวจสอบ</button>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                            <div class="row">
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        <label role="wId">รหัสหน่วยงาน</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label role="wName">ชื่อหน่วยงาน</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-1">
-                                    <label role="wDate">วันที่</label>
-                                </div>
-
-                                <div class="col-md-1">
-                                    <label role="wShift">กะทำงาน</label>
-                                </div>
-
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        <label role="wStartTime">เวลาเข้างาน</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        <label role="wEndTime">เวลาออกงาน</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        <label role="wAllTime">ชั่วโมงทำงาน</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        <label role="wOtTime">ชั่วโมง OT</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        <label role="wSelectOtTime">เวลาเข้า OT</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        <label role="wSelectOtTimeout">เวลาออก OT</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-1">
-                                    <label role="button"></label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        {/* <label role="wId">รหัสหน่วยงาน</label> */}
-                                        <input type="text" class="form-control" id="wId" placeholder="รหัสหน่วยงาน" value={wId} onChange={(e) => setWId(e.target.value)} />
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        {/* <label role="wName">ชื่อหน่วยงาน</label> */}
-                                        <input type="text" class="form-control" id="wName" placeholder="ชื่อหน่วยงาน" value={wName} onChange={(e) => setWName(e.target.value)} />
-                                    </div>
-                                </div>
-
-                                <div class="col-md-1">
-                                    {/* <label role="wDate">วันที่</label> */}
-                                    <select className="form-control" value={wDate} onChange={(e) => setWDate(e.target.value)} style={{ width: '5.5rem' }} >
-                                        <option value="">เลือกวัน</option>
-                                        {options}
-                                    </select>
-                                </div>
-
-                                <div class="col-md-1">
-                                    {/* <label role="wShift">กะทำงาน</label> */}
-                                    <select className="form-control" value={wShift} onChange={(e) => setWShift(e.target.value)} style={{ width: '5.5rem' }} >
-                                        <option value="">เลือกกะ</option>
-                                        <option value="morning_shift">กะเช้า</option>
-                                        <option value="afternoon_shift">กะบ่าย</option>
-                                        <option value="night_shift">กะดึก</option>
-                                        <option value="specialt_shift">กะพิเศษ</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        {/* <label role="wStartTime">เวลาเข้างาน</label> */}
-                                        <input type="text" class="form-control" id="wStartTime" placeholder="เวลาเข้างาน" value={wStartTime} onChange={(e) => setWStartTime(e.target.value)} />
-                                    </div>
-                                </div>
-
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        {/* <label role="wEndTime">เวลาออกงาน</label> */}
-                                        <input type="text" class="form-control" id="wEndTime" placeholder="เวลาออกงาน" value={wEndTime} onChange={(e) => setWEndTime(e.target.value)} />
-                                    </div>
-                                </div>
-
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        {/* <label role="wAllTime">ชั่วโมงทำงาน</label> */}
-                                        <input type="text" class="form-control" id="wAllTime" placeholder="ชั่วโมงทำงาน" value={wAllTime} onChange={(e) => setWAllTime(e.target.value)} />
-                                    </div>
-                                </div>
-
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        {/* <label role="wOtTime">ชั่วโมง OT</label> */}
-                                        <input type="text" class="form-control" id="wOtTime" placeholder="ชั่วโมง OT" value={wOtTime} onChange={(e) => setWOtTime(e.target.value)} />
-                                    </div>
-                                </div>
-
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        {/* <label role="wSelectOtTime">เวลาเข้า OT</label> */}
-                                        <input type="text" class="form-control" id="wSelectOtTime" placeholder="เวลาเข้า OT" value={wSelectOtTime} onChange={(e) => setWSelectOtTime(e.target.value)} />
-                                    </div>
-                                </div>
-
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        {/* <label role="wSelectOtTimeout">เวลาออก OT</label> */}
-                                        <input type="text" class="form-control" id="wSelectOtTimeout" placeholder="เวลาออก OT" value={wSelectOtTimeout} onChange={(e) => setWSelectOtTimeout(e.target.value)} />
-                                    </div>
-                                </div>
-
-                                <div class="col-md-1">
-                                    <label role="button"></label>
-                                    <div class="d-flex align-items-end">
-                                        <button class="btn b_save"><i class="fas fa-check"></i> &nbsp; เพิ่ม</button>
-                                    </div>
-                                </div>
-
-                            </div>
-
-
-                            <section class="Frame">
-                                <div class="row">
-                                    <div class="col-md-12">
                                         <div class="row">
-                                            <div class="col-md-1"> รหัสหน่วยงาน</div>
-                                            <div class="col-md-2"> ชื่อหน่วยงาน </div>
-                                            <div class="col-md-1"> วันที่</div>
-                                            <div class="col-md-1"> กะการทำงาน </div>
-                                            <div class="col-md-1"> เวลาเข้างาน </div>
-                                            <div class="col-md-1"> เวลาออกงาน </div>
-                                            <div class="col-md-1"> ชั่วโมงทำงาน </div>
-                                            <div class="col-md-1"> ชั่วโมง OT</div>
-                                            <div class="col-md-1"> เวลาเข้า OT </div>
-                                            <div class="col-md-1"> เวลาออก OT</div>
+                                            <div class="col-md-1">
+                                                <div class="form-group">
+                                                    <label role="wId">รหัสหน่วยงาน</label>
+                                                    <br />
+                                                    <input type="text" class="form-control" id="wId" placeholder="รหัสหน่วยงาน" value={wId} onChange={(e) => setWId(e.target.value)} />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label role="wName">ชื่อหน่วยงาน</label>
+                                                    <br />
+                                                    <br />
+                                                    <input type="text" class="form-control" id="wName" placeholder="ชื่อหน่วยงาน" value={wName} onChange={(e) => setWName(e.target.value)} />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-1">
+                                                <label role="wDate">วันที่</label>
+                                                <br />
+                                                <br />
+
+                                                <select className="form-control" value={wDate} onChange={(e) => setWDate(e.target.value)} style={{ width: '5.5rem' }} >
+                                                    <option value="">เลือกวัน</option>
+                                                    {options}
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-1">
+                                                <label role="wShift">กะทำงาน</label>
+                                                <br />
+                                                <br />
+                                                <select className="form-control" value={wShift} onChange={(e) => setWShift(e.target.value)} style={{ width: '5.5rem' }} >
+                                                    <option value="">เลือกกะ</option>
+                                                    <option value="morning_shift">กะเช้า</option>
+                                                    <option value="afternoon_shift">กะบ่าย</option>
+                                                    <option value="night_shift">กะดึก</option>
+                                                    <option value="specialt_shift">กะพิเศษ</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-1">
+                                                <div class="form-group">
+                                                    <label role="wStartTime">เวลาเข้างาน</label>
+                                                    <br />
+                                                    <br />
+                                                    <input type="text" class="form-control" id="wStartTime" placeholder="เวลาเข้างาน" value={wStartTime} onChange={(e) => setWStartTime(e.target.value)} />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-1">
+                                                <div class="form-group">
+                                                    <label role="wEndTime">เวลาออกงาน</label>
+                                                    <br />
+                                                    <br />
+                                                    <input type="text" class="form-control" id="wEndTime" placeholder="เวลาออกงาน" value={wEndTime} onChange={(e) => setWEndTime(e.target.value)} />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-1">
+                                                <div class="form-group">
+                                                    <label role="wAllTime">ชั่วโมงทำงาน</label>
+                                                    <br />
+                                                    <br />
+                                                    <input type="text" class="form-control" id="wAllTime" placeholder="ชั่วโมงทำงาน" value={wAllTime} onChange={(e) => setWAllTime(e.target.value)} />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-1">
+                                                <div class="form-group">
+                                                    <label role="wOtTime">ชั่วโมง OT</label>
+                                                    <br />
+                                                    <br />
+                                                    <input type="text" class="form-control" id="wOtTime" placeholder="ชั่วโมง OT" value={wOtTime} onChange={(e) => setWOtTime(e.target.value)} />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-1">
+                                                <div class="form-group">
+                                                    <label role="wSelectOtTime">เวลาเข้า OT</label>
+                                                    <br />
+                                                    <br />
+                                                    <input type="text" class="form-control" id="wSelectOtTime" placeholder="เวลาเข้า OT" value={wSelectOtTime} onChange={(e) => setWSelectOtTime(e.target.value)} />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-1">
+                                                <div class="form-group">
+                                                    <label role="wSelectOtTimeout">เวลาออก OT</label>
+                                                    <br />
+                                                    <br />
+                                                    <input type="text" class="form-control" id="wSelectOtTimeout" placeholder="เวลาออก OT" value={wSelectOtTimeout} onChange={(e) => setWSelectOtTimeout(e.target.value)} />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-1">
+                                                <label role="button"></label>
+                                                <br />
+                                                <br />
+                                                <div class="d-flex align-items-end">
+                                                    <button class="btn b_save"><i class="fas fa-check"></i> &nbsp; เพิ่ม</button>
+                                                </div>
+                                            </div>
 
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
 
-                                        {rowDataList2.map((rowData2, index) => (
-                                            rowData2.workplaceId && (
-                                                <div key={index}>
-                                                    <div class="row" style={{ marginBottom: '1rem', borderBottom: '2px solid #000' }}>
-                                                        <div class="col-md-1" style={bordertable}> {rowData2.workplaceId}</div>
-                                                        <div class="col-md-2" style={bordertable}> {rowData2.workplaceName} </div>
-                                                        <div class="col-md-1" style={bordertable}> {rowData2.date} </div>
-                                                        <div class="col-md-1" style={bordertable}>
-                                                            {rowData2.shift === 'morning_shift' ? (
-                                                                <p>กะเช้า</p>
-                                                            ) : rowData2.shift === 'afternoon_shift' ? (
-                                                                <p>กะบ่าย</p>
-                                                            ) : rowData2.shift === 'night_shift' ? (
-                                                                <p>กะดึก</p>
-                                                            ) : rowData2.shift === 'specialt_shift' ? (
-                                                                <p>กะพิเศษ</p>
-                                                            ) : (
-                                                                <div></div>
-                                                            )}
-                                                        </div>
-                                                        <div class="col-md-1" style={bordertable}> {rowData2.startTime} </div>
-                                                        <div class="col-md-1" style={bordertable}> {rowData2.endTime} </div>
-                                                        <div class="col-md-1" style={bordertable}> {rowData2.allTime} </div>
-                                                        <div class="col-md-1" style={bordertable}> {rowData2.otTime} </div>
-                                                        <div class="col-md-1" style={bordertable}> {rowData2.selectotTime} </div>
-                                                        <div class="col-md-1" style={bordertable}> {rowData2.selectotTimeOut} </div>
 
-                                                        <div class="col-md-1" style={bordertable}>
-                                                            {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
-                                                            <button class="btn btn-xs btn-danger" style={{ padding: '0.3rem ', width: '8rem' }} onClick={() => handleDeleteRow(index)}>Delete</button>
-                                                        </div>
+                                        <section class="Frame">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-1"> รหัสหน่วยงาน</div>
+                                                        <div class="col-md-2"> ชื่อหน่วยงาน </div>
+                                                        <div class="col-md-1"> วันที่</div>
+                                                        <div class="col-md-1"> กะการทำงาน </div>
+                                                        <div class="col-md-1"> เวลาเข้างาน </div>
+                                                        <div class="col-md-1"> เวลาออกงาน </div>
+                                                        <div class="col-md-1"> ชั่วโมงทำงาน </div>
+                                                        <div class="col-md-1"> ชั่วโมง OT</div>
+                                                        <div class="col-md-1"> เวลาเข้า OT </div>
+                                                        <div class="col-md-1"> เวลาออก OT</div>
 
                                                     </div>
                                                 </div>
-                                            )
-                                        ))}
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
 
-                                    </div>
+                                                    {rowDataList2.map((rowData2, index) => (
+                                                        rowData2.workplaceId && (
+                                                            <div key={index}>
+                                                                <div class="row" style={{ marginBottom: '1rem', borderBottom: '2px solid #000' }}>
+                                                                    <div class="col-md-1" style={bordertable}> {rowData2.workplaceId}</div>
+                                                                    <div class="col-md-2" style={bordertable}> {rowData2.workplaceName} </div>
+                                                                    <div class="col-md-1" style={bordertable}> {rowData2.date} </div>
+                                                                    <div class="col-md-1" style={bordertable}>
+                                                                        {rowData2.shift === 'morning_shift' ? (
+                                                                            <p>กะเช้า</p>
+                                                                        ) : rowData2.shift === 'afternoon_shift' ? (
+                                                                            <p>กะบ่าย</p>
+                                                                        ) : rowData2.shift === 'night_shift' ? (
+                                                                            <p>กะดึก</p>
+                                                                        ) : rowData2.shift === 'specialt_shift' ? (
+                                                                            <p>กะพิเศษ</p>
+                                                                        ) : (
+                                                                            <div></div>
+                                                                        )}
+                                                                    </div>
+                                                                    <div class="col-md-1" style={bordertable}> {rowData2.startTime} </div>
+                                                                    <div class="col-md-1" style={bordertable}> {rowData2.endTime} </div>
+                                                                    <div class="col-md-1" style={bordertable}> {rowData2.allTime} </div>
+                                                                    <div class="col-md-1" style={bordertable}> {rowData2.otTime} </div>
+                                                                    <div class="col-md-1" style={bordertable}> {rowData2.selectotTime} </div>
+                                                                    <div class="col-md-1" style={bordertable}> {rowData2.selectotTimeOut} </div>
+
+                                                                    <div class="col-md-1" style={bordertable}>
+                                                                        {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
+                                                                        <button class="btn btn-xs btn-danger" style={{ padding: '0.3rem ', width: '8rem' }} onClick={() => handleDeleteRow(index)}>Delete</button>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        )
+                                                    ))}
+
+                                                </div>
+                                            </div>
+                                        </section>
+
+
+                                        <div class="form-group">
+                                            <button class="btn b_save" onClick={handleCreateWorkplaceTimerecord}><i class="nav-icon fas fa-save"></i> &nbsp; บันทึก</button>
+                                        </div>
+                                    </form>
+
                                 </div>
-                            </section>
-
-
-                            <div class="form-group">
-                                <button class="btn b_save" onClick={handleCreateWorkplaceTimerecord}><i class="nav-icon fas fa-save"></i> &nbsp; บันทึก</button>
                             </div>
-                        </form>
-
-                    </div>
+                        </div>
+                        {/* <!-- /.container-fluid --> */}
+                    </section>
                 </div>
+
             </div>
-            {/* <!-- /.container-fluid --> */}
-        </section>
+
+        </body>
 
     )
 }
 
-export default AddsettimeEmployee
+export default AddEditSalaryEmployee

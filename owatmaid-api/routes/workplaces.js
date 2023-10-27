@@ -103,16 +103,25 @@ const workplaceSchema = new mongoose.Schema({
     personalLeave: {
         type: String
     },
+    personalLeaveNumber: {
+        type: String
+    },
     personalLeaveRate: {
         type: String
     },
     sickLeave: {
         type: String
     },
+    sickLeaveNumber: {
+        type: String
+    },
     sickLeaveRate: {
         type: String
     },
     workRateDayoff: {
+        type: String
+    },
+    workRateDayoffNumber: {
         type: String
     },
     workRateDayoffRate: {
@@ -148,6 +157,7 @@ const workplaceSchema = new mongoose.Schema({
 
     addSalary: [{
         name: String,
+        codeSpSalary: String,
         SpSalary: String,
         roundOfSalary: String,
         StaffType: String,
@@ -268,10 +278,13 @@ router.post('/create', async (req, res) => {
         salaryadd5,
         salaryadd6,
         personalLeave,
+        personalLeaveNumber,
         personalLeaveRate,
         sickLeave,
+        sickLeaveNumber,
         sickLeaveRate,
         workRateDayoff,
+        workRateDayoffNumber,
         workRateDayoffRate,
         daysOff,
         workplaceAddress,
@@ -330,10 +343,13 @@ router.post('/create', async (req, res) => {
         salaryadd5,
         salaryadd6,
         personalLeave,
+        personalLeaveNumber,
         personalLeaveRate,
         sickLeave,
+        sickLeaveNumber,
         sickLeaveRate,
         workRateDayoff,
+        workRateDayoffNumber,
         workRateDayoffRate,
         daysOff,
         workplaceAddress,

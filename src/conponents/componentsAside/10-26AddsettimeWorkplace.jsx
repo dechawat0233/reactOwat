@@ -83,10 +83,6 @@ function AddsettimeWorkplace() {
     const [selectotTime, setSelectotTime] = useState('');
     const [selectotTimeOut, setSelectotTimeOut] = useState('');
 
-    const [cashSalary, setCashSalary] = useState(false);
-    const [specialtSalary, setSpecialtSalary] = useState('');
-    const [messageSalary, setMessageSalary] = useState('');
-
     const [shift1start, setShift1start] = useState('');
     const [shift2start, setShift2start] = useState('');
     const [shift3start, setShift3start] = useState('');
@@ -115,10 +111,6 @@ function AddsettimeWorkplace() {
             }
         }
     }, [staffId]);
-
-    const handleCheckboxChange = () => {
-        setCashSalary(!cashSalary); // Toggle the checkbox state
-    };
 
 
     //search employeeId by employeeName 
@@ -209,84 +201,84 @@ function AddsettimeWorkplace() {
         // }
 
         try {
-            if (shift == 'night_shift' ||
-                shift == 'afternoon_shift' ||
-                shift == 'morning_shift') {
-                const allt = calTime(startTime || 0, endTime || 0, workOfHour || 0) || 0;
-                setAllTime(allt);
+            if(shift == 'night_shift' ||
+shift == 'afternoon_shift' ||
+shift == 'morning_shift' ) {
+    const allt = calTime(startTime || 0, endTime || 0, workOfHour || 0) || 0;
+    setAllTime(allt);
 
-            } else {
-                const allt = calTime(startTime || 0, endTime || 0, 24) || 0;
-                setAllTime(allt);
+}else {
+    const allt = calTime(startTime || 0, endTime || 0, 24) || 0;
+    setAllTime(allt);
 
-            }
+}
 
-        } catch (error) {
+          } catch (error) {
             // Handle the error here, you can log it or show an error message.
             console.error(error);
-            //   alert(error);
-        }
-
+          //   alert(error);
+          }
+  
     }, [startTime, endTime, workOfHour]);
 
     useEffect(() => {
         try {
-            if (shift == 'night_shift' ||
-                shift == 'afternoon_shift' ||
-                shift == 'morning_shift') {
-                const ot = calTime(selectotTime || 0, selectotTimeOut || 0, workOfOT || 0) || 0;
-                setOtTime(ot);
+            if(shift == 'night_shift' ||
+shift == 'afternoon_shift' ||
+shift == 'morning_shift' ) {
+    const ot = calTime(selectotTime || 0, selectotTimeOut || 0, workOfOT || 0) || 0;
+    setOtTime(ot);
 
-            } else {
-                const ot = calTime(selectotTime || 0, selectotTimeOut || 0, 24) || 0;
-                setOtTime(ot);
+} else {
+    const ot = calTime(selectotTime || 0, selectotTimeOut || 0, 24) || 0;
+    setOtTime(ot);
 
-            }
+}
         } catch (error) {
-            // Handle the error here, you can log it or show an error message.
-            console.error(error);
-            //   alert(error);
+          // Handle the error here, you can log it or show an error message.
+          console.error(error);
+        //   alert(error);
         }
-    }, [selectotTime, selectotTimeOut, workOfOT]);
+      }, [selectotTime, selectotTimeOut, workOfOT]);
+      
+//     useEffect(() => {
+// const ot = calTime( selectotTime || 0, selectotTimeOut || 0 , workOfOT  || 0) || 0;
+// setOtTime(ot );
+        // const startHours = parseFloat(selectotTime.split('.')[0]);
+        // const startMinutes = parseFloat(selectotTime.split('.')[1] || 0);
+        // const endHours = parseFloat(selectotTimeOut.split('.')[0]);
+        // const endMinutes = parseFloat(selectotTimeOut.split('.')[1] || 0);
+        // let hours = endHours - startHours;
+        // let minutes = endMinutes - startMinutes;
+        // if (minutes < 0) {
+        //     hours -= 1;
+        //     minutes += 60;
+        // }
+        // // Handle cases where endTime is on the next day
+        // if (hours < 0) {
+        //     hours += 24;
+        // }
+        // // Check if the employee worked >= 5 hours 
+        // if (hours >= 5) {
+        //     hours -= 1;
+        // }
 
-    //     useEffect(() => {
-    // const ot = calTime( selectotTime || 0, selectotTimeOut || 0 , workOfOT  || 0) || 0;
-    // setOtTime(ot );
-    // const startHours = parseFloat(selectotTime.split('.')[0]);
-    // const startMinutes = parseFloat(selectotTime.split('.')[1] || 0);
-    // const endHours = parseFloat(selectotTimeOut.split('.')[0]);
-    // const endMinutes = parseFloat(selectotTimeOut.split('.')[1] || 0);
-    // let hours = endHours - startHours;
-    // let minutes = endMinutes - startMinutes;
-    // if (minutes < 0) {
-    //     hours -= 1;
-    //     minutes += 60;
-    // }
-    // // Handle cases where endTime is on the next day
-    // if (hours < 0) {
-    //     hours += 24;
-    // }
-    // // Check if the employee worked >= 5 hours 
-    // if (hours >= 5) {
-    //     hours -= 1;
-    // }
+        // // Calculate the total time difference in minutes
+        // const totalMinutes = hours * 60 + minutes;
+        // // Check if the employee worked > 5 hours
+        // // Cap the time difference at the maximum work hours
+        // const cappedTotalMinutes = Math.min(totalMinutes, otTime * 60);
+        // // Convert the capped time difference back to hours and minutes
+        // const cappedHours = Math.floor(cappedTotalMinutes / 60);
+        // const cappedMinutes = cappedTotalMinutes % 60;
 
-    // // Calculate the total time difference in minutes
-    // const totalMinutes = hours * 60 + minutes;
-    // // Check if the employee worked > 5 hours
-    // // Cap the time difference at the maximum work hours
-    // const cappedTotalMinutes = Math.min(totalMinutes, otTime * 60);
-    // // Convert the capped time difference back to hours and minutes
-    // const cappedHours = Math.floor(cappedTotalMinutes / 60);
-    // const cappedMinutes = cappedTotalMinutes % 60;
-
-    // const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
-    // // alert(timeDiffFormatted);
-    // if (isNaN(timeDiffFormatted)) {
-    //     setOtTime('0');
-    // } else {
-    //     setOtTime(timeDiffFormatted);
-    // }
+        // const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
+        // // alert(timeDiffFormatted);
+        // if (isNaN(timeDiffFormatted)) {
+        //     setOtTime('0');
+        // } else {
+        //     setOtTime(timeDiffFormatted);
+        // }
     // }, [selectotTime, selectotTimeOut, otTime]);
 
 
@@ -943,7 +935,7 @@ function AddsettimeWorkplace() {
         event.preventDefault();
         // alert('hi');
         //get data from input in useState to data 
-
+        
         const data = {
             workplaceId: workplaceId,
             workplaceName: workplaceName,
@@ -1000,31 +992,6 @@ function AddsettimeWorkplace() {
         // alert(rowDataList.length);
 
     }
-
-    const [showInputs, setShowInputs] = useState(false);
-
-    const handleShiftChange = (e) => {
-        const selectedShift = e.target.value;
-        setShift(selectedShift);
-
-        // Show the inputs when "specialt_shift" is selected
-        if (selectedShift === 'specialt_shift') {
-            setShowInputs(true);
-        } else {
-            setShowInputs(false);
-        }
-    };
-    useEffect(() => {
-        //Search Employee  by id
-        if (staffId != '') {
-            const employeesearch = employeeList.find(employee => employee.employeeId === staffId);
-            if (employeesearch) {
-                setStaffName(employeesearch.name);
-            } else {
-                setStaffName('');
-            }
-        }
-    }, [staffId]);
 
     /////////////////
     const [selectedOption, setSelectedOption] = useState('agencytime');
@@ -1142,70 +1109,19 @@ function AddsettimeWorkplace() {
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label role="staffId">รหัสพนักงาน</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label role="staffName">ชื่อพนักงาน</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label role="shift">กะการทำงาน</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <label role="startTime">เวลาเข้างาน</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <label role="endTime">เวลาออกงาน</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <label role="allTime">ชั่วโมงทำงาน</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <label role="selectotTime">เวลาเข้า OT</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <label role="selectotTimeOut">เวลาออก OT</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <label role="otTime">ชั่วโมง OT</label>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            {/* <label role="staffId">รหัสพนักงาน</label> */}
                                             <input type="text" class="form-control" id="staffId" placeholder="รหัสพนักงาน" value={staffId} onChange={(e) => setStaffId(e.target.value)} />
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            {/* <label role="staffName">ชื่อพนักงาน</label> */}
+                                            <label role="staffName">ชื่อพนักงาน</label>
                                             <input type="text" class="form-control" id="staffName" placeholder="ชื่อพนักงาน" value={staffName} onChange={(e) => setStaffName(e.target.value)} />
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            {/* <label role="shift">กะการทำงาน</label> */}
-                                            {/* <select className="form-control" value={shift} onChange={(e) => setShift(e.target.value)}  > */}
-                                            {/* <select className="form-control" value={shift} onChange={(e) => handleShiftChange(e.target.value)}> */}
-                                            <select className="form-control" value={shift} onChange={handleShiftChange}>
+                                            <label role="shift">กะการทำงาน</label>
+                                            <select className="form-control" value={shift} onChange={(e) => setShift(e.target.value)}  >
                                                 <option value="">เลือกกะการทำงาน</option>
                                                 <option value="morning_shift">กะเช้า</option>
                                                 <option value="afternoon_shift">กะบ่าย</option>
@@ -1217,73 +1133,42 @@ function AddsettimeWorkplace() {
                                     </div>
                                     <div class="col-md-1">
                                         <div class="form-group">
-                                            {/* <label role="startTime">เวลาเข้างาน</label> */}
+                                            <label role="startTime">เวลาเข้างาน</label>
                                             <input type="text" class="form-control" id="startTime" placeholder="เวลาเข้างาน" value={startTime} onChange={(e) => setStartTime(e.target.value)} />
                                         </div>
                                     </div>
                                     <div class="col-md-1">
                                         <div class="form-group">
-                                            {/* <label role="endTime">เวลาออกงาน</label> */}
+                                            <label role="endTime">เวลาออกงาน</label>
                                             <input type="text" class="form-control" id="endTime" placeholder="เวลาออกงาน" value={endTime} onChange={(e) => setEndTime(e.target.value)} />
                                         </div>
                                     </div>
                                     <div class="col-md-1">
                                         <div class="form-group">
-                                            {/* <label role="allTime">ชั่วโมงทำงาน</label> */}
+                                            <label role="allTime">ชั่วโมงทำงาน</label>
                                             <input type="text" class="form-control" id="allTime" placeholder="ชั่วโมงทำงาน" value={allTime} onChange={(e) => setAllTime(e.target.value)} />
                                         </div>
                                     </div>
                                     <div class="col-md-1">
                                         <div class="form-group">
-                                            {/* <label role="selectotTime">เวลาเข้า OT</label> */}
+                                            <label role="selectotTime">เวลาเข้า OT</label>
                                             <input type="text" class="form-control" id="selectotTime" placeholder="เวลาเข้า OT" value={selectotTime} onChange={(e) => setSelectotTime(e.target.value)} />
                                         </div>
                                     </div>
                                     <div class="col-md-1">
                                         <div class="form-group">
-                                            {/* <label role="selectotTimeOut">เวลาออก OT</label> */}
+                                            <label role="selectotTimeOut">เวลาออก OT</label>
                                             <input type="text" class="form-control" id="selectotTimeOut" placeholder="เวลาออก OT" value={selectotTimeOut} onChange={(e) => setSelectotTimeOut(e.target.value)} />
                                         </div>
                                     </div>
                                     <div class="col-md-1">
                                         <div class="form-group">
-                                            {/* <label role="otTime">ชั่วโมง OT</label> */}
+                                            <label role="otTime">ชั่วโมง OT</label>
                                             <input type="text" class="form-control" id="otTime" placeholder="ชั่วโมง OT" value={otTime} onChange={(e) => setOtTime(e.target.value)} />
                                         </div>
                                     </div>
 
                                 </div>
-                                {showInputs && shift === 'specialt_shift' && (
-                                    <div>
-                                        <div class="row">
-                                            <div class="col-md-1">
-                                                <label role="staffId">จ่ายสด</label>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label role="specialtSalary">เป็นเงิน</label>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label role="staffId">หมายเหตุ</label>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-1">
-                                                <input
-                                                    type="checkbox"
-                                                    class="form-control"
-                                                    checked={cashSalary}
-                                                    onChange={handleCheckboxChange}
-                                                />
-                                            </div>
-                                            <div class="col-md-2">
-                                                <input type="text" class="form-control" id="specialtSalary" placeholder="เป็นเงิน" value={specialtSalary} onChange={(e) => setSpecialtSalary(e.target.value)} />
-                                            </div>
-                                            <div class="col-md-2">
-                                                <input type="text" class="form-control" id="messageSalary" placeholder="หมายเหตุ" value={messageSalary} onChange={(e) => setMessageSalary(e.target.value)} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
 
                             </section>
 
