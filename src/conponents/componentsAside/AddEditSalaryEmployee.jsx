@@ -1,4 +1,3 @@
-// import React from 'react'
 import endpoint from '../../config';
 
 import axios from 'axios';
@@ -33,31 +32,14 @@ function AddEditSalaryEmployee() {
         options.push(<option key={i} value={formattedValue}>{formattedValue}</option>);
     }
 
-    //Workplace data
-    const [employeeId, setEmployeeId] = useState(''); //รหัสหน่วยงาน
-    const [name, setName] = useState(''); //ชื่อหน่วยงาน
-    const [workplacestay, setWorkplacestay] = useState(''); //สังกัด
-    const [workplaceArea, setWorkplaceArea] = useState(''); //สถานที่ปฏิบัติงาน
-    const [workOfWeek, setWorkOfWeek] = useState(''); //วันทำงานต่อสัปดาห์
-    const [workStart1, setWorkStart1] = useState(''); //เวลาเริ่มกะเช้า
-    const [workEnd1, setWorkEnd1] = useState(''); //เวลาออกกะเช้า
-    const [workStart2, setWorkStart2] = useState(''); //เวลาเข้ากะบ่าย
-    const [workEnd2, setWorkEnd2] = useState(''); //เวลาออกกะบ่าย
-    const [workStart3, setWorkStart3] = useState(''); //เวลาเข้ากะเย็น
-    const [workEnd3, setWorkEnd3] = useState(''); //เวลาออกกะเย็น
-    const [workOfHour, setWorkOfHour] = useState(''); //ชั่วโมงทำงานต่อสัปดาห์
-    const [workOfOT, setWorkOfOT] = useState(''); //ชั่วโมง OT ต่อสัปดาห์
-
-    const [workRate, setWorkRate] = useState(''); //ค่าจ้างต่อวัน
-    const [workRateOT, setWorkRateOT] = useState(''); //ค่าจ้าง OT ต่อชั่วโมง
-    const [workTotalPeople, setWorkTotalPeople] = useState(''); //จำนวนคนในหน่วยงาน
-    const [workRateDayoff, setWorkRateDayoff] = useState(''); //ค่าจ้างวันหยุด ต่อวัน
-    const [workRateDayoffHour, setWorkRateDayoffHour] = useState(''); //ค่าจ้างวันหยุดต่อชั่วโมง
-    const [workplaceAddress, setWorkplaceAddress] = useState(''); //ที่อยู่หน่วยงาน
+    //employeedata
+    const [employeeId, setEmployeeId] = useState(''); //รหัสพนักงาน
+    const [name, setName] = useState(''); //ชื่อพนักงาน
 
     //////////////////////////////
     const [employeeList, setEmployeeList] = useState([]);
     const [workplaceList, setWorkplaceList] = useState([]);
+    const [currentDate, setCurrentDate] = useState('');
 
     useEffect(() => {
         // Fetch data from the API when the component mounts
@@ -71,6 +53,16 @@ function AddEditSalaryEmployee() {
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
+
+            const currentDate = new Date();
+            const day = currentDate.getDate();
+            const month = currentDate.getMonth() + 1; // Months are zero-based
+            const year = currentDate.getFullYear();
+        
+            // Formatting the date to dd/mm/yyyy format
+            const formattedDate = `${day < 10 ? '0' : ''}${day}/${month < 10 ? '0' : ''}${month}/${year}`;
+        
+            setCurrentDate(formattedDate);
     }, []); // The empty array [] ensures that the effect runs only once after the initial render
 
     console.log(workplaceList);
@@ -92,39 +84,6 @@ function AddEditSalaryEmployee() {
     const [minusSalary, setMinusSalary] = useState('');
     const [minusmessage, setMinusmessage] = useState('');
 
-    // This useEffect listens for changes in wShift
-
-    //calculate time of work
-
-    //search employee Name by employeeId 
-    useEffect(() => {
-        if (addSalaryId !== '') {
-            const workplacesearch = workplaceList.find(workplace => workplace.workplaceId === addSalaryId);
-            if (workplacesearch) {
-                setAddSalaryName(workplacesearch.workplaceName);
-            } else {
-                setAddSalaryName('');
-            }
-
-
-        }
-
-    }, [addSalaryId]);
-
-    //search employeeId by employeeName 
-    useEffect(() => {
-        //Search Employee  by name
-        if (addSalaryName != '') {
-            const workplacesearch = workplaceList.find(workplace => workplace.workplaceName === addSalaryName);
-            if (workplacesearch) {
-                setAddSalaryId(workplacesearch.workplaceId);
-            } else {
-                setAddSalaryId('');
-            }
-            console.log(workplacesearch);
-
-        }
-    }, [addSalaryName]);
 
 
 
@@ -132,8 +91,8 @@ function AddEditSalaryEmployee() {
     const numberOfRows2 = 1; // Fixed number of rows
 
     const initialRowData2 = {
-        workplaceId: '',
-        workplaceName: '',
+        addSalaryId: '',
+        addSalaryName: '',
         addSalary: '',
         message: '',
     };
@@ -143,250 +102,19 @@ function AddEditSalaryEmployee() {
     const numberOfRows = 1; // Fixed number of rows
 
     const initialRowData = {
-        workplaceId: '',
-        workplaceName: '',
+        addSalaryId: '',
+        addSalaryName: '',
         addSalary: '',
         message: '',
     };
 
     const [rowDataList, setRowDataList] = useState(new Array(numberOfRows).fill(initialRowData));
 
-    const handleFieldChange2 = (index2, fieldName2, value) => {
-        setRowDataList2(prevDataList => {
-            const newDataList2 = [...prevDataList];
-            newDataList2[index2] = {
-                ...newDataList2[index2],
-                [fieldName2]: value,
-            };
-
-
-            //Search workplace by id
-            if (fieldName2 == 'workplaceId') {
-                const workplaceIdSearch = workplaceList.find(workplace => workplace.workplaceId === value);
-                //                 alert(JSON.stringify(workplaceList, null, 2));
-                // alert( workplaceList.length);
-                if (workplaceIdSearch) {
-                    //   setEmployeeName(employee.name);
-                    newDataList2[index2] = {
-                        ...newDataList2[index2],
-                        ['workplaceName']: workplaceIdSearch.workplaceName + '',
-                        ['shift']: 'morning_shift',
-                        ['startTime']: workplaceIdSearch.workStart1 + '',
-                        ['endTime']: workplaceIdSearch.workEnd1 + '',
-                        ['allTime']: workplaceIdSearch.workOfHour + '',
-                        ['otTime']: workplaceIdSearch.workOfOT + '',
-                        ['selectotTime']: workplaceIdSearch.workStartOt1 + '',
-                        ['selectotTimeOut']: workplaceIdSearch.workEndOt1 + '',
-                    };
-                } else {
-                    //   setEmployeeName('Employee not found');
-                    newDataList2[index2] = {
-                        ...newDataList2[index2],
-                        ['workplaceName']: 'ไม่พบชื่อหน่วยงาน',
-                    };
-                }
-            }
-
-            //Search workplace by name
-            if (fieldName2 == 'workplaceName') {
-                const workplaceNameSearch = workplaceList.find(workplace => workplace.workplaceName === value);
-                //                 alert(JSON.stringify(workplaceList, null, 2));
-                // alert( workplaceList.length);
-                if (workplaceNameSearch) {
-                    //   setEmployeeName(employee.name);
-                    newDataList2[index2] = {
-                        ...newDataList2[index2],
-                        ['workplaceId']: workplaceNameSearch.workplaceId + '',
-                    };
-                } else {
-                    //   setEmployeeName('Employee not found');
-                    newDataList2[index2] = {
-                        ...newDataList2[index2],
-                        ['workplaceId']: 'ไม่พบรหัสหน่วยงาน',
-                    };
-                }
-            }
-
-
-            //Select shift then set time of work 
-            if (fieldName2 == 'shift') {
-                // alert(value);
-                //Check Selected workplace by workplaceId is notnull
-                if (newDataList2[index2].workplaceId !== '') {
-                    // alert(newDataList2[index2].workplaceId );
-                    //get workplace data by  workplaceId from select workplace and search workplace then set worktime to row of table
-                    const workplaceIdSearch = workplaceList.find(workplace => workplace.workplaceId === newDataList2[index2].workplaceId);
-                    if (workplaceIdSearch) {
-                        //check shift by switch case
-                        switch (value) {
-                            case 'morning_shift':
-                                newDataList2[index2] = {
-                                    ...newDataList2[index2],
-                                    ['startTime']: workplaceIdSearch.workStart1 || '' + '',
-                                    ['endTime']: workplaceIdSearch.workEnd1 || '' + '',
-                                    ['allTime']: calTime(workplaceIdSearch.workStart1 || '', workplaceIdSearch.workEnd1 || '', workplaceIdSearch.workOfHour || '') || '' + '',
-                                    ['otTime']: calTime(workplaceIdSearch.workStartOt1 || '', workplaceIdSearch.workEndOt1 || '', workplaceIdSearch.workOfOT || '') || '' + '',
-                                    ['selectotTime']: workplaceIdSearch.workStartOt1 || '' + '',
-                                    ['selectotTimeOut']: workplaceIdSearch.workEndOt1 || '' + '',
-                                };
-                                break;
-                            case 'afternoon_shift':
-                                newDataList2[index2] = {
-                                    ...newDataList2[index2],
-                                    ['startTime']: workplaceIdSearch.workStart2 || '' + '',
-                                    ['endTime']: workplaceIdSearch.workEnd2 || '' + '',
-                                    ['allTime']: calTime(workplaceIdSearch.workStart2 || '', workplaceIdSearch.workEnd2 || '', workplaceIdSearch.workOfHour || '') || '' + '',
-                                    ['otTime']: calTime(workplaceIdSearch.workStartOt2 || '', workplaceIdSearch.workEndOt2 || '', workplaceIdSearch.workOfOT || '') || '' + '',
-                                    ['selectotTime']: workplaceIdSearch.workStartOt2 || '' + '',
-                                    ['selectotTimeOut']: workplaceIdSearch.workEndOt2 || '' + '',
-                                };
-                                break;
-                            case 'night_shift':
-                                newDataList2[index2] = {
-                                    ...newDataList2[index2],
-                                    ['startTime']: workplaceIdSearch.workStart3 || '' + '',
-                                    ['endTime']: workplaceIdSearch.workEnd3 || '' + '',
-                                    ['allTime']: calTime(workplaceIdSearch.workStart3 || '', workplaceIdSearch.workEnd3 || '', workplaceIdSearch.workOfHour || '') || '' + '',
-                                    ['otTime']: calTime(workplaceIdSearch.workStartOt3 || '', workplaceIdSearch.workEndOt3 || '', workplaceIdSearch.workOfOT || '') || '' + '',
-                                    ['selectotTime']: workplaceIdSearch.workStartOt3 || '' + '',
-                                    ['selectotTimeOut']: workplaceIdSearch.workEndOt3 || '' + '',
-                                };
-                                break;
-                            default:
-                                newDataList2[index2] = {
-                                    ...newDataList2[index2],
-                                    ['startTime']: '',
-                                    ['endTime']: '',
-                                    ['allTime']: '',
-                                    ['otTime']: '',
-                                    ['selectotTime']: '',
-                                    ['selectotTimeOut']: '',
-                                };
-                        } //end switch
-                    }
-
-
-                } else {
-                    //emty workplaceId 
-                    newDataList2[index2] = {
-                        ...newDataList2[index2],
-                        ['workplaceId']: 'กรุณาระบุหน่วยงาน',
-                        ['workplaceName']: 'กรุณาระบุหน่วยงาน',
-                    };
-                }
-            }
-
-            //update time of work 
-            if ((fieldName2 == 'startTime') ||
-                (fieldName2 == 'endTime') ||
-                (fieldName2 == 'selectotTime') ||
-                (fieldName2 == 'selectotTimeOut')
-            ) {
-                //Check Selected workplace by workplaceId is notnull
-                if (newDataList2[index2].workplaceId !== '') {
-                    // alert(newDataList2[index2].workplaceId );
-                    //get workplace data by  workplaceId from select workplace and search workplace then set worktime to row of table
-                    const workplaceIdSearch = workplaceList.find(workplace => workplace.workplaceId === newDataList2[index2].workplaceId);
-                    if (workplaceIdSearch) {
-                        //check specialt_shift 
-                        if (newDataList2[index2].shift !== 'specialt_shift') {
-                            newDataList2[index2] = {
-                                ...newDataList2[index2],
-                                ['startTime']: newDataList2[index2].startTime + '',
-                                ['endTime']: newDataList2[index2].endTime + '',
-                                ['allTime']: calTime(newDataList2[index2].startTime, newDataList2[index2].endTime, workplaceIdSearch.workOfHour) + '',
-                                ['otTime']: calTime(newDataList2[index2].selectotTime, newDataList2[index2].selectotTimeOut, workplaceIdSearch.workOfOT) + '',
-                                ['selectotTime']: newDataList2[index2].selectotTime + '',
-                                ['selectotTimeOut']: newDataList2[index2].selectotTimeOut + '',
-                            };
-                        } else {
-                            newDataList2[index2] = {
-                                ...newDataList2[index2],
-                                ['startTime']: newDataList2[index2].startTime + '',
-                                ['endTime']: newDataList2[index2].endTime + '',
-                                ['allTime']: calTime(newDataList2[index2].startTime, newDataList2[index2].endTime, 24) + '',
-                                ['otTime']: calTime(newDataList2[index2].selectotTime, newDataList2[index2].selectotTimeOut, 24) + '',
-                                ['selectotTime']: newDataList2[index2].selectotTime + '',
-                                ['selectotTimeOut']: newDataList2[index2].selectotTimeOut + '',
-                            };
-                        }
-
-                    } else {
-                        //emty workplaceId 
-                        newDataList2[index2] = {
-                            ...newDataList2[index2],
-                            ['workplaceId']: 'กรุณาระบุหน่วยงาน',
-                            ['workplaceName']: 'กรุณาระบุหน่วยงาน',
-                        };
-                    }
-
-                }
-
-            }
-
-            return newDataList2;
-        });
-    };
-
-
-    function calTime(start, end, limit) {
-
-        const startHours = parseFloat(start.split('.')[0]);
-        const startMinutes = parseFloat(start.split('.')[1] || 0);
-        const endHours = parseFloat(end.split('.')[0]);
-        const endMinutes = parseFloat(end.split('.')[1] || 0);
-        let hours = endHours - startHours;
-        let minutes = endMinutes - startMinutes;
-        if (minutes < 0) {
-            hours -= 1;
-            minutes += 60;
-        }
-        // Handle cases where endTime is on the next day
-        if (hours < 0) {
-            hours += 24;
-        }
-        //check employee working >= 5 hours 
-        if (hours >= 5) {
-            hours -= 1;
-        }
-
-        // Calculate the total time difference in minutes
-        const totalMinutes = hours * 60 + minutes;
-        // check employee working > 5 hours
-        // Cap the time difference at the maximum work hours
-        const cappedTotalMinutes = Math.min(totalMinutes, limit * 60);
-        // Convert the capped time difference back to hours and minutes
-        const cappedHours = Math.floor(cappedTotalMinutes / 60);
-        const cappedMinutes = cappedTotalMinutes % 60;
-        const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
-        if (isNaN(timeDiffFormatted)) {
-            return '0';
-        }
-
-        return timeDiffFormatted;
-    }
-
-
-
-    const handleStartDateChange4 = (index2, date) => {
-        alert(index2);
-        handleFieldChange2(index2, 'date', date);
-    };
-
-
-
-    ///////////////////
-    function handleClickResult(workplace) {
+///////////////////
+    function handleClickResult(emp) {
         // Populate all the startTime input fields with the search result value
-        const updatedRowDataList = rowDataList.map(rowData => ({
-            ...rowData,
-            startTime: workplace.workStart1,
-            endTime: workplace.workEnd1,
-            selectotTime: workplace.workEnd1,
-        }));
+        alert(emp.employeeId);
 
-        // Update the state
-        // setRowDataList(updatedRowDataList);
     }
 
 
@@ -406,6 +134,7 @@ function AddEditSalaryEmployee() {
             idCard: '',
             workPlace: '',
         };
+// alert(JSON.stringify(data,null,2));
 
         try {
             const response = await axios.post(endpoint + '/employee/search', data);
@@ -427,16 +156,10 @@ function AddEditSalaryEmployee() {
                 setEmployeeId(response.data.employees[0].employeeId);
                 setName(response.data.employees[0].name);
 
-                // setSearchEmployeeId(response.data.employees[0].employeeId);
-                // setSearchEmployeeName(response.data.employees[0].name);
-
-                // console.log('workOfOT:', response.data.workplaces[0].workOfOT);
-                // console.log('workOfOT:', endTime);
-
             }
         } catch (error) {
             alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
-            // window.location.reload();
+            window.location.reload();
         }
     }
 
@@ -445,21 +168,19 @@ function AddEditSalaryEmployee() {
     async function handleManageWorkplace(event) {
         event.preventDefault();
         //get data from input in useState to data 
-
         const newRowData = await {
-            workplaceId: addSalaryId || '',
-            workplaceName: addSalaryName || '',
+            addSalaryId: addSalaryId || '',
+            addSalaryName: addSalaryName || '',
             addSalary: addSalary || '',
             message: message || '',
         };
 
         const newRowData2 = await {
-            workplaceId: minusId || '',
-            workplaceName: misnusName || '',
+            addSalaryId: minusId || '',
+            addSalaryName: misnusName || '',
             addSalary: minusSalary || '',
             message: minusmessage || '',
         };
-
         await addRow(newRowData);
         await addRow2(newRowData2);
 
@@ -529,26 +250,26 @@ function AddEditSalaryEmployee() {
     };
 
 
-    async function handleCreateWorkplaceTimerecord(event) {
+    async function handleCreateAddSalary(event) {
         event.preventDefault();
-        // alert('test');
 
         //get data from input in useState to data 
         const data = {
             employeeId: employeeId,
             employeeName: name,
-            month: month,
-            addSalaryRecord: rowDataList2,
-            MinusSalaryRecord: rowDataList,
-
+            onUpdate: currentDate || '',
+            addSalary: rowDataList2,
+            minusSalary: rowDataList,
         };
-
+        
 
         try {
-            const response = await axios.post(endpoint + '/timerecord/createemp', data);
+            const response = await axios.post(endpoint + '/addsalary/create', data);
             // setEmployeesResult(response.data.employees);
             if (response) {
                 alert("บันทึกสำเร็จ");
+                            window.location.reload();
+
             }
         } catch (error) {
             alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
@@ -583,7 +304,7 @@ function AddEditSalaryEmployee() {
                     <div class="content-header">
                         <div class="container-fluid">
                             <div class="row mb-2">
-                                <h1 class="m-0"><i class="far fa-arrow-alt-circle-right"></i> ใบลงเวลาการปฏิบัติงาน</h1>
+                                <h1 class="m-0"><i class="far fa-arrow-alt-circle-right"></i> เงินเพิ่ม เงินหักพนักงาน</h1>
                             </div>
                         </div>
                     </div>
@@ -593,7 +314,6 @@ function AddEditSalaryEmployee() {
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="container-fluid">
-                                    {/* <h2 class="title">ข้อมูลการลงเวลาทำงานของพนักงาน</h2> */}
                                     <div class="row">
                                         <div class="col-md-12">
                                             <section class="Frame">
@@ -626,12 +346,12 @@ function AddEditSalaryEmployee() {
                                                             <div class="col-md-12">
                                                                 <div class="form-group">
                                                                     <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
-                                                                        {searchResult.map(workplace => (
+                                                                        {searchResult.map(employee => (
                                                                             <li
-                                                                                key={workplace.id}
-                                                                                onClick={() => handleClickResult(workplace)}
+                                                                                key={employee.id}
+                                                                                onClick={() => handleClickResult(employee)}
                                                                             >
-                                                                                รหัส {workplace.employeeId} ชื่อ{workplace.name}
+                                                                                รหัส {employee.employeeId} ชื่อ{employee.name}
                                                                             </li>
                                                                         ))}
                                                                     </ul>
@@ -645,46 +365,7 @@ function AddEditSalaryEmployee() {
                                         </div>
                                     </div>
                                     <form onSubmit={handleManageWorkplace}>
-                                        {/* <div class="row">
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label role="agencynumber">รหัสพนักงาน</label>
-                                                    <input type="text" class="form-control" id="agencynumber" placeholder="รหัสพนักงาน" value={employeeId} onChange={(e) => setEmployeeId(e.target.value)} />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label role="agencyname">ชื่อพนักงาน</label>
-                                                    <input type="text" class="form-control" id="agencyname" placeholder="ชื่อพนักงาน" value={name} onChange={(e) => setName(e.target.value)} />
-                                                </div>
-                                            </div>
 
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label role="agencyname">เดือน</label>
-                                                    <select className="form-control" value={month} onChange={(e) => setMonth(e.target.value)} >
-                                                        <option value="01">มกราคม</option>
-                                                        <option value="02">กุมภาพันธ์</option>
-                                                        <option value="03">มีนาคม</option>
-                                                        <option value="04">เมษายน</option>
-                                                        <option value="05">พฤษภาคม</option>
-                                                        <option value="06">มิถุนายน</option>
-                                                        <option value="07">กรกฎาคม</option>
-                                                        <option value="08">สิงหาคม</option>
-                                                        <option value="09">กันยายน</option>
-                                                        <option value="10">ตุลาคม</option>
-                                                        <option value="11">พฤศจิกายน</option>
-                                                        <option value="12">ธันวาคม</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label role="button"></label>
-                                                <div class="d-flex align-items-end">
-                                                    <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ตรวจสอบ</button>
-                                                </div>
-                                            </div>
-                                        </div> */}
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <h3>เงินเพิ่ม</h3>
@@ -716,21 +397,21 @@ function AddEditSalaryEmployee() {
                                                     <div class="row">
                                                         <div class="col-md-2">
                                                             <div class="form-group">
-                                                                <input type="text" class="form-control" id="addSalaryId" placeholder="รหัสหน่วยงาน" value={addSalaryId} onChange={(e) => setAddSalaryId(e.target.value)} />
+                                                                <input type="text" class="form-control" id="addSalaryId" placeholder="รหัส" value={addSalaryId} onChange={(e) => setAddSalaryId(e.target.value)} />
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-3">
                                                             <div class="form-group">
-                                                                <input type="text" class="form-control" id="addSalaryName" placeholder="ชื่อหน่วยงาน" value={addSalaryName} onChange={(e) => setAddSalaryName(e.target.value)} />
+                                                                <input type="text" class="form-control" id="addSalaryName" placeholder="ชื่อ" value={addSalaryName} onChange={(e) => setAddSalaryName(e.target.value)} />
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-2">
-                                                            <input type="text" class="form-control" id="addSalary" placeholder="ชื่อหน่วยงาน" value={addSalary} onChange={(e) => setAddSalary(e.target.value)} />
+                                                            <input type="text" class="form-control" id="addSalary" placeholder="จำนวนเงิน" value={addSalary} onChange={(e) => setAddSalary(e.target.value)} />
                                                         </div>
                                                         <div class="col-md-2">
-                                                            <input type="text" class="form-control" id="message" placeholder="ชื่อหน่วยงาน" value={message} onChange={(e) => setMessage(e.target.value)} />
+                                                            <input type="text" class="form-control" id="message" placeholder="หมายเหตุ" value={message} onChange={(e) => setMessage(e.target.value)} />
                                                         </div>
                                                         <div class="col-md-2">
                                                             <div class="d-flex align-items-end">
@@ -757,11 +438,11 @@ function AddEditSalaryEmployee() {
                                                             <div class="col-md-12">
 
                                                                 {rowDataList2.map((rowData2, index) => (
-                                                                    rowData2.workplaceId && (
+                                                                    rowData2.addSalaryId && (
                                                                         <div key={index}>
                                                                             <div class="row" style={{ marginBottom: '1rem', borderBottom: '2px solid #000' }}>
-                                                                                <div class="col-md-2" style={bordertable}> {rowData2.workplaceId}</div>
-                                                                                <div class="col-md-2" style={bordertable}> {rowData2.workplaceName} </div>
+                                                                                <div class="col-md-2" style={bordertable}> {rowData2.addSalaryId}</div>
+                                                                                <div class="col-md-2" style={bordertable}> {rowData2.addSalaryName} </div>
                                                                                 <div class="col-md-2" style={bordertable}> {rowData2.addSalary} </div>
                                                                                 <div class="col-md-2" style={bordertable}> {rowData2.message} </div>
                                                                                 <div class="col-md-3" style={bordertable}>
@@ -810,21 +491,21 @@ function AddEditSalaryEmployee() {
                                                     <div class="row">
                                                         <div class="col-md-2">
                                                             <div class="form-group">
-                                                                <input type="text" class="form-control" id="addSalaryId" placeholder="รหัสหน่วยงาน" value={minusId} onChange={(e) => setMinusId(e.target.value)} />
+                                                                <input type="text" class="form-control" id="addSalaryId" placeholder="รหัส" value={minusId} onChange={(e) => setMinusId(e.target.value)} />
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-3">
                                                             <div class="form-group">
-                                                                <input type="text" class="form-control" id="addSalaryName" placeholder="ชื่อหน่วยงาน" value={misnusName} onChange={(e) => setMisnusName(e.target.value)} />
+                                                                <input type="text" class="form-control" id="addSalaryName" placeholder="ชื่อ" value={misnusName} onChange={(e) => setMisnusName(e.target.value)} />
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-2">
-                                                            <input type="text" class="form-control" id="addSalaryName" placeholder="ชื่อหน่วยงาน" value={minusSalary} onChange={(e) => setMinusSalary(e.target.value)} />
+                                                            <input type="text" class="form-control" id="addSalaryName" placeholder="จำนวนเงิน" value={minusSalary} onChange={(e) => setMinusSalary(e.target.value)} />
                                                         </div>
                                                         <div class="col-md-2">
-                                                            <input type="text" class="form-control" id="addSalaryName" placeholder="ชื่อหน่วยงาน" value={minusmessage} onChange={(e) => setMinusmessage(e.target.value)} />
+                                                            <input type="text" class="form-control" id="addSalaryName" placeholder="หมายเหตุ" value={minusmessage} onChange={(e) => setMinusmessage(e.target.value)} />
                                                         </div>
                                                         <div class="col-md-2">
                                                             <div class="d-flex align-items-end">
@@ -850,11 +531,11 @@ function AddEditSalaryEmployee() {
 
 
                                                                 {rowDataList.map((rowData2, index) => (
-                                                                    rowData2.workplaceId && (
+                                                                    rowData2.addSalaryId&& (
                                                                         <div key={index}>
                                                                             <div class="row" style={{ marginBottom: '1rem', borderBottom: '2px solid #000' }}>
-                                                                                <div class="col-md-2" style={bordertable}> {rowData2.workplaceId}</div>
-                                                                                <div class="col-md-2" style={bordertable}> {rowData2.workplaceName} </div>
+                                                                                <div class="col-md-2" style={bordertable}> {rowData2.addSalaryId}</div>
+                                                                                <div class="col-md-2" style={bordertable}> {rowData2.addSalaryName} </div>
                                                                                 <div class="col-md-2" style={bordertable}> {rowData2.addSalary} </div>
                                                                                 <div class="col-md-2" style={bordertable}> {rowData2.message} </div>
                                                                                 <div class="col-md-3" style={bordertable}>
@@ -887,7 +568,7 @@ function AddEditSalaryEmployee() {
 
 
                                         <div class="form-group">
-                                            <button class="btn b_save" onClick={handleCreateWorkplaceTimerecord}><i class="nav-icon fas fa-save"></i> &nbsp; บันทึก</button>
+                                            <button class="btn b_save" onClick={handleCreateAddSalary}><i class="nav-icon fas fa-save"></i> &nbsp; บันทึก</button>
                                         </div>
                                     </form>
 
