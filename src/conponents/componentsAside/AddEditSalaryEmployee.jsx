@@ -460,8 +460,14 @@ function AddEditSalaryEmployee() {
             message: minusmessage || '',
         };
 
-        await addRow(newRowData);
-        await addRow2(newRowData2);
+        // await addRow(newRowData);
+        // await addRow2(newRowData2);
+        if (newRowData.workplaceId || newRowData.workplaceName || newRowData.addSalary || newRowData.message) {
+            await addRow(newRowData);
+        }
+        if (newRowData2.workplaceId || newRowData2.workplaceName || newRowData2.addSalary || newRowData2.message) {
+            await addRow2(newRowData2);
+        }
 
 
         await setAddSalaryId('');
@@ -540,10 +546,9 @@ function AddEditSalaryEmployee() {
             month: month,
             addSalaryRecord: rowDataList2,
             MinusSalaryRecord: rowDataList,
-
         };
 
-
+        console.log("data", data);
         try {
             const response = await axios.post(endpoint + '/timerecord/createemp', data);
             // setEmployeesResult(response.data.employees);
@@ -556,7 +561,9 @@ function AddEditSalaryEmployee() {
         }
 
     }
+    console.log("rowDataList2", rowDataList2);
 
+    console.log("rowDataList", rowDataList);
 
     /////////////////
     const [selectedOption, setSelectedOption] = useState('agencytime');
