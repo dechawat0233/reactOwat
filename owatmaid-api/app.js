@@ -10,6 +10,7 @@ var usersRouter = require('./routes/users');
 var employeesRouter = require('./routes/employees');
 var workplacesRouter = require('./routes/workplaces');
 var timerecordsRouter = require('./routes/timerecords');
+var addsalaryRouter = require('./routes/addsalary');
 
 var app = express();
 
@@ -30,7 +31,7 @@ app.use('/users', usersRouter);
 app.use('/employee', employeesRouter);
 app.use('/workplace', workplacesRouter);
 app.use('/timerecord', timerecordsRouter );
-
+app.use('/addsalary', addsalaryRouter );
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
