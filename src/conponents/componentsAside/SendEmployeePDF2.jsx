@@ -125,7 +125,16 @@ const SendEmployeePDF2 = () => {
         doc.setFontSize(14);
 
         // doc.setFont('THSarabunNew');
+        const formatDateThai = (dateOfBirth) => {
+            const thaiMonthNames = new Intl.DateTimeFormat('th-TH', { month: 'long' }).format;
+            const formattedDate = new Date(dateOfBirth);
 
+            const day = formattedDate.getDate();
+            const month = thaiMonthNames(formattedDate);
+            const year = formattedDate.getFullYear();
+
+            return `${day} ${month} ${year}`;
+        };
         inputValuesTest.forEach((value, index) => {
             if (index > 0) {
                 doc.addPage(); // Add a new page for each set of inputs after the first
@@ -135,23 +144,30 @@ const SendEmployeePDF2 = () => {
             const y = 60;
             const y2 = 10;
 
-            // const y2 = 100;
 
-            const maxWidth = 100; // Adjust the width as needed
-            const text = 'Some text that might be really long and is intended to exceed the maximum width, causing it to be split into multiple lines because it is too long to fit on a single line.';
-            const textLines2 = doc.splitTextToSize(text + 'Extra long string', maxWidth);
+            const maxWidth = 70; // Adjust the width as needed
+            // const text = 'Some text that might be really long and is intended to exceed the maximum width, causing it to be split into multiple lines because it is too long to fit on a single line.';
+            // const textLines2 = doc.splitTextToSize(text + 'Extra long string', maxWidth);
             // console.log(textLines2.length);
             // doc.text(`${textLines2.length}`, x2, y + 10);
-            const textLines = doc.splitTextToSize(value.address + '55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555', maxWidth);
+            const textLines = doc.splitTextToSize(value.address + '', maxWidth);
+            const textLines2 = doc.splitTextToSize(value.currentAddress + '', maxWidth);
+
+            // const textLines = doc.splitTextToSize(value.address , maxWidth);
+
             // doc.text(textLines.length, x, y + 10);
 
             textLines.forEach((line, index) => {
                 doc.text(line, x2, y + (y2 * 7) + index * 10); // Use appropriate Y positioning for each line
             });
+            textLines2.forEach((line, index) => {
+                doc.text(line, x2, y + (y2 * (7 + textLines.length)) + index * 10); // Use appropriate Y positioning for each line
+            });
+
             doc.setFontSize(20);
             // doc.setFontStyle('bold');
             doc.setLineWidth(1); // Increase line width for boldness
-            doc.rect(20, 20, 100, 100); // (x, y, width, height)
+            doc.rect(50, 50, 130, 120 + (y2 * (textLines.length + textLines2.length))); // (x, y, width, height)กรอบข้อความ
 
             doc.text(`ประวัติพนักงาน`, 80, y);
             const textWidth = doc.getStringUnitWidth('ประวัติพนักงาน') * doc.internal.getFontSize() / doc.internal.scaleFactor;
@@ -163,27 +179,27 @@ const SendEmployeePDF2 = () => {
             // doc.text(textLines.length, x, y + 10);
 
             doc.text(`ไอดี: `, x, y + (y2 * 2));
-            doc.text(`ชื่อ: `, x, y + (y2 * 3));
+            doc.text(`ชื่อ/นามสกุล: `, x, y + (y2 * 3));
             doc.text(`อายุ: `, x, y + (y2 * 4));
             doc.text(`วัน/เดือน/ปี เกิด: `, x, y + (y2 * 5));
             doc.text(`เลขบัตรประชาชน: `, x, y + (y2 * 6));
             doc.text(`ที่อยู่(ตามบัตรประชาชน): `, x, y + (y2 * 7));
             doc.text(`ที่อยู่(ที่สามารถติดต่อได้): `, x, y + (y2 * (7 + textLines.length)));
-            doc.text(`เบอร์โทรศัพท์: `, x, y + (y2 * (8 + textLines.length)));
-            doc.text(`สถานะภาพ: `, x, y + (y2 * (9 + textLines.length)));
-            doc.text(`กรณีฉุกเฉินติดต่อได้: `, x, y + (y2 * (10 + textLines.length)));
+            doc.text(`เบอร์โทรศัพท์: `, x, y + (y2 * (7 + textLines.length + textLines2.length)));
+            doc.text(`สถานะภาพ: `, x, y + (y2 * (8 + textLines.length + textLines2.length)));
+            doc.text(`กรณีฉุกเฉินติดต่อได้: `, x, y + (y2 * (9 + textLines.length + textLines2.length)));
 
 
             doc.text(`${value.Id}`, x2, y + (y2 * 2));
             doc.text(`${value.Name}`, x2, y + (y2 * 3));
             doc.text(`${value.age}`, x2, y + (y2 * 4));
-            doc.text(`${value.dateOfBirth}`, x2, y + (y2 * 5));
+            doc.text(`${formatDateThai(value.dateOfBirth)}`, x2, y + (y2 * 5));
             doc.text(`${value.idCard}`, x2, y + (y2 * 6));
             // doc.text(`${value.address}`, x2, y + 70);
-            doc.text(`${value.currentAddress}`, x2, (y2 * (7 + textLines.length)));
-            doc.text(`${value.phoneNumber}`, x2, y + (y2 * (8 + textLines.length)));
-            doc.text(`${value.maritalStatus}`, x2, y + (y2 * (9 + textLines.length)));
-            doc.text(`${value.emergencyContactNumber}`, x2, y + (y2 * (10 + textLines.length)));
+            // doc.text(`${value.currentAddress}`, x2, y + (y2 * (7 + textLines.length)));
+            doc.text(`${value.phoneNumber}`, x2, y + (y2 * (7 + textLines.length + textLines2.length)));
+            doc.text(`${value.maritalStatus}`, x2, y + (y2 * (8 + textLines.length + textLines2.length)));
+            doc.text(`${value.emergencyContactNumber}`, x2, y + (y2 * (9 + textLines.length + textLines2.length)));
         });
 
         const pdfContent = doc.output('bloburl');
