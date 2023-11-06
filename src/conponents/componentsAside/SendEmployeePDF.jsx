@@ -1,3 +1,6 @@
+import endpoint from '../../config';
+
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
 
@@ -6,23 +9,17 @@ const SendEmployeePDF = () => {
     const [formattedDate, setFormattedDate] = useState(['']);
 
 
-    const handleInputChangeTest = (index, value) => {
+    const handleInputChangeTest = (index, inputField, value) => {
         const newInputValues = [...inputValuesTest];
-        newInputValues[index] = value;
+        newInputValues[index][inputField] = value;
         setInputValuesTest(newInputValues);
     };
+
 
     const addInput = () => {
         const newInputValues = [...inputValuesTest, ''];
         setInputValuesTest(newInputValues);
-        // const uniqueNumber = inputValuesTest.length + 1; // Generate a unique number
-        // setInputValuesTest([...inputValuesTest, `Input ${uniqueNumber}`]); // Add a new input with a unique number
     };
-
-    // const generateUniqueInput = () => {
-    //     const uniqueNumber = inputValuesTest.length + 1; // Generate a unique number
-    //     setInputValuesTest([...inputValuesTest, `Input ${uniqueNumber}`]); // Add a new input with a unique number
-    //   };
 
     const deleteInput = (index) => {
         const newInputValues = [...inputValuesTest];
@@ -74,24 +71,13 @@ const SendEmployeePDF = () => {
         doc.addFileToVFS(fontPath);
         doc.addFont(fontPath, 'THSarabunNew', 'normal');
 
-        // const positions = {
-        //     input1: { x: 10, y: 40 },
-        //     input2: { x: 10, y: 50 },
-        //     input3: { x: 10, y: 60 },
-        //     input4: { x: 10, y: 80 },
-        //     input5: { x: 10, y: 140 },
-        //     inputValuesTest: { x: 10, y: 160 }, // Adjust the y position
-        //     date: { x: 100, y: 30 }, // Adjust the y position
-        //     // Add more positions for additional inputs
-        // };
         const positions = {
             input1: { x: 10, y: 20 },
             input2: { x: 10, y: 80 }, // Adjust the initial y position for input2
-            input3: { x: 10, y: 0 }, // Adjust the initial y position for input3
-            input4: { x: 10, y: 0 }, // Adjust the initial y position for input4
-            input5: { x: 10, y: 0 }, // Adjust the initial y position for input5
-            inputValuesTest: { x: 10, y: 30 }, // Adjust the y position
-            date: { x: 100, y: 0 }, // Adjust the y position
+            input3: { x: 10, y: 140 }, // Adjust the initial y position for input3
+            input4: { x: 10, y: 200 }, // Adjust the initial y position for input4
+            input5: { x: 10, y: 260 }, // Adjust the initial y position for input5
+            date: { x: 100, y: 380 }, // Adjust the y position
             // Add more positions for additional inputs
         };
 
@@ -100,73 +86,9 @@ const SendEmployeePDF = () => {
         // Calculate the total height of the inputValuesTest array
 
         doc.setFont('THSarabunNew');
-        // doc.text('เรื่อง', 20, 40);
-        // doc.text('เรียน', 20, 50);
-        // doc.text('เรื่อง', positions.input1.x, positions.input1.y);
 
         let previousInput = 'input1'; // Initialize with the first input
 
-
-        // for (const name in inputValues) {
-        //     if (inputValues.hasOwnProperty(name)) {
-        //         const value = inputValues[name];
-        //         const position = positions[name];
-
-        //         // Split text to fit within a specific width (adjust width as needed)
-        //         const maxWidth = 150; // Adjust the width as needed
-        //         const textLines = doc.splitTextToSize(value, maxWidth);
-
-        //         // Add a fixed indentation for all lines
-        //         const initialIndentation = 30; // Adjust the initial indentation as needed
-
-        //         // Iterate through text lines
-        //         textLines.forEach((line, index) => {
-        //             // Calculate indentation based on line index
-        //             const indentation = index === 0 ? initialIndentation : 10;
-
-        //             // Set x-position with indentation
-        //             const x = position.x + indentation;
-
-        //             // Display the line with the calculated position
-        //             doc.text(line, x, position.y + index * 10);
-        //         });
-
-        //         // Calculate the Y position for the next input
-        //         position.y += doc.internal.getFontSize() * textLines.length + 5;
-        //     }
-        // }
-        // for (const name in inputValues) {
-        //     if (inputValues.hasOwnProperty(name)) {
-        //         const value = inputValues[name];
-        //         const position = positions[name];
-
-        //         // Split text to fit within a specific width (adjust width as needed)
-        //         const maxWidth = 150; // Adjust the width as needed
-        //         const textLines = doc.splitTextToSize(value, maxWidth);
-
-        //         // Add a fixed indentation for all lines
-        //         const initialIndentation = 30; // Adjust the initial indentation as needed
-
-        //         // Calculate the Y position for the current input based on the previous input
-        //         // position.y = positions[previousInput].y + doc.internal.getFontSize() * textLines.length + 5;
-        //         position.y = positions[previousInput].y + doc.internal.getFontSize() * textLines.length + 5;
-
-
-        //         // Iterate through text lines
-        //         textLines.forEach((line, index) => {
-        //             // Calculate indentation based on line index
-        //             const indentation = index === 0 ? initialIndentation : 10;
-
-        //             // Set x-position with indentation
-        //             const x = position.x + indentation;
-
-        //             // Display the line with the calculated position
-        //             doc.text(line, x, position.y + (index * 10));
-        //         });
-
-        //         previousInput = name; // Update the previous input for the next iteration
-        //     }
-        // }
 
         for (const name in inputValues) {
             if (inputValues.hasOwnProperty(name)) {
@@ -187,6 +109,7 @@ const SendEmployeePDF = () => {
                 if (name === 'input2') {
                     position.y -= 10; // Adjust the reduction value as needed
                 }
+                doc.setFontSize(12);
 
                 // Iterate through text lines
                 textLines.forEach((line, index) => {
@@ -204,40 +127,59 @@ const SendEmployeePDF = () => {
             }
         }
 
-        // Handle inputValuesTest
-        inputValuesTest.forEach((value, index) => {
-            const position = positions.inputValuesTest;
-
-            doc.setFont('THSarabunNew');
-
-            // Split text to fit within a specific width (adjust width as needed)
-            const maxWidth = 100; // Adjust the width as needed
-            const textLines = doc.splitTextToSize(value, maxWidth);
-
-            // Add a fixed indentation for all lines
-            const initialIndentation = 20; // Adjust the initial indentation as needed
-
-            // Iterate through text lines
-            textLines.forEach((line, lineIndex) => {
-                // Calculate indentation based on line index
-                const indentation = lineIndex === 0 ? initialIndentation : 10;
-
-                // Set x-position with indentation
-                const x = position.x + indentation;
-
-                // Display the line with the calculated position
-                doc.text(line, x, position.y + index * 10 + lineIndex * 10);
-            });
-        });
-
-        // Display the formatted date
-        // doc.setFont('THSarabunNew');
-        // doc.text(formattedDate, positions.date.x, positions.date.y);
-
         // doc.save('user_input.pdf');
         const pdfContent = doc.output('bloburl'); // Convert the PDF to a blob URL
 
         // Open the generated PDF in a new tab
+        window.open(pdfContent, '_blank');
+    };
+
+    // const generatePDF2 = () => {
+    //     const doc = new jsPDF();
+
+    //     // Ensure 'THSarabunNew.ttf' is accessible and correct
+    //     const fontPath = '/assets/fonts/THSarabunNew.ttf';
+    //     doc.addFileToVFS(fontPath);
+    //     doc.addFont(fontPath, 'THSarabunNew', 'normal');
+    //     doc.setFont('THSarabunNew');
+
+    //     let yOffset = 20; // Initial Y offset
+
+    //     inputValuesTest.forEach((value, index) => {
+    //         const x1 = 20; // X coordinate for input1
+    //         const x2 = 50; // X coordinate for input2
+
+    //         doc.text(value.input1, x1, yOffset);
+    //         doc.text(value.input2, x2, yOffset);
+
+    //         yOffset += 10; // Increment Y offset for the next entry
+    //     });
+
+    //     const pdfContent = doc.output('bloburl');
+    //     window.open(pdfContent, '_blank');
+    // };
+    const generatePDF2 = () => {
+        const doc = new jsPDF();
+
+        // Ensure 'THSarabunNew.ttf' is accessible and correct
+        const fontPath = '/assets/fonts/THSarabunNew.ttf';
+        doc.addFileToVFS(fontPath);
+        doc.addFont(fontPath, 'THSarabunNew', 'normal');
+        doc.setFont('THSarabunNew');
+
+        let yOffset = 20; // Initial Y offset
+
+        inputValuesTest.forEach((value, index) => {
+            const x1 = 20; // X coordinate for input1
+            const x2 = 50; // X coordinate for input2
+
+            doc.text(value.input1, x1, yOffset);
+            doc.text(value.input2, x2, yOffset);
+
+            yOffset += 10; // Increment Y offset for the next entry
+        });
+
+        const pdfContent = doc.output('bloburl');
         window.open(pdfContent, '_blank');
     };
 
@@ -370,35 +312,47 @@ const SendEmployeePDF = () => {
                                                     cols="50" // Set the number of visible columns (adjust as needed)
                                                 ></textarea>
                                                 <br />
+                                                <div className="row">
+                                                    <div class="col-md-6">
+                                                        <button class="btn b_save" onClick={generatePDF}>Generate PDF</button>
+                                                    </div>
+                                                </div>
+                                                <br />
                                                 {inputValuesTest.map((value, index) => (
                                                     <div className="row" key={index}>
-
-                                                        <div class="col-md-6">
+                                                        <div className="col-md-3">
                                                             <label style={{ position: 'absolute', bottom: '0' }}>{index + 1}.</label>
                                                             <input
                                                                 type="text"
-                                                                class="form-control"
-                                                                value={value}
+                                                                className="form-control"
+                                                                value={value.input1} // Assuming 'input1' exists in each 'value' object
                                                                 style={{ marginLeft: '1rem' }}
-                                                                onChange={(e) => handleInputChangeTest(index, e.target.value)}
+                                                                onChange={(e) => handleInputChangeTest(index, 'input1', e.target.value)}
                                                             />
                                                         </div>
-                                                        <div class="col-md-6">
-                                                            <button class="btn btn-danger" onClick={() => deleteInput(index)}>Delete</button>
+                                                        <div className="col-md-3">
+                                                            <label style={{ position: 'absolute', bottom: '0' }}>{index + 1}.</label>
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+                                                                value={value.input2} // Assuming 'input2' exists in each 'value' object
+                                                                style={{ marginLeft: '1rem' }}
+                                                                onChange={(e) => handleInputChangeTest(index, 'input2', e.target.value)}
+                                                            />
                                                         </div>
-
-
-
+                                                        <div className="col-md-6">
+                                                            <button className="btn btn-danger" onClick={() => deleteInput(index)}>Delete</button>
+                                                        </div>
                                                     </div>
-
                                                 ))}
+
                                                 <br />
                                                 <button class="btn b_save" onClick={addInput}>Add Input</button>
                                                 <br />
                                                 <br />
                                                 <div className="row">
                                                     <div class="col-md-6">
-                                                        <button class="btn b_save" onClick={generatePDF}>Generate PDF</button>
+                                                        <button class="btn b_save" onClick={generatePDF2}>Generate PDF</button>
                                                     </div>
                                                 </div>
                                             </div>

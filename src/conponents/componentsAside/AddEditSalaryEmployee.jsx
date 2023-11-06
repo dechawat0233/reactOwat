@@ -277,7 +277,9 @@ function AddEditSalaryEmployee() {
         }
 
     }
+    console.log("rowDataList2", rowDataList2);
 
+    console.log("rowDataList", rowDataList);
 
     /////////////////
     const [selectedOption, setSelectedOption] = useState('agencytime');
@@ -569,7 +571,7 @@ function AddEditSalaryEmployee() {
 
                                         <div class="form-group">
                                             <button class="btn b_save" onClick={handleCreateAddSalary}><i class="nav-icon fas fa-save"></i> &nbsp; บันทึก</button>
-                                        </div>
+                                            </div>
                                     </form>
 
                                 </div>
