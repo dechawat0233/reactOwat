@@ -47,9 +47,9 @@ const SendEmployeePDF2 = () => {
     }, []); // The empty array [] ensures that the effect runs only once after the initial render
     console.log(employeeList);
 
-    const [title, setTitle] = useState('');
-    const [invite, setInvite] = useState('');
-    const [content, setContent] = useState('');
+    const [title, setTitle] = useState('ชี้แจงหนังสือรับรองวุฒิการศึกษาทำงานพนักงานทำความสะอาด');
+    const [invite, setInvite] = useState('ประธานกรรมการตรวจรับ สัญญาเลขที่ C40180001342(OP) ลงวันที่ 1 กุมภาพันธ์ 2566');
+    const [content, setContent] = useState('บริษัท โอวาท โปร แอนด์ ควิก จำกัด ขอขอบพระคุณเป็นอย่างยิ่งที่ท่านได้ไว้วางใจให้บริษัท ฯ ได้รับใช้ทำความสะอาดด้วยดีเสมอมา');
 
     const [input1, setInput1] = useState('');
     const [input2, setInput2] = useState('');
@@ -195,17 +195,23 @@ const SendEmployeePDF2 = () => {
         };
 
         // doc.addPage(); // Add a new page for each set of inputs after the first
-        const maxWidth = 130; // Define the maximum width for the text
+        const maxWidth = 150; // Define the maximum width for the text
         // const invite = 'This is a long text that needs to be wrapped to a new line when it reaches the maximum width to ensure readability and proper formatting.';
-        const inviteLines = doc.splitTextToSize(`เรื่อง: ThisThability and proper formatting. is a long text thato ensure readability and proper formatting.     ` + invite, maxWidth);
-        const titleLines = doc.splitTextToSize(`เรียน:  This iThiadability and proper formatting.s a long reaches the maximum width to ensure readability and proper formatting.    ` + title, maxWidth);
-        const contentLines = doc.splitTextToSize(`เรียน:  This iThiadability and proper formatting.s a long reaches the maximum width to ensure readability and proper formatt` + content, maxWidth);
+        // const inviteLines = doc.splitTextToSize(`เรื่อง: ThisThability and proper formatting. is a lnd proper formatting. is a long text thong text thato ensure readability and proper formatting.     ` + invite, maxWidth);
+        // const titleLines = doc.splitTextToSize(`เรียน:  บริษัทฯ จึงขอรับรองตำแหน่องทำความสะอาดทดแทนงาน พนักงานมีประสบการณ์ทำงานด้สนทำความสะอาดไม่ต่ำกว่า 1 ปี สามารถใช้อุปกรณ์การทำความสะอาดได้เป็นอย่างดีและสามารถอ่านและเขียนภาษาไทยได้ดี    ` + title, maxWidth);
+        // const contentLines = doc.splitTextToSize(`This iThiadability and proper formattind proper formattihe maximum width the maximum width to ensure readability and proper formatt` + content, maxWidth);
+
+        // const invite = 'This is a long text that needs to be wrapped to a new line when it reaches the maximum width to ensure readability and proper formatting.';
+        const inviteLines = doc.splitTextToSize(`เรื่อง:     ` + title, maxWidth);
+        const titleLines = doc.splitTextToSize(`เรียน:     ` + invite, maxWidth);
+        const contentLines = doc.splitTextToSize(`` + content, maxWidth);
+        // const inviteLines = doc.splitTextToSize(`เรื่อง:  and proper formatting.     ` + invite, maxWidth);
         // const inviteLines = doc.splitTextToSize(`เรื่อง:  and proper formatting.     ` + invite, maxWidth);
         // const titleLines = doc.splitTextToSize(`เรียน:  This iThiadabilityformatting.    ` + title, maxWidth);
 
 
         // Set the initial coordinates
-        let x = 40;
+        let x = 30;
         let y = 50;
         // Loop through each line and draw it on the PDF
         inviteLines.forEach((line, index) => {
@@ -213,24 +219,28 @@ const SendEmployeePDF2 = () => {
                 x = 20; // For lines after the first line, start at x = 10
             }
             doc.text(line, x, y);
-            y += 10; // Increase the Y-coordinate for the next line
+            y += 8; // Increase the Y-coordinate for the next line
         });
-        x = 40;
+        x = 30;
         titleLines.forEach((line, index) => {
             if (index > 0) {
                 x = 20; // For lines after the first line, start at x = 10
             }
             doc.text(line, x, y + inviteLines.length);
-            y += 10; // Increase the Y-coordinate for the next line
+            y += 8; // Increase the Y-coordinate for the next line
         });
-        x = 40;
+        x = 30;
         contentLines.forEach((line, index) => {
             if (index > 0) {
                 x = 20; // For lines after the first line, start at x = 10
             }
             doc.text(line, x, y + inviteLines.length + titleLines.length);
-            y += 10; // Increase the Y-coordinate for the next line
+            y += 8; // Increase the Y-coordinate for the next line
         });
+        // const y = 50; 
+        x = 40;
+
+        doc.text(`บริษัทฯ ใคร่ขอแจ้งให้ท่านทรบว่าพนักงานมรามีรายชื่อดั้งต่อไปนี้`, x, y + inviteLines.length + titleLines.length); // Adding 30 to the Y-coordinate
 
         doc.text(`วันที่ : ${formatDateThaiFirst(workDate)}`, 130, 40); // Adding 30 to the Y-coordinate
 
@@ -240,14 +250,82 @@ const SendEmployeePDF2 = () => {
         inputValuesFirst.forEach((value, index) => {
             if (index < 5) { // To skip the first array
                 const x = 40; // X-coordinate for starting point
-                const y = 60 + (10 * (titleLines.length + inviteLines.length + contentLines.length)) + (index) * 20; // Y-coordinate, with 20 pixels separation for each item
-                const y2 = 70 + (10 * (titleLines.length + inviteLines.length + contentLines.length)) + (index) * 20; // Y-coordinate, with 20 pixels separation for each item
+                const y = 55 + (10 * (titleLines.length + inviteLines.length + contentLines.length)) + (index) * 15; // Y-coordinate, with 20 pixels separation for each item
+                const y2 = 60 + (10 * (titleLines.length + inviteLines.length + contentLines.length)) + (index) * 15; // Y-coordinate, with 20 pixels separation for each item
 
                 doc.setFontSize(14);
                 doc.text(`${index + 1}. ${value.Name} ตำแหน่ง: ${value.position}`, x, y);
                 doc.text(`ประวัติการศึกษา: ${value.educational}`, x, y2); // Adding 30 to the Y-coordinate
             }
         });
+
+        const autoText1 = doc.splitTextToSize(`จากการสอบถามพนักงานแจ้งว่าได้จบการศึกษาตามที่บริษัทฯ แจ้งให้ทราบแล้วนั้น สืบเนื่องมาจาก พนักงานได้จบการศึกษา มานานแล้วทำให้เอกสารสูญหาย`, maxWidth);
+        const autoText2 = doc.splitTextToSize(`บริษัทฯ จึงขอรับรองตำแหน่องทำความสะอาดทดแทนงาน พนักงานมีประสบการณ์ทำงานด้านทำความสะอาด ไม่ต่ำกว่า 1 ปี สามารถใช้อุปกรณ์การทำความสะอาดได้เป็นอย่างดีและสามารถอ่านและเขียนภาษาไทยได้ดี`, maxWidth);
+        const autoText3 = doc.splitTextToSize(`จึงเรียนมาเพื่อพิจารณาอนุญาต`, maxWidth);
+
+        // if (inputValuesFirst.length === 1) {
+        if (inputValuesFirst.length < 6) {
+            const lengthFirst = inputValuesFirst.length;
+            x = 30;
+            autoText1.forEach((line, index) => {
+                if (index > 0) {
+                    x = 20; // For lines after the first line, start at x = 10
+                }
+                doc.text(line, x, y + (5 * ((titleLines.length + inviteLines.length + contentLines.length) + lengthFirst * 3)));
+                y += 8; // Increase the Y-coordinate for the next line
+            });
+            x = 30;
+            autoText2.forEach((line, index) => {
+                if (index > 0) {
+                    x = 20; // For lines after the first line, start at x = 10
+                }
+                doc.text(line, x, y + (5 * ((titleLines.length + inviteLines.length + contentLines.length) + lengthFirst * 3)));
+                y += 8; // Increase the Y-coordinate for the next line
+            });
+            x = 30;
+            autoText3.forEach((line, index) => {
+                if (index > 0) {
+                    x = 20; // For lines after the first line, start at x = 10
+                }
+                doc.text(line, x, y + (5 * ((titleLines.length + inviteLines.length + contentLines.length) + lengthFirst * 3)));
+                y += 8; // Increase the Y-coordinate for the next line
+            });
+            doc.text('ขอแสดงความนับถือ', 100 + x, 5 + y + (4 * ((titleLines.length + inviteLines.length + contentLines.length + autoText1.length + autoText2.length + autoText3.length) + lengthFirst * 3)));
+            doc.text('(นางสาวอสีดะห์ ยาบี)', 100 + x, 35 + y + (4 * ((titleLines.length + inviteLines.length + contentLines.length + autoText1.length + autoText2.length + autoText3.length) + lengthFirst * 3)));
+            doc.text('ผู้จัดการฝ่ายบุคคล', 100 + x, 40 + y + (4 * ((titleLines.length + inviteLines.length + contentLines.length + autoText1.length + autoText2.length + autoText3.length) + lengthFirst * 3)));
+        } else {
+            const lengthFirst = 5;
+            x = 30;
+            autoText1.forEach((line, index) => {
+                if (index > 0) {
+                    x = 20; // For lines after the first line, start at x = 10
+                }
+                doc.text(line, x, y + (5 * ((titleLines.length + inviteLines.length + contentLines.length) + lengthFirst * 3)));
+                y += 8; // Increase the Y-coordinate for the next line
+            });
+            x = 40;
+            autoText2.forEach((line, index) => {
+                if (index > 0) {
+                    x = 20; // For lines after the first line, start at x = 10
+                }
+                doc.text(line, x, y + (5 * ((titleLines.length + inviteLines.length + contentLines.length) + lengthFirst * 3)));
+                y += 8; // Increase the Y-coordinate for the next line
+            });
+            x = 40;
+            autoText3.forEach((line, index) => {
+                if (index > 0) {
+                    x = 20; // For lines after the first line, start at x = 10
+                }
+                doc.text(line, x, y + (5 * ((titleLines.length + inviteLines.length + contentLines.length) + lengthFirst * 3)));
+                y += 8; // Increase the Y-coordinate for the next line
+            });
+            doc.text('ขอแสดงความนับถือ', 100 + x, 5 + y + (4 * ((titleLines.length + inviteLines.length + contentLines.length + autoText1.length + autoText2.length + autoText3.length) + lengthFirst * 3)));
+            doc.text('(นางสาวอสีดะห์ ยาบี)', 100 + x, 35 + y + (4 * ((titleLines.length + inviteLines.length + contentLines.length + autoText1.length + autoText2.length + autoText3.length) + lengthFirst * 3)));
+            doc.text('ผู้จัดการฝ่ายบุคคล', 100 + x, 40 + y + (4 * ((titleLines.length + inviteLines.length + contentLines.length + autoText1.length + autoText2.length + autoText3.length) + lengthFirst * 3)));
+        }
+
+
+
         doc.addPage(); // Add a new page for each set of inputs after the first
         // inputValuesFirst.forEach((value, index) => {
         //     if (index > 4 && < 10) { // To skip the first array
@@ -394,12 +472,12 @@ const SendEmployeePDF2 = () => {
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><i class="fas fa-home"></i> <a href="index.php">หน้าหลัก</a></li>
                             <li class="breadcrumb-item"><a href="#"> ระบบเงินเดือน</a></li>
-                            <li class="breadcrumb-item active">ใบลงเวลาการปฏิบัติงาน</li>
+                            <li class="breadcrumb-item active">ใบลงรายงาน</li>
                         </ol>
                         <div class="content-header">
                             <div class="container-fluid">
                                 <div class="row mb-2">
-                                    <h1 class="m-0"><i class="far fa-arrow-alt-circle-right"></i> ใบลงเวลาการปฏิบัติงาน</h1>
+                                    <h1 class="m-0"><i class="far fa-arrow-alt-circle-right"></i> ใบลงรายงาน</h1>
                                 </div>
                             </div>
                         </div>
@@ -442,8 +520,10 @@ const SendEmployeePDF2 = () => {
                                                 <br />
                                                 <button className="btn b_save" onClick={addInput}>Add Input</button> */}
                                                 <div className="row">
-                                                    วันที่
-                                                    <label role="searchname">เดือน</label>
+                                                    <div className="col-md-1">
+                                                        <label role="searchname">วันที่</label>
+                                                    </div>
+
                                                     <div className="col-md-3">
                                                         <div style=
                                                             {{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
@@ -459,8 +539,11 @@ const SendEmployeePDF2 = () => {
                                                     </div>
                                                 </div>
                                                 <div className="row">
-                                                    <label role="searchname">เรื่อง</label>
-                                                    <div className="col-md-12">
+                                                    <div className="col-md-1">
+                                                        <label role="searchname">เรื่อง</label>
+                                                    </div>
+
+                                                    <div className="col-md-11">
                                                         <input
                                                             type="text"
                                                             className="form-control"
@@ -470,8 +553,11 @@ const SendEmployeePDF2 = () => {
                                                     </div>
                                                 </div>
                                                 <div className="row">
-                                                    <label role="searchname">เรียน</label>
-                                                    <div className="col-md-12">
+                                                    <div className="col-md-1">
+                                                        <label role="searchname">เรียน</label>
+                                                    </div>
+
+                                                    <div className="col-md-11">
                                                         <input
                                                             type="text"
                                                             className="form-control"
@@ -482,7 +568,7 @@ const SendEmployeePDF2 = () => {
                                                 </div>
                                                 <div className="row">
                                                     <label role="searchname">เนื้อหา</label>
-                                                    <div className="col-md-12">
+                                                    <div className="col-md-11">
                                                         <textarea
                                                             name="input5"
                                                             class="form-control"
@@ -513,7 +599,7 @@ const SendEmployeePDF2 = () => {
                                                         />
                                                     </div>
                                                     <div className="col-md-6">
-                                                        <button className="btn b_save" type="submit" onClick={addInput}>Add Input</button>
+                                                        <button className="btn b_save" style={{ position: 'absolute', bottom: '0rem' }} type="submit" onClick={addInput}>Add Input</button>
                                                     </div>
                                                 </div>
                                                 <br />
@@ -536,9 +622,12 @@ const SendEmployeePDF2 = () => {
                                                 ))}
                                                 <br />
                                                 <br />
-                                                <div className="row">
-                                                    <div className="col-md-6">
-                                                        <button className="btn b_save" onClick={generatePDF2}>Generate PDF</button>
+                                                <div className="row" >
+                                                    {/* Your content */}
+                                                    <div className="col-md-6" style={{ position: 'absolute', bottom: '0rem' }}>
+                                                        <button className="btn b_save" onClick={generatePDF2}>
+                                                            Generate PDF
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
