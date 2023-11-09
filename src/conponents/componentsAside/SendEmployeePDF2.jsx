@@ -4,6 +4,10 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
 
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+// import { registerLocale } from 'react-datepicker';
+
 const SendEmployeePDF2 = () => {
     // const [input1, setInput1] = useState('');
     // const [input2, setInput2] = useState('');
@@ -43,8 +47,14 @@ const SendEmployeePDF2 = () => {
     }, []); // The empty array [] ensures that the effect runs only once after the initial render
     console.log(employeeList);
 
+    const [title, setTitle] = useState('');
+    const [invite, setInvite] = useState('');
+    const [content, setContent] = useState('');
+
     const [input1, setInput1] = useState('');
     const [input2, setInput2] = useState('');
+
+    const [prefix, setPrefix] = useState('');
 
     const [lastName, setLastName] = useState('');
     const [age, setAge] = useState('');
@@ -55,24 +65,51 @@ const SendEmployeePDF2 = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [maritalStatus, setMaritalStatus] = useState('');
     const [emergencyContactNumber, setEmergencyContactNumber] = useState('');
+    const [position, setPosition] = useState('');
+    const [educational, setEducational] = useState('');
 
     const [inputValuesTest, setInputValuesTest] = useState([]);
+    const [inputValuesFirst, setInputValuesFirst] = useState([]);
+
+    const [workDate, setWorkDate] = useState(new Date());
+    const formattedWorkDate = moment(workDate).format('DD/MM/YYYY');
+
+    const handletitleChange = (event) => {
+        setTitle(event.target.value);
+    };
+
+    const handleinviteChange = (event) => {
+        setInvite(event.target.value);
+    };
+
+    const handleContentChange = (event) => {
+        setContent(event.target.value);
+    };
+    const handleWorkDateChange = (date) => {
+        setWorkDate(date);
+    };
+
+    // registerLocale('th', th);
 
     useEffect(() => {
         if (input1 && employeeList.length > 0) {
             const employee = employeeList.find(emp => emp.employeeId === input1);
             if (employee) {
-                setInput2(employee.name);
+                setInput2(employee.name || '');
 
-                setLastName(employee.lastName);
-                setAge(employee.age);
-                setDateOfBirth(employee.dateOfBirth);
-                setIdCard(employee.idCard);
-                setAddress(employee.address);
-                setCurrentAddress(employee.currentAddress);
-                setPhoneNumber(employee.phoneNumber);
-                setMaritalStatus(employee.maritalStatus);
-                setEmergencyContactNumber(employee.emergencyContactNumber);
+                setPrefix(employee.prefix || '');
+                setLastName(employee.lastName || '');
+                setAge(employee.age || '');
+                setDateOfBirth(employee.dateOfBirth || '');
+                setIdCard(employee.idCard || '');
+                setAddress(employee.address || '');
+                setCurrentAddress(employee.currentAddress || '');
+                setPhoneNumber(employee.phoneNumber || '');
+                setMaritalStatus(employee.maritalStatus || '');
+                setEmergencyContactNumber(employee.emergencyContactNumber || '');
+
+                setPosition(employee.position);
+
             }
         }
     }, [input1, employeeList]);
@@ -82,10 +119,17 @@ const SendEmployeePDF2 = () => {
         setInputValuesTest([
             ...inputValuesTest,
             {
-                Id: input1, Name: input2 + ' ' + lastName, age: age, dateOfBirth: dateOfBirth, idCard: idCard, address: address,
+                Id: input1, Name: prefix + input2 + ' ' + lastName, age: age, dateOfBirth: dateOfBirth, idCard: idCard, address: address,
                 currentAddress: currentAddress, phoneNumber: phoneNumber, maritalStatus: maritalStatus, emergencyContactNumber: emergencyContactNumber
             }
         ]);
+        setInputValuesFirst([
+            ...inputValuesFirst,
+            {
+                Id: input1, Name: prefix + input2 + ' ' + lastName, position: position, educational: educational
+            }
+        ]);
+
         setInput1(''); // Clear the input1 field after adding
         setInput2(''); // Clear the input2 field after adding
     };
@@ -106,6 +150,9 @@ const SendEmployeePDF2 = () => {
     const deleteInput = (index) => {
         const newInputValues = inputValuesTest.filter((_, i) => i !== index);
         setInputValuesTest(newInputValues);
+
+        const newInputValuesFirst = inputValuesFirst.filter((_, i) => i !== index);
+        setInputValuesFirst(newInputValuesFirst);
     };
 
     const generatePDF2 = () => {
@@ -135,12 +182,142 @@ const SendEmployeePDF2 = () => {
 
             return `${day} ${month} ${year}`;
         };
+
+        const formatDateThaiFirst = (workDate) => {
+            const thaiMonthNames = new Intl.DateTimeFormat('th-TH', { month: 'long' }).format;
+            const formattedDate = new Date(workDate);
+
+            const day = formattedDate.getDate();
+            const month = thaiMonthNames(formattedDate);
+            const year = formattedDate.getFullYear();
+
+            return `${day} ${month} ${year}`;
+        };
+
+        // doc.addPage(); // Add a new page for each set of inputs after the first
+        const maxWidth = 130; // Define the maximum width for the text
+        // const invite = 'This is a long text that needs to be wrapped to a new line when it reaches the maximum width to ensure readability and proper formatting.';
+        const inviteLines = doc.splitTextToSize(`เรื่อง: ThisThability and proper formatting. is a long text thato ensure readability and proper formatting.     ` + invite, maxWidth);
+        const titleLines = doc.splitTextToSize(`เรียน:  This iThiadability and proper formatting.s a long reaches the maximum width to ensure readability and proper formatting.    ` + title, maxWidth);
+        const contentLines = doc.splitTextToSize(`เรียน:  This iThiadability and proper formatting.s a long reaches the maximum width to ensure readability and proper formatt` + content, maxWidth);
+        // const inviteLines = doc.splitTextToSize(`เรื่อง:  and proper formatting.     ` + invite, maxWidth);
+        // const titleLines = doc.splitTextToSize(`เรียน:  This iThiadabilityformatting.    ` + title, maxWidth);
+
+
+        // Set the initial coordinates
+        let x = 40;
+        let y = 50;
+        // Loop through each line and draw it on the PDF
+        inviteLines.forEach((line, index) => {
+            if (index > 0) {
+                x = 20; // For lines after the first line, start at x = 10
+            }
+            doc.text(line, x, y);
+            y += 10; // Increase the Y-coordinate for the next line
+        });
+        x = 40;
+        titleLines.forEach((line, index) => {
+            if (index > 0) {
+                x = 20; // For lines after the first line, start at x = 10
+            }
+            doc.text(line, x, y + inviteLines.length);
+            y += 10; // Increase the Y-coordinate for the next line
+        });
+        x = 40;
+        contentLines.forEach((line, index) => {
+            if (index > 0) {
+                x = 20; // For lines after the first line, start at x = 10
+            }
+            doc.text(line, x, y + inviteLines.length + titleLines.length);
+            y += 10; // Increase the Y-coordinate for the next line
+        });
+
+        doc.text(`วันที่ : ${formatDateThaiFirst(workDate)}`, 130, 40); // Adding 30 to the Y-coordinate
+
+        // doc.text(`เรีอง:      ${invite}`, 40, 50); // Adding 30 to the Y-coordinate
+        // doc.text(`เรียน:      ${title}`, 40, 60); // Adding 30 to the Y-coordinate
+
+        inputValuesFirst.forEach((value, index) => {
+            if (index < 5) { // To skip the first array
+                const x = 40; // X-coordinate for starting point
+                const y = 60 + (10 * (titleLines.length + inviteLines.length + contentLines.length)) + (index) * 20; // Y-coordinate, with 20 pixels separation for each item
+                const y2 = 70 + (10 * (titleLines.length + inviteLines.length + contentLines.length)) + (index) * 20; // Y-coordinate, with 20 pixels separation for each item
+
+                doc.setFontSize(14);
+                doc.text(`${index + 1}. ${value.Name} ตำแหน่ง: ${value.position}`, x, y);
+                doc.text(`ประวัติการศึกษา: ${value.educational}`, x, y2); // Adding 30 to the Y-coordinate
+            }
+        });
+        doc.addPage(); // Add a new page for each set of inputs after the first
+        // inputValuesFirst.forEach((value, index) => {
+        //     if (index > 4 && < 10) { // To skip the first array
+        //         const x = 40; // X-coordinate for starting point
+        //         // const y = 60 + (10 * (titleLines.length + inviteLines.length + contentLines.length)) + (index) * 20; // Y-coordinate, with 20 pixels separation for each item
+        //         // const y2 = 70 + (10 * (titleLines.length + inviteLines.length + contentLines.length)) + (index) * 20; // Y-coordinate, with 20 pixels separation for each item
+        //         const y = 10 + (index - 3) * 20; // Y-coordinate, with 20 pixels separation for each item
+        //         const y2 = 20 + (index - 3) * 20;
+        //         doc.setFontSize(14);
+        //         doc.text(`${index + 1}. ${value.Name} ตำแหน่ง: ${value.position}`, x, y);
+        //         doc.text(`ประวัติการศึกษา: ${value.educational}`, x, y2); // Adding 30 to the Y-coordinate
+        //     }
+        // });
+        // const arrayChunks = [];
+        // const chunkSize = 10;
+
+        // for (let i = 5; i < inputValuesFirst.length; i += chunkSize) {
+        //     arrayChunks.push(inputValuesFirst.slice(i, i + chunkSize));
+        // }
+
+        // arrayChunks.forEach((chunk, pageIndex) => {
+        //     if (pageIndex > 0) {
+        //         doc.addPage();
+        //     }
+
+        //     chunk.forEach((value, index) => {
+        //         const x = 40; // X-coordinate for starting point
+        //         const y = 20 + index * 20;
+        //         const y2 = 30 + index * 20;
+
+        //         doc.setFontSize(14);
+        //         doc.text(`${index + (6 + arrayChunks.length)}. ${value.Name} ตำแหน่ง: ${value.position}`, x, y);
+        //         doc.text(`ประวัติการศึกษา: ${value.educational}`, x, y2);
+        //     });
+        // });
+        const arrayChunks = [];
+        const chunkSize = 10;
+        const initialIndex = 6;
+
+        for (let i = initialIndex; i < inputValuesFirst.length; i += chunkSize) {
+            arrayChunks.push(inputValuesFirst.slice(i, i + chunkSize));
+        }
+
+        arrayChunks.forEach((chunk, pageIndex) => {
+            if (pageIndex > 0) {
+                doc.addPage();
+            }
+
+            chunk.forEach((value, index) => {
+                const x = 40; // X-coordinate for starting point
+                const y = 20 + index * 20;
+                const y2 = 30 + index * 20;
+
+                doc.setFontSize(14);
+                const currentIndex = index + initialIndex + pageIndex * chunkSize;
+                doc.text(`${currentIndex}. ${value.Name} ตำแหน่ง: ${value.position}`, x, y);
+                doc.text(`ประวัติการศึกษา: ${value.educational}`, x, y2);
+            });
+        });
+
+
+
+        doc.addPage(); // Add a new page for each set of inputs after the first
+
         inputValuesTest.forEach((value, index) => {
             if (index > 0) {
                 doc.addPage(); // Add a new page for each set of inputs after the first
             }
-            const x = 60;
-            const x2 = 100;
+            const x = 55;
+            const x2 = 95;
             const y = 60;
             const y2 = 10;
 
@@ -167,13 +344,13 @@ const SendEmployeePDF2 = () => {
             doc.setFontSize(20);
             // doc.setFontStyle('bold');
             doc.setLineWidth(1); // Increase line width for boldness
-            doc.rect(50, 50, 130, 120 + (y2 * (textLines.length + textLines2.length))); // (x, y, width, height)กรอบข้อความ
+            doc.rect(45, 50, 130, 120 + (y2 * (textLines.length + textLines2.length))); // (x, y, width, height)กรอบข้อความ
 
-            doc.text(`ประวัติพนักงาน`, 80, y);
+            doc.text(`ประวัติพนักงาน`, 95, y);
             const textWidth = doc.getStringUnitWidth('ประวัติพนักงาน') * doc.internal.getFontSize() / doc.internal.scaleFactor;
             // Add an underline
             doc.setLineWidth(0.1);
-            doc.line(80, y + 3, 110, y + 3);
+            doc.line(95, y + 3, 125, y + 3);
 
             doc.setFontSize(14);
             // doc.text(textLines.length, x, y + 10);
@@ -265,8 +442,60 @@ const SendEmployeePDF2 = () => {
                                                 <br />
                                                 <button className="btn b_save" onClick={addInput}>Add Input</button> */}
                                                 <div className="row">
+                                                    วันที่
+                                                    <label role="searchname">เดือน</label>
                                                     <div className="col-md-3">
-                                                        <label>Input 1:</label>
+                                                        <div style=
+                                                            {{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
+                                                            <DatePicker id="datetime" name="datetime"
+                                                                className="form-control" // Apply Bootstrap form-control class
+                                                                popperClassName="datepicker-popper" // Apply custom popper class if needed
+                                                                selected={workDate}
+                                                                onChange={handleWorkDateChange}
+                                                                dateFormat="dd/MM/yyyy"
+                                                            // showMonthYearPicker
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="row">
+                                                    <label role="searchname">เรื่อง</label>
+                                                    <div className="col-md-12">
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            value={title}
+                                                            onChange={handletitleChange}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="row">
+                                                    <label role="searchname">เรียน</label>
+                                                    <div className="col-md-12">
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            value={invite}
+                                                            onChange={handleinviteChange}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="row">
+                                                    <label role="searchname">เนื้อหา</label>
+                                                    <div className="col-md-12">
+                                                        <textarea
+                                                            name="input5"
+                                                            class="form-control"
+                                                            value={content}
+                                                            onChange={handleContentChange}
+                                                            rows="4" // Set the number of visible rows (adjust as needed)
+                                                            cols="50" // Set the number of visible columns (adjust as needed)
+                                                        ></textarea>
+                                                    </div>
+                                                </div>
+                                                <div className="row">
+                                                    <div className="col-md-3">
+                                                        <label>รหัสพนักงาน:</label>
                                                         <input
                                                             type="text"
                                                             className="form-control"
@@ -275,7 +504,7 @@ const SendEmployeePDF2 = () => {
                                                         />
                                                     </div>
                                                     <div className="col-md-3">
-                                                        <label>Input 2:</label>
+                                                        <label>ชื่อ:</label>
                                                         <input
                                                             type="text"
                                                             className="form-control"
