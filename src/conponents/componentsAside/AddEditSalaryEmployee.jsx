@@ -113,8 +113,11 @@ function AddEditSalaryEmployee() {
 ///////////////////
     function handleClickResult(emp) {
         // Populate all the startTime input fields with the search result value
-        alert(emp.employeeId);
+        // alert(emp.employeeId);
+        setEmployeeId(emp.employeeId);
+        setName(emp.name);
 
+//select employee
     }
 
 
@@ -152,9 +155,12 @@ function AddEditSalaryEmployee() {
                 setSearchEmployeeId('');
                 setSearchEmployeeName('');
 
+                //result > 1 
+                if(response.data.employees.length == 1){
                 // Set search values
                 setEmployeeId(response.data.employees[0].employeeId);
                 setName(response.data.employees[0].name);
+                }
 
             }
         } catch (error) {
@@ -372,6 +378,31 @@ function AddEditSalaryEmployee() {
                                             <div class="col-md-6">
                                                 <h3>เงินเพิ่ม</h3>
                                                 <section class="Frame">
+
+                                                <div class="row">
+                                                        <div class="col-md-2">
+                                                            <div class="form-group">
+                                                                <label role="addSalaryId">{employeeId}</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label role="addSalaryName">{name}</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <div class="form-group">
+                                                                <label role="addSalary">ปรับปรุงเมื่อ</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label role="message"> พบข้อมูลเงินเพิ่มเงินหัก / ไม่พบข้อมูลเงินเพิ่มเงินหัก</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                                     <div class="row">
                                                         <div class="col-md-2">
                                                             <div class="form-group">
