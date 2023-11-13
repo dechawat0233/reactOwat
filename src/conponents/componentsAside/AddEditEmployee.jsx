@@ -375,9 +375,9 @@ function AddEditEmployee() {
     //         console.error('Error deleting employee:', error.message);
     //     }
     // };
-    const deleteEmployee = async (_id) => {
+    const deleteEmployee = async (employeeId) => {
         try {
-            const response = await axios.delete(`${endpoint}/employee/delete/${_id}`);
+            const response = await axios.delete(`${endpoint}/employee/delete/${employeeId}`);
 
             // Handle success
             console.log(response.data); // This will contain the success message and deleted employee details
@@ -386,6 +386,7 @@ function AddEditEmployee() {
             console.error('Error deleting employee:', error.message);
         }
     };
+
 
 
     /////////////////
@@ -466,7 +467,7 @@ function AddEditEmployee() {
                                                                                     type="button"
                                                                                     name="delete"
                                                                                     value="delete"
-                                                                                    onClick={() => deleteEmployee(workplace._id)} // Pass the actual employeeId
+                                                                                    onClick={() => deleteEmployee(workplace.employeeId)} // Pass the actual employeeId
                                                                                     className="btn b_save"
                                                                                 >
                                                                                     &nbsp;ลบ
