@@ -326,6 +326,8 @@ function AddEditEmployee() {
             try {
                 const response = await axios.post(endpoint + '/employee/create', data);
                 // setEmployeesResult(response.data.employees);
+                alert('บันทึกสำเร็จ');
+
                 window.location.reload();
 
             } catch (error) {
