@@ -9,6 +9,11 @@ import 'react-datepicker/dist/react-datepicker.css';
 import EmployeesSelected from './EmployeesSelected';
 
 function AddEditEmployee() {
+    const [storedEmp, setStoredEmp] = useState([]);
+
+    const [buttonValue, setButtonValue] = useState('');
+    const [newEmp, setNewEmp] = useState(true);
+    const [employeeselection, setEmployeeselection] = useState([]);
 
     const bordertable = {
         borderLeft: '2px solid #000'
@@ -32,27 +37,107 @@ function AddEditEmployee() {
         options.push(<option key={i} value={formattedValue}>{formattedValue}</option>);
     }
 
-    //Workplace data
-    const [employeeId, setEmployeeId] = useState(''); //รหัสหน่วยงาน
-    const [name, setName] = useState(''); //ชื่อหน่วยงาน
-    const [workplacestay, setWorkplacestay] = useState(''); //สังกัด
-    const [workplaceArea, setWorkplaceArea] = useState(''); //สถานที่ปฏิบัติงาน
-    const [workOfWeek, setWorkOfWeek] = useState(''); //วันทำงานต่อสัปดาห์
-    const [workStart1, setWorkStart1] = useState(''); //เวลาเริ่มกะเช้า
-    const [workEnd1, setWorkEnd1] = useState(''); //เวลาออกกะเช้า
-    const [workStart2, setWorkStart2] = useState(''); //เวลาเข้ากะบ่าย
-    const [workEnd2, setWorkEnd2] = useState(''); //เวลาออกกะบ่าย
-    const [workStart3, setWorkStart3] = useState(''); //เวลาเข้ากะเย็น
-    const [workEnd3, setWorkEnd3] = useState(''); //เวลาออกกะเย็น
-    const [workOfHour, setWorkOfHour] = useState(''); //ชั่วโมงทำงานต่อสัปดาห์
-    const [workOfOT, setWorkOfOT] = useState(''); //ชั่วโมง OT ต่อสัปดาห์
 
-    const [workRate, setWorkRate] = useState(''); //ค่าจ้างต่อวัน
-    const [workRateOT, setWorkRateOT] = useState(''); //ค่าจ้าง OT ต่อชั่วโมง
-    const [workTotalPeople, setWorkTotalPeople] = useState(''); //จำนวนคนในหน่วยงาน
-    const [workRateDayoff, setWorkRateDayoff] = useState(''); //ค่าจ้างวันหยุด ต่อวัน
-    const [workRateDayoffHour, setWorkRateDayoffHour] = useState(''); //ค่าจ้างวันหยุดต่อชั่วโมง
-    const [workplaceAddress, setWorkplaceAddress] = useState(''); //ที่อยู่หน่วยงาน
+
+    const [_id, set_id] = useState('');
+    const [employeeId, setEmployeeId] = useState('');
+    const [position, setPosition] = useState(''); //ตำแหน่ง
+    const [department, setDepartment] = useState(''); //แผนก
+    const [workplace, setWorkplace] = useState(''); //หน่วยงาน
+    const [employeeData, setEmployeeData] = useState({});
+    const [jobtype, setJobtype] = useState(''); //ประเภทการจ้าง
+    const [salary, setSalary] = useState(''); //เงินจ้าง
+
+    const [startjob, setStartjob] = useState(''); //วันที่เริ่มงาน
+    const [endjob, setEndjob] = useState(''); //วันที่ลาออก
+    const [exceptjob, setExceptjob] = useState(''); //วันที่บรรจุ
+    const [prefix, setPrefix] = useState(''); //นำหน้าชื่อ
+    const [name, setName] = useState(''); //ชื่อ
+    const [lastName, setLastName] = useState(''); //นามสกุล
+    const [nickName, setNickName] = useState(''); //ชื่อเล่น
+    const [gender, setGender] = useState(''); //เพศ
+    const [dateOfBirth, setDateOfBirth] = useState(''); //วดป เกิด
+    const [age, setAge] = useState(''); //อายุ
+    const [idCard, setIdCard] = useState(''); //บัตรประชาชน
+    const [ethnicity, setEthnicity] = useState(''); //เชื้อชาติ
+    const [religion, setReligion] = useState(''); //ศาสนา
+    const [maritalStatus, setMaritalStatus] = useState(''); //สถานภาพการสมรส
+    const [militaryStatus, setMilitaryStatus] = useState(''); //สถานภาพทางการทหาร
+    const [address, setAddress] = useState(''); //ที่อยู่ตามบัตรประชาชน
+    const [currentAddress, setCurrentAddress] = useState(''); //ที่อยู่ปัจจุบัน
+    const [phoneNumber, setPhoneNumber] = useState(''); //เบอร์โทรศัพท์
+    const [emergencyContactNumber, setEmergencyContactNumber] = useState(''); //เบอร์ติดต่อกรณีฉุกเฉิน
+    const [idLine, setIdLine] = useState(''); //ไอดีไลน์
+    const [vaccination, setVaccination] = useState([]); //การรับวัคซีน
+    const [treatmentRights, setTreatmentRights] = useState(''); //สิทธิการรักษาพยาบาล
+    const [workplacearea, setWorkplacearea] = useState(''); //
+
+
+
+    const [workplaceSelection, setWorkplaceSelection] = useState([]);
+
+    useEffect(() => {
+        const storedValue = sessionStorage.getItem('empSelect');
+        if (storedValue) {
+            // setEmployeeselection(storedValue);
+        }
+
+        //get all Workplace from API
+        fetch(endpoint + '/workplace/listselect') // Update with your API endpoint
+            .then(response => response.json())
+            .then(data => {
+                setWorkplaceSelection(data);
+                console.log(data);
+
+            }
+            )
+            .catch(error => console.error('Error fetching employees:', error));
+
+    }, []);
+
+
+    const handleDateOfBirth = (date) => {
+        setDateOfBirth(date);
+    };
+    const handleMilitaryStatus = (event) => {
+        setMilitaryStatus(event.target.value);
+    };
+    const [copyAddress, setCopyAddress] = useState(false);
+
+    const handleCheckboxChange = () => {
+        setCopyAddress(!copyAddress); // Toggle the value of copyAddress
+        if (!copyAddress) {
+            setCurrentAddress(address); // Copy address to currentAddress
+        } else {
+            setCurrentAddress(''); // Reset currentAddress
+        }
+    };
+
+    const handleWorkplace = (event) => {
+        setWorkplace(event.target.value);
+        setEmployeeData(prevData => ({
+            ...prevData,
+            ['workplace']: event.target.value
+        }));
+
+        const filtered = workplaceSelection.filter(wp =>
+            event.target.value === '' || wp.workplaceName === event.target.value
+        )
+        // alert(JSON.stringify(filtered , null, 2) );
+        // alert(filtered[0].workplaceArea );
+        // if (filtered !== '') {
+        //     if (employeeData.workplace == '') {
+        //         setWorkplacearea('');
+        //     } else {
+        //         setWorkplacearea(filtered[0].workplaceArea);
+        //     }
+
+        // } else {
+        //     setWorkplacearea('');
+        // }
+
+        // setWorkplacearea(filtered[0].workplaceArea );
+    };
 
     //////////////////////////////
     const [employeeList, setEmployeeList] = useState([]);
@@ -71,6 +156,47 @@ function AddEditEmployee() {
                 console.error('Error fetching data:', error);
             });
     }, []); // The empty array [] ensures that the effect runs only once after the initial render
+
+    useEffect(() => {
+        // setNewEmp(true);
+        if (employeeselection.length > 0) {
+            setNewEmp(true);
+        } else {
+            setNewEmp(false);
+        }
+
+    }, [employeeselection]);
+
+    useEffect(() => {
+        const storedItem = localStorage.getItem('selectedEmployees');
+        if (storedItem) {
+            // Item exists in localStorage
+            // setStoredEmp(storedItem);
+            const parsedData = JSON.parse(storedItem);
+            setStoredEmp(parsedData);
+            //      console.log('Item exists:', storedItem);
+            setNewEmp(true);
+
+            // setNewEmp(false);
+        } else {
+            // Item does not exist in localStorage
+            console.log('Item does not exist');
+            setNewEmp(true);
+        }
+    }, []);
+    useEffect(() => {
+        // Listen for the custom event when selectedEmployees change in localStorage
+        const handleSelectedEmployeesChange = (event) => {
+            const { selectedEmployees } = event.detail;
+            setStoredEmp(selectedEmployees);
+        };
+
+        window.addEventListener('selectedEmployeesChanged', handleSelectedEmployeesChange);
+
+        return () => {
+            window.removeEventListener('selectedEmployeesChanged', handleSelectedEmployeesChange);
+        };
+    }, []);
 
     console.log(workplaceList);
 
@@ -91,359 +217,6 @@ function AddEditEmployee() {
     const [wOtTime, setWOtTime] = useState('');
     const [wSelectOtTime, setWSelectOtTime] = useState('');
     const [wSelectOtTimeout, setWSelectOtTimeout] = useState('');
-
-
-    // This useEffect listens for changes in wShift
-    useEffect(() => {
-        if (wId !== '' && wName !== '') {
-            const workplacesearch = workplaceList.find(workplace => workplace.workplaceId === wId);
-            if (workplacesearch) {
-                switch (wShift) {
-                    case 'morning_shift':
-                        setWStartTime(workplacesearch.workStart1 || '');
-                        setWEndTime(workplacesearch.workEnd1 || '');
-                        setWAllTime(calTime(workplacesearch.workStart1 || '', workplacesearch.workEnd1 || '', workplacesearch.workOfHour) || '');
-                        setWOtTime(calTime(workplacesearch.workStartOt1 || '', workplacesearch.workEndOt1 || '', workplacesearch.workOfOT || '') || '');
-                        setWSelectOtTime(workplacesearch.workStartOt1 || '');
-                        setWSelectOtTimeout(workplacesearch.workEndOt1 || '');
-                        break;
-                    case 'afternoon_shift':
-                        setWStartTime(workplacesearch.workStart2 || '');
-                        setWEndTime(workplacesearch.workEnd2 || '');
-                        setWAllTime(calTime(workplacesearch.workStart2 || '', workplacesearch.workEnd2 || '', workplacesearch.workOfHour) || '');
-                        setWOtTime(calTime(workplacesearch.workStartOt2 || '', workplacesearch.workEndOt2 || '', workplacesearch.workOfOT || '') || '');
-                        setWSelectOtTime(workplacesearch.workStartOt2 || '');
-                        setWSelectOtTimeout(workplacesearch.workEndOt2 || '');
-                        break;
-                    case 'night_shift':
-                        setWStartTime(workplacesearch.workStart3 || '');
-                        setWEndTime(workplacesearch.workEnd3 || '');
-                        setWAllTime(calTime(workplacesearch.workStart3 || '', workplacesearch.workEnd3 || '', workplacesearch.workOfHour) || '');
-                        setWOtTime(calTime(workplacesearch.workStartOt3 || '', workplacesearch.workEndOt3 || '', workplacesearch.workOfOT || '') || '');
-                        setWSelectOtTime(workplacesearch.workStartOt3 || '');
-                        setWSelectOtTimeout(workplacesearch.workEndOt1 || '');
-
-                        break;
-                    default:
-                        setWStartTime('');
-                        setWEndTime('');
-                        setWAllTime('');
-                        setWOtTime('');
-                        setWSelectOtTime('');
-                        setWSelectOtTimeout('');
-                }
-            }
-
-        }
-
-
-    }, [wShift]);
-
-
-    //calculate time of work
-    useEffect(() => {
-        if (wStartTime !== '' && wEndTime !== '') {
-            if (wId !== '' && wName !== '') {
-                const workplacesearch = workplaceList.find(workplace => workplace.workplaceId === wId);
-                if (workplacesearch) {
-                    setWAllTime(calTime(wStartTime || '', wEndTime || '', workplacesearch.workOfHour || ''));
-                }
-            }
-
-        } else {
-            setWAllTime(0);
-        }
-    }, [wStartTime, wEndTime]);
-
-
-    useEffect(() => {
-        if (wSelectOtTime !== '' && wSelectOtTimeout !== '') {
-            if (wId !== '' && wName !== '') {
-                const workplacesearch = workplaceList.find(workplace => workplace.workplaceId === wId);
-                if (workplacesearch) {
-                    setWOtTime(calTime(wSelectOtTime || '', wSelectOtTimeout || '', workplacesearch.workOfOT || ''));
-                }
-            }
-
-        } else {
-            setWOtTime(0);
-        }
-    }, [wSelectOtTime, wSelectOtTimeout])
-
-
-    //search employee Name by employeeId 
-    useEffect(() => {
-        if (wId !== '') {
-            const workplacesearch = workplaceList.find(workplace => workplace.workplaceId === wId);
-            if (workplacesearch) {
-                setWName(workplacesearch.workplaceName);
-            } else {
-                setWName('');
-            }
-
-
-        }
-
-    }, [wId]);
-
-    //search employeeId by employeeName 
-    useEffect(() => {
-        //Search Employee  by name
-        if (wName != '') {
-            const workplacesearch = workplaceList.find(workplace => workplace.workplaceName === wName);
-            if (workplacesearch) {
-                setWId(workplacesearch.workplaceId);
-            } else {
-                setWId('');
-            }
-            console.log(workplacesearch);
-
-        }
-    }, [wName]);
-
-
-
-    // const numberOfRows2 = 30; // Fixed number of rows
-    const numberOfRows2 = 1; // Fixed number of rows
-
-    const initialRowData2 = {
-        workplaceId: '',
-        workplaceName: '',
-        date: '', // Use null as initial value for DatePicker
-        shift: 'morning_shift',
-        startTime: '',
-        endTime: '',
-        allTime: '',
-        otTime: '',
-        selectotTime: '',
-        selectotTimeOut: '',
-    };
-
-    const [rowDataList2, setRowDataList2] = useState(new Array(numberOfRows2).fill(initialRowData2));
-
-    const handleFieldChange2 = (index2, fieldName2, value) => {
-        setRowDataList2(prevDataList => {
-            const newDataList2 = [...prevDataList];
-            newDataList2[index2] = {
-                ...newDataList2[index2],
-                [fieldName2]: value,
-            };
-
-
-            //Search workplace by id
-            if (fieldName2 == 'workplaceId') {
-                const workplaceIdSearch = workplaceList.find(workplace => workplace.workplaceId === value);
-                //                 alert(JSON.stringify(workplaceList, null, 2));
-                // alert( workplaceList.length);
-                if (workplaceIdSearch) {
-                    //   setEmployeeName(employee.name);
-                    newDataList2[index2] = {
-                        ...newDataList2[index2],
-                        ['workplaceName']: workplaceIdSearch.workplaceName + '',
-                        ['shift']: 'morning_shift',
-                        ['startTime']: workplaceIdSearch.workStart1 + '',
-                        ['endTime']: workplaceIdSearch.workEnd1 + '',
-                        ['allTime']: workplaceIdSearch.workOfHour + '',
-                        ['otTime']: workplaceIdSearch.workOfOT + '',
-                        ['selectotTime']: workplaceIdSearch.workStartOt1 + '',
-                        ['selectotTimeOut']: workplaceIdSearch.workEndOt1 + '',
-                    };
-                } else {
-                    //   setEmployeeName('Employee not found');
-                    newDataList2[index2] = {
-                        ...newDataList2[index2],
-                        ['workplaceName']: 'ไม่พบชื่อหน่วยงาน',
-                    };
-                }
-            }
-
-            //Search workplace by name
-            if (fieldName2 == 'workplaceName') {
-                const workplaceNameSearch = workplaceList.find(workplace => workplace.workplaceName === value);
-                //                 alert(JSON.stringify(workplaceList, null, 2));
-                // alert( workplaceList.length);
-                if (workplaceNameSearch) {
-                    //   setEmployeeName(employee.name);
-                    newDataList2[index2] = {
-                        ...newDataList2[index2],
-                        ['workplaceId']: workplaceNameSearch.workplaceId + '',
-                    };
-                } else {
-                    //   setEmployeeName('Employee not found');
-                    newDataList2[index2] = {
-                        ...newDataList2[index2],
-                        ['workplaceId']: 'ไม่พบรหัสหน่วยงาน',
-                    };
-                }
-            }
-
-
-            //Select shift then set time of work 
-            if (fieldName2 == 'shift') {
-                // alert(value);
-                //Check Selected workplace by workplaceId is notnull
-                if (newDataList2[index2].workplaceId !== '') {
-                    // alert(newDataList2[index2].workplaceId );
-                    //get workplace data by  workplaceId from select workplace and search workplace then set worktime to row of table
-                    const workplaceIdSearch = workplaceList.find(workplace => workplace.workplaceId === newDataList2[index2].workplaceId);
-                    if (workplaceIdSearch) {
-                        //check shift by switch case
-                        switch (value) {
-                            case 'morning_shift':
-                                newDataList2[index2] = {
-                                    ...newDataList2[index2],
-                                    ['startTime']: workplaceIdSearch.workStart1 || '' + '',
-                                    ['endTime']: workplaceIdSearch.workEnd1 || '' + '',
-                                    ['allTime']: calTime(workplaceIdSearch.workStart1 || '', workplaceIdSearch.workEnd1 || '', workplaceIdSearch.workOfHour || '') || '' + '',
-                                    ['otTime']: calTime(workplaceIdSearch.workStartOt1 || '', workplaceIdSearch.workEndOt1 || '', workplaceIdSearch.workOfOT || '') || '' + '',
-                                    ['selectotTime']: workplaceIdSearch.workStartOt1 || '' + '',
-                                    ['selectotTimeOut']: workplaceIdSearch.workEndOt1 || '' + '',
-                                };
-                                break;
-                            case 'afternoon_shift':
-                                newDataList2[index2] = {
-                                    ...newDataList2[index2],
-                                    ['startTime']: workplaceIdSearch.workStart2 || '' + '',
-                                    ['endTime']: workplaceIdSearch.workEnd2 || '' + '',
-                                    ['allTime']: calTime(workplaceIdSearch.workStart2 || '', workplaceIdSearch.workEnd2 || '', workplaceIdSearch.workOfHour || '') || '' + '',
-                                    ['otTime']: calTime(workplaceIdSearch.workStartOt2 || '', workplaceIdSearch.workEndOt2 || '', workplaceIdSearch.workOfOT || '') || '' + '',
-                                    ['selectotTime']: workplaceIdSearch.workStartOt2 || '' + '',
-                                    ['selectotTimeOut']: workplaceIdSearch.workEndOt2 || '' + '',
-                                };
-                                break;
-                            case 'night_shift':
-                                newDataList2[index2] = {
-                                    ...newDataList2[index2],
-                                    ['startTime']: workplaceIdSearch.workStart3 || '' + '',
-                                    ['endTime']: workplaceIdSearch.workEnd3 || '' + '',
-                                    ['allTime']: calTime(workplaceIdSearch.workStart3 || '', workplaceIdSearch.workEnd3 || '', workplaceIdSearch.workOfHour || '') || '' + '',
-                                    ['otTime']: calTime(workplaceIdSearch.workStartOt3 || '', workplaceIdSearch.workEndOt3 || '', workplaceIdSearch.workOfOT || '') || '' + '',
-                                    ['selectotTime']: workplaceIdSearch.workStartOt3 || '' + '',
-                                    ['selectotTimeOut']: workplaceIdSearch.workEndOt3 || '' + '',
-                                };
-                                break;
-                            default:
-                                newDataList2[index2] = {
-                                    ...newDataList2[index2],
-                                    ['startTime']: '',
-                                    ['endTime']: '',
-                                    ['allTime']: '',
-                                    ['otTime']: '',
-                                    ['selectotTime']: '',
-                                    ['selectotTimeOut']: '',
-                                };
-                        } //end switch
-                    }
-
-
-                } else {
-                    //emty workplaceId 
-                    newDataList2[index2] = {
-                        ...newDataList2[index2],
-                        ['workplaceId']: 'กรุณาระบุหน่วยงาน',
-                        ['workplaceName']: 'กรุณาระบุหน่วยงาน',
-                    };
-                }
-            }
-
-            //update time of work 
-            if ((fieldName2 == 'startTime') ||
-                (fieldName2 == 'endTime') ||
-                (fieldName2 == 'selectotTime') ||
-                (fieldName2 == 'selectotTimeOut')
-            ) {
-                //Check Selected workplace by workplaceId is notnull
-                if (newDataList2[index2].workplaceId !== '') {
-                    // alert(newDataList2[index2].workplaceId );
-                    //get workplace data by  workplaceId from select workplace and search workplace then set worktime to row of table
-                    const workplaceIdSearch = workplaceList.find(workplace => workplace.workplaceId === newDataList2[index2].workplaceId);
-                    if (workplaceIdSearch) {
-                        //check specialt_shift 
-                        if (newDataList2[index2].shift !== 'specialt_shift') {
-                            newDataList2[index2] = {
-                                ...newDataList2[index2],
-                                ['startTime']: newDataList2[index2].startTime + '',
-                                ['endTime']: newDataList2[index2].endTime + '',
-                                ['allTime']: calTime(newDataList2[index2].startTime, newDataList2[index2].endTime, workplaceIdSearch.workOfHour) + '',
-                                ['otTime']: calTime(newDataList2[index2].selectotTime, newDataList2[index2].selectotTimeOut, workplaceIdSearch.workOfOT) + '',
-                                ['selectotTime']: newDataList2[index2].selectotTime + '',
-                                ['selectotTimeOut']: newDataList2[index2].selectotTimeOut + '',
-                            };
-                        } else {
-                            newDataList2[index2] = {
-                                ...newDataList2[index2],
-                                ['startTime']: newDataList2[index2].startTime + '',
-                                ['endTime']: newDataList2[index2].endTime + '',
-                                ['allTime']: calTime(newDataList2[index2].startTime, newDataList2[index2].endTime, 24) + '',
-                                ['otTime']: calTime(newDataList2[index2].selectotTime, newDataList2[index2].selectotTimeOut, 24) + '',
-                                ['selectotTime']: newDataList2[index2].selectotTime + '',
-                                ['selectotTimeOut']: newDataList2[index2].selectotTimeOut + '',
-                            };
-                        }
-
-                    } else {
-                        //emty workplaceId 
-                        newDataList2[index2] = {
-                            ...newDataList2[index2],
-                            ['workplaceId']: 'กรุณาระบุหน่วยงาน',
-                            ['workplaceName']: 'กรุณาระบุหน่วยงาน',
-                        };
-                    }
-
-                }
-
-            }
-
-            return newDataList2;
-        });
-    };
-
-
-    function calTime(start, end, limit) {
-
-        const startHours = parseFloat(start.split('.')[0]);
-        const startMinutes = parseFloat(start.split('.')[1] || 0);
-        const endHours = parseFloat(end.split('.')[0]);
-        const endMinutes = parseFloat(end.split('.')[1] || 0);
-        let hours = endHours - startHours;
-        let minutes = endMinutes - startMinutes;
-        if (minutes < 0) {
-            hours -= 1;
-            minutes += 60;
-        }
-        // Handle cases where endTime is on the next day
-        if (hours < 0) {
-            hours += 24;
-        }
-        //check employee working >= 5 hours 
-        if (hours >= 5) {
-            hours -= 1;
-        }
-
-        // Calculate the total time difference in minutes
-        const totalMinutes = hours * 60 + minutes;
-        // check employee working > 5 hours
-        // Cap the time difference at the maximum work hours
-        const cappedTotalMinutes = Math.min(totalMinutes, limit * 60);
-        // Convert the capped time difference back to hours and minutes
-        const cappedHours = Math.floor(cappedTotalMinutes / 60);
-        const cappedMinutes = cappedTotalMinutes % 60;
-        const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
-        if (isNaN(timeDiffFormatted)) {
-            return '0';
-        }
-
-        return timeDiffFormatted;
-    }
-
-
-
-    const handleStartDateChange4 = (index2, date) => {
-        alert(index2);
-        handleFieldChange2(index2, 'date', date);
-    };
-
-
 
     ///////////////////
     function handleClickResult(workplace) {
@@ -512,91 +285,79 @@ function AddEditEmployee() {
 
 
 
-    async function handleManageWorkplace(event) {
+    async function handleManageEmployee(event) {
         event.preventDefault();
-        //get data from input in useState to data 
-
-        const newRowData = await {
-            workplaceId: wId || '',
-            workplaceName: wName || '',
-            date: wDate || '',
-            shift: wShift || '',
-            startTime: wStartTime || '',
-            endTime: wEndTime || '',
-            allTime: wAllTime || '',
-            otTime: wOtTime || '',
-            selectotTime: wSelectOtTime || '',
-            selectotTimeOut: wSelectOtTimeout || '',
-        };
-
-        await addRow(newRowData);
-
-        await setWId('');
-        await setWName('');
-        await setWStartTime('');
-        await setWEndTime('');
-        await setWAllTime('');
-        await setWOtTime('');
-        await setWSelectOtTime('');
-        await setWSelectOtTimeout('');
-    }
-
-
-    // Function to add a new row to the rowDataList with specific values
-    const addRow = (newRowData) => {
-        // Create a copy of the current state
-        const newDataList = [...rowDataList2];
-        // Push a new row with specific data
-        // newDataList.push({ ...initialRowData, ...newRowData });
-        newDataList.unshift(newRowData);
-        // Update the state with the new data
-        setRowDataList2(newDataList);
-    };
-
-    // Function to handle editing a row
-    const handleEditRow = async (index) => {
-        // You can implement the edit logic here, e.g., open a modal for editing
-        // console.log('Edit row at index:', index);
-        const tmp = await rowDataList2[index];
-        // alert(tmp.staffId);
-        await setWId(tmp.workplaceId);
-        await setWName(tmp.workplaceName);
-
-    };
-
-    // Function to handle deleting a row
-    const handleDeleteRow = (index) => {
-        // Create a copy of the current state
-        const newDataList = [...rowDataList2];
-        // Remove the row at the specified index
-        newDataList.splice(index, 1);
-        // Update the state with the new data
-        setRowDataList2(newDataList);
-    };
-
-
-    async function handleCreateWorkplaceTimerecord(event) {
-        event.preventDefault();
-        // alert('test');
-
-        //get data from input in useState to data 
         const data = {
             employeeId: employeeId,
-            employeeName: name,
-            month: month,
-            employee_workplaceRecord: rowDataList2
+            position: position,
+            department: department,
+            workplace: workplace,
+            jobtype: jobtype,
+            salary: salary,
+            startjob: startjob,
+            endjob: endjob,
+            exceptjob: exceptjob,
+            prefix: prefix,
+            name: name,
+            lastName: lastName,
+            nickName: nickName,
+            gender: gender,
+            dateOfBirth: dateOfBirth,
+            age: age,
+            idCard: idCard,
+            ethnicity: ethnicity,
+            religion: religion,
+            maritalStatus: maritalStatus,
+            militaryStatus: militaryStatus,
+            address: address,
+            currentAddress: currentAddress,
+            phoneNumber: phoneNumber,
+            emergencyContactNumber: emergencyContactNumber,
+            idLine: idLine,
+            // vaccination: vaccination,
+            // treatmentRights: treatmentRights,
         };
+        console.log(data);
+
+        //check create or update Employee
+        if (newEmp) {
+            // alert('create employee');
+
+            try {
+                const response = await axios.post(endpoint + '/employee/create', data);
+                // setEmployeesResult(response.data.employees);
+                window.location.reload();
+
+            } catch (error) {
+                alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล', error);
+                console.error('Error:', error);
+                console.error('Response Data:', error.response.data);
 
 
-        try {
-            const response = await axios.post(endpoint + '/timerecord/createemp', data);
-            // setEmployeesResult(response.data.employees);
-            if (response) {
-                alert("บันทึกสำเร็จ");
+                // window.location.reload();
+
             }
-        } catch (error) {
-            alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
-            // window.location.reload();
+
+        } else {
+            if (buttonValue == 'save') {
+                // Make the API call to update the resource by ID
+                try {
+                    const response = await axios.put(endpoint + '/employee/update/' + _id, data);
+                    // setEmployeesResult(response.data.employees);
+                    if (response) {
+                        alert("บันทึกสำเร็จ");
+                        window.location.reload();
+
+                    }
+                } catch (error) {
+                    alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+                    alert(error);
+                    window.location.reload();
+                }
+
+
+            }
+
         }
 
     }
@@ -604,15 +365,6 @@ function AddEditEmployee() {
 
     /////////////////
     const [selectedOption, setSelectedOption] = useState('agencytime');
-
-    const handleOptionChange = (event) => {
-        setSelectedOption(event.target.value);
-    };
-
-    const handleSubmitForm1 = (event) => {
-        event.preventDefault();
-        // Handle submission for Form 1
-    };
 
     return (
         <body class="hold-transition sidebar-mini" className='editlaout'>
@@ -688,236 +440,224 @@ function AddEditEmployee() {
                                             {/* <!--Frame--> */}
                                         </div>
                                     </div>
-                                    <form onSubmit={handleManageWorkplace}>
+                                    <form onSubmit={handleManageEmployee}>
+                                        <h2 class="title">ข้อมูลส่วนบุคคลพนักงาน</h2>
                                         <div class="row">
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label role="agencynumber">รหัสพนักงาน</label>
-                                                    <input type="text" class="form-control" id="agencynumber" placeholder="รหัสพนักงาน" value={employeeId} onChange={(e) => setEmployeeId(e.target.value)} />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label role="agencyname">ชื่อพนักงาน</label>
-                                                    <input type="text" class="form-control" id="agencyname" placeholder="ชื่อพนักงาน" value={name} onChange={(e) => setName(e.target.value)} />
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label role="agencyname">เดือน</label>
-                                                    <select className="form-control" value={month} onChange={(e) => setMonth(e.target.value)} >
-                                                        <option value="01">มกราคม</option>
-                                                        <option value="02">กุมภาพันธ์</option>
-                                                        <option value="03">มีนาคม</option>
-                                                        <option value="04">เมษายน</option>
-                                                        <option value="05">พฤษภาคม</option>
-                                                        <option value="06">มิถุนายน</option>
-                                                        <option value="07">กรกฎาคม</option>
-                                                        <option value="08">สิงหาคม</option>
-                                                        <option value="09">กันยายน</option>
-                                                        <option value="10">ตุลาคม</option>
-                                                        <option value="11">พฤศจิกายน</option>
-                                                        <option value="12">ธันวาคม</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            {/* <div class="col-md-2">
-                                <div class="form-group">
-                                    <label role="datetime">วันที่</label>
-                                    <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
-                                        <DatePicker id="datetime" name="datetime"
-                                            className="form-control" // Apply Bootstrap form-control class
-                                            popperClassName="datepicker-popper" // Apply custom popper class if needed
-                                            selected={startjob}
-                                            onChange={handleStartDateChange}
-                                            dateFormat="dd/MM/yyyy" />
-                                    </div>
-                                </div>
-
-                            </div> */}
-                                            <div class="col-md-3">
-                                                <label role="button"></label>
-                                                <div class="d-flex align-items-end">
-                                                    <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ตรวจสอบ</button>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-1">
-                                                <div class="form-group">
-                                                    <label role="wId">รหัสหน่วยงาน</label>
-                                                    <br />
-                                                    <input type="text" class="form-control" id="wId" placeholder="รหัสหน่วยงาน" value={wId} onChange={(e) => setWId(e.target.value)} />
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label role="wName">ชื่อหน่วยงาน</label>
-                                                    <br />
-                                                    <br />
-                                                    <input type="text" class="form-control" id="wName" placeholder="ชื่อหน่วยงาน" value={wName} onChange={(e) => setWName(e.target.value)} />
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-1">
-                                                <label role="wDate">วันที่</label>
-                                                <br />
-                                                <br />
-
-                                                <select className="form-control" value={wDate} onChange={(e) => setWDate(e.target.value)} style={{ width: '5.5rem' }} >
-                                                    <option value="">เลือกวัน</option>
-                                                    {options}
-                                                </select>
-                                            </div>
-
-                                            <div class="col-md-1">
-                                                <label role="wShift">กะทำงาน</label>
-                                                <br />
-                                                <br />
-                                                <select className="form-control" value={wShift} onChange={(e) => setWShift(e.target.value)} style={{ width: '5.5rem' }} >
-                                                    <option value="">เลือกกะ</option>
-                                                    <option value="morning_shift">กะเช้า</option>
-                                                    <option value="afternoon_shift">กะบ่าย</option>
-                                                    <option value="night_shift">กะดึก</option>
-                                                    <option value="specialt_shift">กะพิเศษ</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="col-md-1">
-                                                <div class="form-group">
-                                                    <label role="wStartTime">เวลาเข้างาน</label>
-                                                    <br />
-                                                    <br />
-                                                    <input type="text" class="form-control" id="wStartTime" placeholder="เวลาเข้างาน" value={wStartTime} onChange={(e) => setWStartTime(e.target.value)} />
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-1">
-                                                <div class="form-group">
-                                                    <label role="wEndTime">เวลาออกงาน</label>
-                                                    <br />
-                                                    <br />
-                                                    <input type="text" class="form-control" id="wEndTime" placeholder="เวลาออกงาน" value={wEndTime} onChange={(e) => setWEndTime(e.target.value)} />
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-1">
-                                                <div class="form-group">
-                                                    <label role="wAllTime">ชั่วโมงทำงาน</label>
-                                                    <br />
-                                                    <br />
-                                                    <input type="text" class="form-control" id="wAllTime" placeholder="ชั่วโมงทำงาน" value={wAllTime} onChange={(e) => setWAllTime(e.target.value)} />
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-1">
-                                                <div class="form-group">
-                                                    <label role="wOtTime">ชั่วโมง OT</label>
-                                                    <br />
-                                                    <br />
-                                                    <input type="text" class="form-control" id="wOtTime" placeholder="ชั่วโมง OT" value={wOtTime} onChange={(e) => setWOtTime(e.target.value)} />
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-1">
-                                                <div class="form-group">
-                                                    <label role="wSelectOtTime">เวลาเข้า OT</label>
-                                                    <br />
-                                                    <br />
-                                                    <input type="text" class="form-control" id="wSelectOtTime" placeholder="เวลาเข้า OT" value={wSelectOtTime} onChange={(e) => setWSelectOtTime(e.target.value)} />
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-1">
-                                                <div class="form-group">
-                                                    <label role="wSelectOtTimeout">เวลาออก OT</label>
-                                                    <br />
-                                                    <br />
-                                                    <input type="text" class="form-control" id="wSelectOtTimeout" placeholder="เวลาออก OT" value={wSelectOtTimeout} onChange={(e) => setWSelectOtTimeout(e.target.value)} />
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-1">
-                                                <label role="button"></label>
-                                                <br />
-                                                <br />
-                                                <div class="d-flex align-items-end">
-                                                    <button class="btn b_save"><i class="fas fa-check"></i> &nbsp; เพิ่ม</button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-
-                                        <section class="Frame">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="row">
-                                                        <div class="col-md-1"> รหัสหน่วยงาน</div>
-                                                        <div class="col-md-2"> ชื่อหน่วยงาน </div>
-                                                        <div class="col-md-1"> วันที่</div>
-                                                        <div class="col-md-1"> กะการทำงาน </div>
-                                                        <div class="col-md-1"> เวลาเข้างาน </div>
-                                                        <div class="col-md-1"> เวลาออกงาน </div>
-                                                        <div class="col-md-1"> ชั่วโมงทำงาน </div>
-                                                        <div class="col-md-1"> ชั่วโมง OT</div>
-                                                        <div class="col-md-1"> เวลาเข้า OT </div>
-                                                        <div class="col-md-1"> เวลาออก OT</div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-
-                                                    {rowDataList2.map((rowData2, index) => (
-                                                        rowData2.workplaceId && (
-                                                            <div key={index}>
-                                                                <div class="row" style={{ marginBottom: '1rem', borderBottom: '2px solid #000' }}>
-                                                                    <div class="col-md-1" style={bordertable}> {rowData2.workplaceId}</div>
-                                                                    <div class="col-md-2" style={bordertable}> {rowData2.workplaceName} </div>
-                                                                    <div class="col-md-1" style={bordertable}> {rowData2.date} </div>
-                                                                    <div class="col-md-1" style={bordertable}>
-                                                                        {rowData2.shift === 'morning_shift' ? (
-                                                                            <p>กะเช้า</p>
-                                                                        ) : rowData2.shift === 'afternoon_shift' ? (
-                                                                            <p>กะบ่าย</p>
-                                                                        ) : rowData2.shift === 'night_shift' ? (
-                                                                            <p>กะดึก</p>
-                                                                        ) : rowData2.shift === 'specialt_shift' ? (
-                                                                            <p>กะพิเศษ</p>
-                                                                        ) : (
-                                                                            <div></div>
-                                                                        )}
-                                                                    </div>
-                                                                    <div class="col-md-1" style={bordertable}> {rowData2.startTime} </div>
-                                                                    <div class="col-md-1" style={bordertable}> {rowData2.endTime} </div>
-                                                                    <div class="col-md-1" style={bordertable}> {rowData2.allTime} </div>
-                                                                    <div class="col-md-1" style={bordertable}> {rowData2.otTime} </div>
-                                                                    <div class="col-md-1" style={bordertable}> {rowData2.selectotTime} </div>
-                                                                    <div class="col-md-1" style={bordertable}> {rowData2.selectotTimeOut} </div>
-
-                                                                    <div class="col-md-1" style={bordertable}>
-                                                                        {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
-                                                                        <button class="btn btn-xs btn-danger" style={{ padding: '0.3rem ', width: '8rem' }} onClick={() => handleDeleteRow(index)}>Delete</button>
-                                                                    </div>
+                                            <div class="col-md-12">
+                                                <section class="Frame">
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label role="prefix">รหัส</label>
+                                                                    <input type="text" class="form-control" id="employeeId" placeholder="รหัสพนักงาน" value={employeeId} onChange={(e) => setEmployeeId(e.target.value)} />
 
                                                                 </div>
                                                             </div>
-                                                        )
-                                                    ))}
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label role="name">หน่วยงาน</label>
+                                                                    <input
+                                                                        type="text"
+                                                                        id="workplace"
+                                                                        name="workplace"
+                                                                        list="workplaces"
+                                                                        className="form-control"
+                                                                        value={workplace}
+                                                                        onChange={handleWorkplace}
+                                                                    />
 
-                                                </div>
+                                                                    <datalist id="workplaces">
+                                                                        <option value="">ยังไม่ระบุหน่วยงาน</option>
+                                                                        {workplaceSelection.map((wp) => (
+                                                                            <option key={wp._id} value={wp.workplaceId}>
+                                                                                {wp.workplaceName}
+                                                                            </option>
+                                                                        ))}
+                                                                    </datalist>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label role="lastName">ตำแหน่ง</label>
+                                                                    <input type="text" class="form-control" id="position" placeholder="ตำแหน่ง" value={position} onChange={(e) => setPosition(e.target.value)} />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label role="prefix">เงินจ้าง</label>
+                                                                    <input type="text" name="salary" class="form-control" id="name" placeholder="เงินจ้าง" value={salary} onChange={(e) => setSalary(e.target.value)} />
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label role="name">ประเภทการจ้าง</label>
+                                                                    <input type="text" name="jobtype" class="form-control" id="jobtype" placeholder="ประเภทการจ้าง" value={jobtype} onChange={(e) => setJobtype(e.target.value)} />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label role="prefix">คำนำหน้า</label>
+                                                                    <input type="text" name="prefix" class="form-control" id="name" placeholder="คำนำหน้า" value={prefix} onChange={(e) => setPrefix(e.target.value)} />
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label role="name">ชื่อ</label>
+                                                                    <input type="text" name="name" class="form-control" id="name" placeholder="ชื่อ" value={name} onChange={(e) => setName(e.target.value)} />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label role="lastName">นามสกุล</label>
+                                                                    <input type="text" name="lastName" class="form-control" id="lastName" placeholder="นามสกุล" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label role="nickName">ชื่อเล่น</label>
+                                                                    <input type="text" name="nickName" class="form-control" id="nickName" placeholder="ชื่อเล่น" value={nickName} onChange={(e) => setNickName(e.target.value)} />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label role="gender">เพศ</label>
+                                                                    <input type="text" name="gender" class="form-control" id="gender" placeholder="ชื่อเล่น" value={gender} onChange={(e) => setGender(e.target.value)} />
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label role="dateOfBirth">วันเดือนปีเกิด</label>
+                                                                    <div style={{ position: 'relative', zIndex: 9999 }}>
+                                                                        <DatePicker id="dateOfBirth" name="dateOfBirth"
+                                                                            className="form-control"
+                                                                            popperClassName="datepicker-popper"
+                                                                            selected={dateOfBirth}
+                                                                            onChange={handleDateOfBirth}
+                                                                            dateFormat="dd/MM/yyyy" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            {/* <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label role="dateOfBirth">วันเดือนปีเกิด</label>
+                                                            <DatePicker id="dateOfBirth" name="dateOfBirth"
+                                                                selected={dateOfBirth}
+                                                                onChange={handleDateOfBirth}
+                                                                dateFormat="dd/MM/yyyy" />
+                                                        </div>
+                                                    </div> */}
+
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label role="age">อายุ</label>
+                                                                    <input type="text" name="age" class="form-control" id="age" placeholder="อายุ" value={age} onChange={(e) => setAge(e.target.value)} />
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label role="idCard">เลขบัตรประจำตัวประชาชน</label>
+                                                                    <input type="text" name="idCard" class="form-control" id="idCard" placeholder="เลขบัตรประจำตัวประชาชน" value={idCard} onChange={(e) => setIdCard(e.target.value)} />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label role="ethnicity">เชื้อชาติ</label>
+                                                                    <input type="text" name="ethnicity" class="form-control" id="ethnicity" placeholder="เชื้อชาติ" value={ethnicity} onChange={(e) => setEthnicity(e.target.value)} />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label role="religion">ศาสนา</label>
+                                                                    <input type="text" name="religion" class="form-control" id="religion" placeholder="ศาสนา" value={religion} onChange={(e) => setReligion(e.target.value)} />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label role="maritalStatus">สถานภาพการสมรส</label>
+                                                                    <input type="text" name="maritalStatus" class="form-control" id="maritalStatus" placeholder="สถานภาพการสมรส" value={maritalStatus} onChange={(e) => setMaritalStatus(e.target.value)} />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label role="militaryStatus">สถานภาพทางการทหาร</label>
+                                                                    <select name="militaryStatus" id="militaryStatus" class="form-control"
+                                                                        value={militaryStatus} onChange={handleMilitaryStatus}>
+                                                                        <option value="ยกเว้นการเกณฑ์ทหาร">ยกเว้นการเกณฑ์ทหาร</option>
+                                                                        <option value="ผ่านการเกณฑ์ทหารแล้ว">ผ่านการเกณฑ์ทหารแล้ว</option>
+                                                                        <option value="ไม่ผ่านการเกณฑ์ทหาร">ไม่ผ่านการเกณฑ์ทหาร</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label role="address">ที่อยู่ตามบัตรประชาชน</label>
+                                                                    <textarea name="address" id="address" class="form-control" rows="3" value={address} onChange={(e) => setAddress(e.target.value)} ></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label role="currentAddress">ที่อยู่ปัจจุบัน</label>
+                                                                    <div class="icheck-primary d-inline">
+                                                                        <input type="checkbox" checked={copyAddress} id="" name="radio1" onChange={handleCheckboxChange}
+                                                                        /> ใช้ที่อยู่ตามบัตรประชาชน
+                                                                    </div>
+                                                                    <textarea name="currentAddress" id="currentAddress" class="form-control" rows="3" value={currentAddress} onChange={(e) => setCurrentAddress(e.target.value)} ></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        {/* <!--row--> */}
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label role="phoneNumber">เบอร์โทรศัพท์</label>
+                                                                    <input type="text" name="phoneNumber" class="form-control" id="phoneNumber" placeholder="เบอร์โทรศัพท์" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label role="emergencyContactNumber">เบอร์ติดต่อกรณีฉุกเฉิน</label>
+                                                                    <input type="text" name="emergencyContactNumber" class="form-control" id="emergencyContactNumber" placeholder="เบอร์ติดต่อกรณีฉุกเฉิน" value={emergencyContactNumber} onChange={(e) => setEmergencyContactNumber(e.target.value)} />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label role="idLine">ไอดีไลน์</label>
+                                                                    <input type="text" name="idLine" class="form-control" id="idLine" placeholder="ไอดีไลน์" value={idLine} onChange={(e) => setIdLine(e.target.value)} />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {/* <!--col-md-12--> */}
+                                                </section>
+                                                {/* <!--Frame--> */}
                                             </div>
-                                        </section>
+                                        </div>
 
 
                                         <div class="form-group">
-                                            <button class="btn b_save" onClick={handleCreateWorkplaceTimerecord}><i class="nav-icon fas fa-save"></i> &nbsp; บันทึก</button>
-                                        </div>
+                                            {newEmp ? (
+                                                <button type="submit" name="save" value="create" onClick={() => setButtonValue('create')} class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;สร้างพนักงานใหม่</button>
+                                            ) : (
+                                                <button type="submit" name="save" value="save" onClick={() => setButtonValue('save')} class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
+                                            )}
+                                            <button class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>                                        </div>
                                     </form>
 
                                 </div>
