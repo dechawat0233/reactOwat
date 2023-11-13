@@ -364,6 +364,30 @@ function AddEditEmployee() {
 
     }
 
+    // const deleteEmployee = async (employeeId) => {
+    //     try {
+    //         const response = await axios.delete(`http://your-api-url/delete/${employeeId}`);
+
+    //         // Handle success
+    //         console.log(response.data); // This will contain the success message and deleted employee details
+    //     } catch (error) {
+    //         // Handle error
+    //         console.error('Error deleting employee:', error.message);
+    //     }
+    // };
+    const deleteEmployee = async (employeeId) => {
+        try {
+            const response = await axios.delete(`${endpoint}/employee/delete/${employeeId}`);
+
+            // Handle success
+            console.log(response.data); // This will contain the success message and deleted employee details
+        } catch (error) {
+            // Handle error
+            console.error('Error deleting employee:', error.message);
+        }
+    };
+
+
 
     /////////////////
     const [selectedOption, setSelectedOption] = useState('agencytime');
@@ -423,13 +447,31 @@ function AddEditEmployee() {
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <div class="form-group">
-                                                                    <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
+                                                                    {/* <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
                                                                         {searchResult.map(workplace => (
                                                                             <li
                                                                                 key={workplace.id}
                                                                                 onClick={() => handleClickResult(workplace)}
                                                                             >
                                                                                 รหัส {workplace.employeeId} ชื่อ{workplace.name}
+                                                                                <button type="button" name="delete" value="delete" onClick={() => deleteEmployee('create')} class="btn b_save"> &nbsp;ลบ</button>
+
+                                                                            </li>
+                                                                        ))}
+                                                                    </ul> */}
+                                                                    <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
+                                                                        {searchResult.map(workplace => (
+                                                                            <li key={workplace.id}>
+                                                                                รหัส {workplace.employeeId} ชื่อ {workplace.name}
+                                                                                <button
+                                                                                    type="button"
+                                                                                    name="delete"
+                                                                                    value="delete"
+                                                                                    onClick={() => deleteEmployee(workplace.employeeId)} // Pass the actual employeeId
+                                                                                    className="btn b_save"
+                                                                                >
+                                                                                    &nbsp;ลบ
+                                                                                </button>
                                                                             </li>
                                                                         ))}
                                                                     </ul>
