@@ -543,7 +543,6 @@ router.delete('/delete/:employeeId', async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
 // Delete employee by _id
 router.delete('/delete/:_id', async (req, res) => {
   try {
