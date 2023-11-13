@@ -524,5 +524,24 @@ router.put('/update/:_id', async (req, res) => {
   }
 });
 
+// Delete employee by Id
+router.delete('/delete/:employeeId', async (req, res) => {
+  try {
+    const employeeIdToDelete = req.params.employeeId;
+
+    // Find the employee by ID and delete it
+    const deletedEmployee = await Employee.findOneAndDelete({ employeeId: employeeIdToDelete });
+
+    if (deletedEmployee) {
+      res.json({ message: 'Employee deleted successfully', deletedEmployee });
+    } else {
+      res.status(404).json({ error: 'Employee not found' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 
 module.exports = router;
