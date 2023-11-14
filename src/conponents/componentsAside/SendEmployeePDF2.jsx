@@ -382,7 +382,7 @@ const SendEmployeePDF2 = () => {
             // doc.addImage(OwatAddress, 'PNG', 140, 10, 61.5, 28.4);
             // doc.addImage(OwatIcon, 'PNG', 10, 10, 68, 30);
             // doc.addImage(OwatSupport, 'PNG', 85, 275, 113.0, 16.4);
-            
+
         }
 
 
@@ -404,7 +404,7 @@ const SendEmployeePDF2 = () => {
             doc.addImage(OwatIcon, 'PNG', 10, 10, 68, 30);
             doc.addImage(OwatSupport, 'PNG', 85, 275, 113.0, 16.4);
             chunk.forEach((value, index) => {
-                const x = 40; // X-coordinate for starting point
+                x = 40; // X-coordinate for starting point
                 const y = 50 + index * 10;
                 // const y2 = 30 + index * 20;
 
