@@ -268,7 +268,38 @@ function AddEditEmployee() {
 
                 // Set search values
                 setEmployeeId(response.data.employees[0].employeeId);
+
+                setPosition(response.data.employees[0].position);
+                setSalary(response.data.employees[0].salary);
+                setJobtype(response.data.employees[0].jobtype);
+                setPrefix(response.data.employees[0].prefix);
+
                 setName(response.data.employees[0].name);
+                setLastName(response.data.employees[0].lastName);
+                setNickName(response.data.employees[0].nickName);
+                // setGender(response.data.employees[0].gender);
+                setGender(response.data.employees[0].gender === 'male' ? 'ชาย' : 'หญิง');
+
+                // setDateOfBirth(response.data.employees[0].dateOfBirth);
+                const isoDate = response.data.employees[0].dateOfBirth;
+                // Convert ISO date to JavaScript Date object
+                const dateObject = new Date(isoDate);
+                // Set the formatted date to the state
+                setDateOfBirth(dateObject);
+
+                setAge(response.data.employees[0].age);
+                setIdCard(response.data.employees[0].idCard);
+                setEthnicity(response.data.employees[0].ethnicity);
+                setReligion(response.data.employees[0].religion);
+                setMaritalStatus(response.data.employees[0].maritalStatus);
+
+                setMilitaryStatus(response.data.employees[0].militaryStatus);
+                setAddress(response.data.employees[0].address);
+                setCopyAddress(response.data.employees[0].copyAddress);
+                setCurrentAddress(response.data.employees[0].currentAddress);
+                setPhoneNumber(response.data.employees[0].phoneNumber);
+                setEmergencyContactNumber(response.data.employees[0].emergencyContactNumber);
+                setIdLine(response.data.employees[0].idLine);
 
                 // setSearchEmployeeId(response.data.employees[0].employeeId);
                 // setSearchEmployeeName(response.data.employees[0].name);
@@ -486,7 +517,8 @@ function AddEditEmployee() {
                                                                                     name="delete"
                                                                                     value="delete"
                                                                                     onClick={() => handleDelete(workplace._id)} // Pass the actual employeeId
-                                                                                    className="btn b_save"
+                                                                                    className="btn btn-danger"
+                                                                                    style={{ width: "5rem" }}
                                                                                 >
                                                                                     &nbsp;ลบ
                                                                                 </button>

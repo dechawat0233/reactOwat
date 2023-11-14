@@ -28,7 +28,7 @@ function Dashboard() {
               <div class="Inner-dash">
                 <div class="row">
                   <a href="" class="btn-d btn-app" style={{ background: "#ff6c60" }}><i class="fas fa-business-time"></i> ระบบลงเวลา</a>
-                  <Link to="/addEdit_Employee" className="btn-d btn-app" style={{ background: "#9DBAEA" }}><i class="fas fa-people-arrows"></i> ระบบ เพิ่ม/ลบ พนังงาน</Link>
+                  <Link to="/addEdit_Employee" className="btn-d btn-app" style={{ background: "#9DBAEA" }}><i class="fas fa-people-arrows"></i> ระบบ เพิ่ม/ลบ พนักงาน</Link>
                   <Link to="/addEdit_SalaryEmployee" className="btn-d btn-app" style={{ background: "#A2B4D2" }}><i class="fas fa-money-bill-wave"></i> ระบบ เงินเพิ่ม/เงินหัก พนักงาน</Link>
                   {/* <a href="" class="btn-d btn-app" style={{ background: "#9DBAEA" }}></a>
                   <a href="" class="btn-d btn-app" style={{ background: "#A2B4D2" }}></a> */}
