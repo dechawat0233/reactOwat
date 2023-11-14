@@ -155,6 +155,7 @@ function App() {
               {/* <Route path="/testPDF" element={<TestPDF />} /> */}
               {/* <Route path="/testPDF" element={<PdfGenerator />} /> */}
               {/* <Route path="/testPDF" element={<Testapp />} /> */}
+              <Route path="/listsendemployee" element={<SendEmployeePDF2 />} />
               <Route path="/testPDF" element={<SendEmployeePDF2 />} />
 
 

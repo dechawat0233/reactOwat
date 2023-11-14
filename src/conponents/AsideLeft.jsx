@@ -9,6 +9,8 @@ function AsideLeft() {
   const [showSubMenu, setShowSubMenu] = useState(false);
   const [showSubMenu2, setShowSubMenu2] = useState(false);
   const [showSubMenu3, setShowSubMenu3] = useState(false);
+  const [showSubMenu4, setShowSubMenu4] = useState(false);
+
 
   const token = localStorage.getItem('token');
 
@@ -41,15 +43,18 @@ function AsideLeft() {
   function toggleSubMenu3() {
     setShowSubMenu3(!showSubMenu3);
   }
+  function toggleSubMenu4() {
+    setShowSubMenu4(!showSubMenu4);
+  }
 
   return (
     <>
-      <aside class="main-sidebar sidebar-dark-primary elevation-4" style={{width:'13rem'}}>
+      <aside class="main-sidebar sidebar-dark-primary elevation-4" style={{ width: '13rem' }}>
         <div class="sidebar">
           <div class="Logo-w">
             <a href="dashboard.php" class="brand-link logo-switch">
               <img src="assets/images/logo-xs.png" alt="Logo Small" class="brand-image-xl logo-xs" />
-              <img src="assets/images/logo.png" alt=" Docs Logo Large" class="brand-image-xl logo-xl" style={{ borderRadius: "8px",width:'92%' }} />
+              <img src="assets/images/logo.png" alt=" Docs Logo Large" class="brand-image-xl logo-xl" style={{ borderRadius: "8px", width: '92%' }} />
             </a>
           </div>
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -91,9 +96,18 @@ function AsideLeft() {
               </li>
 
               <li class="nav-item">
-                <a href="#" class="nav-link"><i class="nav-icon fas fa-file-import"></i>
-                  <p> ระบบออกเอกสาร</p>
+                <a href="#" class="nav-link" onClick={toggleSubMenu4}><i class="nav-icon fas fa-file-import"></i>
+                  <p> ระบบออกเอกสาร <i class="right fas fa-angle-left"></i><i class=""></i></p>
                 </a>
+                {showSubMenu4 && (
+                  <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <>
+                      <li class="nav-item">
+                        <Link to="/listsendemployee" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ใบส่งตัว</Link>
+                      </li>
+                    </>
+                  </ul>
+                )}
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link"><i class="nav-icon fas fa-file-alt"></i>
