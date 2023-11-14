@@ -43,7 +43,8 @@ const employeeSchema = new mongoose.Schema({
   endjob: {
     type: String
   },
-  exceptjob: {    type: String
+  exceptjob: {
+    type: String
   },
   prefix: {
     type: String
@@ -209,9 +210,9 @@ const employeeSchema = new mongoose.Schema({
     roundOfSalary: String,
     StaffType: String,
     nameType: String,
-}],
-selectAddSalary: [],
-sumAddSalary: String,
+  }],
+  selectAddSalary: [],
+  sumAddSalary: String,
 
 });
 
@@ -525,15 +526,35 @@ router.put('/update/:_id', async (req, res) => {
 });
 
 // Delete employee by Id
-router.delete('/delete/:employeeId', async (req, res) => {
+// router.delete('/delete/:employeeId', async (req, res) => {
+//   try {
+//     const employeeIdToDelete = req.params.employeeId;
+
+//     // Find the employee by ID and delete it
+//     const deletedEmployee = await Employee.findOneAndDelete({ employeeId: employeeIdToDelete });
+
+//     if (deletedEmployee) {
+//       res.json({ message: 'Employee deleted successfully', deletedEmployee });
+//     } else {
+//       res.status(404).json({ error: 'Employee not found' });
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// });
+
+
+
+router.delete('/delete/:_id', async (req, res) => {
   try {
-    const employeeIdToDelete = req.params.employeeId;
+    const employeeIdToDelete = req.params._id;
 
     // Find the employee by ID and delete it
-    const deletedEmployee = await Employee.findOneAndDelete({ employeeId: employeeIdToDelete });
+    const deletedEmployee = await Employee.findOneAndDelete({ _id: employeeIdToDelete });
 
     if (deletedEmployee) {
-      res.json({ message: 'Employee deleted successfully', deletedEmployee });
+      res.status(200).json({ message: 'Employee deleted successfully', deletedEmployee });
     } else {
       res.status(404).json({ error: 'Employee not found' });
     }
@@ -542,6 +563,26 @@ router.delete('/delete/:employeeId', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+
+
+// router.delete('/delete/:_id', async (req, res) => {
+//   try {
+//     const employeeIdToDelete = req.params._id;
+
+//     // Find the employee by ID and delete it
+//     const deletedEmployee = await Employee.findOneAndDelete({ _id: employeeIdToDelete });
+
+//     if (deletedEmployee) {
+//       res.json({ message: 'Employee deleted successfully', deletedEmployee });
+//     } else {
+//       res.status(404).json({ error: 'Employee not found' });
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// });
 
 // Delete employee by _id
 router.delete('/delete/:_id', async (req, res) => {

@@ -375,14 +375,32 @@ function AddEditEmployee() {
     //         console.error('Error deleting employee:', error.message);
     //     }
     // };
-    const deleteEmployee = async (employeeId) => {
-        try {
-            const response = await axios.delete(`${endpoint}/employee/delete/${employeeId}`);
+    // const deleteEmployee = async (_id) => {
+    //     try {
+    //         const response = await axios.delete(`${endpoint}/employee/delete/${_id}`);
 
-            // Handle success
-            console.log(response.data); // This will contain the success message and deleted employee details
+    //         // Handle success
+    //         console.log(response.data); // This will contain the success message and deleted employee details
+    //     } catch (error) {
+    //         // Handle error
+    //         console.error('Error deleting employee:', error.message);
+    //     }
+    // };
+
+
+    const handleDelete = async (_id) => {
+        try {
+            const response = await axios.delete(`${endpoint}/employee/delete_id/${_id}`);
+
+            // Check the response status
+            if (response.status === 200) {
+                console.log('Employee deleted successfully:', response.data);
+                setDeleted(true);
+                // Optionally, update your UI or state after successful deletion
+            } else {
+                console.error('Error deleting employee:', response.data.error);
+            }
         } catch (error) {
-            // Handle error
             console.error('Error deleting employee:', error.message);
         }
     };
@@ -467,7 +485,7 @@ function AddEditEmployee() {
                                                                                     type="button"
                                                                                     name="delete"
                                                                                     value="delete"
-                                                                                    onClick={() => deleteEmployee(workplace.employeeId)} // Pass the actual employeeId
+                                                                                    onClick={() => handleDelete(workplace._id)} // Pass the actual employeeId
                                                                                     className="btn b_save"
                                                                                 >
                                                                                     &nbsp;ลบ
