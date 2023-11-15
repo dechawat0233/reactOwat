@@ -8,7 +8,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 // import { registerLocale } from 'react-datepicker';
 
-const SendEmployeePDF2 = () => {
+const SendEmployeePDF3 = () => {
     // const [input1, setInput1] = useState('');
     // const [input2, setInput2] = useState('');
 
@@ -57,6 +57,9 @@ const SendEmployeePDF2 = () => {
     const [invite, setInvite] = useState('ประธานกรรมการตรวจรับ สัญญาเลขที่ C40180001342(OP) ลงวันที่ 1 กุมภาพันธ์ 2566');
     const [content, setContent] = useState('บริษัท โอวาท โปร แอนด์ ควิก จำกัด ขอขอบพระคุณเป็นอย่างยิ่งที่ท่านได้ไว้วางใจให้บริษัท ฯ ได้รับใช้ทำความสะอาดด้วยดีเสมอมา');
     const [content2, setContent2] = useState('เพื่อเข้าปฏิบัตหน้าที่พนักงานประจำอาคารสถาบันวิจัยจุฬาภรณ์ เป็นต้นไป');
+    const [content3, setContent3] = useState('เพื่อเข้าปฏิบัตหน้าที่พนักงานประจำอาคารสถาบันวิจัยจุฬาภรณ์ เป็นต้นไป');
+    const [content4, setContent4] = useState('เพื่อเข้าปฏิบัตหน้าที่พนักงานประจำอาคารสถาบันวิจัยจุฬาภรณ์ เป็นต้นไป');
+
 
 
     const [signature, setSignature] = useState('นางสาวอสีดะห์ ยาบ');
@@ -104,6 +107,12 @@ const SendEmployeePDF2 = () => {
     };
     const handleContent2Change = (event) => {
         setContent2(event.target.value);
+    };
+    const handleContent3Change = (event) => {
+        setContent3(event.target.value);
+    };
+    const handleContent4Change = (event) => {
+        setContent4(event.target.value);
     };
     const handleWorkDateChange = (date) => {
         setWorkDate(date);
@@ -278,7 +287,7 @@ const SendEmployeePDF2 = () => {
             doc.text(line, x, y + inviteLines.length);
             y += 8; // Increase the Y-coordinate for the next line
         });
-        x = 30;
+        x = 43;
         contentLines.forEach((line, index) => {
             if (index > 0) {
                 x = 20; // For lines after the first line, start at x = 10
@@ -287,7 +296,7 @@ const SendEmployeePDF2 = () => {
             y += 8; // Increase the Y-coordinate for the next line
         });
         // const y = 50; 
-        x = 40;
+        x = 43;
 
         doc.text(`บริษัทฯ ใคร่ขอแจ้งให้ท่านทรบว่าพนักงานมรามีรายชื่อดั้งต่อไปนี้`, x, y + inviteLines.length + titleLines.length); // Adding 30 to the Y-coordinate
 
@@ -299,12 +308,12 @@ const SendEmployeePDF2 = () => {
         inputValuesFirst.forEach((value, index) => {
             if (index < 15) { // To skip the first array
                 const x = 40; // X-coordinate for starting point
-                const y = 70 + (10 * (titleLines.length + inviteLines.length + contentLines.length)) + (index) * 10; // Y-coordinate, with 20 pixels separation for each item
-                // const y2 = 65 + (10 * (titleLines.length + inviteLines.length + contentLines.length)) + (index) * 15; // Y-coordinate, with 20 pixels separation for each item
+                const y = 65 + (10 * (titleLines.length + inviteLines.length + contentLines.length)) + (index) * 10; // Y-coordinate, with 20 pixels separation for each item
+                const y2 = 70 + (10 * (titleLines.length + inviteLines.length + contentLines.length)) + (index) * 15; // Y-coordinate, with 20 pixels separation for each item
 
                 doc.setFontSize(14);
                 doc.text(`${index + 1}. ${value.Name} ตำแหน่ง: ${value.position}`, x, y);
-                // doc.text(`ประวัติการศึกษา: ${value.educational}`, x, y2); // Adding 30 to the Y-coordinate
+                doc.text(`- ประวัติการศึกษา: ${value.educational}.${index + 1}`, x + 2, y2); // Adding 30 to the Y-coordinate
             }
         });
 
@@ -312,11 +321,14 @@ const SendEmployeePDF2 = () => {
         // const autoText2 = doc.splitTextToSize(`บริษัทฯ จึงขอรับรองตำแหน่องทำความสะอาดทดแทนงาน พนักงานมีประสบการณ์ทำงานด้านทำความสะอาด ไม่ต่ำกว่า 1 ปี สามารถใช้อุปกรณ์การทำความสะอาดได้เป็นอย่างดีและสามารถอ่านและเขียนภาษาไทยได้ดี`, maxWidth);
         // const autoText3 = doc.splitTextToSize(`จึงเรียนมาเพื่อพิจารณาอนุญาต`, maxWidth);
         const autoContent2 = doc.splitTextToSize(content2, maxWidth);
+        const autoContent3 = doc.splitTextToSize(content3, maxWidth);
+        const autoContent4 = doc.splitTextToSize(content4, maxWidth);
+
 
         // if (inputValuesFirst.length === 1) {
         if (inputValuesFirst.length < 16) {
             const lengthFirst = inputValuesFirst.length;
-            x = 30;
+            x = 40;
             // autoText1.forEach((line, index) => {
             //     if (index > 0) {
             //         x = 20; // For lines after the first line, start at x = 10
@@ -343,7 +355,7 @@ const SendEmployeePDF2 = () => {
             // doc.text('ขอแสดงความนับถือ', 100 + x, 15 + y + (4 * ((titleLines.length + inviteLines.length + contentLines.length + autoText1.length + autoText2.length + autoText3.length) + lengthFirst * 3)));
             // doc.text('(' + signature + ')', 100 + x, 35 + y + (4 * ((titleLines.length + inviteLines.length + contentLines.length + autoText1.length + autoText2.length + autoText3.length) + lengthFirst * 3)));
             // doc.text(positionHead, 100 + x, 40 + y + (4 * ((titleLines.length + inviteLines.length + contentLines.length + autoText1.length + autoText2.length + autoText3.length) + lengthFirst * 3)));
-            if (inputValuesFirst.length + autoContent2.length > 10) {
+            if (inputValuesFirst.length + autoContent2.length + autoContent3.length + autoContent4.length > 10) {
                 doc.addPage(); // Add a new page for each set of inputs after the first
                 doc.addImage(OwatAddress, 'PNG', 140, 10, 61.5, 28.4);
                 doc.addImage(OwatIcon, 'PNG', 10, 10, 68, 30);
@@ -358,23 +370,71 @@ const SendEmployeePDF2 = () => {
 
                     y += 10; // Increase the Y-coordinate for the next line
                 });
-
-                doc.text('ขอแสดงความนับถือ', 100 + x, 15 + y + (10 * autoContent2.length));
-                doc.text('(' + signature + ')', 100 + x, 35 + y + (10 * autoContent2.length));
-                doc.text(positionHead, 100 + x, 40 + y + (10 * autoContent2.length));
-            } else {
-                autoContent2.forEach((line, index) => {
+                x = 40;
+                y = 50;
+                autoContent3.forEach((line, index) => {
                     if (index > 0) {
                         x = 20; // For lines after the first line, start at x = 10
                     }
-                    doc.text(line, x, y + (10 * ((titleLines.length + inviteLines.length + contentLines.length + lengthFirst) - 2)));
+                    doc.text(line, x, y + (10 * autoContent2.length));
+                    // doc.text(line, x, y + (5 * ((titleLines.length + inviteLines.length + contentLines.length) + lengthFirst * 3)));
+                    y += 10; // Increase the Y-coordinate for the next line
+                });
+                x = 40;
+                y = 50;
+                autoContent4.forEach((line, index) => {
+                    if (index > 0) {
+                        x = 20; // For lines after the first line, start at x = 10
+                    }
+                    doc.text(line, x, y + (10 * (autoContent2.length + autoContent3.length)));
                     // doc.text(line, x, y + (5 * ((titleLines.length + inviteLines.length + contentLines.length) + lengthFirst * 3)));
 
                     y += 10; // Increase the Y-coordinate for the next line
                 });
-                doc.text('ขอแสดงความนับถือ', 100 + x, 15 + y + (10 * ((titleLines.length + inviteLines.length + contentLines.length + lengthFirst + autoContent2.length) - 2)));
-                doc.text('(' + signature + ')', 100 + x, 35 + y + (10 * ((titleLines.length + inviteLines.length + contentLines.length + lengthFirst + autoContent2.length) - 2)));
-                doc.text(positionHead, 100 + x, 40 + y + (10 * ((titleLines.length + inviteLines.length + contentLines.length + lengthFirst + autoContent2.length) - 2)));
+                y = 50;
+                doc.text('ขอแสดงความนับถือ', 100 + x, 15 + y + (10 * (autoContent2.length + autoContent4.length + autoContent4.length)));
+                doc.text('(' + signature + ')', 100 + x, 35 + y + (10 * (autoContent2.length + autoContent4.length + autoContent4.length)));
+                doc.text(positionHead, 100 + x, 40 + y + (10 * (autoContent2.length + autoContent4.length + autoContent4.length)));
+            } else {
+                x = 40;
+                y = 70;
+                autoContent2.forEach((line, index) => {
+                    if (index > 0) {
+                        x = 20; // For lines after the first line, start at x = 10
+                    }
+                    doc.text(line, x, y + (10 * ((titleLines.length + inviteLines.length + contentLines.length + lengthFirst))));
+                    // doc.text(line, x, y + (5 * ((titleLines.length + inviteLines.length + contentLines.length) + lengthFirst * 3)));
+
+                    y += 10; // Increase the Y-coordinate for the next line
+                });
+                x = 40;
+                y = 70;
+                autoContent3.forEach((line, index) => {
+                    if (index > 0) {
+                        x = 20; // For lines after the first line, start at x = 10
+                    }
+                    doc.text(line, x, y + (10 * (titleLines.length + inviteLines.length + contentLines.length + lengthFirst + autoContent2.length)));
+                    // doc.text(line, x, y + (5 * ((titleLines.length + inviteLines.length + contentLines.length) + lengthFirst * 3)));
+                    y += 10; // Increase the Y-coordinate for the next line
+                });
+                x = 40;
+                y = 70;
+                autoContent4.forEach((line, index) => {
+                    if (index > 0) {
+                        x = 20; // For lines after the first line, start at x = 10
+                    }
+                    doc.text(line, x, y + (10 * (titleLines.length + inviteLines.length + contentLines.length + lengthFirst + autoContent2.length + autoContent3.length)));
+                    // doc.text(line, x, y + (5 * ((titleLines.length + inviteLines.length + contentLines.length) + lengthFirst * 3)));
+
+                    y += 10; // Increase the Y-coordinate for the next line
+                });
+                y = 50;
+                doc.text('ขอแสดงความนับถือ', 100 + x, 15 + y + (10 * (titleLines.length + inviteLines.length + contentLines.length + lengthFirst + autoContent2.length + autoContent4.length + autoContent4.length)));
+                doc.text('(' + signature + ')', 100 + x, 35 + y + (10 * (titleLines.length + inviteLines.length + contentLines.length + lengthFirst + autoContent2.length + autoContent4.length + autoContent4.length)));
+                doc.text(positionHead, 100 + x, 40 + y + (10 * (titleLines.length + inviteLines.length + contentLines.length + lengthFirst + autoContent2.length + autoContent4.length + autoContent4.length)));
+                // doc.text('ขอแสดงความนับถือ', 100 + x, 15 + y + (10 * ((titleLines.length + inviteLines.length + contentLines.length + lengthFirst + autoContent2.length) - 2)));
+                // doc.text('(' + signature + ')', 100 + x, 35 + y + (10 * ((titleLines.length + inviteLines.length + contentLines.length + lengthFirst + autoContent2.length) - 2)));
+                // doc.text(positionHead, 100 + x, 40 + y + (10 * ((titleLines.length + inviteLines.length + contentLines.length + lengthFirst + autoContent2.length) - 2)));
             }
 
         } else {
@@ -406,12 +466,12 @@ const SendEmployeePDF2 = () => {
             chunk.forEach((value, index) => {
                 x = 40; // X-coordinate for starting point
                 const y = 50 + index * 10;
-                // const y2 = 30 + index * 20;
+                const y2 = 30 + index * 20;
 
                 doc.setFontSize(14);
                 const currentIndex = index + initialIndex + pageIndex * chunkSize;
                 doc.text(`${currentIndex + 1}. ${value.Name} ตำแหน่ง: ${value.position}`, x, y);
-                // doc.text(`ประวัติการศึกษา: ${value.educational}`, x, y2);
+                doc.text(`ประวัติการศึกษา: ${value.educational}.${currentIndex + 1}`, x, y2);
 
                 // Check if it's the last page and the last element in the chunk
                 const isLastPage = pageIndex === arrayChunks.length - 1;
@@ -667,7 +727,7 @@ const SendEmployeePDF2 = () => {
                                     <br />
                                     <div className="row">
                                         <div className="col-md-1">
-                                            <label role="searchname">เนื้อหาส่วนท้าย</label>
+                                            <label role="searchname">เนื้อหาส่วนท้าย 1</label>
                                         </div>
                                         <div className="col-md-11">
                                             <textarea
@@ -675,6 +735,38 @@ const SendEmployeePDF2 = () => {
                                                 class="form-control"
                                                 value={content2}
                                                 onChange={handleContent2Change}
+                                                rows="4" // Set the number of visible rows (adjust as needed)
+                                                cols="50" // Set the number of visible columns (adjust as needed)
+                                            ></textarea>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div className="row">
+                                        <div className="col-md-1">
+                                            <label role="searchname">เนื้อหาส่วนท้าย 2</label>
+                                        </div>
+                                        <div className="col-md-11">
+                                            <textarea
+                                                name="input5"
+                                                class="form-control"
+                                                value={content3}
+                                                onChange={handleContent3Change}
+                                                rows="4" // Set the number of visible rows (adjust as needed)
+                                                cols="50" // Set the number of visible columns (adjust as needed)
+                                            ></textarea>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div className="row">
+                                        <div className="col-md-1">
+                                            <label role="searchname">เนื้อหาส่วนท้าย 3</label>
+                                        </div>
+                                        <div className="col-md-11">
+                                            <textarea
+                                                name="input5"
+                                                class="form-control"
+                                                value={content4}
+                                                onChange={handleContent4Change}
                                                 rows="4" // Set the number of visible rows (adjust as needed)
                                                 cols="50" // Set the number of visible columns (adjust as needed)
                                             ></textarea>
@@ -738,9 +830,10 @@ const SendEmployeePDF2 = () => {
                     </div>
                 </div>
             </section>
-        </div>
 
+
+        </div>
     );
 };
 
-export default SendEmployeePDF2;
+export default SendEmployeePDF3;

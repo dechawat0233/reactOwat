@@ -8,7 +8,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 // import { registerLocale } from 'react-datepicker';
 
-const SendEmployeePDF2 = () => {
+const SendEmployeePDF3 = () => {
     // const [input1, setInput1] = useState('');
     // const [input2, setInput2] = useState('');
 
@@ -541,14 +541,31 @@ const SendEmployeePDF2 = () => {
 
     return (
         <div>
-
-            <section class="content">
-                <div class="row">
-                    <div class="col-md-12">
-                        <section class="Frame">
-                            <div class="col-md-12">
-                                <div class="col-md-12">
-                                    {/* {inputValuesTest.map((value, index) => (
+            <body class="hold-transition sidebar-mini" className='editlaout'>
+                <div class="wrapper">
+                    <div class="content-wrapper">
+                        {/* <!-- Content Header (Page header) --> */}
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><i class="fas fa-home"></i> <a href="index.php">หน้าหลัก</a></li>
+                            <li class="breadcrumb-item"><a href="#"> ระบบเงินเดือน</a></li>
+                            <li class="breadcrumb-item active">ใบลงรายงาน</li>
+                        </ol>
+                        <div class="content-header">
+                            <div class="container-fluid">
+                                <div class="row mb-2">
+                                    <h1 class="m-0"><i class="far fa-arrow-alt-circle-right"></i> ใบลงรายงาน</h1>
+                                </div>
+                            </div>
+                        </div>
+                        {/* <!-- /.content-header -->
+<!-- Main content --> */}
+                        <section class="content">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <section class="Frame">
+                                        <div class="col-md-12">
+                                            <div class="col-md-12">
+                                                {/* {inputValuesTest.map((value, index) => (
                                                     <div className="row" key={index}>
                                                         <div className="col-md-3">
                                                             <label style={{ position: 'absolute', bottom: '0' }}>{index + 1}.</label>
@@ -578,169 +595,204 @@ const SendEmployeePDF2 = () => {
 
                                                 <br />
                                                 <button className="btn b_save" onClick={addInput}>Add Input</button> */}
-                                    <div className="row">
-                                        <div className="col-md-1" >
-                                            <label role="searchname" style={absoluteBottomStyle}>วันที่</label>
-                                        </div>
-                                        <div className="col-md-3">
-                                            <div style=
-                                                {{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
-                                                <DatePicker id="datetime" name="datetime"
-                                                    className="form-control" // Apply Bootstrap form-control class
-                                                    popperClassName="datepicker-popper" // Apply custom popper class if needed
-                                                    selected={workDate}
-                                                    onChange={handleWorkDateChange}
-                                                    dateFormat="dd/MM/yyyy"
-                                                // showMonthYearPicker
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <div className='row'>
-                                        <div className="col-md-3">
-                                            <label role="searchname" style={absoluteBottomStyle}>แสดงความนับถือ</label>
-                                        </div>
-                                        <div className="col-md-4">
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                value={signature}
-                                                onChange={handlesignatureChange}
-                                            />
-                                        </div>
-                                        <div className="col-md-4">
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                value={positionHead}
-                                                onChange={handlepositionHeadChange}
-                                            />
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <div className="row">
-                                        <div className="col-md-1">
-                                            <label role="searchname" style={absoluteBottomStyle}>เรื่อง</label>
-                                        </div>
+                                                <div className="row">
+                                                    <div className="col-md-1" >
+                                                        <label role="searchname" style={absoluteBottomStyle}>วันที่</label>
+                                                    </div>
+                                                    <div className="col-md-3">
+                                                        <div style=
+                                                            {{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
+                                                            <DatePicker id="datetime" name="datetime"
+                                                                className="form-control" // Apply Bootstrap form-control class
+                                                                popperClassName="datepicker-popper" // Apply custom popper class if needed
+                                                                selected={workDate}
+                                                                onChange={handleWorkDateChange}
+                                                                dateFormat="dd/MM/yyyy"
+                                                            // showMonthYearPicker
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div className='row'>
+                                                    <div className="col-md-3">
+                                                        <label role="searchname" style={absoluteBottomStyle}>แสดงความนับถือ</label>
+                                                    </div>
+                                                    <div className="col-md-4">
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            value={signature}
+                                                            onChange={handlesignatureChange}
+                                                        />
+                                                    </div>
+                                                    <div className="col-md-4">
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            value={positionHead}
+                                                            onChange={handlepositionHeadChange}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div className="row">
+                                                    <div className="col-md-1">
+                                                        <label role="searchname" style={absoluteBottomStyle}>เรื่อง</label>
+                                                    </div>
 
-                                        <div className="col-md-11">
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                value={title}
-                                                onChange={handletitleChange}
-                                            />
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <div className="row">
-                                        <div className="col-md-1">
-                                            <label role="searchname" style={absoluteBottomStyle}>เรียน</label>
-                                        </div>
+                                                    <div className="col-md-11">
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            value={title}
+                                                            onChange={handletitleChange}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div className="row">
+                                                    <div className="col-md-1">
+                                                        <label role="searchname" style={absoluteBottomStyle}>เรียน</label>
+                                                    </div>
 
-                                        <div className="col-md-11">
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                value={invite}
-                                                onChange={handleinviteChange}
-                                            />
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <div className="row">
-                                        <div className="col-md-1">
-                                            <label role="searchname">เนื้อหา</label>
-                                        </div>
-                                        <div className="col-md-11">
-                                            <textarea
-                                                name="input5"
-                                                class="form-control"
-                                                value={content}
-                                                onChange={handleContentChange}
-                                                rows="4" // Set the number of visible rows (adjust as needed)
-                                                cols="50" // Set the number of visible columns (adjust as needed)
-                                            ></textarea>
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <div className="row">
-                                        <div className="col-md-1">
-                                            <label role="searchname">เนื้อหาส่วนท้าย</label>
-                                        </div>
-                                        <div className="col-md-11">
-                                            <textarea
-                                                name="input5"
-                                                class="form-control"
-                                                value={content2}
-                                                onChange={handleContent2Change}
-                                                rows="4" // Set the number of visible rows (adjust as needed)
-                                                cols="50" // Set the number of visible columns (adjust as needed)
-                                            ></textarea>
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <div className="row">
-                                        <div className="col-md-3">
-                                            <label>รหัสพนักงาน:</label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                value={input1}
-                                                onChange={(e) => setInput1(e.target.value)}
-                                            />
-                                        </div>
-                                        <div className="col-md-3">
-                                            <label>ชื่อ:</label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                value={input2}
-                                                onChange={(e) => setInput2(e.target.value)}
-                                            />
-                                        </div>
-                                        <div className="col-md-6">
-                                            <button className="btn b_save" style={{ position: 'absolute', bottom: '0rem' }} type="submit" onClick={addInput}>Add Input</button>
-                                        </div>
-                                    </div>
-                                    <br />
-                                    {inputValuesTest.map((value, index) => (
-                                        <div className="row" key={index} style={{ border: '1px solid #000', padding: '5px', marginBottom: '5px' }}>
-                                            <div className="col-md-1" style={{ borderRight: '1px solid #000' }}>
-                                                {index + 1}
-                                            </div>
-                                            <div className="col-md-4" style={{ borderRight: '1px solid #000' }}>
-                                                {value.Id}
-                                            </div>
-                                            <div className="col-md-4" style={{ borderRight: '1px solid #000' }}>
-                                                {value.Name}
-                                            </div>
-                                            <div className="col-md-2">
-                                                <button className="btn b_save" style={{ width: '5rem' }} onClick={() => deleteInput(index)}>Delete</button>
-                                            </div>
-                                        </div>
+                                                    <div className="col-md-11">
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            value={invite}
+                                                            onChange={handleinviteChange}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div className="row">
+                                                    <div className="col-md-1">
+                                                        <label role="searchname">เนื้อหา</label>
+                                                    </div>
+                                                    <div className="col-md-11">
+                                                        <textarea
+                                                            name="input5"
+                                                            class="form-control"
+                                                            value={content}
+                                                            onChange={handleContentChange}
+                                                            rows="4" // Set the number of visible rows (adjust as needed)
+                                                            cols="50" // Set the number of visible columns (adjust as needed)
+                                                        ></textarea>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div className="row">
+                                                    <div className="col-md-1">
+                                                        <label role="searchname">เนื้อหาส่วนท้าย</label>
+                                                    </div>
+                                                    <div className="col-md-11">
+                                                        <textarea
+                                                            name="input5"
+                                                            class="form-control"
+                                                            value={content2}
+                                                            onChange={handleContent2Change}
+                                                            rows="4" // Set the number of visible rows (adjust as needed)
+                                                            cols="50" // Set the number of visible columns (adjust as needed)
+                                                        ></textarea>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div className="row">
+                                                    <div className="col-md-1">
+                                                        <label role="searchname">เนื้อหาส่วนท้าย</label>
+                                                    </div>
+                                                    <div className="col-md-11">
+                                                        <textarea
+                                                            name="input5"
+                                                            class="form-control"
+                                                            value={content2}
+                                                            onChange={handleContent2Change}
+                                                            rows="4" // Set the number of visible rows (adjust as needed)
+                                                            cols="50" // Set the number of visible columns (adjust as needed)
+                                                        ></textarea>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div className="row">
+                                                    <div className="col-md-1">
+                                                        <label role="searchname">เนื้อหาส่วนท้าย</label>
+                                                    </div>
+                                                    <div className="col-md-11">
+                                                        <textarea
+                                                            name="input5"
+                                                            class="form-control"
+                                                            value={content2}
+                                                            onChange={handleContent2Change}
+                                                            rows="4" // Set the number of visible rows (adjust as needed)
+                                                            cols="50" // Set the number of visible columns (adjust as needed)
+                                                        ></textarea>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div className="row">
+                                                    <div className="col-md-3">
+                                                        <label>รหัสพนักงาน:</label>
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            value={input1}
+                                                            onChange={(e) => setInput1(e.target.value)}
+                                                        />
+                                                    </div>
+                                                    <div className="col-md-3">
+                                                        <label>ชื่อ:</label>
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            value={input2}
+                                                            onChange={(e) => setInput2(e.target.value)}
+                                                        />
+                                                    </div>
+                                                    <div className="col-md-6">
+                                                        <button className="btn b_save" style={{ position: 'absolute', bottom: '0rem' }} type="submit" onClick={addInput}>Add Input</button>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                {inputValuesTest.map((value, index) => (
+                                                    <div className="row" key={index} style={{ border: '1px solid #000', padding: '5px', marginBottom: '5px' }}>
+                                                        <div className="col-md-1" style={{ borderRight: '1px solid #000' }}>
+                                                            {index + 1}
+                                                        </div>
+                                                        <div className="col-md-4" style={{ borderRight: '1px solid #000' }}>
+                                                            {value.Id}
+                                                        </div>
+                                                        <div className="col-md-4" style={{ borderRight: '1px solid #000' }}>
+                                                            {value.Name}
+                                                        </div>
+                                                        <div className="col-md-2">
+                                                            <button className="btn b_save" style={{ width: '5rem' }} onClick={() => deleteInput(index)}>Delete</button>
+                                                        </div>
+                                                    </div>
 
-                                    ))}
-                                    <br />
-                                    <br />
-                                    <div className="row" >
-                                        {/* Your content */}
-                                        <div className="col-md-6" style={{ position: 'absolute', bottom: '0rem' }}>
-                                            <button className="btn b_save" onClick={generatePDF2}>
-                                                Generate PDF
-                                            </button>
+                                                ))}
+                                                <br />
+                                                <br />
+                                                <div className="row" >
+                                                    {/* Your content */}
+                                                    <div className="col-md-6" style={{ position: 'absolute', bottom: '0rem' }}>
+                                                        <button className="btn b_save" onClick={generatePDF2}>
+                                                            Generate PDF
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </section>
                                 </div>
                             </div>
                         </section>
                     </div>
                 </div>
-            </section>
-        </div>
+            </body>
 
+        </div>
     );
 };
 
-export default SendEmployeePDF2;
+export default SendEmployeePDF3;

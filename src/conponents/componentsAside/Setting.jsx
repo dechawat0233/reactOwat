@@ -969,7 +969,7 @@ function Setting() {
                                                     onChange={(e) => handleChangeSpSalary(e, index, 'codeSpSalary')}
                                                 />
                                             </div>
-                                            <div className="col-md-1">
+                                            {/* <div className="col-md-1">
                                                 <label role="SpSalary">จำนวนเงิน</label>
                                                 <input
                                                     type="text"
@@ -978,7 +978,7 @@ function Setting() {
                                                     value={data.SpSalary}
                                                     onChange={(e) => handleChangeSpSalary(e, index, 'SpSalary')}
                                                 />
-                                            </div>
+                                            </div> */}
                                             <div className="col-md-2">
                                                 <label role="name">ชื่อรายการ</label>
                                                 <input
@@ -1042,7 +1042,7 @@ function Setting() {
                                                 <button onClick={() => handleDeleteInput(index)} className="btn btn-danger" style={{ width: "3rem", position: 'absolute', bottom: '0' }}>ลบ</button>
                                             </div>
                                         </div>
-                                        
+
                                     ))}
                                     <br />
                                     < button type='button' onClick={handleAddInput} class="btn btn-primary" >เพิ่ม</button>
@@ -1055,7 +1055,7 @@ function Setting() {
                                         <section class="Frame">
                                             <div class="col-md-12">
                                                 <div class="row">
-                                                <div class="col-md-4">
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label role="personalLeaveNumber">รหัส</label>
                                                             <input type="text" class="form-control" id="personalLeaveNumber" placeholder="รหัส" value={personalLeaveNumber} onChange={(e) => setPersonalLeaveNumber(e.target.value)} />
@@ -1078,7 +1078,7 @@ function Setting() {
                                                 </div>
                                                 {/* <!--row--> */}
                                                 <div class="row">
-                                                <div class="col-md-4">
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label role="SickLeaveNumber">รหัส</label>
                                                             <input type="text" class="form-control" id="SickLeaveNumber" placeholder="รหัส" value={sickLeaveNumber} onChange={(e) => setSickLeaveNumber(e.target.value)} />
@@ -1101,7 +1101,7 @@ function Setting() {
                                                 </div>
                                                 {/* <!--row--> */}
                                                 <div class="row">
-                                                <div class="col-md-4">
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label role="setWorkRateDayoffNumber">รหัส</label>
                                                             <input type="text" class="form-control" id="setWorkRateDayoffNumber" placeholder="รหัส" value={workRateDayoffNumber} onChange={(e) => setWorkRateDayoffNumber(e.target.value)} />

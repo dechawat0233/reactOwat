@@ -49,6 +49,7 @@ import TestPDF from "./conponents/componentsAside/TestPDF";
 // import SendEmployeePDF from "./conponents/componentsAside/sendEmployeePDF";
 import SendEmployeePDF from "./conponents/componentsAside/SendEmployeePDF";
 import SendEmployeePDF2 from "./conponents/componentsAside/SendEmployeePDF2";
+import SendEmployeePDF3 from "./conponents/componentsAside/SendEmployeePDF3";
 import Testapp from "./conponents/componentsAside/Test";
 
 // import Time from "./conponents/Time";
@@ -156,9 +157,8 @@ function App() {
               {/* <Route path="/testPDF" element={<PdfGenerator />} /> */}
               {/* <Route path="/testPDF" element={<Testapp />} /> */}
               <Route path="/listsendemployee" element={<SendEmployeePDF2 />} />
-              <Route path="/testPDF" element={<SendEmployeePDF2 />} />
-
-
+              {/* <Route path="/testPDF" element={<SendEmployeePDF3 />} /> */}
+              <Route path="/testPDF" element={<SendEmployeePDF />} />
 
 
 
