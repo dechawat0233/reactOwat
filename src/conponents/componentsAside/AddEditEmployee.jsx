@@ -625,7 +625,7 @@ function AddEditEmployee() {
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
                                                                     <label role="gender">เพศ</label>
-                                                                    <input type="text" name="gender" class="form-control" id="gender" placeholder="ชื่อเล่น" value={gender} onChange={(e) => setGender(e.target.value)} />
+                                                                    <input type="text" name="gender" class="form-control" id="gender" placeholder="เพศ" value={gender} onChange={(e) => setGender(e.target.value)} />
                                                                 </div>
                                                             </div>
 

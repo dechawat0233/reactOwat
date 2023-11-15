@@ -306,10 +306,10 @@ const SendEmployeePDF3 = () => {
         // doc.text(`เรียน:      ${title}`, 40, 60); // Adding 30 to the Y-coordinate
 
         inputValuesFirst.forEach((value, index) => {
-            if (index < 15) { // To skip the first array
+            if (index < 8) { // To skip the first array
                 const x = 40; // X-coordinate for starting point
-                const y = 65 + (10 * (titleLines.length + inviteLines.length + contentLines.length)) + (index) * 10; // Y-coordinate, with 20 pixels separation for each item
-                const y2 = 70 + (10 * (titleLines.length + inviteLines.length + contentLines.length)) + (index) * 15; // Y-coordinate, with 20 pixels separation for each item
+                const y = 65 + (10 * (titleLines.length + inviteLines.length + contentLines.length)) + (index) * 15; // Y-coordinate, with 20 pixels separation for each item
+                const y2 = 72.5 + (10 * (titleLines.length + inviteLines.length + contentLines.length)) + (index) * 15; // Y-coordinate, with 20 pixels separation for each item
 
                 doc.setFontSize(14);
                 doc.text(`${index + 1}. ${value.Name} ตำแหน่ง: ${value.position}`, x, y);
@@ -326,7 +326,7 @@ const SendEmployeePDF3 = () => {
 
 
         // if (inputValuesFirst.length === 1) {
-        if (inputValuesFirst.length < 16) {
+        if (inputValuesFirst.length < 9) {
             const lengthFirst = inputValuesFirst.length;
             x = 40;
             // autoText1.forEach((line, index) => {
@@ -450,7 +450,7 @@ const SendEmployeePDF3 = () => {
 
         const arrayChunks = [];
         const chunkSize = 20;
-        const initialIndex = 15;
+        const initialIndex = 8;
 
         for (let i = initialIndex; i < inputValuesFirst.length; i += chunkSize) {
             arrayChunks.push(inputValuesFirst.slice(i, i + chunkSize));
@@ -465,8 +465,8 @@ const SendEmployeePDF3 = () => {
             doc.addImage(OwatSupport, 'PNG', 85, 275, 113.0, 16.4);
             chunk.forEach((value, index) => {
                 x = 40; // X-coordinate for starting point
-                const y = 50 + index * 10;
-                const y2 = 30 + index * 20;
+                const y = 50 + index * 15;
+                const y2 = 57.5 + index * 15;
 
                 doc.setFontSize(14);
                 const currentIndex = index + initialIndex + pageIndex * chunkSize;

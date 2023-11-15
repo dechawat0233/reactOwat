@@ -124,6 +124,15 @@ function AddsettimeEmployee() {
                         setWSelectOtTimeout(workplacesearch.workEndOt1 || '');
 
                         break;
+                    case 'specialt_shift':
+                        setWStartTime(workplacesearch.workStart3 || '');
+                        setWEndTime(workplacesearch.workEnd3 || '');
+                        setWAllTime(calTime(workplacesearch.workStart3 || '', workplacesearch.workEnd3 || '', workplacesearch.workOfHour) || '');
+                        setWOtTime(calTime(workplacesearch.workStartOt3 || '', workplacesearch.workEndOt3 || '', workplacesearch.workOfOT || '') || '');
+                        setWSelectOtTime(workplacesearch.workStartOt3 || '');
+                        setWSelectOtTimeout(workplacesearch.workEndOt1 || '');
+
+                        break;
                     default:
                         setWStartTime('');
                         setWEndTime('');
@@ -187,19 +196,19 @@ function AddsettimeEmployee() {
     }, [wId]);
 
     //search employeeId by employeeName 
-    useEffect(() => {
-        //Search Employee  by name
-        if (wName != '') {
-            const workplacesearch = workplaceList.find(workplace => workplace.workplaceName === wName);
-            if (workplacesearch) {
-                setWId(workplacesearch.workplaceId);
-            } else {
-                setWId('');
-            }
-            console.log(workplacesearch);
+    // useEffect(() => {
+    //     //Search Employee  by name
+    //     if (wName != '') {
+    //         const workplacesearch = workplaceList.find(workplace => workplace.workplaceName === wName);
+    //         if (workplacesearch) {
+    //             setWId(workplacesearch.workplaceId);
+    //         } else {
+    //             setWId('');
+    //         }
+    //         console.log(workplacesearch);
 
-        }
-    }, [wName]);
+    //     }
+    // }, [wName]);
 
 
 
@@ -360,16 +369,17 @@ function AddsettimeEmployee() {
                     if (workplaceIdSearch) {
                         //check specialt_shift 
                         if (newDataList2[index2].shift !== 'specialt_shift') {
-                            newDataList2[index2] = {
-                                ...newDataList2[index2],
-                                ['startTime']: newDataList2[index2].startTime + '',
-                                ['endTime']: newDataList2[index2].endTime + '',
-                                ['allTime']: calTime(newDataList2[index2].startTime, newDataList2[index2].endTime, workplaceIdSearch.workOfHour) + '',
-                                ['otTime']: calTime(newDataList2[index2].selectotTime, newDataList2[index2].selectotTimeOut, workplaceIdSearch.workOfOT) + '',
-                                ['selectotTime']: newDataList2[index2].selectotTime + '',
-                                ['selectotTimeOut']: newDataList2[index2].selectotTimeOut + '',
-                            };
-                        } else {
+                        //     newDataList2[index2] = {
+                        //         ...newDataList2[index2],
+                        //         ['startTime']: newDataList2[index2].startTime + '',
+                        //         ['endTime']: newDataList2[index2].endTime + '',
+                        //         ['allTime']: calTime(newDataList2[index2].startTime, newDataList2[index2].endTime, workplaceIdSearch.workOfHour) + '',
+                        //         ['otTime']: calTime(newDataList2[index2].selectotTime, newDataList2[index2].selectotTimeOut, workplaceIdSearch.workOfOT) + '',
+                        //         ['selectotTime']: newDataList2[index2].selectotTime + '',
+                        //         ['selectotTimeOut']: newDataList2[index2].selectotTimeOut + '',
+                        //     };
+                        // } 
+                        // else {
                             newDataList2[index2] = {
                                 ...newDataList2[index2],
                                 ['startTime']: newDataList2[index2].startTime + '',

@@ -122,17 +122,17 @@ function AddsettimeWorkplace() {
 
 
     //search employeeId by employeeName 
-    useEffect(() => {
-        //Search Employee  by name
-        if (staffName != '') {
-            const employeesearch = employeeList.find(employee => employee.name === staffName);
-            if (employeesearch) {
-                setStaffId(employeesearch.employeeId);
-            } else {
-                setStaffId('');
-            }
-        }
-    }, [staffName])
+    // useEffect(() => {
+    //     //Search Employee  by name
+    //     if (staffName != '') {
+    //         const employeesearch = employeeList.find(employee => employee.name === staffName);
+    //         if (employeesearch) {
+    //             setStaffId(employeesearch.employeeId);
+    //         } else {
+    //             setStaffId('');
+    //         }
+    //     }
+    // }, [staffName])
 
 
     //check ship and set time of work to start time and end time
