@@ -312,7 +312,8 @@ const SendEmployeePDF3 = () => {
                 const y2 = 72.5 + (10 * (titleLines.length + inviteLines.length + contentLines.length)) + (index) * 15; // Y-coordinate, with 20 pixels separation for each item
 
                 doc.setFontSize(14);
-                doc.text(`${index + 1}. ${value.Name} ตำแหน่ง: ${value.position}`, x, y);
+                doc.text(`${index + 1}. ${value.Name}`, x, y);
+                doc.text(`ตำแหน่ง: ${value.position}`, x + 60, y);
                 doc.text(`- ประวัติการศึกษา: ${value.educational}.${index + 1}`, x + 2, y2); // Adding 30 to the Y-coordinate
             }
         });
@@ -327,7 +328,7 @@ const SendEmployeePDF3 = () => {
 
         // if (inputValuesFirst.length === 1) {
         if (inputValuesFirst.length < 9) {
-            const lengthFirst = inputValuesFirst.length;
+            // const lengthFirst = inputValuesFirst.length;
             x = 40;
             // autoText1.forEach((line, index) => {
             //     if (index > 0) {
@@ -355,7 +356,7 @@ const SendEmployeePDF3 = () => {
             // doc.text('ขอแสดงความนับถือ', 100 + x, 15 + y + (4 * ((titleLines.length + inviteLines.length + contentLines.length + autoText1.length + autoText2.length + autoText3.length) + lengthFirst * 3)));
             // doc.text('(' + signature + ')', 100 + x, 35 + y + (4 * ((titleLines.length + inviteLines.length + contentLines.length + autoText1.length + autoText2.length + autoText3.length) + lengthFirst * 3)));
             // doc.text(positionHead, 100 + x, 40 + y + (4 * ((titleLines.length + inviteLines.length + contentLines.length + autoText1.length + autoText2.length + autoText3.length) + lengthFirst * 3)));
-            if (inputValuesFirst.length + autoContent2.length + autoContent3.length + autoContent4.length > 10) {
+            if (titleLines.length + inviteLines.length + contentLines.length + inputValuesFirst.length + autoContent2.length + autoContent3.length + autoContent4.length > 13) {
                 doc.addPage(); // Add a new page for each set of inputs after the first
                 doc.addImage(OwatAddress, 'PNG', 140, 10, 61.5, 28.4);
                 doc.addImage(OwatIcon, 'PNG', 10, 10, 68, 30);
@@ -376,7 +377,7 @@ const SendEmployeePDF3 = () => {
                     if (index > 0) {
                         x = 20; // For lines after the first line, start at x = 10
                     }
-                    doc.text(line, x, y + (10 * autoContent2.length));
+                    doc.text(line, x, y + (10 * (autoContent2.length)));
                     // doc.text(line, x, y + (5 * ((titleLines.length + inviteLines.length + contentLines.length) + lengthFirst * 3)));
                     y += 10; // Increase the Y-coordinate for the next line
                 });
@@ -397,41 +398,41 @@ const SendEmployeePDF3 = () => {
                 doc.text(positionHead, 100 + x, 40 + y + (10 * (autoContent2.length + autoContent4.length + autoContent4.length)));
             } else {
                 x = 40;
-                y = 70;
+                y = 65;
                 autoContent2.forEach((line, index) => {
                     if (index > 0) {
                         x = 20; // For lines after the first line, start at x = 10
                     }
-                    doc.text(line, x, y + (10 * ((titleLines.length + inviteLines.length + contentLines.length + lengthFirst))));
+                    doc.text(line, x, (15 * inputValuesFirst.length) + y + (10 * ((titleLines.length + inviteLines.length + contentLines.length))));
                     // doc.text(line, x, y + (5 * ((titleLines.length + inviteLines.length + contentLines.length) + lengthFirst * 3)));
 
                     y += 10; // Increase the Y-coordinate for the next line
                 });
                 x = 40;
-                y = 70;
+                y = 65;
                 autoContent3.forEach((line, index) => {
                     if (index > 0) {
                         x = 20; // For lines after the first line, start at x = 10
                     }
-                    doc.text(line, x, y + (10 * (titleLines.length + inviteLines.length + contentLines.length + lengthFirst + autoContent2.length)));
+                    doc.text(line, x, (15 * inputValuesFirst.length) + y + (10 * (titleLines.length + inviteLines.length + contentLines.length + autoContent2.length)));
                     // doc.text(line, x, y + (5 * ((titleLines.length + inviteLines.length + contentLines.length) + lengthFirst * 3)));
                     y += 10; // Increase the Y-coordinate for the next line
                 });
                 x = 40;
-                y = 70;
+                y = 65;
                 autoContent4.forEach((line, index) => {
                     if (index > 0) {
                         x = 20; // For lines after the first line, start at x = 10
                     }
-                    doc.text(line, x, y + (10 * (titleLines.length + inviteLines.length + contentLines.length + lengthFirst + autoContent2.length + autoContent3.length)));
+                    doc.text(line, x, (15 * inputValuesFirst.length) + y + (10 * (titleLines.length + inviteLines.length + contentLines.length + autoContent2.length + autoContent3.length)));
                     // doc.text(line, x, y + (5 * ((titleLines.length + inviteLines.length + contentLines.length) + lengthFirst * 3)));
 
                     y += 10; // Increase the Y-coordinate for the next line
                 });
-                y = 50;
-                doc.text('ขอแสดงความนับถือ', 100 + x, 15 + y + (10 * (titleLines.length + inviteLines.length + contentLines.length + lengthFirst + autoContent2.length + autoContent4.length + autoContent4.length)));
-                doc.text('(' + signature + ')', 100 + x, 35 + y + (10 * (titleLines.length + inviteLines.length + contentLines.length + lengthFirst + autoContent2.length + autoContent4.length + autoContent4.length)));
-                doc.text(positionHead, 100 + x, 40 + y + (10 * (titleLines.length + inviteLines.length + contentLines.length + lengthFirst + autoContent2.length + autoContent4.length + autoContent4.length)));
+                y = 65;
+                doc.text('ขอแสดงความนับถือ', 100 + x, 15 + y + (15 * inputValuesFirst.length) + (10 * (titleLines.length + inviteLines.length + contentLines.length + autoContent2.length + autoContent4.length + autoContent4.length)));
+                doc.text('(' + signature + ')', 100 + x, 35 + y + (15 * inputValuesFirst.length) + (10 * (titleLines.length + inviteLines.length + contentLines.length + autoContent2.length + autoContent4.length + autoContent4.length)));
+                doc.text(positionHead, 100 + x, 40 + y + (15 * inputValuesFirst.length) + (10 * (titleLines.length + inviteLines.length + contentLines.length + autoContent2.length + autoContent4.length + autoContent4.length)));
                 // doc.text('ขอแสดงความนับถือ', 100 + x, 15 + y + (10 * ((titleLines.length + inviteLines.length + contentLines.length + lengthFirst + autoContent2.length) - 2)));
                 // doc.text('(' + signature + ')', 100 + x, 35 + y + (10 * ((titleLines.length + inviteLines.length + contentLines.length + lengthFirst + autoContent2.length) - 2)));
                 // doc.text(positionHead, 100 + x, 40 + y + (10 * ((titleLines.length + inviteLines.length + contentLines.length + lengthFirst + autoContent2.length) - 2)));
@@ -470,7 +471,8 @@ const SendEmployeePDF3 = () => {
 
                 doc.setFontSize(14);
                 const currentIndex = index + initialIndex + pageIndex * chunkSize;
-                doc.text(`${currentIndex + 1}. ${value.Name} ตำแหน่ง: ${value.position}`, x, y);
+                doc.text(`${currentIndex + 1}. ${value.Name} `, x, y);
+                doc.text(`ตำแหน่ง: ${value.position}`, x + 60, y);
                 doc.text(`ประวัติการศึกษา: ${value.educational}.${currentIndex + 1}`, x, y2);
 
                 // Check if it's the last page and the last element in the chunk
@@ -478,91 +480,95 @@ const SendEmployeePDF3 = () => {
                 const isLastElement = index === chunk.length - 1;
 
                 if (isLastPage && isLastElement) {
-                    if (chunk.length > 15) {
+                    if (chunk.length + autoContent2.length + autoContent3.length + autoContent4.length > 13) {
                         const yMultiplier = 10; // Adjust this multiplier as needed
                         let y = 30; // Initialize y as a variable
                         doc.addPage();
+                        doc.addImage(OwatAddress, 'PNG', 140, 10, 61.5, 28.4);
+                        doc.addImage(OwatIcon, 'PNG', 10, 10, 68, 30);
+                        doc.addImage(OwatSupport, 'PNG', 85, 275, 113.0, 16.4);
                         x = 40;
-                        y = 30;
+                        y = 50;
                         autoContent2.forEach((line, index) => {
                             if (index > 0) {
                                 x = 20; // For lines after the first line, start at x = 10
                             }
 
                             // Adjust the Y-coordinate calculation
-                            doc.text(line, x, y + (yMultiplier * index));
+                            doc.text(line, x, y);
 
                             y += yMultiplier; // Increase the Y-coordinate for the next line
                         });
                         x = 40;
-                        y = 30;
+                        y = 50;
                         autoContent3.forEach((line, index) => {
                             if (index > 0) {
                                 x = 20; // For lines after the first line, start at x = 10
                             }
 
                             // Adjust the Y-coordinate calculation
-                            doc.text(line, x, y + (yMultiplier * (index + autoContent2.length)));
+                            doc.text(line, x, y + (yMultiplier * (autoContent2.length)));
 
                             y += yMultiplier; // Increase the Y-coordinate for the next line
                         });
                         x = 40;
-                        y = 30;
+                        y = 50;
                         autoContent4.forEach((line, index) => {
                             if (index > 0) {
                                 x = 20; // For lines after the first line, start at x = 10
                             }
 
                             // Adjust the Y-coordinate calculation
-                            doc.text(line, x, y + (yMultiplier * (index + autoContent2.length + autoContent3.length)));
+                            doc.text(line, x, y + (yMultiplier * (autoContent2.length + autoContent3.length)));
 
                             y += yMultiplier; // Increase the Y-coordinate for the next line
                         });
 
-                        y = 30;
+                        y = 50;
                         doc.text('ขอแสดงความนับถือ', 100 + x, y + (yMultiplier * (autoContent2.length + autoContent3.length + autoContent4.length)));
                         doc.text('(' + signature + ')', 100 + x, 20 + y + (yMultiplier * (autoContent2.length + autoContent4.length + autoContent3.length)));
                         doc.text(positionHead, 100 + x, 30 + y + (yMultiplier * (autoContent2.length + autoContent3.length + autoContent4.length)));
                     } else {
                         const yMultiplier = 10; // Adjust this multiplier as needed
-                        let y = 90; // Initialize y as a variable
+                        let y = 60; // Initialize y as a variable
                         x = 40;
                         autoContent2.forEach((line, index) => {
                             if (index > 0) {
                                 x = 20; // For lines after the first line, start at x = 10
                             }
                             // Adjust the Y-coordinate calculation
-                            doc.text(line, x, y + (yMultiplier * chunk.length));
+                            doc.text(line, x, y + (15 * chunk.length));
 
                             y += yMultiplier; // Increase the Y-coordinate for the next line
                         });
                         x = 40;
-                        y = 90;
+                        y = 60;
                         autoContent3.forEach((line, index) => {
                             if (index > 0) {
                                 x = 20; // For lines after the first line, start at x = 10
                             }
 
                             // Adjust the Y-coordinate calculation
-                            doc.text(line, x, y + (yMultiplier * (chunk.length + autoContent2.length)));
+                            doc.text(line, x, y + (15 * chunk.length) + (yMultiplier * (autoContent2.length)));
 
                             y += yMultiplier; // Increase the Y-coordinate for the next line
                         });
                         x = 40;
-                        y = 90;
+                        y = 60;
                         autoContent4.forEach((line, index) => {
                             if (index > 0) {
                                 x = 20; // For lines after the first line, start at x = 10
                             }
 
                             // Adjust the Y-coordinate calculation
-                            doc.text(line, x, y + (yMultiplier * (chunk.length + autoContent2.length + autoContent3.length)));
+                            doc.text(line, x, y + (15 * chunk.length) + (yMultiplier * (autoContent2.length + autoContent3.length)));
 
                             y += yMultiplier; // Increase the Y-coordinate for the next line
                         });
-                        doc.text('ขอแสดงความนับถือ', 100 + x, y + (yMultiplier * (chunk.length + autoContent2.length + autoContent3.length + autoContent4.length)));
-                        doc.text('(' + signature + ')', 100 + x, 20 + y + (yMultiplier * (chunk.length + autoContent2.length + autoContent3.length + autoContent4.length)));
-                        doc.text(positionHead, 100 + x, 30 + y + (yMultiplier * (chunk.length + autoContent2.length + autoContent3.length + autoContent4.length)));
+                        y = 60;
+                        doc.text('ขอแสดงความนับถือ', 100 + x, y + (15 * chunk.length) + (yMultiplier * (autoContent2.length + autoContent3.length + autoContent4.length)));
+                        doc.text('(' + signature + ')', 100 + x, 20 + y + (15 * chunk.length) + (yMultiplier * (autoContent2.length + autoContent3.length + autoContent4.length)));
+                        doc.text(positionHead, 100 + x, 30 + y + (15 * chunk.length) + (yMultiplier * (autoContent2.length + autoContent3.length + autoContent4.length)));
                     }
                 }
             });

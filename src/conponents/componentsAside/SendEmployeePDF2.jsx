@@ -303,7 +303,9 @@ const SendEmployeePDF2 = () => {
                 // const y2 = 65 + (10 * (titleLines.length + inviteLines.length + contentLines.length)) + (index) * 15; // Y-coordinate, with 20 pixels separation for each item
 
                 doc.setFontSize(14);
-                doc.text(`${index + 1}. ${value.Name} ตำแหน่ง: ${value.position}`, x, y);
+                doc.text(`${index + 1}. ${value.Name}`, x, y);
+                doc.text(`ตำแหน่ง: ${value.position}`, x + 60, y);
+
                 // doc.text(`ประวัติการศึกษา: ${value.educational}`, x, y2); // Adding 30 to the Y-coordinate
             }
         });
@@ -410,7 +412,9 @@ const SendEmployeePDF2 = () => {
 
                 doc.setFontSize(14);
                 const currentIndex = index + initialIndex + pageIndex * chunkSize;
-                doc.text(`${currentIndex + 1}. ${value.Name} ตำแหน่ง: ${value.position}`, x, y);
+                doc.text(`${currentIndex + 1}. ${value.Name}`, x, y);
+                doc.text(`ตำแหน่ง: ${value.position}`, x + 60, y);
+
                 // doc.text(`ประวัติการศึกษา: ${value.educational}`, x, y2);
 
                 // Check if it's the last page and the last element in the chunk
