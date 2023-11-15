@@ -157,165 +157,6 @@ function AddEditEmployee() {
             });
     }, []); // The empty array [] ensures that the effect runs only once after the initial render
 
-    useEffect(() => {
-        // setNewEmp(true);
-        if (employeeselection.length > 0) {
-            setNewEmp(true);
-        } else {
-            setNewEmp(false);
-        }
-
-    }, [employeeselection]);
-
-    useEffect(() => {
-        const storedItem = localStorage.getItem('selectedEmployees');
-        if (storedItem) {
-            // Item exists in localStorage
-            // setStoredEmp(storedItem);
-            const parsedData = JSON.parse(storedItem);
-            setStoredEmp(parsedData);
-            //      console.log('Item exists:', storedItem);
-            setNewEmp(true);
-
-            // setNewEmp(false);
-        } else {
-            // Item does not exist in localStorage
-            console.log('Item does not exist');
-            setNewEmp(true);
-        }
-    }, []);
-    useEffect(() => {
-        // Listen for the custom event when selectedEmployees change in localStorage
-        const handleSelectedEmployeesChange = (event) => {
-            const { selectedEmployees } = event.detail;
-            setStoredEmp(selectedEmployees);
-        };
-
-        window.addEventListener('selectedEmployeesChanged', handleSelectedEmployeesChange);
-
-        return () => {
-            window.removeEventListener('selectedEmployeesChanged', handleSelectedEmployeesChange);
-        };
-    }, []);
-
-    console.log(workplaceList);
-
-    //search employee name by employeeId
-    // console.log(workplaceList);
-    // console.log(workplaceList);
-
-
-
-    /////////////////////////////////////////////
-    const [wId, setWId] = useState('');
-    const [wName, setWName] = useState('');
-    const [wDate, setWDate] = useState('');
-    const [wShift, setWShift] = useState('');
-    const [wStartTime, setWStartTime] = useState('');
-    const [wEndTime, setWEndTime] = useState('');
-    const [wAllTime, setWAllTime] = useState('');
-    const [wOtTime, setWOtTime] = useState('');
-    const [wSelectOtTime, setWSelectOtTime] = useState('');
-    const [wSelectOtTimeout, setWSelectOtTimeout] = useState('');
-
-    ///////////////////
-    function handleClickResult(workplace) {
-        // Populate all the startTime input fields with the search result value
-        const updatedRowDataList = rowDataList.map(rowData => ({
-            ...rowData,
-            startTime: workplace.workStart1,
-            endTime: workplace.workEnd1,
-            selectotTime: workplace.workEnd1,
-        }));
-
-        // Update the state
-        setRowDataList(updatedRowDataList);
-    }
-
-
-    //data for search
-    const [searchWorkplaceId, setSearchWorkplaceId] = useState(''); //รหัสหน่วยงาน
-    const [searchWorkplaceName, setSearchWorkplaceName] = useState(''); //ชื่อหน่วยงาน
-    const [searchResult, setSearchResult] = useState([]);
-
-    async function handleSearch(event) {
-        event.preventDefault();
-
-
-        // get value from form search
-        const data = {
-            employeeId: searchEmployeeId,
-            name: searchEmployeeName,
-            idCard: '',
-            workPlace: '',
-        };
-
-        try {
-            const response = await axios.post(endpoint + '/employee/search', data);
-            setSearchResult(response.data.employees);
-            // alert(response.data.employees.length);
-            if (response.data.employees.length < 1) {
-                // window.location.reload();
-                setEmployeeId('');
-                setName('');
-                alert('ไม่พบข้อมูล');
-            } else {
-                // alert(response.data.employees.length);
-
-                //clean form 
-                setSearchEmployeeId('');
-                setSearchEmployeeName('');
-
-                // Set search values
-                setEmployeeId(response.data.employees[0].employeeId);
-
-                setPosition(response.data.employees[0].position);
-                setSalary(response.data.employees[0].salary);
-                setJobtype(response.data.employees[0].jobtype);
-                setPrefix(response.data.employees[0].prefix);
-
-                setName(response.data.employees[0].name);
-                setLastName(response.data.employees[0].lastName);
-                setNickName(response.data.employees[0].nickName);
-                // setGender(response.data.employees[0].gender);
-                setGender(response.data.employees[0].gender === 'male' ? 'ชาย' : 'หญิง');
-
-                // setDateOfBirth(response.data.employees[0].dateOfBirth);
-                const isoDate = response.data.employees[0].dateOfBirth;
-                // Convert ISO date to JavaScript Date object
-                const dateObject = new Date(isoDate);
-                // Set the formatted date to the state
-                setDateOfBirth(dateObject);
-
-                setAge(response.data.employees[0].age);
-                setIdCard(response.data.employees[0].idCard);
-                setEthnicity(response.data.employees[0].ethnicity);
-                setReligion(response.data.employees[0].religion);
-                setMaritalStatus(response.data.employees[0].maritalStatus);
-
-                setMilitaryStatus(response.data.employees[0].militaryStatus);
-                setAddress(response.data.employees[0].address);
-                setCopyAddress(response.data.employees[0].copyAddress);
-                setCurrentAddress(response.data.employees[0].currentAddress);
-                setPhoneNumber(response.data.employees[0].phoneNumber);
-                setEmergencyContactNumber(response.data.employees[0].emergencyContactNumber);
-                setIdLine(response.data.employees[0].idLine);
-
-                // setSearchEmployeeId(response.data.employees[0].employeeId);
-                // setSearchEmployeeName(response.data.employees[0].name);
-
-                // console.log('workOfOT:', response.data.workplaces[0].workOfOT);
-                // console.log('workOfOT:', endTime);
-
-            }
-        } catch (error) {
-            alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
-            // window.location.reload();
-        }
-    }
-
-
-
     async function handleManageEmployee(event) {
         event.preventDefault();
         const data = {
@@ -395,6 +236,127 @@ function AddEditEmployee() {
 
     }
 
+
+
+    //search employee name by employeeId
+    // console.log(workplaceList);
+    // console.log(workplaceList);
+
+
+
+    /////////////////////////////////////////////
+    const [wId, setWId] = useState('');
+    const [wName, setWName] = useState('');
+    const [wDate, setWDate] = useState('');
+    const [wShift, setWShift] = useState('');
+    const [wStartTime, setWStartTime] = useState('');
+    const [wEndTime, setWEndTime] = useState('');
+    const [wAllTime, setWAllTime] = useState('');
+    const [wOtTime, setWOtTime] = useState('');
+    const [wSelectOtTime, setWSelectOtTime] = useState('');
+    const [wSelectOtTimeout, setWSelectOtTimeout] = useState('');
+
+    ///////////////////
+    function handleClickResult(workplace) {
+        // Populate all the startTime input fields with the search result value
+        const updatedRowDataList = rowDataList.map(rowData => ({
+            ...rowData,
+            startTime: workplace.workStart1,
+            endTime: workplace.workEnd1,
+            selectotTime: workplace.workEnd1,
+        }));
+
+        // Update the state
+        setRowDataList(updatedRowDataList);
+    }
+
+
+    //data for search
+    const [searchWorkplaceId, setSearchWorkplaceId] = useState(''); //รหัสหน่วยงาน
+    const [searchWorkplaceName, setSearchWorkplaceName] = useState(''); //ชื่อหน่วยงาน
+    const [searchResult, setSearchResult] = useState([]);
+
+    async function handleSearch(event) {
+        event.preventDefault();
+
+
+        // get value from form search
+        const data = {
+            employeeId: searchEmployeeId,
+            name: searchEmployeeName,
+            idCard: '',
+            workPlace: '',
+        };
+
+        try {
+            const response = await axios.post(endpoint + '/employee/search', data);
+            setSearchResult(response.data.employees);
+            // alert(response.data.employees.length);
+            if (response.data.employees.length < 1) {
+                // window.location.reload();
+                setEmployeeId('');
+                setName('');
+                alert('ไม่พบข้อมูล');
+            } else {
+                // alert(response.data.employees.length);
+
+                //clean form 
+                setSearchEmployeeId('');
+                setSearchEmployeeName('');
+                set_id(response.data.employees[0]._id);
+
+                // Set search values
+                setEmployeeId(response.data.employees[0].employeeId);
+
+                setPosition(response.data.employees[0].position);
+                setSalary(response.data.employees[0].salary);
+                setJobtype(response.data.employees[0].jobtype);
+                setPrefix(response.data.employees[0].prefix);
+
+                setName(response.data.employees[0].name);
+                setLastName(response.data.employees[0].lastName);
+                setNickName(response.data.employees[0].nickName);
+                // setGender(response.data.employees[0].gender);
+                setGender(response.data.employees[0].gender === 'male' ? 'ชาย' : 'หญิง');
+
+                // setDateOfBirth(response.data.employees[0].dateOfBirth);
+                const isoDate = response.data.employees[0].dateOfBirth;
+                // Convert ISO date to JavaScript Date object
+                const dateObject = new Date(isoDate);
+                // Set the formatted date to the state
+                setDateOfBirth(dateObject);
+
+                setAge(response.data.employees[0].age);
+                setIdCard(response.data.employees[0].idCard);
+                setEthnicity(response.data.employees[0].ethnicity);
+                setReligion(response.data.employees[0].religion);
+                setMaritalStatus(response.data.employees[0].maritalStatus);
+
+                setMilitaryStatus(response.data.employees[0].militaryStatus);
+                setAddress(response.data.employees[0].address);
+                setCopyAddress(response.data.employees[0].copyAddress);
+                setCurrentAddress(response.data.employees[0].currentAddress);
+                setPhoneNumber(response.data.employees[0].phoneNumber);
+                setEmergencyContactNumber(response.data.employees[0].emergencyContactNumber);
+                setIdLine(response.data.employees[0].idLine);
+
+                setNewEmp(false);
+
+
+                // setSearchEmployeeId(response.data.employees[0].employeeId);
+                // setSearchEmployeeName(response.data.employees[0].name);
+
+                // console.log('workOfOT:', response.data.workplaces[0].workOfOT);
+                // console.log('workOfOT:', endTime);
+
+            }
+        } catch (error) {
+            alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
+            // window.location.reload();
+        }
+    }
+
+
     // const deleteEmployee = async (employeeId) => {
     //     try {
     //         const response = await axios.delete(`http://your-api-url/delete/${employeeId}`);
@@ -436,7 +398,48 @@ function AddEditEmployee() {
         }
     };
 
+    useEffect(() => {
+        // setNewEmp(true);
+        if (employeeselection.length > 0) {
+            setNewEmp(true);
+        } else {
+            setNewEmp(false);
+        }
 
+    }, [employeeselection]);
+
+    useEffect(() => {
+        const storedItem = localStorage.getItem('selectedEmployees');
+        if (storedItem) {
+            // Item exists in localStorage
+            // setStoredEmp(storedItem);
+            const parsedData = JSON.parse(storedItem);
+            setStoredEmp(parsedData);
+            //      console.log('Item exists:', storedItem);
+            setNewEmp(true);
+
+            // setNewEmp(false);
+        } else {
+            // Item does not exist in localStorage
+            console.log('Item does not exist');
+            setNewEmp(true);
+        }
+    }, []);
+    useEffect(() => {
+        // Listen for the custom event when selectedEmployees change in localStorage
+        const handleSelectedEmployeesChange = (event) => {
+            const { selectedEmployees } = event.detail;
+            setStoredEmp(selectedEmployees);
+        };
+
+        window.addEventListener('selectedEmployeesChanged', handleSelectedEmployeesChange);
+
+        return () => {
+            window.removeEventListener('selectedEmployeesChanged', handleSelectedEmployeesChange);
+        };
+    }, []);
+
+    console.log(workplaceList);
 
     /////////////////
     const [selectedOption, setSelectedOption] = useState('agencytime');

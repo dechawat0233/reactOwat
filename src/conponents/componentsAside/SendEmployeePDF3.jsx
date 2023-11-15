@@ -449,7 +449,7 @@ const SendEmployeePDF3 = () => {
         doc.addPage(); // Add a new page for each set of inputs after the first
 
         const arrayChunks = [];
-        const chunkSize = 20;
+        const chunkSize = 13;
         const initialIndex = 8;
 
         for (let i = initialIndex; i < inputValuesFirst.length; i += chunkSize) {
@@ -482,6 +482,8 @@ const SendEmployeePDF3 = () => {
                         const yMultiplier = 10; // Adjust this multiplier as needed
                         let y = 30; // Initialize y as a variable
                         doc.addPage();
+                        x = 40;
+                        y = 30;
                         autoContent2.forEach((line, index) => {
                             if (index > 0) {
                                 x = 20; // For lines after the first line, start at x = 10
@@ -492,31 +494,77 @@ const SendEmployeePDF3 = () => {
 
                             y += yMultiplier; // Increase the Y-coordinate for the next line
                         });
-
+                        x = 40;
                         y = 30;
-                        doc.text('ขอแสดงความนับถือ', 100 + x, y + (yMultiplier * autoContent2.length));
-                        doc.text('(' + signature + ')', 100 + x, 20 + y + (yMultiplier * autoContent2.length));
-                        doc.text(positionHead, 100 + x, 30 + y + (yMultiplier * autoContent2.length));
-                    } else {
-                        const yMultiplier = 10; // Adjust this multiplier as needed
-                        let y = 50; // Initialize y as a variable
-                        autoContent2.forEach((line, index) => {
+                        autoContent3.forEach((line, index) => {
                             if (index > 0) {
                                 x = 20; // For lines after the first line, start at x = 10
                             }
 
                             // Adjust the Y-coordinate calculation
-                            doc.text(line, x, y + (yMultiplier * chunk.length));
+                            doc.text(line, x, y + (yMultiplier * (index + autoContent2.length)));
+
+                            y += yMultiplier; // Increase the Y-coordinate for the next line
+                        });
+                        x = 40;
+                        y = 30;
+                        autoContent4.forEach((line, index) => {
+                            if (index > 0) {
+                                x = 20; // For lines after the first line, start at x = 10
+                            }
+
+                            // Adjust the Y-coordinate calculation
+                            doc.text(line, x, y + (yMultiplier * (index + autoContent2.length + autoContent3.length)));
 
                             y += yMultiplier; // Increase the Y-coordinate for the next line
                         });
 
-                        doc.text('ขอแสดงความนับถือ', 100 + x, y + (yMultiplier * chunk.length));
-                        doc.text('(' + signature + ')', 100 + x, 20 + y + (yMultiplier * chunk.length));
-                        doc.text(positionHead, 100 + x, 30 + y + (yMultiplier * chunk.length));
+                        y = 30;
+                        doc.text('ขอแสดงความนับถือ', 100 + x, y + (yMultiplier * (autoContent2.length + autoContent3.length + autoContent4.length)));
+                        doc.text('(' + signature + ')', 100 + x, 20 + y + (yMultiplier * (autoContent2.length + autoContent4.length + autoContent3.length)));
+                        doc.text(positionHead, 100 + x, 30 + y + (yMultiplier * (autoContent2.length + autoContent3.length + autoContent4.length)));
+                    } else {
+                        const yMultiplier = 10; // Adjust this multiplier as needed
+                        let y = 90; // Initialize y as a variable
+                        x = 40;
+                        autoContent2.forEach((line, index) => {
+                            if (index > 0) {
+                                x = 20; // For lines after the first line, start at x = 10
+                            }
+                            // Adjust the Y-coordinate calculation
+                            doc.text(line, x, y + (yMultiplier * chunk.length));
+
+                            y += yMultiplier; // Increase the Y-coordinate for the next line
+                        });
+                        x = 40;
+                        y = 90;
+                        autoContent3.forEach((line, index) => {
+                            if (index > 0) {
+                                x = 20; // For lines after the first line, start at x = 10
+                            }
+
+                            // Adjust the Y-coordinate calculation
+                            doc.text(line, x, y + (yMultiplier * (chunk.length + autoContent2.length)));
+
+                            y += yMultiplier; // Increase the Y-coordinate for the next line
+                        });
+                        x = 40;
+                        y = 90;
+                        autoContent4.forEach((line, index) => {
+                            if (index > 0) {
+                                x = 20; // For lines after the first line, start at x = 10
+                            }
+
+                            // Adjust the Y-coordinate calculation
+                            doc.text(line, x, y + (yMultiplier * (chunk.length + autoContent2.length + autoContent3.length)));
+
+                            y += yMultiplier; // Increase the Y-coordinate for the next line
+                        });
+                        doc.text('ขอแสดงความนับถือ', 100 + x, y + (yMultiplier * (chunk.length + autoContent2.length + autoContent3.length + autoContent4.length)));
+                        doc.text('(' + signature + ')', 100 + x, 20 + y + (yMultiplier * (chunk.length + autoContent2.length + autoContent3.length + autoContent4.length)));
+                        doc.text(positionHead, 100 + x, 30 + y + (yMultiplier * (chunk.length + autoContent2.length + autoContent3.length + autoContent4.length)));
                     }
                 }
-
             });
         });
 
