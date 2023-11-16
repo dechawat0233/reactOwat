@@ -72,6 +72,55 @@ function Employee() {
     const [images, setImages] = useState([]);//อัพรูป
     const [imageURLs, setImageURLs] = useState([]);
 
+//Update localStorage
+function updateEmployeeLocal(emp) {
+    let employeeLocal = JSON.parse(localStorage.getItem("selectedEmployees"));
+    // alert(JSON.stringify(employeeLocal, null, 2));
+  
+    const employeeLocalUpdate = employeeLocal.map(item => {
+      if (item._id === emp._id) {
+        // Update the item here
+        // return { ...item, id: emp.id, /* other properties you want to update */ };
+        const data = {
+            employeeId: employeeId,
+            position: position,
+            department: department,
+            workplace: workplace,
+            jobtype: jobtype,
+            startjob: startjob,
+            endjob: endjob,
+            exceptjob: exceptjob,
+            prefix: prefix,
+            name: name,
+            lastName: lastName,
+            nickName: nickName,
+            gender: gender,
+            dateOfBirth: dateOfBirth,
+            age: age,
+            idCard: idCard,
+            ethnicity: ethnicity,
+            religion: religion,
+            maritalStatus: maritalStatus,
+            militaryStatus: militaryStatus,
+            address: address,
+            currentAddress: currentAddress,
+            phoneNumber: phoneNumber,
+            emergencyContactNumber: emergencyContactNumber,
+            idLine: idLine,
+            vaccination: vaccination,
+            treatmentRights: treatmentRights,
+        };
+
+return data;
+      }
+  
+      return item;
+    });
+  
+    localStorage.setItem("selectedEmployees", JSON.stringify(employeeLocalUpdate));
+  }
+  
+    
     const handleChange = (e, field) => {
         setEmployeeData(prevData => ({
             ...prevData,
@@ -199,6 +248,8 @@ function Employee() {
         if (newEmp) {
             // alert('create employee');
 
+            if (buttonValue == 'create') {
+
             try {
                 const response = await axios.post(endpoint + '/employee/create', data);
                 // setEmployeesResult(response.data.employees);
@@ -209,6 +260,8 @@ function Employee() {
 
             }
 
+        }
+
         } else {
             if (buttonValue == 'save') {
                 // Make the API call to update the resource by ID
@@ -217,6 +270,8 @@ function Employee() {
                     // setEmployeesResult(response.data.employees);
                     if (response) {
                         alert("บันทึกสำเร็จ");
+updateEmployeeLocal(response.data);
+
                         window.location.reload();
 
                     }
