@@ -443,11 +443,11 @@ const SendEmployeePDF3 = () => {
             // doc.addImage(OwatAddress, 'PNG', 140, 10, 61.5, 28.4);
             // doc.addImage(OwatIcon, 'PNG', 10, 10, 68, 30);
             // doc.addImage(OwatSupport, 'PNG', 85, 275, 113.0, 16.4);
-
+doc.addPage(); // Add a new page for each set of inputs after the first
         }
 
 
-        doc.addPage(); // Add a new page for each set of inputs after the first
+        
 
         const arrayChunks = [];
         const chunkSize = 13;
