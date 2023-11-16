@@ -125,13 +125,19 @@ function AddsettimeEmployee() {
 
                         break;
                     case 'specialt_shift':
-                        setWStartTime(workplacesearch.workStart3 || '');
-                        setWEndTime(workplacesearch.workEnd3 || '');
-                        setWAllTime(calTime(workplacesearch.workStart3 || '', workplacesearch.workEnd3 || '', workplacesearch.workOfHour) || '');
-                        setWOtTime(calTime(workplacesearch.workStartOt3 || '', workplacesearch.workEndOt3 || '', workplacesearch.workOfOT || '') || '');
-                        setWSelectOtTime(workplacesearch.workStartOt3 || '');
-                        setWSelectOtTimeout(workplacesearch.workEndOt1 || '');
+                        // setWStartTime(workplacesearch.workStart3 || '');
+                        // setWEndTime(workplacesearch.workEnd3 || '');
+                        // setWAllTime(calTime(workplacesearch.workStart3 || '', workplacesearch.workEnd3 || '', workplacesearch.workOfHour) || '');
+                        // setWOtTime(calTime(workplacesearch.workStartOt3 || '', workplacesearch.workEndOt3 || '', workplacesearch.workOfOT || '') || '');
+                        // setWSelectOtTime(workplacesearch.workStartOt3 || '');
+                        // setWSelectOtTimeout(workplacesearch.workEndOt1 || '');
 
+                        setWStartTime('');
+                        setWEndTime('');
+                        setWAllTime(calTime('0', '0', '24') || '');
+                        setWOtTime(calTime('0', '0', '24') || '');
+                        setWSelectOtTime('');
+                        setWSelectOtTimeout('');
                         break;
                     default:
                         setWStartTime('');
@@ -156,6 +162,11 @@ function AddsettimeEmployee() {
                 const workplacesearch = workplaceList.find(workplace => workplace.workplaceId === wId);
                 if (workplacesearch) {
                     setWAllTime(calTime(wStartTime || '', wEndTime || '', workplacesearch.workOfHour || ''));
+                    if (wShift == 'specialt_shift') {
+                        setWAllTime(calTime(wStartTime || '', wEndTime || '', 24));
+                    } else {
+                        setWAllTime(calTime(wStartTime || '', wEndTime || '', workplacesearch.workOfHour || ''));
+                    }
                 }
             }
 
@@ -170,7 +181,11 @@ function AddsettimeEmployee() {
             if (wId !== '' && wName !== '') {
                 const workplacesearch = workplaceList.find(workplace => workplace.workplaceId === wId);
                 if (workplacesearch) {
-                    setWOtTime(calTime(wSelectOtTime || '', wSelectOtTimeout || '', workplacesearch.workOfOT || ''));
+                    if (wShift == 'specialt_shift') {
+                        setWOtTime(calTime(wSelectOtTime || '', wSelectOtTimeout || '', 24));
+                    } else {
+                        setWOtTime(calTime(wSelectOtTime || '', wSelectOtTimeout || '', workplacesearch.workOfOT || ''));
+                    }
                 }
             }
 
@@ -331,6 +346,17 @@ function AddsettimeEmployee() {
                                     ['selectotTimeOut']: workplaceIdSearch.workEndOt3 || '' + '',
                                 };
                                 break;
+                            case 'specialt_shift':
+                                newDataList2[index2] = {
+                                    ...newDataList2[index2],
+                                    ['startTime']: '' + '',
+                                    ['endTime']: '' + '',
+                                    ['allTime']: calTime('0', '0', '24') || '' + '',
+                                    ['otTime']: calTime('0', '0', '24') || '' + '',
+                                    ['selectotTime']: '' + '',
+                                    ['selectotTimeOut']: '' + '',
+                                };
+                                break;
                             default:
                                 newDataList2[index2] = {
                                     ...newDataList2[index2],
@@ -369,17 +395,17 @@ function AddsettimeEmployee() {
                     if (workplaceIdSearch) {
                         //check specialt_shift 
                         if (newDataList2[index2].shift !== 'specialt_shift') {
-                        //     newDataList2[index2] = {
-                        //         ...newDataList2[index2],
-                        //         ['startTime']: newDataList2[index2].startTime + '',
-                        //         ['endTime']: newDataList2[index2].endTime + '',
-                        //         ['allTime']: calTime(newDataList2[index2].startTime, newDataList2[index2].endTime, workplaceIdSearch.workOfHour) + '',
-                        //         ['otTime']: calTime(newDataList2[index2].selectotTime, newDataList2[index2].selectotTimeOut, workplaceIdSearch.workOfOT) + '',
-                        //         ['selectotTime']: newDataList2[index2].selectotTime + '',
-                        //         ['selectotTimeOut']: newDataList2[index2].selectotTimeOut + '',
-                        //     };
-                        // } 
-                        // else {
+                            //     newDataList2[index2] = {
+                            //         ...newDataList2[index2],
+                            //         ['startTime']: newDataList2[index2].startTime + '',
+                            //         ['endTime']: newDataList2[index2].endTime + '',
+                            //         ['allTime']: calTime(newDataList2[index2].startTime, newDataList2[index2].endTime, workplaceIdSearch.workOfHour) + '',
+                            //         ['otTime']: calTime(newDataList2[index2].selectotTime, newDataList2[index2].selectotTimeOut, workplaceIdSearch.workOfOT) + '',
+                            //         ['selectotTime']: newDataList2[index2].selectotTime + '',
+                            //         ['selectotTimeOut']: newDataList2[index2].selectotTimeOut + '',
+                            //     };
+                            // } 
+                            // else {
                             newDataList2[index2] = {
                                 ...newDataList2[index2],
                                 ['startTime']: newDataList2[index2].startTime + '',
@@ -439,6 +465,12 @@ function AddsettimeEmployee() {
         const cappedHours = Math.floor(cappedTotalMinutes / 60);
         const cappedMinutes = cappedTotalMinutes % 60;
         const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
+        console.log('cappedHours', cappedHours);
+        console.log('cappedMinutes', cappedMinutes);
+        console.log('timeDiffFormatted', timeDiffFormatted);
+        console.log('limit', limit);
+
+
         if (isNaN(timeDiffFormatted)) {
             return '0';
         }
