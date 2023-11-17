@@ -374,11 +374,9 @@ function AddEditSalaryEmployee() {
                                     </div>
                                     <form onSubmit={handleManageWorkplace}>
 
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <h3>เงินเพิ่ม</h3>
-                                                <section class="Frame">
-
+                                    <div class="row">
+                                            <div class="col-md-12">
+                                                <h3>ข้อมูลพนักงาน</h3>
                                                 <div class="row">
                                                         <div class="col-md-2">
                                                             <div class="form-group">
@@ -393,7 +391,7 @@ function AddEditSalaryEmployee() {
                                                         </div>
                                                         <div class="col-md-2">
                                                             <div class="form-group">
-                                                                <label role="addSalary">ปรับปรุงเมื่อ</label>
+                                                                <label role="addSalary">ปรับปรุงเงินเพิ่ม/เงินหักเมื่อ</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
@@ -402,6 +400,14 @@ function AddEditSalaryEmployee() {
                                                             </div>
                                                         </div>
                                                     </div>
+
+
+</div>
+</div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h3>เงินเพิ่ม</h3>
+                                                <section class="Frame">
 
                                                     <div class="row">
                                                         <div class="col-md-2">
@@ -601,7 +607,9 @@ function AddEditSalaryEmployee() {
 
 
                                         <div class="form-group">
+
                                             <button class="btn b_save" onClick={handleCreateAddSalary}><i class="nav-icon fas fa-save"></i> &nbsp; บันทึก</button>
+                                            
                                             </div>
                                     </form>
 
