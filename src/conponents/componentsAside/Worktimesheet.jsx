@@ -866,11 +866,21 @@ function Worktimesheet() {
 
     const selectedAddSalaryIds = filteredEmployeeList.map((obj) => obj.selectAddSalary).flat();
     const selectedMinus = filteredEmployeeList.map((obj) => obj.minus);
+    const selectedaddSalary = filteredEmployeeList.map((obj) => obj.addSalary).flat();
+
     // const selectedMinus = filteredEmployeeList.map((obj) => obj.minus.toFixed(2));
     // const selectedMinus = filteredEmployeeList.map((obj) => parseFloat(obj.minus.toFixed(2)));
     console.log('selectedMinus', selectedMinus);
 
     const filteredAddSalary = [];
+
+    // filteredEmployeeList.forEach((employee) => {
+    //   employee.addSalary.forEach((salary) => {
+    //     if (selectedAddSalaryIds.includes(salary._id)) {
+    //       filteredAddSalary.push(salary);
+    //     }
+    //   });
+    // });
 
     filteredEmployeeList.forEach((employee) => {
       employee.addSalary.forEach((salary) => {
@@ -888,10 +898,12 @@ function Worktimesheet() {
     // setEmpDataWorkplace(filteredEmployeeList.department);
 
     setMinusSearch(selectedMinus);
-    setAddSalary(filteredAddSalary);
+    // setAddSalary(filteredAddSalary);
+    setAddSalary(selectedaddSalary);
   }, [searchResult, employeelist]);
   // console.log('employee', employee);
-  console.log('addSalary', addSalary);
+  console.log('addSalary123', addSalary);
+  console.log('setEmpData', EmpData);
   // console.log('EmpData', EmpData);
 
   useEffect(() => {
@@ -1082,6 +1094,8 @@ function Worktimesheet() {
     console.log('testRe1', Sumall);
     console.log('testRe2', Minus);
     console.log('testRe3', MinusSearch);
+
+    console.log('calculatedValuesaddSalary', calculatedValuesaddSalary);
 
 
     // console.log('all', calculatedValues);
