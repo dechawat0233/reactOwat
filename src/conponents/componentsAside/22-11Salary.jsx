@@ -436,7 +436,7 @@ function Salary() {
         }
 
     }
-    console.log('workplaceSelection', workplaceSelection);
+    // console.log(employeeData + "test");
 
     async function onEmployeeSelect(empSelect) {
         await setEmployeeData(empSelect);
@@ -650,52 +650,14 @@ function Salary() {
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label role="workplace">หน่วยงาน</label>
-                                                            {/* <select id="workplace" name="workplace" class="form-control"
+                                                            <select id="workplace" name="workplace" class="form-control"
                                                                 value={workplace} onChange={handleWorkplace}>
                                                                 <option value="">ยังไม่ระบุหน่วยงาน</option>
                                                                 {workplaceSelection.map(wp => (
                                                                     <option key={wp._id} value={wp.workplaceId}>{wp.workplaceName}</option>
 
                                                                 ))}
-                                                            </select> */}
-                                                            <input
-                                                                type="text"
-                                                                list="workplacelist"
-                                                                id="workplace"
-                                                                name="workplace"
-                                                                className="form-control"
-                                                                value={workplace}
-                                                                onChange={handleWorkplace}
-                                                            />
-
-                                                            <datalist id="workplacelist">
-                                                                <option value="">ยังไม่ระบุหน่วยงาน</option>
-                                                                {workplaceSelection.map(wp => (
-                                                                    <option key={wp._id} value={wp.workplaceId}>
-                                                                        {wp.workplaceName}
-                                                                    </option>
-                                                                ))}
-                                                            </datalist>
-
-
-                                                            {/* <input
-                                                                type="text"
-                                                                id="workplace"
-                                                                name="workplace"
-                                                                list="workplaces"
-                                                                className="form-control"
-                                                                value={workplace}
-                                                                onChange={handleWorkplace}
-                                                            />
-
-                                                            <datalist id="workplaces">
-                                                                <option value="">ยังไม่ระบุหน่วยงาน</option>
-                                                                {workplaceSelection.map((wp) => (
-                                                                    <option key={wp._id} value={wp.workplaceId}>
-                                                                        {wp.workplaceName}
-                                                                    </option>
-                                                                ))}
-                                                            </datalist> */}
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
