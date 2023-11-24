@@ -8,6 +8,11 @@ import '../editwindowcss.css';
 
 function Search() {
   //   const endpoint = 'YOUR_API_ENDPOINT'; // Replace with your API endpoint
+  useEffect(() => {
+    document.title = 'ข้อมูลเงินเดือน';
+    // You can also return a cleanup function if needed
+    // return () => { /* cleanup code */ };
+}, []);
 
   const [message, setMessage] = useState('');
   const [employeeId, setEmployeeId] = useState('');

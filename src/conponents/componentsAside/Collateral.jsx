@@ -1,9 +1,15 @@
-import React from 'react'
+// import React from 'react'
+import React, { useState, useEffect } from 'react';
 import EmployeesSelected from './EmployeesSelected';
 import '../editwindowcss.css';
 
 
 function Collateral() {
+    useEffect(() => {
+        document.title = 'กองทุนสำรองเลี้ยงชีพ';
+        // You can also return a cleanup function if needed
+        // return () => { /* cleanup code */ };
+    }, []);
     return (
         <>
             <body class="hold-transition sidebar-mini" className='editlaout'>
@@ -65,8 +71,8 @@ function Collateral() {
                                             {/* <!--Frame--> */}
                                         </div>
                                         <div class="col-md-3">
-                                        <section class="Frame"><EmployeesSelected /></section>
-                                    </div>
+                                            <section class="Frame"><EmployeesSelected /></section>
+                                        </div>
                                     </div>
                                     <div class="line_btn">
                                         <button type="submit" class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>

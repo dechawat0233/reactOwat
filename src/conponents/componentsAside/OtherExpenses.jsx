@@ -6,6 +6,11 @@ import EmployeesSelected from './EmployeesSelected';
 import '../editwindowcss.css';
 
 function OtherExpenses() {
+    useEffect(() => {
+        document.title = 'ค่าใช้จ่ายอื่นๆ';
+        // You can also return a cleanup function if needed
+        // return () => { /* cleanup code */ };
+    }, []);
     const [id, setId] = useState('');
     const [name, setName] = useState('');
     const [agency, setAgency] = useState('');

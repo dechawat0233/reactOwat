@@ -1,10 +1,15 @@
 // import React from 'react'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import '../editwindowcss.css';
 
 
 function application() {
+    useEffect(() => {
+        document.title = 'กรอกข้อมูลสมัครงาน';
+        // You can also return a cleanup function if needed
+        // return () => { /* cleanup code */ };
+    }, []);
     const [showInput, setShowInput] = useState(false);
 
     const handleCheckboxChange = (event) => {

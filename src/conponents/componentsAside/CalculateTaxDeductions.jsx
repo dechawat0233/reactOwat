@@ -1,9 +1,16 @@
-import React from 'react'
+// import React from 'react'
+import React, { useState, useEffect } from 'react';
+
 import EmployeesSelected from './EmployeesSelected';
 import '../editwindowcss.css';
 
 
 function Calculate_tax_deductions() {
+    useEffect(() => {
+        document.title = 'ภาษีเงินได้';
+        // You can also return a cleanup function if needed
+        // return () => { /* cleanup code */ };
+    }, []);
     return (
         <body class="hold-transition sidebar-mini" className='editlaout'>
             <div class="wrapper">

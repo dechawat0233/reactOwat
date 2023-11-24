@@ -11,6 +11,12 @@ import '../editwindowcss.css';
 
 
 function Salary() {
+    useEffect(() => {
+        document.title = 'สรุปเงินเดือน';
+        // You can also return a cleanup function if needed
+        // return () => { /* cleanup code */ };
+    }, []);
+
     const [storedEmp, setStoredEmp] = useState([]);
     const [newEmp, setNewEmp] = useState(true);
     // const [employeeselection , setEmployeeselection] = useState([]);

@@ -12,6 +12,13 @@ import '../editwindowcss.css';
 
 
 function Employee() {
+
+    useEffect(() => {
+        document.title = 'ข้อมูลพนักงาน';
+        // You can also return a cleanup function if needed
+        // return () => { /* cleanup code */ };
+    }, []);
+
     const [storedEmp, setStoredEmp] = useState([]);
     const [newEmp, setNewEmp] = useState(true);
     const [employeeselection, setEmployeeselection] = useState([]);

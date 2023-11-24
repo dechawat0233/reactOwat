@@ -10,9 +10,13 @@ import 'jspdf-autotable';
 import html2pdf from 'html2pdf.js';
 
 
-
-
 function Worktimesheet() {
+  useEffect(() => {
+    document.title = 'ใบลงเวลาการปฏิบัติงาน';
+    // You can also return a cleanup function if needed
+    // return () => { /* cleanup code */ };
+  }, []);
+
   const styles = {
     th: {
       minWidth: "4rem"
@@ -887,6 +891,21 @@ function Worktimesheet() {
     const selectedMinus = filteredEmployeeList.map((obj) => obj.minus);
     const selectedaddSalary = filteredEmployeeList.map((obj) => obj.addSalary).flat();
 
+    const updatedAddSalary = selectedaddSalary.map((salaryObject) => {
+      const { SpSalary, roundOfSalary } = salaryObject;
+    
+      if (roundOfSalary === 'daily') {
+        return {
+          ...salaryObject,
+          SpSalary: SpSalary * countWork,
+        };
+      }
+      return salaryObject;
+    });
+    console.log('result123', updatedAddSalary);
+    console.log('countWork', countWork);
+
+
     // const selectedMinus = filteredEmployeeList.map((obj) => obj.minus.toFixed(2));
     // const selectedMinus = filteredEmployeeList.map((obj) => parseFloat(obj.minus.toFixed(2)));
     console.log('selectedMinus', selectedMinus);
@@ -918,8 +937,8 @@ function Worktimesheet() {
 
     setMinusSearch(selectedMinus);
     // setAddSalary(filteredAddSalary);
-    setAddSalary(selectedaddSalary);
-  }, [searchResult, employeelist]);
+    setAddSalary(updatedAddSalary);
+  }, [searchResult, employeelist,countWork]);
   // console.log('employee', employee);
   console.log('addSalary123', addSalary);
   console.log('setEmpData', EmpData);
@@ -1104,6 +1123,23 @@ function Worktimesheet() {
     const calculatedValuesDayoffAllTime = calculatedValues.map((value) => parseFloat(value.calculatedValueDayoff));
     const calculatedValuesDayoffOtTime = calculatedValues.map((value) => parseFloat(value.calculatedValueDayoffOt));
     const calculatedValuesaddSalary = addSalary.map((value) => parseFloat(value.SpSalary));
+    // const calculatedValuesaddSalary = addSalary.map((value) => {
+    //   const salary = parseFloat(value.SpSalary);
+    //   const roundOfSalary = value.roundOfSalary.toLowerCase(); // Assuming roundOfSalary is in lowercase
+
+    //   if (roundOfSalary === 'monthly') {
+    //     // Adjust for monthly salary (e.g., multiply by the number of days in a month)
+    //     const daysInMonth = 30; // You can adjust this based on your requirements
+    //     return salary * daysInMonth;
+    //   } else if (roundOfSalary === 'daily') {
+    //     // Leave daily salary unchanged
+    //     return salary;
+    //   } else {
+    //     // Handle other cases or set a default behavior
+    //     return salary;
+    //   }
+    // });
+
 
     const calculatedValuesminus = calculatedValues.map((value) => parseFloat(value.minus));
 
@@ -1484,7 +1520,6 @@ function Worktimesheet() {
 
     doc.save('your_table.pdf');
   };
-
 
   return (
     // <div>
