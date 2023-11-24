@@ -1,11 +1,23 @@
-import React from 'react'
+// import React from 'react'
+import React, { useState, useEffect } from 'react';
+
 // import Top from "./Top"
 // import AsideLeft from './AsideLeft'
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import '../editwindowcss.css';
 
-
 function Dashboard() {
+
+  useEffect(() => {
+    document.title = 'แดชบอร์ด';
+    // You can also return a cleanup function if needed
+    // return () => { /* cleanup code */ };
+  }, []);
+
+  
+
+
+
   return (
     <body class="hold-transition sidebar-mini" className='editlaout'>
       <div class="wrapper">

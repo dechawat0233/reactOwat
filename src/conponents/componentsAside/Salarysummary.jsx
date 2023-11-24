@@ -6,6 +6,11 @@ import '../editwindowcss.css';
 
 
 function Salarysummary() {
+    useEffect(() => {
+        document.title = 'สรุปเงินเดือน';
+        // You can also return a cleanup function if needed
+        // return () => { /* cleanup code */ };
+    }, []);
     const styles = {
         th: {
             minWidth: "5rem"

@@ -10,9 +10,13 @@ import 'jspdf-autotable';
 import html2pdf from 'html2pdf.js';
 
 
-
-
 function Worktimesheet() {
+  useEffect(() => {
+    document.title = 'ใบลงเวลาการปฏิบัติงาน';
+    // You can also return a cleanup function if needed
+    // return () => { /* cleanup code */ };
+  }, []);
+  
   const styles = {
     th: {
       minWidth: "4rem"
@@ -1437,7 +1441,6 @@ function Worktimesheet() {
 
     doc.save('your_table.pdf');
   };
-
 
   return (
     // <div>

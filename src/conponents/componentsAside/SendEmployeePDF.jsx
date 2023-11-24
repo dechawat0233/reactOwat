@@ -12,6 +12,11 @@ const SendEmployeePDF = () => {
     const handleOptionChange = (event) => {
         setSelectedOption(event.target.value);
     };
+    useEffect(() => {
+        document.title = 'ใบส่งตัว';
+        // You can also return a cleanup function if needed
+        // return () => { /* cleanup code */ };
+      }, []); 
     return (
         <div>
             <body class="hold-transition sidebar-mini" className='editlaout'>

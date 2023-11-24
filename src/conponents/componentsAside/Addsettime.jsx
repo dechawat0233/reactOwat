@@ -22,6 +22,14 @@ function Addsettime() {
         setSelectedOption(event.target.value);
     };
 
+    useEffect(() => {
+        document.title = 'ระบบลงเวลา';
+        // You can also return a cleanup function if needed
+        // return () => { /* cleanup code */ };
+      }, []);
+    
+  
+      
     return (
         <body class="hold-transition sidebar-mini" className='editlaout'>
             <div class="wrapper">

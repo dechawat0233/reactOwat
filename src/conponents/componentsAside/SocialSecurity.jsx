@@ -10,7 +10,11 @@ import 'react-datepicker/dist/react-datepicker.css';
 import '../editwindowcss.css';
 
 function SocialSecurity() {
-
+    useEffect(() => {
+        document.title = 'ประกันสังคม';
+        // You can also return a cleanup function if needed
+        // return () => { /* cleanup code */ };
+    }, []);
 
     const [checkedItems, setCheckedItems] = useState([]);
 
