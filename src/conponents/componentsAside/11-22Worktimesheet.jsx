@@ -10,13 +10,9 @@ import 'jspdf-autotable';
 import html2pdf from 'html2pdf.js';
 
 
+
+
 function Worktimesheet() {
-  useEffect(() => {
-    document.title = 'ใบลงเวลาการปฏิบัติงาน';
-    // You can also return a cleanup function if needed
-    // return () => { /* cleanup code */ };
-  }, []);
-  
   const styles = {
     th: {
       minWidth: "4rem"
@@ -82,9 +78,6 @@ function Worktimesheet() {
       const wid = emp_workplace.workplace;
       const empWorkplace = workplaceList.find(item => item.workplaceId === wid);
       // alert(JSON.stringify(empWorkplace ,null,2));
-      console.log('empWorkplace', empWorkplace);
-      console.log('wid', wid);
-
       const df = [];
       if (empWorkplace.workday7 !== "true") {
         df.push('1');
@@ -401,7 +394,6 @@ function Worktimesheet() {
       } else {
         alert("ไม่พบข้อมูล 1 ถึง 20 " + getMonthName(data.month));
         check = check + 1;
-        window.location.reload();
       }
 
 
@@ -517,8 +509,6 @@ function Worktimesheet() {
                 updatedData[(dataIndex + 11)].allTime = allTimeA[index];
                 updatedData[(dataIndex + 11)].workplaceId = workplaceId[index]; // Set otTime at the same index as dates
                 updatedData[(dataIndex + 11)].date = dates[index]; // Set otTime at the same index as dates
-
-
                 // Set otTime at the same index as dates
               }
 
@@ -616,10 +606,6 @@ function Worktimesheet() {
           return updatedData;
         });
 
-
-        console.log('tableData', tableData);
-        console.log('updatedData', dataset);
-
       }
       // console.log('Result:');
       // console.log(result);
@@ -629,7 +615,6 @@ function Worktimesheet() {
       if (response.data.recordworkplace.length < 1) {
         window.location.reload();
         alert('ไม่พบข้อมูล');
-        window.location.reload();
       } else {
 
         // Set search values
@@ -647,7 +632,7 @@ function Worktimesheet() {
       }
     } catch (error) {
       alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
-      window.location.reload();
+      // window.location.reload();
     }
 
     try {
@@ -749,15 +734,10 @@ function Worktimesheet() {
         });
         // setWoekplace(dates);
       }
-      // if (!tableData.some(item => item.isChecked === true)) {
-      //   alert('ไม่พบข้อมูล');
-      //   window.location.reload();
-      // }
     }
-
     catch (error) {
       alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา', error);
-      window.location.reload();
+      // window.location.reload();
     }
     //xx
     // alert(result_data[0].employeeId);
@@ -1488,6 +1468,7 @@ function Worktimesheet() {
 
     doc.save('your_table.pdf');
   };
+
 
   return (
     // <div>

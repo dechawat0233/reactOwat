@@ -172,7 +172,11 @@ function Setting() {
     // const [daysOff , setDaysOff] = useState([{ date: '' }]);
 
 
-    const [formData, setFormData] = useState([]);
+    const [formData, setFormData] = useState({
+        addSalary: [
+            { codeSpSalary: '', name: '', SpSalary: '', roundOfSalary: '', StaffType: '', nameType: '' }
+        ]
+    });
     const [showAdditionalInput, setShowAdditionalInput] = useState([]);
 
     // const handleSelectChange = (e, index) => {

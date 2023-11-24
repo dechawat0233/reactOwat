@@ -22,14 +22,15 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 const addSalarySchema = new mongoose.Schema({
     employeeId: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     employeeName: {
-        type: String
+        type: String,
+        required: true
     },
     onUpdate: {
-        type: String
+        type: String,
+        required: true
     },
 
     addSalary: [{
