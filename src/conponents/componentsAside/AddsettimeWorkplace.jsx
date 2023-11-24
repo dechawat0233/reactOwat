@@ -895,12 +895,17 @@ function AddsettimeWorkplace() {
         // alert('test');
         // alert(formattedWorkDate);
 
+        const dateObject = new Date(formattedWorkDate);
+
+        // Extract the year from the dateObject
+        const year = dateObject.getFullYear();
         //get data from input in useState to data 
         const data = {
             workplaceId: workplaceId,
             workplaceName: workplaceName,
             date: formattedWorkDate,
-            employeeRecord: rowDataList
+            employeeRecord: rowDataList,
+            timerecordId: year.toString(),
         };
 
 
