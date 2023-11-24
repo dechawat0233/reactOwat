@@ -307,7 +307,7 @@ function Salary() {
         // alert(event.target.value);
 
         const filtered = workplaceSelection.filter(wp =>
-            event.target.value === '' || wp.workplaceId === event.target.value
+            event.target.value === '' || wp.workplaceId === event.target.value || wp.workplaceName === event.target.value
         )
         // alert(JSON.stringify(filtered , null, 2) );
         // alert(filtered[0].workplaceArea );
@@ -996,9 +996,7 @@ function Salary() {
                                     <div class="col-md-9">
                                         <h2 class="title">เงินเพิ่มพิเศษ</h2>
                                         <section class="Frame">
-
                                             {/* {JSON.stringify(formData.addSalary , null ,2) } */}
-
                                             {formData.addSalary && formData.addSalary.length > 0 && formData.addSalary.map((data, index) => (
                                                 <div className="row" key={index}>
                                                     <div className="col-md-2">
@@ -1009,6 +1007,7 @@ function Salary() {
                                                             className="form-control"
                                                             value={data.name}
                                                             onChange={(e) => handleChangeSpSalary(e, index, 'name')}
+                                                            readOnly
                                                         />
                                                     </div>
                                                     <div className="col-md-2">
@@ -1019,6 +1018,7 @@ function Salary() {
                                                             className="form-control"
                                                             value={data.SpSalary}
                                                             onChange={(e) => handleChangeSpSalary(e, index, 'SpSalary')}
+                                                            readOnly
                                                         />
 
                                                     </div>
@@ -1029,6 +1029,7 @@ function Salary() {
                                                             className="form-control"
                                                             value={data.roundOfSalary}
                                                             onChange={(e) => handleChangeSpSalary(e, index, 'roundOfSalary')}
+                                                            
                                                         >
                                                             <option value="daily">รายวัน</option>
                                                             <option value="monthly">รายเดือน</option>
@@ -1041,6 +1042,7 @@ function Salary() {
                                                             className="form-control"
                                                             value={data.StaffType}
                                                             onChange={(e) => handleChangeSpSalary(e, index, 'StaffType')}
+                                                            readonly
                                                         >
                                                             <option value="">เลือกตำแหน่งที่จะมอบให้</option>
                                                             <option value="all">ทั้งหมด</option>
@@ -1058,6 +1060,7 @@ function Salary() {
                                                                 className="form-control"
                                                                 value={data.nameType}
                                                                 onChange={(e) => handleChangeSpSalary(e, index, 'nameType')}
+                                                                readOnly
                                                             />
                                                         </div>
                                                     )}
