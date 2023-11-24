@@ -221,7 +221,7 @@ function Search() {
                             key={employee.id}
                             onClick={() => handleClickResult(employee)}
                           >
-                            {employee.name}
+                           {employee.employeeId} : {employee.name} - {employee.lastName}
                           </li>
                         ))}
                       </ul>

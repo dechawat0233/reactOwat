@@ -86,6 +86,7 @@ function Salary() {
     const [employeeId, setEmployeeId] = useState('');
     const [position, setPosition] = useState(''); //ตำแหน่ง
     const [department, setDepartment] = useState(''); //แผนก
+
     const [workplace, setWorkplace] = useState(''); //หน่วยงาน
     const [workplacearea, setWorkplacearea] = useState('');
     const [costtype, setCosttype] = useState(''); //ลงบัญชีเป็นค่าใช้จ่าย
@@ -343,6 +344,7 @@ function Salary() {
 
         // setWorkplacearea(filtered[0].workplaceArea );
     };
+
     // console.log(workplaceSelection);
 
     const handleWorktable = (event) => {
@@ -682,8 +684,7 @@ function Salary() {
                                                                     </option>
                                                                 ))}
                                                             </datalist>
-
-
+                                                    
                                                             {/* <input
                                                                 type="text"
                                                                 id="workplace"
@@ -1029,7 +1030,7 @@ function Salary() {
                                                             className="form-control"
                                                             value={data.roundOfSalary}
                                                             onChange={(e) => handleChangeSpSalary(e, index, 'roundOfSalary')}
-                                                            
+
                                                         >
                                                             <option value="daily">รายวัน</option>
                                                             <option value="monthly">รายเดือน</option>
