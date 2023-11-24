@@ -35,6 +35,7 @@ function AddEditSalaryEmployee() {
     //employeedata
     const [employeeId, setEmployeeId] = useState(''); //รหัสพนักงาน
     const [name, setName] = useState(''); //ชื่อพนักงาน
+    const [lastName, setLastName] = useState(''); //ชื่อพนักงาน
 
     //////////////////////////////
     const [employeeList, setEmployeeList] = useState([]);
@@ -160,6 +161,8 @@ function AddEditSalaryEmployee() {
                 // Set search values
                 setEmployeeId(response.data.employees[0].employeeId);
                 setName(response.data.employees[0].name);
+                setLastName(response.data.employees[0].lastName);
+
                 }
 
             }
@@ -386,7 +389,7 @@ function AddEditSalaryEmployee() {
 
                                                         <div class="col-md-3">
                                                             <div class="form-group">
-                                                                <label role="addSalaryName">{name}</label>
+                                                                <label role="addSalaryName">{name} {lastName} </label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-2">
