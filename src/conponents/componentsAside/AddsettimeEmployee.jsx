@@ -14,6 +14,10 @@ function AddsettimeEmployee() {
         borderLeft: '2px solid #000'
     };
 
+    
+    const [updateButton, setUpdateButton] = useState(false); // Initially, set to false
+    const [timeRecord_id, setTimeRecord_id] = useState('');
+
     const [newWorkplace, setNewWorkplace] = useState(true);
 
     const [searchEmployeeId, setSearchEmployeeId] = useState('');
@@ -552,7 +556,47 @@ function AddsettimeEmployee() {
         }
     }
 
+async function handleCheckTimerecord (){
+//xx
+    const data = {
+        employeeId: employeeId,
+        employeeName: name,
+        month: month,
+    };
 
+    try {
+        const response = await axios.post(endpoint + '/timerecord/searchemp', data);
+// alert(JSON.stringify(response ,null,2));
+
+        if (response.data.recordworkplace.length < 1) {
+            alert('ไม่พบข้อมูล');
+            // Set the state to false if no data is found
+            setUpdateButton(false);
+            setTimeRecord_id('');
+
+        } else {
+            // Set the state to true if data is found
+            setUpdateButton(true);
+alert(response.data.recordworkplace[0].employee_workplaceRecord[1].workplaceId);
+            setTimeRecord_id(response.data.recordworkplace[0]._id);
+
+            setRowDataList2(response.data.recordworkplace[0].employee_workplaceRecord);
+
+            // alert(JSON.stringify( rowDataList[0] ) );
+            //count work of time and set to table 
+            // for (let i = 0; i < response.data.recordworkplace[0].employeeRecord.length; i++) {
+            // alert(response.data.recordworkplace[0].employeeRecord[i].shift );
+            // handleFieldChange(i, 'shift', response.data.recordworkplace[0].employeeRecord[i].shift);
+            // }
+
+        }
+    } catch (error) {
+        alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
+        alert(error.message);
+        window.location.reload();
+    }
+
+}
 
     async function handleManageWorkplace(event) {
         event.preventDefault();
@@ -763,7 +807,7 @@ function AddsettimeEmployee() {
                                 <div class="col-md-3">
                                     <label role="button"></label>
                                     <div class="d-flex align-items-end">
-                                        <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ตรวจสอบ</button>
+                                        <button class="btn b_save" onClick={handleCheckTimerecord} ><i class="nav-icon fas fa-search"></i> &nbsp; ตรวจสอบ</button>
                                     </div>
                                 </div>
                             </div>
