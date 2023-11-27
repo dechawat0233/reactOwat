@@ -14,7 +14,7 @@ function AddsettimeEmployee() {
         borderLeft: '2px solid #000'
     };
 
-    
+
     const [updateButton, setUpdateButton] = useState(false); // Initially, set to false
     const [timeRecord_id, setTimeRecord_id] = useState('');
 
@@ -29,8 +29,8 @@ function AddsettimeEmployee() {
     }, []);
 
     useEffect(() => {
-        if(name !== ''){
-            handleCheckTimerecord();        
+        if (name !== '') {
+            handleCheckTimerecord();
         }
     }, [month]);
 
@@ -563,47 +563,47 @@ function AddsettimeEmployee() {
         }
     }
 
-async function handleCheckTimerecord (){
-//xx
-    const data = {
-        employeeId: employeeId,
-        employeeName: name,
-        month: month,
-    };
+    async function handleCheckTimerecord() {
+        //xx
+        const data = {
+            employeeId: employeeId,
+            employeeName: name,
+            month: month,
+        };
 
-    try {
-        const response = await axios.post(endpoint + '/timerecord/searchemp', data);
-// alert(JSON.stringify(response ,null,2));
+        try {
+            const response = await axios.post(endpoint + '/timerecord/searchemp', data);
+            // alert(JSON.stringify(response ,null,2));
 
-        if (response.data.recordworkplace.length < 1) {
-            alert('ไม่พบข้อมูล');
-            // Set the state to false if no data is found
-            setUpdateButton(false);
-            setTimeRecord_id('');
+            if (response.data.recordworkplace.length < 1) {
+                alert('ไม่พบข้อมูล');
+                // Set the state to false if no data is found
+                setUpdateButton(false);
+                setTimeRecord_id('');
 
-        } else {
-            // Set the state to true if data is found
-            setUpdateButton(true);
-// alert(response.data.recordworkplace[0].employee_workplaceRecord[1].workplaceId);
-            setTimeRecord_id(response.data.recordworkplace[0]._id);
+            } else {
+                // Set the state to true if data is found
+                setUpdateButton(true);
+                // alert(response.data.recordworkplace[0].employee_workplaceRecord[1].workplaceId);
+                setTimeRecord_id(response.data.recordworkplace[0]._id);
 
-            setRowDataList2(response.data.recordworkplace[0].employee_workplaceRecord);
+                setRowDataList2(response.data.recordworkplace[0].employee_workplaceRecord);
 
-            // alert(JSON.stringify( rowDataList[0] ) );
-            //count work of time and set to table 
-            // for (let i = 0; i < response.data.recordworkplace[0].employeeRecord.length; i++) {
-            // alert(response.data.recordworkplace[0].employeeRecord[i].shift );
-            // handleFieldChange(i, 'shift', response.data.recordworkplace[0].employeeRecord[i].shift);
-            // }
+                // alert(JSON.stringify( rowDataList[0] ) );
+                //count work of time and set to table 
+                // for (let i = 0; i < response.data.recordworkplace[0].employeeRecord.length; i++) {
+                // alert(response.data.recordworkplace[0].employeeRecord[i].shift );
+                // handleFieldChange(i, 'shift', response.data.recordworkplace[0].employeeRecord[i].shift);
+                // }
 
+            }
+        } catch (error) {
+            alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
+            alert(error.message);
+            window.location.reload();
         }
-    } catch (error) {
-        alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
-        alert(error.message);
-        window.location.reload();
-    }
 
-}
+    }
 
     async function handleManageWorkplace(event) {
         event.preventDefault();
@@ -691,6 +691,35 @@ async function handleCheckTimerecord (){
             alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
             // window.location.reload();
         }
+
+    }
+
+    async function handleUpdateWorkplaceTimerecord(event) {
+        event.preventDefault();
+        // alert('hi');
+        //get data from input in useState to data 
+
+        const data = {
+            employeeId: employeeId,
+            employeeName: name,
+            month: month,
+            employee_workplaceRecord: rowDataList2
+        };
+
+        try {
+
+            const response = await axios.put(endpoint + '/timerecord/update/' + timeRecord_id, data);
+            // setEmployeesResult(response.data.employees);
+            if (response) {
+                alert("บันทึกสำเร็จ");
+                window.location.reload();
+
+            }
+        } catch (error) {
+            alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+            // window.location.reload();
+        }
+
 
     }
 
@@ -1030,7 +1059,16 @@ async function handleCheckTimerecord (){
 
 
                             <div class="form-group">
-                                <button class="btn b_save" onClick={handleCreateWorkplaceTimerecord}><i class="nav-icon fas fa-save"></i> &nbsp; บันทึก</button>
+                                {/* <button class="btn b_save" onClick={handleCreateWorkplaceTimerecord}><i class="nav-icon fas fa-save"></i> &nbsp; บันทึก</button> */}
+                                {updateButton ? (
+                                    <button class="btn b_save" onClick={handleUpdateWorkplaceTimerecord} >
+                                        <i class="nav-icon fas fa-save"></i> &nbsp; อัพเดท
+                                    </button>
+                                ) : (
+                                    <button class="btn b_save" onClick={handleCreateWorkplaceTimerecord}>
+                                        <i class="nav-icon fas fa-save"></i> &nbsp; บันทึก
+                                    </button>
+                                )}
                             </div>
                         </form>
 
