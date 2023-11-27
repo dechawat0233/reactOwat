@@ -397,7 +397,7 @@ router.put('/updateemp/:employeeRecordId', async (req, res) => {
 
   try {
     // Find the resource by ID and update it
-    const updatedResource = await employeeTimerecord.findByIdAndUpdate(
+    const updatedResource = await workplaceTimerecordEmp.findByIdAndUpdate(
       employeeIdToUpdate,
       updateFields,
       { new: true } // To get the updated document as the result
