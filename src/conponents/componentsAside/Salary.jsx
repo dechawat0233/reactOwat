@@ -12,7 +12,7 @@ import '../editwindowcss.css';
 
 function Salary() {
     useEffect(() => {
-        document.title = 'สรุปเงินเดือน';
+        document.title = 'ข้อมูลเงินเดือน';
         // You can also return a cleanup function if needed
         // return () => { /* cleanup code */ };
     }, []);

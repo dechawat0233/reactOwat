@@ -22,7 +22,7 @@ function SocialSecurity() {
     //     if (checkedItems.length < 1) {
     //       setSumAddSalary(0);
     //     }
-      
+
     //     // Use the functional form of setCheckedItems to ensure you're using the most up-to-date state
     //     setCheckedItems(prevCheckedItems => {
     //       if (prevCheckedItems.includes(id)) {
@@ -44,33 +44,33 @@ function SocialSecurity() {
     //       }
     //     });
     //   };
-      
 
-//     const handleCheckboxChange = (id , SpSalary) => {
-//         if(checkedItems.length < 1) {
-// setSumAddSalary(0);
-//         }
 
-//       if (checkedItems.includes(id)) {
-//         setCheckedItems(checkedItems.filter(item => item !== id));
-//         setTempSpSalary(parseInt(- SpSalary, 10));
-//         setEmployeeData(prevData => ({
-//             ...prevData,
-//             ['selectAddSalary']: checkedItems,
-//             ['sumAddSalary']: sumAddSalary,
-//         }));
+    //     const handleCheckboxChange = (id , SpSalary) => {
+    //         if(checkedItems.length < 1) {
+    // setSumAddSalary(0);
+    //         }
 
-//       } else {
-//         setCheckedItems([...checkedItems, id]);
-// setTempSpSalary(parseInt(SpSalary, 10));
+    //       if (checkedItems.includes(id)) {
+    //         setCheckedItems(checkedItems.filter(item => item !== id));
+    //         setTempSpSalary(parseInt(- SpSalary, 10));
+    //         setEmployeeData(prevData => ({
+    //             ...prevData,
+    //             ['selectAddSalary']: checkedItems,
+    //             ['sumAddSalary']: sumAddSalary,
+    //         }));
 
-//         setEmployeeData(prevData => ({
-//             ...prevData,
-//             ['selectAddSalary']: checkedItems,
-//             ['sumAddSalary']: sumAddSalary,
-//         }));
-//       }
-//     };
+    //       } else {
+    //         setCheckedItems([...checkedItems, id]);
+    // setTempSpSalary(parseInt(SpSalary, 10));
+
+    //         setEmployeeData(prevData => ({
+    //             ...prevData,
+    //             ['selectAddSalary']: checkedItems,
+    //             ['sumAddSalary']: sumAddSalary,
+    //         }));
+    //       }
+    //     };
 
     // save
 
@@ -157,63 +157,96 @@ function SocialSecurity() {
         return total;
     };
 
-const [sumAddSalary , setSumAddSalary] = useState(0);
-const [tempSpSalary , setTempSpSalary ] = useState(0);
+    const [sumAddSalary, setSumAddSalary] = useState(0);
+    const [tempSpSalary, setTempSpSalary] = useState(0);
 
-const handleCheckboxChange = (id, SpSalary) => {
-    setCheckedItems(prevCheckedItems => {
-      const newCheckedItems = prevCheckedItems.includes(id)
-        ? prevCheckedItems.filter(item => item !== id)
-        : [...prevCheckedItems, id];
+    const handleCheckboxChange = (id, SpSalary) => {
+        setCheckedItems(prevCheckedItems => {
+            const newCheckedItems = prevCheckedItems.includes(id)
+                ? prevCheckedItems.filter(item => item !== id)
+                : [...prevCheckedItems, id];
 
-      updateSumAddSalary(newCheckedItems, SpSalary);
-      return newCheckedItems;
-    });
-  };
+            updateSumAddSalary(newCheckedItems, SpSalary);
+            return newCheckedItems;
+        });
+    };
 
-  const updateSumAddSalary = (newCheckedItems, SpSalary) => {
-    const sum = newCheckedItems.reduce((acc, itemId) => {
-      const selectedItem = employeeData.addSalary.find(item => item._id === itemId);
-      return selectedItem ? acc + parseInt(selectedItem.SpSalary, 10) : acc;
-    }, 0);
+    const updateSumAddSalary = (newCheckedItems, SpSalary) => {
+        const sum = newCheckedItems.reduce((acc, itemId) => {
+            const selectedItem = employeeData.addSalary.find(item => item._id === itemId);
+            return selectedItem ? acc + parseInt(selectedItem.SpSalary, 10) : acc;
+        }, 0);
+        setSumAddSalary(sum);
+    };
 
-    setSumAddSalary(sum);
-  };
+    // const handleCheckboxChange = (id, SpSalary) => {
+    //     setCheckedItems(prevCheckedItems => {
+    //         const isChecked = prevCheckedItems.includes(id);
+    //         const newCheckedItems = isChecked
+    //             ? prevCheckedItems.filter(item => item !== id)
+    //             : [...prevCheckedItems, id];
 
-  useEffect(() => {
-    // Perform actions when checkedItems or tempSpSalary changes
-    updateSumAddSalary(checkedItems, tempSpSalary);
+    //         updateSumAddSalary(newCheckedItems, isChecked, SpSalary);
+    //         return newCheckedItems;
+    //     });
+    // };
 
-    // Update employeeData with the updated selectAddSalary and sumAddSalary
-    setEmployeeData(prevData => ({
-      ...prevData,
-      selectAddSalary: checkedItems,
-      sumAddSalary: sumAddSalary,
-    }));
+    // const updateSumAddSalary = (newCheckedItems, isChecked, SpSalary) => {
+    //     setSumAddSalary(prevSum => {
+    //         let sum = prevSum;
+    //         if (isChecked) {
+    //             // If the checkbox is checked, subtract SpSalary
+    //             const selectedItem = employeeData.addSalary && employeeData.addSalary.find(item => item._id === id);
+    //             if (selectedItem) {
+    //                 sum -= parseInt(selectedItem.SpSalary, 10);
+    //             }
+    //         } else {
+    //             // If the checkbox is unchecked, add SpSalary
+    //             const selectedItem = employeeData.addSalary && employeeData.addSalary.find(item => item._id === id);
+    //             if (selectedItem) {
+    //                 sum += parseInt(selectedItem.SpSalary, 10);
+    //             }
+    //         }
+    //         return sum;
+    //     });
+    // };
 
-    // You may want to update the employeeData to an API endpoint or any other storage solution here
-  }, [checkedItems, tempSpSalary]);
+
+
+    useEffect(() => {
+        // Perform actions when checkedItems or tempSpSalary changes
+        updateSumAddSalary(checkedItems, tempSpSalary);
+
+        // Update employeeData with the updated selectAddSalary and sumAddSalary
+        setEmployeeData(prevData => ({
+            ...prevData,
+            selectAddSalary: checkedItems,
+            sumAddSalary: sumAddSalary,
+        }));
+
+        // You may want to update the employeeData to an API endpoint or any other storage solution here
+    }, [checkedItems, tempSpSalary]);
 
 
     //sum salaryaddsumSec by using sumAddSalary
-//     useEffect( () => {
-// // alert(checkedItems );
-// // alert(JSON.stringify( employeeData.addSalary, null , 2));
-// const sum = sumAddSalary || 0;
+    //     useEffect( () => {
+    // // alert(checkedItems );
+    // // alert(JSON.stringify( employeeData.addSalary, null , 2));
+    // const sum = sumAddSalary || 0;
 
-// if(employeeData.addSalary){
-// const x = employeeData.addSalary.filter(item => item._id == checkedItems );
-// // alert(JSON.stringify(x,null,2));
-// if(x){
-//     setSumAddSalary(parseInt(sum , 10) + parseInt(tempSpSalary, 10) );
-//     // alert(x.SpSalary);
-    
-// }
-// } else{
-//     // alert('hi');
-// }
+    // if(employeeData.addSalary){
+    // const x = employeeData.addSalary.filter(item => item._id == checkedItems );
+    // // alert(JSON.stringify(x,null,2));
+    // if(x){
+    //     setSumAddSalary(parseInt(sum , 10) + parseInt(tempSpSalary, 10) );
+    //     // alert(x.SpSalary);
 
-//     }, [checkedItems]);
+    // }
+    // } else{
+    //     // alert('hi');
+    // }
+
+    //     }, [checkedItems]);
 
     // Step 4: Use useState to manage the selected option
     const Bangkok = ['คณะแพทยศาสตร์วชิรพยาบาล', 'รพ.กลาง', 'รพ.จุฬาลงกรณ์', 'รพ.เจริญกรุงประชารักษ์', 'รพ.ตากสิน', 'รพ.ตำรวจ ', 'รพ.ทัณฑสถานโรงพยาบาลราชทัณฑ์', 'รพ.นพรัตนราชธานี(สธ)', 'รพ.พระมงกุฎเกล้า', 'รพ.ภูมิพลอดุลยเดช', 'รพ.ราชวิถี(สธ)', 'รพ.รามาธิบดี', 'รพ.ราชพิพัฒน์', 'รพ.เลิดสิน(สธ)', 'รพ.เวชการุณย์รัศมิ์', 'รพ.ศิริราช', 'รพ.สมเด็จพระปิ่นเกล้า', 'รพ.สมเด็จพระปิ่นเกล้า', 'รพ.หลวงพ่อทวีศักดิ์ ชุตินฺธโร อุทิศ', 'รพ.ลาดกระบัง กรุงเทพมหานคร']
@@ -384,7 +417,7 @@ const handleCheckboxChange = (id, SpSalary) => {
         setJobtype(empSelect.jobtype);
 
         //set checkbox is selection 
-        setCheckedItems(empSelect.selectAddSalary ||'');
+        setCheckedItems(empSelect.selectAddSalary || '');
         //set sum addSalary
         setSumAddSalary(empSelect.sumAddSalary || '');
 
@@ -719,7 +752,7 @@ const handleCheckboxChange = (id, SpSalary) => {
                                                                                 <input
                                                                                     type="checkbox"
                                                                                     checked={checkedItems.includes(item._id)}
-                                                                                    onChange={() => handleCheckboxChange(item._id , item.SpSalary)}
+                                                                                    onChange={() => handleCheckboxChange(item._id, item.SpSalary)}
                                                                                 />
                                                                                 ค่า {item.name} {item.SpSalary} บาท
 
