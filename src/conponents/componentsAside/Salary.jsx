@@ -86,6 +86,7 @@ function Salary() {
     const [employeeId, setEmployeeId] = useState('');
     const [position, setPosition] = useState(''); //ตำแหน่ง
     const [department, setDepartment] = useState(''); //แผนก
+
     const [workplace, setWorkplace] = useState(''); //หน่วยงาน
     const [workplacearea, setWorkplacearea] = useState('');
     const [costtype, setCosttype] = useState(''); //ลงบัญชีเป็นค่าใช้จ่าย
@@ -307,7 +308,7 @@ function Salary() {
         // alert(event.target.value);
 
         const filtered = workplaceSelection.filter(wp =>
-            event.target.value === '' || wp.workplaceId === event.target.value
+            event.target.value === '' || wp.workplaceId === event.target.value || wp.workplaceName === event.target.value
         )
         // alert(JSON.stringify(filtered , null, 2) );
         // alert(filtered[0].workplaceArea );
@@ -343,6 +344,7 @@ function Salary() {
 
         // setWorkplacearea(filtered[0].workplaceArea );
     };
+
     // console.log(workplaceSelection);
 
     const handleWorktable = (event) => {
@@ -452,7 +454,7 @@ function Salary() {
 
         //set workplace to show
         const filtered = await workplaceSelection.filter(wp =>
-            empSelect.workplace === '' || wp.workplaceId === empSelect.workplace
+            empSelect.workplace === '' || wp.workplaceId === empSelect.workplace || wp.workplaceName === empSelect.workplace
         )
         if (filtered !== '') {
             if (employeeData.workplace == '') {
@@ -682,8 +684,7 @@ function Salary() {
                                                                     </option>
                                                                 ))}
                                                             </datalist>
-
-
+                                                    
                                                             {/* <input
                                                                 type="text"
                                                                 id="workplace"
@@ -996,9 +997,7 @@ function Salary() {
                                     <div class="col-md-9">
                                         <h2 class="title">เงินเพิ่มพิเศษ</h2>
                                         <section class="Frame">
-
                                             {/* {JSON.stringify(formData.addSalary , null ,2) } */}
-
                                             {formData.addSalary && formData.addSalary.length > 0 && formData.addSalary.map((data, index) => (
                                                 <div className="row" key={index}>
                                                     <div className="col-md-2">
@@ -1009,6 +1008,7 @@ function Salary() {
                                                             className="form-control"
                                                             value={data.name}
                                                             onChange={(e) => handleChangeSpSalary(e, index, 'name')}
+                                                            readOnly
                                                         />
                                                     </div>
                                                     <div className="col-md-2">
@@ -1019,6 +1019,7 @@ function Salary() {
                                                             className="form-control"
                                                             value={data.SpSalary}
                                                             onChange={(e) => handleChangeSpSalary(e, index, 'SpSalary')}
+                                                            readOnly
                                                         />
 
                                                     </div>
@@ -1029,6 +1030,7 @@ function Salary() {
                                                             className="form-control"
                                                             value={data.roundOfSalary}
                                                             onChange={(e) => handleChangeSpSalary(e, index, 'roundOfSalary')}
+
                                                         >
                                                             <option value="daily">รายวัน</option>
                                                             <option value="monthly">รายเดือน</option>
@@ -1041,6 +1043,7 @@ function Salary() {
                                                             className="form-control"
                                                             value={data.StaffType}
                                                             onChange={(e) => handleChangeSpSalary(e, index, 'StaffType')}
+                                                            readonly
                                                         >
                                                             <option value="">เลือกตำแหน่งที่จะมอบให้</option>
                                                             <option value="all">ทั้งหมด</option>
@@ -1058,6 +1061,7 @@ function Salary() {
                                                                 className="form-control"
                                                                 value={data.nameType}
                                                                 onChange={(e) => handleChangeSpSalary(e, index, 'nameType')}
+                                                                readOnly
                                                             />
                                                         </div>
                                                     )}
