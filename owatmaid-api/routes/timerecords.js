@@ -698,4 +698,32 @@ router.put('/update/:workplaceRecordId', async (req, res) => {
 });
 
 
+// Update existing records in workplaceTimerecordEmp
+router.put('/updateemp/:workplaceRecordId', async (req, res) => {
+  const workplaceIdToUpdate = req.params.workplaceRecordId;
+  const updateFields = req.body;
+  try {
+    // Find the resource by ID and update it
+    const updatedResource = await workplaceTimerecordEmp.findByIdAndUpdate(
+      workplaceIdToUpdate,
+      updateFields,
+      { new: true } // To get the updated document as the result
+    );
+    if (!updatedResource) {
+      return res.status(404).json({ message: 'Resource not found' });
+    }
+
+    // Update records in workplaceTimerecordEmp using setToEmployee with updateRecord set to true
+    await setToEmployee(updatedResource.employeeId, updatedResource.employeeName , updatedResource.month , updatedResource.employee_workplaceRecord , true);
+
+    // Send the updated resource as the response
+    res.json(updatedResource);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
 module.exports = router;
