@@ -699,13 +699,13 @@ router.put('/update/:workplaceRecordId', async (req, res) => {
 
 
 // Update existing records in workplaceTimerecordEmp
-router.put('/updateemp/:workplaceRecordId', async (req, res) => {
-  const workplaceIdToUpdate = req.params.workplaceRecordId;
+router.put('/updateemp/:timeRecord_id', async (req, res) => {
+  const workplaceIdToUpdate = req.params.employeeRecordId;
   const updateFields = req.body;
   try {
     // Find the resource by ID and update it
-    const updatedResource = await workplaceTimerecordEmp .findByIdAndUpdate(
-      workplaceIdToUpdate,
+    const updatedResource = await workplaceTimerecordEmp.findByIdAndUpdate(
+      workplaceIdToUpdate ,
       updateFields,
       { new: true } // To get the updated document as the result
     );
