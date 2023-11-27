@@ -716,6 +716,7 @@ function AddsettimeEmployee() {
 
             }
         } catch (error) {
+            console.log('error', error);
             alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
             // window.location.reload();
         }
