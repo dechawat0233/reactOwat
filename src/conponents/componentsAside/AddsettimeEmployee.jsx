@@ -28,6 +28,13 @@ function AddsettimeEmployee() {
         setMonth("01");
     }, []);
 
+    useEffect(() => {
+        if(name !== ''){
+            handleCheckTimerecord();        
+        }
+    }, [month]);
+
+
     const options = [];
 
     for (let i = 1; i <= 31; i++) {
@@ -577,7 +584,7 @@ async function handleCheckTimerecord (){
         } else {
             // Set the state to true if data is found
             setUpdateButton(true);
-alert(response.data.recordworkplace[0].employee_workplaceRecord[1].workplaceId);
+// alert(response.data.recordworkplace[0].employee_workplaceRecord[1].workplaceId);
             setTimeRecord_id(response.data.recordworkplace[0]._id);
 
             setRowDataList2(response.data.recordworkplace[0].employee_workplaceRecord);
