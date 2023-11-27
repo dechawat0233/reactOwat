@@ -179,37 +179,7 @@ function SocialSecurity() {
         setSumAddSalary(sum);
     };
 
-    // const handleCheckboxChange = (id, SpSalary) => {
-    //     setCheckedItems(prevCheckedItems => {
-    //         const isChecked = prevCheckedItems.includes(id);
-    //         const newCheckedItems = isChecked
-    //             ? prevCheckedItems.filter(item => item !== id)
-    //             : [...prevCheckedItems, id];
 
-    //         updateSumAddSalary(newCheckedItems, isChecked, SpSalary);
-    //         return newCheckedItems;
-    //     });
-    // };
-
-    // const updateSumAddSalary = (newCheckedItems, isChecked, SpSalary) => {
-    //     setSumAddSalary(prevSum => {
-    //         let sum = prevSum;
-    //         if (isChecked) {
-    //             // If the checkbox is checked, subtract SpSalary
-    //             const selectedItem = employeeData.addSalary && employeeData.addSalary.find(item => item._id === id);
-    //             if (selectedItem) {
-    //                 sum -= parseInt(selectedItem.SpSalary, 10);
-    //             }
-    //         } else {
-    //             // If the checkbox is unchecked, add SpSalary
-    //             const selectedItem = employeeData.addSalary && employeeData.addSalary.find(item => item._id === id);
-    //             if (selectedItem) {
-    //                 sum += parseInt(selectedItem.SpSalary, 10);
-    //             }
-    //         }
-    //         return sum;
-    //     });
-    // };
 
 
 
