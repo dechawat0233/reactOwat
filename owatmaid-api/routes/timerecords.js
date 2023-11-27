@@ -697,7 +697,7 @@ router.put('/update/:workplaceRecordId', async (req, res) => {
   }
 });
 
-app.put('/updateemp/:employeeId/timerecord/:recordId', async (req, res) => {
+router.put('/updateemp/:employeeId/timerecord/:recordId', async (req, res) => {
   const { employeeId, recordId } = req.params;
   const updatedRecord = req.body;
 
