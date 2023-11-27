@@ -708,7 +708,7 @@ function AddsettimeEmployee() {
 
         try {
 
-            const response = await axios.put(endpoint + '/timerecord/update/' + timeRecord_id, data);
+            const response = await axios.put(endpoint + '/timerecord/updateemp/' + timeRecord_id, data);
             // setEmployeesResult(response.data.employees);
             if (response) {
                 alert("บันทึกสำเร็จ");

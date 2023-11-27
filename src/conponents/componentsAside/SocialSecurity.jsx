@@ -160,18 +160,52 @@ function SocialSecurity() {
     const [sumAddSalary, setSumAddSalary] = useState(0);
     const [tempSpSalary, setTempSpSalary] = useState(0);
 
+    // const handleCheckboxChange = (id, SpSalary) => {
+    //     setCheckedItems(prevCheckedItems => {
+    //         const newCheckedItems = prevCheckedItems.includes(id)
+    //             ? prevCheckedItems.filter(item => item !== id)
+    //             : [...prevCheckedItems, id];
+
+    //         updateSumAddSalary(newCheckedItems, SpSalary);
+    //         return newCheckedItems;
+    //     });
+    // };
+
+    // const updateSumAddSalary = (newCheckedItems, SpSalary) => {
+    //     const sum = newCheckedItems.reduce((acc, itemId) => {
+    //         const selectedItem = employeeData.addSalary.find(item => item._id === itemId);
+    //         return selectedItem ? acc + parseInt(selectedItem.SpSalary, 10) : acc;
+    //     }, 0);
+    //     setSumAddSalary(sum);
+    // };
+
+    // useEffect(() => {
+    //     // Perform actions when checkedItems or tempSpSalary changes
+    //     updateSumAddSalary(checkedItems, tempSpSalary);
+
+    //     // Update employeeData with the updated selectAddSalary and sumAddSalary
+    //     setEmployeeData(prevData => ({
+    //         ...prevData,
+    //         selectAddSalary: checkedItems,
+    //         sumAddSalary: sumAddSalary,
+    //     }));
+
+    //     // You may want to update the employeeData to an API endpoint or any other storage solution here
+    // }, [checkedItems, tempSpSalary]);
+
     const handleCheckboxChange = (id, SpSalary) => {
         setCheckedItems(prevCheckedItems => {
-            const newCheckedItems = prevCheckedItems.includes(id)
+            const isChecked = prevCheckedItems.includes(id);
+            const newCheckedItems = isChecked
                 ? prevCheckedItems.filter(item => item !== id)
                 : [...prevCheckedItems, id];
 
-            updateSumAddSalary(newCheckedItems, SpSalary);
+            updateSumAddSalary(newCheckedItems);
             return newCheckedItems;
         });
     };
 
-    const updateSumAddSalary = (newCheckedItems, SpSalary) => {
+    const updateSumAddSalary = (newCheckedItems) => {
         const sum = newCheckedItems.reduce((acc, itemId) => {
             const selectedItem = employeeData.addSalary.find(item => item._id === itemId);
             return selectedItem ? acc + parseInt(selectedItem.SpSalary, 10) : acc;
@@ -179,13 +213,9 @@ function SocialSecurity() {
         setSumAddSalary(sum);
     };
 
-
-
-
-
     useEffect(() => {
         // Perform actions when checkedItems or tempSpSalary changes
-        updateSumAddSalary(checkedItems, tempSpSalary);
+        updateSumAddSalary(checkedItems);
 
         // Update employeeData with the updated selectAddSalary and sumAddSalary
         setEmployeeData(prevData => ({
@@ -196,6 +226,7 @@ function SocialSecurity() {
 
         // You may want to update the employeeData to an API endpoint or any other storage solution here
     }, [checkedItems, tempSpSalary]);
+
 
 
     //sum salaryaddsumSec by using sumAddSalary
@@ -494,17 +525,23 @@ function SocialSecurity() {
         } else {
             const parsedSalary = parseFloat(employeeData.salary);
             const parsedSalarySS = parseFloat(salaryaddsumSec());
-            const parsedSalaryFinal = parsedSalary + parsedSalarySS;
+            const parsedSalaryFinal = parsedSalary + parsedSalarySS + sumAddSalary;
             const parsedMinus = parseFloat(employeeData.minus) / 100; // Convert the minus percentage to a decimal
             // console.log(parsedSalarySS);
             if (parsedSalaryFinal < 1650) {
-                setSocialSecurity(1650 * parsedMinus);
+                const socialSecurityValue = 1650 * parsedMinus;
+                const formattedSocialSecurity = parseFloat(socialSecurityValue.toFixed(2));
+                setSocialSecurity(formattedSocialSecurity);
                 setParsedSalaryFinal(parsedSalaryFinal);
             } else if (parsedSalaryFinal >= 1650 && parsedSalaryFinal <= 15000) {
-                setSocialSecurity(parsedSalaryFinal * parsedMinus);
+                const socialSecurityValue = parsedSalaryFinal * parsedMinus;
+                const formattedSocialSecurity = parseFloat(socialSecurityValue.toFixed(2));
+                setSocialSecurity(formattedSocialSecurity);
                 setParsedSalaryFinal(parsedSalaryFinal);
             } else {
-                setSocialSecurity(15000 * parsedMinus);
+                const socialSecurityValue = 15000 * parsedMinus;
+                const formattedSocialSecurity = parseFloat(socialSecurityValue.toFixed(2));
+                setSocialSecurity(formattedSocialSecurity);
                 setParsedSalaryFinal(parsedSalaryFinal);
             }
         }
