@@ -8,9 +8,28 @@ import '../editwindowcss.css';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import html2pdf from 'html2pdf.js';
+import { useTable } from 'react-table';
 
 
 function Worktimesheet() {
+  const vertical1 = {
+    borderCollapse: "collapse",
+    width: "100%",
+  };
+
+  const verticalText = {
+    writingMode: "vertical-rl",
+    textAlign: "center", // Adjust as needed
+    whiteSpace: "nowrap", // Prevent text wrapping
+  };
+  const verticalTextHeader = {
+    writingMode: "vertical-rl",
+    textAlign: "center",
+    whiteSpace: "nowrap",
+    transform: "rotate(180deg)", // Rotate the text 180 degrees
+  };
+
+
   useEffect(() => {
     document.title = 'ใบลงเวลาการปฏิบัติงาน';
     // You can also return a cleanup function if needed
@@ -893,7 +912,7 @@ function Worktimesheet() {
 
     const updatedAddSalary = selectedaddSalary.map((salaryObject) => {
       const { SpSalary, roundOfSalary } = salaryObject;
-    
+
       if (roundOfSalary === 'daily') {
         return {
           ...salaryObject,
@@ -938,7 +957,7 @@ function Worktimesheet() {
     setMinusSearch(selectedMinus);
     // setAddSalary(filteredAddSalary);
     setAddSalary(updatedAddSalary);
-  }, [searchResult, employeelist,countWork]);
+  }, [searchResult, employeelist, countWork]);
   // console.log('employee', employee);
   console.log('addSalary123', addSalary);
   console.log('setEmpData', EmpData);
@@ -1671,7 +1690,7 @@ function Worktimesheet() {
                         </thead>
                         <tbody>
                           <tr>
-                            <td>วันทำงาน</td>
+                            <td style={verticalTextHeader} >วันทำงาน</td>
                             {tableData.map((data, index) => (
                               <td key={index}>
                                 {/* <input
@@ -1857,6 +1876,16 @@ function Worktimesheet() {
                           <td>{result}</td>
                         </tr>
                       </tbody>
+                    </table>
+                    <table style={vertical1}>
+                      <thead>
+                        <tr>
+                          <th style={verticalTextHeader}>Header 1</th>
+                          <th style={verticalTextHeader}>Header 2</th>
+                          {/* Add more header columns as needed */}
+                        </tr>
+                      </thead>
+                      
                     </table>
                   </div>
                 </section>

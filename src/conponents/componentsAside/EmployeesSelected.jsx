@@ -98,7 +98,7 @@ function EmployeesSelected({ onEmployeeSelect }) {
                     marginLeft: '-3rem',
                   }}
                 >
-                  <span style={{ flex: 1 }}>{employee.name}</span>
+                  <span style={{ flex: 1 }}>{employee.employeeId}:{employee.name} {employee.lastName}</span>
                   <div>
                     <button
                       aria-label="choose"
