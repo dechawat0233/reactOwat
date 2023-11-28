@@ -72,6 +72,13 @@ function AddsettimeWorkplace() {
     }, []); // The empty array [] ensures that the effect runs only once after the initial render
     console.log(employeeList);
 
+    //auto check time record 
+    useEffect(() => {
+        if(workplaceName !== ''){
+            handleCheckTimerecord();
+        }
+    } , [workDate] );
+
     /////////////////////////////////////////////
     const [staffId, setStaffId] = useState(''); //รหัสหน่วยงาน
     const [staffName, setStaffName] = useState(''); //รหัสหน่วยงาน
