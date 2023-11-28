@@ -480,13 +480,13 @@ function AddEditEmployee() {
                     {/* <!-- Content Header (Page header) --> */}
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><i class="fas fa-home"></i> <a href="index.php">หน้าหลัก</a></li>
-                        <li class="breadcrumb-item"><a href="#"> ระบบเงินเดือน</a></li>
-                        <li class="breadcrumb-item active">ใบลงเวลาการปฏิบัติงาน</li>
+                        {/* <li class="breadcrumb-item"><a href="#"> ระบบเงินเดือน</a></li> */}
+                        <li class="breadcrumb-item active">ระบบ เพิ่ม/ลบ พนักงาน</li>
                     </ol>
                     <div class="content-header">
                         <div class="container-fluid">
                             <div class="row mb-2">
-                                <h1 class="m-0"><i class="far fa-arrow-alt-circle-right"></i> ใบลงเวลาการปฏิบัติงาน</h1>
+                                <h1 class="m-0"><i class="far fa-arrow-alt-circle-right"></i> ระบบ เพิ่ม/ลบ พนักงาน</h1>
                             </div>
                         </div>
                     </div>
@@ -543,14 +543,14 @@ function AddEditEmployee() {
                                                                     <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
                                                                         {searchResult.map(workplace => (
                                                                             <li key={workplace.id}>
-                                                                                รหัส {workplace.employeeId} ชื่อ {workplace.name}
+                                                                                รหัส {workplace.employeeId} ชื่อ {workplace.name} {workplace.lastName}
                                                                                 <button
                                                                                     type="button"
                                                                                     name="delete"
                                                                                     value="delete"
                                                                                     onClick={() => handleDelete(workplace._id)} // Pass the actual employeeId
                                                                                     className="btn btn-danger"
-                                                                                    style={{ width: "5rem" }}
+                                                                                    style={{ width: "5rem",marginLeft:"1rem" }}
                                                                                 >
                                                                                     &nbsp;ลบ
                                                                                 </button>
