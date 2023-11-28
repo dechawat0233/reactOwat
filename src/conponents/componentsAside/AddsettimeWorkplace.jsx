@@ -870,7 +870,7 @@ function AddsettimeWorkplace() {
             const response = await axios.post(endpoint + '/timerecord/search', data);
 
             if (response.data.recordworkplace.length < 1) {
-                alert('ไม่พบข้อมูล');
+                // alert('ไม่พบข้อมูล');
                 // Set the state to false if no data is found
                 setUpdateButton(false);
                 setTimeRecord_id('');
