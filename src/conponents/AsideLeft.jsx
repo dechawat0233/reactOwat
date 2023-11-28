@@ -90,6 +90,9 @@ function AsideLeft() {
                       <li class="nav-item">
                         <Link to="/salarysummary" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> สรุปเงินเดือน</Link>
                       </li>
+                      <li class="nav-item">
+                        <Link to="/worktimesheetworkplace" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> สรุปหน่วยงาน</Link>
+                      </li>
                     </>
                   </ul>
                 )}

@@ -44,6 +44,7 @@ import Addsettime from "./conponents/componentsAside/Addsettime";
 
 import Salarysummary from "./conponents/componentsAside/Salarysummary";
 import Worktimesheet from "./conponents/componentsAside/Worktimesheet";
+import WorktimeSheetWorkplace from "./conponents/componentsAside/WorktimeSheetWorkplace";
 
 import TestPDF from "./conponents/componentsAside/TestPDF";
 // import SendEmployeePDF from "./conponents/componentsAside/sendEmployeePDF";
@@ -124,6 +125,7 @@ function App() {
               <Route path="/salary" element={<Salary />} />
               <Route path="/salarysummary" element={<Salarysummary />} />
               <Route path="/worktimesheet" element={<Worktimesheet />} />
+              <Route path="/worktimesheetworkplace" element={<WorktimeSheetWorkplace />} />
 
 
 
