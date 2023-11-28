@@ -397,6 +397,7 @@ function AddEditEmployee() {
         } catch (error) {
             console.error('Error deleting employee:', error.message);
         }
+        window.location.reload();
     };
 
     useEffect(() => {
