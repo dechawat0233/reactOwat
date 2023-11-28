@@ -307,6 +307,7 @@ function AddEditEmployee() {
 
                 // Set search values
                 setEmployeeId(response.data.employees[0].employeeId);
+                setWorkplace(response.data.employees[0].workplace);
 
                 setPosition(response.data.employees[0].position);
                 setSalary(response.data.employees[0].salary);
