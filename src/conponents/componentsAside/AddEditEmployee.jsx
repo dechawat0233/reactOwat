@@ -382,23 +382,50 @@ function AddEditEmployee() {
     // };
 
 
-    const handleDelete = async (_id) => {
-        try {
-            const response = await axios.delete(`${endpoint}/employee/delete_id/${_id}`);
+    // const handleDelete = async (_id) => {
+    //     try {
+    //         const response = await axios.delete(`${endpoint}/employee/delete_id/${_id}`);
 
-            // Check the response status
-            if (response.status === 200) {
-                console.log('Employee deleted successfully:', response.data);
-                setDeleted(true);
-                // Optionally, update your UI or state after successful deletion
-            } else {
-                console.error('Error deleting employee:', response.data.error);
+    //         // Check the response status
+    //         if (response.status === 200) {
+    //             console.log('Employee deleted successfully:', response.data);
+    //             setDeleted(true);
+    //             // Optionally, update your UI or state after successful deletion
+    //         } else {
+    //             console.error('Error deleting employee:', response.data.error);
+    //         }
+    //     } catch (error) {
+    //         console.error('Error deleting employee:', error.message);
+    //     }
+    //     alert('ทำการลบเรียบร้อย');
+    //     window.location.reload();
+    // };
+    const handleDelete = async (_id) => {
+        // Show confirmation dialog
+        const isConfirmed = window.confirm('ต้องการลบพนักงานรึไม่');
+
+        // If user confirms, proceed with deletion
+        if (isConfirmed) {
+            try {
+                const response = await axios.delete(`${endpoint}/employee/delete_id/${_id}`);
+
+                // Check the response status
+                if (response.status === 200) {
+                    console.log('Employee deleted successfully:', response.data);
+                    setDeleted(true);
+                    // Optionally, update your UI or state after successful deletion
+                } else {
+                    console.error('Error deleting employee:', response.data.error);
+                }
+            } catch (error) {
+                console.error('Error deleting employee:', error.message);
             }
-        } catch (error) {
-            console.error('Error deleting employee:', error.message);
+
+            alert('ทำการลบเรียบร้อย');
+            window.location.reload();
         }
-        window.location.reload();
     };
+
 
     useEffect(() => {
         // setNewEmp(true);
