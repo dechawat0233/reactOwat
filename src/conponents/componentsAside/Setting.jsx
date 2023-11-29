@@ -251,10 +251,12 @@ function Setting() {
 
 
 
+const [showEmployeeListResult , setShowEmployeeListResult ] = useState([]);
 
     //set data to form
     function handleClickResult(workplace) {
         setNewWorkplace(false);
+        setShowEmployeeListResult(employeeListResult);
         set_id(workplace._id);
         setWorkplaceId(workplace.workplaceId);
         setWorkplaceName(workplace.workplaceName);
@@ -415,9 +417,13 @@ function Setting() {
     const [searchWorkplaceId, setSearchWorkplaceId] = useState(''); //รหัสหน่วยงาน
     const [searchWorkplaceName, setSearchWorkplaceName] = useState(''); //ชื่อหน่วยงาน
     const [searchResult, setSearchResult] = useState([]);
+const [employeeListResult , setEmployeeListResult ] = useState([]);
 
     async function handleSearch(event) {
         event.preventDefault();
+
+        //clean list employee
+        setShowEmployeeListResult([]);
 
         //get value from form search        
         const data = {
@@ -428,10 +434,27 @@ function Setting() {
         try {
             const response = await axios.post(endpoint + '/workplace/search', data);
             setSearchResult(response.data.workplaces);
+
             if (response.data.workplaces.length < 1) {
                 window.location.reload();
 
+            } else {
+//x1
+const data1 = {
+    employeeId: '' , 
+    name: '', 
+    idCard: '', 
+    workplace: searchWorkplaceId 
+};
+
+const response1 = await axios.post(endpoint + '/employee/search', data1);
+await setEmployeeListResult(response1.data.employees );
+// await alert(JSON.stringify(response1.data.employees , null ,2));
+// alert(response1.data );
+alert( employeeListResult.length);
+
             }
+
         } catch (error) {
             // setMessage('ไม่พบผลการค้นหา กรุณาตรวจสอบข้อมูลที่ใช้ในการค้นหาอีกครั้ง');
             alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
@@ -1251,6 +1274,12 @@ function Setting() {
                                         <button type="button" class="btn btn-primary" onClick={handleAddVaccination}>เพิ่ม</button>
                                         <br />
                                         <br />
+                                        {showEmployeeListResult.length > 0 && (
+                                        <h2>พนักงานในหน่วยงาน {showEmployeeListResult.length} คน</h2>
+
+                                        )
+
+                                        }
                                         {/* {employeeIdList.length > 0 && (
                                         <h2>รายการที่เพิ่ม</h2>
                                         <ul>
