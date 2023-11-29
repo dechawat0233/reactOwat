@@ -281,8 +281,8 @@ console.log(query.workplace );
     // Query the employee collection for matching documents
     const employees = await Employee.find(query);
 
-    console.log('Search Results:');
-    console.log(employees);
+    // console.log('Search Results:');
+    // console.log(employees);
     let textSearch = 'test';
     res.status(200).json({ employees });
   } catch (error) {
