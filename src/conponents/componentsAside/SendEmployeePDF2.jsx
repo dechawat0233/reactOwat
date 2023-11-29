@@ -120,7 +120,13 @@ const SendEmployeePDF2 = () => {
                 setPrefix(employee.prefix || '');
                 setLastName(employee.lastName || '');
                 setAge(employee.age || '');
-                setDateOfBirth(employee.dateOfBirth || '');
+                // setDateOfBirth(employee.dateOfBirth || '');
+                if (employee.dateOfBirth) {
+                    setDateOfBirth(employee.dateOfBirth);
+                } else {
+                    employee.dateOfBirth = null;
+                    setDateOfBirth('');
+                }
                 setIdCard(employee.idCard || '');
                 setAddress(employee.address || '');
                 setCurrentAddress(employee.currentAddress || '');
@@ -384,11 +390,11 @@ const SendEmployeePDF2 = () => {
             // doc.addImage(OwatAddress, 'PNG', 140, 10, 61.5, 28.4);
             // doc.addImage(OwatIcon, 'PNG', 10, 10, 68, 30);
             // doc.addImage(OwatSupport, 'PNG', 85, 275, 113.0, 16.4);
-doc.addPage(); // Add a new page for each set of inputs after the first
+            doc.addPage(); // Add a new page for each set of inputs after the first
         }
 
 
-        
+
 
         const arrayChunks = [];
         const chunkSize = 20;
