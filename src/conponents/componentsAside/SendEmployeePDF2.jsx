@@ -534,7 +534,7 @@ const SendEmployeePDF2 = () => {
             doc.text(`${value.Id}`, x2, y + (y2 * 2));
             doc.text(`${value.Name}`, x2, y + (y2 * 3));
             doc.text(`${value.age}`, x2, y + (y2 * 4));
-            // doc.text(`${formatDateThai(value.dateOfBirth)}`, x2, y + (y2 * 5));
+            doc.text(`${formatDateThai(value.dateOfBirth)}`, x2, y + (y2 * 5));
             doc.text(`${value.idCard}`, x2, y + (y2 * 6));
             // doc.text(`${value.address}`, x2, y + 70);
             // doc.text(`${value.currentAddress}`, x2, y + (y2 * (7 + textLines.length)));
