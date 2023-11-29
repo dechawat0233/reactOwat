@@ -92,129 +92,129 @@ function WorktimeSheetWorkplace() {
     //data for check list dayoff
     const [data_listDayoff, setData_listDayoff] = useState([]);
 
-    useEffect(() => {
-        setListDayOff({});
-        const emp_workplace = employeelist.find(item => item.employeeId === result_data[0].employeeId);
-        console.log('emp_workplace', emp_workplace);
+    // useEffect(() => {
+    //     setListDayOff({});
+    //     const emp_workplace = employeelist.find(item => item.employeeId === result_data[0].employeeId);
+    //     console.log('emp_workplace', emp_workplace);
 
-        if (emp_workplace) {
-            const wid = emp_workplace.workplace;
-            const empWorkplace = workplaceList.find(item => item.workplaceId === wid);
-            // alert(JSON.stringify(empWorkplace ,null,2));
-            console.log('empWorkplace', empWorkplace);
-            console.log('wid', wid);
+    //     if (emp_workplace) {
+    //         const wid = emp_workplace.workplace;
+    //         const empWorkplace = workplaceList.find(item => item.workplaceId === wid);
+    //         // alert(JSON.stringify(empWorkplace ,null,2));
+    //         console.log('empWorkplace', empWorkplace);
+    //         console.log('wid', wid);
 
-            const df = [];
-            if (empWorkplace.workday7 !== "true") {
-                df.push('1');
-            }
-            if (empWorkplace.workday6 !== "true") {
-                df.push('7');
-            }
-            if (empWorkplace.workday5 !== "true") {
-                df.push('6');
-            }
-            if (empWorkplace.workday4 !== "true") {
-                df.push('5');
-            }
-            if (empWorkplace.workday3 !== "true") {
-                df.push('4');
-            }
-            if (empWorkplace.workday2 !== "true") {
-                df.push('3');
-            }
-            if (empWorkplace.workday1 !== "true") {
-                df.push('2');
-            }
+    //         const df = [];
+    //         if (empWorkplace.workday7 !== "true") {
+    //             df.push('1');
+    //         }
+    //         if (empWorkplace.workday6 !== "true") {
+    //             df.push('7');
+    //         }
+    //         if (empWorkplace.workday5 !== "true") {
+    //             df.push('6');
+    //         }
+    //         if (empWorkplace.workday4 !== "true") {
+    //             df.push('5');
+    //         }
+    //         if (empWorkplace.workday3 !== "true") {
+    //             df.push('4');
+    //         }
+    //         if (empWorkplace.workday2 !== "true") {
+    //             df.push('3');
+    //         }
+    //         if (empWorkplace.workday1 !== "true") {
+    //             df.push('2');
+    //         }
 
-            setListDayOff(df);
+    //         setListDayOff(df);
 
-            //get totalday of month
-            let m = parseInt(result_data[0].month, 10); // Convert month to integer and subtract 1
-            // alert(result_data[0].month );
-            let totalDay = new Date(result_data[0].timerecordId, m, 0).getDate()
-            // alert(JSON.stringify(result_data , null,2));
-            // alert(totalDay );
-            let dateString = result_data[0].timerecordId + '/' + m + '/21';
-            let dateObj = new Date(dateString);
-            // alert(dateObj);
-            let numstartDay = getDateDayOfWeek(dateObj);
-            numstartDay = parseInt(numstartDay, 10);
-            console.log('numstartDay', numstartDay);
-            let dayoffTable = [];
-            let dayoffCheck = [];
-            // alert(numstartDay );
+    //         //get totalday of month
+    //         let m = parseInt(result_data[0].month, 10); // Convert month to integer and subtract 1
+    //         // alert(result_data[0].month );
+    //         let totalDay = new Date(result_data[0].timerecordId, m, 0).getDate()
+    //         // alert(JSON.stringify(result_data , null,2));
+    //         // alert(totalDay );
+    //         let dateString = result_data[0].timerecordId + '/' + m + '/21';
+    //         let dateObj = new Date(dateString);
+    //         // alert(dateObj);
+    //         let numstartDay = getDateDayOfWeek(dateObj);
+    //         numstartDay = parseInt(numstartDay, 10);
+    //         console.log('numstartDay', numstartDay);
+    //         let dayoffTable = [];
+    //         let dayoffCheck = [];
+    //         // alert(numstartDay );
 
-            for (let i = 21; i <= totalDay; i++) {
-                if (numstartDay > 7) {
-                    numstartDay = 1;
-                }
+    //         for (let i = 21; i <= totalDay; i++) {
+    //             if (numstartDay > 7) {
+    //                 numstartDay = 1;
+    //             }
 
-                if (df.includes(numstartDay.toString())) {
-                    // alert(i);
-                    dayoffTable.push({ [i]: "หยุด" });
-                    dayoffCheck.push(i);
+    //             if (df.includes(numstartDay.toString())) {
+    //                 // alert(i);
+    //                 dayoffTable.push({ [i]: "หยุด" });
+    //                 dayoffCheck.push(i);
 
-                } else {
-                    dayoffTable.push({ [i]: " " });
-                }
+    //             } else {
+    //                 dayoffTable.push({ [i]: " " });
+    //             }
 
-                //next day
-                numstartDay = numstartDay + 1;
-            } //end for
+    //             //next day
+    //             numstartDay = numstartDay + 1;
+    //         } //end for
 
-            //any month < 31 day , add to 31 day for show in table
-            if (totalDay < 31) {
-                for (let j = totalDay + 1; j <= 31; j++) {
-                    dayoffTable.push({ [j]: " " });
-                }
-            }
-            // alert(dayoffTable.length);
-            //next month 1 - 20 
-            // m = m +1;
-            m = parseInt(result_data[0].month, 10); // Convert month to integer and subtract 1
+    //         //any month < 31 day , add to 31 day for show in table
+    //         if (totalDay < 31) {
+    //             for (let j = totalDay + 1; j <= 31; j++) {
+    //                 dayoffTable.push({ [j]: " " });
+    //             }
+    //         }
+    //         // alert(dayoffTable.length);
+    //         //next month 1 - 20 
+    //         // m = m +1;
+    //         m = parseInt(result_data[0].month, 10); // Convert month to integer and subtract 1
 
-            // alert(m);
-            let s = result_data[0].timerecordId + '/' + (m + 1) + '/1';
-            let sObj = new Date(s);
-            // alert(sObj);
-            let numstartDay1 = getDateDayOfWeek(sObj);
-            numstartDay1 = parseInt(numstartDay1, 10);
-            // alert('x' + numstartDay1 );
-            for (let l = 1; l <= 20; l++) {
-                if (numstartDay1 > 7) {
-                    numstartDay1 = 1;
-                }
-                // alert("วันที่ " + l + "ตัวเลข" + numstartDay1  );  
-                if (df.includes(numstartDay1.toString())) {
-                    // alert(i);
-                    dayoffTable.push({ [l]: "หยุด" });
-                    // alert(l + "หยุด")
-                    dayoffCheck.push(l);
-                    //next day
-                    numstartDay1 = numstartDay1 + 1;
+    //         // alert(m);
+    //         let s = result_data[0].timerecordId + '/' + (m + 1) + '/1';
+    //         let sObj = new Date(s);
+    //         // alert(sObj);
+    //         let numstartDay1 = getDateDayOfWeek(sObj);
+    //         numstartDay1 = parseInt(numstartDay1, 10);
+    //         // alert('x' + numstartDay1 );
+    //         for (let l = 1; l <= 20; l++) {
+    //             if (numstartDay1 > 7) {
+    //                 numstartDay1 = 1;
+    //             }
+    //             // alert("วันที่ " + l + "ตัวเลข" + numstartDay1  );  
+    //             if (df.includes(numstartDay1.toString())) {
+    //                 // alert(i);
+    //                 dayoffTable.push({ [l]: "หยุด" });
+    //                 // alert(l + "หยุด")
+    //                 dayoffCheck.push(l);
+    //                 //next day
+    //                 numstartDay1 = numstartDay1 + 1;
 
-                } else {
-                    dayoffTable.push({ [l]: " " });
-                    //next day
-                    numstartDay1 = numstartDay1 + 1;
+    //             } else {
+    //                 dayoffTable.push({ [l]: " " });
+    //                 //next day
+    //                 numstartDay1 = numstartDay1 + 1;
 
-                }
+    //             }
 
-            } //end for
-            // alert(dayoffTable.length);
+    //         } //end for
+    //         // alert(dayoffTable.length);
 
 
-            setData_listDayoff(dayoffCheck);
-            setListTableDayoff(dayoffTable);
+    //         setData_listDayoff(dayoffCheck);
+    //         setListTableDayoff(dayoffTable);
 
-            // alert(df);
-            // alert(dayoffCheck);
-            //xx
+    //         // alert(df);
+    //         // alert(dayoffCheck);
+    //         //xx
 
-        }
+    //     }
 
-    }, [result_data]);
+    // }, [result_data]);
 
     console.log('data_listDayoff', data_listDayoff);
     console.log('listTableDayoff', listTableDayoff);
@@ -651,130 +651,131 @@ function WorktimeSheetWorkplace() {
     const [EmpData, setEmpData] = useState([]); // Example: February (you can set it dynamically)
     // const [EmpDataWorkplace, setEmpDataWorkplace] = useState([]); // Example: February (you can set it dynamically)
 
-    useEffect(() => {
-        // Extract employeeIds from searchResult
-        const employeeIds = searchResult.map((obj) => obj.employeeId);
+    // useEffect(() => {
+    //     // Extract employeeIds from searchResult
+    //     const employeeIds = searchResult.map((obj) => obj.employeeId);
 
-        // Filter employeelist based on employeeIds
-        const filteredEmployeeList = employeelist.filter((employee) =>
-            employeeIds.includes(employee.employeeId)
-        );
+    //     // Filter employeelist based on employeeIds
+    //     const filteredEmployeeList = employeelist.filter((employee) =>
+    //         employeeIds.includes(employee.employeeId)
+    //     );
 
-        const selectedAddSalaryIds = filteredEmployeeList.map((obj) => obj.selectAddSalary).flat();
-        const selectedMinus = filteredEmployeeList.map((obj) => obj.minus);
-        const selectedaddSalary = filteredEmployeeList.map((obj) => obj.addSalary).flat();
+    //     const selectedAddSalaryIds = filteredEmployeeList.map((obj) => obj.selectAddSalary).flat();
+    //     const selectedMinus = filteredEmployeeList.map((obj) => obj.minus);
+    //     const selectedaddSalary = filteredEmployeeList.map((obj) => obj.addSalary).flat();
 
-        const updatedAddSalary = selectedaddSalary.map((salaryObject) => {
-            const { SpSalary, roundOfSalary } = salaryObject;
+    //     const updatedAddSalary = selectedaddSalary.map((salaryObject) => {
+    //         const { SpSalary, roundOfSalary } = salaryObject;
 
-            if (roundOfSalary === 'daily') {
-                return {
-                    ...salaryObject,
-                    SpSalary: SpSalary * countWork,
-                };
-            }
-            return salaryObject;
-        });
-        console.log('result123', updatedAddSalary);
-        console.log('countWork', countWork);
+    //         if (roundOfSalary === 'daily') {
+    //             return {
+    //                 ...salaryObject,
+    //                 SpSalary: SpSalary * countWork,
+    //             };
+    //         }
+    //         return salaryObject;
+    //     });
+    //     console.log('result123', updatedAddSalary);
+    //     console.log('countWork', countWork);
 
-        console.log('selectedMinus', selectedMinus);
+    //     console.log('selectedMinus', selectedMinus);
 
-        const filteredAddSalary = [];
+    //     const filteredAddSalary = [];
 
-        filteredEmployeeList.forEach((employee) => {
-            employee.addSalary.forEach((salary) => {
-                if (selectedAddSalaryIds.includes(salary._id)) {
-                    filteredAddSalary.push(salary);
-                }
-            });
-        });
-        // const testtest2 = filteredEmployeeList.map((item) => item.department);
+    //     filteredEmployeeList.forEach((employee) => {
+    //         employee.addSalary.forEach((salary) => {
+    //             if (selectedAddSalaryIds.includes(salary._id)) {
+    //                 filteredAddSalary.push(salary);
+    //             }
+    //         });
+    //     });
+    //     // const testtest2 = filteredEmployeeList.map((item) => item.department);
 
-        console.log('testtest', filteredEmployeeList);
-        // console.log('testtest2', testtest2);
+    //     console.log('testtest', filteredEmployeeList);
+    //     // console.log('testtest2', testtest2);
 
-        setEmpData(filteredEmployeeList);
-        // setEmpDataWorkplace(filteredEmployeeList.department);
+    //     setEmpData(filteredEmployeeList);
+    //     // setEmpDataWorkplace(filteredEmployeeList.department);
 
-        setMinusSearch(selectedMinus);
-        // setAddSalary(filteredAddSalary);
-        setAddSalary(updatedAddSalary);
-    }, [searchResult, employeelist, countWork]);
+    //     setMinusSearch(selectedMinus);
+    //     // setAddSalary(filteredAddSalary);
+    //     setAddSalary(updatedAddSalary);
+    // }, [searchResult, employeelist, countWork]);
+
     // console.log('employee', employee);
     console.log('addSalary123', addSalary);
     console.log('setEmpData', EmpData);
     // console.log('EmpData', EmpData);
 
-    useEffect(() => {
-        // Extract workplaceId values from workplaceIdList
-        const selectedWorkplaceIds = workplaceIdList.map((item) => item.workplaceId);
+    // useEffect(() => {
+    //     // Extract workplaceId values from workplaceIdList
+    //     const selectedWorkplaceIds = workplaceIdList.map((item) => item.workplaceId);
 
-        // Filter workplaceList based on selected workplaceIds
-        const filteredWorkplaces = workplaceList.filter((workplace) =>
-            selectedWorkplaceIds.includes(workplace.workplaceId)
-        );
+    //     // Filter workplaceList based on selected workplaceIds
+    //     const filteredWorkplaces = workplaceList.filter((workplace) =>
+    //         selectedWorkplaceIds.includes(workplace.workplaceId)
+    //     );
 
-        setWorkplaceIdListSearch(filteredWorkplaces);
+    //     setWorkplaceIdListSearch(filteredWorkplaces);
 
-        const EmpDatamain = EmpData.map((item) => item.workplace);
+    //     const EmpDatamain = EmpData.map((item) => item.workplace);
 
-        const workplaceData = workplaceList.find((w) => EmpDatamain.includes(w.workplaceId));
+    //     const workplaceData = workplaceList.find((w) => EmpDatamain.includes(w.workplaceId));
 
-        const workRate = workplaceData?.workRate ?? 0;
-        const workRateOT = workplaceData?.workRateOT ?? 0;
-        const workOfHour = workplaceData?.workOfHour ?? 0;
+    //     const workRate = workplaceData?.workRate ?? 0;
+    //     const workRateOT = workplaceData?.workRateOT ?? 0;
+    //     const workOfHour = workplaceData?.workOfHour ?? 0;
 
-        const holiday = workplaceData?.holiday ?? 0;
-        const holidayOT = workplaceData?.holidayOT ?? 0;
+    //     const holiday = workplaceData?.holiday ?? 0;
+    //     const holidayOT = workplaceData?.holidayOT ?? 0;
 
-        console.log('workRate', workRate);
-        console.log('workRateOT', workRateOT);
-        console.log('workOfHour', workOfHour);
+    //     console.log('workRate', workRate);
+    //     console.log('workRateOT', workRateOT);
+    //     console.log('workOfHour', workOfHour);
 
-        console.log('holiday', holiday);
-        console.log('holidayOT', holidayOT);
+    //     console.log('holiday', holiday);
+    //     console.log('holidayOT', holidayOT);
 
-        // console.log('EmpData', EmpData);
-        console.log('EmpDatamain', EmpDatamain);
-        // console.log('matchingWorkplaceData', matchingWorkplaceData);
-
-
-        const calculatedResults = workplaceIdList.map((item) => {
-            const workplaceId = item.workplaceId;
-            const allTime = parseFloat(item.allTime) || 0; // Convert to a number
-            const otTime = parseFloat(item.otTime) || 0; // Convert to a number
-            const dayoffAllTime = parseFloat(item.dayoffAllTime) || 0; // Convert to a number
-            const dayoffOtTime = parseFloat(item.dayoffOtTime) || 0; // Convert to a number
-
-            const calculatedValue = workRate * allTime;
-            const calculatedOT = (workRate / workOfHour) * workRateOT * otTime;
-            const calculatedValueDayoff = (workRate / workOfHour) * holiday * dayoffAllTime;
-            const calculatedValueDayoffOt = (workRate / workOfHour) * holidayOT * dayoffOtTime;
-
-            return { workplaceId, calculatedValue, allTime, otTime, dayoffAllTime, dayoffOtTime, calculatedOT, calculatedValueDayoff, calculatedValueDayoffOt };
-        });
-
-        console.log('workplaceIdList', workplaceIdList);
+    //     // console.log('EmpData', EmpData);
+    //     console.log('EmpDatamain', EmpDatamain);
+    //     // console.log('matchingWorkplaceData', matchingWorkplaceData);
 
 
+    //     const calculatedResults = workplaceIdList.map((item) => {
+    //         const workplaceId = item.workplaceId;
+    //         const allTime = parseFloat(item.allTime) || 0; // Convert to a number
+    //         const otTime = parseFloat(item.otTime) || 0; // Convert to a number
+    //         const dayoffAllTime = parseFloat(item.dayoffAllTime) || 0; // Convert to a number
+    //         const dayoffOtTime = parseFloat(item.dayoffOtTime) || 0; // Convert to a number
 
-        // Remove null values from the result
-        const filteredResults = calculatedResults.filter((result) => result !== null);
+    //         const calculatedValue = workRate * allTime;
+    //         const calculatedOT = (workRate / workOfHour) * workRateOT * otTime;
+    //         const calculatedValueDayoff = (workRate / workOfHour) * holiday * dayoffAllTime;
+    //         const calculatedValueDayoffOt = (workRate / workOfHour) * holidayOT * dayoffOtTime;
 
-        // Calculate the total sum
-        const totalSum = filteredResults.reduce((sum, result) => sum + result.calculatedValue, 0);
-        // const totalSum = filteredResults.reduce((sum, result) => sum + result.calculatedValue, 0);
+    //         return { workplaceId, calculatedValue, allTime, otTime, dayoffAllTime, dayoffOtTime, calculatedOT, calculatedValueDayoff, calculatedValueDayoffOt };
+    //     });
 
-        setWorkRate(totalSum);
-
-        setCalculatedValues(filteredResults);
-        console.log('Total Sum:', totalSum);
-        console.log('Total Sum2:', filteredResults);
-        console.log('Total Sum3:', calculatedResults);
+    //     console.log('workplaceIdList', workplaceIdList);
 
 
-    }, [workplaceList, workplaceIdList, EmpData]);
+
+    //     // Remove null values from the result
+    //     const filteredResults = calculatedResults.filter((result) => result !== null);
+
+    //     // Calculate the total sum
+    //     const totalSum = filteredResults.reduce((sum, result) => sum + result.calculatedValue, 0);
+    //     // const totalSum = filteredResults.reduce((sum, result) => sum + result.calculatedValue, 0);
+
+    //     setWorkRate(totalSum);
+
+    //     setCalculatedValues(filteredResults);
+    //     console.log('Total Sum:', totalSum);
+    //     console.log('Total Sum2:', filteredResults);
+    //     console.log('Total Sum3:', calculatedResults);
+
+
+    // }, [workplaceList, workplaceIdList, EmpData]);
     console.log('workplaceList', workplaceList);
     console.log('workplaceIdList', workplaceIdList);
     console.log('EmpData', EmpData); // Can access EmpData here
@@ -813,52 +814,52 @@ function WorktimeSheetWorkplace() {
 
     const [result, setResult] = useState(''); // Example: February (you can set it dynamically)
 
-    useEffect(() => {
-        setMonthset(month);
+    // useEffect(() => {
+    //     setMonthset(month);
 
-        const calculatedValuesAllTime = calculatedValues.map((value) => parseFloat(value.calculatedValue));
-        const calculatedValuesOtTime = calculatedValues.map((value) => parseFloat(value.calculatedOT));
+    //     const calculatedValuesAllTime = calculatedValues.map((value) => parseFloat(value.calculatedValue));
+    //     const calculatedValuesOtTime = calculatedValues.map((value) => parseFloat(value.calculatedOT));
 
-        const calculatedValuesDayoffAllTime = calculatedValues.map((value) => parseFloat(value.calculatedValueDayoff));
-        const calculatedValuesDayoffOtTime = calculatedValues.map((value) => parseFloat(value.calculatedValueDayoffOt));
-        const calculatedValuesaddSalary = addSalary.map((value) => parseFloat(value.SpSalary));
-
-
-
-        const calculatedValuesminus = calculatedValues.map((value) => parseFloat(value.minus));
-
-        // const testre = EmployeeSearch.map((value) => parseFloat(value.minus));
-
-        const sumAlltime = calculatedValuesAllTime.reduce((total, currentValue) => total + currentValue, 0);
-        const sumOtTime = calculatedValuesOtTime.reduce((total, currentValue) => total + currentValue, 0);
-
-        const sumDayoffAlltime = calculatedValuesDayoffAllTime.reduce((total, currentValue) => total + currentValue, 0);
-        const sumDayoffOtTime = calculatedValuesDayoffOtTime.reduce((total, currentValue) => total + currentValue, 0);
-
-        const sumSalary = calculatedValuesaddSalary.reduce((total, currentValue) => total + currentValue, 0);
-        // const summinus = calculatedValuesminus.reduce((total, currentValue) => total + currentValue, 0);
-
-        const Sumall = sumAlltime + sumSalary + sumOtTime + sumDayoffAlltime + sumDayoffOtTime;
-        const Minus = parseFloat((Sumall * (MinusSearch / 100)).toFixed(2));
-
-        console.log('testRe11', calculatedValuesAllTime);
+    //     const calculatedValuesDayoffAllTime = calculatedValues.map((value) => parseFloat(value.calculatedValueDayoff));
+    //     const calculatedValuesDayoffOtTime = calculatedValues.map((value) => parseFloat(value.calculatedValueDayoffOt));
+    //     const calculatedValuesaddSalary = addSalary.map((value) => parseFloat(value.SpSalary));
 
 
-        console.log('testRe1', Sumall);
-        console.log('testRe2', Minus);
-        console.log('testRe3', MinusSearch);
 
-        console.log('calculatedValuesaddSalary', calculatedValuesaddSalary);
+    //     const calculatedValuesminus = calculatedValues.map((value) => parseFloat(value.minus));
+
+    //     // const testre = EmployeeSearch.map((value) => parseFloat(value.minus));
+
+    //     const sumAlltime = calculatedValuesAllTime.reduce((total, currentValue) => total + currentValue, 0);
+    //     const sumOtTime = calculatedValuesOtTime.reduce((total, currentValue) => total + currentValue, 0);
+
+    //     const sumDayoffAlltime = calculatedValuesDayoffAllTime.reduce((total, currentValue) => total + currentValue, 0);
+    //     const sumDayoffOtTime = calculatedValuesDayoffOtTime.reduce((total, currentValue) => total + currentValue, 0);
+
+    //     const sumSalary = calculatedValuesaddSalary.reduce((total, currentValue) => total + currentValue, 0);
+    //     // const summinus = calculatedValuesminus.reduce((total, currentValue) => total + currentValue, 0);
+
+    //     const Sumall = sumAlltime + sumSalary + sumOtTime + sumDayoffAlltime + sumDayoffOtTime;
+    //     const Minus = parseFloat((Sumall * (MinusSearch / 100)).toFixed(2));
+
+    //     console.log('testRe11', calculatedValuesAllTime);
 
 
-        // console.log('all', calculatedValues);
+    //     console.log('testRe1', Sumall);
+    //     console.log('testRe2', Minus);
+    //     console.log('testRe3', MinusSearch);
 
-        setMinusSS(Minus);
-        setResult(Sumall - Minus);
-        // countWork
-        console.log('testcal ++', monthset);
+    //     console.log('calculatedValuesaddSalary', calculatedValuesaddSalary);
 
-    }, [month, calculatedValues, addSalary]);
+
+    //     // console.log('all', calculatedValues);
+
+    //     setMinusSS(Minus);
+    //     setResult(Sumall - Minus);
+    //     // countWork
+    //     console.log('testcal ++', monthset);
+
+    // }, [month, calculatedValues, addSalary]);
     console.log('testcal', monthset);
     console.log('testRe', result);
 
@@ -1132,7 +1133,9 @@ function WorktimeSheetWorkplace() {
             doc.text(titletest2, 15, 115);
 
 
-            doc.save('example.pdf');
+            // doc.save('example.pdf');
+            const pdfContent = doc.output('bloburl');
+            window.open(pdfContent, '_blank');
         } catch (error) {
             console.error('Error generating PDF:', error);
         }
@@ -1170,25 +1173,207 @@ function WorktimeSheetWorkplace() {
         const titleX = (pageWidth - titleWidth) / 2;
         doc.text(title, titleX, 10);
 
-        const titleY = (doc.internal.pageSize.getHeight() - titleWidth) / 2;
+        // const titleY = (doc.internal.pageSize.getHeight() - titleWidth) / 2;
 
-        doc.text(title, titleX, titleY, { angle: 90 });
+        doc.text(title, titleX, 30, { angle: 90 });
 
         const subTitle = workMonth; // Replace with your desired subtitle text
         doc.setFontSize(12); // You can adjust the font size for the subtitle
         const subTitleWidth = doc.getStringUnitWidth(subTitle) * doc.internal.getFontSize() / doc.internal.scaleFactor;
         const subTitleX = (pageWidth - subTitleWidth) / 2;
-        doc.text(subTitle, subTitleX, 20); // Adjust the vertical position as needed
+        // doc.text(subTitle, subTitleX, 20); // Adjust the vertical position as needed
 
         // Convert the table to a PDF using jsPDF and jsPDF-AutoTable
 
-        doc.autoTable({
-            html: table,
-            styles: stylestable,
-            margin: { top: 30 },
-        });
+        // doc.autoTable({
+        //     html: table,
+        //     styles: stylestable,
+        //     margin: { top: 30 },
+        // });
+        function getDaysInMonth(month, year) {
+            // Months are 0-based, so we subtract 1 from the provided month
+            const lastDayOfMonth = new Date(year, month, 0).getDate();
+            return lastDayOfMonth;
+        }
 
-        doc.save('your_table.pdf');
+        // const CheckMonth = 2; 
+        // const CheckYear = 2023;
+
+        // const daysInMonth = getDaysInMonth(CheckMonth, CheckYear);
+
+        // doc.text('จำนวนวัน' + daysInMonth, 10, 10);
+
+        const CheckMonth = 2;
+        const CheckYear = 2023;
+
+        const daysInMonth = getDaysInMonth(CheckMonth, CheckYear);
+        // const daysInMonth = 30;
+
+        doc.text('จำนวนวัน' + daysInMonth, 10, 10);
+
+        const numRows = 7;
+        const numCols = daysInMonth;
+        const cellWidth = 4.125;
+        const cellHeight = 3.5;
+        const startX = 50; // Adjust the starting X-coordinate as needed
+        const startY = 55; // Adjust the starting Y-coordinate as needed
+        const borderWidth = 0.5; // Adjust the border width as needed
+
+        // Function to draw a cell with borders
+        const drawCell = (x, y, width, height) => {
+            doc.rect(x, y, width, height);
+        };
+
+        // Function to draw the entire table
+        // const drawTable = () => {
+        //     for (let i = 0; i < numRows; i++) {
+        //         for (let j = 0; j < numCols; j++) {
+        //             const x = startX + j * cellWidth;
+        //             const y = startY + i * cellHeight;
+        //             drawCell(x, y, cellWidth, cellHeight);
+        //         }
+        //     }
+        // };
+        const drawTable = (tableNumber) => {
+            for (let i = 0; i < numRows; i++) {
+                for (let j = 0; j < numCols; j++) {
+                    const x = startX + j * cellWidth;
+                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 1);
+                    drawCell(x, y, cellWidth, cellHeight);
+                }
+            }
+        };
+
+        const numRowsLeftHead = 7;
+        const numColsLeftHead = 1;
+        const cellWidthLeftHead = 40;
+        const cellHeightLeftHead = 3.5;
+        const startXLeftHead = 10; // Adjust the starting X-coordinate as needed
+        // const startYLeftHead = 20; // Adjust the starting Y-coordinate as needed
+        const borderWidthLeftHead = 0.5; // Adjust the border width as needed
+
+        const drawTableLeftHead = (tableNumber) => {
+            for (let i = 0; i < numRows; i++) {
+                for (let j = 0; j < numColsLeftHead; j++) {
+                    const x = startXLeftHead + j * cellWidthLeftHead;
+                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 1);
+                    drawCell(x, y, cellWidthLeftHead, cellHeight);
+                }
+            }
+        };
+        const numRowsNumHead = 7;
+        const numColsNumHead = 1;
+        const cellWidthNumHead = 10;
+        const cellHeightNumHead = 3.5;
+        const startXNumHead = 10; // Adjust the starting X-coordinate as needed
+        // const startYNumHead = 20; // Adjust the starting Y-coordinate as needed
+        const borderWidthNumHead = 0.5; // Adjust the border width as needed
+
+        const drawTableNumHead = (tableNumber) => {
+            for (let i = 0; i < numRows; i++) {
+                for (let j = 0; j < numColsNumHead; j++) {
+                    const x = startXNumHead + j * cellWidthNumHead;
+                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 1);
+                    drawCell(x, y, cellWidthNumHead, cellHeight);
+                }
+            }
+        };
+
+        const numRowsSpSalary = 7;
+        const numColsSpSalary = 8;
+        const cellWidthSpSalary = 10;
+        const cellHeightSpSalary = 3.5;
+        const borderWidthSpSalary = 0.5; // Adjust the border width as needed
+
+        let startXSpSalary; // Declare startXSpSalary before using it
+
+        if (daysInMonth === 28) {
+            startXSpSalary = 165.5;
+        } else if (daysInMonth === 29) {
+            startXSpSalary = 169.5;
+        } else if (daysInMonth === 30) {
+            startXSpSalary = 173.75;
+        } else if (daysInMonth === 31) {
+            startXSpSalary = 177.75;
+        };
+        // console.log('startXSpSalary:', startXSpSalary);
+        // console.log('cellHeightSpSalary:', cellHeightSpSalary);
+
+        // const startXSpSalary = 182; // Adjust the starting X-coordinate as needed
+        // const startYSpSalary = 20; // Adjust the starting Y-coordinate as needed
+
+        const drawTableSpSalary = (tableNumber) => {
+            for (let i = 0; i < numRows; i++) {
+                for (let j = 0; j < numColsSpSalary; j++) {
+                    const x = startXSpSalary + j * cellWidthSpSalary;
+                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 1);
+                    drawCell(x, y, cellWidthSpSalary, cellHeight);
+                }
+            }
+        };
+
+        const numRowsMess = 7;
+        const numColsMess = 1;
+        const cellWidthMess = 25;
+        const cellHeightMess = 3.5;
+        let startXMess; // Declare startXSpSalary before using it
+
+        if (daysInMonth === 28) {
+            startXMess = 245.5;
+        } else if (daysInMonth === 29) {
+            startXMess = 249.5;
+        } else if (daysInMonth === 30) {
+            startXMess = 253.75;
+        } else if (daysInMonth === 31) {
+            startXMess = 257.75;
+        };
+        // const startXMess = 262; // Adjust the starting X-coordinate as needed
+        // const startYMess = 20; // Adjust the starting Y-coordinate as needed
+        const borderWidthMess = 0.5; // Adjust the border width as needed
+
+        const drawTableMess = (tableNumber) => {
+            for (let i = 0; i < numRows; i++) {
+                for (let j = 0; j < numColsMess; j++) {
+                    const x = startXMess + j * cellWidthMess;
+                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 1);
+                    drawCell(x, y, cellWidthMess, cellHeight);
+                }
+            }
+        };
+
+        // Draw the table
+        // drawTable();
+        for (let i = 0; i < 5; i++) {
+            drawTable(i);
+            drawTableLeftHead(i);
+            drawTableNumHead(i);
+            drawTableSpSalary(i);
+            drawTableMess(i);
+        }
+        // body table
+        // const numRows = 7;
+        // const numCols = daysInMonth;
+        // const cellWidth = 4.125;
+        // const cellHeight = 3.5;
+        // const startX = 50; // Adjust the starting X-coordinate as needed
+        // const startY = 55; // Adjust the starting Y-coordinate as needed
+        // const borderWidth = 0.5; // Adjust the border width as needed
+
+        // const drawTable = (tableNumber) => {
+        //     for (let i = 0; i < numRows; i++) {
+        //         for (let j = 0; j < numCols; j++) {
+        //             const x = startX + j * cellWidth;
+        //             const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 1);
+        //             drawCell(x, y, cellWidth, cellHeight);
+        //         }
+        //     }
+        // };
+
+
+
+        // doc.save('your_table.pdf');
+        const pdfContent = doc.output('bloburl');
+        window.open(pdfContent, '_blank');
     };
 
     return (
