@@ -231,6 +231,9 @@ const SendEmployeePDF3 = () => {
 
         // doc.setFont('THSarabunNew');
         const formatDateThai = (dateOfBirth) => {
+            if (!dateOfBirth) {
+                return '';
+            }
             const thaiMonthNames = new Intl.DateTimeFormat('th-TH', { month: 'long' }).format;
             const formattedDate = new Date(dateOfBirth);
 
@@ -443,11 +446,11 @@ const SendEmployeePDF3 = () => {
             // doc.addImage(OwatAddress, 'PNG', 140, 10, 61.5, 28.4);
             // doc.addImage(OwatIcon, 'PNG', 10, 10, 68, 30);
             // doc.addImage(OwatSupport, 'PNG', 85, 275, 113.0, 16.4);
-doc.addPage(); // Add a new page for each set of inputs after the first
+            doc.addPage(); // Add a new page for each set of inputs after the first
         }
 
 
-        
+
 
         const arrayChunks = [];
         const chunkSize = 13;
@@ -638,7 +641,12 @@ doc.addPage(); // Add a new page for each set of inputs after the first
             doc.text(`${value.Id}`, x2, y + (y2 * 2));
             doc.text(`${value.Name}`, x2, y + (y2 * 3));
             doc.text(`${value.age}`, x2, y + (y2 * 4));
-            doc.text(`${formatDateThai(value.dateOfBirth)}`, x2, y + (y2 * 5));
+            
+            // doc.text(`${formatDateThai(value.dateOfBirth)}`, x2, y + (y2 * 5));
+            const formattedDate = formatDateThai(value.dateOfBirth);
+
+            // doc.text(`${formatDateThai(value.dateOfBirth)}`, x2, y + (y2 * 5));
+            doc.text(`${formattedDate}`, x2, y + (y2 * 5));
             doc.text(`${value.idCard}`, x2, y + (y2 * 6));
             // doc.text(`${value.address}`, x2, y + 70);
             // doc.text(`${value.currentAddress}`, x2, y + (y2 * (7 + textLines.length)));
