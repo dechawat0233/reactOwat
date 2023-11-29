@@ -1244,7 +1244,7 @@ function Setting() {
                                 <h2 class="title">พนักงานในสังกัด</h2>
                                 <section class="Frame">
                                     <div>
-                                        <div class="row">
+                                        {/* <div class="row">
                                             <div class="col-md-6">
                                                 <label role="vaccination">รหัสพนักงาน:</label>
                                                 <input
@@ -1273,7 +1273,7 @@ function Setting() {
                                         <br />
                                         <button type="button" class="btn btn-primary" onClick={handleAddVaccination}>เพิ่ม</button>
                                         <br />
-                                        <br />
+                                        <br /> */}
                                         {/* {showEmployeeListResult.length > 0 && (
                                             <h2>พนักงานในหน่วยงาน {showEmployeeListResult.length} คน</h2>
 
