@@ -1350,8 +1350,9 @@ function WorktimeSheetWorkplace() {
             drawTableSpSalary(i);
             drawTableMess(i);
         }
-        // body table
-        // const numRows = 7;
+        // body table//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // const numRows = 1;
         // const numCols = daysInMonth;
         // const cellWidth = 4.125;
         // const cellHeight = 3.5;
@@ -1359,16 +1360,51 @@ function WorktimeSheetWorkplace() {
         // const startY = 55; // Adjust the starting Y-coordinate as needed
         // const borderWidth = 0.5; // Adjust the border width as needed
 
-        // const drawTable = (tableNumber) => {
-        //     for (let i = 0; i < numRows; i++) {
-        //         for (let j = 0; j < numCols; j++) {
-        //             const x = startX + j * cellWidth;
-        //             const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 1);
-        //             drawCell(x, y, cellWidth, cellHeight);
-        //         }
-        //     }
-        // };
-
+        const drawTableTop = (tableNumber) => {
+            for (let i = 0; i < numRows; i++) {
+                for (let j = 0; j < numCols; j++) {
+                    const x = startX + j * cellWidth;
+                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 1);
+                    drawCell(x, y, cellWidth, cellHeight);
+                }
+            }
+        };
+        const drawTableLeftHeadTop = (tableNumber) => {
+            for (let i = 0; i < numRows; i++) {
+                for (let j = 0; j < numColsLeftHead; j++) {
+                    const x = startXLeftHead + j * cellWidthLeftHead;
+                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 1);
+                    drawCell(x, y, cellWidthLeftHead, cellHeight);
+                }
+            }
+        };
+        const drawTableNumHeadTop = (tableNumber) => {
+            for (let i = 0; i < numRows; i++) {
+                for (let j = 0; j < numColsNumHead; j++) {
+                    const x = startXNumHead + j * cellWidthNumHead;
+                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 1);
+                    drawCell(x, y, cellWidthNumHead, cellHeight);
+                }
+            }
+        };
+        const drawTableSpSalaryTop = (tableNumber) => {
+            for (let i = 0; i < numRows; i++) {
+                for (let j = 0; j < numColsSpSalary; j++) {
+                    const x = startXSpSalary + j * cellWidthSpSalary;
+                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 1);
+                    drawCell(x, y, cellWidthSpSalary, cellHeight);
+                }
+            }
+        };
+        const drawTableMessTop = (tableNumber) => {
+            for (let i = 0; i < numRows; i++) {
+                for (let j = 0; j < numColsMess; j++) {
+                    const x = startXMess + j * cellWidthMess;
+                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 1);
+                    drawCell(x, y, cellWidthMess, cellHeight);
+                }
+            }
+        };
 
 
         // doc.save('your_table.pdf');
