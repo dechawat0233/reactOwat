@@ -251,7 +251,7 @@ function Setting() {
 
 
 
-const [showEmployeeListResult , setShowEmployeeListResult ] = useState([]);
+    const [showEmployeeListResult, setShowEmployeeListResult] = useState([]);
 
     //set data to form
     function handleClickResult(workplace) {
@@ -417,7 +417,7 @@ const [showEmployeeListResult , setShowEmployeeListResult ] = useState([]);
     const [searchWorkplaceId, setSearchWorkplaceId] = useState(''); //รหัสหน่วยงาน
     const [searchWorkplaceName, setSearchWorkplaceName] = useState(''); //ชื่อหน่วยงาน
     const [searchResult, setSearchResult] = useState([]);
-const [employeeListResult , setEmployeeListResult ] = useState([]);
+    const [employeeListResult, setEmployeeListResult] = useState([]);
 
     async function handleSearch(event) {
         event.preventDefault();
@@ -439,19 +439,19 @@ const [employeeListResult , setEmployeeListResult ] = useState([]);
                 window.location.reload();
 
             } else {
-//x1
-const data1 = {
-    employeeId: '' , 
-    name: '', 
-    idCard: '', 
-    workplace: searchWorkplaceId 
-};
+                //x1
+                const data1 = {
+                    employeeId: '',
+                    name: '',
+                    idCard: '',
+                    workplace: searchWorkplaceId
+                };
 
-const response1 = await axios.post(endpoint + '/employee/search', data1);
-await setEmployeeListResult(response1.data.employees );
-// await alert(JSON.stringify(response1.data.employees , null ,2));
-// alert(response1.data );
-alert( employeeListResult.length);
+                const response1 = await axios.post(endpoint + '/employee/search', data1);
+                await setEmployeeListResult(response1.data.employees);
+                // await alert(JSON.stringify(response1.data.employees , null ,2));
+                // alert(response1.data );
+                alert(employeeListResult.length);
 
             }
 
@@ -1274,12 +1274,23 @@ alert( employeeListResult.length);
                                         <button type="button" class="btn btn-primary" onClick={handleAddVaccination}>เพิ่ม</button>
                                         <br />
                                         <br />
-                                        {showEmployeeListResult.length > 0 && (
-                                        <h2>พนักงานในหน่วยงาน {showEmployeeListResult.length} คน</h2>
+                                        {/* {showEmployeeListResult.length > 0 && (
+                                            <h2>พนักงานในหน่วยงาน {showEmployeeListResult.length} คน</h2>
 
                                         )
 
-                                        }
+                                        } */}
+                                        {showEmployeeListResult.length > 0 && (
+                                            <>
+                                                <h2>พนักงานในหน่วยงาน {showEmployeeListResult.length} คน</h2>
+                                                <ul>
+                                                    {showEmployeeListResult.map((employee, index) => (
+                                                        <li key={index}>{employee.employeeId}: {employee.name} {employee.lastName}</li>
+                                                        // Replace "name" with the property you want to display for each employee
+                                                    ))}
+                                                </ul>
+                                            </>
+                                        )}
                                         {/* {employeeIdList.length > 0 && (
                                         <h2>รายการที่เพิ่ม</h2>
                                         <ul>
