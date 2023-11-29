@@ -263,6 +263,8 @@ router.post('/search', async (req, res) => {
     }
 
     if (workPlace) {
+      // query.workplace = workPlace;
+// console.log(query.workplace );
       query.workplace = { $regex: new RegExp(workPlace, 'i') };
       // query.workPlace = { $regex: workPlace, $options: 'i' };
     }
@@ -279,8 +281,8 @@ router.post('/search', async (req, res) => {
     // Query the employee collection for matching documents
     const employees = await Employee.find(query);
 
-    console.log('Search Results:');
-    console.log(employees);
+    // console.log('Search Results:');
+    // console.log(employees);
     let textSearch = 'test';
     res.status(200).json({ employees });
   } catch (error) {
