@@ -1202,6 +1202,8 @@ function WorktimeSheetWorkplace() {
         // const daysInMonth = getDaysInMonth(CheckMonth, CheckYear);
 
         // doc.text('จำนวนวัน' + daysInMonth, 10, 10);
+        doc.setFontSize(8);
+        doc.text(title, 171, 55, { angle: 90 });
 
         const CheckMonth = 2;
         const CheckYear = 2023;
@@ -1352,60 +1354,83 @@ function WorktimeSheetWorkplace() {
         }
         // body table//////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        // const numRows = 1;
-        // const numCols = daysInMonth;
-        // const cellWidth = 4.125;
-        // const cellHeight = 3.5;
-        // const startX = 50; // Adjust the starting X-coordinate as needed
-        // const startY = 55; // Adjust the starting Y-coordinate as needed
-        // const borderWidth = 0.5; // Adjust the border width as needed
-
-        const drawTableTop = (tableNumber) => {
-            for (let i = 0; i < numRows; i++) {
+        const numRowsTop = 1;
+        const startXTop = 50; // Adjust the starting X-coordinate as needed
+        const startYTop = 30; // Adjust the starting Y-coordinate as needed
+        const cellHeightTop = 25;
+        const drawTableTop = () => {
+            for (let i = 0; i < numRowsTop; i++) {
                 for (let j = 0; j < numCols; j++) {
                     const x = startX + j * cellWidth;
-                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 1);
-                    drawCell(x, y, cellWidth, cellHeight);
+                    const y = startYTop + i * cellHeightTop;
+                    drawCell(x, y, cellWidth, cellHeightTop);
                 }
             }
         };
-        const drawTableLeftHeadTop = (tableNumber) => {
-            for (let i = 0; i < numRows; i++) {
+        const drawTableLeftHeadTop = () => {
+            for (let i = 0; i < numRowsTop; i++) {
                 for (let j = 0; j < numColsLeftHead; j++) {
                     const x = startXLeftHead + j * cellWidthLeftHead;
-                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 1);
-                    drawCell(x, y, cellWidthLeftHead, cellHeight);
+                    const y = startYTop + i * cellHeightTop;
+                    drawCell(x, y, cellWidthLeftHead, cellHeightTop);
                 }
             }
         };
-        const drawTableNumHeadTop = (tableNumber) => {
-            for (let i = 0; i < numRows; i++) {
+        const drawTableNumHeadTop = () => {
+            for (let i = 0; i < numRowsTop; i++) {
                 for (let j = 0; j < numColsNumHead; j++) {
                     const x = startXNumHead + j * cellWidthNumHead;
-                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 1);
-                    drawCell(x, y, cellWidthNumHead, cellHeight);
+                    const y = startYTop + i * cellHeightTop;
+                    drawCell(x, y, cellWidthNumHead, cellHeightTop);
                 }
             }
         };
-        const drawTableSpSalaryTop = (tableNumber) => {
-            for (let i = 0; i < numRows; i++) {
+        // const drawTableSpSalaryTop = () => {
+        //     for (let i = 0; i < numRowsTop; i++) {
+        //         for (let j = 0; j < numColsSpSalary; j++) {
+        //             const x = startXSpSalary + j * cellWidthSpSalary;
+        //             const y = startYTop + i * cellHeightTop;
+        //             drawCell(x, y, cellWidthSpSalary, cellHeightTop);
+        //         }
+        //     }
+        // };
+
+        const drawCellcoloer = (x, y, width, height, bgColor) => {
+            // Assuming ctx is the 2D rendering context of your canvas
+            ctx.fillStyle = bgColor;
+            ctx.fillRect(x, y, width, height);
+            // Additional drawing code for cell content if needed
+        };
+        const drawTableSpSalaryTop = () => {
+            for (let i = 0; i < numRowsTop; i++) {
                 for (let j = 0; j < numColsSpSalary; j++) {
                     const x = startXSpSalary + j * cellWidthSpSalary;
-                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 1);
-                    drawCell(x, y, cellWidthSpSalary, cellHeight);
-                }
-            }
-        };
-        const drawTableMessTop = (tableNumber) => {
-            for (let i = 0; i < numRows; i++) {
-                for (let j = 0; j < numColsMess; j++) {
-                    const x = startXMess + j * cellWidthMess;
-                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 1);
-                    drawCell(x, y, cellWidthMess, cellHeight);
+                    const y = startYTop + i * cellHeightTop;
+
+                    // Set a background color, e.g., 'lightblue'
+                    const bgColor = 'lightblue';
+
+                    // Call the modified drawCell function
+                    drawCellcoloer(x, y, cellWidthSpSalary, cellHeightTop, bgColor);
                 }
             }
         };
 
+        const drawTableMessTop = () => {
+            for (let i = 0; i < numRowsTop; i++) {
+                for (let j = 0; j < numColsMess; j++) {
+                    const x = startXMess + j * cellWidthMess;
+                    const y = startYTop + i * cellHeightTop;
+                    drawCell(x, y, cellWidthMess, cellHeightTop);
+                }
+            }
+        };
+
+        drawTableTop();
+        drawTableLeftHeadTop();
+        drawTableNumHeadTop();
+        drawTableSpSalaryTop();
+        drawTableMessTop();
 
         // doc.save('your_table.pdf');
         const pdfContent = doc.output('bloburl');
