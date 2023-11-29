@@ -1310,7 +1310,7 @@ function Setting() {
 
                                         </ul>
                                         )} */}
-
+{/* 
                                         {employeeIdList.length > 0 && (
                                             <div>
                                                 <h2>รายการที่เพิ่ม</h2>
@@ -1330,7 +1330,7 @@ function Setting() {
                                                     ))}
                                                 </ul>
                                             </div>
-                                        )}
+                                        )} */}
                                     </div>
                                 </section>
                                 {/* <!--Frame--> */}
