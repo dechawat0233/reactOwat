@@ -444,7 +444,7 @@ function Setting() {
                     employeeId: '',
                     name: '',
                     idCard: '',
-                    workplace: searchWorkplaceId
+                    workPlace: searchWorkplaceId
                 };
 
                 const response1 = await axios.post(endpoint + '/employee/search', data1);
