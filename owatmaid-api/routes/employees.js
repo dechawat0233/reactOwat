@@ -263,7 +263,9 @@ router.post('/search', async (req, res) => {
     }
 
     if (workPlace) {
-      query.workplace = { $regex: new RegExp(workPlace, 'i') };
+      query.workplace = workPlace;
+
+      // query.workplace = { $regex: new RegExp(workPlace, 'i') };
       // query.workPlace = { $regex: workPlace, $options: 'i' };
     }
 

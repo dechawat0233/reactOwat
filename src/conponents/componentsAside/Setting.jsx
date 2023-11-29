@@ -451,7 +451,7 @@ function Setting() {
                 await setEmployeeListResult(response1.data.employees);
                 // await alert(JSON.stringify(response1.data.employees , null ,2));
                 // alert(response1.data );
-                alert(employeeListResult.length);
+                // alert(employeeListResult.length);
 
             }
 
