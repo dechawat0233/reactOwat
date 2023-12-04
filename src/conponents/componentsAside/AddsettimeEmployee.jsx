@@ -580,14 +580,19 @@ function AddsettimeEmployee() {
                 // Set the state to false if no data is found
                 setUpdateButton(false);
                 setTimeRecord_id('');
-
+                setRowDataList2([]);
             } else {
                 // Set the state to true if data is found
                 setUpdateButton(true);
                 // alert(response.data.recordworkplace[0].employee_workplaceRecord[1].workplaceId);
                 setTimeRecord_id(response.data.recordworkplace[0]._id);
 
-                setRowDataList2(response.data.recordworkplace[0].employee_workplaceRecord);
+                // setRowDataList2(response.data.recordworkplace[0].employee_workplaceRecord);
+                if (name != '') {
+                    setRowDataList2(response.data.recordworkplace[0].employee_workplaceRecord);
+                } else {
+                    setRowDataList2([]);
+                }
 
                 // alert(JSON.stringify( rowDataList[0] ) );
                 //count work of time and set to table 

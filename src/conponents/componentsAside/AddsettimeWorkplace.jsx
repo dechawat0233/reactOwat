@@ -74,10 +74,10 @@ function AddsettimeWorkplace() {
 
     //auto check time record 
     useEffect(() => {
-        if(workplaceName !== ''){
+        if (workplaceName !== '') {
             handleCheckTimerecord();
         }
-    } , [workDate] );
+    }, [workDate]);
 
     /////////////////////////////////////////////
     const [staffId, setStaffId] = useState(''); //รหัสหน่วยงาน
@@ -874,11 +874,16 @@ function AddsettimeWorkplace() {
                 // Set the state to false if no data is found
                 setUpdateButton(false);
                 setTimeRecord_id('');
+                setRowDataList([]);
             } else {
                 // Set the state to true if data is found
                 setUpdateButton(true);
                 setTimeRecord_id(response.data.recordworkplace[0]._id);
-                setRowDataList(response.data.recordworkplace[0].employeeRecord);
+                if (workplaceName != '') {
+                    setRowDataList(response.data.recordworkplace[0].employeeRecord);
+                } else {
+                    setRowDataList([]);
+                }
 
                 // alert(JSON.stringify( rowDataList[0] ) );
                 //count work of time and set to table 

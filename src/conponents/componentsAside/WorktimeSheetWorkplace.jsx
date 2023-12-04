@@ -1534,7 +1534,7 @@ function WorktimeSheetWorkplace() {
             fontSize: 10,
         };
 
-        const arraytest = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1001],
+        const arraytest = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.5],
         [1, 1, 1, 1, 1, 1, 1],
         [1, 1, 1, 1, 1, 1, 1],
         [1, 1, 1, 1, 1, 1, 1],
@@ -1843,7 +1843,7 @@ function WorktimeSheetWorkplace() {
             for (let i = 0; i < dataArray.length; i++) {
                 // const arrayText = dataArray[i].join('      ');
                 // const arrayText = dataArray[i].join('     '); // Use spaces to mimic the width
-                let currentX = startX;
+                let currentX = startX - 1;
                 let currentY = startY;
 
                 for (let j = 0; j < dataArray[i].length; j++) {
