@@ -1561,16 +1561,19 @@ function WorktimeSheetWorkplace() {
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2]];
         // const arraylistNameEmp = ['สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย','สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย','สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย','สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย', 'สนไหม'];
         const arraylistNameEmp =
-            [['สมชาย สมชาย', '612548', 'กะเช้า', 'กะดึก'],
-            ['สมชาย ไม่มา', '165843', 'กะเช้า', 'กะดึก'],
-            ['สมชาย ไม่อยู่', '162847', 'กะเช้า', 'กะดึก'],
-            ['สมชาย กำลัง', '653298', 'กะเช้า', 'กะดึก'],
-            ['สมชาย ไปริด', '7536241', 'กะเช้า', 'กะดึก'],
-            ['สมชาย สมชาย', '999999', 'กะเช้า', 'กะดึก'],
-            ['สมชาย ติดห', '1845270', 'กะเช้า', 'กะดึก'],
-            ['สมชาย สมชาย', '1652305', 'กะเช้า', 'กะดึก'],
-            ['สมชาย สมชาย', '9564832', 'กะเช้า', 'กะดึก'],
-            ['สมชาย สมชาย', '1032568', 'กะเช้า', 'กะดึก']];
+            [['สมชาย สมชาย', '612548', 'กะเช้า', 'กะดึก', '1001'],
+            ['สมชาย ไม่มา', '165843', 'กะเช้า', 'กะดึก', '1201'],
+            ['สมชาย ไม่อยู่', '162847', 'กะเช้า', 'กะดึก', '8401'],
+            ['สมชาย กำลัง', '653298', 'กะเช้า', 'กะดึก', '1196'],
+            ['สมชาย ไปริด', '7536241', 'กะเช้า', 'กะดึก', '2001'],
+            ['สมชาย สมชาย', '999999', 'กะเช้า', 'กะดึก', '1921'],
+            ['สมชาย ติดห', '1845270', 'กะเช้า', 'กะดึก', '1548'],
+            ['สมชาย สมชาย', '1652305', 'กะเช้า', 'กะดึก', '1078'],
+            ['สมชาย สมชาย', '9564832', 'กะเช้า', 'กะดึก', '1009'],
+            ['สมชาย สมชาย', '1032568', 'กะเช้า', 'กะดึก', '1005']];
+
+        const arraylistOT =
+            ['2', '3'];
         // const arraylistNameEmp = ['สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย'];
 
         // const arrayLength = arraylistNameEmp.length;
@@ -1671,15 +1674,34 @@ function WorktimeSheetWorkplace() {
         // const startYLeftHead = 20; // Adjust the starting Y-coordinate as needed
         const borderWidthLeftHead = 0.5; // Adjust the border width as needed
 
+        // const drawTableLeftHead = (tableNumber) => {
+        //     for (let i = 0; i < numRows; i++) {
+        //         for (let j = 0; j < numColsLeftHead; j++) {
+        //             const x = startXLeftHead + j * cellWidthLeftHead;
+        //             const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 0.2);
+        //             drawCell(x, y, cellWidthLeftHead, cellHeight);
+        //         }
+        //     }
+        // };
+
         const drawTableLeftHead = (tableNumber) => {
             for (let i = 0; i < numRows; i++) {
                 for (let j = 0; j < numColsLeftHead; j++) {
                     const x = startXLeftHead + j * cellWidthLeftHead;
                     const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 0.2);
                     drawCell(x, y, cellWidthLeftHead, cellHeight);
+
+                    if (i >= numRows - 2) {
+                        const arrayIndex = i - (numRows - 2); // 0 for the last row, 1 for the second last row
+                        if (arraylistOT[arrayIndex]) {
+                            const cellText = arraylistOT[arrayIndex].toString(); // Convert to string if needed
+                            doc.text("โอที " + cellText[0], x + 35, y - 1, { align: 'center' });
+                        }
+                    }
                 }
             }
         };
+
         const numRowsNumHead = 7;
         const numColsNumHead = 1;
         const cellWidthNumHead = 10;
@@ -1750,15 +1772,66 @@ function WorktimeSheetWorkplace() {
         // const startYMess = 20; // Adjust the starting Y-coordinate as needed
         const borderWidthMess = 0.5; // Adjust the border width as needed
 
-        const drawTableMess = (tableNumber) => {
+        // const drawTableMess = (tableNumber) => {
+        //     for (let i = 0; i < numRows; i++) {
+        //         for (let j = 0; j < numColsMess; j++) {
+        //             const x = startXMess + j * cellWidthMess;
+        //             const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 0.2);
+        //             drawCell(x, y, cellWidthMess, cellHeight);
+        //         }
+        //     }
+        // };
+
+        const drawTableMess = (tableNumber, arraylistOT) => {
             for (let i = 0; i < numRows; i++) {
                 for (let j = 0; j < numColsMess; j++) {
                     const x = startXMess + j * cellWidthMess;
                     const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 0.2);
+
+                    // Draw the cell
                     drawCell(x, y, cellWidthMess, cellHeight);
+
+                    // Add text below the last two cells
+                    // if (i >= numRows - 2) {
+                    //     const arrayIndex = i - (numRows - 2); // 0 for the last row, 1 for the second last row
+                    //     if (arraylistOT[arrayIndex]) {
+                    //         const cellText = arraylistOT[arrayIndex].toString(); // Convert to string if needed
+                    //         doc.text(cellText, x, y + cellHeight * (arrayIndex + 1), { align: 'center' });
+                    //     }
+                    // }
                 }
             }
         };
+
+
+
+
+
+
+
+        // const drawTableOT = (tableNumber, arraylistOT) => {
+        //     for (let i = 0; i < numRows; i++) {
+        //         for (let k = 0; k < arraylistOT.length; k++) {
+        //             const x = startXMess; // Adjust the starting X-coordinate as needed
+        //             const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 0.2) + k * lineHeight;
+
+        //             doc.text('โอที ' + arraylistOT[k], x, y, { align: 'left' });
+        //         }
+        //     }
+        // };
+
+        const drawTableOT = (arraylistOT) => {
+            const startXOT = 10; // Adjust the starting X-coordinate for the OT text
+            let startYOT = 10;   // Adjust the starting Y-coordinate for the OT text
+            const lineHeightOT = 10; // Adjust the vertical spacing between lines
+
+            for (let k = 0; k < arraylistOT.length; k++) {
+                doc.text('โอที ' + arraylistOT[k], startXOT, startYOT);
+                startYOT += lineHeightOT; // Adjust the vertical spacing if needed
+            }
+        };
+
+
 
         // Draw the table
         // drawTable();
@@ -1854,6 +1927,48 @@ function WorktimeSheetWorkplace() {
                 }
             }
         };
+
+        const drawArrayTextName = (dataArray) => {
+            for (let i = 0; i < dataArray.length; i++) {
+                let currentX = startX - 20;
+                let currentY = startY + i * verticalDistance;
+
+                for (let j = 0; j < dataArray[i].length; j++) {
+
+                    let xAdjustment = 0;
+                    let yAdjustment = 0;
+
+                    if (j === 0) {
+                        xAdjustment = -8;
+                    }
+                    if (j === 1) {
+                        xAdjustment = -8;
+                    }
+                    if (j === 2) {
+                        xAdjustment = 13;
+                        yAdjustment = -3.5;
+                    }
+                    if (j === 3) {
+                        xAdjustment = 13;
+                        yAdjustment = -3.5;
+                    }
+
+                    if (j === 4) {
+                        yAdjustment = 7;
+                    }
+                    doc.text(
+                        dataArray[i][j].toString(),
+                        // currentX + (j === 1 ? 0 : -10 || j === 0 ? -8 : 0 || j === 2 ? 5 : 0),  // Adjust the X-coordinate for the first row
+                        // 3 + currentY + (j === 2 ? -3.5 : 0 || j === 3 ? -3.5 : 0),  // Adjust the Y-coordinate for the second row
+                        currentX + xAdjustment,  // Adjust the X-coordinate for the first row
+                        yAdjustment + currentY + 3,  // Adjust the Y-coordinate for the second row
+                        { align: 'left' }
+                    );
+                    currentY += 3.5;
+                }
+            }
+        };
+
 
         // doc.addPage();
         // const lineHeight = 10;
@@ -1993,35 +2108,38 @@ function WorktimeSheetWorkplace() {
 
             for (let i = 0; i < 6; i++) {
                 const dataIdx = pageIndex * 6 + i;
-                // Set the color of the square (RGB values)
-                const squareColor = [255, 200, 0]; // Red
-
-                // Set the position where you want to place the square
-                const xPosition = 165.5;
-                const yPosition = 30;
-
-                // Set the fill color
-                doc.setFillColor(...squareColor);
-
-                // Draw a square with the specified size and color
-                doc.rect(xPosition, yPosition, 80, 25, 'F');
-                doc.text(title, 171, 55, { angle: 90 });
-
                 if (dataIdx < arraytest.length) {
+                    // Set the color of the square (RGB values)
+                    const squareColor = [255, 200, 0]; // Red
 
+                    // Set the position where you want to place the square
+                    const xPosition = 165.5;
+                    const yPosition = 30;
+
+                    // Set the fill color
+                    doc.setFillColor(...squareColor);
+
+                    // Draw a square with the specified size and color
+                    doc.rect(xPosition, yPosition, 80, 25, 'F');
+
+                    doc.text(title, 171, 55, { angle: 90 });
 
                     drawTableTop();
                     drawTableLeftHeadTop();
                     drawTableNumHeadTop();
                     drawTableSpSalaryTop();
                     drawTableMessTop();
+                    // drawTableOT();
+                    // drawTableOT(arraylistOT);
+
+                    // drawTableOT(arraylistOT);
+
 
                     drawTable(i, arraytest.slice(dataIdx, dataIdx + 1));
                     drawTableLeftHead(i, arraytest.slice(dataIdx, dataIdx + 1));
                     drawTableNumHead(i, arraytest.slice(dataIdx, dataIdx + 1));
                     drawTableSpSalary(i, arraytest.slice(dataIdx, dataIdx + 1));
                     drawTableMess(i, arraytest.slice(dataIdx, dataIdx + 1));
-
                     // drawArrayText(arraytest, dataIdx, dataIdx + 1);
 
                     // drawArrayText(arraytest.slice(dataIdx, dataIdx + 1));
@@ -2038,6 +2156,9 @@ function WorktimeSheetWorkplace() {
             const pageStartIndex = pageIndex * 6;
             const pageEndIndex = Math.min((pageIndex + 1) * 6, arraytest.length);
             drawArrayText(arraytest.slice(pageStartIndex, pageEndIndex));
+            const pageStartIndexName = pageIndex * 6;
+            const pageEndIndexName = Math.min((pageIndex + 1) * 6, arraytest.length);
+            drawArrayTextName(arraylistNameEmp.slice(pageStartIndex, pageEndIndex));
 
             doc.addPage();
         }
