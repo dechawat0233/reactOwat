@@ -79,6 +79,34 @@ function Employee() {
     const [images, setImages] = useState([]);//อัพรูป
     const [imageURLs, setImageURLs] = useState([]);
 
+    //setup file upload
+    const [selectedFile, setSelectedFile] = useState(null);
+
+    const handleFileChange = (e) => {
+      setSelectedFile(e.target.files[0]);
+    };
+  
+    const handleUpload = () => {
+
+        //set image and employeeId for upload then employeeId.imageType
+const formData = new FormData();
+formData.append('image', selectedFile);
+
+const headers = {
+  'Content-Type': 'multipart/form-data',
+  'Employee-Id': employeeId,
+};
+
+axios.post(endpoint + '/imgemployee/upload', formData, { headers })
+  .then(response => {
+    console.log(response.data);
+  })
+  .catch(error => {
+    console.error(error);
+  });
+
+      };
+
 //Update localStorage
 function updateEmployeeLocal(emp) {
     let employeeLocal = JSON.parse(localStorage.getItem("selectedEmployees"));
@@ -145,6 +173,8 @@ return data;
 
     function onImageChange(e) {
         setImages([...e.target.files]);
+        setSelectedFile(e.target.files[0]);
+
     }
 
     const [newVaccination, setNewVaccination] = useState('');
@@ -259,7 +289,8 @@ return data;
 
             try {
                 const response = await axios.post(endpoint + '/employee/create', data);
-                // setEmployeesResult(response.data.employees);
+                setEmployeesResult(response.data.employees);
+handleUpload();
 
             } catch (error) {
                 alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
@@ -276,6 +307,8 @@ return data;
                     const response = await axios.put(endpoint + '/employee/update/' + _id, data);
                     // setEmployeesResult(response.data.employees);
                     if (response) {
+                        handleUpload();
+
                         alert("บันทึกสำเร็จ");
 updateEmployeeLocal(response.data);
 
@@ -543,6 +576,7 @@ updateEmployeeLocal(response.data);
                                                         <div class="form-group">
                                                             <label>อัพโหลดใบหน้า</label>
                                                             <div class="custom-file">
+                                                            {/* <input type="file" onChange={handleFileChange} /> */}
                                                                 <input type="file" class="custom-file-input " id="customFile" multiple accept='image/*' onChange={onImageChange} />
                                                                 <label class="custom-file-label" for="customFile">เลือกไฟล์</label>
                                                             </div>

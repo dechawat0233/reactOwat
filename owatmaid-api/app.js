@@ -12,6 +12,7 @@ var workplacesRouter = require('./routes/workplaces');
 var timerecordsRouter = require('./routes/timerecords');
 var addsalaryRouter = require('./routes/addsalary');
 var oldemployeesRouter = require('./routes/oldemployees');
+var imgemployeeRouter = require('./routes/imgemployee');
 
 var app = express();
 
@@ -34,6 +35,7 @@ app.use('/workplace', workplacesRouter);
 app.use('/timerecord', timerecordsRouter );
 app.use('/addsalary', addsalaryRouter );
 app.use('/oldemployee', oldemployeesRouter);
+app.use('/imgemployee', imgemployeeRouter);
 
 
 // catch 404 and forward to error handler
