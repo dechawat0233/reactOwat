@@ -883,8 +883,10 @@ function WorktimeSheetWorkplace() {
     // );
 
 
-    const [year, setYear] = useState(2023); // Example year (you can set it dynamically)
-    // const [calendarData, setCalendarData] = useState([]);
+    const currentYear = new Date().getFullYear();
+    const years = Array.from({ length: currentYear - 1998 }, (_, index) => currentYear - index);
+
+    const [year, setYear] = useState(currentYear);    // const [calendarData, setCalendarData] = useState([]);
 
     const [workMonth, setWorkMonth] = useState([]);
 
@@ -1225,7 +1227,7 @@ function WorktimeSheetWorkplace() {
         doc.setFontSize(8);
         doc.text(title, 171, 55, { angle: 90 });
 
-        const CheckMonth = 2;
+        const CheckMonth = 1;
         const CheckYear = 2023;
 
         const daysInMonth = getDaysInMonth(CheckMonth, CheckYear);
@@ -1338,30 +1340,30 @@ function WorktimeSheetWorkplace() {
         const numColsMess = 1;
         const cellWidthMess = 25;
         const cellHeightMess = 3.5;
-        let startXMess; // Declare startXSpSalary before using it
+        // let startXMess; // Declare startXSpSalary before using it
 
-        if (daysInMonth === 28) {
-            startXMess = 245.5;
-        } else if (daysInMonth === 29) {
-            startXMess = 249.5;
-        } else if (daysInMonth === 30) {
-            startXMess = 253.75;
-        } else if (daysInMonth === 31) {
-            startXMess = 257.75;
-        };
-        // const startXMess = 262; // Adjust the starting X-coordinate as needed
-        // const startYMess = 20; // Adjust the starting Y-coordinate as needed
-        const borderWidthMess = 0.5; // Adjust the border width as needed
+        // if (daysInMonth === 28) {
+        //     startXMess = 245.5;
+        // } else if (daysInMonth === 29) {
+        //     startXMess = 249.5;
+        // } else if (daysInMonth === 30) {
+        //     startXMess = 253.75;
+        // } else if (daysInMonth === 31) {
+        //     startXMess = 255.75;
+        // };
+        // // const startXMess = 262; // Adjust the starting X-coordinate as needed
+        // // const startYMess = 20; // Adjust the starting Y-coordinate as needed
+        // const borderWidthMess = 0.5; // Adjust the border width as needed
 
-        const drawTableMess = (tableNumber) => {
-            for (let i = 0; i < numRows; i++) {
-                for (let j = 0; j < numColsMess; j++) {
-                    const x = startXMess + j * cellWidthMess;
-                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 0.2);
-                    drawCell(x, y, cellWidthMess, cellHeight);
-                }
-            }
-        };
+        // const drawTableMess = (tableNumber) => {
+        //     for (let i = 0; i < numRows; i++) {
+        //         for (let j = 0; j < numColsMess; j++) {
+        //             const x = startXMess + j * cellWidthMess;
+        //             const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 0.2);
+        //             drawCell(x, y, cellWidthMess, cellHeight);
+        //         }
+        //     }
+        // };
 
         // Draw the table
         // drawTable();
@@ -1524,6 +1526,7 @@ function WorktimeSheetWorkplace() {
         });
         const table = tableRef.current;
         const fontPath = '/assets/fonts/THSarabunNew.ttf';
+
         doc.addFileToVFS(fontPath);
         doc.addFont(fontPath, 'THSarabunNew', 'normal');
 
@@ -1534,34 +1537,43 @@ function WorktimeSheetWorkplace() {
             fontSize: 10,
         };
 
+        // const arraytest = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.5],
+        // [1, 1, 1, 1, 1, 1, 1],
+        // [1, 1, 1, 1, 1, 1, 1],
+        // [1, 1, 1, 1, 1, 1, 1],
+        // [1, 1, 1, 1, 1, 1, 1],
+        // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9],
+        // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
+        // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+        // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+        // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+        // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+        // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+        // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+        // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+        // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+        // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+        // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+        // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+        // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+        // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+        // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+        // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+        // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+        // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2]];
         const arraytest = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.5],
         [1, 1, 1, 1, 1, 1, 1],
         [1, 1, 1, 1, 1, 1, 1],
         [1, 1, 1, 1, 1, 1, 1],
         [1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2]];
+        [1, 1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1, 1, 0, 0, 0.5, 0.5, 1.5],
+
+        ];
         // const arraylistNameEmp = ['สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย','สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย','สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย','สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย', 'สนไหม'];
         const arraylistNameEmp =
-            [['สมชาย สมชาย', '612548', 'กะเช้า', 'กะดึก', '1001'],
+            [['ภัทรนก แซหว็อง', '612548', 'กะเช้า', 'กะดึก', '1001'],
             ['สมชาย ไม่มา', '165843', 'กะเช้า', 'กะดึก', '1201'],
             ['สมชาย ไม่อยู่', '162847', 'กะเช้า', 'กะดึก', '8401'],
             ['สมชาย กำลัง', '653298', 'กะเช้า', 'กะดึก', '1196'],
@@ -1574,6 +1586,54 @@ function WorktimeSheetWorkplace() {
 
         const arraylistOT =
             ['2', '3'];
+
+        const addSalaryWorkplace =
+            [{
+                name: "ค่าเดินทาง",
+                codeSpSalary: "1001",
+                SpSalary: "1000",
+                roundOfSalary: "monthly",
+                StaffType: "all",
+                nameType: "",
+                _id: "656025d1fd5375965d5028a3"
+            },
+            {
+                name: "ค่าอาหาร",
+                codeSpSalary: "2534",
+                SpSalary: "500",
+                roundOfSalary: "daily",
+                StaffType: "all",
+                nameType: "ทดลอง",
+                _id: "656025d1fd5375965d5028a4"
+            },
+            {
+                name: "ค่าโทรศัพท์",
+                codeSpSalary: "8467",
+                SpSalary: "500",
+                roundOfSalary: "daily",
+                StaffType: "header",
+                nameType: "",
+                _id: "656025d1fd5375965d5028a5"
+            },
+            {
+                name: "ค่าตำแหน่ง",
+                codeSpSalary: "4392",
+                SpSalary: "800",
+                roundOfSalary: "monthly",
+                StaffType: "header",
+                nameType: "",
+                _id: "656025d1fd5375965d5028a6"
+            },
+                // {
+                //     name: "เบี้ยขยัน",
+                //     codeSpSalary: "1358",
+                //     SpSalary: "500",
+                //     roundOfSalary: "monthly",
+                //     StaffType: "all",
+                //     nameType: "",
+                //     _id: "656025d1fd5375965d5028a7"
+                // },
+            ];
         // const arraylistNameEmp = ['สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย'];
 
         // const arrayLength = arraylistNameEmp.length;
@@ -1583,24 +1643,6 @@ function WorktimeSheetWorkplace() {
         let roundpage = 0;
 
         // for (let page = 0; page < makePage; page++) {
-
-        const title = ' ใบลงเวลาการปฏิบัติงาน';
-
-        doc.setFont('THSarabunNew');
-        doc.setFontSize(16);
-        const titleWidth = doc.getStringUnitWidth(title) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-        const pageWidth = doc.internal.pageSize.getWidth();
-        const titleX = (pageWidth - titleWidth) / 2;
-        doc.text(title, titleX, 10);
-
-        // const titleY = (doc.internal.pageSize.getHeight() - titleWidth) / 2;
-
-        doc.text(title, titleX, 30, { angle: 90 });
-
-        const subTitle = workMonth; // Replace with your desired subtitle text
-        doc.setFontSize(12); // You can adjust the font size for the subtitle
-        const subTitleWidth = doc.getStringUnitWidth(subTitle) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-        const subTitleX = (pageWidth - subTitleWidth) / 2;
         // doc.text(subTitle, subTitleX, 20); // Adjust the vertical position as needed
 
         // Convert the table to a PDF using jsPDF and jsPDF-AutoTable
@@ -1616,14 +1658,14 @@ function WorktimeSheetWorkplace() {
             return lastDayOfMonth;
         }
 
-        const CheckMonth = 2;
+        const CheckMonth = 1;
         const CheckYear = 2023;
 
         const daysInMonth = getDaysInMonth(CheckMonth, CheckYear);
 
         // doc.text('จำนวนวัน' + daysInMonth, 10, 10);
         doc.setFontSize(8);
-        doc.text(title, 171, 55, { angle: 90 });
+        // doc.text(title, 171, 55, { angle: 90 });
 
         // const CheckMonth = 2;
         // const CheckYear = 2023;
@@ -1636,7 +1678,7 @@ function WorktimeSheetWorkplace() {
         const numCols = daysInMonth;
         const cellWidth = 4.125;
         const cellHeight = 3.5;
-        const startX = 50; // Adjust the starting X-coordinate as needed
+        const startX = 35; // Adjust the starting X-coordinate as needed
         const startY = 55; // Adjust the starting Y-coordinate as needed
         const borderWidth = 0.5; // Adjust the border width as needed
 
@@ -1668,21 +1710,11 @@ function WorktimeSheetWorkplace() {
 
         const numRowsLeftHead = 7;
         const numColsLeftHead = 1;
-        const cellWidthLeftHead = 40;
+        const cellWidthLeftHead = 30;
         const cellHeightLeftHead = 3.5;
-        const startXLeftHead = 10; // Adjust the starting X-coordinate as needed
+        const startXLeftHead = 5; // Adjust the starting X-coordinate as needed
         // const startYLeftHead = 20; // Adjust the starting Y-coordinate as needed
         const borderWidthLeftHead = 0.5; // Adjust the border width as needed
-
-        // const drawTableLeftHead = (tableNumber) => {
-        //     for (let i = 0; i < numRows; i++) {
-        //         for (let j = 0; j < numColsLeftHead; j++) {
-        //             const x = startXLeftHead + j * cellWidthLeftHead;
-        //             const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 0.2);
-        //             drawCell(x, y, cellWidthLeftHead, cellHeight);
-        //         }
-        //     }
-        // };
 
         const drawTableLeftHead = (tableNumber) => {
             for (let i = 0; i < numRows; i++) {
@@ -1695,7 +1727,7 @@ function WorktimeSheetWorkplace() {
                         const arrayIndex = i - (numRows - 2); // 0 for the last row, 1 for the second last row
                         if (arraylistOT[arrayIndex]) {
                             const cellText = arraylistOT[arrayIndex].toString(); // Convert to string if needed
-                            doc.text("โอที " + cellText[0], x + 35, y - 1, { align: 'center' });
+                            doc.text("โอที " + cellText[0], x + 26, y - 1, { align: 'center' });
                         }
                     }
                 }
@@ -1704,9 +1736,9 @@ function WorktimeSheetWorkplace() {
 
         const numRowsNumHead = 7;
         const numColsNumHead = 1;
-        const cellWidthNumHead = 10;
+        const cellWidthNumHead = 8;
         const cellHeightNumHead = 3.5;
-        const startXNumHead = 10; // Adjust the starting X-coordinate as needed
+        const startXNumHead = 5; // Adjust the starting X-coordinate as needed
         // const startYNumHead = 20; // Adjust the starting Y-coordinate as needed
         const borderWidthNumHead = 0.5; // Adjust the border width as needed
 
@@ -1721,7 +1753,7 @@ function WorktimeSheetWorkplace() {
         };
 
         const numRowsSpSalary = 7;
-        const numColsSpSalary = 8;
+        const numColsSpSalary = 3 + 7 + 1;
         const cellWidthSpSalary = 10;
         const cellHeightSpSalary = 3.5;
         const borderWidthSpSalary = 0.5; // Adjust the border width as needed
@@ -1729,13 +1761,13 @@ function WorktimeSheetWorkplace() {
         let startXSpSalary; // Declare startXSpSalary before using it
 
         if (daysInMonth === 28) {
-            startXSpSalary = 165.5;
+            startXSpSalary = 150.5;
         } else if (daysInMonth === 29) {
-            startXSpSalary = 169.5;
+            startXSpSalary = 154.5;
         } else if (daysInMonth === 30) {
-            startXSpSalary = 173.75;
+            startXSpSalary = 158.75;
         } else if (daysInMonth === 31) {
-            startXSpSalary = 177.75;
+            startXSpSalary = 162.75;
         };
         // console.log('startXSpSalary:', startXSpSalary);
         // console.log('cellHeightSpSalary:', cellHeightSpSalary);
@@ -1755,33 +1787,20 @@ function WorktimeSheetWorkplace() {
 
         const numRowsMess = 7;
         const numColsMess = 1;
-        const cellWidthMess = 25;
+        const cellWidthMess = 15;
         const cellHeightMess = 3.5;
         let startXMess; // Declare startXSpSalary before using it
 
         if (daysInMonth === 28) {
-            startXMess = 245.5;
+            startXMess = 260.5;
         } else if (daysInMonth === 29) {
-            startXMess = 249.5;
+            startXMess = 264.5;
         } else if (daysInMonth === 30) {
-            startXMess = 253.75;
+            startXMess = 268.75;
         } else if (daysInMonth === 31) {
-            startXMess = 257.75;
+            startXMess = 272.75;
         };
-        // const startXMess = 262; // Adjust the starting X-coordinate as needed
-        // const startYMess = 20; // Adjust the starting Y-coordinate as needed
-        const borderWidthMess = 0.5; // Adjust the border width as needed
-
-        // const drawTableMess = (tableNumber) => {
-        //     for (let i = 0; i < numRows; i++) {
-        //         for (let j = 0; j < numColsMess; j++) {
-        //             const x = startXMess + j * cellWidthMess;
-        //             const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 0.2);
-        //             drawCell(x, y, cellWidthMess, cellHeight);
-        //         }
-        //     }
-        // };
-
+        const borderWidthMess = 0.5;
         const drawTableMess = (tableNumber, arraylistOT) => {
             for (let i = 0; i < numRows; i++) {
                 for (let j = 0; j < numColsMess; j++) {
@@ -1889,6 +1908,15 @@ function WorktimeSheetWorkplace() {
                 }
             }
         };
+        const drawTableSpSalaryHeadTop = () => {
+            for (let i = 0; i < numRowsTop; i++) {
+                for (let j = 0; j < numColsSpSalary - 2; j++) {
+                    const x = (startXSpSalary + j * cellWidthSpSalary);
+                    const y = startYTop + i * 6;
+                    drawCell(x + cellWidthSpSalary, y + 4, cellWidthSpSalary, 6);
+                }
+            }
+        };
 
         const drawTableMessTop = () => {
             for (let i = 0; i < numRowsTop; i++) {
@@ -1930,7 +1958,7 @@ function WorktimeSheetWorkplace() {
 
         const drawArrayTextName = (dataArray) => {
             for (let i = 0; i < dataArray.length; i++) {
-                let currentX = startX - 20;
+                let currentX = startX - 13;
                 let currentY = startY + i * verticalDistance;
 
                 for (let j = 0; j < dataArray[i].length; j++) {
@@ -1945,11 +1973,11 @@ function WorktimeSheetWorkplace() {
                         xAdjustment = -8;
                     }
                     if (j === 2) {
-                        xAdjustment = 13;
+                        xAdjustment = 8;
                         yAdjustment = -3.5;
                     }
                     if (j === 3) {
-                        xAdjustment = 13;
+                        xAdjustment = 8;
                         yAdjustment = -3.5;
                     }
 
@@ -2052,13 +2080,43 @@ function WorktimeSheetWorkplace() {
         //     }
         //     drawArrayText(arraytest.slice(pageStartIndex, pageEndIndex));
         //     doc.addPage();
-        // }
+        // } 
+        const title = ' ใบลงเวลาการปฏิบัติงาน';
 
+        const alldaywork = 'รวมวันทำงาน';
+        const countalldaywork = '340';
+
+        const alldayworkHoliday = 'วันนักขัตฤกษ์';
+        const countalldayworkHoliday = '340';
+        const workOt = '1.5';
+
+        // if (daysInMonth === 28) {
+        //     startXMess = 245.5;
+        // } else if (daysInMonth === 29) {
+        //     startXMess = 249.5;
+        // } else if (daysInMonth === 30) {
+        //     startXMess = 253.75;
+        // } else if (daysInMonth === 31) {
+        //     startXMess = 257.75;
+        // };
+        const countalldayworkX = '340';
+        const countalldayworkY = '340';
+
+        const startDay = 21;
+        // Create an array from startDay to daysInMonth
+        const firstPart = Array.from({ length: daysInMonth - startDay + 1 }, (_, index) => startDay + index);
+
+        // Create an array from 1 to 20
+        const secondPart = Array.from({ length: 20 }, (_, index) => index + 1);
+
+        // Concatenate the two arrays
+        const resultArray = [...firstPart, ...secondPart];
+        const spaceWidth = 10;
 
         const makePage = Math.ceil(arraytest.length / 6);
 
         for (let pageIndex = 0; pageIndex < makePage; pageIndex++) {
-            const title = ' ใบลงเวลาการปฏิบัติงาน';
+
 
             doc.setFont('THSarabunNew');
             doc.setFontSize(16);
@@ -2069,7 +2127,7 @@ function WorktimeSheetWorkplace() {
 
             // const titleY = (doc.internal.pageSize.getHeight() - titleWidth) / 2;
 
-            doc.text(title, titleX, 30, { angle: 90 });
+            // doc.text(title, titleX, 30, { angle: 90 });
 
             const subTitle = workMonth; // Replace with your desired subtitle text
             doc.setFontSize(12); // You can adjust the font size for the subtitle
@@ -2099,18 +2157,21 @@ function WorktimeSheetWorkplace() {
             doc.setFontSize(8);
             doc.text(title, 171, 55, { angle: 90 });
 
-            const CheckMonth = 2;
-            const CheckYear = 2023;
+            // const CheckMonth = 3;
+            // const CheckYear = 2023;
 
-            const daysInMonth = getDaysInMonth(CheckMonth, CheckYear);
+            // const daysInMonth = getDaysInMonth(CheckMonth, CheckYear);
 
-            doc.text('จำนวนวัน' + daysInMonth, 10, 10);
+
+
+            doc.text('จำนวนวัน ' + daysInMonth, 10, 10);
+
 
             for (let i = 0; i < 6; i++) {
                 const dataIdx = pageIndex * 6 + i;
                 if (dataIdx < arraytest.length) {
                     // Set the color of the square (RGB values)
-                    const squareColor = [255, 200, 0]; // Red
+                    const squareColor = [255, 255, 0]; // Red
 
                     // Set the position where you want to place the square
                     const xPosition = 165.5;
@@ -2120,14 +2181,23 @@ function WorktimeSheetWorkplace() {
                     doc.setFillColor(...squareColor);
 
                     // Draw a square with the specified size and color
-                    doc.rect(xPosition, yPosition, 80, 25, 'F');
+                    doc.rect(startXSpSalary, startYTop, (cellWidthSpSalary * numColsSpSalary) - 0.2, cellHeightTop, 'F');
 
-                    doc.text(title, 171, 55, { angle: 90 });
+                    doc.text(alldaywork + ' ' + countalldaywork, 5 + startXSpSalary, 54.8, { angle: 90 });
+                    doc.text(alldayworkHoliday + ' ' + countalldayworkHoliday, 5 + startXSpSalary + cellWidthSpSalary, 54.8, { angle: 90 });
+                    doc.text('โอที' + ' ' + workOt, 5 + startXSpSalary + (cellWidthSpSalary * 2), 54.8, { angle: 90 });
+
+                    // doc.text(addSalaryWorkplace, 171, 54, { angle: 90 });
+                    addSalaryWorkplace.forEach((item, index) => {
+                        const text = `${item.name} ${item.SpSalary}`;
+                        doc.text(text, 201 + index * cellWidthSpSalary, 54.8, { angle: 90 });
+                    });
 
                     drawTableTop();
                     drawTableLeftHeadTop();
                     drawTableNumHeadTop();
                     drawTableSpSalaryTop();
+                    drawTableSpSalaryHeadTop();
                     drawTableMessTop();
                     // drawTableOT();
                     // drawTableOT(arraylistOT);
@@ -2144,6 +2214,15 @@ function WorktimeSheetWorkplace() {
 
                     // drawArrayText(arraytest.slice(dataIdx, dataIdx + 1));
 
+                    const squareColornew = [255, 255, 0];
+
+                    // Set the position where you want to place the square
+
+                    // Set the fill color
+                    doc.setFillColor(...squareColornew);
+                    doc.rect(startXSpSalary + 30.2, startYTop + 0.1, (cellWidthSpSalary * 7) - 0.4, 3.8, 'F');
+
+
                 }
             }
             // drawArrayText(arraytest, pageIndex * 6, Math.min((pageIndex + 1) * 6, arraytest.length));
@@ -2156,9 +2235,29 @@ function WorktimeSheetWorkplace() {
             const pageStartIndex = pageIndex * 6;
             const pageEndIndex = Math.min((pageIndex + 1) * 6, arraytest.length);
             drawArrayText(arraytest.slice(pageStartIndex, pageEndIndex));
+
             const pageStartIndexName = pageIndex * 6;
             const pageEndIndexName = Math.min((pageIndex + 1) * 6, arraytest.length);
             drawArrayTextName(arraylistNameEmp.slice(pageStartIndex, pageEndIndex));
+
+            for (let i = 0; i < resultArray.length; i++) {
+                const x = startX + i * cellWidth;
+                doc.text(resultArray[i].toString(), x + 1, cellHeightTop + startYTop - 2);
+            }
+
+            doc.text('ลำดับ', startXNumHead + 2, cellHeightTop + startYTop - 2);
+            doc.text('ชื่อ - นามสกุล', startXLeftHead + 10, cellHeightTop + startYTop - 2);
+            doc.text('ค่าล่วงเวลา', startXSpSalary + 11, startYTop + 3);
+            doc.text('สวัสดีการ', startXSpSalary + (cellWidthSpSalary * 3) + 3, startYTop + 3);
+
+            doc.text('หักประกันสังคม 5%', startXMess - 5, cellHeightTop + startYTop - 1,{ angle: 90 });
+
+            doc.text('หมายเหตุ', startXMess + 3, cellHeightTop + startYTop - 2);
+
+
+            // startXSpSalary + j * cellWidthSpSalary;
+            // const y = startYTop
+
 
             doc.addPage();
         }
@@ -2191,9 +2290,9 @@ function WorktimeSheetWorkplace() {
         // }
 
 
-        // doc.save('your_table.pdf');
-        const pdfContent = doc.output('bloburl');
-        window.open(pdfContent, '_blank');
+        doc.save('your_table.pdf');
+        // const pdfContent = doc.output('bloburl');
+        // window.open(pdfContent, '_blank');
     };
 
     return (
@@ -2219,16 +2318,16 @@ function WorktimeSheetWorkplace() {
 
                     <section class="content">
                         <div class="row">
-                            <div class="col-md-7">
+                            <div class="col-md-10">
                                 <section class="Frame">
                                     <div class="col-md-12">
                                         <h2 class="title">ค้นหา</h2>
                                         <div class="col-md-12">
                                             <form onSubmit={handleSearch}>
                                                 <div class="row">
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <div class="form-group">
-                                                            <label role="searchWorkplaceId">หน่วยงาน</label>
+                                                            <label role="searchWorkplaceId">รหัสหน่วยงาน</label>
                                                             <input type="text" class="form-control" id="searchWorkplaceId" placeholder="หน่วยงาน" value={searchWorkplaceId} onChange={(e) => setSearchWorkplaceId(e.target.value)} />
                                                         </div>
                                                     </div>
@@ -2238,7 +2337,7 @@ function WorktimeSheetWorkplace() {
                                                             <input type="text" class="form-control" id="searchWorkplaceName" placeholder="ชื่อหน่วยงาน" value={searchWorkplaceName} onChange={(e) => setSearchWorkplaceName(e.target.value)} />
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <div class="form-group">
                                                             <label role="searchEmployeeId">เดือน</label>
                                                             <select className="form-control" value={month} onChange={(e) => setMonth(e.target.value)} >
@@ -2254,6 +2353,18 @@ function WorktimeSheetWorkplace() {
                                                                 <option value="10">ตุลาคม</option>
                                                                 <option value="11">พฤศจิกายน</option>
                                                                 <option value="12">ธันวาคม</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label role="searchEmployeeId">ปี</label>
+                                                            <select className="form-control" value={year} onChange={(e) => setYear(e.target.value)} >
+                                                                {years.map((y) => (
+                                                                    <option key={y} value={y}>
+                                                                        {y}
+                                                                    </option>
+                                                                ))}
                                                             </select>
                                                         </div>
                                                     </div>
