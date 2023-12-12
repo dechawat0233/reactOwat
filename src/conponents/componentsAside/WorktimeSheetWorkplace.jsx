@@ -1562,13 +1562,145 @@ function WorktimeSheetWorkplace() {
         // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
         // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
         // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2]];
-        const arraytest = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.5],
-        [1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 0, 0, 0.5, 0.5, 1.5],
+        const arraytest = [[
+            {
+                name: "ค่าอาหาร",
+                codeSpSalary: "2534",
+                SpSalary: "500",
+                roundOfSalary: "daily",
+                StaffType: "all",
+                nameType: "ทดลอง",
+                _id: "656025d1fd5375965d5028a4"
+            },
+            {
+                name: "ค่าตำแหน่ง",
+                codeSpSalary: "4392",
+                SpSalary: "800",
+                roundOfSalary: "monthly",
+                StaffType: "header",
+                nameType: "",
+                _id: "656025d1fd5375965d5028a6"
+            }],
+        [{
+            name: "ค่าเดินทาง",
+            codeSpSalary: "1001",
+            SpSalary: "1000",
+            roundOfSalary: "monthly",
+            StaffType: "all",
+            nameType: "",
+            _id: "656025d1fd5375965d5028a3"
+        },
+        {
+            name: "ค่าตำแหน่ง",
+            codeSpSalary: "4392",
+            SpSalary: "800",
+            roundOfSalary: "monthly",
+            StaffType: "header",
+            nameType: "",
+            _id: "656025d1fd5375965d5028a6"
+        }],
+        [{
+            name: "ค่าเดินทาง",
+            codeSpSalary: "1001",
+            SpSalary: "1000",
+            roundOfSalary: "monthly",
+            StaffType: "all",
+            nameType: "",
+            _id: "656025d1fd5375965d5028a3"
+        },
+        {
+            name: "ค่าอาหาร",
+            codeSpSalary: "2534",
+            SpSalary: "500",
+            roundOfSalary: "daily",
+            StaffType: "all",
+            nameType: "ทดลอง",
+            _id: "656025d1fd5375965d5028a4"
+        }],
+        [{
+            name: "ค่าเดินทาง",
+            codeSpSalary: "1001",
+            SpSalary: "1000",
+            roundOfSalary: "monthly",
+            StaffType: "all",
+            nameType: "",
+            _id: "656025d1fd5375965d5028a3"
+        },
+        {
+            name: "ค่าอาหาร",
+            codeSpSalary: "2534",
+            SpSalary: "500",
+            roundOfSalary: "daily",
+            StaffType: "all",
+            nameType: "ทดลอง",
+            _id: "656025d1fd5375965d5028a4"
+        },
+        {
+            name: "ค่าโทรศัพท์",
+            codeSpSalary: "8467",
+            SpSalary: "500",
+            roundOfSalary: "daily",
+            StaffType: "header",
+            nameType: "",
+            _id: "656025d1fd5375965d5028a5"
+        }],
+        [{
+            name: "ค่าเดินทาง",
+            codeSpSalary: "1001",
+            SpSalary: "1000",
+            roundOfSalary: "monthly",
+            StaffType: "all",
+            nameType: "",
+            _id: "656025d1fd5375965d5028a3"
+        },
+        {
+            name: "ค่าตำแหน่ง",
+            codeSpSalary: "4392",
+            SpSalary: "800",
+            roundOfSalary: "monthly",
+            StaffType: "header",
+            nameType: "",
+            _id: "656025d1fd5375965d5028a6"
+        }],
+        [
+            {
+                name: "ค่าอาหาร",
+                codeSpSalary: "2534",
+                SpSalary: "500",
+                roundOfSalary: "daily",
+                StaffType: "all",
+                nameType: "ทดลอง",
+                _id: "656025d1fd5375965d5028a4"
+            },
+            {
+                name: "ค่าโทรศัพท์",
+                codeSpSalary: "8467",
+                SpSalary: "500",
+                roundOfSalary: "daily",
+                StaffType: "header",
+                nameType: "",
+                _id: "656025d1fd5375965d5028a5"
+            }],
+        [{
+            name: "ค่าเดินทาง",
+            codeSpSalary: "1001",
+            SpSalary: "1000",
+            roundOfSalary: "monthly",
+            StaffType: "all",
+            nameType: "",
+            _id: "656025d1fd5375965d5028a3"
+        },
+
+        {
+            name: "ค่าโทรศัพท์",
+            codeSpSalary: "8467",
+            SpSalary: "500",
+            roundOfSalary: "daily",
+            StaffType: "header",
+            nameType: "",
+            _id: "656025d1fd5375965d5028a5"
+        }
+        ]
         ];
         const sumArray = arraytest.map((subArray) => subArray.reduce((acc, val) => acc + val, 0));
 
@@ -1583,6 +1715,15 @@ function WorktimeSheetWorkplace() {
         const sumArrayOT = arraytestOT.map(subArray =>
             subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
         );
+
+        const arraytestSpSalary = [[1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0.5],
+        [2, 2, 2, 2, 2, '', 2, '', 2],
+        [2, '', 2, 2, '', 2, 3, '', 3, 3],
+        [3, 3, 3, '', 3, 3, 3, 3],
+        [3, '', 3, '', 3, 3, 3, 1, '', 1],
+        [3, 3, '', 1, 1, '', 1, 3, 3],
+        [3, 3, '', 3, '', 3, 3, 3, 3, '', 1, '', 1, 0.5, 0.5, 1.5],
+        ];
 
         // const arraylistNameEmp = ['สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย','สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย','สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย','สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย', 'สนไหม'];
         const arraylistNameEmp =
@@ -2266,7 +2407,7 @@ function WorktimeSheetWorkplace() {
                         } else if (item.roundOfSalary === 'daily') {
                             roundOfSalaryText = 'วัน';
                         } doc.text(NameSp, 5 + (cellWidthSpSalary * 5) + startXSpSalary + index * (cellWidthSpSalary), 54.8, { angle: 90 });
-                        doc.text('ต่อ '+roundOfSalaryText, 8 + (cellWidthSpSalary * 5) + startXSpSalary + index * (cellWidthSpSalary), 54.8, { angle: 90 });
+                        doc.text('ต่อ ' + roundOfSalaryText, 8 + (cellWidthSpSalary * 5) + startXSpSalary + index * (cellWidthSpSalary), 54.8, { angle: 90 });
                     });
 
                     drawTableTop();
