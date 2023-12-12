@@ -35,7 +35,10 @@ function AddEditSalaryEmployee() {
     //employeedata
     const [employeeId, setEmployeeId] = useState(''); //รหัสพนักงาน
     const [name, setName] = useState(''); //ชื่อพนักงาน
-    const [lastName, setLastName] = useState(''); //ชื่อพนักงาน
+    const [lastName, setLastName] = useState(''); //นามสกุลพนักงาน
+const [dataResult , setDataResult] = useState([]);
+
+
 
     //////////////////////////////
     const [employeeList, setEmployeeList] = useState([]);
@@ -68,12 +71,9 @@ function AddEditSalaryEmployee() {
 
     console.log(workplaceList);
 
-    //search employee name by employeeId
-    // console.log(workplaceList);
-    // console.log(workplaceList);
 
 
-
+//x1
     /////////////////////////////////////////////
     const [addSalaryId, setAddSalaryId] = useState('');
     const [addSalaryName, setAddSalaryName] = useState('');
@@ -156,12 +156,29 @@ function AddEditSalaryEmployee() {
                 setSearchEmployeeId('');
                 setSearchEmployeeName('');
 
-                //result > 1 
+                //result = 1 
                 if(response.data.employees.length == 1){
                 // Set search values
                 setEmployeeId(response.data.employees[0].employeeId);
                 setName(response.data.employees[0].name);
                 setLastName(response.data.employees[0].lastName);
+setDataResult(response.data.employees[0] );
+ alert(response.data.employees[0].addSalary.length );
+ for(let i =0; i < response.data.employees[0].addSalary.length  ; i++){
+    const newRowData = {
+        // addSalaryId: addSalaryId || '',
+        // addSalaryName: || '',
+        addSalary: response.data.employees[0].addSalary[i].SpSalary  || '',
+        // message: message || '',
+    };
+
+    addRow(newRowData );
+// alert(response.data.employees[0].addSalary[i].roundOfSalary ); //แบบรายวัน รายเดือน
+alert(response.data.employees[0].addSalary[i].name ); 
+
+ }
+
+//x33
 
                 }
 
