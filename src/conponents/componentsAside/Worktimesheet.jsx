@@ -91,6 +91,8 @@ function Worktimesheet() {
   const [listTableDayoff, setListTableDayoff] = useState([]);
   //data for check list dayoff
   const [data_listDayoff, setData_listDayoff] = useState([]);
+const [spDayoff , setSpDayoff] = useState(null);
+
 
   useEffect(() => {
     setListDayOff({});
@@ -103,6 +105,10 @@ function Worktimesheet() {
       // alert(JSON.stringify(empWorkplace ,null,2));
       console.log('empWorkplace', empWorkplace);
       console.log('wid', wid);
+
+      //get special dayoff
+      setSpDayoff(empWorkplace.daysOff);
+      // alert(new Date(empWorkplace.daysOff[0]).getDate() );
 
       const df = [];
       if (empWorkplace.workday7 !== "true") {
@@ -217,6 +223,40 @@ function Worktimesheet() {
     // const empWorkplace = workplaceList.find(item => item.workplaceId === wid);
 
   }, [result_data]);
+
+
+  
+  //count day work and dayoff and special dayoff
+  const [dw , setDw] = useState(0); //รวมวันทำงาน
+  const [doff , setDoff] = useState(0); //รวมทำวันหยุดในสัปดาห์
+  const [dspe , setDspe] = useState(0); //รวมทำงานวันหยุดพิเศษ
+const [ listDf , setListDf] = useState([]);
+
+  useEffect( () => {
+
+    const calDayoff = async () => {
+      let temp = [];
+
+      //get special dayoff to list
+      await spDayoff.map(item => {
+        temp.push(new Date(item).getDate() );
+              } )
+
+                    //filtered dayoff with special dayoff
+      const filteredDayoff = await data_listDayoff.filter((element) => !temp.includes(element));
+      await setListDf(filteredDayoff );
+      // await alert(JSON.stringify(listDf, null,2) );
+
+    };
+
+    if(spDayoff !== null ){
+      calDayoff();
+      //b1
+
+    }
+
+  }, [spDayoff] );
+
 
   console.log('data_listDayoff', data_listDayoff);
   console.log('listTableDayoff', listTableDayoff);
