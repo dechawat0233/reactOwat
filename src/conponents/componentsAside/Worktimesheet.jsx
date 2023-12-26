@@ -1548,7 +1548,7 @@ alert("งวดต้นปี");
 
             <div class="row">
               <div class="col-md-2">
-                {result_data.map((
+                {result_data.slice(0, 1).map((
                   employeerecord) => (
                   employeerecord.employeeId + ': ชื่อพนักงาน ' + employeerecord.employeeName)
                 )}
