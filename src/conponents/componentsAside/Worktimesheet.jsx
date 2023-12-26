@@ -1555,50 +1555,6 @@ alert("งวดต้นปี");
   </div>
 </div>
 <br />
-<div class="row">
-  <div class="col-md-2">
-    {result_data.length > 0 && (
-      result_data.slice(0, 1).map((employeerecord) => (
-        employeerecord.employeeId + ': ชื่อพนักงาน ' + employeerecord.employeeName
-      ))
-    )}
-  </div>
-</div>
-<br />
-
-<div class="row">
-  <div class="col-md-2">
-    {result_data.length > 0 && (
-      result_data.slice(0, 1).map((employeerecord) => (
-        'ชื่อ : ' + employeerecord.employeeName
-      ))
-    )}
-  </div>
-  {/* <div class="col-md-3"> */}
-  {result_data.length > 0 && (
-    result_data.slice(0, 1).map((employeerecord) => {
-      if (getMonthName(month) === "มกราคม") {
-        return (
-          <div class="col-md-3" key={employeerecord.timerecordId}>
-            {'ประจำเดือน ' + getMonthName(month)}
-            {'ตั้งแต่วันที่ 1 ' + getMonthName(parseInt(month, 10))}
-            {' ถึง 20 ' + getMonthName(month)}
-            {' ' + (parseInt(employeerecord.timerecordId, 10) + 543)}
-          </div>
-        );
-      } else {
-        return (
-          <div class="col-md-3" key={employeerecord.timerecordId}>
-            {'ประจำเดือน ' + getMonthName(month)}
-            {'ตั้งแต่วันที่ 21 ' + getMonthName(parseInt(month, 10) - 1)}
-            {' ถึง 20 ' + getMonthName(month)}
-            {' ' + (parseInt(employeerecord.timerecordId, 10) + 543)}
-          </div>
-        );
-      }
-    })
-  )}
-</div>
 
 <div class="row">
   <div class="col-md-2">
@@ -1916,7 +1872,7 @@ return (
         </div >
       </div >
 
-      {/* {JSON.stringify(listDayOff,null,2)} */
+      {/* {JSON.stringify(listDayOff,null,2)} */}
 
     </body >
   )
