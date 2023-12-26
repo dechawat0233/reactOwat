@@ -1521,12 +1521,17 @@ alert("งวดต้นปี");
                           <div class="col-md-12">
                             <div class="form-group">
                               <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
-                                {result_data.map(workplace => (
+                                { result_data.map((workplace , index)  => (
                                   <li
                                     key={workplace.employeeId}
                                     onClick={() => handleClickResult(workplace)}
                                   >
-                                    รหัส {workplace.employeeId || ''} ชื่อพนักงาน {workplace.employeeName || ''}
+                                        {index === 0 ? (
+      <span>
+        รหัส {workplace.employeeId || ''} ชื่อพนักงาน {workplace.employeeName || ''}
+      </span>
+    ) : null}
+                                    {/* รหัส {workplace.employeeId || ''} ชื่อพนักงาน {workplace.employeeName || ''} */}
                                   </li>
                                 ))}
                               </ul>
