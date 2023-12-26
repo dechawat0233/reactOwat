@@ -92,7 +92,6 @@ function Worktimesheet() {
   //data for check list dayoff
   const [data_listDayoff, setData_listDayoff] = useState([]);
 const [spDayoff , setSpDayoff] = useState(null);
-const [lastName , setLastName] = useState('');
 
 
   useEffect(() => {
@@ -104,8 +103,6 @@ const [lastName , setLastName] = useState('');
       const wid = emp_workplace.workplace;
       const empWorkplace = workplaceList.find(item => item.workplaceId === wid);
       // alert(JSON.stringify(empWorkplace ,null,2));
-
-      setLastName(emp_workplace.lastName);
       console.log('empWorkplace', empWorkplace);
       console.log('wid', wid);
 
@@ -219,11 +216,11 @@ const [lastName , setLastName] = useState('');
 
       // alert(df);
       // alert(dayoffCheck);
+      //xx
 
     }
     // const wid = emp_workplace.workplace;
     // const empWorkplace = workplaceList.find(item => item.workplaceId === wid);
-
 
   }, [result_data]);
 
@@ -236,69 +233,38 @@ const [lastName , setLastName] = useState('');
 const [ listDf , setListDf] = useState([]);
 const [listSp , setListSp] = useState([]);
 
-
-
-  //dayoff management
-  useEffect(() => {
-    // alert(JSON.stringify(listSp ,null,2));
-
+  useEffect( () => {
 
     const calDayoff = async () => {
-      //loop days of work.
-const tempDW = [];
-
-await result_data[0].employee_workplaceRecord.map(item => {
-  // alert(item.date);
-  tempDW.push(item.date);
-  setDw(tempDW);
-  });
-
-// await alert(tempDW );
-await setDw(tempDW);
-
-
       let temp = [];
-      
+
       //get special dayoff to list
       await spDayoff.map(async item => {
-
-        //check month and push special dayoff of month
-  const parsedNumber = await parseInt(month, 10) ;
-  
-  // alert(parsedNumber + ' * ');
-  // alert(new Date(item).getMonth() + ' ' + new Date(item).getDate() );
-  
-  if(parsedNumber  === new Date(item).getMonth() ) {
-  await temp.push(new Date(item).getDate() );
-  await setListSp(temp);
-  } else {
-  await setListSp([]);
-  }
+        await temp.push(new Date(item).getDate() );
+        await setListSp(temp);
        } );
-  
-  // await alert(JSON.stringify(listSp ,null,2));
-  //check special dayoff.
-  
+
+// await alert(JSON.stringify(listSp ,null,2) );
+
                     //filtered dayoff with special dayoff
       const filteredDayoff = await data_listDayoff.filter((element) => !temp.includes(element));
       await setListDf(filteredDayoff );
       // await alert(JSON.stringify(listDf, null,2) );
+
     };
-  
 
-if(result_data.length  > 0 ){
+    if(spDayoff !== null ){
+      calDayoff();
+      //b1
+alert(result_data[0].employee_workplaceRecord.length );
+result_data[0].employee_workplaceRecord.map(item => {
 
-  if(spDayoff !== null ){
-    
-  calDayoff();
+alert(item.date);
+});
+    }
+//b2
+  }, [spDayoff] );
 
-  }
-
-
-}
-
-  
-  } , [spDayoff] );
 
   console.log('data_listDayoff', data_listDayoff);
   console.log('listTableDayoff', listTableDayoff);
@@ -378,19 +344,6 @@ if(result_data.length  > 0 ){
   const monthtest = 3; // 3 represents March using 1-based indexing
   async function handleSearch(event) {
     event.preventDefault();
-
-    //clean value 
-    setSpDayoff([]);
-
-    setTableData (
-      combinedRange.map((index) => ({
-        isChecked: false, // Initial state of the checkbox
-        textValue: '',    // Initial state of the text value
-        workplaceId: index, // Store the workplaceId
-        date: '', // Store the workplaceId
-      }))
-    );
-  
     // get value from form search
     if (searchEmployeeId === '' && searchEmployeeName === '') {
       // Both employeeId and employeeName are null
@@ -405,8 +358,7 @@ if(result_data.length  > 0 ){
       employeeId: searchEmployeeId,
       employeeName: searchEmployeeName,
       month: month
-    };
-     console.log(searchEmployeeId);
+    }; console.log(searchEmployeeId);
 
     const parsedNumber = await parseInt(month, 10) - 1;
     const formattedResult = await String(parsedNumber).padStart(2, '0');
@@ -516,16 +468,92 @@ if(result_data.length  > 0 ){
       } else {
         alert("ไม่พบข้อมูล 1 ถึง 20 " + getMonthName(data.month));
         check = check + 1;
-        // window.location.reload();
+        window.location.reload();
       }
 
 
+      // const empId = await axios.post(endpoint + '/employee/search', searchResult.employeeId);
+      // if (empId.data.recordworkplace.length >= 1) {
+      //   await setEmpId(empId.data.recordworkplace);
+      // } else {
+      //   alert("ไม่พบข้อมูล 1 ถึง 20 " + getMonthName(data.month));
+      // }
+      // console.log('empId',empId);
+
+      // if (data1.month == '00') {
+      //   data1.month = '12';
+      // }
+      // const response1 = await axios.post(endpoint + '/timerecord/searchemp', data1);
+      // if (response1.data.recordworkplace.length >= 1) {
+      //   await setSearchResult1(response1.data.recordworkplace);
+      // } else {
+      //   alert("ไม่พบข้อมูล 21 ถึง สิ้นเดือน " + getMonthName(data1.month ) );
+      // }
+
+      // // await alert(data1.month + ' : '+ response1.data.recordworkplace.length )
+      // // await alert(data.month + ' : '+ response.data.recordworkplace.length )
+
+      // // await alert(searchResult[0].employee_workplaceRecord.length);
+
+      // // alert(JSON.stringify(response.data , null, 2) );
+      // // await alert(searchResult[0].employee_workplaceRecord[0].workplaceId );
 
       const employeeWorkplaceRecords = await response.data.recordworkplace[0].employee_workplaceRecord || '';
+      // const employeeWorkplaceRecords1 = await response1.data.recordworkplace[0].employee_workplaceRecord || '';
 
+      // // xx
+      // if (employeeWorkplaceRecords1.length > 0) {
+      //   const dates1 = employeeWorkplaceRecords1.map(record => record.date);
+      //   // const otTime = employeeWorkplaceRecords.map(record => record.otTime);
+
+      //   const allTimeA1 = employeeWorkplaceRecords1.map((record) => record.allTime);
+
+      //   const workplaceId1 = employeeWorkplaceRecords1.map(record => record.workplaceId);
+
+      //   const otTime1 = employeeWorkplaceRecords1.map((record) => record.otTime);
+
+      //   // setDataset(
+      //   //   employeeWorkplaceRecords1.filter((record) => record.date) // Filter out records with null or undefined dates
+      //   //     .map((record) => {
+      //   //       return record;
+      //   //     })
+      //   // );
+
+      //   setTableData((prevState) => {
+      //     const updatedData = [...prevState];
+      //     dates1.forEach((date1, index) => {
+      //       const dataIndex1 = parseInt(date1, 10) - 1; // Subtract 1 because indices are zero-based
+      //       if (dataIndex1 >= 0 && dataIndex1 < updatedData.length) {
+
+      //         if (dataIndex1 >= 21 && dataIndex1 <= 31) {
+      //           // alert(dataIndex1 +' .');
+
+      //           updatedData[(dataIndex1 - 20)].isChecked = true;
+      //           updatedData[(dataIndex1 - 20)].otTime = otTime1[index];
+      //           updatedData[(dataIndex1 - 20)].allTimeA = allTimeA1[index];
+      //           updatedData[(dataIndex1 - 20)].workplaceId = workplaceId1[index]; // Set otTime at the same index as dates
+      //           updatedData[(dataIndex1 - 20)].date = dates1[index]; // Set otTime at the same index as dates
+
+      //           // Set otTime at the same index as dates
+
+      //         }
+
+      //       }
+      //     });
+      //     const filteredData = updatedData.filter((record) => record.isChecked == true);
+      //     setDataset(filteredData);
+      //     return updatedData;
+
+      //   });
+
+      //   // setWoekplace(dates);
+
+      // }
+      // // xx
 
       if (employeeWorkplaceRecords.length > 0) {
         const dates = employeeWorkplaceRecords.map(record => record.date);
+        // const otTime = employeeWorkplaceRecords.map(record => record.otTime);
 
         const allTimeA = employeeWorkplaceRecords.map((record) => record.allTime);
 
@@ -533,12 +561,22 @@ if(result_data.length  > 0 ){
 
         const otTime = employeeWorkplaceRecords.map((record) => record.otTime);
 
+        // setDataset(
+        //   employeeWorkplaceRecords
+        //     .filter((record) => record.date) // Filter out records with null or undefined dates
+        //     .map((record) => {
+        //       return record;
+        //     })
+        // );
+
         setTableData((prevState) => {
           const updatedData = [...prevState];
           dates.forEach((date, index) => {
             const dataIndex = parseInt(date, 10) - 1; // Subtract 1 because indices are zero-based
+            // alert(index);
             if (dataIndex >= 0 && dataIndex < updatedData.length) {
               if (dataIndex <= 20) {
+                // setCountWork((countWork + 1));
                 // alert((dataIndex + 11));
 
                 updatedData[(dataIndex + 11)].isChecked = true;
@@ -555,7 +593,91 @@ if(result_data.length  > 0 ){
           });
           const filteredData = updatedData.filter((record) => record.isChecked == true);
 
+          // const filteredData = [
+          //   { isChecked: true, textValue: '', workplaceId: '1001', date: '30', otTime: '1.0', allTime: '8.0' },
+          //   { isChecked: true, textValue: '', workplaceId: '1001', date: '01', otTime: '2.0', allTime: '4.0' },
+          //   { isChecked: true, textValue: '', workplaceId: '1002', date: '03', otTime: '6.0', allTime: '8.0' },
+          //   { isChecked: false, textValue: '', workplaceId: '1003', date: '04', otTime: '2.0', allTime: '8.0' }
+          // ];
+          // const workplaceIds = filteredData.map((record) => record.workplaceId)
           const workplaceIds = [...new Set(filteredData.map((record) => record.workplaceId))];
+
+          // const workplaceIdCounts = {};
+          // 
+          // Extract unique workplaceId values and count occurrences
+          // filteredData.forEach((record) => {
+          //   if (record.isChecked) {
+          //     const { workplaceId } = record;
+          //     if (workplaceIdCounts[workplaceId]) {
+          //       workplaceIdCounts[workplaceId]++;
+          //     } else {
+          //       workplaceIdCounts[workplaceId] = 1;
+          //     }
+          //   }
+          // });
+          // // const uniqueWorkplaceIds = [...new Set(updatedData.map((record) => record.workplaceId))];
+          // const result = Object.entries(workplaceIdCounts).map(([workplaceId, count]) => ({ workplaceId, count }));
+
+          // const workplaceIdCounts = {};
+          // const workplaceIdAllTimes = {};
+          // const workplaceIdOtTimes = {};
+
+
+          // filteredData.forEach((record) => {
+          //   if (record.isChecked) {
+          //     const { workplaceId, otTime, allTime } = record;
+          //     if (workplaceIdCounts[workplaceId]) {
+          //       workplaceIdCounts[workplaceId]++;
+          //       const allTimeAsNumber = parseFloat(allTime); // Parse allTime to a number
+          //       const otTimeAsNumber = parseFloat(otTime); // Parse otTime to a number
+
+          //       if (!isNaN(allTimeAsNumber)) {
+          //         if (allTimeAsNumber > 5.0) {
+          //           workplaceIdAllTimes[workplaceId] += 1;
+          //         } else {
+          //           workplaceIdAllTimes[workplaceId] += 0.5;
+          //         }
+          //       }
+          //       if (!isNaN(otTimeAsNumber)) {
+          //         workplaceIdOtTimes[workplaceId] += otTimeAsNumber;
+          //       }
+          //     } else {
+          //       workplaceIdCounts[workplaceId] = 1;
+          //       const allTimeAsNumber = parseFloat(allTime); // Parse allTime to a number
+          //       const otTimeAsNumber = parseFloat(otTime); // Parse otTime to a number
+          //       if (!isNaN(allTimeAsNumber)) {
+          //         if (allTimeAsNumber > 5.0) {
+          //           workplaceIdAllTimes[workplaceId] = 1;
+          //         } else {
+          //           workplaceIdAllTimes[workplaceId] = 0.5;
+          //         }
+          //       }
+          //       if (!isNaN(otTimeAsNumber)) {
+          //         workplaceIdOtTimes[workplaceId] = otTimeAsNumber;
+          //       }
+          //     }
+          //   }
+          // });
+
+          // const result = Object.entries(workplaceIdCounts).map(([workplaceId, count]) => ({
+          //   workplaceId,
+          //   count,
+          //   allTime: workplaceIdAllTimes[workplaceId].toFixed(1),
+          //   otTime: workplaceIdOtTimes[workplaceId].toFixed(2), // Format otTime to 2 decimal places
+          // }));
+
+          // // Calculate the total allTime
+          // const totalAllTime = Object.values(workplaceIdAllTimes).reduce((sum, allTime) => sum + allTime, 0).toFixed(1);
+
+          // console.log('Result:', result);
+          // console.log('Total AllTime:', totalAllTime);
+
+
+          // const count = filteredData.length;
+
+          // setCountWork((count));
+          // setCountWorkSTime(totalAllTime);
+          // setWorkplaceIdList(result);
 
           setDataset(filteredData);
           return updatedData;
@@ -582,27 +704,24 @@ if(result_data.length  > 0 ){
         await setName(response.data.recordworkplace[0].employeeName);
         // console.log('Name', name);
 
+        // setWoekplace(response.data.recordworkplace[0].employee_workplaceRecord[0].workplaceName);
 
+        // setSearchEmployeeId(response.data.employees[0].employeeId);
+        // setSearchEmployeeName(response.data.employees[0].name);
         setSearchEmployeeId('');
         setSearchEmployeeName('');
 
       }
-
-
     } catch (error) {
-      // alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
-      // window.location.reload();
+      alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
+      window.location.reload();
     }
 
     try {
 
-      // if (data1.month == '00') {
-      //   data1.month = '12';
-      // }
-
-      //check month 01 then skip data
-if(data.month !== '01'){
-
+      if (data1.month == '00') {
+        data1.month = '12';
+      }
       const response1 = await axios.post(endpoint + '/timerecord/searchemp', data1);
       if (response1.data.recordworkplace.length >= 1) {
         await setSearchResult1(response1.data.recordworkplace);
@@ -615,7 +734,6 @@ if(data.month !== '01'){
         check = check + 1;
         if (check > 1) {
           // alert('reload');
-          alert('กรุณาตรวจสอบข้อมูลการลงเวลาของพนักงาน')
           window.location.reload();
         }
 
@@ -666,23 +784,47 @@ if(data.month !== '01'){
 
           const filteredData = updatedData.filter((record) => record.isChecked == true);
           // console.log('updatedData', updatedData);
+          // const workplaceIds = filteredData.map((record) => record.workplaceId)
+
+          // const filteredData = [
+          //   { isChecked: true, textValue: '', workplaceId: '1001', date: '30', otTime: '1.0', allTime: '8.0' },
+          //   { isChecked: true, textValue: '', workplaceId: '1001', date: '01', otTime: '2.0', allTime: '4.0' },
+          //   { isChecked: true, textValue: '', workplaceId: '1002', date: '03', otTime: '6.0', allTime: '8.0' },
+          //   { isChecked: false, textValue: '', workplaceId: '1003', date: '04', otTime: '2.0', allTime: '8.0' }
+          // ];
 
           const workplaceIds = [...new Set(filteredData.map((record) => record.workplaceId))];
+          // const workplaceIdCounts = {};
+          // const workplaceIdOtTimes = {};
+          // Extract unique workplaceId values and count occurrences
+          // filteredData.forEach((record) => {
+          //   if (record.isChecked) {
+          //     const { workplaceId } = record;
+          //     if (workplaceIdCounts[workplaceId]) {
+          //       workplaceIdCounts[workplaceId]++;
+          //     } else {
+          //       workplaceIdCounts[workplaceId] = 1;
+          //     }
+          //   }
+          // });
+          // // const uniqueWorkplaceIds = [...new Set(updatedData.map((record) => record.workplaceId))];
+          // const result = Object.entries(workplaceIdCounts).map(([workplaceId, count, allTime, otTime]) => ({ workplaceId, count, allTime, otTime }));
 
           setDataset(filteredData);
           return updatedData;
 
         });
+        // setWoekplace(dates);
       }
-
-    } else{
-alert("งวดต้นปี");
-      }
-
+      // if (!tableData.some(item => item.isChecked === true)) {
+      //   alert('ไม่พบข้อมูล');
+      //   window.location.reload();
+      // }
     }
+
     catch (error) {
-      // alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา', error);
-      // window.location.reload();
+      alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา', error);
+      window.location.reload();
     }
     //xx
     // alert(result_data[0].employeeId);
@@ -1517,24 +1659,19 @@ alert("งวดต้นปี");
                         </div>
                       </form>
                       <div class="d-flex justify-content-center">
-                        <h2 class="title">ผลลัพธ์ {result_data.length >0 ? ( '1') : ('0')} รายการ</h2>
+                        <h2 class="title">ผลลัพธ์ {result_data.length} รายการ</h2>
                       </div>
                       <div class="d-flex justify-content-center">
                         <div class="row">
                           <div class="col-md-12">
                             <div class="form-group">
                               <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
-                                { result_data.map((workplace , index)  => (
+                                {result_data.map(workplace => (
                                   <li
                                     key={workplace.employeeId}
                                     onClick={() => handleClickResult(workplace)}
                                   >
-                                        {index === 0 ? (
-      <span>
-        รหัส {workplace.employeeId || ''} ชื่อพนักงาน {workplace.employeeName || ''}
-      </span>
-    ) : null}
-                                    {/* รหัส {workplace.employeeId || ''} ชื่อพนักงาน {workplace.employeeName || ''} */}
+                                    รหัส {workplace.employeeId || ''} ชื่อพนักงาน {workplace.employeeName || ''}
                                   </li>
                                 ))}
                               </ul>
@@ -1551,54 +1688,30 @@ alert("งวดต้นปี");
 
             <div class="row">
               <div class="col-md-2">
-                {result_data.slice(0, 1).map((
+                {result_data.map((
                   employeerecord) => (
-                  employeerecord.employeeId + ': ' + employeerecord.employeeName + ' ' +  lastName )
+                  employeerecord.employeeId + ': ชื่อพนักงาน ' + employeerecord.employeeName)
                 )}
               </div>
             </div>
             <br />
 
             <div class="row">
-              {/* <div class="col-md-2">
-                {result_data.slice(0, 1).map((
+              <div class="col-md-2">
+                {result_data.map((
                   employeerecord) => (
                   '                ชื่อ :                   ' + employeerecord.employeeName)
                 )}
-              </div> */}
-              {/* <div class="col-md-3"> */}
-                {result_data.slice(0, 1).map((employeerecord) => {
-
-if(getMonthName(month) == "มกราคม"){
-return (
-  <div class="col-md-5" key={employeerecord.timerecordId}>
-
-  {'ประจำเดือน ' + getMonthName(month)}
-  {' ตั้งแต่วันที่ 1 ' + getMonthName(parseInt(month, 10))}
-  {' ถึง 20 ' + getMonthName(month)}
-{'  ' + (parseInt(employeerecord.timerecordId, 10) + 543)}
-
-</div>
-
-);
-} else {
-
-
-return (
-  <div class="col-md-5" key={employeerecord.timerecordId}>
-
-  {'ประจำเดือน ' + getMonthName(month)}
-  {' ตั้งแต่วันที่ 21 ' + getMonthName(parseInt(month, 10) - 1)}
-   {' ถึง 20 ' + getMonthName(month)}
-{'  ' + (parseInt(employeerecord.timerecordId, 10) + 543)}
-
-</div>
-);
-}
-
-                }
-
+              </div>
+              <div class="col-md-3">
+                {result_data.map((
+                  employeerecord) => (
+                    'ประจำเดือน ' + getMonthName(month)
+                    + 'ตั้งแต่วันที่ 21 ' + getMonthName(parseInt(month, 10) - 1)
+                    + ' ถึง 20 ' + getMonthName(month))
+                  + '  ' + (parseInt(employeerecord.timerecordId, 10) + 543)
                 )}
+              </div>
             </div>
             <br />
             <div class="row">
