@@ -245,14 +245,11 @@ const [listSp , setListSp] = useState([]);
 const tempDW = [];
 
 await result_data[0].employee_workplaceRecord.map(item => {
-
   // alert(item.date);
   tempDW.push(item.date);
   setDw(tempDW);
-
-  //check special dayoff.
-  
   });
+
 // await alert(tempDW );
 await setDw(tempDW);
 
@@ -261,12 +258,11 @@ await setDw(tempDW);
       
       //get special dayoff to list
       await spDayoff.map(async item => {
-  //check month and push special dayoff of month
-  
+
+        //check month and push special dayoff of month
   const parsedNumber = await parseInt(month, 10) ;
   
   // alert(parsedNumber + ' * ');
-  
   // alert(new Date(item).getMonth() + ' ' + new Date(item).getDate() );
   
   if(parsedNumber  === new Date(item).getMonth() ) {
@@ -275,15 +271,10 @@ await setDw(tempDW);
   } else {
   await setListSp([]);
   }
-  
-  
-        // await temp.push(new Date(item).getDate() );
-        // await setListSp(temp);
-  
-  
        } );
   
   // await alert(JSON.stringify(listSp ,null,2));
+  //check special dayoff.
   
                     //filtered dayoff with special dayoff
       const filteredDayoff = await data_listDayoff.filter((element) => !temp.includes(element));
@@ -1567,15 +1558,39 @@ alert("งวดต้นปี");
                   '                ชื่อ :                   ' + employeerecord.employeeName)
                 )}
               </div>
-              <div class="col-md-3">
-                {result_data.map((
-                  employeerecord) => (
-                    'ประจำเดือน ' + getMonthName(month)
-                    + 'ตั้งแต่วันที่ 21 ' + getMonthName(parseInt(month, 10) - 1)
-                    + ' ถึง 20 ' + getMonthName(month))
-                  + '  ' + (parseInt(employeerecord.timerecordId, 10) + 543)
+              {/* <div class="col-md-3"> */}
+                {result_data.map((employeerecord) => {
+
+if(getMonthName(month) == "มกราคม"){
+return (
+  <div class="col-md-3" key={employeerecord.timerecordId}>
+
+  {'ประจำเดือน ' + getMonthName(month)}
+  {'ตั้งแต่วันที่ 1 ' + getMonthName(parseInt(month, 10))}
+  {' ถึง 20 ' + getMonthName(month)}
+{'  ' + (parseInt(employeerecord.timerecordId, 10) + 543)}
+
+</div>
+
+);
+} else {
+
+
+return (
+  <div class="col-md-3" key={employeerecord.timerecordId}>
+
+  {'ประจำเดือน ' + getMonthName(month)}
+  {'ตั้งแต่วันที่ 21 ' + getMonthName(parseInt(month, 10) - 1)}
+   {' ถึง 20 ' + getMonthName(month)}
+{'  ' + (parseInt(employeerecord.timerecordId, 10) + 543)}
+
+</div>
+);
+}
+
+                }
+
                 )}
-              </div>
             </div>
             <br />
             <div class="row">
