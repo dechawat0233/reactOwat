@@ -1564,7 +1564,7 @@ alert("งวดต้นปี");
                 )}
               </div>
               {/* <div class="col-md-3"> */}
-                {result_data.map((employeerecord) => {
+                {result_data.slice(0, 1).map((employeerecord) => {
 
 if(getMonthName(month) == "มกราคม"){
 return (
