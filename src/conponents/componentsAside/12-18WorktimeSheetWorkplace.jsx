@@ -1401,7 +1401,7 @@ function WorktimeSheetWorkplace() {
     console.log('Array 2 (Countdown):', array2);
 
 
-    const arraytest = [[1001, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.5],
+    const arraytest = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.5],
     [1, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 1],
@@ -2491,10 +2491,7 @@ function WorktimeSheetWorkplace() {
 
 
     // Create an object to store dates for each employee
-
     const datesByEmployee = {};
-    const datesByEmployeeLow = {};
-
 
     const datesByEmployeeUpper = {};
     const datesByEmployeeLower = {};
@@ -2503,21 +2500,49 @@ function WorktimeSheetWorkplace() {
         // Filter entries for the current employee
         const employeeEntries = filteredEntries.filter(entry => entry.employeeId === employeeId);
 
+        // Extract dates for the current employee
+        // const dates = employeeEntries.flatMap(entry =>
+        //     entry.employee_workplaceRecord.map(record => record.date)
+        // );
+        // const allTimes = employeeEntries.flatMap(entry =>
+        //     entry.employee_workplaceRecord.map(record => record.allTime)
+        // );
+        // const otTimes = employeeEntries.flatMap(entry =>
+        //     entry.employee_workplaceRecord.map(record => record.otTime)
+        // );
         const entriesData = employeeEntries.map(entry =>
-            entry.employee_workplaceRecord
-                .filter(record => record.date <= 20)
-                .map(record => ({
-                    workplaceId: record.workplaceId,
-                    dates: record.date,
-                    allTimes: record.allTime,
-                    otTimes: record.otTime
-                }))
+            entry.employee_workplaceRecord.map(record => ({
+                dates: record.date,
+                allTimes: record.allTime,
+                otTimes: record.otTime
+            }))
         );
 
+        // Flatten the array of arrays
+        // const flattenedEntries = [].concat(...entriesData);
+
+        // // Group the entries by dates
+        // const groupedByDate = flattenedEntries.reduce((acc, entry) => {
+        //     const key = entry.dates;
+        //     if (!acc[key]) {
+        //         acc[key] = [];
+        //     }
+        //     acc[key].push({ dates: entry.date,allTimes: entry.allTimes, otTimes: entry.otTimes });
+        //     return acc;
+        // }, {});
+
+        // Store the grouped data for the current employee
+        // groupedData[employeeId] = groupedByDate;
+
+        // Remove duplicates (if any)
+        // const uniqueDates = [...new Set(dates), ...new Set(allTimes), ...new Set(otTimes)];
+
+        // Store the unique dates for the current employee
+        // datesByEmployee[employeeId] = uniqueDates;
         datesByEmployee[employeeId] = entriesData;
 
     }
-    console.log('datesByEmployee123', datesByEmployee);
+    console.log('datesByEmployee', datesByEmployee);
 
 
     for (const employeeId of employeeIdsLower) {
@@ -2525,45 +2550,16 @@ function WorktimeSheetWorkplace() {
         const employeeEntries = filteredEntriesLower.filter(entry => entry.employeeId === employeeId);
 
         // Extract dates for the current employee
-        // const dates = employeeEntries.flatMap(entry =>
-        //     entry.employee_workplaceRecord.map(record => record.date)
-        // );
-
-        // // Remove duplicates (if any)
-        // const uniqueDatesLower = [...new Set(dates)];
-
-        const entriesDataLower = employeeEntries.map(entry =>
-            entry.employee_workplaceRecord
-                .filter(record => record.date >= 21)
-                .map(record => ({
-                    workplaceId: record.workplaceId,
-                    dates: record.date,
-                    allTimes: record.allTime,
-                    otTimes: record.otTime
-                }))
+        const dates = employeeEntries.flatMap(entry =>
+            entry.employee_workplaceRecord.map(record => record.date)
         );
 
+        // Remove duplicates (if any)
+        const uniqueDatesLower = [...new Set(dates)];
+
         // Store the unique dates for the current employee
-        datesByEmployeeLow[employeeId] = entriesDataLower;
+        datesByEmployeeLower[employeeId] = uniqueDatesLower;
     }
-    console.log('datesByEmployeeLower123', datesByEmployeeLow);
-
-    const combinedArray = {};
-
-    for (const employeeId of Object.keys(datesByEmployee)) {
-        const entriesData = datesByEmployee[employeeId].flat();
-
-        combinedArray[employeeId] = [...(combinedArray[employeeId] || []), ...entriesData];
-    }
-
-    for (const employeeId of Object.keys(datesByEmployeeLow)) {
-        const entriesData = datesByEmployeeLow[employeeId].flat();
-
-        combinedArray[employeeId] = [...(combinedArray[employeeId] || []), ...entriesData];
-    }
-
-    console.log('Combined Array:', combinedArray);
-
 
 
     for (const employeeId in datesByEmployee) {
@@ -2593,23 +2589,13 @@ function WorktimeSheetWorkplace() {
     const newDatesWork = {};
 
     // Loop through each employee ID
-    // for (const employeeId in datesByEmployeeLower) {
-    //     // Concatenate the arrays for the current employee
-    //     newDatesWork[employeeId] = [
-    //         ...(datesByEmployeeUpper[employeeId] || []), // Handle the case where there is no upper array
-    //         ...(datesByEmployeeLower[employeeId] || []), // Handle the case where there is no lower array
-    //     ];
-    // }
-
     for (const employeeId in datesByEmployeeLower) {
         // Concatenate the arrays for the current employee
         newDatesWork[employeeId] = [
-            ...(datesByEmployee[employeeId] || []), // Handle the case where there is no upper array
-            ...(datesByEmployeeLow[employeeId] || []), // Handle the case where there is no lower array
+            ...(datesByEmployeeUpper[employeeId] || []), // Handle the case where there is no upper array
+            ...(datesByEmployeeLower[employeeId] || []), // Handle the case where there is no lower array
         ];
     }
-
-    console.log('newDatesWork', newDatesWork);
     // Create new arrays for each employee
     const newDatesByEmployeeLower = {};
     // const newDatesByEmployeeUpper = {};
