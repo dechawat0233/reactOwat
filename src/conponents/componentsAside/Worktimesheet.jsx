@@ -92,6 +92,7 @@ function Worktimesheet() {
   //data for check list dayoff
   const [data_listDayoff, setData_listDayoff] = useState([]);
 const [spDayoff , setSpDayoff] = useState(null);
+const [lastName , setLastName] = useState('');
 
 
   useEffect(() => {
@@ -103,6 +104,8 @@ const [spDayoff , setSpDayoff] = useState(null);
       const wid = emp_workplace.workplace;
       const empWorkplace = workplaceList.find(item => item.workplaceId === wid);
       // alert(JSON.stringify(empWorkplace ,null,2));
+
+      setLastName(emp_workplace.lastName);
       console.log('empWorkplace', empWorkplace);
       console.log('wid', wid);
 
@@ -1550,25 +1553,25 @@ alert("งวดต้นปี");
               <div class="col-md-2">
                 {result_data.slice(0, 1).map((
                   employeerecord) => (
-                  employeerecord.employeeId + ': ชื่อ' + employeerecord.employeeName +JSON.stringify( employeerecord,null,2) )
+                  employeerecord.employeeId + ': ' + employeerecord.employeeName + ' ' +  lastName )
                 )}
               </div>
             </div>
             <br />
 
             <div class="row">
-              <div class="col-md-2">
+              {/* <div class="col-md-2">
                 {result_data.slice(0, 1).map((
                   employeerecord) => (
                   '                ชื่อ :                   ' + employeerecord.employeeName)
                 )}
-              </div>
+              </div> */}
               {/* <div class="col-md-3"> */}
                 {result_data.slice(0, 1).map((employeerecord) => {
 
 if(getMonthName(month) == "มกราคม"){
 return (
-  <div class="col-md-3" key={employeerecord.timerecordId}>
+  <div class="col-md-5" key={employeerecord.timerecordId}>
 
   {'ประจำเดือน ' + getMonthName(month)}
   {'ตั้งแต่วันที่ 1 ' + getMonthName(parseInt(month, 10))}
@@ -1582,7 +1585,7 @@ return (
 
 
 return (
-  <div class="col-md-3" key={employeerecord.timerecordId}>
+  <div class="col-md-5" key={employeerecord.timerecordId}>
 
   {'ประจำเดือน ' + getMonthName(month)}
   {'ตั้งแต่วันที่ 21 ' + getMonthName(parseInt(month, 10) - 1)}
