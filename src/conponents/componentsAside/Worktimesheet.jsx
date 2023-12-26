@@ -1574,7 +1574,7 @@ return (
   <div class="col-md-5" key={employeerecord.timerecordId}>
 
   {'ประจำเดือน ' + getMonthName(month)}
-  {'ตั้งแต่วันที่ 1 ' + getMonthName(parseInt(month, 10))}
+  {' ตั้งแต่วันที่ 1 ' + getMonthName(parseInt(month, 10))}
   {' ถึง 20 ' + getMonthName(month)}
 {'  ' + (parseInt(employeerecord.timerecordId, 10) + 543)}
 
@@ -1588,7 +1588,7 @@ return (
   <div class="col-md-5" key={employeerecord.timerecordId}>
 
   {'ประจำเดือน ' + getMonthName(month)}
-  {'ตั้งแต่วันที่ 21 ' + getMonthName(parseInt(month, 10) - 1)}
+  {' ตั้งแต่วันที่ 21 ' + getMonthName(parseInt(month, 10) - 1)}
    {' ถึง 20 ' + getMonthName(month)}
 {'  ' + (parseInt(employeerecord.timerecordId, 10) + 543)}
 
