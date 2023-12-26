@@ -1514,7 +1514,7 @@ alert("งวดต้นปี");
                         </div>
                       </form>
                       <div class="d-flex justify-content-center">
-                        <h2 class="title">ผลลัพธ์ {result_data.length} รายการ</h2>
+                        <h2 class="title">ผลลัพธ์ {result_data.length >0 ? ( '0') : ('1')} รายการ</h2>
                       </div>
                       <div class="d-flex justify-content-center">
                         <div class="row">
