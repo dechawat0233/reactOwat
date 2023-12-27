@@ -26,36 +26,8 @@ function Setting() {
     const [selectedDates, setSelectedDates] = useState([]);
     const [reason, setReason] = useState('');
 
-    const [day, setDay] = useState('');
-    const [month, setMonth] = useState('');
-    const [year, setYear] = useState(new Date().getFullYear());
-
-    // const handleDateChange = (date) => {
-    //     setSelectedDates((prevDates) => [...prevDates, date]);
-    // };
-    const handleAddDate = () => {
-        if (day && month && year) {
-            const selectedDate = new Date(`${month}/${day}/${year}`);
-            // Check if the selected date is a valid date
-            if (!isNaN(selectedDate.getTime())) {
-                // Check if the selected date already exists in the array
-                if (!selectedDates.find((date) => date.getTime() === selectedDate.getTime())) {
-                    setSelectedDates((prevDates) => [...prevDates, selectedDate]);
-                } else {
-                    // Show alert for duplicate date selection
-                    alert(day + '/' + month + '/' + year + '  Selected date already exists in the list.');
-                }
-                setDay('');
-                setMonth('');
-                setYear(new Date().getFullYear());
-            } else {
-                // Show alert for invalid date selection
-                alert(day / month / year + 'Invalid date selection. Please select a valid day, month, and year.');
-            }
-        } else {
-            // Show alert for invalid date selection
-            alert('Invalid date selection. Please select a day, month, and year.');
-        }
+    const handleDateChange = (date) => {
+        setSelectedDates((prevDates) => [...prevDates, date]);
     };
 
     const handleRemoveDate = (dateToRemove) => {
@@ -1238,52 +1210,16 @@ function Setting() {
                                 <section class="Frame">
                                     <div>
                                         <label>เลือกวันหยุดของหน่วยงาน:</label>
-                                        {/* <DatePicker
+                                        <DatePicker
                                             className="form-control"
                                             popperClassName="datepicker-popper"
                                             selected={null}
                                             onChange={handleDateChange}
-                                            // dateFormat="MMMM d, yyyy"
-                                            dateFormat="dd/mm/YYYY"
+                                            dateFormat="MMMM d, yyyy"
                                             isClearable
                                             placeholderText="Select a date"
-                                        /> */}
-                                        <div>
-                                            <label style={{ marginRight: '0.5rem' }}>เดือน:</label>
-                                            <select value={month} onChange={(e) => setMonth(e.target.value)}>
-                                                <option value="">Select month</option>
-                                                {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
-                                                    <option key={month} value={month}>
-                                                        {month}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                            <label style={{ margin: '0.5rem' }}>วันที่:</label>
-                                            <select value={day} onChange={(e) => setDay(e.target.value)}>
-                                                <option value="">Select day</option>
-                                                {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => (
-                                                    <option key={day} value={day}>
-                                                        {day}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                            <label style={{ margin: '0.5rem' }}>ปี:</label>
-                                            <select value={year} onChange={(e) => setYear(e.target.value)} style={{ margin: '0.5rem' }}>
-                                                <option value="">Select year</option>
-                                                {Array.from({ length: 7 }, (_, i) => new Date().getFullYear() + 3 - i).map(
-                                                    (year) => (
-                                                        <option key={year} value={year}>
-                                                            {year}
-                                                        </option>
-                                                    )
-                                                )}
-                                            </select>
-
-                                            <button type="button" className="btn btn-primary" onClick={handleAddDate}>
-                                                เพิ่ม
-                                            </button>
-                                        </div>
-                                        {/* {selectedDates.length > 0 && (
+                                        />
+                                        {selectedDates.length > 0 && (
                                             <div>
                                                 <h3>วันหยุดหน่วยงาน</h3>
                                                 <ul>
@@ -1296,28 +1232,6 @@ function Setting() {
                                                         </li>
                                                     ))}
                                                 </ul>
-                                            </div>
-                                        )} */}
-                                        {selectedDates.length > 0 && (
-                                            <div>
-                                                <h3>วันหยุดหน่วยงาน</h3>
-                                                <ol>
-                                                    {selectedDates.map((date, index) => (
-                                                        <li key={index}>
-                                                            {date instanceof Date && !isNaN(date.getTime())
-                                                                ? date.toLocaleDateString()
-                                                                : `${day}/${month}/${year} (Invalid Date)`}{' '}
-                                                            <button
-                                                                type="button"
-                                                                onClick={() => handleRemoveDate(date)}
-                                                                className="btn clean"
-                                                                style={{ margin: '0.5rem' }}
-                                                            >
-                                                                ลบออก
-                                                            </button>
-                                                        </li>
-                                                    ))}
-                                                </ol>
                                             </div>
                                         )}
                                     </div>
@@ -1396,7 +1310,7 @@ function Setting() {
 
                                         </ul>
                                         )} */}
-                                        {/* 
+{/* 
                                         {employeeIdList.length > 0 && (
                                             <div>
                                                 <h2>รายการที่เพิ่ม</h2>

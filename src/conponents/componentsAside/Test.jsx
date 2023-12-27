@@ -10,76 +10,100 @@ import moment from 'moment';
 import EmployeesSelected from './EmployeesSelected';
 
 function Test() {
-    const bordertable = {
-        borderLeft: '2px solid #000'
+    const [selectedDates, setSelectedDates] = useState([]);
+    const [reason, setReason] = useState('');
+
+    const [day, setDay] = useState('');
+    const [month, setMonth] = useState('');
+    const [year, setYear] = useState(new Date().getFullYear());
+
+    // const handleDateChange = (date) => {
+    //     setSelectedDates((prevDates) => [...prevDates, date]);
+    // };
+
+    const handleDateChange = (date) => {
+        // Check if the selected date already exists in the array
+        if (!selectedDates.includes(date)) {
+            setSelectedDates((prevDates) => [...prevDates, date]);
+        } else {
+            // Alert that the date already exists
+            alert('This date is already selected. Please choose a different date.');
+        }
     };
 
-    const [staffId, setStaffId] = useState(''); //รหัสหน่วยงาน
-    const [staffName, setStaffName] = useState(''); //รหัสหน่วยงาน
-    const [shift, setShift] = useState('');
-    const [startTime, setStartTime] = useState(''); //รหัสหน่วยงาน
-    const [endTime, setEndTime] = useState(''); //รหัสหน่วยงาน
-    const [allTime, setAllTime] = useState(''); //รหัสหน่วยงาน
-    const [otTime, setOtTime] = useState(''); //รหัสหน่วยงาน
-    const [selectotTime, setSelectotTime] = useState('');
-    const [selectotTimeOut, setSelectotTimeOut] = useState('');
+    // const handleAddDate = () => {
+    //     if (day && month && year) {
+    //         const selectedDate = new Date(`${day}/${month}/${year}`);
+    //         setSelectedDates((prevDates) => [...prevDates, selectedDate]);
+    //         setDay('');
+    //         setMonth('');
+    //         setYear('');
+    //     } else {
+    //         // Handle invalid date selection
+    //         console.error('Invalid date selection');
+    //     }
+    // };
+    // const handleAddDate = () => {
+    //     if (day && month && year) {
+    //         const selectedDate = new Date(`${day}/${month}/${year}`);
+    //         // Check if the selected date already exists in the array
+    //         if (!selectedDates.find((date) => date.getTime() === selectedDate.getTime())) {
+    //             setSelectedDates((prevDates) => [...prevDates, selectedDate]);
+    //         } else {
+    //             // Handle case where the date already exists
+    //             console.error('Date already selected');
+    //             alert(`${day}/${month}/${year}` + 'ถูกเพิ่มไปแล้ว');
+    //         }
+    //         setDay('');
+    //         setMonth('');
+    //         setYear('');
+    //     } else {
+    //         // Handle invalid date selection
+    //         // console.error(day '/' month '/' year'Invalid date selection');
+    //         alert(`${day}/${month}/${year}` + 'Invalid date selection. Please select a day, month, and year.');
 
-    // Function to add a new row to the rowDataList with specific values
-    const addRow = (newRowData) => {
-        // Create a copy of the current state
-        const newDataList = [...rowDataList];
-        // Push a new row with specific data
-        // newDataList.push({ ...initialRowData, ...newRowData });
-        newDataList.unshift(newRowData);
+    //     }
+    // };
 
-        // Update the state with the new data
-        setRowDataList(newDataList);
+    const handleAddDate = () => {
+        if (day && month && year) {
+            const selectedDate = new Date(`${month}/${day}/${year}`);
+            // Check if the selected date is a valid date
+            if (!isNaN(selectedDate.getTime())) {
+                // Check if the selected date already exists in the array
+                if (!selectedDates.find((date) => date.getTime() === selectedDate.getTime())) {
+                    setSelectedDates((prevDates) => [...prevDates, selectedDate]);
+                } else {
+                    // Show alert for duplicate date selection
+                    alert('Selected date already exists in the list.');
+                }
+                setDay('');
+                setMonth('');
+                setYear('');
+            } else {
+                // Show alert for invalid date selection
+                alert('Invalid date selection. Please select a valid day, month, and year.');
+            }
+        } else {
+            // Show alert for invalid date selection
+            alert('Invalid date selection. Please select a day, month, and year.');
+        }
     };
 
-    // Function to handle deleting a row
-    const handleDeleteRow = (index) => {
-        // Create a copy of the current state
-        const newDataList = [...rowDataList];
-        // Remove the row at the specified index
-        newDataList.splice(index, 1);
-        // Update the state with the new data
-        setRowDataList(newDataList);
+    // const handleRemoveDate = (dateToRemove) => {
+    //     setSelectedDates((prevDates) =>
+    //         prevDates.filter((date) => date !== dateToRemove)
+    //     );
+    // };
+    const handleRemoveDate = (dateToRemove) => {
+        setSelectedDates((prevDates) =>
+            prevDates.filter((date) => date.getTime() !== dateToRemove.getTime())
+        );
     };
 
-    const [rowDataList, setRowDataList] = useState([]);
-
-    ///////////////////
-
-    async function handleManageWorkplace(event) {
-        event.preventDefault();
-
-        const newRowData = {
-            // staffId: staffId || '',
-            staffName: staffName || '',
-            shift: shift || '',
-            startTime: startTime || '',
-            endTime: endTime || '',
-            allTime: allTime || '',
-            otTime: otTime || '',
-            selectotTime: selectotTime || '',
-            selectotTimeOut: selectotTimeOut || '',
-        };
-
-        addRow(newRowData);
-
-        //clean form
-        // setStaffId('');
-        setShift('');
-        setStaffName('');
-        setStartTime('');
-        setEndTime('');
-        setAllTime('');
-        setOtTime('');
-        setSelectotTime('');
-        setSelectotTimeOut('');
-        // alert(rowDataList.length);
-
-    }
+    const handleReasonChange = (event) => {
+        setReason(event.target.value);
+    };
 
     // console.log(workOfOT);
     return (
@@ -88,116 +112,116 @@ function Test() {
                 <div class="col-md-12">
                     <div class="container-fluid">
                         {/* <h2 class="title">ข้อมูลการลงเวลาทำงานของพนักงาน</h2> */}
-                        <form onSubmit={handleManageWorkplace}>
+                        <form >
 
                             <section class="Frame">
                                 <div class="row">
-                                    {/* <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label role="staffId">รหัสพนักงาน</label>
-                                            <input type="text" class="form-control" id="staffId" placeholder="รหัสพนักงาน" value={staffId} onChange={(e) => setStaffId(e.target.value)} />
-                                        </div>
-                                    </div> */}
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label role="staffName">ชื่อพนักงาน</label>
-                                            <input type="text" class="form-control" id="staffName" placeholder="ชื่อพนักงาน" value={staffName} onChange={(e) => setStaffName(e.target.value)} />
-                                        </div>
-                                    </div>
-                                
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <label role="startTime">เวลาเข้างาน</label>
-                                            <input type="text" class="form-control" id="startTime" placeholder="เวลาเข้างาน" value={startTime} onChange={(e) => setStartTime(e.target.value)} />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <label role="endTime">เวลาออกงาน</label>
-                                            <input type="text" class="form-control" id="endTime" placeholder="เวลาออกงาน" value={endTime} onChange={(e) => setEndTime(e.target.value)} />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <label role="allTime">ชั่วโมงทำงาน</label>
-                                            <input type="text" class="form-control" id="allTime" placeholder="ชั่วโมงทำงาน" value={allTime} onChange={(e) => setAllTime(e.target.value)} />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <label role="selectotTime">เวลาเข้า OT</label>
-                                            <input type="text" class="form-control" id="selectotTime" placeholder="เวลาเข้า OT" value={selectotTime} onChange={(e) => setSelectotTime(e.target.value)} />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <label role="selectotTimeOut">เวลาออก OT</label>
-                                            <input type="text" class="form-control" id="selectotTimeOut" placeholder="เวลาออก OT" value={selectotTimeOut} onChange={(e) => setSelectotTimeOut(e.target.value)} />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <label role="otTime">ชั่วโมง OT</label>
-                                            <input type="text" class="form-control" id="otTime" placeholder="ชั่วโมง OT" value={otTime} onChange={(e) => setOtTime(e.target.value)} />
-                                        </div>
+                                    {/*  */}
+                                    {/* <DatePicker
+                                        className="form-control"
+                                        popperClassName="datepicker-popper"
+                                        selected={null}
+                                        // Pass the raw date to the handler
+                                        onChange={(date) => handleDateChange(new Date(date))}
+                                        dateFormat="dd/mm/yyyy"
+                                        isClearable
+                                        placeholderText="Select a date"
+                                    /> */}
+                                    {/*  */}
+                                    <div>
+                                        <label>เดือน:</label>
+                                        <select value={month} onChange={(e) => setMonth(e.target.value)}>
+                                            <option value="">Select month</option>
+                                            {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
+                                                <option key={month} value={month}>
+                                                    {month}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        <label>วันที่:</label>
+                                        <select value={day} onChange={(e) => setDay(e.target.value)}>
+                                            <option value="">Select day</option>
+                                            {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => (
+                                                <option key={day} value={day}>
+                                                    {day}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        <label>ปี:</label>
+                                        <select value={year} onChange={(e) => setYear(e.target.value)}>
+                                            <option value="">Select year</option>
+                                            {Array.from({ length: 7 }, (_, i) => new Date().getFullYear() - 3 + i).map(
+                                                (year) => (
+                                                    <option key={year} value={year}>
+                                                        {year}
+                                                    </option>
+                                                )
+                                            )}
+                                        </select>
+
+                                        <button type="button" onClick={handleAddDate}>
+                                            เพิ่ม
+                                        </button>
                                     </div>
 
+                                    {/*  */}
+                                    {/* {selectedDates.length > 0 && (
+                                        <div>
+                                            <h3>วันหยุดหน่วยงาน</h3>
+                                            <ul>
+                                                {selectedDates.map((date) => (
+                                                    <li key={date.toString()}>
+                                                        {date.toLocaleDateString()}{' '}
+                                                        <button type="button" onClick={() => handleRemoveDate(date)} class="btn clean" style={{ margin: '0.5rem' }}>
+                                                            ลบออก
+                                                        </button>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    )} */}
+                                    {/*  */}
+                                    {selectedDates.length > 0 && (
+                                        <div>
+                                            <h3>วันหยุดหน่วยงาน</h3>
+                                            {/* <ol>
+                                                {selectedDates.map((date, index) => (
+                                                    <li key={date.toString()}>
+                                                        {date.toLocaleDateString()}{' '}
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => handleRemoveDate(date)}
+                                                            className="btn clean"
+                                                            style={{ margin: '0.5rem' }}
+                                                        >
+                                                            ลบออก
+                                                        </button>
+                                                    </li>
+                                                ))}
+                                            </ol> */}
+                                            <ol>
+                                                {selectedDates.map((date, index) => (
+                                                    <li key={index}>
+                                                        {date instanceof Date && !isNaN(date.getTime())
+                                                            ? date.toLocaleDateString()
+                                                            : `${day}/${month}/${year} (Invalid Date)`}{' '}
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => handleRemoveDate(date)}
+                                                            className="btn clean"
+                                                            style={{ margin: '0.5rem' }}
+                                                        >
+                                                            ลบออก
+                                                        </button>
+                                                    </li>
+                                                ))}
+                                            </ol>
+                                        </div>
+                                    )}
                                 </div>
 
                             </section>
 
-                            <div class="form-group">
-                                <button class="btn b_save" >
-                                    <i class="fas fa-check"></i> &nbsp; เพิ่ม
-                                </button>
-                            </div>
-
-                        </form>
-
-                        <form onSubmit={handleManageWorkplace}>
-
-                            <section class="Frame">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-2"> รหัสพนักงาน </div>
-                                            <div class="col-md-2"> ชื่อพนักงาน </div>
-                                            <div class="col-md-1"> กะการทำงาน </div>
-                                            <div class="col-md-1"> เวลาเข้างาน </div>
-                                            <div class="col-md-1"> เวลาออกงาน </div>
-                                            <div class="col-md-1"> ชั่วโมงทำงาน </div>
-                                            <div class="col-md-1"> เวลาเข้า OT </div>
-                                            <div class="col-md-1"> เวลาออก OT</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-
-                                        {rowDataList.map((rowData, index) => (
-                                            // rowData.staffId && ( // Check if staffId is set (truthy)
-                                                <div key={index}>
-                                                    <div class="row" style={{ marginBottom: '1rem', borderBottom: '2px solid #000' }}>
-                                                        <div class="col-md-2" style={bordertable}> {rowData.staffId} </div>
-                                                        <div class="col-md-2" style={bordertable}> {rowData.staffName} </div>
-                                                        <div class="col-md-1" style={bordertable}> {rowData.startTime} </div>
-                                                        <div class="col-md-1" style={bordertable}> {rowData.endTime} </div>
-                                                        <div class="col-md-1" style={bordertable}> {rowData.allTime} </div>
-                                                        <div class="col-md-1" style={bordertable}> {rowData.selectotTime} </div>
-                                                        <div class="col-md-1" style={bordertable}> {rowData.selectotTimeOut} </div>
-                                                        <div class="col-md-1" style={bordertable}> {rowData.otTime} </div>
-
-                                                        <div class="col-md-2" style={bordertable}>
-                                                            {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
-                                                            <button class="btn btn-xs btn-danger" style={{ padding: '0.3rem ' }} onClick={() => handleDeleteRow(index)}>Delete</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            // )
-                                        ))}
-                                    </div>
-                                </div>
-                            </section>
                         </form>
 
                     </div>
