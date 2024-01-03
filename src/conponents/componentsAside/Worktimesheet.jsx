@@ -269,6 +269,7 @@ await setDw(tempDW);
   // alert(new Date(item).getMonth() + ' ' + new Date(item).getDate() );
   
   if(parsedNumber  === new Date(item).getMonth() ) {
+    // alert(new Date(item).getDate() );
   await temp.push(new Date(item).getDate() );
   await setListSp(temp);
   } else {
@@ -278,9 +279,11 @@ await setDw(tempDW);
   
   // await alert(JSON.stringify(listSp ,null,2));
   //check special dayoff.
-  
+  alert(temp);
+
                     //filtered dayoff with special dayoff
       const filteredDayoff = await data_listDayoff.filter((element) => !temp.includes(element));
+      await alert(filteredDayoff );
       await setListDf(filteredDayoff );
       // await alert(JSON.stringify(listDf, null,2) );
     };
