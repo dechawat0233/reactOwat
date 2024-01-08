@@ -73,6 +73,15 @@ const workplaceSchema = new mongoose.Schema({
     workTotalPeople: {
         type: String,
     },
+    dayoffRate: {
+        type: String
+    },
+    dayoffRateOT: {
+        type: String
+    },
+    dayoffRateHour: {
+        type: String
+    },
     holiday: {
         type: String
     },
@@ -268,6 +277,9 @@ router.post('/create', async (req, res) => {
         workRate,
         workRateOT,
         workTotalPeople,
+        dayoffRate,
+        dayoffRateOT,
+        dayoffRateHour,
         holiday,
         holidayOT,
         holidayHour,
@@ -333,6 +345,9 @@ router.post('/create', async (req, res) => {
         workRate,
         workRateOT,
         workTotalPeople,
+        dayoffRate,
+        dayoffRateOT,
+        dayoffRateHour,
         holiday,
         holidayOT,
         holidayHour,

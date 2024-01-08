@@ -158,9 +158,13 @@ function Setting() {
     const [workRate, setWorkRate] = useState(''); //ค่าจ้างต่อวัน
     const [workRateOT, setWorkRateOT] = useState(''); //ค่าจ้าง OT ต่อชั่วโมง
     const [workTotalPeople, setWorkTotalPeople] = useState(''); //จำนวนคนในหน่วยงาน
+    const [dayoffRate, setDayoffRate] = useState(''); //ค่าจ้างวันหยุดรายวันต่อชั่วโมง
+    const [dayoffRateOT, setDayoffRateOT] = useState(''); //ค่าจ้างวันหยุด OT ต่อชั่วโมง
+    const [dayoffRateHour, setDayoffRateHour] = useState(''); //ค่าจ้างวันหยุดต่อชั่วโมง
     const [holiday, setHoliday] = useState(''); //ค่าจ้างวันหยุดนักขัตฤกษ์ 
     const [holidayOT, setHolidayOT] = useState(''); //ค่าจ้างวันหยุดนักขัตฤกษ์ OT
     const [holidayHour, setHolidayHour] = useState(''); //ค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง
+
     const [salaryadd1, setSalaryadd1] = useState(''); //ค่ารถ
     const [salaryadd2, setSalaryadd2] = useState(''); //ค่าอาหาร
     const [salaryadd3, setSalaryadd3] = useState(''); //เบี้ยขยัน
@@ -310,6 +314,9 @@ function Setting() {
         setWorkRate(workplace.workRate);
         setWorkRateOT(workplace.workRateOT);
         setWorkTotalPeople(workplace.workTotalPeople);
+        setDayoffRate(workplace.dayoffRate);
+        setDayoffRateOT(workplace.dayoffRateOT);
+        setDayoffRateHour(workplace.dayoffRateHour);
         setHoliday(workplace.holiday);
         setHolidayOT(workplace.holidayOT);
         setHolidayHour(workplace.holidayHour);
@@ -467,7 +474,6 @@ function Setting() {
                 window.location.reload();
 
             } else {
-                //x1
                 const data1 = {
                     employeeId: '',
                     name: '',
@@ -521,6 +527,9 @@ function Setting() {
             workRate: workRate,
             workRateOT: workRateOT,
             workTotalPeople: workTotalPeople,
+            dayoffRate: dayoffRate,
+            dayoffRateOT: dayoffRateOT,
+            dayoffRateHour: dayoffRateHour,
             holiday: holiday,
             holidayOT: holidayOT,
             holidayHour: holidayHour,
@@ -948,22 +957,41 @@ function Setting() {
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-4">
+                                    <div class="col-md-4">
                                             <div class="form-group">
-                                                <label role="holiday">อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง</label>
-                                                <input type="text" class="form-control" id="holiday" placeholder="อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายวัน" value={holiday} onChange={(e) => setHoliday(e.target.value)} />
+                                                <label role="dayoffRate">อัตราค่าจ้างวันหยุดประจำสัปดาห์</label>
+                                                <input type="text" class="form-control" id="dayoffRate" placeholder="อัตราค่าจ้างวันหยุดประจำสัปดาห์" value={dayoffRate} onChange={(e) => setDayoffRate(e.target.value)} />
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label role="holidayOT">อัตราค่าจ้างวันหยุดนักขัตฤกษ์ OT รายชั่วโมง</label>
-                                                <input type="text" class="form-control" id="holidayOT" placeholder="อัตราค่าจ้างวันหยุดนักขัตฤกษ์ OT รายชั่วโมง" value={holidayOT} onChange={(e) => setHolidayOT(e.target.value)} />
+                                                <label role="dayoffRateHour">อัตราค่าจ้างวันหยุดประจำสัปดาห์รายชั่วโมง</label>
+                                                <input type="text" class="form-control" id="dayoffRateHour" placeholder="อัตราค่าจ้างวันหยุดประจำสัปดาห์รายชั่วโมง" value={dayoffRateHour} onChange={(e) => setDayoffRateHour(e.target.value)} />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label role="dayoffRateOT">อัตราค่าจ้าง OT วันหยุดประจำสัปดาห์รายชั่วโมง</label>
+                                                <input type="text" class="form-control" id="dayoffRateOT" placeholder="อัตราค่าจ้าง OT วันหยุดประจำสัปดาห์รายชั่วโมง" value={dayoffRateOT} onChange={(e) => setDayoffRateOT(e.target.value)} />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label role="holiday">อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายวัน</label>
+                                                <input type="text" class="form-control" id="holiday" placeholder="อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายวัน" value={holiday} onChange={(e) => setHoliday(e.target.value)} />
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label role="holidayHour">อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง</label>
                                                 <input type="text" class="form-control" id="holidayHour" placeholder="อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง" value={holidayHour} onChange={(e) => setHolidayHour(e.target.value)} />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label role="holidayOT">อัตราค่าจ้างวันหยุดนักขัตฤกษ์ OT รายชั่วโมง</label>
+                                                <input type="text" class="form-control" id="holidayOT" placeholder="อัตราค่าจ้างวันหยุดนักขัตฤกษ์ OT รายชั่วโมง" value={holidayOT} onChange={(e) => setHolidayOT(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
