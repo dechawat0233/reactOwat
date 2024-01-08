@@ -253,7 +253,7 @@ await result_data[0].employee_workplaceRecord.map(item => {
   setDw(tempDW);
   });
 
-// await alert(tempDW );
+await alert(tempDW );
 await setDw(tempDW);
 
 
