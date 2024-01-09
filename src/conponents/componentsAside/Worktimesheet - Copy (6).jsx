@@ -332,6 +332,37 @@ if(result_data.length  > 0 ){
   const [countWorkSTime, setCountWorkSTime] = useState(0);
 
 
+  const [checked1, setChecked1] = useState(false);
+  const [checked2, setChecked2] = useState(false);
+  const [checked3, setChecked3] = useState(false);
+  const [checked4, setChecked4] = useState(false);
+  const [checked5, setChecked5] = useState(false);
+  const [checked6, setChecked6] = useState(false);
+  const [checked7, setChecked7] = useState(false);
+  const [checked8, setChecked8] = useState(false);
+  const [checked9, setChecked9] = useState(false);
+  const [checked10, setChecked10] = useState(false);
+  const [checked11, setChecked11] = useState(false);
+  const [checked12, setChecked12] = useState(false);
+  const [checked13, setChecked113] = useState(false);
+  const [checked14, setChecked14] = useState(false);
+  const [checked15, setChecked15] = useState(false);
+  const [checked16, setChecked16] = useState(false);
+  const [checked17, setChecked17] = useState(false);
+  const [checked18, setChecked18] = useState(false);
+  // const [checked1, setChecked1] = useState(false);
+  // const [checked2, setChecked2] = useState(false);
+  // const [checked3, setChecked3] = useState(false);
+  // const [checked1, setChecked1] = useState(false);
+  // const [checked2, setChecked2] = useState(false);
+  // const [checked3, setChecked3] = useState(false);
+  // const [checked1, setChecked1] = useState(false);
+  // const [checked2, setChecked2] = useState(false);
+  // const [checked3, setChecked3] = useState(false);
+
+  const [checked28, setChecked28] = useState(false);
+  const [checked31, setChecked31] = useState(false);
+
 
   const [employeeId, setEmployeeId] = useState('');
   const [name, setName] = useState('');
@@ -358,7 +389,6 @@ if(result_data.length  > 0 ){
   const [calendarData2, setCalendarData2] = useState([]);
   const yeartest = 2023;
   const monthtest = 3; // 3 represents March using 1-based indexing
-  
   async function handleSearch(event) {
     event.preventDefault();
 
