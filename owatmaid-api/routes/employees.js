@@ -205,6 +205,7 @@ const employeeSchema = new mongoose.Schema({
   divide: String,
 
   addSalary: [{
+    id: String,
     name: String,
     SpSalary: String,
     roundOfSalary: String,
