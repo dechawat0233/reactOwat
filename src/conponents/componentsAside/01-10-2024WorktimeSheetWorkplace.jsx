@@ -1336,8 +1336,8 @@ function WorktimeSheetWorkplace() {
     };
 
 
-    const CheckMonth = parseInt(month, 10);
-    const CheckYear = year;
+    const CheckMonth = 1;
+    const CheckYear = 2024;
 
     let countdownMonth;
     if (CheckMonth === 1) {
@@ -1401,19 +1401,19 @@ function WorktimeSheetWorkplace() {
     console.log('Array 2 (Countdown):', array2);
 
 
-    // const arraytest = [[1001, 1, 1, 1, 1, '', 1, 1, 1, 1, '', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.5],
-    // [1, 1, 1, 1, 1, 1, 1],
-    // [1, 1, 1, 1, 1, 1, 1],
-    // [1, 1, 1, 1, 1, 1, 1],
-    // [1, 1, 1, 1, 1, 1, 1],
-    // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9],];
+    const arraytest = [[1001, 1, 1, 1, 1, '', 1, 1, 1, 1, '', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.5],
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9],];
 
-    // // const sumArray = arraytest.map((subArray) => subArray.reduce((acc, val) => acc + val, 0));
-    // const sumArray = arraytest.map(subArray =>
-    //     subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
-    // );
-    // console.log('sumArray', sumArray);
+    // const sumArray = arraytest.map((subArray) => subArray.reduce((acc, val) => acc + val, 0));
+    const sumArray = arraytest.map(subArray =>
+        subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
+    );
+    console.log('sumArray', sumArray);
 
     const arraytestOT = [[1, 2, 2, 2, 2, 2, 2, '', 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0.5],
     [2, 2, 2, 2, 2, '', 2, '', 2],
@@ -1427,180 +1427,7 @@ function WorktimeSheetWorkplace() {
         subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
     );
 
-    // เริ่มระบุวันที่
-    const desiredWorkplaceId = searchWorkplaceId;
-    const desiredTimerecordId = year;
-    const desiredMonth = month;
-    let desiredMonthLower;
 
-    if (desiredMonth === "01") {
-        desiredMonthLower = "12";
-    } else {
-        // Convert desiredMonth to a number, subtract 1, add 12, take modulo 12, and format as a two-digit string
-        desiredMonthLower = ((parseInt(desiredMonth, 10) - 1 + 12) % 12).toString().padStart(2, '0');
-    }
-    // Filter the entries based on the criteria
-    const filteredEntries = timerecordAllList.filter(entry =>
-        entry.timerecordId === desiredTimerecordId &&
-        entry.month === desiredMonth
-        &&
-        entry.employee_workplaceRecord.some(record => record.workplaceId === desiredWorkplaceId)
-    );
-
-    const employeeIds = filteredEntries.map(entry => entry.employeeId);
-
-    const filteredEntriesLower = timerecordAllList.filter(entry =>
-        entry.timerecordId === desiredTimerecordId &&
-        entry.month === desiredMonthLower
-        &&
-        entry.employee_workplaceRecord.some(record => record.workplaceId === desiredWorkplaceId)
-    );
-
-    const employeeIdsLower = filteredEntriesLower.map(entry => entry.employeeId);
-
-
-    // Create an object to store dates for each employee
-
-    const datesByEmployee = {};
-    const datesByEmployeeLow = {};
-
-
-    const datesByEmployeeUpper = {};
-    const datesByEmployeeLower = {};
-    // Loop through employeeIds
-    for (const employeeId of employeeIds) {
-        // Filter entries for the current employee
-        const employeeEntries = filteredEntries.filter(entry => entry.employeeId === employeeId);
-
-        const entriesData = employeeEntries.map(entry =>
-            entry.employee_workplaceRecord
-                .filter(record => record.date <= 20)
-                .map(record => ({
-                    workplaceId: record.workplaceId,
-                    dates: record.date,
-                    allTimes: record.allTime,
-                    otTimes: record.otTime
-                }))
-        );
-
-        datesByEmployee[employeeId] = entriesData;
-
-    }
-    console.log('datesByEmployee123', datesByEmployee);
-
-
-    for (const employeeId of employeeIdsLower) {
-        // Filter entries for the current employee
-        const employeeEntries = filteredEntriesLower.filter(entry => entry.employeeId === employeeId);
-
-        // Extract dates for the current employee
-        // const dates = employeeEntries.flatMap(entry =>
-        //     entry.employee_workplaceRecord.map(record => record.date)
-        // );
-
-        // // Remove duplicates (if any)
-        // const uniqueDatesLower = [...new Set(dates)];
-
-        const entriesDataLower = employeeEntries.map(entry =>
-            entry.employee_workplaceRecord
-                .filter(record => record.date >= 21)
-                .map(record => ({
-                    workplaceId: record.workplaceId,
-                    dates: record.date,
-                    allTimes: record.allTime,
-                    otTimes: record.otTime
-                }))
-        );
-
-        // Store the unique dates for the current employee
-        datesByEmployeeLow[employeeId] = entriesDataLower;
-    }
-    console.log('datesByEmployeeLower123', datesByEmployeeLow);
-
-    const combinedArray = {};
-
-    for (const employeeId of Object.keys(datesByEmployee)) {
-        const entriesData = datesByEmployee[employeeId].flat();
-
-        combinedArray[employeeId] = [...(combinedArray[employeeId] || []), ...entriesData];
-    }
-
-    for (const employeeId of Object.keys(datesByEmployeeLow)) {
-        const entriesData = datesByEmployeeLow[employeeId].flat();
-
-        combinedArray[employeeId] = [...(combinedArray[employeeId] || []), ...entriesData];
-    }
-
-    console.log('Combined Array:', combinedArray);
-
-
-    const uniqueDatesArray = Object.keys(combinedArray).map(employeeId => {
-        const entriesData = combinedArray[employeeId];
-        const uniqueDatesSet = new Set(
-            entriesData
-                .map(entry => Number(entry.dates))
-                .filter(date => date !== 0)
-        );
-        return [...uniqueDatesSet].sort((a, b) => a - b);
-    });
-
-    // Extract employee IDs
-    const employeeIdsArray = Object.keys(combinedArray).map(Number).sort((a, b) => a - b);
-
-    console.log('Unique Dates:', uniqueDatesArray);
-    console.log('Employee IDs:', employeeIdsArray);
-
-    // const arraytest = uniqueDatesArray.map(datesArray => {
-    //     return resultArray.map(day => (datesArray.includes(day) ? '1' : ''));
-    // });
-    // // วันทำงานที่ได้จากการค้นหา
-    // console.log('Final Result Array:', arraytest);
-
-    // const arraytest = [[1001, 1, 1, 1, 1, '', 1, 1, 1, 1, '', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.5],
-    // [1, 1, 1, 1, 1, 1, 1],
-    // [1, 1, 1, 1, 1, 1, 1],
-    // [1, 1, 1, 1, 1, 1, 1],
-    // [1, 1, 1, 1, 1, 1, 1],
-    // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9],];
-
-    // const sumArray = arraytest.map((subArray) => subArray.reduce((acc, val) => acc + val, 0));
-
-    const arraytest = [];
-
-    // Initialize the array
-    Object.keys(combinedArray).forEach(employeeId => {
-        const datesArray = combinedArray[employeeId].map(entry => Number(entry.dates));
-        const employeeResultArray = resultArray.map(day => {
-            const workplaceIdIndex = datesArray.indexOf(day);
-            if (workplaceIdIndex !== -1) {
-                const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].workplaceId;
-                return currentWorkplaceId === searchWorkplaceId ? 1 : parseInt(currentWorkplaceId, 10);
-            } else {
-                return '';
-            }
-        });
-        arraytest.push(employeeResultArray);
-    });
-
-
-    console.log('Result Position Array:', arraytest);
-
-    // const sumArray = arraytest.map(subArray =>
-    //     subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
-    // );
-    // const array = [
-    //     [1001, 1, 12, 16, 31, 19, '', '', '', '', ''],
-    //     [1001, 1, 16, 31, 19, '', '', '', '', ''],
-    //     [1, 12, '', '', '', '', ''],
-    //     // ... other subarrays
-    // ];
-    const sumArray = arraytest.map(subarray => subarray.map(item => (typeof item === 'number' ? 1 : item)).reduce((count, item) => (item === 1 ? count + 1 : count), 0));
-
-
-    console.log('sumArray', sumArray);
-
-    // เริ่มฟังค์ชั่นpdf
 
     const generatePDFTest123 = () => {
         const doc = new jsPDF({
@@ -2166,8 +1993,7 @@ function WorktimeSheetWorkplace() {
                 for (let j = 0; j < dataArray[i].length; j++) {
                     // const elementWidth = calculateElementWidth(dataArray[i][j]);
                     const textToDraw = dataArray[i][j].toString();
-                    const alignment = textToDraw.length > 3 ? { align: 'left', angle: 45, xOffset: 5 } : { align: 'left' };
-
+                    const alignment = textToDraw.length > 3 ? { align: 'left', angle: 45 } : { align: 'left' };
 
                     doc.text(textToDraw, currentX + 2, 3 + currentY + i * verticalDistance, alignment);
                     // currentX += elementWidth + cellWidth; 
@@ -2175,9 +2001,6 @@ function WorktimeSheetWorkplace() {
                 }
             }
         };
-
-
-
 
         // const drawArrayTextAddSalary = (dataArray) => {
         //     for (let i = 0; i < dataArray.length; i++) {
@@ -2643,6 +2466,133 @@ function WorktimeSheetWorkplace() {
     // const count = timerecordAllList.filter(employee =>
     //     employee.employee_workplaceRecord.some(record => record.workplaceId === "9999")
     // ).length;
+    const desiredWorkplaceId = "9999";
+    const desiredTimerecordId = "2023";
+    const desiredMonth = "03";
+    let desiredMonthLower;
+
+    if (desiredMonth === "01") {
+        desiredMonthLower = "12";
+    } else {
+        // Convert desiredMonth to a number, subtract 1, add 12, take modulo 12, and format as a two-digit string
+        desiredMonthLower = ((parseInt(desiredMonth, 10) - 1 + 12) % 12).toString().padStart(2, '0');
+    }
+    // Filter the entries based on the criteria
+    const filteredEntries = timerecordAllList.filter(entry =>
+        entry.timerecordId === desiredTimerecordId &&
+        entry.month === desiredMonth
+        &&
+        entry.employee_workplaceRecord.some(record => record.workplaceId === desiredWorkplaceId)
+    );
+
+    const employeeIds = filteredEntries.map(entry => entry.employeeId);
+
+    const filteredEntriesLower = timerecordAllList.filter(entry =>
+        entry.timerecordId === desiredTimerecordId &&
+        entry.month === desiredMonthLower
+        &&
+        entry.employee_workplaceRecord.some(record => record.workplaceId === desiredWorkplaceId)
+    );
+
+    const employeeIdsLower = filteredEntriesLower.map(entry => entry.employeeId);
+
+
+    // Create an object to store dates for each employee
+
+    const datesByEmployee = {};
+    const datesByEmployeeLow = {};
+
+
+    const datesByEmployeeUpper = {};
+    const datesByEmployeeLower = {};
+    // Loop through employeeIds
+    for (const employeeId of employeeIds) {
+        // Filter entries for the current employee
+        const employeeEntries = filteredEntries.filter(entry => entry.employeeId === employeeId);
+
+        const entriesData = employeeEntries.map(entry =>
+            entry.employee_workplaceRecord
+                .filter(record => record.date <= 20)
+                .map(record => ({
+                    workplaceId: record.workplaceId,
+                    dates: record.date,
+                    allTimes: record.allTime,
+                    otTimes: record.otTime
+                }))
+        );
+
+        datesByEmployee[employeeId] = entriesData;
+
+    }
+    console.log('datesByEmployee123', datesByEmployee);
+
+
+    for (const employeeId of employeeIdsLower) {
+        // Filter entries for the current employee
+        const employeeEntries = filteredEntriesLower.filter(entry => entry.employeeId === employeeId);
+
+        // Extract dates for the current employee
+        // const dates = employeeEntries.flatMap(entry =>
+        //     entry.employee_workplaceRecord.map(record => record.date)
+        // );
+
+        // // Remove duplicates (if any)
+        // const uniqueDatesLower = [...new Set(dates)];
+
+        const entriesDataLower = employeeEntries.map(entry =>
+            entry.employee_workplaceRecord
+                .filter(record => record.date >= 21)
+                .map(record => ({
+                    workplaceId: record.workplaceId,
+                    dates: record.date,
+                    allTimes: record.allTime,
+                    otTimes: record.otTime
+                }))
+        );
+
+        // Store the unique dates for the current employee
+        datesByEmployeeLow[employeeId] = entriesDataLower;
+    }
+    console.log('datesByEmployeeLower123', datesByEmployeeLow);
+
+    const combinedArray = {};
+
+    for (const employeeId of Object.keys(datesByEmployee)) {
+        const entriesData = datesByEmployee[employeeId].flat();
+
+        combinedArray[employeeId] = [...(combinedArray[employeeId] || []), ...entriesData];
+    }
+
+    for (const employeeId of Object.keys(datesByEmployeeLow)) {
+        const entriesData = datesByEmployeeLow[employeeId].flat();
+
+        combinedArray[employeeId] = [...(combinedArray[employeeId] || []), ...entriesData];
+    }
+
+    console.log('Combined Array:', combinedArray);
+
+
+    const uniqueDatesArray = Object.keys(combinedArray).map(employeeId => {
+        const entriesData = combinedArray[employeeId];
+        const uniqueDatesSet = new Set(
+          entriesData
+            .map(entry => Number(entry.dates))
+            .filter(date => date !== 0)
+        );
+        return [...uniqueDatesSet].sort((a, b) => a - b);
+      });
+
+    // Extract employee IDs
+    const employeeIdsArray = Object.keys(combinedArray).map(Number).sort((a, b) => a - b);
+
+    console.log('Unique Dates:', uniqueDatesArray);
+    console.log('Employee IDs:', employeeIdsArray);
+
+    const finalResultArray = uniqueDatesArray.map(datesArray => {
+        return resultArray.map(day => (datesArray.includes(day) ? '1' : ''));
+    });
+    
+    console.log('Final Result Array:', finalResultArray);
 
     for (const employeeId in datesByEmployee) {
         const dates = datesByEmployee[employeeId];
