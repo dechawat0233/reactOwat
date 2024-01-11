@@ -1639,7 +1639,7 @@ function WorktimeSheetWorkplace() {
 
     console.log('Combined Array:', combinedArray);
 
-
+    // แยกวันทำงานของแต่ละคน
     const uniqueDatesArray = Object.keys(combinedArray).map(employeeId => {
         const entriesData = combinedArray[employeeId];
         const uniqueDatesSet = new Set(
@@ -1651,7 +1651,9 @@ function WorktimeSheetWorkplace() {
     });
 
     // Extract employee IDs
+    // แยกemployee IDsของแต่ละคน
     const employeeIdsArray = Object.keys(combinedArray).map(Number).sort((a, b) => a - b);
+
 
     console.log('Unique Dates:', uniqueDatesArray);
     console.log('Employee IDs:', employeeIdsArray);
@@ -1691,6 +1693,22 @@ function WorktimeSheetWorkplace() {
 
 
     console.log('Result Position Array:', arraytest);
+
+    const arrayholiday = [];
+
+    // Assuming holidayList is an array of numbers
+    Object.keys(combinedArray).forEach(employeeId => {
+        combinedArray[employeeId].forEach(entry => {
+            const entryDate = Number(entry.dates);
+
+            // Check if entryDate is present in holidayList
+            if (holidayList.includes(entryDate)) {
+                arrayholiday.push(entryDate);
+            }
+        });
+    });
+
+    console.log('arrayholiday', arrayholiday);
 
     // const sumArray = arraytest.map(subArray =>
     //     subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
