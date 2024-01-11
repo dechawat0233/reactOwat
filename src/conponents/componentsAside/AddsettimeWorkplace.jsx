@@ -999,7 +999,10 @@ function AddsettimeWorkplace() {
             allTime: allTime || '',
             otTime: otTime || '',
             selectotTime: selectotTime || '',
-            selectotTimeOut: selectotTimeOut || '',
+        selectotTimeOut: selectotTimeOut || '',
+        cashSalary: cashSalary || '',
+        specialtSalary: specialtSalary || '',
+        messageSalary: messageSalary || '',
         };
 
         addRow(newRowData);
@@ -1014,6 +1017,10 @@ function AddsettimeWorkplace() {
         setOtTime('');
         setSelectotTime('');
         setSelectotTimeOut('');
+        setCashSalary(!cashSalary);
+        setSpecialtSalary('');
+        setMessageSalary('');
+
         // alert(rowDataList.length);
 
     }
@@ -1274,13 +1281,13 @@ function AddsettimeWorkplace() {
                                     <div>
                                         <div class="row">
                                             <div class="col-md-1">
-                                                <label role="staffId">จ่ายสด</label>
+                                                <label >จ่ายสด</label>
                                             </div>
                                             <div class="col-md-2">
                                                 <label role="specialtSalary">เป็นเงิน</label>
                                             </div>
                                             <div class="col-md-2">
-                                                <label role="staffId">หมายเหตุ</label>
+                                                <label role="messageSalary">หมายเหตุ</label>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -1359,6 +1366,12 @@ function AddsettimeWorkplace() {
                                                         <div class="col-md-1" style={bordertable}> {rowData.selectotTime} </div>
                                                         <div class="col-md-1" style={bordertable}> {rowData.selectotTimeOut} </div>
                                                         <div class="col-md-1" style={bordertable}> {rowData.otTime} </div>
+
+                                                        {rowData.cashSalary === true ? (
+                                                                <p>จ่ายเงินสด {rowData.specialtSalary} บาท</p>
+                                                        ): (
+                                                            <div></div>
+                                                        ) }
 
                                                         <div class="col-md-1" style={bordertable}>
                                                             {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
