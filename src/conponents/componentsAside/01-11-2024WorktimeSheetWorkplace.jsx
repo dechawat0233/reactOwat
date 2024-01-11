@@ -44,9 +44,6 @@ function WorktimeSheetWorkplace() {
     const [dataset, setDataset] = useState([]);
 
     const [workplaceList, setWorkplaceList] = useState([]);
-    const [workplaceDataList, setWorkplaceDataList] = useState([]);
-    const [workplaceDataListDayOff, setWorkplaceDataListDayOff] = useState([]);
-    const [daysOffArray, setDaysOffArray] = useState([]);
     const [result_data, setResult_data] = useState([]);
     const [timerecordAllList, setTimerecordAllList] = useState([]);
     const [emploeeData, setEmploeeData] = useState([]);
@@ -1447,87 +1444,10 @@ function WorktimeSheetWorkplace() {
 
     // เริ่มระบุวันที่
     const desiredWorkplaceId = searchWorkplaceId;
-    const desiredTimerecordId = year;
-    const desiredMonth = month;
-
-    // const desiredTimerecordId = 2023;
-    // const desiredMonth = 3;
-    const desiredTimerecordIdDaysOff = parseInt(year, 10);
-
-    const desiredMonthDaysOff = parseInt(month, 10);
-
-    useEffect(() => {
-        // Filter data based on searchWorkplaceId and set it to workplaceDataList
-        const filteredData = workplaceList.filter(item => item.workplaceId === searchWorkplaceId);
-        setWorkplaceDataList(filteredData);
-
-        // Filter workplaceDataList to find items with dayOff
-        // const dayOffData = filteredData.filter(item => item.daysOff); // Assuming 'dayOff' is a property in the items
-
-        // Filter workplaceDataList to find items with dayOff
-        const dayOffData = filteredData.reduce((acc, item) => {
-            if (item.daysOff && Array.isArray(item.daysOff)) {
-                acc.push(...item.daysOff);
-            }
-            return acc;
-        }, []);
-        setWorkplaceDataListDayOff(dayOffData);
-    }, [searchWorkplaceId, workplaceList]);
-
-    // วันหยุดนักขัต
-    const filteredDaysOff = workplaceDataListDayOff
-        .filter(item => {
-            const date = new Date(item);
-            return (
-                date.getFullYear() === desiredTimerecordIdDaysOff &&
-                date.getMonth() + 1 === desiredMonthDaysOff
-            );
-        })
-        .map(item => {
-            const date = new Date(item);
-            return date.getDate(); // Extract day part of the date
-        });
-
-    const holidayList = [];
-    const falseWorkdays = [];
-
-    // Days of the week
-    // กรองวันที่ที่ในสัปดา
-    const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
-    // Loop through each day of the week
-    for (let i = 1; i <= 7; i++) {
-        const workdayProperty = `workday${i}`;
-
-        // Check if the workday property is set to false
-        if (workplaceDataList.some(item => item[workdayProperty] === 'false')) {
-            falseWorkdays.push(daysOfWeek[i - 1]);
-        }
-    }
-
-    const arrays = [array1, array2];
-    // กรองวันหยุดประจำสัปดา
-    falseWorkdays.forEach(day => {
-        arrays.forEach(array => {
-            if (array[day]) {
-                holidayList.push(...array[day]);
-            }
-        });
-    });
-
-    // console.log('holidayList', holidayList);
-    console.log('filteredDaysOff', filteredDaysOff);
-    console.log('falseWorkdays', falseWorkdays);
-    console.log('holidayList', holidayList);
-
-    // console.log('Array 1 (March):', array1);
-    // console.log('Array 2 (Countdown):', array2);
-
-    console.log('workplaceDataList', workplaceDataList);
-    console.log('WorkplaceDataListDayOff', workplaceDataListDayOff);
-    // console.log('setDaysOffArray', dayOffData);
-
-
+    // const desiredTimerecordId = year;
+    // const desiredMonth = month;
+    const desiredTimerecordId = 2023;
+    const desiredMonth = 3;
 
     // const desiredMonthInt = parseInt(month, 10);
 
@@ -1536,6 +1456,14 @@ function WorktimeSheetWorkplace() {
         const date = new Date(dateString);
         return date.getFullYear() === year && date.getMonth() + 1 === month; // Note: month is 0-indexed
     };
+
+    // Filter daysOff based on the desired year and month
+    const filteredDaysOff = workplaceList.reduce((result, workplace) => {
+        const daysOffInMonth = workplace.daysOff.filter(day => isDateInDesiredMonth(day, desiredTimerecordId, desiredMonth));
+        return result.concat(daysOffInMonth);
+    }, []);
+
+    console.log('filteredDaysOff',filteredDaysOff);
 
     let desiredMonthLower;
 
