@@ -14,6 +14,14 @@ function AddsettimeEmployee() {
         borderLeft: '2px solid #000'
     };
 
+    const [cashSalary, setCashSalary] = useState(false);
+    const [specialtSalary, setSpecialtSalary] = useState('');
+    const [messageSalary, setMessageSalary] = useState('');
+
+    const handleCheckboxChange = () => {
+        setCashSalary(!cashSalary); // Toggle the checkbox state
+    };
+
 
     const [updateButton, setUpdateButton] = useState(false); // Initially, set to false
     const [timeRecord_id, setTimeRecord_id] = useState('');
@@ -625,6 +633,9 @@ function AddsettimeEmployee() {
             otTime: wOtTime || '',
             selectotTime: wSelectOtTime || '',
             selectotTimeOut: wSelectOtTimeout || '',
+            cashSalary: cashSalary || '',
+            specialtSalary: specialtSalary || '',
+            messageSalary: messageSalary || '',
         };
 
         await addRow(newRowData);
@@ -637,6 +648,10 @@ function AddsettimeEmployee() {
         await setWOtTime('');
         await setWSelectOtTime('');
         await setWSelectOtTimeout('');
+        await setCashSalary(!cashSalary);
+        await setSpecialtSalary('');
+        await setMessageSalary('');
+
     }
 
 
@@ -991,6 +1006,39 @@ function AddsettimeEmployee() {
                                     </div>
                                 </div>
 
+                                {wShift === 'specialt_shift' && (
+                                    <div>
+                                        <div class="row">
+                                            <div class="col-md-1">
+                                                <label >จ่ายสด</label>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label role="specialtSalary">เป็นเงิน</label>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label role="messageSalary">หมายเหตุ</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-1">
+                                                <input
+                                                    type="checkbox"
+                                                    class="form-control"
+                                                    checked={cashSalary}
+                                                    onChange={handleCheckboxChange}
+                                                />
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input type="text" class="form-control" id="specialtSalary" placeholder="เป็นเงิน" value={specialtSalary} onChange={(e) => setSpecialtSalary(e.target.value)} />
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input type="text" class="form-control" id="messageSalary" placeholder="หมายเหตุ" value={messageSalary} onChange={(e) => setMessageSalary(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+
                                 <div class="col-md-1">
                                     <label role="button"></label>
                                     <div class="d-flex align-items-end">
@@ -1049,6 +1097,15 @@ function AddsettimeEmployee() {
                                                         <div class="col-md-1" style={bordertable}> {rowData2.selectotTime} </div>
                                                         <div class="col-md-1" style={bordertable}> {rowData2.selectotTimeOut} </div>
 
+                            {rowData2.cashSalary === true ? (
+                                                            <div class="col-md-1" style={bordertable}>
+                                                                {rowData2.specialtSalary} บาท
+                                                            </div>
+                                                        ) : (
+                                                            <div class="col-md-1"></div>
+                                                        )} 
+
+
                                                         <div class="col-md-1" style={bordertable}>
                                                             {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
                                                             <button class="btn btn-xs btn-danger" style={{ padding: '0.3rem ', width: '8rem' }} onClick={() => handleDeleteRow(index)}>Delete</button>
@@ -1062,6 +1119,8 @@ function AddsettimeEmployee() {
                                     </div>
                                 </div>
                             </section>
+
+
 
 
                             <div class="form-group">
