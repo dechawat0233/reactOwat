@@ -999,10 +999,10 @@ function AddsettimeWorkplace() {
             allTime: allTime || '',
             otTime: otTime || '',
             selectotTime: selectotTime || '',
-        selectotTimeOut: selectotTimeOut || '',
-        cashSalary: cashSalary || '',
-        specialtSalary: specialtSalary || '',
-        messageSalary: messageSalary || '',
+            selectotTimeOut: selectotTimeOut || '',
+            cashSalary: cashSalary || '',
+            specialtSalary: specialtSalary || '',
+            messageSalary: messageSalary || '',
         };
 
         addRow(newRowData);
@@ -1334,6 +1334,7 @@ function AddsettimeWorkplace() {
                                             <div class="col-md-1"> เวลาเข้า OT </div>
                                             <div class="col-md-1"> เวลาออก OT</div>
                                             <div class="col-md-1"> ชั่วโมง OT</div>
+                                            <div class="col-md-1"> จ่ายเงินสด</div>
 
                                         </div>
                                     </div>
@@ -1368,10 +1369,12 @@ function AddsettimeWorkplace() {
                                                         <div class="col-md-1" style={bordertable}> {rowData.otTime} </div>
 
                                                         {rowData.cashSalary === true ? (
-                                                                <p>จ่ายเงินสด {rowData.specialtSalary} บาท</p>
-                                                        ): (
-                                                            <div></div>
-                                                        ) }
+                                                            <div class="col-md-1" style={bordertable}>
+                                                                {rowData.specialtSalary} บาท
+                                                            </div>
+                                                        ) : (
+                                                            <div class="col-md-1"></div>
+                                                        )}
 
                                                         <div class="col-md-1" style={bordertable}>
                                                             {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
@@ -1403,7 +1406,7 @@ function AddsettimeWorkplace() {
                 </div>
             </div>
             {/* <!-- /.container-fluid --> */}
-        </section>
+        </section >
     )
 }
 
