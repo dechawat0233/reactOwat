@@ -165,12 +165,6 @@ const [dataResult , setDataResult] = useState([]);
 setDataResult(response.data.employees[0] );
 //  alert(response.data.employees[0].addSalary.length );
  for(let i =0; i < response.data.employees[0].addSalary.length  ; i++){
-    const tempData = {
-        addSalaryId: '',
-        addSalaryName: response.data.employees[0].addSalary[i].name ,
-        addSalary: '',
-        message: '',
-    };
 
     const newRowData = {
         // addSalaryId: addSalaryId || '',
@@ -181,7 +175,7 @@ setDataResult(response.data.employees[0] );
 
     addRow(newRowData );
 // alert(response.data.employees[0].addSalary[i].roundOfSalary ); //แบบรายวัน รายเดือน
-// alert(response.data.employees[0].addSalary[i].name ); 
+alert(response.data.employees[0].addSalary[i].id ); 
 
  }
 
@@ -648,7 +642,8 @@ setDataResult(response.data.employees[0] );
                 </div>
 
             </div>
-            
+            {JSON.stringify(dataResult.addSalary  ,null,2)}
+
         </body>
 
     )
