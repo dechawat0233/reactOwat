@@ -31,6 +31,14 @@ function AddsettimeEmployee() {
     const [searchEmployeeId, setSearchEmployeeId] = useState('');
     const [searchEmployeeName, setSearchEmployeeName] = useState('');
     const [month, setMonth] = useState('');
+    const [year, setYear] = useState('');
+
+    useEffect(() => {
+        const currentYear = new Date().getFullYear();
+        setYear(currentYear);
+    }, []); // Run this effect only once on component mount
+    const startYear = 2010;
+    const years = Array.from({ length: new Date().getFullYear() - startYear - 1 }, (_, index) => year - index);
 
     useEffect(() => {
         setMonth("01");
@@ -577,6 +585,7 @@ function AddsettimeEmployee() {
             employeeId: employeeId,
             employeeName: name,
             month: month,
+            year: year,
         };
 
         try {
@@ -697,6 +706,7 @@ function AddsettimeEmployee() {
             employeeId: employeeId,
             employeeName: name,
             month: month,
+            year: year,
             employee_workplaceRecord: rowDataList2
         };
 
@@ -723,6 +733,7 @@ function AddsettimeEmployee() {
             employeeId: employeeId,
             employeeName: name,
             month: month,
+            year: year,
             employee_workplaceRecord: rowDataList2
         };
 
@@ -815,13 +826,13 @@ function AddsettimeEmployee() {
                         </div>
                         <form onSubmit={handleManageWorkplace}>
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label role="agencynumber">รหัสพนักงาน</label>
                                         <input type="text" class="form-control" id="agencynumber" placeholder="รหัสพนักงาน" value={employeeId} onChange={(e) => setEmployeeId(e.target.value)} />
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label role="agencyname">ชื่อพนักงาน</label>
                                         <input type="text" class="form-control" id="agencyname" placeholder="ชื่อพนักงาน" value={name} onChange={(e) => setName(e.target.value)} />
@@ -844,6 +855,18 @@ function AddsettimeEmployee() {
                                             <option value="10">ตุลาคม</option>
                                             <option value="11">พฤศจิกายน</option>
                                             <option value="12">ธันวาคม</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label role="agencyname">เดือน</label>
+                                        <select className="form-control" value={year} onChange={(e) => setYear(e.target.value)}>
+                                            {years.map((y) => (
+                                                <option key={y} value={y}>
+                                                    {y}
+                                                </option>
+                                            ))}
                                         </select>
                                     </div>
                                 </div>
@@ -1009,18 +1032,18 @@ function AddsettimeEmployee() {
                                 {wShift === 'specialt_shift' && (
                                     <div>
                                         <div class="row">
-                                            <div class="col-md-1">
+                                            <div class="col-md-2">
                                                 <label >จ่ายสด</label>
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-5">
                                                 <label role="specialtSalary">เป็นเงิน</label>
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-5">
                                                 <label role="messageSalary">หมายเหตุ</label>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-1">
+                                            <div class="col-md-2">
                                                 <input
                                                     type="checkbox"
                                                     class="form-control"
@@ -1028,10 +1051,10 @@ function AddsettimeEmployee() {
                                                     onChange={handleCheckboxChange}
                                                 />
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-5">
                                                 <input type="text" class="form-control" id="specialtSalary" placeholder="เป็นเงิน" value={specialtSalary} onChange={(e) => setSpecialtSalary(e.target.value)} />
                                             </div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-5">
                                                 <input type="text" class="form-control" id="messageSalary" placeholder="หมายเหตุ" value={messageSalary} onChange={(e) => setMessageSalary(e.target.value)} />
                                             </div>
                                         </div>
@@ -1074,7 +1097,8 @@ function AddsettimeEmployee() {
                                             rowData2.workplaceId && (
                                                 <div key={index}>
                                                     <div class="row" style={{ marginBottom: '1rem', borderBottom: '2px solid #000' }}>
-                                                        <div class="col-md-1" style={bordertable}> {rowData2.workplaceId}</div>
+                                                        <div class="col-md-1" style={bordertable}> {rowData2.workplaceId}
+                                                        </div>
                                                         <div class="col-md-2" style={bordertable}> {rowData2.workplaceName} </div>
                                                         <div class="col-md-1" style={bordertable}> {rowData2.date} </div>
                                                         <div class="col-md-1" style={bordertable}>
@@ -1097,21 +1121,22 @@ function AddsettimeEmployee() {
                                                         <div class="col-md-1" style={bordertable}> {rowData2.selectotTime} </div>
                                                         <div class="col-md-1" style={bordertable}> {rowData2.selectotTimeOut} </div>
 
-                            {rowData2.cashSalary === true ? (
-                                                            <div class="col-md-1" style={bordertable}>
-                                                                {rowData2.specialtSalary} บาท
-                                                            </div>
-                                                        ) : (
-                                                            <div class="col-md-1"></div>
-                                                        )} 
-
-
                                                         <div class="col-md-1" style={bordertable}>
                                                             {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
                                                             <button class="btn btn-xs btn-danger" style={{ padding: '0.3rem ', width: '8rem' }} onClick={() => handleDeleteRow(index)}>Delete</button>
                                                         </div>
 
                                                     </div>
+                                                    {rowData2.cashSalary === true ? (
+                                                        <div style={{ marginBottom: '1rem', borderBottom: '2px solid #000', width: '10rem' }}>
+                                                            <div class="col-md-1" style={bordertable}>
+                                                                {rowData2.specialtSalary} บาท
+                                                            </div>
+                                                        </div>
+
+                                                    ) : (
+                                                        <div></div>
+                                                    )}
                                                 </div>
                                             )
                                         ))}
