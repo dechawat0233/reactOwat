@@ -344,6 +344,7 @@ router.post('/createemp', async (req, res) => {
   const timerecordId = currentYear;
 
   const {
+timerecordId,
     employeeId,
     employeeName,
     month,
