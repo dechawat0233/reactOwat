@@ -59,7 +59,7 @@ const employeeTimerecordSchema = new mongoose.Schema({
     otTime: String,
     selectotTime: String,
     selectotTimeOut: String,
-    cashSalary: Boolean,
+    cashSalary: String,
 specialtSalary: String,
         messageSalary: String,
 }]
