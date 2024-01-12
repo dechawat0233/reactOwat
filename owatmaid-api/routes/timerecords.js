@@ -580,7 +580,11 @@ async function setToEmployee(selectWorkplaceId, selectworkplaceName, selectMonth
   for (const element of workplaceTimeRecordData) {
     if (element.staffId !== '') {
       try {
+        const timerecordId_year = dateParts[2];
+        const timerecordId = timerecordId_year;
+
         const query = {
+          timerecordId : timerecordId,
           employeeId: element.staffId,
           month: { $regex: new RegExp(month, 'i') }
         };
