@@ -36,6 +36,9 @@ const workplaceTimerecordSchema = new mongoose.Schema({
     otTime: String,
     selectotTime: String,
     selectotTimeOut: String,
+    cashSalary: String,
+    specialtSalary: String,
+            messageSalary: String,
   }]
 });
 
@@ -597,6 +600,9 @@ async function setToEmployee(selectWorkplaceId, selectworkplaceName, selectMonth
             'otTime': element.otTime,
             'selectotTime': element.selectotTime,
             'selectotTimeOut': element.selectotTimeOut,
+            'cashSalary': element.cashSalary,
+            'specialtSalary': element.specialtSalary,
+                    'messageSalary': element.messageSalary,
           });
 
           await recordworkplace.save();
@@ -619,6 +625,9 @@ async function setToEmployee(selectWorkplaceId, selectworkplaceName, selectMonth
             'otTime': element.otTime,
             'selectotTime': element.selectotTime,
             'selectotTimeOut': element.selectotTimeOut,
+            'cashSalary': element.cashSalary,
+            'specialtSalary': element.specialtSalary,
+                    'messageSalary': element.messageSalary,
           };
 
           // Create new employee time record

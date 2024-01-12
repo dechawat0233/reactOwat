@@ -1130,7 +1130,7 @@ function AddsettimeEmployee() {
                                                         </div>
 
                                                     </div>
-                                                    {rowData2.cashSalary === true ? (
+                                                    {rowData2.cashSalary === "true" || rowData2.cashSalary === true ? (
                                                         <div style={{ marginBottom: '1rem', borderBottom: '2px solid #000', width: '10rem' }}>
                                                             <div class="col-md-1" style={bordertable}>
                                                                 {rowData2.specialtSalary} บาท
