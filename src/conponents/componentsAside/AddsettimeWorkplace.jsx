@@ -1368,7 +1368,7 @@ function AddsettimeWorkplace() {
                                                         <div class="col-md-1" style={bordertable}> {rowData.selectotTimeOut} </div>
                                                         <div class="col-md-1" style={bordertable}> {rowData.otTime} </div>
 
-                                                        {rowData.cashSalary === true ? (
+                                                        {rowData.cashSalary === "true"  || rowData.cashSalary === true ? (
                                                             <div class="col-md-1" style={bordertable}>
                                                                 {rowData.specialtSalary} บาท
                                                             </div>
