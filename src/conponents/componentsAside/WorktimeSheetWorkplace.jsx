@@ -1674,10 +1674,39 @@ function WorktimeSheetWorkplace() {
 
     // const sumArray = arraytest.map((subArray) => subArray.reduce((acc, val) => acc + val, 0));
 
-    const arraytest = [];
+    // วันที่ทำงาน
+    // const arraytest = [];
+    // const arrayWorkHoliday = [];
 
-    // Initialize the array
+
+    // // Initialize the array
+    // Object.keys(combinedArray).forEach(employeeId => {
+    //     const datesArray = combinedArray[employeeId].map(entry => Number(entry.dates));
+    //     const employeeResultArray = resultArray.map(day => {
+    //         const workplaceIdIndex = datesArray.indexOf(day);
+    //         if (workplaceIdIndex !== -1) {
+    //             const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].workplaceId;
+    //             return currentWorkplaceId === searchWorkplaceId ? 1 : parseInt(currentWorkplaceId, 10);
+    //         } else {
+    //             return '';
+    //         }
+    //     });
+    //     arraytest.push(employeeResultArray);
+    // });
+
+
+    // console.log('Result Position Array:', arraytest);
+
+    // filteredDaysOff
+    // holidayList
+
+    const arraytest = [];
+    const arrayWorkHoliday = [];
+    const arrayWorkNormalDay = [];
+
+
     Object.keys(combinedArray).forEach(employeeId => {
+        // วันที่ทำงานทั้งหมด
         const datesArray = combinedArray[employeeId].map(entry => Number(entry.dates));
         const employeeResultArray = resultArray.map(day => {
             const workplaceIdIndex = datesArray.indexOf(day);
@@ -1688,27 +1717,55 @@ function WorktimeSheetWorkplace() {
                 return '';
             }
         });
+
         arraytest.push(employeeResultArray);
-    });
 
+        // const commonDates = datesArray.filter(date => filteredDaysOff.includes(date) || holidayList.includes(date));
+        // const employeeResultArray2 = resultArray.map(day => {
+        //     const workplaceIdIndex = commonDates.indexOf(day);
+        //     if (workplaceIdIndex !== -1) {
+        //         const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].allTimes;
+        //         return Number.isInteger(parseFloat(currentWorkplaceId));
 
-    console.log('Result Position Array:', arraytest);
+        //     } else {
+        //         return '';
+        //     }
+        // });
 
-    const arrayholiday = [];
-
-    // Assuming holidayList is an array of numbers
-    Object.keys(combinedArray).forEach(employeeId => {
-        combinedArray[employeeId].forEach(entry => {
-            const entryDate = Number(entry.dates);
-
-            // Check if entryDate is present in holidayList
-            if (holidayList.includes(entryDate)) {
-                arrayholiday.push(entryDate);
+        // วันที่ทำงานในวันหยุด(ช.ม.)
+        const commonDates = datesArray.filter(date => filteredDaysOff.includes(date) || holidayList.includes(date));
+        const employeeResultArray2 = resultArray.map(day => {
+            const workplaceIdIndex = commonDates.indexOf(day);
+            if (workplaceIdIndex !== -1) {
+                const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].allTimes;
+                return currentWorkplaceId === searchWorkplaceId ? 1 : parseInt(currentWorkplaceId, 10);
+            } else {
+                return '';
             }
         });
+        arrayWorkHoliday.push(employeeResultArray2);
+
+
+        // วันที่ทำงานปกติ
+        const commonDates3 = datesArray.filter(date => !(filteredDaysOff.includes(date) || holidayList.includes(date)));
+        const employeeResultArray3 = resultArray.map(day => {
+            const workplaceIdIndex = commonDates3.indexOf(day);
+            if (workplaceIdIndex !== -1) {
+                const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].workplaceId;
+                return currentWorkplaceId === searchWorkplaceId ? 1 : parseInt(currentWorkplaceId, 10);
+            } else {
+                return '';
+            }
+        });
+
+        arrayWorkNormalDay.push(employeeResultArray3);
     });
 
-    console.log('arrayholiday', arrayholiday);
+    console.log('Result Position Array:', arraytest);
+    console.log('arrayWorkHoliday:', arrayWorkHoliday);
+    console.log('arrayWorkNormalDay:', arrayWorkNormalDay);
+
+
 
     // const sumArray = arraytest.map(subArray =>
     //     subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
