@@ -341,9 +341,10 @@ router.post('/searchemp', async (req, res) => {
 router.post('/createemp', async (req, res) => {
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
-  const timerecordId = currentYear;
+  //const timerecordId = currentYear;
 
   const {
+timerecordId,
     employeeId,
     employeeName,
     month,
@@ -353,6 +354,7 @@ router.post('/createemp', async (req, res) => {
 
   // Create workplace
   const workplaceTimeRecordData = new workplaceTimerecordEmp({
+timerecordId,
     employeeId,
     employeeName,
     month,
