@@ -59,6 +59,9 @@ const employeeTimerecordSchema = new mongoose.Schema({
     otTime: String,
     selectotTime: String,
     selectotTimeOut: String,
+    cashSalary: String,
+specialtSalary: String,
+        messageSalary: String,
 }]
 });
 
@@ -207,7 +210,8 @@ router.post('/searchemp', async (req, res) => {
   try {
     const { employeeId,
       employeeName,
-      month} = req.body;
+      month,
+      timerecordId} = req.body;
 
     // Construct the search query based on the provided parameters
     const query = {};
@@ -226,10 +230,15 @@ router.post('/searchemp', async (req, res) => {
       query.month = { $regex: new RegExp(month , 'i') };
     }
 
+    if (timerecordId !== '') {
+      //query.month = new Date(date);
+      query.timerecordId = { $regex: new RegExp(timerecordId , 'i') };
+    }
+
     console.log('Constructed Query:');
     console.log(query);
 
-    if (employeeId == '' && employeeName == '' && month == '') {
+    if (employeeId == '' && employeeName == '' && month == '' && timerecordId == '') {
       res.status(200).json({});
     }
 
@@ -332,9 +341,10 @@ router.post('/searchemp', async (req, res) => {
 router.post('/createemp', async (req, res) => {
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
-  const timerecordId = currentYear;
+  //const timerecordId = currentYear;
 
   const {
+timerecordId,
     employeeId,
     employeeName,
     month,
@@ -344,12 +354,13 @@ router.post('/createemp', async (req, res) => {
 
   // Create workplace
   const workplaceTimeRecordData = new workplaceTimerecordEmp({
-    timerecordId,
+timerecordId,
     employeeId,
     employeeName,
     month,
     employee_workplaceRecord
   });
+console.log(workplaceTimeRecordData );
 
   try {
     await workplaceTimeRecordData.save();

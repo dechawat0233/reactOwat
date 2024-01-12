@@ -34,21 +34,21 @@ function AddsettimeEmployee() {
     const [year, setYear] = useState('');
 
     useEffect(() => {
+        setMonth("01");
+
         const currentYear = new Date().getFullYear();
         setYear(currentYear);
     }, []); // Run this effect only once on component mount
+
     const startYear = 2010;
     const years = Array.from({ length: new Date().getFullYear() - startYear - 1 }, (_, index) => year - index);
 
-    useEffect(() => {
-        setMonth("01");
-    }, []);
 
     useEffect(() => {
         if (name !== '') {
             handleCheckTimerecord();
         }
-    }, [month]);
+    }, [month , year]);
 
 
     const options = [];
@@ -268,6 +268,9 @@ function AddsettimeEmployee() {
         otTime: '',
         selectotTime: '',
         selectotTimeOut: '',
+        cashSalary: '',
+        specialtSalary: '',
+        messageSalary: '',
     };
 
     const [rowDataList2, setRowDataList2] = useState(new Array(numberOfRows2).fill(initialRowData2));
@@ -580,12 +583,11 @@ function AddsettimeEmployee() {
     }
 
     async function handleCheckTimerecord() {
-        //xx
         const data = {
             employeeId: employeeId,
             employeeName: name,
             month: month,
-            year: year,
+            timerecordId: year,
         };
 
         try {
@@ -632,6 +634,7 @@ function AddsettimeEmployee() {
         //get data from input in useState to data 
 
         const newRowData = await {
+            timerecordId: year || '',
             workplaceId: wId || '',
             workplaceName: wName || '',
             date: wDate || '',
@@ -703,10 +706,10 @@ function AddsettimeEmployee() {
 
         //get data from input in useState to data 
         const data = {
+            timerecordId: year,
             employeeId: employeeId,
             employeeName: name,
             month: month,
-            year: year,
             employee_workplaceRecord: rowDataList2
         };
 
@@ -730,10 +733,10 @@ function AddsettimeEmployee() {
         //get data from input in useState to data 
 
         const data = {
+            timerecordId: year,
             employeeId: employeeId,
             employeeName: name,
             month: month,
-            year: year,
             employee_workplaceRecord: rowDataList2
         };
 
@@ -860,7 +863,7 @@ function AddsettimeEmployee() {
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label role="agencyname">เดือน</label>
+                                        <label >ปี</label>
                                         <select className="form-control" value={year} onChange={(e) => setYear(e.target.value)}>
                                             {years.map((y) => (
                                                 <option key={y} value={y}>
