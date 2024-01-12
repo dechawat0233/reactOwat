@@ -354,7 +354,6 @@ timerecordId,
 
   // Create workplace
   const workplaceTimeRecordData = new workplaceTimerecordEmp({
-    timerecordId,
     employeeId,
     employeeName,
     month,
