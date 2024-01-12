@@ -1658,6 +1658,42 @@ function WorktimeSheetWorkplace() {
     console.log('Unique Dates:', uniqueDatesArray);
     console.log('Employee IDs:', employeeIdsArray);
 
+    const filteredUniqueDatesArray = uniqueDatesArray.map(subArray => {
+        return subArray.filter((value, index, self) => {
+            return self.indexOf(value) === index;
+        });
+    });
+
+    console.log('filteredUniqueDatesArray', filteredUniqueDatesArray);
+
+    useEffect(() => {
+        // Fetch data from the API when the component mounts
+        fetch(endpoint + '/employee/list')
+            .then(response => response.json())
+            .then(data => {
+                // Update the state with the fetched data
+                setEmploeeData(data);
+
+                // Find employees with specific IDs [1001, 1002, 1004, 1005, 1006]
+                const employeeIdsToFind = [1001, 1002, 1004, 1005, 1006];
+                const filteredEmployees = data.filter(employee => employeeIdsToFind.includes(employee.employeeId));
+
+                // Get the required information (employeeId, name, lastName)
+                const employeeInfo = filteredEmployees.map(employee => ({
+                    employeeId: employee.employeeId,
+                    name: employee.name,
+                    lastName: employee.lastName
+                }));
+
+                // Do something with the filtered employees' information
+                console.log('employeeInfo', employeeInfo);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, []);
+
+
     // const arraytest = uniqueDatesArray.map(datesArray => {
     //     return resultArray.map(day => (datesArray.includes(day) ? '1' : ''));
     // });
@@ -1765,6 +1801,22 @@ function WorktimeSheetWorkplace() {
     console.log('arrayWorkHoliday:', arrayWorkHoliday);
     console.log('arrayWorkNormalDay:', arrayWorkNormalDay);
 
+    // นับวันที่ทำในวันหยุดวันนักขัตฤกษ์
+    const occurrencesCount = filteredUniqueDatesArray.map(subArray => {
+        const count = subArray.filter(value => filteredDaysOff.includes(value)).length;
+        return count;
+    });
+
+    console.log('occurrencesCount', occurrencesCount);
+
+    // นับวันที่ทำในวันหยุด ไม่รวมวันนักขัตฤกษ์
+    const occurrencesCount2 = filteredUniqueDatesArray.map(subArray => {
+        const count = subArray.filter(value => holidayList.includes(value) && !filteredDaysOff.includes(value)).length;
+        return count;
+    });
+
+    console.log('occurrencesCount2', occurrencesCount2);
+
 
 
     // const sumArray = arraytest.map(subArray =>
@@ -1780,27 +1832,6 @@ function WorktimeSheetWorkplace() {
 
 
     console.log('sumArray', sumArray);
-
-
-    useEffect(() => {
-        // Fetch data from the API when the component mounts
-        fetch(endpoint + '/employee/list')
-            .then(response => response.json())
-            .then(data => {
-                // Update the state with the fetched data
-                setEmploeeData(data);
-
-                // Find employees with specific IDs [1001, 1002, 1004, 1005, 1006]
-                const employeeIdsToFind = [1001, 1002, 1004, 1005, 1006];
-                const filteredEmployees = data.filter(employee => employeeIdsToFind.includes(employee.employeeId));
-
-                // Do something with the filtered employees
-                console.log(filteredEmployees);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
-    }, []);
 
     // เริ่มฟังค์ชั่นpdf
 
