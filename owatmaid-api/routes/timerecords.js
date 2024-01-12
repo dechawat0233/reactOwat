@@ -360,6 +360,7 @@ timerecordId,
     month,
     employee_workplaceRecord
   });
+console.log(workplaceTimeRecordData );
 
   try {
     await workplaceTimeRecordData.save();
