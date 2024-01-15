@@ -11,6 +11,8 @@ var employeesRouter = require('./routes/employees');
 var employeesoutsideRouter = require('./routes/employeesoutside');
 var workplacesRouter = require('./routes/workplaces');
 var timerecordsRouter = require('./routes/timerecords');
+var timerecordsoutsideRouter = require('./routes/timerecordsoutside');
+
 var addsalaryRouter = require('./routes/addsalary');
 var oldemployeesRouter = require('./routes/oldemployees');
 var imgemployeeRouter = require('./routes/imgemployee');
@@ -35,6 +37,7 @@ app.use('/employee', employeesRouter);
 app.use('/employeeoutside', employeesoutsideRouter);
 app.use('/workplace', workplacesRouter);
 app.use('/timerecord', timerecordsRouter );
+app.use('/timerecordoutside', timerecordsoutsideRouter );
 app.use('/addsalary', addsalaryRouter );
 app.use('/oldemployee', oldemployeesRouter);
 app.use('/imgemployee', imgemployeeRouter);

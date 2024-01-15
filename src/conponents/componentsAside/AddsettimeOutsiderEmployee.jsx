@@ -522,7 +522,7 @@ function AddsettimeEmployee() {
         };
 
         try {
-            const response = await axios.post(endpoint + '/employee/search', data);
+            const response = await axios.post(endpoint + '/timerecordsoutside/employeesearch', data);
             setSearchResult(response.data.employees);
             // alert(response.data.employees.length);
             if (response.data.employees.length < 1) {
