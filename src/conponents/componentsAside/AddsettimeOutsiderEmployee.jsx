@@ -1000,7 +1000,6 @@ if(employeeId !== ''){
                                     </div>
                                 </div>
 
-                                {wShift === 'specialt_shift' && (
                                     <div>
                                         <div class="row">
                                             <div class="col-md-2">
@@ -1018,7 +1017,7 @@ if(employeeId !== ''){
                                                 <input
                                                     type="checkbox"
                                                     class="form-control"
-                                                    checked={cashSalary}
+                                                    checked={true}
                                                     onChange={handleCheckboxChange}
                                                 />
                                             </div>
@@ -1030,7 +1029,6 @@ if(employeeId !== ''){
                                             </div>
                                         </div>
                                     </div>
-                                )}
 
 
                                 <div class="col-md-1">
