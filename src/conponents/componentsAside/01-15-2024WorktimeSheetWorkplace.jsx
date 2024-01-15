@@ -50,8 +50,6 @@ function WorktimeSheetWorkplace() {
     const [result_data, setResult_data] = useState([]);
     const [timerecordAllList, setTimerecordAllList] = useState([]);
     const [emploeeData, setEmploeeData] = useState([]);
-    const [emploeeDataSearch, setEmploeeDataSearch] = useState([]);
-
 
 
     useEffect(() => {
@@ -1076,7 +1074,7 @@ function WorktimeSheetWorkplace() {
         const cellWidth = 4.125;
         const cellHeight = 3.5;
         const startX = 50; // Adjust the starting X-coordinate as needed
-        const startY = 60; // Adjust the starting Y-coordinate as needed
+        const startY = 55; // Adjust the starting Y-coordinate as needed
         const borderWidth = 0.5; // Adjust the border width as needed
 
         // Function to draw a cell with borders
@@ -1435,17 +1433,17 @@ function WorktimeSheetWorkplace() {
     // );
     // console.log('sumArray', sumArray);
 
-    // const arraytestOT = [[1, 2, 2, 2, 2, 2, 2, '', 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0.5],
-    // [2, 2, 2, 2, 2, '', 2, '', 2],
-    // [2, '', 2, 2, '', 2, 3, '', 3, 3],
-    // [3, 3, 3, '', 3, 3, 3, 3],
-    // [3, '', 3, '', 3, 3, 3, 1, '', 1],
-    // [3, 3, '', 1, 1, '', 1, 3, 3],
-    // [3, 3, '', 3, '', 3, 3, 3, 3, '', 1, '', 1, 0.5, 0.5, 1.5],
-    // ];
-    // const sumArrayOT = arraytestOT.map(subArray =>
-    //     subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
-    // );
+    const arraytestOT = [[1, 2, 2, 2, 2, 2, 2, '', 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0.5],
+    [2, 2, 2, 2, 2, '', 2, '', 2],
+    [2, '', 2, 2, '', 2, 3, '', 3, 3],
+    [3, 3, 3, '', 3, 3, 3, 3],
+    [3, '', 3, '', 3, 3, 3, 1, '', 1],
+    [3, 3, '', 1, 1, '', 1, 3, 3],
+    [3, 3, '', 3, '', 3, 3, 3, 3, '', 1, '', 1, 0.5, 0.5, 1.5],
+    ];
+    const sumArrayOT = arraytestOT.map(subArray =>
+        subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
+    );
 
     // เริ่มระบุวันที่
     const desiredWorkplaceId = searchWorkplaceId;
@@ -1675,42 +1673,33 @@ function WorktimeSheetWorkplace() {
             .then(data => {
                 // Update the state with the fetched data
                 setEmploeeData(data);
-
+    
                 // Find employees with specific IDs [1001, 1002, 1004, 1005, 1006]
                 const employeeIdsToFind = [1001, 1002, 1004, 1005, 1006];
-                const filteredEmployees = data.filter(employee => employeeIdsToFind.includes(parseInt(employee.employeeId, 10)));
-
+                const filteredEmployees = data.filter(employee => employeeIdsToFind.includes(employee.employeeId));
+    
                 // Do something with the filtered employees
                 console.log('filteredEmployees', filteredEmployees);
-
+    
                 // Extract specific information from filtered employees
-                const extractedData = filteredEmployees.map(employee => [
-                    // employeeId: employee.employeeId,
-                    // name: employee.name,
-                    // morning_shift: 'กะเช้า',
-                    // afternoon_shift: 'กะดึก',
-                    // lastName: employee.lastName,
-
-                    employee.name + ' ' + employee.lastName,
-                    employee.employeeId,
-                    'กะเช้า',
-                    'กะดึก',
-                    // Add more properties as needed
-
-                ]);
-
+                const extractedData = filteredEmployees.map(employee => {
+                    return {
+                        employeeId: employee.employeeId,
+                        name: employee.name,
+                        lastName: employee.lastName,
+                        // Add more properties as needed
+                    };
+                });
+    
                 // Do something with the extracted data
-                // console.log('extractedData', extractedData);
-                setEmploeeDataSearch(extractedData);
+                console.log('extractedData', extractedData);
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
     }, []);
+    console.log('EmploeeData',emploeeData);
 
-    console.log('EmploeeData', emploeeData);
-    console.log('EmploeeDataSearch', emploeeDataSearch);
-    const arraylistNameEmp = emploeeDataSearch;
 
     // const arraytest = uniqueDatesArray.map(datesArray => {
     //     return resultArray.map(day => (datesArray.includes(day) ? '1' : ''));
@@ -1755,16 +1744,9 @@ function WorktimeSheetWorkplace() {
     // holidayList
 
     const arraytest = [];
-    const arraytestOT = [];
-
-    const arrayWorkNormalDay = [];
-    const arrayWorkOTNormalDay = [];
-
-    const arrayWorkHoli = [];
-
-
     const arrayWorkHoliday = [];
-    const arrayWorkOTHoliday = [];
+    const arrayWorkNormalDay = [];
+
 
     Object.keys(combinedArray).forEach(employeeId => {
         // วันที่ทำงานทั้งหมด
@@ -1793,23 +1775,8 @@ function WorktimeSheetWorkplace() {
         //     }
         // });
 
-        // วันที่ทำงานในวันหยุดธรรมดา(ช.ม.)
-        const commonDatesHoli = datesArray.filter(date =>
-            holidayList.includes(date) && !filteredDaysOff.includes(date)
-        );
-        const employeeResultArray2Holi = resultArray.map(day => {
-            const workplaceIdIndex = commonDatesHoli.indexOf(day);
-            if (workplaceIdIndex !== -1) {
-                const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].allTimes;
-                return currentWorkplaceId === searchWorkplaceId ? 1 : parseInt(currentWorkplaceId, 10);
-            } else {
-                return '';
-            }
-        });
-        arrayWorkHoli.push(employeeResultArray2Holi);
-
-        // วันที่ทำงานในวันหยุดนักขัตฤกษ์(ช.ม.)
-        const commonDates = datesArray.filter(date => filteredDaysOff.includes(date));
+        // วันที่ทำงานในวันหยุด(ช.ม.)
+        const commonDates = datesArray.filter(date => filteredDaysOff.includes(date) || holidayList.includes(date));
         const employeeResultArray2 = resultArray.map(day => {
             const workplaceIdIndex = commonDates.indexOf(day);
             if (workplaceIdIndex !== -1) {
@@ -1820,19 +1787,6 @@ function WorktimeSheetWorkplace() {
             }
         });
         arrayWorkHoliday.push(employeeResultArray2);
-
-        // วันที่ทำงานในวันหยุดนักขัตฤกษ์OT(ช.ม.)
-        const commonDatesOT = datesArray.filter(date => filteredDaysOff.includes(date));
-        const employeeResultArray2OT = resultArray.map(day => {
-            const workplaceIdIndex = commonDatesOT.indexOf(day);
-            if (workplaceIdIndex !== -1) {
-                const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].otTimes;
-                return currentWorkplaceId === searchWorkplaceId ? 1 : parseInt(currentWorkplaceId, 10);
-            } else {
-                return '';
-            }
-        });
-        arrayWorkOTHoliday.push(employeeResultArray2OT);
 
 
         // วันที่ทำงานปกติ
@@ -1848,44 +1802,11 @@ function WorktimeSheetWorkplace() {
         });
 
         arrayWorkNormalDay.push(employeeResultArray3);
-
-        // วันที่ทำงานปกติOT
-        const commonDates3OT = datesArray.filter(date => !(filteredDaysOff.includes(date) || holidayList.includes(date)));
-        const employeeResultArray3OT = resultArray.map(day => {
-            const workplaceIdIndex = commonDates3OT.indexOf(day);
-            if (workplaceIdIndex !== -1) {
-                const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].otTimes;
-                return currentWorkplaceId === searchWorkplaceId ? 1 : parseInt(currentWorkplaceId, 10);
-            } else {
-                return '';
-            }
-        });
-
-        arrayWorkOTNormalDay.push(employeeResultArray3OT);
     });
 
     console.log('Result Position Array:', arraytest);
     console.log('arrayWorkHoliday:', arrayWorkHoliday);
     console.log('arrayWorkNormalDay:', arrayWorkNormalDay);
-    console.log('arrayWorkOTNormalDay:', arrayWorkOTNormalDay);
-    console.log('arrayWorkHoli:', arrayWorkHoli);
-
-
-    const sumArrayOT = arrayWorkOTNormalDay.map(subArray =>
-        subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
-    );
-
-    const sumArrayHoli = arrayWorkHoli.map(subArray =>
-        subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
-    );
-
-    const sumArrayHoliday = arrayWorkHoliday.map(subArray =>
-        subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
-    );
-
-    const sumArrayOTHoliday = arrayWorkOTHoliday.map(subArray =>
-        subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
-    );
 
     // นับวันที่ทำในวันหยุดวันนักขัตฤกษ์
     const occurrencesCount = filteredUniqueDatesArray.map(subArray => {
@@ -1914,7 +1835,7 @@ function WorktimeSheetWorkplace() {
     //     [1, 12, '', '', '', '', ''],
     //     // ... other subarrays
     // ];
-    const sumArray = arrayWorkNormalDay.map(subarray => subarray.map(item => (typeof item === 'number' ? 1 : item)).reduce((count, item) => (item === 1 ? count + 1 : count), 0));
+    const sumArray = arraytest.map(subarray => subarray.map(item => (typeof item === 'number' ? 1 : item)).reduce((count, item) => (item === 1 ? count + 1 : count), 0));
 
 
     console.log('sumArray', sumArray);
@@ -2106,7 +2027,7 @@ function WorktimeSheetWorkplace() {
         ]
         ];
 
-        const arraytestSpSalary = [['', 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0.5],
+        const arraytestSpSalary = [[1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0.5],
         [2, 2, 2, 2, 2, '', 2, '', 2],
         [2, '', 2, 2, '', 2, 3, '', 3, 3],
         [3, 3, 3, '', 3, 3, 3, 3],
@@ -2116,20 +2037,20 @@ function WorktimeSheetWorkplace() {
         ];
 
         // const arraylistNameEmp = ['สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย','สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย','สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย','สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย', 'สนไหม'];
-        // const arraylistNameEmp =
-        //     [['ภัทรนก แซหว็อง', '612548', 'กะเช้า', 'กะดึก', '1001'],
-        //     ['สมชาย ไม่มา', '165843', 'กะเช้า', 'กะดึก', '1201'],
-        //     ['สมชาย ไม่อยู่', '162847', 'กะเช้า', 'กะดึก', '8401'],
-        //     ['สมชาย กำลัง', '653298', 'กะเช้า', 'กะดึก', '1196'],
-        //     ['สมชาย ไปริด', '7536241', 'กะเช้า', 'กะดึก', '2001'],
-        //     ['สมชาย สมชาย', '999999', 'กะเช้า', 'กะดึก', '1921'],
-        //     ['สมชาย ติดห', '1845270', 'กะเช้า', 'กะดึก', '1548'],
-        //     ['สมชาย สมชาย', '1652305', 'กะเช้า', 'กะดึก', '1078'],
-        //     ['สมชาย สมชาย', '9564832', 'กะเช้า', 'กะดึก', '1009'],
-        //     ['สมชาย สมชาย', '1032568', 'กะเช้า', 'กะดึก', '1005']];
+        const arraylistNameEmp =
+            [['ภัทรนก แซหว็อง', '612548', 'กะเช้า', 'กะดึก', '1001'],
+            ['สมชาย ไม่มา', '165843', 'กะเช้า', 'กะดึก', '1201'],
+            ['สมชาย ไม่อยู่', '162847', 'กะเช้า', 'กะดึก', '8401'],
+            ['สมชาย กำลัง', '653298', 'กะเช้า', 'กะดึก', '1196'],
+            ['สมชาย ไปริด', '7536241', 'กะเช้า', 'กะดึก', '2001'],
+            ['สมชาย สมชาย', '999999', 'กะเช้า', 'กะดึก', '1921'],
+            ['สมชาย ติดห', '1845270', 'กะเช้า', 'กะดึก', '1548'],
+            ['สมชาย สมชาย', '1652305', 'กะเช้า', 'กะดึก', '1078'],
+            ['สมชาย สมชาย', '9564832', 'กะเช้า', 'กะดึก', '1009'],
+            ['สมชาย สมชาย', '1032568', 'กะเช้า', 'กะดึก', '1005']];
 
         const arraylistOT =
-            ['1.5', '2', '3'];
+            ['2', '3'];
 
         const addSalaryWorkplace =
             [{
@@ -2233,38 +2154,15 @@ function WorktimeSheetWorkplace() {
         //     }
         // };
 
-        // const drawTable = (tableNumber) => {
-        //     for (let i = 0; i < numRows; i++) {
-        //         for (let j = 0; j < numCols; j++) {
-        //             const x = startX + j * cellWidth;
-        //             const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 0.2);
-        //             drawCell(x, y, cellWidth, cellHeight);
-        //         }
-        //     }
-        // };
-        // const additionalHeight = 3;
-
         const drawTable = (tableNumber) => {
             for (let i = 0; i < numRows; i++) {
                 for (let j = 0; j < numCols; j++) {
                     const x = startX + j * cellWidth;
-                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 3.7);
-                    // Increase the height for the first row
-                    const adjustedCellHeight = i === 0 ? cellHeight * 2 : cellHeight;
-                    // const adjustedCellY = i === 0 ? y : y * 2;
-
-                    if (i === 0) {
-                        drawCell(x, y, cellWidth, adjustedCellHeight);
-
-                    } else {
-                        drawCell(x, y + cellHeight, cellWidth, adjustedCellHeight);
-
-                    }
-                    // drawCell(x, y , cellWidth, adjustedCellHeight);
+                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 0.2);
+                    drawCell(x, y, cellWidth, cellHeight);
                 }
             }
         };
-
 
         const numRowsLeftHead = 7;
         const numColsLeftHead = 1;
@@ -2278,29 +2176,19 @@ function WorktimeSheetWorkplace() {
             for (let i = 0; i < numRows; i++) {
                 for (let j = 0; j < numColsLeftHead; j++) {
                     const x = startXLeftHead + j * cellWidthLeftHead;
-                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 3.7);
-                    // drawCell(x, y, cellWidthLeftHead, cellHeight);
-                    const adjustedCellHeight = i === 0 ? cellHeight * 2 : cellHeight;
+                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 0.2);
+                    drawCell(x, y, cellWidthLeftHead, cellHeight);
 
-                    if (i === 0) {
-                        drawCell(x, y, cellWidthLeftHead, adjustedCellHeight);
-
-                    } else {
-                        drawCell(x, y + cellHeight, cellWidthLeftHead, adjustedCellHeight);
-
-                    }
-
-                    if (i >= numRows - 3) {
-                        const arrayIndex = i - (numRows - 3); // 0 for the last row, 1 for the second last row
+                    if (i >= numRows - 2) {
+                        const arrayIndex = i - (numRows - 2); // 0 for the last row, 1 for the second last row
                         if (arraylistOT[arrayIndex]) {
                             const cellText = arraylistOT[arrayIndex].toString(); // Convert to string if needed
-                            doc.text("โอที " + cellText, x + 26, y - 1, { align: 'center' }); // Use the entire cellText
+                            doc.text("โอที " + cellText[0], x + 26, y - 1, { align: 'center' });
                         }
                     }
                 }
             }
         };
-
 
         const numRowsNumHead = 7;
         const numColsNumHead = 1;
@@ -2314,17 +2202,8 @@ function WorktimeSheetWorkplace() {
             for (let i = 0; i < numRows; i++) {
                 for (let j = 0; j < numColsNumHead; j++) {
                     const x = startXNumHead + j * cellWidthNumHead;
-                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 3.7);
-                    // drawCell(x, y, cellWidthNumHead, cellHeight);
-                    const adjustedCellHeight = i === 0 ? cellHeight * 2 : cellHeight;
-
-                    if (i === 0) {
-                        drawCell(x, y, cellWidthNumHead, adjustedCellHeight);
-
-                    } else {
-                        drawCell(x, y + cellHeight, cellWidthNumHead, adjustedCellHeight);
-
-                    }
+                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 0.2);
+                    drawCell(x, y, cellWidthNumHead, cellHeight);
                 }
             }
         };
@@ -2356,17 +2235,8 @@ function WorktimeSheetWorkplace() {
             for (let i = 0; i < numRows; i++) {
                 for (let j = 0; j < numColsSpSalary; j++) {
                     const x = startXSpSalary + j * cellWidthSpSalary;
-                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 3.7);
-                    // drawCell(x, y, cellWidthSpSalary, cellHeight);
-                    const adjustedCellHeight = i === 0 ? cellHeight * 2 : cellHeight;
-
-                    if (i === 0) {
-                        drawCell(x, y, cellWidthSpSalary, adjustedCellHeight);
-
-                    } else {
-                        drawCell(x, y + cellHeight, cellWidthSpSalary, adjustedCellHeight);
-
-                    }
+                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 0.2);
+                    drawCell(x, y, cellWidthSpSalary, cellHeight);
                 }
             }
         };
@@ -2391,19 +2261,10 @@ function WorktimeSheetWorkplace() {
             for (let i = 0; i < numRows; i++) {
                 for (let j = 0; j < numColsMess; j++) {
                     const x = startXMess + j * cellWidthMess;
-                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 3.7);
+                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 0.2);
 
                     // Draw the cell
-                    // drawCell(x, y, cellWidthMess, cellHeight);
-                    const adjustedCellHeight = i === 0 ? cellHeight * 2 : cellHeight;
-
-                    if (i === 0) {
-                        drawCell(x, y, cellWidthMess, adjustedCellHeight);
-
-                    } else {
-                        drawCell(x, y + cellHeight, cellWidthMess, adjustedCellHeight);
-
-                    }
+                    drawCell(x, y, cellWidthMess, cellHeight);
 
                     // Add text below the last two cells
                     // if (i >= numRows - 2) {
@@ -2522,7 +2383,7 @@ function WorktimeSheetWorkplace() {
                 }
             }
         };
-        const verticalDistance = 24.7 + cellHeight; // Set your desired vertical distance
+        const verticalDistance = 24.7; // Set your desired vertical distance
 
         // const drawArrayText = (dataArray) => {
         //     const arrayText = dataArray.map(row => row.join(' ')).join('\n');
@@ -2535,18 +2396,17 @@ function WorktimeSheetWorkplace() {
             return elementWidth;
         };
 
-        // แสดงตารางวันทำงานธรรมดา
         const drawArrayText = (dataArray) => {
             for (let i = 0; i < dataArray.length; i++) {
                 // const arrayText = dataArray[i].join('      ');
                 // const arrayText = dataArray[i].join('     '); // Use spaces to mimic the width
-                let currentX = startX;
-                let currentY = startY + 3.7;
+                let currentX = startX - 1;
+                let currentY = startY;
 
                 for (let j = 0; j < dataArray[i].length; j++) {
                     // const elementWidth = calculateElementWidth(dataArray[i][j]);
                     const textToDraw = dataArray[i][j].toString();
-                    const alignment = textToDraw.length > 3 ? { align: 'left', angle: 90, xOffset: 5 } : { align: 'left' };
+                    const alignment = textToDraw.length > 3 ? { align: 'left', angle: 45, xOffset: 5 } : { align: 'left' };
 
 
                     doc.text(textToDraw, currentX + 2, 3 + currentY + i * verticalDistance, alignment);
@@ -2556,70 +2416,31 @@ function WorktimeSheetWorkplace() {
             }
         };
 
+
+
+
+        // const drawArrayTextAddSalary = (dataArray) => {
+        //     for (let i = 0; i < dataArray.length; i++) {
+        //         let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 5);
+        //         let currentY = startY;
+
+        //         for (let j = 0; j < dataArray[i].length; j++) {
+        //             const item = dataArray[i][j];
+        //             const text = `${item.SpSalary}`;
+        //             doc.text(text, currentX + 2 + (cellWidthSpSalary * 1), 3 + currentY + i * verticalDistance, { align: 'center' });
+        //             currentX += cellWidthSpSalary;
+        //         }
+        //     }
+        // };
+
         const drawArrayTextOT = (dataArray) => {
             for (let i = 0; i < dataArray.length; i++) {
                 let currentX = startX - 1;
-                let currentY = startY + 3 + cellHeight;
+                let currentY = startY + 3;
 
                 for (let j = 0; j < dataArray[i].length; j++) {
                     // const elementWidth = calculateElementWidth(dataArray[i][j]);
                     doc.text(dataArray[i][j].toString(), currentX + 2, 3 + currentY + i * verticalDistance, { align: 'left' });
-                    // currentX += elementWidth + cellWidth; 
-                    currentX += cellWidth;
-                }
-            }
-        };
-
-        // แสดงตารางวันทำงานหยุดธรรมดา
-        const drawArrayTextHoli = (dataArray) => {
-            for (let i = 0; i < dataArray.length; i++) {
-                // const arrayText = dataArray[i].join('      ');
-                // const arrayText = dataArray[i].join('     '); // Use spaces to mimic the width
-                let currentX = startX - 1;
-                let currentY = startY + (3 * 3);
-
-                for (let j = 0; j < dataArray[i].length; j++) {
-                    // const elementWidth = calculateElementWidth(dataArray[i][j]);
-                    const textToDraw = dataArray[i][j].toString();
-                    const alignment = textToDraw.length > 3 ? { align: 'left', angle: 45, xOffset: 5 } : { align: 'left' };
-
-
-                    doc.text(textToDraw, currentX + 2, 4 + currentY + i * verticalDistance, alignment);
-                    // currentX += elementWidth + cellWidth; 
-                    currentX += cellWidth;
-                }
-            }
-        };
-
-        // แสดงตารางวันทำงานหยุดนักขัตฤกษ์
-        const drawArrayTextHoliday = (dataArray) => {
-            for (let i = 0; i < dataArray.length; i++) {
-                // const arrayText = dataArray[i].join('      ');
-                // const arrayText = dataArray[i].join('     '); // Use spaces to mimic the width
-                let currentX = startX - 1;
-                let currentY = startY + (3 * 4);
-
-                for (let j = 0; j < dataArray[i].length; j++) {
-                    // const elementWidth = calculateElementWidth(dataArray[i][j]);
-                    const textToDraw = dataArray[i][j].toString();
-                    const alignment = textToDraw.length > 3 ? { align: 'left', angle: 45, xOffset: 5 } : { align: 'left' };
-
-
-                    doc.text(textToDraw, currentX + 2, 5 + currentY + i * verticalDistance, alignment);
-                    // currentX += elementWidth + cellWidth; 
-                    currentX += cellWidth;
-                }
-            }
-        };
-
-        const drawArrayTextOTHoliday = (dataArray) => {
-            for (let i = 0; i < dataArray.length; i++) {
-                let currentX = startX - 1;
-                let currentY = startY + (3 * 5);
-
-                for (let j = 0; j < dataArray[i].length; j++) {
-                    // const elementWidth = calculateElementWidth(dataArray[i][j]);
-                    doc.text(dataArray[i][j].toString(), currentX + 2, 5 + currentY + i * verticalDistance, { align: 'left' });
                     // currentX += elementWidth + cellWidth; 
                     currentX += cellWidth;
                 }
@@ -2634,13 +2455,10 @@ function WorktimeSheetWorkplace() {
         //         doc.text(sumArray[i].toString() * countalldaywork, currentX + 2, 3 + currentY +3, { align: 'center' });
         //     }
         // };
-
-        const addmove = 3;
-        // ผลรวมวันทำงานวันธรรรมดา
         const drawArrayTextSumWork = (dataArray, sumArray) => {
             for (let i = 0; i < dataArray.length; i++) {
                 let currentX = startXSpSalary + 3;
-                let currentY = startY + i * verticalDistance + addmove;
+                let currentY = startY + i * verticalDistance;
 
                 // Calculate the product and convert it to a string
                 const product = (sumArray[i] * countalldaywork).toString();
@@ -2652,7 +2470,7 @@ function WorktimeSheetWorkplace() {
         const drawArrayTextSumWorkOT = (dataArray, sumArrayOT) => {
             for (let i = 0; i < dataArray.length; i++) {
                 let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 3);
-                let currentY = startY + i * verticalDistance + addmove;
+                let currentY = startY + i * verticalDistance;
 
                 // Calculate the product and convert it to a string
                 const product = (sumArrayOT[i] * (countalldaywork / 8)).toString();
@@ -2662,47 +2480,6 @@ function WorktimeSheetWorkplace() {
                 );
 
                 doc.text(sumArrayOT[i].toString(), currentX + 2, 3 + currentY, { align: 'center' });
-                doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
-            }
-        };
-        // ผลรวมวันทำงานวันหยุด
-        const drawArrayTextSumWorkHoli = (dataArray, sumArrayHoli) => {
-            for (let i = 0; i < dataArray.length; i++) {
-                let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 1);
-                let currentY = startY + i * verticalDistance + addmove;
-
-                // Calculate the product and convert it to a string
-                const product = (sumArrayHoli[i] * (1.5 * (countalldaywork / 8))).toString();
-
-                doc.text(sumArrayHoli[i].toString(), currentX + 2, 3 + currentY, { align: 'center' });
-                doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
-            }
-        };
-        // ผลรวมวันทำงานวันหยุดนักขัตฤกษ์
-
-        const drawArrayTextSumWorkHoliday = (dataArray, sumArrayHoliday) => {
-            for (let i = 0; i < dataArray.length; i++) {
-                let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 2);
-                let currentY = startY + i * verticalDistance + addmove;
-
-                // Calculate the product and convert it to a string
-                const product = (sumArrayHoliday[i] * (2 * (countalldaywork / 8))).toString();
-
-                doc.text(sumArrayHoliday[i].toString(), currentX + 2, 3 + currentY, { align: 'center' });
-                doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
-            }
-        };
-
-        // ผลรวมวันทำงานวันหยุดนักขัตฤกษ์OT
-        const drawArrayTextSumWorkOTHoliday = (dataArray, sumArrayOTHoliday) => {
-            for (let i = 0; i < dataArray.length; i++) {
-                let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 4);
-                let currentY = startY + i * verticalDistance + addmove;
-
-                // Calculate the product and convert it to a string
-                const product = (sumArrayOTHoliday[i] * (3 * (countalldaywork / 8))).toString();
-
-                doc.text(sumArrayOTHoliday[i].toString(), currentX + 2, 3 + currentY, { align: 'center' });
                 doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
             }
         };
@@ -2735,7 +2512,7 @@ function WorktimeSheetWorkplace() {
         const drawArrayTextAddSalary = (dataArray, sumArray) => {
             for (let i = 0; i < dataArray.length; i++) {
                 let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 5);
-                let currentY = startY + addmove;
+                let currentY = startY;
 
                 for (let j = 0; j < dataArray[i].length; j++) {
                     const item = dataArray[i][j];
@@ -2763,7 +2540,7 @@ function WorktimeSheetWorkplace() {
         const drawArrayTextName = (dataArray) => {
             for (let i = 0; i < dataArray.length; i++) {
                 let currentX = startX - 13;
-                let currentY = startY + i * verticalDistance ;
+                let currentY = startY + i * verticalDistance;
 
                 for (let j = 0; j < dataArray[i].length; j++) {
 
@@ -2920,7 +2697,7 @@ function WorktimeSheetWorkplace() {
 
         const spaceWidth = 10;
 
-        const makePage = Math.ceil(arrayWorkNormalDay.length / 6);
+        const makePage = Math.ceil(arraytest.length / 6);
 
         for (let pageIndex = 0; pageIndex < makePage; pageIndex++) {
 
@@ -2976,7 +2753,7 @@ function WorktimeSheetWorkplace() {
 
             for (let i = 0; i < 6; i++) {
                 const dataIdx = pageIndex * 6 + i;
-                if (dataIdx < arrayWorkNormalDay.length) {
+                if (dataIdx < arraytest.length) {
                     // Set the color of the square (RGB values)
                     const squareColor = [255, 255, 0]; // Red
 
@@ -3026,11 +2803,11 @@ function WorktimeSheetWorkplace() {
                     // drawTableOT(arraylistOT);
 
 
-                    drawTable(i, arrayWorkNormalDay.slice(dataIdx, dataIdx + 1));
-                    drawTableLeftHead(i, arrayWorkNormalDay.slice(dataIdx, dataIdx + 1));
-                    drawTableNumHead(i, arrayWorkNormalDay.slice(dataIdx, dataIdx + 1));
-                    drawTableSpSalary(i, arrayWorkNormalDay.slice(dataIdx, dataIdx + 1));
-                    drawTableMess(i, arrayWorkNormalDay.slice(dataIdx, dataIdx + 1));
+                    drawTable(i, arraytest.slice(dataIdx, dataIdx + 1));
+                    drawTableLeftHead(i, arraytest.slice(dataIdx, dataIdx + 1));
+                    drawTableNumHead(i, arraytest.slice(dataIdx, dataIdx + 1));
+                    drawTableSpSalary(i, arraytest.slice(dataIdx, dataIdx + 1));
+                    drawTableMess(i, arraytest.slice(dataIdx, dataIdx + 1));
                     // drawArrayText(arraytest, dataIdx, dataIdx + 1);
 
                     // drawArrayText(arraytest.slice(dataIdx, dataIdx + 1));
@@ -3054,32 +2831,24 @@ function WorktimeSheetWorkplace() {
             // }
             const pageStartIndex = pageIndex * 6;
             const pageEndIndex = Math.min((pageIndex + 1) * 6, arraytest.length);
-            drawArrayText(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex));
+            drawArrayText(arraytest.slice(pageStartIndex, pageEndIndex));
 
             drawArrayTextAddSalary(arraytestEmpAddSalary.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
             // drawArrayText(arraytestEmpAddSalary);
 
-            drawArrayTextOT(arrayWorkOTNormalDay.slice(pageStartIndex, pageEndIndex));
-
-            drawArrayTextHoli(arrayWorkHoli.slice(pageStartIndex, pageEndIndex));
-
-            drawArrayTextHoliday(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex));
-            drawArrayTextOTHoliday(arrayWorkOTHoliday.slice(pageStartIndex, pageEndIndex));
+            drawArrayTextOT(arraytestOT.slice(pageStartIndex, pageEndIndex));
 
 
-            drawArrayTextSumWork(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
-            drawArrayTextSumWorkOT(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArrayOT.slice(pageStartIndex, pageEndIndex));
+            drawArrayTextSumWork(arraytest.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
 
-            drawArrayTextSumWorkHoli(arrayWorkHoli.slice(pageStartIndex, pageEndIndex), sumArrayHoli.slice(pageStartIndex, pageEndIndex));
+            drawArrayTextSumWorkOT(arraytest.slice(pageStartIndex, pageEndIndex), sumArrayOT.slice(pageStartIndex, pageEndIndex));
 
-            drawArrayTextSumWorkHoliday(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), sumArrayHoliday.slice(pageStartIndex, pageEndIndex));
-            drawArrayTextSumWorkOTHoliday(arrayWorkOTHoliday.slice(pageStartIndex, pageEndIndex), sumArrayOTHoliday.slice(pageStartIndex, pageEndIndex));
             // drawArrayTextAddSalary(arraytest.slice(pageStartIndex, pageEndIndex), arraytestEmpAddSalary.slice(pageStartIndex, pageEndIndex));
             // drawArrayTextAddSalary(arraytestEmpAddSalary.slice(pageStartIndex, pageEndIndex));
 
 
             const pageStartIndexName = pageIndex * 6;
-            const pageEndIndexName = Math.min((pageIndex + 1) * 6, arrayWorkNormalDay.length);
+            const pageEndIndexName = Math.min((pageIndex + 1) * 6, arraytest.length);
             drawArrayTextName(arraylistNameEmp.slice(pageStartIndex, pageEndIndex));
 
             for (let i = 0; i < resultArray.length; i++) {
