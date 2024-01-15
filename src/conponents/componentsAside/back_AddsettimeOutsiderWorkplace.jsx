@@ -9,7 +9,7 @@ import moment from 'moment';
 
 import EmployeesSelected from './EmployeesSelected';
 
-function AddsettimeWorkplace() {
+function AddsettimeOutsiderWorkplace() {
     const bordertable = {
         borderLeft: '2px solid #000'
     };
@@ -60,7 +60,7 @@ function AddsettimeWorkplace() {
 
     useEffect(() => {
         // Fetch data from the API when the component mounts
-        fetch(endpoint + '/timerecordoutside/listemp')
+        fetch(endpoint + '/employee/list')
             .then(response => response.json())
             .then(data => {
                 // Update the state with the fetched data
@@ -72,13 +72,6 @@ function AddsettimeWorkplace() {
     }, []); // The empty array [] ensures that the effect runs only once after the initial render
     console.log(employeeList);
 
-    //auto check time record 
-    useEffect(() => {
-        if (workplaceName !== '') {
-            handleCheckTimerecord();
-        }
-    }, [workDate]);
-
     /////////////////////////////////////////////
     const [staffId, setStaffId] = useState(''); //รหัสหน่วยงาน
     const [staffName, setStaffName] = useState(''); //รหัสหน่วยงาน
@@ -89,10 +82,6 @@ function AddsettimeWorkplace() {
     const [otTime, setOtTime] = useState(''); //รหัสหน่วยงาน
     const [selectotTime, setSelectotTime] = useState('');
     const [selectotTimeOut, setSelectotTimeOut] = useState('');
-
-    const [cashSalary, setCashSalary] = useState(false);
-    const [specialtSalary, setSpecialtSalary] = useState('');
-    const [messageSalary, setMessageSalary] = useState('');
 
     const [shift1start, setShift1start] = useState('');
     const [shift2start, setShift2start] = useState('');
@@ -109,13 +98,14 @@ function AddsettimeWorkplace() {
     const [startTimeOt3, setStartTimeOt3] = useState('');
     const [endTimeOt3, setEndTimeOt3] = useState('');
 
+
     //search employee name by employeeId
     useEffect(() => {
         //Search Employee  by id
         if (staffId != '') {
             const employeesearch = employeeList.find(employee => employee.employeeId === staffId);
             if (employeesearch) {
-setStaffName(employeesearch.employeeName);
+                setStaffName(employeesearch.name);
             } else {
                 setStaffName('');
             }
@@ -123,23 +113,18 @@ setStaffName(employeesearch.employeeName);
     }, [staffId]);
 
 
-    const handleCheckboxChange = () => {
-        setCashSalary(!cashSalary); // Toggle the checkbox state
-    };
-
-
     //search employeeId by employeeName 
-    // useEffect(() => {
-    //     //Search Employee  by name
-    //     if (staffName != '') {
-    //         const employeesearch = employeeList.find(employee => employee.name === staffName);
-    //         if (employeesearch) {
-    //             setStaffId(employeesearch.employeeId);
-    //         } else {
-    //             setStaffId('');
-    //         }
-    //     }
-    // }, [staffName])
+    useEffect(() => {
+        //Search Employee  by name
+        if (staffName != '') {
+            const employeesearch = employeeList.find(employee => employee.name === staffName);
+            if (employeesearch) {
+                setStaffId(employeesearch.employeeId);
+            } else {
+                setStaffId('');
+            }
+        }
+    }, [staffName])
 
 
     //check ship and set time of work to start time and end time
@@ -216,84 +201,84 @@ setStaffName(employeesearch.employeeName);
         // }
 
         try {
-            if (shift == 'night_shift' ||
-                shift == 'afternoon_shift' ||
-                shift == 'morning_shift') {
-                const allt = calTime(startTime || 0, endTime || 0, workOfHour || 0) || 0;
-                setAllTime(allt);
+            if(shift == 'night_shift' ||
+shift == 'afternoon_shift' ||
+shift == 'morning_shift' ) {
+    const allt = calTime(startTime || 0, endTime || 0, workOfHour || 0) || 0;
+    setAllTime(allt);
 
-            } else {
-                const allt = calTime(startTime || 0, endTime || 0, 24) || 0;
-                setAllTime(allt);
+}else {
+    const allt = calTime(startTime || 0, endTime || 0, 24) || 0;
+    setAllTime(allt);
 
-            }
+}
 
-        } catch (error) {
+          } catch (error) {
             // Handle the error here, you can log it or show an error message.
             console.error(error);
-            //   alert(error);
-        }
-
+          //   alert(error);
+          }
+  
     }, [startTime, endTime, workOfHour]);
 
     useEffect(() => {
         try {
-            if (shift == 'night_shift' ||
-                shift == 'afternoon_shift' ||
-                shift == 'morning_shift') {
-                const ot = calTime(selectotTime || 0, selectotTimeOut || 0, workOfOT || 0) || 0;
-                setOtTime(ot);
+            if(shift == 'night_shift' ||
+shift == 'afternoon_shift' ||
+shift == 'morning_shift' ) {
+    const ot = calTime(selectotTime || 0, selectotTimeOut || 0, workOfOT || 0) || 0;
+    setOtTime(ot);
 
-            } else {
-                const ot = calTime(selectotTime || 0, selectotTimeOut || 0, 24) || 0;
-                setOtTime(ot);
+} else {
+    const ot = calTime(selectotTime || 0, selectotTimeOut || 0, 24) || 0;
+    setOtTime(ot);
 
-            }
+}
         } catch (error) {
-            // Handle the error here, you can log it or show an error message.
-            console.error(error);
-            //   alert(error);
+          // Handle the error here, you can log it or show an error message.
+          console.error(error);
+        //   alert(error);
         }
-    }, [selectotTime, selectotTimeOut, workOfOT]);
+      }, [selectotTime, selectotTimeOut, workOfOT]);
+      
+//     useEffect(() => {
+// const ot = calTime( selectotTime || 0, selectotTimeOut || 0 , workOfOT  || 0) || 0;
+// setOtTime(ot );
+        // const startHours = parseFloat(selectotTime.split('.')[0]);
+        // const startMinutes = parseFloat(selectotTime.split('.')[1] || 0);
+        // const endHours = parseFloat(selectotTimeOut.split('.')[0]);
+        // const endMinutes = parseFloat(selectotTimeOut.split('.')[1] || 0);
+        // let hours = endHours - startHours;
+        // let minutes = endMinutes - startMinutes;
+        // if (minutes < 0) {
+        //     hours -= 1;
+        //     minutes += 60;
+        // }
+        // // Handle cases where endTime is on the next day
+        // if (hours < 0) {
+        //     hours += 24;
+        // }
+        // // Check if the employee worked >= 5 hours 
+        // if (hours >= 5) {
+        //     hours -= 1;
+        // }
 
-    //     useEffect(() => {
-    // const ot = calTime( selectotTime || 0, selectotTimeOut || 0 , workOfOT  || 0) || 0;
-    // setOtTime(ot );
-    // const startHours = parseFloat(selectotTime.split('.')[0]);
-    // const startMinutes = parseFloat(selectotTime.split('.')[1] || 0);
-    // const endHours = parseFloat(selectotTimeOut.split('.')[0]);
-    // const endMinutes = parseFloat(selectotTimeOut.split('.')[1] || 0);
-    // let hours = endHours - startHours;
-    // let minutes = endMinutes - startMinutes;
-    // if (minutes < 0) {
-    //     hours -= 1;
-    //     minutes += 60;
-    // }
-    // // Handle cases where endTime is on the next day
-    // if (hours < 0) {
-    //     hours += 24;
-    // }
-    // // Check if the employee worked >= 5 hours 
-    // if (hours >= 5) {
-    //     hours -= 1;
-    // }
+        // // Calculate the total time difference in minutes
+        // const totalMinutes = hours * 60 + minutes;
+        // // Check if the employee worked > 5 hours
+        // // Cap the time difference at the maximum work hours
+        // const cappedTotalMinutes = Math.min(totalMinutes, otTime * 60);
+        // // Convert the capped time difference back to hours and minutes
+        // const cappedHours = Math.floor(cappedTotalMinutes / 60);
+        // const cappedMinutes = cappedTotalMinutes % 60;
 
-    // // Calculate the total time difference in minutes
-    // const totalMinutes = hours * 60 + minutes;
-    // // Check if the employee worked > 5 hours
-    // // Cap the time difference at the maximum work hours
-    // const cappedTotalMinutes = Math.min(totalMinutes, otTime * 60);
-    // // Convert the capped time difference back to hours and minutes
-    // const cappedHours = Math.floor(cappedTotalMinutes / 60);
-    // const cappedMinutes = cappedTotalMinutes % 60;
-
-    // const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
-    // // alert(timeDiffFormatted);
-    // if (isNaN(timeDiffFormatted)) {
-    //     setOtTime('0');
-    // } else {
-    //     setOtTime(timeDiffFormatted);
-    // }
+        // const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
+        // // alert(timeDiffFormatted);
+        // if (isNaN(timeDiffFormatted)) {
+        //     setOtTime('0');
+        // } else {
+        //     setOtTime(timeDiffFormatted);
+        // }
     // }, [selectotTime, selectotTimeOut, otTime]);
 
 
@@ -867,23 +852,18 @@ setStaffName(employeesearch.employeeName);
         };
 
         try {
-            const response = await axios.post(endpoint + '/timerecordoutside/search', data);
+            const response = await axios.post(endpoint + '/timerecord/search', data);
 
             if (response.data.recordworkplace.length < 1) {
-                // alert('ไม่พบข้อมูล');
+                alert('ไม่พบข้อมูล');
                 // Set the state to false if no data is found
                 setUpdateButton(false);
                 setTimeRecord_id('');
-                setRowDataList([]);
             } else {
                 // Set the state to true if data is found
                 setUpdateButton(true);
                 setTimeRecord_id(response.data.recordworkplace[0]._id);
-                if (workplaceName != '') {
-                    setRowDataList(response.data.recordworkplace[0].employeeRecord);
-                } else {
-                    setRowDataList([]);
-                }
+                setRowDataList(response.data.recordworkplace[0].employeeRecord);
 
                 // alert(JSON.stringify( rowDataList[0] ) );
                 //count work of time and set to table 
@@ -907,17 +887,12 @@ setStaffName(employeesearch.employeeName);
         // alert('test');
         // alert(formattedWorkDate);
 
-        const dateObject = new Date(formattedWorkDate);
-
-        // Extract the year from the dateObject
-        const year = dateObject.getFullYear();
         //get data from input in useState to data 
         const data = {
             workplaceId: workplaceId,
             workplaceName: workplaceName,
             date: formattedWorkDate,
-            employeeRecord: rowDataList,
-            timerecordId: year.toString(),
+            employeeRecord: rowDataList
         };
 
 
@@ -925,7 +900,7 @@ setStaffName(employeesearch.employeeName);
         // if (newWorkplace) {
         // alert('Create Workplace');
         try {
-            const response = await axios.post(endpoint + '/timerecordoutside/create', data);
+            const response = await axios.post(endpoint + '/timerecord/create', data);
             // setEmployeesResult(response.data.employees);
             if (response) {
                 alert("บันทึกสำเร็จ");
@@ -960,7 +935,7 @@ setStaffName(employeesearch.employeeName);
         event.preventDefault();
         // alert('hi');
         //get data from input in useState to data 
-
+        
         const data = {
             workplaceId: workplaceId,
             workplaceName: workplaceName,
@@ -970,7 +945,7 @@ setStaffName(employeesearch.employeeName);
 
         try {
 
-            const response = await axios.put(endpoint + '/timerecordoutside/update/' + timeRecord_id, data);
+            const response = await axios.put(endpoint + '/timerecord/update/' + timeRecord_id, data);
             // setEmployeesResult(response.data.employees);
             if (response) {
                 alert("บันทึกสำเร็จ");
@@ -1000,9 +975,6 @@ setStaffName(employeesearch.employeeName);
             otTime: otTime || '',
             selectotTime: selectotTime || '',
             selectotTimeOut: selectotTimeOut || '',
-            cashSalary: cashSalary || '',
-            specialtSalary: specialtSalary || '',
-            messageSalary: messageSalary || '',
         };
 
         addRow(newRowData);
@@ -1017,28 +989,9 @@ setStaffName(employeesearch.employeeName);
         setOtTime('');
         setSelectotTime('');
         setSelectotTimeOut('');
-        setCashSalary(!cashSalary);
-        setSpecialtSalary('');
-        setMessageSalary('');
-
         // alert(rowDataList.length);
 
     }
-
-    const [showInputs, setShowInputs] = useState(false);
-
-    const handleShiftChange = (e) => {
-        const selectedShift = e.target.value;
-        setShift(selectedShift);
-
-        // Show the inputs when "specialt_shift" is selected
-        if (selectedShift === 'specialt_shift') {
-            setShowInputs(true);
-        } else {
-            setShowInputs(false);
-        }
-    };
-
 
     /////////////////
     const [selectedOption, setSelectedOption] = useState('agencytime');
@@ -1155,71 +1108,20 @@ setStaffName(employeesearch.employeeName);
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <label role="staffId">เลขบัตรประชาชน</label>
+                                            <label role="staffId">รหัสพนักงาน</label>
+                                            <input type="text" class="form-control" id="staffId" placeholder="รหัสพนักงาน" value={staffId} onChange={(e) => setStaffId(e.target.value)} />
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <label role="staffName">ชื่อ สกุล</label>
+                                            <label role="staffName">ชื่อพนักงาน</label>
+                                            <input type="text" class="form-control" id="staffName" placeholder="ชื่อพนักงาน" value={staffName} onChange={(e) => setStaffName(e.target.value)} />
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label role="shift">กะการทำงาน</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <label role="startTime">เวลาเข้างาน</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <label role="endTime">เวลาออกงาน</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <label role="allTime">ชั่วโมงทำงาน</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <label role="selectotTime">เวลาเข้า OT</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <label role="selectotTimeOut">เวลาออก OT</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <label role="otTime">ชั่วโมง OT</label>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            {/* <label role="staffId">รหัสพนักงาน</label> */}
-                                            <input type="text" class="form-control" id="staffId" placeholder="เลขบัตรประชาชน" value={staffId} onChange={(e) => setStaffId(e.target.value)} />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            {/* <label role="staffName">ชื่อพนักงาน</label> */}
-                                            <input type="text" class="form-control" id="staffName" placeholder="ชื่อ สกุล" value={staffName} onChange={(e) => setStaffName(e.target.value)} />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            {/* <label role="shift">กะการทำงาน</label> */}
-                                            {/* <select className="form-control" value={shift} onChange={(e) => setShift(e.target.value)}  > */}
-                                            {/* <select className="form-control" value={shift} onChange={(e) => handleShiftChange(e.target.value)}> */}
-                                            <select className="form-control" value={shift} onChange={handleShiftChange}>
+                                            <select className="form-control" value={shift} onChange={(e) => setShift(e.target.value)}  >
                                                 <option value="">เลือกกะการทำงาน</option>
                                                 <option value="morning_shift">กะเช้า</option>
                                                 <option value="afternoon_shift">กะบ่าย</option>
@@ -1231,73 +1133,42 @@ setStaffName(employeesearch.employeeName);
                                     </div>
                                     <div class="col-md-1">
                                         <div class="form-group">
-                                            {/* <label role="startTime">เวลาเข้างาน</label> */}
+                                            <label role="startTime">เวลาเข้างาน</label>
                                             <input type="text" class="form-control" id="startTime" placeholder="เวลาเข้างาน" value={startTime} onChange={(e) => setStartTime(e.target.value)} />
                                         </div>
                                     </div>
                                     <div class="col-md-1">
                                         <div class="form-group">
-                                            {/* <label role="endTime">เวลาออกงาน</label> */}
+                                            <label role="endTime">เวลาออกงาน</label>
                                             <input type="text" class="form-control" id="endTime" placeholder="เวลาออกงาน" value={endTime} onChange={(e) => setEndTime(e.target.value)} />
                                         </div>
                                     </div>
                                     <div class="col-md-1">
                                         <div class="form-group">
-                                            {/* <label role="allTime">ชั่วโมงทำงาน</label> */}
+                                            <label role="allTime">ชั่วโมงทำงาน</label>
                                             <input type="text" class="form-control" id="allTime" placeholder="ชั่วโมงทำงาน" value={allTime} onChange={(e) => setAllTime(e.target.value)} />
                                         </div>
                                     </div>
                                     <div class="col-md-1">
                                         <div class="form-group">
-                                            {/* <label role="selectotTime">เวลาเข้า OT</label> */}
+                                            <label role="selectotTime">เวลาเข้า OT</label>
                                             <input type="text" class="form-control" id="selectotTime" placeholder="เวลาเข้า OT" value={selectotTime} onChange={(e) => setSelectotTime(e.target.value)} />
                                         </div>
                                     </div>
                                     <div class="col-md-1">
                                         <div class="form-group">
-                                            {/* <label role="selectotTimeOut">เวลาออก OT</label> */}
+                                            <label role="selectotTimeOut">เวลาออก OT</label>
                                             <input type="text" class="form-control" id="selectotTimeOut" placeholder="เวลาออก OT" value={selectotTimeOut} onChange={(e) => setSelectotTimeOut(e.target.value)} />
                                         </div>
                                     </div>
                                     <div class="col-md-1">
                                         <div class="form-group">
-                                            {/* <label role="otTime">ชั่วโมง OT</label> */}
+                                            <label role="otTime">ชั่วโมง OT</label>
                                             <input type="text" class="form-control" id="otTime" placeholder="ชั่วโมง OT" value={otTime} onChange={(e) => setOtTime(e.target.value)} />
                                         </div>
                                     </div>
 
                                 </div>
-                                {/* {showInputs && shift === 'specialt_shift' && ( */}
-                                    <div>
-                                        <div class="row">
-                                            <div class="col-md-1">
-                                                <label >จ่ายสด</label>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label role="specialtSalary">เป็นเงิน</label>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label role="messageSalary">หมายเหตุ</label>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-1">
-                                                <input
-                                                    type="checkbox"
-                                                    class="form-control"
-                                                    checked={true}
-                                                    onChange={handleCheckboxChange}
-                                                />
-                                            </div>
-                                            <div class="col-md-2">
-                                                <input type="text" class="form-control" id="specialtSalary" placeholder="เป็นเงิน" value={specialtSalary} onChange={(e) => setSpecialtSalary(e.target.value)} />
-                                            </div>
-                                            <div class="col-md-2">
-                                                <input type="text" class="form-control" id="messageSalary" placeholder="หมายเหตุ" value={messageSalary} onChange={(e) => setMessageSalary(e.target.value)} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                {/* )} */}
 
                             </section>
 
@@ -1324,7 +1195,6 @@ setStaffName(employeesearch.employeeName);
                                             <div class="col-md-1"> เวลาเข้า OT </div>
                                             <div class="col-md-1"> เวลาออก OT</div>
                                             <div class="col-md-1"> ชั่วโมง OT</div>
-                                            <div class="col-md-1"> จ่ายเงินสด</div>
 
                                         </div>
                                     </div>
@@ -1358,10 +1228,6 @@ setStaffName(employeesearch.employeeName);
                                                         <div class="col-md-1" style={bordertable}> {rowData.selectotTimeOut} </div>
                                                         <div class="col-md-1" style={bordertable}> {rowData.otTime} </div>
 
-                                                            <div class="col-md-1" style={bordertable}>
-                                                                {rowData.specialtSalary} บาท
-                                                            </div>
-
                                                         <div class="col-md-1" style={bordertable}>
                                                             {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
                                                             <button class="btn btn-xs btn-danger" style={{ padding: '0.3rem ', width: '8rem' }} onClick={() => handleDeleteRow(index)}>Delete</button>
@@ -1392,8 +1258,8 @@ setStaffName(employeesearch.employeeName);
                 </div>
             </div>
             {/* <!-- /.container-fluid --> */}
-        </section >
+        </section>
     )
 }
 
-export default AddsettimeWorkplace
+export default AddsettimeOutsiderWorkplace
