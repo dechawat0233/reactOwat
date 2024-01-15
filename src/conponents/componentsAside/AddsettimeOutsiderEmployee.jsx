@@ -516,16 +516,16 @@ function AddsettimeEmployee() {
         // get value from form search
         const data = {
             employeeId: searchEmployeeId,
-            name: searchEmployeeName,
-            idCard: '',
-            workPlace: '',
+            employeeName: searchEmployeeName,
         };
 
         try {
-            const response = await axios.post(endpoint + '/timerecordsoutside/employeesearch', data);
-            setSearchResult(response.data.employees);
-            // alert(response.data.employees.length);
-            if (response.data.employees.length < 1) {
+            const response = await axios.post(endpoint + '/timerecordoutside/employeesearch', data);
+            // alert(JSON.stringify(response ,null,2));
+            // alert(response .data.recordworkplace[0].employeeId);
+
+            // setSearchResult(response .data.recordworkplace[0] );
+            if (response .data.recordworkplace.length < 1) {
                 // window.location.reload();
                 setEmployeeId('');
                 setName('');
@@ -538,18 +538,14 @@ function AddsettimeEmployee() {
                 setSearchEmployeeName('');
 
                 // Set search values
-                setEmployeeId(response.data.employees[0].employeeId);
-                setName(response.data.employees[0].name);
+                setEmployeeId(response .data.recordworkplace[0].employeeId);
+                setName(response .data.recordworkplace[0].employeeName);
 
-                // setSearchEmployeeId(response.data.employees[0].employeeId);
-                // setSearchEmployeeName(response.data.employees[0].name);
-
-                // console.log('workOfOT:', response.data.workplaces[0].workOfOT);
-                // console.log('workOfOT:', endTime);
 
             }
         } catch (error) {
             alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
+            // alert(error);
             // window.location.reload();
         }
     }
@@ -563,7 +559,7 @@ function AddsettimeEmployee() {
         };
 
         try {
-            const response = await axios.post(endpoint + '/timerecord/searchemp', data);
+            const response = await axios.post(endpoint + '/timerecordoutside/searchemp', data);
             // alert(JSON.stringify(response ,null,2));
 
             if (response.data.recordworkplace.length < 1) {
@@ -683,7 +679,7 @@ function AddsettimeEmployee() {
 if(employeeId !== ''){
 
         try {
-            const response = await axios.post(endpoint + '/timerecord/createemp', data);
+            const response = await axios.post(endpoint + '/timerecordoutside/createemp', data);
             // setEmployeesResult(response.data.employees);
             if (response) {
                 alert("บันทึกสำเร็จ");
@@ -714,7 +710,7 @@ if(employeeId !== ''){
 
         try {
 
-            const response = await axios.put(endpoint + '/timerecord/updateemp/' + timeRecord_id, data);
+            const response = await axios.put(endpoint + '/timerecordoutside/updateemp/' + timeRecord_id, data);
             // setEmployeesResult(response.data.employees);
             if (response) {
                 alert("บันทึกสำเร็จ");
