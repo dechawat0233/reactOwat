@@ -592,7 +592,7 @@ function AddsettimeEmployee() {
             timerecordId: year,
         };
         
-if(rowDataList2.length < 1 && data.employeeId == ''){
+if(rowDataList2.length < 1 && data.employeeId !== ''){
 
 
         try {
