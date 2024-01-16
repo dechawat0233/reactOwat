@@ -1295,25 +1295,25 @@ function AddsettimeWorkplace() {
                                         <div class="col-md-2">
                                             <input type="text" class="form-control" id="messageSalary" placeholder="หมายเหตุ" value={messageSalary} onChange={(e) => setMessageSalary(e.target.value)} />
                                         </div>
-                                        <div class="col-md-1">
+                                        {/* <div class="col-md-1">
                                             <label role="button"></label>
                                             <div class="d-flex align-items-end" style={{marginTop:'-1.5rem'}}>
                                                 <button class="btn b_save"><i class="fas fa-check"></i> &nbsp; เพิ่ม</button>
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </div>
 
 
                                 </div>
                                 {/* )} */}
-                                {/* <div class="form-group">
-                                    <button class="btn b_save" >
-                                        <i class="fas fa-check"></i> &nbsp; เพิ่ม
-                                    </button>
-                                </div> */}
+
 
                             </section>
-
+                            <div class="form-group">
+                                <button class="btn b_save" >
+                                    <i class="fas fa-check"></i> &nbsp; เพิ่ม
+                                </button>
+                            </div>
 
 
                         </form>

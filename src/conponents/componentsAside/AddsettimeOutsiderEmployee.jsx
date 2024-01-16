@@ -1032,16 +1032,20 @@ function AddsettimeEmployee() {
                                     </div>
 
 
-                                    <div class="col-md-1">
+                                    {/* <div class="col-md-1">
                                         <label role="button"></label>
                                         <div class="d-flex align-items-end" style={{ marginTop: '0.8rem' }}>
                                             <button class="btn b_save"><i class="fas fa-check"></i> &nbsp; เพิ่ม</button>
                                         </div>
-                                    </div>
+                                    </div> */}
 
                                 </div>
                             </section>
-
+                            <div class="form-group">
+                                <button class="btn b_save" >
+                                    <i class="fas fa-check"></i> &nbsp; เพิ่ม
+                                </button>
+                            </div>
 
                             <section class="Frame">
                                 <div class="row">
