@@ -52,6 +52,7 @@ function WorktimeSheetWorkplace() {
     const [emploeeData, setEmploeeData] = useState([]);
     const [emploeeDataSearch, setEmploeeDataSearch] = useState([]);
 
+    const [arraytestEmpAddSalary, setArraytestEmpAddSalary] = useState([]);
 
 
     useEffect(() => {
@@ -1919,6 +1920,147 @@ function WorktimeSheetWorkplace() {
 
     console.log('sumArray', sumArray);
 
+    // const arraytestEmpAddSalary = [[
+    //     {
+    //         name: "ค่าอาหาร",
+    //         codeSpSalary: "2534",
+    //         SpSalary: "100",
+    //         roundOfSalary: "daily",
+    //         StaffType: "all",
+    //         nameType: "ทดลอง",
+    //         _id: "656025d1fd5375965d5028a4"
+    //     },
+    //     {
+    //         name: "ค่าตำแหน่ง",
+    //         codeSpSalary: "4392",
+    //         SpSalary: "800",
+    //         roundOfSalary: "monthly",
+    //         StaffType: "header",
+    //         nameType: "",
+    //         _id: "656025d1fd5375965d5028a6"
+    //     }],
+    // [{
+    //     name: "ค่าเดินทาง",
+    //     codeSpSalary: "1001",
+    //     SpSalary: "1000",
+    //     roundOfSalary: "monthly",
+    //     StaffType: "all",
+    //     nameType: "",
+    //     _id: "656025d1fd5375965d5028a3"
+    // },
+    // {
+    //     name: "ค่าตำแหน่ง",
+    //     codeSpSalary: "4392",
+    //     SpSalary: "800",
+    //     roundOfSalary: "monthly",
+    //     StaffType: "header",
+    //     nameType: "",
+    //     _id: "656025d1fd5375965d5028a6"
+    // }],
+    // [{
+    //     name: "ค่าเดินทาง",
+    //     codeSpSalary: "1001",
+    //     SpSalary: "1000",
+    //     roundOfSalary: "monthly",
+    //     StaffType: "all",
+    //     nameType: "",
+    //     _id: "656025d1fd5375965d5028a3"
+    // },
+    // {
+    //     name: "ค่าอาหาร",
+    //     codeSpSalary: "2534",
+    //     SpSalary: "100",
+    //     roundOfSalary: "daily",
+    //     StaffType: "all",
+    //     nameType: "ทดลอง",
+    //     _id: "656025d1fd5375965d5028a4"
+    // }],
+    // [{
+    //     name: "ค่าเดินทาง",
+    //     codeSpSalary: "1001",
+    //     SpSalary: "1000",
+    //     roundOfSalary: "monthly",
+    //     StaffType: "all",
+    //     nameType: "",
+    //     _id: "656025d1fd5375965d5028a3"
+    // },
+    // {
+    //     name: "ค่าอาหาร",
+    //     codeSpSalary: "2534",
+    //     SpSalary: "100",
+    //     roundOfSalary: "daily",
+    //     StaffType: "all",
+    //     nameType: "ทดลอง",
+    //     _id: "656025d1fd5375965d5028a4"
+    // },
+    // {
+    //     name: "ค่าโทรศัพท์",
+    //     codeSpSalary: "8467",
+    //     SpSalary: "300",
+    //     roundOfSalary: "daily",
+    //     StaffType: "header",
+    //     nameType: "",
+    //     _id: "656025d1fd5375965d5028a5"
+    // }],
+    // [{
+    //     name: "ค่าเดินทาง",
+    //     codeSpSalary: "1001",
+    //     SpSalary: "1000",
+    //     roundOfSalary: "monthly",
+    //     StaffType: "all",
+    //     nameType: "",
+    //     _id: "656025d1fd5375965d5028a3"
+    // },
+    // {
+    //     name: "ค่าตำแหน่ง",
+    //     codeSpSalary: "4392",
+    //     SpSalary: "800",
+    //     roundOfSalary: "monthly",
+    //     StaffType: "header",
+    //     nameType: "",
+    //     _id: "656025d1fd5375965d5028a6"
+    // }],
+    // [
+    //     {
+    //         name: "ค่าอาหาร",
+    //         codeSpSalary: "2534",
+    //         SpSalary: "100",
+    //         roundOfSalary: "daily",
+    //         StaffType: "all",
+    //         nameType: "ทดลอง",
+    //         _id: "656025d1fd5375965d5028a4"
+    //     },
+    //     {
+    //         name: "ค่าโทรศัพท์",
+    //         codeSpSalary: "8467",
+    //         SpSalary: "300",
+    //         roundOfSalary: "daily",
+    //         StaffType: "header",
+    //         nameType: "",
+    //         _id: "656025d1fd5375965d5028a5"
+    //     }],
+    // [{
+    //     name: "ค่าเดินทาง",
+    //     codeSpSalary: "1001",
+    //     SpSalary: "1000",
+    //     roundOfSalary: "monthly",
+    //     StaffType: "all",
+    //     nameType: "",
+    //     _id: "656025d1fd5375965d5028a3"
+    // },
+
+    // {
+    //     name: "ค่าโทรศัพท์",
+    //     codeSpSalary: "8467",
+    //     SpSalary: "300",
+    //     roundOfSalary: "daily",
+    //     StaffType: "header",
+    //     nameType: "",
+    //     _id: "656025d1fd5375965d5028a5"
+    // }
+    // ]
+    // ];
+
     // เริ่มฟังค์ชั่นpdf
 
     const generatePDFTest123 = () => {
@@ -1965,146 +2107,7 @@ function WorktimeSheetWorkplace() {
         // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
         // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
         // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2]];
-        const arraytestEmpAddSalary = [[
-            {
-                name: "ค่าอาหาร",
-                codeSpSalary: "2534",
-                SpSalary: "100",
-                roundOfSalary: "daily",
-                StaffType: "all",
-                nameType: "ทดลอง",
-                _id: "656025d1fd5375965d5028a4"
-            },
-            {
-                name: "ค่าตำแหน่ง",
-                codeSpSalary: "4392",
-                SpSalary: "800",
-                roundOfSalary: "monthly",
-                StaffType: "header",
-                nameType: "",
-                _id: "656025d1fd5375965d5028a6"
-            }],
-        [{
-            name: "ค่าเดินทาง",
-            codeSpSalary: "1001",
-            SpSalary: "1000",
-            roundOfSalary: "monthly",
-            StaffType: "all",
-            nameType: "",
-            _id: "656025d1fd5375965d5028a3"
-        },
-        {
-            name: "ค่าตำแหน่ง",
-            codeSpSalary: "4392",
-            SpSalary: "800",
-            roundOfSalary: "monthly",
-            StaffType: "header",
-            nameType: "",
-            _id: "656025d1fd5375965d5028a6"
-        }],
-        [{
-            name: "ค่าเดินทาง",
-            codeSpSalary: "1001",
-            SpSalary: "1000",
-            roundOfSalary: "monthly",
-            StaffType: "all",
-            nameType: "",
-            _id: "656025d1fd5375965d5028a3"
-        },
-        {
-            name: "ค่าอาหาร",
-            codeSpSalary: "2534",
-            SpSalary: "100",
-            roundOfSalary: "daily",
-            StaffType: "all",
-            nameType: "ทดลอง",
-            _id: "656025d1fd5375965d5028a4"
-        }],
-        [{
-            name: "ค่าเดินทาง",
-            codeSpSalary: "1001",
-            SpSalary: "1000",
-            roundOfSalary: "monthly",
-            StaffType: "all",
-            nameType: "",
-            _id: "656025d1fd5375965d5028a3"
-        },
-        {
-            name: "ค่าอาหาร",
-            codeSpSalary: "2534",
-            SpSalary: "100",
-            roundOfSalary: "daily",
-            StaffType: "all",
-            nameType: "ทดลอง",
-            _id: "656025d1fd5375965d5028a4"
-        },
-        {
-            name: "ค่าโทรศัพท์",
-            codeSpSalary: "8467",
-            SpSalary: "300",
-            roundOfSalary: "daily",
-            StaffType: "header",
-            nameType: "",
-            _id: "656025d1fd5375965d5028a5"
-        }],
-        [{
-            name: "ค่าเดินทาง",
-            codeSpSalary: "1001",
-            SpSalary: "1000",
-            roundOfSalary: "monthly",
-            StaffType: "all",
-            nameType: "",
-            _id: "656025d1fd5375965d5028a3"
-        },
-        {
-            name: "ค่าตำแหน่ง",
-            codeSpSalary: "4392",
-            SpSalary: "800",
-            roundOfSalary: "monthly",
-            StaffType: "header",
-            nameType: "",
-            _id: "656025d1fd5375965d5028a6"
-        }],
-        [
-            {
-                name: "ค่าอาหาร",
-                codeSpSalary: "2534",
-                SpSalary: "100",
-                roundOfSalary: "daily",
-                StaffType: "all",
-                nameType: "ทดลอง",
-                _id: "656025d1fd5375965d5028a4"
-            },
-            {
-                name: "ค่าโทรศัพท์",
-                codeSpSalary: "8467",
-                SpSalary: "300",
-                roundOfSalary: "daily",
-                StaffType: "header",
-                nameType: "",
-                _id: "656025d1fd5375965d5028a5"
-            }],
-        [{
-            name: "ค่าเดินทาง",
-            codeSpSalary: "1001",
-            SpSalary: "1000",
-            roundOfSalary: "monthly",
-            StaffType: "all",
-            nameType: "",
-            _id: "656025d1fd5375965d5028a3"
-        },
-
-        {
-            name: "ค่าโทรศัพท์",
-            codeSpSalary: "8467",
-            SpSalary: "300",
-            roundOfSalary: "daily",
-            StaffType: "header",
-            nameType: "",
-            _id: "656025d1fd5375965d5028a5"
-        }
-        ]
-        ];
+       
 
         const arraytestSpSalary = [['', 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0.5],
         [2, 2, 2, 2, 2, '', 2, '', 2],
@@ -2548,8 +2551,12 @@ function WorktimeSheetWorkplace() {
                     const textToDraw = dataArray[i][j].toString();
                     const alignment = textToDraw.length > 3 ? { align: 'left', angle: 90, xOffset: 5 } : { align: 'left' };
 
-
-                    doc.text(textToDraw, currentX + 2, 3 + currentY + i * verticalDistance, alignment);
+                    if (textToDraw.length > 3) {
+                        doc.text(textToDraw, currentX + 2, 3 + currentY + i * verticalDistance, alignment);
+                    } else {
+                        doc.text(textToDraw, currentX + 1, 3 + currentY + i * verticalDistance, alignment);
+                    }
+                    // doc.text(textToDraw, currentX + 2, 3 + currentY + i * verticalDistance, alignment);
                     // currentX += elementWidth + cellWidth; 
                     currentX += cellWidth;
                 }
@@ -2763,7 +2770,7 @@ function WorktimeSheetWorkplace() {
         const drawArrayTextName = (dataArray) => {
             for (let i = 0; i < dataArray.length; i++) {
                 let currentX = startX - 13;
-                let currentY = startY + i * verticalDistance ;
+                let currentY = startY + i * verticalDistance;
 
                 for (let j = 0; j < dataArray[i].length; j++) {
 
