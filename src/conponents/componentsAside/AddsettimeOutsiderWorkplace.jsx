@@ -115,7 +115,7 @@ function AddsettimeWorkplace() {
         if (staffId != '') {
             const employeesearch = employeeList.find(employee => employee.employeeId === staffId);
             if (employeesearch) {
-setStaffName(employeesearch.employeeName);
+                setStaffName(employeesearch.employeeName);
             } else {
                 setStaffName('');
             }
@@ -1268,44 +1268,53 @@ setStaffName(employeesearch.employeeName);
 
                                 </div>
                                 {/* {showInputs && shift === 'specialt_shift' && ( */}
-                                    <div>
-                                        <div class="row">
-                                            <div class="col-md-1">
-                                                <label >จ่ายสด</label>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label role="specialtSalary">เป็นเงิน</label>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label role="messageSalary">หมายเหตุ</label>
-                                            </div>
+                                <div>
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <label >จ่ายสด</label>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-1">
-                                                <input
-                                                    type="checkbox"
-                                                    class="form-control"
-                                                    checked={true}
-                                                    onChange={handleCheckboxChange}
-                                                />
-                                            </div>
-                                            <div class="col-md-2">
-                                                <input type="text" class="form-control" id="specialtSalary" placeholder="เป็นเงิน" value={specialtSalary} onChange={(e) => setSpecialtSalary(e.target.value)} />
-                                            </div>
-                                            <div class="col-md-2">
-                                                <input type="text" class="form-control" id="messageSalary" placeholder="หมายเหตุ" value={messageSalary} onChange={(e) => setMessageSalary(e.target.value)} />
+                                        <div class="col-md-2">
+                                            <label role="specialtSalary">เป็นเงิน</label>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label role="messageSalary">หมายเหตุ</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <input
+                                                type="checkbox"
+                                                class="form-control"
+                                                checked={true}
+                                                onChange={handleCheckboxChange}
+                                            />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control" id="specialtSalary" placeholder="เป็นเงิน" value={specialtSalary} onChange={(e) => setSpecialtSalary(e.target.value)} />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control" id="messageSalary" placeholder="หมายเหตุ" value={messageSalary} onChange={(e) => setMessageSalary(e.target.value)} />
+                                        </div>
+                                        <div class="col-md-1">
+                                            <label role="button"></label>
+                                            <div class="d-flex align-items-end" style={{marginTop:'-1.5rem'}}>
+                                                <button class="btn b_save"><i class="fas fa-check"></i> &nbsp; เพิ่ม</button>
                                             </div>
                                         </div>
                                     </div>
+
+
+                                </div>
                                 {/* )} */}
+                                {/* <div class="form-group">
+                                    <button class="btn b_save" >
+                                        <i class="fas fa-check"></i> &nbsp; เพิ่ม
+                                    </button>
+                                </div> */}
 
                             </section>
 
-                            <div class="form-group">
-                                <button class="btn b_save" >
-                                    <i class="fas fa-check"></i> &nbsp; เพิ่ม
-                                </button>
-                            </div>
+
 
                         </form>
 
@@ -1315,8 +1324,8 @@ setStaffName(employeesearch.employeeName);
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="row">
-                                            <div class="col-md-1"> รหัสพนักงาน </div>
-                                            <div class="col-md-2"> ชื่อพนักงาน </div>
+                                            <div class="col-md-2"> เลขบัตรประชาชน </div>
+                                            <div class="col-md-1" style={{ marginLeft: '-4rem' }}> ชื่อพนักงาน </div>
                                             <div class="col-md-1"> กะการทำงาน </div>
                                             <div class="col-md-1"> เวลาเข้างาน </div>
                                             <div class="col-md-1"> เวลาออกงาน </div>
@@ -1336,8 +1345,8 @@ setStaffName(employeesearch.employeeName);
                                             rowData.staffId && ( // Check if staffId is set (truthy)
                                                 <div key={index}>
                                                     <div class="row" style={{ marginBottom: '1rem', borderBottom: '2px solid #000' }}>
-                                                        <div class="col-md-1" style={bordertable}> {rowData.staffId} </div>
-                                                        <div class="col-md-2" style={bordertable}> {rowData.staffName} </div>
+                                                        <div class="col-md-2" style={bordertable}> {rowData.staffId} </div>
+                                                        <div class="col-md-1" style={{ bordertable, borderLeft: '2px solid #000', marginLeft: '-4rem' }}> {rowData.staffName} </div>
                                                         <div class="col-md-1" style={bordertable}>
                                                             {rowData.shift === 'morning_shift' ? (
                                                                 <p>กะเช้า</p>
@@ -1358,9 +1367,9 @@ setStaffName(employeesearch.employeeName);
                                                         <div class="col-md-1" style={bordertable}> {rowData.selectotTimeOut} </div>
                                                         <div class="col-md-1" style={bordertable}> {rowData.otTime} </div>
 
-                                                            <div class="col-md-1" style={bordertable}>
-                                                                {rowData.specialtSalary} บาท
-                                                            </div>
+                                                        <div class="col-md-1" style={bordertable}>
+                                                            {rowData.specialtSalary} บาท
+                                                        </div>
 
                                                         <div class="col-md-1" style={bordertable}>
                                                             {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}

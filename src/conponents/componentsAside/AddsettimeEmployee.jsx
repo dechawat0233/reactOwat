@@ -48,7 +48,7 @@ function AddsettimeEmployee() {
         if (name !== '') {
             handleCheckTimerecord();
         }
-    }, [month , year]);
+    }, [month, year]);
 
 
     const options = [];
@@ -1102,7 +1102,7 @@ function AddsettimeEmployee() {
                                                     <div class="row" style={{ marginBottom: '1rem', borderBottom: '2px solid #000' }}>
                                                         <div class="col-md-1" style={bordertable}> {rowData2.workplaceId}
                                                         </div>
-                                                        <div class="col-md-2" style={bordertable}> {rowData2.workplaceName} </div>
+                                                        <div class="col-md-1" style={bordertable}> {rowData2.workplaceName} </div>
                                                         <div class="col-md-1" style={bordertable}> {rowData2.date} </div>
                                                         <div class="col-md-1" style={bordertable}>
                                                             {rowData2.shift === 'morning_shift' ? (
@@ -1123,23 +1123,23 @@ function AddsettimeEmployee() {
                                                         <div class="col-md-1" style={bordertable}> {rowData2.otTime} </div>
                                                         <div class="col-md-1" style={bordertable}> {rowData2.selectotTime} </div>
                                                         <div class="col-md-1" style={bordertable}> {rowData2.selectotTimeOut} </div>
+                                                        {rowData2.cashSalary === "true" || rowData2.cashSalary === true ? (
+                                                            // <div style={{ marginBottom: '1rem', borderBottom: '2px solid #000', width: '10rem' }}>
+                                                            <div class="col-md-1" style={bordertable}>
+                                                                {rowData2.specialtSalary} บาท
+                                                            </div>
+                                                            // </div>
 
+                                                        ) : (
+                                                            <div></div>
+                                                        )}
                                                         <div class="col-md-1" style={bordertable}>
                                                             {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
                                                             <button class="btn btn-xs btn-danger" style={{ padding: '0.3rem ', width: '8rem' }} onClick={() => handleDeleteRow(index)}>Delete</button>
                                                         </div>
 
                                                     </div>
-                                                    {rowData2.cashSalary === "true" || rowData2.cashSalary === true ? (
-                                                        <div style={{ marginBottom: '1rem', borderBottom: '2px solid #000', width: '10rem' }}>
-                                                            <div class="col-md-1" style={bordertable}>
-                                                                {rowData2.specialtSalary} บาท
-                                                            </div>
-                                                        </div>
 
-                                                    ) : (
-                                                        <div></div>
-                                                    )}
                                                 </div>
                                             )
                                         ))}

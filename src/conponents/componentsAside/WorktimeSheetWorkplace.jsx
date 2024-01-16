@@ -1699,10 +1699,15 @@ function WorktimeSheetWorkplace() {
                     // Add more properties as needed
 
                 ]);
+                const extractedDataAddSalary = filteredEmployees.map(employee => [
+                    employee.addSalary
+                ]);
 
                 // Do something with the extracted data
                 // console.log('extractedData', extractedData);
                 setEmploeeDataSearch(extractedData);
+                setArraytestEmpAddSalary(extractedDataAddSalary);
+
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -1711,6 +1716,8 @@ function WorktimeSheetWorkplace() {
 
     console.log('EmploeeData', emploeeData);
     console.log('EmploeeDataSearch', emploeeDataSearch);
+    console.log('arraytestEmpAddSalary', arraytestEmpAddSalary);
+
     const arraylistNameEmp = emploeeDataSearch;
 
     // const arraytest = uniqueDatesArray.map(datesArray => {
@@ -2107,7 +2114,7 @@ function WorktimeSheetWorkplace() {
         // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
         // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
         // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2]];
-       
+
 
         const arraytestSpSalary = [['', 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0.5],
         [2, 2, 2, 2, 2, '', 2, '', 2],
@@ -2981,6 +2988,73 @@ function WorktimeSheetWorkplace() {
             doc.text('จำนวนวัน ' + daysInMonth, 10, 10);
 
 
+            const squareColor2 = [255, 255, 80]; // Red
+
+            doc.setFillColor(...squareColor2);
+
+            // Draw a square with the specified size and color
+            // doc.rect(startX, startYTop, cellWidth - 0.2, cellHeightTop, 'F');
+
+            for (let i = 0; i < resultArray.length; i++) {
+                const currentNumber = resultArray[i];
+
+                if (holidayList.includes(currentNumber) || filteredDaysOff.includes(currentNumber)) {
+                    // Set loop position color
+                    doc.rect(startX + i * cellWidth, startYTop + 100, cellWidth - 0.2, cellHeightTop, 'F');
+                } else {
+                    // Set default color or do nothing
+                }
+            }
+
+            const pageStartIndex = pageIndex * 6;
+            const pageEndIndex = Math.min((pageIndex + 1) * 6, arraytest.length);
+            drawArrayText(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex));
+
+            drawArrayTextAddSalary(arraytestEmpAddSalary.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
+            // drawArrayText(arraytestEmpAddSalary);
+
+            drawArrayTextOT(arrayWorkOTNormalDay.slice(pageStartIndex, pageEndIndex));
+
+            drawArrayTextHoli(arrayWorkHoli.slice(pageStartIndex, pageEndIndex));
+
+            drawArrayTextHoliday(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex));
+            drawArrayTextOTHoliday(arrayWorkOTHoliday.slice(pageStartIndex, pageEndIndex));
+
+
+            drawArrayTextSumWork(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
+            drawArrayTextSumWorkOT(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArrayOT.slice(pageStartIndex, pageEndIndex));
+
+            drawArrayTextSumWorkHoli(arrayWorkHoli.slice(pageStartIndex, pageEndIndex), sumArrayHoli.slice(pageStartIndex, pageEndIndex));
+
+            drawArrayTextSumWorkHoliday(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), sumArrayHoliday.slice(pageStartIndex, pageEndIndex));
+            drawArrayTextSumWorkOTHoliday(arrayWorkOTHoliday.slice(pageStartIndex, pageEndIndex), sumArrayOTHoliday.slice(pageStartIndex, pageEndIndex));
+            // drawArrayTextAddSalary(arraytest.slice(pageStartIndex, pageEndIndex), arraytestEmpAddSalary.slice(pageStartIndex, pageEndIndex));
+            // drawArrayTextAddSalary(arraytestEmpAddSalary.slice(pageStartIndex, pageEndIndex));
+
+
+            const pageStartIndexName = pageIndex * 6;
+            const pageEndIndexName = Math.min((pageIndex + 1) * 6, arrayWorkNormalDay.length);
+            drawArrayTextName(arraylistNameEmp.slice(pageStartIndex, pageEndIndex));
+
+            for (let i = 0; i < resultArray.length; i++) {
+                const x = startX + i * cellWidth;
+                doc.text(resultArray[i].toString(), x + 1, cellHeightTop + startYTop - 2);
+            }
+
+            doc.text('ลำดับ', startXNumHead + 2, cellHeightTop + startYTop - 2);
+            doc.text('ชื่อ - นามสกุล', startXLeftHead + 10, cellHeightTop + startYTop - 2);
+            doc.text('วันหยุด', startXSpSalary + 11, startYTop + 3);
+            doc.text('โอที', startXSpSalary + (cellWidthSpSalary * 2) + 3, startYTop + 3);
+            doc.text('สวัสดีการ', startXSpSalary + (cellWidthSpSalary * 5) + 3, startYTop + 3);
+
+            doc.text('หักประกันสังคม 5%', startXMess - 5, cellHeightTop + startYTop - 1, { angle: 90 });
+
+            doc.text('หมายเหตุ', startXMess + 3, cellHeightTop + startYTop - 2);
+
+
+            // startXSpSalary + j * cellWidthSpSalary;
+            // const y = startYTop
+
             for (let i = 0; i < 6; i++) {
                 const dataIdx = pageIndex * 6 + i;
                 if (dataIdx < arrayWorkNormalDay.length) {
@@ -2997,6 +3071,18 @@ function WorktimeSheetWorkplace() {
                     // Draw a square with the specified size and color
                     doc.rect(startXSpSalary, startYTop, (cellWidthSpSalary * numColsSpSalary) - 0.2, cellHeightTop, 'F');
 
+                    doc.setFillColor(...squareColor);
+
+                    for (let i = 0; i < resultArray.length; i++) {
+                        const currentNumber = resultArray[i];
+
+                        if (holidayList.includes(currentNumber) || filteredDaysOff.includes(currentNumber)) {
+                            // Set loop position color
+                            doc.rect(startX + i * cellWidth, startYTop, cellWidth - 0.2, cellHeightTop, 'F');
+                        } else {
+                            // Set default color or do nothing
+                        }
+                    }
                     doc.text(alldaywork + ' ' + countalldaywork, 5 + startXSpSalary, 54.8, { angle: 90 });
                     doc.text(alldayworkHoliday + ' ' + countalldayworkHoliday, 5 + startXSpSalary + cellWidthSpSalary, 54.8, { angle: 90 });
                     doc.text('วันนักขัตฤกษ์' + ' ' + workOt2 + 'เท่า', 3 + startXSpSalary + (cellWidthSpSalary * 2), 54.8, { angle: 90 });
@@ -3059,54 +3145,6 @@ function WorktimeSheetWorkplace() {
             //     const pageEndIndex = Math.min(dataarray + 6, arraytest.length);
             //     drawArrayText(arraytest.slice(pageStartIndex, pageEndIndex));
             // }
-            const pageStartIndex = pageIndex * 6;
-            const pageEndIndex = Math.min((pageIndex + 1) * 6, arraytest.length);
-            drawArrayText(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex));
-
-            drawArrayTextAddSalary(arraytestEmpAddSalary.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
-            // drawArrayText(arraytestEmpAddSalary);
-
-            drawArrayTextOT(arrayWorkOTNormalDay.slice(pageStartIndex, pageEndIndex));
-
-            drawArrayTextHoli(arrayWorkHoli.slice(pageStartIndex, pageEndIndex));
-
-            drawArrayTextHoliday(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex));
-            drawArrayTextOTHoliday(arrayWorkOTHoliday.slice(pageStartIndex, pageEndIndex));
-
-
-            drawArrayTextSumWork(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
-            drawArrayTextSumWorkOT(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArrayOT.slice(pageStartIndex, pageEndIndex));
-
-            drawArrayTextSumWorkHoli(arrayWorkHoli.slice(pageStartIndex, pageEndIndex), sumArrayHoli.slice(pageStartIndex, pageEndIndex));
-
-            drawArrayTextSumWorkHoliday(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), sumArrayHoliday.slice(pageStartIndex, pageEndIndex));
-            drawArrayTextSumWorkOTHoliday(arrayWorkOTHoliday.slice(pageStartIndex, pageEndIndex), sumArrayOTHoliday.slice(pageStartIndex, pageEndIndex));
-            // drawArrayTextAddSalary(arraytest.slice(pageStartIndex, pageEndIndex), arraytestEmpAddSalary.slice(pageStartIndex, pageEndIndex));
-            // drawArrayTextAddSalary(arraytestEmpAddSalary.slice(pageStartIndex, pageEndIndex));
-
-
-            const pageStartIndexName = pageIndex * 6;
-            const pageEndIndexName = Math.min((pageIndex + 1) * 6, arrayWorkNormalDay.length);
-            drawArrayTextName(arraylistNameEmp.slice(pageStartIndex, pageEndIndex));
-
-            for (let i = 0; i < resultArray.length; i++) {
-                const x = startX + i * cellWidth;
-                doc.text(resultArray[i].toString(), x + 1, cellHeightTop + startYTop - 2);
-            }
-
-            doc.text('ลำดับ', startXNumHead + 2, cellHeightTop + startYTop - 2);
-            doc.text('ชื่อ - นามสกุล', startXLeftHead + 10, cellHeightTop + startYTop - 2);
-            doc.text('วันหยุด', startXSpSalary + 11, startYTop + 3);
-            doc.text('โอที', startXSpSalary + (cellWidthSpSalary * 2) + 3, startYTop + 3);
-            doc.text('สวัสดีการ', startXSpSalary + (cellWidthSpSalary * 5) + 3, startYTop + 3);
-
-            doc.text('หักประกันสังคม 5%', startXMess - 5, cellHeightTop + startYTop - 1, { angle: 90 });
-
-            doc.text('หมายเหตุ', startXMess + 3, cellHeightTop + startYTop - 2);
-
-
-            // startXSpSalary + j * cellWidthSpSalary;
-            // const y = startYTop
 
 
             doc.addPage();

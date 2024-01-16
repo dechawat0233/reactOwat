@@ -48,7 +48,7 @@ function AddsettimeEmployee() {
         if (name !== '') {
             handleCheckTimerecord();
         }
-    }, [month , year]);
+    }, [month, year]);
 
 
     const options = [];
@@ -85,7 +85,7 @@ function AddsettimeEmployee() {
     const [employeeList, setEmployeeList] = useState([]);
     const [workplaceList, setWorkplaceList] = useState([]);
 
-    
+
     useEffect(() => {
         // Fetch data from the API when the component mounts
         fetch(endpoint + '/workplace/list')
@@ -525,7 +525,7 @@ function AddsettimeEmployee() {
             // alert(response .data.recordworkplace[0].employeeId);
 
             // setSearchResult(response .data.recordworkplace[0] );
-            if (response .data.recordworkplace.length < 1) {
+            if (response.data.recordworkplace.length < 1) {
                 // window.location.reload();
                 setEmployeeId('');
                 setName('');
@@ -538,8 +538,8 @@ function AddsettimeEmployee() {
                 setSearchEmployeeName('');
 
                 // Set search values
-                setEmployeeId(response .data.recordworkplace[0].employeeId);
-                setName(response .data.recordworkplace[0].employeeName);
+                setEmployeeId(response.data.recordworkplace[0].employeeId);
+                setName(response.data.recordworkplace[0].employeeName);
 
 
             }
@@ -676,22 +676,22 @@ function AddsettimeEmployee() {
             employee_workplaceRecord: rowDataList2
         };
 
-if(employeeId !== ''){
+        if (employeeId !== '') {
 
-        try {
-            const response = await axios.post(endpoint + '/timerecordoutside/createemp', data);
-            // setEmployeesResult(response.data.employees);
-            if (response) {
-                alert("บันทึกสำเร็จ");
+            try {
+                const response = await axios.post(endpoint + '/timerecordoutside/createemp', data);
+                // setEmployeesResult(response.data.employees);
+                if (response) {
+                    alert("บันทึกสำเร็จ");
+                }
+            } catch (error) {
+                alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+                // window.location.reload();
             }
-        } catch (error) {
-            alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
-            // window.location.reload();
-        }
-    } else {
-        alert('กรุณาระบุข้อมูลพนักงาน');
+        } else {
+            alert('กรุณาระบุข้อมูลพนักงาน');
 
-    }
+        }
 
     }
 
@@ -862,143 +862,144 @@ if(employeeId !== ''){
                                     </div>
                                 </div>
                             </div>
+                            <section class="Frame">
 
-                            <div class="row">
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        <label role="wId">รหัสหน่วยงาน</label>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            <label role="wId">รหัสหน่วยงาน</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label role="wName">ชื่อหน่วยงาน</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-1">
+                                        <label role="wDate">วันที่</label>
+                                    </div>
+
+                                    <div class="col-md-1">
+                                        <label role="wShift">กะทำงาน</label>
+                                    </div>
+
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            <label role="wStartTime">เวลาเข้างาน</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            <label role="wEndTime">เวลาออกงาน</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            <label role="wAllTime">ชั่วโมงทำงาน</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            <label role="wOtTime">ชั่วโมง OT</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            <label role="wSelectOtTime">เวลาเข้า OT</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            <label role="wSelectOtTimeout">เวลาออก OT</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-1">
+                                        <label role="button"></label>
                                     </div>
                                 </div>
-
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label role="wName">ชื่อหน่วยงาน</label>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            {/* <label role="wId">รหัสหน่วยงาน</label> */}
+                                            <input type="text" class="form-control" id="wId" placeholder="รหัสหน่วยงาน" value={wId} onChange={(e) => setWId(e.target.value)} />
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="col-md-1">
-                                    <label role="wDate">วันที่</label>
-                                </div>
-
-                                <div class="col-md-1">
-                                    <label role="wShift">กะทำงาน</label>
-                                </div>
-
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        <label role="wStartTime">เวลาเข้างาน</label>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            {/* <label role="wName">ชื่อหน่วยงาน</label> */}
+                                            <input type="text" class="form-control" id="wName" placeholder="ชื่อหน่วยงาน" value={wName} onChange={(e) => setWName(e.target.value)} />
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        <label role="wEndTime">เวลาออกงาน</label>
+                                    <div class="col-md-1">
+                                        {/* <label role="wDate">วันที่</label> */}
+                                        <select className="form-control" value={wDate} onChange={(e) => setWDate(e.target.value)} style={{ width: '5.5rem' }} >
+                                            <option value="">เลือกวัน</option>
+                                            {options}
+                                        </select>
                                     </div>
-                                </div>
 
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        <label role="wAllTime">ชั่วโมงทำงาน</label>
+                                    <div class="col-md-1">
+                                        {/* <label role="wShift">กะทำงาน</label> */}
+                                        <select className="form-control" value={wShift} onChange={(e) => setWShift(e.target.value)} style={{ width: '5.5rem' }} >
+                                            <option value="">เลือกกะ</option>
+                                            <option value="morning_shift">กะเช้า</option>
+                                            <option value="afternoon_shift">กะบ่าย</option>
+                                            <option value="night_shift">กะดึก</option>
+                                            <option value="specialt_shift">กะพิเศษ</option>
+                                        </select>
                                     </div>
-                                </div>
 
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        <label role="wOtTime">ชั่วโมง OT</label>
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            {/* <label role="wStartTime">เวลาเข้างาน</label> */}
+                                            <input type="text" class="form-control" id="wStartTime" placeholder="เวลาเข้างาน" value={wStartTime} onChange={(e) => setWStartTime(e.target.value)} />
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        <label role="wSelectOtTime">เวลาเข้า OT</label>
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            {/* <label role="wEndTime">เวลาออกงาน</label> */}
+                                            <input type="text" class="form-control" id="wEndTime" placeholder="เวลาออกงาน" value={wEndTime} onChange={(e) => setWEndTime(e.target.value)} />
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        <label role="wSelectOtTimeout">เวลาออก OT</label>
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            {/* <label role="wAllTime">ชั่วโมงทำงาน</label> */}
+                                            <input type="text" class="form-control" id="wAllTime" placeholder="ชั่วโมงทำงาน" value={wAllTime} onChange={(e) => setWAllTime(e.target.value)} />
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="col-md-1">
-                                    <label role="button"></label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        {/* <label role="wId">รหัสหน่วยงาน</label> */}
-                                        <input type="text" class="form-control" id="wId" placeholder="รหัสหน่วยงาน" value={wId} onChange={(e) => setWId(e.target.value)} />
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            {/* <label role="wOtTime">ชั่วโมง OT</label> */}
+                                            <input type="text" class="form-control" id="wOtTime" placeholder="ชั่วโมง OT" value={wOtTime} onChange={(e) => setWOtTime(e.target.value)} />
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        {/* <label role="wName">ชื่อหน่วยงาน</label> */}
-                                        <input type="text" class="form-control" id="wName" placeholder="ชื่อหน่วยงาน" value={wName} onChange={(e) => setWName(e.target.value)} />
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            {/* <label role="wSelectOtTime">เวลาเข้า OT</label> */}
+                                            <input type="text" class="form-control" id="wSelectOtTime" placeholder="เวลาเข้า OT" value={wSelectOtTime} onChange={(e) => setWSelectOtTime(e.target.value)} />
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="col-md-1">
-                                    {/* <label role="wDate">วันที่</label> */}
-                                    <select className="form-control" value={wDate} onChange={(e) => setWDate(e.target.value)} style={{ width: '5.5rem' }} >
-                                        <option value="">เลือกวัน</option>
-                                        {options}
-                                    </select>
-                                </div>
-
-                                <div class="col-md-1">
-                                    {/* <label role="wShift">กะทำงาน</label> */}
-                                    <select className="form-control" value={wShift} onChange={(e) => setWShift(e.target.value)} style={{ width: '5.5rem' }} >
-                                        <option value="">เลือกกะ</option>
-                                        <option value="morning_shift">กะเช้า</option>
-                                        <option value="afternoon_shift">กะบ่าย</option>
-                                        <option value="night_shift">กะดึก</option>
-                                        <option value="specialt_shift">กะพิเศษ</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        {/* <label role="wStartTime">เวลาเข้างาน</label> */}
-                                        <input type="text" class="form-control" id="wStartTime" placeholder="เวลาเข้างาน" value={wStartTime} onChange={(e) => setWStartTime(e.target.value)} />
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            {/* <label role="wSelectOtTimeout">เวลาออก OT</label> */}
+                                            <input type="text" class="form-control" id="wSelectOtTimeout" placeholder="เวลาออก OT" value={wSelectOtTimeout} onChange={(e) => setWSelectOtTimeout(e.target.value)} />
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        {/* <label role="wEndTime">เวลาออกงาน</label> */}
-                                        <input type="text" class="form-control" id="wEndTime" placeholder="เวลาออกงาน" value={wEndTime} onChange={(e) => setWEndTime(e.target.value)} />
-                                    </div>
-                                </div>
-
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        {/* <label role="wAllTime">ชั่วโมงทำงาน</label> */}
-                                        <input type="text" class="form-control" id="wAllTime" placeholder="ชั่วโมงทำงาน" value={wAllTime} onChange={(e) => setWAllTime(e.target.value)} />
-                                    </div>
-                                </div>
-
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        {/* <label role="wOtTime">ชั่วโมง OT</label> */}
-                                        <input type="text" class="form-control" id="wOtTime" placeholder="ชั่วโมง OT" value={wOtTime} onChange={(e) => setWOtTime(e.target.value)} />
-                                    </div>
-                                </div>
-
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        {/* <label role="wSelectOtTime">เวลาเข้า OT</label> */}
-                                        <input type="text" class="form-control" id="wSelectOtTime" placeholder="เวลาเข้า OT" value={wSelectOtTime} onChange={(e) => setWSelectOtTime(e.target.value)} />
-                                    </div>
-                                </div>
-
-                                <div class="col-md-1">
-                                    <div class="form-group">
-                                        {/* <label role="wSelectOtTimeout">เวลาออก OT</label> */}
-                                        <input type="text" class="form-control" id="wSelectOtTimeout" placeholder="เวลาออก OT" value={wSelectOtTimeout} onChange={(e) => setWSelectOtTimeout(e.target.value)} />
-                                    </div>
-                                </div>
 
                                     <div>
                                         <div class="row">
@@ -1031,14 +1032,15 @@ if(employeeId !== ''){
                                     </div>
 
 
-                                <div class="col-md-1">
-                                    <label role="button"></label>
-                                    <div class="d-flex align-items-end">
-                                        <button class="btn b_save"><i class="fas fa-check"></i> &nbsp; เพิ่ม</button>
+                                    <div class="col-md-1">
+                                        <label role="button"></label>
+                                        <div class="d-flex align-items-end" style={{ marginTop: '0.8rem' }}>
+                                            <button class="btn b_save"><i class="fas fa-check"></i> &nbsp; เพิ่ม</button>
+                                        </div>
                                     </div>
-                                </div>
 
-                            </div>
+                                </div>
+                            </section>
 
 
                             <section class="Frame">
