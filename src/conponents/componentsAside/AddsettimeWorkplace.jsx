@@ -124,7 +124,7 @@ function AddsettimeWorkplace() {
     }, [staffId]);
 
     const handleCheckboxChange = () => {
-        setCashSalary(!cashSalary); // Toggle the checkbox state
+                setCashSalary(!cashSalary); // Toggle the checkbox state
     };
 
 
@@ -1020,6 +1020,7 @@ function AddsettimeWorkplace() {
         setCashSalary(!cashSalary);
         setSpecialtSalary('');
         setMessageSalary('');
+        setCashSalary(''); // Toggle the checkbox state
 
         // alert(rowDataList.length);
 
