@@ -542,7 +542,7 @@ function AddsettimeEmployee() {
 
 
         // get value from form search
-        const data = {
+        const data = await {
             employeeId: searchEmployeeId,
             name: searchEmployeeName,
             idCard: '',
@@ -558,6 +558,8 @@ function AddsettimeEmployee() {
                 setEmployeeId('');
                 setName('');
                 alert('ไม่พบข้อมูล');
+                //zzaa
+
             } else {
                 // alert(response.data.employees.length);
 
@@ -589,6 +591,9 @@ function AddsettimeEmployee() {
             month: month,
             timerecordId: year,
         };
+        
+if(rowDataList2.length < 1 && data.employeeId == ''){
+
 
         try {
             const response = await axios.post(endpoint + '/timerecord/searchemp', data);
@@ -626,6 +631,7 @@ function AddsettimeEmployee() {
             alert(error.message);
             window.location.reload();
         }
+    }
 
     }
 
@@ -660,7 +666,7 @@ function AddsettimeEmployee() {
         await setWOtTime('');
         await setWSelectOtTime('');
         await setWSelectOtTimeout('');
-        await setCashSalary(!cashSalary);
+        await setCashSalary('');
         await setSpecialtSalary('');
         await setMessageSalary('');
 
@@ -797,7 +803,7 @@ function AddsettimeEmployee() {
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-center">
-                                                <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา</button>
+                                                <button class="btn b_save" onClick={handleSearch() } ><i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา</button>
                                             </div>
                                         </form>
                                         <br />
@@ -1073,6 +1079,9 @@ function AddsettimeEmployee() {
                                 </div>
 
                             </div>
+                            </form>
+                            
+                            <form onSubmit={handleManageWorkplace}>
 
 
                             <section class="Frame">
