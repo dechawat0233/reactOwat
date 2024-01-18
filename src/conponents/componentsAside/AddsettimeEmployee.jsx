@@ -46,6 +46,8 @@ function AddsettimeEmployee() {
 
     useEffect(() => {
         if (name !== '') {
+            setCheckaddData('');
+            
             handleCheckTimerecord();
         }
     }, [month, year]);
@@ -58,6 +60,8 @@ function AddsettimeEmployee() {
         const formattedValue = i.toString().padStart(2, '0');
         options.push(<option key={i} value={formattedValue}>{formattedValue}</option>);
     }
+
+const [checkaddData , setCheckaddData] = useState('');
 
     //Workplace data
     const [employeeId, setEmployeeId] = useState(''); //รหัสหน่วยงาน
@@ -558,7 +562,6 @@ function AddsettimeEmployee() {
                 setEmployeeId('');
                 setName('');
                 alert('ไม่พบข้อมูล');
-                //zzaa
 
             } else {
                 // alert(response.data.employees.length);
@@ -594,7 +597,7 @@ function AddsettimeEmployee() {
 
 
 
-        if (rowDataList2.length < 1 && data.employeeId !== '') {
+        if (! checkaddData) {
 
 
             try {
@@ -677,6 +680,8 @@ function AddsettimeEmployee() {
 
     // Function to add a new row to the rowDataList with specific values
     const addRow = (newRowData) => {
+        setCheckaddData(true);
+
         // Create a copy of the current state
         const newDataList = [...rowDataList2];
         // Push a new row with specific data
