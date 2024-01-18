@@ -54,9 +54,6 @@ function WorktimeSheetWorkplace() {
 
     const [arraytestEmpAddSalary, setArraytestEmpAddSalary] = useState([]);
 
-    const [empIDlist, setEmpIDlist] = useState([]);
-
-
 
     useEffect(() => {
         // Fetch data from the API when the component mounts
@@ -1659,11 +1656,10 @@ function WorktimeSheetWorkplace() {
     // Extract employee IDs
     // แยกemployee IDsของแต่ละคน
     const employeeIdsArray = Object.keys(combinedArray).map(Number).sort((a, b) => a - b);
-    // setEmpIDlist(employeeIdsArray);
-    // console.log('EmpIDlist',empIDlist);
+
 
     console.log('Unique Dates:', uniqueDatesArray);
-    console.log('EmployeeIDs:', employeeIdsArray);
+    console.log('Employee IDs:', employeeIdsArray);
 
     const filteredUniqueDatesArray = uniqueDatesArray.map(subArray => {
         return subArray.filter((value, index, self) => {
@@ -1680,16 +1676,21 @@ function WorktimeSheetWorkplace() {
             .then(data => {
                 // Update the state with the fetched data
                 setEmploeeData(data);
-                // const employeeIdsToFind = [1001, 1002, 1004, 1005, 1006];
-                // employeeIdsArray
-                // const filteredEmployees123 = data.filter(employee => employeeIdsArray.includes(parseInt(employee.employeeId, 10)));
-                const filteredEmployees = data.filter(employee => employeeIdsArray.includes(parseInt(employee.employeeId, 10)));
+
+                // Find employees with specific IDs [1001, 1002, 1004, 1005, 1006]
+                const employeeIdsToFind = [1001, 1002, 1004, 1005, 1006];
+                const filteredEmployees = data.filter(employee => employeeIdsToFind.includes(parseInt(employee.employeeId, 10)));
 
                 // Do something with the filtered employees
-                // console.log('filteredEmployees', filteredEmployees);
+                console.log('filteredEmployees', filteredEmployees);
 
                 // Extract specific information from filtered employees
                 const extractedData = filteredEmployees.map(employee => [
+                    // employeeId: employee.employeeId,
+                    // name: employee.name,
+                    // morning_shift: 'กะเช้า',
+                    // afternoon_shift: 'กะดึก',
+                    // lastName: employee.lastName,
 
                     employee.name + ' ' + employee.lastName,
                     employee.employeeId,
@@ -1711,8 +1712,7 @@ function WorktimeSheetWorkplace() {
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
-    }, [employeeIdsArray]);
-
+    }, []);
 
     console.log('EmploeeData', emploeeData);
     console.log('EmploeeDataSearch', emploeeDataSearch);
@@ -2570,76 +2570,6 @@ function WorktimeSheetWorkplace() {
             }
         };
 
-        // const drawArrayTextWithColor = (dataArray, columnIndex, rowIndex) => {
-        //     const currentX = startX + columnIndex * cellWidth;
-        //     const currentY = startY + 3.7 + rowIndex * verticalDistance;
-
-        //     // Set color based on holidayList and filteredDaysOff
-        //     const currentNumber = resultArray[rowIndex];
-        //     const isHighlighted = holidayList.includes(currentNumber) || filteredDaysOff.includes(currentNumber);
-
-        //     // Draw a colored rectangle for each column
-        //     if (isHighlighted) {
-        //         doc.setFillColor(255, 0, 0); // Set your desired color
-        //         doc.rect(currentX, currentY, cellWidth, cellHeight, 'F');
-        //     }
-
-        //     // Draw the text on top of the colored rectangle
-        //     for (let i = 0; i < dataArray.length; i++) {
-        //         const textToDraw = dataArray[i].toString();
-        //         const alignment = textToDraw.length > 3 ? { align: 'left', angle: 90, xOffset: 5 } : { align: 'left' };
-
-        //         if (textToDraw.length > 3) {
-        //             doc.text(textToDraw, currentX + 2, 3 + currentY, alignment);
-        //         } else {
-        //             doc.text(textToDraw, currentX + 1, 3 + currentY, alignment);
-        //         }
-        //     }
-        // };
-
-        const drawArrayTextWithColor = (dataArray, columnIndex, rowIndex) => {
-            const currentX = startX + columnIndex * cellWidth;
-            const currentY = startY + 3.7 + rowIndex * verticalDistance;
-
-            // Set color based on holidayList and filteredDaysOff
-            const currentNumber = resultArray[columnIndex];
-            const isHighlighted = holidayList.includes(currentNumber) || filteredDaysOff.includes(currentNumber);
-
-            // Draw a colored rectangle for each column
-            if (isHighlighted) {
-                doc.setFillColor(255, 255, 0); // Set your desired color
-                doc.rect(currentX, currentY - cellHeight, cellWidth, (cellHeight * 8), 'F');
-            }
-
-            // Draw the text on top of the colored rectangle
-            const textToDraw = dataArray[0].toString();
-            const alignment = textToDraw.length > 3 ? { align: 'left', angle: 90, xOffset: 5 } : { align: 'left' };
-
-            if (textToDraw.length > 3) {
-                doc.text(textToDraw, currentX + 2, 3 + currentY, alignment);
-            } else {
-                doc.text(textToDraw, currentX + 1, 3 + currentY, alignment);
-            }
-        };
-
-        // const squareColor2 = [255, 255, 190]; // Red
-
-        // doc.setFillColor(...squareColor2);
-
-        // // Draw a square with the specified size and color
-        // doc.rect(startX, startYTop, cellWidth - 0.2, cellHeightTop, 'F');
-
-        // for (let i = 0; i < resultArray.length; i++) {
-        //     const currentNumber = resultArray[i];
-
-        //     if (holidayList.includes(currentNumber) || filteredDaysOff.includes(currentNumber)) {
-        //         // Set loop position color
-        //         doc.rect(startX + i * cellWidth, startYTop + 80, cellWidth - 0.2, cellHeightTop, 'F');
-        //     } else {
-        //         // Set default color or do nothing
-        //     }
-        // }
-
         const drawArrayTextOT = (dataArray) => {
             for (let i = 0; i < dataArray.length; i++) {
                 let currentX = startX - 1;
@@ -3004,7 +2934,7 @@ function WorktimeSheetWorkplace() {
 
         const spaceWidth = 10;
 
-        const makePage = Math.ceil(arrayWorkNormalDay.length / 5);
+        const makePage = Math.ceil(arrayWorkNormalDay.length / 6);
 
         for (let pageIndex = 0; pageIndex < makePage; pageIndex++) {
 
@@ -3057,11 +2987,6 @@ function WorktimeSheetWorkplace() {
 
             doc.text('จำนวนวัน ' + daysInMonth, 10, 10);
 
-
-
-            const pageStartIndex = pageIndex * 5;
-            const pageEndIndex = Math.min((pageIndex + 1) * 5, arraytest.length);
-
             const squareColor2 = [255, 255, 190]; // Red
 
             doc.setFillColor(...squareColor2);
@@ -3069,43 +2994,47 @@ function WorktimeSheetWorkplace() {
             // Draw a square with the specified size and color
             // doc.rect(startX, startYTop, cellWidth - 0.2, cellHeightTop, 'F');
 
-            // for (let i = 0; i < resultArray.length; i++) {
-            //     const currentNumber = resultArray[i];
-
-            //     if (holidayList.includes(currentNumber) || filteredDaysOff.includes(currentNumber)) {
-            //         // Set loop position color
-            //         doc.rect(startX + i * cellWidth, startYTop + 80, cellWidth - 0.2, cellHeightTop, 'F');
-            //     } else {
-            //         // Set default color or do nothing
-            //     }
-            // }
-
-            // for (let i = pageStartIndex; i < pageEndIndex; i++) {
-            //     const rowData = arrayWorkNormalDay[i];
-            //     const color = i % 2 === 0 ? [240, 240, 100] : [255, 255, 255]; // Alternate row colors
-
-            //     drawArrayTextWithColor(rowData, color, i - pageStartIndex);
-
-            // }
-
-            const pageStartIndexName = pageIndex * 5;
-            const pageEndIndexName = Math.min((pageIndex + 1) * 5, arrayWorkNormalDay.length);
-            drawArrayTextName(arraylistNameEmp.slice(pageStartIndex, pageEndIndex));
-
-            const squareColor = [255, 255, 0]; // Red
-            doc.setFillColor(...squareColor);
-
             for (let i = 0; i < resultArray.length; i++) {
                 const currentNumber = resultArray[i];
 
                 if (holidayList.includes(currentNumber) || filteredDaysOff.includes(currentNumber)) {
                     // Set loop position color
-                    doc.rect(startX + i * cellWidth, startYTop, cellWidth - 0.2, cellHeightTop, 'F');
+                    doc.rect(startX + i * cellWidth, startYTop + 80, cellWidth - 0.2, cellHeightTop, 'F');
                 } else {
                     // Set default color or do nothing
                 }
             }
 
+            const pageStartIndex = pageIndex * 6;
+            const pageEndIndex = Math.min((pageIndex + 1) * 6, arraytest.length);
+            drawArrayText(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex));
+
+            drawArrayTextAddSalary(arraytestEmpAddSalary.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
+            // drawArrayText(arraytestEmpAddSalary);
+
+            drawArrayTextOT(arrayWorkOTNormalDay.slice(pageStartIndex, pageEndIndex));
+
+            drawArrayTextHoli(arrayWorkHoli.slice(pageStartIndex, pageEndIndex));
+
+            drawArrayTextHoliday(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex));
+            drawArrayTextOTHoliday(arrayWorkOTHoliday.slice(pageStartIndex, pageEndIndex));
+
+
+            drawArrayTextSumWork(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
+            drawArrayTextSumWorkOT(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArrayOT.slice(pageStartIndex, pageEndIndex));
+
+            drawArrayTextSumWorkHoli(arrayWorkHoli.slice(pageStartIndex, pageEndIndex), sumArrayHoli.slice(pageStartIndex, pageEndIndex));
+
+            drawArrayTextSumWorkHoliday(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), sumArrayHoliday.slice(pageStartIndex, pageEndIndex));
+            drawArrayTextSumWorkOTHoliday(arrayWorkOTHoliday.slice(pageStartIndex, pageEndIndex), sumArrayOTHoliday.slice(pageStartIndex, pageEndIndex));
+            // drawArrayTextAddSalary(arraytest.slice(pageStartIndex, pageEndIndex), arraytestEmpAddSalary.slice(pageStartIndex, pageEndIndex));
+            // drawArrayTextAddSalary(arraytestEmpAddSalary.slice(pageStartIndex, pageEndIndex));
+
+
+            const pageStartIndexName = pageIndex * 6;
+            const pageEndIndexName = Math.min((pageIndex + 1) * 6, arrayWorkNormalDay.length);
+            drawArrayTextName(arraylistNameEmp.slice(pageStartIndex, pageEndIndex));
+            
             for (let i = 0; i < resultArray.length; i++) {
                 const x = startX + i * cellWidth;
                 doc.text(resultArray[i].toString(), x + 1, cellHeightTop + startYTop - 2);
@@ -3127,8 +3056,8 @@ function WorktimeSheetWorkplace() {
             // startXSpSalary + j * cellWidthSpSalary;
             // const y = startYTop
 
-            for (let i = 0; i < 5; i++) {
-                const dataIdx = pageIndex * 5 + i;
+            for (let i = 0; i < 6; i++) {
+                const dataIdx = pageIndex * 6 + i;
                 if (dataIdx < arrayWorkNormalDay.length) {
                     // Set the color of the square (RGB values)
                     const squareColor = [255, 255, 0]; // Red
@@ -3143,6 +3072,18 @@ function WorktimeSheetWorkplace() {
                     // Draw a square with the specified size and color
                     doc.rect(startXSpSalary, startYTop, (cellWidthSpSalary * numColsSpSalary) - 0.2, cellHeightTop, 'F');
 
+                    doc.setFillColor(...squareColor);
+
+                    for (let i = 0; i < resultArray.length; i++) {
+                        const currentNumber = resultArray[i];
+
+                        if (holidayList.includes(currentNumber) || filteredDaysOff.includes(currentNumber)) {
+                            // Set loop position color
+                            doc.rect(startX + i * cellWidth, startYTop, cellWidth - 0.2, cellHeightTop, 'F');
+                        } else {
+                            // Set default color or do nothing
+                        }
+                    }
                     doc.text(alldaywork + ' ' + countalldaywork, 5 + startXSpSalary, 54.8, { angle: 90 });
                     doc.text(alldayworkHoliday + ' ' + countalldayworkHoliday, 5 + startXSpSalary + cellWidthSpSalary, 54.8, { angle: 90 });
                     doc.text('วันนักขัตฤกษ์' + ' ' + workOt2 + 'เท่า', 3 + startXSpSalary + (cellWidthSpSalary * 2), 54.8, { angle: 90 });
@@ -3178,14 +3119,7 @@ function WorktimeSheetWorkplace() {
 
                     // drawTableOT(arraylistOT);
 
-                    // for (let i = pageStartIndex; i < pageEndIndex; i++) {
-                        const rowData = arrayWorkNormalDay[i];
-        
-                        // Draw text with color for each column
-                        for (let j = 0; j < resultArray.length; j++) {
-                            drawArrayTextWithColor([rowData[j]], j, i);
-                        }
-                    // }
+
                     drawTable(i, arrayWorkNormalDay.slice(dataIdx, dataIdx + 1));
                     drawTableLeftHead(i, arrayWorkNormalDay.slice(dataIdx, dataIdx + 1));
                     drawTableNumHead(i, arrayWorkNormalDay.slice(dataIdx, dataIdx + 1));
@@ -3195,34 +3129,16 @@ function WorktimeSheetWorkplace() {
 
                     // drawArrayText(arraytest.slice(dataIdx, dataIdx + 1));
 
+                    const squareColornew = [255, 255, 0];
+
+                    // Set the fill color
+                    doc.setFillColor(...squareColornew);
+                    doc.rect(startXSpSalary + (cellWidthSpSalary * 5) + 0.2, startYTop + 0.1, (cellWidthSpSalary * 5) - 0.4, 3.8, 'F');
+                    doc.rect(startXSpSalary + (cellWidthSpSalary * 2) + 0.2, startYTop + 0.1, (cellWidthSpSalary * 3) - 0.4, 3.8, 'F');
+
+
                 }
             }
-
-            drawArrayText(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex));
-
-            drawArrayTextAddSalary(arraytestEmpAddSalary.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
-            // drawArrayText(arraytestEmpAddSalary);
-
-            drawArrayTextOT(arrayWorkOTNormalDay.slice(pageStartIndex, pageEndIndex));
-
-            drawArrayTextHoli(arrayWorkHoli.slice(pageStartIndex, pageEndIndex));
-
-            drawArrayTextHoliday(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex));
-            drawArrayTextOTHoliday(arrayWorkOTHoliday.slice(pageStartIndex, pageEndIndex));
-
-
-            drawArrayTextSumWork(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
-            drawArrayTextSumWorkOT(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArrayOT.slice(pageStartIndex, pageEndIndex));
-
-            drawArrayTextSumWorkHoli(arrayWorkHoli.slice(pageStartIndex, pageEndIndex), sumArrayHoli.slice(pageStartIndex, pageEndIndex));
-
-            drawArrayTextSumWorkHoliday(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), sumArrayHoliday.slice(pageStartIndex, pageEndIndex));
-            drawArrayTextSumWorkOTHoliday(arrayWorkOTHoliday.slice(pageStartIndex, pageEndIndex), sumArrayOTHoliday.slice(pageStartIndex, pageEndIndex));
-
-            // drawArrayTextAddSalary(arraytest.slice(pageStartIndex, pageEndIndex), arraytestEmpAddSalary.slice(pageStartIndex, pageEndIndex));
-            // drawArrayTextAddSalary(arraytestEmpAddSalary.slice(pageStartIndex, pageEndIndex));
-
-
             // drawArrayText(arraytest, pageIndex * 6, Math.min((pageIndex + 1) * 6, arraytest.length));
 
             // for (let dataarray = 0; dataarray < arraytest.length; dataarray += 6) {
