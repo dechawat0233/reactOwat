@@ -1471,7 +1471,9 @@ function WorktimeSheetWorkplace() {
 
         // Filter workplaceDataList to find items with dayOff
         // const dayOffData = filteredData.filter(item => item.daysOff); // Assuming 'dayOff' is a property in the items
-
+        const filteredDataAddSalary = workplaceList.filter(item => item.workplaceId === searchWorkplaceId);
+        setWorkplaceDataListAddSalary(filteredDataAddSalary);
+        
         // Filter workplaceDataList to find items with dayOff
         const dayOffData = filteredData.reduce((acc, item) => {
             if (item.daysOff && Array.isArray(item.daysOff)) {
