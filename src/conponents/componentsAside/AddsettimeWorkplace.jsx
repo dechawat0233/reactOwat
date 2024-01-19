@@ -865,7 +865,7 @@ function AddsettimeWorkplace() {
             workplaceName: searchWorkplaceName,
             date: formattedWorkDate,
         };
-
+        
         try {
             const response = await axios.post(endpoint + '/timerecord/search', data);
 
