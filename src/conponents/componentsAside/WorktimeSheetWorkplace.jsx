@@ -47,6 +47,8 @@ function WorktimeSheetWorkplace() {
     const [workplaceDataList, setWorkplaceDataList] = useState([]);
     const [workplaceDataListDayOff, setWorkplaceDataListDayOff] = useState([]);
     const [workplaceDataListAddSalary, setWorkplaceDataListAddSalary] = useState([]);
+    const [workplaceDataWorkOfHour, setWorkplaceDataWorkOfHour] = useState([]);
+
 
     const [daysOffArray, setDaysOffArray] = useState([]);
     const [result_data, setResult_data] = useState([]);
@@ -1467,8 +1469,14 @@ function WorktimeSheetWorkplace() {
 
         // Filter workplaceDataList to find items with dayOff
         // const dayOffData = filteredData.filter(item => item.daysOff); // Assuming 'dayOff' is a property in the items
-        const filteredDataAddSalary = workplaceList.filter(item => item.workplaceId === searchWorkplaceId);
-        setWorkplaceDataListAddSalary(filteredDataAddSalary);
+
+        // const filteredDataAddSalary = workplaceDataList.filter(item => item.workplaceId === searchWorkplaceId);
+        // setWorkplaceDataListAddSalary(filteredDataAddSalary);
+        const addSalaryArray = filteredData.map(item => item.addSalary).flat();
+        setWorkplaceDataListAddSalary(addSalaryArray);
+
+        const addSalaryArrayWorkOfHour = filteredData.map(item => item.workOfHour);
+        setWorkplaceDataWorkOfHour(addSalaryArrayWorkOfHour);
 
         // Filter workplaceDataList to find items with dayOff
         const dayOffData = filteredData.reduce((acc, item) => {
@@ -1477,10 +1485,14 @@ function WorktimeSheetWorkplace() {
             }
             return acc;
         }, []);
+        // วันหยุดนัก
         setWorkplaceDataListDayOff(dayOffData);
     }, [searchWorkplaceId, workplaceList]);
 
+    console.log('WorkplaceDataListAddSalary', workplaceDataListAddSalary);
+    const addSalaryWorkplace = workplaceDataListAddSalary;
 
+    // workplaceDataListAddSalary
     // วันหยุดนักขัต
     const filteredDaysOff = workplaceDataListDayOff
         .filter(item => {
@@ -2017,6 +2029,27 @@ function WorktimeSheetWorkplace() {
 
 
     console.log('sumArray', sumArray);
+    console.log('sumArrayHoli', sumArrayHoli);
+    console.log('sumArrayHoliday', sumArrayHoliday);
+
+    // workplaceDataWorkOfHour
+    // sumArrayHoliday
+    // sumArrayHoli
+
+    const sumarrayAllHoloday = sumArrayHoli.map((valueHoli, index) => {
+        const valueHoliday = sumArrayHoliday[index] || 0; // If undefined, treat as 0
+        const sum = valueHoli + valueHoliday;
+        return sum / workplaceDataWorkOfHour;
+    });
+
+    const sumArraySumarrayAllHoloday = sumArray.map((value, index) => value + sumarrayAllHoloday[index]);
+
+
+
+    console.log('sumarrayAllHoloday', sumarrayAllHoloday);
+
+    console.log('sumArraySumarrayAllHoloday', sumArraySumarrayAllHoloday);
+
 
     // const arraytestEmpAddSalary = [[
     //     {
@@ -2235,53 +2268,53 @@ function WorktimeSheetWorkplace() {
             const arraylistOT =
                 ['1.5', '2', '3'];
 
-            const addSalaryWorkplace =
-                [{
-                    name: "ค่าเดินทาง",
-                    codeSpSalary: "1001",
-                    SpSalary: "1000",
-                    roundOfSalary: "monthly",
-                    StaffType: "all",
-                    nameType: "",
-                    _id: "656025d1fd5375965d5028a3"
-                },
-                {
-                    name: "ค่าอาหาร",
-                    codeSpSalary: "2534",
-                    SpSalary: "100",
-                    roundOfSalary: "daily",
-                    StaffType: "all",
-                    nameType: "ทดลอง",
-                    _id: "656025d1fd5375965d5028a4"
-                },
-                {
-                    name: "ค่าโทรศัพท์",
-                    codeSpSalary: "8467",
-                    SpSalary: "300",
-                    roundOfSalary: "daily",
-                    StaffType: "header",
-                    nameType: "",
-                    _id: "656025d1fd5375965d5028a5"
-                },
-                {
-                    name: "ค่าตำแหน่ง",
-                    codeSpSalary: "4392",
-                    SpSalary: "800",
-                    roundOfSalary: "monthly",
-                    StaffType: "header",
-                    nameType: "",
-                    _id: "656025d1fd5375965d5028a6"
-                },
-                {
-                    name: "เบี้ยขยัน",
-                    codeSpSalary: "1358",
-                    SpSalary: "500",
-                    roundOfSalary: "monthly",
-                    StaffType: "all",
-                    nameType: "",
-                    _id: "656025d1fd5375965d5028a7"
-                },
-                ];
+            // const addSalaryWorkplace =
+            //     [{
+            //         name: "ค่าเดินทาง",
+            //         codeSpSalary: "1001",
+            //         SpSalary: "1000",
+            //         roundOfSalary: "monthly",
+            //         StaffType: "all",
+            //         nameType: "",
+            //         _id: "656025d1fd5375965d5028a3"
+            //     },
+            //     {
+            //         name: "ค่าอาหาร",
+            //         codeSpSalary: "2534",
+            //         SpSalary: "100",
+            //         roundOfSalary: "daily",
+            //         StaffType: "all",
+            //         nameType: "ทดลอง",
+            //         _id: "656025d1fd5375965d5028a4"
+            //     },
+            //     {
+            //         name: "ค่าโทรศัพท์",
+            //         codeSpSalary: "8467",
+            //         SpSalary: "300",
+            //         roundOfSalary: "daily",
+            //         StaffType: "header",
+            //         nameType: "",
+            //         _id: "656025d1fd5375965d5028a5"
+            //     },
+            //     {
+            //         name: "ค่าตำแหน่ง",
+            //         codeSpSalary: "4392",
+            //         SpSalary: "800",
+            //         roundOfSalary: "monthly",
+            //         StaffType: "header",
+            //         nameType: "",
+            //         _id: "656025d1fd5375965d5028a6"
+            //     },
+            //     {
+            //         name: "เบี้ยขยัน",
+            //         codeSpSalary: "1358",
+            //         SpSalary: "500",
+            //         roundOfSalary: "monthly",
+            //         StaffType: "all",
+            //         nameType: "",
+            //         _id: "656025d1fd5375965d5028a7"
+            //     },
+            //     ];
             // const arraylistNameEmp = ['สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย'];
 
             // const arrayLength = arraylistNameEmp.length;
@@ -2664,6 +2697,30 @@ function WorktimeSheetWorkplace() {
                 }
             };
 
+
+
+            const drawArrayTextSumWorkAddSalary = (dataArray, sumArray, addSalaryWorkplace) => {
+                for (let i = 0; i < dataArray.length; i++) {
+                    let currentX = startXSpSalary + 3;
+                    let currentY = startY + i * verticalDistance + addmove;
+
+                    const roundOfSalary = addSalaryWorkplace[i]?.roundOfSalary || ''; // Get roundOfSalary for the current index
+
+                    // Check roundOfSalary and display the appropriate text
+                    if (roundOfSalary === 'monthly') {
+                        doc.text(addSalaryWorkplace[i].SpSalary, currentX + 2, 3 + currentY, { align: 'center' });
+                    } else if (roundOfSalary === 'daily') {
+                        // Calculate the product and convert it to a string
+                        const product = (sumArray[i] * addSalaryWorkplace[i].SpSalary).toString();
+                        doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
+                    } else {
+                        // Handle other cases or set default text
+                        doc.text('N/A', currentX + 2, 3 + currentY, { align: 'center' });
+                    }
+                }
+            };
+
+
             // const drawArrayTextWithColor = (dataArray, columnIndex, rowIndex) => {
             //     const currentX = startX + columnIndex * cellWidth;
             //     const currentY = startY + 3.7 + rowIndex * verticalDistance;
@@ -2827,6 +2884,8 @@ function WorktimeSheetWorkplace() {
                     doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
                 }
             };
+
+
             const drawArrayTextSumWorkOT = (dataArray, sumArrayOT) => {
                 for (let i = 0; i < dataArray.length; i++) {
                     let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 3);
@@ -2910,33 +2969,76 @@ function WorktimeSheetWorkplace() {
             //         }
             //     }
             // };
-            const drawArrayTextAddSalary = (dataArray, sumArray) => {
-                for (let i = 0; i < dataArray.length; i++) {
-                    let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 5);
-                    let currentY = startY + addmove;
 
-                    for (let j = 0; j < dataArray[i].length; j++) {
-                        const item = dataArray[i][j];
 
-                        // Check if dataArray[i][j].name exists in addSalaryWorkplace
-                        const position = addSalaryWorkplace.findIndex(
-                            (salaryItem) => salaryItem.name === item.name
-                        );
+            // const drawArrayTextSumWorkTest = (dataArray, sumArraySumarrayAllHoloday) => {
+            //     for (let i = 0; i < dataArray.length; i++) {
+            //         let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 5);
+            //         let currentY = startY + i * verticalDistance + addmove;
 
-                        // If the position is found, use it as x; otherwise, use a default value (e.g., 0)
-                        const x = position !== -1 ? position : 0;
+            //         // Calculate the product and convert it to a string
+            //         doc.text(sumArraySumarrayAllHoloday[i].toString(), currentX + 2, 3 + currentY, { align: 'center' });
+            //     }
+            // };
 
-                        // If roundOfSalary is "daily", multiply SpSalary by the corresponding value in sumArray
-                        // If roundOfSalary is "monthly", keep SpSalary as is
-                        const adjustedSpSalary = item.roundOfSalary === 'daily' ? item.SpSalary * sumArray[i] : item.SpSalary;
+            const drawArrayTextSumWorkTest = (sumArraySumarrayAllHoloday, workplaceDataListAddSalary) => {
+                for (let i = 0; i < sumArraySumarrayAllHoloday.length; i++) {
+                    for (let j = 0; j < workplaceDataListAddSalary.length; j++) {
+                        let currentX = startXSpSalary + 5 + (cellWidthSpSalary * 5) + (j * cellWidthSpSalary);
+                        let currentY = startY + i * verticalDistance + addmove;
 
-                        const text = `${adjustedSpSalary}`;
-                        doc.text(text, currentX + 2 + (cellWidthSpSalary * x), 3 + currentY + i * verticalDistance, { align: 'center' });
-                        // currentX += cellWidthSpSalary;
+                        const item = workplaceDataListAddSalary[j];
+
+                        // Calculate the product and convert it to a string
+                        if (item.roundOfSalary == 'monthly') {
+                            const product = parseInt(item.SpSalary, 10);
+                            doc.text(product.toString(), currentX, 3 + currentY, { align: 'center' });
+                        } else {
+                            const product = sumArraySumarrayAllHoloday[i] * parseInt(item.SpSalary, 10);
+                            doc.text(product.toString(), currentX, 3 + currentY, { align: 'center' });
+                        }
+
+                        // doc.text(product.toString(), currentX, 3 + currentY, { align: 'center' });
+
+                        currentY += 10;
+
                     }
                 }
             };
 
+
+            // sumArrayHoliday
+            // sumArrayHoli
+            // sumArray
+
+            // const drawArrayTextAddSalary2 = (dataArray, addSalaryWorkplace, sumArraySumarrayAllHoloday) => {
+            //     for (let i = 0; i < dataArray.length; i++) {
+            //         let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 5);
+            //         let currentY = startY + addmove;
+
+            //         for (let j = 0; j < dataArray[i].length; j++) {
+            //             const item = dataArray[i][j];
+
+            //             // Check if dataArray[i][j].name exists in addSalaryWorkplace
+            //             const salaryItem = addSalaryWorkplace.find(salary => salary.name === item.name);
+
+            //             if (salaryItem) {
+            //                 // If roundOfSalary is "daily", multiply SpSalary by the corresponding value in sumArraySumarrayAllHoloday
+            //                 // If roundOfSalary is "monthly", keep SpSalary as is
+            //                 const adjustedSpSalary = salaryItem.roundOfSalary === 'daily' ?
+            //                     salaryItem.SpSalary * sumArraySumarrayAllHoloday[i] :
+            //                     salaryItem.SpSalary;
+
+            //                 const text = `${adjustedSpSalary}`;
+            //                 doc.text(text, currentX + 2, 3 + currentY + i * verticalDistance, { align: 'center' });
+            //             }
+
+            //             currentX += cellWidthSpSalary;
+            //         }
+            //     }
+            // };
+
+            // Use drawArrayTextAddSalary2 with the appropriate slices            
 
             const drawArrayTextName = (dataArray) => {
                 for (let i = 0; i < dataArray.length; i++) {
@@ -3239,7 +3341,22 @@ function WorktimeSheetWorkplace() {
 
                         doc.text(alldaywork + ' ' + countalldaywork, 5 + startXSpSalary, 54.8, { angle: 90 });
                         doc.text(alldayworkHoliday + ' ' + countalldayworkHoliday, 5 + startXSpSalary + cellWidthSpSalary, 54.8, { angle: 90 });
+
                         doc.text('วันนักขัตฤกษ์' + ' ' + workOt2 + 'เท่า', 3 + startXSpSalary + (cellWidthSpSalary * 2), 54.8, { angle: 90 });
+
+                        // doc.text('วันนักขัตฤกษ์' + ' ' + workOt2 + 'เท่า', 3 + startXSpSalary + (cellWidthSpSalary * 2), 54.8, { angle: 90 });
+
+                        for (let i = 0; i < workplaceDataListAddSalary.length; i++) {
+                            let currentX = startXSpSalary + 5 + (cellWidthSpSalary * 5) + (i * cellWidthSpSalary);
+                            let currentY = startY + verticalDistance + addmove;
+
+                            const item = workplaceDataListAddSalary[i];
+
+                            // Display the name and SpSalary
+                            doc.text(`${item.name}`, currentX + 2, 54.8, { align: 'center', angle: 90 });
+                            doc.text(`${item.SpSalary} .-`, currentX + 5, 54.8, { align: 'center', angle: 90 });
+
+                        }
                         doc.text((340 * workOt2) / 8 + ' .-', 7 + startXSpSalary + (cellWidthSpSalary * 2), 54.8, { angle: 90 });
 
                         doc.text('โอที' + ' ' + workOt + 'เท่า', 3 + startXSpSalary + (cellWidthSpSalary * 3), 54.8, { angle: 90 });
@@ -3249,17 +3366,17 @@ function WorktimeSheetWorkplace() {
                         doc.text((340 * workOt3) / 8 + ' .-', 7 + startXSpSalary + (cellWidthSpSalary * 4), 54.8, { angle: 90 });
 
                         // doc.text(addSalaryWorkplace, 171, 54, { angle: 90 });
-                        addSalaryWorkplace.forEach((item, index) => {
-                            const NameSp = `${item.name} ${item.SpSalary}`;
-                            let roundOfSalaryText = '';
+                        // addSalaryWorkplace.forEach((item, index) => {
+                        //     const NameSp = `${item.name} ${item.SpSalary}`;
+                        //     let roundOfSalaryText = '';
 
-                            if (item.roundOfSalary === 'monthly') {
-                                roundOfSalaryText = 'เดือน';
-                            } else if (item.roundOfSalary === 'daily') {
-                                roundOfSalaryText = 'วัน';
-                            } doc.text(NameSp, 5 + (cellWidthSpSalary * 5) + startXSpSalary + index * (cellWidthSpSalary), 54.8, { angle: 90 });
-                            doc.text('ต่อ ' + roundOfSalaryText, 8 + (cellWidthSpSalary * 5) + startXSpSalary + index * (cellWidthSpSalary), 54.8, { angle: 90 });
-                        });
+                        //     if (item.roundOfSalary === 'monthly') {
+                        //         roundOfSalaryText = 'เดือน';
+                        //     } else if (item.roundOfSalary === 'daily') {
+                        //         roundOfSalaryText = 'วัน';
+                        //     } doc.text(NameSp, 5 + (cellWidthSpSalary * 5) + startXSpSalary + index * (cellWidthSpSalary), 54.8, { angle: 90 });
+                        //     doc.text('ต่อ ' + roundOfSalaryText, 8 + (cellWidthSpSalary * 5) + startXSpSalary + index * (cellWidthSpSalary), 54.8, { angle: 90 });
+                        // });
 
                         drawTableTop();
                         drawTableLeftHeadTop();
@@ -3293,8 +3410,6 @@ function WorktimeSheetWorkplace() {
                 }
 
                 drawArrayText(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex));
-
-                drawArrayTextAddSalary(extractedDataAddSalary.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
                 // drawArrayText(extractedDataAddSalary);
 
                 drawArrayTextOT(arrayWorkOTNormalDay.slice(pageStartIndex, pageEndIndex));
@@ -3312,6 +3427,16 @@ function WorktimeSheetWorkplace() {
 
                 drawArrayTextSumWorkHoliday(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), sumArrayHoliday.slice(pageStartIndex, pageEndIndex));
                 drawArrayTextSumWorkOTHoliday(arrayWorkOTHoliday.slice(pageStartIndex, pageEndIndex), sumArrayOTHoliday.slice(pageStartIndex, pageEndIndex));
+
+                // drawArrayTextSumWorkAddSalary(addSalaryWorkplace.slice(pageStartIndex, pageEndIndex));
+                // drawArrayTextAddSalary(extractedDataAddSalary.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
+
+                // drawArrayTextSumWorkTest(addSalaryWorkplace.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
+                // drawArrayTextSumWorkTest(sumArraySumarrayAllHoloday.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
+                // สวัสดิการ
+                // drawArrayTextSumWorkTest(sumArraySumarrayAllHoloday.slice(pageStartIndex, pageEndIndex), sumArraySumarrayAllHoloday.slice(pageStartIndex, pageEndIndex));
+                drawArrayTextSumWorkTest(sumArraySumarrayAllHoloday.slice(pageStartIndex, pageEndIndex), workplaceDataListAddSalary.slice(pageStartIndex, pageEndIndex));
+
 
                 // drawArrayTextAddSalary(arraytest.slice(pageStartIndex, pageEndIndex), extractedDataAddSalary.slice(pageStartIndex, pageEndIndex));
                 // drawArrayTextAddSalary(extractedDataAddSalary.slice(pageStartIndex, pageEndIndex));
@@ -3343,9 +3468,6 @@ function WorktimeSheetWorkplace() {
             // throw error;
             // return;
         }
-
-
-
 
     };
 
