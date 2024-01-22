@@ -374,12 +374,6 @@ function Setting() {
         } else {
             setWorkday7(workplace.workday7);
         }
-        // setWorkday2(workplace.workday2);
-        // setWorkday3(workplace.workday3);
-        // setWorkday4(workplace.workday4);
-        // setWorkday5(workplace.workday5);
-        // setWorkday6(workplace.workday6);
-        // setWorkday7(workplace.workday7);
 
         setWorkcount1(workplace.workcount1);
         setWorkcount2(workplace.workcount2);
@@ -555,13 +549,13 @@ function Setting() {
             employeeIdList: employeeIdList,
             employeeNameList: employeeNameList,
 
-            workday1: workday1,
-            workday2: workday2,
-            workday3: workday3,
-            workday4: workday4,
-            workday5: workday5,
-            workday6: workday6,
-            workday7: workday7,
+            workday1: workday1 === true ? workday1 : false,
+            workday2: workday2 === true ? workday2 : false,
+            workday3: workday3 === true ? workday3 : false,
+            workday4: workday4 === true ? workday4 : false,
+            workday5: workday5 === true ? workday5 : false,
+            workday6: workday6 === true ? workday6 : false,
+            workday7: workday7 === true ? workday7 : false,
 
             workcount1: workcount1,
             workcount2: workcount2,
@@ -957,7 +951,7 @@ function Setting() {
                                         </div>
                                     </div>
                                     <div class="row">
-                                    <div class="col-md-4">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label role="dayoffRate">อัตราค่าจ้างวันหยุดประจำสัปดาห์</label>
                                                 <input type="text" class="form-control" id="dayoffRate" placeholder="อัตราค่าจ้างวันหยุดประจำสัปดาห์" value={dayoffRate} onChange={(e) => setDayoffRate(e.target.value)} />
