@@ -157,27 +157,32 @@ const [dataResult , setDataResult] = useState([]);
                 setSearchEmployeeName('');
 
                 //result = 1 
-                if(response.data.employees.length == 1){
+                if(response.data.employees.length > 0){
                 // Set search values
                 setEmployeeId(response.data.employees[0].employeeId);
                 setName(response.data.employees[0].name);
                 setLastName(response.data.employees[0].lastName);
 setDataResult(response.data.employees[0] );
 //  alert(response.data.employees[0].addSalary.length );
- for(let i =0; i < response.data.employees[0].addSalary.length  ; i++){
+const newDataList = [...rowDataList2];
 
-    const newRowData = {
-        // addSalaryId: addSalaryId || '',
-        // addSalaryName: || '',
-        addSalary: response.data.employees[0].addSalary[i].SpSalary  || '',
-        // message: message || '',
-    };
+response.data.employees[0].addSalary.map(item => {
+let newRowData = {
+    addSalaryId: '',
+    addSalaryName: item.name,
+    addSalary: item.SpSalary ,
+    message: '',
+};
 
-    addRow(newRowData );
-// alert(response.data.employees[0].addSalary[i].roundOfSalary ); //แบบรายวัน รายเดือน
-alert(response.data.employees[0].addSalary[i].id ); 
+// const newDataList = [...rowDataList2];
+// Push a new row with specific data
+newDataList.unshift(newRowData );
+// Update the state with the new data
+// setRowDataList2(newDataList);
 
- }
+});
+setRowDataList2(newDataList);
+
 
 //x33
 
@@ -497,14 +502,14 @@ alert(response.data.employees[0].addSalary[i].id );
                                                         <div class="row">
                                                             <div class="col-md-12">
 
-                                                                {rowDataList2.map((rowData2, index) => (
-                                                                    rowData2.addSalaryId && (
+                                                                {rowDataList2.map((item , index) => (
+                                                                    item.addSalaryName && (
                                                                         <div key={index}>
                                                                             <div class="row" style={{ marginBottom: '1rem', borderBottom: '2px solid #000' }}>
-                                                                                <div class="col-md-2" style={bordertable}> {rowData2.addSalaryId}</div>
-                                                                                <div class="col-md-2" style={bordertable}> {rowData2.addSalaryName} </div>
-                                                                                <div class="col-md-2" style={bordertable}> {rowData2.addSalary} </div>
-                                                                                <div class="col-md-2" style={bordertable}> {rowData2.message} </div>
+                                                                                <div class="col-md-2" style={bordertable}> {item.addSalaryId}</div>
+                                                                                <div class="col-md-2" style={bordertable}> {item.addSalaryName} </div>
+                                                                                <div class="col-md-2" style={bordertable}> {item.addSalary} </div>
+                                                                                <div class="col-md-2" style={bordertable}> {item.message} </div>
                                                                                 <div class="col-md-3" style={bordertable}>
                                                                                     {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
                                                                                     <button class="btn btn-xs btn-danger" style={{ padding: '0.3rem ', addSalaryIdth: '8rem' }} onClick={() => handleDeleteRow(index)}>Delete</button>
@@ -642,7 +647,7 @@ alert(response.data.employees[0].addSalary[i].id );
                 </div>
 
             </div>
-            {JSON.stringify(dataResult.addSalary  ,null,2)}
+            {JSON.stringify(rowDataList2,null,2)}
 
         </body>
 
