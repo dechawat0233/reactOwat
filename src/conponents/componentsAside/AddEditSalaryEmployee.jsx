@@ -92,9 +92,12 @@ const [dataResult , setDataResult] = useState([]);
     const numberOfRows2 = 1; // Fixed number of rows
 
     const initialRowData2 = {
-        addSalaryId: '',
-        addSalaryName: '',
-        addSalary: '',
+        id: '',
+        name: '',
+        SpSalary: '',
+        roundOfSalary: '',
+        StaffType: '',
+        nameType: '',
         message: '',
     };
 
@@ -103,9 +106,12 @@ const [dataResult , setDataResult] = useState([]);
     const numberOfRows = 1; // Fixed number of rows
 
     const initialRowData = {
-        addSalaryId: '',
-        addSalaryName: '',
-        addSalary: '',
+        id: '',
+        name: '',
+        SpSalary: '',
+        roundOfSalary: '',
+        StaffType: '',
+        nameType: '',
         message: '',
     };
 
@@ -129,7 +135,8 @@ const [dataResult , setDataResult] = useState([]);
 
     async function handleSearch(event) {
         event.preventDefault();
-
+setRowDataList2([]);
+setRowDataList([]);
 
         // get value from form search
         const data = {
@@ -164,24 +171,50 @@ const [dataResult , setDataResult] = useState([]);
                 setLastName(response.data.employees[0].lastName);
 setDataResult(response.data.employees[0] );
 //  alert(response.data.employees[0].addSalary.length );
-const newDataList = [...rowDataList2];
+const newDataList = [];
 
 response.data.employees[0].addSalary.map(item => {
-let newRowData = {
-    addSalaryId: '',
-    addSalaryName: item.name,
-    addSalary: item.SpSalary ,
-    message: '',
-};
+    let newRowData = {
+    id: item.id,
+    name: item.name,
+    SpSalary: item.SpSalary,
+    roundOfSalary: item.roundOfSalary,
+    StaffType: item.StaffType,
+    nameType: item.nameType,
+    message: item.message,
+}
 
-// const newDataList = [...rowDataList2];
+
 // Push a new row with specific data
 newDataList.unshift(newRowData );
-// Update the state with the new data
-// setRowDataList2(newDataList);
 
 });
+
+// Update the state with the new data
 setRowDataList2(newDataList);
+
+//deduct salary
+const newDataList1 = [];
+// alert(JSON.stringify(response.data.employees[0].deductSalary,null,2));
+
+response.data.employees[0].deductSalary.map(item => {
+    let newRowData1 = {
+    id: item.id,
+    name: item.name,
+    SpSalary: item.SpSalary,
+    roundOfSalary: item.roundOfSalary,
+    StaffType: item.StaffType,
+    nameType: item.nameType,
+    message: item.message,
+}
+
+// Push a new row with specific data
+newDataList1 .unshift(newRowData1 );
+
+});
+
+// Update the state with the new data
+setRowDataList(newDataList1);
 
 
 //x33
@@ -201,16 +234,22 @@ setRowDataList2(newDataList);
         event.preventDefault();
         //get data from input in useState to data 
         const newRowData = await {
-            addSalaryId: addSalaryId || '',
-            addSalaryName: addSalaryName || '',
-            addSalary: addSalary || '',
+            id: addSalaryId || '',
+            name: addSalaryName || '',
+            SpSalary: addSalary || '',
+            roundOfSalary: '',
+            StaffType: '',
+            nameType: '',
             message: message || '',
         };
 
         const newRowData2 = await {
-            addSalaryId: minusId || '',
-            addSalaryName: misnusName || '',
-            addSalary: minusSalary || '',
+            id: minusId || '',
+            name: misnusName || '',
+            SpSalary: minusSalary || '',
+            roundOfSalary: '',
+            StaffType: '',
+            nameType: '',
             message: minusmessage || '',
         };
         await addRow(newRowData);
@@ -284,29 +323,50 @@ setRowDataList2(newDataList);
 
     async function handleCreateAddSalary(event) {
         event.preventDefault();
+// alert(dataResult._id);
+// alert(dataResult.addSalary);
+// alert(rowDataList2);
+dataResult.addSalary = await rowDataList2;
+dataResult.deductSalary = await rowDataList;
 
-        //get data from input in useState to data 
-        const data = {
-            employeeId: employeeId,
-            employeeName: name,
-            onUpdate: currentDate || '',
-            addSalary: rowDataList2,
-            minusSalary: rowDataList,
-        };
+try {
+    const response = await axios.put(endpoint + '/employee/update/' + dataResult._id, dataResult);
+    // setEmployeesResult(response.data.employees);
+    if (response) {
+        alert("บันทึกสำเร็จ");
+        // localStorage.setItem('selectedEmployees' , JSON.stringify(response.data.employees));
+
+        // window.location.reload();
+
+    }
+} catch (error) {
+    alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+    alert(error);
+    // window.location.reload();
+}
+
+        // //get data from input in useState to data 
+        // const data = {
+        //     employeeId: employeeId,
+        //     employeeName: name,
+        //     onUpdate: currentDate || '',
+        //     addSalary: rowDataList2,
+        //     minusSalary: rowDataList,
+        // };
         
 
-        try {
-            const response = await axios.post(endpoint + '/addsalary/create', data);
+        // try {
+            // const response = await axios.post(endpoint + '/addsalary/create', data);
             // setEmployeesResult(response.data.employees);
-            if (response) {
-                alert("บันทึกสำเร็จ");
-                            window.location.reload();
+            // if (response) {
+                // alert("บันทึกสำเร็จ");
+                            // window.location.reload();
 
-            }
-        } catch (error) {
-            alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+            // }
+        // } catch (error) {
+            // alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
             // window.location.reload();
-        }
+        // }
 
     }
     console.log("rowDataList2", rowDataList2);
@@ -503,12 +563,12 @@ setRowDataList2(newDataList);
                                                             <div class="col-md-12">
 
                                                                 {rowDataList2.map((item , index) => (
-                                                                    item.addSalaryName && (
+                                                                    item.name&& (
                                                                         <div key={index}>
                                                                             <div class="row" style={{ marginBottom: '1rem', borderBottom: '2px solid #000' }}>
-                                                                                <div class="col-md-2" style={bordertable}> {item.addSalaryId}</div>
-                                                                                <div class="col-md-2" style={bordertable}> {item.addSalaryName} </div>
-                                                                                <div class="col-md-2" style={bordertable}> {item.addSalary} </div>
+                                                                                <div class="col-md-2" style={bordertable}> {item.id}</div>
+                                                                                <div class="col-md-2" style={bordertable}> {item.name} </div>
+                                                                                <div class="col-md-2" style={bordertable}> {item.SpSalary} </div>
                                                                                 <div class="col-md-2" style={bordertable}> {item.message} </div>
                                                                                 <div class="col-md-3" style={bordertable}>
                                                                                     {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
@@ -595,14 +655,14 @@ setRowDataList2(newDataList);
                                                             <div class="col-md-12">
 
 
-                                                                {rowDataList.map((rowData2, index) => (
-                                                                    rowData2.addSalaryId&& (
+                                                                {rowDataList.map((item , index) => (
+                                                                    item.name && (
                                                                         <div key={index}>
                                                                             <div class="row" style={{ marginBottom: '1rem', borderBottom: '2px solid #000' }}>
-                                                                                <div class="col-md-2" style={bordertable}> {rowData2.addSalaryId}</div>
-                                                                                <div class="col-md-2" style={bordertable}> {rowData2.addSalaryName} </div>
-                                                                                <div class="col-md-2" style={bordertable}> {rowData2.addSalary} </div>
-                                                                                <div class="col-md-2" style={bordertable}> {rowData2.message} </div>
+                                                                                <div class="col-md-2" style={bordertable}> {item.id}</div>
+                                                                                <div class="col-md-2" style={bordertable}> {item.name} </div>
+                                                                                <div class="col-md-2" style={bordertable}> {item.SpSalary} </div>
+                                                                                <div class="col-md-2" style={bordertable}> {item.message} </div>
                                                                                 <div class="col-md-3" style={bordertable}>
                                                                                     {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
                                                                                     <button class="btn btn-xs btn-danger" style={{ padding: '0.3rem ', addSalaryIdth: '8rem' }} onClick={() => handleDeleteRow2(index)}>Delete</button>
@@ -647,7 +707,7 @@ setRowDataList2(newDataList);
                 </div>
 
             </div>
-            {JSON.stringify(rowDataList2,null,2)}
+            {/* {JSON.stringify(rowDataList2,null,2)} */}
 
         </body>
 
