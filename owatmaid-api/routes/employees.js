@@ -211,7 +211,18 @@ const employeeSchema = new mongoose.Schema({
     roundOfSalary: String,
     StaffType: String,
     nameType: String,
+    message: String,
   }],
+  deductSalary: [{
+    id: String,
+    name: String,
+    SpSalary: String,
+    roundOfSalary: String,
+    StaffType: String,
+    nameType: String,
+    message: String,
+  }],
+
   selectAddSalary: [],
   sumAddSalary: String,
 
