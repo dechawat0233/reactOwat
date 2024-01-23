@@ -207,7 +207,6 @@ response.data.employees[0].deductSalary.map(item => {
     nameType: item.nameType,
     message: item.message,
 }
-alert(item.id);
 
 // Push a new row with specific data
 newDataList1 .unshift(newRowData1 );
