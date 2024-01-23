@@ -195,7 +195,7 @@ setRowDataList2(newDataList);
 
 //deduct salary
 const newDataList1 = [];
-alert(JSON.stringify(response.data.employees[0].deductSalary,null,2));
+// alert(JSON.stringify(response.data.employees[0].deductSalary,null,2));
 
 response.data.employees[0].deductSalary.map(item => {
     let newRowData1 = {
