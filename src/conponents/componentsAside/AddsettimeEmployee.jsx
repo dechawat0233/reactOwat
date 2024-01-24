@@ -663,8 +663,8 @@ const [checkaddData , setCheckaddData] = useState('');
 
         await addRow(newRowData);
 
-        await setWId('');
-        await setWName('');
+        // await setWId('');
+        // await setWName('');
         await setWStartTime('');
         await setWEndTime('');
         await setWAllTime('');

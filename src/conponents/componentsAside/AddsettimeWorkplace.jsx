@@ -82,6 +82,7 @@ function AddsettimeWorkplace() {
     /////////////////////////////////////////////
     const [staffId, setStaffId] = useState(''); //รหัสหน่วยงาน
     const [staffName, setStaffName] = useState(''); //รหัสหน่วยงาน
+    const [staffLastname, setStaffLastname] = useState(''); //รหัสหน่วยงาน
     const [shift, setShift] = useState('');
     const [startTime, setStartTime] = useState(''); //รหัสหน่วยงาน
     const [endTime, setEndTime] = useState(''); //รหัสหน่วยงาน
@@ -116,9 +117,11 @@ function AddsettimeWorkplace() {
         if (staffId != '') {
             const employeesearch = employeeList.find(employee => employee.employeeId === staffId);
             if (employeesearch) {
-                setStaffName(employeesearch.name);
+                setStaffName(employeesearch.name );
+                setStaffLastname(employeesearch.lastName);
             } else {
                 setStaffName('');
+                setStaffLastname('');
             }
         }
     }, [staffId]);
@@ -992,7 +995,7 @@ function AddsettimeWorkplace() {
 
         const newRowData = {
             staffId: staffId || '',
-            staffName: staffName || '',
+            staffName: staffName +' ' + staffLastname || '',
             shift: shift || '',
             startTime: startTime || '',
             endTime: endTime || '',
@@ -1222,7 +1225,7 @@ function AddsettimeWorkplace() {
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             {/* <label role="staffName">ชื่อพนักงาน</label> */}
-                                            <input type="text" class="form-control" id="staffName" placeholder="ชื่อพนักงาน" value={staffName} onChange={(e) => setStaffName(e.target.value)} />
+                                            <input type="text" class="form-control" id="staffName" placeholder="ชื่อพนักงาน" value={(staffName + " " + staffLastname)} onChange={(e) => setStaffName(e.target.value)} />
                                         </div>
                                     </div>
                                     <div class="col-md-2">
