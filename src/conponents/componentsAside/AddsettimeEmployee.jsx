@@ -66,6 +66,7 @@ const [checkaddData , setCheckaddData] = useState('');
     //Workplace data
     const [employeeId, setEmployeeId] = useState(''); //รหัสหน่วยงาน
     const [name, setName] = useState(''); //ชื่อหน่วยงาน
+    const [lastName, setLastname] = useState(''); //ชื่อหน่วยงาน
     const [workplacestay, setWorkplacestay] = useState(''); //สังกัด
     const [workplaceArea, setWorkplaceArea] = useState(''); //สถานที่ปฏิบัติงาน
     const [workOfWeek, setWorkOfWeek] = useState(''); //วันทำงานต่อสัปดาห์
@@ -663,8 +664,8 @@ const [checkaddData , setCheckaddData] = useState('');
 
         await addRow(newRowData);
 
-        await setWId('');
-        await setWName('');
+        // await setWId('');
+        // await setWName('');
         await setWStartTime('');
         await setWEndTime('');
         await setWAllTime('');
