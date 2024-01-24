@@ -562,6 +562,7 @@ const [checkaddData , setCheckaddData] = useState('');
                 // window.location.reload();
                 setEmployeeId('');
                 setName('');
+                setLastname('');
                 alert('ไม่พบข้อมูล');
 
             } else {
@@ -574,6 +575,7 @@ const [checkaddData , setCheckaddData] = useState('');
                 // Set search values
                 setEmployeeId(response.data.employees[0].employeeId);
                 setName(response.data.employees[0].name);
+                setLastname(response.data.employees[0].lastName);
 
                 // setSearchEmployeeId(response.data.employees[0].employeeId);
                 // setSearchEmployeeName(response.data.employees[0].name);
@@ -828,7 +830,7 @@ const [checkaddData , setCheckaddData] = useState('');
                                                                     key={workplace.id}
                                                                     onClick={() => handleClickResult(workplace)}
                                                                 >
-                                                                    รหัส {workplace.employeeId} ชื่อ{workplace.name}
+                                                                    รหัส {workplace.employeeId} ชื่อ{workplace.name} {workplace.lastName}
                                                                 </li>
                                                             ))}
                                                         </ul>
@@ -852,7 +854,7 @@ const [checkaddData , setCheckaddData] = useState('');
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label role="agencyname">ชื่อพนักงาน</label>
-                                        <input type="text" class="form-control" id="agencyname" placeholder="ชื่อพนักงาน" value={name} onChange={(e) => setName(e.target.value)} />
+                                        <input type="text" class="form-control" id="agencyname" placeholder="ชื่อพนักงาน" value={name + lastName} onChange={(e) => setName(e.target.value)} />
                                     </div>
                                 </div>
 
