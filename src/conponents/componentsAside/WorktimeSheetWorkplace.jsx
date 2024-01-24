@@ -1883,7 +1883,8 @@ function WorktimeSheetWorkplace() {
                 return '';
             }
         });
-
+        combinedArray
+        console.log('combinedArray',combinedArray);
         // const datesArray = combinedArray[employeeId].map(entry => Number(entry.dates));
         // const employeeResultArray = resultArray.map(day => {
         //     const workplaceIdIndex = datesArray.indexOf(day);
@@ -1969,6 +1970,10 @@ function WorktimeSheetWorkplace() {
         //     }
         // });
         const commonDates3 = datesArray.filter(date => !(filteredDaysOff.includes(date) || holidayList.includes(date)));
+        console.log('commonDates3',commonDates3);
+        console.log('datesArray',datesArray);
+
+        datesArray
         const employeeResultArray3 = resultArray.map(day => {
             const workplaceIdIndex = commonDates3.indexOf(day);
             if (workplaceIdIndex !== -1) {
@@ -1983,11 +1988,12 @@ function WorktimeSheetWorkplace() {
 
         // วันที่ทำงานปกติOT
         const commonDates3OT = datesArray.filter(date => !(filteredDaysOff.includes(date) || holidayList.includes(date)));
+        console.log('commonDates3OT',commonDates3OT);
         const employeeResultArray3OT = resultArray.map(day => {
             const workplaceIdIndex = commonDates3OT.indexOf(day);
             if (workplaceIdIndex !== -1) {
                 const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].otTimes;
-                return currentWorkplaceId === searchWorkplaceId ? 1 : parseInt(currentWorkplaceId, 10);
+                return currentWorkplaceId === searchWorkplaceId ? 1 : parseFloat(currentWorkplaceId, 10);
             } else {
                 return '';
             }
