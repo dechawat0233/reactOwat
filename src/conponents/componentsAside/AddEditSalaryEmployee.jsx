@@ -538,7 +538,7 @@ try {
                                                         <div class="col-md-2">
                                                             <input type="text" class="form-control" id="message" placeholder="หมายเหตุ" value={message} onChange={(e) => setMessage(e.target.value)} />
                                                         </div>
-                                                        <div class="col-md-2">
+                                                        <div class="col-md-3">
                                                             <div class="d-flex align-items-end">
                                                                 <button class="btn b_save"><i class="fas fa-check"></i> &nbsp; เพิ่ม</button>
                                                             </div>
@@ -632,7 +632,7 @@ try {
                                                         <div class="col-md-2">
                                                             <input type="text" class="form-control" id="addSalaryName" placeholder="หมายเหตุ" value={minusmessage} onChange={(e) => setMinusmessage(e.target.value)} />
                                                         </div>
-                                                        <div class="col-md-2">
+                                                        <div class="col-md-3">
                                                             <div class="d-flex align-items-end">
                                                                 <button class="btn b_save"><i class="fas fa-check"></i> &nbsp; เพิ่ม</button>
                                                             </div>
