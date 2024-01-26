@@ -74,10 +74,10 @@ case 'จันทร์':
         setListTuesday((prevData) => [...prevData, item]);
         break;
         case 'พุธ':
-            setListTuesday((prevData) => [...prevData, item]);
+            setListWednesday((prevData) => [...prevData, item]);
             break;
             case 'พฤหัส':
-                setListWednesday((prevData) => [...prevData, item]);
+                setListThursday((prevData) => [...prevData, item]);
                 break;
                 case 'ศุกร์':
                     setListFriday((prevData) => [...prevData, item]);
@@ -95,6 +95,12 @@ alert('not select day')
 
   }, [listEmployeeDay] );
 
+  const handleSearchAndDelete = (searchDay, searchPosition) => {
+    const updatedList = listEmployeeDay.filter(
+      (entry) => entry.day !== searchDay || entry.position !== searchPosition
+    );
+    setListEmployeeDay(updatedList);
+  };  
   
     //test 
 
@@ -1358,7 +1364,15 @@ alert('not select day')
     <td>
         {listMonday.length >= 1 ? (
 listMonday.map(item => (
-    <>{item.position}: {item.employees} </>
+<>{item.position}: {item.employees} 
+<button
+type="button"
+                onClick={() => handleSearchAndDelete(item.day, item.position)}
+              >
+             ลบ
+              </button>
+    <br />
+    </>
 
 )
 )
@@ -1369,7 +1383,15 @@ listMonday.map(item => (
     <td>
         {listTuesday.length >= 1 ? (
 listTuesday.map(item => (
-    <>{item.position}: {item.employees} </>
+    <>{item.position}: {item.employees} 
+    <button
+type="button"
+                onClick={() => handleSearchAndDelete(item.day, item.position)}
+              >
+             ลบ
+              </button>
+    <br />
+    </>
 
 )
 )
@@ -1380,7 +1402,15 @@ listTuesday.map(item => (
     <td>
         {listWednesday.length >= 1 ? (
 listWednesday.map(item => (
-    <>{item.position}: {item.employees} </>
+    <>{item.position}: {item.employees} 
+    <button
+type="button"
+                onClick={() => handleSearchAndDelete(item.day, item.position)}
+              >
+             ลบ
+              </button>
+    <br />
+</>
 )
 )
         ): (
@@ -1390,7 +1420,15 @@ listWednesday.map(item => (
     <td>
         {listThursday.length >= 1 ? (
 listThursday.map(item => (
-    <>{item.position}: {item.employees} </>
+    <>{item.position}: {item.employees} 
+<button
+type="button"
+                onClick={() => handleSearchAndDelete(item.day, item.position)}
+              >
+             ลบ
+              </button>
+    <br />
+    </>
 )
 )
         ): (
@@ -1400,7 +1438,15 @@ listThursday.map(item => (
     <td>
         {listFriday.length >= 1 ? (
 listFriday.map(item => (
-    <>{item.position}: {item.employees} </>
+    <>{item.position}: {item.employees} 
+    <button
+type="button"
+                onClick={() => handleSearchAndDelete(item.day, item.position)}
+              >
+             ลบ
+              </button>
+    <br />
+</>
 )
 )
         ): (
@@ -1410,7 +1456,15 @@ listFriday.map(item => (
     <td>
         {listSaturday.length >= 1 ? (
 listSaturday.map(item => (
-    <>{item.position}: {item.employees} </>
+    <>{item.position}: {item.employees} 
+    <button
+type="button"
+                onClick={() => handleSearchAndDelete(item.day, item.position)}
+              >
+             ลบ
+              </button>
+    <br />
+</>
 )
 )
         ): (
@@ -1420,7 +1474,15 @@ listSaturday.map(item => (
     <td>
         {listSunday.length >= 1 ? (
 listSunday.map(item => (
-    <>{item.position}: {item.employees} </>
+    <>{item.position}: {item.employees} 
+    <button
+type="button"
+                onClick={() => handleSearchAndDelete(item.day, item.position)}
+              >
+             ลบ
+              </button>
+    <br />
+</>
 )
 )
         ): (
