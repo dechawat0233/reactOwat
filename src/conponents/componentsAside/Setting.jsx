@@ -13,95 +13,95 @@ import EmployeeWorkDay from './componentsetting/EmployeeWorkDay';
 
 
 function Setting() {
-  // State for selected values
-  const [selectedDay, setSelectedDay] = useState('');
-  const [selectedPosition, setSelectedPosition] = useState('');
-  const [numberOfEmployees, setNumberOfEmployees] = useState('');
+    // State for selected values
+    const [selectedDay, setSelectedDay] = useState('');
+    const [selectedPosition, setSelectedPosition] = useState('');
+    const [numberOfEmployees, setNumberOfEmployees] = useState('');
 
-const [listEmployeeDay , setListEmployeeDay ] = useState([]);
-const [listMonday , setListMonday ] = useState([]);
-const [listTuesday , setListTuesday ] = useState([]);
-const [listWednesday, setListWednesday] = useState([]);
-const [listThursday, setListThursday] = useState([]);
-const [listFriday, setListFriday] = useState([]);
-const [listSaturday , setListSaturday ] = useState([]);
-const [listSunday, setListSunday] = useState([]);
-
-
-  // Options for dropdowns
-  const daysOfWeek = ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัส', 'ศุกร์' , 'เสาร์', 'อาทิตย์'];
-  const positions = ['Manager', 'Developer', 'Designer', 'Marketing'];
-
-  // Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if(selectedDates && selectedPosition && numberOfEmployees !== '' ) {
-        const newData = {
-            day: selectedDay,
-            position: selectedPosition,
-            employees: numberOfEmployees,
-          };
-
-setListEmployeeDay((prevData) => [...prevData, newData]);
-
-                // Reset the form fields after submitting
-          setSelectedDay('');
-          setSelectedPosition('');
-          setNumberOfEmployees('');
-    }
-    
-  };
+    const [listEmployeeDay, setListEmployeeDay] = useState([]);
+    const [listMonday, setListMonday] = useState([]);
+    const [listTuesday, setListTuesday] = useState([]);
+    const [listWednesday, setListWednesday] = useState([]);
+    const [listThursday, setListThursday] = useState([]);
+    const [listFriday, setListFriday] = useState([]);
+    const [listSaturday, setListSaturday] = useState([]);
+    const [listSunday, setListSunday] = useState([]);
 
 
-  //set data to 7 day
-  useEffect(() => {
-//clean data
-setListMonday([]);
-setListTuesday([]);
-setListWednesday([]);
-setListThursday([]);
-setListFriday([]);
-setListSaturday ([]);
-setListSunday([]);
+    // Options for dropdowns
+    const daysOfWeek = ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัส', 'ศุกร์', 'เสาร์', 'อาทิตย์'];
+    const positions = ['Manager', 'Developer', 'Designer', 'Marketing'];
 
-listEmployeeDay.map((item) => {
-switch(item.day){
-case 'จันทร์':
-    setListMonday((prevData) => [...prevData, item]);
-    break;
-    case 'อังคาร':
-        setListTuesday((prevData) => [...prevData, item]);
-        break;
-        case 'พุธ':
-            setListWednesday((prevData) => [...prevData, item]);
-            break;
-            case 'พฤหัส':
-                setListThursday((prevData) => [...prevData, item]);
-                break;
+    // Handle form submission
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (selectedDates && selectedPosition && numberOfEmployees !== '') {
+            const newData = {
+                day: selectedDay,
+                position: selectedPosition,
+                employees: numberOfEmployees,
+            };
+
+            setListEmployeeDay((prevData) => [...prevData, newData]);
+
+            // Reset the form fields after submitting
+            setSelectedDay('');
+            setSelectedPosition('');
+            setNumberOfEmployees('');
+        }
+
+    };
+
+
+    //set data to 7 day
+    useEffect(() => {
+        //clean data
+        setListMonday([]);
+        setListTuesday([]);
+        setListWednesday([]);
+        setListThursday([]);
+        setListFriday([]);
+        setListSaturday([]);
+        setListSunday([]);
+
+        listEmployeeDay.map((item) => {
+            switch (item.day) {
+                case 'จันทร์':
+                    setListMonday((prevData) => [...prevData, item]);
+                    break;
+                case 'อังคาร':
+                    setListTuesday((prevData) => [...prevData, item]);
+                    break;
+                case 'พุธ':
+                    setListWednesday((prevData) => [...prevData, item]);
+                    break;
+                case 'พฤหัส':
+                    setListThursday((prevData) => [...prevData, item]);
+                    break;
                 case 'ศุกร์':
                     setListFriday((prevData) => [...prevData, item]);
                     break;
-                    case 'เสาร์':
-                        setListSaturday((prevData) => [...prevData, item]);
-                        break;
-                        case 'อาทิตย์':
-                            setListSunday((prevData) => [...prevData, item]);
-                            break;
-default:
-alert('not select day')                                                                                        
-}
-});
+                case 'เสาร์':
+                    setListSaturday((prevData) => [...prevData, item]);
+                    break;
+                case 'อาทิตย์':
+                    setListSunday((prevData) => [...prevData, item]);
+                    break;
+                default:
+                    alert('not select day')
+            }
+        });
 
-  }, [listEmployeeDay] );
+    }, [listEmployeeDay]);
 
-  const handleSearchAndDelete = (searchDay, searchPosition) => {
-    const updatedList = listEmployeeDay.filter(
-      (entry) => entry.day !== searchDay || entry.position !== searchPosition
-    );
-    setListEmployeeDay(updatedList);
-  };  
-  
+    const handleSearchAndDelete = (searchDay, searchPosition) => {
+        const updatedList = listEmployeeDay.filter(
+            (entry) => entry.day !== searchDay || entry.position !== searchPosition
+        );
+        setListEmployeeDay(updatedList);
+    };
+
     //test 
 
     const styles = {
@@ -1296,39 +1296,6 @@ alert('not select day')
                                         </section>
                                         {/* <!--Frame--> */}
 
-      <div>
-        <label>วันในสัปดาห์:</label>
-        <select value={selectedDay} onChange={(e) => setSelectedDay(e.target.value)}>
-          <option value="">เลือกวัน</option>
-          {daysOfWeek.map((day) => (
-            <option key={day} value={day}>
-              {day}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div>
-        <label>ตำแหน่งงาน:</label>
-        <select value={selectedPosition} onChange={(e) => setSelectedPosition(e.target.value)}>
-          <option value="">เลือกตำแหน่ง</option>
-          {positions.map((position) => (
-            <option key={position} value={position}>
-              {position}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div>
-        <label>Number of Employees:</label>
-        <input
-          type="number"
-          placeholder="number"
-          value={numberOfEmployees}
-          onChange={(e) => setNumberOfEmployees(e.target.value)}
-        />
-      </div>
-      <button type="button" onClick={handleSubmit }>เพิ่ม</button>
-    
                                     </div>
                                     <div class="col-md-6">
                                         <section class="Frame">
@@ -1336,6 +1303,49 @@ alert('not select day')
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
+                                                            <div class="row">
+                                                                <label>วันในสัปดาห์:</label>
+
+                                                                <div class="col-md-6">
+
+                                                                    <select className="form-control" value={selectedDay} onChange={(e) => setSelectedDay(e.target.value)}>
+                                                                        <option value="">เลือกวัน</option>
+                                                                        {daysOfWeek.map((day) => (
+                                                                            <option key={day} value={day}>
+                                                                                {day}
+                                                                            </option>
+                                                                        ))}
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+
+                                                                <label>ตำแหน่งงาน:</label>
+                                                                <div class="col-md-6">
+
+                                                                    <select className="form-control" value={selectedPosition} onChange={(e) => setSelectedPosition(e.target.value)}>
+                                                                        <option value="">เลือกตำแหน่ง</option>
+                                                                        {positions.map((position) => (
+                                                                            <option key={position} value={position}>
+                                                                                {position}
+                                                                            </option>
+                                                                        ))}
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <label>Number of Employees:</label>
+                                                                <input
+                                                                    type="number"
+                                                                    placeholder="number"
+                                                                    value={numberOfEmployees}
+                                                                    className="form-control"
+                                                                    onChange={(e) => setNumberOfEmployees(e.target.value)}
+                                                                />
+                                                            </div>
+                                                            <br/>
+                                                            <button type="button" class="btn btn-primary" onClick={handleSubmit} >เพิ่ม</button>
+                                                            <br/>
                                                             <label role="personalLeave">วันทำงาน</label>
                                                             <div class="container" style={{ overflowX: 'scroll' }}>
                                                                 <table id="" class="table table-bordered ">
@@ -1360,137 +1370,137 @@ alert('not select day')
                                                                             <td><input type="checkbox" class="form-control" name='' checked={workday6} onChange={handleCheckboxChange6} /></td>
                                                                             <td><input type="checkbox" class="form-control" name='' checked={workday7} onChange={handleCheckboxChange7} /></td>
                                                                         </tr>
-<tr>
-    <td>
-        {listMonday.length >= 1 ? (
-listMonday.map(item => (
-<>{item.position}: {item.employees} 
-<button
-type="button"
-                onClick={() => handleSearchAndDelete(item.day, item.position)}
-              >
-             ลบ
-              </button>
-    <br />
-    </>
+                                                                        <tr>
+                                                                            <td>
+                                                                                {listMonday.length >= 1 ? (
+                                                                                    listMonday.map(item => (
+                                                                                        <>{item.position}: {item.employees}
+                                                                                            <button
+                                                                                                type="button"
+                                                                                                onClick={() => handleSearchAndDelete(item.day, item.position)}
+                                                                                            >
+                                                                                                ลบ
+                                                                                            </button>
+                                                                                            <br />
+                                                                                        </>
 
-)
-)
-        ): (
-            <td></td>
-        )}
-    </td>
-    <td>
-        {listTuesday.length >= 1 ? (
-listTuesday.map(item => (
-    <>{item.position}: {item.employees} 
-    <button
-type="button"
-                onClick={() => handleSearchAndDelete(item.day, item.position)}
-              >
-             ลบ
-              </button>
-    <br />
-    </>
+                                                                                    )
+                                                                                    )
+                                                                                ) : (
+                                                                                    <td></td>
+                                                                                )}
+                                                                            </td>
+                                                                            <td>
+                                                                                {listTuesday.length >= 1 ? (
+                                                                                    listTuesday.map(item => (
+                                                                                        <>{item.position}: {item.employees}
+                                                                                            <button
+                                                                                                type="button"
+                                                                                                onClick={() => handleSearchAndDelete(item.day, item.position)}
+                                                                                            >
+                                                                                                ลบ
+                                                                                            </button>
+                                                                                            <br />
+                                                                                        </>
 
-)
-)
-        ): (
-            <td></td>
-        )}
-    </td>
-    <td>
-        {listWednesday.length >= 1 ? (
-listWednesday.map(item => (
-    <>{item.position}: {item.employees} 
-    <button
-type="button"
-                onClick={() => handleSearchAndDelete(item.day, item.position)}
-              >
-             ลบ
-              </button>
-    <br />
-</>
-)
-)
-        ): (
-            <td></td>
-        )}
-    </td>
-    <td>
-        {listThursday.length >= 1 ? (
-listThursday.map(item => (
-    <>{item.position}: {item.employees} 
-<button
-type="button"
-                onClick={() => handleSearchAndDelete(item.day, item.position)}
-              >
-             ลบ
-              </button>
-    <br />
-    </>
-)
-)
-        ): (
-            <td></td>
-        )}
-    </td>
-    <td>
-        {listFriday.length >= 1 ? (
-listFriday.map(item => (
-    <>{item.position}: {item.employees} 
-    <button
-type="button"
-                onClick={() => handleSearchAndDelete(item.day, item.position)}
-              >
-             ลบ
-              </button>
-    <br />
-</>
-)
-)
-        ): (
-            <td></td>
-        )}
-    </td>
-    <td>
-        {listSaturday.length >= 1 ? (
-listSaturday.map(item => (
-    <>{item.position}: {item.employees} 
-    <button
-type="button"
-                onClick={() => handleSearchAndDelete(item.day, item.position)}
-              >
-             ลบ
-              </button>
-    <br />
-</>
-)
-)
-        ): (
-            <td></td>
-        )}
-    </td>
-    <td>
-        {listSunday.length >= 1 ? (
-listSunday.map(item => (
-    <>{item.position}: {item.employees} 
-    <button
-type="button"
-                onClick={() => handleSearchAndDelete(item.day, item.position)}
-              >
-             ลบ
-              </button>
-    <br />
-</>
-)
-)
-        ): (
-            <td></td>
-        )}
-    </td>
+                                                                                    )
+                                                                                    )
+                                                                                ) : (
+                                                                                    <td></td>
+                                                                                )}
+                                                                            </td>
+                                                                            <td>
+                                                                                {listWednesday.length >= 1 ? (
+                                                                                    listWednesday.map(item => (
+                                                                                        <>{item.position}: {item.employees}
+                                                                                            <button
+                                                                                                type="button"
+                                                                                                onClick={() => handleSearchAndDelete(item.day, item.position)}
+                                                                                            >
+                                                                                                ลบ
+                                                                                            </button>
+                                                                                            <br />
+                                                                                        </>
+                                                                                    )
+                                                                                    )
+                                                                                ) : (
+                                                                                    <td></td>
+                                                                                )}
+                                                                            </td>
+                                                                            <td>
+                                                                                {listThursday.length >= 1 ? (
+                                                                                    listThursday.map(item => (
+                                                                                        <>{item.position}: {item.employees}
+                                                                                            <button
+                                                                                                type="button"
+                                                                                                onClick={() => handleSearchAndDelete(item.day, item.position)}
+                                                                                            >
+                                                                                                ลบ
+                                                                                            </button>
+                                                                                            <br />
+                                                                                        </>
+                                                                                    )
+                                                                                    )
+                                                                                ) : (
+                                                                                    <td></td>
+                                                                                )}
+                                                                            </td>
+                                                                            <td>
+                                                                                {listFriday.length >= 1 ? (
+                                                                                    listFriday.map(item => (
+                                                                                        <>{item.position}: {item.employees}
+                                                                                            <button
+                                                                                                type="button"
+                                                                                                onClick={() => handleSearchAndDelete(item.day, item.position)}
+                                                                                            >
+                                                                                                ลบ
+                                                                                            </button>
+                                                                                            <br />
+                                                                                        </>
+                                                                                    )
+                                                                                    )
+                                                                                ) : (
+                                                                                    <td></td>
+                                                                                )}
+                                                                            </td>
+                                                                            <td>
+                                                                                {listSaturday.length >= 1 ? (
+                                                                                    listSaturday.map(item => (
+                                                                                        <>{item.position}: {item.employees}
+                                                                                            <button
+                                                                                                type="button"
+                                                                                                onClick={() => handleSearchAndDelete(item.day, item.position)}
+                                                                                            >
+                                                                                                ลบ
+                                                                                            </button>
+                                                                                            <br />
+                                                                                        </>
+                                                                                    )
+                                                                                    )
+                                                                                ) : (
+                                                                                    <td></td>
+                                                                                )}
+                                                                            </td>
+                                                                            <td>
+                                                                                {listSunday.length >= 1 ? (
+                                                                                    listSunday.map(item => (
+                                                                                        <>{item.position}: {item.employees}
+                                                                                            <button
+                                                                                                type="button"
+                                                                                                onClick={() => handleSearchAndDelete(item.day, item.position)}
+                                                                                            >
+                                                                                                ลบ
+                                                                                            </button>
+                                                                                            <br />
+                                                                                        </>
+                                                                                    )
+                                                                                    )
+                                                                                ) : (
+                                                                                    <td></td>
+                                                                                )}
+                                                                            </td>
 
-</tr>
+                                                                        </tr>
 
                                                                         {/* <tr>
                                                                             <td><input type="text" class="form-control" name='' value={workcount1} onChange={(e) => setWorkcount1(e.target.value)} /></td>
