@@ -39,6 +39,8 @@ import AddEditEmployee from "./conponents/componentsAside/AddEditEmployee";
 import AddEditSalaryEmployee from "./conponents/componentsAside/AddEditSalaryEmployee";
 
 import Setting from "./conponents/componentsAside/Setting";
+import EmployeeWorkDay from "./conponents/componentsAside/componentsetting/EmployeeWorkDay";
+
 import SystemUser from "./conponents/componentsAside/SystemUser";
 import Addsettime from "./conponents/componentsAside/Addsettime";
 
