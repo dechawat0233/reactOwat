@@ -2668,7 +2668,7 @@ function WorktimeSheetWorkplace() {
             const numCols = daysInMonth;
             const cellWidth = 6.5;
             const cellHeight = 3.5;
-            const startX = 35; // Adjust the starting X-coordinate as needed
+            const startX = 55; // Adjust the starting X-coordinate as needed
             const startY = 55; // Adjust the starting Y-coordinate as needed
             const borderWidth = 0.5; // Adjust the border width as needed
 
@@ -2721,37 +2721,48 @@ function WorktimeSheetWorkplace() {
             };
 
 
-            const numRowsLeftHead = 7;
+            const numRowsLeftHead = 1;
             const numColsLeftHead = 1;
-            const cellWidthLeftHead = 30;
+            const cellWidthLeftHead = 50;
             const cellHeightLeftHead = 3.5;
             const startXLeftHead = 5; // Adjust the starting X-coordinate as needed
             // const startYLeftHead = 20; // Adjust the starting Y-coordinate as needed
             const borderWidthLeftHead = 0.5; // Adjust the border width as needed
 
             const drawTableLeftHead = (tableNumber) => {
-                for (let i = 0; i < numRows; i++) {
+                for (let i = 0; i < 1; i++) {
                     for (let j = 0; j < numColsLeftHead; j++) {
                         const x = startXLeftHead + j * cellWidthLeftHead;
                         const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 3.7);
                         // drawCell(x, y, cellWidthLeftHead, cellHeight);
-                        const adjustedCellHeight = i === 0 ? cellHeight * 2 : cellHeight;
+                        // const adjustedCellHeight = i === 0 ? cellHeight * 2 : cellHeight;
+                        const adjustedCellHeight = cellHeight * 8;
 
-                        if (i === 0) {
-                            drawCell(x, y, cellWidthLeftHead, adjustedCellHeight);
+                        // if (i === 0) {
+                        //     drawCell(x, y, cellWidthLeftHead, adjustedCellHeight);
 
-                        } else {
-                            drawCell(x, y + cellHeight, cellWidthLeftHead, adjustedCellHeight);
+                        // } else {
+                        //     drawCell(x, y + cellHeight, cellWidthLeftHead, adjustedCellHeight);
 
-                        }
+                        // }
+                        drawCell(x, y, cellWidthLeftHead, adjustedCellHeight);
 
-                        if (i >= numRows - 3) {
-                            const arrayIndex = i - (numRows - 3); // 0 for the last row, 1 for the second last row
-                            if (arraylistOT[arrayIndex]) {
-                                const cellText = arraylistOT[arrayIndex].toString(); // Convert to string if needed
-                                doc.text("โอที " + cellText, x + 26, y - 1, { align: 'center' }); // Use the entire cellText
-                            }
-                        }
+
+                        // if (i >= numRows - 3) {
+                        //     const arrayIndex = i - (numRows - 3); // 0 for the last row, 1 for the second last row
+                        //     if (arraylistOT[arrayIndex]) {
+                        //         const cellText = arraylistOT[arrayIndex].toString(); // Convert to string if needed
+                        //         doc.text("โอที " + cellText, x + 46, y + 2.5, { align: 'center' }); // Use the entire cellText
+                        //     }
+                        // }
+                        const cellText0 = arraylistOT[0].toString(); // Convert to string if needed
+                        const cellText1 = arraylistOT[1].toString(); // Convert to string if needed
+                        const cellText2 = arraylistOT[2].toString(); // Convert to string if needed
+
+                        doc.text("โอที " + cellText0, x + 46, y + 2.5 + (3.5 * 4), { align: 'center' }); // Use the entire cellText
+                        doc.text("โอที " + cellText1, x + 46, y + 2.5 + (3.5 * 5), { align: 'center' }); // Use the entire cellText
+                        doc.text("โอที " + cellText2, x + 46, y + 2.5 + (3.5 * 6), { align: 'center' }); // Use the entire cellText
+
                     }
                 }
             };
@@ -2793,13 +2804,13 @@ function WorktimeSheetWorkplace() {
             let startXSpSalary; // Declare startXSpSalary before using it
 
             if (daysInMonth === 28) {
-                startXSpSalary = 137;
+                startXSpSalary = 157;
             } else if (daysInMonth === 29) {
-                startXSpSalary = 143.5;
+                startXSpSalary = 163.5;
             } else if (daysInMonth === 30) {
-                startXSpSalary = 150;
+                startXSpSalary = 170;
             } else if (daysInMonth === 31) {
-                startXSpSalary = 156.5;
+                startXSpSalary = 176.5;
             };
             // console.log('startXSpSalary:', startXSpSalary);
             // console.log('cellHeightSpSalary:', cellHeightSpSalary);
@@ -2940,13 +2951,14 @@ function WorktimeSheetWorkplace() {
             // const cellWidthTopHead = 200;
             let cellWidthTopHead;
             if (daysInMonth === 28) {
-                cellWidthTopHead = 267;
+                // 267
+                cellWidthTopHead = 262;
             } else if (daysInMonth === 29) {
-                cellWidthTopHead = 273.5;
+                cellWidthTopHead = 268.5;
             } else if (daysInMonth === 30) {
-                cellWidthTopHead = 280;
+                cellWidthTopHead = 275;
             } else if (daysInMonth === 31) {
-                cellWidthTopHead = 286.5;
+                cellWidthTopHead = 281.5;
             };
             const drawTableTopHead = () => {
                 for (let i = 0; i < numRowsTopHead; i++) {
@@ -3024,6 +3036,31 @@ function WorktimeSheetWorkplace() {
                     // const arrayText = dataArray[i].join('     '); // Use spaces to mimic the width
                     let currentX = startX;
                     let currentY = startY + 3.7;
+
+                    for (let j = 0; j < dataArray[i].length; j++) {
+                        // const elementWidth = calculateElementWidth(dataArray[i][j]);
+                        const textToDraw = dataArray[i][j].toString();
+                        const alignment = textToDraw.length > 3 ? { align: 'left', angle: 90, xOffset: 5 } : { align: 'left' };
+
+                        if (textToDraw.length > 3) {
+                            doc.text(textToDraw, currentX + 2, 3 + currentY + i * verticalDistance, alignment);
+                        } else {
+                            doc.text(textToDraw, currentX + 1, 3 + currentY + i * verticalDistance, alignment);
+                        }
+                        // doc.text(textToDraw, currentX + 2, 3 + currentY + i * verticalDistance, alignment);
+                        // currentX += elementWidth + cellWidth; 
+                        currentX += cellWidth;
+                    }
+                }
+            };
+
+            // แสดงตารางวันทำงานธรรมดาช.ใ.
+            const drawArrayTextAllTime = (dataArray) => {
+                for (let i = 0; i < dataArray.length; i++) {
+                    // const arrayText = dataArray[i].join('      ');
+                    // const arrayText = dataArray[i].join('     '); // Use spaces to mimic the width
+                    let currentX = startX;
+                    let currentY = startY + (3.5 * 2);
 
                     for (let j = 0; j < dataArray[i].length; j++) {
                         // const elementWidth = calculateElementWidth(dataArray[i][j]);
@@ -3139,7 +3176,7 @@ function WorktimeSheetWorkplace() {
             const drawArrayTextOT = (dataArray) => {
                 for (let i = 0; i < dataArray.length; i++) {
                     let currentX = startX - 1;
-                    let currentY = startY + 3 + cellHeight;
+                    let currentY = startY + 3 + (cellHeight * 2);
 
                     for (let j = 0; j < dataArray[i].length; j++) {
                         // const elementWidth = calculateElementWidth(dataArray[i][j]);
@@ -3156,7 +3193,7 @@ function WorktimeSheetWorkplace() {
                     // const arrayText = dataArray[i].join('      ');
                     // const arrayText = dataArray[i].join('     '); // Use spaces to mimic the width
                     let currentX = startX - 1;
-                    let currentY = startY + (3 * 3);
+                    let currentY = startY + (3 * 4);
 
                     for (let j = 0; j < dataArray[i].length; j++) {
                         // const elementWidth = calculateElementWidth(dataArray[i][j]);
@@ -3177,7 +3214,7 @@ function WorktimeSheetWorkplace() {
                     // const arrayText = dataArray[i].join('      ');
                     // const arrayText = dataArray[i].join('     '); // Use spaces to mimic the width
                     let currentX = startX - 1;
-                    let currentY = startY + (3 * 4);
+                    let currentY = startY + (3 * 5);
 
                     for (let j = 0; j < dataArray[i].length; j++) {
                         // const elementWidth = calculateElementWidth(dataArray[i][j]);
@@ -3195,7 +3232,7 @@ function WorktimeSheetWorkplace() {
             const drawArrayTextOTHoliday = (dataArray) => {
                 for (let i = 0; i < dataArray.length; i++) {
                     let currentX = startX - 1;
-                    let currentY = startY + (3 * 5);
+                    let currentY = startY + (3 * 6);
 
                     for (let j = 0; j < dataArray[i].length; j++) {
                         // const elementWidth = calculateElementWidth(dataArray[i][j]);
@@ -3270,7 +3307,7 @@ function WorktimeSheetWorkplace() {
                     // Calculate the product and convert it to a string
                     const product = (sumArrayHoli[i] * (1.5 * (countalldaywork / 8))).toString();
 
-                    doc.text(sumArrayHoli[i].toString(), currentX + 2, 3 + currentY, { align: 'center' });
+                    doc.text(sumArrayHoli[i].toString(), currentX + 2, 6.5 + currentY, { align: 'center' });
                     // doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
                 }
             };
@@ -3284,7 +3321,7 @@ function WorktimeSheetWorkplace() {
                     // Calculate the product and convert it to a string
                     const product = (sumArrayHoliday[i] * (2 * (countalldaywork / 8))).toString();
 
-                    doc.text(sumArrayHoliday[i].toString(), currentX + 2, 3 + currentY, { align: 'center' });
+                    doc.text(sumArrayHoliday[i].toString(), currentX + 2, 10.5 + currentY, { align: 'center' });
                     // doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
                 }
             };
@@ -3376,7 +3413,7 @@ function WorktimeSheetWorkplace() {
 
             const drawArrayTextName = (dataArray) => {
                 for (let i = 0; i < dataArray.length; i++) {
-                    let currentX = startX - 13;
+                    let currentX = startX - 20;
                     let currentY = startY + i * verticalDistance;
 
                     for (let j = 0; j < dataArray[i].length; j++) {
@@ -3385,22 +3422,23 @@ function WorktimeSheetWorkplace() {
                         let yAdjustment = 0;
 
                         if (j === 0) {
-                            xAdjustment = -8;
+                            xAdjustment = -20;
                         }
                         if (j === 1) {
-                            xAdjustment = -8;
+                            xAdjustment = +10;
+                            yAdjustment = -3.5;
                         }
                         if (j === 2) {
-                            xAdjustment = 8;
-                            yAdjustment = -3.5;
+                            xAdjustment = +15;
+                            // yAdjustment = -3.5;
                         }
                         if (j === 3) {
-                            xAdjustment = 8;
-                            yAdjustment = -3.5;
+                            xAdjustment = +15;
+                            // yAdjustment = -3.5;
                         }
 
                         if (j === 4) {
-                            yAdjustment = 7;
+                            yAdjustment = 10.5;
                         }
                         doc.text(
                             dataArray[i][j].toString(),
@@ -3742,7 +3780,8 @@ function WorktimeSheetWorkplace() {
                         drawTableNumHeadTop();
                         drawTableSpSalaryTop();
                         // drawTableSpSalaryHeadTop();
-                        drawTableMessTop();
+                        // drawTableMessTop();
+
                         // drawTableOT();
                         // drawTableOT(arraylistOT);
 
@@ -3760,16 +3799,18 @@ function WorktimeSheetWorkplace() {
                         drawTableLeftHead(i, arrayWorkNormalDay.slice(dataIdx, dataIdx + 1));
                         drawTableNumHead(i, arrayWorkNormalDay.slice(dataIdx, dataIdx + 1));
                         drawTableSpSalary(i, arrayWorkNormalDay.slice(dataIdx, dataIdx + 1));
-                        drawTableMess(i, arrayWorkNormalDay.slice(dataIdx, dataIdx + 1));
+                        // drawTableMess(i, arrayWorkNormalDay.slice(dataIdx, dataIdx + 1));
                         // drawArrayText(arraytest, dataIdx, dataIdx + 1);
 
                         // drawArrayText(arraytest.slice(dataIdx, dataIdx + 1));
 
                     }
-                }
+                } arrayAllTime
 
                 drawArrayText(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex));
                 // drawArrayText(extractedDataAddSalary);
+                // drawArrayTextAllTime
+                drawArrayTextAllTime(arrayAllTime.slice(pageStartIndex, pageEndIndex));
 
                 drawArrayTextOT(arrayWorkOTNormalDay.slice(pageStartIndex, pageEndIndex));
 
@@ -3784,8 +3825,8 @@ function WorktimeSheetWorkplace() {
                 // drawArrayTextSumWorkOT(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArrayOT.slice(pageStartIndex, pageEndIndex));
 
                 drawArrayTextSumWorkHoli(arrayWorkHoli.slice(pageStartIndex, pageEndIndex), sumArrayAllTime.slice(pageStartIndex, pageEndIndex));
-
                 drawArrayTextSumWorkHoliday(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), sumArrayOTAllTime.slice(pageStartIndex, pageEndIndex));
+
                 // drawArrayTextSumWorkOTHoliday(arrayWorkOTHoliday.slice(pageStartIndex, pageEndIndex), sumArrayOTHoliday.slice(pageStartIndex, pageEndIndex));
 
 
