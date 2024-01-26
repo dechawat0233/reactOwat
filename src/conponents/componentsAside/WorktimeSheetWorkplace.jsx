@@ -3501,7 +3501,7 @@ function WorktimeSheetWorkplace() {
             // } 
             const title = 'บริษัท โอวาท โปร แอนด์ ควิก จำกัด';
             const subTitle = 'ใบแสดงเวลาปฏิบัติงาน'; // Replace with your desired subtitle text
-            const TriTitle = 'หน่วยงาน'; // Replace with your desired subtitle text
+            const TriTitle = 'หน่วยงาน ' + searchWorkplaceName; // Replace with your desired subtitle text
 
             const alldaywork = 'รวมวันทำงาน';
             const countalldaywork = '';
