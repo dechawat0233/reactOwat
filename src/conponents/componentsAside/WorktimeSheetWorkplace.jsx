@@ -49,6 +49,8 @@ function WorktimeSheetWorkplace() {
     const [workplaceDataListAddSalary, setWorkplaceDataListAddSalary] = useState([]);
     const [workplaceDataWorkOfHour, setWorkplaceDataWorkOfHour] = useState([]);
 
+    const [WName, setWName] = useState('');
+
 
     const [daysOffArray, setDaysOffArray] = useState([]);
     const [result_data, setResult_data] = useState([]);
@@ -142,6 +144,8 @@ function WorktimeSheetWorkplace() {
                 console.error('Error fetching data:', error);
             });
     }, []); // The empty array [] ensures that the effect runs only once after the initial render
+
+
 
     console.log('employeelist', employeelist);
 
@@ -333,7 +337,7 @@ function WorktimeSheetWorkplace() {
             'employee_workplaceRecord.workplaceId': searchWorkplaceId,
             // 'employee_workplaceRecord.workplaceName': searchWorkplaceName,
 
-        }; console.log(searchWorkplaceId);
+        }; console.log('searchWorkplaceId', searchWorkplaceId);
 
         const parsedNumber = await parseInt(month, 10) - 1;
         const formattedResult = await String(parsedNumber).padStart(2, '0');
@@ -370,6 +374,7 @@ function WorktimeSheetWorkplace() {
         const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         const dates1 = [];
         const dates2 = [];
+
 
         // Loop through the days of the week
         for (let i = 0; i < 7; i++) {
@@ -687,6 +692,21 @@ function WorktimeSheetWorkplace() {
 
     console.log('datasetTest', Datasetsec);
 
+    useEffect(() => {
+        if (searchWorkplaceId !== '') {
+            const workplacesearch = workplaceList.find(workplace => workplace.workplaceId === searchWorkplaceId);
+            if (workplacesearch) {
+                setSearchWorkplaceName(workplacesearch.workplaceName);
+            } else {
+                setSearchWorkplaceName('');
+            }
+            console.log('workplacesearch', workplacesearch);
+
+        }
+
+    }, [searchWorkplaceId]);
+    console.log('workplaceList', workplaceList);
+    console.log('searchWorkplaceId', searchWorkplaceId);
 
     //set salaty calculate
     const [workRate, setWorkRate] = useState(''); //ค่าจ้างต่อวัน
@@ -2489,6 +2509,7 @@ function WorktimeSheetWorkplace() {
     // ];
 
     // const = workplaceDataList
+    const yearThai = parseFloat(year, 10) + 543;
     // เริ่มฟังค์ชั่นpdf
 
     const generatePDFTest123 = () => {
@@ -3478,7 +3499,7 @@ function WorktimeSheetWorkplace() {
             //     drawArrayText(arraytest.slice(pageStartIndex, pageEndIndex));
             //     doc.addPage();
             // } 
-            const title = 'ใบลงเวลาการปฏิบัติงาน';
+            const title = 'บริษัท โอวาท โปร แอนด์ ควิก จำกัด';
             const subTitle = 'ใบแสดงเวลาปฏิบัติงาน'; // Replace with your desired subtitle text
             const TriTitle = 'หน่วยงาน'; // Replace with your desired subtitle text
 
@@ -3642,7 +3663,7 @@ function WorktimeSheetWorkplace() {
                 // } else if (daysInMonth === 31) {
                 //     startXHeadTable = 9;
                 // };
-                const period = 'งวกวันที่ 21 ' + thaiMonthNameLower + ' - 20 ' + thaiMonthName;
+                const period = 'งวดวันที่ 21 ' + thaiMonthNameLower + ' - 20 ' + thaiMonthName + ' พ.ศ. ' + yearThai;
                 const periodWidth = doc.getStringUnitWidth(period) * doc.internal.getFontSize() / doc.internal.scaleFactor;
                 const periodX = (pageWidth - periodWidth) / 2;
                 doc.text(period, periodX, startYTop - 2); // Adjust the vertical position as needed
@@ -3919,7 +3940,8 @@ function WorktimeSheetWorkplace() {
                                     <div class="col-md-12">
                                         <h2 class="title">ค้นหา</h2>
                                         <div class="col-md-12">
-                                            <form onSubmit={handleSearch}>
+                                            {/* <form onSubmit={handleSearch}> */}
+                                            <form >
                                                 <div class="row">
                                                     <div class="col-md-2">
                                                         <div class="form-group">
@@ -3960,7 +3982,7 @@ function WorktimeSheetWorkplace() {
                                                                 <option value="" >เลือกปี</option>
                                                                 {years.map((y) => (
                                                                     <option key={y} value={y}>
-                                                                        {y}
+                                                                        {y + 543}
                                                                     </option>
                                                                 ))}
                                                             </select>
@@ -3969,7 +3991,8 @@ function WorktimeSheetWorkplace() {
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <div class="form-group" style={{ position: 'absolute', bottom: '0' }}>
-                                                                <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา</button>
+                                                                {/* <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา</button> */}
+                                                                <button onClick={generatePDFTest123} class="btn b_save"><i class="nav-icon fas fa-search"></i>Generate PDF2</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -4043,8 +4066,8 @@ function WorktimeSheetWorkplace() {
                                     <section class="Frame">
                                         <div class="container" style={{ overflowX: 'scroll' }}>
                                             {/* <table class="table table-bordered "> */}
-                                            <button onClick={generatePDFTest}>Generate PDF</button>
-                                            <button onClick={generatePDFTest123}>Generate PDF2</button>
+                                            {/* <button onClick={generatePDFTest}>Generate PDF</button>
+                                            <button onClick={generatePDFTest123}>Generate PDF2</button> */}
 
                                             <table ref={tableRef} className="table table-bordered">
                                                 <thead>
