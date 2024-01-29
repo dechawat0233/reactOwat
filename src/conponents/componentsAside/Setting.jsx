@@ -30,7 +30,7 @@ const [listSunday, setListSunday] = useState([]);
 
   // Options for dropdowns
   const daysOfWeek = ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัส', 'ศุกร์' , 'เสาร์', 'อาทิตย์'];
-  const positions = ['Manager', 'Developer', 'Designer', 'Marketing'];
+  const positions = ['หัวหน้างาน', 'พนักงานทำความสะอาด'];
 
   // Handle form submission
   const handleSubmit = (e) => {
@@ -503,6 +503,7 @@ alert('not select day')
         const employeeNameLists = workplace.employeeNameList.map((item) => [...item]);
         setEmployeeNameList(employeeNameLists);
 
+        setListEmployeeDay(workplace.listEmployeeDay);
         // console.log(workplace);
         // // console.log(initialFormData);
         // console.log("formData", formData);
@@ -657,6 +658,7 @@ alert('not select day')
             workcount6: workcount6,
             workcount7: workcount7,
             addSalary: formData.addSalary,
+            listEmployeeDay: listEmployeeDay,
         };
 
 
@@ -1296,7 +1298,10 @@ alert('not select day')
                                         </section>
                                         {/* <!--Frame--> */}
 
-      <div>
+                                        <h2 class="title">ตั้งค่ารายวัน</h2>
+
+<div>
+                                <div>
         <label>วันในสัปดาห์:</label>
         <select value={selectedDay} onChange={(e) => setSelectedDay(e.target.value)}>
           <option value="">เลือกวัน</option>
@@ -1319,7 +1324,7 @@ alert('not select day')
         </select>
       </div>
       <div>
-        <label>Number of Employees:</label>
+        <label>จำนวน:</label>
         <input
           type="number"
           placeholder="number"
@@ -1327,9 +1332,92 @@ alert('not select day')
           onChange={(e) => setNumberOfEmployees(e.target.value)}
         />
       </div>
-      <button type="button" onClick={handleSubmit }>เพิ่ม</button>
-    
+      <button type="button" onClick={handleSubmit }>เพิ่มอัตราพนักงาน</button>
                                     </div>
+
+                                    <div>
+        <label>วันในสัปดาห์:</label>
+        <select value={selectedDay} onChange={(e) => setSelectedDay(e.target.value)}>
+          <option value="">เลือกวัน</option>
+          {daysOfWeek.map((day) => (
+            <option key={day} value={day}>
+              {day}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <section class="Frame">
+                                            <label>กะเช้า</label>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="workStart1">เวลาเข้างาน</label>
+                                                            <input type="text" class="form-control" id="workStart1" placeholder="เวลาเข้างาน" value={workStart1} onChange={(e) => setWorkStart1(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="workEnd1">เวลาออกงาน</label>
+                                                            <input type="text" class="form-control" id="workEnd1" placeholder="เวลาออกงาน" value={workEnd1} onChange={(e) => setWorkEnd1(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/* <!--row--> */}
+                                            </div>
+                                            {/* <!--col-md-12--> */}
+                                        </section>
+                                        {/* <!--Frame--> */}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <section class="Frame">
+                                            <label>กะบ่าย</label>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="workStart2">เวลาเข้างาน</label>
+                                                            <input type="text" class="form-control" id="workStart2" placeholder="เวลาเข้างาน" value={workStart2} onChange={(e) => setWorkStart2(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="workEnd2">เวลาออกงาน</label>
+                                                            <input type="text" class="form-control" id="workEnd2" placeholder="เวลาออกงาน" value={workEnd2} onChange={(e) => setWorkEnd2(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/* <!--row--> */}
+                                            </div>
+                                        </section>
+                                        {/* <!--Frame--> */}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <section class="Frame">
+                                            <label>กะดึก</label>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="workStart3">เวลาเข้างาน</label>
+                                                            <input type="text" class="form-control" id="workStart3" placeholder="เวลาเข้างาน" value={workStart3} onChange={(e) => setWorkStart3(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="workEnd3">เวลาออกงาน</label>
+                                                            <input type="text" class="form-control" id="workEnd3" placeholder="เวลาออกงาน" value={workEnd3} onChange={(e) => setWorkEnd3(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/* <!--row--> */}
+                                            </div>
+                                        </section>
+
+      <button type="button" onClick={handleSubmit }>เพิ่มเวลาการทำงาน</button>
+                                    </div>
+
                                     <div class="col-md-6">
                                         <section class="Frame">
                                             <div class="col-md-12">
