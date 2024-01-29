@@ -17,8 +17,19 @@ function Setting() {
     const [selectedDay, setSelectedDay] = useState('');
     const [selectedPosition, setSelectedPosition] = useState('');
     const [numberOfEmployees, setNumberOfEmployees] = useState('');
-
     const [listEmployeeDay, setListEmployeeDay] = useState([]);
+
+
+    const [selectedDay1, setSelectedDay1] = useState('');
+    const [spWorkStart1 , setSpWorkStart1] = useState('');
+const [spWorkEnd1, setSpWorkEnd1] = useState('');
+const [spWorkStart2 , setSpWorkStart2] = useState('');
+const [spWorkEnd2, setSpWorkEnd2] = useState('');
+const [spWorkStart3, setSpWorkStart3] = useState('');
+const [spWorkEnd3 , setSpWorkEnd3] = useState('');
+
+    const [listSpecialWorktime, setListSpecialWorktime] = useState([]);
+
     const [listMonday, setListMonday] = useState([]);
     const [listTuesday, setListTuesday] = useState([]);
     const [listWednesday, setListWednesday] = useState([]);
@@ -54,6 +65,41 @@ function Setting() {
     };
 
 
+        // Handle form submission
+        const handleAddSpecialWorktime = (e) => {
+            e.preventDefault();
+    
+            if (selectedDay1 !== '') {
+                if(spWorkStart1 || spWorkEnd1 || spWorkStart2  || spWorkEnd2 || spWorkStart3 || spWorkEnd3  !== ''){
+                    const newData = {
+                        day: selectedDay1,
+                        spWorkStart1 : spWorkStart1 ,
+                        spWorkEnd1: spWorkEnd1,
+                        spWorkStart2 : spWorkStart2 ,
+                        spWorkEnd2: spWorkEnd2,
+                        spWorkStart3: spWorkStart3,
+                        spWorkEnd3 : spWorkEnd3 ,
+                    };
+        
+                    setListSpecialWorktime((prevData) => [...prevData, newData]);
+        
+                    // Reset the form fields after submitting
+                    setSelectedDay1('');
+                    setSpWorkStart1('');
+                    setSpWorkEnd1('');
+                    setSpWorkStart2('');
+                    setSpWorkEnd2('');
+                    setSpWorkStart3('');
+                     setSpWorkEnd3('');
+                        
+                } else {
+                    alert("กรุณากรอกข้อมูลเวลาปฏิบัติงานที่ต้องการเพิ่ม");
+                }
+
+            }
+    
+        };
+    
     //set data to 7 day
     useEffect(() => {
         //clean data
@@ -93,7 +139,36 @@ function Setting() {
             }
         });
 
-    }, [listEmployeeDay]);
+        //set special work time
+        listSpecialWorktime.map((item) => {
+            switch (item.day) {
+                case 'จันทร์':
+                    setListMonday((prevData) => [...prevData, item]);
+                    break;
+                case 'อังคาร':
+                    setListTuesday((prevData) => [...prevData, item]);
+                    break;
+                case 'พุธ':
+                    setListWednesday((prevData) => [...prevData, item]);
+                    break;
+                case 'พฤหัส':
+                    setListThursday((prevData) => [...prevData, item]);
+                    break;
+                case 'ศุกร์':
+                    setListFriday((prevData) => [...prevData, item]);
+                    break;
+                case 'เสาร์':
+                    setListSaturday((prevData) => [...prevData, item]);
+                    break;
+                case 'อาทิตย์':
+                    setListSunday((prevData) => [...prevData, item]);
+                    break;
+                default:
+                    alert('not select data')
+            }
+        });
+
+    }, [listEmployeeDay , listSpecialWorktime]);
 
     const handleSearchAndDelete = (searchDay, searchPosition) => {
         const updatedList = listEmployeeDay.filter(
@@ -1301,7 +1376,7 @@ function Setting() {
 
                                         <div class="col-md-6">
 
-                                            <select className="form-control" value={selectedDay} onChange={(e) => setSelectedDay(e.target.value)}>
+                                            <select className="form-control" value={selectedDay1} onChange={(e) => setSelectedDay1(e.target.value)}>
                                                 <option value="">เลือกวัน</option>
                                                 {daysOfWeek.map((day) => (
                                                     <option key={day} value={day}>
@@ -1320,14 +1395,14 @@ function Setting() {
                                                         <div class="row">
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
-                                                                    <label role="workStart1">เวลาเข้างาน</label>
-                                                                    <input type="text" class="form-control" id="workStart1" placeholder="เวลาเข้างาน" value={workStart1} onChange={(e) => setWorkStart1(e.target.value)} />
+                                                                    <label role="spWorkStart1">เวลาเข้างาน</label>
+                                                                    <input type="text" class="form-control" id="spWorkStart1" placeholder="เวลาเข้างาน" value={spWorkStart1} onChange={(e) => setSpWorkStart1(e.target.value)} />
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
-                                                                    <label role="workEnd1">เวลาออกงาน</label>
-                                                                    <input type="text" class="form-control" id="workEnd1" placeholder="เวลาออกงาน" value={workEnd1} onChange={(e) => setWorkEnd1(e.target.value)} />
+                                                                    <label role="spWorkEnd1">เวลาออกงาน</label>
+                                                                    <input type="text" class="form-control" id="spWorkEnd1" placeholder="เวลาออกงาน" value={spWorkEnd1} onChange={(e) => setSpWorkEnd1(e.target.value)} />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1344,14 +1419,14 @@ function Setting() {
                                                         <div class="row">
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
-                                                                    <label role="workStart2">เวลาเข้างาน</label>
-                                                                    <input type="text" class="form-control" id="workStart2" placeholder="เวลาเข้างาน" value={workStart2} onChange={(e) => setWorkStart2(e.target.value)} />
+                                                                    <label role="spWorkStart2">เวลาเข้างาน</label>
+                                                                    <input type="text" class="form-control" id="spWorkStart2" placeholder="เวลาเข้างาน" value={spWorkStart2} onChange={(e) => setSpWorkStart2(e.target.value)} />
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
-                                                                    <label role="workEnd2">เวลาออกงาน</label>
-                                                                    <input type="text" class="form-control" id="workEnd2" placeholder="เวลาออกงาน" value={workEnd2} onChange={(e) => setWorkEnd2(e.target.value)} />
+                                                                    <label role="spWorkEnd2">เวลาออกงาน</label>
+                                                                    <input type="text" class="form-control" id="spWorkEnd2" placeholder="เวลาออกงาน" value={spWorkEnd2} onChange={(e) => setSpWorkEnd2(e.target.value)} />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1367,14 +1442,14 @@ function Setting() {
                                                         <div class="row">
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
-                                                                    <label role="workStart3">เวลาเข้างาน</label>
-                                                                    <input type="text" class="form-control" id="workStart3" placeholder="เวลาเข้างาน" value={workStart3} onChange={(e) => setWorkStart3(e.target.value)} />
+                                                                    <label role="spWorkStart3">เวลาเข้างาน</label>
+                                                                    <input type="text" class="form-control" id="spWorkStart3" placeholder="เวลาเข้างาน" value={spWorkStart3} onChange={(e) => setSpWorkStart3(e.target.value)} />
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
-                                                                    <label role="workEnd3">เวลาออกงาน</label>
-                                                                    <input type="text" class="form-control" id="workEnd3" placeholder="เวลาออกงาน" value={workEnd3} onChange={(e) => setWorkEnd3(e.target.value)} />
+                                                                    <label role="spWorkEnd3">เวลาออกงาน</label>
+                                                                    <input type="text" class="form-control" id="spWorkEnd3" placeholder="เวลาออกงาน" value={spWorkEnd3} onChange={(e) => setSpWorkEnd3(e.target.value)} />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1382,7 +1457,7 @@ function Setting() {
                                                     </div>
                                                 </section>
 
-                                                <button type="button" onClick={handleSubmit}>เพิ่มเวลาการทำงาน</button>
+                                                <button type="button" onClick={handleAddSpecialWorktime}>เพิ่มเวลาการทำงาน</button>
                                             </div>
                                         </div>
                                     </div >
@@ -1471,6 +1546,8 @@ function Setting() {
                                                                             <td>
                                                                                 {listMonday.length >= 1 ? (
                                                                                     listMonday.map(item => (
+
+                                                                                (item.position ? (        
                                                                                         <>{item.position}: {item.employees}
                                                                                             <button
                                                                                                 type="button"
@@ -1481,6 +1558,22 @@ function Setting() {
                                                                                             </button>
                                                                                             <br />
                                                                                         </>
+                                                                                ): (
+                                                                                    <>
+                                                                                    เช้า:{item.spWorkStart1} - {item.spWorkEnd1}<br />
+                                                                                    บ่าย:{item.spWorkStart2} - {item.spWorkEnd2}<br />
+                                                                                    ดึก:{item.spWorkStart3} - {item.spWorkEnd13}<br />
+                                                                                    <button
+                                                                                                type="button"
+                                                                                                class="btn btn-danger" style={{ width: '3rem' }}
+                                                                                                onClick={() => handleSearchAndDelete(item.day, item.position)}
+                                                                                            >
+                                                                                                ลบ
+                                                                                            </button>
+                                                                                            <br />
+
+                                                                                    </>
+                                                                                ))
 
                                                                                     )
                                                                                     )
