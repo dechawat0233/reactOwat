@@ -10,6 +10,8 @@ import 'jspdf-autotable';
 import html2pdf from 'html2pdf.js';
 import { useTable } from 'react-table';
 
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 function WorktimeSheetWorkplace() {
     const vertical1 = {
@@ -51,6 +53,10 @@ function WorktimeSheetWorkplace() {
 
     const [WName, setWName] = useState('');
 
+    const [workDate, setWorkDate] = useState(new Date());
+    const handleWorkDateChange = (date) => {
+        setWorkDate(date);
+    };
 
     const [daysOffArray, setDaysOffArray] = useState([]);
     const [result_data, setResult_data] = useState([]);
@@ -305,6 +311,8 @@ function WorktimeSheetWorkplace() {
 
     const [searchWorkplaceId, setSearchWorkplaceId] = useState(''); //รหัสหน่วยงาน
     const [searchWorkplaceName, setSearchWorkplaceName] = useState(''); //ชื่อหน่วยงาน
+    const [codePage, setCodePage] = useState('FM-HR-005-03'); //ชื่อหน่วยงาน
+
     const [searchEmployeeId, setSearchEmployeeId] = useState('');
     const [searchEmployeeName, setSearchEmployeeName] = useState('');
     const [searchResult, setSearchResult] = useState([]);
@@ -1355,7 +1363,7 @@ function WorktimeSheetWorkplace() {
                 // roundpage++
             }
             drawArrayText(arraytest.slice(pageStartIndex, pageEndIndex));
-            doc.addPage();
+            // doc.addPage();
         }
 
 
@@ -2218,7 +2226,8 @@ function WorktimeSheetWorkplace() {
     console.log('arrayWorkOTNormalDay:', arrayWorkOTNormalDay);
     console.log('arrayWorkHoli:', arrayWorkHoli);
 
-
+    // const makePage = Math.ceil(arrayWorkNormalDay.length / 5);
+    // console.log('makePage', makePage);
 
     const sumArrayAllTime = arrayAllTime.map(subArray =>
         subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
@@ -2296,7 +2305,12 @@ function WorktimeSheetWorkplace() {
     console.log('sumArrayHoliday', sumArrayHoliday);
     console.log('sumArrayAllTime', sumArrayAllTime);
     console.log('sumArrayOTAllTime', sumArrayOTAllTime);
+    console.log('sumArrayOTHoliday', sumArrayOTHoliday);
+    console.log('sumArrayOT', sumArrayOT);
 
+    const sumHoliAllTime = sumArrayOT.map((value, index) => value + sumArrayHoli[index]);
+
+    console.log('sumHoliAllTime', sumHoliAllTime);
 
     // workplaceDataWorkOfHour
     // sumArrayHoliday
@@ -2946,8 +2960,8 @@ function WorktimeSheetWorkplace() {
 
             const numRowsTopHead = 1;
             const startXTopHead = 1; // Adjust the starting X-coordinate as needed
-            const startYTopHead = 25; // Adjust the starting Y-coordinate as needed
-            const cellHeightTopHead = 5;
+            const startYTopHead = 24; // Adjust the starting Y-coordinate as needed
+            const cellHeightTopHead = 6;
             // const cellWidthTopHead = 200;
             let cellWidthTopHead;
             if (daysInMonth === 28) {
@@ -3322,6 +3336,47 @@ function WorktimeSheetWorkplace() {
                     const product = (sumArrayHoliday[i] * (2 * (countalldaywork / 8))).toString();
 
                     doc.text(sumArrayHoliday[i].toString(), currentX + 2, 10.5 + currentY, { align: 'center' });
+                    // doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
+                }
+            };
+            // รวมช.ม.ทำงาน1.5
+            const drawArrayTextSumWorkHoliday1q5 = (dataArray, sumArrayHoliday) => {
+                for (let i = 0; i < dataArray.length; i++) {
+                    let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 10);
+                    let currentY = startY + i * verticalDistance + addmove;
+
+                    // Calculate the product and convert it to a string
+                    const product = (sumArrayHoliday[i] * (2 * (countalldaywork / 8))).toString();
+
+                    doc.text(sumArrayHoliday[i].toString(), currentX + 2, 14 + currentY, { align: 'center' });
+                    // doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
+                }
+            };
+
+            // รวมช.ม.ทำงาน2
+            const drawArrayTextSumWorkHoliday2 = (dataArray, sumArrayHoliday) => {
+                for (let i = 0; i < dataArray.length; i++) {
+                    let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 10);
+                    let currentY = startY + i * verticalDistance + addmove;
+
+                    // Calculate the product and convert it to a string
+                    const product = (sumArrayHoliday[i] * (2 * (countalldaywork / 8))).toString();
+
+                    doc.text(sumArrayHoliday[i].toString(), currentX + 2, 17.5 + currentY, { align: 'center' });
+                    // doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
+                }
+            };
+
+            // รวมช.ม.ทำงาน3
+            const drawArrayTextSumWorkHoliday3 = (dataArray, sumArrayHoliday) => {
+                for (let i = 0; i < dataArray.length; i++) {
+                    let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 10);
+                    let currentY = startY + i * verticalDistance + addmove;
+
+                    // Calculate the product and convert it to a string
+                    const product = (sumArrayHoliday[i] * (2 * (countalldaywork / 8))).toString();
+
+                    doc.text(sumArrayHoliday[i].toString(), currentX + 2, 21 + currentY, { align: 'center' });
                     // doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
                 }
             };
@@ -3738,7 +3793,8 @@ function WorktimeSheetWorkplace() {
                         doc.text(alldaywork + ' ' + countalldaywork, 5 + startXSpSalary + (cellWidthSpSalary * 8), 54.8, { angle: 90 });
                         doc.text(alldayworkHoliday + ' ' + countalldayworkHoliday, 5 + startXSpSalary + (cellWidthSpSalary * 9), 54.8, { angle: 90 });
 
-                        doc.text('รวมชั่วโมงโอที' + ' ' + workOt2 + 'เท่า', 3 + startXSpSalary + (cellWidthSpSalary * 10), 54.8, { angle: 90 });
+                        doc.text('รวมชั่วโมงโอทีวันหยุด', 3 + startXSpSalary + (cellWidthSpSalary * 10), 54.8, { angle: 90 });
+                        // doc.text('รวมชั่วโมงโอที' + ' ' + workOt2 + 'เท่า', 3 + startXSpSalary + (cellWidthSpSalary * 10), 54.8, { angle: 90 });
 
                         // doc.text('วันนักขัตฤกษ์' + ' ' + workOt2 + 'เท่า', 3 + startXSpSalary + (cellWidthSpSalary * 2), 54.8, { angle: 90 });
 
@@ -3805,7 +3861,8 @@ function WorktimeSheetWorkplace() {
                         // drawArrayText(arraytest.slice(dataIdx, dataIdx + 1));
 
                     }
-                } arrayAllTime
+                }
+                // arrayAllTime
 
                 drawArrayText(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex));
                 // drawArrayText(extractedDataAddSalary);
@@ -3823,10 +3880,15 @@ function WorktimeSheetWorkplace() {
                 // drawArrayTextSumWork(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
                 drawArrayTextSumWork(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArraySumarrayAllHolioday.slice(pageStartIndex, pageEndIndex));
                 // drawArrayTextSumWorkOT(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArrayOT.slice(pageStartIndex, pageEndIndex));
-
                 drawArrayTextSumWorkHoli(arrayWorkHoli.slice(pageStartIndex, pageEndIndex), sumArrayAllTime.slice(pageStartIndex, pageEndIndex));
                 drawArrayTextSumWorkHoliday(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), sumArrayOTAllTime.slice(pageStartIndex, pageEndIndex));
 
+                // 1.5
+                drawArrayTextSumWorkHoliday1q5(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), sumHoliAllTime.slice(pageStartIndex, pageEndIndex));
+                // 2
+                drawArrayTextSumWorkHoliday2(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), sumArrayHoliday.slice(pageStartIndex, pageEndIndex));
+                // 3
+                drawArrayTextSumWorkHoliday3(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), sumArrayOTHoliday.slice(pageStartIndex, pageEndIndex));
                 // drawArrayTextSumWorkOTHoliday(arrayWorkOTHoliday.slice(pageStartIndex, pageEndIndex), sumArrayOTHoliday.slice(pageStartIndex, pageEndIndex));
 
 
@@ -3853,8 +3915,20 @@ function WorktimeSheetWorkplace() {
                 //     drawArrayText(arraytest.slice(pageStartIndex, pageEndIndex));
                 // }
 
+                // for (let pageIndex = 0; pageIndex < makePage; pageIndex++) 
+                const formattedDate = workDate.toLocaleDateString('en-GB'); // Use 'en-GB' to get the "day/month/year" format
 
-                doc.addPage();
+                doc.text(codePage + '' + formattedDate + '' + (pageIndex + 1) + ' of ' + makePage, 250, 210);
+
+                if (pageIndex < makePage - 1) {
+                    doc.addPage();
+
+                }
+                // doc.text('pageStartIndex', 10 + 10, 10 + 10 - 2);
+
+                // doc.addPage();
+
+
             }
             // If an error occurs, throw an exception 
             // doc.save('your_table.pdf');
@@ -4029,12 +4103,40 @@ function WorktimeSheetWorkplace() {
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <div class="form-group" style={{ position: 'absolute', bottom: '0' }}>
-                                                                {/* <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา</button> */}
-                                                                <button onClick={generatePDFTest123} class="btn b_save"><i class="nav-icon fas fa-search"></i>Generate PDF2</button>
+
+
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-9">
+                                                        <div class="form-group">
+                                                            <label role="codePage">รหัสประดาษ</label>
+                                                            <input type="text" class="form-control" id="codePage" placeholder="รหัสประดาษ" value={codePage} onChange={(e) => setCodePage(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label role="datetime">วันที่</label>
+                                                            <div style=
+                                                                {{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
+                                                                <DatePicker id="datetime" name="datetime"
+                                                                    className="form-control" // Apply Bootstrap form-control class
+                                                                    popperClassName="datepicker-popper" // Apply custom popper class if needed
+                                                                    selected={workDate}
+                                                                    onChange={handleWorkDateChange}
+                                                                    dateFormat="dd/MM/yyyy"
+                                                                // showMonthYearPicker
+                                                                />
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="row">
+                                                    <div class="col-md-12" style={{ marginTop: '5rem' }}>
+                                                        <div class="form-group" style={{ position: 'absolute', bottom: '0' }}>
+                                                            {/* <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา</button> */}
+                                                            <button onClick={generatePDFTest123} class="btn b_save"><i class="nav-icon fas fa-search"></i>Generate PDF2</button>
                                                         </div>
                                                     </div>
                                                 </div>
