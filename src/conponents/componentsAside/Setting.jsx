@@ -1297,6 +1297,19 @@ function Setting() {
                                             </div>
                                         </section>
                                         {/* <!--Frame--> */}
+                                        <label>วันในสัปดาห์:</label>
+
+                                        <div class="col-md-6">
+
+                                            <select className="form-control" value={selectedDay} onChange={(e) => setSelectedDay(e.target.value)}>
+                                                <option value="">เลือกวัน</option>
+                                                {daysOfWeek.map((day) => (
+                                                    <option key={day} value={day}>
+                                                        {day}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
                                         <div class="row">
 
                                             <div class="col-md-4">
