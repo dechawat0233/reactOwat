@@ -733,7 +733,7 @@ function AddsettimeWorkplace() {
                 // Calculate the time difference
                 setWorkOfHour(response.data.workplaces[0].workOfHour);
                 setWorkOfOT(response.data.workplaces[0].workOfOT);
-
+            
                 const startTime = response.data.workplaces[0].workStart1;
                 const endTime = response.data.workplaces[0].workEnd1;
                 const workOfHour = response.data.workplaces[0].workOfHour;
@@ -821,12 +821,14 @@ function AddsettimeWorkplace() {
                 setWorkplaceId(response.data.workplaces[0].workplaceId);
                 setWorkplaceName(response.data.workplaces[0].workplaceName);
 
-                setSearchWorkplaceId(response.data.workplaces[0].workplaceId);
-                setSearchWorkplaceName(response.data.workplaces[0].workplaceName);
+                // setSearchWorkplaceId(response.data.workplaces[0].workplaceId);
+                // setSearchWorkplaceName(response.data.workplaces[0].workplaceName);
 
                 // console.log('workOfOT:', response.data.workplaces[0].workOfOT);
                 // console.log('workOfOT:', endTime);
 
+                setSearchWorkplaceId('');
+                setSearchWorkplaceName('');
             }
         } catch (error) {
             alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
