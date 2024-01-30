@@ -179,7 +179,7 @@ function Setting() {
 
     const handleDeleteSpecialWorktime = (searchDay) => {
         const updatedList = listSpecialWorktime.filter(
-            (entry) => entry.day !== searchDay );
+            (entry) => entry.day !== searchDay);
         setListSpecialWorktime(updatedList);
     };
 
@@ -1306,7 +1306,7 @@ function Setting() {
                                 {/* <!--Frame--> */}
                                 <h2 class="title">สวัสดิการวันหยุดพนักงาน</h2>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <section class="Frame">
                                             <div class="col-md-12">
                                                 <div class="row">
@@ -1416,6 +1416,7 @@ function Setting() {
                                                                             </select>
                                                                         </div>
                                                                     </div>
+                                                                    <br />
                                                                     <div class="row">
 
                                                                         <label>ตำแหน่งงาน:</label>
@@ -1431,6 +1432,7 @@ function Setting() {
                                                                             </select>
                                                                         </div>
                                                                     </div>
+                                                                    <br />
                                                                     <div>
                                                                         <label>Number of Employees:</label>
                                                                         <input
@@ -1448,19 +1450,28 @@ function Setting() {
                                                             <div class="col-md-9">
                                                                 <section class="Frame">
                                                                     <label>วันในสัปดาห์:</label>
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
 
-                                                                    <div class="col-md-6">
+                                                                            <select className="form-control" value={selectedDay1} onChange={(e) => setSelectedDay1(e.target.value)}>
+                                                                                <option value="">เลือกวัน</option>
+                                                                                {daysOfWeek.map((day) => (
+                                                                                    <option key={day} value={day}>
+                                                                                        {day}
+                                                                                    </option>
+                                                                                ))}
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="col-md-6">
 
-                                                                        <select className="form-control" value={selectedDay1} onChange={(e) => setSelectedDay1(e.target.value)}>
-                                                                            <option value="">เลือกวัน</option>
-                                                                            {daysOfWeek.map((day) => (
-                                                                                <option key={day} value={day}>
-                                                                                    {day}
-                                                                                </option>
-                                                                            ))}
-                                                                        </select>
+                                                                            <button type="button" class="btn btn-primary" onClick={handleAddSpecialWorktime}>เพิ่มเวลาทำงาน</button>
+
+                                                                        </div>
                                                                     </div>
+
+
                                                                     <br />
+
                                                                     <div class="row">
 
                                                                         <div class="col-md-4">
@@ -1532,15 +1543,13 @@ function Setting() {
                                                                                     {/* <!--row--> */}
                                                                                 </div>
                                                                             </section>
-
-                                                                            <button type="button" class="btn btn-primary" onClick={handleAddSpecialWorktime}>เพิ่มเวลาการทำงาน</button>
                                                                         </div>
                                                                     </div>
                                                                 </section>
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                            
+
                                                         </div>
                                                         <br />
                                                         <label role="personalLeave">วันทำงาน</label>
@@ -1647,7 +1656,7 @@ function Setting() {
                                                                         <td>
                                                                             {listWednesday.length >= 1 ? (
                                                                                 listWednesday.map(item => (
-                                                                                                                                                                        (item.position ? (
+                                                                                    (item.position ? (
                                                                                         <>{item.position}: {item.employees}
                                                                                             <button
                                                                                                 type="button"
