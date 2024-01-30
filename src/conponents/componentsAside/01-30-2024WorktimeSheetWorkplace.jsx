@@ -4197,9 +4197,80 @@ function WorktimeSheetWorkplace() {
                             </div>
                         </div>
                         <br />
-                        
+                        <div class="row">
+                            <div class="col-md-3">
+                                วันทำงานทั้งหมด {countWork} วัน
+                            </div>
+                        </div>
 
-                        
+                        <form>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <section class="Frame">
+                                        <div class="container" style={{ overflowX: 'scroll' }}>
+                                            {/* <table class="table table-bordered "> */}
+                                            {/* <button onClick={generatePDFTest}>Generate PDF</button>
+                                            <button onClick={generatePDFTest123}>Generate PDF2</button> */}
+
+                                            <table ref={tableRef} className="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style={styles.th}></th>
+                                                        {combinedRange.map((number, index) => (
+                                                            <th key={index} style={styles.th}>{number}</th>
+                                                        ))}
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style={verticalTextHeader} >วันทำงาน</td>
+                                                        {tableData.map((data, index) => (
+                                                            <td key={index}>
+                                                                {data.workplaceId <= 31 ? null : data.workplaceId}
+
+                                                            </td>
+
+                                                        ))}
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                        {listTableDayoff.map((item, index) => {
+                                                            const [day, s] = Object.entries(item)[0];
+
+                                                            return (
+                                                                <td key={index}>{s}</td>
+                                                            )
+
+                                                        }
+
+                                                        )}
+                                                    </tr>
+                                                    <tr>
+                                                        <td>ช.ม. ทำงาน</td>
+                                                        {tableData.map((data, index) => (
+                                                            <td key={index}>
+                                                                {data.allTime}
+                                                            </td>
+                                                        ))}
+                                                    </tr>
+                                                    <tr>
+                                                        <td>ช.ม. โอที</td>
+                                                        {tableData.map((data, index) => (
+                                                            <td key={index}>
+                                                                {data.otTime}
+                                                            </td>
+                                                        ))}
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </section>
+                                </div>
+                            </div>
+                        </form>
+                        {/* </form> */}
                     </section>
                     {/* <!-- /.content --> */}
                 </div >

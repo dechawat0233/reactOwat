@@ -70,6 +70,7 @@ function AddsettimeWorkplace() {
                 console.error('Error fetching data:', error);
             });
     }, []); // The empty array [] ensures that the effect runs only once after the initial render
+
     console.log(employeeList);
 
     //auto check time record 
@@ -83,6 +84,8 @@ function AddsettimeWorkplace() {
     const [staffId, setStaffId] = useState(''); //รหัสหน่วยงาน
     const [staffName, setStaffName] = useState(''); //รหัสหน่วยงาน
     const [staffLastname, setStaffLastname] = useState(''); //รหัสหน่วยงาน
+    const [staffFullName, setStaffFullName] = useState(''); //รหัสหน่วยงาน
+
     const [shift, setShift] = useState('');
     const [startTime, setStartTime] = useState(''); //รหัสหน่วยงาน
     const [endTime, setEndTime] = useState(''); //รหัสหน่วยงาน
@@ -117,7 +120,7 @@ function AddsettimeWorkplace() {
         if (staffId != '') {
             const employeesearch = employeeList.find(employee => employee.employeeId === staffId);
             if (employeesearch) {
-                setStaffName(employeesearch.name );
+                setStaffName(employeesearch.name);
                 setStaffLastname(employeesearch.lastName);
             } else {
                 setStaffName('');
@@ -127,7 +130,7 @@ function AddsettimeWorkplace() {
     }, [staffId]);
 
     const handleCheckboxChange = () => {
-                setCashSalary(!cashSalary); // Toggle the checkbox state
+        setCashSalary(!cashSalary); // Toggle the checkbox state
     };
 
 
@@ -868,7 +871,7 @@ function AddsettimeWorkplace() {
             workplaceName: searchWorkplaceName,
             date: formattedWorkDate,
         };
-        
+
         try {
             const response = await axios.post(endpoint + '/timerecord/search', data);
 
@@ -995,7 +998,7 @@ function AddsettimeWorkplace() {
 
         const newRowData = {
             staffId: staffId || '',
-            staffName: staffName +' ' + staffLastname || '',
+            staffName: staffName + ' ' + staffLastname || '',
             shift: shift || '',
             startTime: startTime || '',
             endTime: endTime || '',
@@ -1014,6 +1017,8 @@ function AddsettimeWorkplace() {
         setStaffId('');
         setShift('');
         setStaffName('');
+        setStaffLastname('');
+        setStaffFullName('');
         setStartTime('');
         setEndTime('');
         setAllTime('');
@@ -1066,6 +1071,40 @@ function AddsettimeWorkplace() {
         // Handle submission for Form 1
     };
 
+
+
+    const handleStaffIdChange = (e) => {
+        const selectedStaffId = e.target.value;
+        setStaffId(selectedStaffId);
+
+        // Find the corresponding employee and set the staffName
+        const selectedEmployee = employeeList.find(employee => employee.employeeId === selectedStaffId);
+        if (selectedEmployee) {
+            // setStaffName(selectedEmployee.name);
+            // setStaffLastname(selectedEmployee.lastName);
+            setStaffFullName(selectedEmployee.name + ' ' + selectedEmployee.lastName);
+
+
+        } else {
+            setStaffName('');
+            setStaffFullName('');
+        }
+    };
+
+    const handleStaffNameChange = (e) => {
+        const selectedStaffName = e.target.value;
+
+        // Find the corresponding employee and set the staffId
+        const selectedEmployee = employeeList.find(employee => (employee.name + " " + employee.lastName) === selectedStaffName);
+        if (selectedEmployee) {
+            setStaffId(selectedEmployee.employeeId);
+        } else {
+            setStaffId('');
+        }
+
+        // setStaffName(selectedStaffName);
+        setStaffFullName(selectedStaffName);
+    };
 
     // console.log(workOfOT);
     return (
@@ -1216,18 +1255,52 @@ function AddsettimeWorkplace() {
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-2">
+                                    <div className="col-md-2">
+                                        <div className="form-group">
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                id="staffId"
+                                                placeholder="รหัสพนักงาน"
+                                                value={staffId}
+                                                onChange={handleStaffIdChange}
+                                                list="staffIdList"
+                                            />
+                                            <datalist id="staffIdList">
+                                                {employeeList.map(employee => (
+                                                    <option key={employee.employeeId} value={employee.employeeId} />
+                                                ))}
+                                            </datalist>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-2">
+                                        <div className="form-group">
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                id="staffName"
+                                                placeholder="ชื่อพนักงาน"
+                                                value={staffFullName}
+                                                onChange={handleStaffNameChange}
+                                                list="staffNameList"
+                                            />
+                                            <datalist id="staffNameList">
+                                                {employeeList.map(employee => (
+                                                    <option key={employee.employeeId} value={employee.name + " " + employee.lastName} />
+                                                ))}
+                                            </datalist>
+                                        </div>
+                                    </div>
+                                    {/* <div class="col-md-2">
                                         <div class="form-group">
-                                            {/* <label role="staffId">รหัสพนักงาน</label> */}
                                             <input type="text" class="form-control" id="staffId" placeholder="รหัสพนักงาน" value={staffId} onChange={(e) => setStaffId(e.target.value)} />
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            {/* <label role="staffName">ชื่อพนักงาน</label> */}
                                             <input type="text" class="form-control" id="staffName" placeholder="ชื่อพนักงาน" value={(staffName + " " + staffLastname)} onChange={(e) => setStaffName(e.target.value)} />
                                         </div>
-                                    </div>
+                                    </div> */}
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             {/* <label role="shift">กะการทำงาน</label> */}
@@ -1372,7 +1445,7 @@ function AddsettimeWorkplace() {
                                                         <div class="col-md-1" style={bordertable}> {rowData.selectotTimeOut} </div>
                                                         <div class="col-md-1" style={bordertable}> {rowData.otTime} </div>
 
-                                                        {rowData.cashSalary === "true"  || rowData.cashSalary === true ? (
+                                                        {rowData.cashSalary === "true" || rowData.cashSalary === true ? (
                                                             <div class="col-md-1" style={bordertable}>
                                                                 {rowData.specialtSalary} บาท
                                                             </div>

@@ -91,8 +91,8 @@ function Worktimesheet() {
   const [listTableDayoff, setListTableDayoff] = useState([]);
   //data for check list dayoff
   const [data_listDayoff, setData_listDayoff] = useState([]);
-const [spDayoff , setSpDayoff] = useState(null);
-const [lastName , setLastName] = useState('');
+  const [spDayoff, setSpDayoff] = useState(null);
+  const [lastName, setLastName] = useState('');
 
 
   useEffect(() => {
@@ -228,16 +228,16 @@ const [lastName , setLastName] = useState('');
   }, [result_data]);
 
 
-  
+
   //count day work and dayoff and special dayoff
-  const [dw , setDw] = useState(0); //รวมวันทำงาน
-  const [doff , setDoff] = useState(0); //รวมทำวันหยุดในสัปดาห์
-  const [dspe , setDspe] = useState(0); //รวมทำงานวันหยุดพิเศษ
-const [ listDf , setListDf] = useState([]);
-const [listSp , setListSp] = useState([]);
-const [csp , setCsp ] = useState(0);
-const [cdf , setCdf] = useState(0);
-const [cdw , setCdw] = useState(0);
+  const [dw, setDw] = useState(0); //รวมวันทำงาน
+  const [doff, setDoff] = useState(0); //รวมทำวันหยุดในสัปดาห์
+  const [dspe, setDspe] = useState(0); //รวมทำงานวันหยุดพิเศษ
+  const [listDf, setListDf] = useState([]);
+  const [listSp, setListSp] = useState([]);
+  const [csp, setCsp] = useState(0);
+  const [cdf, setCdf] = useState(0);
+  const [cdw, setCdw] = useState(0);
 
 
 
@@ -248,16 +248,16 @@ const [cdw , setCdw] = useState(0);
 
     const calDayoff = async () => {
       //loop days of work.
-const tempDW = [];
+      const tempDW = [];
 
-await result_data[0].employee_workplaceRecord.map(item => {
-  // alert(item.date);
-  tempDW.push(item.date);
-  setDw(tempDW);
-  });
+      await result_data[0].employee_workplaceRecord.map(item => {
+        // alert(item.date);
+        tempDW.push(item.date);
+        setDw(tempDW);
+      });
 
-// await alert(tempDW );
-await setDw(tempDW);
+      // await alert(tempDW );
+      await setDw(tempDW);
 
 
       let temp = [];
@@ -265,53 +265,53 @@ await setDw(tempDW);
       await spDayoff.map(async item => {
 
         //check year 
-        if(new Date(item).getFullYear() === year){
+        if (new Date(item).getFullYear() === year) {
 
-        //check month and push special dayoff of month
-  const parsedNumber = await parseInt(month, 10) ;
-  
-  // alert(parsedNumber + ' * ');
-  // alert(new Date(item).getMonth() + ' ' + new Date(item).getDate() );
+          //check month and push special dayoff of month
+          const parsedNumber = await parseInt(month, 10);
 
-  if(parsedNumber  === new Date(item).getMonth()+1 ) {
-    // alert(new Date(item).getDate() );
-  await temp.push(new Date(item).getDate() );
-  await setListSp(temp);
-  } else {
-  await setListSp([]);
-  }
-}
+          // alert(parsedNumber + ' * ');
+          // alert(new Date(item).getMonth() + ' ' + new Date(item).getDate() );
 
-       } );
+          if (parsedNumber === new Date(item).getMonth() + 1) {
+            // alert(new Date(item).getDate() );
+            await temp.push(new Date(item).getDate());
+            await setListSp(temp);
+          } else {
+            await setListSp([]);
+          }
+        }
 
-  // await alert(JSON.stringify(listSp ,null,2));
-  //check special dayoff.
-  // alert(temp);
+      });
 
-                    //filtered dayoff with special dayoff
+      // await alert(JSON.stringify(listSp ,null,2));
+      //check special dayoff.
+      // alert(temp);
+
+      //filtered dayoff with special dayoff
       const filteredDayoff = await data_listDayoff.filter((element) => !temp.includes(element));
 
 
       // await alert(filteredDayoff );
-      await setListDf(filteredDayoff );
+      await setListDf(filteredDayoff);
       // await alert(JSON.stringify(listDf, null,2) );
 
     };
 
 
-if(result_data.length  > 0 ){
+    if (result_data.length > 0) {
 
-  if(spDayoff !== null ){
-    
-  calDayoff();
+      if (spDayoff !== null) {
 
-  }
+        calDayoff();
+
+      }
 
 
-}
+    }
 
-  
-  } , [spDayoff] );
+
+  }, [spDayoff]);
 
   console.log('data_listDayoff', data_listDayoff);
   console.log('listTableDayoff', listTableDayoff);
@@ -358,14 +358,14 @@ if(result_data.length  > 0 ){
   const [calendarData2, setCalendarData2] = useState([]);
   const yeartest = 2023;
   const monthtest = 3; // 3 represents March using 1-based indexing
-  
+
   async function handleSearch(event) {
     event.preventDefault();
 
     //clean value 
     setSpDayoff([]);
 
-    setTableData (
+    setTableData(
       combinedRange.map((index) => ({
         isChecked: false, // Initial state of the checkbox
         textValue: '',    // Initial state of the text value
@@ -373,7 +373,7 @@ if(result_data.length  > 0 ){
         date: '', // Store the workplaceId
       }))
     );
-  
+
     // get value from form search
     if (searchEmployeeId === '' && searchEmployeeName === '') {
       // Both employeeId and employeeName are null
@@ -389,7 +389,7 @@ if(result_data.length  > 0 ){
       employeeName: searchEmployeeName,
       month: month
     };
-     console.log(searchEmployeeId);
+    console.log(searchEmployeeId);
 
     const parsedNumber = await parseInt(month, 10) - 1;
     const formattedResult = await String(parsedNumber).padStart(2, '0');
@@ -584,82 +584,82 @@ if(result_data.length  > 0 ){
       // }
 
       //check month 01 then skip data
-if(data.month !== '01'){
+      if (data.month !== '01') {
 
-      const response1 = await axios.post(endpoint + '/timerecord/searchemp', data1);
-      if (response1.data.recordworkplace.length >= 1) {
-        await setSearchResult1(response1.data.recordworkplace);
-        // if (!result_data) {
-        await setResult_data(response1.data.recordworkplace);
-        // }
+        const response1 = await axios.post(endpoint + '/timerecord/searchemp', data1);
+        if (response1.data.recordworkplace.length >= 1) {
+          await setSearchResult1(response1.data.recordworkplace);
+          // if (!result_data) {
+          await setResult_data(response1.data.recordworkplace);
+          // }
 
-      } else {
-        alert("ไม่พบข้อมูล 21 ถึง สิ้นเดือน " + getMonthName(data1.month));
-        check = check + 1;
-        if (check > 1) {
-          // alert('reload');
-          alert('กรุณาตรวจสอบข้อมูลการลงเวลาของพนักงาน')
-          window.location.reload();
+        } else {
+          alert("ไม่พบข้อมูล 21 ถึง สิ้นเดือน " + getMonthName(data1.month));
+          check = check + 1;
+          if (check > 1) {
+            // alert('reload');
+            alert('กรุณาตรวจสอบข้อมูลการลงเวลาของพนักงาน')
+            window.location.reload();
+          }
+
         }
 
-      }
+        // await alert(data1.month + ' : '+ response1.data.recordworkplace.length )
+        // await alert(data.month + ' : '+ response.data.recordworkplace.length )
 
-      // await alert(data1.month + ' : '+ response1.data.recordworkplace.length )
-      // await alert(data.month + ' : '+ response.data.recordworkplace.length )
+        const employeeWorkplaceRecords1 = await response1.data.recordworkplace[0].employee_workplaceRecord || '';
 
-      const employeeWorkplaceRecords1 = await response1.data.recordworkplace[0].employee_workplaceRecord || '';
+        if (employeeWorkplaceRecords1.length > 0) {
 
-      if (employeeWorkplaceRecords1.length > 0) {
+          const dates1 = await employeeWorkplaceRecords1.map(record => record.date);
+          // const otTime = employeeWorkplaceRecords.map(record => record.otTime);
 
-        const dates1 = await employeeWorkplaceRecords1.map(record => record.date);
-        // const otTime = employeeWorkplaceRecords.map(record => record.otTime);
+          const allTimeA1 = await employeeWorkplaceRecords1.map((record) => record.allTime);
 
-        const allTimeA1 = await employeeWorkplaceRecords1.map((record) => record.allTime);
+          const workplaceId1 = await employeeWorkplaceRecords1.map(record => record.workplaceId);
 
-        const workplaceId1 = await employeeWorkplaceRecords1.map(record => record.workplaceId);
+          const otTime1 = await employeeWorkplaceRecords1.map((record) => record.otTime);
 
-        const otTime1 = await employeeWorkplaceRecords1.map((record) => record.otTime);
+          await setTableData((prevState) => {
+            const updatedData = [...prevState];
+            dates1.forEach((date1, index) => {
+              const dataIndex1 = parseInt(date1, 10) - 1; // Subtract 1 because indices are zero-based
+              // if (dataIndex1 >= 0 && dataIndex1 < updatedData.length) {
+              // alert(index);
+              if (dataIndex1 >= 20 && dataIndex1 <= 31) {
+                // alert(dataIndex1 +' .');
+                // setCountWork((countWork + 1));
+                // alert((dataIndex1 - 20));
 
-        await setTableData((prevState) => {
-          const updatedData = [...prevState];
-          dates1.forEach((date1, index) => {
-            const dataIndex1 = parseInt(date1, 10) - 1; // Subtract 1 because indices are zero-based
-            // if (dataIndex1 >= 0 && dataIndex1 < updatedData.length) {
-            // alert(index);
-            if (dataIndex1 >= 20 && dataIndex1 <= 31) {
-              // alert(dataIndex1 +' .');
-              // setCountWork((countWork + 1));
-              // alert((dataIndex1 - 20));
-
-              updatedData[(dataIndex1 - 20)].isChecked = true;
-              updatedData[(dataIndex1 - 20)].otTime = otTime1[index];
-              updatedData[(dataIndex1 - 20)].allTime = allTimeA1[index];
-              updatedData[(dataIndex1 - 20)].workplaceId = workplaceId1[index]; // Set otTime at the same index as dates
-              updatedData[(dataIndex1 - 20)].date = dates1[index]; // Set otTime at the same index as dates
-              // updatedData[(dataIndex1 - 20)].month = month[index]; // Set otTime at the same index as dates
+                updatedData[(dataIndex1 - 20)].isChecked = true;
+                updatedData[(dataIndex1 - 20)].otTime = otTime1[index];
+                updatedData[(dataIndex1 - 20)].allTime = allTimeA1[index];
+                updatedData[(dataIndex1 - 20)].workplaceId = workplaceId1[index]; // Set otTime at the same index as dates
+                updatedData[(dataIndex1 - 20)].date = dates1[index]; // Set otTime at the same index as dates
+                // updatedData[(dataIndex1 - 20)].month = month[index]; // Set otTime at the same index as dates
 
 
-              // Set otTime at the same index as dates
-            }
+                // Set otTime at the same index as dates
+              }
 
-            // }
+              // }
+
+            });
+            console.log('updatedData', updatedData);
+
+            const filteredData = updatedData.filter((record) => record.isChecked == true);
+            // console.log('updatedData', updatedData);
+
+            const workplaceIds = [...new Set(filteredData.map((record) => record.workplaceId))];
+
+            setDataset(filteredData);
+            return updatedData;
 
           });
-          console.log('updatedData', updatedData);
+        }
 
-          const filteredData = updatedData.filter((record) => record.isChecked == true);
-          // console.log('updatedData', updatedData);
-
-          const workplaceIds = [...new Set(filteredData.map((record) => record.workplaceId))];
-
-          setDataset(filteredData);
-          return updatedData;
-
-        });
-      }
-
-    } else{
-alert("งวดต้นปี");
+      } else {
+        alert("งวดต้นปี");
       }
 
     }
@@ -1500,23 +1500,23 @@ alert("งวดต้นปี");
                         </div>
                       </form>
                       <div class="d-flex justify-content-center">
-                        <h2 class="title">ผลลัพธ์ {result_data.length >0 ? ( '1') : ('0')} รายการ</h2>
+                        <h2 class="title">ผลลัพธ์ {result_data.length > 0 ? ('1') : ('0')} รายการ</h2>
                       </div>
                       <div class="d-flex justify-content-center">
                         <div class="row">
                           <div class="col-md-12">
                             <div class="form-group">
                               <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
-                                { result_data.map((workplace , index)  => (
+                                {result_data.map((workplace, index) => (
                                   <li
                                     key={workplace.employeeId}
                                     onClick={() => handleClickResult(workplace)}
                                   >
-                                        {index === 0 ? (
-      <span>
-        รหัส {workplace.employeeId || ''} ชื่อพนักงาน {workplace.employeeName || ''}
-      </span>
-    ) : null}
+                                    {index === 0 ? (
+                                      <span>
+                                        รหัส {workplace.employeeId || ''} ชื่อพนักงาน {workplace.employeeName || ''}
+                                      </span>
+                                    ) : null}
                                     {/* รหัส {workplace.employeeId || ''} ชื่อพนักงาน {workplace.employeeName || ''} */}
                                   </li>
                                 ))}
@@ -1536,7 +1536,7 @@ alert("งวดต้นปี");
               <div class="col-md-2">
                 {result_data.slice(0, 1).map((
                   employeerecord) => (
-                  employeerecord.employeeId + ': ' + employeerecord.employeeName + ' ' +  lastName )
+                  employeerecord.employeeId + ': ' + employeerecord.employeeName + ' ' + lastName)
                 )}
               </div>
             </div>
@@ -1550,38 +1550,38 @@ alert("งวดต้นปี");
                 )}
               </div> */}
               {/* <div class="col-md-3"> */}
-                {result_data.slice(0, 1).map((employeerecord) => {
+              {result_data.slice(0, 1).map((employeerecord) => {
 
-if(getMonthName(month) == "มกราคม"){
-return (
-  <div class="col-md-5" key={employeerecord.timerecordId}>
+                if (getMonthName(month) == "มกราคม") {
+                  return (
+                    <div class="col-md-5" key={employeerecord.timerecordId}>
 
-  {'ประจำเดือน ' + getMonthName(month)}
-  {' ตั้งแต่วันที่ 1 ' + getMonthName(parseInt(month, 10))}
-  {' ถึง 20 ' + getMonthName(month)}
-{'  ' + (parseInt(employeerecord.timerecordId, 10) + 543)}
+                      {'ประจำเดือน ' + getMonthName(month)}
+                      {' ตั้งแต่วันที่ 1 ' + getMonthName(parseInt(month, 10))}
+                      {' ถึง 20 ' + getMonthName(month)}
+                      {'  ' + (parseInt(employeerecord.timerecordId, 10) + 543)}
 
-</div>
+                    </div>
 
-);
-} else {
+                  );
+                } else {
 
 
-return (
-  <div class="col-md-5" key={employeerecord.timerecordId}>
+                  return (
+                    <div class="col-md-5" key={employeerecord.timerecordId}>
 
-  {'ประจำเดือน ' + getMonthName(month)}
-  {' ตั้งแต่วันที่ 21 ' + getMonthName(parseInt(month, 10) - 1)}
-   {' ถึง 20 ' + getMonthName(month)}
-{'  ' + (parseInt(employeerecord.timerecordId, 10) + 543)}
+                      {'ประจำเดือน ' + getMonthName(month)}
+                      {' ตั้งแต่วันที่ 21 ' + getMonthName(parseInt(month, 10) - 1)}
+                      {' ถึง 20 ' + getMonthName(month)}
+                      {'  ' + (parseInt(employeerecord.timerecordId, 10) + 543)}
 
-</div>
-);
-}
-
+                    </div>
+                  );
                 }
 
-                )}
+              }
+
+              )}
             </div>
             <br />
             <div class="row">
@@ -1803,7 +1803,7 @@ return (
                           {/* Add more header columns as needed */}
                         </tr>
                       </thead>
-                      
+
                     </table>
                   </div>
                 </section>
