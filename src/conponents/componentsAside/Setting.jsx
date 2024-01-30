@@ -1377,218 +1377,193 @@ function Setting() {
 
 
                                 </div >
-                                <section class="Frame">
 
-                                    <label>วันในสัปดาห์:</label>
-
-                                    <div class="col-md-6">
-
-                                        <select className="form-control" value={selectedDay1} onChange={(e) => setSelectedDay1(e.target.value)}>
-                                            <option value="">เลือกวัน</option>
-                                            {daysOfWeek.map((day) => (
-                                                <option key={day} value={day}>
-                                                    {day}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                    <br />
-                                    <div class="row">
-
-                                        <div class="col-md-4">
-
-                                            <section class="Frame">
-                                                <label>กะเช้า</label>
-                                                <div class="col-md-12">
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label role="spWorkStart1">เวลาเข้างาน</label>
-                                                                <input type="text" class="form-control" id="spWorkStart1" placeholder="เวลาเข้างาน" value={spWorkStart1} onChange={(e) => setSpWorkStart1(e.target.value)} />
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label role="spWorkEnd1">เวลาออกงาน</label>
-                                                                <input type="text" class="form-control" id="spWorkEnd1" placeholder="เวลาออกงาน" value={spWorkEnd1} onChange={(e) => setSpWorkEnd1(e.target.value)} />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    {/* <!--row--> */}
-                                                </div>
-                                                {/* <!--col-md-12--> */}
-                                            </section>
-                                            {/* <!--Frame--> */}
-                                        </div>
-                                        <div class="col-md-4">
-                                            <section class="Frame">
-                                                <label>กะบ่าย</label>
-                                                <div class="col-md-12">
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label role="spWorkStart2">เวลาเข้างาน</label>
-                                                                <input type="text" class="form-control" id="spWorkStart2" placeholder="เวลาเข้างาน" value={spWorkStart2} onChange={(e) => setSpWorkStart2(e.target.value)} />
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label role="spWorkEnd2">เวลาออกงาน</label>
-                                                                <input type="text" class="form-control" id="spWorkEnd2" placeholder="เวลาออกงาน" value={spWorkEnd2} onChange={(e) => setSpWorkEnd2(e.target.value)} />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    {/* <!--row--> */}
-                                                </div>
-                                            </section>
-                                            {/* <!--Frame--> */}
-                                        </div>
-                                        <div class="col-md-4">
-                                            <section class="Frame">
-                                                <label>กะดึก</label>
-                                                <div class="col-md-12">
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label role="spWorkStart3">เวลาเข้างาน</label>
-                                                                <input type="text" class="form-control" id="spWorkStart3" placeholder="เวลาเข้างาน" value={spWorkStart3} onChange={(e) => setSpWorkStart3(e.target.value)} />
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label role="spWorkEnd3">เวลาออกงาน</label>
-                                                                <input type="text" class="form-control" id="spWorkEnd3" placeholder="เวลาออกงาน" value={spWorkEnd3} onChange={(e) => setSpWorkEnd3(e.target.value)} />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    {/* <!--row--> */}
-                                                </div>
-                                            </section>
-
-                                            <button type="button"  class="btn btn-primary" onClick={handleAddSpecialWorktime}>เพิ่มเวลาการทำงาน</button>
-                                        </div>
-                                    </div>
-                                </section>
                                 <section class="Frame">
 
                                     <div class="col-md-12">
-                                        <section class="Frame">
-                                            <div class="col-md-12">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <h2 class="title">ตั้งค่ารายวัน</h2>
+                                        <div class="col-md-12">
 
-                                                            <div class="row">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <h2 class="title">ตั้งค่ารายวัน</h2>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <section class="Frame">
 
-                                                                <label>วันในสัปดาห์:</label>
+                                                                    <div class="row">
 
-                                                                <div class="col-md-6">
+                                                                        <label>วันในสัปดาห์:</label>
 
-                                                                    <select className="form-control" value={selectedDay} onChange={(e) => setSelectedDay(e.target.value)}>
-                                                                        <option value="">เลือกวัน</option>
-                                                                        {daysOfWeek.map((day) => (
-                                                                            <option key={day} value={day}>
-                                                                                {day}
-                                                                            </option>
-                                                                        ))}
-                                                                    </select>
-                                                                </div>
+                                                                        <div class="col-md-6">
+
+                                                                            <select className="form-control" value={selectedDay} onChange={(e) => setSelectedDay(e.target.value)}>
+                                                                                <option value="">เลือกวัน</option>
+                                                                                {daysOfWeek.map((day) => (
+                                                                                    <option key={day} value={day}>
+                                                                                        {day}
+                                                                                    </option>
+                                                                                ))}
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+
+                                                                        <label>ตำแหน่งงาน:</label>
+                                                                        <div class="col-md-6">
+
+                                                                            <select className="form-control" value={selectedPosition} onChange={(e) => setSelectedPosition(e.target.value)}>
+                                                                                <option value="">เลือกตำแหน่ง</option>
+                                                                                {positions.map((position) => (
+                                                                                    <option key={position} value={position}>
+                                                                                        {position}
+                                                                                    </option>
+                                                                                ))}
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <label>Number of Employees:</label>
+                                                                        <input
+                                                                            type="number"
+                                                                            placeholder="number"
+                                                                            value={numberOfEmployees}
+                                                                            className="form-control"
+                                                                            onChange={(e) => setNumberOfEmployees(e.target.value)}
+                                                                        />
+                                                                    </div>
+                                                                    <br />
+                                                                    <button type="button" class="btn btn-primary" onClick={handleSubmit} >เพิ่ม</button>
+                                                                </section>
                                                             </div>
-                                                            <div class="row">
+                                                            <div class="col-md-9">
+                                                                <section class="Frame">
+                                                                    <label>วันในสัปดาห์:</label>
 
-                                                                <label>ตำแหน่งงาน:</label>
-                                                                <div class="col-md-6">
+                                                                    <div class="col-md-6">
 
-                                                                    <select className="form-control" value={selectedPosition} onChange={(e) => setSelectedPosition(e.target.value)}>
-                                                                        <option value="">เลือกตำแหน่ง</option>
-                                                                        {positions.map((position) => (
-                                                                            <option key={position} value={position}>
-                                                                                {position}
-                                                                            </option>
-                                                                        ))}
-                                                                    </select>
-                                                                </div>
+                                                                        <select className="form-control" value={selectedDay1} onChange={(e) => setSelectedDay1(e.target.value)}>
+                                                                            <option value="">เลือกวัน</option>
+                                                                            {daysOfWeek.map((day) => (
+                                                                                <option key={day} value={day}>
+                                                                                    {day}
+                                                                                </option>
+                                                                            ))}
+                                                                        </select>
+                                                                    </div>
+                                                                    <br />
+                                                                    <div class="row">
+
+                                                                        <div class="col-md-4">
+
+                                                                            <section class="Frame">
+                                                                                <label>กะเช้า</label>
+                                                                                <div class="col-md-12">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="form-group">
+                                                                                                <label role="spWorkStart1">เวลาเข้างาน</label>
+                                                                                                <input type="text" class="form-control" id="spWorkStart1" placeholder="เวลาเข้างาน" value={spWorkStart1} onChange={(e) => setSpWorkStart1(e.target.value)} />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="form-group">
+                                                                                                <label role="spWorkEnd1">เวลาออกงาน</label>
+                                                                                                <input type="text" class="form-control" id="spWorkEnd1" placeholder="เวลาออกงาน" value={spWorkEnd1} onChange={(e) => setSpWorkEnd1(e.target.value)} />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    {/* <!--row--> */}
+                                                                                </div>
+                                                                                {/* <!--col-md-12--> */}
+                                                                            </section>
+                                                                            {/* <!--Frame--> */}
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                            <section class="Frame">
+                                                                                <label>กะบ่าย</label>
+                                                                                <div class="col-md-12">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="form-group">
+                                                                                                <label role="spWorkStart2">เวลาเข้างาน</label>
+                                                                                                <input type="text" class="form-control" id="spWorkStart2" placeholder="เวลาเข้างาน" value={spWorkStart2} onChange={(e) => setSpWorkStart2(e.target.value)} />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="form-group">
+                                                                                                <label role="spWorkEnd2">เวลาออกงาน</label>
+                                                                                                <input type="text" class="form-control" id="spWorkEnd2" placeholder="เวลาออกงาน" value={spWorkEnd2} onChange={(e) => setSpWorkEnd2(e.target.value)} />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    {/* <!--row--> */}
+                                                                                </div>
+                                                                            </section>
+                                                                            {/* <!--Frame--> */}
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                            <section class="Frame">
+                                                                                <label>กะดึก</label>
+                                                                                <div class="col-md-12">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="form-group">
+                                                                                                <label role="spWorkStart3">เวลาเข้างาน</label>
+                                                                                                <input type="text" class="form-control" id="spWorkStart3" placeholder="เวลาเข้างาน" value={spWorkStart3} onChange={(e) => setSpWorkStart3(e.target.value)} />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="form-group">
+                                                                                                <label role="spWorkEnd3">เวลาออกงาน</label>
+                                                                                                <input type="text" class="form-control" id="spWorkEnd3" placeholder="เวลาออกงาน" value={spWorkEnd3} onChange={(e) => setSpWorkEnd3(e.target.value)} />
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    {/* <!--row--> */}
+                                                                                </div>
+                                                                            </section>
+
+                                                                            <button type="button" class="btn btn-primary" onClick={handleAddSpecialWorktime}>เพิ่มเวลาการทำงาน</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </section>
                                                             </div>
-                                                            <div>
-                                                                <label>Number of Employees:</label>
-                                                                <input
-                                                                    type="number"
-                                                                    placeholder="number"
-                                                                    value={numberOfEmployees}
-                                                                    className="form-control"
-                                                                    onChange={(e) => setNumberOfEmployees(e.target.value)}
-                                                                />
-                                                            </div>
-                                                            <br />
-                                                            <button type="button" class="btn btn-primary" onClick={handleSubmit} >เพิ่ม</button>
-                                                            <br />
-                                                            <label role="personalLeave">วันทำงาน</label>
-                                                            <div class="container" style={{ overflowX: 'scroll' }}>
-                                                                <table id="" class="table table-bordered ">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th style={styles.th} id="test">วันจันทร์</th>
-                                                                            <th style={styles.th} id="test">อังคาร</th>
-                                                                            <th style={styles.th} id="test">พุธ</th>
-                                                                            <th style={styles.th} id="test">พฤหัส</th>
-                                                                            <th style={styles.th} id="test">ศุกร์</th>
-                                                                            <th style={styles.th} id="test">เสาร์</th>
-                                                                            <th style={styles.th} id="test">อาทิตย์</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td><input type="checkbox" class="form-control" name='' checked={workday1} onChange={handleCheckboxChange1} /></td>
-                                                                            <td><input type="checkbox" class="form-control" name='' checked={workday2} onChange={handleCheckboxChange2} /></td>
-                                                                            <td><input type="checkbox" class="form-control" name='' checked={workday3} onChange={handleCheckboxChange3} /></td>
-                                                                            <td><input type="checkbox" class="form-control" name='' checked={workday4} onChange={handleCheckboxChange4} /></td>
-                                                                            <td><input type="checkbox" class="form-control" name='' checked={workday5} onChange={handleCheckboxChange5} /></td>
-                                                                            <td><input type="checkbox" class="form-control" name='' checked={workday6} onChange={handleCheckboxChange6} /></td>
-                                                                            <td><input type="checkbox" class="form-control" name='' checked={workday7} onChange={handleCheckboxChange7} /></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                                {listMonday.length >= 1 ? (
-                                                                                    listMonday.map(item => (
+                                                        </div>
+                                                        <div class="row">
+                                                            
+                                                        </div>
+                                                        <br />
+                                                        <label role="personalLeave">วันทำงาน</label>
+                                                        <div class="container" style={{ overflowX: 'scroll' }}>
+                                                            <table id="" class="table table-bordered ">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th style={styles.th} id="test">วันจันทร์</th>
+                                                                        <th style={styles.th} id="test">อังคาร</th>
+                                                                        <th style={styles.th} id="test">พุธ</th>
+                                                                        <th style={styles.th} id="test">พฤหัส</th>
+                                                                        <th style={styles.th} id="test">ศุกร์</th>
+                                                                        <th style={styles.th} id="test">เสาร์</th>
+                                                                        <th style={styles.th} id="test">อาทิตย์</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td><input type="checkbox" class="form-control" name='' checked={workday1} onChange={handleCheckboxChange1} /></td>
+                                                                        <td><input type="checkbox" class="form-control" name='' checked={workday2} onChange={handleCheckboxChange2} /></td>
+                                                                        <td><input type="checkbox" class="form-control" name='' checked={workday3} onChange={handleCheckboxChange3} /></td>
+                                                                        <td><input type="checkbox" class="form-control" name='' checked={workday4} onChange={handleCheckboxChange4} /></td>
+                                                                        <td><input type="checkbox" class="form-control" name='' checked={workday5} onChange={handleCheckboxChange5} /></td>
+                                                                        <td><input type="checkbox" class="form-control" name='' checked={workday6} onChange={handleCheckboxChange6} /></td>
+                                                                        <td><input type="checkbox" class="form-control" name='' checked={workday7} onChange={handleCheckboxChange7} /></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            {listMonday.length >= 1 ? (
+                                                                                listMonday.map(item => (
 
-                                                                                        (item.position ? (
-                                                                                            <>{item.position}: {item.employees}
-                                                                                                <button
-                                                                                                    type="button"
-                                                                                                    class="btn btn-danger" style={{ width: '3rem' }}
-                                                                                                    onClick={() => handleSearchAndDelete(item.day, item.position)}
-                                                                                                >
-                                                                                                    ลบ
-                                                                                                </button>
-                                                                                                <br />
-                                                                                            </>
-                                                                                        ) : (
-                                                                                            <>
-                                                                                                เช้า:{item.spWorkStart1} - {item.spWorkEnd1}<br />
-                                                                                                บ่าย:{item.spWorkStart2} - {item.spWorkEnd2}<br />
-                                                                                                ดึก:{item.spWorkStart3} - {item.spWorkEnd13}<br />
-                                                                                                <button
-                                                                                                    type="button"
-                                                                                                    class="btn btn-danger" style={{ width: '3rem' }}
-                                                                                                    onClick={() => handleSearchAndDelete(item.day, item.position)}
-                                                                                                >
-                                                                                                    ลบ
-                                                                                                </button>
-                                                                                                <br />
-
-                                                                                            </>
-                                                                                        ))
-
-                                                                                    )
-                                                                                    )
-                                                                                ) : (
-                                                                                    <td></td>
-                                                                                )}
-                                                                            </td>
-                                                                            <td>
-                                                                                {listTuesday.length >= 1 ? (
-                                                                                    listTuesday.map(item => (
+                                                                                    (item.position ? (
                                                                                         <>{item.position}: {item.employees}
                                                                                             <button
                                                                                                 type="button"
@@ -1599,107 +1574,143 @@ function Setting() {
                                                                                             </button>
                                                                                             <br />
                                                                                         </>
+                                                                                    ) : (
+                                                                                        <>
+                                                                                            เช้า:{item.spWorkStart1} - {item.spWorkEnd1}<br />
+                                                                                            บ่าย:{item.spWorkStart2} - {item.spWorkEnd2}<br />
+                                                                                            ดึก:{item.spWorkStart3} - {item.spWorkEnd13}<br />
+                                                                                            <button
+                                                                                                type="button"
+                                                                                                class="btn btn-danger" style={{ width: '3rem' }}
+                                                                                                onClick={() => handleSearchAndDelete(item.day, item.position)}
+                                                                                            >
+                                                                                                ลบ
+                                                                                            </button>
+                                                                                            <br />
 
-                                                                                    )
-                                                                                    )
-                                                                                ) : (
-                                                                                    <td></td>
-                                                                                )}
-                                                                            </td>
-                                                                            <td>
-                                                                                {listWednesday.length >= 1 ? (
-                                                                                    listWednesday.map(item => (
-                                                                                        <>{item.position}: {item.employees}
-                                                                                            <button
-                                                                                                type="button" class="btn btn-danger" style={{ width: '3rem' }}
-                                                                                                onClick={() => handleSearchAndDelete(item.day, item.position)}
-                                                                                            >
-                                                                                                ลบ
-                                                                                            </button>
-                                                                                            <br />
                                                                                         </>
-                                                                                    )
-                                                                                    )
-                                                                                ) : (
-                                                                                    <td></td>
-                                                                                )}
-                                                                            </td>
-                                                                            <td>
-                                                                                {listThursday.length >= 1 ? (
-                                                                                    listThursday.map(item => (
-                                                                                        <>{item.position}: {item.employees}
-                                                                                            <button
-                                                                                                type="button" class="btn btn-danger" style={{ width: '3rem' }}
-                                                                                                onClick={() => handleSearchAndDelete(item.day, item.position)}
-                                                                                            >
-                                                                                                ลบ
-                                                                                            </button>
-                                                                                            <br />
-                                                                                        </>
-                                                                                    )
-                                                                                    )
-                                                                                ) : (
-                                                                                    <td></td>
-                                                                                )}
-                                                                            </td>
-                                                                            <td>
-                                                                                {listFriday.length >= 1 ? (
-                                                                                    listFriday.map(item => (
-                                                                                        <>{item.position}: {item.employees}
-                                                                                            <button
-                                                                                                type="button" class="btn btn-danger" style={{ width: '3rem' }}
-                                                                                                onClick={() => handleSearchAndDelete(item.day, item.position)}
-                                                                                            >
-                                                                                                ลบ
-                                                                                            </button>
-                                                                                            <br />
-                                                                                        </>
-                                                                                    )
-                                                                                    )
-                                                                                ) : (
-                                                                                    <td></td>
-                                                                                )}
-                                                                            </td>
-                                                                            <td>
-                                                                                {listSaturday.length >= 1 ? (
-                                                                                    listSaturday.map(item => (
-                                                                                        <>{item.position}: {item.employees}
-                                                                                            <button
-                                                                                                type="button" class="btn btn-danger" style={{ width: '3rem' }}
-                                                                                                onClick={() => handleSearchAndDelete(item.day, item.position)}
-                                                                                            >
-                                                                                                ลบ
-                                                                                            </button>
-                                                                                            <br />
-                                                                                        </>
-                                                                                    )
-                                                                                    )
-                                                                                ) : (
-                                                                                    <td></td>
-                                                                                )}
-                                                                            </td>
-                                                                            <td>
-                                                                                {listSunday.length >= 1 ? (
-                                                                                    listSunday.map(item => (
-                                                                                        <>{item.position}: {item.employees}
-                                                                                            <button
-                                                                                                type="button" class="btn btn-danger" style={{ width: '3rem' }}
-                                                                                                onClick={() => handleSearchAndDelete(item.day, item.position)}
-                                                                                            >
-                                                                                                ลบ
-                                                                                            </button >
-                                                                                            <br />
-                                                                                        </>
-                                                                                    )
-                                                                                    )
-                                                                                ) : (
-                                                                                    <td></td>
-                                                                                )}
-                                                                            </td>
+                                                                                    ))
 
-                                                                        </tr>
+                                                                                )
+                                                                                )
+                                                                            ) : (
+                                                                                <td></td>
+                                                                            )}
+                                                                        </td>
+                                                                        <td>
+                                                                            {listTuesday.length >= 1 ? (
+                                                                                listTuesday.map(item => (
+                                                                                    <>{item.position}: {item.employees}
+                                                                                        <button
+                                                                                            type="button"
+                                                                                            class="btn btn-danger" style={{ width: '3rem' }}
+                                                                                            onClick={() => handleSearchAndDelete(item.day, item.position)}
+                                                                                        >
+                                                                                            ลบ
+                                                                                        </button>
+                                                                                        <br />
+                                                                                    </>
 
-                                                                        {/* <tr>
+                                                                                )
+                                                                                )
+                                                                            ) : (
+                                                                                <td></td>
+                                                                            )}
+                                                                        </td>
+                                                                        <td>
+                                                                            {listWednesday.length >= 1 ? (
+                                                                                listWednesday.map(item => (
+                                                                                    <>{item.position}: {item.employees}
+                                                                                        <button
+                                                                                            type="button" class="btn btn-danger" style={{ width: '3rem' }}
+                                                                                            onClick={() => handleSearchAndDelete(item.day, item.position)}
+                                                                                        >
+                                                                                            ลบ
+                                                                                        </button>
+                                                                                        <br />
+                                                                                    </>
+                                                                                )
+                                                                                )
+                                                                            ) : (
+                                                                                <td></td>
+                                                                            )}
+                                                                        </td>
+                                                                        <td>
+                                                                            {listThursday.length >= 1 ? (
+                                                                                listThursday.map(item => (
+                                                                                    <>{item.position}: {item.employees}
+                                                                                        <button
+                                                                                            type="button" class="btn btn-danger" style={{ width: '3rem' }}
+                                                                                            onClick={() => handleSearchAndDelete(item.day, item.position)}
+                                                                                        >
+                                                                                            ลบ
+                                                                                        </button>
+                                                                                        <br />
+                                                                                    </>
+                                                                                )
+                                                                                )
+                                                                            ) : (
+                                                                                <td></td>
+                                                                            )}
+                                                                        </td>
+                                                                        <td>
+                                                                            {listFriday.length >= 1 ? (
+                                                                                listFriday.map(item => (
+                                                                                    <>{item.position}: {item.employees}
+                                                                                        <button
+                                                                                            type="button" class="btn btn-danger" style={{ width: '3rem' }}
+                                                                                            onClick={() => handleSearchAndDelete(item.day, item.position)}
+                                                                                        >
+                                                                                            ลบ
+                                                                                        </button>
+                                                                                        <br />
+                                                                                    </>
+                                                                                )
+                                                                                )
+                                                                            ) : (
+                                                                                <td></td>
+                                                                            )}
+                                                                        </td>
+                                                                        <td>
+                                                                            {listSaturday.length >= 1 ? (
+                                                                                listSaturday.map(item => (
+                                                                                    <>{item.position}: {item.employees}
+                                                                                        <button
+                                                                                            type="button" class="btn btn-danger" style={{ width: '3rem' }}
+                                                                                            onClick={() => handleSearchAndDelete(item.day, item.position)}
+                                                                                        >
+                                                                                            ลบ
+                                                                                        </button>
+                                                                                        <br />
+                                                                                    </>
+                                                                                )
+                                                                                )
+                                                                            ) : (
+                                                                                <td></td>
+                                                                            )}
+                                                                        </td>
+                                                                        <td>
+                                                                            {listSunday.length >= 1 ? (
+                                                                                listSunday.map(item => (
+                                                                                    <>{item.position}: {item.employees}
+                                                                                        <button
+                                                                                            type="button" class="btn btn-danger" style={{ width: '3rem' }}
+                                                                                            onClick={() => handleSearchAndDelete(item.day, item.position)}
+                                                                                        >
+                                                                                            ลบ
+                                                                                        </button >
+                                                                                        <br />
+                                                                                    </>
+                                                                                )
+                                                                                )
+                                                                            ) : (
+                                                                                <td></td>
+                                                                            )}
+                                                                        </td>
+
+                                                                    </tr>
+
+                                                                    {/* <tr>
                                                                             <td><input type="text" class="form-control" name='' value={workcount1} onChange={(e) => setWorkcount1(e.target.value)} /></td>
                                                                             <td><input type="text" class="form-control" name='' value={workcount2} onChange={(e) => setWorkcount2(e.target.value)} /></td>
                                                                             <td><input type="text" class="form-control" name='' value={workcount3} onChange={(e) => setWorkcount3(e.target.value)} /></td>
@@ -1708,16 +1719,15 @@ function Setting() {
                                                                             <td><input type="text" class="form-control" name='' value={workcount6} onChange={(e) => setWorkcount6(e.target.value)} /></td>
                                                                             <td><input type="text" class="form-control" name='' value={workcount7} onChange={(e) => setWorkcount7(e.target.value)} /></td>
                                                                         </tr> */}
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-
+                                                                </tbody>
+                                                            </table>
                                                         </div>
+
                                                     </div>
                                                 </div>
-                                                {/* <!--row--> */}
                                             </div>
-                                        </section>
+                                            {/* <!--row--> */}
+                                        </div>
                                         {/* <!--Frame--> */}
                                     </div>
                                 </section>
