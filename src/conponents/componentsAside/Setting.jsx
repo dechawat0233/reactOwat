@@ -177,6 +177,12 @@ function Setting() {
         setListEmployeeDay(updatedList);
     };
 
+    const handleDeleteSpecialWorktime = (searchDay) => {
+        const updatedList = listSpecialWorktime.filter(
+            (entry) => entry.day !== searchDay );
+        setListSpecialWorktime(updatedList);
+    };
+
     //test 
 
     const styles = {
@@ -579,6 +585,8 @@ function Setting() {
         setEmployeeNameList(employeeNameLists);
 
         setListEmployeeDay(workplace.listEmployeeDay);
+        setListSpecialWorktime(workplace.listSpecialWorktime);
+
         // console.log(workplace);
         // // console.log(initialFormData);
         // console.log("formData", formData);
@@ -734,6 +742,7 @@ function Setting() {
             workcount7: workcount7,
             addSalary: formData.addSalary,
             listEmployeeDay: listEmployeeDay,
+            listSpecialWorktime: listSpecialWorktime,
         };
 
 
@@ -1582,7 +1591,7 @@ function Setting() {
                                                                                             <button
                                                                                                 type="button"
                                                                                                 class="btn btn-danger" style={{ width: '3rem' }}
-                                                                                                onClick={() => handleSearchAndDelete(item.day, item.position)}
+                                                                                                onClick={() => handleDeleteSpecialWorktime(item.day)}
                                                                                             >
                                                                                                 ลบ
                                                                                             </button>
@@ -1600,16 +1609,34 @@ function Setting() {
                                                                         <td>
                                                                             {listTuesday.length >= 1 ? (
                                                                                 listTuesday.map(item => (
-                                                                                    <>{item.position}: {item.employees}
-                                                                                        <button
-                                                                                            type="button"
-                                                                                            class="btn btn-danger" style={{ width: '3rem' }}
-                                                                                            onClick={() => handleSearchAndDelete(item.day, item.position)}
-                                                                                        >
-                                                                                            ลบ
-                                                                                        </button>
-                                                                                        <br />
-                                                                                    </>
+                                                                                    (item.position ? (
+                                                                                        <>{item.position}: {item.employees}
+                                                                                            <button
+                                                                                                type="button"
+                                                                                                class="btn btn-danger" style={{ width: '3rem' }}
+                                                                                                onClick={() => handleSearchAndDelete(item.day, item.position)}
+                                                                                            >
+                                                                                                ลบ
+                                                                                            </button>
+                                                                                            <br />
+                                                                                        </>
+                                                                                    ) : (
+                                                                                        <>
+                                                                                            เช้า:{item.spWorkStart1} - {item.spWorkEnd1}<br />
+                                                                                            บ่าย:{item.spWorkStart2} - {item.spWorkEnd2}<br />
+                                                                                            ดึก:{item.spWorkStart3} - {item.spWorkEnd13}<br />
+                                                                                            <button
+                                                                                                type="button"
+                                                                                                class="btn btn-danger" style={{ width: '3rem' }}
+                                                                                                onClick={() => handleDeleteSpecialWorktime(item.day)}
+                                                                                            >
+                                                                                                ลบ
+                                                                                            </button>
+                                                                                            <br />
+
+                                                                                        </>
+                                                                                    ))
+
 
                                                                                 )
                                                                                 )
@@ -1620,15 +1647,34 @@ function Setting() {
                                                                         <td>
                                                                             {listWednesday.length >= 1 ? (
                                                                                 listWednesday.map(item => (
-                                                                                    <>{item.position}: {item.employees}
-                                                                                        <button
-                                                                                            type="button" class="btn btn-danger" style={{ width: '3rem' }}
-                                                                                            onClick={() => handleSearchAndDelete(item.day, item.position)}
-                                                                                        >
-                                                                                            ลบ
-                                                                                        </button>
-                                                                                        <br />
-                                                                                    </>
+                                                                                                                                                                        (item.position ? (
+                                                                                        <>{item.position}: {item.employees}
+                                                                                            <button
+                                                                                                type="button"
+                                                                                                class="btn btn-danger" style={{ width: '3rem' }}
+                                                                                                onClick={() => handleSearchAndDelete(item.day, item.position)}
+                                                                                            >
+                                                                                                ลบ
+                                                                                            </button>
+                                                                                            <br />
+                                                                                        </>
+                                                                                    ) : (
+                                                                                        <>
+                                                                                            เช้า:{item.spWorkStart1} - {item.spWorkEnd1}<br />
+                                                                                            บ่าย:{item.spWorkStart2} - {item.spWorkEnd2}<br />
+                                                                                            ดึก:{item.spWorkStart3} - {item.spWorkEnd13}<br />
+                                                                                            <button
+                                                                                                type="button"
+                                                                                                class="btn btn-danger" style={{ width: '3rem' }}
+                                                                                                onClick={() => handleDeleteSpecialWorktime(item.day)}
+                                                                                            >
+                                                                                                ลบ
+                                                                                            </button>
+                                                                                            <br />
+
+                                                                                        </>
+                                                                                    ))
+
                                                                                 )
                                                                                 )
                                                                             ) : (
@@ -1638,15 +1684,34 @@ function Setting() {
                                                                         <td>
                                                                             {listThursday.length >= 1 ? (
                                                                                 listThursday.map(item => (
-                                                                                    <>{item.position}: {item.employees}
-                                                                                        <button
-                                                                                            type="button" class="btn btn-danger" style={{ width: '3rem' }}
-                                                                                            onClick={() => handleSearchAndDelete(item.day, item.position)}
-                                                                                        >
-                                                                                            ลบ
-                                                                                        </button>
-                                                                                        <br />
-                                                                                    </>
+                                                                                    (item.position ? (
+                                                                                        <>{item.position}: {item.employees}
+                                                                                            <button
+                                                                                                type="button"
+                                                                                                class="btn btn-danger" style={{ width: '3rem' }}
+                                                                                                onClick={() => handleSearchAndDelete(item.day, item.position)}
+                                                                                            >
+                                                                                                ลบ
+                                                                                            </button>
+                                                                                            <br />
+                                                                                        </>
+                                                                                    ) : (
+                                                                                        <>
+                                                                                            เช้า:{item.spWorkStart1} - {item.spWorkEnd1}<br />
+                                                                                            บ่าย:{item.spWorkStart2} - {item.spWorkEnd2}<br />
+                                                                                            ดึก:{item.spWorkStart3} - {item.spWorkEnd13}<br />
+                                                                                            <button
+                                                                                                type="button"
+                                                                                                class="btn btn-danger" style={{ width: '3rem' }}
+                                                                                                onClick={() => handleDeleteSpecialWorktime(item.day)}
+                                                                                            >
+                                                                                                ลบ
+                                                                                            </button>
+                                                                                            <br />
+
+                                                                                        </>
+                                                                                    ))
+
                                                                                 )
                                                                                 )
                                                                             ) : (
@@ -1656,15 +1721,34 @@ function Setting() {
                                                                         <td>
                                                                             {listFriday.length >= 1 ? (
                                                                                 listFriday.map(item => (
-                                                                                    <>{item.position}: {item.employees}
-                                                                                        <button
-                                                                                            type="button" class="btn btn-danger" style={{ width: '3rem' }}
-                                                                                            onClick={() => handleSearchAndDelete(item.day, item.position)}
-                                                                                        >
-                                                                                            ลบ
-                                                                                        </button>
-                                                                                        <br />
-                                                                                    </>
+                                                                                    (item.position ? (
+                                                                                        <>{item.position}: {item.employees}
+                                                                                            <button
+                                                                                                type="button"
+                                                                                                class="btn btn-danger" style={{ width: '3rem' }}
+                                                                                                onClick={() => handleSearchAndDelete(item.day, item.position)}
+                                                                                            >
+                                                                                                ลบ
+                                                                                            </button>
+                                                                                            <br />
+                                                                                        </>
+                                                                                    ) : (
+                                                                                        <>
+                                                                                            เช้า:{item.spWorkStart1} - {item.spWorkEnd1}<br />
+                                                                                            บ่าย:{item.spWorkStart2} - {item.spWorkEnd2}<br />
+                                                                                            ดึก:{item.spWorkStart3} - {item.spWorkEnd13}<br />
+                                                                                            <button
+                                                                                                type="button"
+                                                                                                class="btn btn-danger" style={{ width: '3rem' }}
+                                                                                                onClick={() => handleDeleteSpecialWorktime(item.day)}
+                                                                                            >
+                                                                                                ลบ
+                                                                                            </button>
+                                                                                            <br />
+
+                                                                                        </>
+                                                                                    ))
+
                                                                                 )
                                                                                 )
                                                                             ) : (
@@ -1674,15 +1758,34 @@ function Setting() {
                                                                         <td>
                                                                             {listSaturday.length >= 1 ? (
                                                                                 listSaturday.map(item => (
-                                                                                    <>{item.position}: {item.employees}
-                                                                                        <button
-                                                                                            type="button" class="btn btn-danger" style={{ width: '3rem' }}
-                                                                                            onClick={() => handleSearchAndDelete(item.day, item.position)}
-                                                                                        >
-                                                                                            ลบ
-                                                                                        </button>
-                                                                                        <br />
-                                                                                    </>
+                                                                                    (item.position ? (
+                                                                                        <>{item.position}: {item.employees}
+                                                                                            <button
+                                                                                                type="button"
+                                                                                                class="btn btn-danger" style={{ width: '3rem' }}
+                                                                                                onClick={() => handleSearchAndDelete(item.day, item.position)}
+                                                                                            >
+                                                                                                ลบ
+                                                                                            </button>
+                                                                                            <br />
+                                                                                        </>
+                                                                                    ) : (
+                                                                                        <>
+                                                                                            เช้า:{item.spWorkStart1} - {item.spWorkEnd1}<br />
+                                                                                            บ่าย:{item.spWorkStart2} - {item.spWorkEnd2}<br />
+                                                                                            ดึก:{item.spWorkStart3} - {item.spWorkEnd13}<br />
+                                                                                            <button
+                                                                                                type="button"
+                                                                                                class="btn btn-danger" style={{ width: '3rem' }}
+                                                                                                onClick={() => handleDeleteSpecialWorktime(item.day)}
+                                                                                            >
+                                                                                                ลบ
+                                                                                            </button>
+                                                                                            <br />
+
+                                                                                        </>
+                                                                                    ))
+
                                                                                 )
                                                                                 )
                                                                             ) : (
@@ -1692,15 +1795,34 @@ function Setting() {
                                                                         <td>
                                                                             {listSunday.length >= 1 ? (
                                                                                 listSunday.map(item => (
-                                                                                    <>{item.position}: {item.employees}
-                                                                                        <button
-                                                                                            type="button" class="btn btn-danger" style={{ width: '3rem' }}
-                                                                                            onClick={() => handleSearchAndDelete(item.day, item.position)}
-                                                                                        >
-                                                                                            ลบ
-                                                                                        </button >
-                                                                                        <br />
-                                                                                    </>
+                                                                                    (item.position ? (
+                                                                                        <>{item.position}: {item.employees}
+                                                                                            <button
+                                                                                                type="button"
+                                                                                                class="btn btn-danger" style={{ width: '3rem' }}
+                                                                                                onClick={() => handleSearchAndDelete(item.day, item.position)}
+                                                                                            >
+                                                                                                ลบ
+                                                                                            </button>
+                                                                                            <br />
+                                                                                        </>
+                                                                                    ) : (
+                                                                                        <>
+                                                                                            เช้า:{item.spWorkStart1} - {item.spWorkEnd1}<br />
+                                                                                            บ่าย:{item.spWorkStart2} - {item.spWorkEnd2}<br />
+                                                                                            ดึก:{item.spWorkStart3} - {item.spWorkEnd13}<br />
+                                                                                            <button
+                                                                                                type="button"
+                                                                                                class="btn btn-danger" style={{ width: '3rem' }}
+                                                                                                onClick={() => handleDeleteSpecialWorktime(item.day)}
+                                                                                            >
+                                                                                                ลบ
+                                                                                            </button>
+                                                                                            <br />
+
+                                                                                        </>
+                                                                                    ))
+
                                                                                 )
                                                                                 )
                                                                             ) : (
