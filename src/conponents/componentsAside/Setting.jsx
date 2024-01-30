@@ -1582,31 +1582,35 @@ function Setting() {
                                                                                 listMonday.map(item => (
 
                                                                                     (item.position ? (
-                                                                                        <>{item.position}: {item.employees}
+                                                                                        <div className="d-flex justify-content-between">
+                                                                                            <span>{item.position}: {item.employees}</span>
                                                                                             <button
                                                                                                 type="button"
-                                                                                                class="btn btn-danger" style={{ width: '3rem' }}
+                                                                                                className="btn btn-danger"
+                                                                                                style={{ width: '3rem' }}
                                                                                                 onClick={() => handleSearchAndDelete(item.day, item.position)}
                                                                                             >
                                                                                                 ลบ
                                                                                             </button>
-                                                                                            <br />
-                                                                                        </>
+                                                                                        </div>
+
                                                                                     ) : (
-                                                                                        <>
-                                                                                            เช้า:{item.spWorkStart1} - {item.spWorkEnd1}<br />
-                                                                                            บ่าย:{item.spWorkStart2} - {item.spWorkEnd2}<br />
-                                                                                            ดึก:{item.spWorkStart3} - {item.spWorkEnd13}<br />
+                                                                                        <div className="d-flex justify-content-between align-items-end">
+                                                                                            <span>
+                                                                                                เช้า:{item.spWorkStart1} - {item.spWorkEnd1}<br />
+                                                                                                บ่าย:{item.spWorkStart2} - {item.spWorkEnd2}<br />
+                                                                                                ดึก:{item.spWorkStart3} - {item.spWorkEnd13}<br />
+                                                                                            </span>
                                                                                             <button
                                                                                                 type="button"
-                                                                                                class="btn btn-danger" style={{ width: '3rem' }}
+                                                                                                className="btn btn-danger"
+                                                                                                style={{ height: '3rem', width: '3rem' }}
                                                                                                 onClick={() => handleDeleteSpecialWorktime(item.day)}
                                                                                             >
                                                                                                 ลบ
                                                                                             </button>
-                                                                                            <br />
+                                                                                        </div>
 
-                                                                                        </>
                                                                                     ))
 
                                                                                 )
@@ -1619,7 +1623,8 @@ function Setting() {
                                                                             {listTuesday.length >= 1 ? (
                                                                                 listTuesday.map(item => (
                                                                                     (item.position ? (
-                                                                                        <>{item.position}: {item.employees}
+                                                                                        <div className="d-flex justify-content-between">
+                                                                                            <span>{item.position}: {item.employees}</span>
                                                                                             <button
                                                                                                 type="button"
                                                                                                 class="btn btn-danger" style={{ width: '3rem' }}
@@ -1628,12 +1633,14 @@ function Setting() {
                                                                                                 ลบ
                                                                                             </button>
                                                                                             <br />
-                                                                                        </>
+                                                                                        </div>
                                                                                     ) : (
-                                                                                        <>
-                                                                                            เช้า:{item.spWorkStart1} - {item.spWorkEnd1}<br />
-                                                                                            บ่าย:{item.spWorkStart2} - {item.spWorkEnd2}<br />
-                                                                                            ดึก:{item.spWorkStart3} - {item.spWorkEnd13}<br />
+                                                                                        <div className="d-flex justify-content-between align-items-end">
+                                                                                            <span>
+                                                                                                เช้า:{item.spWorkStart1} - {item.spWorkEnd1}<br />
+                                                                                                บ่าย:{item.spWorkStart2} - {item.spWorkEnd2}<br />
+                                                                                                ดึก:{item.spWorkStart3} - {item.spWorkEnd13}<br /></span>
+
                                                                                             <button
                                                                                                 type="button"
                                                                                                 class="btn btn-danger" style={{ width: '3rem' }}
@@ -1643,7 +1650,7 @@ function Setting() {
                                                                                             </button>
                                                                                             <br />
 
-                                                                                        </>
+                                                                                        </div>
                                                                                     ))
 
 
@@ -1657,7 +1664,8 @@ function Setting() {
                                                                             {listWednesday.length >= 1 ? (
                                                                                 listWednesday.map(item => (
                                                                                     (item.position ? (
-                                                                                        <>{item.position}: {item.employees}
+                                                                                        <div className="d-flex justify-content-between">
+                                                                                            <span>{item.position}: {item.employees}</span>
                                                                                             <button
                                                                                                 type="button"
                                                                                                 class="btn btn-danger" style={{ width: '3rem' }}
@@ -1666,12 +1674,15 @@ function Setting() {
                                                                                                 ลบ
                                                                                             </button>
                                                                                             <br />
-                                                                                        </>
+                                                                                        </div>
                                                                                     ) : (
-                                                                                        <>
-                                                                                            เช้า:{item.spWorkStart1} - {item.spWorkEnd1}<br />
-                                                                                            บ่าย:{item.spWorkStart2} - {item.spWorkEnd2}<br />
-                                                                                            ดึก:{item.spWorkStart3} - {item.spWorkEnd13}<br />
+                                                                                        <div className="d-flex justify-content-between align-items-end">
+                                                                                            <span>
+                                                                                                เช้า:{item.spWorkStart1} - {item.spWorkEnd1}<br />
+                                                                                                บ่าย:{item.spWorkStart2} - {item.spWorkEnd2}<br />
+                                                                                                ดึก:{item.spWorkStart3} - {item.spWorkEnd13}<br /></span>
+
+
                                                                                             <button
                                                                                                 type="button"
                                                                                                 class="btn btn-danger" style={{ width: '3rem' }}
@@ -1681,7 +1692,7 @@ function Setting() {
                                                                                             </button>
                                                                                             <br />
 
-                                                                                        </>
+                                                                                        </div>
                                                                                     ))
 
                                                                                 )
@@ -1694,7 +1705,8 @@ function Setting() {
                                                                             {listThursday.length >= 1 ? (
                                                                                 listThursday.map(item => (
                                                                                     (item.position ? (
-                                                                                        <>{item.position}: {item.employees}
+                                                                                        <div className="d-flex justify-content-between">
+                                                                                            <span>{item.position}: {item.employees}</span>
                                                                                             <button
                                                                                                 type="button"
                                                                                                 class="btn btn-danger" style={{ width: '3rem' }}
@@ -1703,12 +1715,15 @@ function Setting() {
                                                                                                 ลบ
                                                                                             </button>
                                                                                             <br />
-                                                                                        </>
+                                                                                        </div>
                                                                                     ) : (
-                                                                                        <>
-                                                                                            เช้า:{item.spWorkStart1} - {item.spWorkEnd1}<br />
-                                                                                            บ่าย:{item.spWorkStart2} - {item.spWorkEnd2}<br />
-                                                                                            ดึก:{item.spWorkStart3} - {item.spWorkEnd13}<br />
+                                                                                        <div className="d-flex justify-content-between align-items-end">
+                                                                                            <span>
+                                                                                                เช้า:{item.spWorkStart1} - {item.spWorkEnd1}<br />
+                                                                                                บ่าย:{item.spWorkStart2} - {item.spWorkEnd2}<br />
+                                                                                                ดึก:{item.spWorkStart3} - {item.spWorkEnd13}<br /></span>
+
+
                                                                                             <button
                                                                                                 type="button"
                                                                                                 class="btn btn-danger" style={{ width: '3rem' }}
@@ -1718,7 +1733,7 @@ function Setting() {
                                                                                             </button>
                                                                                             <br />
 
-                                                                                        </>
+                                                                                        </div>
                                                                                     ))
 
                                                                                 )
@@ -1731,7 +1746,9 @@ function Setting() {
                                                                             {listFriday.length >= 1 ? (
                                                                                 listFriday.map(item => (
                                                                                     (item.position ? (
-                                                                                        <>{item.position}: {item.employees}
+                                                                                        <div className="d-flex justify-content-between">
+
+                                                                                            <span>{item.position}: {item.employees}</span>
                                                                                             <button
                                                                                                 type="button"
                                                                                                 class="btn btn-danger" style={{ width: '3rem' }}
@@ -1740,12 +1757,15 @@ function Setting() {
                                                                                                 ลบ
                                                                                             </button>
                                                                                             <br />
-                                                                                        </>
+                                                                                        </div>
                                                                                     ) : (
-                                                                                        <>
-                                                                                            เช้า:{item.spWorkStart1} - {item.spWorkEnd1}<br />
-                                                                                            บ่าย:{item.spWorkStart2} - {item.spWorkEnd2}<br />
-                                                                                            ดึก:{item.spWorkStart3} - {item.spWorkEnd13}<br />
+                                                                                        <div className="d-flex justify-content-between align-items-end">
+                                                                                            <span>
+                                                                                                เช้า:{item.spWorkStart1} - {item.spWorkEnd1}<br />
+                                                                                                บ่าย:{item.spWorkStart2} - {item.spWorkEnd2}<br />
+                                                                                                ดึก:{item.spWorkStart3} - {item.spWorkEnd13}<br /></span>
+
+
                                                                                             <button
                                                                                                 type="button"
                                                                                                 class="btn btn-danger" style={{ width: '3rem' }}
@@ -1755,7 +1775,7 @@ function Setting() {
                                                                                             </button>
                                                                                             <br />
 
-                                                                                        </>
+                                                                                        </div>
                                                                                     ))
 
                                                                                 )
@@ -1768,7 +1788,9 @@ function Setting() {
                                                                             {listSaturday.length >= 1 ? (
                                                                                 listSaturday.map(item => (
                                                                                     (item.position ? (
-                                                                                        <>{item.position}: {item.employees}
+                                                                                        <div className="d-flex justify-content-between">
+
+                                                                                            <span>{item.position}: {item.employees}</span>
                                                                                             <button
                                                                                                 type="button"
                                                                                                 class="btn btn-danger" style={{ width: '3rem' }}
@@ -1777,12 +1799,14 @@ function Setting() {
                                                                                                 ลบ
                                                                                             </button>
                                                                                             <br />
-                                                                                        </>
+                                                                                        </div>
                                                                                     ) : (
-                                                                                        <>
-                                                                                            เช้า:{item.spWorkStart1} - {item.spWorkEnd1}<br />
-                                                                                            บ่าย:{item.spWorkStart2} - {item.spWorkEnd2}<br />
-                                                                                            ดึก:{item.spWorkStart3} - {item.spWorkEnd13}<br />
+                                                                                        <div className="d-flex justify-content-between align-items-end">
+                                                                                            <span>
+                                                                                                เช้า:{item.spWorkStart1} - {item.spWorkEnd1}<br />
+                                                                                                บ่าย:{item.spWorkStart2} - {item.spWorkEnd2}<br />
+                                                                                                ดึก:{item.spWorkStart3} - {item.spWorkEnd13}<br /></span>
+
                                                                                             <button
                                                                                                 type="button"
                                                                                                 class="btn btn-danger" style={{ width: '3rem' }}
@@ -1792,7 +1816,7 @@ function Setting() {
                                                                                             </button>
                                                                                             <br />
 
-                                                                                        </>
+                                                                                        </div>
                                                                                     ))
 
                                                                                 )
@@ -1805,7 +1829,9 @@ function Setting() {
                                                                             {listSunday.length >= 1 ? (
                                                                                 listSunday.map(item => (
                                                                                     (item.position ? (
-                                                                                        <>{item.position}: {item.employees}
+                                                                                        <div className="d-flex justify-content-between">
+
+                                                                                            <span>{item.position}: {item.employees}</span>
                                                                                             <button
                                                                                                 type="button"
                                                                                                 class="btn btn-danger" style={{ width: '3rem' }}
@@ -1814,12 +1840,15 @@ function Setting() {
                                                                                                 ลบ
                                                                                             </button>
                                                                                             <br />
-                                                                                        </>
+                                                                                        </div>
                                                                                     ) : (
-                                                                                        <>
-                                                                                            เช้า:{item.spWorkStart1} - {item.spWorkEnd1}<br />
-                                                                                            บ่าย:{item.spWorkStart2} - {item.spWorkEnd2}<br />
-                                                                                            ดึก:{item.spWorkStart3} - {item.spWorkEnd13}<br />
+                                                                                        <div className="d-flex justify-content-between align-items-end">
+                                                                                            <span>
+                                                                                                เช้า:{item.spWorkStart1} - {item.spWorkEnd1}<br />
+                                                                                                บ่าย:{item.spWorkStart2} - {item.spWorkEnd2}<br />
+                                                                                                ดึก:{item.spWorkStart3} - {item.spWorkEnd13}<br /></span>
+
+
                                                                                             <button
                                                                                                 type="button"
                                                                                                 class="btn btn-danger" style={{ width: '3rem' }}
@@ -1829,7 +1858,7 @@ function Setting() {
                                                                                             </button>
                                                                                             <br />
 
-                                                                                        </>
+                                                                                        </div>
                                                                                     ))
 
                                                                                 )
