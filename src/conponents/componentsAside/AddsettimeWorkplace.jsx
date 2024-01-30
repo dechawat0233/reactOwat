@@ -754,6 +754,7 @@ function AddsettimeWorkplace() {
                 setStartTimeOt3(response.data.workplaces[0].workStartOt1);
                 setEndTimeOt3(response.data.workplaces[0].workEndOt1);
 
+                setShift('morning_shift');
 
                 setShift1start(startTime);
                 setShift1end(endTime);
@@ -1015,20 +1016,21 @@ function AddsettimeWorkplace() {
 
         //clean form
         setStaffId('');
-        setShift('');
+        // setShift('');
         setStaffName('');
         setStaffLastname('');
         setStaffFullName('');
-        setStartTime('');
-        setEndTime('');
-        setAllTime('');
-        setOtTime('');
-        setSelectotTime('');
-        setSelectotTimeOut('');
+        // setStartTime('');
+        // setEndTime('');
+        // setAllTime('');
+        // setOtTime('');
+        // setSelectotTime('');
+        // setSelectotTimeOut('');
         setCashSalary(!cashSalary);
         setSpecialtSalary('');
         setMessageSalary('');
         setCashSalary(''); // Toggle the checkbox state
+        setShift('morning_shift');
 
         // alert(rowDataList.length);
 
@@ -1307,7 +1309,7 @@ function AddsettimeWorkplace() {
                                             {/* <select className="form-control" value={shift} onChange={(e) => setShift(e.target.value)}  > */}
                                             {/* <select className="form-control" value={shift} onChange={(e) => handleShiftChange(e.target.value)}> */}
                                             <select className="form-control" value={shift} onChange={handleShiftChange}>
-                                                <option value="">เลือกกะการทำงาน</option>
+                                                {/* <option value="">เลือกกะการทำงาน</option> */}
                                                 <option value="morning_shift">กะเช้า</option>
                                                 <option value="afternoon_shift">กะบ่าย</option>
                                                 <option value="night_shift">กะดึก</option>
