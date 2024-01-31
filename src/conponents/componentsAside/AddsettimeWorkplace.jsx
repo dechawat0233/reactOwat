@@ -733,7 +733,7 @@ function AddsettimeWorkplace() {
                 // Calculate the time difference
                 setWorkOfHour(response.data.workplaces[0].workOfHour);
                 setWorkOfOT(response.data.workplaces[0].workOfOT);
-
+            
                 const startTime = response.data.workplaces[0].workStart1;
                 const endTime = response.data.workplaces[0].workEnd1;
                 const workOfHour = response.data.workplaces[0].workOfHour;
@@ -754,6 +754,7 @@ function AddsettimeWorkplace() {
                 setStartTimeOt3(response.data.workplaces[0].workStartOt1);
                 setEndTimeOt3(response.data.workplaces[0].workEndOt1);
 
+                setShift('morning_shift');
 
                 setShift1start(startTime);
                 setShift1end(endTime);
@@ -820,12 +821,14 @@ function AddsettimeWorkplace() {
                 setWorkplaceId(response.data.workplaces[0].workplaceId);
                 setWorkplaceName(response.data.workplaces[0].workplaceName);
 
-                setSearchWorkplaceId(response.data.workplaces[0].workplaceId);
-                setSearchWorkplaceName(response.data.workplaces[0].workplaceName);
+                // setSearchWorkplaceId(response.data.workplaces[0].workplaceId);
+                // setSearchWorkplaceName(response.data.workplaces[0].workplaceName);
 
                 // console.log('workOfOT:', response.data.workplaces[0].workOfOT);
                 // console.log('workOfOT:', endTime);
 
+                setSearchWorkplaceId('');
+                setSearchWorkplaceName('');
             }
         } catch (error) {
             alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
@@ -1015,20 +1018,21 @@ function AddsettimeWorkplace() {
 
         //clean form
         setStaffId('');
-        setShift('');
+        // setShift('');
         setStaffName('');
         setStaffLastname('');
         setStaffFullName('');
-        setStartTime('');
-        setEndTime('');
-        setAllTime('');
-        setOtTime('');
-        setSelectotTime('');
-        setSelectotTimeOut('');
+        // setStartTime('');
+        // setEndTime('');
+        // setAllTime('');
+        // setOtTime('');
+        // setSelectotTime('');
+        // setSelectotTimeOut('');
         setCashSalary(!cashSalary);
         setSpecialtSalary('');
         setMessageSalary('');
         setCashSalary(''); // Toggle the checkbox state
+        setShift('morning_shift');
 
         // alert(rowDataList.length);
 
@@ -1307,7 +1311,7 @@ function AddsettimeWorkplace() {
                                             {/* <select className="form-control" value={shift} onChange={(e) => setShift(e.target.value)}  > */}
                                             {/* <select className="form-control" value={shift} onChange={(e) => handleShiftChange(e.target.value)}> */}
                                             <select className="form-control" value={shift} onChange={handleShiftChange}>
-                                                <option value="">เลือกกะการทำงาน</option>
+                                                {/* <option value="">เลือกกะการทำงาน</option> */}
                                                 <option value="morning_shift">กะเช้า</option>
                                                 <option value="afternoon_shift">กะบ่าย</option>
                                                 <option value="night_shift">กะดึก</option>

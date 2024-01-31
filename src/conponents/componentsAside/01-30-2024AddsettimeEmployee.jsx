@@ -22,11 +22,6 @@ function AddsettimeEmployee() {
         setCashSalary(!cashSalary); // Toggle the checkbox state
     };
 
-    const [staffId, setStaffId] = useState(''); //รหัสหน่วยงาน
-    const [staffName, setStaffName] = useState(''); //รหัสหน่วยงาน
-    const [staffLastname, setStaffLastname] = useState(''); //รหัสหน่วยงาน
-    const [staffFullName, setStaffFullName] = useState(''); //รหัสหน่วยงาน
-
 
     const [updateButton, setUpdateButton] = useState(false); // Initially, set to false
     const [timeRecord_id, setTimeRecord_id] = useState('');
@@ -52,7 +47,7 @@ function AddsettimeEmployee() {
     useEffect(() => {
         if (name !== '') {
             setCheckaddData('');
-
+            
             handleCheckTimerecord();
         }
     }, [month, year]);
@@ -66,7 +61,7 @@ function AddsettimeEmployee() {
         options.push(<option key={i} value={formattedValue}>{formattedValue}</option>);
     }
 
-    const [checkaddData, setCheckaddData] = useState('');
+const [checkaddData , setCheckaddData] = useState('');
 
     //Workplace data
     const [employeeId, setEmployeeId] = useState(''); //รหัสหน่วยงาน
@@ -94,21 +89,6 @@ function AddsettimeEmployee() {
     //////////////////////////////
     const [employeeList, setEmployeeList] = useState([]);
     const [workplaceList, setWorkplaceList] = useState([]);
-
-    useEffect(() => {
-        // Fetch data from the API when the component mounts
-        fetch(endpoint + '/employee/list')
-            .then(response => response.json())
-            .then(data => {
-                // Update the state with the fetched data
-                setEmployeeList(data);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
-    }, []); // The empty array [] ensures that the effect runs only once after the initial render
-
-    console.log(employeeList);
 
     useEffect(() => {
         // Fetch data from the API when the component mounts
@@ -569,11 +549,11 @@ function AddsettimeEmployee() {
         // get value from form search
         const data = await {
             employeeId: searchEmployeeId,
-            // name: searchEmployeeName,
+            name: searchEmployeeName,
             idCard: '',
             workPlace: '',
         };
-        // alert(data.name);
+
         try {
             const response = await axios.post(endpoint + '/employee/search', data);
             setSearchResult(response.data.employees);
@@ -620,7 +600,7 @@ function AddsettimeEmployee() {
 
 
 
-        if (!checkaddData) {
+        if (! checkaddData) {
 
 
             try {
@@ -807,48 +787,6 @@ function AddsettimeEmployee() {
         // Handle submission for Form 1
     };
 
-    const handleStaffIdChange = (e) => {
-        const selectedStaffId = e.target.value;
-        setStaffId(selectedStaffId);
-        setSearchEmployeeId(selectedStaffId);
-        // Find the corresponding employee and set the staffName
-        const selectedEmployee = employeeList.find(employee => employee.employeeId === selectedStaffId);
-        if (selectedEmployee) {
-            // setStaffName(selectedEmployee.name);
-            // setStaffLastname(selectedEmployee.lastName);
-            setStaffFullName(selectedEmployee.name + ' ' + selectedEmployee.lastName);
-
-
-        } else {
-            setStaffName('');
-            setStaffFullName('');
-            setSearchEmployeeName('');
-        }
-    };
-
-    const handleStaffNameChange = (e) => {
-        const selectedStaffName = e.target.value;
-
-        // Find the corresponding employee and set the staffId
-        const selectedEmployee = employeeList.find(employee => (employee.name + " " + employee.lastName) === selectedStaffName);
-        const selectedEmployeeFName = employeeList.find(employee => employee.name === selectedStaffName);
-
-        if (selectedEmployee) {
-            setStaffId(selectedEmployee.employeeId);
-            setSearchEmployeeId(selectedEmployee.employeeId);
-        } else {
-            setStaffId('');
-            // searchEmployeeId('');
-        }
-
-        // setStaffName(selectedStaffName);
-        setStaffFullName(selectedStaffName);
-        setSearchEmployeeName(selectedEmployeeFName);
-    };
-
-    console.log('SearchEmployeeName',searchEmployeeName);
-    console.log('SearchEmployeeId',searchEmployeeId);
-
     return (
         <section class="content">
             <div class="row">
@@ -860,83 +798,17 @@ function AddsettimeEmployee() {
                                 <section class="Frame">
                                     <div class="col-md-12">
                                         <form onSubmit={handleSearch}>
-                                            {/* <div class="row">
-                                                <div className="col-md-2">
-                                                    <div className="form-group">
-                                                        <input
-                                                            type="text"
-                                                            className="form-control"
-                                                            id="staffId"
-                                                            placeholder="รหัสพนักงาน"
-                                                            value={staffId}
-                                                            onChange={handleStaffIdChange}
-                                                            list="staffIdList"
-                                                        />
-                                                        <datalist id="staffIdList">
-                                                            {employeeList.map(employee => (
-                                                                <option key={employee.employeeId} value={employee.employeeId} />
-                                                            ))}
-                                                        </datalist>
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-2">
-                                                    <div className="form-group">
-                                                        <input
-                                                            type="text"
-                                                            className="form-control"
-                                                            id="staffName"
-                                                            placeholder="ชื่อพนักงาน"
-                                                            value={staffFullName}
-                                                            onChange={handleStaffNameChange}
-                                                            list="staffNameList"
-                                                        />
-                                                        <datalist id="staffNameList">
-                                                            {employeeList.map(employee => (
-                                                                <option key={employee.employeeId} value={employee.name + " " + employee.lastName} />
-                                                            ))}
-                                                        </datalist>
-                                                    </div>
-                                                </div>
-                                            </div> */}
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label role="searchEmployeeId">รหัสพนักงาน</label>
-                                                        {/* <input type="text" class="form-control" id="searchEmployeeId" placeholder="รหัสพนักงาน" value={searchEmployeeId} onChange={(e) => setSearchEmployeeId(e.target.value)} /> */}
-                                                        <input
-                                                            type="text"
-                                                            className="form-control"
-                                                            id="staffId"
-                                                            placeholder="รหัสพนักงาน"
-                                                            value={staffId}
-                                                            onChange={handleStaffIdChange}
-                                                            list="staffIdList"
-                                                        />
-                                                        <datalist id="staffIdList">
-                                                            {employeeList.map(employee => (
-                                                                <option key={employee.employeeId} value={employee.employeeId} />
-                                                            ))}
-                                                        </datalist>
+                                                        <input type="text" class="form-control" id="searchEmployeeId" placeholder="รหัสพนักงาน" value={searchEmployeeId} onChange={(e) => setSearchEmployeeId(e.target.value)} />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label role="searchname">ชื่อพนักงาน</label>
-                                                        {/* <input type="text" class="form-control" id="searchname" placeholder="ชื่อพนักงาน" value={searchEmployeeName} onChange={(e) => setSearchEmployeeName(e.target.value)} /> */}
-                                                        <input
-                                                            type="text"
-                                                            className="form-control"
-                                                            id="staffName"
-                                                            placeholder="ชื่อพนักงาน"
-                                                            value={staffFullName}
-                                                            onChange={handleStaffNameChange}
-                                                            list="staffNameList"
-                                                        />
-                                                        <datalist id="staffNameList">
-                                                            {employeeList.map(employee => (
-                                                                <option key={employee.employeeId} value={employee.name + " " + employee.lastName} />
-                                                            ))}
-                                                        </datalist>
+                                                        <input type="text" class="form-control" id="searchname" placeholder="ชื่อพนักงาน" value={searchEmployeeName} onChange={(e) => setSearchEmployeeName(e.target.value)} />
                                                     </div>
                                                 </div>
                                             </div>
@@ -945,7 +817,7 @@ function AddsettimeEmployee() {
                                             </div>
                                         </form>
                                         <br />
-                                        {/* <div class="d-flex justify-content-center">
+                                        <div class="d-flex justify-content-center">
                                             <h2 class="title">ผลลัพธ์ {searchResult.length} รายการ</h2>
                                         </div>
                                         <div class="d-flex justify-content-center">
@@ -965,7 +837,7 @@ function AddsettimeEmployee() {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div> */}
+                                        </div>
                                     </div>
                                 </section>
                                 {/* <!--Frame--> */}
