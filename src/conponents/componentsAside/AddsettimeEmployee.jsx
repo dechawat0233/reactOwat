@@ -838,7 +838,7 @@ function AddsettimeEmployee() {
             setSearchEmployeeId(selectedEmployee.employeeId);
         } else {
             setStaffId('');
-            searchEmployeeId('');
+            // searchEmployeeId('');
         }
 
         // setStaffName(selectedStaffName);
