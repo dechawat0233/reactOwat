@@ -735,7 +735,7 @@ function AddsettimeEmployee() {
         // Remove the row at the specified index
         const updatedList = newDataList.filter(
             (entry) => entry.tmpIndex !== index);
-alert(index);
+// alert(index);
         // newDataList.splice(index, 1);
         // Update the state with the new data
         setRowDataList2(updatedList );
