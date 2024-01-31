@@ -133,6 +133,7 @@ function AddsettimeEmployee() {
 
 
     /////////////////////////////////////////////
+    const [ tmpIndex , setTmpIndex ] = useState(0);
     const [wId, setWId] = useState('');
     const [wName, setWName] = useState('');
     const [wDate, setWDate] = useState('');
@@ -668,6 +669,7 @@ function AddsettimeEmployee() {
         //get data from input in useState to data 
 
         const newRowData = await {
+            tmpIndex : tmpIndex ||'',
             timerecordId: year || '',
             workplaceId: wId || '',
             workplaceName: wName || '',
@@ -686,14 +688,15 @@ function AddsettimeEmployee() {
 
         await addRow(newRowData);
 
+        await setTmpIndex(tmpIndex +1);
         // await setWId('');
         // await setWName('');
-        await setWStartTime('');
-        await setWEndTime('');
-        await setWAllTime('');
-        await setWOtTime('');
-        await setWSelectOtTime('');
-        await setWSelectOtTimeout('');
+        // await setWStartTime('');
+        // await setWEndTime('');
+        // await setWAllTime('');
+        // await setWOtTime('');
+        // await setWSelectOtTime('');
+        // await setWSelectOtTimeout('');
         await setCashSalary('');
         await setSpecialtSalary('');
         await setMessageSalary('');
@@ -730,9 +733,12 @@ function AddsettimeEmployee() {
         // Create a copy of the current state
         const newDataList = [...rowDataList2];
         // Remove the row at the specified index
-        newDataList.splice(index, 1);
+        const updatedList = newDataList.filter(
+            (entry) => entry.tmpIndex !== index);
+alert(index);
+        // newDataList.splice(index, 1);
         // Update the state with the new data
-        setRowDataList2(newDataList);
+        setRowDataList2(updatedList );
     };
 
 
@@ -972,6 +978,8 @@ function AddsettimeEmployee() {
                             </div>
                         </div>
                         <form onSubmit={handleManageWorkplace}>
+                        <input type="hidden" id="hiddenField" name="" value={tmpIndex} />
+
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="form-group">
@@ -1289,7 +1297,7 @@ function AddsettimeEmployee() {
                                                         )}
                                                         <div class="col-md-1" style={bordertable}>
                                                             {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
-                                                            <button class="btn btn-xs btn-danger" style={{ padding: '0.3rem ', width: '8rem' }} onClick={() => handleDeleteRow(index)}>Delete</button>
+                                                            <button type="button" class="btn btn-xs btn-danger" style={{ padding: '0.3rem ', width: '8rem' }} onClick={() => handleDeleteRow(rowData2.tmpIndex)}>Delete</button>
                                                         </div>
 
                                                     </div>
