@@ -1042,7 +1042,7 @@ function AddsettimeEmployee() {
                                 <div class="col-md-3">
                                     <label role="button"></label>
                                     <div class="d-flex align-items-end">
-                                        <button class="btn b_save" onClick={handleCheckTimerecord} ><i class="nav-icon fas fa-search"></i> &nbsp; ตรวจสอบ</button>
+                                        <button type="button" class="btn b_save" onClick={handleCheckTimerecord} ><i class="nav-icon fas fa-search"></i> &nbsp; ตรวจสอบ</button>
                                     </div>
                                 </div>
                             </div>
