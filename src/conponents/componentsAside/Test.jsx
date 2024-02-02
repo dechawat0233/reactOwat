@@ -21,6 +21,101 @@ function Test() {
     //     setSelectedDates((prevDates) => [...prevDates, date]);
     // };
 
+    const testData = [
+        {
+            _id: '64d46a67f811c14a70d4b3d7',
+            workplaceId: '9999',
+            workplaceName: 'ทดสอบการทำงาน101',
+            workplaceArea: 'นครปฐม',
+            workOfWeek: '5',
+
+        },
+        {
+            _id: '64d46a67f811c14a70d4b3d7',
+            workplaceId: '9999',
+            workplaceName: 'ทดสอบการทำงาน101',
+            workplaceArea: 'นครปฐม',
+            workOfWeek: '5',
+            workDay1:
+            {
+                position: 'head',
+                time: '210.00',
+                timeEnd: '211.00',
+                time2: '213.00',
+                timeEnd2: '214.00',
+                time3: '219.00',
+                timeEnd3: '220.00',
+            },
+            workDay2:
+            {
+                position: 'head',
+                time: '210.01',
+                timeEnd: '211.01',
+                time2: '213.01',
+                timeEnd2: '214.01',
+                time3: '219.01',
+                timeEnd3: '220.01',
+            },
+            workDay3:
+            {
+                position: 'head',
+                time: '210.02',
+                timeEnd: '211.02',
+                time2: '213.02',
+                timeEnd2: '214.02',
+                time3: '219.02',
+                timeEnd3: '220.02',
+            },
+            workDay4:
+            {
+                position: 'head',
+                time: '210.03',
+                timeEnd: '211.03',
+                time2: '213.03',
+                timeEnd2: '214.03',
+                time3: '219.03',
+                timeEnd3: '220.03',
+            },
+            workDay5:
+            {
+                position: 'head',
+                time: '210.04',
+                timeEnd: '211.04',
+                time2: '213.04',
+                timeEnd2: '214.04',
+                time3: '219.04',
+                timeEnd3: '220.04',
+            },
+            workDay6:
+            {
+                position: 'head',
+                time: '210.05',
+                timeEnd: '211.05',
+                time2: '213.05',
+                timeEnd2: '214.05',
+                time3: '219.05',
+                timeEnd3: '220.05',
+            },
+            workDay7:
+            {
+                position: 'head',
+                time: '210.06',
+                timeEnd: '211.06',
+                time2: '213.06',
+                timeEnd2: '214.06',
+                time3: '219.06',
+                timeEnd3: '220.06',
+            },
+        },
+        {
+            _id: '64d46a67f811c14a70d4b3d7',
+            workplaceId: '9999',
+            workplaceName: 'ทดสอบการทำงาน101',
+            workplaceArea: 'นครปฐม',
+            workOfWeek: '5'
+        }
+    ];
+
     const handleDateChange = (date) => {
         // Check if the selected date already exists in the array
         if (!selectedDates.includes(date)) {
@@ -31,39 +126,7 @@ function Test() {
         }
     };
 
-    // const handleAddDate = () => {
-    //     if (day && month && year) {
-    //         const selectedDate = new Date(`${day}/${month}/${year}`);
-    //         setSelectedDates((prevDates) => [...prevDates, selectedDate]);
-    //         setDay('');
-    //         setMonth('');
-    //         setYear('');
-    //     } else {
-    //         // Handle invalid date selection
-    //         console.error('Invalid date selection');
-    //     }
-    // };
-    // const handleAddDate = () => {
-    //     if (day && month && year) {
-    //         const selectedDate = new Date(`${day}/${month}/${year}`);
-    //         // Check if the selected date already exists in the array
-    //         if (!selectedDates.find((date) => date.getTime() === selectedDate.getTime())) {
-    //             setSelectedDates((prevDates) => [...prevDates, selectedDate]);
-    //         } else {
-    //             // Handle case where the date already exists
-    //             console.error('Date already selected');
-    //             alert(`${day}/${month}/${year}` + 'ถูกเพิ่มไปแล้ว');
-    //         }
-    //         setDay('');
-    //         setMonth('');
-    //         setYear('');
-    //     } else {
-    //         // Handle invalid date selection
-    //         // console.error(day '/' month '/' year'Invalid date selection');
-    //         alert(`${day}/${month}/${year}` + 'Invalid date selection. Please select a day, month, and year.');
 
-    //     }
-    // };
 
     const handleAddDate = () => {
         if (day && month && year) {
@@ -90,11 +153,6 @@ function Test() {
         }
     };
 
-    // const handleRemoveDate = (dateToRemove) => {
-    //     setSelectedDates((prevDates) =>
-    //         prevDates.filter((date) => date !== dateToRemove)
-    //     );
-    // };
     const handleRemoveDate = (dateToRemove) => {
         setSelectedDates((prevDates) =>
             prevDates.filter((date) => date.getTime() !== dateToRemove.getTime())
@@ -105,29 +163,87 @@ function Test() {
         setReason(event.target.value);
     };
 
-    // console.log(workOfOT);
+    ////////////////////////////////////////////////////////
+
+
+    const [workTimeDay, setWorkTimeDay] = useState({
+        startDay: '',
+        endDay: '',
+        allTimes: [],
+    });
+
+    const daysOfWeek = ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์', 'อาทิตย์'];
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setWorkTimeDay((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    const handleAddTime = () => {
+        setWorkTimeDay((prevData) => ({
+            ...prevData,
+            allTimes: [...prevData.allTimes, { startTime: '', endTime: '', resultTime: '', startTimeOT: '', endTimeOT: '', resultTimeOT: '' }],
+        }));
+    };
+
+    const handleTimeChange = (index, timeType, value) => {
+        setWorkTimeDay((prevData) => {
+            const updatedTimes = prevData.allTimes.map((time, i) =>
+                i === index ? { ...time, [timeType]: value } : time
+            );
+
+            // Calculate resultTime and resultOT when both startTime and endTime are provided
+            if (timeType === 'startTime' || timeType === 'endTime' || timeType === 'startTimeOT' || timeType === 'endTimeOT') {
+                const startTime = updatedTimes[index].startTime;
+                const endTime = updatedTimes[index].endTime;
+                const startTimeOT = updatedTimes[index].startTimeOT;
+                const endTimeOT = updatedTimes[index].endTimeOT;
+
+                if (startTime && endTime) {
+                    const resultTime = calculateTimeDifference(startTime, endTime);
+                    updatedTimes[index].resultTime = resultTime;
+                }
+
+                if (startTimeOT && endTimeOT) {
+                    const resultOT = calculateTimeDifference(startTimeOT, endTimeOT);
+                    updatedTimes[index].resultOT = resultOT;
+                }
+            }
+
+            return {
+                ...prevData,
+                allTimes: updatedTimes,
+            };
+        });
+    };
+
+    const calculateTimeDifference = (startTime, endTime) => {
+        const [startHour, startMinute] = startTime.split('.').map(Number);
+        const [endHour, endMinute] = endTime.split('.').map(Number);
+
+        let resultHour = endHour - startHour;
+        let resultMinute = endMinute - startMinute;
+
+        if (resultMinute < 0) {
+            resultHour -= 1;
+            resultMinute += 60;
+        }
+
+        return `${resultHour.toString().padStart(2, '0')}.${resultMinute.toString().padStart(2, '0')}`;
+    };
+
+
     return (
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
                     <div class="container-fluid">
-                        {/* <h2 class="title">ข้อมูลการลงเวลาทำงานของพนักงาน</h2> */}
                         <form >
-
                             <section class="Frame">
                                 <div class="row">
-                                    {/*  */}
-                                    {/* <DatePicker
-                                        className="form-control"
-                                        popperClassName="datepicker-popper"
-                                        selected={null}
-                                        // Pass the raw date to the handler
-                                        onChange={(date) => handleDateChange(new Date(date))}
-                                        dateFormat="dd/mm/yyyy"
-                                        isClearable
-                                        placeholderText="Select a date"
-                                    /> */}
-                                    {/*  */}
                                     <div>
                                         <label>เดือน:</label>
                                         <select value={month} onChange={(e) => setMonth(e.target.value)}>
@@ -163,42 +279,9 @@ function Test() {
                                             เพิ่ม
                                         </button>
                                     </div>
-
-                                    {/*  */}
-                                    {/* {selectedDates.length > 0 && (
-                                        <div>
-                                            <h3>วันหยุดหน่วยงาน</h3>
-                                            <ul>
-                                                {selectedDates.map((date) => (
-                                                    <li key={date.toString()}>
-                                                        {date.toLocaleDateString()}{' '}
-                                                        <button type="button" onClick={() => handleRemoveDate(date)} class="btn clean" style={{ margin: '0.5rem' }}>
-                                                            ลบออก
-                                                        </button>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    )} */}
-                                    {/*  */}
                                     {selectedDates.length > 0 && (
                                         <div>
                                             <h3>วันหยุดหน่วยงาน</h3>
-                                            {/* <ol>
-                                                {selectedDates.map((date, index) => (
-                                                    <li key={date.toString()}>
-                                                        {date.toLocaleDateString()}{' '}
-                                                        <button
-                                                            type="button"
-                                                            onClick={() => handleRemoveDate(date)}
-                                                            className="btn clean"
-                                                            style={{ margin: '0.5rem' }}
-                                                        >
-                                                            ลบออก
-                                                        </button>
-                                                    </li>
-                                                ))}
-                                            </ol> */}
                                             <ol>
                                                 {selectedDates.map((date, index) => (
                                                     <li key={index}>
@@ -219,7 +302,6 @@ function Test() {
                                         </div>
                                     )}
                                 </div>
-
                             </section>
 
                         </form>
@@ -227,7 +309,86 @@ function Test() {
                     </div>
                 </div>
             </div>
-            {/* <!-- /.container-fluid --> */}
+
+            {/* /////////////////////////////// */}
+
+            <div class="row">
+                <div class="col-md-1">
+                    <select name="startDay" value={workTimeDay.startDay} onChange={handleInputChange}>
+                        {daysOfWeek.map((day, index) => (
+                            <option key={index} value={day}>
+                                {day}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <select name="endDay" value={workTimeDay.endDay} onChange={handleInputChange}>
+                        {daysOfWeek.map((day, index) => (
+                            <option key={index} value={day}>
+                                {day}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    {workTimeDay.allTimes.map((time, index) => (
+                        <div key={index}>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder={`Start Time ${index + 1}`}
+                                        value={time.startTime}
+                                        onChange={(e) => handleTimeChange(index, 'startTime', e.target.value)}
+                                    />
+                                </div>
+                                <div class="col-md-2">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder={`End Time ${index + 1}`}
+                                        value={time.endTime}
+                                        onChange={(e) => handleTimeChange(index, 'endTime', e.target.value)}
+                                    />
+                                </div>
+                                <span>Result Time: {time.resultTime}</span>
+                                <div class="col-md-2">
+
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder={`Start Time OT ${index + 1}`}
+                                        value={time.startTimeOT}
+                                        onChange={(e) => handleTimeChange(index, 'startTimeOT', e.target.value)}
+                                    />
+                                </div>
+                                <div class="col-md-2">
+
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder={`End Time OT ${index + 1}`}
+                                        value={time.endTimeOT}
+                                        onChange={(e) => handleTimeChange(index, 'endTimeOT', e.target.value)}
+                                    />
+                                </div>
+                                <span>Result OT: {time.resultOT}</span>
+                            </div>
+                        </div>
+                    ))}
+
+                </div>
+                <div class="col-md-1">
+                    <button onClick={handleAddTime}>
+                        <i class="fa">&#xf067;</i>
+                    </button>
+                </div>
+            </div>
+            <button onClick={() => console.log(workTimeDay)}>Submit</button>
+            {/* <button onClick={() => console.log(workTimeDay)}>Submit</button> */}
+            {/* ////////////////////////////// */}
         </section>
     )
 }

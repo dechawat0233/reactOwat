@@ -688,12 +688,14 @@ function AddsettimeEmployee() {
 
         // await setWId('');
         // await setWName('');
-        await setWStartTime('');
-        await setWEndTime('');
-        await setWAllTime('');
-        await setWOtTime('');
-        await setWSelectOtTime('');
-        await setWSelectOtTimeout('');
+
+        // await setWStartTime('');
+        // await setWEndTime('');
+        // await setWAllTime('');
+        // await setWOtTime('');
+        // await setWSelectOtTime('');
+        // await setWSelectOtTimeout('');
+
         await setCashSalary('');
         await setSpecialtSalary('');
         await setMessageSalary('');
@@ -712,6 +714,7 @@ function AddsettimeEmployee() {
         newDataList.unshift(newRowData);
         // Update the state with the new data
         setRowDataList2(newDataList);
+        
     };
 
     // Function to handle editing a row
@@ -846,8 +849,8 @@ function AddsettimeEmployee() {
         setSearchEmployeeName(selectedEmployeeFName);
     };
 
-    console.log('SearchEmployeeName',searchEmployeeName);
-    console.log('SearchEmployeeId',searchEmployeeId);
+    console.log('SearchEmployeeName', searchEmployeeName);
+    console.log('SearchEmployeeId', searchEmployeeId);
 
     return (
         <section class="content">
@@ -1127,7 +1130,7 @@ function AddsettimeEmployee() {
                                     <div class="col-md-1">
                                         {/* <label role="wShift">กะทำงาน</label> */}
                                         <select className="form-control" value={wShift} onChange={(e) => setWShift(e.target.value)} style={{ width: '5.5rem' }} >
-                                            <option value="">เลือกกะ</option>
+                                            {/* <option value="">เลือกกะ</option> */}
                                             <option value="morning_shift">กะเช้า</option>
                                             <option value="afternoon_shift">กะบ่าย</option>
                                             <option value="night_shift">กะดึก</option>

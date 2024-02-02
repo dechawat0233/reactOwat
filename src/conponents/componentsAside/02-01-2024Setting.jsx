@@ -65,111 +65,6 @@ function Setting() {
     };
 
 
-    const [workTimeDay, setWorkTimeDay] = useState({
-        startDay: '',
-        endDay: '',
-        allTimes: [],
-    });
-
-    // const daysOfWeekThai = ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์', 'อาทิตย์'];
-    const shiftWork = ['กะเช้า', 'กะบ่าย', 'กะดึก'];
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setWorkTimeDay((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-    };
-
-    const handleAddTime = () => {
-        setWorkTimeDay((prevData) => ({
-            ...prevData,
-            allTimes: [...prevData.allTimes, { shift: '', startTime: '', endTime: '', resultTime: '', startTimeOT: '', endTimeOT: '', resultTimeOT: '' }],
-        }));
-    };
-
-    const handleTimeChange = (index, timeType, value) => {
-        setWorkTimeDay((prevData) => {
-            const updatedTimes = prevData.allTimes.map((time, i) =>
-                i === index ? { ...time, [timeType]: value } : time
-            );
-
-            // Calculate resultTime and resultOT when both startTime and endTime are provided
-            if (timeType === 'startTime' || timeType === 'endTime' || timeType === 'startTimeOT' || timeType === 'endTimeOT') {
-                const startTime = updatedTimes[index].startTime;
-                const endTime = updatedTimes[index].endTime;
-                const startTimeOT = updatedTimes[index].startTimeOT;
-                const endTimeOT = updatedTimes[index].endTimeOT;
-
-                if (startTime && endTime) {
-                    const resultTime = calculateTimeDifference(startTime, endTime);
-                    updatedTimes[index].resultTime = resultTime;
-                }
-
-                if (startTimeOT && endTimeOT) {
-                    const resultOT = calculateTimeDifference(startTimeOT, endTimeOT);
-                    updatedTimes[index].resultOT = resultOT;
-                }
-            }
-
-            return {
-                ...prevData,
-                allTimes: updatedTimes,
-            };
-        });
-    };
-
-    const calculateTimeDifference = (startTime, endTime) => {
-        const [startHour, startMinute] = startTime.split('.').map(Number);
-        const [endHour, endMinute] = endTime.split('.').map(Number);
-
-        let resultHour = endHour - startHour;
-        let resultMinute = endMinute - startMinute;
-
-        if (resultMinute < 0) {
-            resultHour -= 1;
-            resultMinute += 60;
-        }
-
-        return `${resultHour.toString().padStart(2, '0')}.${resultMinute.toString().padStart(2, '0')}`;
-    };
-
-
-    const [workTimeDayPerson, setWorkTimeDayPerson] = useState({
-        startDay: '',
-        endDay: '',
-        allTimesPerson: [],
-    });
-
-    // const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-    // const shiftWork = ['Shift 1', 'Shift 2', 'Shift 3'];
-    const positionWork = ['หัวหน้า', 'ทำความสะอาด', 'กวาดพื้น'];
-
-    const handleInputChangePerson = (e, index) => {
-        const { name, value } = e.target;
-        setWorkTimeDayPerson((prevData) => {
-            const updatedAllTimesPerson = [...prevData.allTimesPerson];
-            updatedAllTimesPerson[index] = {
-                ...updatedAllTimesPerson[index],
-                [name]: value,
-            };
-            return {
-                ...prevData,
-                allTimesPerson: updatedAllTimesPerson,
-            };
-        });
-    };
-
-    const handleAddTimePerson = () => {
-        setWorkTimeDayPerson((prevData) => ({
-            ...prevData,
-            allTimesPerson: [...prevData.allTimesPerson, { shift: '', positionWork: '', countPerson: '' }],
-        }));
-    };
-
-
-
     // Handle form submission
     const handleAddSpecialWorktime = (e) => {
         e.preventDefault();
@@ -1318,9 +1213,9 @@ function Setting() {
                                     </div> */}
 
                                     {formData.addSalary && formData.addSalary.length > 0 && formData.addSalary.map((data, index) => (
-                                        <div key={index}>
+                                        <div className="row" key={index}>
                                             <div className="row">
-                                                <div className="col-md-1">
+                                                <div className="col-md-2">
                                                     <label role="codeSpSalary">รหัส</label>
                                                     <input
                                                         type="text"
@@ -1350,7 +1245,7 @@ function Setting() {
                                                         onChange={(e) => handleChangeSpSalary(e, index, 'name')}
                                                     />
                                                 </div>
-                                                <div className="col-md-2">
+                                                <div className="col-md-1">
                                                     <label role="SpSalary">จำนวนเงิน</label>
                                                     <input
                                                         type="text"
@@ -1403,7 +1298,8 @@ function Setting() {
                                                     <button onClick={() => handleDeleteInput(index)} className="btn btn-danger" style={{ width: "3rem", position: 'absolute', bottom: '0' }}>ลบ</button>
                                                 </div>
                                             </div>
-                                            {/* <div className="row">
+                                            <br/>
+                                            <div className="row">
                                                 <div className="col-md-6">
                                                     <label role="codeSpSalary">New</label>
                                                     <input
@@ -1414,16 +1310,15 @@ function Setting() {
                                                         onChange={(e) => handleChangeSpSalary(e, index, 'codeSpSalary')}
                                                     />
                                                 </div>
-                                            </div> */}
+                                            </div>
                                         </div>
                                     ))}
                                     <br />
                                     < button type='button' onClick={handleAddInput} class="btn btn-primary" >เพิ่ม</button>
                                     {/* <pre>{JSON.stringify(formData, null, 2)}</pre> */}
                                 </section>
-
                                 {/* <!--Frame--> */}
-                                <h2 class="title" > สวัสดิการวันหยุดพนักงาน</h2>
+                                < h2 class="title" > สวัสดิการวันหยุดพนักงาน</h2>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <section class="Frame">
@@ -1505,186 +1400,6 @@ function Setting() {
 
 
                                 </div >
-
-                                <h2 class="title">ตั้งค่าวันทํางาน</h2>
-                                <section class="Frame">
-                                    <div class="row">
-                                        <div class="col-md-1">
-                                            <select name="startDay" className="form-control" value={workTimeDay.startDay} onChange={handleInputChange}>
-                                                {daysOfWeek.map((day, index) => (
-                                                    <option key={index} value={day}>
-                                                        {day}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <select name="endDay" className="form-control" value={workTimeDay.endDay} onChange={handleInputChange}>
-                                                {daysOfWeek.map((day, index) => (
-                                                    <option key={index} value={day}>
-                                                        {day}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                        </div>
-                                        <div class="col-md-9">
-                                            {workTimeDay.allTimes.map((time, index) => (
-                                                <div key={index}>
-                                                    <div class="row">
-                                                        <div class="col-md-2">
-                                                            <select name="shift" className="form-control" value={workTimeDay.shift} onChange={handleInputChange}>
-                                                                {shiftWork.map((day, index) => (
-                                                                    <option key={index} value={day}>
-                                                                        {day}
-                                                                    </option>
-                                                                ))}
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <input
-                                                                type="text"
-                                                                class="form-control"
-                                                                placeholder={`Start Time ${index + 1}`}
-                                                                value={time.startTime}
-                                                                onChange={(e) => handleTimeChange(index, 'startTime', e.target.value)}
-                                                            />
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <input
-                                                                type="text"
-                                                                class="form-control"
-                                                                placeholder={`End Time ${index + 1}`}
-                                                                value={time.endTime}
-                                                                onChange={(e) => handleTimeChange(index, 'endTime', e.target.value)}
-                                                            />
-                                                        </div>
-                                                        <span>Result Time: {time.resultTime}</span>
-                                                        <div class="col-md-2">
-
-                                                            <input
-                                                                type="text"
-                                                                class="form-control"
-                                                                placeholder={`Start Time OT ${index + 1}`}
-                                                                value={time.startTimeOT}
-                                                                onChange={(e) => handleTimeChange(index, 'startTimeOT', e.target.value)}
-                                                            />
-                                                        </div>
-                                                        <div class="col-md-2">
-
-                                                            <input
-                                                                type="text"
-                                                                class="form-control"
-                                                                placeholder={`End Time OT ${index + 1}`}
-                                                                value={time.endTimeOT}
-                                                                onChange={(e) => handleTimeChange(index, 'endTimeOT', e.target.value)}
-                                                            />
-                                                        </div>
-                                                        <span>Result OT: {time.resultOT}</span>
-                                                    </div>
-                                                </div>
-                                            ))}
-
-                                        </div>
-                                        <div class="col-md-1">
-                                            <button onClick={handleAddTime}>
-                                                <i class="fa">&#xf067;</i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <button onClick={() => console.log(workTimeDay)}>Submit</button>
-                                </section>
-
-                                <h2 class="title">ตั้งค่าคนทํางาน</h2>
-                                <section class="Frame">
-                                    <div className="row">
-                                        <div className="col-md-1">
-                                            <select
-                                                name="startDay"
-                                                className="form-control"
-                                                value={workTimeDayPerson.startDay}
-                                                onChange={(e) => handleInputChangePerson(e, 0)}
-                                            >
-                                                {daysOfWeek.map((day, index) => (
-                                                    <option key={index} value={day}>
-                                                        {day}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                        </div>
-                                        <div className="col-md-1">
-                                            <select
-                                                name="endDay"
-                                                className="form-control"
-                                                value={workTimeDayPerson.endDay}
-                                                onChange={(e) => handleInputChangePerson(e, 0)}
-                                            >
-                                                {daysOfWeek.map((day, index) => (
-                                                    <option key={index} value={day}>
-                                                        {day}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                        </div>
-                                        <div className="col-md-9">
-                                            {workTimeDayPerson.allTimesPerson.map((time, index) => (
-                                                <div key={index} className="row">
-                                                    <div className="col-md-2">
-                                                        <select
-                                                            name="shift"
-                                                            className="form-control"
-                                                            value={time.shift}
-                                                            onChange={(e) => handleInputChangePerson(e, index)}
-                                                        >
-                                                            {shiftWork.map((shift, shiftIndex) => (
-                                                                <option key={shiftIndex} value={shift}>
-                                                                    {shift}
-                                                                </option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
-                                                    <div className="col-md-2">
-                                                        <select
-                                                            name="positionWork"
-                                                            className="form-control"
-                                                            value={time.positionWork}
-                                                            onChange={(e) => handleInputChangePerson(e, index)}
-                                                        >
-                                                            {positionWork.map((position, positionIndex) => (
-                                                                <option key={positionIndex} value={position}>
-                                                                    {position}
-                                                                </option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
-                                                    <div className="col-md-2">
-                                                        {/* <input
-                                                            type="text"
-                                                            className="form-control"
-                                                            placeholder={`Person ${index + 1}`}
-                                                            value={time.countPerson}
-                                                            onChange={(e) => handleInputChangePerson(e, index)}
-                                                        /> */}
-                                                        <input
-                                                            type="text"
-                                                            className="form-control"
-                                                            placeholder={`Person ${index + 1}`}
-                                                            name="countPerson" // Make sure the name attribute is set to "countPerson"
-                                                            value={time.countPerson}
-                                                            onChange={(e) => handleInputChangePerson(e, index)}
-                                                        />
-
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                        <div className="col-md-1">
-                                            <button onClick={handleAddTimePerson}>
-                                                <i className="fa">&#xf067;</i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <button onClick={() => console.log(workTimeDayPerson)}>Submit</button>
-                                </section>
 
                                 <section class="Frame">
 
