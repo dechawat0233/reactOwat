@@ -317,15 +317,15 @@ function Worktimesheet() {
                         </div>
                       </form>
 
-                      <div class="d-flex justify-content-center">
-                        <h2 class="title">ผลลัพธ์ {length > 0 ? ('1') : ('0')} รายการ</h2>
-                      </div>
-                      <div class="d-flex justify-content-center">
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="form-group">
-                              <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
-                                {/* {result_data.map((workplace, index) => (
+                  <div class="d-flex justify-content-center">
+                    <h2 class="title">ผลลัพธ์ {length > 0 ? ('1') : ('0')} รายการ</h2>
+                  </div>
+                  <div class="d-flex justify-content-center">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <ul style={{ listStyle: 'none', marginLeft: "-2rem" }}>
+                            {/* {result_data.map((workplace, index) => (
                               <li
                                 key={workplace.employeeId}
                                 onClick={() => handleClickResult(workplace)}
