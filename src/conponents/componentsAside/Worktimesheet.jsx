@@ -318,7 +318,7 @@ return (
                   </form>
 
                   <div class="d-flex justify-content-center">
-                    <h2 class="title">ผลลัพธ์ {.length > 0 ? ('1') : ('0')} รายการ</h2>
+                    <h2 class="title">ผลลัพธ์ {length > 0 ? ('1') : ('0')} รายการ</h2>
                   </div>
                   <div class="d-flex justify-content-center">
                     <div class="row">
