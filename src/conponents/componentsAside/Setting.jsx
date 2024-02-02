@@ -13,11 +13,29 @@ import EmployeeWorkDay from './componentsetting/EmployeeWorkDay';
 
 
 function Setting() {
+
+
+    const tableStyle = {
+        borderCollapse: 'collapse',
+        width: '100%',
+    };
+
+    const cellStyle = {
+        border: '1px solid black',
+        padding: '8px',
+    };
+
+    const headerCellStyle = {
+        ...cellStyle,
+        backgroundColor: '#f2f2f2',
+    };
+
     // State for selected values
     const [selectedDay, setSelectedDay] = useState('');
     const [selectedPosition, setSelectedPosition] = useState('');
     const [numberOfEmployees, setNumberOfEmployees] = useState('');
     const [listEmployeeDay, setListEmployeeDay] = useState([]);
+
 
 
     const [selectedDay1, setSelectedDay1] = useState('');
@@ -68,6 +86,7 @@ function Setting() {
     const [workTimeDay, setWorkTimeDay] = useState({
         startDay: '',
         endDay: '',
+        workOrStop: '',
         allTimes: [],
     });
 
@@ -1046,7 +1065,7 @@ function Setting() {
                                     </div>
                                 </section>
                                 {/* <!--Frame--> */}
-                                
+
                                 <h2 class="title">เวลาทำงาน</h2>
                                 <section class="Frame">
                                     <div class="row">
@@ -1364,6 +1383,36 @@ function Setting() {
                                 <section class="Frame">
                                     <div class="row">
                                         <div class="col-md-1">
+                                            ตั้วแต่วันที่
+                                        </div>
+                                        <div class="col-md-1">
+                                            ถึงวันที่
+                                        </div>
+                                        <div class="col-md-1">
+                                            ทำงาน/หยุด
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    กะ
+                                                </div>
+                                                <div class="col-md-2">
+                                                    เวลาเข้า
+                                                </div>
+                                                <div class="col-md-2">
+                                                    เวลาออก
+                                                </div>
+                                                <div class="col-md-2">
+                                                    เวลาเข้าOT
+                                                </div>
+                                                <div class="col-md-2">
+                                                    เวลาออกOT
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1">
                                             <select name="startDay" className="form-control" value={workTimeDay.startDay} onChange={handleInputChange}>
                                                 {daysOfWeek.map((day, index) => (
                                                     <option key={index} value={day}>
@@ -1381,7 +1430,17 @@ function Setting() {
                                                 ))}
                                             </select>
                                         </div>
-                                        <div class="col-md-9">
+                                        <div class="col-md-1">
+                                            <select name="shift" className="form-control" onChange={handleInputChange}>
+                                                <option value='work'>
+                                                    ทำงาน
+                                                </option>
+                                                <option value='stop'>
+                                                    หยุด
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-8">
                                             {workTimeDay.allTimes.map((time, index) => (
                                                 <div key={index}>
                                                     <div class="row">
@@ -1412,7 +1471,7 @@ function Setting() {
                                                                 onChange={(e) => handleTimeChange(index, 'endTime', e.target.value)}
                                                             />
                                                         </div>
-                                                        <span>Result Time: {time.resultTime}</span>
+                                                        {/* <span>Result Time: {time.resultTime}</span> */}
                                                         <div class="col-md-2">
 
                                                             <input
@@ -1433,8 +1492,9 @@ function Setting() {
                                                                 onChange={(e) => handleTimeChange(index, 'endTimeOT', e.target.value)}
                                                             />
                                                         </div>
-                                                        <span>Result OT: {time.resultOT}</span>
+                                                        {/* <span>Result OT: {time.resultOT}</span> */}
                                                     </div>
+                                                    <br />
                                                 </div>
                                             ))}
 
@@ -1445,11 +1505,75 @@ function Setting() {
                                             </button>
                                         </div>
                                     </div>
-                                    <button onClick={() => console.log(workTimeDay)}>Submit</button>
+                                    <br />
+                                    {/* <button onClick={() => console.log(workTimeDay)}>Submit</button> */}
+                                    <div class="row">
+                                        {/* ... (Your other components) ... */}
+                                        <button
+                                            onClick={() => console.log(workTimeDay)} className="btn btn-primary ml-auto"
+                                            style={{ marginLeft: 'auto', display: 'block' }}
+                                        >
+                                            Submit
+                                        </button>
+                                    </div>
+                                    <br />
+                                    <br />
+
+
+                                    <table style={tableStyle}>
+                                        <thead>
+                                            <tr>
+                                                <th style={headerCellStyle}>ตั้งแต่</th>
+                                                <th style={headerCellStyle}>ถึงวันที่</th>
+                                                <th style={headerCellStyle}>กะ</th>
+                                                <th style={headerCellStyle}>เวลาเข้า</th>
+                                                <th style={headerCellStyle}>เวลาออก</th>
+                                                <th style={headerCellStyle}>ชม.</th>
+                                                <th style={headerCellStyle}>เวลาเข้าOT</th>
+                                                <th style={headerCellStyle}>เวลาออกOT</th>
+                                                <th style={headerCellStyle}>ชม.OT</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style={cellStyle}>จันทร์</td>
+                                                <td style={cellStyle}>ศุกร์</td>
+                                                <td style={cellStyle}>กะเช้า</td>
+                                                <td style={cellStyle}>8.30</td>
+                                                <td style={cellStyle}>16.30</td>
+                                                <td style={cellStyle}>8</td>
+                                                <td style={cellStyle}>17.00</td>
+                                                <td style={cellStyle}>18.00</td>
+                                                <td style={cellStyle}>1</td>
+                                            </tr>
+                                            {/* Add more rows as needed */}
+                                        </tbody>
+                                    </table>
                                 </section>
 
                                 <h2 class="title">ตั้งค่าคนทํางาน</h2>
                                 <section class="Frame">
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            ตั้วแต่วันที่
+                                        </div>
+                                        <div class="col-md-1">
+                                            ถึงวันที่
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    กะ
+                                                </div>
+                                                <div class="col-md-2">
+                                                    ตำแหน่ง
+                                                </div>
+                                                <div class="col-md-2">
+                                                    จำนวนคน
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div className="row">
                                         <div className="col-md-1">
                                             <select
@@ -1537,10 +1661,17 @@ function Setting() {
                                             </button>
                                         </div>
                                     </div>
-                                    <button onClick={() => console.log(workTimeDayPerson)}>Submit</button>
-                                </section>
+                                    <div class="row">
+                                        {/* ... (Your other components) ... */}
+                                        <button
+                                            onClick={() => console.log(workTimeDay)} className="btn btn-primary ml-auto"
+                                            style={{ marginLeft: 'auto', display: 'block' }}
+                                        >
+                                            Submit
+                                        </button>
+                                    </div>                                </section>
 
-                                
+
                                 <h2 class="title">วันหยุดหน่วยงาน</h2>
                                 <section class="Frame">
                                     <div>
