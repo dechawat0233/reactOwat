@@ -1525,6 +1525,7 @@ function Setting() {
                                             <tr>
                                                 <th style={headerCellStyle}>ตั้งแต่</th>
                                                 <th style={headerCellStyle}>ถึงวันที่</th>
+                                                <th style={headerCellStyle}>ทำงาน/หยุด</th>
                                                 <th style={headerCellStyle}>กะ</th>
                                                 <th style={headerCellStyle}>เวลาเข้า</th>
                                                 <th style={headerCellStyle}>เวลาออก</th>
@@ -1538,6 +1539,7 @@ function Setting() {
                                             <tr>
                                                 <td style={cellStyle}>จันทร์</td>
                                                 <td style={cellStyle}>ศุกร์</td>
+                                                <td style={cellStyle}>ทำงาน</td>
                                                 <td style={cellStyle}>กะเช้า</td>
                                                 <td style={cellStyle}>8.30</td>
                                                 <td style={cellStyle}>16.30</td>
@@ -1669,7 +1671,37 @@ function Setting() {
                                         >
                                             Submit
                                         </button>
-                                    </div>                                </section>
+                                    </div>
+                                    <br />
+                                    <table style={tableStyle}>
+                                        <thead>
+                                            <tr>
+                                                <th style={headerCellStyle}>ตั้งแต่</th>
+                                                <th style={headerCellStyle}>ถึงวันที่</th>
+                                                <th style={headerCellStyle}>กะ</th>
+                                                <th style={headerCellStyle}>ตำแหน่ง</th>
+                                                <th style={headerCellStyle}>จำนวนคน</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style={cellStyle}>จันทร์</td>
+                                                <td style={cellStyle}>ศุกร์</td>
+                                                <td style={cellStyle}>กะเช้า</td>
+                                                <td style={cellStyle}>หัวหน้า</td>
+                                                <td style={cellStyle}>1</td>
+                                            </tr>
+                                            <tr>
+                                                <td style={cellStyle}>จันทร์</td>
+                                                <td style={cellStyle}>ศุกร์</td>
+                                                <td style={cellStyle}>กะเช้า</td>
+                                                <td style={cellStyle}>พนักงานทำความสะอาด</td>
+                                                <td style={cellStyle}>20</td>
+                                            </tr>
+                                            {/* Add more rows as needed */}
+                                        </tbody>
+                                    </table>
+                                </section>
 
 
                                 <h2 class="title">วันหยุดหน่วยงาน</h2>
