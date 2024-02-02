@@ -1,4 +1,5 @@
 import endpoint from '../../config';
+import {getMonthName , getDateDayOfWeek } from './library';
 
 import axios from 'axios';
 import React, { useEffect, useState, useRef } from 'react';
@@ -35,6 +36,9 @@ const styles = {
 };
 
 //variable
+const currentYear = new Date().getFullYear();
+const years = Array.from({ length: currentYear - 1998 }, (_, index) => currentYear - index);
+
 const [dataset, setDataset] = useState([]);
 const [workplaceList, setWorkplaceList] = useState([]);
 const [result_data, setResult_data] = useState([]);
@@ -82,10 +86,12 @@ const [m1, setM1] = useState('');
   const [searchWorkplaceName, setSearchWorkplaceName] = useState(''); //ชื่อหน่วยงาน
   const [searchEmployeeId, setSearchEmployeeId] = useState('');
   const [searchEmployeeName, setSearchEmployeeName] = useState('');
+
   const [searchResult, setSearchResult] = useState([]);
+  const [searchResult1, setSearchResult1] = useState([]);
+
   const [empId, setEmpId] = useState([]);
 
-  const [searchResult1, setSearchResult1] = useState([]);
   const [woekplace, setWoekplace] = useState([]);
   const [calendarData1, setCalendarData1] = useState([]);
   const [calendarData2, setCalendarData2] = useState([]);
@@ -124,16 +130,104 @@ useEffect(() => {
   document.title = 'ใบลงเวลาการปฏิบัติงาน';
   setMonth("01");
 
+    //clean data
+setSearchResult([]);
+setSearchResult1([]);
+
   // You can also return a cleanup function if needed
   // return () => { /* cleanup code */ };
 }, []);
 
 
+//check event search result
+useEffect(() => {
+// alert("x " + searchResult.length);
+// alert("x " +searchResult1.length);
+
+} , [searchResult, searchResult1]);
+
 //function
 //function search
 async function handleSearch(event) {
+  event.preventDefault();
+  //clean data
+await setSearchResult([]);
+await setSearchResult1([]);
+
+      // get value from form search
+      if (searchEmployeeId === '' && searchEmployeeName === '') {
+              // Both employeeId and employeeName are null
+      alert("กรุณากรอกรหัสหรือชื่อพนักงาน");
+      // You can use window.location.reload() to reload the web page
+      window.location.reload();
+      } else {
+        const data = await {
+          employeeId: searchEmployeeId,
+          employeeName: searchEmployeeName,
+          month: month,
+          timerecordId: year
+        };
+    
+        const parsedNumber = await parseInt(month, 10) - 1;
+        const formattedResult = await String(parsedNumber).padStart(2, '0');
+        // await alert(formattedResult );
+    
+        const data1 = await {
+          employeeId: searchEmployeeId,
+          employeeName: searchEmployeeName,
+          month: formattedResult,
+          timerecordId: year
+        };
+    
+        //search timerecord 
+try {
+  // alert(getMonthName (data.month ) );
+  // alert(data.timerecordId);
+
+  const response = await axios.post(endpoint + '/timerecord/searchemp', data);
+// alert(response.data.recordworkplace.length ); 
+
+//check result data > 1 record
+if(response.data.recordworkplace.length >= 1 ) {
+await setSearchResult(response.data.recordworkplace);
+}
+
+} catch (error) {
+        alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
+      // window.location.reload();
+}
+
+        //search timerecord previous month
+        try {
+          //check month is 01 then get data from previous year
+                if (data1.month == '00') {
+        data1.month = '12';
+        data1.timerecordId = data1.timerecordId -1;
+      }
+
+// alert(data1.month );
+// alert(data1.timerecordId);
+
+      const response1 = await axios.post(endpoint + '/timerecord/searchemp', data1);
+      // alert(response1.data.recordworkplace.length ); 
+
+      //check result data > 1 record
+if(response1.data.recordworkplace.length  >= 1) {
+await setSearchResult1(response1.data.recordworkplace);
+}
+
+        } catch (error) {
+      alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา', error);
+      // window.location.reload();
+
+        }
+
+
+      }
+
 
 };
+
 
 
 //view
@@ -164,6 +258,7 @@ return (
               <div class="col-md-12">
                 <h2 class="title">ค้นหา</h2>
                 <div class="col-md-12">
+                  
                   <form onSubmit={handleSearch}>
                     <div class="row">
                       <div class="col-md-3">
@@ -197,6 +292,21 @@ return (
                           </select>
                         </div>
                       </div>
+                      <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label role="year">ปี</label>
+                                                            <select className="form-control" value={year} onChange={(e) => setYear(e.target.value)} >
+                                                                <option value="" >เลือกปี</option>
+                                                                {years.map((y) => (
+                                                                    <option key={y} value={y}>
+                                                                        {y + 543}
+                                                                    </option>
+                                                                ))}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+
                       <div class="row">
                         <div class="col-md-12">
                           <div class="form-group" style={{ position: 'absolute', bottom: '0' }}>
@@ -206,8 +316,9 @@ return (
                       </div>
                     </div>
                   </form>
+
                   <div class="d-flex justify-content-center">
-                    <h2 class="title">ผลลัพธ์ {result_data.length > 0 ? ('1') : ('0')} รายการ</h2>
+                    <h2 class="title">ผลลัพธ์ {.length > 0 ? ('1') : ('0')} รายการ</h2>
                   </div>
                   <div class="d-flex justify-content-center">
                     <div class="row">
