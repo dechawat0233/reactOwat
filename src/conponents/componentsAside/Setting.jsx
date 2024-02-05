@@ -87,7 +87,7 @@ function Setting() {
         startDay: '',
         endDay: '',
         workOrStop: '',
-        allTimes: [],
+        allTimes: [{ shift: '', startTime: '', endTime: '', resultTime: '', startTimeOT: '', endTimeOT: '', resultTimeOT: '' }],
     });
 
     const [workTimeDayList, setWorkTimeDayList] = useState([]);
@@ -119,7 +119,7 @@ function Setting() {
             startDay: '',
             endDay: '',
             workOrStop: '',
-            allTimes: [],
+            allTimes: [{ shift: '', startTime: '', endTime: '', resultTime: '', startTimeOT: '', endTimeOT: '', resultTimeOT: '' }],
         });
     };
 
@@ -1562,9 +1562,21 @@ function Setting() {
                                         </thead>
                                         <tbody>
                                             {workTimeDayList.map((item, index) => (
-                                                <tr key={index}>
+
+item.allTimes.map((item1, index1) => (
+
+    <tr key={index}>
+{index1 > 0 ? (
+    <>
+    <td style={cellStyle}></td>
+    <td style={cellStyle}></td>
+    </>
+): (
+    <>
                                                     <td style={cellStyle}>{item.startDay}</td>
                                                     <td style={cellStyle}>{item.endDay}</td>
+                                                    </>
+                                                    )}
 
                                                     {item.workOrStop == "work" ? (
                                                         <td style={cellStyle}>ทำงาน</td>
@@ -1572,14 +1584,18 @@ function Setting() {
                                                         <td style={cellStyle}>หยุด</td>
                                                     )}
 
-                                                    <td style={cellStyle}>{item.allTimes[index].shift}</td>
-                                                    <td style={cellStyle}>{item.allTimes[index].startTime}</td>
-                                                    <td style={cellStyle}>{item.allTimes[index].endTime}</td>
-                                                    <td style={cellStyle}>{item.allTimes[index].resultTime}</td>
-                                                    <td style={cellStyle}>{item.allTimes[index].startTimeOT}</td>
-                                                    <td style={cellStyle}>{item.allTimes[index].endTimeOT}</td>
-                                                    <td style={cellStyle}>{item.allTimes[index].resultOT}</td>
-                                                </tr>
+
+                                                     <td style={cellStyle}>{item1.shift}</td>
+                                                     <td style={cellStyle}>{item1.startTime}</td>
+                                                     <td style={cellStyle}>{item1.endTime}</td>
+                                                    <td style={cellStyle}>{item1.resultTime}</td>
+                                                    <td style={cellStyle}>{item1.startTimeOT}</td>
+                                                    <td style={cellStyle}>{item1.endTimeOT}</td>
+                                                    <td style={cellStyle}>{item1.resultOT}</td> 
+                                                    </tr>
+
+ ) )
+
                                             ))}
                                             {/* <tr>
                                                 <td style={cellStyle}>จันทร์</td>
