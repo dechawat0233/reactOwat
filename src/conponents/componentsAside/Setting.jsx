@@ -1526,7 +1526,7 @@ function Setting() {
 
                                         </div>
                                         <div class="col-md-1">
-                                            <button type="button" aria-label="เวลาทำงาน" onClick={handleAddTime}>
+                                            <button type="button" aria-label="เวลาทำงาน" onClick={handleAddTime} className="btn btn-primary" style={{ width: '2rem' }}>
                                                 <i class="fa">&#xf067;</i>
                                             </button>
                                         </div>
@@ -1535,7 +1535,7 @@ function Setting() {
                                     {/* <button onClick={() => console.log(workTimeDay)}>Submit</button> */}
                                     <div class="row">
                                         {/* ... (Your other components) ... */}
-                                        <button type="button" aria-label="เพิ่มรายการวันทำงาน"
+                                        <button type="button" aria-label="เพิ่มรายการวันทำงาน" className="btn btn-primary ml-auto"
                                             onClick={handleAddTimeList}
                                         >
                                             เพิ่ม
@@ -1703,11 +1703,13 @@ function Setting() {
                                             ))}
                                         </div>
                                         <div className="col-md-1">
-                                            <button onClick={handleAddTimePerson}>
+                                            <button onClick={handleAddTimePerson} className="btn btn-primary" style={{ width: '2rem' }}>
                                                 <i className="fa">&#xf067;</i>
                                             </button>
                                         </div>
                                     </div>
+                                    <br />
+
                                     <div class="row">
                                         {/* ... (Your other components) ... */}
                                         <button
@@ -1718,6 +1720,8 @@ function Setting() {
                                         </button>
                                     </div>
                                     <br />
+                                    <br />
+
                                     <table style={tableStyle}>
                                         <thead>
                                             <tr>
