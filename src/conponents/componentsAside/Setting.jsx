@@ -123,6 +123,14 @@ function Setting() {
         });
     };
 
+    const handleRemoveTimeList = (index) => {
+        setWorkTimeDayList((prevList) => {
+            const updatedList = [...prevList];
+            updatedList.splice(index, 1);
+            return updatedList;
+        });
+    };
+
     const handleTimeChange = (index, timeType, value) => {
         setWorkTimeDay((prevData) => {
             const updatedTimes = prevData.allTimes.map((time, i) =>
@@ -1472,6 +1480,7 @@ function Setting() {
                                                         <div class="col-md-2">
                                                             <select name="shift" className="form-control" value={workTimeDay.shift}
                                                                 onChange={(e) => handleTimeChange(index, 'shift', e.target.value)}>
+                                                                    <option value="">เลือกกะ</option>
                                                                 {shiftWork.map((day, index) => (
                                                                     <option key={index} value={day}>
                                                                         {day}
@@ -1526,7 +1535,7 @@ function Setting() {
 
                                         </div>
                                         <div class="col-md-1">
-                                            <button type="button" aria-label="เวลาทำงาน" onClick={handleAddTime} className="btn btn-primary" style={{ width: '2rem' }}>
+                                            <button type="button" aria-label="เพิ่มเวลาทำงาน" onClick={handleAddTime} className="btn btn-primary" style={{ width: '2rem' }}>
                                                 <i class="fa">&#xf067;</i>
                                             </button>
                                         </div>
@@ -1571,13 +1580,16 @@ function Setting() {
                                                             <>
                                                                 <td style={cellStyle}></td>
                                                                 <td style={cellStyle}></td>
+                                                                <td style={cellStyle}></td>
+
                                                             </>
                                                         ) : (
                                                             <>
                                                                 <td style={cellStyle}>
-                                                                    <button type="button" aria-label="ลบ" className="btn btn-danger ml-auto"
-                                                                    >
-                                                                        Delete
+                                                                    <button type="button"  
+onClick={() => handleRemoveTimeList(index)}
+                                                                    className="btn btn-danger ml-auto" >
+                                                                        ลบ
                                                                     </button>
                                                                 </td>
                                                                 <td style={cellStyle}>{item.startDay}</td>
