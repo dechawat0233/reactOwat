@@ -90,7 +90,7 @@ function Setting() {
         allTimes: [],
     });
 
-    const [ workTimeDayList , setWorkTimeDayList ] = useState([]);
+    const [workTimeDayList, setWorkTimeDayList] = useState([]);
 
     // const daysOfWeekThai = ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์', 'อาทิตย์'];
     const shiftWork = ['กะเช้า', 'กะบ่าย', 'กะดึก'];
@@ -1429,6 +1429,9 @@ function Setting() {
                                     <div class="row">
                                         <div class="col-md-1">
                                             <select name="startDay" className="form-control" value={workTimeDay.startDay} onChange={handleInputChange}>
+                                                <option value='' >
+                                                    เลือก
+                                                </option>
                                                 {daysOfWeek.map((day, index) => (
                                                     <option key={index} value={day}>
                                                         {day}
@@ -1438,6 +1441,9 @@ function Setting() {
                                         </div>
                                         <div class="col-md-1">
                                             <select name="endDay" className="form-control" value={workTimeDay.endDay} onChange={handleInputChange}>
+                                                <option value='' >
+                                                    เลือก
+                                                </option>
                                                 {daysOfWeek.map((day, index) => (
                                                     <option key={index} value={day}>
                                                         {day}
@@ -1447,6 +1453,9 @@ function Setting() {
                                         </div>
                                         <div class="col-md-1">
                                             <select name="workOrStop" className="form-control" onChange={handleInputChange}>
+                                                <option value='' >
+                                                    เลือก
+                                                </option>
                                                 <option value='work'>
                                                     ทำงาน
                                                 </option>
@@ -1461,8 +1470,8 @@ function Setting() {
                                                 <div key={index}>
                                                     <div class="row">
                                                         <div class="col-md-2">
-                                                            <select name="shift" className="form-control" value={workTimeDay.shift} 
-onChange={(e) => handleTimeChange(index, 'shift', e.target.value)}>
+                                                            <select name="shift" className="form-control" value={workTimeDay.shift}
+                                                                onChange={(e) => handleTimeChange(index, 'shift', e.target.value)}>
                                                                 {shiftWork.map((day, index) => (
                                                                     <option key={index} value={day}>
                                                                         {day}
@@ -1527,7 +1536,7 @@ onChange={(e) => handleTimeChange(index, 'shift', e.target.value)}>
                                     <div class="row">
                                         {/* ... (Your other components) ... */}
                                         <button type="button" aria-label="เพิ่มรายการวันทำงาน"
-                                        onClick={handleAddTimeList }
+                                            onClick={handleAddTimeList}
                                         >
                                             เพิ่ม
                                         </button>
@@ -1552,24 +1561,24 @@ onChange={(e) => handleTimeChange(index, 'shift', e.target.value)}>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {workTimeDayList.map((item , index) => (
+                                            {workTimeDayList.map((item, index) => (
                                                 <tr key={index}>
-                                                <td style={cellStyle}>{item.startDay}</td>
-                                                <td style={cellStyle}>{item.endDay}</td>
-                                                
-                                                {item.workOrStop== "work" ? (
-                                                  <td style={cellStyle}>ทำงาน</td>  
-                                                ) : (
-                                                    <td style={cellStyle}>หยุด</td>
-                                                )}
+                                                    <td style={cellStyle}>{item.startDay}</td>
+                                                    <td style={cellStyle}>{item.endDay}</td>
 
-                                                <td style={cellStyle}>{item.allTimes[index].shift}</td>
-                                                <td style={cellStyle}>{item.allTimes[index].startTime}</td>
-                                                <td style={cellStyle}>{item.allTimes[index].endTime}</td>
-                                                <td style={cellStyle}>{item.allTimes[index].resultTime}</td>
-                                                <td style={cellStyle}>{item.allTimes[index].startTimeOT}</td>
-                                                <td style={cellStyle}>{item.allTimes[index].endTimeOT}</td>
-                                                <td style={cellStyle}>{item.allTimes[index].resultTimeOT}</td>
+                                                    {item.workOrStop == "work" ? (
+                                                        <td style={cellStyle}>ทำงาน</td>
+                                                    ) : (
+                                                        <td style={cellStyle}>หยุด</td>
+                                                    )}
+
+                                                    <td style={cellStyle}>{item.allTimes[index].shift}</td>
+                                                    <td style={cellStyle}>{item.allTimes[index].startTime}</td>
+                                                    <td style={cellStyle}>{item.allTimes[index].endTime}</td>
+                                                    <td style={cellStyle}>{item.allTimes[index].resultTime}</td>
+                                                    <td style={cellStyle}>{item.allTimes[index].startTimeOT}</td>
+                                                    <td style={cellStyle}>{item.allTimes[index].endTimeOT}</td>
+                                                    <td style={cellStyle}>{item.allTimes[index].resultOT}</td>
                                                 </tr>
                                             ))}
                                             {/* <tr>
@@ -1945,7 +1954,7 @@ onChange={(e) => handleTimeChange(index, 'shift', e.target.value)}>
                 </div >
 
             </div >
-{JSON.stringify(workTimeDay,null,2)}
+            {JSON.stringify(workTimeDay, null, 2)}
         </body >
     );
 }
