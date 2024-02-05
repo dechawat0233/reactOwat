@@ -90,11 +90,14 @@ function Setting() {
         allTimes: [],
     });
 
+    const [ workTimeDayList , setWorkTimeDayList ] = useState([]);
+
     // const daysOfWeekThai = ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์', 'อาทิตย์'];
     const shiftWork = ['กะเช้า', 'กะบ่าย', 'กะดึก'];
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+
         setWorkTimeDay((prevData) => ({
             ...prevData,
             [name]: value,
@@ -106,6 +109,18 @@ function Setting() {
             ...prevData,
             allTimes: [...prevData.allTimes, { shift: '', startTime: '', endTime: '', resultTime: '', startTimeOT: '', endTimeOT: '', resultTimeOT: '' }],
         }));
+    };
+
+    const handleAddTimeList = () => {
+        setWorkTimeDayList((prevList) => [...prevList, workTimeDay]);
+
+        //clean data
+        setWorkTimeDay({
+            startDay: '',
+            endDay: '',
+            workOrStop: '',
+            allTimes: [],
+        });
     };
 
     const handleTimeChange = (index, timeType, value) => {
@@ -1383,7 +1398,7 @@ function Setting() {
                                 <section class="Frame">
                                     <div class="row">
                                         <div class="col-md-1">
-                                            ตั้วแต่วันที่
+                                            ตั้งแต่วันที่
                                         </div>
                                         <div class="col-md-1">
                                             ถึงวันที่
@@ -1431,7 +1446,7 @@ function Setting() {
                                             </select>
                                         </div>
                                         <div class="col-md-1">
-                                            <select name="shift" className="form-control" onChange={handleInputChange}>
+                                            <select name="workOrStop" className="form-control" onChange={handleInputChange}>
                                                 <option value='work'>
                                                     ทำงาน
                                                 </option>
@@ -1441,11 +1456,13 @@ function Setting() {
                                             </select>
                                         </div>
                                         <div class="col-md-8">
+
                                             {workTimeDay.allTimes.map((time, index) => (
                                                 <div key={index}>
                                                     <div class="row">
                                                         <div class="col-md-2">
-                                                            <select name="shift" className="form-control" value={workTimeDay.shift} onChange={handleInputChange}>
+                                                            <select name="shift" className="form-control" value={workTimeDay.shift} 
+onChange={(e) => handleTimeChange(index, 'shift', e.target.value)}>
                                                                 {shiftWork.map((day, index) => (
                                                                     <option key={index} value={day}>
                                                                         {day}
@@ -1500,7 +1517,7 @@ function Setting() {
 
                                         </div>
                                         <div class="col-md-1">
-                                            <button onClick={handleAddTime}>
+                                            <button type="button" aria-label="เวลาทำงาน" onClick={handleAddTime}>
                                                 <i class="fa">&#xf067;</i>
                                             </button>
                                         </div>
@@ -1509,11 +1526,10 @@ function Setting() {
                                     {/* <button onClick={() => console.log(workTimeDay)}>Submit</button> */}
                                     <div class="row">
                                         {/* ... (Your other components) ... */}
-                                        <button
-                                            onClick={() => console.log(workTimeDay)} className="btn btn-primary ml-auto"
-                                            style={{ marginLeft: 'auto', display: 'block' }}
+                                        <button type="button" aria-label="เพิ่มรายการวันทำงาน"
+                                        onClick={handleAddTimeList }
                                         >
-                                            Submit
+                                            เพิ่ม
                                         </button>
                                     </div>
                                     <br />
@@ -1536,7 +1552,27 @@ function Setting() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
+                                            {workTimeDayList.map((item , index) => (
+                                                <tr key={index}>
+                                                <td style={cellStyle}>{item.startDay}</td>
+                                                <td style={cellStyle}>{item.endDay}</td>
+                                                
+                                                {item.workOrStop== "work" ? (
+                                                  <td style={cellStyle}>ทำงาน</td>  
+                                                ) : (
+                                                    <td style={cellStyle}>หยุด</td>
+                                                )}
+
+                                                <td style={cellStyle}>{item.allTimes[index].shift}</td>
+                                                <td style={cellStyle}>{item.allTimes[index].startTime}</td>
+                                                <td style={cellStyle}>{item.allTimes[index].endTime}</td>
+                                                <td style={cellStyle}>{item.allTimes[index].resultTime}</td>
+                                                <td style={cellStyle}>{item.allTimes[index].startTimeOT}</td>
+                                                <td style={cellStyle}>{item.allTimes[index].endTimeOT}</td>
+                                                <td style={cellStyle}>{item.allTimes[index].resultTimeOT}</td>
+                                                </tr>
+                                            ))}
+                                            {/* <tr>
                                                 <td style={cellStyle}>จันทร์</td>
                                                 <td style={cellStyle}>ศุกร์</td>
                                                 <td style={cellStyle}>ทำงาน</td>
@@ -1547,7 +1583,7 @@ function Setting() {
                                                 <td style={cellStyle}>17.00</td>
                                                 <td style={cellStyle}>18.00</td>
                                                 <td style={cellStyle}>1</td>
-                                            </tr>
+                                            </tr> */}
                                             {/* Add more rows as needed */}
                                         </tbody>
                                     </table>
@@ -1557,7 +1593,7 @@ function Setting() {
                                 <section class="Frame">
                                     <div class="row">
                                         <div class="col-md-1">
-                                            ตั้วแต่วันที่
+                                            ตั้งแต่วันที่
                                         </div>
                                         <div class="col-md-1">
                                             ถึงวันที่
@@ -1909,7 +1945,7 @@ function Setting() {
                 </div >
 
             </div >
-
+{JSON.stringify(workTimeDay,null,2)}
         </body >
     );
 }
