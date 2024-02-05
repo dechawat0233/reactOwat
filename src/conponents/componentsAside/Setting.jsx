@@ -1548,6 +1548,7 @@ function Setting() {
                                     <table style={tableStyle}>
                                         <thead>
                                             <tr>
+                                                <th style={headerCellStyle}>ลบ</th>
                                                 <th style={headerCellStyle}>ตั้งแต่</th>
                                                 <th style={headerCellStyle}>ถึงวันที่</th>
                                                 <th style={headerCellStyle}>ทำงาน/หยุด</th>
@@ -1563,38 +1564,44 @@ function Setting() {
                                         <tbody>
                                             {workTimeDayList.map((item, index) => (
 
-item.allTimes.map((item1, index1) => (
+                                                item.allTimes.map((item1, index1) => (
 
-    <tr key={index}>
-{index1 > 0 ? (
-    <>
-    <td style={cellStyle}></td>
-    <td style={cellStyle}></td>
-    </>
-): (
-    <>
-                                                    <td style={cellStyle}>{item.startDay}</td>
-                                                    <td style={cellStyle}>{item.endDay}</td>
-                                                    </>
-                                                    )}
+                                                    <tr key={index}>
+                                                        {index1 > 0 ? (
+                                                            <>
+                                                                <td style={cellStyle}></td>
+                                                                <td style={cellStyle}></td>
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <td style={cellStyle}>
+                                                                    <button type="button" aria-label="ลบ" className="btn btn-danger ml-auto"
+                                                                    >
+                                                                        Delete
+                                                                    </button>
+                                                                </td>
+                                                                <td style={cellStyle}>{item.startDay}</td>
+                                                                <td style={cellStyle}>{item.endDay}</td>
+                                                            </>
+                                                        )}
 
-                                                    {item.workOrStop == "work" ? (
-                                                        <td style={cellStyle}>ทำงาน</td>
-                                                    ) : (
-                                                        <td style={cellStyle}>หยุด</td>
-                                                    )}
+                                                        {item.workOrStop == "work" ? (
+                                                            <td style={cellStyle}>ทำงาน</td>
+                                                        ) : (
+                                                            <td style={cellStyle}>หยุด</td>
+                                                        )}
 
 
-                                                     <td style={cellStyle}>{item1.shift}</td>
-                                                     <td style={cellStyle}>{item1.startTime}</td>
-                                                     <td style={cellStyle}>{item1.endTime}</td>
-                                                    <td style={cellStyle}>{item1.resultTime}</td>
-                                                    <td style={cellStyle}>{item1.startTimeOT}</td>
-                                                    <td style={cellStyle}>{item1.endTimeOT}</td>
-                                                    <td style={cellStyle}>{item1.resultOT}</td> 
+                                                        <td style={cellStyle}>{item1.shift}</td>
+                                                        <td style={cellStyle}>{item1.startTime}</td>
+                                                        <td style={cellStyle}>{item1.endTime}</td>
+                                                        <td style={cellStyle}>{item1.resultTime}</td>
+                                                        <td style={cellStyle}>{item1.startTimeOT}</td>
+                                                        <td style={cellStyle}>{item1.endTimeOT}</td>
+                                                        <td style={cellStyle}>{item1.resultOT}</td>
                                                     </tr>
 
- ) )
+                                                ))
 
                                             ))}
                                             {/* <tr>
