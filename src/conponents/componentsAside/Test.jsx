@@ -9,6 +9,83 @@ import moment from 'moment';
 
 import EmployeesSelected from './EmployeesSelected';
 
+import jsPDF from 'jspdf';
+
+const dataArray = [
+    [
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+
+        // ... other data
+    ],
+    // ... other arrays
+    [
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+    ],
+];
+
 function Test() {
     const [selectedDates, setSelectedDates] = useState([]);
     const [reason, setReason] = useState('');
@@ -235,6 +312,44 @@ function Test() {
         return `${resultHour.toString().padStart(2, '0')}.${resultMinute.toString().padStart(2, '0')}`;
     };
 
+    const arraysPerPage = 10;
+    const arraysPerPage2 = 2;
+
+    // console.log('arraysPerPage', arraysPerPage % arraysPerPage2);
+
+    // const number = 7.3;
+    // const roundedUpNumber = Math.ceil(number);
+
+    console.log('dataArray',dataArray.length);  // Output: 8
+
+
+    const generatePDF = () => {
+        const pdf = new jsPDF();
+        const totalPages = Math.ceil(dataArray.length / arraysPerPage);
+
+        for (let currentPage = 1; currentPage <= totalPages; currentPage++) {
+            pdf.addPage();
+            let yOffset = 10;
+
+            for (
+                let currentArrayIndex = (currentPage - 1) * arraysPerPage;
+                currentArrayIndex < currentPage * arraysPerPage && currentArrayIndex < dataArray.length;
+                currentArrayIndex++
+            ) {
+                const innerArray = dataArray[currentArrayIndex];
+
+                // Iterate through the inner array
+                innerArray.forEach(obj => {
+                    // Add data to the PDF with the incremented y-coordinate
+                    pdf.text(`Name: ${obj.name}, Prime: ${obj.prime}`, 10, yOffset);
+                    yOffset += 10; // Increment y-coordinate
+                });
+            }
+        }
+
+        // Save or display the PDF
+        pdf.save('your_document.pdf');
+    };
 
     return (
         <section class="content">
@@ -389,7 +504,13 @@ function Test() {
             <button onClick={() => console.log(workTimeDay)}>Submit</button>
             {/* <button onClick={() => console.log(workTimeDay)}>Submit</button> */}
             {/* ////////////////////////////// */}
+
+            <div>
+                <button onClick={generatePDF}>Generate PDF</button>
+            </div>
         </section>
+
+
     )
 }
 
