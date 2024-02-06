@@ -23,6 +23,7 @@ function Setting() {
     const cellStyle = {
         border: '1px solid black',
         padding: '8px',
+        textAlign: 'center',
     };
 
     const headerCellStyle = {
@@ -1504,7 +1505,7 @@ function Setting() {
                                 <section class="Frame">
                                     <div class="row">
                                         <div class="col-md-1">
-                                            ตั้งแต่วันที่
+                                            ตั้งแต่
                                         </div>
                                         <div class="col-md-1">
                                             ถึงวันที่
@@ -1626,13 +1627,18 @@ function Setting() {
                                                             />
                                                         </div>
                                                         {/* <span>Result OT: {time.resultOT}</span> */}
-                                                        <div class="col-md-2">
+                                                        <div class="col-md-1">
                                                             {index >= 1 ? (
                                                                 <button type='button' className='btn btn-danger ml-auto' style={{ width: '2.5rem' }}
                                                                     onClick={() => handleRemoveTime(index)}>ลบ</button>
                                                             ) : (
 
-                                                                <></>
+                                                                <>
+                                                                    <button type="button" aria-label="เพิ่มเวลาทำงาน" onClick={handleAddTime}
+                                                                        className="btn btn-primary" style={{ width: '2.5rem' }}>
+                                                                        <i class="fa">&#xf067;</i>
+                                                                    </button>
+                                                                </>
                                                             )}
                                                         </div>
                                                         {/* <span>Result OT: {time.resultOT}</span> */}
@@ -1642,11 +1648,11 @@ function Setting() {
                                             ))}
 
                                         </div>
-                                        <div class="col-md-1">
+                                        {/* <div class="col-md-1">
                                             <button type="button" aria-label="เพิ่มเวลาทำงาน" onClick={handleAddTime} className="btn btn-primary" style={{ width: '2rem' }}>
                                                 <i class="fa">&#xf067;</i>
                                             </button>
-                                        </div>
+                                        </div> */}
                                     </div>
                                     <br />
                                     {/* <button onClick={() => console.log(workTimeDay)}>Submit</button> */}
@@ -1666,7 +1672,7 @@ function Setting() {
                                         <thead>
                                             <tr>
                                                 <th style={headerCellStyle}>ตั้งแต่</th>
-                                                <th style={headerCellStyle}>ถึงวันที่</th>
+                                                <th style={headerCellStyle}>ถึง</th>
                                                 <th style={headerCellStyle}>ทำงาน/หยุด</th>
                                                 <th style={headerCellStyle}>กะ</th>
                                                 <th style={headerCellStyle}>เวลาเข้า</th>
@@ -1762,7 +1768,7 @@ function Setting() {
                                 <section class="Frame">
                                     <div class="row">
                                         <div class="col-md-1">
-                                            ตั้งแต่วันที่
+                                            ตั้งแต่
                                         </div>
                                         <div class="col-md-1">
                                             ถึงวันที่
@@ -1869,13 +1875,20 @@ function Setting() {
                                                     <div class="col-md-2">
                                                         {index >= 1 ? (
                                                             <button type='button'
-                                                            // onClick={() => handleRemoveTime(index)}
+                                                                // onClick={() => handleRemoveTime(index)}
+                                                                style={{ width: '2.5rem' }}
+                                                                className="btn btn-danger ml-auto"
+
                                                             >
                                                                 ลบ
                                                             </button>
                                                         ) : (
-
-                                                            <></>
+                                                            <>
+                                                                <button type="button" aria-label="เพิ่ม"
+                                                                    onClick={handleAddTimePerson} className="btn btn-primary" style={{ width: '2.5rem' }}>
+                                                                    <i className="fa">&#xf067;</i>
+                                                                </button>
+                                                            </>
                                                         )}
                                                     </div>
                                                     <br />
@@ -1885,12 +1898,12 @@ function Setting() {
                                                 </div>
                                             ))}
                                         </div>
-                                        <div className="col-md-1">
+                                        {/* <div className="col-md-1">
                                             <button type="button" aria-label="เพิ่ม"
-                                                onClick={handleAddTimePerson} className="btn btn-primary" style={{ width: '2rem' }}>
+                                                onClick={handleAddTimePerson} className="btn btn-primary" style={{ width: '2.5rem' }}>
                                                 <i className="fa">&#xf067;</i>
                                             </button>
-                                        </div>
+                                        </div> */}
                                     </div>
                                     <br />
 
@@ -1910,7 +1923,7 @@ function Setting() {
                                         <thead>
                                             <tr>
                                                 <th style={headerCellStyle}>ตั้งแต่</th>
-                                                <th style={headerCellStyle}>ถึงวันที่</th>
+                                                <th style={headerCellStyle}>ถึง</th>
                                                 <th style={headerCellStyle}>กะ</th>
                                                 <th style={headerCellStyle}>ตำแหน่ง</th>
                                                 <th style={headerCellStyle}>จำนวนคน</th>

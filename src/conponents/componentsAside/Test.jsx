@@ -11,6 +11,10 @@ import EmployeesSelected from './EmployeesSelected';
 
 import jsPDF from 'jspdf';
 
+const dataArrayName = [
+    { name: 'ที่ไหน', code: '233158', },
+    { name: 'ที่ไหน', code: '233158', }
+];
 const dataArray = [
     [
         // 1
@@ -327,8 +331,8 @@ function Test() {
                     }
                 }
 
-                if (page === pageCount ) {
-                    pdf.text(`Page ${page + 1}/${pageCount} - Sum 'no': ${sumNo}`, 50, 280);
+                if (page === pageCount - 1) {
+                    pdf.text(`Page ${page + 1}/${pageCount} - Sum 'no': ${sumNo}`, 200, 200);
                 }
 
                 if (page < pageCount) {
