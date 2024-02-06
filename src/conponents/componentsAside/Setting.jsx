@@ -253,7 +253,7 @@ function Setting() {
     const [workTimeDayPerson, setWorkTimeDayPerson] = useState({
         startDay: '',
         endDay: '',
-        allTimesPerson: [],
+        allTimesPerson: [{ shift: '', positionWork: '', countPerson: ''}],
     });
 
     const [workTimeDayPersonList , setWorkTimeDayPersonList ] = useState([]);
@@ -295,6 +295,17 @@ function Setting() {
         }));
     };
 
+
+    const handleAddTimePersonList = () => {
+        setWorkTimeDayPersonList((prevList) => [...prevList, workTimeDayPerson]);
+//xxss
+        //clean data
+        setWorkTimeDayPerson({
+            startDay: '',
+            endDay: '',
+            allTimesPerson: [{ shift: '', positionWork: '', countPerson: ''}],
+        });
+    };
 
 
     // Handle form submission
@@ -1616,9 +1627,13 @@ function Setting() {
                                                         </div>
                                                         {/* <span>Result OT: {time.resultOT}</span> */}
                                                         <div class="col-md-2">
+                                                            {index >= 1 ? (
+                                                                                                                            <button type='button'
+                                                                                                                            onClick={() => handleRemoveTime(index)}>ลบ</button>
+                                                            ):(
 
-                                                            <button type='button'
-                                                            onClick={() => handleRemoveTime(index)}>ลบ</button>
+                                                                <></>
+                                                            )}
                                                         </div>
                                                         {/* <span>Result OT: {time.resultOT}</span> */}
                                                     </div>
@@ -1866,7 +1881,7 @@ function Setting() {
                                     <div class="row">
                                         {/* ... (Your other components) ... */}
                                         <button type="button" aria-label="เพิ่มรายการ"
-                                            onClick={() => console.log(workTimeDay)} className="btn btn-primary ml-auto"
+                                            onClick={handleAddTimePersonList } className="btn btn-primary ml-auto"
                                             style={{ marginLeft: 'auto', display: 'block' }}
                                         >
                                             เพิ่ม
@@ -2111,7 +2126,7 @@ function Setting() {
                 </div >
 
             </div >
-            {/* {JSON.stringify(workTimeDay, null, 2)} */}
+            {/* {JSON.stringify(workTimeDayPersonList, null, 2)} */}
         </body >
     );
 }
