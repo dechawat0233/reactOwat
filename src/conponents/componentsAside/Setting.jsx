@@ -295,6 +295,12 @@ function Setting() {
         }));
     };
 
+    const handleRemoveTimePerson = (indexToRemove) => {
+        setWorkTimeDayPerson((prevData) => ({
+            ...prevData,
+            allTimesPerson: prevData.allTimesPerson.filter((_, index) => index !== indexToRemove),
+        }));
+    };
 
     const handleAddTimePersonList = () => {
         setWorkTimeDayPersonList((prevList) => [...prevList, workTimeDayPerson]);
@@ -307,6 +313,13 @@ function Setting() {
         });
     };
 
+    const handleRemoveTimeListPerson = (index) => {
+        setWorkTimeDayPersonList((prevList) => {
+            const updatedList = [...prevList];
+            updatedList.splice(index, 1);
+            return updatedList;
+        });
+    };
 
     // Handle form submission
     const handleAddSpecialWorktime = (e) => {
@@ -1869,7 +1882,7 @@ function Setting() {
                                                     <div class="col-md-2">
                                                         {index >= 1 ? (
                                                             <button type='button'
-                                                            // onClick={() => handleRemoveTime(index)}
+                                                            onClick={() => handleRemoveTimePerson (index)}
                                                             >
                                                                 ลบ
                                                             </button>
@@ -1946,7 +1959,7 @@ function Setting() {
                                                             <>
                                                                 <td style={cellStyle}>
                                                                     <button type="button"
-                                                                        // onClick={() => handleRemoveTimeList(index)}
+                                                                        onClick={() => handleRemoveTimeListPerson(index)}
                                                                         className="btn btn-danger ml-auto" >
                                                                         ลบ
                                                                     </button>
