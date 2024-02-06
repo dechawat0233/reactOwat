@@ -249,12 +249,24 @@ function Setting() {
         allTimesPerson: [],
     });
 
+    const [workTimeDayPersonList , setWorkTimeDayPersonList ] = useState([]);
+    
     // const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     // const shiftWork = ['Shift 1', 'Shift 2', 'Shift 3'];
     const positionWork = ['หัวหน้า', 'ทำความสะอาด', 'กวาดพื้น'];
 
+    const handleInputPersonChange = (e) => {
+        const { name, value } = e.target;
+
+        setWorkTimeDayPerson((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
     const handleInputChangePerson = (e, index) => {
         const { name, value } = e.target;
+        
         setWorkTimeDayPerson((prevData) => {
             const updatedAllTimesPerson = [...prevData.allTimesPerson];
             updatedAllTimesPerson[index] = {
@@ -266,6 +278,7 @@ function Setting() {
                 allTimesPerson: updatedAllTimesPerson,
             };
         });
+
     };
 
     const handleAddTimePerson = () => {
@@ -1729,8 +1742,9 @@ function Setting() {
                                                 name="startDay"
                                                 className="form-control"
                                                 value={workTimeDayPerson.startDay}
-                                                onChange={(e) => handleInputChangePerson(e, 0)}
+                                                onChange={handleInputPersonChange }
                                             >
+                                                <option value="">เลือกวัน</option>
                                                 {daysOfWeek.map((day, index) => (
                                                     <option key={index} value={day}>
                                                         {day}
@@ -1743,8 +1757,10 @@ function Setting() {
                                                 name="endDay"
                                                 className="form-control"
                                                 value={workTimeDayPerson.endDay}
-                                                onChange={(e) => handleInputChangePerson(e, 0)}
+                                                onChange={handleInputPersonChange }
                                             >
+                                                                                                <option value="">เลือกวัน</option>
+
                                                 {daysOfWeek.map((day, index) => (
                                                     <option key={index} value={day}>
                                                         {day}
@@ -1762,6 +1778,8 @@ function Setting() {
                                                             value={time.shift}
                                                             onChange={(e) => handleInputChangePerson(e, index)}
                                                         >
+                                                                                                            <option value="">เลือกกะ</option>
+
                                                             {shiftWork.map((shift, shiftIndex) => (
                                                                 <option key={shiftIndex} value={shift}>
                                                                     {shift}
@@ -1776,6 +1794,8 @@ function Setting() {
                                                             value={time.positionWork}
                                                             onChange={(e) => handleInputChangePerson(e, index)}
                                                         >
+                                                                                                            <option value="">เลือกตำแหน่ง</option>
+
                                                             {positionWork.map((position, positionIndex) => (
                                                                 <option key={positionIndex} value={position}>
                                                                     {position}
@@ -1805,7 +1825,8 @@ function Setting() {
                                             ))}
                                         </div>
                                         <div className="col-md-1">
-                                            <button onClick={handleAddTimePerson} className="btn btn-primary" style={{ width: '2rem' }}>
+                                            <button type="button" aria-label="เพิ่ม"
+                                            onClick={handleAddTimePerson} className="btn btn-primary" style={{ width: '2rem' }}>
                                                 <i className="fa">&#xf067;</i>
                                             </button>
                                         </div>
@@ -1814,11 +1835,11 @@ function Setting() {
 
                                     <div class="row">
                                         {/* ... (Your other components) ... */}
-                                        <button
+                                        <button type="button" aria-label="เพิ่มรายการ"
                                             onClick={() => console.log(workTimeDay)} className="btn btn-primary ml-auto"
                                             style={{ marginLeft: 'auto', display: 'block' }}
                                         >
-                                            Submit
+                                            เพิ่ม
                                         </button>
                                     </div>
                                     <br />
