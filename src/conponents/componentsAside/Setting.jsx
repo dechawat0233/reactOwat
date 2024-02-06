@@ -297,6 +297,14 @@ function Setting() {
     };
 
 
+    const handleRemoveTimePerson = (indexToRemove) => {
+        setWorkTimeDayPerson((prevData) => ({
+            ...prevData,
+            allTimesPerson: prevData.allTimesPerson.filter((_, index) => index !== indexToRemove),
+        }));
+    };
+
+
     const handleAddTimePersonList = () => {
         setWorkTimeDayPersonList((prevList) => [...prevList, workTimeDayPerson]);
         //xxss
@@ -307,6 +315,15 @@ function Setting() {
             allTimesPerson: [{ shift: '', positionWork: '', countPerson: '' }],
         });
     };
+
+    const handleRemoveTimePersonList = (index) => {
+        setWorkTimeDayPersonList((prevList) => {
+            const updatedList = [...prevList];
+            updatedList.splice(index, 1);
+            return updatedList;
+        });
+    };
+
 
 
     // Handle form submission
@@ -1875,7 +1892,7 @@ function Setting() {
                                                     <div class="col-md-2">
                                                         {index >= 1 ? (
                                                             <button type='button'
-                                                                // onClick={() => handleRemoveTime(index)}
+                                                                onClick={() => handleRemoveTimePerson(index)}
                                                                 style={{ width: '2.5rem' }}
                                                                 className="btn btn-danger ml-auto"
 
@@ -1962,7 +1979,7 @@ function Setting() {
                                                             <>
                                                                 <td style={cellStyle}>
                                                                     <button type="button"
-                                                                        // onClick={() => handleRemoveTimeList(index)}
+                                                                        onClick={() => handleRemoveTimePersonList(index)}
                                                                         style={{ width: '3rem' }}
                                                                         className="btn btn-danger ml-auto" >
                                                                         ลบ
