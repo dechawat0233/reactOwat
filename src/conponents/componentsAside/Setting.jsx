@@ -152,6 +152,7 @@ function Setting() {
                 if (startTimeOT && endTimeOT) {
                     const resultOT = calculateTimeDifference(startTimeOT, endTimeOT);
                     updatedTimes[index].resultOT = resultOT;
+
                 }
             }
 
