@@ -848,6 +848,7 @@ function Setting() {
         setListEmployeeDay(workplace.listEmployeeDay);
         setListSpecialWorktime(workplace.listSpecialWorktime);
         setWorkTimeDayList(workplace.workTimeDay);
+setWorkTimeDayPersonList(workplace.workTimeDayPerson);
 
         // console.log(workplace);
         // // console.log(initialFormData);
@@ -1006,6 +1007,7 @@ function Setting() {
             listEmployeeDay: listEmployeeDay,
             listSpecialWorktime: listSpecialWorktime,
             workTimeDay: workTimeDayList,
+            workTimeDayPerson: workTimeDayPersonList
         };
 
 
