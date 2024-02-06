@@ -733,7 +733,8 @@ function Setting() {
 
         setListEmployeeDay(workplace.listEmployeeDay);
         setListSpecialWorktime(workplace.listSpecialWorktime);
-setWorkTimeDayList(workplace.workTimeDayList);
+setWorkTimeDayList(workplace.workTimeDay);
+
         // console.log(workplace);
         // // console.log(initialFormData);
         // console.log("formData", formData);
