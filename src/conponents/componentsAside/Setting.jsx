@@ -87,7 +87,7 @@ function Setting() {
         startDay: '',
         endDay: '',
         workOrStop: '',
-        allTimes: [{ shift: '', startTime: '', endTime: '', resultTime: '', startTimeOT: '', endTimeOT: '', resultOT: '' }],
+        allTimes: [{ shift: '', startTime: '', endTime: '', resultTime: '', startTimeOT: '', endTimeOT: '', resultTimeOT: '' }],
     });
 
     const [workTimeDayList, setWorkTimeDayList] = useState([]);
@@ -107,7 +107,7 @@ function Setting() {
     const handleAddTime = () => {
         setWorkTimeDay((prevData) => ({
             ...prevData,
-            allTimes: [...prevData.allTimes, { shift: '', startTime: '', endTime: '', resultTime: '', startTimeOT: '', endTimeOT: '', resultOT: '' }],
+            allTimes: [...prevData.allTimes, { shift: '', startTime: '', endTime: '', resultTime: '', startTimeOT: '', endTimeOT: '', resultTimeOT: '' }],
         }));
     };
 
@@ -119,7 +119,7 @@ function Setting() {
             startDay: '',
             endDay: '',
             workOrStop: '',
-            allTimes: [{ shift: '', startTime: '', endTime: '', resultTime: '', startTimeOT: '', endTimeOT: '', resultOT: '' }],
+            allTimes: [{ shift: '', startTime: '', endTime: '', resultTime: '', startTimeOT: '', endTimeOT: '', resultTimeOT: '' }],
         });
     };
 
@@ -150,8 +150,8 @@ function Setting() {
                 }
 
                 if (startTimeOT && endTimeOT) {
-                    const resultOT = calculateTimeDifference(startTimeOT, endTimeOT);
-                    updatedTimes[index].resultOT = resultOT;
+                    const resultTimeOT = calculateTimeDifference(startTimeOT, endTimeOT);
+                    updatedTimes[index].resultTimeOT = resultTimeOT;
 
                 }
             }
@@ -1677,7 +1677,7 @@ function Setting() {
                                                         <td style={cellStyle}>{item1.resultTime}</td>
                                                         <td style={cellStyle}>{item1.startTimeOT}</td>
                                                         <td style={cellStyle}>{item1.endTimeOT}</td>
-                                                        <td style={cellStyle}>{item1.resultOT}</td>
+                                                        <td style={cellStyle}>{item1.resultTimeOT}</td>
                                                     </tr>
 
                                                 ))
