@@ -1928,7 +1928,9 @@ function Setting() {
                                                 <th style={headerCellStyle}>กะ</th>
                                                 <th style={headerCellStyle}>ตำแหน่ง</th>
                                                 <th style={headerCellStyle}>จำนวนคน</th>
-                                                <th style={headerCellStyle}>ลบ</th>
+                                                {/* <th style={headerCellStyle, { width: '5rem' }}>ลบ</th> */}
+                                                <th style={{ ...headerCellStyle, width: '5rem' }}>ลบ</th>
+
 
                                             </tr>
                                         </thead>
@@ -1961,6 +1963,7 @@ function Setting() {
                                                                 <td style={cellStyle}>
                                                                     <button type="button"
                                                                         // onClick={() => handleRemoveTimeList(index)}
+                                                                        style={{ width: '3rem' }}
                                                                         className="btn btn-danger ml-auto" >
                                                                         ลบ
                                                                     </button>
