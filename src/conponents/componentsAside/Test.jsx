@@ -70,7 +70,7 @@ const dataArray = [
         { name: 'John', prime: 'Yes' },
         { name: 'Jane', prime: 'No' },
         { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
+        { name: 'Jane', prime: '1232132132' },
 
         // ... other data
     ],
@@ -82,9 +82,13 @@ const dataArray = [
         { name: 'John', prime: 'Yes' },
         { name: 'Jane', prime: 'No' },
         { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
+        { name: 'qwqwqw', prime: '1232132132' },
     ],
 ];
+
+const subarrayLengths = dataArray.map(subarray => subarray.length);
+
+console.log('subarrayLengths', subarrayLengths);
 
 function Test() {
     const [selectedDates, setSelectedDates] = useState([]);
@@ -312,40 +316,37 @@ function Test() {
         return `${resultHour.toString().padStart(2, '0')}.${resultMinute.toString().padStart(2, '0')}`;
     };
 
+
     const arraysPerPage = 10;
-    const arraysPerPage2 = 2;
-
-    // console.log('arraysPerPage', arraysPerPage % arraysPerPage2);
-
-    // const number = 7.3;
-    // const roundedUpNumber = Math.ceil(number);
-
-    console.log('dataArray',dataArray.length);  // Output: 8
-
 
     const generatePDF = () => {
         const pdf = new jsPDF();
-        const totalPages = Math.ceil(dataArray.length / arraysPerPage);
 
-        for (let currentPage = 1; currentPage <= totalPages; currentPage++) {
-            pdf.addPage();
-            let yOffset = 10;
+        const subarrayLengths = dataArray.map(subarray => subarray.length);
 
-            for (
-                let currentArrayIndex = (currentPage - 1) * arraysPerPage;
-                currentArrayIndex < currentPage * arraysPerPage && currentArrayIndex < dataArray.length;
-                currentArrayIndex++
-            ) {
-                const innerArray = dataArray[currentArrayIndex];
+        subarrayLengths.forEach((length, index) => {
+            const pageCount = Math.ceil(length / arraysPerPage);
+            for (let page = 0; page < pageCount; page++) {
+                let yOffset = 10;
 
-                // Iterate through the inner array
-                innerArray.forEach(obj => {
-                    // Add data to the PDF with the incremented y-coordinate
-                    pdf.text(`Name: ${obj.name}, Prime: ${obj.prime}`, 10, yOffset);
-                    yOffset += 10; // Increment y-coordinate
-                });
+                const startIdx = page * arraysPerPage;
+                const endIdx = Math.min((page + 1) * arraysPerPage, length);
+
+                for (let i = startIdx; i < endIdx; i++) {
+                    const innerArray = dataArray[index];
+                    const currentArray = innerArray[i];
+
+                    if (currentArray) {
+                        pdf.text(`Name: ${currentArray.name}, Prime: ${currentArray.prime}`, 10, yOffset);
+                        yOffset += 10;
+                    }
+                }
+                if (page < pageCount) {
+                    pdf.addPage();
+                }
+
             }
-        }
+        });
 
         // Save or display the PDF
         pdf.save('your_document.pdf');

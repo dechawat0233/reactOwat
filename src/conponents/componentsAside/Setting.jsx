@@ -162,9 +162,24 @@ function Setting() {
         });
     };
 
+    // const calculateTimeDifference = (startTime, endTime) => {
+    //     const [startHour, startMinute] = startTime.split('.').map(Number);
+    //     const [endHour, endMinute] = endTime.split('.').map(Number);
+
+    //     let resultHour = endHour - startHour;
+    //     let resultMinute = endMinute - startMinute;
+
+    //     if (resultMinute < 0) {
+    //         resultHour -= 1;
+    //         resultMinute += 60;
+    //     }
+
+    //     return `${resultHour.toString().padStart(2, '0')}.${resultMinute.toString().padStart(2, '0')}`;
+    // };
+    // Function to calculate time difference
     const calculateTimeDifference = (startTime, endTime) => {
-        const [startHour, startMinute] = startTime.split('.').map(Number);
-        const [endHour, endMinute] = endTime.split('.').map(Number);
+        const [startHour, startMinute] = startTime.split(':').map(Number);
+        const [endHour, endMinute] = endTime.split(':').map(Number);
 
         let resultHour = endHour - startHour;
         let resultMinute = endMinute - startMinute;
@@ -174,8 +189,10 @@ function Setting() {
             resultMinute += 60;
         }
 
-        return `${resultHour.toString().padStart(2, '0')}.${resultMinute.toString().padStart(2, '0')}`;
+        const resultTime = `${resultHour.toString().padStart(2, '0')}:${resultMinute.toString().padStart(2, '0')}`;
+        return resultTime;
     };
+
 
 
     const [workTimeDayPerson, setWorkTimeDayPerson] = useState({
@@ -1480,7 +1497,7 @@ function Setting() {
                                                         <div class="col-md-2">
                                                             <select name="shift" className="form-control" value={workTimeDay.shift}
                                                                 onChange={(e) => handleTimeChange(index, 'shift', e.target.value)}>
-                                                                    <option value="">เลือกกะ</option>
+                                                                <option value="">เลือกกะ</option>
                                                                 {shiftWork.map((day, index) => (
                                                                     <option key={index} value={day}>
                                                                         {day}
@@ -1586,9 +1603,9 @@ function Setting() {
                                                         ) : (
                                                             <>
                                                                 <td style={cellStyle}>
-                                                                    <button type="button"  
-onClick={() => handleRemoveTimeList(index)}
-                                                                    className="btn btn-danger ml-auto" >
+                                                                    <button type="button"
+                                                                        onClick={() => handleRemoveTimeList(index)}
+                                                                        className="btn btn-danger ml-auto" >
                                                                         ลบ
                                                                     </button>
                                                                 </td>
