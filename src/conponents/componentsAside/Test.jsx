@@ -13,6 +13,7 @@ import jsPDF from 'jspdf';
 
 const dataArray = [
     [
+        // 1
         { name: 'John', prime: 'Yes' },
         { name: 'Jane', prime: 'No' },
         { name: 'John', prime: 'Yes' },
@@ -23,6 +24,7 @@ const dataArray = [
         { name: 'Jane', prime: 'No' },
         { name: 'John', prime: 'Yes' },
         { name: 'Jane', prime: 'No' },
+        // 2
         { name: 'John', prime: 'Yes' },
         { name: 'Jane', prime: 'No' },
         { name: 'John', prime: 'Yes' },
@@ -33,6 +35,7 @@ const dataArray = [
         { name: 'Jane', prime: 'No' },
         { name: 'John', prime: 'Yes' },
         { name: 'Jane', prime: 'No' },
+        // 3
         { name: 'John', prime: 'Yes' },
         { name: 'Jane', prime: 'No' },
         { name: 'John', prime: 'Yes' },
@@ -43,6 +46,7 @@ const dataArray = [
         { name: 'Jane', prime: 'No' },
         { name: 'John', prime: 'Yes' },
         { name: 'Jane', prime: 'No' },
+        // 4
         { name: 'John', prime: 'Yes' },
         { name: 'Jane', prime: 'No' },
         { name: 'John', prime: 'Yes' },
@@ -53,6 +57,7 @@ const dataArray = [
         { name: 'Jane', prime: 'No' },
         { name: 'John', prime: 'Yes' },
         { name: 'Jane', prime: 'No' },
+        // 5
         { name: 'John', prime: 'Yes' },
         { name: 'Jane', prime: 'No' },
         { name: 'John', prime: 'Yes' },
@@ -63,6 +68,7 @@ const dataArray = [
         { name: 'Jane', prime: 'No' },
         { name: 'John', prime: 'Yes' },
         { name: 'Jane', prime: 'No' },
+        // 6
         { name: 'John', prime: 'Yes' },
         { name: 'Jane', prime: 'No' },
         { name: 'John', prime: 'Yes' },
@@ -323,6 +329,9 @@ function Test() {
         const pdf = new jsPDF();
 
         const subarrayLengths = dataArray.map(subarray => subarray.length);
+        const totalArrays = subarrayLengths.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
+        console.log('totalArrays', totalArrays);
 
         subarrayLengths.forEach((length, index) => {
             const pageCount = Math.ceil(length / arraysPerPage);
@@ -338,12 +347,15 @@ function Test() {
 
                     if (currentArray) {
                         pdf.text(`Name: ${currentArray.name}, Prime: ${currentArray.prime}`, 10, yOffset);
+                        pdf.text(`Page ${page + 1}/${pageCount}`, 150, 10);
+
                         yOffset += 10;
                     }
                 }
 
-                pdf.addPage();
-
+                if (page < pageCount) {
+                    pdf.addPage();
+                }
             }
         });
 

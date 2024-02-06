@@ -87,7 +87,7 @@ function Setting() {
         startDay: '',
         endDay: '',
         workOrStop: '',
-        allTimes: [{ shift: '', startTime: '', endTime: '', resultTime: '', startTimeOT: '', endTimeOT: '', resultTimeOT: '' }],
+        allTimes: [{ shift: '', startTime: '', endTime: '', resultTime: '', startTimeOT: '', endTimeOT: '', resultOT: '' }],
     });
 
     const [workTimeDayList, setWorkTimeDayList] = useState([]);
@@ -107,7 +107,7 @@ function Setting() {
     const handleAddTime = () => {
         setWorkTimeDay((prevData) => ({
             ...prevData,
-            allTimes: [...prevData.allTimes, { shift: '', startTime: '', endTime: '', resultTime: '', startTimeOT: '', endTimeOT: '', resultTimeOT: '' }],
+            allTimes: [...prevData.allTimes, { shift: '', startTime: '', endTime: '', resultTime: '', startTimeOT: '', endTimeOT: '', resultOT: '' }],
         }));
     };
 
@@ -119,7 +119,7 @@ function Setting() {
             startDay: '',
             endDay: '',
             workOrStop: '',
-            allTimes: [{ shift: '', startTime: '', endTime: '', resultTime: '', startTimeOT: '', endTimeOT: '', resultTimeOT: '' }],
+            allTimes: [{ shift: '', startTime: '', endTime: '', resultTime: '', startTimeOT: '', endTimeOT: '', resultOT: '' }],
         });
     };
 
