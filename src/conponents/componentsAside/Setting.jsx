@@ -1642,7 +1642,6 @@ function Setting() {
                                     <table style={tableStyle}>
                                         <thead>
                                             <tr>
-                                                <th style={headerCellStyle}>ลบ</th>
                                                 <th style={headerCellStyle}>ตั้งแต่</th>
                                                 <th style={headerCellStyle}>ถึงวันที่</th>
                                                 <th style={headerCellStyle}>ทำงาน/หยุด</th>
@@ -1653,6 +1652,8 @@ function Setting() {
                                                 <th style={headerCellStyle}>เวลาเข้าOT</th>
                                                 <th style={headerCellStyle}>เวลาออกOT</th>
                                                 <th style={headerCellStyle}>ชม.OT</th>
+                                                <th style={headerCellStyle}>ลบ</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -1696,7 +1697,7 @@ function Setting() {
                                                         <td style={cellStyle}>{item1.startTimeOT}</td>
                                                         <td style={cellStyle}>{item1.endTimeOT}</td>
                                                         <td style={cellStyle}>{item1.resultTimeOT}</td>
-                                                        
+
                                                         {index1 > 0 ? (
                                                             <>
                                                                 <td style={cellStyle}></td>
