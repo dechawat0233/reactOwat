@@ -117,7 +117,7 @@ function Setting() {
             allTimes: prevData.allTimes.filter((_, index) => index !== indexToRemove),
         }));
     };
-    
+
     const handleAddTimeList = () => {
         setWorkTimeDayList((prevList) => [...prevList, workTimeDay]);
 
@@ -253,11 +253,11 @@ function Setting() {
     const [workTimeDayPerson, setWorkTimeDayPerson] = useState({
         startDay: '',
         endDay: '',
-        allTimesPerson: [{ shift: '', positionWork: '', countPerson: ''}],
+        allTimesPerson: [{ shift: '', positionWork: '', countPerson: '' }],
     });
 
-    const [workTimeDayPersonList , setWorkTimeDayPersonList ] = useState([]);
-    
+    const [workTimeDayPersonList, setWorkTimeDayPersonList] = useState([]);
+
     // const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     // const shiftWork = ['Shift 1', 'Shift 2', 'Shift 3'];
     const positionWork = ['หัวหน้า', 'ทำความสะอาด', 'กวาดพื้น'];
@@ -273,7 +273,7 @@ function Setting() {
 
     const handleInputChangePerson = (e, index) => {
         const { name, value } = e.target;
-        
+
         setWorkTimeDayPerson((prevData) => {
             const updatedAllTimesPerson = [...prevData.allTimesPerson];
             updatedAllTimesPerson[index] = {
@@ -298,12 +298,12 @@ function Setting() {
 
     const handleAddTimePersonList = () => {
         setWorkTimeDayPersonList((prevList) => [...prevList, workTimeDayPerson]);
-//xxss
+        //xxss
         //clean data
         setWorkTimeDayPerson({
             startDay: '',
             endDay: '',
-            allTimesPerson: [{ shift: '', positionWork: '', countPerson: ''}],
+            allTimesPerson: [{ shift: '', positionWork: '', countPerson: '' }],
         });
     };
 
@@ -1628,9 +1628,9 @@ function Setting() {
                                                         {/* <span>Result OT: {time.resultOT}</span> */}
                                                         <div class="col-md-2">
                                                             {index >= 1 ? (
-                                                                                                                            <button type='button'
-                                                                                                                            onClick={() => handleRemoveTime(index)}>ลบ</button>
-                                                            ):(
+                                                                <button type='button' className='btn btn-danger ml-auto' style={{ width: '2.5rem' }}
+                                                                    onClick={() => handleRemoveTime(index)}>ลบ</button>
+                                                            ) : (
 
                                                                 <></>
                                                             )}
@@ -1787,7 +1787,7 @@ function Setting() {
                                                 name="startDay"
                                                 className="form-control"
                                                 value={workTimeDayPerson.startDay}
-                                                onChange={handleInputPersonChange }
+                                                onChange={handleInputPersonChange}
                                             >
                                                 <option value="">เลือกวัน</option>
                                                 {daysOfWeek.map((day, index) => (
@@ -1802,9 +1802,9 @@ function Setting() {
                                                 name="endDay"
                                                 className="form-control"
                                                 value={workTimeDayPerson.endDay}
-                                                onChange={handleInputPersonChange }
+                                                onChange={handleInputPersonChange}
                                             >
-                                                                                                <option value="">เลือกวัน</option>
+                                                <option value="">เลือกวัน</option>
 
                                                 {daysOfWeek.map((day, index) => (
                                                     <option key={index} value={day}>
@@ -1823,7 +1823,7 @@ function Setting() {
                                                             value={time.shift}
                                                             onChange={(e) => handleInputChangePerson(e, index)}
                                                         >
-                                                                                                            <option value="">เลือกกะ</option>
+                                                            <option value="">เลือกกะ</option>
 
                                                             {shiftWork.map((shift, shiftIndex) => (
                                                                 <option key={shiftIndex} value={shift}>
@@ -1839,7 +1839,7 @@ function Setting() {
                                                             value={time.positionWork}
                                                             onChange={(e) => handleInputChangePerson(e, index)}
                                                         >
-                                                                                                            <option value="">เลือกตำแหน่ง</option>
+                                                            <option value="">เลือกตำแหน่ง</option>
 
                                                             {positionWork.map((position, positionIndex) => (
                                                                 <option key={positionIndex} value={position}>
@@ -1866,12 +1866,28 @@ function Setting() {
                                                         />
 
                                                     </div>
+                                                    <div class="col-md-2">
+                                                        {index >= 1 ? (
+                                                            <button type='button'
+                                                            // onClick={() => handleRemoveTime(index)}
+                                                            >
+                                                                ลบ
+                                                            </button>
+                                                        ) : (
+
+                                                            <></>
+                                                        )}
+                                                    </div>
+                                                    <br />
+                                                    <br />
+                                                    <br />
+
                                                 </div>
                                             ))}
                                         </div>
                                         <div className="col-md-1">
                                             <button type="button" aria-label="เพิ่ม"
-                                            onClick={handleAddTimePerson} className="btn btn-primary" style={{ width: '2rem' }}>
+                                                onClick={handleAddTimePerson} className="btn btn-primary" style={{ width: '2rem' }}>
                                                 <i className="fa">&#xf067;</i>
                                             </button>
                                         </div>
@@ -1881,7 +1897,7 @@ function Setting() {
                                     <div class="row">
                                         {/* ... (Your other components) ... */}
                                         <button type="button" aria-label="เพิ่มรายการ"
-                                            onClick={handleAddTimePersonList } className="btn btn-primary ml-auto"
+                                            onClick={handleAddTimePersonList} className="btn btn-primary ml-auto"
                                             style={{ marginLeft: 'auto', display: 'block' }}
                                         >
                                             เพิ่ม
@@ -1898,33 +1914,50 @@ function Setting() {
                                                 <th style={headerCellStyle}>กะ</th>
                                                 <th style={headerCellStyle}>ตำแหน่ง</th>
                                                 <th style={headerCellStyle}>จำนวนคน</th>
+                                                <th style={headerCellStyle}>ลบ</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {workTimeDayPersonList.map((item , index) => (
+                                            {workTimeDayPersonList.map((item, index) => (
 
-item.allTimesPerson.map((item1, index1) => (
-<tr>
-    {index1 ==0 ?(
-    <>
-    <td style={cellStyle}>{item.startDay}</td>
-    <td style={cellStyle}>{item.endDay}</td>
-</>
-    ):(
-        <>
-        <td style={cellStyle}></td>
-        <td style={cellStyle}></td>
-</>
-    ) }
+                                                item.allTimesPerson.map((item1, index1) => (
+                                                    <tr>
+                                                        {index1 == 0 ? (
+                                                            <>
+                                                                <td style={cellStyle}>{item.startDay}</td>
+                                                                <td style={cellStyle}>{item.endDay}</td>
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <td style={cellStyle}></td>
+                                                                <td style={cellStyle}></td>
+                                                            </>
+                                                        )}
 
-                                                <td style={cellStyle}>{item1.shift}</td>
-                                                <td style={cellStyle}>{item1.positionWork}</td>
-                                                <td style={cellStyle}>{item1.countPerson}</td>
-</tr>                                                
+                                                        <td style={cellStyle}>{item1.shift}</td>
+                                                        <td style={cellStyle}>{item1.positionWork}</td>
+                                                        <td style={cellStyle}>{item1.countPerson}</td>
+                                                        {index1 > 0 ? (
+                                                            <>
+                                                                <td style={cellStyle}></td>
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <td style={cellStyle}>
+                                                                    <button type="button"
+                                                                        // onClick={() => handleRemoveTimeList(index)}
+                                                                        className="btn btn-danger ml-auto" >
+                                                                        ลบ
+                                                                    </button>
+                                                                </td>
+                                                            </>
+                                                        )}
+                                                    </tr>
 
-) )                                                
+                                                ))
 
-                                            ) )}
+                                            ))}
                                             {/* Add more rows as needed */}
                                         </tbody>
                                     </table>
