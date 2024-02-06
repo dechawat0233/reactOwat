@@ -14,91 +14,43 @@ import jsPDF from 'jspdf';
 const dataArray = [
     [
         // 1
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes', no: '10' },
+        { name: 'Jane', prime: 'No', no: '20' },
+        { name: 'John', prime: 'Yes', no: '30' },
+        { name: 'Jane', prime: 'No', no: '50' },
+        { name: 'John', prime: 'Yes', no: '90' },
+        { name: 'Jane', prime: 'No', no: '10' },
+        { name: 'John', prime: 'Yes', no: '40' },
+        { name: 'Jane', prime: 'No', no: '10' },
+        { name: 'John', prime: 'Yes', no: '60' },
+        { name: 'Jane', prime: 'No', no: '80' },
         // 2
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        // 3
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        // 4
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        // 5
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        // 6
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: '1232132132' },
+        { name: 'John', prime: 'Yes', no: '20' },
+        { name: 'Jane', prime: 'No', no: '60' },
+        { name: 'John', prime: 'Yes', no: '80' },
+        { name: 'Jane', prime: 'No', no: '60' },
+        { name: 'John', prime: 'Yes', no: '10' },
+        { name: 'Jane', prime: 'No', no: '20' },
+        { name: 'John', prime: 'Yes', no: '40' },
+        { name: 'Jane', prime: 'No', no: '60' },
+        { name: 'John', prime: 'Yes', no: '70' },
+        { name: 'Jane', prime: 'No', no: '30' },
 
-        // ... other data
     ],
+    // create footer
+    // sum 'no'
     // ... other arrays
     [
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'qwqwqw', prime: '1232132132' },
+        { name: 'Jane', prime: 'No', no: '90' },
+        { name: 'John', prime: 'Yes', no: '120' },
+        { name: 'Jane', prime: 'No', no: '100' },
+        { name: 'John', prime: 'Yes', no: '104' },
+        { name: 'Jane', prime: 'No', no: '110' },
+        { name: 'John', prime: 'Yes', no: '150' },
+        { name: 'qwqwqw', prime: '1232132132', no: '190' },
     ],
-    [
-        { name: 'Jane', prime: '1232132132' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'Jane', prime: 'No' },
-        { name: 'John', prime: 'Yes' },
-        { name: 'qwqwqw', prime: '1232132132' },
-    ],
+    // create footer
+    // sum 'no'
 ];
 
 const subarrayLengths = dataArray.map(subarray => subarray.length);
@@ -335,33 +287,48 @@ function Test() {
     const arraysPerPage = 10;
 
     const generatePDF = () => {
-        const pdf = new jsPDF();
+        const pdf = new jsPDF({
+            orientation: 'landscape',
+            unit: 'mm',
+            format: 'a4',
+        });
+
+        // Load the Thai font
+        const fontPath = '/assets/fonts/THSarabunNew.ttf';
+        const fontName = 'THSarabunNew';
+
+        pdf.addFileToVFS(fontPath);
+        pdf.addFont(fontPath, fontName, 'normal');
+
+        // Set the font for the document
+        pdf.setFont(fontName);
 
         const subarrayLengths = dataArray.map(subarray => subarray.length);
-        const totalArrays = subarrayLengths.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-
-        console.log('totalArrays', totalArrays);
 
         dataArray.forEach((innerArray, index) => {
             const pageCount = Math.ceil(subarrayLengths[index] / arraysPerPage);
+            let sumNo = 0;
+
             for (let page = 0; page < pageCount; page++) {
                 let yOffset = 20;
 
                 const startIdx = page * arraysPerPage;
                 const endIdx = Math.min((page + 1) * arraysPerPage, subarrayLengths[index]);
 
+                pdf.text(`รายชื่อทั้งหมด`, 10, 10);
+
                 for (let i = startIdx; i < endIdx; i++) {
                     const currentArray = innerArray[i];
 
                     if (currentArray) {
-                        pdf.text(`Name: ${currentArray.name}, Prime: ${currentArray.prime}`, 10, yOffset);
+                        pdf.text(`Name: ${currentArray.name}, Prime: ${currentArray.prime}, No: ${currentArray.no}`, 20, yOffset);
                         yOffset += 10;
+                        sumNo += parseInt(currentArray.no, 10);
                     }
                 }
 
-                // Add footer on the last page
-                if (page === pageCount - 1) {
-                    pdf.text(`Page ${page + 1}/${pageCount} - Footer`, 150, 280);
+                if (page === pageCount ) {
+                    pdf.text(`Page ${page + 1}/${pageCount} - Sum 'no': ${sumNo}`, 50, 280);
                 }
 
                 if (page < pageCount) {
