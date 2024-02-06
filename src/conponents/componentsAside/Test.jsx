@@ -90,6 +90,15 @@ const dataArray = [
         { name: 'John', prime: 'Yes' },
         { name: 'qwqwqw', prime: '1232132132' },
     ],
+    [
+        { name: 'Jane', prime: '1232132132' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'qwqwqw', prime: '1232132132' },
+    ],
 ];
 
 const subarrayLengths = dataArray.map(subarray => subarray.length);
@@ -333,24 +342,26 @@ function Test() {
 
         console.log('totalArrays', totalArrays);
 
-        subarrayLengths.forEach((length, index) => {
-            const pageCount = Math.ceil(length / arraysPerPage);
+        dataArray.forEach((innerArray, index) => {
+            const pageCount = Math.ceil(subarrayLengths[index] / arraysPerPage);
             for (let page = 0; page < pageCount; page++) {
-                let yOffset = 10;
+                let yOffset = 20;
 
                 const startIdx = page * arraysPerPage;
-                const endIdx = Math.min((page + 1) * arraysPerPage, length);
+                const endIdx = Math.min((page + 1) * arraysPerPage, subarrayLengths[index]);
 
                 for (let i = startIdx; i < endIdx; i++) {
-                    const innerArray = dataArray[index];
                     const currentArray = innerArray[i];
 
                     if (currentArray) {
                         pdf.text(`Name: ${currentArray.name}, Prime: ${currentArray.prime}`, 10, yOffset);
-                        pdf.text(`Page ${page + 1}/${pageCount}`, 150, 10);
-
                         yOffset += 10;
                     }
+                }
+
+                // Add footer on the last page
+                if (page === pageCount - 1) {
+                    pdf.text(`Page ${page + 1}/${pageCount} - Footer`, 150, 280);
                 }
 
                 if (page < pageCount) {
@@ -363,6 +374,8 @@ function Test() {
         const pdfContent = pdf.output('bloburl');
         window.open(pdfContent, '_blank');
     };
+
+
 
     return (
         <section class="content">
