@@ -9,6 +9,87 @@ import moment from 'moment';
 
 import EmployeesSelected from './EmployeesSelected';
 
+import jsPDF from 'jspdf';
+
+const dataArray = [
+    [
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: '1232132132' },
+
+        // ... other data
+    ],
+    // ... other arrays
+    [
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'Jane', prime: 'No' },
+        { name: 'John', prime: 'Yes' },
+        { name: 'qwqwqw', prime: '1232132132' },
+    ],
+];
+
+const subarrayLengths = dataArray.map(subarray => subarray.length);
+
+console.log('subarrayLengths', subarrayLengths);
+
 function Test() {
     const [selectedDates, setSelectedDates] = useState([]);
     const [reason, setReason] = useState('');
@@ -236,6 +317,41 @@ function Test() {
     };
 
 
+    const arraysPerPage = 10;
+
+    const generatePDF = () => {
+        const pdf = new jsPDF();
+
+        const subarrayLengths = dataArray.map(subarray => subarray.length);
+
+        subarrayLengths.forEach((length, index) => {
+            const pageCount = Math.ceil(length / arraysPerPage);
+            for (let page = 0; page < pageCount; page++) {
+                let yOffset = 10;
+
+                const startIdx = page * arraysPerPage;
+                const endIdx = Math.min((page + 1) * arraysPerPage, length);
+
+                for (let i = startIdx; i < endIdx; i++) {
+                    const innerArray = dataArray[index];
+                    const currentArray = innerArray[i];
+
+                    if (currentArray) {
+                        pdf.text(`Name: ${currentArray.name}, Prime: ${currentArray.prime}`, 10, yOffset);
+                        yOffset += 10;
+                    }
+                }
+
+                pdf.addPage();
+
+            }
+        });
+
+        // Save or display the PDF
+        const pdfContent = pdf.output('bloburl');
+        window.open(pdfContent, '_blank');
+    };
+
     return (
         <section class="content">
             <div class="row">
@@ -389,7 +505,13 @@ function Test() {
             <button onClick={() => console.log(workTimeDay)}>Submit</button>
             {/* <button onClick={() => console.log(workTimeDay)}>Submit</button> */}
             {/* ////////////////////////////// */}
+
+            <div>
+                <button onClick={generatePDF}>Generate PDF</button>
+            </div>
         </section>
+
+
     )
 }
 
