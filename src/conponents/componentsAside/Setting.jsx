@@ -1608,6 +1608,11 @@ function Setting() {
                                                             />
                                                         </div>
                                                         {/* <span>Result OT: {time.resultOT}</span> */}
+                                                        <div class="col-md-2">
+
+                                                            <button type='button'>ลบ</button>
+                                                        </div>
+                                                        {/* <span>Result OT: {time.resultOT}</span> */}
                                                     </div>
                                                     <br />
                                                 </div>
@@ -1658,20 +1663,20 @@ function Setting() {
                                                     <tr key={index}>
                                                         {index1 > 0 ? (
                                                             <>
-                                                                <td style={cellStyle}></td>
+                                                                {/* <td style={cellStyle}></td> */}
                                                                 <td style={cellStyle}></td>
                                                                 <td style={cellStyle}></td>
 
                                                             </>
                                                         ) : (
                                                             <>
-                                                                <td style={cellStyle}>
+                                                                {/* <td style={cellStyle}>
                                                                     <button type="button"
                                                                         onClick={() => handleRemoveTimeList(index)}
                                                                         className="btn btn-danger ml-auto" >
                                                                         ลบ
                                                                     </button>
-                                                                </td>
+                                                                </td> */}
                                                                 <td style={cellStyle}>{item.startDay}</td>
                                                                 <td style={cellStyle}>{item.endDay}</td>
                                                             </>
@@ -1691,6 +1696,22 @@ function Setting() {
                                                         <td style={cellStyle}>{item1.startTimeOT}</td>
                                                         <td style={cellStyle}>{item1.endTimeOT}</td>
                                                         <td style={cellStyle}>{item1.resultTimeOT}</td>
+                                                        
+                                                        {index1 > 0 ? (
+                                                            <>
+                                                                <td style={cellStyle}></td>
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <td style={cellStyle}>
+                                                                    <button type="button"
+                                                                        onClick={() => handleRemoveTimeList(index)}
+                                                                        className="btn btn-danger ml-auto" >
+                                                                        ลบ
+                                                                    </button>
+                                                                </td>
+                                                            </>
+                                                        )}
                                                     </tr>
 
                                                 ))
