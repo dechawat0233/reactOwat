@@ -176,10 +176,11 @@ function Setting() {
 
     //     return `${resultHour.toString().padStart(2, '0')}.${resultMinute.toString().padStart(2, '0')}`;
     // };
-    // Function to calculate time difference
+
+
     const calculateTimeDifference = (startTime, endTime) => {
-        const [startHour, startMinute] = startTime.split(':').map(Number);
-        const [endHour, endMinute] = endTime.split(':').map(Number);
+        const [startHour, startMinute] = startTime.split('.').map(Number);
+        const [endHour, endMinute] = endTime.split('.').map(Number);
 
         let resultHour = endHour - startHour;
         let resultMinute = endMinute - startMinute;
@@ -189,9 +190,55 @@ function Setting() {
             resultMinute += 60;
         }
 
-        const resultTime = `${resultHour.toString().padStart(2, '0')}:${resultMinute.toString().padStart(2, '0')}`;
-        return resultTime;
+        // If resultHour is negative, adjust the minutes accordingly
+        if (resultHour < 0) {
+            resultHour += 24; // Assuming 24-hour time format
+        }
+
+        return `${resultHour.toString().padStart(2, '0')}.${resultMinute.toString().padStart(2, '0')}`;
     };
+
+
+
+    // Function to calculate time difference
+    // const calculateTimeDifference = (startTime, endTime) => {
+    //     const [startHour, startMinute] = startTime.split(':').map(Number);
+    //     const [endHour, endMinute] = endTime.split(':').map(Number);
+
+    //     let resultHour = endHour - startHour;
+    //     let resultMinute = endMinute - startMinute;
+
+    //     if (resultMinute < 0) {
+    //         resultHour -= 1;
+    //         resultMinute += 60;
+    //     }
+
+    //     const resultTime = `${resultHour.toString().padStart(2, '0')}:${resultMinute.toString().padStart(2, '0')}`;
+    //     return resultTime;
+    // };
+
+    // const calculateTimeDifference = (startTime, endTime) => {
+    //     const start = new Date(`1970-01-01T${startTime}`);
+    //     const end = new Date(`1970-01-01T${endTime}`);
+
+    //     // Ensure valid dates
+    //     if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+    //         return 'Invalid Time';
+    //     }
+
+    //     let diff = end - start;
+
+    //     if (diff < 0) {
+    //         // Add 24 hours to handle cases where endTime is earlier than startTime
+    //         diff += 24 * 60 * 60 * 1000;
+    //     }
+
+    //     const hours = Math.floor(diff / (60 * 60 * 1000));
+    //     const minutes = Math.floor((diff % (60 * 60 * 1000)) / (60 * 1000));
+
+    //     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+    // };
+
 
 
 
@@ -750,7 +797,7 @@ function Setting() {
 
         setListEmployeeDay(workplace.listEmployeeDay);
         setListSpecialWorktime(workplace.listSpecialWorktime);
-setWorkTimeDayList(workplace.workTimeDay);
+        setWorkTimeDayList(workplace.workTimeDay);
 
         // console.log(workplace);
         // // console.log(initialFormData);
