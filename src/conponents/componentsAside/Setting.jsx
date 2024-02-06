@@ -1901,20 +1901,30 @@ function Setting() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td style={cellStyle}>จันทร์</td>
-                                                <td style={cellStyle}>ศุกร์</td>
-                                                <td style={cellStyle}>กะเช้า</td>
-                                                <td style={cellStyle}>หัวหน้า</td>
-                                                <td style={cellStyle}>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td style={cellStyle}>จันทร์</td>
-                                                <td style={cellStyle}>ศุกร์</td>
-                                                <td style={cellStyle}>กะเช้า</td>
-                                                <td style={cellStyle}>พนักงานทำความสะอาด</td>
-                                                <td style={cellStyle}>20</td>
-                                            </tr>
+                                            {workTimeDayPersonList.map((item , index) => (
+
+item.allTimesPerson.map((item1, index1) => (
+<tr>
+    {index1 ==0 ?(
+    <>
+    <td style={cellStyle}>{item.startDay}</td>
+    <td style={cellStyle}>{item.endDay}</td>
+</>
+    ):(
+        <>
+        <td style={cellStyle}></td>
+        <td style={cellStyle}></td>
+</>
+    ) }
+
+                                                <td style={cellStyle}>{item1.shift}</td>
+                                                <td style={cellStyle}>{item1.positionWork}</td>
+                                                <td style={cellStyle}>{item1.countPerson}</td>
+</tr>                                                
+
+) )                                                
+
+                                            ) )}
                                             {/* Add more rows as needed */}
                                         </tbody>
                                     </table>
