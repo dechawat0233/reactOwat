@@ -891,7 +891,7 @@ setWorkTimeDayList(workplace.workTimeDay);
             addSalary: formData.addSalary,
             listEmployeeDay: listEmployeeDay,
             listSpecialWorktime: listSpecialWorktime,
-            workTimeDayList: workTimeDayList,
+            workTimeDay: workTimeDayList,
         };
 
 
