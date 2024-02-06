@@ -111,6 +111,13 @@ function Setting() {
         }));
     };
 
+    const handleRemoveTime = (indexToRemove) => {
+        setWorkTimeDay((prevData) => ({
+            ...prevData,
+            allTimes: prevData.allTimes.filter((_, index) => index !== indexToRemove),
+        }));
+    };
+    
     const handleAddTimeList = () => {
         setWorkTimeDayList((prevList) => [...prevList, workTimeDay]);
 
@@ -1610,7 +1617,8 @@ function Setting() {
                                                         {/* <span>Result OT: {time.resultOT}</span> */}
                                                         <div class="col-md-2">
 
-                                                            <button type='button'>ลบ</button>
+                                                            <button type='button'
+                                                            onClick={() => handleRemoveTime(index)}>ลบ</button>
                                                         </div>
                                                         {/* <span>Result OT: {time.resultOT}</span> */}
                                                     </div>
