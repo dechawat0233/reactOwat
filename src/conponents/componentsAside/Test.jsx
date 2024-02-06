@@ -341,15 +341,15 @@ function Test() {
                         yOffset += 10;
                     }
                 }
-                if (page < pageCount) {
-                    pdf.addPage();
-                }
+
+                pdf.addPage();
 
             }
         });
 
         // Save or display the PDF
-        pdf.save('your_document.pdf');
+        const pdfContent = pdf.output('bloburl');
+        window.open(pdfContent, '_blank');
     };
 
     return (
