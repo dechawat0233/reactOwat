@@ -1235,7 +1235,7 @@ function SettingSpecial() {
                                     </section>
                                     <div class="line_btn">
                                         {newWorkplace ? (
-                                            <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;สร้างหน่วยงานใหม่</button>
+                                            <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
                                         ) : (
                                             <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
 
