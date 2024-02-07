@@ -39,6 +39,7 @@ import AddEditEmployee from "./conponents/componentsAside/AddEditEmployee";
 import AddEditSalaryEmployee from "./conponents/componentsAside/AddEditSalaryEmployee";
 
 import Setting from "./conponents/componentsAside/Setting";
+import SettingSpecial from "./conponents/componentsAside/SettingSpecail";
 import EmployeeWorkDay from "./conponents/componentsAside/componentsetting/EmployeeWorkDay";
 
 import SystemUser from "./conponents/componentsAside/SystemUser";
@@ -143,6 +144,8 @@ function App() {
               <Route path="/other_expenses" element={<OtherExpenses />} />
               <Route path="/search_results" element={<SearchResults />} />
               <Route path="/setting" element={<Setting />} />
+              <Route path="/settingspecial" element={<SettingSpecial />} />
+
               <Route path="/systemuser" element={<SystemUser />} />
 
               <Route path="/addsettime" element={<Addsettime />} />
