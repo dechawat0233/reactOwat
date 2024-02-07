@@ -345,7 +345,8 @@ function Test() {
         //         }
         //     }
         // };
-        const drawTableTop = () => {
+
+        const drawID = () => {
             for (let i = 0; i < numRowsTop; i++) {
                 for (let j = 0; j < numCols; j++) {
                     const x = startX + j * cellWidth;
@@ -354,6 +355,58 @@ function Test() {
                     // Add text for each cell
                     const cellText = `รหัส`;
                     drawCell(x, y, cellWidth, cellHeightTop, cellText);
+                }
+            }
+        };
+
+  
+        const cellWidthName = 70;
+        const startXName = 25; // Adjust the starting X-coordinate as needed
+        const startYName = 55; // Adjust the starting Y-coordinate as needed
+
+        const drawName = () => {
+            for (let i = 0; i < numRowsTop; i++) {
+                for (let j = 0; j < numCols; j++) {
+                    const x = startXName + j * cellWidthName;
+                    const y = startYTop + i * cellHeightTop;
+
+                    // Add text for each cell
+                    const cellText = `ชื่อ - สกุล`;
+                    drawCell(x, y, cellWidthName, cellHeightTop, cellText);
+                }
+            }
+        };
+
+        const cellWidthAllDay = 10;
+        const startXAllDay = 95; // Adjust the starting X-coordinate as needed
+        const startYAllDay = 55; // Adjust the starting Y-coordinate as needed
+
+        const drawAllDay = () => {
+            for (let i = 0; i < numRowsTop; i++) {
+                for (let j = 0; j < numCols; j++) {
+                    const x = startXAllDay + j * cellWidthAllDay;
+                    const y = startYTop + i * cellHeightTop;
+
+                    // Add text for each cell
+                    const cellText = `วัน`;
+                    drawCell(x, y, cellWidthAllDay, cellHeightTop, cellText);
+                }
+            }
+        };
+
+        const cellWidthSalary = 10;
+        const startXSalary = 95; // Adjust the starting X-coordinate as needed
+        const startYSalary = 55; // Adjust the starting Y-coordinate as needed
+
+        const drawSalary = () => {
+            for (let i = 0; i < numRowsTop; i++) {
+                for (let j = 0; j < numCols; j++) {
+                    const x = startXAllDay + j * cellWidthAllDay;
+                    const y = startYTop + i * cellHeightTop;
+
+                    // Add text for each cell
+                    const cellText = `วัน`;
+                    drawCell(x, y, cellWidthAllDay, cellHeightTop, cellText);
                 }
             }
         };
@@ -407,7 +460,10 @@ function Test() {
             pdf.text(`รายชื่อทั้งหมด: ${dataArrayName[index].name}`, 10, 10);
             pdf.text(`ตั้งแต่วันที่30/08/2567 ถึง 20/09/2667`, 10, 20);
             pdf.text(`แผนก: ${dataArrayName[index].code}`, 10, 30);
-            drawTableTop();
+
+            drawID();
+            drawName();
+            drawAllDay();
 
             const pageCount = Math.ceil(subarrayLengths[index] / arraysPerPage);
             let sumNo = 0;
