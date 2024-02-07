@@ -84,9 +84,26 @@ function SettingSpecial() {
             setSelectedPosition('');
             setNumberOfEmployees('');
         }
-
     };
 
+//special work time day
+const [specialWorkTimeDay, setSpecialWorkTimeDay] = useState({
+    day: '',
+    shift: '',
+    startTime: '',
+    endTime: '',
+    startTimeOT: '',
+    endTimeOT: '',
+payment: '',
+paymentOT: '',
+workDetail: '',    
+    employees: [{
+        positionWork: '', 
+        countPerson: ''   
+     }],
+});
+
+const [specailWorkTimeDayList , setSpecialWorkTimeDayList] = useState([]);
 
     const [workTimeDay, setWorkTimeDay] = useState({
         startDay: '',
@@ -103,7 +120,7 @@ function SettingSpecial() {
     const handleInputChange = (e) => {
         const { name, value } = e.target;
 
-        setWorkTimeDay((prevData) => ({
+        setSpecialWorkTimeDay((prevData) => ({
             ...prevData,
             [name]: value,
         }));
@@ -124,19 +141,27 @@ function SettingSpecial() {
     };
 
     const handleAddTimeList = () => {
-        setWorkTimeDayList((prevList) => [...prevList, workTimeDay]);
+        setSpecialWorkTimeDayList((prevList) => [...prevList, specialWorkTimeDay]);
 
         //clean data
-        setWorkTimeDay({
-            startDay: '',
-            endDay: '',
-            workOrStop: '',
-            allTimes: [{ shift: '', startTime: '', endTime: '', resultTime: '', startTimeOT: '', endTimeOT: '', resultTimeOT: '' }],
-        });
+        setSpecialWorkTimeDay({
+            day: '',
+            shift: '',
+            startTime: '',
+            endTime: '',
+            startTimeOT: '',
+            endTimeOT: '',
+        payment: '',
+        paymentOT: '',
+        workDetail: '',    
+            employees: [{
+                positionWork: '', 
+                countPerson: ''   
+             }]       });
     };
 
     const handleRemoveTimeList = (index) => {
-        setWorkTimeDayList((prevList) => {
+        setSpecialWorkTimeDayList((prevList) => {
             const updatedList = [...prevList];
             updatedList.splice(index, 1);
             return updatedList;
@@ -213,32 +238,36 @@ function SettingSpecial() {
     const handleInputChangePerson = (e, index) => {
         const { name, value } = e.target;
 
-        setWorkTimeDayPerson((prevData) => {
-            const updatedAllTimesPerson = [...prevData.allTimesPerson];
+        setSpecialWorkTimeDay((prevData) => {
+            const updatedAllTimesPerson = [...prevData.employees];
             updatedAllTimesPerson[index] = {
                 ...updatedAllTimesPerson[index],
                 [name]: value,
             };
             return {
                 ...prevData,
-                allTimesPerson: updatedAllTimesPerson,
+                employees: updatedAllTimesPerson,
             };
         });
 
     };
 
     const handleAddTimePerson = () => {
-        setWorkTimeDayPerson((prevData) => ({
+        setSpecialWorkTimeDay((prevData) => ({
             ...prevData,
-            allTimesPerson: [...prevData.allTimesPerson, { shift: '', positionWork: '', countPerson: '' }],
+            employees: [...prevData.employees, {
+                positionWork: '', 
+                countPerson: ''   
+             }
+        ],
         }));
     };
 
 
     const handleRemoveTimePerson = (indexToRemove) => {
-        setWorkTimeDayPerson((prevData) => ({
+        setSpecialWorkTimeDay((prevData) => ({
             ...prevData,
-            allTimesPerson: prevData.allTimesPerson.filter((_, index) => index !== indexToRemove),
+            employees: prevData.employees.filter((_, index) => index !== indexToRemove),
         }));
     };
 
@@ -906,11 +935,11 @@ function SettingSpecial() {
                                                 </select> */}
                                                 <div style=
                                                     {{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
-                                                    <DatePicker id="datetime" name="datetime"
+                                                    <DatePicker id="datetime" name="day"
                                                         className="form-control" // Apply Bootstrap form-control class
                                                         popperClassName="datepicker-popper" // Apply custom popper class if needed
                                                         selected={workDate}
-                                                        onChange={handleWorkDateChange}
+                                                        onChange={handleInputChange}
                                                         dateFormat="dd/MM/yyyy"
                                                     // showMonthYearPicker
                                                     />
@@ -922,8 +951,8 @@ function SettingSpecial() {
                                                     <div key={index}>
                                                         <div class="row">
                                                             <div class="col-md-2">
-                                                                <select name="shift" className="form-control" value={workTimeDay.shift}
-                                                                    onChange={(e) => handleTimeChange(index, 'shift', e.target.value)}>
+                                                                <select name="shift" className="form-control" value={specialWorkTimeDay.shift}
+                                                                    onChange={handleInputChange}>
                                                                     <option value="">เลือกกะ</option>
                                                                     {shiftWork.map((day, index) => (
                                                                         <option key={index} value={day}>
@@ -935,19 +964,21 @@ function SettingSpecial() {
                                                             <div class="col-md-1">
                                                                 <input
                                                                     type="text"
+                                                                    name="startTime"
                                                                     class="form-control"
-                                                                    placeholder={`Start Time ${index + 1}`}
-                                                                    value={time.startTime}
-                                                                    onChange={(e) => handleTimeChange(index, 'startTime', e.target.value)}
+                                                                    placeholder={`Start Time `}
+                                                                    value={specialWorkTimeDay.startTime}
+                                                                    onChange={handleInputChange}
                                                                 />
                                                             </div>
                                                             <div class="col-md-1">
                                                                 <input
                                                                     type="text"
+                                                                    name="endTime"
                                                                     class="form-control"
-                                                                    placeholder={`End Time ${index + 1}`}
-                                                                    value={time.endTime}
-                                                                    onChange={(e) => handleTimeChange(index, 'endTime', e.target.value)}
+                                                                    placeholder={`End Time `}
+                                                                    value={specialWorkTimeDay.endTime}
+                                                                    onChange={handleInputChange}
                                                                 />
                                                             </div>
                                                             {/* <span>Result Time: {time.resultTime}</span> */}
@@ -955,20 +986,22 @@ function SettingSpecial() {
 
                                                                 <input
                                                                     type="text"
+                                                                   name="startTimeOT" 
                                                                     class="form-control"
-                                                                    placeholder={`Start Time OT ${index + 1}`}
-                                                                    value={time.startTimeOT}
-                                                                    onChange={(e) => handleTimeChange(index, 'startTimeOT', e.target.value)}
+                                                                    placeholder={`Start Time OT `}
+                                                                    value={specialWorkTimeDay.startTimeOT}
+                                                                    onChange={handleInputChange}
                                                                 />
                                                             </div>
                                                             <div class="col-md-2">
 
                                                                 <input
                                                                     type="text"
+                                                                    name="endTimeOT"
                                                                     class="form-control"
-                                                                    placeholder={`End Time OT ${index + 1}`}
-                                                                    value={time.endTimeOT}
-                                                                    onChange={(e) => handleTimeChange(index, 'endTimeOT', e.target.value)}
+                                                                    placeholder={`End Time OT `}
+                                                                    value={specialWorkTimeDay.endTimeOT}
+                                                                    onChange={handleInputChange}
                                                                 />
                                                             </div>
 
@@ -977,20 +1010,22 @@ function SettingSpecial() {
 
                                                                 <input
                                                                     type="text"
+                                                                    name="payment"
                                                                     class="form-control"
-                                                                    placeholder={`Start Time OT ${index + 1}`}
-                                                                    value={time.SalaryWork}
-                                                                    onChange={(e) => handleTimeChange(index, 'SalaryWork', e.target.value)}
+                                                                    placeholder={`อัตราค่าจ้าง `}
+                                                                    value={specialWorkTimeDay.payment}
+                                                                    onChange={handleInputChange}
                                                                 />
                                                             </div>
                                                             <div class="col-md-2">
 
                                                                 <input
                                                                     type="text"
+                                                                    name="paymentOT"
                                                                     class="form-control"
-                                                                    placeholder={`End Time OT ${index + 1}`}
-                                                                    value={time.SalaryWorkOT}
-                                                                    onChange={(e) => handleTimeChange(index, 'SalaryWorkOT', e.target.value)}
+                                                                    placeholder={`อัตราค่าจ้างOT `}
+                                                                    value={specialWorkTimeDay.paymentOT}
+                                                                    onChange={handleInputChange}
                                                                 />
                                                             </div>
 
@@ -1021,7 +1056,7 @@ function SettingSpecial() {
                                         <br />
 
                                         <div className="col-md-12">
-                                            {workTimeDayPerson.allTimesPerson.map((time, index) => (
+                                            {specialWorkTimeDay.employees.map((time, index) => (
                                                 <div key={index} className="row">
                                                     <div className="col-md-2">
                                                         <select
@@ -1050,7 +1085,7 @@ function SettingSpecial() {
                                                         <input
                                                             type="text"
                                                             className="form-control"
-                                                            placeholder={`Person ${index + 1}`}
+                                                            placeholder={`Person `}
                                                             name="countPerson" // Make sure the name attribute is set to "countPerson"
                                                             value={time.countPerson}
                                                             onChange={(e) => handleInputChangePerson(e, index)}
@@ -1109,11 +1144,11 @@ function SettingSpecial() {
                                                         /> */}
                                                     <input
                                                         type="text"
+                                                        name="workDetail"
                                                         className="form-control"
                                                         placeholder={`รายละเอียดงาน`}
-                                                        name="countPerson" // Make sure the name attribute is set to "countPerson"
-                                                        value={detail}
-                                                        onChange={(e) => handleInputChangePerson(e, index)}
+                                                        value={specialWorkTimeDay.workDetail}
+                                                        onChange={handleInputChange}
                                                     />
 
                                                 </div>
@@ -1148,83 +1183,39 @@ function SettingSpecial() {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {workTimeDayList.map((item, index) => (
+{specailWorkTimeDayList.map((item , index) => (
+                                                <tr>
+                                                    <td style={cellStyle}>
+                                                        {item.day}
+                                                    </td>
 
-                                                    item.allTimes.map((item1, index1) => (
+                                                    <td style={cellStyle}>
+                                                    {item.shift} เวลา {item.startTime} ถึง {item.endTime} เวลาทำงาน OT {item.startTimeOT} ถึง {item.endTimeOT}<br />
+                                                        อัตราค่าจ้างทำงานพิเศษ {item.payment} OT {item.paymentOT}<br />
 
-                                                        <tr key={index}>
-                                                            {index1 > 0 ? (
-                                                                <>
-                                                                    {/* <td style={cellStyle}></td> */}
-                                                                    <td style={cellStyle}></td>
-                                                                    <td style={cellStyle}></td>
+                                                        {item.employees.map((item1, index1) => (
+<>
+                                                        {item1.positionWork} {item1.countPerson} คน<br />
+</>
+                                                        ))}
+                                                    </td>
 
-                                                                </>
-                                                            ) : (
-                                                                <>
-                                                                    {/* <td style={cellStyle}>
-                                                                    <button type="button"
-                                                                        onClick={() => handleRemoveTimeList(index)}
-                                                                        className="btn btn-danger ml-auto" >
-                                                                        ลบ
-                                                                    </button>
-                                                                </td> */}
-                                                                    <td style={cellStyle}>{item.startDay}</td>
-                                                                    <td style={cellStyle}>{item.endDay}</td>
-                                                                </>
-                                                            )}
-
-                                                            {item.workOrStop == "work" ? (
-                                                                <td style={cellStyle}>ทำงาน</td>
-                                                            ) : (
-                                                                <td style={cellStyle}>หยุด</td>
-                                                            )}
-
-
-                                                            <td style={cellStyle}>{item1.shift}</td>
-                                                            <td style={cellStyle}>{item1.startTime}</td>
-                                                            <td style={cellStyle}>{item1.endTime}</td>
-                                                            <td style={cellStyle}>{item1.resultTime}</td>
-                                                            <td style={cellStyle}>{item1.startTimeOT}</td>
-                                                            <td style={cellStyle}>{item1.endTimeOT}</td>
-                                                            <td style={cellStyle}>{item1.resultTimeOT}</td>
-
-                                                            {index1 > 0 ? (
-                                                                <>
-                                                                    <td style={cellStyle}></td>
-                                                                </>
-                                                            ) : (
-                                                                <>
-                                                                    <td style={cellStyle}>
+                                                    <td style={cellStyle}>
+                                                        {item.workDetail}
+                                                    </td>
+                                                    <td style={cellStyle}>
                                                                         <button type="button"
                                                                             onClick={() => handleRemoveTimeList(index)}
                                                                             className="btn btn-danger ml-auto" >
                                                                             ลบ
                                                                         </button>
                                                                     </td>
-                                                                </>
-                                                            )}
-                                                        </tr>
 
-                                                    ))
-
-                                                ))}
-                                                <tr>
-                                                    <td style={cellStyle}>
-                                                        25/08/2024
-                                                    </td>
-                                                    <td style={cellStyle}>
-                                                        กะเช้า เวลา 07.00 ถึง 16.00 เวลาทำงาน OT<br />
-                                                        อัตราค่าจ้างทำงานพิเศษ<br />
-                                                        หัวหน้าพนักงานทำความสะอาด  1 คน<br />
-                                                        พนักงานทำความสะอาด 10คน
-                                                    </td>
-                                                    <td style={cellStyle}>
-                                                        ล้างอาคารสำนักงาน ณ อาคารโอวาท
-                                                    </td>
-                                                    <td style={cellStyle}>
-                                                        ลบ                                                    </td>
                                                 </tr>
+
+)
+
+) }
 
                                             </tbody>
                                         </table>
