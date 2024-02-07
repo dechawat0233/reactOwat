@@ -1003,7 +1003,7 @@ function SettingSpecial() {
                                         </div>
 
                                         <br />
-                                        
+
 
                                         <div class="row">
                                             <div class="col-md-12">
@@ -1223,12 +1223,23 @@ function SettingSpecial() {
                                                         ล้างอาคารสำนักงาน ณ อาคารโอวาท
                                                     </td>
                                                     <td style={cellStyle}>
-                                                        ลบ                                                    </td>
+                                                        ลบ
+                                                    </td>
                                                 </tr>
 
                                             </tbody>
                                         </table>
-                                    </section>                                </form>
+                                    </section>
+                                    <div class="line_btn">
+                                        {newWorkplace ? (
+                                            <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;สร้างหน่วยงานใหม่</button>
+                                        ) : (
+                                            <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
+
+                                        )}
+                                        <button class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
+                                    </div>
+                                </form>
                             </section>
 
 
