@@ -37,10 +37,6 @@ function SettingSpecial() {
     const [numberOfEmployees, setNumberOfEmployees] = useState('');
     const [listEmployeeDay, setListEmployeeDay] = useState([]);
 
-    const [workDate, setWorkDate] = useState(new Date());
-    const handleWorkDateChange = (date) => {
-        setWorkDate(date);
-    };
 
     const [selectedDay1, setSelectedDay1] = useState('');
     const [spWorkStart1, setSpWorkStart1] = useState('');
@@ -105,6 +101,22 @@ function SettingSpecial() {
 
     const [specailWorkTimeDayList, setSpecialWorkTimeDayList] = useState([]);
 
+    const [workDate, setWorkDate] = useState(new Date());
+    const handleWorkDateChange = (date) => {
+            // Convert the date to a dd-mm-yyyy string format
+    const day = date.getDate().toString().padStart(2, '0'); // Get the day and ensure it has leading zero if necessary
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Get the month (months are zero-based) and ensure it has leading zero if necessary
+    const year = date.getFullYear().toString(); // Get the full year
+    const dateString = `${day}-${month}-${year}`;
+
+        setWorkDate(date);
+        setSpecialWorkTimeDay(prevState => ({
+            ...prevState,
+            day: dateString
+        }));
+    };
+
+
     const [workTimeDay, setWorkTimeDay] = useState({
         startDay: '',
         endDay: '',
@@ -117,9 +129,9 @@ function SettingSpecial() {
     // const daysOfWeekThai = ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์', 'อาทิตย์'];
     const shiftWork = ['กะเช้า', 'กะบ่าย', 'กะดึก'];
 
+    
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-
         setSpecialWorkTimeDay((prevData) => ({
             ...prevData,
             [name]: value,
@@ -940,7 +952,7 @@ function SettingSpecial() {
                                                         className="form-control" // Apply Bootstrap form-control class
                                                         popperClassName="datepicker-popper" // Apply custom popper class if needed
                                                         selected={workDate}
-                                                        onChange={handleInputChange}
+                                                        onChange={handleWorkDateChange }
                                                         dateFormat="dd/MM/yyyy"
                                                     // showMonthYearPicker
                                                     />
