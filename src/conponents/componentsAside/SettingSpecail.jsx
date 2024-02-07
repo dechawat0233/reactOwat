@@ -865,6 +865,31 @@ function SettingSpecial() {
                                             <div class="col-md-2">
                                                 เลือกวันที่
                                             </div>
+                                            <div class="col-md-10">
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        กะ
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        เวลาเข้า
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        เวลาออก
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        เวลาเข้าOT
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        เวลาออกOT
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        อัตราค่าจ้าง
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        อัตราค่าจ้างOT
+                                                    </div>
+                                                </div>
+                                            </div>
 
                                         </div>
                                         <div class="row">
@@ -891,38 +916,7 @@ function SettingSpecial() {
                                                     />
                                                 </div>
                                             </div>
-                                        </div>
-                                        <br />
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="row">
-                                                    <div class="col-md-2">
-                                                        กะ
-                                                    </div>
-                                                    <div class="col-md-1">
-                                                        เวลาเข้า
-                                                    </div>
-                                                    <div class="col-md-1">
-                                                        เวลาออก
-                                                    </div>
-                                                    <div class="col-md-1">
-                                                        เวลาเข้าOT
-                                                    </div>
-                                                    <div class="col-md-1">
-                                                        เวลาออกOT
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        อัตราค่าจ้าง
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        อัตราค่าจ้างOT
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-
-                                            <div class="col-md-12">
+                                            <div class="col-md-10">
 
                                                 {workTimeDay.allTimes.map((time, index) => (
                                                     <div key={index}>
@@ -957,7 +951,7 @@ function SettingSpecial() {
                                                                 />
                                                             </div>
                                                             {/* <span>Result Time: {time.resultTime}</span> */}
-                                                            <div class="col-md-1">
+                                                            <div class="col-md-2">
 
                                                                 <input
                                                                     type="text"
@@ -967,7 +961,7 @@ function SettingSpecial() {
                                                                     onChange={(e) => handleTimeChange(index, 'startTimeOT', e.target.value)}
                                                                 />
                                                             </div>
-                                                            <div class="col-md-1">
+                                                            <div class="col-md-2">
 
                                                                 <input
                                                                     type="text"
@@ -986,7 +980,7 @@ function SettingSpecial() {
                                                                     class="form-control"
                                                                     placeholder={`Start Time OT ${index + 1}`}
                                                                     value={time.SalaryWork}
-                                                                    onChange={(e) => handleTimeChange(index, 'startTimeOT', e.target.value)}
+                                                                    onChange={(e) => handleTimeChange(index, 'SalaryWork', e.target.value)}
                                                                 />
                                                             </div>
                                                             <div class="col-md-2">
@@ -996,7 +990,7 @@ function SettingSpecial() {
                                                                     class="form-control"
                                                                     placeholder={`End Time OT ${index + 1}`}
                                                                     value={time.SalaryWorkOT}
-                                                                    onChange={(e) => handleTimeChange(index, 'endTimeOT', e.target.value)}
+                                                                    onChange={(e) => handleTimeChange(index, 'SalaryWorkOT', e.target.value)}
                                                                 />
                                                             </div>
 
@@ -1006,12 +1000,10 @@ function SettingSpecial() {
                                                 ))}
 
                                             </div>
-                                            {/* <div class="col-md-1">
-                                            <button type="button" aria-label="เพิ่มเวลาทำงาน" onClick={handleAddTime} className="btn btn-primary" style={{ width: '2rem' }}>
-                                                <i class="fa">&#xf067;</i>
-                                            </button>
-                                        </div> */}
                                         </div>
+
+                                        <br />
+                                        
 
                                         <div class="row">
                                             <div class="col-md-12">
