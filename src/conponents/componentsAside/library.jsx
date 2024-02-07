@@ -31,3 +31,8 @@ export const getMonthName= (monthNumber) => {
     // console.log('dayOfWeek',dayOfWeek);
   };
   
+
+  //get time of work by workplace and day
+  export const getWorkTime = (workplaceId , day) => {
+
+  };
