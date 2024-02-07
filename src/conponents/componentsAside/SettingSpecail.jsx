@@ -86,24 +86,24 @@ function SettingSpecial() {
         }
     };
 
-//special work time day
-const [specialWorkTimeDay, setSpecialWorkTimeDay] = useState({
-    day: '',
-    shift: '',
-    startTime: '',
-    endTime: '',
-    startTimeOT: '',
-    endTimeOT: '',
-payment: '',
-paymentOT: '',
-workDetail: '',    
-    employees: [{
-        positionWork: '', 
-        countPerson: ''   
-     }],
-});
+    //special work time day
+    const [specialWorkTimeDay, setSpecialWorkTimeDay] = useState({
+        day: '',
+        shift: '',
+        startTime: '',
+        endTime: '',
+        startTimeOT: '',
+        endTimeOT: '',
+        payment: '',
+        paymentOT: '',
+        workDetail: '',
+        employees: [{
+            positionWork: '',
+            countPerson: ''
+        }],
+    });
 
-const [specailWorkTimeDayList , setSpecialWorkTimeDayList] = useState([]);
+    const [specailWorkTimeDayList, setSpecialWorkTimeDayList] = useState([]);
 
     const [workTimeDay, setWorkTimeDay] = useState({
         startDay: '',
@@ -151,13 +151,14 @@ const [specailWorkTimeDayList , setSpecialWorkTimeDayList] = useState([]);
             endTime: '',
             startTimeOT: '',
             endTimeOT: '',
-        payment: '',
-        paymentOT: '',
-        workDetail: '',    
+            payment: '',
+            paymentOT: '',
+            workDetail: '',
             employees: [{
-                positionWork: '', 
-                countPerson: ''   
-             }]       });
+                positionWork: '',
+                countPerson: ''
+            }]
+        });
     };
 
     const handleRemoveTimeList = (index) => {
@@ -256,10 +257,10 @@ const [specailWorkTimeDayList , setSpecialWorkTimeDayList] = useState([]);
         setSpecialWorkTimeDay((prevData) => ({
             ...prevData,
             employees: [...prevData.employees, {
-                positionWork: '', 
-                countPerson: ''   
-             }
-        ],
+                positionWork: '',
+                countPerson: ''
+            }
+            ],
         }));
     };
 
@@ -986,7 +987,7 @@ const [specailWorkTimeDayList , setSpecialWorkTimeDayList] = useState([]);
 
                                                                 <input
                                                                     type="text"
-                                                                   name="startTimeOT" 
+                                                                    name="startTimeOT"
                                                                     class="form-control"
                                                                     placeholder={`Start Time OT `}
                                                                     value={specialWorkTimeDay.startTimeOT}
@@ -1183,61 +1184,39 @@ const [specailWorkTimeDayList , setSpecialWorkTimeDayList] = useState([]);
                                                 </tr>
                                             </thead>
                                             <tbody>
-{specailWorkTimeDayList.map((item , index) => (
-                                                <tr>
-                                                    <td style={cellStyle}>
-                                                        {item.day}
-                                                    </td>
+                                                {specailWorkTimeDayList.map((item, index) => (
+                                                    <tr>
+                                                        <td style={cellStyle}>
+                                                            {item.day}
+                                                        </td>
 
-                                                    <td style={cellStyle}>
-                                                    {item.shift} เวลา {item.startTime} ถึง {item.endTime} เวลาทำงาน OT {item.startTimeOT} ถึง {item.endTimeOT}<br />
-                                                        อัตราค่าจ้างทำงานพิเศษ {item.payment} OT {item.paymentOT}<br />
+                                                        <td style={cellStyle}>
+                                                            {item.shift} เวลา {item.startTime} ถึง {item.endTime} เวลาทำงาน OT {item.startTimeOT} ถึง {item.endTimeOT}<br />
+                                                            อัตราค่าจ้างทำงานพิเศษ {item.payment} OT {item.paymentOT}<br />
 
-                                                        {item.employees.map((item1, index1) => (
-<>
-                                                        {item1.positionWork} {item1.countPerson} คน<br />
-</>
-                                                        ))}
-                                                    </td>
+                                                            {item.employees.map((item1, index1) => (
+                                                                <>
+                                                                    {item1.positionWork} {item1.countPerson} คน<br />
+                                                                </>
+                                                            ))}
+                                                        </td>
 
-                                                    <td style={cellStyle}>
-                                                        {item.workDetail}
-                                                    </td>
-                                                    <td style={cellStyle}>
-                                                                        <button type="button"
-                                                                            onClick={() => handleRemoveTimeList(index)}
-                                                                            className="btn btn-danger ml-auto" >
-                                                                            ลบ
-                                                                        </button>
-                                                                    </td>
+                                                        <td style={cellStyle}>
+                                                            {item.workDetail}
+                                                        </td>
+                                                        <td style={cellStyle}>
+                                                            <button type="button"
+                                                                onClick={() => handleRemoveTimeList(index)}
+                                                                className="btn btn-danger ml-auto" >
+                                                                ลบ
+                                                            </button>
+                                                        </td>
 
-<<<<<<< HEAD
-=======
-                                                    ))
+                                                    </tr>
 
-                                                ))}
-                                                <tr>
-                                                    <td style={cellStyle}>
-                                                        25/08/2024
-                                                    </td>
-                                                    <td style={cellStyle}>
-                                                        กะเช้า เวลา 07.00 ถึง 16.00 เวลาทำงาน OT<br />
-                                                        อัตราค่าจ้างทำงานพิเศษ<br />
-                                                        หัวหน้าพนักงานทำความสะอาด  1 คน<br />
-                                                        พนักงานทำความสะอาด 10คน
-                                                    </td>
-                                                    <td style={cellStyle}>
-                                                        ล้างอาคารสำนักงาน ณ อาคารโอวาท
-                                                    </td>
-                                                    <td style={cellStyle}>
-                                                        ลบ
-                                                    </td>
->>>>>>> a27b254988e4625254548e89e3653ee24aec2f0e
-                                                </tr>
+                                                )
 
-)
-
-) }
+                                                )}
 
                                             </tbody>
                                         </table>
