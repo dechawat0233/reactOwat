@@ -307,37 +307,79 @@ function Test() {
         // Set the font for the document
         pdf.setFont(fontName);
 
-        const subarrayLengths = dataArray.map(subarray => subarray.length);
+        //     const subarrayLengths = dataArray.map(subarray => subarray.length);
 
-        dataArray.forEach((innerArray, index) => {
-            const pageCount = Math.ceil(subarrayLengths[index] / arraysPerPage);
-            let sumNo = 0;
+        //     dataArray.forEach((innerArray, index) => {
+        //         const pageCount = Math.ceil(subarrayLengths[index] / arraysPerPage);
+        //         let sumNo = 0;
 
-            for (let page = 0; page < pageCount; page++) {
-                let yOffset = 20;
+        //         for (let page = 0; page < pageCount; page++) {
+        //             let yOffset = 20;
+
+        //             const startIdx = page * arraysPerPage;
+        //             const endIdx = Math.min((page + 1) * arraysPerPage, subarrayLengths[index]);
+
+        //             pdf.text(`รายชื่อทั้งหมด`, 10, 10);
+
+        //             for (let i = startIdx; i < endIdx; i++) {
+        //                 const currentArray = innerArray[i];
+
+        //                 if (currentArray) {
+        //                     pdf.text(`Name: ${currentArray.name}, Prime: ${currentArray.prime}, No: ${currentArray.no}`, 20, yOffset);
+        //                     yOffset += 10;
+        //                     sumNo += parseInt(currentArray.no, 10);
+        //                 }
+        //             }
+
+        //             if (page === pageCount - 1) {
+        //                 pdf.text(`Page ${page + 1}/${pageCount} - Sum 'no': ${sumNo}`, 200, 200);
+        //             }
+
+        //             if (page < pageCount) {
+        //                 pdf.addPage();
+        //             }
+        //         }
+        //     });
+
+        //     // Save or display the PDF
+        //     const pdfContent = pdf.output('bloburl');
+        //     window.open(pdfContent, '_blank');
+        // };
+        dataArrayName.forEach((header, index) => {
+            pdf.addPage();
+            pdf.text(`รายชื่อทั้งหมด: ${header.name}`, 10, 10);
+
+            const innerArray = dataArray[index];
+            const subarrayLength = innerArray.length;
+
+            for (let i = 0; i < subarrayLength; i++) {
+                const currentArray = innerArray[i];
+
+                if (currentArray) {
+                    pdf.text(`Name: ${currentArray.name}, Code: ${currentArray.code}`, 20, 20 + i * 10);
+                }
+            }
+
+            const pageCount = Math.ceil(subarrayLength / arraysPerPage);
+            pdf.text(`Page 1/${pageCount}`, 200, 200);
+
+            for (let page = 1; page < pageCount; page++) {
+                pdf.addPage();
 
                 const startIdx = page * arraysPerPage;
-                const endIdx = Math.min((page + 1) * arraysPerPage, subarrayLengths[index]);
+                const endIdx = Math.min((page + 1) * arraysPerPage, subarrayLength);
 
-                pdf.text(`รายชื่อทั้งหมด`, 10, 10);
+                pdf.text(`รายชื่อทั้งหมด: ${header.name}`, 10, 10);
 
                 for (let i = startIdx; i < endIdx; i++) {
                     const currentArray = innerArray[i];
 
                     if (currentArray) {
-                        pdf.text(`Name: ${currentArray.name}, Prime: ${currentArray.prime}, No: ${currentArray.no}`, 20, yOffset);
-                        yOffset += 10;
-                        sumNo += parseInt(currentArray.no, 10);
+                        pdf.text(`Name: ${currentArray.name}, Code: ${currentArray.code}`, 20, 20 + (i - startIdx) * 10);
                     }
                 }
 
-                if (page === pageCount - 1) {
-                    pdf.text(`Page ${page + 1}/${pageCount} - Sum 'no': ${sumNo}`, 200, 200);
-                }
-
-                if (page < pageCount) {
-                    pdf.addPage();
-                }
+                pdf.text(`Page ${page + 1}/${pageCount}`, 200, 200);
             }
         });
 
