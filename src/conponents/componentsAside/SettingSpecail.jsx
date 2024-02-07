@@ -102,15 +102,16 @@ function SettingSpecial() {
     const [specailWorkTimeDayList, setSpecialWorkTimeDayList] = useState([]);
 
     const [workDate, setWorkDate] = useState(new Date());
-    const handleWorkDateChange = (date) => {
-            // Convert the date to a dd-mm-yyyy string format
-    const day = date.getDate().toString().padStart(2, '0'); // Get the day and ensure it has leading zero if necessary
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Get the month (months are zero-based) and ensure it has leading zero if necessary
-    const year = date.getFullYear().toString(); // Get the full year
-    const dateString = `${day}-${month}-${year}`;
+    const handleWorkDateChange = async (date) => {
+        await setWorkDate(date);
 
-        setWorkDate(date);
-        setSpecialWorkTimeDay(prevState => ({
+            // Convert the date to a dd-mm-yyyy string format
+    const day = await workDate.getDate().toString().padStart(2, '0'); // Get the day and ensure it has leading zero if necessary
+    const month = await (date.getMonth() + 1).toString().padStart(2, '0'); // Get the month (months are zero-based) and ensure it has leading zero if necessary
+    const year = await date.getFullYear().toString(); // Get the full year
+    const dateString = await `${day}-${month}-${year}`;
+
+        await setSpecialWorkTimeDay(prevState => ({
             ...prevState,
             day: dateString
         }));
