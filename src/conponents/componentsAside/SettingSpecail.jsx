@@ -1038,7 +1038,7 @@ const [specailWorkTimeDayList , setSpecialWorkTimeDayList] = useState([]);
                                         </div>
 
                                         <br />
-                                        
+
 
                                         <div class="row">
                                             <div class="col-md-12">
@@ -1211,6 +1211,28 @@ const [specailWorkTimeDayList , setSpecialWorkTimeDayList] = useState([]);
                                                                         </button>
                                                                     </td>
 
+<<<<<<< HEAD
+=======
+                                                    ))
+
+                                                ))}
+                                                <tr>
+                                                    <td style={cellStyle}>
+                                                        25/08/2024
+                                                    </td>
+                                                    <td style={cellStyle}>
+                                                        กะเช้า เวลา 07.00 ถึง 16.00 เวลาทำงาน OT<br />
+                                                        อัตราค่าจ้างทำงานพิเศษ<br />
+                                                        หัวหน้าพนักงานทำความสะอาด  1 คน<br />
+                                                        พนักงานทำความสะอาด 10คน
+                                                    </td>
+                                                    <td style={cellStyle}>
+                                                        ล้างอาคารสำนักงาน ณ อาคารโอวาท
+                                                    </td>
+                                                    <td style={cellStyle}>
+                                                        ลบ
+                                                    </td>
+>>>>>>> a27b254988e4625254548e89e3653ee24aec2f0e
                                                 </tr>
 
 )
@@ -1219,7 +1241,17 @@ const [specailWorkTimeDayList , setSpecialWorkTimeDayList] = useState([]);
 
                                             </tbody>
                                         </table>
-                                    </section>                                </form>
+                                    </section>
+                                    <div class="line_btn">
+                                        {newWorkplace ? (
+                                            <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;สร้างหน่วยงานใหม่</button>
+                                        ) : (
+                                            <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
+
+                                        )}
+                                        <button class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
+                                    </div>
+                                </form>
                             </section>
 
 
