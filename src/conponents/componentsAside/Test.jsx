@@ -13,7 +13,7 @@ import jsPDF from 'jspdf';
 
 const dataArrayName = [
     { name: 'ที่ไหน', code: '233158', },
-    { name: 'ที่ไหน', code: '233158', }
+    { name: 'ที่ไหนpgghh', code: '243978', }
 ];
 const dataArray = [
     [
@@ -307,6 +307,57 @@ function Test() {
         // Set the font for the document
         pdf.setFont(fontName);
 
+        const numRows = 7;
+        const numCols = 1;
+        const cellWidth = 15;
+        const cellHeight = 3.5;
+        const startX = 10; // Adjust the starting X-coordinate as needed
+        const startY = 55; // Adjust the starting Y-coordinate as needed
+        const borderWidth = 0.5; // Adjust the border width as needed
+
+        // Function to draw a cell with borders
+        // const drawCell = (x, y, width, height) => {
+        //     pdf.rect(x, y, width, height);
+        // };
+        const drawCell = (x, y, width, height, text) => {
+            // Draw the cell border
+            pdf.rect(x, y, width, height);
+
+            // Calculate the center of the cell
+            const centerX = x + width / 2;
+            const centerY = y + height / 2;
+
+            // Add text to the center of the cell
+            pdf.text(text, centerX, centerY, { align: 'center', valign: 'middle' });
+        };
+
+        const numRowsTop = 1;
+        const startXTop = 50; // Adjust the starting X-coordinate as needed
+        const startYTop = 35; // Adjust the starting Y-coordinate as needed
+        const cellHeightTop = 10;
+
+        // const drawTableTop = () => {
+        //     for (let i = 0; i < numRowsTop; i++) {
+        //         for (let j = 0; j < numCols; j++) {
+        //             const x = startX + j * cellWidth;
+        //             const y = startYTop + i * cellHeightTop;
+        //             drawCell(x, y, cellWidth, cellHeightTop);
+        //         }
+        //     }
+        // };
+        const drawTableTop = () => {
+            for (let i = 0; i < numRowsTop; i++) {
+                for (let j = 0; j < numCols; j++) {
+                    const x = startX + j * cellWidth;
+                    const y = startYTop + i * cellHeightTop;
+
+                    // Add text for each cell
+                    const cellText = `รหัส`;
+                    drawCell(x, y, cellWidth, cellHeightTop, cellText);
+                }
+            }
+        };
+
         //     const subarrayLengths = dataArray.map(subarray => subarray.length);
 
         //     dataArray.forEach((innerArray, index) => {
@@ -319,7 +370,10 @@ function Test() {
         //             const startIdx = page * arraysPerPage;
         //             const endIdx = Math.min((page + 1) * arraysPerPage, subarrayLengths[index]);
 
-        //             pdf.text(`รายชื่อทั้งหมด`, 10, 10);
+        //             // pdf.text(`รายชื่อทั้งหมด`, 10, 10);
+        //             if (page === pageCount) {
+        //                 pdf.text(`Page ${page + 1}/${pageCount} - Sum 'no': ${sumNo}`, 20, 10);
+        //             }
 
         //             for (let i = startIdx; i < endIdx; i++) {
         //                 const currentArray = innerArray[i];
@@ -345,42 +399,44 @@ function Test() {
         //     const pdfContent = pdf.output('bloburl');
         //     window.open(pdfContent, '_blank');
         // };
-        dataArrayName.forEach((header, index) => {
-            pdf.addPage();
-            pdf.text(`รายชื่อทั้งหมด: ${header.name}`, 10, 10);
+        const subarrayLengths = dataArray.map(subarray => subarray.length);
 
-            const innerArray = dataArray[index];
-            const subarrayLength = innerArray.length;
+        dataArray.forEach((innerArray, index) => {
+            // Display dataArrayName on the first page
+            // pdf.addPage();
+            pdf.text(`รายชื่อทั้งหมด: ${dataArrayName[index].name}`, 10, 10);
+            pdf.text(`ตั้งแต่วันที่30/08/2567 ถึง 20/09/2667`, 10, 20);
+            pdf.text(`แผนก: ${dataArrayName[index].code}`, 10, 30);
+            drawTableTop();
 
-            for (let i = 0; i < subarrayLength; i++) {
-                const currentArray = innerArray[i];
+            const pageCount = Math.ceil(subarrayLengths[index] / arraysPerPage);
+            let sumNo = 0;
 
-                if (currentArray) {
-                    pdf.text(`Name: ${currentArray.name}, Code: ${currentArray.code}`, 20, 20 + i * 10);
-                }
-            }
-
-            const pageCount = Math.ceil(subarrayLength / arraysPerPage);
-            pdf.text(`Page 1/${pageCount}`, 200, 200);
-
-            for (let page = 1; page < pageCount; page++) {
-                pdf.addPage();
+            for (let page = 0; page < pageCount; page++) {
+                let yOffset = 50;
 
                 const startIdx = page * arraysPerPage;
-                const endIdx = Math.min((page + 1) * arraysPerPage, subarrayLength);
-
-                pdf.text(`รายชื่อทั้งหมด: ${header.name}`, 10, 10);
+                const endIdx = Math.min((page + 1) * arraysPerPage, subarrayLengths[index]);
 
                 for (let i = startIdx; i < endIdx; i++) {
                     const currentArray = innerArray[i];
 
                     if (currentArray) {
-                        pdf.text(`Name: ${currentArray.name}, Code: ${currentArray.code}`, 20, 20 + (i - startIdx) * 10);
+                        pdf.text(`Name: ${currentArray.name}, Prime: ${currentArray.prime}, No: ${currentArray.no}`, 20, yOffset);
+                        yOffset += 10;
+                        sumNo += parseInt(currentArray.no, 10);
                     }
                 }
 
-                pdf.text(`Page ${page + 1}/${pageCount}`, 200, 200);
+                // pdf.text(`Page ${page + 1}/${pageCount} - Sum 'no': ${sumNo}`, 200, 200);
+                if (page === pageCount - 1) {
+                    pdf.text(`Page ${page + 1}/${pageCount} - Sum 'no': ${sumNo}`, 200, 200);
+                }
+                if (page < pageCount) {
+                    pdf.addPage();
+                }
             }
+
         });
 
         // Save or display the PDF
