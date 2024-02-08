@@ -45,8 +45,14 @@ function AddsettimeEmployee() {
         setYear(currentYear);
     }, []); // Run this effect only once on component mount
 
-    const startYear = 2010;
-    const years = Array.from({ length: new Date().getFullYear() - startYear - 1 }, (_, index) => year - index);
+    // const startYear = 2010;
+    // const years = Array.from({ length: new Date().getFullYear() - startYear - 1 }, (_, index) => year - index);
+    // const startYear = 2010;
+    // const years = Array.from({ length: new Date().getFullYear() - startYear + 1 }, (_, index) => index + startYear);
+
+    const EndYear = 2010;
+    const currentYear = new Date().getFullYear(); // 2024
+    const years = Array.from({ length: currentYear - EndYear + 1 }, (_, index) => EndYear + index).reverse();
 
 
     useEffect(() => {
@@ -133,7 +139,7 @@ function AddsettimeEmployee() {
 
 
     /////////////////////////////////////////////
-    const [ tmpIndex , setTmpIndex ] = useState(0);
+    const [tmpIndex, setTmpIndex] = useState(0);
     const [wId, setWId] = useState('');
     const [wName, setWName] = useState('');
     const [wDate, setWDate] = useState('');
@@ -669,7 +675,7 @@ function AddsettimeEmployee() {
         //get data from input in useState to data 
 
         const newRowData = await {
-            tmpIndex : tmpIndex ||'',
+            tmpIndex: tmpIndex || '',
             timerecordId: year || '',
             workplaceId: wId || '',
             workplaceName: wName || '',
@@ -688,7 +694,7 @@ function AddsettimeEmployee() {
 
         await addRow(newRowData);
 
-        await setTmpIndex(tmpIndex +1);
+        await setTmpIndex(tmpIndex + 1);
         // await setWId('');
         // await setWName('');
         // await setWStartTime('');
@@ -715,7 +721,7 @@ function AddsettimeEmployee() {
         newDataList.unshift(newRowData);
         // Update the state with the new data
         setRowDataList2(newDataList);
-        
+
     };
 
     // Function to handle editing a row
@@ -736,10 +742,10 @@ function AddsettimeEmployee() {
         // Remove the row at the specified index
         const updatedList = newDataList.filter(
             (entry) => entry.tmpIndex !== index);
-// alert(index);
+        // alert(index);
         // newDataList.splice(index, 1);
         // Update the state with the new data
-        setRowDataList2(updatedList );
+        setRowDataList2(updatedList);
     };
 
 
@@ -979,7 +985,7 @@ function AddsettimeEmployee() {
                             </div>
                         </div>
                         <form onSubmit={handleManageWorkplace}>
-                        <input type="hidden" id="hiddenField" name="" value={tmpIndex} />
+                            <input type="hidden" id="hiddenField" name="" value={tmpIndex} />
 
                             <div class="row">
                                 <div class="col-md-2">

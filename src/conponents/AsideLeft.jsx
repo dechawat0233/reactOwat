@@ -224,7 +224,7 @@ function AsideLeft() {
                         <Link to="/setting" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ตั้งค่าหน่วยงาน</Link>
                       </li>
                       <li class="nav-item">
-                        <Link to="/settingspecial" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ตั้งค่าหน่วยงานพิเศษ</Link>
+                        <Link to="/settingspecial" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> ตั้งค่าวันทำงานพิเศษ</Link>
                       </li>
                     </>
                   </ul>
