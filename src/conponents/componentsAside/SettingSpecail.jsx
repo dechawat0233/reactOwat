@@ -787,7 +787,6 @@ setSpecialWorkTimeDayList(workplace.specialWorkTimeDay);
 
             // Make the API call to update the resource by ID
             try {
-
                 const response = await axios.put(endpoint + '/workplace/update/' + _id, data);
                 // setEmployeesResult(response.data.employees);
                 if (response) {
@@ -895,7 +894,7 @@ setSpecialWorkTimeDayList(workplace.specialWorkTimeDay);
                             {/* <!--Frame--> */}
                             <h2 class="title">ตั้งค่าวันทํางานพิเศษ</h2>
                             <section class="Frame">
-                                <form>
+                                <form onSubmit={handleManageWorkplace}>
                                     <section class="Frame">
                                         <div class="row">
                                             <div class="col-md-2">
@@ -1232,7 +1231,6 @@ setSpecialWorkTimeDayList(workplace.specialWorkTimeDay);
                                             <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
                                         ) : (
                                             <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
-
                                         )}
                                         <button class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
                                     </div>
