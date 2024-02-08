@@ -783,21 +783,6 @@ setSpecialWorkTimeDayList(workplace.specialWorkTimeDay);
             specialWorkTimeDay: specailWorkTimeDayList
         };
 
-
-        //check create or update Employee
-        if (newWorkplace) {
-            // alert('Create Workplace');
-            try {
-                const response = await axios.post(endpoint + '/workplace/create', data);
-                // setEmployeesResult(response.data.employees);
-                if (response) {
-                    alert("บันทึกสำเร็จ");
-                }
-            } catch (error) {
-                alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
-                // window.location.reload();
-            }
-        } else {
             //update workplace data
 
             // Make the API call to update the resource by ID
@@ -815,7 +800,6 @@ setSpecialWorkTimeDayList(workplace.specialWorkTimeDay);
                 // window.location.reload();
             }
 
-        }
     }
 
     const bordertable = {
