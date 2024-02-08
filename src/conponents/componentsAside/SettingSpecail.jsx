@@ -82,9 +82,17 @@ function SettingSpecial() {
         }
     };
 
+    const [workDate, setWorkDate] = useState(new Date());
+    
+    const day = workDate.getDate().toString().padStart(2, '0'); // Get the day and ensure it has leading zero if necessary
+    const month = (workDate.getMonth() + 1).toString().padStart(2, '0'); // Get the month (months are zero-based) and ensure it has leading zero if necessary
+    const year =  workDate.getFullYear().toString(); // Get the full year
+    const dateString =  `${day}-${month}-${year}`;
+
+
     //special work time day
     const [specialWorkTimeDay, setSpecialWorkTimeDay] = useState({
-        day: '',
+        day: dateString ,
         shift: '',
         startTime: '',
         endTime: '',
@@ -101,15 +109,14 @@ function SettingSpecial() {
 
     const [specailWorkTimeDayList, setSpecialWorkTimeDayList] = useState([]);
 
-    const [workDate, setWorkDate] = useState(new Date());
     const handleWorkDateChange = async (date) => {
         await setWorkDate(date);
 
             // Convert the date to a dd-mm-yyyy string format
-    const day = await workDate.getDate().toString().padStart(2, '0'); // Get the day and ensure it has leading zero if necessary
-    const month = await (date.getMonth() + 1).toString().padStart(2, '0'); // Get the month (months are zero-based) and ensure it has leading zero if necessary
-    const year = await date.getFullYear().toString(); // Get the full year
-    const dateString = await `${day}-${month}-${year}`;
+    let day = await workDate.getDate().toString().padStart(2, '0'); // Get the day and ensure it has leading zero if necessary
+    let month = await (date.getMonth() + 1).toString().padStart(2, '0'); // Get the month (months are zero-based) and ensure it has leading zero if necessary
+    let year = await date.getFullYear().toString(); // Get the full year
+    let dateString = await `${day}-${month}-${year}`;
 
         await setSpecialWorkTimeDay(prevState => ({
             ...prevState,
@@ -158,7 +165,7 @@ function SettingSpecial() {
 
         //clean data
         setSpecialWorkTimeDay({
-            day: '',
+            day: dateString ,
             shift: '',
             startTime: '',
             endTime: '',
