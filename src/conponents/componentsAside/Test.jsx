@@ -311,7 +311,7 @@ function Test() {
         const numCols = 1;
         const cellWidth = 15;
         const cellHeight = 3.5;
-        const startX = 10; // Adjust the starting X-coordinate as needed
+        const startX = 5; // Adjust the starting X-coordinate as needed
         const startY = 55; // Adjust the starting Y-coordinate as needed
         const borderWidth = 0.5; // Adjust the border width as needed
 
@@ -328,6 +328,8 @@ function Test() {
             const centerY = y + height / 2;
 
             // Add text to the center of the cell
+            pdf.setFontSize(12);
+
             pdf.text(text, centerX, centerY, { align: 'center', valign: 'middle' });
         };
 
@@ -359,9 +361,9 @@ function Test() {
             }
         };
 
-  
-        const cellWidthName = 70;
-        const startXName = 25; // Adjust the starting X-coordinate as needed
+
+        const cellWidthName = 60;
+        const startXName = 20; // Adjust the starting X-coordinate as needed
         const startYName = 55; // Adjust the starting Y-coordinate as needed
 
         const drawName = () => {
@@ -378,7 +380,7 @@ function Test() {
         };
 
         const cellWidthAllDay = 10;
-        const startXAllDay = 95; // Adjust the starting X-coordinate as needed
+        const startXAllDay = 80; // Adjust the starting X-coordinate as needed
         const startYAllDay = 55; // Adjust the starting Y-coordinate as needed
 
         const drawAllDay = () => {
@@ -394,19 +396,53 @@ function Test() {
             }
         };
 
-        const cellWidthSalary = 10;
-        const startXSalary = 95; // Adjust the starting X-coordinate as needed
+        const cellWidthSalary = 15;
+        const startXSalary = 90; // Adjust the starting X-coordinate as needed
         const startYSalary = 55; // Adjust the starting Y-coordinate as needed
 
         const drawSalary = () => {
             for (let i = 0; i < numRowsTop; i++) {
                 for (let j = 0; j < numCols; j++) {
-                    const x = startXAllDay + j * cellWidthAllDay;
+                    const x = startXSalary + j * cellWidthSalary;
                     const y = startYTop + i * cellHeightTop;
 
                     // Add text for each cell
-                    const cellText = `วัน`;
-                    drawCell(x, y, cellWidthAllDay, cellHeightTop, cellText);
+                    const cellText = `เงินเดือน`;
+                    drawCell(x, y, cellWidthSalary, cellHeightTop, cellText);
+                }
+            }
+        };
+
+        const cellWidthOT = 15;
+        const startXOT = 105; // Adjust the starting X-coordinate as needed
+        const startYOT = 55; // Adjust the starting Y-coordinate as needed
+
+        const drawOT = () => {
+            for (let i = 0; i < numRowsTop; i++) {
+                for (let j = 0; j < numCols; j++) {
+                    const x = startXOT + j * cellWidthOT;
+                    const y = startYTop + i * cellHeightTop;
+
+                    // Add text for each cell
+                    const cellText = `ค่าล่วงเวลา`;
+                    drawCell(x, y, cellWidthOT, cellHeightTop, cellText);
+                }
+            }
+        };
+
+        const cellWidthWelfare = 15;
+        const startXWelfare = 120; // Adjust the starting X-coordinate as needed
+        const startYWelfare = 55; // Adjust the starting Y-coordinate as needed
+
+        const drawWelfare = () => {
+            for (let i = 0; i < numRowsTop; i++) {
+                for (let j = 0; j < numCols; j++) {
+                    const x = startXWelfare + j * cellWidthWelfare;
+                    const y = startYTop + i * cellHeightTop;
+
+                    // Add text for each cell
+                    const cellText = `สวัสดิการพิเศษ`;
+                    drawCell(x, y, cellWidthWelfare, cellHeightTop, cellText);
                 }
             }
         };
@@ -464,6 +500,9 @@ function Test() {
             drawID();
             drawName();
             drawAllDay();
+            drawSalary();
+            drawOT();
+            drawWelfare();
 
             const pageCount = Math.ceil(subarrayLengths[index] / arraysPerPage);
             let sumNo = 0;
