@@ -91,6 +91,15 @@ function AsideLeft() {
                         <Link to="/salarysummary" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> สรุปเงินเดือน</Link>
                       </li>
                       <li class="nav-item">
+                        <Link to="/examine" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> ตรวจการทำงาน</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/compensation" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> ตารางค่าตอบแทน</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/salaryresult" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> สรุปเงินเดือน</Link>
+                      </li>
+                      <li class="nav-item">
                         <Link to="/worktimesheetworkplace" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> สรุปหน่วยงาน</Link>
                       </li>
                     </>

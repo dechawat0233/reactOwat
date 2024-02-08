@@ -357,6 +357,9 @@ function Test() {
                     // Add text for each cell
                     const cellText = `รหัส`;
                     drawCell(x, y, cellWidth, cellHeightTop, cellText);
+                    const cellText2 = ``;
+                    drawCell(x, 195, cellWidth, cellHeightTop,cellText2);
+
                 }
             }
         };
@@ -375,6 +378,8 @@ function Test() {
                     // Add text for each cell
                     const cellText = `ชื่อ - สกุล`;
                     drawCell(x, y, cellWidthName, cellHeightTop, cellText);
+                    const cellText2 = ``;
+                    drawCell(x, 195, cellWidthName, cellHeightTop,cellText2);
                 }
             }
         };
@@ -392,6 +397,8 @@ function Test() {
                     // Add text for each cell
                     const cellText = `วัน`;
                     drawCell(x, y, cellWidthAllDay, cellHeightTop, cellText);
+                    const cellText2 = ``;
+                    drawCell(x, 195, cellWidthAllDay, cellHeightTop,cellText2);
                 }
             }
         };
@@ -409,6 +416,8 @@ function Test() {
                     // Add text for each cell
                     const cellText = `เงินเดือน`;
                     drawCell(x, y, cellWidthSalary, cellHeightTop, cellText);
+                    const cellText2 = ``;
+                    drawCell(x, 195, cellWidth, cellHeightTop,cellText2);
                 }
             }
         };
@@ -426,6 +435,8 @@ function Test() {
                     // Add text for each cell
                     const cellText = `ค่าล่วงเวลา`;
                     drawCell(x, y, cellWidthOT, cellHeightTop, cellText);
+                    const cellText2 = ``;
+                    drawCell(x, 195, cellWidth, cellHeightTop,cellText2);
                 }
             }
         };
@@ -444,6 +455,8 @@ function Test() {
                     // Add text for each cell
                     const cellText = `สวัสดิการ\nพิเศษ`;
                     drawCell(x, y, cellWidthWelfare, cellHeightTop, cellText);
+                    const cellText2 = ``;
+                    drawCell(x, 195, cellWidth, cellHeightTop,cellText2);
                 }
             }
         };
@@ -462,6 +475,8 @@ function Test() {
                     // Add text for each cell
                     const cellText = `ค่าตำแหน่ง`;
                     drawCell(x, y, cellWidthRoleWork, cellHeightTop, cellText);
+                    const cellText2 = ``;
+                    drawCell(x, 195, cellWidth, cellHeightTop,cellText2);
                 }
             }
         };
@@ -480,6 +495,8 @@ function Test() {
                     // Add text for each cell
                     const cellText = `เบี้ยขยัน`;
                     drawCell(x, y, cellWidthDiligenceAllowance, cellHeightTop, cellText);
+                    const cellText2 = ``;
+                    drawCell(x, 195, cellWidth, cellHeightTop,cellText2);
                 }
             }
         };
@@ -498,6 +515,8 @@ function Test() {
                     // Add text for each cell
                     const cellText = `นักขัตฤกษ์`;
                     drawCell(x, y, cellWidthHoliday, cellHeightTop, cellText);
+                    const cellText2 = ``;
+                    drawCell(x, 195, cellWidth, cellHeightTop,cellText2);
                 }
             }
         };
@@ -516,6 +535,8 @@ function Test() {
                     // Add text for each cell
                     const cellText = `บวกอื่นๆ\nก่อนหัก`;
                     drawCell(x, y, cellWidthAddBeforeDeductTax, cellHeightTop, cellText);
+                    const cellText2 = ``;
+                    drawCell(x, 195, cellWidth, cellHeightTop,cellText2);
                 }
             }
         };
@@ -534,6 +555,8 @@ function Test() {
                     // Add text for each cell
                     const cellText = `หักอื่นๆ\nก่อนภาษี`;
                     drawCell(x, y, cellWidthMinusBeforeDeductTax, cellHeightTop, cellText);
+                    const cellText2 = ``;
+                    drawCell(x, 195, cellWidth, cellHeightTop,cellText2);
                 }
             }
         };
@@ -553,6 +576,8 @@ function Test() {
                     // Add text for each cell
                     const cellText = `หักภาษี`;
                     drawCell(x, y, cellWidthDeductTax, cellHeightTop, cellText);
+                    const cellText2 = ``;
+                    drawCell(x, 195, cellWidth, cellHeightTop,cellText2);
                 }
             }
         };
@@ -571,6 +596,8 @@ function Test() {
                     // Add text for each cell
                     const cellText = `หัก ปกส`;
                     drawCell(x, y, cellWidthDeductTaxSocialSecurity, cellHeightTop, cellText);
+                    const cellText2 = ``;
+                    drawCell(x, 195, cellWidth, cellHeightTop,cellText2);
                 }
             }
         };
@@ -589,6 +616,8 @@ function Test() {
                     // Add text for each cell
                     const cellText = `บวกอื่นๆ\nหลังภาษี`;
                     drawCell(x, y, cellWidthAddAfterDeductTax, cellHeightTop, cellText);
+                    const cellText2 = ``;
+                    drawCell(x, 195, cellWidth, cellHeightTop,cellText2);
                 }
             }
         };
@@ -607,6 +636,8 @@ function Test() {
                     // Add text for each cell
                     const cellText = `เบิกล่วงหน้า`;
                     drawCell(x, y, cellWidthAdvancePayment, cellHeightTop, cellText);
+                    const cellText2 = ``;
+                    drawCell(x, 195, cellWidth, cellHeightTop,cellText2);
                 }
             }
         };
@@ -625,6 +656,8 @@ function Test() {
                     // Add text for each cell
                     const cellText = `หักอื่นๆ\nหลังภาษี`;
                     drawCell(x, y, cellWidthMinusAfterDeductTax, cellHeightTop, cellText);
+                    const cellText2 = ``;
+                    drawCell(x, 195, cellWidth, cellHeightTop,cellText2);
                 }
             }
         };
@@ -643,6 +676,8 @@ function Test() {
                     // Add text for each cell
                     const cellText = `ค่าธนาคาร\nโอน`;
                     drawCell(x, y, cellWidthBank, cellHeightTop, cellText);
+                    const cellText2 = ``;
+                    drawCell(x, 195, cellWidth, cellHeightTop,cellText2);
                 }
             }
         };
@@ -661,6 +696,8 @@ function Test() {
                     // Add text for each cell
                     const cellText = `สุทธิ`;
                     drawCell(x, y, cellWidthResult, cellHeightTop, cellText);
+                    const cellText2 = ``;
+                    drawCell(x, 195, cellWidth, cellHeightTop,cellText2);
                 }
             }
         };
