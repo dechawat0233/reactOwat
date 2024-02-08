@@ -362,7 +362,7 @@ function Test() {
         };
 
 
-        const cellWidthName = 60;
+        const cellWidthName = 40;
         const startXName = 20; // Adjust the starting X-coordinate as needed
         const startYName = 55; // Adjust the starting Y-coordinate as needed
 
@@ -380,7 +380,7 @@ function Test() {
         };
 
         const cellWidthAllDay = 10;
-        const startXAllDay = 80; // Adjust the starting X-coordinate as needed
+        const startXAllDay = 60; // Adjust the starting X-coordinate as needed
         const startYAllDay = 55; // Adjust the starting Y-coordinate as needed
 
         const drawAllDay = () => {
@@ -396,8 +396,8 @@ function Test() {
             }
         };
 
-        const cellWidthSalary = 15;
-        const startXSalary = 90; // Adjust the starting X-coordinate as needed
+        const cellWidthSalary = 20;
+        const startXSalary = 70; // Adjust the starting X-coordinate as needed
         const startYSalary = 55; // Adjust the starting Y-coordinate as needed
 
         const drawSalary = () => {
@@ -413,8 +413,8 @@ function Test() {
             }
         };
 
-        const cellWidthOT = 15;
-        const startXOT = 105; // Adjust the starting X-coordinate as needed
+        const cellWidthOT = 20;
+        const startXOT = 90; // Adjust the starting X-coordinate as needed
         const startYOT = 55; // Adjust the starting Y-coordinate as needed
 
         const drawOT = () => {
@@ -430,8 +430,8 @@ function Test() {
             }
         };
 
-        const cellWidthWelfare = 15;
-        const startXWelfare = 120; // Adjust the starting X-coordinate as needed
+        const cellWidthWelfare = 20;
+        const startXWelfare = 110; // Adjust the starting X-coordinate as needed
         const startYWelfare = 55; // Adjust the starting Y-coordinate as needed
 
         const drawWelfare = () => {
@@ -443,6 +443,74 @@ function Test() {
                     // Add text for each cell
                     const cellText = `สวัสดิการพิเศษ`;
                     drawCell(x, y, cellWidthWelfare, cellHeightTop, cellText);
+                }
+            }
+        };
+
+        const cellWidthRoleWork = 20;
+        const startXRoleWork = 130; // Adjust the starting X-coordinate as needed
+        const startYRoleWork = 55; // Adjust the starting Y-coordinate as needed
+
+        const drawRoleWork = () => {
+            for (let i = 0; i < numRowsTop; i++) {
+                for (let j = 0; j < numCols; j++) {
+                    const x = startXRoleWork + j * cellWidthRoleWork;
+                    const y = startYTop + i * cellHeightTop;
+
+                    // Add text for each cell
+                    const cellText = `ค่าตำแหน่ง`;
+                    drawCell(x, y, cellWidthRoleWork, cellHeightTop, cellText);
+                }
+            }
+        };
+
+        const cellWidthHoliday = 20;
+        const startXHoliday = 150; // Adjust the starting X-coordinate as needed
+        const startYHoliday = 55; // Adjust the starting Y-coordinate as needed
+
+        const drawHoliday = () => {
+            for (let i = 0; i < numRowsTop; i++) {
+                for (let j = 0; j < numCols; j++) {
+                    const x = startXHoliday + j * cellWidthHoliday;
+                    const y = startYTop + i * cellHeightTop;
+
+                    // Add text for each cell
+                    const cellText = `ค่าตำแหน่ง`;
+                    drawCell(x, y, cellWidthHoliday, cellHeightTop, cellText);
+                }
+            }
+        };
+
+        const cellWidthAddBeforeDeductTax = 20;
+        const startXAddBeforeDeductTax = 150; // Adjust the starting X-coordinate as needed
+        const startYAddBeforeDeductTax = 55; // Adjust the starting Y-coordinate as needed
+
+        const drawAddBeforeDeductTax = () => {
+            for (let i = 0; i < numRowsTop; i++) {
+                for (let j = 0; j < numCols; j++) {
+                    const x = startXAddBeforeDeductTax + j * cellWidthAddBeforeDeductTax;
+                    const y = startYTop + i * cellHeightTop;
+
+                    // Add text for each cell
+                    const cellText = `ค่าตำแหน่ง`;
+                    drawCell(x, y, cellWidthAddBeforeDeductTax, cellHeightTop, cellText);
+                }
+            }
+        };
+
+        const cellWidthMinusBeforeDeductTax = 20;
+        const startXMinusBeforeDeductTax = 150; // Adjust the starting X-coordinate as needed
+        const startYMinusBeforeDeductTax = 55; // Adjust the starting Y-coordinate as needed
+
+        const drawMinuseforeDeductTax = () => {
+            for (let i = 0; i < numRowsTop; i++) {
+                for (let j = 0; j < numCols; j++) {
+                    const x = startXMinusBeforeDeductTax + j * cellWidthMinusBeforeDeductTax;
+                    const y = startYTop + i * cellHeightTop;
+
+                    // Add text for each cell
+                    const cellText = `ค่าตำแหน่ง`;
+                    drawCell(x, y, cellWidthMinusBeforeDeductTax, cellHeightTop, cellText);
                 }
             }
         };
