@@ -212,6 +212,23 @@ const workplaceSchema = new mongoose.Schema({
             countPerson: String
         }]
     }],
+
+    specialWorkTimeDay: [{
+        day: String,
+        shift: String,
+        startTime: String,
+        endTime: String,
+        startTimeOT: String,
+        endTimeOT: String,
+        payment: String,
+        paymentOT: String,
+        workDetail: String,
+        employees: [{
+            positionWork: String,
+            countPerson: String
+        }]
+    }],
+
 });
 
 // Create the workplace model based on the schema
@@ -363,6 +380,7 @@ router.post('/create', async (req, res) => {
         listSpecialWorktime,
         workTimeDay,
         workTimeDayPerson,
+        specialWorkTimeDay,
     } = req.body;
 
 
@@ -419,7 +437,8 @@ router.post('/create', async (req, res) => {
         listEmployeeDay,
         listSpecialWorktime,
         workTimeDay,
-        workTimeDayPerson
+        workTimeDayPerson,
+        specialWorkTimeDay
     });
 
     try {
