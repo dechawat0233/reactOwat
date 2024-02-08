@@ -905,10 +905,10 @@ setSpecialWorkTimeDayList(workplace.specialWorkTimeDay);
                                                     <div class="col-md-2">
                                                         กะ
                                                     </div>
-                                                    <div class="col-md-1">
+                                                    <div class="col-md-2">
                                                         เวลาเข้า
                                                     </div>
-                                                    <div class="col-md-1">
+                                                    <div class="col-md-2">
                                                         เวลาออก
                                                     </div>
                                                     <div class="col-md-2">
@@ -917,10 +917,10 @@ setSpecialWorkTimeDayList(workplace.specialWorkTimeDay);
                                                     <div class="col-md-2">
                                                         เวลาออกOT
                                                     </div>
-                                                    <div class="col-md-2">
+                                                    <div class="col-md-1">
                                                         อัตราค่าจ้าง
                                                     </div>
-                                                    <div class="col-md-2">
+                                                    <div class="col-md-1">
                                                         อัตราค่าจ้างOT
                                                     </div>
                                                 </div>
@@ -967,7 +967,7 @@ setSpecialWorkTimeDayList(workplace.specialWorkTimeDay);
                                                                     ))}
                                                                 </select>
                                                             </div>
-                                                            <div class="col-md-1">
+                                                            <div class="col-md-2">
                                                                 <input
                                                                     type="text"
                                                                     name="startTime"
@@ -977,7 +977,7 @@ setSpecialWorkTimeDayList(workplace.specialWorkTimeDay);
                                                                     onChange={handleInputChange}
                                                                 />
                                                             </div>
-                                                            <div class="col-md-1">
+                                                            <div class="col-md-2">
                                                                 <input
                                                                     type="text"
                                                                     name="endTime"
@@ -1012,7 +1012,7 @@ setSpecialWorkTimeDayList(workplace.specialWorkTimeDay);
                                                             </div>
 
 
-                                                            <div class="col-md-2">
+                                                            <div class="col-md-1">
 
                                                                 <input
                                                                     type="text"
@@ -1023,7 +1023,7 @@ setSpecialWorkTimeDayList(workplace.specialWorkTimeDay);
                                                                     onChange={handleInputChange}
                                                                 />
                                                             </div>
-                                                            <div class="col-md-2">
+                                                            <div class="col-md-1">
 
                                                                 <input
                                                                     type="text"
