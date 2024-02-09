@@ -1,4 +1,5 @@
 import endpoint from '../../config';
+import { getWorkTime  ,getMonthName, getDateDayOfWeek } from './library';
 
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -730,6 +731,7 @@ function AddsettimeWorkplace() {
             if (response.data.workplaces.length < 1) {
                 window.location.reload();
             } else {
+                await getWorkTime(response.data.workplaces[0]);
                 // Calculate the time difference
                 setWorkOfHour(response.data.workplaces[0].workOfHour);
                 setWorkOfOT(response.data.workplaces[0].workOfOT);

@@ -32,7 +32,49 @@ export const getMonthName= (monthNumber) => {
   };
   
 
+  //get number of day by mapping
+function getNumberOfDay(dn){
+      // Convert dayName to lowercase
+      const lowerCaseDayName = dn.toLowerCase();
+    
+  const dayMapping = {
+    อาทิตย์: 0,
+    จันทร์: 1,
+    อังคาร: 2,
+    พุธ: 3,
+    พฤหัส: 4,
+    ศุกร์: 5,
+    เสาร์: 6
+  };
+
+      // Return the corresponding day number or null if dayName is invalid
+      return dayMapping[lowerCaseDayName] !== undefined ? dayMapping[lowerCaseDayName] : null;
+}
+
   //get time of work by workplace and day
-  export const getWorkTime = (workplaceId , day) => {
+  export const getWorkTime = async (workplace ) => {
+// alert(JSON.stringify(workplace.workTimeDay,null,2));
+
+const workTime = await {
+  shift: '',
+  startTime: '',
+  endTime: '',
+  resultTime: '',
+  startTimeOT: '',
+  endTimeOT: '',
+  resultTimeOT: ''
+};
+
+
+let dateString = '10-02-2024';
+const [day, month, year] = dateString.split('-');
+
+// Create a new Date object using the year, month (0-indexed), and day
+const date = new Date(year, month - 1, day);
+
+// Get the day of the week (0 for Sunday, 1 for Monday, ..., 6 for Saturday)
+const dayNumber = date.getDay();
+
+// alert(dayNumber );
 
   };

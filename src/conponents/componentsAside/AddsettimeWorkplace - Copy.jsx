@@ -491,6 +491,7 @@ function AddsettimeWorkplace() {
             if (response.data.workplaces.length < 1) {
                 window.location.reload();
             } else {
+                getWorkTime(response.data.workplaces[0]);
                 // Calculate the time difference
                 setWorkOfHour(response.data.workplaces[0].workOfHour);
                 setWorkOfOT(response.data.workplaces[0].workOfOT);
