@@ -46,9 +46,9 @@ import SystemUser from "./conponents/componentsAside/SystemUser";
 import Addsettime from "./conponents/componentsAside/Addsettime";
 
 import Salarysummary from "./conponents/componentsAside/Salarysummary";
-import Examine from "./conponents/componentsAside/salarysummary/Examine";
-import Salaryresult from "./conponents/componentsAside/salarysummary/Salaryresult";
-import Compensation from "./conponents/componentsAside/salarysummary/Compensation";
+import Examine from "./conponents/componentsAside/salarysummary/examine";
+import Salaryresult from "./conponents/componentsAside/salarysummary/salaryresult";
+import Compensation from "./conponents/componentsAside/salarysummary/compensation";
 
 import Worktimesheet from "./conponents/componentsAside/Worktimesheet";
 import WorktimeSheetWorkplace from "./conponents/componentsAside/WorktimeSheetWorkplace";
@@ -131,6 +131,11 @@ function App() {
 
               <Route path="/salary" element={<Salary />} />
               <Route path="/salarysummary" element={<Salarysummary />} />
+
+              <Route path="/examine" element={<Examine />} />
+              <Route path="/compensation" element={<Compensation />} />
+              <Route path="/salaryresult" element={<Salaryresult />} />
+
               <Route path="/worktimesheet" element={<Worktimesheet />} />
               <Route path="/worktimesheetworkplace" element={<WorktimeSheetWorkplace />} />
 

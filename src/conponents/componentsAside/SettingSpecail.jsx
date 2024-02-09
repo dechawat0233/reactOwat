@@ -83,16 +83,16 @@ function SettingSpecial() {
     };
 
     const [workDate, setWorkDate] = useState(new Date());
-    
+
     const day = workDate.getDate().toString().padStart(2, '0'); // Get the day and ensure it has leading zero if necessary
     const month = (workDate.getMonth() + 1).toString().padStart(2, '0'); // Get the month (months are zero-based) and ensure it has leading zero if necessary
-    const year =  workDate.getFullYear().toString(); // Get the full year
-    const dateString =  `${day}-${month}-${year}`;
+    const year = workDate.getFullYear().toString(); // Get the full year
+    const dateString = `${day}-${month}-${year}`;
 
 
     //special work time day
     const [specialWorkTimeDay, setSpecialWorkTimeDay] = useState({
-        day: dateString ,
+        day: dateString,
         shift: '',
         startTime: '',
         endTime: '',
@@ -112,11 +112,11 @@ function SettingSpecial() {
     const handleWorkDateChange = async (date) => {
         await setWorkDate(date);
 
-            // Convert the date to a dd-mm-yyyy string format
-    let day = await workDate.getDate().toString().padStart(2, '0'); // Get the day and ensure it has leading zero if necessary
-    let month = await (date.getMonth() + 1).toString().padStart(2, '0'); // Get the month (months are zero-based) and ensure it has leading zero if necessary
-    let year = await date.getFullYear().toString(); // Get the full year
-    let dateString = await `${day}-${month}-${year}`;
+        // Convert the date to a dd-mm-yyyy string format
+        let day = await workDate.getDate().toString().padStart(2, '0'); // Get the day and ensure it has leading zero if necessary
+        let month = await (date.getMonth() + 1).toString().padStart(2, '0'); // Get the month (months are zero-based) and ensure it has leading zero if necessary
+        let year = await date.getFullYear().toString(); // Get the full year
+        let dateString = await `${day}-${month}-${year}`;
 
         await setSpecialWorkTimeDay(prevState => ({
             ...prevState,
@@ -137,7 +137,7 @@ function SettingSpecial() {
     // const daysOfWeekThai = ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์', 'อาทิตย์'];
     const shiftWork = ['กะเช้า', 'กะบ่าย', 'กะดึก'];
 
-    
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setSpecialWorkTimeDay((prevData) => ({
@@ -165,7 +165,7 @@ function SettingSpecial() {
 
         //clean data
         setSpecialWorkTimeDay({
-            day: dateString ,
+            day: dateString,
             shift: '',
             startTime: '',
             endTime: '',
@@ -642,7 +642,7 @@ function SettingSpecial() {
         setListSpecialWorktime(workplace.listSpecialWorktime);
         setWorkTimeDayList(workplace.workTimeDay);
         setWorkTimeDayPersonList(workplace.workTimeDayPerson);
-setSpecialWorkTimeDayList(workplace.specialWorkTimeDay);
+        setSpecialWorkTimeDayList(workplace.specialWorkTimeDay);
 
         // console.log(workplace);
         // // console.log(initialFormData);
@@ -783,21 +783,21 @@ setSpecialWorkTimeDayList(workplace.specialWorkTimeDay);
             specialWorkTimeDay: specailWorkTimeDayList
         };
 
-            //update workplace data
+        //update workplace data
 
-            // Make the API call to update the resource by ID
-            try {
-                const response = await axios.put(endpoint + '/workplace/update/' + _id, data);
-                // setEmployeesResult(response.data.employees);
-                if (response) {
-                    alert("บันทึกสำเร็จ");
-                    window.location.reload();
+        // Make the API call to update the resource by ID
+        try {
+            const response = await axios.put(endpoint + '/workplace/update/' + _id, data);
+            // setEmployeesResult(response.data.employees);
+            if (response) {
+                alert("บันทึกสำเร็จ");
+                window.location.reload();
 
-                }
-            } catch (error) {
-                alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
-                // window.location.reload();
             }
+        } catch (error) {
+            alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+            // window.location.reload();
+        }
 
     }
 
@@ -945,7 +945,7 @@ setSpecialWorkTimeDayList(workplace.specialWorkTimeDay);
                                                         className="form-control" // Apply Bootstrap form-control class
                                                         popperClassName="datepicker-popper" // Apply custom popper class if needed
                                                         selected={workDate}
-                                                        onChange={handleWorkDateChange }
+                                                        onChange={handleWorkDateChange}
                                                         dateFormat="dd/MM/yyyy"
                                                     // showMonthYearPicker
                                                     />
