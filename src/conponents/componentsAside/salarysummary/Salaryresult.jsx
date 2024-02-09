@@ -114,7 +114,7 @@ function Salaryresult() {
                 </div>
                 <br />
                 <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-10">
                     <table border="1" style={tableStyle}>
                       <thead>
                         <tr>
@@ -136,11 +136,14 @@ function Salaryresult() {
                       </tbody>
                     </table>
                   </div>
+                  <div class="col-md-2">
+                    <button>แก้ไข</button>
+                  </div>
                 </div>
-                <br/>
+                <br />
 
                 <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-10">
                     <table border="1" style={tableStyle}>
                       <thead>
                         <tr>
@@ -160,8 +163,11 @@ function Salaryresult() {
                       </tbody>
                     </table>
                   </div>
+                  <div class="col-md-2">
+                    <button>แก้ไข</button>
+                  </div>
                 </div>
-<br/>
+                <br />
                 <div class="row">
                   <div class="col-md-8">
                     <table border="1" style={tableStyle}>
