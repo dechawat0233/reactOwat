@@ -51,9 +51,12 @@ function getNumberOfDay(dn){
       return dayMapping[lowerCaseDayName] !== undefined ? dayMapping[lowerCaseDayName] : null;
 }
 
+
   //get time of work by workplace and day
-  export const getWorkTime = async (workplace ) => {
-// alert(JSON.stringify(workplace.workTimeDay,null,2));
+  export const getWorkTime = async (workplace , dw) => {
+// alert(JSON.stringify(workplace,null,2));
+// alert(dw);
+const worktimeList = {};
 
 const workTime = await {
   shift: '',
@@ -65,16 +68,35 @@ const workTime = await {
   resultTimeOT: ''
 };
 
+// alert(workplace[0].workTimeDay);
+// alert(workplace.workTimeDay.length);
+await workplace[0].workTimeDay.map( async (item, index) => {
+  // alert(JSON.stringify(item,null,2));
+// alert('start' +getNumberOfDay(item.startDay) );
+// alert('end' + getNumberOfDay(item.endDay) );
 
-let dateString = '10-02-2024';
-const [day, month, year] = dateString.split('-');
+if(getNumberOfDay(item.startDay) ==  getNumberOfDay(item.endDay) ){
+  worktimeList[getNumberOfDay(item.startDay)] = item.allTimes;
+} else {
+for(let i = getNumberOfDay(item.startDay); i <= getNumberOfDay(item.endDay); i++ ) {
+  worktimeList[i] = item.allTimes;
+}
+}
+
+});
+
+// alert(JSON.stringify(worktimeList, null ,2) );
+// alert(dw);
+let dateString = await dw;
+const [day, month, year] = await dateString.split('/');
 
 // Create a new Date object using the year, month (0-indexed), and day
-const date = new Date(year, month - 1, day);
+const date = await new Date(year, month - 1, day);
 
 // Get the day of the week (0 for Sunday, 1 for Monday, ..., 6 for Saturday)
-const dayNumber = date.getDay();
-
-// alert(dayNumber );
-
+const dayNumber = await date.getDay();
+// const dayNumber = dw.getDay();
+// await alert(dayNumber );
+// await alert(JSON.stringify(worktimeList[dayNumber] ,null,2));
+return await worktimeList[dayNumber];
   };
