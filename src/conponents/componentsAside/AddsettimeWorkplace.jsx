@@ -731,7 +731,7 @@ function AddsettimeWorkplace() {
             if (response.data.workplaces.length < 1) {
                 window.location.reload();
             } else {
-                await getWorkTime(response.data.workplaces[0]);
+
                 // Calculate the time difference
                 setWorkOfHour(response.data.workplaces[0].workOfHour);
                 setWorkOfOT(response.data.workplaces[0].workOfOT);
@@ -767,6 +767,26 @@ function AddsettimeWorkplace() {
 
                 setShift4start(startTime4);
                 setShift4end(endTime4);
+                                                        //get work time from workplace 
+                                                        const workplaceWorkTime = await getWorkTime(response.data.workplaces, formattedWorkDate);
+// alert(JSON.stringify(searchResult,null,2) );
+
+workplaceWorkTime.map(item => {
+// alert(item.shift);
+if(item.shift == 'กะเช้า'){
+// alert(item.startTime);
+setShift1start(item.startTime);
+setShift1end(item.endTime);
+}else if(item.shift == 'กะบ่าย') {
+    setShift2start(item.startTime);
+    setShift2end(item.endTime);
+} else if(item.shift == 'กะดึก'){
+    setShift3start(item.startTime);
+    setShift3end(item.endTime);
+}
+
+});
+
 
                 const [startHours, startMinutes] = startTime.split('.').map(parseFloat);
                 const [endHours, endMinutes] = endTime.split('.').map(parseFloat);
@@ -831,6 +851,8 @@ function AddsettimeWorkplace() {
 
                 setSearchWorkplaceId('');
                 setSearchWorkplaceName('');
+
+                
             }
         } catch (error) {
             alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
@@ -877,6 +899,27 @@ function AddsettimeWorkplace() {
             date: formattedWorkDate,
         };
 
+                                                        //get work time from workplace 
+                                                        const workplaceWorkTime = await getWorkTime(searchResult, formattedWorkDate);
+// alert(JSON.stringify(searchResult,null,2) );
+
+workplaceWorkTime.map(item => {
+// alert(item.shift);
+if(item.shift == 'กะเช้า'){
+// alert(item.startTime);
+setShift1start(item.startTime);
+setShift1end(item.endTime);
+}else if(item.shift == 'กะบ่าย') {
+    setShift2start(item.startTime);
+    setShift2end(item.endTime);
+} else if(item.shift == 'กะดึก'){
+    setShift3start(item.startTime);
+    setShift3end(item.endTime);
+}
+
+});
+
+
         try {
             const response = await axios.post(endpoint + '/timerecord/search', data);
 
@@ -887,6 +930,9 @@ function AddsettimeWorkplace() {
                 setTimeRecord_id('');
                 setRowDataList([]);
             } else {
+                                                                                  //get work time from workplace 
+                                                        getWorkTime(response.data.workplaces[0] , formattedWorkDate);
+      
                 // Set the state to true if data is found
                 setUpdateButton(true);
                 setTimeRecord_id(response.data.recordworkplace[0]._id);
