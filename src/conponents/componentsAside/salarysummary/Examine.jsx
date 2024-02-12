@@ -36,7 +36,18 @@ function Examine() {
 
     const [searchWorkplaceId, setSearchWorkplaceId] = useState(''); //รหัสหน่วยงาน
     const [searchWorkplaceName, setSearchWorkplaceName] = useState(''); //ชื่อหน่วยงาน
+
+
+    const [searchEmployeeId, setSearchEmployeeId] = useState('');
+    const [searchEmployeeName, setSearchEmployeeName] = useState('');
+
     const [searchResult, setSearchResult] = useState([]);
+    const [searchResultLower, setSearchResultLower] = useState([]);
+
+    const [alldaywork, setAlldaywork] = useState([]);
+    const [alldayworkLower, setAlldayworkLower] = useState([]);
+
+    const [timerecordAllList, setTimerecordAllList] = useState([]);
     const [employeeListResult, setEmployeeListResult] = useState([]);
     const [newWorkplace, setNewWorkplace] = useState(true);
 
@@ -76,7 +87,19 @@ function Examine() {
 
     console.log(employeeList);
 
-
+    useEffect(() => {
+        // Fetch data from the API when the component mounts
+        fetch(endpoint + '/timerecord/listemp')
+            .then(response => response.json())
+            .then(data => {
+                // Update the state with the fetched data
+                setTimerecordAllList(data);
+                // alert(data[0].workplaceName);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, []);
     // const CheckMonth = parseInt(month, 10);
     // const CheckYear = year;
     const CheckMonth = 5;
@@ -163,21 +186,91 @@ function Examine() {
     // const commonNumbers = [...new Set([...array1.Mon, ...array2.Mon])];
     console.log('commonNumbers', commonNumbers);
 
+
+    let monthLower;
+    let timerecordIdLower;
+    // get value from form search
+    if (month == "01") {
+        monthLower = "12";
+        timerecordIdLower = year - 1;
+    } else {
+        const monthNumber = parseInt(month, 10);
+        monthLower = (monthNumber - 1).toString().padStart(2, '0');  // Convert back to string, pad with leading zero if needed
+        // monthLower = month - 1;
+        timerecordIdLower = year
+    }
+    monthLower
+    console.log('monthLower', monthLower);
+    console.log('month', month);
+    console.log('year', year);
+    console.log('timerecordIdLower', timerecordIdLower);
+
     async function handleSearch(event) {
         event.preventDefault();
 
-
-        // get value from form search
         const data = await {
             employeeId: searchEmployeeId,
             // name: searchEmployeeName,
-            idCard: '',
-            workPlace: '',
+            // employeeName: searchEmployeeName,
+            month: month,
+            timerecordId: year,
+
+        };
+        const dataLower = await {
+            employeeId: searchEmployeeId,
+            // name: searchEmployeeName,
+            // employeeName: searchEmployeeName,
+            month: monthLower,
+            timerecordId: timerecordIdLower,
         };
         // alert(data.name);
         try {
-            const response = await axios.post(endpoint + '/employee/search', data);
-            setSearchResult(response.data.employees);
+            // const response = await axios.post(endpoint + '/timerecord/listemp', data);
+            // const responseLower = await axios.post(endpoint + '/timerecord/listemp', dataLower);
+            const filteredEntries = timerecordAllList.filter(entry =>
+                entry.employeeId === searchEmployeeId &&
+                entry.month === month
+                &&
+                entry.timerecordId === year
+            );
+            const filteredEntriesLower = timerecordAllList.filter(entry =>
+                entry.employeeId === searchEmployeeId &&
+                entry.month === monthLower
+                &&
+                entry.timerecordId === timerecordIdLower
+            );
+
+
+            alert(filteredEntriesLower);
+
+
+            setSearchResult(filteredEntries);
+            setSearchResultLower(filteredEntriesLower);
+
+            const entriesData = filteredEntries.map(entry =>
+                entry.employee_workplaceRecord
+                    .filter(record => record.date <= 20)
+                    .map(record => ({
+                        workplaceId: record.workplaceId,
+                        dates: record.date,
+                        allTimes: record.allTime,
+                        otTimes: record.otTime
+                    }))
+            );
+
+            const entriesDataLower = filteredEntriesLower.map(entry =>
+                entry.employee_workplaceRecord
+                    .filter(record => record.date >= 21)
+                    .map(record => ({
+                        workplaceId: record.workplaceId,
+                        dates: record.date,
+                        allTimes: record.allTime,
+                        otTimes: record.otTime
+                    }))
+            );
+
+            setAlldaywork(entriesData);
+            setAlldayworkLower(entriesDataLower);
             // alert(response.data.employees.length);
             if (response.data.employees.length < 1) {
                 // window.location.reload();
@@ -206,10 +299,17 @@ function Examine() {
 
             }
         } catch (error) {
-            alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
+            alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา', error);
+            // alert(error);
+
             // window.location.reload();
         }
     }
+    console.log('searchResult', searchResult);
+    console.log('searchResultLower', searchResultLower);
+    
+    console.log('alldaywork', alldaywork);
+    console.log('alldayworkLower', alldayworkLower);
 
     const handleStaffIdChange = (e) => {
         const selectedStaffId = e.target.value;
@@ -275,7 +375,7 @@ function Examine() {
                             <h2 class="title">ตรวจการทำงาน</h2>
                             <section class="Frame">
                                 <div class="col-md-12">
-                                    <form >
+                                    <form onSubmit={handleSearch}>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
@@ -356,7 +456,7 @@ function Examine() {
                                         </div>
                                     </form>
                                     <br />
-                                    <div class="d-flex justify-content-center">
+                                    {/* <div class="d-flex justify-content-center">
                                         <h2 class="title">ผลลัพธ์ {searchResult.length} รายการ</h2>
                                     </div>
                                     <div class="d-flex justify-content-center">
@@ -376,7 +476,7 @@ function Examine() {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </section>
                             <section class="Frame">
