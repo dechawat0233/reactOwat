@@ -307,9 +307,34 @@ function Examine() {
     }
     console.log('searchResult', searchResult);
     console.log('searchResultLower', searchResultLower);
-    
+
     console.log('alldaywork', alldaywork);
     console.log('alldayworkLower', alldayworkLower);
+
+
+    const result = resultArray2.map((number) => {
+        const matchingEntry = alldaywork.find((entry) => entry.dates === (number < 10 ? '0' + number : '' + number));
+
+        if (matchingEntry) {
+            return `${number}, workplaceId: '${matchingEntry.workplaceId}', allTimes: '${matchingEntry.allTimes}', otTimes: '${matchingEntry.otTimes}'`;
+        } else {
+            return `${number}, workplaceId: '', allTimes: '', otTimes: ''`;
+        }
+    });
+
+    console.log('result', result);
+
+    // Extract unique dates from alldaywork
+    const uniqueDates = new Set(alldaywork.map(item => parseInt(item.dates, 10)));
+
+    // Filter resultArray2 based on unique dates
+    const filteredResultArray2 = resultArray2.filter(date => uniqueDates.has(date));
+
+    console.log('filteredResultArray2', filteredResultArray2);
+
+    const datesArray = alldaywork.map(entry => Number(entry.dates));
+    console.log('datesArray', datesArray);
+
 
     const handleStaffIdChange = (e) => {
         const selectedStaffId = e.target.value;
