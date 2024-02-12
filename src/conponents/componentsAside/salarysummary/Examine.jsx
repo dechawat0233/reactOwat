@@ -254,7 +254,12 @@ function Examine() {
                         workplaceId: record.workplaceId,
                         dates: record.date,
                         allTimes: record.allTime,
-                        otTimes: record.otTime
+                        otTimes: record.otTime,
+
+                        startTime: record.startTime,
+                        endTime: record.endTime,
+                        selectotTime: record.selectotTime,
+                        selectotTimeOut: record.selectotTimeOut,
                     }))
             );
 
@@ -265,7 +270,12 @@ function Examine() {
                         workplaceId: record.workplaceId,
                         dates: record.date,
                         allTimes: record.allTime,
-                        otTimes: record.otTime
+                        otTimes: record.otTime,
+
+                        startTime: record.startTime,
+                        endTime: record.endTime,
+                        selectotTime: record.selectotTime,
+                        selectotTimeOut: record.selectotTimeOut,
                     }))
             );
 
@@ -311,6 +321,8 @@ function Examine() {
     console.log('alldaywork', alldaywork);
     console.log('alldayworkLower', alldayworkLower);
 
+    const allwork = [...alldayworkLower, ...alldaywork];
+    console.log('allwork', allwork);
 
     const result = resultArray2.map((number) => {
         const matchingEntry = alldaywork.find((entry) => entry.dates === (number < 10 ? '0' + number : '' + number));
@@ -324,16 +336,43 @@ function Examine() {
 
     console.log('result', result);
 
-    // Extract unique dates from alldaywork
-    const uniqueDates = new Set(alldaywork.map(item => parseInt(item.dates, 10)));
 
-    // Filter resultArray2 based on unique dates
-    const filteredResultArray2 = resultArray2.filter(date => uniqueDates.has(date));
+    // Convert 'dates' to numbers
+    // const allworkWithNumberDates = allwork.map(item => ({
+    //     ...item,
+    //     dates: parseInt(item.dates, 10)
+    // }));
+    const allworkFlattened = allwork.flat();
 
-    console.log('filteredResultArray2', filteredResultArray2);
+    console.log(allworkFlattened);
 
-    const datesArray = alldaywork.map(entry => Number(entry.dates));
-    console.log('datesArray', datesArray);
+    // Filter unique entries based on 'workplaceId' and 'dates'
+    const uniqueEntries = allworkFlattened.reduce((acc, curr) => {
+        const key = `${curr.workplaceId}-${curr.dates}`;
+        if (!acc[key]) {
+            acc[key] = curr;
+        }
+        return acc;
+    }, {});
+
+    // Extract values from the object to get the final array
+    const resultAllwork = Object.values(uniqueEntries);
+
+    console.log('resultAllwork', resultAllwork);
+
+    const resultArrayWithWorkplaceRecords = resultArray2.map(date => {
+        const matchingRecord = resultAllwork.find(record => record.dates == date);
+        return matchingRecord ? { ...matchingRecord } : '';
+    });
+
+    console.log('resultArrayWithWorkplaceRecords', resultArrayWithWorkplaceRecords);
+
+    const combinedArray = resultArray.map((date, index) => {
+        const workplaceRecord = resultArrayWithWorkplaceRecords[index];
+        return [workplaceRecord, date];
+    });
+
+    console.log('combinedArray', combinedArray);
 
 
     const handleStaffIdChange = (e) => {
@@ -532,7 +571,7 @@ function Examine() {
                                                         </tr>
                                                     ))} */}
 
-                                                    {resultArray.map((value, index) => (
+                                                    {/* {resultArray.map((value, index) => (
                                                         <tr key={index}>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                 {value}
@@ -560,6 +599,37 @@ function Examine() {
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                 ลบ/แก้ไข
+                                                            </td>
+                                                        </tr>
+                                                    ))} */}
+                                                    {resultArrayWithWorkplaceRecords.map((workplaceRecord, index) => (
+                                                        <tr key={index}>
+                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {resultArray[index]}
+                                                            </td>
+                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {workplaceRecord.workplaceId}
+                                                            </td>
+                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {workplaceRecord.startTime}
+                                                            </td>
+                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {workplaceRecord.endTime}
+                                                            </td>
+                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {workplaceRecord.selectotTime}
+                                                            </td>
+                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {workplaceRecord.selectotTimeOut}
+                                                            </td>
+                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {workplaceRecord.allTimes}
+                                                            </td>
+                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {workplaceRecord.otTimes}
+                                                            </td>
+                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                <a href="https://example.com" class="link1" style={{ color: 'red' }}><b>ลบ</b></a> / <a href="https://example2.com" class="link2" style={{ color: 'blue' }}><b>แก้ไข</b></a>
                                                             </td>
                                                         </tr>
                                                     ))}
