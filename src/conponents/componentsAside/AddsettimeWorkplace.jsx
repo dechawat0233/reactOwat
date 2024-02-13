@@ -756,7 +756,7 @@ function AddsettimeWorkplace() {
                 // setStartTimeOt3(response.data.workplaces[0].workStartOt1);
                 // setEndTimeOt3(response.data.workplaces[0].workEndOt1);
 
-                setShift('morning_shift');
+                // setShift('morning_shift');
 
                 // setShift1start(startTime);
                 // setShift1end(endTime);
@@ -767,6 +767,23 @@ function AddsettimeWorkplace() {
 
                 // setShift4start(startTime4);
                 // setShift4end(endTime4);
+
+
+                setShift('morning_shift');
+setShift1start('');
+setShift1end('');
+setShift2start('');
+setShift2end('');
+setShift3start('');
+setShift3end('');
+
+setStartTimeOt1('');
+setEndTimeOt1('');
+setStartTimeOt2('');
+setEndTimeOt2('');
+setStartTimeOt3('');
+setEndTimeOt3('');
+
                                                         //get work time from workplace 
                                                         const workplaceWorkTime = await getWorkTime(response.data.workplaces, formattedWorkDate);
 // alert(JSON.stringify(workplaceWorkTime , null,2) );
@@ -908,6 +925,7 @@ setEndTimeOt3(item.endTimeOT);
             date: formattedWorkDate,
         };
 
+
                                                         //get work time from workplace 
                                                         const workplaceWorkTime = await getWorkTime(searchResult, formattedWorkDate);
 // alert(JSON.stringify(searchResult,null,2) );
@@ -936,6 +954,7 @@ setEndTimeOt3(item.endTimeOT);
 }
 
 });
+
 setShift('morning_shift');
 
 
