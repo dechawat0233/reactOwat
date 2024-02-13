@@ -127,7 +127,6 @@ function Setting() {
             startDay: '',
             endDay: '',
             workOrStop: '',
-            shift: '',
             allTimes: [{ shift: '', startTime: '', endTime: '', resultTime: '', startTimeOT: '', endTimeOT: '', resultTimeOT: '' }],
         });
         
