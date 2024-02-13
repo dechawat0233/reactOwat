@@ -59,15 +59,9 @@ function Examine() {
     const [staffLastname, setStaffLastname] = useState(''); //รหัสหน่วยงาน
     const [staffFullName, setStaffFullName] = useState(''); //รหัสหน่วยงาน
 
-    const [month, setMonth] = useState('');
-    const [year, setYear] = useState('');
+    const [month, setMonth] = useState('01');
+    const [year, setYear] = useState(new Date().getFullYear());
 
-    useEffect(() => {
-        setMonth("01");
-
-        const currentYear = new Date().getFullYear();
-        setYear(currentYear);
-    }, []); // Run this effect only once on component mount
     const EndYear = 2010;
     const currentYear = new Date().getFullYear(); // 2024
     const years = Array.from({ length: currentYear - EndYear + 1 }, (_, index) => EndYear + index).reverse();
@@ -100,22 +94,25 @@ function Examine() {
                 console.error('Error fetching data:', error);
             });
     }, []);
-    // const CheckMonth = parseInt(month, 10);
-    // const CheckYear = year;
-    const CheckMonth = 5;
-    const CheckYear = 2023;
+    const CheckMonth = parseInt(month, 10);
+    const CheckYear = year;
+    // const CheckMonth = 5;
+    // const CheckYear = 2023;
+    console.log('CheckMonth', CheckMonth);
+    console.log('CheckYear', CheckYear);
 
     let countdownMonth;
     let countdownYear;
 
     if (CheckMonth === 1) {
         countdownMonth = 12;
-        countdownYear = 2023 - 1;
+        countdownYear = CheckYear - 1;
     } else {
         countdownMonth = CheckMonth - 1;
         countdownYear = CheckYear;
 
     }
+    const base = 543;
     function getDaysInMonth(month, year) {
         // Months are 0-based, so we subtract 1 from the provided month
         const lastDayOfMonth = new Date(year, month, 0).getDate();
@@ -125,10 +122,10 @@ function Examine() {
     const daysInMonth = getDaysInMonth(countdownMonth, CheckYear);
     const startDay = 21;
     // Create an array from startDay to daysInMonth
-    const firstPart = Array.from({ length: daysInMonth - startDay + 1 }, (_, index) => (startDay + index) + '/' + countdownMonth + '/' + (countdownYear + 543));
+    const firstPart = Array.from({ length: daysInMonth - startDay + 1 }, (_, index) => (startDay + index) + '/' + countdownMonth + '/' + (parseInt(countdownYear, 10) + parseInt(base, 10)));
 
     // Create an array from 1 to 20
-    const secondPart = Array.from({ length: 20 }, (_, index) => index + 1 + '/' + CheckMonth + '/' + (CheckYear + 543));
+    const secondPart = Array.from({ length: 20 }, (_, index) => index + 1 + '/' + CheckMonth + '/' + (parseInt(CheckYear, 10) + parseInt(base, 10)));
 
     // Concatenate the two arrays
     const resultArray = [...firstPart, ...secondPart];
