@@ -919,6 +919,8 @@ setEndTimeOt3(item.endTimeOT);
     // }
 
     async function handleCheckTimerecord() {
+        await                     setRowDataList([]);
+
         const data = {
             workplaceId: searchWorkplaceId,
             workplaceName: searchWorkplaceName,
@@ -955,7 +957,6 @@ setEndTimeOt3(item.endTimeOT);
 
 });
 
-setShift('morning_shift');
 
 
         try {
