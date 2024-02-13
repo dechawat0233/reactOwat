@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import EmployeesSelected from './../EmployeesSelected';
+import EmployeesSelected from '../EmployeesSelected';
 import Calendar from 'react-calendar';
 import '../../editwindowcss.css';
 import EmployeeWorkDay from '../componentsetting/EmployeeWorkDay';
@@ -17,7 +17,7 @@ import './styleCom.css';
 Modal.setAppElement('#root'); // Set the root element for accessibility
 
 
-function Compensation() {
+function compensation() {
 
   const tableStyle = {
     borderCollapse: 'collapse',
@@ -666,4 +666,4 @@ function Compensation() {
     // </div>  )
   )
 }
-export default Compensation
+export default compensation

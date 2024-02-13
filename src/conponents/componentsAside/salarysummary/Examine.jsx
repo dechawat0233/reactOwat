@@ -7,12 +7,12 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import EmployeesSelected from './../EmployeesSelected';
+import EmployeesSelected from '../EmployeesSelected';
 import Calendar from 'react-calendar';
 import '../../editwindowcss.css';
 import EmployeeWorkDay from '../componentsetting/EmployeeWorkDay';
 
-function Examine() {
+function examine() {
 
     const tableStyle = {
         borderCollapse: 'collapse',
@@ -656,4 +656,4 @@ function Examine() {
     )
 }
 
-export default Examine
+export default examine
