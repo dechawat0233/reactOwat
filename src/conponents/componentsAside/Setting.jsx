@@ -127,8 +127,10 @@ function Setting() {
             startDay: '',
             endDay: '',
             workOrStop: '',
+            shift: '',
             allTimes: [{ shift: '', startTime: '', endTime: '', resultTime: '', startTimeOT: '', endTimeOT: '', resultTimeOT: '' }],
         });
+        
     };
 
     const handleRemoveTimeList = (index) => {
@@ -160,8 +162,8 @@ function Setting() {
                 if (startTimeOT && endTimeOT) {
                     const resultTimeOT = calculateTimeDifference(startTimeOT, endTimeOT);
                     updatedTimes[index].resultTimeOT = resultTimeOT;
-
                 }
+
             }
 
             return {
@@ -169,6 +171,7 @@ function Setting() {
                 allTimes: updatedTimes,
             };
         });
+
     };
 
     // const calculateTimeDifference = (startTime, endTime) => {
@@ -307,7 +310,6 @@ function Setting() {
 
     const handleAddTimePersonList = () => {
         setWorkTimeDayPersonList((prevList) => [...prevList, workTimeDayPerson]);
-        //xxss
         //clean data
         setWorkTimeDayPerson({
             startDay: '',
@@ -1578,7 +1580,7 @@ setWorkTimeDayPersonList(workplace.workTimeDayPerson);
                                             </select>
                                         </div>
                                         <div class="col-md-1">
-                                            <select name="workOrStop" className="form-control" onChange={handleInputChange}>
+                                            <select name="workOrStop" className="form-control" value={workTimeDay.workOrStop} onChange={handleInputChange}>
                                                 <option value='' >
                                                     เลือก
                                                 </option>
