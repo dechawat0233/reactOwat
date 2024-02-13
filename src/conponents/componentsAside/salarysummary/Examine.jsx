@@ -167,18 +167,18 @@ function Examine() {
     }
 
     const daysInMonth2 = getDaysInMonth(CheckMonth, CheckYear);
-    const daysInCountdownMonth = getDaysInMonth2(countdownMonth, CheckYear);
+    const daysInCountdownMonth = getDaysInMonth2(countdownMonth, countdownYear);
 
     // const array1 = createDaysArray(CheckMonth, CheckYear, daysInMonth2, (day) => day <= 20);
     // const array2 = createDaysArray(countdownMonth, CheckYear, daysInCountdownMonth, (day) => day > 21);
     const array1 = createDaysArray(CheckMonth, CheckYear, daysInMonth2, (day) => day <= 20);
-    const array2 = createDaysArray(countdownMonth, CheckYear, daysInCountdownMonth, (day) => day >= 21);
+    const array2 = createDaysArray(countdownMonth, countdownYear, daysInCountdownMonth, (day) => day >= 21);
 
 
     console.log('Array 1 (March):', array1);
     console.log('Array 2 (Countdown):', array2);
 
-    const commonNumbers = new Set([...array1.Mon, ...array2.Mon]);
+    const commonNumbers = new Set([...array2.Mon, ...array1.Mon]);
 
     // const commonNumbers = [...new Set([...array1.Mon, ...array2.Mon])];
     console.log('commonNumbers', commonNumbers);
