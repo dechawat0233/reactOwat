@@ -1501,7 +1501,6 @@ setEndTimeOt3(item.endTimeOT);
                                             <div class="col-md-1"> เวลาออก OT</div>
                                             <div class="col-md-1"> ชั่วโมง OT</div>
                                             <div class="col-md-1"> จ่ายเงินสด</div>
-{JSON.stringify(rowDataList)}
                                         </div>
                                     </div>
                                 </div>
