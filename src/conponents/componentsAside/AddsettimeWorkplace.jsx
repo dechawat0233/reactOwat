@@ -769,7 +769,7 @@ function AddsettimeWorkplace() {
                 // setShift4end(endTime4);
                                                         //get work time from workplace 
                                                         const workplaceWorkTime = await getWorkTime(response.data.workplaces, formattedWorkDate);
-// alert(JSON.stringify(searchResult,null,2) );
+alert(JSON.stringify(workplaceWorkTime , null,2) );
 
 workplaceWorkTime.map(item => {
 // alert(item.shift);
