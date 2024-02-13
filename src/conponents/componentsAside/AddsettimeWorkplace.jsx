@@ -756,7 +756,7 @@ function AddsettimeWorkplace() {
                 // setStartTimeOt3(response.data.workplaces[0].workStartOt1);
                 // setEndTimeOt3(response.data.workplaces[0].workEndOt1);
 
-                // setShift('morning_shift');
+                setShift('morning_shift');
 
                 // setShift1start(startTime);
                 // setShift1end(endTime);
@@ -769,7 +769,7 @@ function AddsettimeWorkplace() {
                 // setShift4end(endTime4);
                                                         //get work time from workplace 
                                                         const workplaceWorkTime = await getWorkTime(response.data.workplaces, formattedWorkDate);
-alert(JSON.stringify(workplaceWorkTime , null,2) );
+// alert(JSON.stringify(workplaceWorkTime , null,2) );
 
 workplaceWorkTime.map(item => {
 // alert(item.shift);
@@ -913,7 +913,7 @@ setEndTimeOt3(item.endTimeOT);
 // alert(JSON.stringify(searchResult,null,2) );
 
 workplaceWorkTime.map(item => {
-alert(item.shift);
+// alert(item.shift);
 if(item.shift == 'กะเช้า'){
 // alert(item.startTime);
 setShift1start(item.startTime);
@@ -936,6 +936,7 @@ setEndTimeOt3(item.endTimeOT);
 }
 
 });
+setShift('morning_shift');
 
 
         try {
