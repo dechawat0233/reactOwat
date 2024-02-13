@@ -749,24 +749,24 @@ function AddsettimeWorkplace() {
                 const startTime4 = '';
                 const endTime4 = '';
 
-                setStartTimeOt1(response.data.workplaces[0].workStartOt1);
-                setEndTimeOt1(response.data.workplaces[0].workEndOt1);
-                setStartTimeOt2(response.data.workplaces[0].workStartOt1);
-                setEndTimeOt2(response.data.workplaces[0].workEndOt1);
-                setStartTimeOt3(response.data.workplaces[0].workStartOt1);
-                setEndTimeOt3(response.data.workplaces[0].workEndOt1);
+                // setStartTimeOt1(response.data.workplaces[0].workStartOt1);
+                // setEndTimeOt1(response.data.workplaces[0].workEndOt1);
+                // setStartTimeOt2(response.data.workplaces[0].workStartOt1);
+                // setEndTimeOt2(response.data.workplaces[0].workEndOt1);
+                // setStartTimeOt3(response.data.workplaces[0].workStartOt1);
+                // setEndTimeOt3(response.data.workplaces[0].workEndOt1);
 
-                setShift('morning_shift');
+                // setShift('morning_shift');
 
-                setShift1start(startTime);
-                setShift1end(endTime);
-                setShift2start(startTime2);
-                setShift2end(endTime2);
-                setShift3start(startTime3);
-                setShift3end(endTime3);
+                // setShift1start(startTime);
+                // setShift1end(endTime);
+                // setShift2start(startTime2);
+                // setShift2end(endTime2);
+                // setShift3start(startTime3);
+                // setShift3end(endTime3);
 
-                setShift4start(startTime4);
-                setShift4end(endTime4);
+                // setShift4start(startTime4);
+                // setShift4end(endTime4);
                                                         //get work time from workplace 
                                                         const workplaceWorkTime = await getWorkTime(response.data.workplaces, formattedWorkDate);
 // alert(JSON.stringify(searchResult,null,2) );
@@ -777,12 +777,21 @@ if(item.shift == 'กะเช้า'){
 // alert(item.startTime);
 setShift1start(item.startTime);
 setShift1end(item.endTime);
+setStartTimeOt1(item.startTimeOT);
+setEndTimeOt1(item.endTimeOT);
+
 }else if(item.shift == 'กะบ่าย') {
     setShift2start(item.startTime);
     setShift2end(item.endTime);
+    setStartTimeOt2(item.startTimeOT);
+setEndTimeOt2(item.endTimeOT);
+
 } else if(item.shift == 'กะดึก'){
     setShift3start(item.startTime);
     setShift3end(item.endTime);
+    setStartTimeOt3(item.startTimeOT);
+setEndTimeOt3(item.endTimeOT);
+
 }
 
 });
@@ -904,17 +913,26 @@ setShift1end(item.endTime);
 // alert(JSON.stringify(searchResult,null,2) );
 
 workplaceWorkTime.map(item => {
-// alert(item.shift);
+alert(item.shift);
 if(item.shift == 'กะเช้า'){
 // alert(item.startTime);
 setShift1start(item.startTime);
 setShift1end(item.endTime);
+setStartTimeOt1(item.startTimeOT);
+setEndTimeOt1(item.endTimeOT);
+
 }else if(item.shift == 'กะบ่าย') {
     setShift2start(item.startTime);
     setShift2end(item.endTime);
+    setStartTimeOt2(item.startTimeOT);
+setEndTimeOt2(item.endTimeOT);
+
 } else if(item.shift == 'กะดึก'){
     setShift3start(item.startTime);
     setShift3end(item.endTime);
+    setStartTimeOt3(item.startTimeOT);
+setEndTimeOt3(item.endTimeOT);
+
 }
 
 });
@@ -930,8 +948,6 @@ setShift1end(item.endTime);
                 setTimeRecord_id('');
                 setRowDataList([]);
             } else {
-                                                                                  //get work time from workplace 
-                                                        getWorkTime(response.data.workplaces[0] , formattedWorkDate);
       
                 // Set the state to true if data is found
                 setUpdateButton(true);

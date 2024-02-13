@@ -1,5 +1,8 @@
+import { useState } from 'react';
 import endpoint from '../../config';
 import axios from 'axios';
+
+// import React, { useEffect, useState } from 'react';
 
 
 export const getMonthName= (monthNumber) => {
@@ -56,7 +59,8 @@ function getNumberOfDay(dn){
   export const getWorkTime = async (workplace , dw) => {
 // alert(JSON.stringify(workplace,null,2));
 // alert(dw);
-const worktimeList = {};
+const worktimeList = [];
+// const [worktimeList  , setWorktimeList ] = useState([]);
 
 const workTime = await {
   shift: '',
@@ -75,17 +79,42 @@ await workplace[0].workTimeDay.map( async (item, index) => {
 // alert('start' +getNumberOfDay(item.startDay) );
 // alert('end' + getNumberOfDay(item.endDay) );
 
-if(getNumberOfDay(item.startDay) ==  getNumberOfDay(item.endDay) ){
-  worktimeList[getNumberOfDay(item.startDay)] = item.allTimes;
+if(getNumberOfDay(item.startDay) ===  getNumberOfDay(item.endDay) ){
+  worktimeList[getNumberOfDay(item.startDay)] = await item.allTimes;
+  // alert('test ' + getNumberOfDay(item.startDay));
 } else {
+  if(getNumberOfDay(item.startDay) >  getNumberOfDay(item.endDay)){
+let tmpc = getNumberOfDay(item.startDay);
+let c = true;
+
+    while(c) {
+if(tmpc == getNumberOfDay(item.endDay)){
+  c =false;
+  }
+
+  // alert(tmpc);
+  worktimeList[c] = await item.allTimes;
+
+
+tmpc = tmpc +1;
+if(tmpc > 6 ){
+tmpc = 0;
+}
+    }
+
+  } else {
 for(let i = getNumberOfDay(item.startDay); i <= getNumberOfDay(item.endDay); i++ ) {
-  worktimeList[i] = item.allTimes;
+  worktimeList[i] = await item.allTimes;
+  // alert(i);
+}
 }
 }
 
 });
 
 // alert(JSON.stringify(worktimeList, null ,2) );
+// alert(worktimeList);
+
 // alert(dw);
 let dateString = await dw;
 const [day, month, year] = await dateString.split('/');

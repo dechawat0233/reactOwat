@@ -46,9 +46,9 @@ import SystemUser from "./conponents/componentsAside/SystemUser";
 import Addsettime from "./conponents/componentsAside/Addsettime";
 
 import Salarysummary from "./conponents/componentsAside/Salarysummary";
-import Examine from "./conponents/componentsAside/salarysummary/examine";
-import Salaryresult from "./conponents/componentsAside/salarysummary/salaryresult";
-import Compensation from "./conponents/componentsAside/salarysummary/compensation";
+// import Examine from "./conponents/componentsAside/salarysummary/examine";
+// import Salaryresult from "./conponents/componentsAside/salarysummary/salaryresult";
+// import Compensation from "./conponents/componentsAside/salarysummary/compensation";
 
 import Worktimesheet from "./conponents/componentsAside/Worktimesheet";
 import WorktimeSheetWorkplace from "./conponents/componentsAside/WorktimeSheetWorkplace";
