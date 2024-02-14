@@ -928,34 +928,34 @@ function AddsettimeWorkplace() {
         };
 
 
-        //get work time from workplace 
-        const workplaceWorkTime = await getWorkTime(searchResult, formattedWorkDate);
-        // alert(JSON.stringify(searchResult,null,2) );
+        //                                                         //get work time from workplace 
+        //                                                         const workplaceWorkTime = await getWorkTime(searchResult, formattedWorkDate);
+        // // alert(JSON.stringify(searchResult,null,2) );
 
-        workplaceWorkTime.map(item => {
-            // alert(item.shift);
-            if (item.shift == 'กะเช้า') {
-                // alert(item.startTime);
-                setShift1start(item.startTime);
-                setShift1end(item.endTime);
-                setStartTimeOt1(item.startTimeOT);
-                setEndTimeOt1(item.endTimeOT);
+        // workplaceWorkTime.map(item => {
+        // // alert(item.shift);
+        // if(item.shift == 'กะเช้า'){
+        // // alert(item.startTime);
+        // setShift1start(item.startTime);
+        // setShift1end(item.endTime);
+        // setStartTimeOt1(item.startTimeOT);
+        // setEndTimeOt1(item.endTimeOT);
 
-            } else if (item.shift == 'กะบ่าย') {
-                setShift2start(item.startTime);
-                setShift2end(item.endTime);
-                setStartTimeOt2(item.startTimeOT);
-                setEndTimeOt2(item.endTimeOT);
+        // }else if(item.shift == 'กะบ่าย') {
+        //     setShift2start(item.startTime);
+        //     setShift2end(item.endTime);
+        //     setStartTimeOt2(item.startTimeOT);
+        // setEndTimeOt2(item.endTimeOT);
 
-            } else if (item.shift == 'กะดึก') {
-                setShift3start(item.startTime);
-                setShift3end(item.endTime);
-                setStartTimeOt3(item.startTimeOT);
-                setEndTimeOt3(item.endTimeOT);
+        // } else if(item.shift == 'กะดึก'){
+        //     setShift3start(item.startTime);
+        //     setShift3end(item.endTime);
+        //     setStartTimeOt3(item.startTimeOT);
+        // setEndTimeOt3(item.endTimeOT);
 
-            }
+        // }
 
-        });
+        // });
 
 
 
@@ -971,12 +971,12 @@ function AddsettimeWorkplace() {
             } else {
 
                 // Set the state to true if data is found
-                setUpdateButton(true);
-                setTimeRecord_id(response.data.recordworkplace[0]._id);
+                await setUpdateButton(true);
+                await setTimeRecord_id(response.data.recordworkplace[0]._id);
                 if (workplaceName != '') {
-                    setRowDataList(response.data.recordworkplace[0].employeeRecord);
+                    await setRowDataList(response.data.recordworkplace[0].employeeRecord);
                 } else {
-                    setRowDataList([]);
+                    await setRowDataList([]);
                 }
 
                 // alert(JSON.stringify( rowDataList[0] ) );
@@ -1501,7 +1501,6 @@ function AddsettimeWorkplace() {
                                             <div class="col-md-1"> เวลาออก OT</div>
                                             <div class="col-md-1"> ชั่วโมง OT</div>
                                             <div class="col-md-1"> จ่ายเงินสด</div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -1509,7 +1508,7 @@ function AddsettimeWorkplace() {
                                     <div class="col-md-12">
 
                                         {rowDataList.map((rowData, index) => (
-                                            rowData.staffId && ( // Check if staffId is set (truthy)
+                                            rowData.staffId !== '' && ( // Check if staffId is set (truthy)
                                                 <div key={index}>
                                                     <div class="row" style={{ marginBottom: '1rem', borderBottom: '2px solid #000' }}>
                                                         <div class="col-md-1" style={bordertable}> {rowData.staffId} </div>
