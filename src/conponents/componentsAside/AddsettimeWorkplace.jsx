@@ -767,9 +767,26 @@ function AddsettimeWorkplace() {
 
                 // setShift4start(startTime4);
                 // setShift4end(endTime4);
+
+
+                setShift('morning_shift');
+                setShift1start('');
+                setShift1end('');
+                setShift2start('');
+                setShift2end('');
+                setShift3start('');
+                setShift3end('');
+
+                setStartTimeOt1('');
+                setEndTimeOt1('');
+                setStartTimeOt2('');
+                setEndTimeOt2('');
+                setStartTimeOt3('');
+                setEndTimeOt3('');
+
                 //get work time from workplace 
                 const workplaceWorkTime = await getWorkTime(response.data.workplaces, formattedWorkDate);
-                // alert(JSON.stringify(searchResult,null,2) );
+                // alert(JSON.stringify(workplaceWorkTime , null,2) );
 
                 workplaceWorkTime.map(item => {
                     // alert(item.shift);
@@ -902,18 +919,21 @@ function AddsettimeWorkplace() {
     // }
 
     async function handleCheckTimerecord() {
+        await setRowDataList([]);
+
         const data = {
             workplaceId: searchWorkplaceId,
             workplaceName: searchWorkplaceName,
             date: formattedWorkDate,
         };
 
+
         //get work time from workplace 
         const workplaceWorkTime = await getWorkTime(searchResult, formattedWorkDate);
         // alert(JSON.stringify(searchResult,null,2) );
 
         workplaceWorkTime.map(item => {
-            alert(item.shift);
+            // alert(item.shift);
             if (item.shift == 'กะเช้า') {
                 // alert(item.startTime);
                 setShift1start(item.startTime);
@@ -936,6 +956,7 @@ function AddsettimeWorkplace() {
             }
 
         });
+
 
 
         try {

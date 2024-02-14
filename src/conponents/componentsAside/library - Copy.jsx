@@ -76,10 +76,10 @@ await workplace[0].workTimeDay.map( async (item, index) => {
 // alert('end' + getNumberOfDay(item.endDay) );
 
 if(getNumberOfDay(item.startDay) ==  getNumberOfDay(item.endDay) ){
-  worktimeList[getNumberOfDay(item.startDay)] = item.allTimes;
+  worktimeList[getNumberOfDay(item.startDay)] = await item.allTimes;
 } else {
 for(let i = getNumberOfDay(item.startDay); i <= getNumberOfDay(item.endDay); i++ ) {
-  worktimeList[i] = item.allTimes;
+  worktimeList[i] = await item.allTimes;
 }
 }
 

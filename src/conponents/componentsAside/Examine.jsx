@@ -94,6 +94,10 @@ function Examine() {
                 console.error('Error fetching data:', error);
             });
     }, []);
+
+    console.log('timerecordAllList', timerecordAllList);
+    // console.log('CheckYear', CheckYear);
+
     const CheckMonth = parseInt(month, 10);
     const CheckYear = year;
     // const CheckMonth = 5;
@@ -225,19 +229,23 @@ function Examine() {
             // const response = await axios.post(endpoint + '/timerecord/listemp', data);
             // const responseLower = await axios.post(endpoint + '/timerecord/listemp', dataLower);
             const filteredEntries = timerecordAllList.filter(entry =>
-                entry.employeeId === searchEmployeeId &&
+                entry.employeeId === searchEmployeeId
+                &&
                 entry.month === month
                 &&
-                entry.timerecordId === year
+                entry.timerecordId == year
             );
             const filteredEntriesLower = timerecordAllList.filter(entry =>
-                entry.employeeId === searchEmployeeId &&
+                entry.employeeId === searchEmployeeId
+                &&
                 entry.month === monthLower
                 &&
-                entry.timerecordId === timerecordIdLower
+                entry.timerecordId == timerecordIdLower
             );
-
-
+            
+            alert(year);
+            alert(timerecordIdLower);
+            alert(filteredEntries);
             alert(filteredEntriesLower);
 
 
