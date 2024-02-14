@@ -47,6 +47,7 @@ function Compensation() {
 
     const [employeeListResult, setEmployeeListResult] = useState([]);
     const [newWorkplace, setNewWorkplace] = useState(true);
+    const [timerecordAllList, setTimerecordAllList] = useState([]);
 
     const [employeeList, setEmployeeList] = useState([]);
     const [workplaceList, setWorkplaceList] = useState([]);
@@ -99,6 +100,7 @@ function Compensation() {
                 console.error('Error fetching data:', error);
             });
     }, []);
+    console.error('workplaceList', workplaceList);
 
     console.log(employeeList);
 
@@ -366,41 +368,86 @@ function Compensation() {
             setSearchResult(filteredEntries);
             setSearchResultLower(filteredEntriesLower);
 
+            // const entriesData = filteredEntries.map(entry =>
+            //     entry.employee_workplaceRecord
+            //         .filter(record => record.date <= 20)
+            //         .map(record => ({
+            //             workplaceId: record.workplaceId,
+            //             dates: record.date,
+            //             allTimes: record.allTime,
+            //             otTimes: record.otTime,
+
+            //             startTime: record.startTime,
+            //             endTime: record.endTime,
+            //             selectotTime: record.selectotTime,
+            //             selectotTimeOut: record.selectotTimeOut,
+            //         }))
+            // );
+
             const entriesData = filteredEntries.map(entry =>
                 entry.employee_workplaceRecord
                     .filter(record => record.date <= 20)
-                    .map(record => ({
-                        workplaceId: record.workplaceId,
-                        dates: record.date,
-                        allTimes: record.allTime,
-                        otTimes: record.otTime,
-
-                        startTime: record.startTime,
-                        endTime: record.endTime,
-                        selectotTime: record.selectotTime,
-                        selectotTimeOut: record.selectotTimeOut,
-                    }))
+                    .map(record => {
+                        const matchedWorkplace = workplaceList.find(workplace => workplace.workplaceId === record.workplaceId);
+                        return {
+                            workplaceId: record.workplaceId,
+                            dates: record.date,
+                            workOfHour: matchedWorkplace ? matchedWorkplace.workOfHour : '', // Default value if not found
+                            workRate: matchedWorkplace ? matchedWorkplace.workRate : '', // Default value if not found
+                            workRateOT: matchedWorkplace ? matchedWorkplace.workRateOT : '',
+                            allTimes: record.allTime,
+                            otTimes: record.otTime,
+                            startTime: record.startTime,
+                            endTime: record.endTime,
+                            selectotTime: record.selectotTime,
+                            selectotTimeOut: record.selectotTimeOut,
+                        };
+                    })
             );
+
+            // console.log(entriesData);
+
+            // const entriesDataLower = filteredEntriesLower.map(entry =>
+            //     entry.employee_workplaceRecord
+            //         .filter(record => record.date >= 21)
+            //         .map(record => ({
+            //             workplaceId: record.workplaceId,
+            //             dates: record.date,
+            //             allTimes: record.allTime,
+            //             otTimes: record.otTime,
+
+            //             startTime: record.startTime,
+            //             endTime: record.endTime,
+            //             selectotTime: record.selectotTime,
+            //             selectotTimeOut: record.selectotTimeOut,
+            //         }))
+            // );
 
             const entriesDataLower = filteredEntriesLower.map(entry =>
                 entry.employee_workplaceRecord
                     .filter(record => record.date >= 21)
-                    .map(record => ({
-                        workplaceId: record.workplaceId,
-                        dates: record.date,
-                        allTimes: record.allTime,
-                        otTimes: record.otTime,
-
-                        startTime: record.startTime,
-                        endTime: record.endTime,
-                        selectotTime: record.selectotTime,
-                        selectotTimeOut: record.selectotTimeOut,
-                    }))
+                    .map(record => {
+                        const matchedWorkplace = workplaceList.find(workplace => workplace.workplaceId === record.workplaceId);
+                        return {
+                            workplaceId: record.workplaceId,
+                            dates: record.date,
+                            workOfHour: matchedWorkplace ? matchedWorkplace.workOfHour : '', // Default value if not found
+                            workRate: matchedWorkplace ? matchedWorkplace.workRate : '', // Default value if not found
+                            workRateOT: matchedWorkplace ? matchedWorkplace.workRateOT : '',
+                            allTimes: record.allTime,
+                            otTimes: record.otTime,
+                            startTime: record.startTime,
+                            endTime: record.endTime,
+                            selectotTime: record.selectotTime,
+                            selectotTimeOut: record.selectotTimeOut,
+                        };
+                    })
             );
 
             setAlldaywork(entriesData);
             setAlldayworkLower(entriesDataLower);
             // alert(response.data.employees.length);
+
             if (response.data.employees.length < 1) {
                 // window.location.reload();
                 setEmployeeId('');
@@ -429,6 +476,7 @@ function Compensation() {
             }
         } catch (error) {
             alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา', error);
+
             // alert(error);
 
             // window.location.reload();
@@ -534,6 +582,19 @@ function Compensation() {
     };
 
 
+    const sumWorkRate = resultArrayWithWorkplaceRecords.reduce((accumulator, workplaceRecord) => {
+        const workRateValue = parseFloat(workplaceRecord.workRate);
+        return !isNaN(workRateValue) ? accumulator + workRateValue : accumulator;
+    }, 0);
+    const sumWorkRateOT = resultArrayWithWorkplaceRecords.reduce((accumulator, workplaceRecord) => {
+        const workRateValue = parseFloat(workplaceRecord.workRate);//352
+        const workRateOTValue = parseFloat(workplaceRecord.workRateOT);//1.5
+        const workTimeValue = parseFloat(workplaceRecord.workOfHour);//8 work
+        const workTimeOTValue = parseFloat(workplaceRecord.otTimes);//3 workot
+
+        return !isNaN(workRateValue) ? accumulator + (((workRateValue / workTimeValue) * workRateOTValue) * workTimeOTValue) : accumulator;
+    }, 0);
+
     return (
         // <div>
         <body class="hold-transition sidebar-mini" className='editlaout'>
@@ -558,7 +619,7 @@ function Compensation() {
                             <h2 class="title">ตารางค่าตอบแทน</h2>
                             <section class="Frame">
                                 <div class="col-md-12">
-                                    <form >
+                                    <form onSubmit={handleSearch}>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
@@ -692,9 +753,11 @@ function Compensation() {
                                              </tr>
                                          ))} */}
 
-                                                    {resultArray.map((value, index) => (
+                                                    {/* {resultArray.map((value, index) => ( */}
+                                                    {resultArrayWithWorkplaceRecords.map((workplaceRecord, index) => (
+
                                                         <tr key={index}>
-                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                            {/* <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                 {value}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
@@ -717,6 +780,34 @@ function Compensation() {
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
 
+                                                            </td> */}
+                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {resultArray[index]}
+                                                            </td>
+                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {workplaceRecord.workplaceId}
+                                                            </td>
+                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {workplaceRecord.allTimes}
+                                                            </td>
+                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {workplaceRecord.workRate}
+                                                            </td>
+                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {workplaceRecord.otTimes}
+                                                            </td>
+
+                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {/* {(workplaceRecord.workRate / workplaceRecord.workOfHour) * workplaceRecord.workRateOT}({workplaceRecord.workRateOT}) */}
+                                                                {!isNaN(workplaceRecord.workRate) && !isNaN(workplaceRecord.workOfHour) && !isNaN(workplaceRecord.workRateOT) && (
+                                                                    `${((workplaceRecord.workRate / workplaceRecord.workOfHour) * workplaceRecord.workRateOT).toFixed(2)} (${workplaceRecord.workRateOT})`
+                                                                )}
+                                                            </td>
+                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {/* {workplaceRecord.allTimes} */}
+                                                            </td>
+                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {/* {workplaceRecord.otTimes} */}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                 ลบ/
@@ -835,6 +926,14 @@ function Compensation() {
                                                             </td>
                                                         </tr>
                                                     ))}
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td style={cellStyle}>{sumWorkRate}</td>
+                                                        <td></td>
+                                                        <td style={cellStyle}>{sumWorkRateOT.toFixed(2)}</td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
