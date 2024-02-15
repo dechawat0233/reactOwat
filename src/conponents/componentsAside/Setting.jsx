@@ -104,6 +104,7 @@ function Setting() {
             [name]: value,
         }));
     };
+const [selectShift , setSelectShift ] = useState('');
 
     const handleAddTime = () => {
         setWorkTimeDay((prevData) => ({
@@ -1597,7 +1598,7 @@ setWorkTimeDayPersonList(workplace.workTimeDayPerson);
                                                 <div key={index}>
                                                     <div class="row">
                                                         <div class="col-md-2">
-                                                            <select name="shift" className="form-control" value={workTimeDay.shift}
+                                                            <select name="shift" className="form-control" value={time.shift}
                                                                 onChange={(e) => handleTimeChange(index, 'shift', e.target.value)}>
                                                                 <option value="">เลือกกะ</option>
                                                                 {shiftWork.map((day, index) => (

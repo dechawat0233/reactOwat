@@ -258,7 +258,11 @@ function Examine() {
                 &&
                 entry.timerecordId == timerecordIdLower
             );
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> 9c89777e62877d0009c6dd7f32f1ca2a5ed6cc12
             // alert(year);
             // alert(timerecordIdLower);
             // alert(filteredEntries);
@@ -330,7 +334,7 @@ function Examine() {
 
             }
         } catch (error) {
-            alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา', error);
+            // alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา', error);
             // alert(error);
 
             // window.location.reload();
@@ -386,6 +390,7 @@ function Examine() {
         return matchingRecord ? { ...matchingRecord } : '';
     });
 
+
     console.log('resultArrayWithWorkplaceRecords', resultArrayWithWorkplaceRecords);
 
     const combinedArray = resultArray.map((date, index) => {
@@ -434,6 +439,14 @@ function Examine() {
         setStaffFullName(selectedStaffName);
         setSearchEmployeeName(selectedEmployeeFName);
     };
+
+
+//edit data
+async function editdata(index , workplaceRecord){
+    alert(index);
+// resultArrayWithWorkplaceRecords[index]= {... workplaceRecord };
+
+}
 
 
     return (
@@ -583,7 +596,7 @@ function Examine() {
                                                 <thead>
                                                     <tr>
                                                         <th style={headerCellStyle}>วันที่</th>
-                                                        <th style={headerCellStyle}>หน่วงงาน</th>
+                                                        <th style={headerCellStyle}>หน่วยงาน</th>
                                                         <th style={headerCellStyle}>เวลาเข้า</th>
                                                         <th style={headerCellStyle}>เวลาออก</th>
                                                         <th style={headerCellStyle}>เวลาเข้า OT</th>
@@ -634,7 +647,15 @@ function Examine() {
                                                             </td>
                                                         </tr>
                                                     ))} */}
+
+
                                                     {resultArrayWithWorkplaceRecords.map((workplaceRecord, index) => (
+                                                        workplaceRecord.editdata == true ? (
+<tr>
+<td><input type="text" /></td>
+</tr>
+                                                        ):(
+
                                                         <tr key={index}>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                 {resultArray[index]}
@@ -661,9 +682,12 @@ function Examine() {
                                                                 {workplaceRecord.otTimes}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                <a href="https://example.com" class="link1" style={{ color: 'red' }}><b>ลบ</b></a> / <a href="https://example2.com" class="link2" style={{ color: 'blue' }}><b>แก้ไข</b></a>
+                                                                <a href="https://example.com" class="link1" style={{ color: 'red' }}><b>ลบ</b></a> / <a href="#" onClick={(e) => editdata(index , workplaceRecord)} class="link2" style={{ color: 'blue' }}><b>แก้ไข</b></a>
                                                             </td>
                                                         </tr>
+                                                        )
+                                                    
+
                                                     ))}
                                                 </tbody>
                                             </table>
@@ -674,9 +698,9 @@ function Examine() {
 
                                 <div class="line_btn">
                                     {newWorkplace ? (
-                                        <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;สร้างหน่วยงานใหม่</button>
-                                    ) : (
                                         <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
+                                    ) : (
+                                        <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;สรุปค่าตอบแทน</button>
 
                                     )}
                                     <button class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
@@ -686,6 +710,7 @@ function Examine() {
                     </section>
                 </div>
             </div>
+
         </body>
         // </div>
     )
