@@ -135,8 +135,8 @@ function Examine() {
     };
 
     // Example usage
-    const thaiMonthName = getThaiMonthName(parseInt(CheckMonth, 10));
-    const thaiMonthLowerName = getThaiMonthName(parseInt(countdownMonth, 10));
+    // const thaiMonthName = getThaiMonthName(parseInt(CheckMonth, 10));
+    // const thaiMonthLowerName = getThaiMonthName(parseInt(countdownMonth, 10));
 
     const daysInMonth = getDaysInMonth(countdownMonth, CheckYear);
     const startDay = 21;
@@ -222,6 +222,9 @@ function Examine() {
     console.log('year', year);
     console.log('timerecordIdLower', timerecordIdLower);
 
+    const thaiMonthName = getThaiMonthName(parseInt(CheckMonth, 10));
+    const thaiMonthLowerName = getThaiMonthName(parseInt(countdownMonth, 10));
+
     async function handleSearch(event) {
         event.preventDefault();
 
@@ -258,11 +261,6 @@ function Examine() {
                 &&
                 entry.timerecordId == timerecordIdLower
             );
-<<<<<<< HEAD
-
-=======
-            
->>>>>>> 9c89777e62877d0009c6dd7f32f1ca2a5ed6cc12
             // alert(year);
             // alert(timerecordIdLower);
             // alert(filteredEntries);
@@ -441,12 +439,12 @@ function Examine() {
     };
 
 
-//edit data
-async function editdata(index , workplaceRecord){
-    alert(index);
-// resultArrayWithWorkplaceRecords[index]= {... workplaceRecord };
+    //edit data
+    async function editdata(index, workplaceRecord) {
+        alert(index);
+        // resultArrayWithWorkplaceRecords[index]= {... workplaceRecord };
 
-}
+    }
 
 
     return (
@@ -578,11 +576,27 @@ async function editdata(index , workplaceRecord){
                                 </div>
                             </section>
                             <section class="Frame">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        ชื่อ: {staffFullName}
+                                {staffFullName ? (
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            ชื่อ: {staffFullName}
+                                        </div>
+                                    </div>) : (
+                                    <div>
+                                        {/* Content to show when staffFullName is not set */}
                                     </div>
-                                </div>
+                                )}
+
+                                {/* {month ? (
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            ตั้งแต่วันที่ 20 {thaiMonthLowerName} - 21 {thaiMonthName} ปี {year}
+                                        </div>
+                                    </div>) : (
+                                    <div>
+                                    </div>
+                                )} */}
+
                                 <div class="row">
                                     <div class="col-md-12">
                                         ตั้งแต่วันที่ 20 {thaiMonthLowerName} - 21 {thaiMonthName} ปี {year}
@@ -603,7 +617,7 @@ async function editdata(index , workplaceRecord){
                                                         <th style={headerCellStyle}>เวลาออก OT</th>
                                                         <th style={headerCellStyle}>ชั่วโมงทำงาน</th>
                                                         <th style={headerCellStyle}>ชั่วโมง OT</th>
-                                                        <th style={headerCellStyle}>แก้/ลบ</th>
+                                                        {/* <th style={headerCellStyle}>แก้/ลบ</th> */}
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -651,42 +665,42 @@ async function editdata(index , workplaceRecord){
 
                                                     {resultArrayWithWorkplaceRecords.map((workplaceRecord, index) => (
                                                         workplaceRecord.editdata == true ? (
-<tr>
-<td><input type="text" /></td>
-</tr>
-                                                        ):(
+                                                            <tr>
+                                                                <td><input type="text" /></td>
+                                                            </tr>
+                                                        ) : (
 
-                                                        <tr key={index}>
-                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {resultArray[index]}
-                                                            </td>
-                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {workplaceRecord.workplaceId}
-                                                            </td>
-                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {workplaceRecord.startTime}
-                                                            </td>
-                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {workplaceRecord.endTime}
-                                                            </td>
-                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {workplaceRecord.selectotTime}
-                                                            </td>
-                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {workplaceRecord.selectotTimeOut}
-                                                            </td>
-                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {workplaceRecord.allTimes}
-                                                            </td>
-                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {workplaceRecord.otTimes}
-                                                            </td>
-                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                <a href="https://example.com" class="link1" style={{ color: 'red' }}><b>ลบ</b></a> / <a href="#" onClick={(e) => editdata(index , workplaceRecord)} class="link2" style={{ color: 'blue' }}><b>แก้ไข</b></a>
-                                                            </td>
-                                                        </tr>
+                                                            <tr key={index}>
+                                                                <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                    {resultArray[index]}
+                                                                </td>
+                                                                <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                    {workplaceRecord.workplaceId}
+                                                                </td>
+                                                                <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                    {workplaceRecord.startTime}
+                                                                </td>
+                                                                <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                    {workplaceRecord.endTime}
+                                                                </td>
+                                                                <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                    {workplaceRecord.selectotTime}
+                                                                </td>
+                                                                <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                    {workplaceRecord.selectotTimeOut}
+                                                                </td>
+                                                                <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                    {workplaceRecord.allTimes}
+                                                                </td>
+                                                                <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                    {workplaceRecord.otTimes}
+                                                                </td>
+                                                                {/* <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                    <a href="https://example.com" class="link1" style={{ color: 'red' }}><b>ลบ</b></a> / <a href="#" onClick={(e) => editdata(index, workplaceRecord)} class="link2" style={{ color: 'blue' }}><b>แก้ไข</b></a>
+                                                                </td> */}
+                                                            </tr>
                                                         )
-                                                    
+
 
                                                     ))}
                                                 </tbody>
@@ -697,13 +711,16 @@ async function editdata(index , workplaceRecord){
                                 </div>
 
                                 <div class="line_btn">
-                                    {newWorkplace ? (
+                                    {/* {newWorkplace ? (
                                         <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
                                     ) : (
                                         <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;สรุปค่าตอบแทน</button>
 
                                     )}
-                                    <button class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
+                                    <button class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button> */}
+                                    <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;แก้ไข</button>
+                                    <button class="btn clean"><i>&gt;</i> &nbsp;ถัดไป</button>
+
                                 </div>
                             </section>
                         </div>
