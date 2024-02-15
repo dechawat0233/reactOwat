@@ -362,7 +362,7 @@ function Compensation() {
             );
 
 
-            alert(filteredEntriesLower);
+            // alert(filteredEntriesLower);
 
 
             setSearchResult(filteredEntries);
@@ -475,7 +475,7 @@ function Compensation() {
 
             }
         } catch (error) {
-            alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา', error);
+            // alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา', error);
 
             // alert(error);
 
@@ -733,7 +733,7 @@ function Compensation() {
                                                 <thead>
                                                     <tr>
                                                         <th style={headerCellStyle}>วันที่</th>
-                                                        <th style={headerCellStyle}>หน่วงงาน</th>
+                                                        <th style={headerCellStyle}>หน่วยงาน</th>
                                                         <th style={headerCellStyle}>ชั่วโมงทำงาน</th>
                                                         <th style={headerCellStyle}>ค่าจ้างปกติ</th>
                                                         <th style={headerCellStyle}>ชั่วโมง OT</th>
@@ -754,6 +754,7 @@ function Compensation() {
                                          ))} */}
 
                                                     {/* {resultArray.map((value, index) => ( */}
+
                                                     {resultArrayWithWorkplaceRecords.map((workplaceRecord, index) => (
 
                                                         <tr key={index}>
@@ -781,6 +782,7 @@ function Compensation() {
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
 
                                                             </td> */}
+
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                 {resultArray[index]}
                                                             </td>

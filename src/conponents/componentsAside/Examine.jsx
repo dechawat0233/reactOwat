@@ -258,11 +258,7 @@ function Examine() {
                 &&
                 entry.timerecordId == timerecordIdLower
             );
-<<<<<<< HEAD
-
-=======
             
->>>>>>> 9c89777e62877d0009c6dd7f32f1ca2a5ed6cc12
             // alert(year);
             // alert(timerecordIdLower);
             // alert(filteredEntries);
