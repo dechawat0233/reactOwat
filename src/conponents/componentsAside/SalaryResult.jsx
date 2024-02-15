@@ -12,6 +12,7 @@ import Calendar from 'react-calendar';
 import '../editwindowcss.css';
 import EmployeeWorkDay from './componentsetting/EmployeeWorkDay';
 function Salaryresult() {
+  document.title = 'สรุปเงินเดือน';
 
   const tableStyle = {
     borderCollapse: 'collapse',
@@ -45,10 +46,10 @@ function Salaryresult() {
   const [year, setYear] = useState('');
 
   useEffect(() => {
-      setMonth("01");
+    setMonth("01");
 
-      const currentYear = new Date().getFullYear();
-      setYear(currentYear);
+    const currentYear = new Date().getFullYear();
+    setYear(currentYear);
   }, []); // Run this effect only once on component mount
   const EndYear = 2010;
   const currentYear = new Date().getFullYear(); // 2024
@@ -260,7 +261,7 @@ function Salaryresult() {
                           <select className="form-control" value={year} onChange={(e) => setYear(e.target.value)}>
                             {years.map((y) => (
                               <option key={y} value={y}>
-                                {y}
+                                {y + 543}
                               </option>
                             ))}
                           </select>

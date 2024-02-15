@@ -37,7 +37,7 @@ function Worktimesheet() {
 
   //variable
   const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: currentYear - 1998 }, (_, index) => currentYear - index);
+  const years = Array.from({ length: currentYear - 1999 }, (_, index) => currentYear - index);
 
   const [dataset, setDataset] = useState([]);
   const [workplaceList, setWorkplaceList] = useState([]);
@@ -119,7 +119,7 @@ function Worktimesheet() {
   const [MinusSS, setMinusSS] = useState(0); // Example: February (you can set it dynamically)
   const [result, setResult] = useState(''); // Example: February (you can set it dynamically)
 
-  const [year, setYear] = useState(2023); // Example year (you can set it dynamically)
+  const [year, setYear] = useState(new Date().getFullYear()); // Example year (you can set it dynamically)
 
   const [workMonth, setWorkMonth] = useState([]);
 
@@ -400,7 +400,7 @@ function Worktimesheet() {
               </div>
             </div>
 
-            <p>form</p>
+            {/* <p>form</p> */}
 
             <div class="row">
               <div class="col-md-9">
@@ -483,16 +483,14 @@ function Worktimesheet() {
                         </tr>
                       </tbody>
                     </table>
-                    <table style={vertical1}>
+                    {/* <table style={vertical1}>
                       <thead>
                         <tr>
                           <th style={verticalTextHeader}>Header 1</th>
                           <th style={verticalTextHeader}>Header 2</th>
-                          {/* Add more header columns as needed */}
                         </tr>
                       </thead>
-
-                    </table>
+                    </table> */}
                   </div>
                 </section>
               </div>

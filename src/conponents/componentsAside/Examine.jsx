@@ -13,6 +13,7 @@ import '../editwindowcss.css';
 import EmployeeWorkDay from './componentsetting/EmployeeWorkDay';
 
 function Examine() {
+    document.title = 'ตรวจการทำงาน';
 
     const tableStyle = {
         borderCollapse: 'collapse',
@@ -65,6 +66,12 @@ function Examine() {
     const EndYear = 2010;
     const currentYear = new Date().getFullYear(); // 2024
     const years = Array.from({ length: currentYear - EndYear + 1 }, (_, index) => EndYear + index).reverse();
+
+    const thaiMonthNames = [
+        'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
+        'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
+    ];
+
 
     useEffect(() => {
         // Fetch data from the API when the component mounts
@@ -122,6 +129,14 @@ function Examine() {
         const lastDayOfMonth = new Date(year, month, 0).getDate();
         return lastDayOfMonth;
     }
+
+    const getThaiMonthName = (monthNumber) => {
+        return thaiMonthNames[monthNumber - 1];
+    };
+
+    // Example usage
+    const thaiMonthName = getThaiMonthName(parseInt(CheckMonth, 10));
+    const thaiMonthLowerName = getThaiMonthName(parseInt(countdownMonth, 10));
 
     const daysInMonth = getDaysInMonth(countdownMonth, CheckYear);
     const startDay = 21;
@@ -200,6 +215,7 @@ function Examine() {
         // monthLower = month - 1;
         timerecordIdLower = year
     }
+
     monthLower
     console.log('monthLower', monthLower);
     console.log('month', month);
@@ -242,11 +258,11 @@ function Examine() {
                 &&
                 entry.timerecordId == timerecordIdLower
             );
-            
-            alert(year);
-            alert(timerecordIdLower);
-            alert(filteredEntries);
-            alert(filteredEntriesLower);
+
+            // alert(year);
+            // alert(timerecordIdLower);
+            // alert(filteredEntries);
+            // alert(filteredEntriesLower);
 
 
             setSearchResult(filteredEntries);
@@ -513,7 +529,7 @@ function Examine() {
                                                     <select className="form-control" value={year} onChange={(e) => setYear(e.target.value)}>
                                                         {years.map((y) => (
                                                             <option key={y} value={y}>
-                                                                {y}
+                                                                {y + 543}
                                                             </option>
                                                         ))}
                                                     </select>
@@ -549,6 +565,17 @@ function Examine() {
                                 </div>
                             </section>
                             <section class="Frame">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        ชื่อ: {staffFullName}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        ตั้งแต่วันที่ 20 {thaiMonthLowerName} - 21 {thaiMonthName} ปี {year}
+                                    </div>
+                                </div>
+                                <br />
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">

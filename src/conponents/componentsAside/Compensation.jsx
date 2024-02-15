@@ -18,7 +18,7 @@ Modal.setAppElement('#root'); // Set the root element for accessibility
 
 
 function Compensation() {
-
+    document.title = ' ตารางค่าตอบแทน';
     const tableStyle = {
         borderCollapse: 'collapse',
         width: '100%',
@@ -352,13 +352,13 @@ function Compensation() {
                 entry.employeeId === searchEmployeeId &&
                 entry.month === month
                 &&
-                entry.timerecordId === year
+                entry.timerecordId == year
             );
             const filteredEntriesLower = timerecordAllList.filter(entry =>
                 entry.employeeId === searchEmployeeId &&
                 entry.month === monthLower
                 &&
-                entry.timerecordId === timerecordIdLower
+                entry.timerecordId == timerecordIdLower
             );
 
 
@@ -690,7 +690,7 @@ function Compensation() {
                                                     <select className="form-control" value={year} onChange={(e) => setYear(e.target.value)}>
                                                         {years.map((y) => (
                                                             <option key={y} value={y}>
-                                                                {y}
+                                                                {y + 543}
                                                             </option>
                                                         ))}
                                                     </select>
@@ -810,9 +810,10 @@ function Compensation() {
                                                                 {/* {workplaceRecord.otTimes} */}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                ลบ/
+                                                                <a href="https://example.com" class="link1" style={{ color: 'red' }}><b>ลบ</b></a> / <a href="#" class="link2" style={{ color: 'blue' }} onClick={openModal}><b>แก้ไข</b></a>
+
                                                                 {/* <button onClick={handleButtonClick}>แก้ไข</button> */}
-                                                                <button onClick={openModal}>แก้ไข</button>
+                                                                {/* <button onClick={openModal}>แก้ไข</button> */}
 
                                                                 <Modal
                                                                     isOpen={modalIsOpen}
@@ -927,12 +928,15 @@ function Compensation() {
                                                         </tr>
                                                     ))}
                                                     <tr>
-                                                        <td></td>
+                                                        <td style={cellStyle}>สรุป</td>
                                                         <td></td>
                                                         <td></td>
                                                         <td style={cellStyle}>{sumWorkRate}</td>
                                                         <td></td>
                                                         <td style={cellStyle}>{sumWorkRateOT.toFixed(2)}</td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
                                                     </tr>
                                                 </tbody>
                                             </table>

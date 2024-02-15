@@ -972,7 +972,7 @@ function SettingSpecial() {
                                                                     type="text"
                                                                     name="startTime"
                                                                     class="form-control"
-                                                                    placeholder={`Start Time `}
+                                                                    placeholder={`เวลาเข้า `}
                                                                     value={specialWorkTimeDay.startTime}
                                                                     onChange={handleInputChange}
                                                                 />
@@ -982,7 +982,7 @@ function SettingSpecial() {
                                                                     type="text"
                                                                     name="endTime"
                                                                     class="form-control"
-                                                                    placeholder={`End Time `}
+                                                                    placeholder={`เวลาออก `}
                                                                     value={specialWorkTimeDay.endTime}
                                                                     onChange={handleInputChange}
                                                                 />
@@ -994,7 +994,7 @@ function SettingSpecial() {
                                                                     type="text"
                                                                     name="startTimeOT"
                                                                     class="form-control"
-                                                                    placeholder={`Start Time OT `}
+                                                                    placeholder={`เวลาเข้า OT `}
                                                                     value={specialWorkTimeDay.startTimeOT}
                                                                     onChange={handleInputChange}
                                                                 />
@@ -1005,7 +1005,7 @@ function SettingSpecial() {
                                                                     type="text"
                                                                     name="endTimeOT"
                                                                     class="form-control"
-                                                                    placeholder={`End Time OT `}
+                                                                    placeholder={`เวลาออก OT `}
                                                                     value={specialWorkTimeDay.endTimeOT}
                                                                     onChange={handleInputChange}
                                                                 />
@@ -1091,8 +1091,8 @@ function SettingSpecial() {
                                                         <input
                                                             type="text"
                                                             className="form-control"
-                                                            placeholder={`Person `}
-                                                            name="countPerson" // Make sure the name attribute is set to "countPerson"
+                                                            placeholder={`จำนวนคน `}
+                                                            name="จำนวนคน" // Make sure the name attribute is set to "countPerson"
                                                             value={time.countPerson}
                                                             onChange={(e) => handleInputChangePerson(e, index)}
                                                         />

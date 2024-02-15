@@ -701,7 +701,7 @@ const SendEmployeePDF3 = () => {
                                                 <br />
                                                 <button className="btn b_save" onClick={addInput}>Add Input</button> */}
                                     <div className="row">
-                                        <div className="col-md-1" >
+                                        <div className="col-md-2" >
                                             <label role="searchname" style={absoluteBottomStyle}>วันที่</label>
                                         </div>
                                         <div className="col-md-3">
@@ -720,7 +720,7 @@ const SendEmployeePDF3 = () => {
                                     </div>
                                     <br />
                                     <div className='row'>
-                                        <div className="col-md-3">
+                                        <div className="col-md-2">
                                             <label role="searchname" style={absoluteBottomStyle}>แสดงความนับถือ</label>
                                         </div>
                                         <div className="col-md-4">
@@ -742,11 +742,11 @@ const SendEmployeePDF3 = () => {
                                     </div>
                                     <br />
                                     <div className="row">
-                                        <div className="col-md-1">
+                                        <div className="col-md-2">
                                             <label role="searchname" style={absoluteBottomStyle}>เรื่อง</label>
                                         </div>
 
-                                        <div className="col-md-11">
+                                        <div className="col-md-10">
                                             <input
                                                 type="text"
                                                 className="form-control"
@@ -757,11 +757,11 @@ const SendEmployeePDF3 = () => {
                                     </div>
                                     <br />
                                     <div className="row">
-                                        <div className="col-md-1">
+                                        <div className="col-md-2">
                                             <label role="searchname" style={absoluteBottomStyle}>เรียน</label>
                                         </div>
 
-                                        <div className="col-md-11">
+                                        <div className="col-md-10">
                                             <input
                                                 type="text"
                                                 className="form-control"
@@ -772,10 +772,10 @@ const SendEmployeePDF3 = () => {
                                     </div>
                                     <br />
                                     <div className="row">
-                                        <div className="col-md-1">
+                                        <div className="col-md-2">
                                             <label role="searchname">เนื้อหา</label>
                                         </div>
-                                        <div className="col-md-11">
+                                        <div className="col-md-10">
                                             <textarea
                                                 name="input5"
                                                 class="form-control"
@@ -788,10 +788,10 @@ const SendEmployeePDF3 = () => {
                                     </div>
                                     <br />
                                     <div className="row">
-                                        <div className="col-md-1">
+                                        <div className="col-md-2">
                                             <label role="searchname">เนื้อหาส่วนท้าย 1</label>
                                         </div>
-                                        <div className="col-md-11">
+                                        <div className="col-md-10">
                                             <textarea
                                                 name="input5"
                                                 class="form-control"
@@ -804,10 +804,10 @@ const SendEmployeePDF3 = () => {
                                     </div>
                                     <br />
                                     <div className="row">
-                                        <div className="col-md-1">
+                                        <div className="col-md-2">
                                             <label role="searchname">เนื้อหาส่วนท้าย 2</label>
                                         </div>
-                                        <div className="col-md-11">
+                                        <div className="col-md-10">
                                             <textarea
                                                 name="input5"
                                                 class="form-control"
@@ -820,10 +820,10 @@ const SendEmployeePDF3 = () => {
                                     </div>
                                     <br />
                                     <div className="row">
-                                        <div className="col-md-1">
+                                        <div className="col-md-2">
                                             <label role="searchname">เนื้อหาส่วนท้าย 3</label>
                                         </div>
-                                        <div className="col-md-11">
+                                        <div className="col-md-10">
                                             <textarea
                                                 name="input5"
                                                 class="form-control"
