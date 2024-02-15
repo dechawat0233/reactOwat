@@ -928,34 +928,34 @@ function AddsettimeWorkplace() {
         };
 
 
-        //                                                         //get work time from workplace 
-        //                                                         const workplaceWorkTime = await getWorkTime(searchResult, formattedWorkDate);
-        // // alert(JSON.stringify(searchResult,null,2) );
+                                                                //get work time from workplace 
+                                                                const workplaceWorkTime = await getWorkTime(searchResult, formattedWorkDate);
+        // alert(JSON.stringify(searchResult,null,2) );
 
-        // workplaceWorkTime.map(item => {
-        // // alert(item.shift);
-        // if(item.shift == 'กะเช้า'){
-        // // alert(item.startTime);
-        // setShift1start(item.startTime);
-        // setShift1end(item.endTime);
-        // setStartTimeOt1(item.startTimeOT);
-        // setEndTimeOt1(item.endTimeOT);
+        workplaceWorkTime.map(item => {
+        // alert(item.shift);
+        if(item.shift == 'กะเช้า'){
+        // alert(item.startTime);
+        setShift1start(item.startTime);
+        setShift1end(item.endTime);
+        setStartTimeOt1(item.startTimeOT);
+        setEndTimeOt1(item.endTimeOT);
 
-        // }else if(item.shift == 'กะบ่าย') {
-        //     setShift2start(item.startTime);
-        //     setShift2end(item.endTime);
-        //     setStartTimeOt2(item.startTimeOT);
-        // setEndTimeOt2(item.endTimeOT);
+        }else if(item.shift == 'กะบ่าย') {
+            setShift2start(item.startTime);
+            setShift2end(item.endTime);
+            setStartTimeOt2(item.startTimeOT);
+        setEndTimeOt2(item.endTimeOT);
 
-        // } else if(item.shift == 'กะดึก'){
-        //     setShift3start(item.startTime);
-        //     setShift3end(item.endTime);
-        //     setStartTimeOt3(item.startTimeOT);
-        // setEndTimeOt3(item.endTimeOT);
+        } else if(item.shift == 'กะดึก'){
+            setShift3start(item.startTime);
+            setShift3end(item.endTime);
+            setStartTimeOt3(item.startTimeOT);
+        setEndTimeOt3(item.endTimeOT);
 
-        // }
+        }
 
-        // });
+        });
 
 
 

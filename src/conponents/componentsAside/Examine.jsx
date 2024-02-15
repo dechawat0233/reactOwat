@@ -420,6 +420,13 @@ function Examine() {
     };
 
 
+//edit data
+async function editdata(){
+    alert('hi');
+
+}
+
+
     return (
         // <div>
         <body class="hold-transition sidebar-mini" className='editlaout'>
@@ -556,7 +563,7 @@ function Examine() {
                                                 <thead>
                                                     <tr>
                                                         <th style={headerCellStyle}>วันที่</th>
-                                                        <th style={headerCellStyle}>หน่วงงาน</th>
+                                                        <th style={headerCellStyle}>หน่วยงาน</th>
                                                         <th style={headerCellStyle}>เวลาเข้า</th>
                                                         <th style={headerCellStyle}>เวลาออก</th>
                                                         <th style={headerCellStyle}>เวลาเข้า OT</th>
@@ -607,6 +614,7 @@ function Examine() {
                                                             </td>
                                                         </tr>
                                                     ))} */}
+                                                    {JSON.stringify(resultArrayWithWorkplaceRecords)}
                                                     {resultArrayWithWorkplaceRecords.map((workplaceRecord, index) => (
                                                         <tr key={index}>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
@@ -634,7 +642,7 @@ function Examine() {
                                                                 {workplaceRecord.otTimes}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                <a href="https://example.com" class="link1" style={{ color: 'red' }}><b>ลบ</b></a> / <a href="https://example2.com" class="link2" style={{ color: 'blue' }}><b>แก้ไข</b></a>
+                                                                <a href="https://example.com" class="link1" style={{ color: 'red' }}><b>ลบ</b></a> / <a href="https://example2.com" onClick={editdata} class="link2" style={{ color: 'blue' }}><b>แก้ไข</b></a>
                                                             </td>
                                                         </tr>
                                                     ))}
