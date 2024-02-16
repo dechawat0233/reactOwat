@@ -1,4 +1,3 @@
-// import React from 'react'
 import endpoint from '../../config';
 
 import axios from 'axios';
@@ -11,6 +10,8 @@ import EmployeesSelected from './EmployeesSelected';
 import Calendar from 'react-calendar';
 import '../editwindowcss.css';
 import EmployeeWorkDay from './componentsetting/EmployeeWorkDay';
+import './salarysummary/styleCom.css';
+
 function Salaryresult() {
   document.title = 'สรุปเงินเดือน';
 
@@ -34,16 +35,40 @@ function Salaryresult() {
   const [name, setName] = useState(''); //ชื่อหน่วยงาน
   const [lastName, setLastname] = useState(''); //ชื่อหน่วยงาน
 
+  const [searchWorkplaceId, setSearchWorkplaceId] = useState(''); //รหัสหน่วยงาน
+  const [searchWorkplaceName, setSearchWorkplaceName] = useState(''); //ชื่อหน่วยงาน
+
+  const [searchResult, setSearchResult] = useState([]);
+  const [searchResultLower, setSearchResultLower] = useState([]);
+
+  const [employeeListResult, setEmployeeListResult] = useState([]);
+  const [newWorkplace, setNewWorkplace] = useState(true);
+  const [timerecordAllList, setTimerecordAllList] = useState([]);
+
   const [employeeList, setEmployeeList] = useState([]);
   const [workplaceList, setWorkplaceList] = useState([]);
-
+  const [searchEmployeeId, setSearchEmployeeId] = useState('');
+  const [searchEmployeeName, setSearchEmployeeName] = useState('');
   const [staffId, setStaffId] = useState(''); //รหัสหน่วยงาน
   const [staffName, setStaffName] = useState(''); //รหัสหน่วยงาน
   const [staffLastname, setStaffLastname] = useState(''); //รหัสหน่วยงาน
   const [staffFullName, setStaffFullName] = useState(''); //รหัสหน่วยงาน
 
-  const [month, setMonth] = useState('');
-  const [year, setYear] = useState('');
+  const [alldaywork, setAlldaywork] = useState([]);
+  const [alldayworkLower, setAlldayworkLower] = useState([]);
+  //   const [month, setMonth] = useState('');
+  //   const [year, setYear] = useState('');
+  const [month, setMonth] = useState('01');
+  const [year, setYear] = useState(new Date().getFullYear());
+  const [employee, setEmployee] = useState({});
+
+  const thaiMonthNames = [
+    'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
+    'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
+  ];
+  const getThaiMonthName = (monthNumber) => {
+    return thaiMonthNames[monthNumber - 1];
+  };
 
   useEffect(() => {
     setMonth("01");
@@ -55,6 +80,119 @@ function Salaryresult() {
   const currentYear = new Date().getFullYear(); // 2024
   const years = Array.from({ length: currentYear - EndYear + 1 }, (_, index) => EndYear + index).reverse();
 
+  useEffect(() => {
+    // Fetch data from the API when the component mounts
+    fetch(endpoint + '/employee/list')
+      .then(response => response.json())
+      .then(data => {
+        // Update the state with the fetched data
+        setEmployeeList(data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []); // The empty array [] ensures that the effect runs only once after the initial render
+
+  useEffect(() => {
+    // Fetch data from the API when the component mounts
+    fetch(endpoint + '/workplace/list')
+      .then(response => response.json())
+      .then(data => {
+        // Update the state with the fetched data
+        setWorkplaceList(data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+  console.error('workplaceList', workplaceList);
+
+  console.log(employeeList);
+
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
+  const [workTimeDayPerson, setWorkTimeDayPerson] = useState({
+    // startDay: '',
+    // endDay: '',
+    allTimesPerson: [{ CodeSalary: '', positionWork: '', countPerson: '' }],
+  });
+
+  const [workTimeDayPersonList, setWorkTimeDayPersonList] = useState([]);
+
+  // const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  // const shiftWork = ['Shift 1', 'Shift 2', 'Shift 3'];
+  const positionWork = ['หัวหน้า', 'ทำความสะอาด', 'กวาดพื้น'];
+
+
+  const handleInputPersonChange = (e) => {
+    const { name, value } = e.target;
+
+    setWorkTimeDayPerson((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleInputChangePerson = (e, index) => {
+    const { name, value } = e.target;
+
+    setWorkTimeDayPerson((prevData) => {
+      const updatedAllTimesPerson = [...prevData.allTimesPerson];
+      updatedAllTimesPerson[index] = {
+        ...updatedAllTimesPerson[index],
+        [name]: value,
+      };
+      return {
+        ...prevData,
+        allTimesPerson: updatedAllTimesPerson,
+      };
+    });
+
+  };
+
+  const handleAddTimePerson = () => {
+    setWorkTimeDayPerson((prevData) => ({
+      ...prevData,
+      allTimesPerson: [...prevData.allTimesPerson, { CodeSalary: '', positionWork: '', countPerson: '' }],
+    }));
+  };
+
+
+  const handleRemoveTimePerson = (indexToRemove) => {
+    setWorkTimeDayPerson((prevData) => ({
+      ...prevData,
+      allTimesPerson: prevData.allTimesPerson.filter((_, index) => index !== indexToRemove),
+    }));
+  };
+
+
+  const handleAddTimePersonList = () => {
+    setWorkTimeDayPersonList((prevList) => [...prevList, workTimeDayPerson]);
+    //xxss
+    //clean data
+    setWorkTimeDayPerson({
+      // startDay: '',
+      // endDay: '',
+      allTimesPerson: [{ CodeSalary: '', positionWork: '', countPerson: '' }],
+    });
+  };
+
+  const handleRemoveTimePersonList = (index) => {
+    setWorkTimeDayPersonList((prevList) => {
+      const updatedList = [...prevList];
+      updatedList.splice(index, 1);
+      return updatedList;
+    });
+  };
 
   useEffect(() => {
     // Fetch data from the API when the component mounts
@@ -71,29 +209,256 @@ function Salaryresult() {
 
   console.log(employeeList);
 
+  useEffect(() => {
+    // Fetch data from the API when the component mounts
+    fetch(endpoint + '/timerecord/listemp')
+      .then(response => response.json())
+      .then(data => {
+        // Update the state with the fetched data
+        setTimerecordAllList(data);
+        // alert(data[0].workplaceName);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
 
-  const [searchWorkplaceId, setSearchWorkplaceId] = useState(''); //รหัสหน่วยงาน
-  const [searchWorkplaceName, setSearchWorkplaceName] = useState(''); //ชื่อหน่วยงาน
-  const [searchResult, setSearchResult] = useState([]);
-  const [employeeListResult, setEmployeeListResult] = useState([]);
-  const [newWorkplace, setNewWorkplace] = useState(true);
+  const CheckMonth = parseInt(month, 10);
+  const CheckYear = year;
+  // const CheckMonth = 5;
+  // const CheckYear = 2023;
+  console.log('CheckMonth', CheckMonth);
+  console.log('CheckYear', CheckYear);
+
+  let countdownMonth;
+  let countdownYear;
+
+  if (CheckMonth === 1) {
+    countdownMonth = 12;
+    countdownYear = CheckYear - 1;
+  } else {
+    countdownMonth = CheckMonth - 1;
+    countdownYear = CheckYear;
+
+  }
+  const base = 543;
+  function getDaysInMonth(month, year) {
+    // Months are 0-based, so we subtract 1 from the provided month
+    const lastDayOfMonth = new Date(year, month, 0).getDate();
+    return lastDayOfMonth;
+  }
+
+  const daysInMonth = getDaysInMonth(countdownMonth, CheckYear);
+  const startDay = 21;
+  // Create an array from startDay to daysInMonth
+  const firstPart = Array.from({ length: daysInMonth - startDay + 1 }, (_, index) => (startDay + index) + '/' + countdownMonth + '/' + (parseInt(countdownYear, 10) + parseInt(base, 10)));
+
+  // Create an array from 1 to 20
+  const secondPart = Array.from({ length: 20 }, (_, index) => index + 1 + '/' + CheckMonth + '/' + (parseInt(CheckYear, 10) + parseInt(base, 10)));
+
+  // Concatenate the two arrays
+  const resultArray = [...firstPart, ...secondPart];
+
+  const firstPart2 = Array.from({ length: daysInMonth - startDay + 1 }, (_, index) => (startDay + index));
+
+  // Create an array from 1 to 20
+  const secondPart2 = Array.from({ length: 20 }, (_, index) => index + 1);
+
+  // Concatenate the two arrays
+  const resultArray2 = [...firstPart2, ...secondPart2];
+
+  console.log('resultArrayresultArray', resultArray);
+  console.log('resultArrayresultArray2', resultArray2);
+
+
+  function getDaysInMonth2(month, year) {
+    // Months are 0-based, so we subtract 1 from the provided month
+    return new Date(year, month, 0).getDate();
+  }
+  // Function to create an array of days for a given month and year
+  function createDaysArray(month, year, endDay, filter) {
+    const daysArray = {};
+
+    for (let day = 1; day <= endDay; day++) {
+      const date = new Date(year, month - 1, day);
+      const weekday = date.toLocaleDateString('en-US', { weekday: 'short' });
+
+      if (!daysArray[weekday]) {
+        daysArray[weekday] = [];
+      }
+
+      if (filter(day)) {
+        daysArray[weekday].push(day);
+      }
+    }
+
+    return daysArray;
+  }
+
+  const daysInMonth2 = getDaysInMonth(CheckMonth, CheckYear);
+  const daysInCountdownMonth = getDaysInMonth2(countdownMonth, countdownYear);
+
+  // const array1 = createDaysArray(CheckMonth, CheckYear, daysInMonth2, (day) => day <= 20);
+  // const array2 = createDaysArray(countdownMonth, CheckYear, daysInCountdownMonth, (day) => day > 21);
+  const array1 = createDaysArray(CheckMonth, CheckYear, daysInMonth2, (day) => day <= 20);
+  const array2 = createDaysArray(countdownMonth, countdownYear, daysInCountdownMonth, (day) => day >= 21);
+
+
+  console.log('Array 1 (March):', array1);
+  console.log('Array 2 (Countdown):', array2);
+
+  const commonNumbers = new Set([...array2.Mon, ...array1.Mon]);
+
+  // const commonNumbers = [...new Set([...array1.Mon, ...array2.Mon])];
+  console.log('commonNumbers', commonNumbers);
+
+
+  let monthLower;
+  let timerecordIdLower;
+  // get value from form search
+  if (month == "01") {
+    monthLower = "12";
+    timerecordIdLower = year - 1;
+  } else {
+    const monthNumber = parseInt(month, 10);
+    monthLower = (monthNumber - 1).toString().padStart(2, '0');  // Convert back to string, pad with leading zero if needed
+    // monthLower = month - 1;
+    timerecordIdLower = year
+  }
+  monthLower
+  console.log('monthLower', monthLower);
+  console.log('month', month);
+  console.log('year', year);
+  console.log('timerecordIdLower', timerecordIdLower);
+
+  const thaiMonthName = getThaiMonthName(parseInt(CheckMonth, 10));
+  const thaiMonthLowerName = getThaiMonthName(parseInt(countdownMonth, 10));
 
   async function handleSearch(event) {
     event.preventDefault();
 
-
-    // get value from form search
     const data = await {
       employeeId: searchEmployeeId,
       // name: searchEmployeeName,
-      idCard: '',
-      workPlace: '',
+      // employeeName: searchEmployeeName,
+      month: month,
+      timerecordId: year,
+
+    };
+    const dataLower = await {
+      employeeId: searchEmployeeId,
+      // name: searchEmployeeName,
+      // employeeName: searchEmployeeName,
+      month: monthLower,
+      timerecordId: timerecordIdLower,
     };
     // alert(data.name);
     try {
-      const response = await axios.post(endpoint + '/employee/search', data);
-      setSearchResult(response.data.employees);
+      //get employee data
+      await setEmployee(findEmployeeById(searchEmployeeId));
+
+      // const response = await axios.post(endpoint + '/timerecord/listemp', data);
+      // const responseLower = await axios.post(endpoint + '/timerecord/listemp', dataLower);
+      const filteredEntries = timerecordAllList.filter(entry =>
+        entry.employeeId === searchEmployeeId &&
+        entry.month === month
+        &&
+        entry.timerecordId == year
+      );
+      const filteredEntriesLower = timerecordAllList.filter(entry =>
+        entry.employeeId === searchEmployeeId &&
+        entry.month === monthLower
+        &&
+        entry.timerecordId == timerecordIdLower
+      );
+
+
+      // alert(filteredEntriesLower);
+
+
+      setSearchResult(filteredEntries);
+      setSearchResultLower(filteredEntriesLower);
+
+      // const entriesData = filteredEntries.map(entry =>
+      //     entry.employee_workplaceRecord
+      //         .filter(record => record.date <= 20)
+      //         .map(record => ({
+      //             workplaceId: record.workplaceId,
+      //             dates: record.date,
+      //             allTimes: record.allTime,
+      //             otTimes: record.otTime,
+
+      //             startTime: record.startTime,
+      //             endTime: record.endTime,
+      //             selectotTime: record.selectotTime,
+      //             selectotTimeOut: record.selectotTimeOut,
+      //         }))
+      // );
+
+      const entriesData = filteredEntries.map(entry =>
+        entry.employee_workplaceRecord
+          .filter(record => record.date <= 20)
+          .map(record => {
+            const matchedWorkplace = workplaceList.find(workplace => workplace.workplaceId === record.workplaceId);
+            return {
+              workplaceId: record.workplaceId,
+              dates: record.date,
+              workOfHour: matchedWorkplace ? matchedWorkplace.workOfHour : '', // Default value if not found
+              workRate: matchedWorkplace ? matchedWorkplace.workRate : '', // Default value if not found
+              workRateOT: matchedWorkplace ? matchedWorkplace.workRateOT : '',
+              allTimes: record.allTime,
+              otTimes: record.otTime,
+              startTime: record.startTime,
+              endTime: record.endTime,
+              selectotTime: record.selectotTime,
+              selectotTimeOut: record.selectotTimeOut,
+            };
+          })
+      );
+
+      // console.log(entriesData);
+
+      // const entriesDataLower = filteredEntriesLower.map(entry =>
+      //     entry.employee_workplaceRecord
+      //         .filter(record => record.date >= 21)
+      //         .map(record => ({
+      //             workplaceId: record.workplaceId,
+      //             dates: record.date,
+      //             allTimes: record.allTime,
+      //             otTimes: record.otTime,
+
+      //             startTime: record.startTime,
+      //             endTime: record.endTime,
+      //             selectotTime: record.selectotTime,
+      //             selectotTimeOut: record.selectotTimeOut,
+      //         }))
+      // );
+
+      const entriesDataLower = filteredEntriesLower.map(entry =>
+        entry.employee_workplaceRecord
+          .filter(record => record.date >= 21)
+          .map(record => {
+            const matchedWorkplace = workplaceList.find(workplace => workplace.workplaceId === record.workplaceId);
+            return {
+              workplaceId: record.workplaceId,
+              dates: record.date,
+              workOfHour: matchedWorkplace ? matchedWorkplace.workOfHour : '', // Default value if not found
+              workRate: matchedWorkplace ? matchedWorkplace.workRate : '', // Default value if not found
+              workRateOT: matchedWorkplace ? matchedWorkplace.workRateOT : '',
+              allTimes: record.allTime,
+              otTimes: record.otTime,
+              startTime: record.startTime,
+              endTime: record.endTime,
+              selectotTime: record.selectotTime,
+              selectotTimeOut: record.selectotTimeOut,
+            };
+          })
+      );
+
+      setAlldaywork(entriesData);
+      setAlldayworkLower(entriesDataLower);
       // alert(response.data.employees.length);
+
       if (response.data.employees.length < 1) {
         // window.location.reload();
         setEmployeeId('');
@@ -121,10 +486,102 @@ function Salaryresult() {
 
       }
     } catch (error) {
-      alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
+      // alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา', error);
+
+      // alert(error);
+
       // window.location.reload();
     }
   }
+
+
+  const findEmployeeById = (id) => {
+    return employeeList.find(employee => employee.employeeId === id);
+  };
+
+
+  const [addSalaryDay, setAddSalaryDay] = useState(0);
+  useEffect(() => {
+
+    setAddSalaryDay(0);
+
+    if (employee?.addSalary?.length > 0) {
+      // alert(employee.addSalary.length);
+      //cal addSalary day
+      const ans = 0;
+      for (let i = 0; i < employee.addSalary.length; i++) {
+        // alert(employee.addSalary[i].roundOfSalary || '');
+        let tmp = employee.addSalary[i].roundOfSalary || '';
+        if (tmp == 'daily') {
+          // alert(employee.addSalary[i].SpSalary || 0);
+          let tmp1 = employee.addSalary[i].SpSalary || 0;
+          // alert(tmp1);
+          setAddSalaryDay(addSalaryDay + parseInt(employee.addSalary[i].SpSalary || 0));
+        }
+      }
+      // setAddSalaryDay(ans);
+
+    }
+
+  }, [employee]);
+
+  console.log('searchResult', searchResult);
+  console.log('searchResultLower', searchResultLower);
+
+  console.log('alldaywork', alldaywork);
+  console.log('alldayworkLower', alldayworkLower);
+
+  const allwork = [...alldayworkLower, ...alldaywork];
+  console.log('allwork', allwork);
+
+  const result = resultArray2.map((number) => {
+    const matchingEntry = alldaywork.find((entry) => entry.dates === (number < 10 ? '0' + number : '' + number));
+
+    if (matchingEntry) {
+      return `${number}, workplaceId: '${matchingEntry.workplaceId}', allTimes: '${matchingEntry.allTimes}', otTimes: '${matchingEntry.otTimes}'`;
+    } else {
+      return `${number}, workplaceId: '', allTimes: '', otTimes: ''`;
+    }
+  });
+  console.log('result', result);
+
+
+  // Convert 'dates' to numbers
+  // const allworkWithNumberDates = allwork.map(item => ({
+  //     ...item,
+  //     dates: parseInt(item.dates, 10)
+  // }));
+  const allworkFlattened = allwork.flat();
+
+  console.log(allworkFlattened);
+
+  // Filter unique entries based on 'workplaceId' and 'dates'
+  const uniqueEntries = allworkFlattened.reduce((acc, curr) => {
+    const key = `${curr.workplaceId}-${curr.dates}`;
+    if (!acc[key]) {
+      acc[key] = curr;
+    }
+    return acc;
+  }, {});
+
+  // Extract values from the object to get the final array
+  const resultAllwork = Object.values(uniqueEntries);
+
+  console.log('resultAllwork', resultAllwork);
+
+  const resultArrayWithWorkplaceRecords = resultArray2.map(date => {
+    const matchingRecord = resultAllwork.find(record => record.dates == date);
+    return matchingRecord ? { ...matchingRecord } : '';
+  });
+
+  console.log('resultArrayWithWorkplaceRecords', resultArrayWithWorkplaceRecords);
+
+  const combinedArray = resultArray.map((date, index) => {
+    const workplaceRecord = resultArrayWithWorkplaceRecords[index];
+    return [workplaceRecord, date];
+  });
+
+  console.log('combinedArray', combinedArray);
 
   const handleStaffIdChange = (e) => {
     const selectedStaffId = e.target.value;
@@ -165,6 +622,47 @@ function Salaryresult() {
     setSearchEmployeeName(selectedEmployeeFName);
   };
 
+  const sumTime = resultArrayWithWorkplaceRecords.reduce((accumulator, workplaceRecord) => {
+    const workTime = parseFloat(workplaceRecord.allTimes);
+    return !isNaN(workTime) ? accumulator + workTime : accumulator;
+  }, 0);
+
+  const sumTimeOT = resultArrayWithWorkplaceRecords.reduce((accumulator, workplaceRecord) => {
+    const workTimeOT = parseFloat(workplaceRecord.otTimes);
+    return !isNaN(workTimeOT) ? accumulator + workTimeOT : accumulator;
+  }, 0);
+
+  const sumWorkRate = resultArrayWithWorkplaceRecords.reduce((accumulator, workplaceRecord) => {
+    const workRateValue = parseFloat(workplaceRecord.workRate);
+    return !isNaN(workRateValue) ? accumulator + workRateValue : accumulator;
+  }, 0);
+  const sumWorkRateOT = resultArrayWithWorkplaceRecords.reduce((accumulator, workplaceRecord) => {
+    const workRateValue = parseFloat(workplaceRecord.workRate);//352
+    const workRateOTValue = parseFloat(workplaceRecord.workRateOT);//1.5
+    const workTimeValue = parseFloat(workplaceRecord.workOfHour);//8 work
+    const workTimeOTValue = parseFloat(workplaceRecord.otTimes);//3 workot
+
+    return !isNaN(workRateValue) ? accumulator + (((workRateValue / workTimeValue) * workRateOTValue) * workTimeOTValue) : accumulator;
+  }, 0);
+
+  const Compensation = ({ staffId, month, year }) => {
+    setStaffId(staffId);
+    setMonth(month);
+    setYear(year);
+  };
+
+  const sumWorkRate1 = resultArrayWithWorkplaceRecords.reduce((accumulator, workplaceRecord) => {
+    const workRateValue = parseFloat(workplaceRecord.workRate);
+    if (!isNaN(workRateValue)) {
+      accumulator.sum += workRateValue;
+      accumulator.count++;
+    }
+    return accumulator;
+  }, { sum: 0, count: 0 });
+
+  console.log("Sum:", sumWorkRate.sum);
+  console.log("Count:", sumWorkRate.count);
+
   return (
     // <div>
 
@@ -192,7 +690,7 @@ function Salaryresult() {
               <h2 class="title">สรุปเงินเดือน</h2>
               <section class="Frame">
                 <div class="col-md-12">
-                  <form >
+                  <form onSubmit={handleSearch}>
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
@@ -235,6 +733,8 @@ function Salaryresult() {
                         </div>
                       </div>
                     </div>
+
+
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
@@ -273,9 +773,9 @@ function Salaryresult() {
                     </div>
                   </form>
                   <br />
-                  <div class="d-flex justify-content-center">
+                  {/* <div class="d-flex justify-content-center">
                     <h2 class="title">ผลลัพธ์ {searchResult.length} รายการ</h2>
-                  </div>
+                  </div> */}
                 </div>
               </section>
               <h2 class="title">ตั้งค่าหน่วยงาน</h2>
@@ -293,9 +793,9 @@ function Salaryresult() {
                       </thead>
                       <tbody>
                         <tr>
-                          <td style={cellStyle}>25</td>
-                          <td style={cellStyle}>205</td>
-                          <td style={cellStyle}>50</td>
+                          <td style={cellStyle}>{sumTime.length}</td>
+                          <td style={cellStyle}>{sumTime}</td>
+                          <td style={cellStyle}>{sumTimeOT}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -317,11 +817,11 @@ function Salaryresult() {
                       </thead>
                       <tbody>
                         <tr>
+                          <td>{sumWorkRate}</td>
+                          <td>{(sumWorkRateOT).toFixed(2)}</td>
                           <td></td>
                           <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
+                          <td>{(sumWorkRate + sumWorkRateOT).toFixed(2)}</td>
                           <td>
                             <button>แก้ไข</button>
                           </td>
@@ -372,7 +872,7 @@ function Salaryresult() {
                         <tr>
                           <th style={headerCellStyle}>รวมเงินได้</th>
                           <th style={headerCellStyle}>รวมเงินหัก</th>
-                          <th style={headerCellStyle}>เงิรสุทธิ</th>
+                          <th style={headerCellStyle}>เงินสุทธิ</th>
 
                         </tr>
                       </thead>
