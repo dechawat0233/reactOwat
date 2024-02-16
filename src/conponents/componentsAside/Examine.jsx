@@ -35,11 +35,21 @@ function Examine() {
         backgroundColor: '#f2f2f2',
     };
 
+    const thaiToEnglishDayMap = {
+        'จันทร์': ['Mon'],
+        'อังคาร': ['Tue'],
+        'พุธ': ['Wed'],
+        'พฤหัส': ['Thu'],
+        'ศุกร์': ['Fri'],
+        'เสาร์': ['Sat'],
+        'อาทิตย์': ['Sun'],
+    };
+
     const [employeeId, setEmployeeId] = useState(''); //รหัสหน่วยงาน
     const [name, setName] = useState(''); //ชื่อหน่วยงาน
     const [lastName, setLastname] = useState(''); //ชื่อหน่วยงาน
 
-    const [searchWorkplaceId, setSearchWorkplaceId] = useState(''); //รหัสหน่วยงาน
+    const [workplaceIdEMP, setWorkplaceIdENP] = useState(''); //รหัสหน่วยงาน
     const [searchWorkplaceName, setSearchWorkplaceName] = useState(''); //ชื่อหน่วยงาน
 
 
@@ -51,6 +61,7 @@ function Examine() {
 
     const [alldaywork, setAlldaywork] = useState([]);
     const [alldayworkLower, setAlldayworkLower] = useState([]);
+    const [holiday, setHoliday] = useState([]);
 
     const [timerecordAllList, setTimerecordAllList] = useState([]);
     const [employeeListResult, setEmployeeListResult] = useState([]);
@@ -99,6 +110,20 @@ function Examine() {
             .then(data => {
                 // Update the state with the fetched data
                 setTimerecordAllList(data);
+                // alert(data[0].workplaceName);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, []);
+
+    useEffect(() => {
+        // Fetch data from the API when the component mounts
+        fetch(endpoint + '/workplace/list')
+            .then(response => response.json())
+            .then(data => {
+                // Update the state with the fetched data
+                setWorkplaceList(data);
                 // alert(data[0].workplaceName);
             })
             .catch(error => {
@@ -191,21 +216,6 @@ function Examine() {
 
     const daysInMonth2 = getDaysInMonth(CheckMonth, CheckYear);
     const daysInCountdownMonth = getDaysInMonth2(countdownMonth, countdownYear);
-
-    // const array1 = createDaysArray(CheckMonth, CheckYear, daysInMonth2, (day) => day <= 20);
-    // const array2 = createDaysArray(countdownMonth, CheckYear, daysInCountdownMonth, (day) => day > 21);
-    const array1 = createDaysArray(CheckMonth, CheckYear, daysInMonth2, (day) => day <= 20);
-    const array2 = createDaysArray(countdownMonth, countdownYear, daysInCountdownMonth, (day) => day >= 21);
-
-
-    console.log('Array 1 (March):', array1);
-    console.log('Array 2 (Countdown):', array2);
-
-    const commonNumbers = new Set([...array2.Mon, ...array1.Mon]);
-
-    // const commonNumbers = [...new Set([...array1.Mon, ...array2.Mon])];
-    console.log('commonNumbers', commonNumbers);
-
 
     let monthLower;
     let timerecordIdLower;
@@ -361,7 +371,7 @@ function Examine() {
         }
     });
 
-    console.log('result', result);
+    // console.log('result', result);
 
 
     // Convert 'dates' to numbers
@@ -414,6 +424,7 @@ function Examine() {
             // setStaffName(selectedEmployee.name);
             // setStaffLastname(selectedEmployee.lastName);
             setStaffFullName(selectedEmployee.name + ' ' + selectedEmployee.lastName);
+            setWorkplaceIdENP(selectedEmployee.workplace);
 
 
         } else {
@@ -433,6 +444,7 @@ function Examine() {
         if (selectedEmployee) {
             setStaffId(selectedEmployee.employeeId);
             setSearchEmployeeId(selectedEmployee.employeeId);
+            setWorkplaceIdENP(selectedEmployee.workplace);
         } else {
             setStaffId('');
             // searchEmployeeId('');
@@ -443,6 +455,74 @@ function Examine() {
         setSearchEmployeeName(selectedEmployeeFName);
     };
 
+    console.log('workplaceIdEMP', workplaceIdEMP);
+
+    // const array1 = createDaysArray(CheckMonth, CheckYear, daysInMonth2, (day) => day <= 20);
+    // const array2 = createDaysArray(countdownMonth, CheckYear, daysInCountdownMonth, (day) => day > 21);
+    const array1 = createDaysArray(CheckMonth, CheckYear, daysInMonth2, (day) => day <= 20);
+    const array2 = createDaysArray(countdownMonth, countdownYear, daysInCountdownMonth, (day) => day >= 21);
+
+    const workplace = workplaceList.find(workplace => workplace.workplaceId === workplaceIdEMP);
+    console.log('workplace', workplace);
+
+    let commonNumbers = new Set();
+
+    if (workplace) {
+        const stopWorkTimeDay = workplace.workTimeDay.find(day => day.workOrStop === "stop");
+
+        if (stopWorkTimeDay) {
+            const { startDay, endDay } = stopWorkTimeDay;
+            console.log("Found stop workTimeDay:", startDay, endDay);
+
+            const daysInBetween = getDaysInBetween(startDay, endDay);
+            console.log("daysInBetween:", daysInBetween);
+
+            daysInBetween.forEach(day => {
+                const englishDayArray = thaiToEnglishDayMap[day];
+
+                englishDayArray.forEach(englishDay => {
+                    // Use forEach to add each element to commonNumbers
+                    // commonNumbers.add(...array1[englishDayArray]);
+                    array1[englishDay].forEach(value => commonNumbers.add(value));
+                    array2[englishDay].forEach(value => commonNumbers.add(value));
+                });
+            });
+            
+            // setHoliday(commonNumbers);
+            console.log("Common Numbers:", commonNumbers);
+        } else {
+            console.log("No stop workTimeDay found.");
+        }
+    } else {
+        console.log("Workplace not found.");
+    }
+
+    // const commonNumbersArray = [...commonNumbers];
+    const commonNumbersArray = [...commonNumbers].map(value => value.toString());
+
+
+    function getDaysInBetween(startDay, endDay) {
+        const weekdays = ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัส', 'ศุกร์', 'เสาร์', 'อาทิตย์'];
+        const startIndex = weekdays.indexOf(startDay);
+        const endIndex = weekdays.indexOf(endDay);
+
+        if (startIndex === -1 || endIndex === -1) {
+            return [];
+        }
+
+        return weekdays.slice(startIndex, endIndex + 1);
+    }
+
+    console.log("commonNumbersArray:", commonNumbersArray);
+    console.log("resultArray2[index]:", resultArray2);
+
+    console.log('Array 1 (March):', array1);
+    console.log('Array 2 (Countdown):', array2);
+
+    // const commonNumbers = new Set([...array2.Mon, ...array1.Mon]);
+
+    // // const commonNumbers = [...new Set([...array1.Mon, ...array2.Mon])];
+    // console.log('commonNumbers', commonNumbers);
 
     //edit data
     async function editdata(index, workplaceRecord) {
@@ -681,28 +761,31 @@ function Examine() {
                                                         ) : (
 
                                                             <tr key={index}>
-                                                                <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {/* <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}> */}
+                                                                {/* <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}> */}
+                                                                <td style={commonNumbersArray.includes(resultArray2[index].toString()) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+
                                                                     {resultArray[index]}
                                                                 </td>
-                                                                <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                     {workplaceRecord.workplaceId}
                                                                 </td>
-                                                                <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                     {workplaceRecord.startTime}
                                                                 </td>
-                                                                <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                     {workplaceRecord.endTime}
                                                                 </td>
-                                                                <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                     {workplaceRecord.selectotTime}
                                                                 </td>
-                                                                <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                     {workplaceRecord.selectotTimeOut}
                                                                 </td>
-                                                                <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                     {workplaceRecord.allTimes}
                                                                 </td>
-                                                                <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                     {workplaceRecord.otTimes}
                                                                 </td>
                                                                 {/* <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
