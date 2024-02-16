@@ -51,8 +51,7 @@ function AddsettimeEmployee() {
         const savedYear = localStorage.getItem('year');
         if (savedEmployeeId ) {
             setSearchEmployeeId(savedEmployeeId);
-setEmployeeId(savedEmployeeId);
-
+setEmployeeId(savedEmployeeId );
 // const event = new Event('submit'); // Creating a synthetic event object
 // handleSearch(event); // Call handleSearch with the event
 localStorage.removeItem('employeeId');
@@ -1031,7 +1030,8 @@ localStorage.removeItem('employeeId');
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label role="agencynumber">รหัสพนักงาน</label>
-                                        <input type="text" class="form-control" id="agencynumber" placeholder="รหัสพนักงาน" value={employeeId} onChange={(e) => setEmployeeId(e.target.value)} />
+                                        <input type="text" class="form-control" id="agencynumber" placeholder="รหัสพนักงาน" 
+                                        value={employeeId !== 'null' ? employeeId : ''} onChange={(e) => setEmployeeId(e.target.value)} />
                                     </div>
                                 </div>
                                 <div class="col-md-2">
