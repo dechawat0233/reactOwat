@@ -52,12 +52,17 @@ function AddsettimeEmployee() {
 setEmployeeId(savedEmployeeId);
 const event = new Event('submit'); // Creating a synthetic event object
 handleSearch(event); // Call handleSearch with the event
+localStorage.removeItem('employeeId');
           }
           if (savedMonth) {
             setMonth(savedMonth);
+            localStorage.removeItem('month');
+
           }
           if (savedYear) {
             setYear(savedYear);
+            localStorage.removeItem('year');
+
           }
           
     }, []); // Run this effect only once on component mount
