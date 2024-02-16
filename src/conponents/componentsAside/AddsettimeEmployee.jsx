@@ -754,6 +754,8 @@ handleSearch(event); // Call handleSearch with the event
 
     // Function to handle deleting a row
     const handleDeleteRow = (index) => {
+alert(index);
+
         // Create a copy of the current state
         const newDataList = [...rowDataList2];
         // Remove the row at the specified index
@@ -1285,6 +1287,8 @@ handleSearch(event); // Call handleSearch with the event
                                         {rowDataList2.map((rowData2, index) => (
                                             rowData2.workplaceId && (
                                                 <div key={index}>
+                                                                            <input type="hidden" id="hiddenField" name="" value={index} />
+
                                                     <div class="row" style={{ marginBottom: '1rem', borderBottom: '2px solid #000' }}>
                                                         <div class="col-md-1" style={bordertable}> {rowData2.workplaceId}
                                                         </div>
@@ -1321,7 +1325,7 @@ handleSearch(event); // Call handleSearch with the event
                                                         )}
                                                         <div class="col-md-1" style={bordertable}>
                                                             {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
-                                                            <button type="button" class="btn btn-xs btn-danger" style={{ padding: '0.3rem ', width: '8rem' }} onClick={() => handleDeleteRow(rowData2.tmpIndex)}>Delete</button>
+                                                            <button type="button" class="btn btn-xs btn-danger" style={{ padding: '0.3rem ', width: '8rem' }} onClick={() => handleDeleteRow(index)}>Delete</button>
                                                         </div>
 
                                                     </div>
