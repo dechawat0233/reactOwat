@@ -82,16 +82,16 @@ function Compensation() {
         const savedYear = localStorage.getItem('year');
         if (savedEmployeeId) {
             setSearchEmployeeId(savedEmployeeId);
-setStaffId(savedEmployeeId);
-const event = new Event('submit'); // Creating a synthetic event object
-handleSearch(event); // Call handleSearch with the event
-          }
-          if (savedMonth) {
+            setStaffId(savedEmployeeId);
+            const event = new Event('submit'); // Creating a synthetic event object
+            handleSearch(event); // Call handleSearch with the event
+        }
+        if (savedMonth) {
             setMonth(savedMonth);
-          }
-          if (savedYear) {
+        }
+        if (savedYear) {
             setYear(savedYear);
-          }
+        }
 
     }, []); // Run this effect only once on component mount
     const EndYear = 2010;
@@ -844,7 +844,7 @@ handleSearch(event); // Call handleSearch with the event
                                                         <th style={headerCellStyle}>ชั่วโมง OT</th>
                                                         <th style={headerCellStyle}>ค่าล่วงเวลา OT</th>
                                                         <th style={headerCellStyle}>เงินเพิ่ม</th>
-                                                        <th style={headerCellStyle}>เงินหัก</th>
+                                                        {/* <th style={headerCellStyle}>เงินหัก</th> */}
                                                         <th style={headerCellStyle}>แก้/ลบ</th>
                                                     </tr>
                                                 </thead>
@@ -918,9 +918,8 @@ handleSearch(event); // Call handleSearch with the event
                                                                 <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                 </td>
                                                             )}
-                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {/* {workplaceRecord.otTimes} */}
-                                                            </td>
+                                                            {/* <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                            </td> */}
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                 <a href="https://example.com" class="link1" style={{ color: 'red' }}><b>ลบ</b></a> / <a href="#" class="link2" style={{ color: 'blue' }} onClick={openModal}><b>แก้ไข</b></a>
 
@@ -1046,10 +1045,81 @@ handleSearch(event); // Call handleSearch with the event
                                                         <td style={cellStyle}>{sumWorkRate}</td>
                                                         <td></td>
                                                         <td style={cellStyle}>{sumWorkRateOT.toFixed(2)}</td>
-                                                        <td >{(sumWorkRate1.count * (addSalaryDay / 30)).toFixed(2)}</td>
+                                                        <td style={cellStyle}>{(sumWorkRate1.count * (addSalaryDay / 30)).toFixed(2)}</td>
                                                         <td></td>
                                                         <td></td>
                                                     </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <br />
+                                            <table border="1" style={tableStyle}>
+                                                <thead>
+                                                    <tr>
+                                                        <th style={headerCellStyle}>วันที่</th>
+                                                        <th style={headerCellStyle}>หน่วยงาน</th>
+                                                        <th style={headerCellStyle}>ชั่วโมงทำงาน</th>
+                                                        <th style={headerCellStyle}>ค่าจ้างปกติ</th>
+                                                        <th style={headerCellStyle}>ชั่วโมง OT</th>
+                                                        <th style={headerCellStyle}>ค่าล่วงเวลา OT</th>
+                                                        <th style={headerCellStyle}>เงินเพิ่ม</th>
+                                                        {/* <th style={headerCellStyle}>เงินหัก</th> */}
+                                                        <th style={headerCellStyle}>แก้/ลบ</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style={cellStyle}>
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+
+                                                            /></td>
+                                                        <td style={cellStyle}>
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+
+                                                            />
+                                                        </td>
+                                                        <td style={cellStyle}>
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+
+                                                            /></td>
+                                                        <td style={cellStyle}>
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+
+                                                            /></td>
+                                                        <td style={cellStyle}>
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+
+                                                            /></td>
+                                                        <td style={cellStyle}>
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+
+                                                            /></td>
+                                                        <td style={cellStyle}>
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+
+                                                            /></td>
+                                                        {/* <td style={headerCellStyle}>เงินหัก</td> */}
+                                                        <td style={cellStyle}>
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+
+                                                            /></td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
                                                 </tbody>
                                             </table>
                                         </div>
