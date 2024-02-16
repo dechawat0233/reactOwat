@@ -162,7 +162,6 @@ function App() {
               <Route path="/systemuser" element={<SystemUser />} />
 
               <Route path="/addsettime" element={<Addsettime />} />
-
               <Route path="/application" element={<Application />} />
               <Route path="/applicatio1" element={<Application1 />} />
               <Route path="/applicatio2" element={<Application2 />} />

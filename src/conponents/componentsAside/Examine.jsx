@@ -1,5 +1,7 @@
 // import React from 'react'
 import endpoint from '../../config';
+import { Link } from 'react-router-dom';
+
 
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -385,11 +387,12 @@ function Examine() {
 
     console.log('resultAllwork', resultAllwork);
 
+    const [countWd, setCountWd] = useState(0);
+
     const resultArrayWithWorkplaceRecords = resultArray2.map(date => {
         const matchingRecord = resultAllwork.find(record => record.dates == date);
         return matchingRecord ? { ...matchingRecord } : '';
     });
-
 
     console.log('resultArrayWithWorkplaceRecords', resultArrayWithWorkplaceRecords);
 
@@ -445,15 +448,14 @@ function Examine() {
     async function editdata(index, workplaceRecord) {
         alert(index);
         // resultArrayWithWorkplaceRecords[index]= {... workplaceRecord };
-
     }
 
-    const handleClick = () => {
-        // Call a function in Topop.jsx and pass emp as an argument
-        // You can modify this logic based on your requirements
-        // For simplicity, I'm passing emp directly to the Topop component
-        Compensation({ staffId, month, year });
-    };
+    //edit timerecord
+    async function edittimerecord() {
+        // alert('hi');
+        // return <Compensation  />;
+
+    }
 
     return (
         // <div>
@@ -726,9 +728,15 @@ function Examine() {
 
                                     )}
                                     <button class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button> */}
-                                    <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;แก้ไข</button>
-                                    {/* <button class="btn clean"><i>&gt;</i> &nbsp;ถัดไป</button> */}
-                                    <button class="btn clean" onClick={handleClick}><i>&gt;</i> &nbsp; ถัดไป</button>
+                                    <Link to="/Addsettime">
+
+                                        <button type="button" class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;แก้ไข</button>
+                                    </Link>
+
+                                    <Link to="/Compensation">
+                                        <button class="btn clean"><i>&gt;</i> &nbsp;ถัดไป</button>
+
+                                    </Link>
 
                                 </div>
                             </section>
