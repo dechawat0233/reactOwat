@@ -1,5 +1,3 @@
-// import React from 'react'
-// import React from 'react'
 import endpoint from '../../config';
 
 import axios from 'axios';
@@ -64,6 +62,7 @@ function Compensation() {
     //   const [year, setYear] = useState('');
     const [month, setMonth] = useState('01');
     const [year, setYear] = useState(new Date().getFullYear());
+const [employee , setEmployee ] = useState({});
 
     useEffect(() => {
         setMonth("01");
@@ -346,6 +345,9 @@ function Compensation() {
         };
         // alert(data.name);
         try {
+                    //get employee data
+await setEmployee(findEmployeeById(searchEmployeeId) );
+
             // const response = await axios.post(endpoint + '/timerecord/listemp', data);
             // const responseLower = await axios.post(endpoint + '/timerecord/listemp', dataLower);
             const filteredEntries = timerecordAllList.filter(entry =>
@@ -481,7 +483,39 @@ function Compensation() {
 
             // window.location.reload();
         }
+
     }
+
+
+    const findEmployeeById = (id) => {
+        return employeeList.find(employee => employee.employeeId === id);
+      };
+
+
+const [addSalaryDay , setAddSalaryDay ] = useState(0);
+      useEffect(() => {
+
+        setAddSalaryDay(0);
+
+        if(employee?.addSalary?.length > 0) {
+// alert(employee.addSalary.length);
+//cal addSalary day
+const ans = 0;
+for(let i =0; i < employee.addSalary.length; i++){
+// alert(employee.addSalary[i].roundOfSalary || '');
+let tmp = employee.addSalary[i].roundOfSalary || '';
+if(tmp == 'daily'){
+    // alert(employee.addSalary[i].SpSalary || 0);
+    let tmp1 = employee.addSalary[i].SpSalary || 0;
+    // alert(tmp1);
+setAddSalaryDay(addSalaryDay + parseInt(employee.addSalary[i].SpSalary || 0));
+}
+}
+// setAddSalaryDay(ans);
+
+        }
+
+      }, [employee]);
 
     console.log('searchResult', searchResult);
     console.log('searchResultLower', searchResultLower);
@@ -501,7 +535,6 @@ function Compensation() {
             return `${number}, workplaceId: '', allTimes: '', otTimes: ''`;
         }
     });
-
     console.log('result', result);
 
 
@@ -595,6 +628,18 @@ function Compensation() {
         return !isNaN(workRateValue) ? accumulator + (((workRateValue / workTimeValue) * workRateOTValue) * workTimeOTValue) : accumulator;
     }, 0);
 
+    const sumWorkRate1 = resultArrayWithWorkplaceRecords.reduce((accumulator, workplaceRecord) => {
+        const workRateValue = parseFloat(workplaceRecord.workRate);
+        if (!isNaN(workRateValue)) {
+            accumulator.sum += workRateValue;
+            accumulator.count++;
+        }
+        return accumulator;
+    }, { sum: 0, count: 0 });
+    
+    console.log("Sum:", sumWorkRate.sum);
+    console.log("Count:", sumWorkRate.count);
+    
     return (
         // <div>
         <body class="hold-transition sidebar-mini" className='editlaout'>
@@ -739,7 +784,7 @@ function Compensation() {
                                                         <th style={headerCellStyle}>ชั่วโมง OT</th>
                                                         <th style={headerCellStyle}>ค่าล่วงเวลา OT</th>
                                                         <th style={headerCellStyle}>เงินเพิ่ม</th>
-                                                        <th style={headerCellStyle}>เงินหัก OT</th>
+                                                        <th style={headerCellStyle}>เงินหัก</th>
                                                         <th style={headerCellStyle}>แก้/ลบ</th>
                                                     </tr>
                                                 </thead>
@@ -805,9 +850,14 @@ function Compensation() {
                                                                     `${((workplaceRecord.workRate / workplaceRecord.workOfHour) * workplaceRecord.workRateOT).toFixed(2)} (${workplaceRecord.workRateOT})`
                                                                 )}
                                                             </td>
-                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {/* {workplaceRecord.allTimes} */}
-                                                            </td>
+                                                                {workplaceRecord !== "" ? (
+                                                                                                                                <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                    {(addSalaryDay / 30).toFixed(2) }                                                                
+                                                                    </td>
+                                                                ):(
+                                                                    <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                    </td>
+                                                                )}
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                 {/* {workplaceRecord.otTimes} */}
                                                             </td>
@@ -936,7 +986,7 @@ function Compensation() {
                                                         <td style={cellStyle}>{sumWorkRate}</td>
                                                         <td></td>
                                                         <td style={cellStyle}>{sumWorkRateOT.toFixed(2)}</td>
-                                                        <td></td>
+                                                        <td >{(sumWorkRate1.count * (addSalaryDay/30)).toFixed(2)}</td>
                                                         <td></td>
                                                         <td></td>
                                                     </tr>
@@ -949,13 +999,14 @@ function Compensation() {
 
                                 <div class="line_btn">
                                     {newWorkplace ? (
-                                        <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;สร้างหน่วยงานใหม่</button>
+                                        <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
                                     ) : (
                                         <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
 
                                     )}
-                                    <button class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
+                                    <button class="btn clean"><i class="far fa-window-close"></i> &nbsp;ถัดไป</button>
                                 </div>
+                                {/* {JSON.stringify(employee.addSalary,null,2)} */}
                             </section>
                         </div>
                     </section>
