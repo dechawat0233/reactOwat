@@ -665,7 +665,12 @@ handleSearch(event); // Call handleSearch with the event
 
                     // setRowDataList2(response.data.recordworkplace[0].employee_workplaceRecord);
                     if (name != '') {
-                        setRowDataList2(response.data.recordworkplace[0].employee_workplaceRecord);
+                        // setRowDataList2(response.data.recordworkplace[0].employee_workplaceRecord);
+                        setRowDataList2(response.data.recordworkplace[0].employee_workplaceRecord.map((item, index) => ({
+                            ...item,
+                            tmpIndex: index
+                          })));
+                          //111
                     } else {
                         setRowDataList2([]);
                     }
@@ -754,7 +759,6 @@ handleSearch(event); // Call handleSearch with the event
 
     // Function to handle deleting a row
     const handleDeleteRow = (index) => {
-alert(index);
 
         // Create a copy of the current state
         const newDataList = [...rowDataList2];
@@ -1325,7 +1329,7 @@ alert(index);
                                                         )}
                                                         <div class="col-md-1" style={bordertable}>
                                                             {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
-                                                            <button type="button" class="btn btn-xs btn-danger" style={{ padding: '0.3rem ', width: '8rem' }} onClick={() => handleDeleteRow(index)}>Delete</button>
+                                                            <button type="button" class="btn btn-xs btn-danger" style={{ padding: '0.3rem ', width: '8rem' }} onClick={() => handleDeleteRow(rowData2.tmpIndex)}>Delete</button>
                                                         </div>
 
                                                     </div>
