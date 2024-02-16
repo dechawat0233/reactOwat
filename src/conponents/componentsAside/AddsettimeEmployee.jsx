@@ -43,6 +43,23 @@ function AddsettimeEmployee() {
 
         const currentYear = new Date().getFullYear();
         setYear(currentYear);
+
+        const savedEmployeeId = localStorage.getItem('employeeId');
+        const savedMonth = localStorage.getItem('month');
+        const savedYear = localStorage.getItem('year');
+        if (savedEmployeeId) {
+            setSearchEmployeeId(savedEmployeeId);
+setEmployeeId(savedEmployeeId);
+const event = new Event('submit'); // Creating a synthetic event object
+handleSearch(event); // Call handleSearch with the event
+          }
+          if (savedMonth) {
+            setMonth(savedMonth);
+          }
+          if (savedYear) {
+            setYear(savedYear);
+          }
+          
     }, []); // Run this effect only once on component mount
 
     // const startYear = 2010;
@@ -737,6 +754,8 @@ function AddsettimeEmployee() {
 
     // Function to handle deleting a row
     const handleDeleteRow = (index) => {
+alert(index);
+
         // Create a copy of the current state
         const newDataList = [...rowDataList2];
         // Remove the row at the specified index
@@ -1268,6 +1287,8 @@ function AddsettimeEmployee() {
                                         {rowDataList2.map((rowData2, index) => (
                                             rowData2.workplaceId && (
                                                 <div key={index}>
+                                                                            <input type="hidden" id="hiddenField" name="" value={index} />
+
                                                     <div class="row" style={{ marginBottom: '1rem', borderBottom: '2px solid #000' }}>
                                                         <div class="col-md-1" style={bordertable}> {rowData2.workplaceId}
                                                         </div>
@@ -1304,7 +1325,7 @@ function AddsettimeEmployee() {
                                                         )}
                                                         <div class="col-md-1" style={bordertable}>
                                                             {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
-                                                            <button type="button" class="btn btn-xs btn-danger" style={{ padding: '0.3rem ', width: '8rem' }} onClick={() => handleDeleteRow(rowData2.tmpIndex)}>Delete</button>
+                                                            <button type="button" class="btn btn-xs btn-danger" style={{ padding: '0.3rem ', width: '8rem' }} onClick={() => handleDeleteRow(index)}>Delete</button>
                                                         </div>
 
                                                     </div>

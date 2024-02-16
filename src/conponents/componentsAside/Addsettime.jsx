@@ -27,6 +27,15 @@ function Addsettime() {
         document.title = 'ระบบลงเวลา';
         // You can also return a cleanup function if needed
         // return () => { /* cleanup code */ };
+
+        const savedEmployeeId = localStorage.getItem('employeeId');
+        localStorage.setItem('employeeId', savedEmployeeId );
+        
+        const savedSelect = localStorage.getItem('select');
+        if (savedSelect) {
+            setSelectedOption(savedSelect);
+          }
+
       }, []);
     
   
