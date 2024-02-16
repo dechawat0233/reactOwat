@@ -77,6 +77,22 @@ function Compensation() {
 
         const currentYear = new Date().getFullYear();
         setYear(currentYear);
+        const savedEmployeeId = localStorage.getItem('employeeId');
+        const savedMonth = localStorage.getItem('month');
+        const savedYear = localStorage.getItem('year');
+        if (savedEmployeeId) {
+            setSearchEmployeeId(savedEmployeeId);
+setStaffId(savedEmployeeId);
+const event = new Event('submit'); // Creating a synthetic event object
+handleSearch(event); // Call handleSearch with the event
+          }
+          if (savedMonth) {
+            setMonth(savedMonth);
+          }
+          if (savedYear) {
+            setYear(savedYear);
+          }
+
     }, []); // Run this effect only once on component mount
     const EndYear = 2010;
     const currentYear = new Date().getFullYear(); // 2024

@@ -88,6 +88,7 @@ function Examine() {
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
+            localStorage.setItem('select', 'employee');
     }, []); // The empty array [] ensures that the effect runs only once after the initial render
 
     console.log(employeeList);
@@ -231,6 +232,9 @@ function Examine() {
 
     async function handleSearch(event) {
         event.preventDefault();
+        await localStorage.setItem('employeeId', searchEmployeeId);
+        await localStorage.setItem('month', month);
+        await localStorage.setItem('year', year);
 
         const data = await {
             employeeId: searchEmployeeId,
