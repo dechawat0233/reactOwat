@@ -45,23 +45,35 @@ function AddsettimeEmployee() {
         setYear(currentYear);
 
         const savedEmployeeId = localStorage.getItem('employeeId');
+        const savedName= localStorage.getItem('name');
+        const savedLastName = localStorage.getItem('lastName');
         const savedMonth = localStorage.getItem('month');
         const savedYear = localStorage.getItem('year');
         if (savedEmployeeId) {
             setSearchEmployeeId(savedEmployeeId);
 setEmployeeId(savedEmployeeId);
-const event = new Event('submit'); // Creating a synthetic event object
-handleSearch(event); // Call handleSearch with the event
-localStorage.removeItem('employeeId');
+
+// const event = new Event('submit'); // Creating a synthetic event object
+// handleSearch(event); // Call handleSearch with the event
+// localStorage.removeItem('employeeId');
+          }
+          if (savedName) {
+            setName(savedName);
+            // localStorage.removeItem('name');
+
+          }
+          if (savedLastName) {
+            setLastname(savedLastName);
+            // localStorage.removeItem('lastName');
           }
           if (savedMonth) {
             setMonth(savedMonth);
-            localStorage.removeItem('month');
+            // localStorage.removeItem('month');
 
           }
           if (savedYear) {
             setYear(savedYear);
-            localStorage.removeItem('year');
+            // localStorage.removeItem('year');
 
           }
           
@@ -1024,7 +1036,7 @@ localStorage.removeItem('employeeId');
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label role="agencyname">ชื่อพนักงาน</label>
+                                <label role="agencyname">ชื่อพนักงาน</label>           
                                         <input type="text" class="form-control" id="agencyname" placeholder="ชื่อพนักงาน" value={name + lastName} onChange={(e) => setName(e.target.value)} />
                                     </div>
                                 </div>

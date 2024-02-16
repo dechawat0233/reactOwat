@@ -51,6 +51,7 @@ function Examine() {
 
     const [workplaceIdEMP, setWorkplaceIdENP] = useState(''); //รหัสหน่วยงาน
     const [searchWorkplaceName, setSearchWorkplaceName] = useState(''); //ชื่อหน่วยงาน
+    // alert(selectedEmployee.name );
 
 
     const [searchEmployeeId, setSearchEmployeeId] = useState('');
@@ -428,6 +429,11 @@ function Examine() {
             // setStaffName(selectedEmployee.name);
             // setStaffLastname(selectedEmployee.lastName);
             setStaffFullName(selectedEmployee.name + ' ' + selectedEmployee.lastName);
+            // alert(selectedEmployee.name );
+            // alert(selectedEmployee.lastName );
+            localStorage.setItem('name', selectedEmployee.name );
+            localStorage.setItem('lastName', selectedEmployee.lastName );
+
             setWorkplaceIdENP(selectedEmployee.workplace);
 
 
