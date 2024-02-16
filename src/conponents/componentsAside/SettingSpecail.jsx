@@ -1109,7 +1109,6 @@ function SettingSpecial() {
                                                                 ลบ
                                                             </button>
                                                         ) : (
-
                                                             <>
                                                                 <button type="button" aria-label="เพิ่ม"
                                                                     onClick={handleAddTimePerson} className="btn btn-primary" style={{ width: '2.5rem' }}>
@@ -1121,7 +1120,6 @@ function SettingSpecial() {
                                                     <br />
                                                     <br />
                                                     <br />
-
                                                 </div>
                                             ))}
                                         </div>

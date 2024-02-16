@@ -12,6 +12,8 @@ import Calendar from 'react-calendar';
 import '../editwindowcss.css';
 import EmployeeWorkDay from './componentsetting/EmployeeWorkDay';
 
+import Compensation from './Compensation';
+
 function Examine() {
     document.title = 'ตรวจการทำงาน';
 
@@ -446,6 +448,12 @@ function Examine() {
 
     }
 
+    const handleClick = () => {
+        // Call a function in Topop.jsx and pass emp as an argument
+        // You can modify this logic based on your requirements
+        // For simplicity, I'm passing emp directly to the Topop component
+        Compensation({ staffId, month, year });
+    };
 
     return (
         // <div>
@@ -599,7 +607,7 @@ function Examine() {
 
                                 <div class="row">
                                     <div class="col-md-12">
-                                        ตั้งแต่วันที่ 20 {thaiMonthLowerName} - 21 {thaiMonthName} ปี {year}
+                                        ตั้งแต่วันที่ 20 {thaiMonthLowerName} - 21 {thaiMonthName} ปี {parseInt(year, 10) + 543}
                                     </div>
                                 </div>
                                 <br />
@@ -719,7 +727,8 @@ function Examine() {
                                     )}
                                     <button class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button> */}
                                     <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;แก้ไข</button>
-                                    <button class="btn clean"><i>&gt;</i> &nbsp;ถัดไป</button>
+                                    {/* <button class="btn clean"><i>&gt;</i> &nbsp;ถัดไป</button> */}
+                                    <button class="btn clean" onClick={handleClick}><i>&gt;</i> &nbsp; ถัดไป</button>
 
                                 </div>
                             </section>

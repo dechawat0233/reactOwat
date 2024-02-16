@@ -594,6 +594,12 @@ function Compensation() {
 
         return !isNaN(workRateValue) ? accumulator + (((workRateValue / workTimeValue) * workRateOTValue) * workTimeOTValue) : accumulator;
     }, 0);
+    
+    const Compensation = ({ staffId, month, year }) => {
+        setStaffId(staffId);
+        setMonth(month);
+        setYear(year);
+    };
 
     return (
         // <div>
