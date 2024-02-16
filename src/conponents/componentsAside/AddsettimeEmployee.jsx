@@ -49,31 +49,31 @@ function AddsettimeEmployee() {
         const savedLastName = localStorage.getItem('lastName');
         const savedMonth = localStorage.getItem('month');
         const savedYear = localStorage.getItem('year');
-        if (savedEmployeeId) {
+        if (savedEmployeeId ) {
             setSearchEmployeeId(savedEmployeeId);
 setEmployeeId(savedEmployeeId);
 
 // const event = new Event('submit'); // Creating a synthetic event object
 // handleSearch(event); // Call handleSearch with the event
-// localStorage.removeItem('employeeId');
+localStorage.removeItem('employeeId');
           }
           if (savedName) {
             setName(savedName);
-            // localStorage.removeItem('name');
+            localStorage.removeItem('name');
 
           }
           if (savedLastName) {
             setLastname(savedLastName);
-            // localStorage.removeItem('lastName');
+            localStorage.removeItem('lastName');
           }
           if (savedMonth) {
             setMonth(savedMonth);
-            // localStorage.removeItem('month');
+            localStorage.removeItem('month');
 
           }
           if (savedYear) {
             setYear(savedYear);
-            // localStorage.removeItem('year');
+            localStorage.removeItem('year');
 
           }
           
