@@ -749,6 +749,7 @@ function Compensation() {
     const [formData, setFormData] = useState({ day: '', workplaceId                                                                : '', allTimes: '', workRate : '', otTimes: '', workRateOT                                                                : '' , addSalaryDay: ''});
     const [dataTable, setDataTable] = useState([]);
     const [editIndex, setEditIndex] = useState(null);
+    const [loadStatus , setLoadStatus ] = useState(null);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -757,14 +758,16 @@ function Compensation() {
 
     const saveFormData = () => {
         if (editIndex !== null) {
-            const updatedDataTable = dataTable.map((item, index) => {
-                if (index === editIndex) {
-                    return formData;
-                }
-                return item;
-            });
-            setDataTable(updatedDataTable);
-            setEditIndex(null);
+            setLoadStatus('load');
+
+          const updatedDataTable = dataTable.map((item, index) => {
+            if (index === editIndex) {
+              return formData;
+            }
+            return item;
+          });
+          setDataTable(updatedDataTable);
+          setEditIndex(null);
         } else {
             setDataTable([...dataTable, formData]);
         }
@@ -803,8 +806,9 @@ const updatedDataTable = resultArrayWithWorkplaceRecords.map((item , index) => {
     };
     return tmp;
 });
-
-setDataTable(updatedDataTable );
+if(loadStatus == null){
+    setDataTable(updatedDataTable );
+}
 
       } , [resultArrayWithWorkplaceRecords]);
 
