@@ -1047,81 +1047,12 @@ function Compensation() {
                                                         <td style={cellStyle}>{sumWorkRateOT.toFixed(2)}</td>
                                                         <td style={cellStyle}>{(sumWorkRate1.count * (addSalaryDay / 30)).toFixed(2)}</td>
                                                         <td></td>
-                                                        <td></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
 
                                             <br />
-                                            <table border="1" style={tableStyle}>
-                                                <thead>
-                                                    <tr>
-                                                        <th style={headerCellStyle}>วันที่</th>
-                                                        <th style={headerCellStyle}>หน่วยงาน</th>
-                                                        <th style={headerCellStyle}>ชั่วโมงทำงาน</th>
-                                                        <th style={headerCellStyle}>ค่าจ้างปกติ</th>
-                                                        <th style={headerCellStyle}>ชั่วโมง OT</th>
-                                                        <th style={headerCellStyle}>ค่าล่วงเวลา OT</th>
-                                                        <th style={headerCellStyle}>เงินเพิ่ม</th>
-                                                        {/* <th style={headerCellStyle}>เงินหัก</th> */}
-                                                        <th style={headerCellStyle}>แก้/ลบ</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style={cellStyle}>
-                                                            <input
-                                                                type="text"
-                                                                className="form-control"
 
-                                                            /></td>
-                                                        <td style={cellStyle}>
-                                                            <input
-                                                                type="text"
-                                                                className="form-control"
-
-                                                            />
-                                                        </td>
-                                                        <td style={cellStyle}>
-                                                            <input
-                                                                type="text"
-                                                                className="form-control"
-
-                                                            /></td>
-                                                        <td style={cellStyle}>
-                                                            <input
-                                                                type="text"
-                                                                className="form-control"
-
-                                                            /></td>
-                                                        <td style={cellStyle}>
-                                                            <input
-                                                                type="text"
-                                                                className="form-control"
-
-                                                            /></td>
-                                                        <td style={cellStyle}>
-                                                            <input
-                                                                type="text"
-                                                                className="form-control"
-
-                                                            /></td>
-                                                        <td style={cellStyle}>
-                                                            <input
-                                                                type="text"
-                                                                className="form-control"
-
-                                                            /></td>
-                                                        {/* <td style={headerCellStyle}>เงินหัก</td> */}
-                                                        <td style={cellStyle}>
-                                                            <input
-                                                                type="text"
-                                                                className="form-control"
-
-                                                            /></td>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
                                         </div>
 
                                     </div>
