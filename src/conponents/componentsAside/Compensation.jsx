@@ -993,38 +993,38 @@ function Compensation() {
 
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                 {editIndex === index ?
-                                                                    <input type="text"  className="form-control" value={formData.day} onChange={handleInputChange} name="day" /> :
+                                                                    <input type="text" className="form-control" value={formData.day} onChange={handleInputChange} name="day" readOnly /> :
                                                                     workplaceRecord.day}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                 {editIndex === index ?
-                                                                    <input type="text"  className="form-control" value={formData.workplaceId} onChange={handleInputChange} name="workplaceId" /> :
+                                                                    <input type="text" className="form-control" value={formData.workplaceId} onChange={handleInputChange} name="workplaceId" /> :
                                                                     workplaceRecord.workplaceId}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                 {editIndex === index ?
-                                                                    <input type="text"  className="form-control" value={formData.allTimes} onChange={handleInputChange} name="allTimes" /> :
+                                                                    <input type="text" className="form-control" value={formData.allTimes} onChange={handleInputChange} name="allTimes" /> :
                                                                     workplaceRecord.allTimes}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                 {editIndex === index ?
-                                                                    <input type="text"  className="form-control" value={formData.workRate} onChange={handleInputChange} name="workRate" /> :
+                                                                    <input type="text" className="form-control" value={formData.workRate} onChange={handleInputChange} name="workRate" /> :
                                                                     workplaceRecord.workRate}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                 {editIndex === index ?
-                                                                    <input type="text"  className="form-control" value={formData.otTimes} onChange={handleInputChange} name="otTimes" /> :
+                                                                    <input type="text" className="form-control" value={formData.otTimes} onChange={handleInputChange} name="otTimes" /> :
                                                                     workplaceRecord.otTimes}
                                                             </td>
 
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                 {editIndex === index ?
-                                                                    <input type="text"  className="form-control" value={formData.workRateOT} onChange={handleInputChange} name="workRateOT" /> :
+                                                                    <input type="text" className="form-control" value={formData.workRateOT} onChange={handleInputChange} name="workRateOT" /> :
                                                                     workplaceRecord.workRateOT}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                 {editIndex === index ?
-                                                                    <input type="text"  className="form-control" value={formData.addSalaryDay} onChange={handleInputChange} name="addSalaryDay" /> :
+                                                                    <input type="text" className="form-control" value={formData.addSalaryDay} onChange={handleInputChange} name="addSalaryDay" /> :
                                                                     workplaceRecord.addSalaryDay}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
