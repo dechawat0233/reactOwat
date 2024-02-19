@@ -42,7 +42,6 @@ function Compensation() {
 
     const [searchResult, setSearchResult] = useState([]);
     const [searchResultLower, setSearchResultLower] = useState([]);
-    const [workplaceIdEMP, setWorkplaceIdEMP] = useState(''); //รหัสหน่วยงาน
 
     const [employeeListResult, setEmployeeListResult] = useState([]);
     const [newWorkplace, setNewWorkplace] = useState(true);
@@ -69,15 +68,6 @@ function Compensation() {
         'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
         'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
     ];
-    const thaiToEnglishDayMap = {
-        'จันทร์': ['Mon'],
-        'อังคาร': ['Tue'],
-        'พุธ': ['Wed'],
-        'พฤหัส': ['Thu'],
-        'ศุกร์': ['Fri'],
-        'เสาร์': ['Sat'],
-        'อาทิตย์': ['Sun'],
-    };
     const getThaiMonthName = (monthNumber) => {
         return thaiMonthNames[monthNumber - 1];
     };
@@ -133,7 +123,6 @@ function Compensation() {
                 console.error('Error fetching data:', error);
             });
     }, []);
-
     console.error('workplaceList', workplaceList);
 
     console.log(employeeList);
@@ -323,6 +312,24 @@ function Compensation() {
 
         return daysArray;
     }
+
+    const daysInMonth2 = getDaysInMonth(CheckMonth, CheckYear);
+    const daysInCountdownMonth = getDaysInMonth2(countdownMonth, countdownYear);
+
+    // const array1 = createDaysArray(CheckMonth, CheckYear, daysInMonth2, (day) => day <= 20);
+    // const array2 = createDaysArray(countdownMonth, CheckYear, daysInCountdownMonth, (day) => day > 21);
+    const array1 = createDaysArray(CheckMonth, CheckYear, daysInMonth2, (day) => day <= 20);
+    const array2 = createDaysArray(countdownMonth, countdownYear, daysInCountdownMonth, (day) => day >= 21);
+
+
+    console.log('Array 1 (March):', array1);
+    console.log('Array 2 (Countdown):', array2);
+
+    const commonNumbers = new Set([...array2.Mon, ...array1.Mon]);
+
+    // const commonNumbers = [...new Set([...array1.Mon, ...array2.Mon])];
+    console.log('commonNumbers', commonNumbers);
+
 
     let monthLower;
     let timerecordIdLower;
@@ -605,7 +612,6 @@ function Compensation() {
             // setStaffName(selectedEmployee.name);
             // setStaffLastname(selectedEmployee.lastName);
             setStaffFullName(selectedEmployee.name + ' ' + selectedEmployee.lastName);
-            setWorkplaceIdEMP(selectedEmployee.workplace);
 
 
         } else {
@@ -625,8 +631,6 @@ function Compensation() {
         if (selectedEmployee) {
             setStaffId(selectedEmployee.employeeId);
             setSearchEmployeeId(selectedEmployee.employeeId);
-            setWorkplaceIdEMP(selectedEmployee.workplace);
-
         } else {
             setStaffId('');
             // searchEmployeeId('');
@@ -636,82 +640,6 @@ function Compensation() {
         setStaffFullName(selectedStaffName);
         setSearchEmployeeName(selectedEmployeeFName);
     };
-
-    const daysInMonth2 = getDaysInMonth(CheckMonth, CheckYear);
-    const daysInCountdownMonth = getDaysInMonth2(countdownMonth, countdownYear);
-
-    // const array1 = createDaysArray(CheckMonth, CheckYear, daysInMonth2, (day) => day <= 20);
-    // const array2 = createDaysArray(countdownMonth, CheckYear, daysInCountdownMonth, (day) => day > 21);
-    const array1 = createDaysArray(CheckMonth, CheckYear, daysInMonth2, (day) => day <= 20);
-    const array2 = createDaysArray(countdownMonth, countdownYear, daysInCountdownMonth, (day) => day >= 21);
-
-
-    console.log('Array 1 (March):', array1);
-    console.log('Array 2 (Countdown):', array2);
-
-    // const commonNumbers = new Set([...array2.Mon, ...array1.Mon]);
-
-    // const commonNumbers = [...new Set([...array1.Mon, ...array2.Mon])];
-    // console.log('commonNumbers', commonNumbers);
-
-    const workplace = workplaceList.find(workplace => workplace.workplaceId === workplaceIdEMP);
-
-    console.log('workplace123', workplace);
-
-    let commonNumbers = new Set();
-
-    if (workplace) {
-        const stopWorkTimeDay = workplace.workTimeDay.find(day => day.workOrStop === "stop");
-
-        if (stopWorkTimeDay) {
-            const { startDay, endDay } = stopWorkTimeDay;
-            console.log("Found stop workTimeDay:", startDay, endDay);
-
-            const daysInBetween = getDaysInBetween(startDay, endDay);
-            console.log("daysInBetween:", daysInBetween);
-
-            daysInBetween.forEach(day => {
-                const englishDayArray = thaiToEnglishDayMap[day];
-
-                englishDayArray.forEach(englishDay => {
-                    // Use forEach to add each element to commonNumbers
-                    // commonNumbers.add(...array1[englishDayArray]);
-                    array1[englishDay].forEach(value => commonNumbers.add(value));
-                    array2[englishDay].forEach(value => commonNumbers.add(value));
-                });
-            });
-
-            // setHoliday(commonNumbers);
-            console.log("Common Numbers:", commonNumbers);
-        } else {
-            console.log("No stop workTimeDay found.");
-        }
-    } else {
-        console.log("Workplace not found.");
-    }
-
-    // const commonNumbersArray = [...commonNumbers];
-    const commonNumbersArray = [...commonNumbers].map(value => value.toString());
-
-
-    function getDaysInBetween(startDay, endDay) {
-        const weekdays = ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัส', 'ศุกร์', 'เสาร์', 'อาทิตย์'];
-        const startIndex = weekdays.indexOf(startDay);
-        const endIndex = weekdays.indexOf(endDay);
-
-        if (startIndex === -1 || endIndex === -1) {
-            return [];
-        }
-
-        return weekdays.slice(startIndex, endIndex + 1);
-    }
-
-    console.log("commonNumbersArray:", commonNumbersArray);
-    console.log("resultArray2[index]:", resultArray2);
-
-    console.log('Array 1 (March):', array1);
-    console.log('Array 2 (Countdown):', array2);
-
 
 
     const sumWorkRate = resultArrayWithWorkplaceRecords.reduce((accumulator, workplaceRecord) => {
@@ -746,68 +674,37 @@ function Compensation() {
     console.log("Count:", sumWorkRate.count);
 
 //edit data table
-    const [formData, setFormData] = useState({ day: '', workplaceId                                                                : '', allTimes: '', workRate : '', otTimes: '', workRateOT                                                                : '' , addSalaryDay: ''});
+    const [formData, setFormData] = useState({ id: '', name: '', lastname: '' });
     const [dataTable, setDataTable] = useState([]);
     const [editIndex, setEditIndex] = useState(null);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
-    };
-
-    const saveFormData = () => {
+      };
+    
+      const saveFormData = () => {
         if (editIndex !== null) {
-            const updatedDataTable = dataTable.map((item, index) => {
-                if (index === editIndex) {
-                    return formData;
-                }
-                return item;
-            });
-            setDataTable(updatedDataTable);
-            setEditIndex(null);
+          const updatedDataTable = dataTable.map((item, index) => {
+            if (index === editIndex) {
+              return formData;
+            }
+            return item;
+          });
+          setDataTable(updatedDataTable);
+          setEditIndex(null);
         } else {
-            setDataTable([...dataTable, formData]);
+          setDataTable([...dataTable, formData]);
         }
-        setFormData({day: '', workplaceId                                                                : '', allTimes: '', workRate : '', otTimes: '', workRateOT                                                                : '' , addSalaryDay: ''});
+        setFormData({ id: '', name: '', lastname: '' });
       };
     
       const editData = (index) => {
         setEditIndex(index);
-        const { day, workplaceId                                                                , allTimes, workRate , otTimes, workRateOT                                                                , addSalaryDay} = dataTable[index];
-        setFormData({ day, workplaceId                                                                , allTimes, workRate , otTimes, workRateOT                                                                , addSalaryDay});
+        const { id, name, lastname } = dataTable[index];
+        setFormData({ id, name, lastname });
       };
       
-      useEffect(() => {
-      
-const updatedDataTable = resultArrayWithWorkplaceRecords.map((item , index) => {
-    let addSalaryDay1 = '';
-    if (item !== '') {
-        if (addSalaryDay < 100) {
-            addSalaryDay1 = addSalaryDay
-        } else {
-            addSalaryDay1 = (addSalaryDay / 30).toFixed(2);
-        }
-    }
-
-    const workRateOT = !isNaN(item.workRate) && !isNaN(item.workOfHour) && !isNaN(item.workRateOT) ?
-    `${((item.workRate / item.workOfHour) * item.workRateOT).toFixed(2)} (${item.workRateOT})` :
-    ''; // If any of the values are not numbers, workRateOT will be an empty string
-    const tmp = {
-        day: resultArray[index] , 
-        workplaceId                                                                : item.workplaceId , 
-        allTimes: item.allTimes, 
-        workRate: item.workRate, 
-        otTimes: item.otTimes , 
-        workRateOT: workRateOT,
-        addSalaryDay: addSalaryDay1 
-    };
-    return tmp;
-});
-
-setDataTable(updatedDataTable );
-
-      } , [resultArrayWithWorkplaceRecords]);
-
     return (
         // <div>
         <body class="hold-transition sidebar-mini" className='editlaout'>
@@ -843,7 +740,7 @@ setDataTable(updatedDataTable );
                                                         className="form-control"
                                                         id="staffId"
                                                         placeholder="รหัสพนักงาน"
-                                                        value={staffId == "null" ? '' : staffId}
+                                                        value={staffId == "null" ? '' : staffId }
                                                         onChange={handleStaffIdChange}
                                                         list="staffIdList"
                                                     />
@@ -969,7 +866,6 @@ setDataTable(updatedDataTable );
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-
                                             <table border="1" style={tableStyle}>
                                                 <thead>
                                                     <tr>
@@ -980,59 +876,90 @@ setDataTable(updatedDataTable );
                                                         <th style={headerCellStyle}>ชั่วโมง OT</th>
                                                         <th style={headerCellStyle}>ค่าล่วงเวลา OT</th>
                                                         <th style={headerCellStyle}>เงินเพิ่ม</th>
+                                                        {/* <th style={headerCellStyle}>เงินหัก</th> */}
                                                         <th style={headerCellStyle}>แก้/ลบ</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    {/* {resultArray.map((value, index) => (
+                                             // <tr key={index}>
+                                             //     <td>{resultArray{$index}}</td>
+                                             // </tr>
+                                             <tr key={index}>
+                                                 <td style={cellStyle}>{value}</td>
+                                             </tr>
+                                         ))} */}
 
-                                                    {dataTable.map((workplaceRecord, index) => (
+                                                    {/* {resultArray.map((value, index) => ( */}
+
+
+
+                                                    {resultArrayWithWorkplaceRecords.map((workplaceRecord, index) => (
 
                                                         <tr key={index}>
+                                                            {/* <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {value}
+                                                            </td>
+                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                399-689
+                                                            </td>
+                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                8
+                                                            </td>
+                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                350
+                                                            </td>
+                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                1
+                                                            </td>
+                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                65
+                                                            </td>
+                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                1000
+                                                            </td>
+                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+
+                                                            </td> */}
+
 
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                            {editIndex === index ? 
-                                                            <input type="text" value={formData.day} onChange={handleInputChange} name="day" /> : 
-                                                            workplaceRecord.day}
+                                                                {resultArray[index]}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                            {editIndex === index ? 
-                                                            <input type="text" value={formData.workplaceId} onChange={handleInputChange} name="workplaceId" /> : 
-                                                            workplaceRecord.workplaceId}
+                                                                {workplaceRecord.workplaceId}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                            {editIndex === index ? 
-                                                            <input type="text" value={formData.allTimes} onChange={handleInputChange} name="allTimes" /> : 
-                                                            workplaceRecord.allTimes}
+                                                                {workplaceRecord.allTimes}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                            {editIndex === index ? 
-                                                            <input type="text" value={formData.workRate} onChange={handleInputChange} name="workRate" /> : 
-                                                            workplaceRecord.workRate}
+                                                                {workplaceRecord.workRate}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                            {editIndex === index ? 
-                                                            <input type="text" value={formData.otTimes} onChange={handleInputChange} name="otTimes" /> : 
-                                                            workplaceRecord.otTimes}
+                                                                {workplaceRecord.otTimes}
                                                             </td>
 
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                            {editIndex === index ? 
-                                                            <input type="text" value={formData.workRateOT} onChange={handleInputChange} name="workRateOT" /> : 
-                                                            workplaceRecord.workRateOT}
+                                                                {/* {(workplaceRecord.workRate / workplaceRecord.workOfHour) * workplaceRecord.workRateOT}({workplaceRecord.workRateOT}) */}
+                                                                {!isNaN(workplaceRecord.workRate) && !isNaN(workplaceRecord.workOfHour) && !isNaN(workplaceRecord.workRateOT) && (
+                                                                    `${((workplaceRecord.workRate / workplaceRecord.workOfHour) * workplaceRecord.workRateOT).toFixed(2)} (${workplaceRecord.workRateOT})`
+                                                                )}
                                                             </td>
+                                                            {workplaceRecord !== "" ? (
                                                                 <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {editIndex === index ? 
-                                                            <input type="text" value={formData.addSalaryDay} onChange={handleInputChange} name="addSalaryDay" /> : 
-                                                            workplaceRecord.addSalaryDay}
+                                                                    {(addSalaryDay / 30).toFixed(2)}
                                                                 </td>
+                                                            ) : (
+                                                                <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                </td>
+                                                            )}
+                                                            {/* <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                            </td> */}
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {/* <a href="https://example.com" class="link1" style={{ color: 'red' }}><b>ลบ</b></a> / <a href="#" class="link2" style={{ color: 'blue' }} onClick={openModal}><b>แก้ไข</b></a> */}
+                                                                <a href="https://example.com" class="link1" style={{ color: 'red' }}><b>ลบ</b></a> / <a href="#" class="link2" style={{ color: 'blue' }} onClick={openModal}><b>แก้ไข</b></a>
 
-                                                                {editIndex === index ? (
-                  <button onClick={saveFormData}>Save</button>
-                ) : (
-                  <button onClick={() => editData(index)}>Edit</button>
-                )}
+                                                                {/* <button onClick={handleButtonClick}>แก้ไข</button> */}
+                                                                {/* <button onClick={openModal}>แก้ไข</button> */}
 
                                                                 <Modal
                                                                     isOpen={modalIsOpen}
