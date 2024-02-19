@@ -745,11 +745,11 @@ function Compensation() {
     console.log("Sum:", sumWorkRate.sum);
     console.log("Count:", sumWorkRate.count);
 
-//edit data table
-    const [formData, setFormData] = useState({ day: '', workplaceId                                                                : '', allTimes: '', workRate : '', otTimes: '', workRateOT                                                                : '' , addSalaryDay: ''});
+    //edit data table
+    const [formData, setFormData] = useState({ day: '', workplaceId: '', allTimes: '', workRate: '', otTimes: '', workRateOT: '', addSalaryDay: '' });
     const [dataTable, setDataTable] = useState([]);
     const [editIndex, setEditIndex] = useState(null);
-    const [loadStatus , setLoadStatus ] = useState(null);
+    const [loadStatus, setLoadStatus] = useState(null);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -760,57 +760,55 @@ function Compensation() {
         if (editIndex !== null) {
             setLoadStatus('load');
 
-          const updatedDataTable = dataTable.map((item, index) => {
-            if (index === editIndex) {
-              return formData;
-            }
-            return item;
-          });
-          setDataTable(updatedDataTable);
-          setEditIndex(null);
+            const updatedDataTable = [...dataTable];
+            updatedDataTable[editIndex] = formData;
+            setDataTable(updatedDataTable);
+            setEditIndex(null);
         } else {
             setDataTable([...dataTable, formData]);
         }
-        setFormData({day: '', workplaceId                                                                : '', allTimes: '', workRate : '', otTimes: '', workRateOT                                                                : '' , addSalaryDay: ''});
-      };
-    
-      const editData = (index) => {
-        setEditIndex(index);
-        const { day, workplaceId                                                                , allTimes, workRate , otTimes, workRateOT                                                                , addSalaryDay} = dataTable[index];
-        setFormData({ day, workplaceId                                                                , allTimes, workRate , otTimes, workRateOT                                                                , addSalaryDay});
-      };
-      
-      useEffect(() => {
-      
-const updatedDataTable = resultArrayWithWorkplaceRecords.map((item , index) => {
-    let addSalaryDay1 = '';
-    if (item !== '') {
-        if (addSalaryDay < 100) {
-            addSalaryDay1 = addSalaryDay
-        } else {
-            addSalaryDay1 = (addSalaryDay / 30).toFixed(2);
-        }
-    }
-
-    const workRateOT = !isNaN(item.workRate) && !isNaN(item.workOfHour) && !isNaN(item.workRateOT) ?
-    `${((item.workRate / item.workOfHour) * item.workRateOT).toFixed(2)} (${item.workRateOT})` :
-    ''; // If any of the values are not numbers, workRateOT will be an empty string
-    const tmp = {
-        day: resultArray[index] , 
-        workplaceId                                                                : item.workplaceId , 
-        allTimes: item.allTimes, 
-        workRate: item.workRate, 
-        otTimes: item.otTimes , 
-        workRateOT: workRateOT,
-        addSalaryDay: addSalaryDay1 
+        setFormData({ id: '', name: '', lastname: '' });
     };
-    return tmp;
-});
-if(loadStatus == null){
-    setDataTable(updatedDataTable );
-}
 
-      } , [resultArrayWithWorkplaceRecords]);
+
+    const editData = (index) => {
+        setEditIndex(index);
+        const { day, workplaceId, allTimes, workRate, otTimes, workRateOT, addSalaryDay } = dataTable[index];
+        setFormData({ day, workplaceId, allTimes, workRate, otTimes, workRateOT, addSalaryDay });
+    };
+
+    useEffect(() => {
+
+        const updatedDataTable = resultArrayWithWorkplaceRecords.map((item, index) => {
+            let addSalaryDay1 = '';
+            if (item !== '') {
+                if (addSalaryDay < 100) {
+                    addSalaryDay1 = addSalaryDay
+                } else {
+                    addSalaryDay1 = (addSalaryDay / 30).toFixed(2);
+                }
+            }
+
+            const workRateOT = !isNaN(item.workRate) && !isNaN(item.workOfHour) && !isNaN(item.workRateOT) ?
+                `${((item.workRate / item.workOfHour) * item.workRateOT).toFixed(2)} (${item.workRateOT})` :
+                ''; // If any of the values are not numbers, workRateOT will be an empty string
+            const tmp = {
+                day: resultArray[index],
+                workplaceId: item.workplaceId,
+                allTimes: item.allTimes,
+                workRate: item.workRate,
+                otTimes: item.otTimes,
+                workRateOT: workRateOT,
+                addSalaryDay: addSalaryDay1
+            };
+            return tmp;
+        });
+
+        if (loadStatus == null) {
+            setDataTable(updatedDataTable);
+        }
+
+    }, [resultArrayWithWorkplaceRecords]);
 
     return (
         // <div>
@@ -994,49 +992,49 @@ if(loadStatus == null){
                                                         <tr key={index}>
 
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                            {editIndex === index ? 
-                                                            <input type="text" value={formData.day} onChange={handleInputChange} name="day" /> : 
-                                                            workplaceRecord.day}
+                                                                {editIndex === index ?
+                                                                    <input type="text"  className="form-control" value={formData.day} onChange={handleInputChange} name="day" /> :
+                                                                    workplaceRecord.day}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                            {editIndex === index ? 
-                                                            <input type="text" value={formData.workplaceId} onChange={handleInputChange} name="workplaceId" /> : 
-                                                            workplaceRecord.workplaceId}
+                                                                {editIndex === index ?
+                                                                    <input type="text"  className="form-control" value={formData.workplaceId} onChange={handleInputChange} name="workplaceId" /> :
+                                                                    workplaceRecord.workplaceId}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                            {editIndex === index ? 
-                                                            <input type="text" value={formData.allTimes} onChange={handleInputChange} name="allTimes" /> : 
-                                                            workplaceRecord.allTimes}
+                                                                {editIndex === index ?
+                                                                    <input type="text"  className="form-control" value={formData.allTimes} onChange={handleInputChange} name="allTimes" /> :
+                                                                    workplaceRecord.allTimes}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                            {editIndex === index ? 
-                                                            <input type="text" value={formData.workRate} onChange={handleInputChange} name="workRate" /> : 
-                                                            workplaceRecord.workRate}
+                                                                {editIndex === index ?
+                                                                    <input type="text"  className="form-control" value={formData.workRate} onChange={handleInputChange} name="workRate" /> :
+                                                                    workplaceRecord.workRate}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                            {editIndex === index ? 
-                                                            <input type="text" value={formData.otTimes} onChange={handleInputChange} name="otTimes" /> : 
-                                                            workplaceRecord.otTimes}
+                                                                {editIndex === index ?
+                                                                    <input type="text"  className="form-control" value={formData.otTimes} onChange={handleInputChange} name="otTimes" /> :
+                                                                    workplaceRecord.otTimes}
                                                             </td>
 
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                            {editIndex === index ? 
-                                                            <input type="text" value={formData.workRateOT} onChange={handleInputChange} name="workRateOT" /> : 
-                                                            workplaceRecord.workRateOT}
+                                                                {editIndex === index ?
+                                                                    <input type="text"  className="form-control" value={formData.workRateOT} onChange={handleInputChange} name="workRateOT" /> :
+                                                                    workplaceRecord.workRateOT}
                                                             </td>
-                                                                <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {editIndex === index ? 
-                                                            <input type="text" value={formData.addSalaryDay} onChange={handleInputChange} name="addSalaryDay" /> : 
-                                                            workplaceRecord.addSalaryDay}
-                                                                </td>
+                                                            <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {editIndex === index ?
+                                                                    <input type="text"  className="form-control" value={formData.addSalaryDay} onChange={handleInputChange} name="addSalaryDay" /> :
+                                                                    workplaceRecord.addSalaryDay}
+                                                            </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                 {/* <a href="https://example.com" class="link1" style={{ color: 'red' }}><b>ลบ</b></a> / <a href="#" class="link2" style={{ color: 'blue' }} onClick={openModal}><b>แก้ไข</b></a> */}
 
                                                                 {editIndex === index ? (
-                  <button onClick={saveFormData}>Save</button>
-                ) : (
-                  <button onClick={() => editData(index)}>Edit</button>
-                )}
+                                                                    <button onClick={saveFormData}>Save</button>
+                                                                ) : (
+                                                                    <button onClick={() => editData(index)}>Edit</button>
+                                                                )}
 
                                                                 <Modal
                                                                     isOpen={modalIsOpen}
