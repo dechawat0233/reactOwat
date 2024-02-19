@@ -756,18 +756,18 @@ function Compensation() {
         setFormData({ ...formData, [name]: value });
     };
 
-    const saveFormData = () => {
+    const saveFormData = async () => {
         if (editIndex !== null) {
-            setLoadStatus('load');
+            await setLoadStatus('load');
 
-            const updatedDataTable = [...dataTable];
+            const updatedDataTable = await [...dataTable];
             updatedDataTable[editIndex] = formData;
-            setDataTable(updatedDataTable);
-            setEditIndex(null);
+            await setDataTable(updatedDataTable);
+            await setEditIndex(null);
         } else {
-            setDataTable([...dataTable, formData]);
+            await setDataTable([...dataTable, formData]);
         }
-        setFormData({ id: '', name: '', lastname: '' });
+        await setFormData({ id: '', name: '', lastname: '' });
     };
 
 
