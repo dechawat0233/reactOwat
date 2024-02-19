@@ -683,24 +683,21 @@ function Compensation() {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
       };
-    
+
       const saveFormData = () => {
         if (editIndex !== null) {
-            setLoadStatus('load');
+                        setLoadStatus('load');
 
-          const updatedDataTable = dataTable.map((item, index) => {
-            if (index === editIndex) {
-              return formData;
-            }
-            return item;
-          });
+          const updatedDataTable = [...dataTable];
+          updatedDataTable[editIndex] = formData;
           setDataTable(updatedDataTable);
           setEditIndex(null);
         } else {
           setDataTable([...dataTable, formData]);
         }
-        setFormData({day: '', workplaceId                                                                : '', allTimes: '', workRate : '', otTimes: '', workRateOT                                                                : '' , addSalaryDay: ''});
+        setFormData({ id: '', name: '', lastname: '' });
       };
+
     
       const editData = (index) => {
         setEditIndex(index);
@@ -734,6 +731,7 @@ const updatedDataTable = resultArrayWithWorkplaceRecords.map((item , index) => {
     };
     return tmp;
 });
+
 if(loadStatus == null){
     setDataTable(updatedDataTable );
 }
