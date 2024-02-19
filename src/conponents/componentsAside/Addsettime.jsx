@@ -34,6 +34,8 @@ function Addsettime() {
         const savedSelect = localStorage.getItem('select');
         if (savedSelect) {
             setSelectedOption(savedSelect);
+            localStorage.removeItem('select');
+
           }
 
       }, []);
