@@ -745,6 +745,38 @@ function Compensation() {
     console.log("Sum:", sumWorkRate.sum);
     console.log("Count:", sumWorkRate.count);
 
+    //edit data table
+    const [formData, setFormData] = useState({ id: '', name: '', lastname: '' });
+    const [dataTable, setDataTable] = useState([]);
+    const [editIndex, setEditIndex] = useState(null);
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    const saveFormData = () => {
+        if (editIndex !== null) {
+            const updatedDataTable = dataTable.map((item, index) => {
+                if (index === editIndex) {
+                    return formData;
+                }
+                return item;
+            });
+            setDataTable(updatedDataTable);
+            setEditIndex(null);
+        } else {
+            setDataTable([...dataTable, formData]);
+        }
+        setFormData({ id: '', name: '', lastname: '' });
+    };
+
+    const editData = (index) => {
+        setEditIndex(index);
+        const { id, name, lastname } = dataTable[index];
+        setFormData({ id, name, lastname });
+    };
+
     return (
         // <div>
         <body class="hold-transition sidebar-mini" className='editlaout'>
@@ -780,7 +812,7 @@ function Compensation() {
                                                         className="form-control"
                                                         id="staffId"
                                                         placeholder="รหัสพนักงาน"
-                                                        value={staffId}
+                                                        value={staffId == "null" ? '' : staffId}
                                                         onChange={handleStaffIdChange}
                                                         list="staffIdList"
                                                     />
@@ -931,6 +963,8 @@ function Compensation() {
                                          ))} */}
 
                                                     {/* {resultArray.map((value, index) => ( */}
+
+
 
                                                     {resultArrayWithWorkplaceRecords.map((workplaceRecord, index) => (
 

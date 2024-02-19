@@ -104,7 +104,7 @@ function Setting() {
             [name]: value,
         }));
     };
-const [selectShift , setSelectShift ] = useState('');
+    const [selectShift, setSelectShift] = useState('');
 
     const handleAddTime = () => {
         setWorkTimeDay((prevData) => ({
@@ -130,7 +130,7 @@ const [selectShift , setSelectShift ] = useState('');
             workOrStop: '',
             allTimes: [{ shift: '', startTime: '', endTime: '', resultTime: '', startTimeOT: '', endTimeOT: '', resultTimeOT: '' }],
         });
-        
+
     };
 
     const handleRemoveTimeList = (index) => {
@@ -850,7 +850,7 @@ const [selectShift , setSelectShift ] = useState('');
         setListEmployeeDay(workplace.listEmployeeDay);
         setListSpecialWorktime(workplace.listSpecialWorktime);
         setWorkTimeDayList(workplace.workTimeDay);
-setWorkTimeDayPersonList(workplace.workTimeDayPerson);
+        setWorkTimeDayPersonList(workplace.workTimeDayPerson);
 
         // console.log(workplace);
         // // console.log(initialFormData);
@@ -1149,8 +1149,15 @@ setWorkTimeDayPersonList(workplace.workTimeDayPerson);
                                         </div>
                                     </form>
                                     <br />
-                                    <div class="d-flex justify-content-center">
+                                    {/* <div class="d-flex justify-content-center">
                                         <h2 class="title">ผลลัพธ์ {searchResult.length} รายการ</h2>
+                                    </div> */}
+                                    <div class="d-flex justify-content-center">
+                                        {searchResult.length > 0 ? (
+                                            <h2 class="title">ผลลัพธ์ {searchResult.length} รายการ</h2>
+                                        ) : (
+                                            <p></p>
+                                        )}
                                     </div>
                                     <div class="d-flex justify-content-center">
                                         <div class="row">
@@ -2017,35 +2024,56 @@ setWorkTimeDayPersonList(workplace.workTimeDayPerson);
                                             placeholderText="Select a date"
                                         /> */}
                                         <div>
-                                            <label style={{ marginRight: '0.5rem' }}>เดือน:</label>
-                                            <select value={month} onChange={(e) => setMonth(e.target.value)}>
-                                                <option value="">Select month</option>
-                                                {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
-                                                    <option key={month} value={month}>
-                                                        {month}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                            <label style={{ margin: '0.5rem' }}>วันที่:</label>
-                                            <select value={day} onChange={(e) => setDay(e.target.value)}>
-                                                <option value="">Select day</option>
-                                                {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => (
-                                                    <option key={day} value={day}>
-                                                        {day}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                            <label style={{ margin: '0.5rem' }}>ปี:</label>
-                                            <select value={year} onChange={(e) => setYear(e.target.value)} style={{ margin: '0.5rem' }}>
-                                                <option value="">Select year</option>
-                                                {Array.from({ length: 7 }, (_, i) => new Date().getFullYear() + 3 - i).map(
-                                                    (year) => (
-                                                        <option key={year} value={year}>
-                                                            {year}
-                                                        </option>
-                                                    )
-                                                )}
-                                            </select>
+                                            <div className="row">
+                                                <div className="col-md-2">
+                                                    <label style={{ marginRight: '0.5rem' }}>เดือน:</label>
+
+                                                </div>
+                                                <div className="col-md-2">
+                                                    <label style={{ margin: '0.5rem' }}>วันที่:</label>
+
+                                                </div>
+                                                <div className="col-md-2">
+                                                    <label style={{ margin: '0.5rem' }}>ปี:</label>
+
+                                                </div>
+                                            </div>
+
+                                            <div className="row">
+                                                <div className="col-md-2">
+                                                    <select className="form-control" value={month} onChange={(e) => setMonth(e.target.value)}>
+                                                        <option value="">Select month</option>
+                                                        {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
+                                                            <option key={month} value={month}>
+                                                                {month}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                </div>
+                                                <div className="col-md-2">
+                                                    <select className="form-control" value={day} onChange={(e) => setDay(e.target.value)}>
+                                                        <option value="">Select day</option>
+                                                        {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => (
+                                                            <option key={day} value={day}>
+                                                                {day}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                </div>
+                                                <div className="col-md-2">
+                                                    <select className="form-control" value={year} onChange={(e) => setYear(e.target.value)}>
+                                                        <option value="">Select year</option>
+                                                        {Array.from({ length: 7 }, (_, i) => new Date().getFullYear() + 3 - i).map(
+                                                            (year) => (
+                                                                <option key={year} value={year}>
+                                                                    {year}
+                                                                </option>
+                                                            )
+                                                        )}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <br />
 
                                             <button type="button" className="btn btn-primary" onClick={handleAddDate}>
                                                 เพิ่ม

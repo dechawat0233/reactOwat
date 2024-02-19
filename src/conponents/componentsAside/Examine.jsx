@@ -100,7 +100,7 @@ function Examine() {
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
-            localStorage.setItem('select', 'employee');
+        localStorage.setItem('select', 'employee');
     }, []); // The empty array [] ensures that the effect runs only once after the initial render
 
     console.log(employeeList);
@@ -431,8 +431,8 @@ function Examine() {
             setStaffFullName(selectedEmployee.name + ' ' + selectedEmployee.lastName);
             // alert(selectedEmployee.name );
             // alert(selectedEmployee.lastName );
-            localStorage.setItem('name', selectedEmployee.name );
-            localStorage.setItem('lastName', selectedEmployee.lastName );
+            localStorage.setItem('name', selectedEmployee.name);
+            localStorage.setItem('lastName', selectedEmployee.lastName);
 
             setWorkplaceIdEMP(selectedEmployee.workplace);
 
@@ -497,7 +497,7 @@ function Examine() {
                     array2[englishDay].forEach(value => commonNumbers.add(value));
                 });
             });
-            
+
             // setHoliday(commonNumbers);
             console.log("Common Numbers:", commonNumbers);
         } else {
