@@ -810,6 +810,60 @@ function Compensation() {
 
     }, [resultArrayWithWorkplaceRecords]);
 
+    const createBy = localStorage.getItem('user');
+const [update , setUpdate] = useState(null);
+
+    const saveconclude = async () => {
+const jsonObject = await JSON.parse(createBy);
+const tmpcurrentDate = new Date();
+const tmpday = tmpcurrentDate.getDate().toString().padStart(2, '0');
+const tmpmonth = (tmpcurrentDate.getMonth() + 1).toString().padStart(2, '0'); // Note: Month starts from 0
+const tmpyear = tmpcurrentDate.getFullYear();
+const formattedDate = `${tmpday}-${tmpmonth}-${tmpyear}`;
+
+        const data = await {
+            year: year,
+            month: month,
+            concludeDate : formattedDate ,
+            employeeId: staffId,
+          concludeRecord: dataTable,
+          createBy: jsonObject.name
+        };
+
+//ccc
+if(update == null) {
+
+    //create new conclude record
+try {
+    const response = await axios.post(endpoint + '/conclude/create', data);
+
+    if (response) {
+        alert("บันทึกสำเร็จ");
+    }
+
+} catch (e) {
+    alert('บันทึกไม่สำเร็จ');
+}
+
+} else {
+
+    try {
+        const response = await axios.put(endpoint + '/conclude/update/' + update , data);
+        if (response) {
+            alert("บันทึกสำเร็จ");
+            window.location.reload();
+
+        }
+    } catch (error) {
+        alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+        // window.location.reload();
+    }
+
+}
+
+    } 
+
+
     return (
         // <div>
         <body class="hold-transition sidebar-mini" className='editlaout'>
@@ -1169,12 +1223,8 @@ function Compensation() {
                                 </div>
 
                                 <div class="line_btn">
-                                    {newWorkplace ? (
-                                        <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
-                                    ) : (
-                                        <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
 
-                                    )}
+                                        <button type="button" onClick={saveconclude} class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
                                     <button class="btn clean"><i class="far fa-window-close"></i> &nbsp;ถัดไป</button>
                                 </div>
                                 {/* {JSON.stringify(employee.addSalary,null,2)} */}

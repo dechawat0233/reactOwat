@@ -1097,7 +1097,7 @@ function Compensation() {
                                     {newWorkplace ? (
                                         <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
                                     ) : (
-                                        <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
+                                        <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึกx</button>
 
                                     )}
                                     <button class="btn clean"><i class="far fa-window-close"></i> &nbsp;ถัดไป</button>
