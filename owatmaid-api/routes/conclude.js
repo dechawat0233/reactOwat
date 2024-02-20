@@ -136,7 +136,7 @@ router.post('/create', async (req, res) => {
         concludeDate,
         employeeId,
         concludeRecord,
-        createBuy });
+        createBy });
 
     const ans = await recordConclude .save();
     if (ans) {
