@@ -843,6 +843,7 @@ try {
 
 } catch (e) {
     alert('บันทึกไม่สำเร็จ');
+    alert(e);
 }
 
 } else {
