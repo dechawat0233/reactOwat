@@ -629,8 +629,8 @@ localStorage.removeItem('employeeId');
                 // alert(response.data.employees.length);
 
                 //clean form 
-                setSearchEmployeeId('');
-                setSearchEmployeeName('');
+                // setSearchEmployeeId('');
+                // setSearchEmployeeName('');
 
                 // Set search values
                 setEmployeeId(response.data.employees[0].employeeId);
