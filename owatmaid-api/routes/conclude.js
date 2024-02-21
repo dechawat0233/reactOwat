@@ -106,8 +106,8 @@ console.log('query.date ' + query.date);
     // Query the workplace collection for matching documents
     const recordConclude  = await conclude.find(query);
 
-    await console.log('Search Results:');
-    await console.log(recordworkplace  );
+    // await console.log('Search Results:');
+    // await console.log(recordworkplace  );
     let textSearch = 'conclude';
     await res.status(200).json({ recordConclude  });
   } catch (error) {
