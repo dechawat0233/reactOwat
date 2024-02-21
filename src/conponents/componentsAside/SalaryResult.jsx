@@ -46,6 +46,7 @@ function Salaryresult() {
   const [overallOtTimesSum, setOverallOtTimesSum] = useState(0);
   const [overWorkRateSum, setOverWorkRateSum] = useState(0);
   const [overWorkRateOTSum, setOverWorkRateOTSum] = useState(0);
+  const [overAddSalaryDaySum, setOverAddSalaryDaySum] = useState(0);
 
   const [employeeListResult, setEmployeeListResult] = useState([]);
   const [newWorkplace, setNewWorkplace] = useState(true);
@@ -544,6 +545,12 @@ function Salaryresult() {
       console.log('overWorkRateOTSum:', overWorkRateOTSum);
       setOverWorkRateOTSum(overWorkRateOTSum);
 
+      const overAddSalaryDaySum = Object.values(sumCountsByWorkplace).reduce((sum, workplaceData) => {
+        return sum + workplaceData.addSalaryDay;
+      }, 0);
+
+      console.log('overAddSalaryDaySum:', overAddSalaryDaySum);
+      setOverAddSalaryDaySum(overAddSalaryDaySum);
 
       setAlldaywork(sumCounts);
 
@@ -901,9 +908,9 @@ function Salaryresult() {
                         <tr>
                           <td>{(overWorkRateSum).toFixed(2)}</td>
                           <td>{(overWorkRateOTSum).toFixed(2)}</td>
+                          <td>{(overAddSalaryDaySum).toFixed(2)}</td>
                           <td></td>
                           <td></td>
-                          <td>{ }</td>
                           <td>
                             <button>แก้ไข</button>
                           </td>
