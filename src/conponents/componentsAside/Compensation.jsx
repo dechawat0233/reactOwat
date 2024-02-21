@@ -790,7 +790,7 @@ function Compensation() {
             }
 
             const workRateOT = !isNaN(item.workRate) && !isNaN(item.workOfHour) && !isNaN(item.workRateOT) ?
-                `${((item.workRate / item.workOfHour) * item.workRateOT).toFixed(2)} (${item.workRateOT})` :
+                `${(((item.workRate / item.workOfHour) * item.workRateOT) * item.otTimes).toFixed(2)} (${item.workRateOT})` :
                 ''; // If any of the values are not numbers, workRateOT will be an empty string
             const tmp = {
                 day: resultArray[index],
@@ -840,9 +840,9 @@ function Compensation() {
                 if (response) {
                     alert("บันทึกสำเร็จ");
                 }
-
             } catch (e) {
                 alert('บันทึกไม่สำเร็จ');
+                alert(e);
             }
 
         } else {
@@ -1052,7 +1052,7 @@ function Compensation() {
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                 {editIndex === index ?
-                                                                    <input type="text" className="form-control" value={formData.workplaceId} onChange={handleInputChange} name="workplaceId" /> :
+                                                                    <input type="text" className="form-control" value={formData.workplaceId} onChange={handleInputChange} name="workplaceId" readOnly /> :
                                                                     workplaceRecord.workplaceId}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>

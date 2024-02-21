@@ -41,12 +41,20 @@ function Salaryresult() {
   const [searchResult, setSearchResult] = useState([]);
   const [searchResultLower, setSearchResultLower] = useState([]);
 
+  const [totalCount, setTotalCount] = useState(0);
+  const [overallAllTimesSum, setOverallAllTimesSum] = useState(0);
+  const [overallOtTimesSum, setOverallOtTimesSum] = useState(0);
+  const [overWorkRateSum, setOverWorkRateSum] = useState(0);
+  const [overWorkRateOTSum, setOverWorkRateOTSum] = useState(0);
+
   const [employeeListResult, setEmployeeListResult] = useState([]);
   const [newWorkplace, setNewWorkplace] = useState(true);
   const [timerecordAllList, setTimerecordAllList] = useState([]);
 
   const [employeeList, setEmployeeList] = useState([]);
   const [workplaceList, setWorkplaceList] = useState([]);
+  const [concludeList, setConcludeList] = useState([]);
+
   const [searchEmployeeId, setSearchEmployeeId] = useState('');
   const [searchEmployeeName, setSearchEmployeeName] = useState('');
   const [staffId, setStaffId] = useState(''); //รหัสหน่วยงาน
@@ -93,19 +101,35 @@ function Salaryresult() {
       });
   }, []); // The empty array [] ensures that the effect runs only once after the initial render
 
+  // useEffect(() => {
+  //   // Fetch data from the API when the component mounts
+  //   fetch(endpoint + '/workplace/list')
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       // Update the state with the fetched data
+  //       setWorkplaceList(data);
+  //     })
+  //     .catch(error => {
+  //       console.error('Error fetching data:', error);
+  //     });
+  // }, []);
+
   useEffect(() => {
     // Fetch data from the API when the component mounts
-    fetch(endpoint + '/workplace/list')
+    fetch(endpoint + '/conclude/list')
       .then(response => response.json())
       .then(data => {
         // Update the state with the fetched data
-        setWorkplaceList(data);
+        setConcludeList(data);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
       });
   }, []);
-  console.error('workplaceList', workplaceList);
+
+  // console.error('workplaceList', workplaceList);
+
+  console.log('concludeList', concludeList);
 
   console.log(employeeList);
 
@@ -193,19 +217,6 @@ function Salaryresult() {
       return updatedList;
     });
   };
-
-  useEffect(() => {
-    // Fetch data from the API when the component mounts
-    fetch(endpoint + '/employee/list')
-      .then(response => response.json())
-      .then(data => {
-        // Update the state with the fetched data
-        setEmployeeList(data);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
-  }, []); // The empty array [] ensures that the effect runs only once after the initial render
 
   console.log(employeeList);
 
@@ -359,105 +370,182 @@ function Salaryresult() {
 
       // const response = await axios.post(endpoint + '/timerecord/listemp', data);
       // const responseLower = await axios.post(endpoint + '/timerecord/listemp', dataLower);
-      const filteredEntries = timerecordAllList.filter(entry =>
+      const filteredEntries = concludeList.filter(entry =>
         entry.employeeId === searchEmployeeId &&
         entry.month === month
         &&
-        entry.timerecordId == year
+        entry.year == year
       );
-      const filteredEntriesLower = timerecordAllList.filter(entry =>
-        entry.employeeId === searchEmployeeId &&
-        entry.month === monthLower
-        &&
-        entry.timerecordId == timerecordIdLower
-      );
-
-
-      // alert(filteredEntriesLower);
-
 
       setSearchResult(filteredEntries);
-      setSearchResultLower(filteredEntriesLower);
 
       // const entriesData = filteredEntries.map(entry =>
-      //     entry.employee_workplaceRecord
-      //         .filter(record => record.date <= 20)
-      //         .map(record => ({
-      //             workplaceId: record.workplaceId,
-      //             dates: record.date,
-      //             allTimes: record.allTime,
-      //             otTimes: record.otTime,
-
-      //             startTime: record.startTime,
-      //             endTime: record.endTime,
-      //             selectotTime: record.selectotTime,
-      //             selectotTimeOut: record.selectotTimeOut,
-      //         }))
+      //   entry.concludeRecord
+      //     .filter(record => record.date <= 20)
+      //     .map(record => {
+      //       const matchedWorkplace = workplaceList.find(workplace => workplace.workplaceId === record.workplaceId);
+      //       return {
+      //         workplaceId: record.workplaceId,
+      //         dates: record.date,
+      //         workOfHour: matchedWorkplace ? matchedWorkplace.workOfHour : '', // Default value if not found
+      //         workRate: matchedWorkplace ? matchedWorkplace.workRate : '', // Default value if not found
+      //         workRateOT: matchedWorkplace ? matchedWorkplace.workRateOT : '',
+      //         allTimes: record.allTime,
+      //         otTimes: record.otTime,
+      //         startTime: record.startTime,
+      //         endTime: record.endTime,
+      //         selectotTime: record.selectotTime,
+      //         selectotTimeOut: record.selectotTimeOut,
+      //       };
+      //     })
       // );
+      console.log('filteredEntries', filteredEntries);
 
-      const entriesData = filteredEntries.map(entry =>
-        entry.employee_workplaceRecord
-          .filter(record => record.date <= 20)
-          .map(record => {
-            const matchedWorkplace = workplaceList.find(workplace => workplace.workplaceId === record.workplaceId);
-            return {
-              workplaceId: record.workplaceId,
-              dates: record.date,
-              workOfHour: matchedWorkplace ? matchedWorkplace.workOfHour : '', // Default value if not found
-              workRate: matchedWorkplace ? matchedWorkplace.workRate : '', // Default value if not found
-              workRateOT: matchedWorkplace ? matchedWorkplace.workRateOT : '',
-              allTimes: record.allTime,
-              otTimes: record.otTime,
-              startTime: record.startTime,
-              endTime: record.endTime,
-              selectotTime: record.selectotTime,
-              selectotTimeOut: record.selectotTimeOut,
-            };
-          })
-      );
+      const concludeRecordArray = filteredEntries[0].concludeRecord;
 
-      // console.log(entriesData);
+      setAlldaywork(concludeRecordArray);
+      console.log('concludeRecordArray', concludeRecordArray);
 
-      // const entriesDataLower = filteredEntriesLower.map(entry =>
-      //     entry.employee_workplaceRecord
-      //         .filter(record => record.date >= 21)
-      //         .map(record => ({
-      //             workplaceId: record.workplaceId,
-      //             dates: record.date,
-      //             allTimes: record.allTime,
-      //             otTimes: record.otTime,
+      // const sumCounts = concludeRecordArray.reduce((accumulator, record) => {
+      //   const allTimesValue = parseFloat(record.allTimes) || 0;
+      //   const workRateValue = parseFloat(record.workRate) || 0;
+      //   const otTimesValue = parseFloat(record.otTimes) || 0;
 
-      //             startTime: record.startTime,
-      //             endTime: record.endTime,
-      //             selectotTime: record.selectotTime,
-      //             selectotTimeOut: record.selectotTimeOut,
-      //         }))
-      // );
+      //   // Extracting values inside parentheses and adding them to the sum
+      //   const workRateOTMatch = record.workRateOT.match(/\((.*?)\)/);
+      //   const workRateOTValue = workRateOTMatch ? parseFloat(workRateOTMatch[1]) || 0 : 0;
 
-      const entriesDataLower = filteredEntriesLower.map(entry =>
-        entry.employee_workplaceRecord
-          .filter(record => record.date >= 21)
-          .map(record => {
-            const matchedWorkplace = workplaceList.find(workplace => workplace.workplaceId === record.workplaceId);
-            return {
-              workplaceId: record.workplaceId,
-              dates: record.date,
-              workOfHour: matchedWorkplace ? matchedWorkplace.workOfHour : '', // Default value if not found
-              workRate: matchedWorkplace ? matchedWorkplace.workRate : '', // Default value if not found
-              workRateOT: matchedWorkplace ? matchedWorkplace.workRateOT : '',
-              allTimes: record.allTime,
-              otTimes: record.otTime,
-              startTime: record.startTime,
-              endTime: record.endTime,
-              selectotTime: record.selectotTime,
-              selectotTimeOut: record.selectotTimeOut,
-            };
-          })
-      );
+      //   const addSalaryDayValue = parseFloat(record.addSalaryDay) || 0;
 
-      setAlldaywork(entriesData);
-      setAlldayworkLower(entriesDataLower);
-      // alert(response.data.employees.length);
+      //   // Summing up the values
+      //   accumulator.allTimes += allTimesValue;
+      //   accumulator.workRate += workRateValue;
+      //   accumulator.otTimes += otTimesValue;
+      //   accumulator.workRateOT += workRateOTValue;
+      //   accumulator.addSalaryDay += addSalaryDayValue;
+
+      //   return accumulator;
+      // }, {
+      //   allTimes: 0,
+      //   workRate: 0,
+      //   otTimes: 0,
+      //   workRateOT: 0,
+      //   addSalaryDay: 0,
+      // });
+
+      // console.log('sumCounts', sumCounts);
+
+      // Grouping records by workplaceId
+
+      const workplaceIdCounts = {};
+
+      concludeRecordArray.forEach(record => {
+        if (record.workplaceId) {
+          const workplaceId = record.workplaceId;
+          workplaceIdCounts[workplaceId] = (workplaceIdCounts[workplaceId] || 0) + 1;
+        }
+      });
+
+      console.log('workplaceIdCounts', workplaceIdCounts);
+
+      const totalCount = Object.values(workplaceIdCounts).reduce((sum, count) => sum + count, 0);
+      setTotalCount(totalCount);
+
+      console.log('Total Count:', totalCount);
+
+      const groupedRecords = concludeRecordArray.reduce((groups, record) => {
+        const workplaceId = record.workplaceId || 'default'; // Use a default key if workplaceId is not available
+
+        if (!groups[workplaceId]) {
+          groups[workplaceId] = [];
+        }
+
+        groups[workplaceId].push(record);
+        return groups;
+      }, {});
+
+      // Calculating sum for each group
+      const sumCountsByWorkplace = {};
+
+      Object.keys(groupedRecords).forEach(workplaceId => {
+
+        sumCountsByWorkplace[workplaceId] = groupedRecords[workplaceId].reduce((accumulator, record) => {
+          const allTimesValue = parseFloat(record.allTimes) || 0;
+          const workRateValue = parseFloat(record.workRate) || 0;
+          const otTimesValue = parseFloat(record.otTimes) || 0;
+
+          // const workRateOTMatch = record.workRateOT.match(/\((.*?)\)/);
+          // const workRateOTValue = workRateOTMatch ? parseFloat(workRateOTMatch[1]) || 0 : 0;
+
+          const workRateOTMatch = record.workRateOT.match(/(\d+\.?\d*)/);
+          const workRateOTValue = workRateOTMatch ? parseFloat(workRateOTMatch[0]) || 0 : 0;
+
+
+          const addSalaryDayValue = parseFloat(record.addSalaryDay) || 0;
+
+          accumulator.allTimes += allTimesValue;
+          accumulator.workRate += workRateValue;
+          // accumulator.workRate = workRateValue;
+          accumulator.otTimes += otTimesValue;
+          // accumulator.workRateOT += workRateOTValue;
+          accumulator.workRateOT += workRateOTValue;
+          accumulator.addSalaryDay += addSalaryDayValue;
+          accumulator.count += 1;
+
+          return accumulator;
+        }, {
+          allTimes: 0,
+          workRate: 0,
+          otTimes: 0,
+          workRateOT: 0,
+          addSalaryDay: 0,
+        });
+      });
+
+      console.log('sumCountsByWorkplace', sumCountsByWorkplace);
+
+      // const otTimesSumByWorkplace = {};
+
+      // Object.keys(sumCountsByWorkplace).forEach(workplaceId => {
+      //   const workplaceData = sumCountsByWorkplace[workplaceId];
+      //   const allTimesSum = workplaceData.otTimes;
+
+      //   otTimesSumByWorkplace[workplaceId] = allTimesSum;
+      // });
+
+      // console.log('otTimesSumByWorkplace:', otTimesSumByWorkplace);
+
+      const overallAllTimesSum = Object.values(sumCountsByWorkplace).reduce((sum, workplaceData) => {
+        return sum + workplaceData.allTimes;
+      }, 0);
+
+      console.log('overallAllTimesSum:', overallAllTimesSum);
+      setOverallAllTimesSum(overallAllTimesSum);
+      // alert('overallAllTimesSum');
+
+      const overallOtTimesSum = Object.values(sumCountsByWorkplace).reduce((sum, workplaceData) => {
+        return sum + workplaceData.otTimes;
+      }, 0);
+
+      console.log('overallOtTimesSum:', overallOtTimesSum);
+      setOverallOtTimesSum(overallOtTimesSum);
+
+      const overWorkRateSum = Object.values(sumCountsByWorkplace).reduce((sum, workplaceData) => {
+        return sum + workplaceData.workRate;
+      }, 0);
+
+      console.log('overWorkRateSum:', overWorkRateSum);
+      setOverWorkRateSum(overWorkRateSum);
+
+      const overWorkRateOTSum = Object.values(sumCountsByWorkplace).reduce((sum, workplaceData) => {
+        return sum + workplaceData.workRateOT;
+      }, 0);
+
+      console.log('overWorkRateOTSum:', overWorkRateOTSum);
+      setOverWorkRateOTSum(overWorkRateOTSum);
+
+
+      setAlldaywork(sumCounts);
 
       if (response.data.employees.length < 1) {
         // window.location.reload();
@@ -477,12 +565,6 @@ function Salaryresult() {
         setEmployeeId(response.data.employees[0].employeeId);
         setName(response.data.employees[0].name);
         setLastname(response.data.employees[0].lastName);
-
-        // setSearchEmployeeId(response.data.employees[0].employeeId);
-        // setSearchEmployeeName(response.data.employees[0].name);
-
-        // console.log('workOfOT:', response.data.workplaces[0].workOfOT);
-        // console.log('workOfOT:', endTime);
 
       }
     } catch (error) {
@@ -529,21 +611,21 @@ function Salaryresult() {
   console.log('searchResultLower', searchResultLower);
 
   console.log('alldaywork', alldaywork);
-  console.log('alldayworkLower', alldayworkLower);
+  // console.log('alldayworkLower', alldayworkLower);
 
-  const allwork = [...alldayworkLower, ...alldaywork];
-  console.log('allwork', allwork);
+  // const allwork = [...alldayworkLower, ...alldaywork];
+  // console.log('allwork', allwork);
 
-  const result = resultArray2.map((number) => {
-    const matchingEntry = alldaywork.find((entry) => entry.dates === (number < 10 ? '0' + number : '' + number));
+  // const result = resultArray2.map((number) => {
+  //   const matchingEntry = alldaywork.find((entry) => entry.dates === (number < 10 ? '0' + number : '' + number));
 
-    if (matchingEntry) {
-      return `${number}, workplaceId: '${matchingEntry.workplaceId}', allTimes: '${matchingEntry.allTimes}', otTimes: '${matchingEntry.otTimes}'`;
-    } else {
-      return `${number}, workplaceId: '', allTimes: '', otTimes: ''`;
-    }
-  });
-  console.log('result', result);
+  //   if (matchingEntry) {
+  //     return `${number}, workplaceId: '${matchingEntry.workplaceId}', allTimes: '${matchingEntry.allTimes}', otTimes: '${matchingEntry.otTimes}'`;
+  //   } else {
+  //     return `${number}, workplaceId: '', allTimes: '', otTimes: ''`;
+  //   }
+  // });
+  // console.log('result', result);
 
 
   // Convert 'dates' to numbers
@@ -551,37 +633,37 @@ function Salaryresult() {
   //     ...item,
   //     dates: parseInt(item.dates, 10)
   // }));
-  const allworkFlattened = allwork.flat();
+  // const allworkFlattened = allwork.flat();
 
-  console.log(allworkFlattened);
+  // console.log(allworkFlattened);
 
-  // Filter unique entries based on 'workplaceId' and 'dates'
-  const uniqueEntries = allworkFlattened.reduce((acc, curr) => {
-    const key = `${curr.workplaceId}-${curr.dates}`;
-    if (!acc[key]) {
-      acc[key] = curr;
-    }
-    return acc;
-  }, {});
+  // // Filter unique entries based on 'workplaceId' and 'dates'
+  // const uniqueEntries = allworkFlattened.reduce((acc, curr) => {
+  //   const key = `${curr.workplaceId}-${curr.dates}`;
+  //   if (!acc[key]) {
+  //     acc[key] = curr;
+  //   }
+  //   return acc;
+  // }, {});
 
-  // Extract values from the object to get the final array
-  const resultAllwork = Object.values(uniqueEntries);
+  // // Extract values from the object to get the final array
+  // const resultAllwork = Object.values(uniqueEntries);
 
-  console.log('resultAllwork', resultAllwork);
+  // console.log('resultAllwork', resultAllwork);
 
-  const resultArrayWithWorkplaceRecords = resultArray2.map(date => {
-    const matchingRecord = resultAllwork.find(record => record.dates == date);
-    return matchingRecord ? { ...matchingRecord } : '';
-  });
+  // const resultArrayWithWorkplaceRecords = resultArray2.map(date => {
+  //   const matchingRecord = resultAllwork.find(record => record.dates == date);
+  //   return matchingRecord ? { ...matchingRecord } : '';
+  // });
 
-  console.log('resultArrayWithWorkplaceRecords', resultArrayWithWorkplaceRecords);
+  // console.log('resultArrayWithWorkplaceRecords', resultArrayWithWorkplaceRecords);
 
-  const combinedArray = resultArray.map((date, index) => {
-    const workplaceRecord = resultArrayWithWorkplaceRecords[index];
-    return [workplaceRecord, date];
-  });
+  // const combinedArray = resultArray.map((date, index) => {
+  //   const workplaceRecord = resultArrayWithWorkplaceRecords[index];
+  //   return [workplaceRecord, date];
+  // });
 
-  console.log('combinedArray', combinedArray);
+  // console.log('combinedArray', combinedArray);
 
   const handleStaffIdChange = (e) => {
     const selectedStaffId = e.target.value;
@@ -622,28 +704,28 @@ function Salaryresult() {
     setSearchEmployeeName(selectedEmployeeFName);
   };
 
-  const sumTime = resultArrayWithWorkplaceRecords.reduce((accumulator, workplaceRecord) => {
-    const workTime = parseFloat(workplaceRecord.allTimes);
-    return !isNaN(workTime) ? accumulator + workTime : accumulator;
-  }, 0);
+  // const sumTime = resultArrayWithWorkplaceRecords.reduce((accumulator, workplaceRecord) => {
+  //   const workTime = parseFloat(workplaceRecord.allTimes);
+  //   return !isNaN(workTime) ? accumulator + workTime : accumulator;
+  // }, 0);
 
-  const sumTimeOT = resultArrayWithWorkplaceRecords.reduce((accumulator, workplaceRecord) => {
-    const workTimeOT = parseFloat(workplaceRecord.otTimes);
-    return !isNaN(workTimeOT) ? accumulator + workTimeOT : accumulator;
-  }, 0);
+  // const sumTimeOT = resultArrayWithWorkplaceRecords.reduce((accumulator, workplaceRecord) => {
+  //   const workTimeOT = parseFloat(workplaceRecord.otTimes);
+  //   return !isNaN(workTimeOT) ? accumulator + workTimeOT : accumulator;
+  // }, 0);
 
-  const sumWorkRate = resultArrayWithWorkplaceRecords.reduce((accumulator, workplaceRecord) => {
-    const workRateValue = parseFloat(workplaceRecord.workRate);
-    return !isNaN(workRateValue) ? accumulator + workRateValue : accumulator;
-  }, 0);
-  const sumWorkRateOT = resultArrayWithWorkplaceRecords.reduce((accumulator, workplaceRecord) => {
-    const workRateValue = parseFloat(workplaceRecord.workRate);//352
-    const workRateOTValue = parseFloat(workplaceRecord.workRateOT);//1.5
-    const workTimeValue = parseFloat(workplaceRecord.workOfHour);//8 work
-    const workTimeOTValue = parseFloat(workplaceRecord.otTimes);//3 workot
+  // const sumWorkRate = resultArrayWithWorkplaceRecords.reduce((accumulator, workplaceRecord) => {
+  //   const workRateValue = parseFloat(workplaceRecord.workRate);
+  //   return !isNaN(workRateValue) ? accumulator + workRateValue : accumulator;
+  // }, 0);
+  // const sumWorkRateOT = resultArrayWithWorkplaceRecords.reduce((accumulator, workplaceRecord) => {
+  //   const workRateValue = parseFloat(workplaceRecord.workRate);//352
+  //   const workRateOTValue = parseFloat(workplaceRecord.workRateOT);//1.5
+  //   const workTimeValue = parseFloat(workplaceRecord.workOfHour);//8 work
+  //   const workTimeOTValue = parseFloat(workplaceRecord.otTimes);//3 workot
 
-    return !isNaN(workRateValue) ? accumulator + (((workRateValue / workTimeValue) * workRateOTValue) * workTimeOTValue) : accumulator;
-  }, 0);
+  //   return !isNaN(workRateValue) ? accumulator + (((workRateValue / workTimeValue) * workRateOTValue) * workTimeOTValue) : accumulator;
+  // }, 0);
 
   const Compensation = ({ staffId, month, year }) => {
     setStaffId(staffId);
@@ -651,17 +733,17 @@ function Salaryresult() {
     setYear(year);
   };
 
-  const sumWorkRate1 = resultArrayWithWorkplaceRecords.reduce((accumulator, workplaceRecord) => {
-    const workRateValue = parseFloat(workplaceRecord.workRate);
-    if (!isNaN(workRateValue)) {
-      accumulator.sum += workRateValue;
-      accumulator.count++;
-    }
-    return accumulator;
-  }, { sum: 0, count: 0 });
+  // const sumWorkRate1 = resultArrayWithWorkplaceRecords.reduce((accumulator, workplaceRecord) => {
+  //   const workRateValue = parseFloat(workplaceRecord.workRate);
+  //   if (!isNaN(workRateValue)) {
+  //     accumulator.sum += workRateValue;
+  //     accumulator.count++;
+  //   }
+  //   return accumulator;
+  // }, { sum: 0, count: 0 });
 
-  console.log("Sum:", sumWorkRate.sum);
-  console.log("Count:", sumWorkRate.count);
+  // console.log("Sum:", sumWorkRate.sum);
+  // console.log("Count:", sumWorkRate.count);
 
   return (
     // <div>
@@ -787,15 +869,15 @@ function Salaryresult() {
                         <tr>
                           <th style={headerCellStyle}>รวมวันทำงาน</th>
                           <th style={headerCellStyle}>รวมชั่วโมงทำงาน</th>
-                          <th style={headerCellStyle}>รวใชั่วโมงOT</th>
+                          <th style={headerCellStyle}>รวมใชั่วโมงOT</th>
 
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td style={cellStyle}>{sumTime.length}</td>
-                          <td style={cellStyle}>{sumTime}</td>
-                          <td style={cellStyle}>{sumTimeOT}</td>
+                          <td style={cellStyle}>{totalCount}</td>
+                          <td style={cellStyle}>{(overallAllTimesSum).toFixed(2)}</td>
+                          <td style={cellStyle}>{(overallOtTimesSum).toFixed(2)}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -817,11 +899,11 @@ function Salaryresult() {
                       </thead>
                       <tbody>
                         <tr>
-                          <td>{sumWorkRate}</td>
-                          <td>{(sumWorkRateOT).toFixed(2)}</td>
+                          <td>{(overWorkRateSum).toFixed(2)}</td>
+                          <td>{(overWorkRateOTSum).toFixed(2)}</td>
                           <td></td>
                           <td></td>
-                          <td>{(sumWorkRate + sumWorkRateOT).toFixed(2)}</td>
+                          <td>{ }</td>
                           <td>
                             <button>แก้ไข</button>
                           </td>

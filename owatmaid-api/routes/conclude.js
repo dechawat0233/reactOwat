@@ -39,7 +39,7 @@ createBy: String
 });
 
 // Create the conclude record time model based on the schema
-const conclude = mongoose.model('conclude', concludeSchema);
+const conclude = mongoose.model('conclude', concludeSchema );
 
 
 // Get list of conclude 
@@ -119,23 +119,24 @@ console.log('query.date ' + query.date);
 
 // Create new conclude
 router.post('/create', async (req, res) => {
-  try {
-    const { 
-      year,
-      month,
-      concludeDate,
-      employeeId,
-      createBy,
-      concludeRecord } = req.body;
+  const { 
+    year,
+    month,
+    concludeDate,
+    employeeId,
+    createBy,
+    concludeRecord } = req.body;
 
+
+  try {
       //create conclude record
       const recordConclude = new conclude({
         year,
         month,
         concludeDate,
         employeeId,
-        createBuy,
-        concludeRecord });
+        concludeRecord,
+        createBy });
 
     const ans = await recordConclude .save();
     if (ans) {
