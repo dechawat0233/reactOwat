@@ -354,8 +354,29 @@ function Compensation() {
             // employeeName: searchEmployeeName,
             month: month,
             timerecordId: year,
-
         };
+
+        //get data from conclude data 
+        const serchConclude = await {
+            year: year,
+            month: month,
+            // concludeDate: '',
+            employeeId: searchEmployeeId 
+        };
+
+        try {
+            const response = await axios.post(endpoint + '/conclude/search', serchConclude );
+
+if(response .length <1) {
+    // alert('conclude is null');
+} else {
+    await setLoadStatus('load');
+await alert(JSON.stringify(response ,null,2))
+}
+        } catch (e) {
+            alert(e);
+        }
+
         const dataLower = await {
             employeeId: searchEmployeeId,
             // name: searchEmployeeName,
