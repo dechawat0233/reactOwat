@@ -380,7 +380,7 @@ function Compensation() {
                 await setUpdate(response.data.recordConclude[0]._id);
             }
         } catch (e) {
-            alert(e);
+            // alert(e);
         }
 
 
