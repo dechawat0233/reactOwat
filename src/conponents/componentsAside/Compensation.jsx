@@ -345,7 +345,7 @@ function Compensation() {
     const thaiMonthName = getThaiMonthName(parseInt(CheckMonth, 10));
     const thaiMonthLowerName = getThaiMonthName(parseInt(countdownMonth, 10));
 
-    const [concludeResult , setConcludeResult ] = useState([]);
+    const [concludeResult, setConcludeResult] = useState([]);
 
     async function handleSearch(event) {
         event.preventDefault();
@@ -363,27 +363,27 @@ function Compensation() {
             year: year,
             month: month,
             concludeDate: '',
-            employeeId: searchEmployeeId 
+            employeeId: searchEmployeeId
         };
 
         try {
-            const response = await axios.post(endpoint + '/conclude/search', serchConclude );
-            
-if(response .length <1) {
-    // alert('conclude is null');
-} else {
-// await alert(JSON.stringify(response.data.recordConclude ,null,2))
-// await alert(response.data.recordConclude[0].concludeRecord.length )
-// await setDataTable(response.data.recordConclude[0].concludeRecord);
-await setConcludeResult(response.data.recordConclude[0].concludeRecord);
-await setLoadStatus('load');
-await setUpdate(response.data.recordConclude[0]._id);
-}
+            const response = await axios.post(endpoint + '/conclude/search', serchConclude);
+
+            if (response.length < 1) {
+                // alert('conclude is null');
+            } else {
+                // await alert(JSON.stringify(response.data.recordConclude ,null,2))
+                // await alert(response.data.recordConclude[0].concludeRecord.length )
+                // await setDataTable(response.data.recordConclude[0].concludeRecord);
+                await setConcludeResult(response.data.recordConclude[0].concludeRecord);
+                await setLoadStatus('load');
+                await setUpdate(response.data.recordConclude[0]._id);
+            }
         } catch (e) {
             alert(e);
         }
 
-        
+
         const dataLower = await {
             employeeId: searchEmployeeId,
             // name: searchEmployeeName,
@@ -535,9 +535,9 @@ await setUpdate(response.data.recordConclude[0]._id);
     }
 
 
-useEffect(() => {
-setDataTable(concludeResult);
-} , [concludeResult] )
+    useEffect(() => {
+        setDataTable(concludeResult);
+    }, [concludeResult])
 
     const findEmployeeById = (id) => {
         return employeeList.find(employee => employee.employeeId === id);
