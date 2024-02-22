@@ -538,19 +538,19 @@ function Compensation() {
     useEffect(() => {
         setDataTable(concludeResult);
         let ans = 0;
-let ans1 = 0;
+        let ans1 = 0;
 
-        const s = dataTable.map((item , index) => {
+        const s = dataTable.map((item, index) => {
 
-            if(!isNaN(item.workRate) ){
-ans = ans + parseFloat(item.workRate,10);
-ans1 = ans1 + parseFloat(item.workRateOT,10);
+            if (!isNaN(item.workRate)) {
+                ans = ans + parseFloat(item.workRate, 10);
+                ans1 = ans1 + parseFloat(item.workRateOT, 10);
             }
             return ans;
         })
-//ccss
-setSumRate(ans);
-setSumRateOT(ans1);
+        //ccss
+        setSumRate(ans);
+        setSumRateOT(ans1);
     }, [concludeResult])
 
     const findEmployeeById = (id) => {
@@ -831,8 +831,8 @@ setSumRateOT(ans1);
     };
 
 
-    const [sumRate , setSumRate] = useState(0);
-    const [sumRateOT , setSumRateOT] = useState(0);
+    const [sumRate, setSumRate] = useState(0);
+    const [sumRateOT, setSumRateOT] = useState(0);
 
     useEffect(() => {
         let ans = 0;
@@ -861,23 +861,24 @@ setSumRateOT(ans1);
                 addSalaryDay: addSalaryDay1
             };
 
-                        
-                        if(!isNaN(item.workRate) ){
-            ans = ans + parseFloat(item.workRate,10);
-            ans1 = ans1 + parseFloat(item.workRateOT,10);
-                        }
-            
-            
+
+            if (!isNaN(item.workRate)) {
+                ans = ans + parseFloat(item.workRate, 10);
+                ans1 = ans1 + parseFloat(item.workRateOT, 10);
+            }
+
+
             return tmp;
         });
 
         if (loadStatus == null) {
             setDataTable(updatedDataTable);
             setSumRate(ans);
-setSumRateOT(ans1);
+            setSumRateOT(ans1);
         }
-//ccaa
+        //ccaa
     }, [resultArrayWithWorkplaceRecords]);
+    console.log('sumRate',sumRate);
 
     const createBy = localStorage.getItem('user');
     const [update, setUpdate] = useState(null);
@@ -1297,7 +1298,7 @@ setSumRateOT(ans1);
                                 <div class="line_btn">
 
                                     <button type="button" onClick={saveconclude} class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
-                                    <button type="button" onClick={() => {saveconclude(); } } class="btn clean"><i class="far fa-window-close"></i> &nbsp;ถัดไป</button>
+                                    <button type="button" onClick={() => { saveconclude(); }} class="btn clean"><i class="far fa-window-close"></i> &nbsp;ถัดไป</button>
                                 </div>
                                 {/* {JSON.stringify(employee.addSalary,null,2)} */}
                             </section>
