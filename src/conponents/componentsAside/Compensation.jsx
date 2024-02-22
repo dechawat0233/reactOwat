@@ -88,7 +88,7 @@ function Compensation() {
 
         const currentYear = new Date().getFullYear();
         setYear(currentYear);
-        
+
         const savedEmployeeId = localStorage.getItem('employeeId');
         const savedEmployeeName = localStorage.getItem('employeeName');
         const savedMonth = localStorage.getItem('month');
@@ -110,7 +110,7 @@ function Compensation() {
         }
 
     }, []); // Run this effect only once on component mount
-    
+
     const EndYear = 2010;
     const currentYear = new Date().getFullYear(); // 2024
     const years = Array.from({ length: currentYear - EndYear + 1 }, (_, index) => EndYear + index).reverse();
@@ -554,7 +554,7 @@ function Compensation() {
         let ans = 0;
         let ans1 = 0;
 
-        const s = concludeResult.map((item , index) => {
+        const s = concludeResult.map((item, index) => {
 
             if (!isNaN(item.workRate)) {
                 ans = ans + parseFloat(item.workRate, 10);
@@ -1172,9 +1172,9 @@ function Compensation() {
                                                                 {/* <a href="https://example.com" class="link1" style={{ color: 'red' }}><b>ลบ</b></a> / <a href="#" class="link2" style={{ color: 'blue' }} onClick={openModal}><b>แก้ไข</b></a> */}
 
                                                                 {editIndex === index ? (
-                                                                    <button onClick={saveFormData}>Save</button>
+                                                                    <button class="btn btn-info" style={{ width: '3rem' }} onClick={saveFormData}>Save</button>
                                                                 ) : (
-                                                                    <button onClick={() => editData(index)}>Edit</button>
+                                                                    <button class="btn btn-success" style={{ width: '3rem' }} onClick={() => editData(index)}>Edit</button>
                                                                 )}
 
                                                                 <Modal
@@ -1281,7 +1281,7 @@ function Compensation() {
 
                                                                             </div>
                                                                         ))}
-                                                                        <button type="button" onClick={closeModal}>
+                                                                        <button type="button" class="btn btn-secondary" style={{ width: '3rem' }} onClick={closeModal}>
                                                                             Close
                                                                         </button>
                                                                     </form>
@@ -1314,7 +1314,7 @@ function Compensation() {
                                     <button type="button" onClick={saveconclude} class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
 
                                     <Link to="/Salaryresult">
-                                    <button type="button"  class="btn clean"><i class="far fa-window-close"></i> &nbsp;ถัดไป</button>
+                                        <button type="button" class="btn clean"><i class="far fa-window-close"></i> &nbsp;ถัดไป</button>
                                     </Link >
 
                                 </div>
