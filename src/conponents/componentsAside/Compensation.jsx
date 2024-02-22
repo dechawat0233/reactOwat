@@ -1,4 +1,5 @@
 import endpoint from '../../config';
+import { Link } from 'react-router-dom';
 
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -104,6 +105,7 @@ function Compensation() {
         }
 
     }, []); // Run this effect only once on component mount
+    
     const EndYear = 2010;
     const currentYear = new Date().getFullYear(); // 2024
     const years = Array.from({ length: currentYear - EndYear + 1 }, (_, index) => EndYear + index).reverse();
@@ -349,6 +351,10 @@ function Compensation() {
 
     async function handleSearch(event) {
         event.preventDefault();
+        await localStorage.setItem('employeeId', searchEmployeeId);
+        await localStorage.setItem('month', month);
+        await localStorage.setItem('year', year);
+
 
         const data = await {
             employeeId: searchEmployeeId,
@@ -1290,7 +1296,11 @@ setDataTable(updatedDataTable);
                                 <div class="line_btn">
 
                                     <button type="button" onClick={saveconclude} class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
-                                    <button type="button" onClick={() => {saveconclude(); } } class="btn clean"><i class="far fa-window-close"></i> &nbsp;ถัดไป</button>
+
+                                    <Link to="/Salaryresult">
+                                    <button type="button"  class="btn clean"><i class="far fa-window-close"></i> &nbsp;ถัดไป</button>
+                                    </Link >
+
                                 </div>
                                 {/* {JSON.stringify(employee.addSalary,null,2)} */}
                             </section>
