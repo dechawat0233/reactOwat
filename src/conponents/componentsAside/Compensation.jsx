@@ -206,7 +206,7 @@ function Compensation() {
 
     const handleAddTimePersonList = () => {
         setWorkTimeDayPersonList((prevList) => [...prevList, workTimeDayPerson]);
-        //xxss
+
         //clean data
         setWorkTimeDayPerson({
             // startDay: '',
@@ -537,6 +537,20 @@ function Compensation() {
 
     useEffect(() => {
         setDataTable(concludeResult);
+        let ans = 0;
+let ans1 = 0;
+
+        const s = dataTable.map((item , index) => {
+
+            if(!isNaN(item.workRate) ){
+ans = ans + parseFloat(item.workRate,10);
+ans1 = ans1 + parseFloat(item.workRateOT,10);
+            }
+            return ans;
+        })
+//ccss
+setSumRate(ans);
+setSumRateOT(ans1);
     }, [concludeResult])
 
     const findEmployeeById = (id) => {
@@ -816,7 +830,13 @@ function Compensation() {
         setFormData({ day, workplaceId, allTimes, workRate, otTimes, workRateOT, addSalaryDay });
     };
 
+
+    const [sumRate , setSumRate] = useState(0);
+    const [sumRateOT , setSumRateOT] = useState(0);
+
     useEffect(() => {
+        let ans = 0;
+        let ans1 = 0;
 
         const updatedDataTable = resultArrayWithWorkplaceRecords.map((item, index) => {
             let addSalaryDay1 = '';
@@ -840,13 +860,23 @@ function Compensation() {
                 workRateOT: workRateOT,
                 addSalaryDay: addSalaryDay1
             };
+
+                        
+                        if(!isNaN(item.workRate) ){
+            ans = ans + parseFloat(item.workRate,10);
+            ans1 = ans1 + parseFloat(item.workRateOT,10);
+                        }
+            
+            
             return tmp;
         });
 
         if (loadStatus == null) {
             setDataTable(updatedDataTable);
+            setSumRate(ans);
+setSumRateOT(ans1);
         }
-
+//ccaa
     }, [resultArrayWithWorkplaceRecords]);
 
     const createBy = localStorage.getItem('user');
@@ -1248,9 +1278,9 @@ function Compensation() {
                                                         <td style={cellStyle}>สรุป</td>
                                                         <td></td>
                                                         <td></td>
-                                                        <td style={cellStyle}>{sumWorkRate}</td>
+                                                        <td style={cellStyle}>{sumRate}</td>
                                                         <td></td>
-                                                        <td style={cellStyle}>{sumWorkRateOT.toFixed(2)}</td>
+                                                        <td style={cellStyle}>{sumRateOT}</td>
                                                         <td style={cellStyle}>{(sumWorkRate1.count * (addSalaryDay / 30)).toFixed(2)}</td>
                                                         <td></td>
                                                     </tr>
@@ -1267,7 +1297,7 @@ function Compensation() {
                                 <div class="line_btn">
 
                                     <button type="button" onClick={saveconclude} class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
-                                    <button class="btn clean"><i class="far fa-window-close"></i> &nbsp;ถัดไป</button>
+                                    <button type="button" onClick={() => {saveconclude(); } } class="btn clean"><i class="far fa-window-close"></i> &nbsp;ถัดไป</button>
                                 </div>
                                 {/* {JSON.stringify(employee.addSalary,null,2)} */}
                             </section>
