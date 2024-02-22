@@ -750,6 +750,9 @@ function Compensation() {
         const workRateValue = parseFloat(workplaceRecord.workRate);
         return !isNaN(workRateValue) ? accumulator + workRateValue : accumulator;
     }, 0);
+
+    console.log('sumWorkRate', sumWorkRate);
+
     const sumWorkRateOT = resultArrayWithWorkplaceRecords.reduce((accumulator, workplaceRecord) => {
         const workRateValue = parseFloat(workplaceRecord.workRate);//352
         const workRateOTValue = parseFloat(workplaceRecord.workRateOT);//1.5
@@ -775,6 +778,10 @@ function Compensation() {
     }, { sum: 0, count: 0 });
 
     console.log("Sum:", sumWorkRate.sum);
+    if (sumWorkRate.sum) {
+        alert(sumWorkRate.sum);
+
+    }
     console.log("Count:", sumWorkRate.count);
 
     //edit data table
@@ -891,7 +898,7 @@ function Compensation() {
                 // window.location.reload();
             }
 
-        } 
+        }
         // else {
         //     alert('บันทึกไม่สำเร็จ');
         // }
