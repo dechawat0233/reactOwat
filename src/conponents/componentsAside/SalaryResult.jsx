@@ -820,7 +820,7 @@ function Salaryresult() {
                             className="form-control"
                             id="staffId"
                             placeholder="รหัสพนักงาน"
-                            value={staffId}
+                            value={staffId == "null" ? '' : staffId}
                             onChange={handleStaffIdChange}
                             list="staffIdList"
                           />
@@ -840,7 +840,7 @@ function Salaryresult() {
                             className="form-control"
                             id="staffName"
                             placeholder="ชื่อพนักงาน"
-                            value={staffFullName}
+                            value={staffFullName == "null" ? '' : staffFullName }
                             onChange={handleStaffNameChange}
                             list="staffNameList"
                           />
