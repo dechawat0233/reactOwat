@@ -88,29 +88,42 @@ function Compensation() {
 
         const currentYear = new Date().getFullYear();
         setYear(currentYear);
-        
-        const savedEmployeeId = localStorage.getItem('employeeId');
-        const savedEmployeeName = localStorage.getItem('employeeName');
-        const savedMonth = localStorage.getItem('month');
-        const savedYear = localStorage.getItem('year');
-        if (savedEmployeeId) {
-            setSearchEmployeeId(savedEmployeeId);
-            setSearchEmployeeName(savedEmployeeName);
-            setStaffId(savedEmployeeId);
-            setStaffFullName(savedEmployeeName);
 
-            const event = new Event('submit'); // Creating a synthetic event object
-            handleSearch(event); // Call handleSearch with the event
+        const getdata= async () => {
+
+        const savedEmployeeId = await localStorage.getItem('employeeId');
+        const savedEmployeeFullName = await localStorage.getItem('staffFullName') || '';
+        const savedMonth = await localStorage.getItem('month');
+        const savedYear = await localStorage.getItem('year');
+        if (savedEmployeeId) {
+            await setSearchEmployeeId(savedEmployeeId);
+            // await setSearchEmployeeName(savedEmployeeName);
+            await setStaffId(savedEmployeeId);
+            // setStaffFullName(savedEmployeeName);
+
+            const event = await new Event('submit'); // Creating a synthetic event object
+            await handleSearch(event); // Call handleSearch with the event
+            await localStorage.removeItem('employeeId');
         }
         if (savedMonth) {
-            setMonth(savedMonth);
+            await setMonth(savedMonth);
+            await localStorage.removeItem('month');
         }
         if (savedYear) {
-            setYear(savedYear);
+            await setYear(savedYear);
+            await localStorage.removeItem('year');
+        }
+        if (savedEmployeeFullName) {
+            await setStaffFullName(savedEmployeeFullName);
+            await localStorage.removeItem('staffFullName');
         }
 
+    }
+
+    getdata();
     }, []); // Run this effect only once on component mount
-    
+        
+        
     const EndYear = 2010;
     const currentYear = new Date().getFullYear(); // 2024
     const years = Array.from({ length: currentYear - EndYear + 1 }, (_, index) => EndYear + index).reverse();
@@ -377,7 +390,6 @@ function Compensation() {
             concludeDate: '',
             employeeId: searchEmployeeId,
             employeeName: searchEmployeeName
-
         };
 
         try {
@@ -412,13 +424,13 @@ function Compensation() {
 
             // const response = await axios.post(endpoint + '/timerecord/listemp', data);
             // const responseLower = await axios.post(endpoint + '/timerecord/listemp', dataLower);
-            const filteredEntries = timerecordAllList.filter(entry =>
+            const filteredEntries = await timerecordAllList.filter(entry =>
                 entry.employeeId === searchEmployeeId &&
                 entry.month === month
                 &&
                 entry.timerecordId == year
             );
-            const filteredEntriesLower = timerecordAllList.filter(entry =>
+            const filteredEntriesLower = await timerecordAllList.filter(entry =>
                 entry.employeeId === searchEmployeeId &&
                 entry.month === monthLower
                 &&
@@ -429,8 +441,8 @@ function Compensation() {
             // alert(filteredEntriesLower);
 
 
-            setSearchResult(filteredEntries);
-            setSearchResultLower(filteredEntriesLower);
+            await setSearchResult(filteredEntries);
+            await setSearchResultLower(filteredEntriesLower);
 
             // const entriesData = filteredEntries.map(entry =>
             //     entry.employee_workplaceRecord
@@ -515,22 +527,22 @@ function Compensation() {
             if (response.data.employees.length < 1) {
                 // window.location.reload();
                 setEmployeeId('');
-                setName('');
-                setLastname('');
+                await setName('');
+                await setLastname('');
                 alert('ไม่พบข้อมูล');
 
             } else {
                 // alert(response.data.employees.length);
 
                 //clean form 
-                setSearchEmployeeId('');
-                setSearchEmployeeName('');
+                await setSearchEmployeeId('');
+                await setSearchEmployeeName('');
 
                 // Set search values
-                setEmployeeId(response.data.employees[0].employeeId);
-                setName(response.data.employees[0].name);
-                setLastname(response.data.employees[0].lastName);
-
+                await setEmployeeId(response.data.employees[0].employeeId);
+                await setName(response.data.employees[0].name);
+                await setLastname(response.data.employees[0].lastName);
+await setStaffFullName(response.data.employees[0].name );
                 // setSearchEmployeeId(response.data.employees[0].employeeId);
                 // setSearchEmployeeName(response.data.employees[0].name);
 
@@ -675,6 +687,20 @@ function Compensation() {
         }
     };
 
+
+    const callHandleStaffNameChangeWithEmployeeId = (employeeId) => {
+        // Assuming you have access to the event object or you can create a synthetic event
+        // You can create a synthetic event using `new Event('change')`
+        const syntheticEvent = new Event('change');
+    
+        // You need to attach a `target` property to the synthetic event
+        // with a `value` property containing the employeeId
+        syntheticEvent.target = { value: employeeId };
+    
+        // Call handleStaffNameChange with the synthetic event
+        handleStaffNameChange(syntheticEvent);
+    };
+    
     const handleStaffNameChange = (e) => {
         const selectedStaffName = e.target.value;
 
@@ -694,7 +720,8 @@ function Compensation() {
 
         // setStaffName(selectedStaffName);
         setStaffFullName(selectedStaffName);
-        setSearchEmployeeName(selectedEmployeeFName);
+        setSearchEmployeeName(selectedStaffName);
+        
     };
 
     const daysInMonth2 = getDaysInMonth(CheckMonth, CheckYear);
