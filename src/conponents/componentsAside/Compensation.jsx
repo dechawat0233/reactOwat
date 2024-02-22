@@ -865,9 +865,10 @@ setSumRateOT(ans1);
         });
 
         if (loadStatus == null) {
-            setDataTable(updatedDataTable);
-            setSumRate(ans);
-setSumRateOT(ans1);
+            // setSumRate(ans);
+// setSumRateOT(ans1);
+setDataTable(updatedDataTable);
+
         }
 //ccaa
     }, [resultArrayWithWorkplaceRecords]);
