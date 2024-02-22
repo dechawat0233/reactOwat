@@ -346,8 +346,38 @@ function Salaryresult() {
   const thaiMonthName = getThaiMonthName(parseInt(CheckMonth, 10));
   const thaiMonthLowerName = getThaiMonthName(parseInt(countdownMonth, 10));
 
+  useEffect(() => {
+    setMonth("01");
+
+    const currentYear = new Date().getFullYear();
+    setYear(currentYear);
+    const savedEmployeeId = localStorage.getItem('employeeId');
+    const savedEmployeeName = localStorage.getItem('employeeName');
+    const savedMonth = localStorage.getItem('month');
+    const savedYear = localStorage.getItem('year');
+    if (savedEmployeeId) {
+      setSearchEmployeeId(savedEmployeeId);
+      setStaffFullName(savedEmployeeName);
+
+      setStaffId(savedEmployeeId);
+      setStaffFullName(savedEmployeeName);
+      const event = new Event('submit'); // Creating a synthetic event object
+      handleSearch(event); // Call handleSearch with the event
+    }
+    if (savedMonth) {
+      setMonth(savedMonth);
+    }
+    if (savedYear) {
+      setYear(savedYear);
+    }
+
+  }, []); // Run this effect only once on component mount
+
   async function handleSearch(event) {
     event.preventDefault();
+    await localStorage.setItem('employeeId', searchEmployeeId);
+    await localStorage.setItem('month', month);
+    await localStorage.setItem('year', year);
 
     const data = await {
       employeeId: searchEmployeeId,
@@ -867,8 +897,35 @@ function Salaryresult() {
                   </div> */}
                 </div>
               </section>
-              <h2 class="title">ตั้งค่าหน่วยงาน</h2>
+              <h2 class="title">สรุปเงินเดือน</h2>
               <section class="Frame">
+                {staffFullName ? (
+                  <div class="row">
+                    <div class="col-md-12">
+                      ชื่อ: {staffFullName}
+                    </div>
+                  </div>) : (
+                  <div>
+                    {/* Content to show when staffFullName is not set */}
+                  </div>
+                )}
+
+                {/* {month ? (
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            ตั้งแต่วันที่ 20 {thaiMonthLowerName} - 21 {thaiMonthName} ปี {year}
+                                        </div>
+                                    </div>) : (
+                                    <div>
+                                    </div>
+                                )} */}
+
+                <div class="row">
+                  <div class="col-md-12">
+                    ตั้งแต่วันที่ 20 {thaiMonthLowerName} - 21 {thaiMonthName} ปี {parseInt(year, 10) + 543}
+                  </div>
+                </div>
+                <br />
                 <div class="row">
                   <div class="col-md-8">
                     <table border="1" style={tableStyle}>
@@ -976,6 +1033,16 @@ function Salaryresult() {
                   </div>
                 </div>
               </section>
+              <div class="line_btn">
+
+                <button type="button"  class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;ปิดง่วด</button>
+
+                {/* <Link to="/Salaryresult"> */}
+                  <button type="button" class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
+                {/* </Link > */}
+
+              </div>
+              {/* {JSON.stringify(employee.addSalary,null,2)} */}
             </div>
 
           </section>

@@ -90,11 +90,15 @@ function Compensation() {
         setYear(currentYear);
         
         const savedEmployeeId = localStorage.getItem('employeeId');
+        const savedEmployeeName = localStorage.getItem('employeeName');
         const savedMonth = localStorage.getItem('month');
         const savedYear = localStorage.getItem('year');
         if (savedEmployeeId) {
             setSearchEmployeeId(savedEmployeeId);
+            setSearchEmployeeName(savedEmployeeName);
             setStaffId(savedEmployeeId);
+            setStaffFullName(savedEmployeeName);
+
             const event = new Event('submit'); // Creating a synthetic event object
             handleSearch(event); // Call handleSearch with the event
         }
@@ -353,6 +357,7 @@ function Compensation() {
     async function handleSearch(event) {
         event.preventDefault();
         await localStorage.setItem('employeeId', searchEmployeeId);
+        await localStorage.setItem('employeeName', searchEmployeeName);
         await localStorage.setItem('month', month);
         await localStorage.setItem('year', year);
 
@@ -370,7 +375,9 @@ function Compensation() {
             year: year,
             month: month,
             concludeDate: '',
-            employeeId: searchEmployeeId
+            employeeId: searchEmployeeId,
+            employeeName: searchEmployeeName
+
         };
 
         try {
@@ -545,19 +552,19 @@ function Compensation() {
     useEffect(() => {
         setDataTable(concludeResult);
         let ans = 0;
-let ans1 = 0;
+        let ans1 = 0;
 
         const s = concludeResult.map((item , index) => {
 
-            if(!isNaN(item.workRate) ){
-ans = ans + parseFloat(item.workRate,10);
-ans1 = ans1 + parseFloat(item.workRateOT,10);
+            if (!isNaN(item.workRate)) {
+                ans = ans + parseFloat(item.workRate, 10);
+                ans1 = ans1 + parseFloat(item.workRateOT, 10);
             }
             return ans;
         })
-//ccss
-setSumRate(ans);
-setSumRateOT(ans1);
+        //ccss
+        setSumRate(ans);
+        setSumRateOT(ans1);
     }, [concludeResult])
 
     const findEmployeeById = (id) => {
@@ -771,6 +778,9 @@ setSumRateOT(ans1);
         const workRateValue = parseFloat(workplaceRecord.workRate);
         return !isNaN(workRateValue) ? accumulator + workRateValue : accumulator;
     }, 0);
+
+    console.log('sumWorkRate', sumWorkRate);
+
     const sumWorkRateOT = resultArrayWithWorkplaceRecords.reduce((accumulator, workplaceRecord) => {
         const workRateValue = parseFloat(workplaceRecord.workRate);//352
         const workRateOTValue = parseFloat(workplaceRecord.workRateOT);//1.5
@@ -796,6 +806,10 @@ setSumRateOT(ans1);
     }, { sum: 0, count: 0 });
 
     console.log("Sum:", sumWorkRate.sum);
+    if (sumWorkRate.sum) {
+        alert(sumWorkRate.sum);
+
+    }
     console.log("Count:", sumWorkRate.count);
 
     //edit data table
@@ -831,8 +845,8 @@ setSumRateOT(ans1);
     };
 
 
-    const [sumRate , setSumRate] = useState(0);
-    const [sumRateOT , setSumRateOT] = useState(0);
+    const [sumRate, setSumRate] = useState(0);
+    const [sumRateOT, setSumRateOT] = useState(0);
 
     useEffect(() => {
         let ans = 0;
@@ -861,24 +875,25 @@ setSumRateOT(ans1);
                 addSalaryDay: addSalaryDay1
             };
 
-                        
-                        if(!isNaN(item.workRate) ){
-            ans = ans + parseFloat(item.workRate,10);
-            ans1 = ans1 + parseFloat(item.workRateOT,10);
-                        }
-            
-            
+
+            if (!isNaN(item.workRate)) {
+                ans = ans + parseFloat(item.workRate, 10);
+                ans1 = ans1 + parseFloat(item.workRateOT, 10);
+            }
+
+
             return tmp;
         });
 
         if (loadStatus == null) {
-            // setSumRate(ans);
-// setSumRateOT(ans1);
-setDataTable(updatedDataTable);
+            setSumRate(ans);
+            setSumRateOT(ans1);
+            setDataTable(updatedDataTable);
 
         }
-//ccaa
+        //ccaa
     }, [resultArrayWithWorkplaceRecords]);
+    console.log('sumRate', sumRate);
 
     const createBy = localStorage.getItem('user');
     const [update, setUpdate] = useState(null);
@@ -929,7 +944,7 @@ setDataTable(updatedDataTable);
                 // window.location.reload();
             }
 
-        } 
+        }
         // else {
         //     alert('บันทึกไม่สำเร็จ');
         // }
