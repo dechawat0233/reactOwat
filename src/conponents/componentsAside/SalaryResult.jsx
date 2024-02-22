@@ -346,8 +346,34 @@ function Salaryresult() {
   const thaiMonthName = getThaiMonthName(parseInt(CheckMonth, 10));
   const thaiMonthLowerName = getThaiMonthName(parseInt(countdownMonth, 10));
 
+  useEffect(() => {
+    setMonth("01");
+
+    const currentYear = new Date().getFullYear();
+    setYear(currentYear);
+    const savedEmployeeId = localStorage.getItem('employeeId');
+    const savedMonth = localStorage.getItem('month');
+    const savedYear = localStorage.getItem('year');
+    if (savedEmployeeId) {
+        setSearchEmployeeId(savedEmployeeId);
+        setStaffId(savedEmployeeId);
+        const event = new Event('submit'); // Creating a synthetic event object
+        handleSearch(event); // Call handleSearch with the event
+    }
+    if (savedMonth) {
+        setMonth(savedMonth);
+    }
+    if (savedYear) {
+        setYear(savedYear);
+    }
+
+}, []); // Run this effect only once on component mount
+
   async function handleSearch(event) {
     event.preventDefault();
+    await localStorage.setItem('employeeId', searchEmployeeId);
+    await localStorage.setItem('month', month);
+    await localStorage.setItem('year', year);
 
     const data = await {
       employeeId: searchEmployeeId,
