@@ -872,13 +872,14 @@ function Compensation() {
         });
 
         if (loadStatus == null) {
-            setDataTable(updatedDataTable);
             setSumRate(ans);
             setSumRateOT(ans1);
+            setDataTable(updatedDataTable);
+
         }
         //ccaa
     }, [resultArrayWithWorkplaceRecords]);
-    console.log('sumRate',sumRate);
+    console.log('sumRate', sumRate);
 
     const createBy = localStorage.getItem('user');
     const [update, setUpdate] = useState(null);
