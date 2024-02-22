@@ -88,6 +88,7 @@ function Compensation() {
 
         const currentYear = new Date().getFullYear();
         setYear(currentYear);
+        
         const savedEmployeeId = localStorage.getItem('employeeId');
         const savedMonth = localStorage.getItem('month');
         const savedYear = localStorage.getItem('year');
