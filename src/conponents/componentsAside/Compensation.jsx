@@ -89,11 +89,15 @@ function Compensation() {
         const currentYear = new Date().getFullYear();
         setYear(currentYear);
         const savedEmployeeId = localStorage.getItem('employeeId');
+        const savedEmployeeName = localStorage.getItem('employeeName');
         const savedMonth = localStorage.getItem('month');
         const savedYear = localStorage.getItem('year');
         if (savedEmployeeId) {
             setSearchEmployeeId(savedEmployeeId);
+            setSearchEmployeeName(savedEmployeeName);
             setStaffId(savedEmployeeId);
+            setStaffFullName(savedEmployeeName);
+
             const event = new Event('submit'); // Creating a synthetic event object
             handleSearch(event); // Call handleSearch with the event
         }
@@ -352,6 +356,7 @@ function Compensation() {
     async function handleSearch(event) {
         event.preventDefault();
         await localStorage.setItem('employeeId', searchEmployeeId);
+        await localStorage.setItem('employeeName', searchEmployeeName);
         await localStorage.setItem('month', month);
         await localStorage.setItem('year', year);
 
@@ -369,7 +374,9 @@ function Compensation() {
             year: year,
             month: month,
             concludeDate: '',
-            employeeId: searchEmployeeId
+            employeeId: searchEmployeeId,
+            employeeName: searchEmployeeName
+
         };
 
         try {
