@@ -540,7 +540,7 @@ function Compensation() {
         let ans = 0;
 let ans1 = 0;
 
-        const s = dataTable.map((item , index) => {
+        const s = concludeResult.map((item , index) => {
 
             if(!isNaN(item.workRate) ){
 ans = ans + parseFloat(item.workRate,10);
@@ -1108,7 +1108,6 @@ setDataTable(updatedDataTable);
                                                 <tbody>
 
                                                     {dataTable.map((workplaceRecord, index) => (
-
                                                         <tr key={index}>
 
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
