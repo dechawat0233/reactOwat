@@ -16,6 +16,7 @@ function Salary() {
         // You can also return a cleanup function if needed
         // return () => { /* cleanup code */ };
     }, []);
+    const [showAddSalaryButton, setShowAddSalaryButton] = useState(true);
 
     const [storedEmp, setStoredEmp] = useState([]);
     const [newEmp, setNewEmp] = useState(true);
@@ -684,7 +685,7 @@ function Salary() {
                                                                     </option>
                                                                 ))}
                                                             </datalist>
-                                                    
+
                                                             {/* <input
                                                                 type="text"
                                                                 id="workplace"

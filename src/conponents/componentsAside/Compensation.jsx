@@ -1213,7 +1213,7 @@ let ans2 = 0;
                                                                 {editIndex === index ? (
                                                                     <button class="btn btn-info" style={{ width: '3rem' }} onClick={saveFormData}>Save</button>
                                                                 ) : (
-                                                                    <button class="btn btn-success" style={{ width: '3rem' }} onClick={() => editData(index)}>Edit</button>
+                                                                    <button class="btn btn-danger" style={{ width: '3rem' }} onClick={() => editData(index)}>แก้ไข</button>
                                                                 )}
 
                                                                 <Modal
