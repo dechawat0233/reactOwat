@@ -104,14 +104,6 @@ function Compensation() {
             const event = await new Event('submit'); // Creating a synthetic event object
             await handleSearch(event); // Call handleSearch with the event
 
-            const event1 = new Event('submit'); // Creating a synthetic event object
-Object.defineProperty(event1, 'target', {
-  writable: true,
-  value: { staffId: savedEmployeeId } // Set the value you want to pass to handleStaffIdChange
-});
-await handleStaffIdChange(event1 );
-
-
             await localStorage.removeItem('employeeId');
         }
         if (savedMonth) {
@@ -601,39 +593,26 @@ const getAddSalaryDay = async () => {
     await setAddSalaryDay(0);
 
     if (employee?.addSalary?.length > 0) {
-        let tmp = await 0;
-    await employee.addSalary.map(async (item, index) => {
-if(item.roundOfSalary == 'daily') {
-tmp= await tmp + parseFloat(item.SpSalary, 10);
-await alert(tmp);
-}
-    });
-    await setAddSalaryDay(tmp);
-    await alert(tmp);
+
+        const sum = await employee.addSalary.reduce( async (accumulator, item) => {
+            if (item.roundOfSalary === 'daily') {
+             if(parseFloat(item.SpSalary) < 100) {
+                return await accumulator + parseFloat(item.SpSalary, 10);
+             }   else {
+let r = await accumulator + parseFloat(item.SpSalary, 10);
+r = await r / 30;
+return await r;
+             }
+            } else {
+              return accumulator;
+            }
+          }, 0);
+          
+    await setAddSalaryDay(sum);
     }
 
 
 };
-
-        // setAddSalaryDay(0);
-
-        // if (employee?.addSalary?.length > 0) {
-        //     // alert(employee.addSalary.length);
-        //     //cal addSalary day
-        //     const ans = 0;
-        //     for (let i = 0; i < employee.addSalary.length; i++) {
-        //         // alert(employee.addSalary[i].roundOfSalary || '');
-        //         let tmp = employee.addSalary[i].roundOfSalary || '';
-        //         if (tmp == 'daily') {
-        //             // alert(employee.addSalary[i].SpSalary || 0);
-        //             let tmp1 = employee.addSalary[i].SpSalary || 0;
-        //             // alert(tmp1);
-        //             setAddSalaryDay(addSalaryDay + parseInt(employee.addSalary[i].SpSalary || 0));
-        //         }
-        //     }
-        //     // setAddSalaryDay(ans);
-
-        // }
 
         getAddSalaryDay();
     }, [employee]);
