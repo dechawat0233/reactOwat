@@ -352,33 +352,33 @@ function Salaryresult() {
     const currentYear = new Date().getFullYear();
     setYear(currentYear);
 
-    const getdata= async () => {
+    const getdata = async () => {
 
       const savedEmployeeId = await localStorage.getItem('employeeId');
       const savedEmployeeName = await localStorage.getItem('employeeName') || '';
       const savedMonth = await localStorage.getItem('month');
       const savedYear = await localStorage.getItem('year');
       if (savedEmployeeId) {
-          await setSearchEmployeeId(savedEmployeeId);
-          await setSearchEmployeeName(savedEmployeeName);
-          await setStaffId(savedEmployeeId);
-          // setStaffFullName(savedEmployeeName);
+        await setSearchEmployeeId(savedEmployeeId);
+        await setSearchEmployeeName(savedEmployeeName);
+        await setStaffId(savedEmployeeId);
+        // setStaffFullName(savedEmployeeName);
 
-          const event = await new Event('submit'); // Creating a synthetic event object
-          await handleSearch(event); // Call handleSearch with the event
-          await localStorage.removeItem('employeeId');
+        const event = await new Event('submit'); // Creating a synthetic event object
+        await handleSearch(event); // Call handleSearch with the event
+        await localStorage.removeItem('employeeId');
       }
       if (savedMonth) {
-          await setMonth(savedMonth);
-          await localStorage.removeItem('month');
+        await setMonth(savedMonth);
+        await localStorage.removeItem('month');
       }
       if (savedYear) {
-          await setYear(savedYear);
-          await localStorage.removeItem('year');
+        await setYear(savedYear);
+        await localStorage.removeItem('year');
       }
-  }
+    }
 
-  getdata();
+    getdata();
 
   }, []); // Run this effect only once on component mount
 
@@ -720,7 +720,7 @@ function Salaryresult() {
 
     // Call handleStaffNameChange with the synthetic event
     handleStaffNameChange(syntheticEvent);
-};
+  };
 
   const handleStaffIdChange = (e) => {
     const selectedStaffId = e.target.value;
@@ -860,7 +860,7 @@ function Salaryresult() {
                             className="form-control"
                             id="staffName"
                             placeholder="ชื่อพนักงาน"
-                            value={staffFullName == "null" ? '' : staffFullName }
+                            value={staffFullName == "null" ? '' : staffFullName}
                             onChange={handleStaffNameChange}
                             list="staffNameList"
                           />
@@ -983,12 +983,12 @@ function Salaryresult() {
                       </thead>
                       <tbody>
                         <tr>
-                          <td>{(overWorkRateSum).toFixed(2)}</td>
-                          <td>{(overWorkRateOTSum).toFixed(2)}</td>
-                          <td>{(overAddSalaryDaySum).toFixed(2)}</td>
-                          <td></td>
-                          <td></td>
-                          <td>
+                          <td style={cellStyle}>{(overWorkRateSum).toFixed(2)}</td>
+                          <td style={cellStyle}>{(overWorkRateOTSum).toFixed(2)}</td>
+                          <td style={cellStyle}>{(overAddSalaryDaySum).toFixed(2)}</td>
+                          <td style={cellStyle}></td>
+                          <td style={cellStyle}></td>
+                          <td style={cellStyle}>
                             <button>แก้ไข</button>
                           </td>
 
@@ -1014,12 +1014,12 @@ function Salaryresult() {
                       </thead>
                       <tbody>
                         <tr>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td>
+                          <td style={cellStyle}></td>
+                          <td style={cellStyle}></td>
+                          <td style={cellStyle}></td>
+                          <td style={cellStyle}></td>
+                          <td style={cellStyle}></td>
+                          <td style={cellStyle}>
                             <button>แก้ไข</button>
                           </td>
                         </tr>
@@ -1055,10 +1055,10 @@ function Salaryresult() {
               </section>
               <div class="line_btn">
 
-                <button type="button"  class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;ปิดง่วด</button>
+                <button type="button" class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;ปิดง่วด</button>
 
                 {/* <Link to="/Salaryresult"> */}
-                  <button type="button" class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
+                <button type="button" class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
                 {/* </Link > */}
 
               </div>

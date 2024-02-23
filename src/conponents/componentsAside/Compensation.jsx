@@ -1341,7 +1341,7 @@ await setStaffFullName(response.data.employees[0].name );
                                     <button type="button" onClick={saveconclude} class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
 
                                     <Link to="/Salaryresult">
-                                        <button type="button" class="btn clean"><i class="far fa-window-close"></i> &nbsp;ถัดไป</button>
+                                        <button type="button" class="btn clean"><i>&gt;</i> &nbsp;ถัดไป</button>
                                     </Link >
 
                                 </div>
