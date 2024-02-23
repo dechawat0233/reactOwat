@@ -241,7 +241,11 @@ function Examine() {
     const thaiMonthName = getThaiMonthName(parseInt(CheckMonth, 10));
     const thaiMonthLowerName = getThaiMonthName(parseInt(countdownMonth, 10));
 
-    async function handleSearch(event) {
+    useEffect(() => {
+localStorage.setItem('staffFullName', staffFullName);
+    }, [staffFullName]);    async function handleSearch(event) {
+
+
         event.preventDefault();
         await localStorage.setItem('employeeId', searchEmployeeId);
         await localStorage.setItem('month', month);

@@ -351,33 +351,39 @@ function Salaryresult() {
 
     const currentYear = new Date().getFullYear();
     setYear(currentYear);
-    const savedEmployeeId = localStorage.getItem('employeeId');
-    const savedEmployeeName = localStorage.getItem('employeeName');
-    const savedMonth = localStorage.getItem('month');
-    const savedYear = localStorage.getItem('year');
-    if (savedEmployeeId) {
-      setSearchEmployeeId(savedEmployeeId);
-      setStaffFullName(savedEmployeeName);
 
-      setStaffId(savedEmployeeId);
-      setStaffFullName(savedEmployeeName);
-      const event = new Event('submit'); // Creating a synthetic event object
-      handleSearch(event); // Call handleSearch with the event
-    }
-    if (savedMonth) {
-      setMonth(savedMonth);
-    }
-    if (savedYear) {
-      setYear(savedYear);
-    }
+    const getdata= async () => {
+
+      const savedEmployeeId = await localStorage.getItem('employeeId');
+      const savedEmployeeName = await localStorage.getItem('employeeName') || '';
+      const savedMonth = await localStorage.getItem('month');
+      const savedYear = await localStorage.getItem('year');
+      if (savedEmployeeId) {
+          await setSearchEmployeeId(savedEmployeeId);
+          await setSearchEmployeeName(savedEmployeeName);
+          await setStaffId(savedEmployeeId);
+          // setStaffFullName(savedEmployeeName);
+
+          const event = await new Event('submit'); // Creating a synthetic event object
+          await handleSearch(event); // Call handleSearch with the event
+          await localStorage.removeItem('employeeId');
+      }
+      if (savedMonth) {
+          await setMonth(savedMonth);
+          await localStorage.removeItem('month');
+      }
+      if (savedYear) {
+          await setYear(savedYear);
+          await localStorage.removeItem('year');
+      }
+  }
+
+  getdata();
 
   }, []); // Run this effect only once on component mount
 
   async function handleSearch(event) {
     event.preventDefault();
-    await localStorage.setItem('employeeId', searchEmployeeId);
-    await localStorage.setItem('month', month);
-    await localStorage.setItem('year', year);
 
     const data = await {
       employeeId: searchEmployeeId,
@@ -702,6 +708,20 @@ function Salaryresult() {
 
   // console.log('combinedArray', combinedArray);
 
+
+  const callHandleStaffNameChangeWithEmployeeId = (employeeId) => {
+    // Assuming you have access to the event object or you can create a synthetic event
+    // You can create a synthetic event using `new Event('change')`
+    const syntheticEvent = new Event('change');
+
+    // You need to attach a `target` property to the synthetic event
+    // with a `value` property containing the employeeId
+    syntheticEvent.target = { value: employeeId };
+
+    // Call handleStaffNameChange with the synthetic event
+    handleStaffNameChange(syntheticEvent);
+};
+
   const handleStaffIdChange = (e) => {
     const selectedStaffId = e.target.value;
     setStaffId(selectedStaffId);
@@ -712,7 +732,6 @@ function Salaryresult() {
       // setStaffName(selectedEmployee.name);
       // setStaffLastname(selectedEmployee.lastName);
       setStaffFullName(selectedEmployee.name + ' ' + selectedEmployee.lastName);
-
 
     } else {
       setStaffName('');
@@ -731,13 +750,14 @@ function Salaryresult() {
     if (selectedEmployee) {
       setStaffId(selectedEmployee.employeeId);
       setSearchEmployeeId(selectedEmployee.employeeId);
+      setStaffFullName(selectedEmployee.employeeName);
     } else {
       setStaffId('');
       // searchEmployeeId('');
     }
 
     // setStaffName(selectedStaffName);
-    setStaffFullName(selectedStaffName);
+    setStaffFullName(selectedEmployeeFName);
     setSearchEmployeeName(selectedEmployeeFName);
   };
 
