@@ -1054,7 +1054,7 @@ function Salaryresult() {
                 </div>
               </section>
               <div class="line_btn">
-                <button type="button" class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;ปิดง่วด</button>
+                <button type="button" class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;ปิดงวด</button>
 
                 {/* <Link to="/Salaryresult"> */}
                 <button type="button" class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
