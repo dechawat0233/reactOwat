@@ -100,10 +100,18 @@ function Compensation() {
             // await setSearchEmployeeName(savedEmployeeName);
             await setStaffId(savedEmployeeId);
             // setStaffFullName(savedEmployeeName);
-            await callHandleStaffNameChangeWithEmployeeId(savedEmployeeId);
 
             const event = await new Event('submit'); // Creating a synthetic event object
             await handleSearch(event); // Call handleSearch with the event
+
+            const event1 = new Event('submit'); // Creating a synthetic event object
+Object.defineProperty(event1, 'target', {
+  writable: true,
+  value: { staffId: savedEmployeeId } // Set the value you want to pass to handleStaffIdChange
+});
+await handleStaffIdChange(event1 );
+
+
             await localStorage.removeItem('employeeId');
         }
         if (savedMonth) {
@@ -709,17 +717,17 @@ await alert(tmp);
     };
 
 
-    const callHandleStaffNameChangeWithEmployeeId = (employeeId) => {
+    const callHandleStaffNameChangeWithEmployeeId = async (employeeId) => {
         // Assuming you have access to the event object or you can create a synthetic event
         // You can create a synthetic event using `new Event('change')`
-        const syntheticEvent = new Event('change');
+        const syntheticEvent = await new Event('change');
     
         // You need to attach a `target` property to the synthetic event
         // with a `value` property containing the employeeId
-        syntheticEvent.target = { value: employeeId };
+        syntheticEvent.target = await { value: employeeId };
     
         // Call handleStaffNameChange with the synthetic event
-        handleStaffNameChange(syntheticEvent);
+        await handleStaffIdChange(syntheticEvent);
     };
     
     const handleStaffNameChange = (e) => {
