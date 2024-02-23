@@ -953,7 +953,7 @@ function Salaryresult() {
                         <tr>
                           <th style={headerCellStyle}>รวมวันทำงาน</th>
                           <th style={headerCellStyle}>รวมชั่วโมงทำงาน</th>
-                          <th style={headerCellStyle}>รวมใชั่วโมงOT</th>
+                          <th style={headerCellStyle}>รวมชั่วโมงOT</th>
 
                         </tr>
                       </thead>
@@ -989,7 +989,7 @@ function Salaryresult() {
                           <td style={cellStyle}></td>
                           <td style={cellStyle}></td>
                           <td style={cellStyle}>
-                            <button>แก้ไข</button>
+                            <button class="btn btn-danger" style={{ width: '3rem' }}>แก้ไข</button>
                           </td>
 
                         </tr>
@@ -1020,7 +1020,7 @@ function Salaryresult() {
                           <td style={cellStyle}></td>
                           <td style={cellStyle}></td>
                           <td style={cellStyle}>
-                            <button>แก้ไข</button>
+                            <button class="btn btn-danger" style={{ width: '3rem' }}>แก้ไข</button>
                           </td>
                         </tr>
                       </tbody>

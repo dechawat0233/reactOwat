@@ -830,7 +830,7 @@ localStorage.setItem('staffFullName', staffFullName);
                                         <button type="button" class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;แก้ไข</button>
                                     </Link>
 
-                                    <Link to="/Compensation">
+                                    <Link to="/compensation">
                                         <button class="btn clean"><i>&gt;</i> &nbsp;ถัดไป</button>
 
                                     </Link>

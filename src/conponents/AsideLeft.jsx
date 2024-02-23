@@ -84,12 +84,12 @@ function AsideLeft() {
                 {showSubMenu3 && (
                   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <>
-                      <li class="nav-item">
+                      {/* <li class="nav-item">
                         <Link to="/worktimesheet" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ใบลงเวลาการปฏิบัติงาน</Link>
                       </li>
                       <li class="nav-item">
                         <Link to="/salarysummary" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> สรุปเงินเดือน</Link>
-                      </li>
+                      </li> */}
                       <li class="nav-item">
                         <Link to="/examine" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> ตรวจการทำงาน</Link>
                       </li>
