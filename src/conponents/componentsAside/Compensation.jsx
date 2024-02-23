@@ -100,6 +100,7 @@ function Compensation() {
             // await setSearchEmployeeName(savedEmployeeName);
             await setStaffId(savedEmployeeId);
             // setStaffFullName(savedEmployeeName);
+            await callHandleStaffNameChangeWithEmployeeId(savedEmployeeId);
 
             const event = await new Event('submit'); // Creating a synthetic event object
             await handleSearch(event); // Call handleSearch with the event
@@ -586,27 +587,47 @@ await setStaffFullName(response.data.employees[0].name );
 
     const [addSalaryDay, setAddSalaryDay] = useState(0);
     useEffect(() => {
+// alert(employee?.addSalary?.length );
 
-        setAddSalaryDay(0);
+const getAddSalaryDay = async () => {
+    await setAddSalaryDay(0);
 
-        if (employee?.addSalary?.length > 0) {
-            // alert(employee.addSalary.length);
-            //cal addSalary day
-            const ans = 0;
-            for (let i = 0; i < employee.addSalary.length; i++) {
-                // alert(employee.addSalary[i].roundOfSalary || '');
-                let tmp = employee.addSalary[i].roundOfSalary || '';
-                if (tmp == 'daily') {
-                    // alert(employee.addSalary[i].SpSalary || 0);
-                    let tmp1 = employee.addSalary[i].SpSalary || 0;
-                    // alert(tmp1);
-                    setAddSalaryDay(addSalaryDay + parseInt(employee.addSalary[i].SpSalary || 0));
-                }
-            }
-            // setAddSalaryDay(ans);
+    if (employee?.addSalary?.length > 0) {
+        let tmp = await 0;
+    await employee.addSalary.map(async (item, index) => {
+if(item.roundOfSalary == 'daily') {
+tmp= await tmp + parseFloat(item.SpSalary, 10);
+await alert(tmp);
+}
+    });
+    await setAddSalaryDay(tmp);
+    await alert(tmp);
+    }
 
-        }
 
+};
+
+        // setAddSalaryDay(0);
+
+        // if (employee?.addSalary?.length > 0) {
+        //     // alert(employee.addSalary.length);
+        //     //cal addSalary day
+        //     const ans = 0;
+        //     for (let i = 0; i < employee.addSalary.length; i++) {
+        //         // alert(employee.addSalary[i].roundOfSalary || '');
+        //         let tmp = employee.addSalary[i].roundOfSalary || '';
+        //         if (tmp == 'daily') {
+        //             // alert(employee.addSalary[i].SpSalary || 0);
+        //             let tmp1 = employee.addSalary[i].SpSalary || 0;
+        //             // alert(tmp1);
+        //             setAddSalaryDay(addSalaryDay + parseInt(employee.addSalary[i].SpSalary || 0));
+        //         }
+        //     }
+        //     // setAddSalaryDay(ans);
+
+        // }
+
+        getAddSalaryDay();
     }, [employee]);
 
     console.log('searchResult', searchResult);
@@ -874,10 +895,12 @@ await setStaffFullName(response.data.employees[0].name );
 
     const [sumRate, setSumRate] = useState(0);
     const [sumRateOT, setSumRateOT] = useState(0);
+const [sumAddSalary , setSumAddSalary ] = useState(0);
 
     useEffect(() => {
         let ans = 0;
         let ans1 = 0;
+let ans2 = 0;
 
         const updatedDataTable = resultArrayWithWorkplaceRecords.map((item, index) => {
             let addSalaryDay1 = '';
@@ -905,7 +928,9 @@ await setStaffFullName(response.data.employees[0].name );
 
             if (!isNaN(item.workRate)) {
                 ans = ans + parseFloat(item.workRate, 10);
-                ans1 = ans1 + parseFloat(item.workRateOT, 10);
+                ans1 = ans1 + parseFloat(workRateOT , 10);
+                ans2 = ans2 + parseFloat(addSalaryDay1, 10);
+
             }
 
 
@@ -915,8 +940,8 @@ await setStaffFullName(response.data.employees[0].name );
         if (loadStatus == null) {
             setSumRate(ans);
             setSumRateOT(ans1);
+            setSumAddSalary(ans2);
             setDataTable(updatedDataTable);
-
         }
         //ccaa
     }, [resultArrayWithWorkplaceRecords]);
@@ -1323,7 +1348,7 @@ await setStaffFullName(response.data.employees[0].name );
                                                         <td style={cellStyle}>{sumRate}</td>
                                                         <td></td>
                                                         <td style={cellStyle}>{sumRateOT}</td>
-                                                        <td style={cellStyle}>{(sumWorkRate1.count * (addSalaryDay / 30)).toFixed(2)}</td>
+                                                        <td style={cellStyle}>{sumAddSalary}</td>
                                                         <td></td>
                                                     </tr>
                                                 </tbody>
