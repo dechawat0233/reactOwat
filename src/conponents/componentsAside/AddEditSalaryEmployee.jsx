@@ -477,12 +477,12 @@ try {
                                                         </div>
                                                         <div class="col-md-2">
                                                             <div class="form-group">
-                                                                <label role="addSalary">ปรับปรุงเงินเพิ่ม/เงินหักเมื่อ</label>
+                                                                <label role="addSalary">ปรับปรุงเงินเพิ่ม/เงินหักเมื่อ 01/01/2024</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
                                                             <div class="form-group">
-                                                                <label role="message"> พบข้อมูลเงินเพิ่มเงินหัก / ไม่พบข้อมูลเงินเพิ่มเงินหัก</label>
+                                                                <label role="message"> พบข้อมูลเงินเพิ่มเงินหัก </label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -510,6 +510,16 @@ try {
                                                         <div class="col-md-2">
                                                             <div class="form-group">
                                                                 <label role="addSalary">จำนวนเงิน</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label role="">รายวัน/รายเดือน</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label role="">ประเภทพนักงาน</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
@@ -707,8 +717,7 @@ try {
                 </div>
 
             </div>
-            {/* {JSON.stringify(rowDataList2,null,2)} */}
-
+            {JSON.stringify(rowDataList2,null,2)}
         </body>
 
     )
