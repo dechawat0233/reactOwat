@@ -635,11 +635,15 @@ function AddEditSalaryEmployee() {
                                                                     item.name && (
                                                                         <div key={index}>
                                                                             <div class="row" style={{ marginBottom: '1rem', borderBottom: '2px solid #000' }}>
-                                                                                <div class="col-md-2" style={bordertable}> {item.id}</div>
+                                                                                <div class="col-md-1" style={bordertable}> {item.id}</div>
                                                                                 <div class="col-md-2" style={bordertable}> {item.name} </div>
-                                                                                <div class="col-md-2" style={bordertable}> {item.SpSalary} </div>
+                                                                                <div class="col-md-1" style={bordertable}> {item.SpSalary} </div>
+
+                                                                                <div class="col-md-2" style={bordertable}>รายวัน</div>
+                                                                                <div class="col-md-2" style={bordertable}>พนักงาน </div>
+
                                                                                 <div class="col-md-2" style={bordertable}> {item.message} </div>
-                                                                                <div class="col-md-3" style={bordertable}>
+                                                                                <div class="col-md-2" style={bordertable}>
                                                                                     {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
                                                                                     <button class="btn btn-xs btn-danger" style={{ padding: '0.3rem ', addSalaryIdth: '8rem' }} onClick={() => handleDeleteRow(index)}>Delete</button>
                                                                                 </div>
@@ -793,11 +797,25 @@ function AddEditSalaryEmployee() {
                                                                     item.name && (
                                                                         <div key={index}>
                                                                             <div class="row" style={{ marginBottom: '1rem', borderBottom: '2px solid #000' }}>
-                                                                                <div class="col-md-2" style={bordertable}> {item.id}</div>
+                                                                                {/* <div class="col-md-1" style={bordertable}> {item.id}</div>
                                                                                 <div class="col-md-2" style={bordertable}> {item.name} </div>
                                                                                 <div class="col-md-2" style={bordertable}> {item.SpSalary} </div>
+
+                                                                                <div class="col-md-2" style={bordertable}> {item.SpSalary} </div>
+                                                                                <div class="col-md-2" style={bordertable}> {item.SpSalary} </div>
+
+                                                                                <div class="col-md-2" style={bordertable}> {item.message} </div> */}
+
+                                                                                <div class="col-md-1" style={bordertable}> {item.id}</div>
+                                                                                <div class="col-md-2" style={bordertable}> {item.name} </div>
+                                                                                <div class="col-md-1" style={bordertable}> {item.SpSalary} </div>
+
+                                                                                <div class="col-md-2" style={bordertable}>รายวัน</div>
+                                                                                <div class="col-md-2" style={bordertable}>พนักงาน </div>
+
                                                                                 <div class="col-md-2" style={bordertable}> {item.message} </div>
-                                                                                <div class="col-md-3" style={bordertable}>
+
+                                                                                <div class="col-md-2" style={bordertable}>
                                                                                     {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
                                                                                     <button class="btn btn-xs btn-danger" style={{ padding: '0.3rem ', addSalaryIdth: '8rem' }} onClick={() => handleDeleteRow2(index)}>Delete</button>
                                                                                 </div>
