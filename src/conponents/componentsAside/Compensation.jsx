@@ -374,7 +374,9 @@ function Compensation() {
         await localStorage.setItem('employeeName', searchEmployeeName);
         await localStorage.setItem('month', month);
         await localStorage.setItem('year', year);
-
+let searchStatus = null;
+await setConcludeResult([]);
+await setLoadStatus(null);
 
         const data = await {
             employeeId: searchEmployeeId,
@@ -423,8 +425,6 @@ function Compensation() {
             //get employee data
             await setEmployee(findEmployeeById(searchEmployeeId));
 
-            // const response = await axios.post(endpoint + '/timerecord/listemp', data);
-            // const responseLower = await axios.post(endpoint + '/timerecord/listemp', dataLower);
             const filteredEntries = await timerecordAllList.filter(entry =>
                 entry.employeeId === searchEmployeeId &&
                 entry.month === month
@@ -444,6 +444,7 @@ function Compensation() {
 
             await setSearchResult(filteredEntries);
             await setSearchResultLower(filteredEntriesLower);
+
 
             // const entriesData = filteredEntries.map(entry =>
             //     entry.employee_workplaceRecord
@@ -558,6 +559,7 @@ await setStaffFullName(response.data.employees[0].name );
 
             // window.location.reload();
         }
+
 
     }
 
@@ -892,11 +894,11 @@ let ans2 = 0;
         const updatedDataTable = resultArrayWithWorkplaceRecords.map((item, index) => {
             let addSalaryDay1 = '';
             if (item !== '') {
-                if (addSalaryDay < 100) {
+                // if (addSalaryDay < 100) {
                     addSalaryDay1 = addSalaryDay
-                } else {
-                    addSalaryDay1 = (addSalaryDay / 30).toFixed(2);
-                }
+                // } else {
+                    // addSalaryDay1 = (addSalaryDay / 30).toFixed(2);
+                // }
             }
 
             const workRateOT = !isNaN(item.workRate) && !isNaN(item.workOfHour) && !isNaN(item.workRateOT) ?
