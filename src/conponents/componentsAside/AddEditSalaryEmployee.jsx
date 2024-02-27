@@ -36,7 +36,7 @@ function AddEditSalaryEmployee() {
     const [employeeId, setEmployeeId] = useState(''); //รหัสพนักงาน
     const [name, setName] = useState(''); //ชื่อพนักงาน
     const [lastName, setLastName] = useState(''); //นามสกุลพนักงาน
-const [dataResult , setDataResult] = useState([]);
+    const [dataResult, setDataResult] = useState([]);
 
 
 
@@ -58,25 +58,29 @@ const [dataResult , setDataResult] = useState([]);
                 console.error('Error fetching data:', error);
             });
 
-            const currentDate = new Date();
-            const day = currentDate.getDate();
-            const month = currentDate.getMonth() + 1; // Months are zero-based
-            const year = currentDate.getFullYear();
-        
-            // Formatting the date to dd/mm/yyyy format
-            const formattedDate = `${day < 10 ? '0' : ''}${day}/${month < 10 ? '0' : ''}${month}/${year}`;
-        
-            setCurrentDate(formattedDate);
+        const currentDate = new Date();
+        const day = currentDate.getDate();
+        const month = currentDate.getMonth() + 1; // Months are zero-based
+        const year = currentDate.getFullYear();
+
+        // Formatting the date to dd/mm/yyyy format
+        const formattedDate = `${day < 10 ? '0' : ''}${day}/${month < 10 ? '0' : ''}${month}/${year}`;
+
+        setCurrentDate(formattedDate);
     }, []); // The empty array [] ensures that the effect runs only once after the initial render
 
     console.log(workplaceList);
 
 
 
-//x1
+    //x1
     /////////////////////////////////////////////
     const [addSalaryId, setAddSalaryId] = useState('');
     const [addSalaryName, setAddSalaryName] = useState('');
+
+    const [roundOfSalary, setRoundOfSalary] = useState('');
+    const [staffType, setStaffType] = useState('');
+
     const [addSalary, setAddSalary] = useState('');
     const [message, setMessage] = useState('');
 
@@ -84,6 +88,9 @@ const [dataResult , setDataResult] = useState([]);
     const [misnusName, setMisnusName] = useState('');
     const [minusSalary, setMinusSalary] = useState('');
     const [minusmessage, setMinusmessage] = useState('');
+
+    const [minusRoundOfSalary, setMinusRoundOfSalary] = useState('');
+    const [minusStaffType, setMinusStaffType] = useState('');
 
 
 
@@ -117,14 +124,14 @@ const [dataResult , setDataResult] = useState([]);
 
     const [rowDataList, setRowDataList] = useState(new Array(numberOfRows).fill(initialRowData));
 
-///////////////////
+    ///////////////////
     function handleClickResult(emp) {
         // Populate all the startTime input fields with the search result value
         // alert(emp.employeeId);
         setEmployeeId(emp.employeeId);
         setName(emp.name);
 
-//select employee
+        //select employee
     }
 
 
@@ -135,8 +142,8 @@ const [dataResult , setDataResult] = useState([]);
 
     async function handleSearch(event) {
         event.preventDefault();
-setRowDataList2([]);
-setRowDataList([]);
+        setRowDataList2([]);
+        setRowDataList([]);
 
         // get value from form search
         const data = {
@@ -145,7 +152,7 @@ setRowDataList([]);
             idCard: '',
             workPlace: '',
         };
-// alert(JSON.stringify(data,null,2));
+        // alert(JSON.stringify(data,null,2));
 
         try {
             const response = await axios.post(endpoint + '/employee/search', data);
@@ -164,60 +171,60 @@ setRowDataList([]);
                 setSearchEmployeeName('');
 
                 //result = 1 
-                if(response.data.employees.length > 0){
-                // Set search values
-                setEmployeeId(response.data.employees[0].employeeId);
-                setName(response.data.employees[0].name);
-                setLastName(response.data.employees[0].lastName);
-setDataResult(response.data.employees[0] );
-//  alert(response.data.employees[0].addSalary.length );
-const newDataList = [];
+                if (response.data.employees.length > 0) {
+                    // Set search values
+                    setEmployeeId(response.data.employees[0].employeeId);
+                    setName(response.data.employees[0].name);
+                    setLastName(response.data.employees[0].lastName);
+                    setDataResult(response.data.employees[0]);
+                    //  alert(response.data.employees[0].addSalary.length );
+                    const newDataList = [];
 
-response.data.employees[0].addSalary.map(item => {
-    let newRowData = {
-    id: item.id,
-    name: item.name,
-    SpSalary: item.SpSalary,
-    roundOfSalary: item.roundOfSalary,
-    StaffType: item.StaffType,
-    nameType: item.nameType,
-    message: item.message,
-}
-
-
-// Push a new row with specific data
-newDataList.unshift(newRowData );
-
-});
-
-// Update the state with the new data
-setRowDataList2(newDataList);
-
-//deduct salary
-const newDataList1 = [];
-// alert(JSON.stringify(response.data.employees[0].deductSalary,null,2));
-
-response.data.employees[0].deductSalary.map(item => {
-    let newRowData1 = {
-    id: item.id,
-    name: item.name,
-    SpSalary: item.SpSalary,
-    roundOfSalary: item.roundOfSalary,
-    StaffType: item.StaffType,
-    nameType: item.nameType,
-    message: item.message,
-}
-
-// Push a new row with specific data
-newDataList1 .unshift(newRowData1 );
-
-});
-
-// Update the state with the new data
-setRowDataList(newDataList1);
+                    response.data.employees[0].addSalary.map(item => {
+                        let newRowData = {
+                            id: item.id,
+                            name: item.name,
+                            SpSalary: item.SpSalary,
+                            roundOfSalary: item.roundOfSalary,
+                            StaffType: item.StaffType,
+                            nameType: item.nameType,
+                            message: item.message,
+                        }
 
 
-//x33
+                        // Push a new row with specific data
+                        newDataList.unshift(newRowData);
+
+                    });
+
+                    // Update the state with the new data
+                    setRowDataList2(newDataList);
+
+                    //deduct salary
+                    const newDataList1 = [];
+                    // alert(JSON.stringify(response.data.employees[0].deductSalary,null,2));
+
+                    response.data.employees[0].deductSalary.map(item => {
+                        let newRowData1 = {
+                            id: item.id,
+                            name: item.name,
+                            SpSalary: item.SpSalary,
+                            roundOfSalary: item.roundOfSalary,
+                            StaffType: item.StaffType,
+                            nameType: item.nameType,
+                            message: item.message,
+                        }
+
+                        // Push a new row with specific data
+                        newDataList1.unshift(newRowData1);
+
+                    });
+
+                    // Update the state with the new data
+                    setRowDataList(newDataList1);
+
+
+                    //x33
 
                 }
 
@@ -259,11 +266,15 @@ setRowDataList(newDataList1);
         await setAddSalaryId('');
         await setAddSalaryName('');
         await setAddSalary('');
+        await setRoundOfSalary('');
+        await setStaffType('');
         await setMessage('');
 
         await setMinusId('');
         await setMisnusName('');
         await setMinusSalary('');
+        await setMinusRoundOfSalary('');
+        await setMinusStaffType('');
         await setMinusmessage('');
 
     }
@@ -323,27 +334,27 @@ setRowDataList(newDataList1);
 
     async function handleCreateAddSalary(event) {
         event.preventDefault();
-// alert(dataResult._id);
-// alert(dataResult.addSalary);
-// alert(rowDataList2);
-dataResult.addSalary = await rowDataList2;
-dataResult.deductSalary = await rowDataList;
+        // alert(dataResult._id);
+        // alert(dataResult.addSalary);
+        // alert(rowDataList2);
+        dataResult.addSalary = await rowDataList2;
+        dataResult.deductSalary = await rowDataList;
 
-try {
-    const response = await axios.put(endpoint + '/employee/update/' + dataResult._id, dataResult);
-    // setEmployeesResult(response.data.employees);
-    if (response) {
-        alert("บันทึกสำเร็จ");
-        // localStorage.setItem('selectedEmployees' , JSON.stringify(response.data.employees));
+        try {
+            const response = await axios.put(endpoint + '/employee/update/' + dataResult._id, dataResult);
+            // setEmployeesResult(response.data.employees);
+            if (response) {
+                alert("บันทึกสำเร็จ");
+                // localStorage.setItem('selectedEmployees' , JSON.stringify(response.data.employees));
 
-        // window.location.reload();
+                // window.location.reload();
 
-    }
-} catch (error) {
-    alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
-    alert(error);
-    // window.location.reload();
-}
+            }
+        } catch (error) {
+            alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+            alert(error);
+            // window.location.reload();
+        }
 
         // //get data from input in useState to data 
         // const data = {
@@ -353,19 +364,19 @@ try {
         //     addSalary: rowDataList2,
         //     minusSalary: rowDataList,
         // };
-        
+
 
         // try {
-            // const response = await axios.post(endpoint + '/addsalary/create', data);
-            // setEmployeesResult(response.data.employees);
-            // if (response) {
-                // alert("บันทึกสำเร็จ");
-                            // window.location.reload();
+        // const response = await axios.post(endpoint + '/addsalary/create', data);
+        // setEmployeesResult(response.data.employees);
+        // if (response) {
+        // alert("บันทึกสำเร็จ");
+        // window.location.reload();
 
-            // }
+        // }
         // } catch (error) {
-            // alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
-            // window.location.reload();
+        // alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
+        // window.location.reload();
         // }
 
     }
@@ -460,64 +471,64 @@ try {
                                     </div>
                                     <form onSubmit={handleManageWorkplace}>
 
-                                    <div class="row">
+                                        <div class="row">
                                             <div class="col-md-12">
                                                 <h3>ข้อมูลพนักงาน</h3>
                                                 <div class="row">
-                                                        <div class="col-md-2">
-                                                            <div class="form-group">
-                                                                <label role="addSalaryId">{employeeId}</label>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-3">
-                                                            <div class="form-group">
-                                                                <label role="addSalaryName">{name} {lastName} </label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <div class="form-group">
-                                                                <label role="addSalary">ปรับปรุงเงินเพิ่ม/เงินหักเมื่อ 01/01/2024</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <div class="form-group">
-                                                                <label role="message"> พบข้อมูลเงินเพิ่มเงินหัก </label>
-                                                            </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label role="addSalaryId">{employeeId}</label>
                                                         </div>
                                                     </div>
 
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label role="addSalaryName">{name} {lastName} </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label role="addSalary">ปรับปรุงเงินเพิ่ม/เงินหักเมื่อ 01/01/2024</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label role="message"> พบข้อมูลเงินเพิ่มเงินหัก </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
-</div>
-</div>
+
+                                            </div>
+                                        </div>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <h3>เงินเพิ่ม</h3>
                                                 <section class="Frame">
 
                                                     <div class="row">
-                                                        <div class="col-md-2">
+                                                        <div class="col-md-1">
                                                             <div class="form-group">
                                                                 <label role="addSalaryId">รหัส</label>
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-3">
+                                                        <div class="col-md-2">
                                                             <div class="form-group">
                                                                 <label role="addSalaryName">ชื่อ</label>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-2">
+                                                        <div class="col-md-1">
                                                             <div class="form-group">
                                                                 <label role="addSalary">จำนวนเงิน</label>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-3">
+                                                        <div class="col-md-2">
                                                             <div class="form-group">
                                                                 <label role="">รายวัน/รายเดือน</label>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-3">
+                                                        <div class="col-md-2">
                                                             <div class="form-group">
                                                                 <label role="">ประเภทพนักงาน</label>
                                                             </div>
@@ -530,25 +541,51 @@ try {
                                                     </div>
 
                                                     <div class="row">
-                                                        <div class="col-md-2">
+                                                        <div class="col-md-1">
                                                             <div class="form-group">
                                                                 <input type="text" class="form-control" id="addSalaryId" placeholder="รหัส" value={addSalaryId} onChange={(e) => setAddSalaryId(e.target.value)} />
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-3">
+                                                        <div class="col-md-2">
                                                             <div class="form-group">
                                                                 <input type="text" class="form-control" id="addSalaryName" placeholder="ชื่อ" value={addSalaryName} onChange={(e) => setAddSalaryName(e.target.value)} />
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-2">
+                                                        <div class="col-md-1">
                                                             <input type="text" class="form-control" id="addSalary" placeholder="จำนวนเงิน" value={addSalary} onChange={(e) => setAddSalary(e.target.value)} />
                                                         </div>
                                                         <div class="col-md-2">
+                                                            <select
+                                                                name="roundOfSalary"
+                                                                className="form-control"
+                                                                value={roundOfSalary}
+                                                                onChange={(e) => setRoundOfSalary(e.target.value)}
+                                                            >
+                                                                <option value="">เลือก</option>
+                                                                <option value="daily">รายวัน</option>
+                                                                <option value="monthly">รายเดือน</option>
+                                                            </select>
+                                                        </div>
+                                                        <div className="col-md-2">
+                                                            <select
+                                                                name="StaffType"
+                                                                className="form-control"
+                                                                value={staffType}
+                                                                onChange={(e) => setStaffType(e.target.value)}
+                                                            >
+                                                                <option value="">เลือกตำแหน่งที่จะมอบให้</option>
+                                                                <option value="all">ทั้งหมด</option>
+                                                                <option value="header">หัวหน้างาน</option>
+                                                                <option value="custom">กำหนดเอง</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-md-2">
                                                             <input type="text" class="form-control" id="message" placeholder="หมายเหตุ" value={message} onChange={(e) => setMessage(e.target.value)} />
                                                         </div>
-                                                        <div class="col-md-3">
+                                                        <div class="col-md-2">
                                                             <div class="d-flex align-items-end">
                                                                 <button class="btn b_save"><i class="fas fa-check"></i> &nbsp; เพิ่ม</button>
                                                             </div>
@@ -559,21 +596,43 @@ try {
 
                                                     <section class="Frame">
                                                         <div class="row">
-                                                            <div class="col-md-12">
-                                                                <div class="row">
-                                                                    <div class="col-md-2"> รหัส</div>
-                                                                    <div class="col-md-2"> ชื่อ </div>
-                                                                    <div class="col-md-2"> จำนวนเงิน</div>
-                                                                    <div class="col-md-2"> หมายเหตุ </div>
-                                                                    <div class="col-md-3">  </div>
+                                                            <div class="col-md-1">
+                                                                <div class="form-group">
+                                                                    <label role="addSalaryId">รหัส</label>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-2">
+                                                                <div class="form-group">
+                                                                    <label role="addSalaryName">ชื่อ</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <div class="form-group">
+                                                                    <label role="addSalary">จำนวนเงิน</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <div class="form-group">
+                                                                    <label role="">รายวัน/รายเดือน</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <div class="form-group">
+                                                                    <label role="">ประเภทพนักงาน</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label role="message">หมายเหตุ</label>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-12">
 
-                                                                {rowDataList2.map((item , index) => (
-                                                                    item.name&& (
+                                                                {rowDataList2.map((item, index) => (
+                                                                    item.name && (
                                                                         <div key={index}>
                                                                             <div class="row" style={{ marginBottom: '1rem', borderBottom: '2px solid #000' }}>
                                                                                 <div class="col-md-2" style={bordertable}> {item.id}</div>
@@ -595,54 +654,92 @@ try {
                                                     </section>
                                                 </section>
                                             </div>
-
-                                            <div class="col-md-6">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
                                                 <h3>เงินหัก</h3>
                                                 <section class="Frame">
                                                     <div class="row">
-                                                        <div class="col-md-2">
+                                                        <div class="col-md-1">
                                                             <div class="form-group">
                                                                 <label role="addSalaryId">รหัส</label>
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-3">
+                                                        <div class="col-md-2">
                                                             <div class="form-group">
                                                                 <label role="addSalaryName">ชื่อ</label>
                                                             </div>
                                                         </div>
+                                                        <div class="col-md-1">
+                                                            <div class="form-group">
+                                                                <label role="addSalary">จำนวนเงิน</label>
+                                                            </div>
+                                                        </div>
                                                         <div class="col-md-2">
                                                             <div class="form-group">
-                                                                <label role="addSalaryName">จำนวนเงิน</label>
+                                                                <label role="">รายวัน/รายเดือน</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <div class="form-group">
+                                                                <label role="">ประเภทพนักงาน</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
                                                             <div class="form-group">
-                                                                <label role="addSalaryName">หมายเหตุ</label>
+                                                                <label role="message">หมายเหตุ</label>
                                                             </div>
                                                         </div>
                                                     </div>
 
                                                     <div class="row">
-                                                        <div class="col-md-2">
+                                                        <div class="col-md-1">
                                                             <div class="form-group">
                                                                 <input type="text" class="form-control" id="addSalaryId" placeholder="รหัส" value={minusId} onChange={(e) => setMinusId(e.target.value)} />
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-3">
+                                                        <div class="col-md-2">
                                                             <div class="form-group">
                                                                 <input type="text" class="form-control" id="addSalaryName" placeholder="ชื่อ" value={misnusName} onChange={(e) => setMisnusName(e.target.value)} />
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-2">
+                                                        <div class="col-md-1">
                                                             <input type="text" class="form-control" id="addSalaryName" placeholder="จำนวนเงิน" value={minusSalary} onChange={(e) => setMinusSalary(e.target.value)} />
                                                         </div>
+
                                                         <div class="col-md-2">
-                                                            <input type="text" class="form-control" id="addSalaryName" placeholder="หมายเหตุ" value={minusmessage} onChange={(e) => setMinusmessage(e.target.value)} />
+                                                            <select
+                                                                name="roundOfSalary"
+                                                                className="form-control"
+                                                                value={roundOfSalary}
+                                                                onChange={(e) => setRoundOfSalary(e.target.value)}
+                                                            >
+                                                                <option value="">เลือก</option>
+                                                                <option value="daily">รายวัน</option>
+                                                                <option value="monthly">รายเดือน</option>
+                                                            </select>
                                                         </div>
-                                                        <div class="col-md-3">
+                                                        <div className="col-md-2">
+                                                            <select
+                                                                name="StaffType"
+                                                                className="form-control"
+                                                                value={minusRoundOfSalary}
+                                                                onChange={(e) => setMinusRoundOfSalary(e.target.value)}
+                                                            >
+                                                                <option value="">เลือกตำแหน่งที่จะมอบให้</option>
+                                                                <option value="all">ทั้งหมด</option>
+                                                                <option value="header">หัวหน้างาน</option>
+                                                                <option value="custom">กำหนดเอง</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-md-2">
+                                                            <input type="text" class="form-control" id="minusStaffType" placeholder="หมายเหตุ" value={minusStaffType} onChange={(e) => setMinusStaffType(e.target.value)} />
+                                                        </div>
+                                                        <div class="col-md-2">
                                                             <div class="d-flex align-items-end">
                                                                 <button class="btn b_save"><i class="fas fa-check"></i> &nbsp; เพิ่ม</button>
                                                             </div>
@@ -653,19 +750,46 @@ try {
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <div class="row">
-                                                                    <div class="col-md-2"> รหัส</div>
-                                                                    <div class="col-md-2"> ชื่อ </div>
-                                                                    <div class="col-md-2"> จำนวนเงิน</div>
-                                                                    <div class="col-md-2"> หมายเหตุ </div>
-                                                                    <div class="col-md-3">  </div>
+                                                                    <div class="col-md-1">
+                                                                        <div class="form-group">
+                                                                            <label role="addSalaryId">รหัส</label>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-md-2">
+                                                                        <div class="form-group">
+                                                                            <label role="addSalaryName">ชื่อ</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-1">
+                                                                        <div class="form-group">
+                                                                            <label role="addSalary">จำนวนเงิน</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <div class="form-group">
+                                                                            <label role="">รายวัน/รายเดือน</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <div class="form-group">
+                                                                            <label role="">ประเภทพนักงาน</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <div class="form-group">
+                                                                            <label role="message">หมายเหตุ</label>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
+
                                                             </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-12">
 
 
-                                                                {rowDataList.map((item , index) => (
+                                                                {rowDataList.map((item, index) => (
                                                                     item.name && (
                                                                         <div key={index}>
                                                                             <div class="row" style={{ marginBottom: '1rem', borderBottom: '2px solid #000' }}>
@@ -705,8 +829,8 @@ try {
                                         <div class="form-group">
 
                                             <button class="btn b_save" onClick={handleCreateAddSalary}><i class="nav-icon fas fa-save"></i> &nbsp; บันทึก</button>
-                                            
-                                            </div>
+
+                                        </div>
                                     </form>
 
                                 </div>
@@ -717,7 +841,7 @@ try {
                 </div>
 
             </div>
-            {JSON.stringify(rowDataList2,null,2)}
+            {JSON.stringify(rowDataList2, null, 2)}
         </body>
 
     )
