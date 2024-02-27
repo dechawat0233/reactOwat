@@ -377,9 +377,6 @@ function Compensation() {
 let searchStatus = null;
 await setConcludeResult([]);
 await setLoadStatus(null);
-// await setSumAddSalary(0);
-// await setSearchResult([]);
-            // await setSearchResultLower([]);
 
         const data = await {
             employeeId: searchEmployeeId,
@@ -403,9 +400,7 @@ await setLoadStatus(null);
 
             if (response.length < 1) {
                 // alert('conclude is null');
-                searchStatus = await null;
             } else {
-                searchStatus  = await true;
                 // await alert(JSON.stringify(response.data.recordConclude ,null,2))
                 // await alert(response.data.recordConclude[0].concludeRecord.length )
                 // await setDataTable(response.data.recordConclude[0].concludeRecord);
@@ -450,14 +445,6 @@ await setLoadStatus(null);
             await setSearchResult(filteredEntries);
             await setSearchResultLower(filteredEntriesLower);
 
-            if(filteredEntries.length > 0 || filteredEntriesLower.length > 0) {
-searchStatus = await true;
-// alert('data ');
-            } else {
-                // await setSearchResult('');
-                // await setSearchResultLower('');
-alert('no data');    
-            }
 
             // const entriesData = filteredEntries.map(entry =>
             //     entry.employee_workplaceRecord
