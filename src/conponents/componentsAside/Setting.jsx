@@ -1384,7 +1384,7 @@ function Setting() {
                                                     />
                                                 </div>
                                                 <div className="col-md-2">
-                                                    <label role="roundOfSalary">ประเภทพนักงาน</label>
+                                                    <label role="roundOfSalary">รายวัน/เดือน</label>
                                                     <select
                                                         name="roundOfSalary"
                                                         className="form-control"
