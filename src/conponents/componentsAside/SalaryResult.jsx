@@ -47,6 +47,7 @@ function Salaryresult() {
   const [overWorkRateSum, setOverWorkRateSum] = useState(0);
   const [overWorkRateOTSum, setOverWorkRateOTSum] = useState(0);
   const [overAddSalaryDaySum, setOverAddSalaryDaySum] = useState(0);
+  const [sumSpSalaryResult, setSumSpSalaryResult] = useState(0);
 
   const [employeeListResult, setEmployeeListResult] = useState([]);
   const [newWorkplace, setNewWorkplace] = useState(true);
@@ -415,6 +416,39 @@ function Salaryresult() {
       );
 
       setSearchResult(filteredEntries);
+
+      const filteredEntriesEmp = employeeList.filter(entry =>
+        entry.employeeId === searchEmployeeId
+      );
+
+      console.log('filteredEntriesEmp', filteredEntriesEmp);
+
+      // Assuming filteredEntriesEmp is an array with one element
+      // if (filteredEntriesEmp.length > 0) {
+      //   const addSalaryMonthly = filteredEntriesEmp[0].addSalary.filter(salary => salary.roundOfSalary === "monthly");
+
+      //   console.log('addSalaryMonthly', addSalaryMonthly);
+
+      //   // Now addSalaryMonthly contains only the items with roundOfSalary === "monthly"
+      //   // You can access SpSalary values from addSalaryMonthly array
+      // }
+
+      if (filteredEntriesEmp.length > 0) {
+        const addSalaryMonthly = filteredEntriesEmp[0].addSalary.filter(salary => salary.roundOfSalary === "monthly");
+
+        console.log('addSalaryMonthly', addSalaryMonthly);
+
+        // Now addSalaryMonthly contains only the items with roundOfSalary === "monthly"
+
+        // Summing SpSalary values using reduce
+        const sumSpSalary = addSalaryMonthly.reduce((sum, salary) => sum + parseFloat(salary.SpSalary || 0), 0);
+
+        console.log('sumSpSalary', sumSpSalary);
+
+        setSumSpSalaryResult(sumSpSalary);
+        console.log('setSumSpSalaryResult', sumSpSalaryResult);
+
+      }
 
       // const entriesData = filteredEntries.map(entry =>
       //   entry.concludeRecord
@@ -982,12 +1016,15 @@ function Salaryresult() {
                         </tr>
                       </thead>
                       <tbody>
+                        {/* sumSpSalary */}
                         <tr>
                           <td style={cellStyle}>{(overWorkRateSum).toFixed(2)}</td>
                           <td style={cellStyle}>{(overWorkRateOTSum).toFixed(2)}</td>
-                          <td style={cellStyle}>{(overAddSalaryDaySum).toFixed(2)}</td>
+                          {/* <td style={cellStyle}>{(overAddSalaryDaySum).toFixed(2) + (sumSpSalary).toFixed(2)}</td> */}
+                          <td style={cellStyle}>{(overAddSalaryDaySum + sumSpSalaryResult).toFixed(2) + `(` + (overAddSalaryDaySum).toFixed(2) + `+` + (sumSpSalaryResult).toFixed(2) + `)`}</td>
+
                           <td style={cellStyle}></td>
-                          <td style={cellStyle}></td>
+                          <td style={cellStyle}>{(overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult).toFixed(2)}</td>
                           <td style={cellStyle}>
                             <button class="btn btn-danger" style={{ width: '3rem' }}>แก้ไข</button>
                           </td>
