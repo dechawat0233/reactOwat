@@ -49,6 +49,9 @@ function Salaryresult() {
   const [overAddSalaryDaySum, setOverAddSalaryDaySum] = useState(0);
   const [sumSpSalaryResult, setSumSpSalaryResult] = useState(0);
 
+  const [anySpSalary, setAnySpSalary] = useState(0);
+  const [anyMinus, setAnyMinus] = useState(0);
+
   const [employeeListResult, setEmployeeListResult] = useState([]);
   const [newWorkplace, setNewWorkplace] = useState(true);
   const [timerecordAllList, setTimerecordAllList] = useState([]);
@@ -145,6 +148,17 @@ function Salaryresult() {
   const closeModal = () => {
     setModalIsOpen(false);
   };
+
+  const handleAnySpSalaryChange = (event) => {
+    const newValue = parseFloat(event.target.value) || 0;
+    setAnySpSalary(newValue);
+  };
+
+  const handleAnyMinusChange = (event) => {
+    const newValue = parseFloat(event.target.value) || 0;
+    setAnyMinus(newValue);
+  };
+
 
   const [workTimeDayPerson, setWorkTimeDayPerson] = useState({
     // startDay: '',
@@ -1023,8 +1037,18 @@ function Salaryresult() {
                           {/* <td style={cellStyle}>{(overAddSalaryDaySum).toFixed(2) + (sumSpSalary).toFixed(2)}</td> */}
                           <td style={cellStyle}>{(overAddSalaryDaySum + sumSpSalaryResult).toFixed(2) + `(` + (overAddSalaryDaySum).toFixed(2) + `+` + (sumSpSalaryResult).toFixed(2) + `)`}</td>
 
-                          <td style={cellStyle}></td>
-                          <td style={cellStyle}>{(overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult).toFixed(2)}</td>
+                          <td style={cellStyle}>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="anySpSalary"
+                              placeholder="เงินบวกอื่นๆ"
+                              value={anySpSalary}
+                              style={{ width: '50%' }}
+                              onChange={handleAnySpSalaryChange}
+                            />
+                          </td>
+                          <td style={cellStyle}>{(overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary).toFixed(2)}</td>
                           <td style={cellStyle}>
                             <button class="btn btn-danger" style={{ width: '3rem' }}>แก้ไข</button>
                           </td>
@@ -1054,8 +1078,18 @@ function Salaryresult() {
                           <td style={cellStyle}></td>
                           <td style={cellStyle}></td>
                           <td style={cellStyle}></td>
-                          <td style={cellStyle}></td>
-                          <td style={cellStyle}></td>
+                          <td style={cellStyle}>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="anyMinus"
+                              placeholder="หักอื่นๆ"
+                              value={anyMinus}
+                              style={{ width: '50%' }}
+                              onChange={handleAnyMinusChange}
+                            />
+                          </td>
+                          <td style={cellStyle}>{(anyMinus).toFixed(2)}</td>
                           <td style={cellStyle}>
                             <button class="btn btn-danger" style={{ width: '3rem' }}>แก้ไข</button>
                           </td>
@@ -1104,7 +1138,7 @@ function Salaryresult() {
           </section>
         </div>
       </div>
-      
+
     </body>
   )
 }
