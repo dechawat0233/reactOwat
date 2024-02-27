@@ -374,7 +374,12 @@ function Compensation() {
         await localStorage.setItem('employeeName', searchEmployeeName);
         await localStorage.setItem('month', month);
         await localStorage.setItem('year', year);
-
+let searchStatus = null;
+await setConcludeResult([]);
+await setLoadStatus(null);
+// await setSumAddSalary(0);
+// await setSearchResult([]);
+            // await setSearchResultLower([]);
 
         const data = await {
             employeeId: searchEmployeeId,
@@ -398,7 +403,9 @@ function Compensation() {
 
             if (response.length < 1) {
                 // alert('conclude is null');
+                searchStatus = await null;
             } else {
+                searchStatus  = await true;
                 // await alert(JSON.stringify(response.data.recordConclude ,null,2))
                 // await alert(response.data.recordConclude[0].concludeRecord.length )
                 // await setDataTable(response.data.recordConclude[0].concludeRecord);
@@ -423,8 +430,6 @@ function Compensation() {
             //get employee data
             await setEmployee(findEmployeeById(searchEmployeeId));
 
-            // const response = await axios.post(endpoint + '/timerecord/listemp', data);
-            // const responseLower = await axios.post(endpoint + '/timerecord/listemp', dataLower);
             const filteredEntries = await timerecordAllList.filter(entry =>
                 entry.employeeId === searchEmployeeId &&
                 entry.month === month
@@ -444,6 +449,15 @@ function Compensation() {
 
             await setSearchResult(filteredEntries);
             await setSearchResultLower(filteredEntriesLower);
+
+            if(filteredEntries.length > 0 || filteredEntriesLower.length > 0) {
+searchStatus = await true;
+// alert('data ');
+            } else {
+                // await setSearchResult('');
+                // await setSearchResultLower('');
+alert('no data');    
+            }
 
             // const entriesData = filteredEntries.map(entry =>
             //     entry.employee_workplaceRecord
@@ -558,6 +572,7 @@ await setStaffFullName(response.data.employees[0].name );
 
             // window.location.reload();
         }
+
 
     }
 
@@ -892,11 +907,11 @@ let ans2 = 0;
         const updatedDataTable = resultArrayWithWorkplaceRecords.map((item, index) => {
             let addSalaryDay1 = '';
             if (item !== '') {
-                if (addSalaryDay < 100) {
+                // if (addSalaryDay < 100) {
                     addSalaryDay1 = addSalaryDay
-                } else {
-                    addSalaryDay1 = (addSalaryDay / 30).toFixed(2);
-                }
+                // } else {
+                    // addSalaryDay1 = (addSalaryDay / 30).toFixed(2);
+                // }
             }
 
             const workRateOT = !isNaN(item.workRate) && !isNaN(item.workOfHour) && !isNaN(item.workRateOT) ?

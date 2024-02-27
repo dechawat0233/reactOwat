@@ -1067,6 +1067,7 @@ function Salaryresult() {
           </section>
         </div>
       </div>
+      
     </body>
   )
 }
