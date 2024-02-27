@@ -273,6 +273,7 @@ function Compensation() {
             });
     }, []);
 
+    
     const CheckMonth = parseInt(month, 10);
     const CheckYear = year;
     // const CheckMonth = 5;
@@ -401,9 +402,6 @@ await setLoadStatus(null);
             if (response.length < 1) {
                 // alert('conclude is null');
             } else {
-                // await alert(JSON.stringify(response.data.recordConclude ,null,2))
-                // await alert(response.data.recordConclude[0].concludeRecord.length )
-                // await setDataTable(response.data.recordConclude[0].concludeRecord);
                 await setConcludeResult(response.data.recordConclude[0].concludeRecord);
                 await setLoadStatus('load');
                 await setUpdate(response.data.recordConclude[0]._id);
@@ -617,6 +615,12 @@ return await r;
 };
 
         getAddSalaryDay();
+        if(employee){
+            setWorkplaceIdEMP(employee.workplace ? employee.workplace : '');
+
+        }
+            
+    
     }, [employee]);
 
     console.log('searchResult', searchResult);
@@ -734,6 +738,7 @@ return await r;
         
     };
 
+
     const daysInMonth2 = getDaysInMonth(CheckMonth, CheckYear);
     const daysInCountdownMonth = getDaysInMonth2(countdownMonth, countdownYear);
 
@@ -751,11 +756,12 @@ return await r;
     // const commonNumbers = [...new Set([...array1.Mon, ...array2.Mon])];
     // console.log('commonNumbers', commonNumbers);
 
+
     const workplace = workplaceList.find(workplace => workplace.workplaceId === workplaceIdEMP);
 
     console.log('workplace123', workplace);
 
-    let commonNumbers = new Set();
+    const commonNumbers  = new Set();
 
     if (workplace) {
         const stopWorkTimeDay = workplace.workTimeDay.find(day => day.workOrStop === "stop");
