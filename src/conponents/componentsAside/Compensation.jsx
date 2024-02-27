@@ -1371,7 +1371,6 @@ let ans2 = 0;
                     </section>
                 </div>
             </div>
-            {JSON.stringify(array2)}
         </body>
         // </div>  )
     )
