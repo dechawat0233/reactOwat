@@ -216,9 +216,9 @@ const employeeSchema = new mongoose.Schema({
   deductSalary: [{
     id: String,
     name: String,
-    SpSalary: String,
-    roundOfSalary: String,
-    StaffType: String,
+    amount: String,
+    payType: String,
+    installment: String,
     nameType: String,
     message: String,
   }],
