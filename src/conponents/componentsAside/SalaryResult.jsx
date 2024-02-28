@@ -31,6 +31,13 @@ function Salaryresult() {
     backgroundColor: '#f2f2f2',
   };
 
+  //variable
+  const [socialSecurity , setSocialSecurity] = useState(0); // ประกันสังคม
+const [tax , setTax] = useState(0); //ภาษี 
+const [bankCustom , setBankCustom] = useState(0); //ค่าทำเนียม
+const [sumDeduct , setSumDeduct] = useState(0); //sum deduct immedate
+const [sumDeductInstallment , setSumDeductInstallment ] = useState(0); //sum deduct installment
+
   const [employeeId, setEmployeeId] = useState(''); //รหัสหน่วยงาน
   const [name, setName] = useState(''); //ชื่อหน่วยงาน
   const [lastName, setLastname] = useState(''); //ชื่อหน่วยงาน
@@ -449,6 +456,57 @@ function Salaryresult() {
 
       if (filteredEntriesEmp.length > 0) {
         const addSalaryMonthly = filteredEntriesEmp[0].addSalary.filter(salary => salary.roundOfSalary === "monthly");
+
+        //get deduct data with immedate
+        const deductSalary = filteredEntriesEmp[0].deductSalary.filter(deduct => deduct.payType === "immedate");
+        let sum = 0;
+        //loop forget socialSecurity and tax
+        deductSalary.map((item , index) => {
+
+          //check 0001 is social security
+          if(item.id == "0001"){
+            // alert(item.amount);
+            if(item.amount.includes("%") ) {
+              let tmp = item.amount.replace(/%/g, "");
+              tmp = tmp /100;
+              setSocialSecurity(tmp);
+            } else {
+              setSocialSecurity(item.amount);
+            }
+          }
+                    //check 0002 is tax
+                    else if(item.id == "0002"){
+                      // alert(item.amount);
+                      if(item.amount.includes("%") ) {
+                        let tmp = item.amount.replace(/%/g, "");
+                        tmp = tmp /100;
+                        setTax(tmp);
+                      } else {
+                        setTax(item.amount);
+                      }
+                    }
+                    //check 0003 is bank custom
+                    else if(item.id == "0003"){
+                      // alert(item.amount);\
+                      setBankCustom(item.amount);
+                    }
+else {
+sum = sum + parseFloat(item.amount);
+}
+        })
+        setSumDeduct(sum);
+// alert(deductSalary.length);
+
+        //get deduct data with installment
+        const deductSalaryInstallment = filteredEntriesEmp[0].deductSalary.filter(deduct => deduct.payType === "installment");
+        let sumInstallment = 0;
+        //loop forget socialSecurity and tax
+        deductSalaryInstallment .map((item, index) => {
+let amount = parseFloat(item.amount);
+let installment = parseFloat(item.installment);
+sumInstallment = sumInstallment + parseFloat((amount / installment).toFixed(2));
+        });
+setSumDeductInstallment(sumInstallment);
 
         console.log('addSalaryMonthly', addSalaryMonthly);
 
@@ -1048,7 +1106,7 @@ function Salaryresult() {
                               onChange={handleAnySpSalaryChange}
                             />
                           </td>
-                          <td style={cellStyle}>{(overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary).toFixed(2)}</td>
+                          <td style={cellStyle}>{(overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary).toFixed()}</td>
                           <td style={cellStyle}>
                             <button class="btn btn-danger" style={{ width: '3rem' }}>แก้ไข</button>
                           </td>
@@ -1075,9 +1133,9 @@ function Salaryresult() {
                       </thead>
                       <tbody>
                         <tr>
-                          <td style={cellStyle}></td>
-                          <td style={cellStyle}></td>
-                          <td style={cellStyle}></td>
+                          <td style={cellStyle}>{tax}</td>
+                          <td style={cellStyle}>{((overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary) * socialSecurity).toFixed()}</td>
+                          <td style={cellStyle}>{bankCustom}</td>
                           <td style={cellStyle}>
                             <input
                               type="text"
@@ -1089,7 +1147,7 @@ function Salaryresult() {
                               onChange={handleAnyMinusChange}
                             />
                           </td>
-                          <td style={cellStyle}>{(anyMinus).toFixed(2)}</td>
+                          <td style={cellStyle}>({anyMinus} + {tax} + {((overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary) * socialSecurity).toFixed()} + {bankCustom} + {sumDeduct} + {sumDeductInstallment})</td>
                           <td style={cellStyle}>
                             <button class="btn btn-danger" style={{ width: '3rem' }}>แก้ไข</button>
                           </td>
