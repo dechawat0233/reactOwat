@@ -260,7 +260,7 @@ const [installment , setInstallment] = useState('');
             payType: payType || '',
             installment: installment || '',
             nameType: '',
-            message: minusmessage || '',
+            message: minusStaffType || '',
         };
         await addRow(newRowData);
         await addRow2(newRowData2);
