@@ -88,6 +88,8 @@ function AddEditSalaryEmployee() {
     const [misnusName, setMisnusName] = useState('');
     const [minusSalary, setMinusSalary] = useState('');
     const [minusmessage, setMinusmessage] = useState('');
+const [payType , setPayType] = useState('');
+const [installment , setInstallment] = useState('');
 
     const [minusRoundOfSalary, setMinusRoundOfSalary] = useState('');
     const [minusStaffType, setMinusStaffType] = useState('');
@@ -115,11 +117,12 @@ function AddEditSalaryEmployee() {
     const initialRowData = {
         id: '',
         name: '',
-        SpSalary: '',
-        roundOfSalary: '',
-        StaffType: '',
+        amount: '',
+        payType: '',
+        installment: '',
         nameType: '',
         message: '',
+    
     };
 
     const [rowDataList, setRowDataList] = useState(new Array(numberOfRows).fill(initialRowData));
@@ -208,9 +211,9 @@ function AddEditSalaryEmployee() {
                         let newRowData1 = {
                             id: item.id,
                             name: item.name,
-                            SpSalary: item.SpSalary,
-                            roundOfSalary: item.roundOfSalary,
-                            StaffType: item.StaffType,
+                            amount: item.amount,
+                            payType: item.payType,
+                            installment: item.installment,
                             nameType: item.nameType,
                             message: item.message,
                         }
@@ -253,9 +256,9 @@ function AddEditSalaryEmployee() {
         const newRowData2 = await {
             id: minusId || '',
             name: misnusName || '',
-            SpSalary: minusSalary || '',
-            roundOfSalary: '',
-            StaffType: '',
+            amount: minusSalary || '',
+            payType: payType || '',
+            installment: installment || '',
             nameType: '',
             message: minusmessage || '',
         };
@@ -273,8 +276,8 @@ function AddEditSalaryEmployee() {
         await setMinusId('');
         await setMisnusName('');
         await setMinusSalary('');
-        await setMinusRoundOfSalary('');
-        await setMinusStaffType('');
+        await setPayType('');
+        await setInstallment('');
         await setMinusmessage('');
 
     }
@@ -731,8 +734,8 @@ function AddEditSalaryEmployee() {
                                                             <select
                                                                 name="roundOfSalary"
                                                                 className="form-control"
-                                                                value={roundOfSalary}
-                                                                onChange={(e) => setRoundOfSalary(e.target.value)}
+                                                                value={payType}
+                                                                onChange={(e) => setPayType(e.target.value)}
                                                             >
                                                                 <option value="">เลือก</option>
                                                                 <option value="immedate">ทั้งหมด</option>
@@ -740,19 +743,32 @@ function AddEditSalaryEmployee() {
                                                             </select>
                                                         </div>
                                                         <div className="col-md-2">
+
+                                                        {payType == "installment" ? (
                                                             <select
                                                                 name="StaffType"
                                                                 className="form-control"
-                                                                value={minusRoundOfSalary}
-                                                                onChange={(e) => setMinusRoundOfSalary(e.target.value)}
+                                                                value={installment}
+                                                                onChange={(e) => setInstallment(e.target.value)}
                                                             >
                                                                 <option value="">เลือกจำนวนงวด</option>
-                                                                <option value="2">2 งวด</option>
-                                                                <option value="3">3 งวด</option>
-                                                                <option value="4">4 งวด</option>
-                                                                <option value="5">5 งวด</option>
-                                                                <option value="6">6 งวด</option>
+                                                                <option value="2">2 งวด {minusSalary /2}</option>
+                                                                <option value="3">3 งวด {minusSalary /3}</option>
+                                                                <option value="4">4 งวด {minusSalary /4}</option>
+                                                                <option value="5">5 งวด {minusSalary /5}</option>
+                                                                <option value="6">6 งวด {minusSalary /6}</option>
                                                             </select>
+                                                        ): (
+                                                            <select
+                                                            name="StaffType"
+                                                            className="form-control"
+                                                            value={installment}
+                                                            onChange={(e) => setInstallment(e.target.value)}
+                                                        >
+                                                            <option value="1">1 งวด {minusSalary }</option>
+                                                        </select>
+                                                        )}
+
                                                         </div>
 
                                                         <div class="col-md-2">
@@ -823,10 +839,16 @@ function AddEditSalaryEmployee() {
 
                                                                                 <div class="col-md-1" style={bordertable}> {item.id}</div>
                                                                                 <div class="col-md-2" style={bordertable}> {item.name} </div>
-                                                                                <div class="col-md-1" style={bordertable}> {item.SpSalary} </div>
+                                                                                <div class="col-md-1" style={bordertable}> {item.amount} </div>
 
-                                                                                <div class="col-md-2" style={bordertable}>รายวัน</div>
-                                                                                <div class="col-md-2" style={bordertable}>พนักงาน </div>
+{item.payType == "immedate" && (
+                                                                                <div class="col-md-2" style={bordertable}>จ่ายทั้งหมด</div>
+)}
+{item.payType == "installment" && (
+                                                                                <div class="col-md-2" style={bordertable}>ผ่อนจ่าย</div>
+)}
+
+                                                                                <div class="col-md-2" style={bordertable}>{item.installment}</div>
 
                                                                                 <div class="col-md-2" style={bordertable}> {item.message} </div>
 
