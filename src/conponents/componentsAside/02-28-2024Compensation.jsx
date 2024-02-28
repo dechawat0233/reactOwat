@@ -930,7 +930,7 @@ function Compensation() {
         let ans1 = 0;
         let ans2 = 0;
 
-        const updatedDataTable = calculatedArray.map((item, index) => {
+        const updatedDataTable = resultArrayWithWorkplaceRecords.map((item, index) => {
             let addSalaryDay1 = '';
             if (item !== '') {
                 // if (addSalaryDay < 100) {
@@ -940,25 +940,17 @@ function Compensation() {
                 // }
             }
             // commonNumbersArray
-            const workRateOT2 = !isNaN(item.workRate) && !isNaN(item.workOfHour) && !isNaN(item.workRateOT) ?
+            const workRateOT = !isNaN(item.workRate) && !isNaN(item.workOfHour) && !isNaN(item.workRateOT) ?
                 `${(((item.workRate / item.workOfHour) * item.workRateOT) * item.otTimes).toFixed(2)} (${item.workRateOT})` :
                 ''; // If any of the values are not numbers, workRateOT will be an empty string
-
-            const hasCalculatedValues = typeof item === 'object' && 'calculatedValue' in item && 'calculatedValueOT' in item;
-
-            // Update workRate and workRateOT based on the presence of calculated values
-            const workRate = hasCalculatedValues ? item.calculatedValue : item.workRate;
-            const workRateOT = hasCalculatedValues ? item.calculatedValueOT + ' ' + '(' + item.dayoffRateOT + ')' : workRateOT2;
-
             const tmp = {
                 day: resultArray[index],
                 workplaceId: item.workplaceId,
                 allTimes: item.allTimes,
-                // workRate: item.workRate,
-                workRate: workRate,
+                workRate: item.workRate,
                 otTimes: item.otTimes,
-                workRateOT: workRateOT,
-                // workRateOT: item.workRateOT,
+                // workRateOT: workRateOT,
+                workRateOT: item.workRateOT,
                 addSalaryDay: addSalaryDay1
             };
 
