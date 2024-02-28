@@ -897,7 +897,13 @@ function Compensation() {
     const [sumAddSalary, setSumAddSalary] = useState(0);
 
     const calculatedArray = resultArrayWithWorkplaceRecords.map((record) => {
-        if (record && record.dates && commonNumbersArray.includes(record.dates)) {
+        const numericDate = parseInt(record.dates, 10);
+
+        if (!isNaN(numericDate) && commonNumbersArray.includes(numericDate.toString())) {
+            // if (parseInt(record.dates, 10) && commonNumbersArray.includes(record.dates)) {
+
+            // if (record && parseInt(record.dates, 10) && commonNumbersArray.includes(record.dates)) {
+
             const workOfHour = parseFloat(record.workOfHour) || 0;//เวลาทำงานเซ็ตไว้
             const workRate = parseFloat(record.workRate) || 0;
             // const workRateOTMatch = record.workRateOT.match(/\((.*?)\)/);
@@ -917,6 +923,7 @@ function Compensation() {
                 calculatedValue,
                 calculatedValueOT,
             };
+
         }
 
         // If the condition is not met, return the original object
@@ -944,11 +951,12 @@ function Compensation() {
                 `${(((item.workRate / item.workOfHour) * item.workRateOT) * item.otTimes).toFixed(2)} (${item.workRateOT})` :
                 ''; // If any of the values are not numbers, workRateOT will be an empty string
 
-            const hasCalculatedValues = typeof item === 'object' && 'calculatedValue' in item && 'calculatedValueOT' in item;
+            const hasCalculatedValues = typeof item === 'object' && 'calculatedValue' in item;
+            const hasCalculatedValuesOT = typeof item === 'object' && 'calculatedValueOT' in item;
 
             // Update workRate and workRateOT based on the presence of calculated values
             const workRate = hasCalculatedValues ? item.calculatedValue : item.workRate;
-            const workRateOT = hasCalculatedValues ? item.calculatedValueOT + ' ' + '(' + item.dayoffRateOT + ')' : workRateOT2;
+            const workRateOT = hasCalculatedValuesOT ? item.calculatedValueOT + ' ' + '(' + item.dayoffRateOT + ')' : workRateOT2;
 
             const tmp = {
                 day: resultArray[index],
