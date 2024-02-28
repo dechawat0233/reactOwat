@@ -20,9 +20,39 @@ function AddEditSalaryEmployee() {
     const [searchEmployeeName, setSearchEmployeeName] = useState('');
     const [month, setMonth] = useState('');
 
+
+    const [searchAddSalaryList, setSearchAddSalaryList] = useState([]);
+    const [searchDeductSalaryList, setSearchDeductSalaryList] = useState([]);
+
+
     useEffect(() => {
         setMonth("01");
+        //get data from master employee
+
+const getMaster = async () => {
+        const data = await {
+            employeeId: '0001',
+            name: '',
+            idCard: '',
+            workPlace: '',
+        };
+
+        try {
+            const response = await axios.post(endpoint + '/employee/search', data);
+if(response ) {
+    await setSearchAddSalaryList(response.data.employees[0].addSalary );
+await setSearchDeductSalaryList(response.data.employees[0].deductSalary );
+}
+            // await alert(JSON.stringify(response.data.employees[0].addSalary ,null,2 ));
+            // await alert(JSON.stringify(response.data.employees[0].deductSalary ,null,2 ));
+
+        } catch (e) {
+        }
+    }
+
+getMaster();
     }, []);
+
 
     const options = [];
 
@@ -127,6 +157,18 @@ const [installment , setInstallment] = useState('');
 
     const [rowDataList, setRowDataList] = useState(new Array(numberOfRows).fill(initialRowData));
 
+
+    useEffect(() => {
+        const findObjectById = (id) => {
+          return searchAddSalaryList.find(item => item.id === id);
+        }
+      
+        const foundObject = findObjectById(addSalaryId);
+        if (foundObject) {
+          setAddSalaryName(foundObject.name); // Set only the name property
+        }
+      }, [addSalaryId, searchAddSalaryList]);    
+      
     ///////////////////
     function handleClickResult(emp) {
         // Populate all the startTime input fields with the search result value
