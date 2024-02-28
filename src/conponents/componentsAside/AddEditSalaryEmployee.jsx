@@ -45,31 +45,31 @@ function AddEditSalaryEmployee() {
     const [workplaceList, setWorkplaceList] = useState([]);
     const [currentDate, setCurrentDate] = useState('');
 
-    useEffect(() => {
-        // Fetch data from the API when the component mounts
-        fetch(endpoint + '/workplace/list')
-            .then(response => response.json())
-            .then(data => {
-                // Update the state with the fetched data
-                setWorkplaceList(data);
-                // alert(data[0].workplaceName);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
+    // useEffect(() => {
+    //     // Fetch data from the API when the component mounts
+    //     fetch(endpoint + '/workplace/list')
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             // Update the state with the fetched data
+    //             setWorkplaceList(data);
+    //             // alert(data[0].workplaceName);
+    //         })
+    //         .catch(error => {
+    //             console.error('Error fetching data:', error);
+    //         });
 
-        const currentDate = new Date();
-        const day = currentDate.getDate();
-        const month = currentDate.getMonth() + 1; // Months are zero-based
-        const year = currentDate.getFullYear();
+    //     const currentDate = new Date();
+    //     const day = currentDate.getDate();
+    //     const month = currentDate.getMonth() + 1; // Months are zero-based
+    //     const year = currentDate.getFullYear();
 
-        // Formatting the date to dd/mm/yyyy format
-        const formattedDate = `${day < 10 ? '0' : ''}${day}/${month < 10 ? '0' : ''}${month}/${year}`;
+    //     // Formatting the date to dd/mm/yyyy format
+    //     const formattedDate = `${day < 10 ? '0' : ''}${day}/${month < 10 ? '0' : ''}${month}/${year}`;
 
-        setCurrentDate(formattedDate);
-    }, []); // The empty array [] ensures that the effect runs only once after the initial render
+    //     setCurrentDate(formattedDate);
+    // }, []); // The empty array [] ensures that the effect runs only once after the initial render
 
-    console.log(workplaceList);
+    // console.log(workplaceList);
 
 
 
@@ -156,7 +156,7 @@ function AddEditSalaryEmployee() {
 
         try {
             const response = await axios.post(endpoint + '/employee/search', data);
-            setSearchResult(response.data.employees);
+            await setSearchResult(response.data.employees);
             // alert(response.data.employees.length);
             if (response.data.employees.length < 1) {
                 // window.location.reload();
@@ -244,8 +244,8 @@ function AddEditSalaryEmployee() {
             id: addSalaryId || '',
             name: addSalaryName || '',
             SpSalary: addSalary || '',
-            roundOfSalary: '',
-            StaffType: '',
+            roundOfSalary: roundOfSalary || '',
+            StaffType: staffType || '',
             nameType: '',
             message: message || '',
         };
@@ -311,6 +311,7 @@ function AddEditSalaryEmployee() {
         await setAddSalaryName(tmp.workplaceName);
 
     };
+
 
     // Function to handle deleting a row
     const handleDeleteRow = (index) => {
@@ -630,7 +631,7 @@ function AddEditSalaryEmployee() {
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-12">
-
+                                                                
                                                                 {rowDataList2.map((item, index) => (
                                                                     item.name && (
                                                                         <div key={index}>
@@ -639,8 +640,20 @@ function AddEditSalaryEmployee() {
                                                                                 <div class="col-md-2" style={bordertable}> {item.name} </div>
                                                                                 <div class="col-md-1" style={bordertable}> {item.SpSalary} </div>
 
+{item.roundOfSalary == "daily" &&  (
                                                                                 <div class="col-md-2" style={bordertable}>รายวัน</div>
-                                                                                <div class="col-md-2" style={bordertable}>พนักงาน </div>
+) }
+{item.roundOfSalary == "monthly" &&  (
+                                                                                <div class="col-md-2" style={bordertable}>รายเดือน</div>
+) }
+
+                                                                                {item.StaffType == "header" &&  (
+                                                                                                                                                                    <div class="col-md-2" style={bordertable}>หัวหน้างาน</div>
+) }
+
+{item.StaffType == "all" &&  (
+                                                                                                                                                                    <div class="col-md-2" style={bordertable}>พนักงาน</div>
+) }
 
                                                                                 <div class="col-md-2" style={bordertable}> {item.message} </div>
                                                                                 <div class="col-md-2" style={bordertable}>
@@ -682,12 +695,12 @@ function AddEditSalaryEmployee() {
                                                         </div>
                                                         <div class="col-md-2">
                                                             <div class="form-group">
-                                                                <label role="">รายวัน/รายเดือน</label>
+                                                                <label role="">การหักเงิน</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-2">
                                                             <div class="form-group">
-                                                                <label role="">ประเภทพนักงาน</label>
+                                                                <label role="">จำนวนงวด</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
@@ -722,8 +735,8 @@ function AddEditSalaryEmployee() {
                                                                 onChange={(e) => setRoundOfSalary(e.target.value)}
                                                             >
                                                                 <option value="">เลือก</option>
-                                                                <option value="daily">รายวัน</option>
-                                                                <option value="monthly">รายเดือน</option>
+                                                                <option value="immedate">ทั้งหมด</option>
+                                                                <option value="installment">ผ่อนจ่าย</option>
                                                             </select>
                                                         </div>
                                                         <div className="col-md-2">
@@ -733,10 +746,12 @@ function AddEditSalaryEmployee() {
                                                                 value={minusRoundOfSalary}
                                                                 onChange={(e) => setMinusRoundOfSalary(e.target.value)}
                                                             >
-                                                                <option value="">เลือกตำแหน่งที่จะมอบให้</option>
-                                                                <option value="all">ทั้งหมด</option>
-                                                                <option value="header">หัวหน้างาน</option>
-                                                                <option value="custom">กำหนดเอง</option>
+                                                                <option value="">เลือกจำนวนงวด</option>
+                                                                <option value="2">2 งวด</option>
+                                                                <option value="3">3 งวด</option>
+                                                                <option value="4">4 งวด</option>
+                                                                <option value="5">5 งวด</option>
+                                                                <option value="6">6 งวด</option>
                                                             </select>
                                                         </div>
 
@@ -772,12 +787,12 @@ function AddEditSalaryEmployee() {
                                                                     </div>
                                                                     <div class="col-md-2">
                                                                         <div class="form-group">
-                                                                            <label role="">รายวัน/รายเดือน</label>
+                                                                            <label role="">การหักเงิน</label>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-2">
                                                                         <div class="form-group">
-                                                                            <label role="">ประเภทพนักงาน</label>
+                                                                            <label role="">จำนวนงวด</label>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-3">
@@ -859,7 +874,7 @@ function AddEditSalaryEmployee() {
                 </div>
 
             </div>
-            {JSON.stringify(rowDataList2, null, 2)}
+            {/* {JSON.stringify(rowDataList2, null, 2)} */}
         </body>
 
     )
