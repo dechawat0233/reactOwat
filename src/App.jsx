@@ -63,6 +63,7 @@ import SendEmployeePDF from "./conponents/componentsAside/SendEmployeePDF";
 import SendEmployeePDF2 from "./conponents/componentsAside/SendEmployeePDF2";
 import SendEmployeePDF3 from "./conponents/componentsAside/SendEmployeePDF3";
 import Testapp from "./conponents/componentsAside/Test";
+import TestPDFSalary from "./conponents/componentsAside/TestPDFSalary";
 
 // import Time from "./conponents/Time";
 import Testcal from "./conponents/Testcal";
@@ -178,8 +179,11 @@ function App() {
               {/* <Route path="/testPDF" element={<Testapp />} /> */}
               <Route path="/listsendemployee" element={<SendEmployeePDF />} />
               {/* <Route path="/testPDF" element={<SendEmployeePDF3 />} /> */}
-              <Route path="/testPDF" element={<Testapp />} />
 
+              <Route path="/testPDF" element={<Testapp />} />
+              <Route path="/testPDFSalary" element={<TestPDFSalary />} />
+
+              testPDFSalary
 
 
               <Route path="/time" element={<Testcal />} />
