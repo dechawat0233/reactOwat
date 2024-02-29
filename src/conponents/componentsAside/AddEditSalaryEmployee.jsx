@@ -703,7 +703,7 @@ const [installment , setInstallment] = useState('');
                                                                                 <div class="col-md-2" style={bordertable}> {item.message} </div>
                                                                                 <div class="col-md-2" style={bordertable}>
                                                                                     {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
-                                                                                    <button class="btn btn-xs btn-danger" style={{ padding: '0.3rem ', addSalaryIdth: '8rem' }} onClick={() => handleDeleteRow(index)}>Delete</button>
+                                                                                    <button class="btn btn-xs btn-danger" style={{ padding: '0.3rem ', addSalaryIdth: '8rem' }} onClick={() => handleDeleteRow(index)}>ลบ</button>
                                                                                 </div>
 
                                                                             </div>
@@ -896,7 +896,7 @@ const [installment , setInstallment] = useState('');
 
                                                                                 <div class="col-md-2" style={bordertable}>
                                                                                     {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
-                                                                                    <button class="btn btn-xs btn-danger" style={{ padding: '0.3rem ', addSalaryIdth: '8rem' }} onClick={() => handleDeleteRow2(index)}>Delete</button>
+                                                                                    <button class="btn btn-xs btn-danger" style={{ padding: '0.3rem ', addSalaryIdth: '8rem' }} onClick={() => handleDeleteRow2(index)}>ลบ</button>
                                                                                 </div>
 
                                                                             </div>
