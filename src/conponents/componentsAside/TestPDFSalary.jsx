@@ -2,7 +2,31 @@ import React, { useState } from 'react';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
+import moment from 'moment';
+import 'moment/locale/th'; // Import the Thai locale data
+
 function TestPDFSalary() {
+  const [workDate, setWorkDate] = useState(new Date());
+  const formattedWorkDate = moment(workDate).format('DD/MM/YYYY');
+  const handleWorkDateChange = (date) => {
+    setWorkDate(date);
+  };
+  const [present, setPresent] = useState('DATAOWAT');
+  const [presentfilm, setPresentfilm] = useState("\\10.10.110.20\payrolldata\Report\User\PRUSR101.RPT");
+
+  const formattedDate = workDate.toLocaleString('en-TH', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    timeZone: 'Asia/Bangkok', // Thailand timezone
+  });
 
   // const generatePDF = () => {
   //     const names = ['Alice', 'Bob', 'Charlie', 'David', 'Eva', 'Frank'];
@@ -43,61 +67,67 @@ function TestPDFSalary() {
   //     // Open the generated PDF in a new tab
   //     window.open(pdf.output('bloburl'), '_blank');
   // };
+  const workplaceList = [
+    { name: 'Thai', workplaceId: '1001-25' },
+    { name: 'Total', workplaceId: '1021-25' },
+    { name: 'Miliral', workplaceId: '1031-25' },
+    { name: 'Raimon', workplaceId: '1801-25' },
+  ];
 
   const employees = [
-    { name: 'pop', empID: '1525', workplace: '1001-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '201' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
+    { name: 'pop', empID: '1525', workplaceId: '1001-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '201' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
 
-    { name: 'pffff', empID: '1425', workplace: '1021-25', salary: '200' },
-    { name: 'plkioij', empID: '1625', workplace: '1021-25', salary: '200' },
-    { name: 'bvcde', empID: '1595', workplace: '1021-25', salary: '200' },
-    { name: 'wsxd', empID: '1425', workplace: '1031-25', salary: '200' },
-    { name: 'dodod', empID: '15225', workplace: '1031-25', salary: '200' },
-    { name: 'maassaa', empID: '1575', workplace: '1031-25', salary: '200' },
-    { name: 'dodod', empID: '15225', workplace: '1031-25', salary: '200' },
-    { name: 'maassaa', empID: '1575', workplace: '1031-25', salary: '200' },
-    { name: 'dodod', empID: '15225', workplace: '1031-25', salary: '200' },
-    { name: 'maassaa', empID: '1575', workplace: '1031-25', salary: '200' },
-    { name: 'dodod', empID: '15225', workplace: '1031-25', salary: '200' },
-    { name: 'maassaa', empID: '1575', workplace: '1031-25', salary: '200' },
-    { name: 'dodod', empID: '15225', workplace: '1031-25', salary: '200' },
-    { name: 'maassaa', empID: '1575', workplace: '1031-25', salary: '200' },
-    { name: 'dodod', empID: '15225', workplace: '1031-25', salary: '200' },
-    { name: 'maassaa', empID: '1575', workplace: '1031-25', salary: '200' },
-    { name: 'dodod', empID: '15225', workplace: '1031-25', salary: '200' },
-    { name: 'maassaa', empID: '1575', workplace: '1031-25', salary: '200' },
-    { name: 'dodod', empID: '15225', workplace: '1031-25', salary: '200' },
-    { name: 'maassaa', empID: '1575', workplace: '1031-25', salary: '200' },
-    { name: 'dodod', empID: '15225', workplace: '1031-25', salary: '200' },
-    { name: 'maassaa', empID: '1575', workplace: '1031-25', salary: '200' },
-    { name: 'dodod', empID: '15225', workplace: '1031-25', salary: '200' },
-    { name: 'maassaa', empID: '1575', workplace: '1031-25', salary: '200' },
-    { name: 'dodod', empID: '15225', workplace: '1031-25', salary: '200' },
-    { name: 'maassaa', empID: '1575', workplace: '1031-25', salary: '200' },
-    { name: 'dodod', empID: '15225', workplace: '1031-25', salary: '200' },
-    { name: 'maassaa', empID: '1575', workplace: '1031-25', salary: '200' },
-    { name: 'maakksj', empID: '15995', workplace: '1801-25', salary: '200' },
-    { name: 'ywywy', empID: '1225', workplace: '1801-25', salary: '200' },
+    { name: 'pffff', empID: '1425', workplaceId: '1021-25', salary: '200' },
+    { name: 'plkioij', empID: '1625', workplaceId: '1021-25', salary: '200' },
+    { name: 'bvcde', empID: '1595', workplaceId: '1021-25', salary: '200' },
+    { name: 'wsxd', empID: '1425', workplaceId: '1031-25', salary: '200' },
+    { name: 'dodod', empID: '15225', workplaceId: '1031-25', salary: '200' },
+    { name: 'maassaa', empID: '1575', workplaceId: '1031-25', salary: '200' },
+    { name: 'dodod', empID: '15225', workplaceId: '1031-25', salary: '200' },
+    { name: 'maassaa', empID: '1575', workplaceId: '1031-25', salary: '200' },
+    { name: 'dodod', empID: '15225', workplaceId: '1031-25', salary: '200' },
+    { name: 'maassaa', empID: '1575', workplaceId: '1031-25', salary: '200' },
+    { name: 'dodod', empID: '15225', workplaceId: '1031-25', salary: '200' },
+    { name: 'maassaa', empID: '1575', workplaceId: '1031-25', salary: '200' },
+    { name: 'dodod', empID: '15225', workplaceId: '1031-25', salary: '200' },
+    { name: 'maassaa', empID: '1575', workplaceId: '1031-25', salary: '200' },
+    { name: 'dodod', empID: '15225', workplaceId: '1031-25', salary: '200' },
+    { name: 'maassaa', empID: '1575', workplaceId: '1031-25', salary: '200' },
+    { name: 'dodod', empID: '15225', workplaceId: '1031-25', salary: '200' },
+    { name: 'maassaa', empID: '1575', workplaceId: '1031-25', salary: '200' },
+    { name: 'dodod', empID: '15225', workplaceId: '1031-25', salary: '200' },
+    { name: 'maassaa', empID: '1575', workplaceId: '1031-25', salary: '200' },
+    { name: 'dodod', empID: '15225', workplaceId: '1031-25', salary: '200' },
+    { name: 'maassaa', empID: '1575', workplaceId: '1031-25', salary: '200' },
+    { name: 'dodod', empID: '15225', workplaceId: '1031-25', salary: '200' },
+    { name: 'maassaa', empID: '1575', workplaceId: '1031-25', salary: '200' },
+    { name: 'dodod', empID: '15225', workplaceId: '1031-25', salary: '200' },
+    { name: 'maassaa', empID: '1575', workplaceId: '1031-25', salary: '200' },
+    { name: 'dodod', empID: '15225', workplaceId: '1031-25', salary: '200' },
+    { name: 'maassaa', empID: '1575', workplaceId: '1031-25', salary: '200' },
+    { name: 'maakksj', empID: '15995', workplaceId: '1801-25', salary: '200' },
+    { name: 'ywywy', empID: '1225', workplaceId: '1801-25', salary: '200' },
   ];
 
   // // Grouping employees by workplace
@@ -156,17 +186,21 @@ function TestPDFSalary() {
     ///////////////////////////////////////////////////////
 
     const groupedByWorkplace = employees.reduce((acc, employee) => {
-      const { workplace, salary } = employee;
-      acc[workplace] = acc[workplace] || { employees: [], totalSalary: 0 };
-      acc[workplace].employees.push(employee);
-      acc[workplace].totalSalary += parseInt(salary);
+      const { workplaceId, salary } = employee;
+      acc[workplaceId] = acc[workplaceId] || { employees: [], totalSalary: 0 };
+      acc[workplaceId].employees.push(employee);
+      acc[workplaceId].totalSalary += parseInt(salary);
       return acc;
     }, {});
 
     const doc = new jsPDF({ orientation: 'landscape' });
 
     let currentY = 20;
+    moment.locale('th');
 
+    const formattedWorkDateDD = moment(workDate).format('DD');
+    const formattedWorkDateMM = moment(workDate).format('MM');
+    const formattedWorkDateYYYY = moment(workDate).format('YYYY');
 
     const fontPath = '/assets/fonts/THSarabunNew.ttf';
     const fontName = 'THSarabunNew';
@@ -572,13 +606,17 @@ function TestPDFSalary() {
       }
     };
 
-    Object.keys(groupedByWorkplace).forEach((workplace, index) => {
-      const { employees, totalSalary } = groupedByWorkplace[workplace];
+    Object.keys(groupedByWorkplace).forEach((workplaceKey, index) => {
+      const { employees, totalSalary } = groupedByWorkplace[workplaceKey];
+
+      // Find the corresponding workplace from workplaceList
+      const workplaceDetails = workplaceList.find(w => w.workplace === workplaceKey) || { name: 'Unknown' };
+      const workplaceName = workplaceDetails.name;
 
       // Display workplace heading
       doc.setFontSize(12);
 
-      doc.text(`Workplace: ${workplace}`, 25, currentY);
+      doc.text(`Workplace: ${workplaceKey}`, 25, currentY);
       currentY += 5;
 
       // Display employee information
@@ -610,7 +648,7 @@ function TestPDFSalary() {
         currentY += 5;
 
         // Check if there's not enough space on the current page
-        if (currentY > doc.internal.pageSize.height - 10) {
+        if (currentY > doc.internal.pageSize.height - 20) {
           // Add a new page
           doc.addPage({ orientation: 'landscape' });
           // Reset Y coordinate
@@ -619,11 +657,15 @@ function TestPDFSalary() {
       });
 
       // Display total salary
-      doc.text(`Total Salary: ${totalSalary}`, 10, currentY);
+      doc.text(`Total Salary: ${totalSalary}   ${workplaceName}`, 10, currentY);
       currentY += 5;
 
       // Add some space between workplaces
       // currentY += 5;
+      doc.text(`พิมพ์วันที่ ${formattedWorkDateDD}/${formattedWorkDateMM}/${parseInt(formattedWorkDateYYYY, 10) + 543}`, 10, 200);
+      doc.text(`รายงานโดย ${present}`, 100, 200);
+      doc.text(`แฟ้มรายงาน ${presentfilm}`, 200, 200);
+
     });
 
     window.open(doc.output('bloburl'), '_blank');
@@ -632,6 +674,31 @@ function TestPDFSalary() {
   return (
     <div>
       {/* <button onClick={generatePDF}>Generate PDF</button> */}
+      <label role="datetime">พิมพ์วันที่</label>
+      <div style=
+        {{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
+        <DatePicker id="datetime" name="datetime"
+          className="form-control" // Apply Bootstrap form-control class
+          popperClassName="datepicker-popper" // Apply custom popper class if needed
+          selected={workDate}
+          onChange={handleWorkDateChange}
+          dateFormat="dd/MM/yyyy"
+        // showMonthYearPicker
+        />
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <input type="text" class="form-control" id="searchWorkplaceId" placeholder="รายงานโดย" value={present} onChange={(e) => setPresent(e.target.value)} />
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <input type="text" class="form-control" id="searchWorkplaceId" placeholder="แฟ้มรายงาน" value={presentfilm} onChange={(e) => setPresentfilm(e.target.value)} />
+
+        </div>
+      </div>
+
       <button onClick={generatePDFTest}>Generate PDFTest</button>
 
     </div>
