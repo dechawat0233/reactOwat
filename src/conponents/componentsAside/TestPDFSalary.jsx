@@ -103,6 +103,11 @@ function TestPDFSalary() {
     pdf.addFileToVFS(fontPath);
     pdf.addFont(fontPath, 'THSarabunNew', 'normal');
 
+    // Add bold font
+    const boldFontPath = '/assets/fonts/THSarabunNew Bold.ttf';
+    pdf.addFileToVFS(boldFontPath);
+    pdf.addFont(boldFontPath, 'THSarabunNew Bold', 'normal');
+
     // Override the default stylestable for jspdf-autotable
     const stylestable = {
       font: 'THSarabunNew',
@@ -118,7 +123,9 @@ function TestPDFSalary() {
     // Set the initial position for text and frame
     let x = 20;
 
-    pdf.setFont('THSarabunNew');
+    // pdf.setFont('THSarabunNew');
+    pdf.setFont('THSarabunNew Bold');
+
 
     // Loop through the names and ages arrays to add content to the PDF
     for (let i = 0; i < names.length; i += 2) {
@@ -144,15 +151,65 @@ function TestPDFSalary() {
       // Draw a square frame around the first name
       pdf.rect(7, 28, 155, 74);//ตารางหลัก
       pdf.rect(7, 28, 155, 12);//ตารางหลัก หัวตาราง
+
       pdf.rect(7, 28, 155, 63); //ตารางหลัก ล่าง
       pdf.rect(7, 28, 44, 63);//ตารางหลัก บน ซ้าย ช่อง1 รายได้
+      pdf.text(`รายได้`, 24, 35);//ตารางหลัก รายได้
+      pdf.text(`Earnings`, 22, 38);//ตารางหลัก Earnings
+      //////////////////////// หัวข้อ
+      pdf.text(`อัตรา`, 8, 44);//ตารางหลัก 
+      pdf.text(`เงินเดือน`, 8, 48.1);//ตารางหลัก Earnings
+      pdf.text(`ค่าล่วงเวลา 1 เท่า`, 8, 52.2);//ตารางหลัก 
+      pdf.text(`ค่าล่วงเวลา 1.5 เท่า`, 8, 56.3);//ตารางหลัก Earnings
+      pdf.text(`ค่าล่วงเวลา 2 เท่า(วันหยุด/นักขัติ)`, 8, 60.4);//ตารางหลัก 
+      pdf.text(`ค่าล่วงเวลา 3 เท่า`, 8, 64.5);//ตารางหลัก Earnings
+      pdf.text(`วันหยุดนักขัติฤกษ์`, 8, 68.6);//ตารางหลัก 
+      pdf.text(`ค่าเดินทาง/ตำแหน่ง/โทรศัพท์`, 8, 72.7);//ตารางหลัก Earnings
+      pdf.text(`เบี้ยขยัน`, 8, 76.8);//ตารางหลัก Earnings
+      pdf.text(`เงินเพิ่มพิเศษ/ค่าร้อน/หุงข้าว/ค่ากะ`, 8, 80.9);//ตารางหลัก 
+      pdf.text(`จ่าย่วย/พักร้อน/ลาคลอด/เลิกจ้าง/อื่นๆ`, 8, 85);//ตารางหลัก Earnings
+      // pdf.text(`อัตรา`, 8, 44);//ตารางหลัก 
+
+
       pdf.rect(7, 28, 62, 63);//ตารางหลัก บน ซ้าย ช่อง1 จำนวน
+      pdf.text(`จำนวน`, 56, 35);//ตารางหลัก จำนวน
+      pdf.text(`Number`, 55, 38);//ตารางหลัก Number
+
       pdf.rect(69, 28, 24, 74);//ตารางหลัก บน ซ้าย ช่อง1 จำนวนเงิน
+      pdf.text(`จำนวนเงิน`, 74, 35);//ตารางหลัก จำนวนเงิน
+      pdf.text(`Amount`, 75, 38);//ตารางหลัก Amount
+
       pdf.rect(69, 28, 69, 74);//ตารางหลัก บน ซ้าย ช่อง1 รายการหัก / รายการคืน
+      pdf.text(`รายการหัก / รายการคืน`, 102, 35);//รายการหัก / รายการคืน
+      // pdf.text(`Amount`, 75, 38);//ตารางหลัก 
+
+      /////////
+      pdf.text(`คืนเงินเบิกล่วงหน้า`, 94, 76.8);//ตารางหลัก Earnings
+      pdf.text(`หักภาษีเงินได้`, 94, 80.9);//ตารางหลัก 
+      pdf.text(`หักสมทบประกันสังคม`, 94, 85);//ตารางหลัก Earnings
+      pdf.text(`ค่าทำเนียมโอน`, 94, 89.1);//ตารางหลัก Earnings
+
+      ///////// รวมเงินได้
+      pdf.text(`รวมเงินได้`, 25, 96);//ตารางหลัก Earnings
+      pdf.text(`Tatol Earninng`, 20, 100);//ตารางหลัก Earnings
+
+      /////  รายการหัก / รายการคืน
+      pdf.text(`รายการหัก / รายการคืน`, 100, 96);//ตารางหลัก Earnings
+      pdf.text(`Tatol Deduction`, 105, 100);//ตารางหลัก Earnings
+
+
+      pdf.text(`จำนวนเงิน`, 144, 35);//ตารางหลัก จำนวนเงิน
+      pdf.text(`Amount`, 145, 38);//ตารางหลัก Amount
 
       pdf.rect(162 + 9, 28, 25, 25);//ตารางวันที่จ่าย
+      pdf.rect(162 + 9, 28, 25, 15);//ตารางวันที่จ่าย
+      pdf.text(`วันที่จ่าย`, 180, 35);//ตารางหลัก วันที่จ่าย
+      pdf.text(`Payroll Date`, 177, 38);//ตารางหลัก Payroll Date
 
       pdf.rect(162 + 9, 77, 25, 25);//ตารางเงินรับสุทธิ
+      pdf.rect(162 + 9, 77, 25, 15);//ตารางเงินรับสุทธิ
+      pdf.text(`เงินรับสุทธิ`, 178, 84);//ตารางหลัก วันที่จ่าย
+      pdf.text(`Net To Pay`, 177, 87);//ตารางหลัก Payroll Date
 
       pdf.rect(7, 104, 155, 13);//ตาราง 2 
       pdf.rect(7, 104, 155, 6.5);//ตาราง 2 เส็นกลาง
@@ -163,6 +220,13 @@ function TestPDFSalary() {
         x1 += 31
       };
 
+      pdf.text(`เงินได้สะสมต่อปี`, 9, 108);//ตารางหลัก Earnings
+      pdf.text(`ภาษีสะสมต่อปี`, 40, 108);//ตารางหลัก Earnings
+      pdf.text(`เงินสะสมกองทุนต่อปี`, 71, 108);//ตารางหลัก Earnings
+      pdf.text(`เงินประกันสะสมต่อปี`, 102, 108);//ตารางหลัก Earnings
+      pdf.text(`ค่าลดหย่อนอื่นๆ`, 133, 108);//ตารางหลัก Earnings
+
+
       pdf.rect(7, 119, 155, 12);//ตาราง 3
       pdf.rect(7, 119, 97, 6);//ตาราง 3
       let x2 = 9.7
@@ -170,6 +234,7 @@ function TestPDFSalary() {
         pdf.rect(7, 119, x2, 12);//ตาราง 2 
         x2 += 9.7
       };
+      pdf.text(`ลงชื่อพนักงาน`, 125, 130);//ตารางหลัก Earnings
 
       // เรียงarray 
       // pdf.text(`Name: ${names[i]}`, x + 10, 50);
@@ -198,13 +263,64 @@ function TestPDFSalary() {
         pdf.rect(7, head2 + 3, 155, 12);//ตารางหลัก หัวตาราง
         pdf.rect(7, head2 + 3, 155, 63); //ตารางหลัก ล่าง
         pdf.rect(7, head2 + 3, 44, 63);//ตารางหลัก บน ซ้าย ช่อง1 รายได้
+        pdf.text(`รายได้`, 24, head2 + 9);//ตารางหลัก รายได้
+        pdf.text(`Earnings`, 22, head2 + 12);//ตารางหลัก Earnings
+
+        /////////////////
+        //////////////////////// หัวข้อ
+        pdf.text(`อัตรา`, 8, head2 + 19);//ตารางหลัก 
+        pdf.text(`เงินเดือน`, 8, head2 + 23.1);//ตารางหลัก Earnings
+        pdf.text(`ค่าล่วงเวลา 1 เท่า`, 8, head2 + 27.2);//ตารางหลัก 
+        pdf.text(`ค่าล่วงเวลา 1.5 เท่า`, 8, head2 + 31.3);//ตารางหลัก Earnings
+        pdf.text(`ค่าล่วงเวลา 2 เท่า(วันหยุด/นักขัติ)`, 8, head2 + 35.4);//ตารางหลัก 
+        pdf.text(`ค่าล่วงเวลา 3 เท่า`, 8, head2 + 39.5);//ตารางหลัก Earnings
+        pdf.text(`วันหยุดนักขัติฤกษ์`, 8, head2 + 43.6);//ตารางหลัก 
+        pdf.text(`ค่าเดินทาง/ตำแหน่ง/โทรศัพท์`, 8, head2 + 47.7);//ตารางหลัก Earnings
+        pdf.text(`เบี้ยขยัน`, 8, head2 + 51.8);//ตารางหลัก Earnings
+        pdf.text(`เงินเพิ่มพิเศษ/ค่าร้อน/หุงข้าว/ค่ากะ`, 8, head2 + 55.9);//ตารางหลัก 
+        pdf.text(`จ่าย่วย/พักร้อน/ลาคลอด/เลิกจ้าง/อื่นๆ`, 8, head2 + 60);//ตารางหลัก Earnings
+
         pdf.rect(7, head2 + 3, 62, 63);//ตารางหลัก บน ซ้าย ช่อง1 จำนวน
+        pdf.text(`จำนวน`, 56, head2 + 9);//ตารางหลัก จำนวน
+        pdf.text(`Number`, 55, head2 + 12);//ตารางหลัก Number
+
         pdf.rect(69, head2 + 3, 24, 74);//ตารางหลัก บน ซ้าย ช่อง1 จำนวนเงิน
+        pdf.text(`จำนวนเงิน`, 74, head2 + 9);//ตารางหลัก จำนวนเงิน
+        pdf.text(`Amount`, 75, head2 + 12);//ตารางหลัก Amount
+
         pdf.rect(69, head2 + 3, 69, 74);//ตารางหลัก บน ซ้าย ช่อง1 รายการหัก / รายการคืน
+        pdf.text(`รายการหัก / รายการคืน`, 102, head2 + 9);//รายการหัก / รายการคืน
+        // pdf.text(`Amount`, 75, 38);//ตารางหลัก 
 
-        pdf.rect(162 + 9, 28, 25, 25);//ตารางวันที่จ่าย
+        /////////
+        pdf.text(`คืนเงินเบิกล่วงหน้า`, 94, head2 + 51.8);//ตารางหลัก Earnings
+        pdf.text(`หักภาษีเงินได้`, 94, head2 + 55.9);//ตารางหลัก 
+        pdf.text(`หักสมทบประกันสังคม`, 94, head2 + 60);//ตารางหลัก Earnings
+        pdf.text(`ค่าทำเนียมโอน`, 94, head2 + 64.1);//ตารางหลัก Earnings
 
-        pdf.rect(162 + 9, 77, 25, 25);//ตารางเงินรับสุทธิ
+        ///////// รวมเงินได้
+        pdf.text(`รวมเงินได้`, 25, head2 + 71);//ตารางหลัก Earnings
+        pdf.text(`Tatol Earninng`, 20, head2 + 75);//ตารางหลัก Earnings
+
+        /////  รายการหัก / รายการคืน
+        pdf.text(`รายการหัก / รายการคืน`, 100, head2 + 71);//ตารางหลัก Earnings
+        pdf.text(`Tatol Deduction`, 105, head2 + 75);//ตารางหลัก Earnings
+
+        pdf.text(`จำนวนเงิน`, 144, head2 + 9);//ตารางหลัก จำนวนเงิน
+        pdf.text(`Amount`, 145, head2 + 12);//ตารางหลัก Amount
+        // pdf.rect(162 + 9, 28, 25, 25);//ตารางวันที่จ่าย
+
+        // pdf.rect(162 + 9, 77, 25, 25);//ตารางเงินรับสุทธิ
+
+        pdf.rect(162 + 9, head2 + 3, 25, 25);//ตารางวันที่จ่าย
+        pdf.rect(162 + 9, head2 + 3, 25, 15);//ตารางวันที่จ่าย
+        pdf.text(`วันที่จ่าย`, 180, head2 + 9);//ตารางหลัก วันที่จ่าย
+        pdf.text(`Payroll Date`, 177, head2 + 12);//ตารางหลัก Payroll Date
+
+        pdf.rect(162 + 9, head2 + 52, 25, 25);//ตารางเงินรับสุทธิ
+        pdf.rect(162 + 9, head2 + 52, 25, 15);//ตารางเงินรับสุทธิ
+        pdf.text(`เงินรับสุทธิ`, 178, head2 + 59);//ตารางหลัก เงินรับสุทธิ
+        pdf.text(`Net To Pay`, 177, head2 + 62);//ตารางหลัก Net To Pay
 
         pdf.rect(7, head2 + 79, 155, 13);//ตาราง 2 
         pdf.rect(7, head2 + 79, 155, 6.5);//ตาราง 2 เส็นกลาง
@@ -214,6 +330,13 @@ function TestPDFSalary() {
           pdf.rect(7, head2 + 79, x1, 13);//ตาราง 2 
           x1 += 31
         };
+        // 108
+        // 83
+        pdf.text(`เงินได้สะสมต่อปี`, 9, head2 + 83);//ตารางหลัก Earnings
+        pdf.text(`ภาษีสะสมต่อปี`, 40, head2 + 83);//ตารางหลัก Earnings
+        pdf.text(`เงินสะสมกองทุนต่อปี`, 71, head2 + 83);//ตารางหลัก Earnings
+        pdf.text(`เงินประกันสะสมต่อปี`, 102, head2 + 83);//ตารางหลัก Earnings
+        pdf.text(`ค่าลดหย่อนอื่นๆ`, 133, head2 + 83);//ตารางหลัก Earnings
 
         pdf.rect(7, head2 + 94, 155, 12);//ตาราง 3
         pdf.rect(7, head2 + 94, 97, 6);//ตาราง 3
@@ -222,6 +345,8 @@ function TestPDFSalary() {
           pdf.rect(7, head2 + 94, x2, 12);//ตาราง 2 
           x2 += 9.7
         };
+
+        pdf.text(`ลงชื่อพนักงาน`, 125, head2 + 105);//ตารางหลัก Earnings
 
         // เรียงarray 
         // pdf.text(`Name: ${names[i + 1]}`, 7, 166);
