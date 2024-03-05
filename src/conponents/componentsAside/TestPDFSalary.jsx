@@ -1,103 +1,303 @@
-import React, { useState } from 'react';
-import { jsPDF } from 'jspdf';
+import endpoint from '../../config';
+
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'; import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
+
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
+import moment from 'moment';
+import 'moment/locale/th'; // Import the Thai locale data
 
 function TestPDFSalary() {
 
-  // const generatePDF = () => {
-  //     const names = ['Alice', 'Bob', 'Charlie', 'David', 'Eva', 'Frank'];
-  //     const ages = [25, 30, 22, 35, 28, 40];
+  const [workplacrId, setWorkplacrId] = useState(''); //รหัสหน่วยงาน
+  const [workplacrName, setWorkplacrName] = useState(''); //รหัสหน่วยงาน
 
-  //     // Create a new instance of jsPDF
-  //     const pdf = new jsPDF();
+  const [searchWorkplaceId, setSearchWorkplaceId] = useState('');
+  const [workplaceListAll, setWorkplaceListAll] = useState([]);
 
-  //     // Set the initial position for text and frame
-  //     let x = 20;
 
-  //     // Loop through the names and ages arrays to add content to the PDF
-  //     for (let i = 0; i < names.length; i += 2) {
-  //         // Add a page for each pair of names
-  //         if (i > 0) {
-  //             pdf.addPage();
-  //         }
+  const [workDate, setWorkDate] = useState(new Date());
+  const formattedWorkDate = moment(workDate).format('DD/MM/YYYY');
+  const handleWorkDateChange = (date) => {
+    setWorkDate(date);
+  };
+  const [present, setPresent] = useState('DATAOWAT');
+  const [presentfilm, setPresentfilm] = useState("\\10.10.110.20\payrolldata\Report\User\PRUSR101.RPT");
 
-  //         // Draw a square frame around the first name
-  //         pdf.rect(x, 10, 60, 30);
-  //         pdf.text(`Name: ${names[i]}`, x + 5, 20);
-  //         pdf.text(`Age: ${ages[i]}`, x + 5, 30);
+  const formattedDate = workDate.toLocaleString('en-TH', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    timeZone: 'Asia/Bangkok', // Thailand timezone
+  });
 
-  //         // Move to the next column
-  //         x += 80;
+  useEffect(() => {
+    // Fetch data from the API when the component mounts
+    fetch(endpoint + '/workplace/list')
+      .then(response => response.json())
+      .then(data => {
+        // Update the state with the fetched data
+        setWorkplaceListAll(data);
+        // alert(data[0].workplaceName);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
 
-  //         // Draw a square frame around the second name if available
-  //         if (i + 1 < names.length) {
-  //             pdf.rect(x, 50, 60, 30);
-  //             pdf.text(`Name: ${names[i + 1]}`, x + 5, 60);
-  //             pdf.text(`Age: ${ages[i + 1]}`, x + 5, 70);
-  //         }
+  console.error('workplaceListAll', workplaceListAll);
 
-  //         // Reset position for the next row
-  //         x = 20;
-  //     }
 
-  //     // Open the generated PDF in a new tab
-  //     window.open(pdf.output('bloburl'), '_blank');
-  // };
+  const handleStaffIdChange = (e) => {
+    const selectWorkPlaceId = e.target.value;
+    setWorkplacrId(selectWorkPlaceId);
+    setSearchWorkplaceId(selectWorkPlaceId);
+    // Find the corresponding employee and set the staffName
+    const selectedWorkplace = workplaceListAll.find(employee => employee.workplaceId == selectWorkPlaceId);
+    console.log('selectedWorkplace', selectedWorkplace);
+    if (selectWorkPlaceId) {
+      // setStaffName(selectedEmployee.name);
+      // setStaffLastname(selectedEmployee.lastName);
+      setWorkplacrName(selectedWorkplace.workplaceName);
+    } else {
+      setWorkplacrName('');
+
+    }
+  };
+
+  const handleStaffNameChange = (e) => {
+    const selectWorkPlaceId = e.target.value;
+
+    // Find the corresponding employee and set the staffId
+    const selectedEmployee = workplaceListAll.find(employee => employee.workplaceName == selectWorkPlaceId);
+    const selectedEmployeeFName = workplaceListAll.find(employee => employee.workplaceName === selectWorkPlaceId);
+
+    if (selectedEmployee) {
+      setWorkplacrId(selectedEmployee.workplaceId);
+      setSearchWorkplaceId(selectedEmployee.workplaceId);
+    } else {
+      setStaffId('');
+      // searchEmployeeId('');
+    }
+
+    // setStaffName(selectedStaffName);
+    setStaffFullName(selectedStaffName);
+    setSearchEmployeeName(selectedEmployeeFName);
+  };
+
+  const generatePDF = () => {
+    const names = ['Alice', 'Bob', 'Charlie', 'David', 'Eva'];
+    const ages = [25, 30, 22, 35, 28];
+
+    // Create a new instance of jsPDF
+    const pdf = new jsPDF();
+
+    const fontPath = '/assets/fonts/THSarabunNew.ttf';
+    pdf.addFileToVFS(fontPath);
+    pdf.addFont(fontPath, 'THSarabunNew', 'normal');
+
+    // Override the default stylestable for jspdf-autotable
+    const stylestable = {
+      font: 'THSarabunNew',
+      fontStyle: 'normal',
+      fontSize: 10,
+    };
+    const tableOptions = {
+      styles: stylestable,
+      startY: 25,
+      // margin: { top: 10 },
+    };
+
+    // Set the initial position for text and frame
+    let x = 20;
+
+    pdf.setFont('THSarabunNew');
+
+    // Loop through the names and ages arrays to add content to the PDF
+    for (let i = 0; i < names.length; i += 2) {
+      // Add a page for each pair of names
+      if (i > 0) {
+        pdf.addPage();
+      }
+      pdf.setFontSize(15);
+
+      pdf.text(`ใบจ่ายเงินเดือน`, 73, 12);
+      pdf.text(`บริษัท โอวาท โปร แอนด์ คริก จำกัด`, 55, 18);
+
+      pdf.setFontSize(12);
+
+      const head = 25;
+      const head2 = 150;
+
+      pdf.text(`รหัส`, 7, head);
+      pdf.text(`ชื่อ-สกุล`, 50, head);
+      pdf.text(`แผนก`, 110, head);
+      pdf.text(`เลขที่บัญชี`, 165, head);
+
+      // Draw a square frame around the first name
+      pdf.rect(7, 28, 155, 74);//ตารางหลัก
+      pdf.rect(7, 28, 155, 12);//ตารางหลัก หัวตาราง
+      pdf.rect(7, 28, 155, 63); //ตารางหลัก ล่าง
+      pdf.rect(7, 28, 44, 63);//ตารางหลัก บน ซ้าย ช่อง1 รายได้
+      pdf.rect(7, 28, 62, 63);//ตารางหลัก บน ซ้าย ช่อง1 จำนวน
+      pdf.rect(69, 28, 24, 74);//ตารางหลัก บน ซ้าย ช่อง1 จำนวนเงิน
+      pdf.rect(69, 28, 69, 74);//ตารางหลัก บน ซ้าย ช่อง1 รายการหัก / รายการคืน
+
+      pdf.rect(162 + 9, 28, 25, 25);//ตารางวันที่จ่าย
+
+      pdf.rect(162 + 9, 77, 25, 25);//ตารางเงินรับสุทธิ
+
+      pdf.rect(7, 104, 155, 13);//ตาราง 2 
+      pdf.rect(7, 104, 155, 6.5);//ตาราง 2 เส็นกลาง
+
+      let x1 = 31
+      for (let j = 0; j < 5; j++) {
+        pdf.rect(7, 104, x1, 13);//ตาราง 2 
+        x1 += 31
+      };
+
+      pdf.rect(7, 119, 155, 12);//ตาราง 3
+      pdf.rect(7, 119, 97, 6);//ตาราง 3
+      let x2 = 9.7
+      for (let b = 0; b < 10; b++) {
+        pdf.rect(7, 119, x2, 12);//ตาราง 2 
+        x2 += 9.7
+      };
+
+      // เรียงarray 
+      // pdf.text(`Name: ${names[i]}`, x + 10, 50);
+      // pdf.text(`Age: ${ages[i]}`, x + 10, 60);
+
+      // Move to the next column
+      // x += 80;
+
+      // Draw a square frame around the second name if available
+      if (i + 1 < names.length) {
+        pdf.setFontSize(15);
+
+        pdf.text(`ใบจ่ายเงินเดือน`, 73, 137);
+        pdf.text(`บริษัท โอวาท โปร แอนด์ คริก จำกัด`, 55, 143);
+        pdf.setFontSize(12);
+
+        pdf.text(`รหัส`, 7, head2);
+        pdf.text(`ชื่อ-สกุล`, 50, head2);
+        pdf.text(`แผนก`, 110, head2);
+        pdf.text(`เลขที่บัญชี`, 165, head2);
+
+        // pdf.rect(7, 156, 60, 30);
+
+
+        pdf.rect(7, head2 + 3, 155, 74);//ตารางหลัก
+        pdf.rect(7, head2 + 3, 155, 12);//ตารางหลัก หัวตาราง
+        pdf.rect(7, head2 + 3, 155, 63); //ตารางหลัก ล่าง
+        pdf.rect(7, head2 + 3, 44, 63);//ตารางหลัก บน ซ้าย ช่อง1 รายได้
+        pdf.rect(7, head2 + 3, 62, 63);//ตารางหลัก บน ซ้าย ช่อง1 จำนวน
+        pdf.rect(69, head2 + 3, 24, 74);//ตารางหลัก บน ซ้าย ช่อง1 จำนวนเงิน
+        pdf.rect(69, head2 + 3, 69, 74);//ตารางหลัก บน ซ้าย ช่อง1 รายการหัก / รายการคืน
+
+        pdf.rect(162 + 9, 28, 25, 25);//ตารางวันที่จ่าย
+
+        pdf.rect(162 + 9, 77, 25, 25);//ตารางเงินรับสุทธิ
+
+        pdf.rect(7, head2 + 79, 155, 13);//ตาราง 2 
+        pdf.rect(7, head2 + 79, 155, 6.5);//ตาราง 2 เส็นกลาง
+
+        let x1 = 31
+        for (let j = 0; j < 5; j++) {
+          pdf.rect(7, head2 + 79, x1, 13);//ตาราง 2 
+          x1 += 31
+        };
+
+        pdf.rect(7, head2 + 94, 155, 12);//ตาราง 3
+        pdf.rect(7, head2 + 94, 97, 6);//ตาราง 3
+        let x2 = 9.7
+        for (let b = 0; b < 10; b++) {
+          pdf.rect(7, head2 + 94, x2, 12);//ตาราง 2 
+          x2 += 9.7
+        };
+
+        // เรียงarray 
+        // pdf.text(`Name: ${names[i + 1]}`, 7, 166);
+        // pdf.text(`Age: ${ages[i + 1]}`, 7, 176);
+      }
+
+      // Reset position for the next row
+      x = 20;
+    }
+
+    // Open the generated PDF in a new tab
+    window.open(pdf.output('bloburl'), '_blank');
+  };
+
+
+  const workplaceList = [
+    { name: 'Thai', workplaceId: '1001-25' },
+    { name: 'Total', workplaceId: '1021-25' },
+    { name: 'Miliral', workplaceId: '1031-25' },
+    { name: 'Raimon', workplaceId: '1801-25' },
+  ];
 
   const employees = [
-    { name: 'pop', empID: '1525', workplace: '1001-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '201' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
-    { name: 'popsd', empID: '1585', workplace: '1021-25', salary: '200' },
+    { name: 'pop', empID: '1525', workplaceId: '1001-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '201' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
+    { name: 'popsd', empID: '1585', workplaceId: '1021-25', salary: '200' },
 
-    { name: 'pffff', empID: '1425', workplace: '1021-25', salary: '200' },
-    { name: 'plkioij', empID: '1625', workplace: '1021-25', salary: '200' },
-    { name: 'bvcde', empID: '1595', workplace: '1021-25', salary: '200' },
-    { name: 'wsxd', empID: '1425', workplace: '1031-25', salary: '200' },
-    { name: 'dodod', empID: '15225', workplace: '1031-25', salary: '200' },
-    { name: 'maassaa', empID: '1575', workplace: '1031-25', salary: '200' },
-    { name: 'dodod', empID: '15225', workplace: '1031-25', salary: '200' },
-    { name: 'maassaa', empID: '1575', workplace: '1031-25', salary: '200' },
-    { name: 'dodod', empID: '15225', workplace: '1031-25', salary: '200' },
-    { name: 'maassaa', empID: '1575', workplace: '1031-25', salary: '200' },
-    { name: 'dodod', empID: '15225', workplace: '1031-25', salary: '200' },
-    { name: 'maassaa', empID: '1575', workplace: '1031-25', salary: '200' },
-    { name: 'dodod', empID: '15225', workplace: '1031-25', salary: '200' },
-    { name: 'maassaa', empID: '1575', workplace: '1031-25', salary: '200' },
-    { name: 'dodod', empID: '15225', workplace: '1031-25', salary: '200' },
-    { name: 'maassaa', empID: '1575', workplace: '1031-25', salary: '200' },
-    { name: 'dodod', empID: '15225', workplace: '1031-25', salary: '200' },
-    { name: 'maassaa', empID: '1575', workplace: '1031-25', salary: '200' },
-    { name: 'dodod', empID: '15225', workplace: '1031-25', salary: '200' },
-    { name: 'maassaa', empID: '1575', workplace: '1031-25', salary: '200' },
-    { name: 'dodod', empID: '15225', workplace: '1031-25', salary: '200' },
-    { name: 'maassaa', empID: '1575', workplace: '1031-25', salary: '200' },
-    { name: 'dodod', empID: '15225', workplace: '1031-25', salary: '200' },
-    { name: 'maassaa', empID: '1575', workplace: '1031-25', salary: '200' },
-    { name: 'dodod', empID: '15225', workplace: '1031-25', salary: '200' },
-    { name: 'maassaa', empID: '1575', workplace: '1031-25', salary: '200' },
-    { name: 'dodod', empID: '15225', workplace: '1031-25', salary: '200' },
-    { name: 'maassaa', empID: '1575', workplace: '1031-25', salary: '200' },
-    { name: 'maakksj', empID: '15995', workplace: '1801-25', salary: '200' },
-    { name: 'ywywy', empID: '1225', workplace: '1801-25', salary: '200' },
+    { name: 'pffff', empID: '1425', workplaceId: '1021-25', salary: '200' },
+    { name: 'plkioij', empID: '1625', workplaceId: '1021-25', salary: '200' },
+    { name: 'bvcde', empID: '1595', workplaceId: '1021-25', salary: '200' },
+    { name: 'wsxd', empID: '1425', workplaceId: '1031-25', salary: '200' },
+    { name: 'dodod', empID: '15225', workplaceId: '1031-25', salary: '200' },
+    { name: 'maassaa', empID: '1575', workplaceId: '1031-25', salary: '200' },
+    { name: 'dodod', empID: '15225', workplaceId: '1031-25', salary: '200' },
+    { name: 'maassaa', empID: '1575', workplaceId: '1031-25', salary: '200' },
+    { name: 'dodod', empID: '15225', workplaceId: '1031-25', salary: '200' },
+    { name: 'maassaa', empID: '1575', workplaceId: '1031-25', salary: '200' },
+    { name: 'dodod', empID: '15225', workplaceId: '1031-25', salary: '200' },
+    { name: 'maassaa', empID: '1575', workplaceId: '1031-25', salary: '200' },
+    { name: 'dodod', empID: '15225', workplaceId: '1031-25', salary: '200' },
+    { name: 'maassaa', empID: '1575', workplaceId: '1031-25', salary: '200' },
+    { name: 'dodod', empID: '15225', workplaceId: '1031-25', salary: '200' },
+    { name: 'maassaa', empID: '1575', workplaceId: '1031-25', salary: '200' },
+    { name: 'dodod', empID: '15225', workplaceId: '1031-25', salary: '200' },
+    { name: 'maassaa', empID: '1575', workplaceId: '1031-25', salary: '200' },
+    { name: 'dodod', empID: '15225', workplaceId: '1031-25', salary: '200' },
+    { name: 'maassaa', empID: '1575', workplaceId: '1031-25', salary: '200' },
+    { name: 'dodod', empID: '15225', workplaceId: '1031-25', salary: '200' },
+    { name: 'maassaa', empID: '1575', workplaceId: '1031-25', salary: '200' },
+    { name: 'dodod', empID: '15225', workplaceId: '1031-25', salary: '200' },
+    { name: 'maassaa', empID: '1575', workplaceId: '1031-25', salary: '200' },
+    { name: 'dodod', empID: '15225', workplaceId: '1031-25', salary: '200' },
+    { name: 'maassaa', empID: '1575', workplaceId: '1031-25', salary: '200' },
+    { name: 'dodod', empID: '15225', workplaceId: '1031-25', salary: '200' },
+    { name: 'maassaa', empID: '1575', workplaceId: '1031-25', salary: '200' },
+    { name: 'maakksj', empID: '15995', workplaceId: '1801-25', salary: '200' },
+    { name: 'ywywy', empID: '1225', workplaceId: '1801-25', salary: '200' },
   ];
 
   // // Grouping employees by workplace
@@ -156,17 +356,21 @@ function TestPDFSalary() {
     ///////////////////////////////////////////////////////
 
     const groupedByWorkplace = employees.reduce((acc, employee) => {
-      const { workplace, salary } = employee;
-      acc[workplace] = acc[workplace] || { employees: [], totalSalary: 0 };
-      acc[workplace].employees.push(employee);
-      acc[workplace].totalSalary += parseInt(salary);
+      const { workplaceId, salary } = employee;
+      acc[workplaceId] = acc[workplaceId] || { employees: [], totalSalary: 0 };
+      acc[workplaceId].employees.push(employee);
+      acc[workplaceId].totalSalary += parseInt(salary);
       return acc;
     }, {});
 
     const doc = new jsPDF({ orientation: 'landscape' });
 
     let currentY = 20;
+    moment.locale('th');
 
+    const formattedWorkDateDD = moment(workDate).format('DD');
+    const formattedWorkDateMM = moment(workDate).format('MM');
+    const formattedWorkDateYYYY = moment(workDate).format('YYYY');
 
     const fontPath = '/assets/fonts/THSarabunNew.ttf';
     const fontName = 'THSarabunNew';
@@ -572,13 +776,17 @@ function TestPDFSalary() {
       }
     };
 
-    Object.keys(groupedByWorkplace).forEach((workplace, index) => {
-      const { employees, totalSalary } = groupedByWorkplace[workplace];
+    Object.keys(groupedByWorkplace).forEach((workplaceKey, index) => {
+      const { employees, totalSalary } = groupedByWorkplace[workplaceKey];
+
+      // Find the corresponding workplace from workplaceList
+      const workplaceDetails = workplaceList.find(w => w.workplaceId === workplaceKey) || { name: 'Unknown' };
+      const workplaceName = workplaceDetails.name;
 
       // Display workplace heading
       doc.setFontSize(12);
 
-      doc.text(`Workplace: ${workplace}`, 25, currentY);
+      doc.text(`Workplace: ${workplaceKey}`, 25, currentY);
       currentY += 5;
 
       // Display employee information
@@ -610,7 +818,7 @@ function TestPDFSalary() {
         currentY += 5;
 
         // Check if there's not enough space on the current page
-        if (currentY > doc.internal.pageSize.height - 10) {
+        if (currentY > doc.internal.pageSize.height - 20) {
           // Add a new page
           doc.addPage({ orientation: 'landscape' });
           // Reset Y coordinate
@@ -619,11 +827,15 @@ function TestPDFSalary() {
       });
 
       // Display total salary
-      doc.text(`Total Salary: ${totalSalary}`, 10, currentY);
+      doc.text(`Total Salary: ${totalSalary}   ${workplaceName}`, 10, currentY);
       currentY += 5;
 
       // Add some space between workplaces
       // currentY += 5;
+      doc.text(`พิมพ์วันที่ ${formattedWorkDateDD}/${formattedWorkDateMM}/${parseInt(formattedWorkDateYYYY, 10) + 543}`, 10, 200);
+      doc.text(`รายงานโดย ${present}`, 100, 200);
+      doc.text(`แฟ้มรายงาน ${presentfilm}`, 200, 200);
+
     });
 
     window.open(doc.output('bloburl'), '_blank');
@@ -631,7 +843,73 @@ function TestPDFSalary() {
 
   return (
     <div>
-      {/* <button onClick={generatePDF}>Generate PDF</button> */}
+      <div class="form-group">
+        <label role="searchEmployeeId">รหัสหน่อยงาน</label>
+        {/* <input type="text" class="form-control" id="searchEmployeeId" placeholder="รหัสพนักงาน" value={searchEmployeeId} onChange={(e) => setSearchWorkplaceId(e.target.value)} /> */}
+        <input
+          type="text"
+          className="form-control"
+          id="staffId"
+          placeholder="รหัสหน่อยงาน"
+          value={workplacrId}
+          onChange={handleStaffIdChange}
+          list="WorkplaceIdList"
+        />
+        <datalist id="WorkplaceIdList">
+          {workplaceListAll.map(workplace => (
+            <option key={workplace.workplaceId} value={workplace.workplaceId} />
+          ))}
+        </datalist>
+      </div>
+
+      <div class="form-group">
+        <label role="searchname">ชื่อหน่วยงาน</label>
+        {/* <input type="text" class="form-control" id="searchname" placeholder="ชื่อพนักงาน" value={searchEmployeeName} onChange={(e) => setSearchEmployeeName(e.target.value)} /> */}
+        <input
+          type="text"
+          className="form-control"
+          id="staffName"
+          placeholder="ชื่อพนักงาน"
+          value={workplacrName}
+          onChange={handleStaffNameChange}
+          list="WorkplaceNameList"
+        />
+
+        <datalist id="WorkplaceNameList">
+          {workplaceListAll.map(workplace => (
+            <option key={workplace.workplaceId} value={workplace.workplaceName} />
+          ))}
+        </datalist>
+
+      </div>
+      <button onClick={generatePDF}>Generate PDF</button>
+      <br />
+      <br />
+      <label role="datetime">พิมพ์วันที่</label>
+      <div style=
+        {{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
+        <DatePicker id="datetime" name="datetime"
+          className="form-control" // Apply Bootstrap form-control class
+          popperClassName="datepicker-popper" // Apply custom popper class if needed
+          selected={workDate}
+          onChange={handleWorkDateChange}
+          dateFormat="dd/MM/yyyy"
+        // showMonthYearPicker
+        />
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <input type="text" class="form-control" id="searchWorkplaceId" placeholder="รายงานโดย" value={present} onChange={(e) => setPresent(e.target.value)} />
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <input type="text" class="form-control" id="searchWorkplaceId" placeholder="แฟ้มรายงาน" value={presentfilm} onChange={(e) => setPresentfilm(e.target.value)} />
+
+        </div>
+      </div>
+
       <button onClick={generatePDFTest}>Generate PDFTest</button>
 
     </div>
