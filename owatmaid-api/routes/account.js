@@ -1,4 +1,5 @@
 const connectionString = require('../config');
+const axios = require('axios');
 
 var express = require('express');
 var router = express.Router();
@@ -54,6 +55,13 @@ const accounting= mongoose.model('accounting', accountingSchema );
 
 // Get list of accounting
 router.get('/list', async (req, res) => {
+try{
+  const response = await axios.get('http://localhost:3000/employee/list/');
+await console.log(response );
+
+} catch (e) {
+console.log(e);
+}
 
   const accountingData = await accounting.find();
   res.json(accountingData );
