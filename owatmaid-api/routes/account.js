@@ -151,10 +151,9 @@ for(let i =0; i < responseConclude.data.recordConclude[0].concludeRecord.length;
   amountDay  = await amountDay + parseFloat(responseConclude.data.recordConclude[0].concludeRecord[i].workRate);
   amountOt = await amountOt + parseFloat(responseConclude.data.recordConclude[0].concludeRecord[i].workRateOT);
   amountSpecial = await amountSpecial + parseFloat(responseConclude.data.recordConclude[0].concludeRecord[i].addSalaryDay) || 0;
-await console.log(i);
 
 }
-// await console.log(amountDay  );
+await console.log(amountDay  );
 data.accountingRecord.amountDay = await amountDay  ;
 data.accountingRecord.amountOt = await amountOt;
 data.accountingRecord.amountSpecial = await amountSpecial;
