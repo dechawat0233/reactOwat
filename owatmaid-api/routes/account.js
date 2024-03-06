@@ -1,4 +1,6 @@
 const connectionString = require('../config');
+const sURL = 'http://localhost:3000';
+
 const axios = require('axios');
 
 var express = require('express');
@@ -9,6 +11,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const { months } = require('moment');
+const { el } = require('date-fns/locale');
 
 
 //Connect mongodb
@@ -55,13 +58,31 @@ const accounting= mongoose.model('accounting', accountingSchema );
 
 // Get list of accounting
 router.get('/list', async (req, res) => {
-try{
-  const response = await axios.get('http://localhost:3000/employee/list/');
-await console.log(response );
+// try{
+//   const response = await axios.get('http://localhost:3000/employee/list/');
+// // await console.log(response.data[0] );
+// const emp = await response.data[0];
+// const employees = await Object.values(emp);
+// if (!Array.isArray(employees )) {
+//   console.error('Employees data is not an array');
+//   // Handle the error appropriately, or return from the function
+// }
 
-} catch (e) {
-console.log(e);
-}
+// // Grouping employees by workplace
+// const groupedEmployees = await employees.reduce((acc, employee) => {
+//   const { workplace } = employee;
+//   if (!acc[workplace]) {
+//     acc[workplace] = [];
+//   }
+//   acc[workplace].push(employee);
+//   return acc;
+// }, {});
+
+// // await console.log(groupedEmployees );
+
+// } catch (e) {
+// console.log(e);
+// }
 
   const accountingData = await accounting.find();
   res.json(accountingData );
@@ -70,11 +91,128 @@ console.log(e);
 
 // Get  accounting record by accounting Id
 router.get('/:employeeId', async (req, res) => {
-  try {
-    const accountingData = await accounting.findOne({ employeeId: req.params.employeeId});
+try {
+  const dataTest = await {
+    year: "2024", 
+        month: "02",
+        employeeId : "1001"
+      };
+      const x = await axios.post(sURL + '/accounting/calsalary', dataTest);
+res.json(x.data);
+  
+  
+} catch (e) {
 
-    if (accountingData ) {
-      res.json(accountingData );
+}
+
+});
+
+  router.post('/calsalary', async (req, res) => {
+    // router.get('/:employeeId', async (req, res) => {
+
+const data = await {};
+
+  try {
+    const {
+      year, 
+      month,
+      employeeId 
+    } = await req.body;
+
+    const dataSearch = await {
+      year: year, 
+      month: month,
+      concludeDate: "",
+      employeeId : employeeId 
+      // req.params.employeeId
+    };
+await console.log(dataSearch);
+
+//get data from conclude record
+    const responseConclude = await axios.post(sURL + '/conclude/search', dataSearch);
+    await console.log(responseConclude.data.recordConclude.length );
+    if(responseConclude.data.recordConclude.length > 0 ) {
+      // console.log(responseConclude.data.recordConclude.length );
+// await console.log(JSON.stringify(responseConclude.data,null,2) );
+
+data.year = await responseConclude.data.recordConclude[0].year; 
+data.month = await responseConclude.data.recordConclude[0].month;
+data.createDate = await new Date().toLocaleDateString('en-GB');
+data.employeeId = await responseConclude.data.recordConclude[0].employeeId;
+data.accountingRecord  = await {};
+
+data.accountingRecord.countDay = await responseConclude.data.recordConclude[0].concludeRecord.length;
+
+let amountDay = await 0;
+let amountOt = await 0;
+let amountSpecial  = await 0;
+//loop count data
+for(let i =0; i < responseConclude.data.recordConclude[0].concludeRecord.length; i++) {
+  amountDay  = await amountDay + parseFloat(responseConclude.data.recordConclude[0].concludeRecord[i].workRate);
+  amountOt = await amountOt + parseFloat(responseConclude.data.recordConclude[0].concludeRecord[i].workRateOT);
+  amountSpecial = await amountSpecial + parseFloat(responseConclude.data.recordConclude[0].concludeRecord[i].addSalaryDay) || 0;
+
+}
+data.accountingRecord.amountDay = await amountDay  ;
+data.accountingRecord.amountOt = await amountOt;
+data.accountingRecord.amountSpecial = await amountSpecial;
+
+// await console.log(responseConclude.data.recordConclude[0].concludeRecord.length);
+
+//xxxx
+    } else {
+console.log('no data conclude');
+    }
+
+    //get employee data by employeeId
+      const response = await axios.get(sURL + '/employee/'+ employeeId);
+      if(response) {
+        data.workplace = await response.data.workplace;
+console.log(response.data.addSalary.length);
+
+let position1230 = await '1230';
+const addSalary = await response.data.addSalary.find(salary => salary.id === position1230 );
+
+if (addSalary) {
+  // console.log('Found addSalary:', addSalary);
+  data.accountingRecord.amountPosition = await addSalary.SpSalary;
+  // Handle addSalary found
+} else {
+  // console.log('No addSalary found with the provided ID.');
+  data.accountingRecord.amountPosition = await 0;
+  // Handle no addSalary found
+}
+
+let hardwork1410 = await '1410';
+const addSalary1 = await response.data.addSalary.find(salary => salary.id === hardwork1410 );
+
+if (addSalary1) {
+  data.accountingRecord.amountHardWorking= await addSalary1.SpSalary;
+} else {
+  data.accountingRecord.amountHardWorking= await 0;
+}
+//xxxx
+data.accountingRecord.amountHoliday = await 0;
+data.accountingRecord.addAmountBeforeTax = await 0;
+data.accountingRecord.tax = await 0;
+data.accountingRecord.socialSecurity = await 0;
+data.accountingRecord.addAmountAfterTax = await 0;
+data.accountingRecord.advancePayment = await 0;
+data.accountingRecord.deductAfterTax = await 0;
+data.accountingRecord.bank = await 0;
+data.accountingRecord.total = await 0;
+
+      }
+    // await console.log(response.data.workplace );
+    // console.log(data);
+
+    // const accountingData = await accounting.findOne({ employeeId: req.params.employeeId});
+
+
+    // if (accountingData ) {
+      if (data) {
+
+      res.json(data);
     } else {
       res.status(404).json({ error: 'accounting not found' });
     }
@@ -196,6 +334,18 @@ router.put('/update/:accountingRecordId', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+
+async function getEmployeeData(id) {
+  try {
+    const response = await axios.get(sURL + '/employee/'+ id);
+  // await console.log(response.data.workplace );
+  return response.data;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 
 
 module.exports = router;

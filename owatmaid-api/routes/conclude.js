@@ -95,7 +95,7 @@ router.post('/search', async (req, res) => {
       query.concludeDate = concludeDate;
     }
 
-console.log('query.date ' + query.date);
+// console.log('query.date ' + query.date);
     // console.log('Constructed Query:');
     // console.log(query);
 
