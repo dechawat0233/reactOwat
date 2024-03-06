@@ -151,8 +151,7 @@ let amountSpecial  = await 0;
 for(let i =0; i < responseConclude.data.recordConclude[0].concludeRecord.length; i++) {
   amountDay  = await amountDay + parseFloat(responseConclude.data.recordConclude[0].concludeRecord[i].workRate || 0 );
   amountOt = await amountOt + parseFloat(responseConclude.data.recordConclude[0].concludeRecord[i].workRateOT || 0 );
-  amountSpecial = await amountSpecial + parseFloat(responseConclude.data.recordConclude[0].concludeRecord[i].addSalaryDay) || 0;
-await console.log(amountSpecial );
+  amountSpecial = await amountSpecial + parseFloat(responseConclude.data.recordConclude[0].concludeRecord[i].addSalaryDay || 0 );
 
 }
 // await console.log(amountSpecial );
