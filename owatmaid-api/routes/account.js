@@ -153,7 +153,7 @@ for(let i =0; i < responseConclude.data.recordConclude[0].concludeRecord.length;
   amountSpecial = await amountSpecial + parseFloat(responseConclude.data.recordConclude[0].concludeRecord[i].addSalaryDay) || 0;
 
 }
-await console.log(amountOt );
+await console.log(amountDay  );
 data.accountingRecord.amountDay = await amountDay  ;
 data.accountingRecord.amountOt = await amountOt;
 data.accountingRecord.amountSpecial = await amountSpecial;
