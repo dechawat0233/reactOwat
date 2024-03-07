@@ -95,9 +95,9 @@ try {
   const dataTest = await {
     year: "2024", 
         month: "03",
-        employeeId : "1001"
+        // employeeId : "1001"
       };
-      const x = await axios.post(sURL + '/accounting/calsalary', dataTest);
+      const x = await axios.post(sURL + '/accounting/calsalarylist', dataTest);
 res.json(x.data);
   
   
@@ -105,6 +105,108 @@ res.json(x.data);
 
 }
 
+});
+
+//get all accounting
+router.post('/calsalarylist', async (req, res) => {
+  try {
+    const { year, month } = req.body;
+
+    const dataSearch = {
+      year: year, 
+      month: month,
+      concludeDate: "",
+      employeeId: ''
+    };
+
+    const responseConclude = await axios.post(sURL + '/conclude/search', dataSearch);
+
+    const dataList = [];
+
+    if (responseConclude.data.recordConclude.length > 0) {
+      for (let c = 0; c < responseConclude.data.recordConclude.length; c++) {
+        const data = {}; // Initialize data object inside the loop
+
+        data.year = responseConclude.data.recordConclude[c].year;
+        data.month = responseConclude.data.recordConclude[c].month;
+        data.createDate = new Date().toLocaleDateString('en-GB');
+        data.employeeId = responseConclude.data.recordConclude[c].employeeId;
+        data.accountingRecord = {};
+
+        let countDay = 0;
+        let amountDay = 0;
+        let amountOt = 0;
+        let amountSpecial = 0;
+
+        for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.length; i++) {
+          amountDay += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0);
+          amountOt += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT || 0);
+          amountSpecial += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].addSalaryDay || 0);
+
+          if (responseConclude.data.recordConclude[c].concludeRecord[i].workRate !== '') {
+            countDay++;
+          }
+        }
+
+        data.accountingRecord.countDay = countDay;
+        data.accountingRecord.amountDay = amountDay;
+        data.accountingRecord.amountOt = amountOt;
+        data.accountingRecord.amountSpecial = amountSpecial;
+
+
+// Get employee data by employeeId
+const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
+if (response) {
+    data.workplace = response.data.workplace;
+
+    let position1230 = '1230';
+    const addSalary = response.data.addSalary.find(salary => salary.id === position1230);
+
+    if (addSalary) {
+        data.accountingRecord.amountPosition = addSalary.SpSalary;
+    } else {
+        data.accountingRecord.amountPosition = 0;
+    }
+
+    let hardwork1410 = '1410';
+    const addSalary1 = response.data.addSalary.find(salary => salary.id === hardwork1410);
+
+    if (addSalary1) {
+        data.accountingRecord.amountHardWorking = addSalary1.SpSalary;
+    } else {
+        data.accountingRecord.amountHardWorking = 0;
+    }
+
+    // Other properties
+    data.accountingRecord.amountHoliday = 0;
+    data.accountingRecord.addAmountBeforeTax = 0;
+    data.accountingRecord.tax = 0;
+    data.accountingRecord.socialSecurity = 0;
+    data.accountingRecord.addAmountAfterTax = 0;
+    data.accountingRecord.advancePayment = 0;
+    data.accountingRecord.deductAfterTax = 0;
+    data.accountingRecord.bank = 0;
+    data.accountingRecord.total = 0;
+
+}
+
+        dataList.push(data);
+      }
+    } else {
+      console.log('no data conclude');
+    }
+
+    console.log(JSON.stringify(dataList, null, 2));
+
+    if (dataList.length > 0) {
+      res.json(dataList);
+    } else {
+      res.status(404).json({ error: 'accounting not found' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
   router.post('/calsalary', async (req, res) => {
@@ -141,8 +243,9 @@ data.createDate = await new Date().toLocaleDateString('en-GB');
 data.employeeId = await responseConclude.data.recordConclude[0].employeeId;
 data.accountingRecord  = await {};
 
-data.accountingRecord.countDay = await responseConclude.data.recordConclude[0].concludeRecord.length;
+// data.accountingRecord.countDay = await responseConclude.data.recordConclude[0].concludeRecord.length;
 
+let countDay  = await 0;
 let amountDay = await 0;
 let amountOt = await 0;
 let amountSpecial  = await 0;
@@ -153,8 +256,13 @@ for(let i =0; i < responseConclude.data.recordConclude[0].concludeRecord.length;
   amountOt = await amountOt + parseFloat(responseConclude.data.recordConclude[0].concludeRecord[i].workRateOT || 0 );
   amountSpecial = await amountSpecial + parseFloat(responseConclude.data.recordConclude[0].concludeRecord[i].addSalaryDay || 0 );
 
+  if(responseConclude.data.recordConclude[0].concludeRecord[i].workRate !== '' ){
+    countDay  = await countDay   + 1;
+  }
 }
 // await console.log(amountSpecial );
+
+data.accountingRecord.countDay = await countDay;
 data.accountingRecord.amountDay = await amountDay  ;
 data.accountingRecord.amountOt = await amountOt;
 data.accountingRecord.amountSpecial = await amountSpecial;
@@ -193,6 +301,7 @@ if (addSalary1) {
 } else {
   data.accountingRecord.amountHardWorking= await 0;
 }
+
 //xxxx
 data.accountingRecord.amountHoliday = await 0;
 data.accountingRecord.addAmountBeforeTax = await 0;
@@ -349,5 +458,8 @@ async function getEmployeeData(id) {
 }
 
 
+async function checkCalTax(id) {
+
+}
 
 module.exports = router;
