@@ -143,7 +143,7 @@ router.post('/calsalarylist', async (req, res) => {
           amountOt += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT || 0);
           amountSpecial += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].addSalaryDay || 0);
 
-          if (responseConclude.data.recordConclude[c].concludeRecord[i].workRate !== '') {
+          if (responseConclude.data.recordConclude[c].concludeRecord[i].workRate !== undefined) {
             countDay++;
           }
         }
