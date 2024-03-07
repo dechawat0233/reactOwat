@@ -157,7 +157,10 @@ router.post('/calsalarylist', async (req, res) => {
 // Get employee data by employeeId
 const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
 if (response) {
-    data.workplace = response.data.workplace;
+    data.workplace = await response.data.workplace;
+    // data.employeeId = responseConclude.data.recordConclude[c].employeeId;
+    data.name = await response.data.name;
+    data.lastName = await response.data.lastName;
 
     let position1230 = '1230';
     const addSalary = response.data.addSalary.find(salary => salary.id === position1230);
@@ -196,7 +199,7 @@ if (response) {
       console.log('no data conclude');
     }
 
-    console.log(JSON.stringify(dataList, null, 2));
+    // console.log(JSON.stringify(dataList, null, 2));
 
     if (dataList.length > 0) {
       res.json(dataList);
