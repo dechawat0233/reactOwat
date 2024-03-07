@@ -18,7 +18,7 @@ function TestPDFSalary() {
   const [searchWorkplaceId, setSearchWorkplaceId] = useState('');
   const [workplaceListAll, setWorkplaceListAll] = useState([]);
 
-  const [responseDataAll, setResponseDataAll] = useState([]);
+  // const [responseDataAll, setResponseDataAll] = useState([]);
 
 
 
@@ -99,7 +99,7 @@ function TestPDFSalary() {
         const responseData = response.data;
 
         console.log('responseData', responseData);
-        setResponseDataAll(responseData);
+        // setResponseDataAll(responseData);
 
         // Now you can use the data as needed
         // For example, you can iterate over the array of data
@@ -113,54 +113,54 @@ function TestPDFSalary() {
       });
   };
 
-  console.log('responseDataAll', responseDataAll);
+  // console.log('responseDataAll', responseDataAll);
 
 
-  // const responseDataAll = [
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1001', workplace: 'WorkplaceA', accountingRecord: { amountDay: 3883, /* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1005', workplace: 'WorkplaceA', accountingRecord: { amountDay: 3883, /* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1006', workplace: 'WorkplaceA', accountingRecord: { amountDay: 3883, /* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1004', workplace: 'WorkplaceA', accountingRecord: { amountDay: 3883, /* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1009', workplace: 'WorkplaceA', accountingRecord: { amountDay: 3883, /* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1007', workplace: 'WorkplaceA', accountingRecord: { amountDay: 3883, /* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1012', workplace: 'WorkplaceA', accountingRecord: { amountDay: 3883, /* ... */ } },
+  const responseDataAll = [
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1001', workplace: 'WorkplaceA', accountingRecord: { amountDay: 3883, /* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1005', workplace: 'WorkplaceA', accountingRecord: { amountDay: 3883, /* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1006', workplace: 'WorkplaceA', accountingRecord: { amountDay: 3883, /* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1004', workplace: 'WorkplaceA', accountingRecord: { amountDay: 3883, /* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1009', workplace: 'WorkplaceA', accountingRecord: { amountDay: 3883, /* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1007', workplace: 'WorkplaceA', accountingRecord: { amountDay: 3883, /* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1012', workplace: 'WorkplaceA', accountingRecord: { amountDay: 3883, /* ... */ } },
 
 
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1123', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3813,/* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1112', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1123', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3813,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1112', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
 
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1159', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1666', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1989', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1111', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1326', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3783,/* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1123', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3813,/* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1112', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1159', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1666', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1989', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1111', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1326', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3783,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1123', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3813,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1112', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
 
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1159', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1666', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1989', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1111', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1326', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3783,/* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1123', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3813,/* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1112', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1159', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1666', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1989', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1111', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1326', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3783,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1123', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3813,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1112', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
 
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1159', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1666', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1989', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1111', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1326', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3783,/* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1123', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3813,/* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1112', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1159', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1666', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1989', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1111', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1326', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3783,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1123', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3813,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1112', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
 
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1159', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1666', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1989', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1111', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
-  //   { year: '2024', month: '03', name: 'pop', createDate: '07/03/2024', employeeId: '1326', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3783,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1159', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1666', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1989', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1111', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3883,/* ... */ } },
+    { year: '2024', month: '03', createDate: '07/03/2024', employeeId: '1326', workplace: 'WorkplaceB', accountingRecord: { amountDay: 3783,/* ... */ } },
 
-  //   // ... other data
-  // ];
+    // ... other data
+  ];
 
   const generatePDF01 = () => {
 
@@ -175,6 +175,7 @@ function TestPDFSalary() {
     // Set the font for the document
     pdf.setFont(fontName);
 
+
     const numRows = 7;
     const numCols = 1;
     const cellWidth = 15;
@@ -183,10 +184,7 @@ function TestPDFSalary() {
     const startY = 55; // Adjust the starting Y-coordinate as needed
     const borderWidth = 0.5; // Adjust the border width as needed
 
-    // Function to draw a cell with borders
-    // const drawCell = (x, y, width, height) => {
-    //     doc.rect(x, y, width, height);
-    // };
+
     const drawCell = (x, y, width, height, text) => {
       // Draw the cell border
       pdf.rect(x, y, width, height);
@@ -574,8 +572,6 @@ function TestPDFSalary() {
       const { workplace } = employee;
       acc[workplace] = acc[workplace] || { employees: [], totalSalary: 0 };
       acc[workplace].employees.push(employee);
-      // acc[workplace].name.push(employee.name);
-
       // Adjust this line based on your specific structure to get the salary or any other relevant data
       acc[workplace].totalSalary += parseFloat(employee.accountingRecord.amountDay || 0);
       return acc;
