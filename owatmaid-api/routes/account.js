@@ -171,13 +171,13 @@ if (response) {
         data.accountingRecord.amountPosition = 0;
     }
 
-    let hardwork1410 = '1410';
-    const addSalary1 = response.data.addSalary.find(salary => salary.id === hardwork1410);
+    let amountSpecial1560 = '1560';
+    const addSalary2 = response.data.addSalary.find(salary => salary.id === amountSpecial1560 );
 
-    if (addSalary1) {
-        data.accountingRecord.amountHardWorking = addSalary1.SpSalary;
+    if (addSalary2) {
+        data.accountingRecord.amountSpecial = addSalary2.SpSalary;
     } else {
-        data.accountingRecord.amountHardWorking = 0;
+      data.accountingRecord.amountSpecial = 0;
     }
 
     // Other properties
