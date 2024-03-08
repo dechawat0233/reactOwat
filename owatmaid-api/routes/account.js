@@ -151,7 +151,7 @@ router.post('/calsalarylist', async (req, res) => {
         data.accountingRecord.countDay = countDay;
         data.accountingRecord.amountDay = amountDay;
         data.accountingRecord.amountOt = amountOt;
-        data.accountingRecord.amountSpecial = amountSpecial;
+        // data.accountingRecord.amountSpecial = amountSpecial;
 
 
 // Get employee data by employeeId
@@ -169,6 +169,15 @@ if (response) {
         data.accountingRecord.amountPosition = addSalary.SpSalary;
     } else {
         data.accountingRecord.amountPosition = 0;
+    }
+    
+    let amountHardWorking1410 = '1410';
+    const addSalary1 = response.data.addSalary.find(salary => salary.id === amountHardWorking1410 );
+
+    if (addSalary1) {
+        data.accountingRecord.amountHardWorking = addSalary1.SpSalary;
+    } else {
+      data.accountingRecord.amountHardWorking = 0;
     }
 
     let amountSpecial1560 = '1560';
