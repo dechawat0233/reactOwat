@@ -126,7 +126,6 @@ router.post('/calsalarylist', async (req, res) => {
     if (responseConclude.data.recordConclude.length > 0) {
       for (let c = 0; c < responseConclude.data.recordConclude.length; c++) {
         const data = {}; // Initialize data object inside the loop
-const sumSocial = await 0;
 
 
         data.year = responseConclude.data.recordConclude[c].year;
@@ -139,6 +138,7 @@ const sumSocial = await 0;
         let amountDay = 0;
         let amountOt = 0;
         let amountSpecial = 0;
+        let sumSocial = 0;
 
         for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.length; i++) {
           amountDay += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0);
