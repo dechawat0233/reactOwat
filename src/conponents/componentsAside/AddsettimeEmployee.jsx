@@ -35,7 +35,7 @@ function AddsettimeEmployee() {
 
     const [searchEmployeeId, setSearchEmployeeId] = useState('');
     const [searchEmployeeName, setSearchEmployeeName] = useState('');
-    const [month, setMonth] = useState('');
+    const [month, setMonth] = useState('01');
     const [year, setYear] = useState('');
 
     useEffect(() => {

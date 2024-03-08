@@ -20,6 +20,8 @@ function TestPDFSalary() {
 
   const [responseDataAll, setResponseDataAll] = useState([]);
 
+  const [month, setMonth] = useState('');
+  const [year, setYear] = useState('');
 
 
   const [workDate, setWorkDate] = useState(new Date());
@@ -63,6 +65,11 @@ function TestPDFSalary() {
 
   console.error('workplaceListAll', workplaceListAll);
 
+
+  const EndYear = 2010;
+  const currentYear = new Date().getFullYear(); // 2024
+  const years = Array.from({ length: currentYear - EndYear + 1 }, (_, index) => EndYear + index).reverse();
+
   // const dataTest = {
   //   year: "2024",
   //   month: "03",
@@ -87,12 +94,24 @@ function TestPDFSalary() {
   //   });
 
 
-  const dataTest = {
-    year: "2024",
-    month: "03",
-  };
+  // const dataTest = {
+  //   year: "2024",
+  //   month: "03",
+  // };
 
   const fetchData = () => {
+
+    // const dataTest = {
+    //   year: "2024",
+    //   month: "03",
+    // };
+
+    const dataTest = {
+      year: year,
+      month: month,
+    };
+
+
 
     axios.post(endpoint + '/accounting/calsalarylist', dataTest)
       .then(response => {
@@ -174,6 +193,9 @@ function TestPDFSalary() {
 
     // Set the font for the document
     pdf.setFont(fontName);
+
+    const pageWidth = pdf.internal.pageSize.width;
+
 
     const numRows = 7;
     const numCols = 1;
@@ -572,12 +594,30 @@ function TestPDFSalary() {
 
     const groupedByWorkplace = responseDataAll.reduce((acc, employee) => {
       const { workplace } = employee;
-      acc[workplace] = acc[workplace] || { employees: [], totalSalary: 0 };
+      acc[workplace] = acc[workplace] || { employees: [], totalSalary: 0 , totalAmountOt: 0 ,
+         totalAmountSpecial: 0, totalAmountPosition: 0
+        , totalAmountHardWorking: 0, totalAmountHoliday: 0, totalAddAmountBeforeTax: 0,
+        totalTax: 0, totalSocialSecurity: 0, totalAddAmountAfterTax: 0, totalAdvancePayment: 0
+        , totalDeductAfterTax: 0, totalBank: 0, totalTotal: 0};
       acc[workplace].employees.push(employee);
       // acc[workplace].name.push(employee.name);
 
       // Adjust this line based on your specific structure to get the salary or any other relevant data
       acc[workplace].totalSalary += parseFloat(employee.accountingRecord.amountDay || 0);
+      acc[workplace].totalAmountOt += parseFloat(employee.accountingRecord.amountOt || 0);
+      acc[workplace].totalAmountSpecial += parseFloat(employee.accountingRecord.amountSpecial || 0);
+      acc[workplace].totalAmountPosition += parseFloat(employee.accountingRecord.amountPosition || 0);
+      acc[workplace].totalAmountHardWorking += parseFloat(employee.accountingRecord.amountHardWorking || 0);
+      acc[workplace].totalAmountHoliday += parseFloat(employee.accountingRecord.amountHoliday || 0);
+      acc[workplace].totalAddAmountBeforeTax += parseFloat(employee.accountingRecord.addAmountBeforeTax || 0);
+      acc[workplace].totalTax += parseFloat(employee.accountingRecord.tax || 0);
+      acc[workplace].totalSocialSecurity += parseFloat(employee.accountingRecord.socialSecurity || 0);
+      acc[workplace].totalAddAmountAfterTax += parseFloat(employee.accountingRecord.addAmountAfterTax || 0);
+      acc[workplace].totalAdvancePayment += parseFloat(employee.accountingRecord.advancePayment || 0);
+      acc[workplace].totalDeductAfterTax += parseFloat(employee.accountingRecord.deductAfterTax || 0);
+      acc[workplace].totalBank += parseFloat(employee.accountingRecord.bank || 0);
+      acc[workplace].totalTotal += parseFloat(employee.accountingRecord.total ?? 0);
+
       return acc;
     }, {});
 
@@ -586,7 +626,9 @@ function TestPDFSalary() {
 
     // Loop through the grouped data and add content to the PDF
     Object.keys(groupedByWorkplace).forEach((workplaceKey, index) => {
-      const { employees, totalSalary } = groupedByWorkplace[workplaceKey];
+      const { employees, totalSalary,totalAmountOt, totalAmountSpecial,totalAmountPosition,
+        totalAmountHardWorking,totalAmountHoliday,totalAddAmountBeforeTax,totalTax,totalSocialSecurity,
+        totalAddAmountAfterTax,totalAdvancePayment,totalDeductAfterTax,totalBank,totalTotal} = groupedByWorkplace[workplaceKey];
 
       // Display workplace heading
       pdf.setFontSize(12);
@@ -594,7 +636,7 @@ function TestPDFSalary() {
       currentY += 5;
 
       // Display employee information
-      employees.forEach(({ employeeId, name, accountingRecord }) => {
+      employees.forEach(({ employeeId, lastName, name, accountingRecord }) => {
 
         drawID();
         drawName();
@@ -616,8 +658,57 @@ function TestPDFSalary() {
         drawResult();
 
         pdf.text(`${employeeId}`, 10, currentY);
-        pdf.text(`${name}`, 25, currentY);
-        pdf.text(`${accountingRecord.amountDay}`, 70, currentY);
+        pdf.text(`${name} ${lastName}`, 25, currentY);
+        pdf.text(`${accountingRecord.countDay} `, 63, currentY);
+
+
+        // เงินเดือน
+        const formattedAmountDay = (accountingRecord.amountDay ?? 0).toFixed(2);
+        // pdf.text(`${formattedAmountDay}`, pdf.internal.pageSize.width - 10, currentY, { align: 'right' });
+        pdf.text(`${formattedAmountDay}`, 84, currentY, { align: 'right' });
+        // ค่าล่วงเวลา
+        const formattedAmountOt = (accountingRecord.amountOt ?? 0).toFixed(2);
+        pdf.text(`${formattedAmountOt}`, 98, currentY, { align: 'right' });
+        // สวัสดิการพิเศษ
+        const formattedAmountSpecial = (accountingRecord.amountSpecial ?? 0).toFixed(2);
+        pdf.text(`${formattedAmountSpecial}`, 113, currentY, { align: 'right' });
+        // ค่าตำแหน่ง
+        const formattedAmountPosition = (accountingRecord.amountPosition ?? 0).toFixed(2);
+        pdf.text(`${formattedAmountPosition}`, 128, currentY, { align: 'right' });
+        // เบี้ยขยัน
+        const formattedAmountHardWorking = (accountingRecord.amountHardWorking ?? 0).toFixed(2);
+        pdf.text(`${formattedAmountHardWorking}`, 143, currentY, { align: 'right' });
+        // นักขัติ
+        const formattedAmountHoliday = (accountingRecord.amountHoliday ?? 0).toFixed(2);
+        pdf.text(`${formattedAmountHoliday}`, 158, currentY, { align: 'right' });
+        // บวกก่อนหัก
+        const formattedAddAmountBeforeTax = (accountingRecord.addAmountBeforeTax ?? 0).toFixed(2);
+        pdf.text(`${formattedAddAmountBeforeTax}`, 173, currentY, { align: 'right' });
+        // หักภาษี
+        const formattedTax = (accountingRecord.tax ?? 0).toFixed(2);
+        pdf.text(`${formattedTax}`, 203, currentY, { align: 'right' });
+        // หัก ปกส
+        const formattedSocialSecurity = (accountingRecord.socialSecurity ?? 0).toFixed(2);
+        pdf.text(`${formattedSocialSecurity}`, 218, currentY, { align: 'right' });
+        // บวกหลังหัก
+        const formattedAddAmountAfterTax = (accountingRecord.addAmountAfterTax ?? 0).toFixed(2);
+        pdf.text(`${formattedAddAmountAfterTax}`, 233, currentY, { align: 'right' });
+        // เบิกล่วงหน้า
+        const formattedAdvancePayment = (accountingRecord.advancePayment ?? 0).toFixed(2);
+        pdf.text(`${formattedAdvancePayment}`, 248, currentY, { align: 'right' });
+        // หักหลังภาษี
+        const formattedDeductAfterTax = (accountingRecord.deductAfterTax ?? 0).toFixed(2);
+        pdf.text(`${formattedDeductAfterTax}`, 263, currentY, { align: 'right' });
+        // ธ โอน/
+        const formattedBank = (accountingRecord.bank ?? 0).toFixed(2);
+        pdf.text(`${formattedBank}`, 278, currentY, { align: 'right' });
+        // สุทธิ
+        const formattedTotal = (accountingRecord.total ?? 0).toFixed(2);
+        pdf.text(`${formattedTotal}`, 293, currentY, { align: 'right' });
+
+        // const formattedAmountOt = accountingRecord.amountOt.toFixed(2);
+        // pdf.text(`${formattedAmountOt}`, 102, currentY, { align: 'right' });
+
 
         currentY += 5;
 
@@ -633,7 +724,21 @@ function TestPDFSalary() {
       });
 
       // Display total salary
-      pdf.text(`Total Salary: ${totalSalary}`, 10, currentY);
+      pdf.text(`${totalSalary.toFixed(2)}`, 84, currentY, { align: 'right' });
+      pdf.text(`${totalAmountOt.toFixed(2)}`, 98, currentY, { align: 'right' });
+      pdf.text(`${totalAmountSpecial.toFixed(2)}`, 113, currentY, { align: 'right' });
+      pdf.text(`${totalAmountPosition.toFixed(2)}`, 128, currentY, { align: 'right' });
+      pdf.text(`${totalAmountHardWorking.toFixed(2)}`, 143, currentY, { align: 'right' });
+      pdf.text(`${totalAmountHoliday.toFixed(2)}`, 158, currentY, { align: 'right' });
+      pdf.text(`${totalAddAmountBeforeTax.toFixed(2)}`, 173, currentY, { align: 'right' });
+      pdf.text(`${totalTax.toFixed(2)}`, 203, currentY, { align: 'right' });
+      pdf.text(`${totalSocialSecurity.toFixed(2)}`, 218, currentY, { align: 'right' });
+      pdf.text(`${totalAddAmountAfterTax.toFixed(2)}`, 233, currentY, { align: 'right' });
+      pdf.text(`${totalAdvancePayment.toFixed(2)}`, 248, currentY, { align: 'right' });
+      pdf.text(`${totalDeductAfterTax.toFixed(2)}`, 263, currentY, { align: 'right' });
+      pdf.text(`${totalBank.toFixed(2)}`, 278, currentY, { align: 'right' });
+      pdf.text(`${totalTotal.toFixed(2)}`, 293, currentY, { align: 'right' });
+
       currentY += 5;
 
       // Add some space between workplaces
@@ -1593,8 +1698,39 @@ function TestPDFSalary() {
   return (
     <div>
       <div class="form-group">
+        <div class="col-md-2">
+          <div class="form-group">
+            <label role="agencyname">เดือน</label>
+            <select className="form-control" value={month} onChange={(e) => setMonth(e.target.value)} >
+              <option value="01">มกราคม</option>
+              <option value="02">กุมภาพันธ์</option>
+              <option value="03">มีนาคม</option>
+              <option value="04">เมษายน</option>
+              <option value="05">พฤษภาคม</option>
+              <option value="06">มิถุนายน</option>
+              <option value="07">กรกฎาคม</option>
+              <option value="08">สิงหาคม</option>
+              <option value="09">กันยายน</option>
+              <option value="10">ตุลาคม</option>
+              <option value="11">พฤศจิกายน</option>
+              <option value="12">ธันวาคม</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label >ปี</label>
+            <select className="form-control" value={year} onChange={(e) => setYear(e.target.value)}>
+              {years.map((y) => (
+                <option key={y} value={y}>
+                  {y}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
         <button onClick={fetchData}>Fetch Data</button>
-
+        <br />
         <label role="searchEmployeeId">รหัสหน่อยงาน</label>
         {/* <input type="text" class="form-control" id="searchEmployeeId" placeholder="รหัสพนักงาน" value={searchEmployeeId} onChange={(e) => setSearchWorkplaceId(e.target.value)} /> */}
         <input
