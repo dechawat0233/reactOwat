@@ -154,8 +154,9 @@ const sumSocial = 0;
         data.accountingRecord.amountDay = amountDay;
         data.accountingRecord.amountOt = amountOt;
 
-      sumSocial = await sumSocial + amountDay;
-await console.log(sumSocial );
+//       sumSocial = await sumSocial + amountDay;
+// await console.log(sumSocial );
+
 // Get employee data by employeeId
 const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
 if (response) {
