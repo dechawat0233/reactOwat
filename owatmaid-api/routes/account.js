@@ -40,6 +40,7 @@ accountingRecord: [{
  amountHardWorking: String,
 amountHoliday: String,
 addAmountBeforeTax:String,
+deductBeforeTax: String,
 tax: String,
 socialSecurity: String,
 addAmountAfterTax:String,
@@ -127,6 +128,7 @@ router.post('/calsalarylist', async (req, res) => {
       for (let c = 0; c < responseConclude.data.recordConclude.length; c++) {
         const data = {}; // Initialize data object inside the loop
 
+
         data.year = responseConclude.data.recordConclude[c].year;
         data.month = responseConclude.data.recordConclude[c].month;
         data.createDate = new Date().toLocaleDateString('en-GB');
@@ -137,6 +139,7 @@ router.post('/calsalarylist', async (req, res) => {
         let amountDay = 0;
         let amountOt = 0;
         let amountSpecial = 0;
+        let sumSocial = 0;
 
         for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.length; i++) {
           amountDay += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0);
@@ -151,8 +154,9 @@ router.post('/calsalarylist', async (req, res) => {
         data.accountingRecord.countDay = countDay;
         data.accountingRecord.amountDay = amountDay;
         data.accountingRecord.amountOt = amountOt;
-        data.accountingRecord.amountSpecial = amountSpecial;
 
+      sumSocial = await sumSocial + amountDay;
+// await console.log(sumSocial );
 
 // Get employee data by employeeId
 const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
@@ -170,21 +174,31 @@ if (response) {
     } else {
         data.accountingRecord.amountPosition = 0;
     }
-
-    let hardwork1410 = '1410';
-    const addSalary1 = response.data.addSalary.find(salary => salary.id === hardwork1410);
+    
+    let amountHardWorking1410 = '1410';
+    const addSalary1 = response.data.addSalary.find(salary => salary.id === amountHardWorking1410 );
 
     if (addSalary1) {
         data.accountingRecord.amountHardWorking = addSalary1.SpSalary;
     } else {
-        data.accountingRecord.amountHardWorking = 0;
+      data.accountingRecord.amountHardWorking = 0;
+    }
+
+    let amountSpecial1560 = '1560';
+    const addSalary2 = response.data.addSalary.find(salary => salary.id === amountSpecial1560 );
+
+    if (addSalary2) {
+        data.accountingRecord.amountSpecial = addSalary2.SpSalary;
+    } else {
+      data.accountingRecord.amountSpecial = 0;
     }
 
     // Other properties
     data.accountingRecord.amountHoliday = 0;
     data.accountingRecord.addAmountBeforeTax = 0;
+    data.accountingRecord.deductBeforeTax = 0;
     data.accountingRecord.tax = 0;
-    data.accountingRecord.socialSecurity = 0;
+    data.accountingRecord.socialSecurity = sumSocial  || 0;
     data.accountingRecord.addAmountAfterTax = 0;
     data.accountingRecord.advancePayment = 0;
     data.accountingRecord.deductAfterTax = 0;
@@ -313,6 +327,8 @@ data.accountingRecord.socialSecurity = await 0;
 data.accountingRecord.addAmountAfterTax = await 0;
 data.accountingRecord.advancePayment = await 0;
 data.accountingRecord.deductAfterTax = await 0;
+data.accountingRecord.deductBeforeTax = await 10;
+
 data.accountingRecord.bank = await 0;
 data.accountingRecord.total = await 0;
 
@@ -461,8 +477,20 @@ async function getEmployeeData(id) {
 }
 
 
-async function checkCalTax(id) {
+async function checkCalSocial(id) {
+  const idList = await [1230,1231,1233,1241,1242,1350,1423,1428,1434,1520,1522,1524,1525,1526,1529,1531,1533,1534,1429,1427,1245,1234,2111,2116,2120,2124];
 
+  
+  const idToCheck = await id;
+  
+  if (idList.includes(idToCheck)) {
+      console.log(`ID ${idToCheck} is included in the list.`);
+      return await true;
+  } else {
+      console.log(`ID ${idToCheck} is not included in the list.`);
+      return await false;
+  }
+  
 }
 
 module.exports = router;
