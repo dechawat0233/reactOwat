@@ -594,11 +594,13 @@ function TestPDFSalary() {
 
     const groupedByWorkplace = responseDataAll.reduce((acc, employee) => {
       const { workplace } = employee;
-      acc[workplace] = acc[workplace] || { employees: [], totalSalary: 0 , totalAmountOt: 0 ,
-         totalAmountSpecial: 0, totalAmountPosition: 0
-        , totalAmountHardWorking: 0, totalAmountHoliday: 0, totalAddAmountBeforeTax: 0,
+      acc[workplace] = acc[workplace] || {
+        employees: [], totalSalary: 0, totalAmountOt: 0,
+        totalAmountSpecial: 0, totalAmountPosition: 0
+        , totalAmountHardWorking: 0, totalAmountHoliday: 0, totalDeductBeforeTax: 0, totalAddAmountBeforeTax: 0,
         totalTax: 0, totalSocialSecurity: 0, totalAddAmountAfterTax: 0, totalAdvancePayment: 0
-        , totalDeductAfterTax: 0, totalBank: 0, totalTotal: 0};
+        , totalDeductAfterTax: 0, totalBank: 0, totalTotal: 0, totalEmp: 0
+      };
       acc[workplace].employees.push(employee);
       // acc[workplace].name.push(employee.name);
 
@@ -609,6 +611,7 @@ function TestPDFSalary() {
       acc[workplace].totalAmountPosition += parseFloat(employee.accountingRecord.amountPosition || 0);
       acc[workplace].totalAmountHardWorking += parseFloat(employee.accountingRecord.amountHardWorking || 0);
       acc[workplace].totalAmountHoliday += parseFloat(employee.accountingRecord.amountHoliday || 0);
+      acc[workplace].totalDeductBeforeTax += parseFloat(employee.accountingRecord.deductBeforeTax || 0);
       acc[workplace].totalAddAmountBeforeTax += parseFloat(employee.accountingRecord.addAmountBeforeTax || 0);
       acc[workplace].totalTax += parseFloat(employee.accountingRecord.tax || 0);
       acc[workplace].totalSocialSecurity += parseFloat(employee.accountingRecord.socialSecurity || 0);
@@ -618,6 +621,8 @@ function TestPDFSalary() {
       acc[workplace].totalBank += parseFloat(employee.accountingRecord.bank || 0);
       acc[workplace].totalTotal += parseFloat(employee.accountingRecord.total ?? 0);
 
+      acc[workplace].totalEmp += 1;
+
       return acc;
     }, {});
 
@@ -626,9 +631,9 @@ function TestPDFSalary() {
 
     // Loop through the grouped data and add content to the PDF
     Object.keys(groupedByWorkplace).forEach((workplaceKey, index) => {
-      const { employees, totalSalary,totalAmountOt, totalAmountSpecial,totalAmountPosition,
-        totalAmountHardWorking,totalAmountHoliday,totalAddAmountBeforeTax,totalTax,totalSocialSecurity,
-        totalAddAmountAfterTax,totalAdvancePayment,totalDeductAfterTax,totalBank,totalTotal} = groupedByWorkplace[workplaceKey];
+      const { employees, totalSalary, totalAmountOt, totalAmountSpecial, totalAmountPosition,
+        totalAmountHardWorking, totalAmountHoliday, totalAddAmountBeforeTax, totalDeductBeforeTax, totalTax, totalSocialSecurity,
+        totalAddAmountAfterTax, totalAdvancePayment, totalDeductAfterTax, totalBank, totalTotal, totalEmp } = groupedByWorkplace[workplaceKey];
 
       // Display workplace heading
       pdf.setFontSize(12);
@@ -663,47 +668,50 @@ function TestPDFSalary() {
 
 
         // เงินเดือน
-        const formattedAmountDay = (accountingRecord.amountDay ?? 0).toFixed(2);
+        const formattedAmountDay = Number(accountingRecord.amountDay ?? 0).toFixed(2);
         // pdf.text(`${formattedAmountDay}`, pdf.internal.pageSize.width - 10, currentY, { align: 'right' });
         pdf.text(`${formattedAmountDay}`, 84, currentY, { align: 'right' });
         // ค่าล่วงเวลา
-        const formattedAmountOt = (accountingRecord.amountOt ?? 0).toFixed(2);
+        const formattedAmountOt = Number(accountingRecord.amountOt ?? 0).toFixed(2);
         pdf.text(`${formattedAmountOt}`, 98, currentY, { align: 'right' });
         // สวัสดิการพิเศษ
-        const formattedAmountSpecial = (accountingRecord.amountSpecial ?? 0).toFixed(2);
+        const formattedAmountSpecial = Number(accountingRecord.amountSpecial ?? 0).toFixed(2);
         pdf.text(`${formattedAmountSpecial}`, 113, currentY, { align: 'right' });
         // ค่าตำแหน่ง
-        const formattedAmountPosition = (accountingRecord.amountPosition ?? 0).toFixed(2);
+        const formattedAmountPosition = Number(accountingRecord.amountPosition ?? 0).toFixed(2);
         pdf.text(`${formattedAmountPosition}`, 128, currentY, { align: 'right' });
         // เบี้ยขยัน
-        const formattedAmountHardWorking = (accountingRecord.amountHardWorking ?? 0).toFixed(2);
+        const formattedAmountHardWorking = Number(accountingRecord.amountHardWorking ?? 0).toFixed(2);
         pdf.text(`${formattedAmountHardWorking}`, 143, currentY, { align: 'right' });
         // นักขัติ
-        const formattedAmountHoliday = (accountingRecord.amountHoliday ?? 0).toFixed(2);
+        const formattedAmountHoliday = Number(accountingRecord.amountHoliday ?? 0).toFixed(2);
         pdf.text(`${formattedAmountHoliday}`, 158, currentY, { align: 'right' });
         // บวกก่อนหัก
-        const formattedAddAmountBeforeTax = (accountingRecord.addAmountBeforeTax ?? 0).toFixed(2);
-        pdf.text(`${formattedAddAmountBeforeTax}`, 173, currentY, { align: 'right' });
+        const formattedDeductBeforeTax = Number(accountingRecord.deductBeforeTax ?? 0).toFixed(2);
+        pdf.text(`${formattedDeductBeforeTax}`, 173, currentY, { align: 'right' });
+        // หักก่อนหัก
+        const formattedAddAmountBeforeTax = Number(accountingRecord.addAmountBeforeTax ?? 0).toFixed(2);
+        pdf.text(`${formattedAddAmountBeforeTax}`, 188, currentY, { align: 'right' });
         // หักภาษี
-        const formattedTax = (accountingRecord.tax ?? 0).toFixed(2);
+        const formattedTax = Number(accountingRecord.tax ?? 0).toFixed(2);
         pdf.text(`${formattedTax}`, 203, currentY, { align: 'right' });
         // หัก ปกส
-        const formattedSocialSecurity = (accountingRecord.socialSecurity ?? 0).toFixed(2);
+        const formattedSocialSecurity = Number(accountingRecord.socialSecurity ?? 0).toFixed(2);
         pdf.text(`${formattedSocialSecurity}`, 218, currentY, { align: 'right' });
         // บวกหลังหัก
-        const formattedAddAmountAfterTax = (accountingRecord.addAmountAfterTax ?? 0).toFixed(2);
+        const formattedAddAmountAfterTax = Number(accountingRecord.addAmountAfterTax ?? 0).toFixed(2);
         pdf.text(`${formattedAddAmountAfterTax}`, 233, currentY, { align: 'right' });
         // เบิกล่วงหน้า
-        const formattedAdvancePayment = (accountingRecord.advancePayment ?? 0).toFixed(2);
+        const formattedAdvancePayment = Number(accountingRecord.advancePayment ?? 0).toFixed(2);
         pdf.text(`${formattedAdvancePayment}`, 248, currentY, { align: 'right' });
         // หักหลังภาษี
-        const formattedDeductAfterTax = (accountingRecord.deductAfterTax ?? 0).toFixed(2);
+        const formattedDeductAfterTax = Number(accountingRecord.deductAfterTax ?? 0).toFixed(2);
         pdf.text(`${formattedDeductAfterTax}`, 263, currentY, { align: 'right' });
         // ธ โอน/
-        const formattedBank = (accountingRecord.bank ?? 0).toFixed(2);
+        const formattedBank = Number(accountingRecord.bank ?? 0).toFixed(2);
         pdf.text(`${formattedBank}`, 278, currentY, { align: 'right' });
         // สุทธิ
-        const formattedTotal = (accountingRecord.total ?? 0).toFixed(2);
+        const formattedTotal = Number(accountingRecord.total ?? 0).toFixed(2);
         pdf.text(`${formattedTotal}`, 293, currentY, { align: 'right' });
 
         // const formattedAmountOt = accountingRecord.amountOt.toFixed(2);
@@ -724,6 +732,8 @@ function TestPDFSalary() {
       });
 
       // Display total salary
+      pdf.text(`${totalEmp}`, 66, currentY, { align: 'right' });
+
       pdf.text(`${totalSalary.toFixed(2)}`, 84, currentY, { align: 'right' });
       pdf.text(`${totalAmountOt.toFixed(2)}`, 98, currentY, { align: 'right' });
       pdf.text(`${totalAmountSpecial.toFixed(2)}`, 113, currentY, { align: 'right' });
@@ -731,6 +741,7 @@ function TestPDFSalary() {
       pdf.text(`${totalAmountHardWorking.toFixed(2)}`, 143, currentY, { align: 'right' });
       pdf.text(`${totalAmountHoliday.toFixed(2)}`, 158, currentY, { align: 'right' });
       pdf.text(`${totalAddAmountBeforeTax.toFixed(2)}`, 173, currentY, { align: 'right' });
+      pdf.text(`${totalDeductBeforeTax.toFixed(2)}`, 188, currentY, { align: 'right' });
       pdf.text(`${totalTax.toFixed(2)}`, 203, currentY, { align: 'right' });
       pdf.text(`${totalSocialSecurity.toFixed(2)}`, 218, currentY, { align: 'right' });
       pdf.text(`${totalAddAmountAfterTax.toFixed(2)}`, 233, currentY, { align: 'right' });
