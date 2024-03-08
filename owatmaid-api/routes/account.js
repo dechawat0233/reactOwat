@@ -126,7 +126,7 @@ router.post('/calsalarylist', async (req, res) => {
     if (responseConclude.data.recordConclude.length > 0) {
       for (let c = 0; c < responseConclude.data.recordConclude.length; c++) {
         const data = {}; // Initialize data object inside the loop
-const sumSocial = 0;
+const sumSocial = await 0;
 
 
         data.year = responseConclude.data.recordConclude[c].year;
@@ -154,7 +154,7 @@ const sumSocial = 0;
         data.accountingRecord.amountDay = amountDay;
         data.accountingRecord.amountOt = amountOt;
 
-//       sumSocial = await sumSocial + amountDay;
+      sumSocial = await sumSocial + amountDay;
 // await console.log(sumSocial );
 
 // Get employee data by employeeId
@@ -473,8 +473,19 @@ async function getEmployeeData(id) {
 }
 
 
-async function checkCalTax(id) {
+async function checkCalSocial(id) {
+  const idList = await [1110,1120,1130,1140,1150,1210,1230,1231,1233,1241,1242,1251,1330,1350,1410,1422,1423,1428,1434,1440,1441,1444,1445,1446,1520,1522,1524,1525,1526,1528,1535,1540,1541,1550,1560,1447,1613,1561,1542,1536,1529,1531,1532,1533,1534,1442,1435,1429,1427,1412,1245,1234,1159,2111,2113,2116,2117,2120,2124,2160,2430,1190,1211,1212,1214,1235,1236,1243,1351,1411,1425,1426,1431,1448,1449,1527,1562,2114,2123,1543,1443,1544];
 
+  const idToCheck = await id;
+  
+  if (idList.includes(idToCheck)) {
+      console.log(`ID ${idToCheck} is included in the list.`);
+      return await true;
+  } else {
+      console.log(`ID ${idToCheck} is not included in the list.`);
+      return await false;
+  }
+  
 }
 
 module.exports = router;
