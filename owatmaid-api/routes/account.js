@@ -321,7 +321,7 @@ if (addSalary1) {
 data.accountingRecord.amountHoliday = await 0;
 data.accountingRecord.addAmountBeforeTax = await 0;
 data.accountingRecord.deductBeforeTax = await 0;
-//test
+
 data.accountingRecord.tax = await 0;
 data.accountingRecord.socialSecurity = await 0;
 data.accountingRecord.addAmountAfterTax = await 0;
