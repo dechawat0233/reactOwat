@@ -138,7 +138,7 @@ const sumSocial = 0;
         let countDay = 0;
         let amountDay = 0;
         let amountOt = 0;
-        // let amountSpecial = 0;
+        let amountSpecial = 0;
 
         for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.length; i++) {
           amountDay += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0);
@@ -155,7 +155,7 @@ const sumSocial = 0;
         data.accountingRecord.amountOt = amountOt;
 
       sumSocial = await sumSocial + amountDay;
-
+await console.log(sumSocial );
 // Get employee data by employeeId
 const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
 if (response) {
