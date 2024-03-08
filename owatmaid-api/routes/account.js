@@ -320,12 +320,13 @@ if (addSalary1) {
 //xxxx
 data.accountingRecord.amountHoliday = await 0;
 data.accountingRecord.addAmountBeforeTax = await 0;
-data.accountingRecord.deductBeforeTax = await 10;
 data.accountingRecord.tax = await 0;
 data.accountingRecord.socialSecurity = await 0;
 data.accountingRecord.addAmountAfterTax = await 0;
 data.accountingRecord.advancePayment = await 0;
 data.accountingRecord.deductAfterTax = await 0;
+data.accountingRecord.deductBeforeTax = await 10;
+
 data.accountingRecord.bank = await 0;
 data.accountingRecord.total = await 0;
 
