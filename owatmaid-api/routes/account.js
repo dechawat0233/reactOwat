@@ -40,6 +40,7 @@ accountingRecord: [{
  amountHardWorking: String,
 amountHoliday: String,
 addAmountBeforeTax:String,
+deductBeforeTax: String,
 tax: String,
 socialSecurity: String,
 addAmountAfterTax:String,
@@ -195,6 +196,7 @@ if (response) {
     // Other properties
     data.accountingRecord.amountHoliday = 0;
     data.accountingRecord.addAmountBeforeTax = 0;
+    data.accountingRecord.deductBeforeTax = 0;
     data.accountingRecord.tax = 0;
     data.accountingRecord.socialSecurity = sumSocial  || 0;
     data.accountingRecord.addAmountAfterTax = 0;
