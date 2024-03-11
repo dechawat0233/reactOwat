@@ -100,6 +100,9 @@ function AsideLeft() {
                         <Link to="/salaryresult" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> สรุปเงินเดือน</Link>
                       </li>
                       <li class="nav-item">
+                        <Link to="/salaryAllresult" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> สรุปหน่วยงานทั้งหมด</Link>
+                      </li>
+                      <li class="nav-item">
                         <Link to="/worktimesheetworkplace" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> สรุปหน่วยงาน</Link>
                       </li>
                     </>

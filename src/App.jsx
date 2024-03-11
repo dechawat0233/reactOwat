@@ -53,6 +53,7 @@ import Salarysummary from "./conponents/componentsAside/Salarysummary";
 import Examine from "./conponents/componentsAside/Examine";
 import Compensation from "./conponents/componentsAside/Compensation";
 import Salaryresult from "./conponents/componentsAside/SalaryResult";
+import SalaryAllResult from "./conponents/componentsAside/SalaryAllResult";
 
 import Worktimesheet from "./conponents/componentsAside/Worktimesheet";
 import WorktimeSheetWorkplace from "./conponents/componentsAside/WorktimeSheetWorkplace";
@@ -140,6 +141,7 @@ function App() {
               <Route path="/examine" element={<Examine />} />
               <Route path="/compensation" element={<Compensation />} />
               <Route path="/salaryresult" element={<Salaryresult />} />
+              <Route path="/salaryAllresult" element={<SalaryAllResult />} />
 
               <Route path="/worktimesheet" element={<Worktimesheet />} />
               <Route path="/worktimesheetworkplace" element={<WorktimeSheetWorkplace />} />
@@ -157,6 +159,7 @@ function App() {
               <Route path="/calculate_tax_deductions" element={<CalculateTaxDeductions />} />
               <Route path="/other_expenses" element={<OtherExpenses />} />
               <Route path="/search_results" element={<SearchResults />} />
+
               <Route path="/setting" element={<Setting />} />
               <Route path="/settingspecial" element={<SettingSpecial />} />
 

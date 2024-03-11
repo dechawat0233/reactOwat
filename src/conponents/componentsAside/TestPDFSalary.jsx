@@ -63,7 +63,7 @@ function TestPDFSalary() {
       });
   }, []);
 
-  console.error('workplaceListAll', workplaceListAll);
+  console.log('workplaceListAll', workplaceListAll);
 
 
   const EndYear = 2010;
@@ -630,14 +630,32 @@ function TestPDFSalary() {
     let currentY = 20;
 
     // Loop through the grouped data and add content to the PDF
+    // Object.keys(groupedByWorkplace).forEach((workplaceKey, index) => {
+    //   const { employees, totalSalary, totalAmountOt, totalAmountSpecial, totalAmountPosition,
+    //     totalAmountHardWorking, totalAmountHoliday, totalAddAmountBeforeTax, totalDeductBeforeTax, totalTax, totalSocialSecurity,
+    //     totalAddAmountAfterTax, totalAdvancePayment, totalDeductAfterTax, totalBank, totalTotal, totalEmp } = groupedByWorkplace[workplaceKey];
+
+    //   const workplaceDetails = workplaceListAll.find(w => w.workplaceId == workplaceKey) || { name: 'Unknown' };
+    //   const workplaceName = workplaceDetails.name;
+    //   // Display workplace heading
+    //   pdf.setFontSize(12);
+    //   pdf.text(`${workplaceName} : ${workplaceKey}`, 25, currentY);
+    //   currentY += 5;
     Object.keys(groupedByWorkplace).forEach((workplaceKey, index) => {
-      const { employees, totalSalary, totalAmountOt, totalAmountSpecial, totalAmountPosition,
-        totalAmountHardWorking, totalAmountHoliday, totalAddAmountBeforeTax, totalDeductBeforeTax, totalTax, totalSocialSecurity,
-        totalAddAmountAfterTax, totalAdvancePayment, totalDeductAfterTax, totalBank, totalTotal, totalEmp } = groupedByWorkplace[workplaceKey];
+      const {
+        employees, totalSalary, totalAmountOt, totalAmountSpecial, totalAmountPosition,
+        totalAmountHardWorking, totalAmountHoliday, totalAddAmountBeforeTax, totalDeductBeforeTax,
+        totalTax, totalSocialSecurity, totalAddAmountAfterTax, totalAdvancePayment,
+        totalDeductAfterTax, totalBank, totalTotal, totalEmp
+      } = groupedByWorkplace[workplaceKey];
+
+      const workplaceDetails = workplaceListAll.find(w => w.workplaceId == workplaceKey) || { name: 'Unknown' };
+      console.log('workplaceDetails',workplaceDetails);
+      const workplaceName = workplaceDetails.workplaceName || 'Unknown'; // Use a default value if 'name' is not available
 
       // Display workplace heading
       pdf.setFontSize(12);
-      pdf.text(`Workplace: ${workplaceKey}`, 25, currentY);
+      pdf.text(`${workplaceName} : ${workplaceKey}`, 25, currentY);
       currentY += 5;
 
       // Display employee information
@@ -664,7 +682,7 @@ function TestPDFSalary() {
 
         pdf.text(`${employeeId}`, 10, currentY);
         pdf.text(`${name} ${lastName}`, 25, currentY);
-        pdf.text(`${accountingRecord.countDay} `, 63, currentY);
+        pdf.text(`${accountingRecord.countDay} `, 66, currentY, { align: 'right' });
 
 
         // เงินเดือน
