@@ -140,6 +140,11 @@ router.post('/calsalarylist', async (req, res) => {
         let amountOt = 0;
         let amountSpecial = 0;
         let sumSocial = 0;
+let sumCalTax = 0;
+let sumCalTaxNonSalary = 0;
+let sumNonTaxNonSalary = 0;
+let sumDeductWithTax = 0;
+let sumDeductUncalculateTax = 0;
 
         for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.length; i++) {
           amountDay += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0);
@@ -156,12 +161,17 @@ router.post('/calsalarylist', async (req, res) => {
         data.accountingRecord.amountOt = amountOt;
 
       sumSocial = await sumSocial + amountDay;
+      sumCalTax = await sumCalTax + amountDay;
+      sumCalTax = await sumCalTax + amountOt;
+
 // await console.log(sumSocial );
 
 // Get employee data by employeeId
 const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
 if (response) {
     data.workplace = await response.data.workplace;
+    data.accountingRecord.tax = await response.data.tax ||0;
+
     // data.employeeId = responseConclude.data.recordConclude[c].employeeId;
     data.name = await response.data.name;
     data.lastName = await response.data.lastName;
@@ -193,17 +203,107 @@ if (response) {
       data.accountingRecord.amountSpecial = 0;
     }
 
+//check deduct 
+let advancePayment2330 = '2330';
+const deductSalary = response.data.deductSalary.find(salary => salary.id === advancePayment2330 );
+
+if (deductSalary ) {
+  data.accountingRecord.advancePayment = deductSalary.amount;
+} else {
+  data.accountingRecord.advancePayment = 0;
+}
+
+
+    //check cal social 
+    let promises = [];
+    let promises1 = [];
+    let promisesDeduct = [];
+
+    for (let k = 0; k < response.data.addSalary.length; k++) {
+        const promise = await checkCalSocial(response.data.addSalary[k].id || '0');
+        const promise1 = await checkCalTax(response.data.addSalary[k].id || '0');
+
+        await promises.push(promise);
+        await promises1.push(promise1);
+    }
+
+    for (let l = 0; l < response.data.deductSalary.length; l++) {
+      const promisesDeduct1 = await checkCalTax(response.data.deductSalary[l].id || '0');
+
+      await promisesDeduct.push(promisesDeduct1 );
+  }
+
+    await Promise.all(promises)
+        .then(results => {
+            // let sumSocial = 0;
+            results.forEach((result, k) => {
+                if (result === true) {
+                    sumSocial += parseFloat(response.data.addSalary[k].SpSalary || 0);
+                    // console.log(`Promise ${k} is resolved`);
+                    // console.log(response.data.addSalary[k].SpSalary);
+                }
+            });
+            console.log(sumSocial);
+        })
+        .catch(error => {
+            console.error('Error occurred while processing promises:', error);
+        });
+    
+//check cal tax
+await Promise.all(promises1)
+.then(results => {
+    // let sumSocial = 0;
+    results.forEach((result, k) => {
+        if (result === true) {
+            sumCalTax+= parseFloat(response.data.addSalary[k].SpSalary || 0);
+            sumCalTaxNonSalary += parseFloat(response.data.addSalary[k].SpSalary || 0);
+
+            // console.log(`Promise ${k} is resolved`);
+            // console.log(response.data.addSalary[k].SpSalary);
+        }  else {
+          sumNonTaxNonSalary+= parseFloat(response.data.addSalary[k].SpSalary || 0);
+        }
+    });
+    console.log(sumCalTax);
+})
+.catch(error => {
+    console.error('Error occurred while processing promises:', error);
+});
+
+//check deduct calculate tax
+await Promise.all(promisesDeduct)
+.then(results => {
+    // let sumSocial = 0;
+    results.forEach((result, k) => {
+        if (result === true) {
+            sumDeductWithTax += parseFloat(response.data.deductSalary[k].amount || 0);
+
+        }  else {
+          // sumNonTaxNonSalary+= parseFloat(response.data.addSalary[k].SpSalary || 0);
+          sumDeductUncalculateTax += parseFloat(response.data.deductSalary[k].amount || 0);
+
+          //aa
+        }
+    });
+    console.log(sumCalTax);
+})
+.catch(error => {
+    console.error('Error occurred while processing promises:', error);
+});
+
+
     // Other properties
     data.accountingRecord.amountHoliday = 0;
-    data.accountingRecord.addAmountBeforeTax = 0;
-    data.accountingRecord.deductBeforeTax = 0;
-    data.accountingRecord.tax = 0;
+    data.accountingRecord.addAmountBeforeTax = sumCalTaxNonSalary || 0;
+    data.accountingRecord.deductBeforeTax = sumDeductWithTax || 0;
+    // data.accountingRecord.tax = sumCalTax || 0;
     data.accountingRecord.socialSecurity = sumSocial  || 0;
-    data.accountingRecord.addAmountAfterTax = 0;
-    data.accountingRecord.advancePayment = 0;
-    data.accountingRecord.deductAfterTax = 0;
+    data.accountingRecord.addAmountAfterTax = sumNonTaxNonSalary || 0;
+    // data.accountingRecord.advancePayment = 0;
+    data.accountingRecord.deductAfterTax = sumDeductUncalculateTax || 0;
     data.accountingRecord.bank = 0;
     data.accountingRecord.total = 0;
+    data.accountingRecord.sumSalaryForTax = sumCalTax || 0;
 
 }
 
@@ -478,7 +578,7 @@ async function getEmployeeData(id) {
 
 
 async function checkCalSocial(id) {
-  const idList = await [1230,1231,1233,1241,1242,1350,1423,1428,1434,1520,1522,1524,1525,1526,1529,1531,1533,1534,1429,1427,1245,1234,2111,2116,2120,2124];
+  const idList = await ["1230","1231","1233","1241","1242","1350","1423","1428","1434","1520","1522","1524","1525","1526","1529","1531","1533","1534","1429","1427","1245","1234","2111","2116","2120","2124"];
 
   
   const idToCheck = await id;
@@ -491,6 +591,21 @@ async function checkCalSocial(id) {
       return await false;
   }
   
+}
+
+async function checkCalTax(id) {
+  const idList = await ["1230","1231","1233","1241","1242","1350","1423","1428","1434","1520","1522","1524","1525","1526","1529","1531","1533","1534","1429","1427","1245","1234","2111","2116","2120","2124"];
+
+  
+  const idToCheck = await id;
+  
+  if (idList.includes(idToCheck)) {
+      console.log(`ID ${idToCheck} is included in the list.`);
+      return await true;
+  } else {
+      console.log(`ID ${idToCheck} is not included in the list.`);
+      return await false;
+  }
 }
 
 module.exports = router;
