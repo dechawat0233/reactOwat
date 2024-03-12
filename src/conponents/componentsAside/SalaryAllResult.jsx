@@ -18,9 +18,9 @@ function SalaryAllResult() {
 
     const [responseDataAll, setResponseDataAll] = useState([]);
 
-    const [month, setMonth] = useState('');
-    const [year, setYear] = useState('');
-
+    const [month, setMonth] = useState('01');
+    // const [year, setYear] = useState('');
+    const [year, setYear] = useState(new Date().getFullYear().toString()); // Set the year initially to the current year
 
     const [workDate, setWorkDate] = useState(new Date());
     const formattedWorkDate = moment(workDate).format('DD/MM/YYYY');
@@ -582,17 +582,6 @@ function SalaryAllResult() {
         let currentY = 20;
 
         // Loop through the grouped data and add content to the PDF
-        // Object.keys(groupedByWorkplace).forEach((workplaceKey, index) => {
-        //   const { employees, totalSalary, totalAmountOt, totalAmountSpecial, totalAmountPosition,
-        //     totalAmountHardWorking, totalAmountHoliday, totalAddAmountBeforeTax, totalDeductBeforeTax, totalTax, totalSocialSecurity,
-        //     totalAddAmountAfterTax, totalAdvancePayment, totalDeductAfterTax, totalBank, totalTotal, totalEmp } = groupedByWorkplace[workplaceKey];
-
-        //   const workplaceDetails = workplaceListAll.find(w => w.workplaceId == workplaceKey) || { name: 'Unknown' };
-        //   const workplaceName = workplaceDetails.name;
-        //   // Display workplace heading
-        //   pdf.setFontSize(12);
-        //   pdf.text(`${workplaceName} : ${workplaceKey}`, 25, currentY);
-        //   currentY += 5;
         Object.keys(groupedByWorkplace).forEach((workplaceKey, index) => {
             const {
                 employees, totalSalary, totalAmountOt, totalAmountSpecial, totalAmountPosition,
