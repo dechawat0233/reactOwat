@@ -225,6 +225,8 @@ const employeeSchema = new mongoose.Schema({
 
   selectAddSalary: [],
   sumAddSalary: String,
+  sumSalaryForTax: String,
+  tax: String,
 
 });
 
