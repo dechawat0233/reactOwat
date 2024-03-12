@@ -45,37 +45,37 @@ function AddsettimeEmployee() {
         setYear(currentYear);
 
         const savedEmployeeId = localStorage.getItem('employeeId');
-        const savedName= localStorage.getItem('name');
+        const savedName = localStorage.getItem('name');
         const savedLastName = localStorage.getItem('lastName');
         const savedMonth = localStorage.getItem('month');
         const savedYear = localStorage.getItem('year');
-        if (savedEmployeeId ) {
+        if (savedEmployeeId) {
             setSearchEmployeeId(savedEmployeeId);
-setEmployeeId(savedEmployeeId );
-// const event = new Event('submit'); // Creating a synthetic event object
-// handleSearch(event); // Call handleSearch with the event
-localStorage.removeItem('employeeId');
-          }
-          if (savedName) {
+            setEmployeeId(savedEmployeeId);
+            // const event = new Event('submit'); // Creating a synthetic event object
+            // handleSearch(event); // Call handleSearch with the event
+            localStorage.removeItem('employeeId');
+        }
+        if (savedName) {
             setName(savedName);
             localStorage.removeItem('name');
 
-          }
-          if (savedLastName) {
+        }
+        if (savedLastName) {
             setLastname(savedLastName);
             localStorage.removeItem('lastName');
-          }
-          if (savedMonth) {
+        }
+        if (savedMonth) {
             setMonth(savedMonth);
             localStorage.removeItem('month');
 
-          }
-          if (savedYear) {
+        }
+        if (savedYear) {
             setYear(savedYear);
             localStorage.removeItem('year');
 
-          }
-          
+        }
+
     }, []); // Run this effect only once on component mount
 
     // const startYear = 2010;
@@ -685,8 +685,8 @@ localStorage.removeItem('employeeId');
                         setRowDataList2(response.data.recordworkplace[0].employee_workplaceRecord.map((item, index) => ({
                             ...item,
                             tmpIndex: index
-                          })));
-                          //111
+                        })));
+                        //111
                     } else {
                         setRowDataList2([]);
                     }
@@ -1030,13 +1030,13 @@ localStorage.removeItem('employeeId');
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label role="agencynumber">รหัสพนักงาน</label>
-                                        <input type="text" class="form-control" id="agencynumber" placeholder="รหัสพนักงาน" 
-                                        value={employeeId !== 'null' ? employeeId : ''} onChange={(e) => setEmployeeId(e.target.value)} />
+                                        <input type="text" class="form-control" id="agencynumber" placeholder="รหัสพนักงาน"
+                                            value={employeeId !== 'null' ? employeeId : ''} onChange={(e) => setEmployeeId(e.target.value)} />
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                <label role="agencyname">ชื่อพนักงาน</label>           
+                                        <label role="agencyname">ชื่อพนักงาน</label>
                                         <input type="text" class="form-control" id="agencyname" placeholder="ชื่อพนักงาน" value={name + lastName} onChange={(e) => setName(e.target.value)} />
                                     </div>
                                 </div>
@@ -1290,7 +1290,7 @@ localStorage.removeItem('employeeId');
                                     <div class="col-md-12">
                                         <div class="row">
                                             <div class="col-md-1"> รหัสหน่วยงาน</div>
-                                            <div class="col-md-2"> ชื่อหน่วยงาน </div>
+                                            <div class="col-md-1"> ชื่อหน่วยงาน </div>
                                             <div class="col-md-1"> วันที่</div>
                                             <div class="col-md-1"> กะการทำงาน </div>
                                             <div class="col-md-1"> เวลาเข้างาน </div>
@@ -1308,7 +1308,7 @@ localStorage.removeItem('employeeId');
                                         {rowDataList2.map((rowData2, index) => (
                                             rowData2.workplaceId && (
                                                 <div key={index}>
-                                                                            <input type="hidden" id="hiddenField" name="" value={index} />
+                                                    <input type="hidden" id="hiddenField" name="" value={index} />
 
                                                     <div class="row" style={{ marginBottom: '1rem', borderBottom: '2px solid #000' }}>
                                                         <div class="col-md-1" style={bordertable}> {rowData2.workplaceId}
@@ -1342,7 +1342,7 @@ localStorage.removeItem('employeeId');
                                                             // </div>
 
                                                         ) : (
-                                                            <div></div>
+                                                            <div class="col-md-1" style={bordertable}></div>
                                                         )}
                                                         <div class="col-md-1" style={bordertable}>
                                                             {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
