@@ -145,6 +145,8 @@ let sumCalTaxNonSalary = 0;
 let sumNonTaxNonSalary = 0;
 let sumDeductWithTax = 0;
 let sumDeductUncalculateTax = 0;
+let tax = 0;
+let total = 0;
 
         for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.length; i++) {
           amountDay += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0);
@@ -171,6 +173,7 @@ const response = await axios.get(sURL + '/employee/' + responseConclude.data.rec
 if (response) {
     data.workplace = await response.data.workplace;
     data.accountingRecord.tax = await response.data.tax ||0;
+tax = await response.data.tax ||0; 
 
     // data.employeeId = responseConclude.data.recordConclude[c].employeeId;
     data.name = await response.data.name;
@@ -282,7 +285,6 @@ await Promise.all(promisesDeduct)
           // sumNonTaxNonSalary+= parseFloat(response.data.addSalary[k].SpSalary || 0);
           sumDeductUncalculateTax += parseFloat(response.data.deductSalary[k].amount || 0);
 
-          //aa
         }
     });
     console.log(sumCalTax);
@@ -291,18 +293,35 @@ await Promise.all(promisesDeduct)
     console.error('Error occurred while processing promises:', error);
 });
 
+await console.log(
+  "amount day" +amountDay +   
+  "amount Ot" +amountOt + 
+"sum calculate tax" +    sumCalTaxNonSalary + 
+"sum deduct with tax" +     sumDeductWithTax 
+  +"tax " + tax
+  +" social" + sumSocial * 0.05
+  +"sum non tax" + sumNonTaxNonSalary 
+  + "deduct un tax" +  sumDeductUncalculateTax );
+  
+  
+//total
+total = await amountDay + amountOt + sumCalTaxNonSalary - sumDeductWithTax 
+- tax
+- ((sumSocial * 0.05) || 0)
++ (sumNonTaxNonSalary || 0)
+- (sumDeductUncalculateTax || 0);
 
     // Other properties
     data.accountingRecord.amountHoliday = 0;
     data.accountingRecord.addAmountBeforeTax = sumCalTaxNonSalary || 0;
     data.accountingRecord.deductBeforeTax = sumDeductWithTax || 0;
     // data.accountingRecord.tax = sumCalTax || 0;
-    data.accountingRecord.socialSecurity = sumSocial  || 0;
+    data.accountingRecord.socialSecurity = (sumSocial * 0.05) || 0;
     data.accountingRecord.addAmountAfterTax = sumNonTaxNonSalary || 0;
     // data.accountingRecord.advancePayment = 0;
     data.accountingRecord.deductAfterTax = sumDeductUncalculateTax || 0;
     data.accountingRecord.bank = 0;
-    data.accountingRecord.total = 0;
+    data.accountingRecord.total = total || 0;
     data.accountingRecord.sumSalaryForTax = sumCalTax || 0;
 
 }
@@ -594,8 +613,7 @@ async function checkCalSocial(id) {
 }
 
 async function checkCalTax(id) {
-  const idList = await ["1230","1231","1233","1241","1242","1350","1423","1428","1434","1520","1522","1524","1525","1526","1529","1531","1533","1534","1429","1427","1245","1234","2111","2116","2120","2124"];
-
+  const idList = await ["1110","1120","1130","1140","1150","1210","1230","1231","1233","1241","1242","1251","1330","1350","1410","1422","1423","1428","1434","1440","1441","1444","1445","1446","1520","1522","1524","1525","1526","1528","1535","1540","1541","1550","1560","1447","1613","1561","1542","1536","1529","1531","1532","1533","1534","1442","1435","1429","1427","1412","1245","1234","1159","2111","2113","2116","2117","2120","2124","2160","2430","1190","1211","1212","1214","1235","1236","1243","1351","1411","1425","1426","1431","1448","1449","1527","1562","2114","2123","1543","1443","1544"];
   
   const idToCheck = await id;
   
