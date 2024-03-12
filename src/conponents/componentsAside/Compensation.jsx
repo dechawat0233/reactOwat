@@ -1264,7 +1264,7 @@ function Compensation() {
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                 {editIndex === index ?
-                                                                    <input type="text" className="form-control" value={formData.addSalaryDay} onChange={handleInputChange} name="addSalaryDay" /> :
+                                                                    <input type="text" className="form-control" value={formData.addSalaryDay} onChange={handleInputChange} name="addSalaryDay" readOnly /> :
                                                                     workplaceRecord.addSalaryDay}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>

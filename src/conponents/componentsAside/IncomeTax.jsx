@@ -1,11 +1,19 @@
 // import React from 'react'
-import React, { useState, useEffect } from 'react';
+import endpoint from '../../config';
+
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'; import { jsPDF } from 'jspdf';
 
 import EmployeesSelected from './EmployeesSelected';
 import '../editwindowcss.css';
 import TestPDF from './TestPDF';
 
 function IncomeTax() {
+    const [income, setIncome] = useState('');//เงินได้รวม
+    const [taxDeduction, setTaxDeduction] = useState('');//ลดหย่อน
+    const [taxPaid, setTaxPaid] = useState('');//ภาษีต้อง
+    const [taxPaidToMonth, setTaxPaidToMonth] = useState('');//ภาษีต้องแต่ละเดือน
+
     useEffect(() => {
         document.title = 'ภาษีเงินได้';
         // You can also return a cleanup function if needed
@@ -71,6 +79,37 @@ function IncomeTax() {
                                                 {/* <!-- row --> */}
                                                 <div class="line_btn_search">
                                                     <button type="submit" value="Submit" class="btn_search"><i class="fa fa-search"></i>  &nbsp;ค้นหา</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </section>
+                                    <section class="Frame">
+                                        <div class="col-md-12">
+                                            <form action="">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label role="datetime">เงินได้รวม</label>
+
+                                                        <input type="text" class="form-control" id="income" placeholder="เงินได้รวม" value={income} onChange={(e) => setIncome(e.target.value)} />
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label role="datetime">ลดหย่อน</label>
+
+                                                        <input type="text" class="form-control" id="taxPaid" placeholder="ลดหย่อน" value={taxDeduction} onChange={(e) => setTaxDeduction(e.target.value)} />
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label role="datetime">ภาษีต้องจ่าย</label>
+
+                                                        <input type="text" class="form-control" id="income" placeholder="ภาษีต้องจ่าย" value={taxPaid} onChange={(e) => setTaxPaid(e.target.value)} />
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label role="datetime">ภาษีต้องแต่ละเดือน</label>
+
+                                                        <input type="text" class="form-control" id="taxPaid" placeholder="ภาษีต้องแต่ละเดือน" value={taxPaidToMonth} onChange={(e) => setTaxPaidToMonth(e.target.value)} />
+                                                    </div>
                                                 </div>
                                             </form>
                                         </div>
