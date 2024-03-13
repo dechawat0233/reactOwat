@@ -32,11 +32,11 @@ function Salaryresult() {
   };
 
   //variable
-  const [socialSecurity , setSocialSecurity] = useState(0); // ประกันสังคม
-const [tax , setTax] = useState(0); //ภาษี 
-const [bankCustom , setBankCustom] = useState(0); //ค่าทำเนียม
-const [sumDeduct , setSumDeduct] = useState(0); //sum deduct immedate
-const [sumDeductInstallment , setSumDeductInstallment ] = useState(0); //sum deduct installment
+  const [socialSecurity, setSocialSecurity] = useState(0); // ประกันสังคม
+  const [tax, setTax] = useState(0); //ภาษี 
+  const [bankCustom, setBankCustom] = useState(0); //ค่าทำเนียม
+  const [sumDeduct, setSumDeduct] = useState(0); //sum deduct immedate
+  const [sumDeductInstallment, setSumDeductInstallment] = useState(0); //sum deduct installment
 
   const [employeeId, setEmployeeId] = useState(''); //รหัสหน่วยงาน
   const [name, setName] = useState(''); //ชื่อหน่วยงาน
@@ -62,10 +62,13 @@ const [sumDeductInstallment , setSumDeductInstallment ] = useState(0); //sum ded
   const [employeeListResult, setEmployeeListResult] = useState([]);
   const [newWorkplace, setNewWorkplace] = useState(true);
   const [timerecordAllList, setTimerecordAllList] = useState([]);
+  const [calsalaryAlllist, setSalsalaryAlllist] = useState([]);
+
 
   const [employeeList, setEmployeeList] = useState([]);
   const [workplaceList, setWorkplaceList] = useState([]);
   const [concludeList, setConcludeList] = useState([]);
+  const [calsalarylist, setCalsalarylist] = useState([]);
 
   const [searchEmployeeId, setSearchEmployeeId] = useState('');
   const [searchEmployeeName, setSearchEmployeeName] = useState('');
@@ -133,6 +136,20 @@ const [sumDeductInstallment , setSumDeductInstallment ] = useState(0); //sum ded
       .then(data => {
         // Update the state with the fetched data
         setConcludeList(data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
+  useEffect(() => {
+    // Fetch data from the API when the component mounts
+    fetch(endpoint + '/accounting/calsalarylist')
+      .then(response => response.json())
+      .then(data => {
+        // Update the state with the fetched data
+        setCalsalarylist(data);
+        // alert(data[0].workplaceName);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -243,9 +260,10 @@ const [sumDeductInstallment , setSumDeductInstallment ] = useState(0); //sum ded
 
   console.log(employeeList);
 
+  // 
   useEffect(() => {
     // Fetch data from the API when the component mounts
-    fetch(endpoint + '/timerecord/listemp')
+    fetch(endpoint + '/accounting/calsalarylist')
       .then(response => response.json())
       .then(data => {
         // Update the state with the fetched data
@@ -429,6 +447,7 @@ const [sumDeductInstallment , setSumDeductInstallment ] = useState(0); //sum ded
 
       // const response = await axios.post(endpoint + '/timerecord/listemp', data);
       // const responseLower = await axios.post(endpoint + '/timerecord/listemp', dataLower);
+
       const filteredEntries = concludeList.filter(entry =>
         entry.employeeId === searchEmployeeId &&
         entry.month === month
@@ -437,6 +456,15 @@ const [sumDeductInstallment , setSumDeductInstallment ] = useState(0); //sum ded
       );
 
       setSearchResult(filteredEntries);
+
+      const filteredEntriesCalsalary = calsalarylist.filter(entry =>
+        entry.employeeId === searchEmployeeId &&
+        entry.month === month
+        &&
+        entry.year == year
+      );
+
+      console.log('filteredEntriesCalsalary', filteredEntriesCalsalary);
 
       const filteredEntriesEmp = employeeList.filter(entry =>
         entry.employeeId === searchEmployeeId
@@ -461,52 +489,52 @@ const [sumDeductInstallment , setSumDeductInstallment ] = useState(0); //sum ded
         const deductSalary = filteredEntriesEmp[0].deductSalary.filter(deduct => deduct.payType === "immedate");
         let sum = 0;
         //loop forget socialSecurity and tax
-        deductSalary.map((item , index) => {
+        deductSalary.map((item, index) => {
 
           //check 0001 is social security
-          if(item.id == "0001"){
+          if (item.id == "0001") {
             // alert(item.amount);
-            if(item.amount.includes("%") ) {
+            if (item.amount.includes("%")) {
               let tmp = item.amount.replace(/%/g, "");
-              tmp = tmp /100;
+              tmp = tmp / 100;
               setSocialSecurity(tmp);
             } else {
               setSocialSecurity(item.amount);
             }
           }
-                    //check 0002 is tax
-                    else if(item.id == "0002"){
-                      // alert(item.amount);
-                      if(item.amount.includes("%") ) {
-                        let tmp = item.amount.replace(/%/g, "");
-                        tmp = tmp /100;
-                        setTax(tmp);
-                      } else {
-                        setTax(item.amount);
-                      }
-                    }
-                    //check 0003 is bank custom
-                    else if(item.id == "0003"){
-                      // alert(item.amount);\
-                      setBankCustom(item.amount);
-                    }
-else {
-sum = sum + parseFloat(item.amount);
-}
+          //check 0002 is tax
+          else if (item.id == "0002") {
+            // alert(item.amount);
+            if (item.amount.includes("%")) {
+              let tmp = item.amount.replace(/%/g, "");
+              tmp = tmp / 100;
+              setTax(tmp);
+            } else {
+              setTax(item.amount);
+            }
+          }
+          //check 0003 is bank custom
+          else if (item.id == "0003") {
+            // alert(item.amount);\
+            setBankCustom(item.amount);
+          }
+          else {
+            sum = sum + parseFloat(item.amount);
+          }
         })
         setSumDeduct(sum);
-// alert(deductSalary.length);
+        // alert(deductSalary.length);
 
         //get deduct data with installment
         const deductSalaryInstallment = filteredEntriesEmp[0].deductSalary.filter(deduct => deduct.payType === "installment");
         let sumInstallment = 0;
         //loop forget socialSecurity and tax
-        deductSalaryInstallment .map((item, index) => {
-let amount = parseFloat(item.amount);
-let installment = parseFloat(item.installment);
-sumInstallment = sumInstallment + parseFloat((amount / installment).toFixed(2));
+        deductSalaryInstallment.map((item, index) => {
+          let amount = parseFloat(item.amount);
+          let installment = parseFloat(item.installment);
+          sumInstallment = sumInstallment + parseFloat((amount / installment).toFixed(2));
         });
-setSumDeductInstallment(sumInstallment);
+        setSumDeductInstallment(sumInstallment);
 
         console.log('addSalaryMonthly', addSalaryMonthly);
 
@@ -907,6 +935,20 @@ setSumDeductInstallment(sumInstallment);
 
   // console.log("Sum:", sumWorkRate.sum);
   // console.log("Count:", sumWorkRate.count);
+  const totalSumSalary =
+    parseInt(overWorkRateSum) +
+    parseInt(overWorkRateOTSum) +
+    parseInt(overAddSalaryDaySum) +
+    parseInt(sumSpSalaryResult) +
+    parseInt(anySpSalary);
+
+  const totalSumDeduct =
+    parseInt(anyMinus) +
+    parseInt(tax) +
+    (parseInt(overWorkRateSum) + parseFloat(overWorkRateOTSum) + parseFloat(overAddSalaryDaySum) + parseFloat(sumSpSalaryResult) + parseInt(anySpSalary)) * parseFloat(socialSecurity) +
+    parseInt(bankCustom) +
+    parseInt(sumDeduct) +
+    parseInt(sumDeductInstallment);
 
   return (
     // <div>
@@ -1173,9 +1215,9 @@ setSumDeductInstallment(sumInstallment);
                       </thead>
                       <tbody>
                         <tr>
-                          {/* <td>25</td>
-                          <td>205</td>
-                          <td>50</td> */}
+                          <td>{(overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary).toFixed(2)}</td>
+                          <td>{(totalSumDeduct).toFixed(2)}</td>
+                          <td>{(totalSumSalary).toFixed(2) - (totalSumDeduct).toFixed(2)}</td>
                         </tr>
                       </tbody>
                     </table>
