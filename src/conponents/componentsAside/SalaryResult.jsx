@@ -1176,9 +1176,9 @@ function Salaryresult() {
                       </thead>
                       <tbody>
                         <tr>
-                          <td style={cellStyle}>{(tax).toFixed(2)}</td>
+                          <td style={cellStyle}>{Number(tax).toFixed(2)}</td>
                           <td style={cellStyle}>{((overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary) * socialSecurity).toFixed(2)}</td>
-                          <td style={cellStyle}>{(bankCustom).toFixed(2)}</td>
+                          <td style={cellStyle}>{Number(bankCustom).toFixed(2)}</td>
                           {/* <td style={cellStyle}>
                             <input
                               type="text"
