@@ -293,15 +293,15 @@ await Promise.all(promisesDeduct)
     console.error('Error occurred while processing promises:', error);
 });
 
-await console.log(
-  "amount day" +amountDay +   
-  "amount Ot" +amountOt + 
-"sum calculate tax" +    sumCalTaxNonSalary + 
-"sum deduct with tax" +     sumDeductWithTax 
-  +"tax " + tax
-  +" social" + sumSocial * 0.05
-  +"sum non tax" + sumNonTaxNonSalary 
-  + "deduct un tax" +  sumDeductUncalculateTax );
+// await console.log(
+//   "amount day" +amountDay +   
+//   "amount Ot" +amountOt + 
+// "sum calculate tax" +    sumCalTaxNonSalary + 
+// "sum deduct with tax" +     sumDeductWithTax 
+//   +"tax " + tax
+//   +" social" + sumSocial * 0.05
+//   +"sum non tax" + sumNonTaxNonSalary 
+//   + "deduct un tax" +  sumDeductUncalculateTax );
   
   
 //total
@@ -316,7 +316,16 @@ total = await amountDay + amountOt + sumCalTaxNonSalary - sumDeductWithTax
     data.accountingRecord.addAmountBeforeTax = sumCalTaxNonSalary || 0;
     data.accountingRecord.deductBeforeTax = sumDeductWithTax || 0;
     // data.accountingRecord.tax = sumCalTax || 0;
-    data.accountingRecord.socialSecurity = (sumSocial * 0.05) || 0;
+    // Assuming sumSocial is defined somewhere before this code
+// Check if sumSocial is greater than 15000
+if (sumSocial > 15000) {
+  sumSocial = await 15000; // Set sumSocial to 15000
+}
+
+// Calculate socialSecurity based on sumSocial
+data.accountingRecord.socialSecurity = (sumSocial * 0.05) || 0;
+
+    // data.accountingRecord.socialSecurity = (sumSocial * 0.05) || 0;
     data.accountingRecord.addAmountAfterTax = sumNonTaxNonSalary || 0;
     // data.accountingRecord.advancePayment = 0;
     data.accountingRecord.deductAfterTax = sumDeductUncalculateTax || 0;

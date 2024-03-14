@@ -1,4 +1,7 @@
 const connectionString = require('../config');
+const sURL = 'http://localhost:3000';
+
+const axios = require('axios');
 
 var express = require('express');
 var router = express.Router();
@@ -176,6 +179,56 @@ router.put('/update/:concludeRecordId', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+
+// Auto Create new conclude
+router.post('/autocreate', async (req, res) => {
+  const { 
+    year,
+    month,
+    // concludeDate,
+    employeeId,
+    createBy,
+    // concludeRecord 
+  } = await req.body;
+
+  try {
+    const dataTest = await {
+      year: "2024", 
+          month: "03",
+          employeeId : "1001"
+        };
+        // const x = await axios.post(sURL + '/accounting/calsalarylist', dataTest);
+    
+    
+  } catch (e) {
+    await console.log(e);
+  }
+  
+  
+
+  try {
+      //create conclude record
+      const recordConclude = new conclude({
+        year,
+        month,
+        concludeDate,
+        employeeId,
+        concludeRecord,
+        createBy });
+
+    const ans = await recordConclude .save();
+    if (ans) {
+      console.log('Create workplace time record success');
+    }
+
+    res.json(recordConclude );
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ error: err.message });
+  }
+});
+
 
 
 module.exports = router;
