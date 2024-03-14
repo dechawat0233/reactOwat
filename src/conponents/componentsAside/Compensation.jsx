@@ -479,6 +479,8 @@ function Compensation() {
                             selectotTimeOut: record.selectotTimeOut,
                             dayoffRateHour: matchedWorkplace ? matchedWorkplace.dayoffRateHour : '',
                             dayoffRateOT: matchedWorkplace ? matchedWorkplace.dayoffRateOT : '',
+                            holiday: matchedWorkplace ? matchedWorkplace.holiday : '',
+                            holidayOT: matchedWorkplace ? matchedWorkplace.holidayOT : '',
                         };
                     })
             );
@@ -520,6 +522,8 @@ function Compensation() {
                             selectotTimeOut: record.selectotTimeOut,
                             dayoffRateHour: matchedWorkplace ? matchedWorkplace.dayoffRateHour : '',
                             dayoffRateOT: matchedWorkplace ? matchedWorkplace.dayoffRateOT : '',
+                            holiday: matchedWorkplace ? matchedWorkplace.holiday : '',
+                            holidayOT: matchedWorkplace ? matchedWorkplace.holidayOT : '',
                         };
                     })
             );
@@ -823,7 +827,7 @@ function Compensation() {
     commonNumbers123.forEach(number => {
         commonNumbers.add(number);
     });
-    
+
     console.log("Common Numbers:", commonNumbers);
 
     // const commonNumbersArray = [...commonNumbers];
@@ -927,31 +931,65 @@ function Compensation() {
 
     const calculatedArray = resultArrayWithWorkplaceRecords.map((record) => {
         const numericDate = parseInt(record.dates, 10);
-
+        console.log('numericDate', numericDate);
         if (!isNaN(numericDate) && commonNumbersArray.includes(numericDate.toString())) {
             // if (parseInt(record.dates, 10) && commonNumbersArray.includes(record.dates)) {
 
             // if (record && parseInt(record.dates, 10) && commonNumbersArray.includes(record.dates)) {
 
-            const workOfHour = parseFloat(record.workOfHour) || 0;//เวลาทำงานเซ็ตไว้
-            const workRate = parseFloat(record.workRate) || 0;
-            // const workRateOTMatch = record.workRateOT.match(/\((.*?)\)/);
-            const otTimes = parseFloat(record.otTimes) || 0;//เวลาทำOT
+            // const workOfHour = parseFloat(record.workOfHour) || 0;//เวลาทำงานเซ็ตไว้
+            // const workRate = parseFloat(record.workRate) || 0;
+            // // const workRateOTMatch = record.workRateOT.match(/\((.*?)\)/);
+            // const otTimes = parseFloat(record.otTimes) || 0;//เวลาทำOT
 
-            const workRateOT = parseFloat(record.workRateOT) || 0;
-            const dayoffRateHour = parseFloat(record.dayoffRateHour) || 0;
-            const dayoffRateOT = parseFloat(record.dayoffRateOT) || 0;
+            // const workRateOT = parseFloat(record.workRateOT) || 0;
+            // const dayoffRateHour = parseFloat(record.dayoffRateHour) || 0;
+            // const dayoffRateOT = parseFloat(record.dayoffRateOT) || 0;
 
-            // Calculate the product of workRate and workRateOT
-            const calculatedValue = workRate * dayoffRateHour;
-            const calculatedValueOT = ((workRate / workOfHour) * dayoffRateOT) * otTimes;
+            // // Calculate the product of workRate and workRateOT
+            // const calculatedValue = workRate * dayoffRateHour;
+            // const calculatedValueOT = ((workRate / workOfHour) * dayoffRateOT) * otTimes;
 
-            // Return a new object with the calculated value
-            return {
-                ...record,
-                calculatedValue,
-                calculatedValueOT,
-            };
+            // // Return a new object with the calculated value
+            // return {
+            //     ...record,
+            //     calculatedValue,
+            //     calculatedValueOT,
+            // };
+
+            if (commonNumbers123.has(numericDate)) {
+                const workOfHour = parseFloat(record.workOfHour) || 0;
+                const workRate = parseFloat(record.workRate) || 0;
+                const otTimes = parseFloat(record.otTimes) || 0;
+                const workRateOT = parseFloat(record.workRateOT) || 0;
+                const holiday = parseFloat(record.holiday) || 0;
+                const holidayOT = parseFloat(record.holidayOT) || 0;
+
+                const calculatedValue = workRate * holiday;
+                const calculatedValueOT = ((workRate / workOfHour) * holidayOT) * otTimes;
+
+                return {
+                    ...record,
+                    calculatedValue,
+                    calculatedValueOT,
+                };
+            } else {
+                const workOfHour = parseFloat(record.workOfHour) || 0;
+                const workRate = parseFloat(record.workRate) || 0;
+                const otTimes = parseFloat(record.otTimes) || 0;
+                const workRateOT = parseFloat(record.workRateOT) || 0;
+                const dayoffRateHour = parseFloat(record.dayoffRateHour) || 0;
+                const dayoffRateOT = parseFloat(record.dayoffRateOT) || 0;
+
+                const calculatedValue = workRate * dayoffRateHour;
+                const calculatedValueOT = ((workRate / workOfHour) * dayoffRateOT) * otTimes;
+
+                return {
+                    ...record,
+                    calculatedValue,
+                    calculatedValueOT,
+                };
+            }
 
         }
 
@@ -975,6 +1013,18 @@ function Compensation() {
                 // addSalaryDay1 = (addSalaryDay / 30).toFixed(2);
                 // }
             }
+
+
+            // if (item !== '') {
+            //     // If item is not an empty string
+            //     if (commonNumbers123.has(parseInt(item.dates, 10))) {
+            //         // Check if commonNumbers123 contains the date from item
+            //         addSalaryDay1 = addSalaryDay;
+            //     }else{
+
+            //     }
+            // }
+
             // commonNumbersArray
             const workRateOT2 = !isNaN(item.workRate) && !isNaN(item.workOfHour) && !isNaN(item.workRateOT) ?
                 `${(((item.workRate / item.workOfHour) * item.workRateOT) * item.otTimes).toFixed(2)} (${item.workRateOT})` :
@@ -985,7 +1035,15 @@ function Compensation() {
 
             // Update workRate and workRateOT based on the presence of calculated values
             const workRate = hasCalculatedValues ? item.calculatedValue : item.workRate;
-            const workRateOT = hasCalculatedValuesOT ? item.calculatedValueOT + ' ' + '(' + item.dayoffRateOT + ')' : workRateOT2;
+            let workRateOT = '';
+
+            if (commonNumbers123.has(parseInt(item.dates, 10))) {
+                // Check if commonNumbers123 contains the date from item holidayOT
+                workRateOT = hasCalculatedValuesOT ? item.calculatedValueOT + ' (' + item.holidayOT + ')' : workRateOT2;
+            } else {
+                workRateOT = hasCalculatedValuesOT ? item.calculatedValueOT + ' (' + item.dayoffRateOT + ')' : workRateOT2;
+            }
+            // const workRateOT = hasCalculatedValuesOT ? item.calculatedValueOT + ' ' + '(' + item.dayoffRateOT + ')' : workRateOT2;
 
             const tmp = {
                 day: resultArray[index],
