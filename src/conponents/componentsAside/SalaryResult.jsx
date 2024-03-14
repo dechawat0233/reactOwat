@@ -1149,7 +1149,7 @@ function Salaryresult() {
                               onChange={handleAnySpSalaryChange}
                             />
                           </td> */}
-                          <td style={cellStyle}>{(overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary).toFixed()}</td>
+                          <td style={cellStyle}>{(overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary).toFixed(2)}</td>
                           <td style={cellStyle}>
                             <button class="btn btn-danger" style={{ width: '3rem' }}>แก้ไข</button>
                           </td>
@@ -1169,7 +1169,7 @@ function Salaryresult() {
                           <th style={headerCellStyle}>หักภาษี</th>
                           <th style={headerCellStyle}>หักประกันสังคม</th>
                           <th style={headerCellStyle}>ธรรมเนียมธนาคาร</th>
-                          {/* <th style={headerCellStyle}>หักอื่นๆ</th> */}
+                          <th style={headerCellStyle}>หัก</th>
                           <th style={headerCellStyle}>รวมเงินหัก</th>
                           <th style={headerCellStyle}>แก้ไข</th>
                         </tr>
@@ -1190,6 +1190,7 @@ function Salaryresult() {
                               onChange={handleAnyMinusChange}
                             />
                           </td> */}
+                          <td style={cellStyle}></td>
                           <td style={cellStyle}>{(totalSumDeduct).toFixed(2)}</td>
                           {/* <td style={cellStyle}>({anyMinus} + {tax} + {((overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary) * socialSecurity).toFixed()} + {bankCustom} + {sumDeduct} + {sumDeductInstallment})</td> */}
                           <td style={cellStyle}>
