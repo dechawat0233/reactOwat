@@ -765,29 +765,6 @@ function Compensation() {
 
     console.log('workplace123', workplace);
 
-    // const monthTest = "09"; // Assuming "09" represents September
-    const commonNumbers123 = new Set();
-
-    if (workplace) {
-        const matchingDays = workplace.daysOff.filter(date => {
-            const dateObj = new Date(date);
-            return (dateObj.getMonth() + 1).toString().padStart(2, '0') === month; // +1 because getMonth() returns zero-based month index
-        });
-
-        console.log('matchingDays', matchingDays);
-        // Iterate over matchingDays and add day numbers to commonNumbers set
-
-        matchingDays.forEach(date => {
-            const dateObj = new Date(date);
-            const day = dateObj.getDate(); // Get the day number (1-31)
-            commonNumbers123.add(day); // Add day number to the set
-        });
-
-        console.log('commonNumbers123', commonNumbers123);
-    } else {
-        console.error('Workplace not found');
-    }
-
     const commonNumbers = new Set();
 
     if (workplace) {
@@ -812,19 +789,13 @@ function Compensation() {
             });
 
             // setHoliday(commonNumbers);
-            // console.log("Common Numbers:", commonNumbers);
+            console.log("Common Numbers:", commonNumbers);
         } else {
             console.log("No stop workTimeDay found.");
         }
     } else {
         console.log("Workplace not found.");
     }
-
-    commonNumbers123.forEach(number => {
-        commonNumbers.add(number);
-    });
-    
-    console.log("Common Numbers:", commonNumbers);
 
     // const commonNumbersArray = [...commonNumbers];
     const commonNumbersArray = [...commonNumbers].map(value => value.toString());
