@@ -1124,7 +1124,7 @@ function Salaryresult() {
                           <th style={headerCellStyle}>เงินค่าจ้างปกติ</th>
                           <th style={headerCellStyle}>เงินค่าล่วงเวลา</th>
                           <th style={headerCellStyle}>เงินเพิ่มพิเศษ</th>
-                          {/* <th style={headerCellStyle}>เงินบวกอื่นๆ</th> */}
+                          <th style={headerCellStyle}>เงินบวกอื่นๆ</th>
                           <th style={headerCellStyle}>รวมเงินได้</th>
                           <th style={headerCellStyle}>แก้ไข</th>
                         </tr>
@@ -1135,10 +1135,9 @@ function Salaryresult() {
                           <td style={cellStyle}>{(overWorkRateSum).toFixed(2)}</td>
                           <td style={cellStyle}>{(overWorkRateOTSum).toFixed(2)}</td>
                           {/* <td style={cellStyle}>{(overAddSalaryDaySum).toFixed(2) + (sumSpSalary).toFixed(2)}</td> */}
-                          {/* <td style={cellStyle}>{(overAddSalaryDaySum + sumSpSalaryResult).toFixed(2) + `(` + (overAddSalaryDaySum).toFixed(2) + `+` + (sumSpSalaryResult).toFixed(2) + `)`}</td> */}
-                          <td style={cellStyle}>{(overAddSalaryDaySum + sumSpSalaryResult).toFixed(2)}</td>
+                          <td style={cellStyle}>{(overAddSalaryDaySum + sumSpSalaryResult).toFixed(2) + `(` + (overAddSalaryDaySum).toFixed(2) + `+` + (sumSpSalaryResult).toFixed(2) + `)`}</td>
 
-                          {/* <td style={cellStyle}>
+                          <td style={cellStyle}>
                             <input
                               type="text"
                               className="form-control"
@@ -1148,7 +1147,7 @@ function Salaryresult() {
                               style={{ width: '50%' }}
                               onChange={handleAnySpSalaryChange}
                             />
-                          </td> */}
+                          </td>
                           <td style={cellStyle}>{(overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary).toFixed()}</td>
                           <td style={cellStyle}>
                             <button class="btn btn-danger" style={{ width: '3rem' }}>แก้ไข</button>
@@ -1169,7 +1168,7 @@ function Salaryresult() {
                           <th style={headerCellStyle}>หักภาษี</th>
                           <th style={headerCellStyle}>หักประกันสังคม</th>
                           <th style={headerCellStyle}>ธรรมเนียมธนาคาร</th>
-                          {/* <th style={headerCellStyle}>หักอื่นๆ</th> */}
+                          <th style={headerCellStyle}>หักอื่นๆ</th>
                           <th style={headerCellStyle}>รวมเงินหัก</th>
                           <th style={headerCellStyle}>แก้ไข</th>
                         </tr>
@@ -1179,7 +1178,7 @@ function Salaryresult() {
                           <td style={cellStyle}>{tax}</td>
                           <td style={cellStyle}>{((overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary) * socialSecurity).toFixed()}</td>
                           <td style={cellStyle}>{bankCustom}</td>
-                          {/* <td style={cellStyle}>
+                          <td style={cellStyle}>
                             <input
                               type="text"
                               className="form-control"
@@ -1189,9 +1188,8 @@ function Salaryresult() {
                               style={{ width: '50%' }}
                               onChange={handleAnyMinusChange}
                             />
-                          </td> */}
-                          <td style={cellStyle}>{(totalSumDeduct).toFixed(2)}</td>
-                          {/* <td style={cellStyle}>({anyMinus} + {tax} + {((overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary) * socialSecurity).toFixed()} + {bankCustom} + {sumDeduct} + {sumDeductInstallment})</td> */}
+                          </td>
+                          <td style={cellStyle}>({anyMinus} + {tax} + {((overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary) * socialSecurity).toFixed()} + {bankCustom} + {sumDeduct} + {sumDeductInstallment})</td>
                           <td style={cellStyle}>
                             <button class="btn btn-danger" style={{ width: '3rem' }}>แก้ไข</button>
                           </td>
@@ -1217,9 +1215,9 @@ function Salaryresult() {
                       </thead>
                       <tbody>
                         <tr>
-                          <td style={cellStyle}>{(overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary).toFixed(2)}</td>
-                          <td style={cellStyle}>{(totalSumDeduct).toFixed(2)}</td>
-                          <td style={cellStyle}>{(totalSumSalary).toFixed(2) - (totalSumDeduct).toFixed(2)}</td>
+                          <td>{(overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary).toFixed(2)}</td>
+                          <td>{(totalSumDeduct).toFixed(2)}</td>
+                          <td>{(totalSumSalary).toFixed(2) - (totalSumDeduct).toFixed(2)}</td>
                         </tr>
                       </tbody>
                     </table>
