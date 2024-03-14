@@ -516,7 +516,9 @@ function Salaryresult() {
           //check 0003 is bank custom
           else if (item.id == "0003") {
             // alert(item.amount);\
-            setBankCustom(item.amount);
+            // setBankCustom(item.amount);
+            setBankCustom(0);
+
           }
           else {
             sum = sum + parseFloat(item.amount);
