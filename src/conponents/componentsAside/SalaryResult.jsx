@@ -999,12 +999,12 @@ function Salaryresult() {
   // console.log("Count:", sumWorkRate.count);
 
   const totalSumSalary =
-    parseInt(overWorkRateSum) +
-    parseInt(overWorkRateOTSum) +
-    parseInt(overAddSalaryDaySum) +
-    parseInt(sumSpSalaryResult) +
-    parseInt(anySpSalary);
-    
+    parseFloat(overWorkRateSum) +
+    parseFloat(overWorkRateOTSum) +
+    parseFloat(overAddSalaryDaySum) +
+    parseFloat(sumSpSalaryResult) +
+    parseFloat(anySpSalary);
+
   // const totalSumSalary =
   //   parseInt(amountDay) +
   //   parseInt(amountOt) +
@@ -1023,11 +1023,11 @@ function Salaryresult() {
     // parseInt(bankCustom) +
     // parseInt(sumDeduct) +
     // parseInt(sumDeductInstallment);
-    parseInt(deductBeforeTax) +
-    parseInt(deductAfterTax) +
-    parseInt(tax) +
-    parseInt(socialSecurity) +
-    parseInt(bank);
+    parseFloat(deductBeforeTax) +
+    parseFloat(deductAfterTax) +
+    parseFloat(tax) +
+    parseFloat(socialSecurity) +
+    parseFloat(bank);
   return (
     // <div>
 
