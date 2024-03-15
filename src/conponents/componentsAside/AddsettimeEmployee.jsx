@@ -852,6 +852,10 @@ try {
         // await alert('conclude is null');
     } else {
         // await alert('conclude is set');
+        await localStorage.setItem('editConclude', searchEmployeeId);
+        await localStorage.setItem('employeeId', searchEmployeeId);
+        await localStorage.setItem('month', month);
+        await localStorage.setItem('year', year);
 
         // await setConcludeResult(response.data.recordConclude[0].concludeRecord);
         // await setLoadStatus('load');

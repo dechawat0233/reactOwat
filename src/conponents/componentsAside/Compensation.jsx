@@ -91,6 +91,8 @@ function Compensation() {
 
         const getdata = async () => {
 
+            const savedEditConclude = await localStorage.getItem('editConclude');
+
             const savedEmployeeId = await localStorage.getItem('employeeId');
             const savedEmployeeFullName = await localStorage.getItem('staffFullName') || '';
             const savedMonth = await localStorage.getItem('month');
@@ -402,9 +404,16 @@ function Compensation() {
             if (response.length < 1) {
                 // alert('conclude is null');
             } else {
+                //check update time record then reset data conclude
+                if(savedEditConclude){
+                    await setLoadStatus(null);
+                
+                } else {
                 await setConcludeResult(response.data.recordConclude[0].concludeRecord);
                 await setLoadStatus('load');
                 await setUpdate(response.data.recordConclude[0]._id);
+            }
+
             }
         } catch (e) {
             // alert(e);
