@@ -998,20 +998,23 @@ function Salaryresult() {
   // console.log("Sum:", sumWorkRate.sum);
   // console.log("Count:", sumWorkRate.count);
 
-  // const totalSumSalary =
-  //   parseInt(overWorkRateSum) +
-  //   parseInt(overWorkRateOTSum) +
-  //   parseInt(overAddSalaryDaySum) +
-  //   parseInt(sumSpSalaryResult) +
-  //   parseInt(anySpSalary);
   const totalSumSalary =
-    parseInt(amountDay) +
-    parseInt(amountOt) +
-    parseInt(amountPosition) +
-    parseInt(amountHardWorking) +
-    parseInt(amountHoliday) +
-    parseInt(addAmountAfterTax) +
-    parseInt(amountSpecial);
+    parseInt(overWorkRateSum) +
+    parseInt(overWorkRateOTSum) +
+    parseInt(overAddSalaryDaySum) +
+    parseInt(sumSpSalaryResult) +
+    parseInt(anySpSalary);
+    
+  // const totalSumSalary =
+  //   parseInt(amountDay) +
+  //   parseInt(amountOt) +
+  //   parseInt(amountPosition) +
+  //   parseInt(amountHardWorking) +
+  //   parseInt(amountHoliday) +
+  //   parseInt(addAmountAfterTax) +
+  //   parseInt(amountSpecial);
+
+  //   overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult
 
   const totalSumDeduct =
     // parseInt(anyMinus) +
@@ -1198,7 +1201,7 @@ function Salaryresult() {
                         <tr>
                           <th style={headerCellStyle}>เงินค่าจ้างปกติ</th>
                           <th style={headerCellStyle}>เงินค่าล่วงเวลา</th>
-                          <th style={headerCellStyle}>เงินเพิ่มพิเศษ</th>
+                          <th style={headerCellStyle}>เงินเพิ่ม</th>
                           {/* <th style={headerCellStyle}>เงินบวกอื่นๆ</th> */}
                           <th style={headerCellStyle}>รวมเงินได้</th>
                           <th style={headerCellStyle}>แก้ไข</th>
@@ -1244,7 +1247,7 @@ function Salaryresult() {
                           <th style={headerCellStyle}>หักภาษี</th>
                           <th style={headerCellStyle}>หักประกันสังคม</th>
                           <th style={headerCellStyle}>ธรรมเนียมธนาคาร</th>
-                          <th style={headerCellStyle}>หัก</th>
+                          <th style={headerCellStyle}>เงินหัก</th>
                           <th style={headerCellStyle}>รวมเงินหัก</th>
                           <th style={headerCellStyle}>แก้ไข</th>
                         </tr>
