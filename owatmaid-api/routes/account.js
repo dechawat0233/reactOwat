@@ -258,13 +258,25 @@ await Promise.all(promises1)
     // let sumSocial = 0;
     results.forEach((result, k) => {
         if (result === true) {
+          if(response.data.addSalary[k].roundOfSalary === "daily") {
+            sumCalTax+= parseFloat(response.data.addSalary[k].SpSalary || 0) * countDay;
+            sumCalTaxNonSalary += parseFloat(response.data.addSalary[k].SpSalary || 0) *countDay;
+
+          } else {
             sumCalTax+= parseFloat(response.data.addSalary[k].SpSalary || 0);
             sumCalTaxNonSalary += parseFloat(response.data.addSalary[k].SpSalary || 0);
+
+          }
 
             // console.log(`Promise ${k} is resolved`);
             // console.log(response.data.addSalary[k].SpSalary);
         }  else {
-          sumNonTaxNonSalary+= parseFloat(response.data.addSalary[k].SpSalary || 0);
+          if(response.data.addSalary[k].roundOfSalary === "daily") {
+            sumNonTaxNonSalary+= parseFloat(response.data.addSalary[k].SpSalary || 0) * countDay;
+          } else {
+            sumNonTaxNonSalary+= parseFloat(response.data.addSalary[k].SpSalary || 0);
+          }
+
         }
     });
     console.log(sumCalTax);
