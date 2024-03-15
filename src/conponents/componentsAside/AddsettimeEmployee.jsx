@@ -834,6 +834,33 @@ function AddsettimeEmployee() {
             // setEmployeesResult(response.data.employees);
             if (response) {
                 alert("บันทึกสำเร็จ");
+
+                        //get data from conclude data then check edit data 
+        const serchConclude = await {
+            year: year,
+            month: month,
+            concludeDate: '',
+            employeeId: searchEmployeeId,
+            employeeName: searchEmployeeName
+        };
+
+try {
+    const concludeResponse = await axios.post(endpoint + '/conclude/search', serchConclude);
+
+    // await alert(JSON.stringify(concludeResponse ,null,2));
+    if (concludeResponse.data.recordConclude.length < 1) {
+        // await alert('conclude is null');
+    } else {
+        // await alert('conclude is set');
+
+        // await setConcludeResult(response.data.recordConclude[0].concludeRecord);
+        // await setLoadStatus('load');
+        // await setUpdate(response.data.recordConclude[0]._id);
+    }
+
+} catch (e) {
+    console.log(e);
+}
                 window.location.reload();
 
             }
