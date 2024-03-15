@@ -183,6 +183,8 @@ router.put('/update/:concludeRecordId', async (req, res) => {
 
 // Auto Create new conclude
 router.post('/autocreate', async (req, res) => {
+const workplaceList = await [];
+
   const { 
     year,
     month,
@@ -193,13 +195,15 @@ router.post('/autocreate', async (req, res) => {
   } = await req.body;
 
   try {
+    const workplaceResult = await axios.get(sURL + '/workplace/list');
+    await console.log(JSON.stringify(workplaceResult.data[0].workTimeDay ) );
     const dataTest = await {
-      year: "2024", 
+      timerecordId: "2024", 
           month: "03",
           employeeId : "1001"
         };
-        // const x = await axios.post(sURL + '/accounting/calsalarylist', dataTest);
-    
+        // const x = await axios.post(sURL + '/timerecord/searchemp', dataTest);
+// console.log(JSON.stringify(x,null,2));    
     
   } catch (e) {
     await console.log(e);
@@ -207,26 +211,26 @@ router.post('/autocreate', async (req, res) => {
   
   
 
-  try {
-      //create conclude record
-      const recordConclude = new conclude({
-        year,
-        month,
-        concludeDate,
-        employeeId,
-        concludeRecord,
-        createBy });
+  // try {
+  //     //create conclude record
+  //     const recordConclude = new conclude({
+  //       year,
+  //       month,
+  //       concludeDate,
+  //       employeeId,
+  //       concludeRecord,
+  //       createBy });
 
-    const ans = await recordConclude .save();
-    if (ans) {
-      console.log('Create workplace time record success');
-    }
+  //   const ans = await recordConclude .save();
+  //   if (ans) {
+  //     console.log('Create workplace time record success');
+  //   }
 
-    res.json(recordConclude );
-  } catch (err) {
-    console.error(err);
-    res.status(400).json({ error: err.message });
-  }
+  //   res.json(recordConclude );
+  // } catch (err) {
+  //   console.error(err);
+  //   res.status(400).json({ error: err.message });
+  // }
 });
 
 
