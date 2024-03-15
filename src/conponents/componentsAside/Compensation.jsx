@@ -65,6 +65,7 @@ function Compensation() {
     const [month, setMonth] = useState('01');
     const [year, setYear] = useState(new Date().getFullYear());
     const [employee, setEmployee] = useState({});
+const [editStatus , setEditStatus] = useState('');
 
     const thaiMonthNames = [
         'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
@@ -91,7 +92,11 @@ function Compensation() {
 
         const getdata = async () => {
 
-            const savedEditConclude = await localStorage.getItem('editConclude');
+            const savedEditConclude = await localStorage.getItem('editConclude') || '';
+            if (savedEditConclude) {
+                await setEditStatus(savedEditConclude);
+                await localStorage.removeItem('editConclude');
+            }
 
             const savedEmployeeId = await localStorage.getItem('employeeId');
             const savedEmployeeFullName = await localStorage.getItem('staffFullName') || '';
@@ -400,14 +405,18 @@ function Compensation() {
 
         try {
             const response = await axios.post(endpoint + '/conclude/search', serchConclude);
+// await alert(response.data.recordConclude.length);
+// await alert(JSON.stringify(response,null,2));
 
-            if (response.length < 1) {
+            if (response.data.recordConclude.length < 1) {
                 // alert('conclude is null');
             } else {
                 //check update time record then reset data conclude
-                if(savedEditConclude){
+                await alert(editStatus);
+                if(editStatus !== ''  ){
                     await setLoadStatus(null);
-                
+                    await setUpdate(response.data.recordConclude[0]._id);
+
                 } else {
                 await setConcludeResult(response.data.recordConclude[0].concludeRecord);
                 await setLoadStatus('load');
@@ -1111,7 +1120,7 @@ function Compensation() {
         };
 
         //ccc
-        if (update == null) {
+        if (update == null && editStatus == '') {
 
             //create new conclude record
             try {
