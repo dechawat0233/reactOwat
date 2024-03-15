@@ -34,7 +34,7 @@ function Salaryresult() {
   //variable
   // const [socialSecurity, setSocialSecurity] = useState(0); // ประกันสังคม
   // const [tax, setTax] = useState(0); //ภาษี 
-
+  
   const [bankCustom, setBankCustom] = useState(0); //ค่าทำเนียม
   const [sumDeduct, setSumDeduct] = useState(0); //sum deduct immedate
   const [sumDeductInstallment, setSumDeductInstallment] = useState(0); //sum deduct installment
@@ -579,75 +579,75 @@ function Salaryresult() {
       //   // You can access SpSalary values from addSalaryMonthly array
       // }
 
-      // if (filteredEntriesEmp.length > 0) {
-      //   const addSalaryMonthly = filteredEntriesEmp[0].addSalary.filter(salary => salary.roundOfSalary === "monthly");
+      if (filteredEntriesEmp.length > 0) {
+        const addSalaryMonthly = filteredEntriesEmp[0].addSalary.filter(salary => salary.roundOfSalary === "monthly");
 
-      //   //get deduct data with immedate
-      //   const deductSalary = filteredEntriesEmp[0].deductSalary.filter(deduct => deduct.payType === "immedate");
-      //   let sum = 0;
-      //   //loop forget socialSecurity and tax
-      //   deductSalary.map((item, index) => {
+        //get deduct data with immedate
+        const deductSalary = filteredEntriesEmp[0].deductSalary.filter(deduct => deduct.payType === "immedate");
+        let sum = 0;
+        //loop forget socialSecurity and tax
+        deductSalary.map((item, index) => {
 
-      //     //check 0001 is social security
-      //     if (item.id == "0001") {
-      //       // alert(item.amount);
-      //       if (item.amount.includes("%")) {
-      //         let tmp = item.amount.replace(/%/g, "");
-      //         tmp = tmp / 100;
-      //         setSocialSecurity(tmp);
-      //       } else {
-      //         setSocialSecurity(item.amount);
-      //       }
-      //     }
-      //     //check 0002 is tax
-      //     else if (item.id == "0002") {
-      //       // alert(item.amount);
-      //       if (item.amount.includes("%")) {
-      //         let tmp = item.amount.replace(/%/g, "");
-      //         tmp = tmp / 100;
-      //         setTax(tmp);
-      //       } else {
-      //         setTax(item.amount);
-      //       }
-      //     }
-      //     //check 0003 is bank custom
-      //     else if (item.id == "0003") {
-      //       // alert(item.amount);\
-      //       // setBankCustom(item.amount);
-      //       setBankCustom(0);
+          //check 0001 is social security
+          if (item.id == "0001") {
+            // alert(item.amount);
+            if (item.amount.includes("%")) {
+              let tmp = item.amount.replace(/%/g, "");
+              tmp = tmp / 100;
+              setSocialSecurity(tmp);
+            } else {
+              setSocialSecurity(item.amount);
+            }
+          }
+          //check 0002 is tax
+          else if (item.id == "0002") {
+            // alert(item.amount);
+            if (item.amount.includes("%")) {
+              let tmp = item.amount.replace(/%/g, "");
+              tmp = tmp / 100;
+              setTax(tmp);
+            } else {
+              setTax(item.amount);
+            }
+          }
+          //check 0003 is bank custom
+          else if (item.id == "0003") {
+            // alert(item.amount);\
+            // setBankCustom(item.amount);
+            setBankCustom(0);
 
-      //     }
-      //     else {
-      //       sum = sum + parseFloat(item.amount);
-      //     }
-      //   })
-      //   setSumDeduct(sum);
-      //   // alert(deductSalary.length);
+          }
+          else {
+            sum = sum + parseFloat(item.amount);
+          }
+        })
+        setSumDeduct(sum);
+        // alert(deductSalary.length);
 
-      //   //get deduct data with installment
-      //   const deductSalaryInstallment = filteredEntriesEmp[0].deductSalary.filter(deduct => deduct.payType === "installment");
-      //   let sumInstallment = 0;
-      //   //loop forget socialSecurity and tax
-      //   deductSalaryInstallment.map((item, index) => {
-      //     let amount = parseFloat(item.amount);
-      //     let installment = parseFloat(item.installment);
-      //     sumInstallment = sumInstallment + parseFloat((amount / installment).toFixed(2));
-      //   });
-      //   setSumDeductInstallment(sumInstallment);
+        //get deduct data with installment
+        const deductSalaryInstallment = filteredEntriesEmp[0].deductSalary.filter(deduct => deduct.payType === "installment");
+        let sumInstallment = 0;
+        //loop forget socialSecurity and tax
+        deductSalaryInstallment.map((item, index) => {
+          let amount = parseFloat(item.amount);
+          let installment = parseFloat(item.installment);
+          sumInstallment = sumInstallment + parseFloat((amount / installment).toFixed(2));
+        });
+        setSumDeductInstallment(sumInstallment);
 
-      //   console.log('addSalaryMonthly', addSalaryMonthly);
+        console.log('addSalaryMonthly', addSalaryMonthly);
 
-      //   // Now addSalaryMonthly contains only the items with roundOfSalary === "monthly"
+        // Now addSalaryMonthly contains only the items with roundOfSalary === "monthly"
 
-      //   // Summing SpSalary values using reduce
-      //   const sumSpSalary = addSalaryMonthly.reduce((sum, salary) => sum + parseFloat(salary.SpSalary || 0), 0);
+        // Summing SpSalary values using reduce
+        const sumSpSalary = addSalaryMonthly.reduce((sum, salary) => sum + parseFloat(salary.SpSalary || 0), 0);
 
-      //   console.log('sumSpSalary', sumSpSalary);
+        console.log('sumSpSalary', sumSpSalary);
 
-      //   setSumSpSalaryResult(sumSpSalary);
-      //   console.log('setSumSpSalaryResult', sumSpSalaryResult);
+        setSumSpSalaryResult(sumSpSalary);
+        console.log('setSumSpSalaryResult', sumSpSalaryResult);
 
-      // }
+      }
 
       // const entriesData = filteredEntries.map(entry =>
       //   entry.concludeRecord
@@ -996,34 +996,21 @@ function Salaryresult() {
 
   // console.log("Sum:", sumWorkRate.sum);
   // console.log("Count:", sumWorkRate.count);
-
-  // const totalSumSalary =
-  //   parseInt(overWorkRateSum) +
-  //   parseInt(overWorkRateOTSum) +
-  //   parseInt(overAddSalaryDaySum) +
-  //   parseInt(sumSpSalaryResult) +
-  //   parseInt(anySpSalary);
   const totalSumSalary =
-    parseInt(amountDay) +
-    parseInt(amountOt) +
-    parseInt(amountPosition) +
-    parseInt(amountHardWorking) +
-    parseInt(amountHoliday) +
-    parseInt(addAmountAfterTax) +
-    parseInt(amountSpecial);
+    parseInt(overWorkRateSum) +
+    parseInt(overWorkRateOTSum) +
+    parseInt(overAddSalaryDaySum) +
+    parseInt(sumSpSalaryResult) +
+    parseInt(anySpSalary);
 
   const totalSumDeduct =
-    // parseInt(anyMinus) +
-    // parseInt(tax) +
-    // (parseInt(overWorkRateSum) + parseFloat(overWorkRateOTSum) + parseFloat(overAddSalaryDaySum) + parseFloat(sumSpSalaryResult) + parseInt(anySpSalary)) * parseFloat(socialSecurity) +
-    // parseInt(bankCustom) +
-    // parseInt(sumDeduct) +
-    // parseInt(sumDeductInstallment);
-    parseInt(deductBeforeTax) +
-    parseInt(deductAfterTax) +
+    parseInt(anyMinus) +
     parseInt(tax) +
-    parseInt(socialSecurity) +
-    parseInt(bank);
+    (parseInt(overWorkRateSum) + parseFloat(overWorkRateOTSum) + parseFloat(overAddSalaryDaySum) + parseFloat(sumSpSalaryResult) + parseInt(anySpSalary)) * parseFloat(socialSecurity) +
+    parseInt(bankCustom) +
+    parseInt(sumDeduct) +
+    parseInt(sumDeductInstallment);
+
   return (
     // <div>
 
@@ -1251,10 +1238,8 @@ function Salaryresult() {
                       <tbody>
                         <tr>
                           <td style={cellStyle}>{Number(tax).toFixed(2)}</td>
-                          {/* <td style={cellStyle}>{((overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary) * socialSecurity).toFixed(2)}</td> */}
-                          <td style={cellStyle}>{Number(socialSecurity).toFixed(2)}</td>
-
-                          <td style={cellStyle}>{Number(bank).toFixed(2)}</td>
+                          <td style={cellStyle}>{((overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary) * socialSecurity).toFixed(2)}</td>
+                          <td style={cellStyle}>{Number(bankCustom).toFixed(2)}</td>
                           {/* <td style={cellStyle}>
                             <input
                               type="text"
@@ -1266,8 +1251,8 @@ function Salaryresult() {
                               onChange={handleAnyMinusChange}
                             />
                           </td> */}
-                          <td style={cellStyle}>{(Number(deductBeforeTax) + Number(deductAfterTax)).toFixed(2)}</td>
-                          <td style={cellStyle}>{(Number(deductBeforeTax) + Number(deductAfterTax) + Number(tax) + Number(socialSecurity) + Number(bank)).toFixed(2)}</td>
+                          <td style={cellStyle}></td>
+                          <td style={cellStyle}>{(totalSumDeduct).toFixed(2)}</td>
                           {/* <td style={cellStyle}>({anyMinus} + {tax} + {((overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary) * socialSecurity).toFixed()} + {bankCustom} + {sumDeduct} + {sumDeductInstallment})</td> */}
                           <td style={cellStyle}>
                             <button class="btn btn-danger" style={{ width: '3rem' }}>แก้ไข</button>
@@ -1294,9 +1279,9 @@ function Salaryresult() {
                       </thead>
                       <tbody>
                         <tr>
-                          <td style={cellStyle}>{(totalSumSalary).toFixed(2)}</td>
+                          <td style={cellStyle}>{(overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary).toFixed(2)}</td>
                           <td style={cellStyle}>{(totalSumDeduct).toFixed(2)}</td>
-                          <td style={cellStyle}>{(totalSumSalary - totalSumDeduct).toFixed(2)}</td>
+                          <td style={cellStyle}>{(totalSumSalary).toFixed(2) - (totalSumDeduct).toFixed(2)}</td>
                         </tr>
                       </tbody>
                     </table>

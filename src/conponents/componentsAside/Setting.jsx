@@ -1240,19 +1240,19 @@ function Setting() {
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label role="workRate">อัตราค่าจ้าง รายวัน</label>
-                                                <input type="text" class="form-control" id="workRate" placeholder="อัตราค่าจ้าง รายวัน" value={workRate} onChange={(e) => setWorkRate(e.target.value)} />
+                                                <input type="text" class="form-control" id="workRate" placeholder="บาท" value={workRate} onChange={(e) => setWorkRate(e.target.value)} />
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label role="workRateOT">อัตราค่าจ้าง OT รายชั่วโมง</label>
-                                                <input type="text" class="form-control" id="workRateOT" placeholder="อัตราค่าจ้าง OT รายชั่วโมง" value={workRateOT} onChange={(e) => setWorkRateOT(e.target.value)} />
+                                                <input type="text" class="form-control" id="workRateOT" placeholder="กี่เท่า" value={workRateOT} onChange={(e) => setWorkRateOT(e.target.value)} />
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label role="workTotalPeople">จำนวนพนักงานที่ปฏิบัติงาน</label>
-                                                <input type="text" class="form-control" id="workTotalPeople" placeholder="จำนวนพนักงานที่ปฏิบัติงาน" value={workTotalPeople} onChange={(e) => setWorkTotalPeople(e.target.value)} />
+                                                <input type="text" class="form-control" id="workTotalPeople" placeholder="คน" value={workTotalPeople} onChange={(e) => setWorkTotalPeople(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -1260,38 +1260,38 @@ function Setting() {
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label role="dayoffRate">อัตราค่าจ้างวันหยุดประจำสัปดาห์</label>
-                                                <input type="text" class="form-control" id="dayoffRate" placeholder="อัตราค่าจ้างวันหยุดประจำสัปดาห์" value={dayoffRate} onChange={(e) => setDayoffRate(e.target.value)} />
+                                                <input type="text" class="form-control" id="dayoffRate" placeholder="บาท" value={dayoffRate} onChange={(e) => setDayoffRate(e.target.value)} />
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label role="dayoffRateHour">อัตราค่าจ้างวันหยุดประจำสัปดาห์รายชั่วโมง</label>
-                                                <input type="text" class="form-control" id="dayoffRateHour" placeholder="อัตราค่าจ้างวันหยุดประจำสัปดาห์รายชั่วโมง" value={dayoffRateHour} onChange={(e) => setDayoffRateHour(e.target.value)} />
+                                                <input type="text" class="form-control" id="dayoffRateHour" placeholder="กี่เท่า" value={dayoffRateHour} onChange={(e) => setDayoffRateHour(e.target.value)} />
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label role="dayoffRateOT">อัตราค่าจ้าง OT วันหยุดประจำสัปดาห์รายชั่วโมง</label>
-                                                <input type="text" class="form-control" id="dayoffRateOT" placeholder="อัตราค่าจ้าง OT วันหยุดประจำสัปดาห์รายชั่วโมง" value={dayoffRateOT} onChange={(e) => setDayoffRateOT(e.target.value)} />
+                                                <input type="text" class="form-control" id="dayoffRateOT" placeholder="กี่เท่า" value={dayoffRateOT} onChange={(e) => setDayoffRateOT(e.target.value)} />
                                             </div>
                                         </div>
 
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label role="holiday">อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายวัน</label>
-                                                <input type="text" class="form-control" id="holiday" placeholder="อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายวัน" value={holiday} onChange={(e) => setHoliday(e.target.value)} />
+                                                <input type="text" class="form-control" id="holiday" placeholder="กี่เท่า" value={holiday} onChange={(e) => setHoliday(e.target.value)} />
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label role="holidayHour">อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง</label>
-                                                <input type="text" class="form-control" id="holidayHour" placeholder="อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง" value={holidayHour} onChange={(e) => setHolidayHour(e.target.value)} />
+                                                <input type="text" class="form-control" id="holidayHour" placeholder="" value={holidayHour} onChange={(e) => setHolidayHour(e.target.value)} />
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label role="holidayOT">อัตราค่าจ้างวันหยุดนักขัตฤกษ์ OT รายชั่วโมง</label>
-                                                <input type="text" class="form-control" id="holidayOT" placeholder="อัตราค่าจ้างวันหยุดนักขัตฤกษ์ OT รายชั่วโมง" value={holidayOT} onChange={(e) => setHolidayOT(e.target.value)} />
+                                                <input type="text" class="form-control" id="holidayOT" placeholder="กี่เท่า" value={holidayOT} onChange={(e) => setHolidayOT(e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
