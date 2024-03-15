@@ -648,29 +648,6 @@ function Salaryresult() {
         console.log('setSumSpSalaryResult', sumSpSalaryResult);
 
       }
-<<<<<<< HEAD
-
-      const entriesData = filteredEntries.map(entry =>
-        entry.concludeRecord
-          .filter(record => record.date <= 20)
-          .map(record => {
-            const matchedWorkplace = workplaceList.find(workplace => workplace.workplaceId === record.workplaceId);
-            return {
-              workplaceId: record.workplaceId,
-              dates: record.date,
-              workOfHour: matchedWorkplace ? matchedWorkplace.workOfHour : '', // Default value if not found
-              workRate: matchedWorkplace ? matchedWorkplace.workRate : '', // Default value if not found
-              workRateOT: matchedWorkplace ? matchedWorkplace.workRateOT : '',
-              allTimes: record.allTime,
-              otTimes: record.otTime,
-              startTime: record.startTime,
-              endTime: record.endTime,
-              selectotTime: record.selectotTime,
-              selectotTimeOut: record.selectotTimeOut,
-            };
-          })
-      );
-=======
 
       const entriesData = filteredEntries.map(entry =>
         entry.concludeRecord
@@ -693,7 +670,6 @@ function Salaryresult() {
           })
       );
 
->>>>>>> 20ec65ebcc629c74a905b189218cbc43a50706ce
       console.log('filteredEntries', filteredEntries);
 
       const concludeRecordArray = filteredEntries[0].concludeRecord;
