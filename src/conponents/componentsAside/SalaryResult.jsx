@@ -570,105 +570,106 @@ function Salaryresult() {
       console.log('filteredEntriesEmp', filteredEntriesEmp);
 
       // Assuming filteredEntriesEmp is an array with one element
-      // if (filteredEntriesEmp.length > 0) {
-      //   const addSalaryMonthly = filteredEntriesEmp[0].addSalary.filter(salary => salary.roundOfSalary === "monthly");
+      if (filteredEntriesEmp.length > 0) {
+        const addSalaryMonthly = filteredEntriesEmp[0].addSalary.filter(salary => salary.roundOfSalary === "monthly");
 
-      //   console.log('addSalaryMonthly', addSalaryMonthly);
+        console.log('addSalaryMonthly', addSalaryMonthly);
 
-      //   // Now addSalaryMonthly contains only the items with roundOfSalary === "monthly"
-      //   // You can access SpSalary values from addSalaryMonthly array
-      // }
+        // Now addSalaryMonthly contains only the items with roundOfSalary === "monthly"
+        // You can access SpSalary values from addSalaryMonthly array
+      }
 
-      // if (filteredEntriesEmp.length > 0) {
-      //   const addSalaryMonthly = filteredEntriesEmp[0].addSalary.filter(salary => salary.roundOfSalary === "monthly");
+      if (filteredEntriesEmp.length > 0) {
+        const addSalaryMonthly = filteredEntriesEmp[0].addSalary.filter(salary => salary.roundOfSalary === "monthly");
 
-      //   //get deduct data with immedate
-      //   const deductSalary = filteredEntriesEmp[0].deductSalary.filter(deduct => deduct.payType === "immedate");
-      //   let sum = 0;
-      //   //loop forget socialSecurity and tax
-      //   deductSalary.map((item, index) => {
+        //get deduct data with immedate
+        const deductSalary = filteredEntriesEmp[0].deductSalary.filter(deduct => deduct.payType === "immedate");
+        let sum = 0;
+        //loop forget socialSecurity and tax
+        deductSalary.map((item, index) => {
 
-      //     //check 0001 is social security
-      //     if (item.id == "0001") {
-      //       // alert(item.amount);
-      //       if (item.amount.includes("%")) {
-      //         let tmp = item.amount.replace(/%/g, "");
-      //         tmp = tmp / 100;
-      //         setSocialSecurity(tmp);
-      //       } else {
-      //         setSocialSecurity(item.amount);
-      //       }
-      //     }
-      //     //check 0002 is tax
-      //     else if (item.id == "0002") {
-      //       // alert(item.amount);
-      //       if (item.amount.includes("%")) {
-      //         let tmp = item.amount.replace(/%/g, "");
-      //         tmp = tmp / 100;
-      //         setTax(tmp);
-      //       } else {
-      //         setTax(item.amount);
-      //       }
-      //     }
-      //     //check 0003 is bank custom
-      //     else if (item.id == "0003") {
-      //       // alert(item.amount);\
-      //       // setBankCustom(item.amount);
-      //       setBankCustom(0);
+          //check 0001 is social security
+          if (item.id == "0001") {
+            // alert(item.amount);
+            if (item.amount.includes("%")) {
+              let tmp = item.amount.replace(/%/g, "");
+              tmp = tmp / 100;
+              setSocialSecurity(tmp);
+            } else {
+              setSocialSecurity(item.amount);
+            }
+          }
+          //check 0002 is tax
+          else if (item.id == "0002") {
+            // alert(item.amount);
+            if (item.amount.includes("%")) {
+              let tmp = item.amount.replace(/%/g, "");
+              tmp = tmp / 100;
+              setTax(tmp);
+            } else {
+              setTax(item.amount);
+            }
+          }
+          //check 0003 is bank custom
+          else if (item.id == "0003") {
+            // alert(item.amount);\
+            // setBankCustom(item.amount);
+            setBankCustom(0);
 
-      //     }
-      //     else {
-      //       sum = sum + parseFloat(item.amount);
-      //     }
-      //   })
-      //   setSumDeduct(sum);
-      //   // alert(deductSalary.length);
+          }
+          else {
+            sum = sum + parseFloat(item.amount);
+          }
+        })
+        setSumDeduct(sum);
+        // alert(deductSalary.length);
 
-      //   //get deduct data with installment
-      //   const deductSalaryInstallment = filteredEntriesEmp[0].deductSalary.filter(deduct => deduct.payType === "installment");
-      //   let sumInstallment = 0;
-      //   //loop forget socialSecurity and tax
-      //   deductSalaryInstallment.map((item, index) => {
-      //     let amount = parseFloat(item.amount);
-      //     let installment = parseFloat(item.installment);
-      //     sumInstallment = sumInstallment + parseFloat((amount / installment).toFixed(2));
-      //   });
-      //   setSumDeductInstallment(sumInstallment);
+        //get deduct data with installment
+        const deductSalaryInstallment = filteredEntriesEmp[0].deductSalary.filter(deduct => deduct.payType === "installment");
+        let sumInstallment = 0;
+        //loop forget socialSecurity and tax
+        deductSalaryInstallment.map((item, index) => {
+          let amount = parseFloat(item.amount);
+          let installment = parseFloat(item.installment);
+          sumInstallment = sumInstallment + parseFloat((amount / installment).toFixed(2));
+        });
+        setSumDeductInstallment(sumInstallment);
 
-      //   console.log('addSalaryMonthly', addSalaryMonthly);
+        console.log('addSalaryMonthly', addSalaryMonthly);
 
-      //   // Now addSalaryMonthly contains only the items with roundOfSalary === "monthly"
+        // Now addSalaryMonthly contains only the items with roundOfSalary === "monthly"
 
-      //   // Summing SpSalary values using reduce
-      //   const sumSpSalary = addSalaryMonthly.reduce((sum, salary) => sum + parseFloat(salary.SpSalary || 0), 0);
+        // Summing SpSalary values using reduce
+        const sumSpSalary = addSalaryMonthly.reduce((sum, salary) => sum + parseFloat(salary.SpSalary || 0), 0);
 
-      //   console.log('sumSpSalary', sumSpSalary);
+        console.log('sumSpSalary', sumSpSalary);
 
-      //   setSumSpSalaryResult(sumSpSalary);
-      //   console.log('setSumSpSalaryResult', sumSpSalaryResult);
+        setSumSpSalaryResult(sumSpSalary);
+        console.log('setSumSpSalaryResult', sumSpSalaryResult);
 
-      // }
+      }
 
-      // const entriesData = filteredEntries.map(entry =>
-      //   entry.concludeRecord
-      //     .filter(record => record.date <= 20)
-      //     .map(record => {
-      //       const matchedWorkplace = workplaceList.find(workplace => workplace.workplaceId === record.workplaceId);
-      //       return {
-      //         workplaceId: record.workplaceId,
-      //         dates: record.date,
-      //         workOfHour: matchedWorkplace ? matchedWorkplace.workOfHour : '', // Default value if not found
-      //         workRate: matchedWorkplace ? matchedWorkplace.workRate : '', // Default value if not found
-      //         workRateOT: matchedWorkplace ? matchedWorkplace.workRateOT : '',
-      //         allTimes: record.allTime,
-      //         otTimes: record.otTime,
-      //         startTime: record.startTime,
-      //         endTime: record.endTime,
-      //         selectotTime: record.selectotTime,
-      //         selectotTimeOut: record.selectotTimeOut,
-      //       };
-      //     })
-      // );
+      const entriesData = filteredEntries.map(entry =>
+        entry.concludeRecord
+          .filter(record => record.date <= 20)
+          .map(record => {
+            const matchedWorkplace = workplaceList.find(workplace => workplace.workplaceId === record.workplaceId);
+            return {
+              workplaceId: record.workplaceId,
+              dates: record.date,
+              workOfHour: matchedWorkplace ? matchedWorkplace.workOfHour : '', // Default value if not found
+              workRate: matchedWorkplace ? matchedWorkplace.workRate : '', // Default value if not found
+              workRateOT: matchedWorkplace ? matchedWorkplace.workRateOT : '',
+              allTimes: record.allTime,
+              otTimes: record.otTime,
+              startTime: record.startTime,
+              endTime: record.endTime,
+              selectotTime: record.selectotTime,
+              selectotTimeOut: record.selectotTimeOut,
+            };
+          })
+      );
+
       console.log('filteredEntries', filteredEntries);
 
       const concludeRecordArray = filteredEntries[0].concludeRecord;
@@ -1223,7 +1224,7 @@ function Salaryresult() {
                               onChange={handleAnySpSalaryChange}
                             />
                           </td> */}
-                          <td style={cellStyle}>{(overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary).toFixed(2)}</td>
+                          <td style={cellStyle}>{(overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult).toFixed(2)}</td>
                           <td style={cellStyle}>
                             <button class="btn btn-danger" style={{ width: '3rem' }}>แก้ไข</button>
                           </td>

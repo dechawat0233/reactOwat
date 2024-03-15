@@ -29,28 +29,28 @@ function AddEditSalaryEmployee() {
         setMonth("01");
         //get data from master employee
 
-const getMaster = async () => {
-        const data = await {
-            employeeId: '0001',
-            name: '',
-            idCard: '',
-            workPlace: '',
-        };
+        const getMaster = async () => {
+            const data = await {
+                employeeId: '0001',
+                name: '',
+                idCard: '',
+                workPlace: '',
+            };
 
-        try {
-            const response = await axios.post(endpoint + '/employee/search', data);
-if(response ) {
-    await setSearchAddSalaryList(response.data.employees[0].addSalary );
-await setSearchDeductSalaryList(response.data.employees[0].deductSalary );
-}
-            // await alert(JSON.stringify(response.data.employees[0].addSalary ,null,2 ));
-            // await alert(JSON.stringify(response.data.employees[0].deductSalary ,null,2 ));
+            try {
+                const response = await axios.post(endpoint + '/employee/search', data);
+                if (response) {
+                    await setSearchAddSalaryList(response.data.employees[0].addSalary);
+                    await setSearchDeductSalaryList(response.data.employees[0].deductSalary);
+                }
+                // await alert(JSON.stringify(response.data.employees[0].addSalary ,null,2 ));
+                // await alert(JSON.stringify(response.data.employees[0].deductSalary ,null,2 ));
 
-        } catch (e) {
+            } catch (e) {
+            }
         }
-    }
 
-getMaster();
+        getMaster();
     }, []);
 
 
@@ -118,8 +118,8 @@ getMaster();
     const [misnusName, setMisnusName] = useState('');
     const [minusSalary, setMinusSalary] = useState('');
     const [minusmessage, setMinusmessage] = useState('');
-const [payType , setPayType] = useState('');
-const [installment , setInstallment] = useState('');
+    const [payType, setPayType] = useState('');
+    const [installment, setInstallment] = useState('');
 
     const [minusRoundOfSalary, setMinusRoundOfSalary] = useState('');
     const [minusStaffType, setMinusStaffType] = useState('');
@@ -152,7 +152,7 @@ const [installment , setInstallment] = useState('');
         installment: '',
         nameType: '',
         message: '',
-    
+
     };
 
     const [rowDataList, setRowDataList] = useState(new Array(numberOfRows).fill(initialRowData));
@@ -160,15 +160,15 @@ const [installment , setInstallment] = useState('');
 
     useEffect(() => {
         const findObjectById = (id) => {
-          return searchAddSalaryList.find(item => item.id === id);
+            return searchAddSalaryList.find(item => item.id === id);
         }
-      
+
         const foundObject = findObjectById(addSalaryId);
         if (foundObject) {
-          setAddSalaryName(foundObject.name); // Set only the name property
+            setAddSalaryName(foundObject.name); // Set only the name property
         }
-      }, [addSalaryId, searchAddSalaryList]);    
-      
+    }, [addSalaryId, searchAddSalaryList]);
+
     ///////////////////
     function handleClickResult(emp) {
         // Populate all the startTime input fields with the search result value
@@ -676,7 +676,7 @@ const [installment , setInstallment] = useState('');
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-12">
-                                                                
+
                                                                 {rowDataList2.map((item, index) => (
                                                                     item.name && (
                                                                         <div key={index}>
@@ -685,20 +685,20 @@ const [installment , setInstallment] = useState('');
                                                                                 <div class="col-md-2" style={bordertable}> {item.name} </div>
                                                                                 <div class="col-md-1" style={bordertable}> {item.SpSalary} </div>
 
-{item.roundOfSalary == "daily" &&  (
-                                                                                <div class="col-md-2" style={bordertable}>รายวัน</div>
-) }
-{item.roundOfSalary == "monthly" &&  (
-                                                                                <div class="col-md-2" style={bordertable}>รายเดือน</div>
-) }
+                                                                                {item.roundOfSalary == "daily" && (
+                                                                                    <div class="col-md-2" style={bordertable}>รายวัน</div>
+                                                                                )}
+                                                                                {item.roundOfSalary == "monthly" && (
+                                                                                    <div class="col-md-2" style={bordertable}>รายเดือน</div>
+                                                                                )}
 
-                                                                                {item.StaffType == "header" &&  (
-                                                                                                                                                                    <div class="col-md-2" style={bordertable}>หัวหน้างาน</div>
-) }
+                                                                                {item.StaffType == "header" && (
+                                                                                    <div class="col-md-2" style={bordertable}>หัวหน้างาน</div>
+                                                                                )}
 
-{item.StaffType == "all" &&  (
-                                                                                                                                                                    <div class="col-md-2" style={bordertable}>พนักงาน</div>
-) }
+                                                                                {item.StaffType == "all" && (
+                                                                                    <div class="col-md-2" style={bordertable}>พนักงาน</div>
+                                                                                )}
 
                                                                                 <div class="col-md-2" style={bordertable}> {item.message} </div>
                                                                                 <div class="col-md-2" style={bordertable}>
@@ -786,30 +786,30 @@ const [installment , setInstallment] = useState('');
                                                         </div>
                                                         <div className="col-md-2">
 
-                                                        {payType == "installment" ? (
-                                                            <select
-                                                                name="StaffType"
-                                                                className="form-control"
-                                                                value={installment}
-                                                                onChange={(e) => setInstallment(e.target.value)}
-                                                            >
-                                                                <option value="">เลือกจำนวนงวด</option>
-                                                                <option value="2">2 งวด {minusSalary /2}</option>
-                                                                <option value="3">3 งวด {minusSalary /3}</option>
-                                                                <option value="4">4 งวด {minusSalary /4}</option>
-                                                                <option value="5">5 งวด {minusSalary /5}</option>
-                                                                <option value="6">6 งวด {minusSalary /6}</option>
-                                                            </select>
-                                                        ): (
-                                                            <select
-                                                            name="StaffType"
-                                                            className="form-control"
-                                                            value={installment}
-                                                            onChange={(e) => setInstallment(e.target.value)}
-                                                        >
-                                                            <option value="1">1 งวด {minusSalary }</option>
-                                                        </select>
-                                                        )}
+                                                            {payType == "installment" ? (
+                                                                <select
+                                                                    name="StaffType"
+                                                                    className="form-control"
+                                                                    value={installment}
+                                                                    onChange={(e) => setInstallment(e.target.value)}
+                                                                >
+                                                                    <option value="">เลือกจำนวนงวด</option>
+                                                                    <option value="2">2 งวด {minusSalary / 2}</option>
+                                                                    <option value="3">3 งวด {minusSalary / 3}</option>
+                                                                    <option value="4">4 งวด {minusSalary / 4}</option>
+                                                                    <option value="5">5 งวด {minusSalary / 5}</option>
+                                                                    <option value="6">6 งวด {minusSalary / 6}</option>
+                                                                </select>
+                                                            ) : (
+                                                                <select
+                                                                    name="StaffType"
+                                                                    className="form-control"
+                                                                    value={installment}
+                                                                    onChange={(e) => setInstallment(e.target.value)}
+                                                                >
+                                                                    <option value="1">1 งวด {minusSalary}</option>
+                                                                </select>
+                                                            )}
 
                                                         </div>
 
@@ -883,12 +883,12 @@ const [installment , setInstallment] = useState('');
                                                                                 <div class="col-md-2" style={bordertable}> {item.name} </div>
                                                                                 <div class="col-md-1" style={bordertable}> {item.amount} </div>
 
-{item.payType == "immedate" && (
-                                                                                <div class="col-md-2" style={bordertable}>จ่ายทั้งหมด</div>
-)}
-{item.payType == "installment" && (
-                                                                                <div class="col-md-2" style={bordertable}>ผ่อนจ่าย</div>
-)}
+                                                                                {item.payType == "immedate" && (
+                                                                                    <div class="col-md-2" style={bordertable}>จ่ายทั้งหมด</div>
+                                                                                )}
+                                                                                {item.payType == "installment" && (
+                                                                                    <div class="col-md-2" style={bordertable}>ผ่อนจ่าย</div>
+                                                                                )}
 
                                                                                 <div class="col-md-2" style={bordertable}>{item.installment}</div>
 
