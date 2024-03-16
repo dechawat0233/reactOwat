@@ -412,7 +412,7 @@ const [editStatus , setEditStatus] = useState('');
                 // alert('conclude is null');
             } else {
                 //check update time record then reset data conclude
-                await alert(editStatus);
+                // await alert(editStatus);
                 if(editStatus !== ''  ){
                     await setLoadStatus(null);
                     await setUpdate(response.data.recordConclude[0]._id);

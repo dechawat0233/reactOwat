@@ -195,6 +195,18 @@ function AddsettimeEmployee() {
     const [wSelectOtTimeout, setWSelectOtTimeout] = useState('');
 
 
+      // Get the number of days in the specified month
+  const numberOfDaysInMonth = new Date(2024, 2 , 0).getDate();
+
+  // Create an array containing numbers from 1 to the number of days in the month
+  const daysOfMonth = Array.from({ length: numberOfDaysInMonth }, (_, index) => index + 1);
+
+  // Create an array containing the day of the week (0 to 6) for each day in the month
+  const daysOfWeek = daysOfMonth.map(day => {
+    const dayOfWeek = new Date(2024, 2, day).getDay();
+    return dayOfWeek ;
+  });
+  //cczz
     // This useEffect listens for changes in wShift
     useEffect(() => {
         if (wId !== '' && wName !== '') {
@@ -202,6 +214,7 @@ function AddsettimeEmployee() {
             if (workplacesearch) {
                 //add work time with select day
                 alert(wDate);
+
                 switch (wShift) {
                     case 'morning_shift':
                         setWStartTime(workplacesearch.workStart1 || '');
@@ -1428,7 +1441,16 @@ await setIsDataTrue(true); // Set isDataTrue based on fetched data
 
                   {/* Hidden Link to /test */}
       <Link to="/compensation" style={{ display: 'none' }} ref={linkRef}>Go to Test</Link>
-
+      {/* <div>
+      <h2>Days of the Month: {month + 1}/{year}</h2>
+      <ul>
+        {daysOfMonth.map((day, index) => (
+          <li key={day}>
+            {day} ({daysOfWeek[index]})
+          </li>
+        ))}
+      </ul>
+    </div> */}
         </section>
 
     )
