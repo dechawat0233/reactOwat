@@ -112,15 +112,13 @@ function SalaryAllResult() {
                 .then(response => {
                     const responseData = response.data;
 
-                    console.log('responseData', responseData);
-                    setResponseDataAll(responseData);
+                    console.log('searchWorkplaceId', searchWorkplaceId);
 
-                    // Now you can use the data as needed
-                    // For example, you can iterate over the array of data
-                    // responseData.forEach(item => {
-                    //   console.log(item);
-                    //   // Your logic with each item
-                    // });
+                    console.log('responseData', responseData);
+                    const filteredData = searchWorkplaceId ? responseData.filter(item => item.workplace === searchWorkplaceId) : responseData;
+
+                    setResponseDataAll(filteredData);
+
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -129,7 +127,7 @@ function SalaryAllResult() {
 
         // Call fetchData when year or month changes
         fetchData();
-    }, [year, month]);
+    }, [year, month, searchWorkplaceId]);
 
     console.log('responseDataAll', responseDataAll);
 
@@ -602,6 +600,8 @@ function SalaryAllResult() {
                 pdf.text(`${workplaceName} : ${workplaceKey}`, 25, currentY);
                 currentY += 5;
 
+                employees.sort((a, b) => a.employeeId.localeCompare(b.employeeId));
+
                 // Display employee information
                 employees.forEach(({ employeeId, lastName, name, accountingRecord }) => {
 
@@ -740,7 +740,7 @@ function SalaryAllResult() {
         setWorkplacrId(selectWorkPlaceId);
         setSearchWorkplaceId(selectWorkPlaceId);
         // Find the corresponding employee and set the staffName
-        const selectedWorkplace = workplaceListAll.find(employee => employee.workplaceId == selectWorkPlaceId);
+        const selectedWorkplace = workplaceListAll.find(workplace => workplace.workplaceId == selectWorkPlaceId);
         console.log('selectedWorkplace', selectedWorkplace);
         if (selectWorkPlaceId) {
             // setStaffName(selectedEmployee.name);
@@ -752,27 +752,49 @@ function SalaryAllResult() {
         }
     };
 
-    const handleStaffNameChange = (e) => {
-        const selectWorkPlaceId = e.target.value;
+    // const handleStaffNameChange = (e) => {
+    //     const selectWorkPlaceId = e.target.value;
 
-        // Find the corresponding employee and set the staffId
-        const selectedEmployee = workplaceListAll.find(employee => employee.workplaceName == selectWorkPlaceId);
-        const selectedEmployeeFName = workplaceListAll.find(employee => employee.workplaceName === selectWorkPlaceId);
+    //     // Find the corresponding employee and set the staffId
+    //     const selectedEmployee = workplaceListAll.find(employee => employee.workplaceName == selectWorkPlaceId);
+    //     const selectedEmployeeFName = workplaceListAll.find(employee => employee.workplaceName === selectWorkPlaceId);
+
+    //     if (selectedEmployee) {
+    //         setWorkplacrId(selectedEmployee.workplaceId);
+    //         setSearchWorkplaceId(selectedEmployee.workplaceId);
+    //         setWorkplacrName(selectedEmployee.workplaceName);
+
+    //     } else {
+    //         setStaffId('');
+    //         // searchEmployeeId('');
+    //     }
+
+    //     // setStaffName(selectedStaffName);
+    //     setStaffFullName(selectedStaffName);
+    //     setSearchEmployeeName(selectedEmployeeFName);
+    // };
+    /////////////////
+    const handleStaffNameChange = (e) => {
+        const selectWorkplaceName = e.target.value;
+
+        // Find the corresponding employee and set the staffId and staffName
+        const selectedEmployee = workplaceListAll.find(workplace => workplace.workplaceName == selectWorkplaceName);
+        const selectedEmployeeFName = workplaceListAll.find(workplace => workplace.workplaceName === selectWorkplaceName);
 
         if (selectedEmployee) {
             setWorkplacrId(selectedEmployee.workplaceId);
             setSearchWorkplaceId(selectedEmployee.workplaceId);
-            setWorkplacrName(selectedEmployee.workplaceName);
-
+            // setWorkplacrName(selectedEmployee.workplaceName);
         } else {
-            setStaffId('');
-            // searchEmployeeId('');
+            setWorkplacrId('');
+            // setSearchWorkplaceId('');
+            // setWorkplacrName('');
         }
-
-        // setStaffName(selectedStaffName);
-        setStaffFullName(selectedStaffName);
-        setSearchEmployeeName(selectedEmployeeFName);
+        setWorkplacrName(selectWorkplaceName);
     };
+    console.log('workplacrName', workplacrName);
+
+
     return (
         <body class="hold-transition sidebar-mini" className='editlaout'>
             <div class="wrapper">
@@ -797,6 +819,59 @@ function SalaryAllResult() {
                             <section class="Frame">
                                 <div class="col-md-12">
                                     <div class="row">
+                                        <div class="col-md-3">
+                                            <label role="searchEmployeeId">รหัสหน่อยงาน</label>
+                                            {/* <input type="text" class="form-control" id="searchEmployeeId" placeholder="รหัสพนักงาน" value={searchEmployeeId} onChange={(e) => setSearchWorkplaceId(e.target.value)} /> */}
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                id="staffId"
+                                                placeholder="รหัสหน่อยงาน"
+                                                value={workplacrId}
+                                                onChange={handleStaffIdChange}
+                                                list="WorkplaceIdList"
+                                            />
+                                            <datalist id="WorkplaceIdList">
+                                                {workplaceListAll.map(workplace => (
+                                                    <option key={workplace.workplaceId} value={workplace.workplaceId} />
+                                                ))}
+                                            </datalist>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label role="searchname">ชื่อหน่วยงาน</label>
+                                            {/* <input type="text" class="form-control" id="searchname" placeholder="ชื่อพนักงาน" value={searchEmployeeName} onChange={(e) => setSearchEmployeeName(e.target.value)} /> */}
+                                            {/* <input
+                                                type="text"
+                                                className="form-control"
+                                                id="staffName"
+                                                placeholder="ชื่อพนักงาน"
+                                                value={workplacrName}
+                                                onChange={handleStaffNameChange}
+                                                list="WorkplaceNameList"
+                                            />
+
+                                            <datalist id="WorkplaceNameList">
+                                                {workplaceListAll.map(workplace => (
+                                                    <option key={workplace.workplaceId} value={workplace.workplaceName} />
+                                                ))}
+                                            </datalist> */}
+                                            <label role="searchname">ชื่อหน่วยงาน</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                id="staffName"
+                                                placeholder="ชื่อพนักงาน"
+                                                value={workplacrName}
+                                                onChange={handleStaffNameChange}
+                                                list="WorkplaceNameList"
+                                            />
+
+                                            <datalist id="WorkplaceNameList">
+                                                {workplaceListAll.map(workplace => (
+                                                    <option key={workplace.workplaceId} value={workplace.workplaceName} />
+                                                ))}
+                                            </datalist>
+                                        </div>
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label role="agencyname">เดือน</label>
