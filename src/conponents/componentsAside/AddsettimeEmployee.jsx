@@ -1,7 +1,8 @@
 import endpoint from '../../config';
+import { Link } from 'react-router-dom';
 
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -9,6 +10,15 @@ import 'react-datepicker/dist/react-datepicker.css';
 import EmployeesSelected from './EmployeesSelected';
 
 function AddsettimeEmployee() {
+    const [isDataTrue, setIsDataTrue] = useState(false);
+    const linkRef = useRef(null);
+
+      // Effect to auto-click the Link when data is true
+  useEffect(() => {
+    if (isDataTrue) {
+      linkRef.current.click(); // Programmatically click the link when isDataTrue is true
+    }
+  }, [isDataTrue]);
 
     const bordertable = {
         borderLeft: '2px solid #000'
@@ -185,11 +195,26 @@ function AddsettimeEmployee() {
     const [wSelectOtTimeout, setWSelectOtTimeout] = useState('');
 
 
+      // Get the number of days in the specified month
+  const numberOfDaysInMonth = new Date(2024, 2 , 0).getDate();
+
+  // Create an array containing numbers from 1 to the number of days in the month
+  const daysOfMonth = Array.from({ length: numberOfDaysInMonth }, (_, index) => index + 1);
+
+  // Create an array containing the day of the week (0 to 6) for each day in the month
+  const daysOfWeek = daysOfMonth.map(day => {
+    const dayOfWeek = new Date(2024, 2, day).getDay();
+    return dayOfWeek ;
+  });
+  //cczz
     // This useEffect listens for changes in wShift
     useEffect(() => {
         if (wId !== '' && wName !== '') {
             const workplacesearch = workplaceList.find(workplace => workplace.workplaceId === wId);
             if (workplacesearch) {
+                //add work time with select day
+                alert(wDate);
+
                 switch (wShift) {
                     case 'morning_shift':
                         setWStartTime(workplacesearch.workStart1 || '');
@@ -293,6 +318,8 @@ function AddsettimeEmployee() {
             const workplacesearch = workplaceList.find(workplace => workplace.workplaceId === wId);
             if (workplacesearch) {
                 setWName(workplacesearch.workplaceName);
+                //add work time to selection
+
             } else {
                 setWName('');
             }
@@ -850,18 +877,22 @@ try {
     // await alert(JSON.stringify(concludeResponse ,null,2));
     if (concludeResponse.data.recordConclude.length < 1) {
         // await alert('conclude is null');
+                        window.location.reload();
+
     } else {
         // await alert('conclude is set');
+        await localStorage.setItem('editConclude', searchEmployeeId);
+        await localStorage.setItem('employeeId', searchEmployeeId);
+        await localStorage.setItem('month', month);
+        await localStorage.setItem('year', year);
 
-        // await setConcludeResult(response.data.recordConclude[0].concludeRecord);
-        // await setLoadStatus('load');
-        // await setUpdate(response.data.recordConclude[0]._id);
+await setIsDataTrue(true); // Set isDataTrue based on fetched data
     }
 
 } catch (e) {
     console.log(e);
 }
-                window.location.reload();
+                // window.location.reload();
 
             }
         } catch (error) {
@@ -1194,7 +1225,7 @@ try {
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             {/* <label role="wName">ชื่อหน่วยงาน</label> */}
-                                            <input type="text" class="form-control" id="wName" placeholder="ชื่อหน่วยงาน" value={wName} onChange={(e) => setWName(e.target.value)} />
+                            <input type="text" class="form-control" id="wName" placeholder="ชื่อหน่วยงาน" value={wName} onChange={(e) => setWName(e.target.value)} />
                                         </div>
                                     </div>
 
@@ -1407,9 +1438,24 @@ try {
                 </div>
             </div>
             {/* <!-- /.container-fluid --> */}
+
+                  {/* Hidden Link to /test */}
+      <Link to="/compensation" style={{ display: 'none' }} ref={linkRef}>Go to Test</Link>
+      {/* <div>
+      <h2>Days of the Month: {month + 1}/{year}</h2>
+      <ul>
+        {daysOfMonth.map((day, index) => (
+          <li key={day}>
+            {day} ({daysOfWeek[index]})
+          </li>
+        ))}
+      </ul>
+    </div> */}
         </section>
 
     )
+
+    
 }
 
 export default AddsettimeEmployee
