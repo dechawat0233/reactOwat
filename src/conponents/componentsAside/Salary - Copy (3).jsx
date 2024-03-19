@@ -327,7 +327,6 @@ function Salary() {
 
                 const initialFormData = {
                     addSalary: filtered[0].addSalary.map((item) => ({
-                        id: item.id || '',
                         name: item.name || '',
                         SpSalary: item.SpSalary || '',
                         roundOfSalary: item.roundOfSalary || '',
@@ -465,9 +464,8 @@ function Salary() {
                 setWorkplacearea(filtered[0].workplaceArea || '');
                 setAddSalaryWorkplace(filtered[0].addSalary);
 
-                const initialFormData = await {
+                const initialFormData = {
                     addSalary: filtered[0].addSalary.map((item) => ({
-                        id: item.codeSpSalary || '',
                         name: item.name || '',
                         SpSalary: item.SpSalary || '',
                         roundOfSalary: item.roundOfSalary || '',
@@ -475,7 +473,7 @@ function Salary() {
                         nameType: item.nameType || '',
                     })),
                 };
-// await alert(JSON.stringify(initialFormData,null,2) );
+
                 setFormData(initialFormData);
                 // setFormData(workplace.addSalary);
 
@@ -1015,12 +1013,12 @@ function Salary() {
                                                         />
                                                     </div>
                                                     <div className="col-md-2">
-                                                        <label role="salaryadd6">จำนวนเงิน{JSON.stringify(data) }</label>
+                                                        <label role="salaryadd6">จำนวนเงิน</label>
                                                         <input
                                                             type="text"
                                                             name="SpSalary"
                                                             className="form-control"
-                                                            value={ data.SpSalary}
+                                                            value={data.SpSalary}
                                                             onChange={(e) => handleChangeSpSalary(e, index, 'SpSalary')}
                                                             readOnly
                                                         />

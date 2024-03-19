@@ -1011,7 +1011,7 @@ function Setting() {
             workTimeDay: workTimeDayList,
             workTimeDayPerson: workTimeDayPersonList
         };
-// await alert(JSON.stringify(formData.addSalary,null,2));
+
 
         //check create or update Employee
         if (newWorkplace) {
