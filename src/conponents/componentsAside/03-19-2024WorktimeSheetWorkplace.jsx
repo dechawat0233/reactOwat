@@ -10,10 +10,6 @@ import 'jspdf-autotable';
 import html2pdf from 'html2pdf.js';
 import { useTable } from 'react-table';
 
-import th from 'date-fns/locale/th'; // Import Thai locale data from date-fns
-import en from 'date-fns/locale/en-US';
-
-
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -58,49 +54,8 @@ function WorktimeSheetWorkplace() {
     const [WName, setWName] = useState('');
 
     const [workDate, setWorkDate] = useState(new Date());
-
-    // const handleWorkDateChange = (date) => {
-    //     setWorkDate(date);
-    // };
-
-    function formatThaiBuddhistYear(d) {
-        const thaiYear = d.getFullYear() + 543; // Add 543 to convert to Thai Buddhist year
-        return thaiYear;
-    }
-
-    function convertToThaiBuddhistDate(date) {
-        const thaiYear = date.getFullYear() + 543;
-        return new Date(thaiYear, date.getMonth(), date.getDate());
-    }
-
-    const thaiWorkDate = convertToThaiBuddhistDate(workDate);
-
-
-    const GregorianToThaiBuddhist = (gregorianDate) => {
-        const thaiYear = gregorianDate.getFullYear() + 543;
-        return new Date(thaiYear, gregorianDate.getMonth(), gregorianDate.getDate());
-    };
-
-    const ThaiBuddhistToGregorian = (thaiDate) => {
-        const gregorianYear = thaiDate.getFullYear() - 543;
-        return new Date(gregorianYear, thaiDate.getMonth(), thaiDate.getDate());
-    };
-
-    const initialThaiDate = new Date();
-    initialThaiDate.setFullYear(initialThaiDate.getFullYear() + 543); // Add 543 years to the current year
-
-    const [selectedThaiDate, setSelectedThaiDate] = useState(initialThaiDate);
-    const [selectedGregorianDate, setSelectedGregorianDate] = useState(new Date());
-
-    const handleThaiDateChange = (date) => {
-        setSelectedThaiDate(date);
-        setSelectedGregorianDate(ThaiBuddhistToGregorian(date));
-        setWorkDate(date)
-    };
-
-    const handleGregorianDateChange = (date) => {
-        setSelectedGregorianDate(date);
-        setSelectedThaiDate(GregorianToThaiBuddhist(date));
+    const handleWorkDateChange = (date) => {
+        setWorkDate(date);
     };
 
     const [daysOffArray, setDaysOffArray] = useState([]);
@@ -2355,7 +2310,7 @@ function WorktimeSheetWorkplace() {
 
     const indexArray = Array.from({ length: sumArray.length }, (_, index) => index + 1);
 
-    console.log('indexArray', indexArray);
+    console.log('indexArray',indexArray);
 
     const sumHoliAllTime = sumArrayOT.map((value, index) => value + sumArrayHoli[index]);
 
@@ -3407,7 +3362,7 @@ function WorktimeSheetWorkplace() {
                     // Calculate the product and convert it to a string
                     const product = (indexArray[i] * (2 * (countalldaywork / 8))).toString();
 
-                    doc.text(indexArray[i].toString(), currentX + 2, currentY, { align: 'center' });
+                    doc.text(indexArray[i].toString(), currentX + 2,   currentY, { align: 'center' });
                     // doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
                 }
             };
@@ -4205,21 +4160,13 @@ function WorktimeSheetWorkplace() {
                                                             <label role="datetime">วันที่</label>
                                                             <div style=
                                                                 {{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
-                                                                {/* <DatePicker id="datetime" name="datetime"
+                                                                <DatePicker id="datetime" name="datetime"
                                                                     className="form-control" // Apply Bootstrap form-control class
                                                                     popperClassName="datepicker-popper" // Apply custom popper class if needed
                                                                     selected={workDate}
                                                                     onChange={handleWorkDateChange}
                                                                     dateFormat="dd/MM/yyyy"
                                                                 // showMonthYearPicker
-                                                                /> */}
-
-                                                                <DatePicker
-                                                                    className="form-control"
-                                                                    selected={selectedThaiDate}
-                                                                    onChange={handleThaiDateChange}
-                                                                    dateFormat="dd/MM/yyyy"
-                                                                    locale={th}
                                                                 />
                                                             </div>
                                                         </div>

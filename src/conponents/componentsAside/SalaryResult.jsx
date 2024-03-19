@@ -1034,6 +1034,10 @@ function Salaryresult() {
     { name: 'top', empID: '1585', workplaceId: '1021-25', salary: '498' },
     { name: 'cop', empID: '1585', workplaceId: '1021-25', salary: '753' },
   ];
+
+  const sumSalary = namelist.reduce((acc, curr) => acc + parseInt(curr.salary), 0);
+
+
   return (
     // <div>
 
@@ -1323,6 +1327,9 @@ function Salaryresult() {
                         </tr>
                       </tbody>
                     </table>
+                    <p>Total Salary: {sumSalary}</p>
+
+
                   </div>
                 </div>
               </section>

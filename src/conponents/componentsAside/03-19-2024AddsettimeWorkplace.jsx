@@ -10,9 +10,6 @@ import moment from 'moment';
 
 import EmployeesSelected from './EmployeesSelected';
 
-import th from 'date-fns/locale/th'; // Import Thai locale data from date-fns
-import en from 'date-fns/locale/en-US';
-
 function AddsettimeWorkplace() {
     const bordertable = {
         borderLeft: '2px solid #000'
@@ -137,45 +134,6 @@ function AddsettimeWorkplace() {
         setCashSalary(!cashSalary); // Toggle the checkbox state
     };
 
-    function formatThaiBuddhistYear(d) {
-        const thaiYear = d.getFullYear() + 543; // Add 543 to convert to Thai Buddhist year
-        return thaiYear;
-    }
-
-    function convertToThaiBuddhistDate(date) {
-        const thaiYear = date.getFullYear() + 543;
-        return new Date(thaiYear, date.getMonth(), date.getDate());
-    }
-
-    const thaiWorkDate = convertToThaiBuddhistDate(workDate);
-
-
-    const GregorianToThaiBuddhist = (gregorianDate) => {
-        const thaiYear = gregorianDate.getFullYear() + 543;
-        return new Date(thaiYear, gregorianDate.getMonth(), gregorianDate.getDate());
-    };
-
-    const ThaiBuddhistToGregorian = (thaiDate) => {
-        const gregorianYear = thaiDate.getFullYear() - 543;
-        return new Date(gregorianYear, thaiDate.getMonth(), thaiDate.getDate());
-    };
-
-    const initialThaiDate = new Date();
-    initialThaiDate.setFullYear(initialThaiDate.getFullYear() + 543); // Add 543 years to the current year
-
-    const [selectedThaiDate, setSelectedThaiDate] = useState(initialThaiDate);
-    const [selectedGregorianDate, setSelectedGregorianDate] = useState(new Date());
-
-    const handleThaiDateChange = (date) => {
-        setSelectedThaiDate(date);
-        setSelectedGregorianDate(ThaiBuddhistToGregorian(date));
-        setWorkDate(ThaiBuddhistToGregorian(date))
-    };
-
-    const handleGregorianDateChange = (date) => {
-        setSelectedGregorianDate(date);
-        setSelectedThaiDate(GregorianToThaiBuddhist(date));
-    };
 
     //search employeeId by employeeName 
     // useEffect(() => {
@@ -970,32 +928,32 @@ function AddsettimeWorkplace() {
         };
 
 
-        //get work time from workplace 
-        const workplaceWorkTime = await getWorkTime(searchResult, formattedWorkDate);
+                                                                //get work time from workplace 
+                                                                const workplaceWorkTime = await getWorkTime(searchResult, formattedWorkDate);
         // alert(JSON.stringify(searchResult,null,2) );
 
         workplaceWorkTime.map(item => {
-            // alert(item.shift);
-            if (item.shift == 'กะเช้า') {
-                // alert(item.startTime);
-                setShift1start(item.startTime);
-                setShift1end(item.endTime);
-                setStartTimeOt1(item.startTimeOT);
-                setEndTimeOt1(item.endTimeOT);
+        // alert(item.shift);
+        if(item.shift == 'กะเช้า'){
+        // alert(item.startTime);
+        setShift1start(item.startTime);
+        setShift1end(item.endTime);
+        setStartTimeOt1(item.startTimeOT);
+        setEndTimeOt1(item.endTimeOT);
 
-            } else if (item.shift == 'กะบ่าย') {
-                setShift2start(item.startTime);
-                setShift2end(item.endTime);
-                setStartTimeOt2(item.startTimeOT);
-                setEndTimeOt2(item.endTimeOT);
+        }else if(item.shift == 'กะบ่าย') {
+            setShift2start(item.startTime);
+            setShift2end(item.endTime);
+            setStartTimeOt2(item.startTimeOT);
+        setEndTimeOt2(item.endTimeOT);
 
-            } else if (item.shift == 'กะดึก') {
-                setShift3start(item.startTime);
-                setShift3end(item.endTime);
-                setStartTimeOt3(item.startTimeOT);
-                setEndTimeOt3(item.endTimeOT);
+        } else if(item.shift == 'กะดึก'){
+            setShift3start(item.startTime);
+            setShift3end(item.endTime);
+            setStartTimeOt3(item.startTimeOT);
+        setEndTimeOt3(item.endTimeOT);
 
-            }
+        }
 
         });
 
@@ -1313,20 +1271,13 @@ function AddsettimeWorkplace() {
                                         <label role="datetime">วันที่</label>
                                         <div style=
                                             {{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
-                                            {/* <DatePicker id="datetime" name="datetime"
+                                            <DatePicker id="datetime" name="datetime"
                                                 className="form-control" // Apply Bootstrap form-control class
                                                 popperClassName="datepicker-popper" // Apply custom popper class if needed
                                                 selected={workDate}
                                                 onChange={handleWorkDateChange}
                                                 dateFormat="dd/MM/yyyy"
                                             // showMonthYearPicker
-                                            /> */}
-                                            <DatePicker
-                                                className="form-control"
-                                                selected={selectedThaiDate}
-                                                onChange={handleThaiDateChange}
-                                                dateFormat="dd/MM/yyyy"
-                                                locale={th}
                                             />
                                         </div>
                                     </div>

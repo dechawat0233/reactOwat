@@ -13,12 +13,12 @@ function AddsettimeEmployee() {
     const [isDataTrue, setIsDataTrue] = useState(false);
     const linkRef = useRef(null);
 
-      // Effect to auto-click the Link when data is true
-  useEffect(() => {
-    if (isDataTrue) {
-      linkRef.current.click(); // Programmatically click the link when isDataTrue is true
-    }
-  }, [isDataTrue]);
+    // Effect to auto-click the Link when data is true
+    useEffect(() => {
+        if (isDataTrue) {
+            linkRef.current.click(); // Programmatically click the link when isDataTrue is true
+        }
+    }, [isDataTrue]);
 
     const bordertable = {
         borderLeft: '2px solid #000'
@@ -158,7 +158,7 @@ function AddsettimeEmployee() {
     }, []); // The empty array [] ensures that the effect runs only once after the initial render
 
     console.log(employeeList);
-    
+
 
     useEffect(() => {
         // Fetch data from the API when the component mounts
@@ -196,18 +196,18 @@ function AddsettimeEmployee() {
     const [wSelectOtTimeout, setWSelectOtTimeout] = useState('');
 
 
-      // Get the number of days in the specified month
-  const numberOfDaysInMonth = new Date(2024, 2 , 0).getDate();
+    // Get the number of days in the specified month
+    const numberOfDaysInMonth = new Date(2024, 2, 0).getDate();
 
-  // Create an array containing numbers from 1 to the number of days in the month
-  const daysOfMonth = Array.from({ length: numberOfDaysInMonth }, (_, index) => index + 1);
+    // Create an array containing numbers from 1 to the number of days in the month
+    const daysOfMonth = Array.from({ length: numberOfDaysInMonth }, (_, index) => index + 1);
 
-  // Create an array containing the day of the week (0 to 6) for each day in the month
-  const daysOfWeek = daysOfMonth.map(day => {
-    const dayOfWeek = new Date(2024, 2, day).getDay();
-    return dayOfWeek ;
-  });
-  //cczz
+    // Create an array containing the day of the week (0 to 6) for each day in the month
+    const daysOfWeek = daysOfMonth.map(day => {
+        const dayOfWeek = new Date(2024, 2, day).getDay();
+        return dayOfWeek;
+    });
+    //cczz
     // This useEffect listens for changes in wShift
     useEffect(() => {
         if (wId !== '' && wName !== '') {
@@ -863,36 +863,36 @@ function AddsettimeEmployee() {
             if (response) {
                 alert("บันทึกสำเร็จ");
 
-                        //get data from conclude data then check edit data 
-        const serchConclude = await {
-            year: year,
-            month: month,
-            concludeDate: '',
-            employeeId: searchEmployeeId,
-            employeeName: searchEmployeeName
-        };
+                //get data from conclude data then check edit data 
+                const serchConclude = await {
+                    year: year,
+                    month: month,
+                    concludeDate: '',
+                    employeeId: searchEmployeeId,
+                    employeeName: searchEmployeeName
+                };
 
-try {
-    const concludeResponse = await axios.post(endpoint + '/conclude/search', serchConclude);
+                try {
+                    const concludeResponse = await axios.post(endpoint + '/conclude/search', serchConclude);
 
-    // await alert(JSON.stringify(concludeResponse ,null,2));
-    if (concludeResponse.data.recordConclude.length < 1) {
-        // await alert('conclude is null');
+                    // await alert(JSON.stringify(concludeResponse ,null,2));
+                    if (concludeResponse.data.recordConclude.length < 1) {
+                        // await alert('conclude is null');
                         window.location.reload();
 
-    } else {
-        // await alert('conclude is set');
-        await localStorage.setItem('editConclude', searchEmployeeId);
-        await localStorage.setItem('employeeId', searchEmployeeId);
-        await localStorage.setItem('month', month);
-        await localStorage.setItem('year', year);
+                    } else {
+                        // await alert('conclude is set');
+                        await localStorage.setItem('editConclude', searchEmployeeId);
+                        await localStorage.setItem('employeeId', searchEmployeeId);
+                        await localStorage.setItem('month', month);
+                        await localStorage.setItem('year', year);
 
-await setIsDataTrue(true); // Set isDataTrue based on fetched data
-    }
+                        await setIsDataTrue(true); // Set isDataTrue based on fetched data
+                    }
 
-} catch (e) {
-    console.log(e);
-}
+                } catch (e) {
+                    console.log(e);
+                }
                 // window.location.reload();
 
             }
@@ -1125,7 +1125,7 @@ await setIsDataTrue(true); // Set isDataTrue based on fetched data
                                         <select className="form-control" value={year} onChange={(e) => setYear(e.target.value)}>
                                             {years.map((y) => (
                                                 <option key={y} value={y}>
-                                                    {y}
+                                                    {y + 543}
                                                 </option>
                                             ))}
                                         </select>
@@ -1226,7 +1226,7 @@ await setIsDataTrue(true); // Set isDataTrue based on fetched data
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             {/* <label role="wName">ชื่อหน่วยงาน</label> */}
-                            <input type="text" class="form-control" id="wName" placeholder="ชื่อหน่วยงาน" value={wName} onChange={(e) => setWName(e.target.value)} />
+                                            <input type="text" class="form-control" id="wName" placeholder="ชื่อหน่วยงาน" value={wName} onChange={(e) => setWName(e.target.value)} />
                                         </div>
                                     </div>
 
@@ -1440,9 +1440,9 @@ await setIsDataTrue(true); // Set isDataTrue based on fetched data
             </div>
             {/* <!-- /.container-fluid --> */}
 
-                  {/* Hidden Link to /test */}
-      <Link to="/compensation" style={{ display: 'none' }} ref={linkRef}>Go to Test</Link>
-      {/* <div>
+            {/* Hidden Link to /test */}
+            <Link to="/compensation" style={{ display: 'none' }} ref={linkRef}>Go to Test</Link>
+            {/* <div>
       <h2>Days of the Month: {month + 1}/{year}</h2>
       <ul>
         {daysOfMonth.map((day, index) => (
@@ -1456,7 +1456,7 @@ await setIsDataTrue(true); // Set isDataTrue based on fetched data
 
     )
 
-    
+
 }
 
 export default AddsettimeEmployee

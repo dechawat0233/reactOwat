@@ -9,10 +9,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import moment from 'moment';
 import 'moment/locale/th'; // Import the Thai locale data
-
-import th from 'date-fns/locale/th'; // Import Thai locale data from date-fns
-import en from 'date-fns/locale/en-US';
-
 function SalaryAllResult() {
     const [workplacrId, setWorkplacrId] = useState(''); //รหัสหน่วยงาน
     const [workplacrName, setWorkplacrName] = useState(''); //รหัสหน่วยงาน
@@ -28,17 +24,17 @@ function SalaryAllResult() {
 
     const [workDate, setWorkDate] = useState(new Date());
     const formattedWorkDate = moment(workDate).format('DD/MM/YYYY');
-    // const handleWorkDateChange = (date) => {
-    //     setWorkDate(date);
-    // };
+    const handleWorkDateChange = (date) => {
+        setWorkDate(date);
+    };
     const [present, setPresent] = useState('DATAOWAT');
     const [presentfilm, setPresentfilm] = useState("\\10.10.110.20\payrolldata\Report\User\PRUSR101.RPT");
 
     moment.locale('th');
 
-    // const formattedWorkDateDD = moment(workDate).format('DD');
-    // const formattedWorkDateMM = moment(workDate).format('MM');
-    // const formattedWorkDateYYYY = moment(workDate).format('YYYY');
+    const formattedWorkDateDD = moment(workDate).format('DD');
+    const formattedWorkDateMM = moment(workDate).format('MM');
+    const formattedWorkDateYYYY = moment(workDate).format('YYYY');
 
     const formattedDate = workDate.toLocaleString('en-TH', {
         weekday: 'long',
@@ -71,50 +67,6 @@ function SalaryAllResult() {
     const EndYear = 2010;
     const currentYear = new Date().getFullYear(); // 2024
     const years = Array.from({ length: currentYear - EndYear + 1 }, (_, index) => EndYear + index).reverse();
-
-    function formatThaiBuddhistYear(d) {
-        const thaiYear = d.getFullYear() + 543; // Add 543 to convert to Thai Buddhist year
-        return thaiYear;
-    }
-
-    function convertToThaiBuddhistDate(date) {
-        const thaiYear = date.getFullYear() + 543;
-        return new Date(thaiYear, date.getMonth(), date.getDate());
-    }
-
-    const thaiWorkDate = convertToThaiBuddhistDate(workDate);
-
-
-    const GregorianToThaiBuddhist = (gregorianDate) => {
-        const thaiYear = gregorianDate.getFullYear() + 543;
-        return new Date(thaiYear, gregorianDate.getMonth(), gregorianDate.getDate());
-    };
-
-    const ThaiBuddhistToGregorian = (thaiDate) => {
-        const gregorianYear = thaiDate.getFullYear() - 543;
-        return new Date(gregorianYear, thaiDate.getMonth(), thaiDate.getDate());
-    };
-
-    const initialThaiDate = new Date();
-    initialThaiDate.setFullYear(initialThaiDate.getFullYear() + 543); // Add 543 years to the current year
-
-    const [selectedThaiDate, setSelectedThaiDate] = useState(initialThaiDate);
-    const [selectedGregorianDate, setSelectedGregorianDate] = useState(new Date());
-
-    const handleThaiDateChange = (date) => {
-        setSelectedThaiDate(date);
-        setSelectedGregorianDate(ThaiBuddhistToGregorian(date));
-        setWorkDate(date)
-    };
-
-    const handleGregorianDateChange = (date) => {
-        setSelectedGregorianDate(date);
-        setSelectedThaiDate(GregorianToThaiBuddhist(date));
-    };
-
-    const formattedWorkDateDD = moment(workDate).format('DD');
-    const formattedWorkDateMM = moment(workDate).format('MM');
-    const formattedWorkDateYYYY = moment(workDate).format('YYYY');
 
     // const fetchData = () => {
 
@@ -755,7 +707,7 @@ function SalaryAllResult() {
 
                 pdf.text(`${workplaceName} : ${workplaceKey}`, 25, currentY);
 
-                pdf.text(`${totalEmp} คน`, 66, currentY, { align: 'right' });
+                pdf.text(`${totalEmp}`, 66, currentY, { align: 'right' });
 
                 pdf.text(`${totalSalary.toFixed(2)}`, 84, currentY, { align: 'right' });
                 pdf.text(`${totalAmountOt.toFixed(2)}`, 98, currentY, { align: 'right' });
@@ -953,7 +905,7 @@ function SalaryAllResult() {
                                                 <select className="form-control" value={year} onChange={(e) => setYear(e.target.value)}>
                                                     {years.map((y) => (
                                                         <option key={y} value={y}>
-                                                            {y + 543}
+                                                            {y+543}
                                                         </option>
                                                     ))}
                                                 </select>
@@ -966,7 +918,7 @@ function SalaryAllResult() {
 
                                     <div class="row">
                                         <div class="col-md-3">
-                                            {/* <label role="datetime">พิมพ์วันที่</label>
+                                            <label role="datetime">พิมพ์วันที่</label>
                                             <div style=
                                                 {{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
                                                 <DatePicker id="datetime" name="datetime"
@@ -977,30 +929,7 @@ function SalaryAllResult() {
                                                     dateFormat="dd/MM/yyyy"
                                                 // showMonthYearPicker
                                                 />
-                                            </div> */}
-
-                                            <label role="datetime">พิมพ์วันที่</label>
-                                            <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
-                                                {/* <DatePicker id="datetime" name="datetime"
-                                                    className="form-control"
-                                                    popperClassName="datepicker-popper"
-                                                    selected={thaiWorkDate} // Using Thai Buddhist calendar date
-                                                    onChange={handleWorkDateChange}
-                                                    dateFormat="dd/MM/yyyy"
-                                                    locale={th}
-                                                    formatWeekDay={nameOfDay => nameOfDay.substr(0, 2)}
-                                                    formatWeekYear={formatThaiBuddhistYear}
-                                                    showWeekNumbers
-                                                /> */}
-                                                <DatePicker
-                                                    className="form-control"
-                                                    selected={selectedThaiDate}
-                                                    onChange={handleThaiDateChange}
-                                                    dateFormat="dd/MM/yyyy"
-                                                    locale={th}
-                                                />
                                             </div>
-
                                         </div>
                                         <div class="col-md-3">
                                             <label role="datetime">พิมพ์วันที่</label>
@@ -1021,21 +950,6 @@ function SalaryAllResult() {
                                     <button class="btn btn-success" onClick={generatePDF01}>Generate PDF</button>
 
                                 </div>
-                                {/* <label>Thai Date:</label> */}
-                                {/* <DatePicker
-                                    selected={selectedThaiDate}
-                                    onChange={handleThaiDateChange}
-                                    dateFormat="dd/MM/yyyy"
-                                    locale={th}
-                                /> */}
-                                {/* <br />
-                                <label>Gregorian Date:</label>
-                                <DatePicker
-                                    selected={selectedGregorianDate}
-                                    onChange={handleGregorianDateChange}
-                                    dateFormat="dd/MM/yyyy"
-                                    locale={en}
-                                /> */}
                             </section>
 
                         </div>
