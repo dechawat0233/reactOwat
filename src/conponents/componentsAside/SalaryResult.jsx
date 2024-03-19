@@ -1028,12 +1028,20 @@ function Salaryresult() {
     parseFloat(tax) +
     parseFloat(socialSecurity) +
     parseFloat(bank);
+
+  const namelist = [
+    { name: 'pop', empID: '1525', workplaceId: '1001-25', salary: '123' },
+    { name: 'top', empID: '1585', workplaceId: '1021-25', salary: '498' },
+    { name: 'cop', empID: '1585', workplaceId: '1021-25', salary: '753' },
+  ];
   return (
     // <div>
 
     // </div>
     // <div>
-    <body class="hold-transition sidebar-mini" className='editlaout'>
+
+
+    < body class="hold-transition sidebar-mini" className='editlaout' >
       <div class="wrapper">
 
         <div class="content-wrapper">
@@ -1214,8 +1222,15 @@ function Salaryresult() {
                           <td style={cellStyle}>{(overWorkRateOTSum).toFixed(2)}</td>
                           {/* <td style={cellStyle}>{(overAddSalaryDaySum).toFixed(2) + (sumSpSalary).toFixed(2)}</td> */}
                           {/* <td style={cellStyle}>{(overAddSalaryDaySum + sumSpSalaryResult).toFixed(2) + `(` + (overAddSalaryDaySum).toFixed(2) + `+` + (sumSpSalaryResult).toFixed(2) + `)`}</td> */}
-                          <td style={cellStyle}>{(overAddSalaryDaySum + sumSpSalaryResult).toFixed(2)}</td>
-
+                          <td style={cellStyle}>
+                            {/* {(overAddSalaryDaySum + sumSpSalaryResult).toFixed(2)} */}
+                            {namelist.map((employee, index) => (
+                              <tr key={index}>
+                                <th style={headerCellStyle}>{employee.name}</th>
+                                <td style={cellStyle}>{employee.salary}</td>
+                              </tr>
+                            ))}
+                          </td>
                           {/* <td style={cellStyle}>
                             <input
                               type="text"
@@ -1254,11 +1269,11 @@ function Salaryresult() {
                       </thead>
                       <tbody>
                         <tr>
-                          <td style={cellStyle}>{Number(tax).toFixed(2)}</td>
+                          <td style={cellStyle}>{isNaN(Number(tax)) ? 0.00 : Number(tax).toFixed(2)}</td>
                           {/* <td style={cellStyle}>{((overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary) * socialSecurity).toFixed(2)}</td> */}
-                          <td style={cellStyle}>{Number(socialSecurity).toFixed(2)}</td>
+                          <td style={cellStyle}>{isNaN(Number(socialSecurity)) ? 0.00 : Number(socialSecurity).toFixed(2)}</td>
 
-                          <td style={cellStyle}>{Number(bank).toFixed(2)}</td>
+                          <td style={cellStyle}>{isNaN(Number(bank)) ? 0.00 : Number(bank).toFixed(2)}</td>
                           {/* <td style={cellStyle}>
                             <input
                               type="text"
@@ -1270,8 +1285,8 @@ function Salaryresult() {
                               onChange={handleAnyMinusChange}
                             />
                           </td> */}
-                          <td style={cellStyle}>{(Number(deductBeforeTax) + Number(deductAfterTax)).toFixed(2)}</td>
-                          <td style={cellStyle}>{(Number(deductBeforeTax) + Number(deductAfterTax) + Number(tax) + Number(socialSecurity) + Number(bank)).toFixed(2)}</td>
+                          <td style={cellStyle}>{isNaN(Number(deductBeforeTax) + Number(deductAfterTax)) ? 0.00 : (Number(deductBeforeTax) + Number(deductAfterTax)).toFixed(2)}</td>
+                          <td style={cellStyle}>{isNaN(Number(deductBeforeTax) + Number(deductAfterTax) + Number(tax) + Number(socialSecurity) + Number(bank)) ? 0.00 : (Number(deductBeforeTax) + Number(deductAfterTax) + Number(tax) + Number(socialSecurity) + Number(bank)).toFixed(2)}</td>
                           {/* <td style={cellStyle}>({anyMinus} + {tax} + {((overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary) * socialSecurity).toFixed()} + {bankCustom} + {sumDeduct} + {sumDeductInstallment})</td> */}
                           <td style={cellStyle}>
                             <button class="btn btn-danger" style={{ width: '3rem' }}>แก้ไข</button>
@@ -1298,9 +1313,13 @@ function Salaryresult() {
                       </thead>
                       <tbody>
                         <tr>
-                          <td style={cellStyle}>{(totalSumSalary).toFixed(2)}</td>
+                          {/* <td style={cellStyle}>{(totalSumSalary).toFixed(2)}</td>
                           <td style={cellStyle}>{(totalSumDeduct).toFixed(2)}</td>
-                          <td style={cellStyle}>{(totalSumSalary - totalSumDeduct).toFixed(2)}</td>
+                          <td style={cellStyle}>{(totalSumSalary - totalSumDeduct).toFixed(2)}</td> */}
+
+                          <td style={cellStyle}>{isNaN(totalSumSalary) ? 0.00 : (totalSumSalary).toFixed(2)}</td>
+                          <td style={cellStyle}>{isNaN(totalSumDeduct) ? 0.00 : (totalSumDeduct).toFixed(2)}</td>
+                          <td style={cellStyle}>{isNaN(totalSumSalary - totalSumDeduct) ? 0.00 : (totalSumSalary - totalSumDeduct).toFixed(2)}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -1322,7 +1341,7 @@ function Salaryresult() {
         </div>
       </div>
 
-    </body>
+    </body >
   )
 }
 

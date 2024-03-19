@@ -651,7 +651,7 @@ function TestPDFSalary() {
       } = groupedByWorkplace[workplaceKey];
 
       const workplaceDetails = workplaceListAll.find(w => w.workplaceId == workplaceKey) || { name: 'Unknown' };
-      console.log('workplaceDetails',workplaceDetails);
+      console.log('workplaceDetails', workplaceDetails);
       const workplaceName = workplaceDetails.workplaceName || 'Unknown'; // Use a default value if 'name' is not available
 
       // Display workplace heading
