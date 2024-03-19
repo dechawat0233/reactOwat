@@ -584,6 +584,7 @@ function Salaryresult() {
 
       console.log('Total Count:', totalCount);
 
+
       const filteredEntriesCalsalary = calsalarylist.filter(entry =>
         entry.employeeId === searchEmployeeId &&
         entry.month === month
@@ -756,57 +757,56 @@ function Salaryresult() {
 
       // console.log('Total Count:', totalCount);
 
-      // const groupedRecords = concludeRecordArray.reduce((groups, record) => {
-      //   const workplaceId = record.workplaceId || 'default'; // Use a default key if workplaceId is not available
+      const groupedRecords = concludeRecordArray.reduce((groups, record) => {
+        const workplaceId = record.workplaceId || 'default'; // Use a default key if workplaceId is not available
 
-      //   if (!groups[workplaceId]) {
-      //     groups[workplaceId] = [];
-      //   }
+        if (!groups[workplaceId]) {
+          groups[workplaceId] = [];
+        }
 
-      //   groups[workplaceId].push(record);
-      //   return groups;
-      // }, {});
+        groups[workplaceId].push(record);
+        return groups;
+      }, {});
 
       // Calculating sum for each group
+      const sumCountsByWorkplace = {};
 
-      // const sumCountsByWorkplace = {};
+      Object.keys(groupedRecords).forEach(workplaceId => {
 
-      // Object.keys(groupedRecords).forEach(workplaceId => {
+        sumCountsByWorkplace[workplaceId] = groupedRecords[workplaceId].reduce((accumulator, record) => {
+          const allTimesValue = parseFloat(record.allTimes) || 0;
+          const workRateValue = parseFloat(record.workRate) || 0;
+          const otTimesValue = parseFloat(record.otTimes) || 0;
 
-      //   sumCountsByWorkplace[workplaceId] = groupedRecords[workplaceId].reduce((accumulator, record) => {
-      //     const allTimesValue = parseFloat(record.allTimes) || 0;
-      //     const workRateValue = parseFloat(record.workRate) || 0;
-      //     const otTimesValue = parseFloat(record.otTimes) || 0;
+          // const workRateOTMatch = record.workRateOT.match(/\((.*?)\)/);
+          // const workRateOTValue = workRateOTMatch ? parseFloat(workRateOTMatch[1]) || 0 : 0;
 
-      //     // const workRateOTMatch = record.workRateOT.match(/\((.*?)\)/);
-      //     // const workRateOTValue = workRateOTMatch ? parseFloat(workRateOTMatch[1]) || 0 : 0;
-
-      //     const workRateOTMatch = record.workRateOT.match(/(\d+\.?\d*)/);
-      //     const workRateOTValue = workRateOTMatch ? parseFloat(workRateOTMatch[0]) || 0 : 0;
+          const workRateOTMatch = record.workRateOT.match(/(\d+\.?\d*)/);
+          const workRateOTValue = workRateOTMatch ? parseFloat(workRateOTMatch[0]) || 0 : 0;
 
 
-      //     const addSalaryDayValue = parseFloat(record.addSalaryDay) || 0;
+          const addSalaryDayValue = parseFloat(record.addSalaryDay) || 0;
 
-      //     accumulator.allTimes += allTimesValue;
-      //     accumulator.workRate += workRateValue;
-      //     // accumulator.workRate = workRateValue;
-      //     accumulator.otTimes += otTimesValue;
-      //     // accumulator.workRateOT += workRateOTValue;
-      //     accumulator.workRateOT += workRateOTValue;
-      //     accumulator.addSalaryDay += addSalaryDayValue;
-      //     accumulator.count += 1;
+          accumulator.allTimes += allTimesValue;
+          accumulator.workRate += workRateValue;
+          // accumulator.workRate = workRateValue;
+          accumulator.otTimes += otTimesValue;
+          // accumulator.workRateOT += workRateOTValue;
+          accumulator.workRateOT += workRateOTValue;
+          accumulator.addSalaryDay += addSalaryDayValue;
+          accumulator.count += 1;
 
-      //     return accumulator;
-      //   }, {
-      //     allTimes: 0,
-      //     workRate: 0,
-      //     otTimes: 0,
-      //     workRateOT: 0,
-      //     addSalaryDay: 0,
-      //   });
-      // });
+          return accumulator;
+        }, {
+          allTimes: 0,
+          workRate: 0,
+          otTimes: 0,
+          workRateOT: 0,
+          addSalaryDay: 0,
+        });
+      });
 
-      // console.log('sumCountsByWorkplace', sumCountsByWorkplace);
+      console.log('sumCountsByWorkplace', sumCountsByWorkplace);
 
       // const otTimesSumByWorkplace = {};
 
@@ -819,12 +819,12 @@ function Salaryresult() {
 
       // console.log('otTimesSumByWorkplace:', otTimesSumByWorkplace);
 
-      // const overallAllTimesSum = Object.values(sumCountsByWorkplace).reduce((sum, workplaceData) => {
-      //   return sum + workplaceData.allTimes;
-      // }, 0);
+      const overallAllTimesSum = Object.values(sumCountsByWorkplace).reduce((sum, workplaceData) => {
+        return sum + workplaceData.allTimes;
+      }, 0);
 
-      // console.log('overallAllTimesSum:', overallAllTimesSum);
-      // setOverallAllTimesSum(overallAllTimesSum);
+      console.log('overallAllTimesSum:', overallAllTimesSum);
+      setOverallAllTimesSum(overallAllTimesSum);
       // alert('overallAllTimesSum');
 
       const overallOtTimesSum = Object.values(sumCountsByWorkplace).reduce((sum, workplaceData) => {
@@ -887,88 +887,6 @@ function Salaryresult() {
   }
   console.log('alldaywork', alldaywork);
 
-  // const overallAllTimesSumSum = alldaywork.reduce((sum, record) => {
-  //   // Convert allTimes to number using parseFloat
-  //   const allTimesValue = parseFloat(record.allTimes) || 0;
-  //   return sum + allTimesValue;
-  // }, 0);
-
-  // setOverallAllTimesSum(overallAllTimesSumSum);
-  // console.log('overallAllTimesSumSum:', overallAllTimesSumSum);
-
-  const flattenedArray = alldaywork.flat();
-
-  // Sum up allTimes property
-  const overallAllTimesSum123 = flattenedArray.reduce((sum, record) => {
-    const allTimesValue = parseFloat(record.allTimes) || 0;
-    return sum + allTimesValue;
-  }, 0);
-  // setOverallAllTimesSum(overallAllTimesSum123);
-  console.log('overallAllTimesSum123:', overallAllTimesSum123);
-
-  const overallOtTimesSum123 = flattenedArray.reduce((sum, record) => {
-    const otTimesValue = parseFloat(record.otTimes) || 0;
-    return sum + otTimesValue;
-  }, 0);
-  // overallOtTimesSum(overallOtTimesSum123);
-  console.log('overallOtTimesSum123:', overallOtTimesSum123);
-
-  const groupedRecords = alldaywork.reduce((groups, record) => {
-    const workplaceId = record.workplaceId || 'default'; // Use a default key if workplaceId is not available
-
-    if (!groups[workplaceId]) {
-      groups[workplaceId] = [];
-    }
-
-    groups[workplaceId].push(record);
-    return groups;
-  }, {});
-
-  console.log('groupedRecords', groupedRecords);
-
-  const sumCountsByWorkplace = {};
-
-  Object.keys(groupedRecords).forEach(workplaceId => {
-
-    sumCountsByWorkplace[workplaceId] = groupedRecords[workplaceId].reduce((accumulator, record) => {
-      const allTimesValue = parseFloat(record.allTimes) || 0;
-      const workRateValue = parseFloat(record.workRate) || 0;
-      const otTimesValue = parseFloat(record.otTimes) || 0;
-
-      // const workRateOTMatch = record.workRateOT.match(/\((.*?)\)/);
-      // const workRateOTValue = workRateOTMatch ? parseFloat(workRateOTMatch[1]) || 0 : 0;
-
-      // const workRateOTMatch = record.workRateOT.match(/(\d+\.?\d*)/);
-      let workRateOTValue = 0;
-      if (record.workRateOT) {
-        const workRateOTMatch = record.workRateOT.match(/(\d+\.?\d*)/);
-        workRateOTValue = workRateOTMatch ? parseFloat(workRateOTMatch[1]) || 0 : 0;
-      }
-      // const workRateOTValue = workRateOTMatch ? parseFloat(workRateOTMatch[0]) || 0 : 0;
-
-
-      const addSalaryDayValue = parseFloat(record.addSalaryDay) || 0;
-
-      accumulator.allTimes += allTimesValue;
-      accumulator.workRate += workRateValue;
-      // accumulator.workRate = workRateValue;
-      accumulator.otTimes += otTimesValue;
-      // accumulator.workRateOT += workRateOTValue;
-      accumulator.workRateOT += workRateOTValue;
-      accumulator.addSalaryDay += addSalaryDayValue;
-      accumulator.count += 1;
-
-      return accumulator;
-    }, {
-      allTimes: 0,
-      workRate: 0,
-      otTimes: 0,
-      workRateOT: 0,
-      addSalaryDay: 0,
-    });
-  });
-
-  console.log('sumCountsByWorkplace', sumCountsByWorkplace);
 
   const findEmployeeById = (id) => {
     return employeeList.find(employee => employee.employeeId === id);
@@ -1114,21 +1032,21 @@ function Salaryresult() {
   // console.log("Sum:", sumWorkRate.sum);
   // console.log("Count:", sumWorkRate.count);
 
-  // const totalSumSalary =
-  //   parseFloat(overWorkRateSum) +
-  //   parseFloat(overWorkRateOTSum) +
-  //   parseFloat(overAddSalaryDaySum) +
-  //   parseFloat(sumSpSalaryResult) +
-  //   parseFloat(anySpSalary);
-
   const totalSumSalary =
-    parseFloat(amountDay) +
-    parseFloat(amountOt) +
-    parseFloat(amountPosition) +
-    parseFloat(amountHardWorking) +
-    parseFloat(amountHoliday) +
-    parseFloat(addAmountAfterTax) +
-    parseFloat(amountSpecial);
+    parseFloat(overWorkRateSum) +
+    parseFloat(overWorkRateOTSum) +
+    parseFloat(overAddSalaryDaySum) +
+    parseFloat(sumSpSalaryResult) +
+    parseFloat(anySpSalary);
+
+  // const totalSumSalary =
+  //   parseInt(amountDay) +
+  //   parseInt(amountOt) +
+  //   parseInt(amountPosition) +
+  //   parseInt(amountHardWorking) +
+  //   parseInt(amountHoliday) +
+  //   parseInt(addAmountAfterTax) +
+  //   parseInt(amountSpecial);
 
   //   overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult
 
@@ -1319,8 +1237,8 @@ function Salaryresult() {
                       <tbody>
                         <tr>
                           <td style={cellStyle}>{totalCount}</td>
-                          <td style={cellStyle}>{(overallAllTimesSum123).toFixed(2)}</td>
-                          <td style={cellStyle}>{(overallOtTimesSum123).toFixed(2)}</td>
+                          <td style={cellStyle}>{(overallAllTimesSum).toFixed(2)}</td>
+                          <td style={cellStyle}>{(overallOtTimesSum).toFixed(2)}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -1343,12 +1261,8 @@ function Salaryresult() {
                       <tbody>
                         {/* sumSpSalary */}
                         <tr>
-                          {/* <td style={cellStyle}>{(overWorkRateSum).toFixed(2)}</td>
-                          <td style={cellStyle}>{(overWorkRateOTSum).toFixed(2)}</td> */}
-
-                          <td style={cellStyle}>{isNaN(Number(amountDay)) ? 0.00 : Number(amountDay).toFixed(2)}</td>
-                          <td style={cellStyle}>{isNaN(Number(amountOt)) ? 0.00 : Number(amountOt).toFixed(2)}</td>
-
+                          <td style={cellStyle}>{(overWorkRateSum).toFixed(2)}</td>
+                          <td style={cellStyle}>{(overWorkRateOTSum).toFixed(2)}</td>
                           {/* <td style={cellStyle}>{(overAddSalaryDaySum).toFixed(2) + (sumSpSalary).toFixed(2)}</td> */}
                           {/* <td style={cellStyle}>{(overAddSalaryDaySum + sumSpSalaryResult).toFixed(2) + `(` + (overAddSalaryDaySum).toFixed(2) + `+` + (sumSpSalaryResult).toFixed(2) + `)`}</td> */}
                           <td style={cellStyle}>
@@ -1359,7 +1273,6 @@ function Salaryresult() {
                                 <td style={cellStyle}>{employee.salary}</td>
                               </tr>
                             ))}
-                            {isNaN(Number(addAmountBeforeTax + addAmountAfterTax)) ? 0.00 : Number(addAmountBeforeTax + addAmountAfterTax).toFixed(2)}
                           </td>
                           {/* <td style={cellStyle}>
                             <input
@@ -1372,9 +1285,7 @@ function Salaryresult() {
                               onChange={handleAnySpSalaryChange}
                             />
                           </td> */}
-                          {/* <td style={cellStyle}>{(overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult).toFixed(2)}</td> */}
-                          <td style={cellStyle}>{(amountDay + amountOt + addAmountBeforeTax + addAmountAfterTax).toFixed(2)}</td>
-
+                          <td style={cellStyle}>{(overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult).toFixed(2)}</td>
                           <td style={cellStyle}>
                             <button class="btn btn-danger" style={{ width: '3rem' }}>แก้ไข</button>
                           </td>
