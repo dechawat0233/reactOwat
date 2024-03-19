@@ -1071,14 +1071,8 @@ function AddsettimeWorkplace() {
         };
 
 
-<<<<<<< HEAD
         //get work time from workplace 
         const workplaceWorkTime = await getWorkTime(searchResult, formattedWorkDate);
-=======
-
-                                                                //get work time from workplace 
-                                                                const workplaceWorkTime = await getWorkTime(searchResult, formattedWorkDate);
->>>>>>> daf89421ea2c31a9a203ea53e9f6142677674927
         // alert(JSON.stringify(searchResult,null,2) );
         workplaceWorkTime.map(item => {
             // alert(item.shift);
