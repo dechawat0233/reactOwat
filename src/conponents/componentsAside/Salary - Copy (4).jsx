@@ -467,7 +467,7 @@ function Salary() {
 
                 const initialFormData = await {
                     addSalary: filtered[0].addSalary.map((item) => ({
-                        id: item.codeSpSalary || '',
+                        id: item.id|| '',
                         name: item.name || '',
                         SpSalary: item.SpSalary || '',
                         roundOfSalary: item.roundOfSalary || '',
@@ -475,7 +475,7 @@ function Salary() {
                         nameType: item.nameType || '',
                     })),
                 };
-// await alert(JSON.stringify(initialFormData,null,2) );
+await alert(JSON.stringify(initialFormData,null,2) );
                 setFormData(initialFormData);
                 // setFormData(workplace.addSalary);
 
@@ -1015,7 +1015,7 @@ function Salary() {
                                                         />
                                                     </div>
                                                     <div className="col-md-2">
-                                                        <label role="salaryadd6">จำนวนเงิน</label>
+                                                        <label role="salaryadd6">จำนวนเงิน{JSON.stringify(data) }</label>
                                                         <input
                                                             type="text"
                                                             name="SpSalary"

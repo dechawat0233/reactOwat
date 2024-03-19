@@ -81,6 +81,7 @@ function AddsettimeWorkplace() {
     useEffect(() => {
         if (workplaceName !== '') {
             handleCheckTimerecord();
+
         }
     }, [workDate]);
 
@@ -193,6 +194,7 @@ function AddsettimeWorkplace() {
 
     //check ship and set time of work to start time and end time
     useEffect(() => {
+        // alert(shift);
         switch (shift) {
             case 'morning_shift':
                 setStartTime(shift1start || '');
@@ -770,24 +772,24 @@ function AddsettimeWorkplace() {
         try {
             const response = await axios.post(endpoint + '/workplace/search', data);
             setSearchResult(response.data.workplaces);
+            // alert(JSON.stringify(response ,null,2));
             if (response.data.workplaces.length < 1) {
                 window.location.reload();
             } else {
-
                 // Calculate the time difference
                 setWorkOfHour(response.data.workplaces[0].workOfHour);
                 setWorkOfOT(response.data.workplaces[0].workOfOT);
 
-                const startTime = response.data.workplaces[0].workStart1;
-                const endTime = response.data.workplaces[0].workEnd1;
-                const workOfHour = response.data.workplaces[0].workOfHour;
-                const selectotTime = response.data.workplaces[0].workEnd1;
-                const workOfOT = response.data.workplaces[0].workOfOT;
+                const startTime = response.data.workplaces[0].workStart1 || '';
+                const endTime = response.data.workplaces[0].workEnd1 || '';
+                const workOfHour = response.data.workplaces[0].workOfHour || '';
+                const selectotTime = response.data.workplaces[0].workEnd1 || '';
+                const workOfOT = response.data.workplaces[0].workOfOT || '';
                 //get start time and end time for afternoon and night
-                const startTime2 = response.data.workplaces[0].workStart2;
-                const endTime2 = response.data.workplaces[0].workEnd2;
-                const startTime3 = response.data.workplaces[0].workStart3;
-                const endTime3 = response.data.workplaces[0].workEnd3;
+                const startTime2 = response.data.workplaces[0].workStart2 || '';
+                const endTime2 = response.data.workplaces[0].workEnd2 || '';
+                const startTime3 = response.data.workplaces[0].workStart3 || '';
+                const endTime3 = response.data.workplaces[0].workEnd3 || '';
                 const startTime4 = '';
                 const endTime4 = '';
 
@@ -825,35 +827,134 @@ function AddsettimeWorkplace() {
                 setEndTimeOt2('');
                 setStartTimeOt3('');
                 setEndTimeOt3('');
+                                                                      //get work time from workplace 
+                                                                      const workplaceWorkTime = await getWorkTime(response.data.workplaces  , formattedWorkDate);
+                                                                      // alert(JSON.stringify(searchResult,null,2) );
+                                                                      workplaceWorkTime.map(item => {
+                                                                      // alert(item.shift);
+                                                                      if(item.shift == 'กะเช้า'){
+                                                                      // alert(item.startTime);
+                                                                      setShift1start(item.startTime);
+                                                                      setShift1end(item.endTime);
+                                                                      setStartTimeOt1(item.startTimeOT);
+                                                                      setEndTimeOt1(item.endTimeOT);
+                                                              
+                                                                      }else if(item.shift == 'กะบ่าย') {
+                                                                          setShift2start(item.startTime);
+                                                                          setShift2end(item.endTime);
+                                                                          setStartTimeOt2(item.startTimeOT);
+                                                                      setEndTimeOt2(item.endTimeOT);
+                                                              
+                                                                      } else if(item.shift == 'กะดึก'){
+                                                                          setShift3start(item.startTime);
+                                                                          setShift3end(item.endTime);
+                                                                          setStartTimeOt3(item.startTimeOT);
+                                                                      setEndTimeOt3(item.endTimeOT);
+                                                              
+                                                                      }
+                                                              
+                                                                      });
+                                                              
+                                                              
+                                                                        
+//aass
+// const worktimeList = [];
+//                 const dayMapping = await {
+//                     อาทิตย์: 0,
+//                     จันทร์: 1,
+//                     อังคาร: 2,
+//                     พุธ: 3,
+//                     พฤหัส: 4,
+//                     ศุกร์: 5,
+//                     เสาร์: 6
+//                   };
+                  
+//                 //get work time from workplace 
+//                 // await alert(JSON.stringify(response.data.workplaces[0].workTimeDay.length,null,2));
+//                 await response.data.workplaces[0].workTimeDay.map( async (item , index) => {
 
-                //get work time from workplace 
-                const workplaceWorkTime = await getWorkTime(response.data.workplaces, formattedWorkDate);
-                // alert(JSON.stringify(workplaceWorkTime , null,2) );
+// // await alert(item.startDay + dayMapping[item.startDay] );
+// // await alert(item.endDay + dayMapping[item.endDay] );
+// if(dayMapping [item.startDay] ==  dayMapping[item.endDay] ){
+//     // let x = await {[dayMapping[item.startDay]]: item.allTimes};
+//     // await worktimeList.push(x);
+//     let x = {};
+//     x[dayMapping[item.startDay]] = item.allTimes;
+//     worktimeList.push(x);
 
-                workplaceWorkTime.map(item => {
-                    // alert(item.shift);
-                    if (item.shift == 'กะเช้า') {
-                        // alert(item.startTime);
-                        setShift1start(item.startTime);
-                        setShift1end(item.endTime);
-                        setStartTimeOt1(item.startTimeOT);
-                        setEndTimeOt1(item.endTimeOT);
+     
+//   }  
+  
+//   if(dayMapping [item.startDay] >  dayMapping[item.endDay]){
+//     let tmpc = await dayMapping[item.startDay];
+//     let c = await true;
+    
+//         while(c) {
+//     if(tmpc == dayMapping[item.endDay]){
+//       c =await false;
+//       }
+    
+//       // alert(tmpc);
+//     //   worktimeList[c] = await item.allTimes;
+//     let x = {};
+//     x[c] = item.allTimes;
+//     worktimeList.push(x);
 
-                    } else if (item.shift == 'กะบ่าย') {
-                        setShift2start(item.startTime);
-                        setShift2end(item.endTime);
-                        setStartTimeOt2(item.startTimeOT);
-                        setEndTimeOt2(item.endTimeOT);
+//     // alert(tmpc );
+//     tmpc = await tmpc +1;
+//     if(tmpc > 6 ){
+//     tmpc = await 0;
+//     }
+//     // alert(tmpc);
+//         }
+    
+//       } 
+  
+//       if(dayMapping[item.startDay] <  dayMapping[item.endDay]){
 
-                    } else if (item.shift == 'กะดึก') {
-                        setShift3start(item.startTime);
-                        setShift3end(item.endTime);
-                        setStartTimeOt3(item.startTimeOT);
-                        setEndTimeOt3(item.endTimeOT);
+//         for (let i = dayMapping[item.startDay]; i <= dayMapping[item.endDay]; i++) {
+//             let x = {};
+//             x[i] = item.allTimes;
+//             worktimeList.push(x);
+//         }
+//         }
+  
+//                 });
+//                 // await alert(JSON.stringify(worktimeList.length,null,2) );
 
-                    }
+// // Get the day of the week (0 for Sunday, 1 for Monday, ..., 6 for Saturday)
+// const dayOfWeek = await workDate.getDay();
 
-                });
+// // await alert(dayOfWeek );
+
+//                 await Promise.all(worktimeList.map(async (item) => {
+
+// if(item[dayOfWeek ] !== undefined) {
+//     // alert(JSON.stringify(item[dayOfWeek ]));
+
+//     if (item.shift == 'กะเช้า') {
+//         // alert(item.startTime);
+//         await setShift1start(item.startTime);
+//         await setShift1end(item.endTime);
+//         await setStartTimeOt1(item.startTimeOT);
+//         await setEndTimeOt1(item.endTimeOT);
+
+//     } else if (item.shift == 'กะบ่าย') {
+//         await setShift2start(item.startTime);
+//         await setShift2end(item.endTime);
+//         await setStartTimeOt2(item.startTimeOT);
+//         await setEndTimeOt2(item.endTimeOT);
+
+//     } else if (item.shift == 'กะดึก') {
+//         await setShift3start(item.startTime);
+//         await setShift3end(item.endTime);
+//         await setStartTimeOt3(item.startTimeOT);
+//         await setEndTimeOt3(item.endTimeOT);
+
+//     }
+
+// }                    
+//                 }));
 
 
                 const [startHours, startMinutes] = startTime.split('.').map(parseFloat);
@@ -923,7 +1024,7 @@ function AddsettimeWorkplace() {
 
             }
         } catch (error) {
-            alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
+            alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา' + error);
             window.location.reload();
         }
     }
@@ -970,10 +1071,15 @@ function AddsettimeWorkplace() {
         };
 
 
+<<<<<<< HEAD
         //get work time from workplace 
         const workplaceWorkTime = await getWorkTime(searchResult, formattedWorkDate);
-        // alert(JSON.stringify(searchResult,null,2) );
+=======
 
+                                                                //get work time from workplace 
+                                                                const workplaceWorkTime = await getWorkTime(searchResult, formattedWorkDate);
+>>>>>>> daf89421ea2c31a9a203ea53e9f6142677674927
+        // alert(JSON.stringify(searchResult,null,2) );
         workplaceWorkTime.map(item => {
             // alert(item.shift);
             if (item.shift == 'กะเช้า') {

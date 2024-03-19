@@ -59,6 +59,17 @@ function getNumberOfDay(dn){
   export const getWorkTime = async (workplace , dw) => {
 // alert(JSON.stringify(workplace,null,2));
 // alert(dw);
+const dayMapping = await {
+  อาทิตย์: 0,
+  จันทร์: 1,
+  อังคาร: 2,
+  พุธ: 3,
+  พฤหัส: 4,
+  ศุกร์: 5,
+  เสาร์: 6
+};
+
+
 const worktimeList = [];
 // const [worktimeList  , setWorktimeList ] = useState([]);
 
@@ -78,42 +89,49 @@ await workplace[0].workTimeDay.map( async (item, index) => {
   // alert(JSON.stringify(item,null,2));
 // alert('start' +getNumberOfDay(item.startDay) );
 // alert('end' + getNumberOfDay(item.endDay) );
+// alert('start' + dayMapping[item.startDay] );
 
-if(getNumberOfDay(item.startDay) ===  getNumberOfDay(item.endDay) ){
-  worktimeList[getNumberOfDay(item.startDay)] = await item.allTimes;
+if(dayMapping [item.startDay] ==  dayMapping[item.endDay] ){
+  worktimeList[dayMapping[item.startDay]] = await item.allTimes;
   // alert('test ' + getNumberOfDay(item.startDay));
-} else {
-  if(getNumberOfDay(item.startDay) >  getNumberOfDay(item.endDay)){
-let tmpc = getNumberOfDay(item.startDay);
-let c = true;
+}  
 
-    while(c) {
-if(tmpc == getNumberOfDay(item.endDay)){
-  c =false;
-  }
-
-  // alert(tmpc);
-  worktimeList[c] = await item.allTimes;
-
-
-tmpc = tmpc +1;
-if(tmpc > 6 ){
-tmpc = 0;
-}
+if(dayMapping [item.startDay] >  dayMapping[item.endDay]){
+  let tmpc = await dayMapping[item.startDay];
+  let c = await true;
+  
+      while(c) {
+  if(tmpc == dayMapping[item.endDay]){
+    c =await false;
     }
+  
+    // alert(tmpc);
+    worktimeList[c] = await item.allTimes;
+  
+  // alert(tmpc );
+  tmpc = await tmpc +1;
+  if(tmpc > 6 ){
+  tmpc = await 0;
+  }
+  // alert(tmpc);
+      }
+  
+    } 
 
-  } else {
-for(let i = getNumberOfDay(item.startDay); i <= getNumberOfDay(item.endDay); i++ ) {
-  worktimeList[i] = await item.allTimes;
-  // alert(i);
-}
-}
-}
+    if(dayMapping[item.startDay] <  dayMapping[item.endDay]){
 
+      for(let i = dayMapping[item.startDay]; i <= dayMapping[item.endDay]; i++ ) {
+        worktimeList[i] = await item.allTimes;
+        // alert(JSON.stringify(item.allTimes,null,2));
+        // alert(i);
+      }
+      }
+      
+      
 });
 
-// alert(JSON.stringify(worktimeList, null ,2) );
-// alert(worktimeList);
+// await alert(worktimeList.length );
+// await alert(JSON.stringify(worktimeList,null,2));
 
 // alert(dw);
 let dateString = await dw;
