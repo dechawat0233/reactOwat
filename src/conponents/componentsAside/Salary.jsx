@@ -239,6 +239,17 @@ function Salary() {
     //add salary
     const [addSalary, setAddSalary] = useState([]);
     const [addSalaryWorkplace, setAddSalaryWorkplace] = useState([]);
+    const [addSalaryWorkplace1, setAddSalaryWorkplace1] = useState([]);
+
+
+    const handleAddToSalary = (data) => {
+        setAddSalary(prev => [...prev, data]);
+        // setAddSalaryWorkplace(prev => prev.filter(item => item.id !== data.id));
+    };
+    
+    const handleRemoveFromSalary = (item) => {
+        setAddSalary(prev => prev.filter(i => i !== item));
+    };
 
 
     const handleAddSalary = async (data) => {
@@ -430,6 +441,7 @@ function Salary() {
         // alert('hi');
         // Make the API call to update the resource by ID
         try {
+            employeeData.addSalary = await addSalary;
             const response = await axios.put(endpoint + '/employee/update/' + employeeData._id, employeeData);
             // setEmployeesResult(response.data.employees);
             if (response) {
@@ -1091,8 +1103,170 @@ function Salary() {
                                                 </div>
                                             ))}
 
-<h2>test</h2>
-{addSalary.length} : {addSalaryWorkplace.length}
+<h3>เงินเพิ่มของหน่วยงาน</h3>
+{addSalaryWorkplace.map((data, index) => (
+                                                <div className="row" key={index}>
+                                                <div className="col-md-2">
+                                                    <label role="salaryadd6">ชื่อรายการ</label>
+                                                    <input
+                                                        type="text"
+                                                        name="name"
+                                                        className="form-control"
+                                                        value={data.name}
+                                                        onChange={(e) => handleChangeSpSalary(e, index, 'name')}
+                                                        readOnly
+                                                    />
+                                                </div>
+
+                                                <div className="col-md-2">
+                                                        <label role="salaryadd6">จำนวนเงิน</label>
+                                                        <input
+                                                            type="text"
+                                                            name="SpSalary"
+                                                            className="form-control"
+                                                            value={ data.SpSalary}
+                                                            onChange={(e) => handleChangeSpSalary(e, index, 'SpSalary')}
+                                                            readOnly
+                                                        />
+
+                                                    </div>
+                                                    <div className="col-md-2">
+                                                        <label role="salaryadd6">ได้เป็นราย</label>
+                                                        <select
+                                                            name="roundOfSalary"
+                                                            className="form-control"
+                                                            value={data.roundOfSalary}
+                                                            onChange={(e) => handleChangeSpSalary(e, index, 'roundOfSalary')}
+
+                                                        >
+                                                            <option value="daily">รายวัน</option>
+                                                            <option value="monthly">รายเดือน</option>
+                                                        </select>
+                                                    </div>
+                                                    <div className="col-md-2">
+                                                        <label role="salaryadd6">ประเภทพนักงาน</label>
+                                                        <select
+                                                            name="StaffType"
+                                                            className="form-control"
+                                                            value={data.StaffType}
+                                                            onChange={(e) => handleChangeSpSalary(e, index, 'StaffType')}
+                                                            readonly
+                                                        >
+                                                            <option value="">เลือกตำแหน่งที่จะมอบให้</option>
+                                                            <option value="all">ทั้งหมด</option>
+                                                            <option value="header">หัวหน้างาน</option>
+                                                            <option value="custom">กำหนดเอง</option>
+                                                        </select>
+                                                    </div>
+
+                                                    {data.StaffType === 'custom' && (
+                                                        <div className="col-md-2">
+                                                            <label>ตำแหน่ง</label>
+                                                            <input
+                                                                type="text"
+                                                                name="additionalInput"
+                                                                className="form-control"
+                                                                value={data.nameType}
+                                                                onChange={(e) => handleChangeSpSalary(e, index, 'nameType')}
+                                                                readOnly
+                                                            />
+                                                        </div>
+                                                    )}
+
+<div key={index} className="col-md-1">
+                                                            <div>
+                                                                <button onClick={() => handleAddToSalary (data)} className="btn btn-danger" style={{ width: "5rem", position: 'absolute', bottom: '0' }}>ให้สวัสดิการ</button>
+                                                            </div>
+                                                        </div>
+
+
+                                                </div>
+
+    
+))}
+
+<h3>เงินเพิ่มที่ได้รับ</h3>
+{addSalary.map((data , index) => (
+    data.name !== '' && (
+                                                <div className="row" key={index}>
+                                                <div className="col-md-2">
+                                                    <label role="salaryadd6">ชื่อรายการ</label>
+                                                    <input
+                                                        type="text"
+                                                        name="name"
+                                                        className="form-control"
+                                                        value={data.name}
+                                                        onChange={(e) => handleChangeSpSalary(e, index, 'name')}
+                                                        readOnly
+                                                    />
+                                                </div>
+
+                                                <div className="col-md-2">
+                                                        <label role="salaryadd6">จำนวนเงิน</label>
+                                                        <input
+                                                            type="text"
+                                                            name="SpSalary"
+                                                            className="form-control"
+                                                            value={ data.SpSalary}
+                                                            onChange={(e) => handleChangeSpSalary(e, index, 'SpSalary')}
+                                                            readOnly
+                                                        />
+
+                                                    </div>
+                                                    <div className="col-md-2">
+                                                        <label role="salaryadd6">ได้เป็นราย</label>
+                                                        <select
+                                                            name="roundOfSalary"
+                                                            className="form-control"
+                                                            value={data.roundOfSalary}
+                                                            onChange={(e) => handleChangeSpSalary(e, index, 'roundOfSalary')}
+
+                                                        >
+                                                            <option value="daily">รายวัน</option>
+                                                            <option value="monthly">รายเดือน</option>
+                                                        </select>
+                                                    </div>
+                                                    <div className="col-md-2">
+                                                        <label role="salaryadd6">ประเภทพนักงาน</label>
+                                                        <select
+                                                            name="StaffType"
+                                                            className="form-control"
+                                                            value={data.StaffType}
+                                                            onChange={(e) => handleChangeSpSalary(e, index, 'StaffType')}
+                                                            readonly
+                                                        >
+                                                            <option value="">เลือกตำแหน่งที่จะมอบให้</option>
+                                                            <option value="all">ทั้งหมด</option>
+                                                            <option value="header">หัวหน้างาน</option>
+                                                            <option value="custom">กำหนดเอง</option>
+                                                        </select>
+                                                    </div>
+
+                                                    {data.StaffType === 'custom' && (
+                                                        <div className="col-md-2">
+                                                            <label>ตำแหน่ง</label>
+                                                            <input
+                                                                type="text"
+                                                                name="additionalInput"
+                                                                className="form-control"
+                                                                value={data.nameType}
+                                                                onChange={(e) => handleChangeSpSalary(e, index, 'nameType')}
+                                                                readOnly
+                                                            />
+                                                        </div>
+                                                    )}
+
+<div key={index} className="col-md-1">
+                                                            <div>
+                                                                <button onClick={() => handleRemoveFromSalary(data)} className="btn btn-danger" style={{ width: "5rem", position: 'absolute', bottom: '0' }}>นำออก</button>
+                                                            </div>
+                                                        </div>
+
+
+                                                </div>
+
+    )
+))}
 
                                             {/* < button type='button' onClick={handleAddInput} class="btn btn-primary" >เพิ่ม</button> */}
                                             {/* <pre>{JSON.stringify(formData, null, 2)}</pre> */}
