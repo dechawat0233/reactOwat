@@ -1015,7 +1015,7 @@ function Salary() {
                                                         />
                                                     </div>
                                                     <div className="col-md-2">
-                                                        <label role="salaryadd6">จำนวนเงิน{JSON.stringify(data) }</label>
+                                                        <label role="salaryadd6">จำนวนเงิน</label>
                                                         <input
                                                             type="text"
                                                             name="SpSalary"
