@@ -1091,6 +1091,9 @@ function Salary() {
                                                 </div>
                                             ))}
 
+<h2>test</h2>
+{addSalary.length} : {addSalaryWorkplace.length}
+
                                             {/* < button type='button' onClick={handleAddInput} class="btn btn-primary" >เพิ่ม</button> */}
                                             {/* <pre>{JSON.stringify(formData, null, 2)}</pre> */}
                                             {/* m1 */}
