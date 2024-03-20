@@ -293,7 +293,7 @@ function AddsettimeEmployee() {
                             switch (wShift) {
                                 case 'morning_shift':
                                     const morningTimes = await item.allTimes.filter(time => time.shift === "กะเช้า");
-                    await alert(morningTimes[0].startTime );
+                    // await alert(morningTimes[0].startTime );
                                     await setWStartTime(morningTimes[0].startTime || '');
                                     await setWEndTime(morningTimes[0].endTime  || '');
                                     await setWAllTime(calTime(morningTimes[0].startTime || '', morningTimes[0].endTime  || '', workplacesearch.workOfHour) || '');
