@@ -187,7 +187,7 @@ function AddsettimeEmployee() {
     const [wId, setWId] = useState('');
     const [wName, setWName] = useState('');
     const [wDate, setWDate] = useState('');
-    const [wShift, setWShift] = useState('');
+    const [wShift, setWShift] = useState('morning_shift');
     const [wStartTime, setWStartTime] = useState('');
     const [wEndTime, setWEndTime] = useState('');
     const [wAllTime, setWAllTime] = useState('');
