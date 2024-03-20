@@ -1011,7 +1011,7 @@ function Setting() {
             workTimeDay: workTimeDayList,
             workTimeDayPerson: workTimeDayPersonList
         };
-// await alert(JSON.stringify(formData.addSalary,null,2));
+        // await alert(JSON.stringify(formData.addSalary,null,2));
 
         //check create or update Employee
         if (newWorkplace) {
@@ -1092,16 +1092,34 @@ function Setting() {
     // // console.log(showAdditionalInput);
 
 
+    // useEffect(() => {
+    //     let d = holiday || 0;
+    //     let h = workOfHour || 0;
+    //     if (d < 10) {
+    //         let wr = workRate || 0;
+    //         d = wr * d;
+    //     }
+    //     let wrh = d / h;
+    //     setHolidayHour(wrh);
+    // }, [holiday, workOfHour]);
+
     useEffect(() => {
         let d = holiday || 0;
         let h = workOfHour || 0;
+        let wr = workRate || 0;
+
         if (d < 10) {
-            let wr = workRate || 0;
             d = wr * d;
         }
-        let wrh = d / h;
+
+        let wrh = h !== 0 ? d / h : 0; // Avoid division by zero
+
+        if (isNaN(wrh)) {
+            wrh = 0; // If result is NaN, set it to 0
+        }
+
         setHolidayHour(wrh);
-    }, [holiday, workOfHour]);
+    }, [holiday, workOfHour, workRate]);
 
 
     return (
