@@ -479,7 +479,7 @@ function AddsettimeEmployee() {
         }
 
 timeOfWork();
-    }, [wShift]);
+    }, [wShift , wDate]);
 
 
     //calculate time of work
