@@ -1152,11 +1152,14 @@ function Salaryresult() {
   ];
 
   const [showPopup, setShowPopup] = useState(false);
+  const [color, setColor] = useState('blue');
 
   const sumSalary = namelist.reduce((acc, curr) => acc + parseInt(curr.salary), 0);
 
   const togglePopup = () => {
     setShowPopup(!showPopup);
+    setColor(color === 'blue' ? 'red' : 'blue');
+
   };
 
   return (
@@ -1352,14 +1355,33 @@ function Salaryresult() {
                           {/* <td style={cellStyle}>{(overAddSalaryDaySum).toFixed(2) + (sumSpSalary).toFixed(2)}</td> */}
                           {/* <td style={cellStyle}>{(overAddSalaryDaySum + sumSpSalaryResult).toFixed(2) + `(` + (overAddSalaryDaySum).toFixed(2) + `+` + (sumSpSalaryResult).toFixed(2) + `)`}</td> */}
                           <td style={cellStyle}>
+                            <p onClick={togglePopup} style={{ color: color, cursor: 'pointer' }}>
+                              {sumSalary}
+                            </p>
+                            {showPopup && (
+                              <div className="popup">
+                                <h4>Salary Details</h4>
+                                <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
+                                  {namelist.map((employee, index) => (
+                                    <li key={index} style={{ marginBottom: '10px' }}>
+                                      {employee.name} - Salary: {employee.salary}
+                                    </li>
+                                  ))}
+                                </ul>
+                                <button onClick={togglePopup}>Close</button>
+                              </div>
+                            )}
+
                             {/* {(overAddSalaryDaySum + sumSpSalaryResult).toFixed(2)} */}
-                            {namelist.map((employee, index) => (
+
+                            {/* {namelist.map((employee, index) => (
                               <tr key={index}>
                                 <th style={headerCellStyle}>{employee.name}</th>
                                 <td style={cellStyle}>{employee.salary}</td>
                               </tr>
-                            ))}
+                            ))} */}
                             {isNaN(Number(addAmountBeforeTax + addAmountAfterTax)) ? 0.00 : Number(addAmountBeforeTax + addAmountAfterTax).toFixed(2)}
+
                           </td>
                           {/* <td style={cellStyle}>
                             <input
@@ -1417,7 +1439,24 @@ function Salaryresult() {
                               onChange={handleAnyMinusChange}
                             />
                           </td> */}
-                          <td style={cellStyle}>{isNaN(Number(deductBeforeTax) + Number(deductAfterTax)) ? 0.00 : (Number(deductBeforeTax) + Number(deductAfterTax)).toFixed(2)}</td>
+                          <td style={cellStyle}>
+                            <p onClick={togglePopup} style={{ color: color, cursor: 'pointer' }}>
+                              {sumSalary}
+                            </p>
+                            {showPopup && (
+                              <div className="popup">
+                                <h4>Salary Details</h4>
+                                <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
+                                  {namelist.map((employee, index) => (
+                                    <li key={index} style={{ marginBottom: '10px' }}>
+                                      {employee.name} - Salary: {employee.salary}
+                                    </li>
+                                  ))}
+                                </ul>
+                                <button onClick={togglePopup}>Close</button>
+                              </div>
+                            )}
+                            {isNaN(Number(deductBeforeTax) + Number(deductAfterTax)) ? 0.00 : (Number(deductBeforeTax) + Number(deductAfterTax)).toFixed(2)}</td>
                           <td style={cellStyle}>{isNaN(Number(deductBeforeTax) + Number(deductAfterTax) + Number(tax) + Number(socialSecurity) + Number(bank)) ? 0.00 : (Number(deductBeforeTax) + Number(deductAfterTax) + Number(tax) + Number(socialSecurity) + Number(bank)).toFixed(2)}</td>
                           {/* <td style={cellStyle}>({anyMinus} + {tax} + {((overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary) * socialSecurity).toFixed()} + {bankCustom} + {sumDeduct} + {sumDeductInstallment})</td> */}
                           <td style={cellStyle}>
@@ -1455,21 +1494,6 @@ function Salaryresult() {
                         </tr>
                       </tbody>
                     </table>
-                    <p onClick={togglePopup}>Total Salary: {sumSalary}</p>
-                    {showPopup && (
-                      <div className="popup">
-                        <h2>Salary Details</h2>
-                        <ul>
-                          {namelist.map((employee, index) => (
-                            <li key={index}>
-                              {employee.name} - Salary: {employee.salary}
-                            </li>
-                          ))}
-                        </ul>
-                        <button onClick={togglePopup}>Close</button>
-                      </div>
-                    )}
-
                   </div>
                 </div>
               </section>
