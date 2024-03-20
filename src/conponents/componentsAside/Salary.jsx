@@ -242,8 +242,9 @@ function Salary() {
     const [addSalaryWorkplace1, setAddSalaryWorkplace1] = useState([]);
 
 
-    const handleAddToSalary = (data) => {
-        setAddSalary(prev => [...prev, data]);
+    const handleAddToSalary = async (data) => {
+data.id =await  data.codeSpSalary;
+        await setAddSalary(prev => [...prev, data]);
         // setAddSalaryWorkplace(prev => prev.filter(item => item.id !== data.id));
     };
 
@@ -338,7 +339,7 @@ function Salary() {
 
                 const initialFormData = {
                     addSalary: filtered[0].addSalary.map((item) => ({
-                        id: item.id || '',
+                        id: item.codeSpSalary || '',
                         name: item.name || '',
                         SpSalary: item.SpSalary || '',
                         roundOfSalary: item.roundOfSalary || '',
@@ -441,6 +442,7 @@ function Salary() {
         // alert('hi');
         // Make the API call to update the resource by ID
         try {
+            // alert(JSON.stringify(addSalary))
             employeeData.addSalary = await addSalary;
             const response = await axios.put(endpoint + '/employee/update/' + employeeData._id, employeeData);
             // setEmployeesResult(response.data.employees);
