@@ -210,8 +210,21 @@ function AddsettimeEmployee() {
     //cczz
     // This useEffect listens for changes in wShift
     useEffect(() => {
+                                    setWStartTime('');
+                                    setWEndTime('');
+                                    setWAllTime('');
+                                    setWOtTime('');
+                                    setWSelectOtTime('');
+                                    setWSelectOtTimeout('');
 
         const timeOfWork = async () => {
+            await setWStartTime('');
+            await setWEndTime('');
+            await setWAllTime('');
+            await setWOtTime('');
+            await setWSelectOtTime('');
+            await setWSelectOtTimeout('');
+
             if (wId !== '' && wName !== '') {
                 const workplacesearch = await workplaceList.find(workplace => workplace.workplaceId === wId);
                 if (workplacesearch) {
@@ -294,19 +307,19 @@ function AddsettimeEmployee() {
                                 case 'morning_shift':
                                     const morningTimes = await item.allTimes.filter(time => time.shift === "กะเช้า");
                     // await alert(morningTimes[0].startTime );
+                    await setWAllTime(calTime(morningTimes[0].startTime || '', morningTimes[0].endTime  || '', workplacesearch.workOfHour) || '');
                                     await setWStartTime(morningTimes[0].startTime || '');
                                     await setWEndTime(morningTimes[0].endTime  || '');
-                                    await setWAllTime(calTime(morningTimes[0].startTime || '', morningTimes[0].endTime  || '', workplacesearch.workOfHour) || '');
                                     await setWOtTime(calTime(morningTimes[0].startTimeOT || '', morningTimes[0].endTimeOT || '', workplacesearch.workOfOT || '') || '');
                                     await setWSelectOtTime(morningTimes[0].startTimeOT|| '');
                                     await setWSelectOtTimeout(morningTimes[0].endTimeOT || '');
                                     break;
                                 case 'afternoon_shift':
                                     const afternoonTimes = await item.allTimes.filter(time => time.shift === "กะบ่าย");
+                                    await setWAllTime(calTime(afternoonTimes[0].startTime || '', afternoonTimes[0].endTime  || '', workplacesearch.workOfHour) || '');
                     
                                     await setWStartTime(afternoonTimes[0].startTime || '');
                                     await setWEndTime(afternoonTimes[0].endTime  || '');
-                                    await setWAllTime(calTime(afternoonTimes[0].startTime || '', afternoonTimes[0].endTime  || '', workplacesearch.workOfHour) || '');
                                     await setWOtTime(calTime(afternoonTimes[0].startTimeOT || '', afternoonTimes[0].endTimeOT || '', workplacesearch.workOfOT || '') || '');
                                     await setWSelectOtTime(afternoonTimes[0].startTimeOT|| '');
                                     await setWSelectOtTimeout(afternoonTimes[0].endTimeOT || '');
@@ -315,30 +328,31 @@ function AddsettimeEmployee() {
                                 case 'night_shift':
                     
                                 const nightTimes = await item.allTimes.filter(time => time.shift === "กะดึก");
+                                await setWAllTime(calTime(nightTimes[0].startTime || '', nightTimes[0].endTime  || '', workplacesearch.workOfHour) || '');
                     
                                 await setWStartTime(nightTimes[0].startTime || '');
                                 await setWEndTime(nightTimes[0].endTime  || '');
-                                await setWAllTime(calTime(nightTimes[0].startTime || '', nightTimes[0].endTime  || '', workplacesearch.workOfHour) || '');
                                 await setWOtTime(calTime(nightTimes[0].startTimeOT || '', nightTimes[0].endTimeOT || '', workplacesearch.workOfOT || '') || '');
                                 await setWSelectOtTime(nightTimes[0].startTimeOT|| '');
                                 await setWSelectOtTimeout(nightTimes[0].endTimeOT || '');
                     
                                     break;
                                 case 'specialt_shift':
-                                    setWStartTime('');
-                                    setWEndTime('');
-                                    setWAllTime(calTime('0', '0', '24') || '');
-                                    setWOtTime(calTime('0', '0', '24') || '');
-                                    setWSelectOtTime('');
-                                    setWSelectOtTimeout('');
+                                    await setWAllTime(calTime('0', '0', '24') || '');
+
+                                    await setWStartTime('');
+                                    await setWEndTime('');
+                                    await setWOtTime(calTime('0', '0', '24') || '');
+                                    await setWSelectOtTime('');
+                                    await setWSelectOtTimeout('');
                                     break;
                                 default:
-                                    setWStartTime('');
-                                    setWEndTime('');
-                                    setWAllTime('');
-                                    setWOtTime('');
-                                    setWSelectOtTime('');
-                                    setWSelectOtTimeout('');
+                                    await setWStartTime('');
+                                    await setWEndTime('');
+                                    await setWAllTime('');
+                                    await setWOtTime('');
+                                    await setWSelectOtTime('');
+                                    await setWSelectOtTimeout('');
                             }
                     
                           }               
@@ -350,55 +364,55 @@ function AddsettimeEmployee() {
 //                     await alert(wDate);
 //                     await alert(JSON.stringify(workplacesearch.workTimeDay, null,2))
     
-                    switch (wShift) {
-                        case 'morning_shift':
-                            setWStartTime(workplacesearch.workStart1 || '');
-                            setWEndTime(workplacesearch.workEnd1 || '');
-                            setWAllTime(calTime(workplacesearch.workStart1 || '', workplacesearch.workEnd1 || '', workplacesearch.workOfHour) || '');
-                            setWOtTime(calTime(workplacesearch.workStartOt1 || '', workplacesearch.workEndOt1 || '', workplacesearch.workOfOT || '') || '');
-                            setWSelectOtTime(workplacesearch.workStartOt1 || '');
-                            setWSelectOtTimeout(workplacesearch.workEndOt1 || '');
-                            break;
-                        case 'afternoon_shift':
-                            setWStartTime(workplacesearch.workStart2 || '');
-                            setWEndTime(workplacesearch.workEnd2 || '');
-                            setWAllTime(calTime(workplacesearch.workStart2 || '', workplacesearch.workEnd2 || '', workplacesearch.workOfHour) || '');
-                            setWOtTime(calTime(workplacesearch.workStartOt2 || '', workplacesearch.workEndOt2 || '', workplacesearch.workOfOT || '') || '');
-                            setWSelectOtTime(workplacesearch.workStartOt2 || '');
-                            setWSelectOtTimeout(workplacesearch.workEndOt2 || '');
-                            break;
-                        case 'night_shift':
-                            setWStartTime(workplacesearch.workStart3 || '');
-                            setWEndTime(workplacesearch.workEnd3 || '');
-                            setWAllTime(calTime(workplacesearch.workStart3 || '', workplacesearch.workEnd3 || '', workplacesearch.workOfHour) || '');
-                            setWOtTime(calTime(workplacesearch.workStartOt3 || '', workplacesearch.workEndOt3 || '', workplacesearch.workOfOT || '') || '');
-                            setWSelectOtTime(workplacesearch.workStartOt3 || '');
-                            setWSelectOtTimeout(workplacesearch.workEndOt1 || '');
+                    // switch (wShift) {
+                    //     case 'morning_shift':
+                    //         setWStartTime(workplacesearch.workStart1 || '');
+                    //         setWEndTime(workplacesearch.workEnd1 || '');
+                    //         setWAllTime(calTime(workplacesearch.workStart1 || '', workplacesearch.workEnd1 || '', workplacesearch.workOfHour) || '');
+                    //         setWOtTime(calTime(workplacesearch.workStartOt1 || '', workplacesearch.workEndOt1 || '', workplacesearch.workOfOT || '') || '');
+                    //         setWSelectOtTime(workplacesearch.workStartOt1 || '');
+                    //         setWSelectOtTimeout(workplacesearch.workEndOt1 || '');
+                    //         break;
+                    //     case 'afternoon_shift':
+                    //         setWStartTime(workplacesearch.workStart2 || '');
+                    //         setWEndTime(workplacesearch.workEnd2 || '');
+                    //         setWAllTime(calTime(workplacesearch.workStart2 || '', workplacesearch.workEnd2 || '', workplacesearch.workOfHour) || '');
+                    //         setWOtTime(calTime(workplacesearch.workStartOt2 || '', workplacesearch.workEndOt2 || '', workplacesearch.workOfOT || '') || '');
+                    //         setWSelectOtTime(workplacesearch.workStartOt2 || '');
+                    //         setWSelectOtTimeout(workplacesearch.workEndOt2 || '');
+                    //         break;
+                    //     case 'night_shift':
+                    //         setWStartTime(workplacesearch.workStart3 || '');
+                    //         setWEndTime(workplacesearch.workEnd3 || '');
+                    //         setWAllTime(calTime(workplacesearch.workStart3 || '', workplacesearch.workEnd3 || '', workplacesearch.workOfHour) || '');
+                    //         setWOtTime(calTime(workplacesearch.workStartOt3 || '', workplacesearch.workEndOt3 || '', workplacesearch.workOfOT || '') || '');
+                    //         setWSelectOtTime(workplacesearch.workStartOt3 || '');
+                    //         setWSelectOtTimeout(workplacesearch.workEndOt1 || '');
     
-                            break;
-                        case 'specialt_shift':
-                            // setWStartTime(workplacesearch.workStart3 || '');
-                            // setWEndTime(workplacesearch.workEnd3 || '');
-                            // setWAllTime(calTime(workplacesearch.workStart3 || '', workplacesearch.workEnd3 || '', workplacesearch.workOfHour) || '');
-                            // setWOtTime(calTime(workplacesearch.workStartOt3 || '', workplacesearch.workEndOt3 || '', workplacesearch.workOfOT || '') || '');
-                            // setWSelectOtTime(workplacesearch.workStartOt3 || '');
-                            // setWSelectOtTimeout(workplacesearch.workEndOt1 || '');
+                    //         break;
+                    //     case 'specialt_shift':
+                    //         // setWStartTime(workplacesearch.workStart3 || '');
+                    //         // setWEndTime(workplacesearch.workEnd3 || '');
+                    //         // setWAllTime(calTime(workplacesearch.workStart3 || '', workplacesearch.workEnd3 || '', workplacesearch.workOfHour) || '');
+                    //         // setWOtTime(calTime(workplacesearch.workStartOt3 || '', workplacesearch.workEndOt3 || '', workplacesearch.workOfOT || '') || '');
+                    //         // setWSelectOtTime(workplacesearch.workStartOt3 || '');
+                    //         // setWSelectOtTimeout(workplacesearch.workEndOt1 || '');
     
-                            setWStartTime('');
-                            setWEndTime('');
-                            setWAllTime(calTime('0', '0', '24') || '');
-                            setWOtTime(calTime('0', '0', '24') || '');
-                            setWSelectOtTime('');
-                            setWSelectOtTimeout('');
-                            break;
-                        default:
-                            setWStartTime('');
-                            setWEndTime('');
-                            setWAllTime('');
-                            setWOtTime('');
-                            setWSelectOtTime('');
-                            setWSelectOtTimeout('');
-                    }
+                    //         setWStartTime('');
+                    //         setWEndTime('');
+                    //         setWAllTime(calTime('0', '0', '24') || '');
+                    //         setWOtTime(calTime('0', '0', '24') || '');
+                    //         setWSelectOtTime('');
+                    //         setWSelectOtTimeout('');
+                    //         break;
+                    //     default:
+                    //         setWStartTime('');
+                    //         setWEndTime('');
+                    //         setWAllTime('');
+                    //         setWOtTime('');
+                    //         setWSelectOtTime('');
+                    //         setWSelectOtTimeout('');
+                    // }
                 }
     
             }
