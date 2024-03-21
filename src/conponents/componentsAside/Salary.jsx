@@ -1211,7 +1211,7 @@ data.id =await  data.codeSpSalary;
                                                         <label role="salaryadd6">จำนวนเงิน</label>
                                                     </div>
                                                 </div>
-                                                {addSalary.map((data, index) => (
+                                                {addSalary && addSalary.map((data, index) => (
                                                     data.name !== '' && (
                                                         <div className="row" key={index}>
                                                             <div className="col-md-2">
