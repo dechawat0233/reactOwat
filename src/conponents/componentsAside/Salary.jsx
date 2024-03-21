@@ -243,9 +243,7 @@ function Salary() {
 
 
     const handleAddToSalary = async (data) => {
-if(data.codeSpSalary !== undefined){
-    data.id =await  data.codeSpSalary;
-}
+    data.id =await  data.codeSpSalary || '';
         await setAddSalary(prev => [...prev, data]);
         // setAddSalaryWorkplace(prev => prev.filter(item => item.id !== data.id));
     };
