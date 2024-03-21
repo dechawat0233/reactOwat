@@ -13,6 +13,9 @@ import 'moment/locale/th'; // Import the Thai locale data
 import th from 'date-fns/locale/th'; // Import Thai locale data from date-fns
 import en from 'date-fns/locale/en-US';
 
+import { addYears } from 'date-fns';
+
+
 function SalaryAllResult() {
     const [workplacrId, setWorkplacrId] = useState(''); //รหัสหน่วยงาน
     const [workplacrName, setWorkplacrName] = useState(''); //รหัสหน่วยงาน
@@ -95,8 +98,21 @@ function SalaryAllResult() {
         return new Date(gregorianYear, thaiDate.getMonth(), thaiDate.getDate());
     };
 
-    const initialThaiDate = new Date();
-    initialThaiDate.setFullYear(initialThaiDate.getFullYear() + 543); // Add 543 years to the current year
+    // const GregorianToThaiBuddhist = (gregorianDate) => {
+    //     // Convert Gregorian date to Thai Buddhist date
+    //     const thaiYear = gregorianDate.getFullYear() + 543;
+    //     return addYears(gregorianDate, 543);
+    // };
+
+    // const ThaiBuddhistToGregorian = (thaiDate) => {
+    //     // Convert Thai Buddhist date to Gregorian date
+    //     return addYears(thaiDate, -543);
+    // };
+
+    // const initialThaiDate = new Date();
+    const initialThaiDate = GregorianToThaiBuddhist(new Date());
+
+    initialThaiDate.setFullYear(initialThaiDate.getFullYear()); // Add 543 years to the current year
 
     const [selectedThaiDate, setSelectedThaiDate] = useState(initialThaiDate);
     const [selectedGregorianDate, setSelectedGregorianDate] = useState(new Date());
@@ -1003,14 +1019,14 @@ function SalaryAllResult() {
 
                                         </div>
                                         <div class="col-md-3">
-                                            <label role="datetime">พิมพ์วันที่</label>
+                                            <label role="datetime">ลงชื่อ</label>
 
                                             <input type="text" class="form-control" id="searchWorkplaceId" placeholder="รายงานโดย" value={present} onChange={(e) => setPresent(e.target.value)} />
 
                                         </div>
 
                                         <div class="col-md-3">
-                                            <label role="datetime">พิมพ์วันที่</label>
+                                            <label role="datetime">รหัส</label>
 
                                             <input type="text" class="form-control" id="searchWorkplaceId" placeholder="แฟ้มรายงาน" value={presentfilm} onChange={(e) => setPresentfilm(e.target.value)} />
 

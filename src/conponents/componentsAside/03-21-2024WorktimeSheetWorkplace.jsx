@@ -1611,39 +1611,39 @@ function WorktimeSheetWorkplace() {
     const holidayList = [];
     const falseWorkdays = [];
 
-    // // Days of the week
-    // // กรองวันที่ที่ในสัปดา
-    // const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    // Days of the week
+    // กรองวันที่ที่ในสัปดา
+    const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-    // // Loop through each day of the week
-    // // for (let i = 1; i <= 7; i++) {
-    // //     const workdayProperty = `workday${i}`;
-
-    // //     // Check if the workday property is set to false
-    // //     if (workplaceDataList.some(item => item[workdayProperty] === 'false')) {
-    // //         falseWorkdays.push(daysOfWeek[i - 1]);
-    // //     }
-    // // }
+    // Loop through each day of the week
     // for (let i = 1; i <= 7; i++) {
     //     const workdayProperty = `workday${i}`;
 
-    //     // Check if workplaceDataList is not empty and has at least one item
-    //     if (workplaceDataList.length > 0 && workplaceDataList.some(item => item.hasOwnProperty(workdayProperty) && item[workdayProperty] === 'false')) {
+    //     // Check if the workday property is set to false
+    //     if (workplaceDataList.some(item => item[workdayProperty] === 'false')) {
     //         falseWorkdays.push(daysOfWeek[i - 1]);
     //     }
     // }
+    for (let i = 1; i <= 7; i++) {
+        const workdayProperty = `workday${i}`;
+
+        // Check if workplaceDataList is not empty and has at least one item
+        if (workplaceDataList.length > 0 && workplaceDataList.some(item => item.hasOwnProperty(workdayProperty) && item[workdayProperty] === 'false')) {
+            falseWorkdays.push(daysOfWeek[i - 1]);
+        }
+    }
 
 
 
-    // const arrays = [array1, array2];
-    // // กรองวันหยุดประจำสัปดา
-    // falseWorkdays.forEach(day => {
-    //     arrays.forEach(array => {
-    //         if (array[day]) {
-    //             holidayList.push(...array[day]);
-    //         }
-    //     });
-    // });
+    const arrays = [array1, array2];
+    // กรองวันหยุดประจำสัปดา
+    falseWorkdays.forEach(day => {
+        arrays.forEach(array => {
+            if (array[day]) {
+                holidayList.push(...array[day]);
+            }
+        });
+    });
 
     const workplace = workplaceList.find(workplace => workplace.workplaceId === searchWorkplaceId);
 
@@ -1718,15 +1718,6 @@ function WorktimeSheetWorkplace() {
 
     commonNumbers123.forEach(number => {
         commonNumbers.add(number);
-    });
-
-    commonNumbers.forEach(number => {
-        holidayList.push(number);
-    });
-    
-    // Adding elements from commonNumbers123 array to falseWorkdays
-    commonNumbers.forEach(number => {
-        falseWorkdays.push(number);
     });
 
     console.log("Common Numbers:", commonNumbers);

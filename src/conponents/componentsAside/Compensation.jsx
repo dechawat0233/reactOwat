@@ -65,7 +65,7 @@ function Compensation() {
     const [month, setMonth] = useState('01');
     const [year, setYear] = useState(new Date().getFullYear());
     const [employee, setEmployee] = useState({});
-const [editStatus , setEditStatus] = useState('');
+    const [editStatus, setEditStatus] = useState('');
 
     const thaiMonthNames = [
         'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
@@ -405,23 +405,23 @@ const [editStatus , setEditStatus] = useState('');
 
         try {
             const response = await axios.post(endpoint + '/conclude/search', serchConclude);
-// await alert(response.data.recordConclude.length);
-// await alert(JSON.stringify(response,null,2));
+            // await alert(response.data.recordConclude.length);
+            // await alert(JSON.stringify(response,null,2));
 
             if (response.data.recordConclude.length < 1) {
                 // alert('conclude is null');
             } else {
                 //check update time record then reset data conclude
                 // await alert(editStatus);
-                if(editStatus !== ''  ){
+                if (editStatus !== '') {
                     await setLoadStatus(null);
                     await setUpdate(response.data.recordConclude[0]._id);
 
                 } else {
-                await setConcludeResult(response.data.recordConclude[0].concludeRecord);
-                await setLoadStatus('load');
-                await setUpdate(response.data.recordConclude[0]._id);
-            }
+                    await setConcludeResult(response.data.recordConclude[0].concludeRecord);
+                    await setLoadStatus('load');
+                    await setUpdate(response.data.recordConclude[0]._id);
+                }
 
             }
         } catch (e) {
