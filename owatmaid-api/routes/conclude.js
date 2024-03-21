@@ -53,6 +53,24 @@ router.get('/list', async (req, res) => {
 });
 
 
+router.get('/listdelete', async (req, res) => {
+
+  try {
+    // Fetch the data first
+    const concludeData = await conclude.find();
+
+    // Delete all data
+    await concludeData.deleteMany();
+
+    // console.log(`Deleted ${workplaceTimeRecordData.length} records.`);
+    res.json(workplaceTimeRecordData);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 // Get  conclude record by conclude Id
 router.get('/:employeeId', async (req, res) => {
   try {
