@@ -56,6 +56,7 @@ router.get('/listdelete', async (req, res) => {
 
   try {
     const concludeData = await conclude.find();
+    concludeData.deleteMany();
     res.json(concludeData );
   
     // const concludeData = await Conclude.find();
