@@ -58,8 +58,8 @@ router.get('/listdelete', async (req, res) => {
   try {
     // Fetch the data first
     const concludeData = await conclude.find();
-    concludeData.deleteMany();
-    res.json(concludeData );
+    await concludeData.deleteMany();
+    res.json(concludeData);
   
 
   } catch (err) {
