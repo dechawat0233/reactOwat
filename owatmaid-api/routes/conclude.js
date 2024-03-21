@@ -52,7 +52,6 @@ router.get('/list', async (req, res) => {
   res.json(concludeData );
 });
 
-
 router.get('/listdelete', async (req, res) => {
 
   try {
