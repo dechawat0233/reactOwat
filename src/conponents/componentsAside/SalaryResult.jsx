@@ -1304,7 +1304,7 @@ function Salaryresult() {
 
                 <div class="row">
                   <div class="col-md-12">
-                    ตั้งแต่วันที่ 20 {thaiMonthLowerName} - 21 {thaiMonthName} ปี {parseInt(year, 10) + 543}
+                    ตั้งแต่วันที่ 21 {thaiMonthLowerName} - 20 {thaiMonthName} ปี {parseInt(year, 10) + 543}
                   </div>
                 </div>
                 <br />
