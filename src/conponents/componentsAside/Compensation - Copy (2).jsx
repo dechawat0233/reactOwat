@@ -462,6 +462,22 @@ const [editStatus , setEditStatus] = useState('');
             await setSearchResultLower(filteredEntriesLower);
 
 
+            // const entriesData = filteredEntries.map(entry =>
+            //     entry.employee_workplaceRecord
+            //         .filter(record => record.date <= 20)
+            //         .map(record => ({
+            //             workplaceId: record.workplaceId,
+            //             dates: record.date,
+            //             allTimes: record.allTime,
+            //             otTimes: record.otTime,
+
+            //             startTime: record.startTime,
+            //             endTime: record.endTime,
+            //             selectotTime: record.selectotTime,
+            //             selectotTimeOut: record.selectotTimeOut,
+            //         }))
+            // );
+
             const entriesData = filteredEntries.map(entry =>
                 entry.employee_workplaceRecord
                     .filter(record => record.date <= 20)
@@ -489,6 +505,21 @@ const [editStatus , setEditStatus] = useState('');
 
             // console.log(entriesData);
 
+            // const entriesDataLower = filteredEntriesLower.map(entry =>
+            //     entry.employee_workplaceRecord
+            //         .filter(record => record.date >= 21)
+            //         .map(record => ({
+            //             workplaceId: record.workplaceId,
+            //             dates: record.date,
+            //             allTimes: record.allTime,
+            //             otTimes: record.otTime,
+
+            //             startTime: record.startTime,
+            //             endTime: record.endTime,
+            //             selectotTime: record.selectotTime,
+            //             selectotTimeOut: record.selectotTimeOut,
+            //         }))
+            // );
 
             const entriesDataLower = filteredEntriesLower.map(entry =>
                 entry.employee_workplaceRecord
@@ -1046,8 +1077,7 @@ const [editStatus , setEditStatus] = useState('');
 
 
             if (!isNaN(item.workRate)) {
-                ans = ans + parseFloat(workRate);
-                // parseFloat(item.workRate, 10);
+                ans = ans + parseFloat(item.workRate, 10);
                 ans1 = ans1 + parseFloat(workRateOT, 10);
                 ans2 = ans2 + parseFloat(addSalaryDay1, 10);
 
@@ -1065,7 +1095,6 @@ const [editStatus , setEditStatus] = useState('');
         }
         //ccaa
     }, [resultArrayWithWorkplaceRecords]);
-
     console.log('sumRate', sumRate);
     console.log('dataTable', dataTable);
     console.log('resultArrayWithWorkplaceRecords', resultArrayWithWorkplaceRecords);
