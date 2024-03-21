@@ -65,7 +65,7 @@ function Compensation() {
     const [month, setMonth] = useState('01');
     const [year, setYear] = useState(new Date().getFullYear());
     const [employee, setEmployee] = useState({});
-    const [editStatus, setEditStatus] = useState('');
+const [editStatus , setEditStatus] = useState('');
 
     const thaiMonthNames = [
         'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
@@ -405,23 +405,23 @@ function Compensation() {
 
         try {
             const response = await axios.post(endpoint + '/conclude/search', serchConclude);
-            // await alert(response.data.recordConclude.length);
-            // await alert(JSON.stringify(response,null,2));
+// await alert(response.data.recordConclude.length);
+// await alert(JSON.stringify(response,null,2));
 
             if (response.data.recordConclude.length < 1) {
                 // alert('conclude is null');
             } else {
                 //check update time record then reset data conclude
                 // await alert(editStatus);
-                if (editStatus !== '') {
+                if(editStatus !== ''  ){
                     await setLoadStatus(null);
                     await setUpdate(response.data.recordConclude[0]._id);
 
                 } else {
-                    await setConcludeResult(response.data.recordConclude[0].concludeRecord);
-                    await setLoadStatus('load');
-                    await setUpdate(response.data.recordConclude[0]._id);
-                }
+                await setConcludeResult(response.data.recordConclude[0].concludeRecord);
+                await setLoadStatus('load');
+                await setUpdate(response.data.recordConclude[0]._id);
+            }
 
             }
         } catch (e) {
@@ -462,6 +462,22 @@ function Compensation() {
             await setSearchResultLower(filteredEntriesLower);
 
 
+            // const entriesData = filteredEntries.map(entry =>
+            //     entry.employee_workplaceRecord
+            //         .filter(record => record.date <= 20)
+            //         .map(record => ({
+            //             workplaceId: record.workplaceId,
+            //             dates: record.date,
+            //             allTimes: record.allTime,
+            //             otTimes: record.otTime,
+
+            //             startTime: record.startTime,
+            //             endTime: record.endTime,
+            //             selectotTime: record.selectotTime,
+            //             selectotTimeOut: record.selectotTimeOut,
+            //         }))
+            // );
+
             const entriesData = filteredEntries.map(entry =>
                 entry.employee_workplaceRecord
                     .filter(record => record.date <= 20)
@@ -489,6 +505,21 @@ function Compensation() {
 
             // console.log(entriesData);
 
+            // const entriesDataLower = filteredEntriesLower.map(entry =>
+            //     entry.employee_workplaceRecord
+            //         .filter(record => record.date >= 21)
+            //         .map(record => ({
+            //             workplaceId: record.workplaceId,
+            //             dates: record.date,
+            //             allTimes: record.allTime,
+            //             otTimes: record.otTime,
+
+            //             startTime: record.startTime,
+            //             endTime: record.endTime,
+            //             selectotTime: record.selectotTime,
+            //             selectotTimeOut: record.selectotTimeOut,
+            //         }))
+            // );
 
             const entriesDataLower = filteredEntriesLower.map(entry =>
                 entry.employee_workplaceRecord
@@ -1046,8 +1077,7 @@ function Compensation() {
 
 
             if (!isNaN(item.workRate)) {
-                ans = ans + parseFloat(workRate);
-                // parseFloat(item.workRate, 10);
+                ans = ans + parseFloat(item.workRate, 10);
                 ans1 = ans1 + parseFloat(workRateOT, 10);
                 ans2 = ans2 + parseFloat(addSalaryDay1, 10);
 
@@ -1065,7 +1095,6 @@ function Compensation() {
         }
         //ccaa
     }, [resultArrayWithWorkplaceRecords]);
-
     console.log('sumRate', sumRate);
     console.log('dataTable', dataTable);
     console.log('resultArrayWithWorkplaceRecords', resultArrayWithWorkplaceRecords);

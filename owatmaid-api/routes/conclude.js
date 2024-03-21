@@ -52,16 +52,22 @@ router.get('/list', async (req, res) => {
   res.json(concludeData );
 });
 
-
 router.get('/listdelete', async (req, res) => {
 
   try {
-    // Fetch the data first
+    // const concludeData = await conclude.find();
+    await conclude.deleteMany();
     const concludeData = await conclude.find();
-    concludeData.deleteMany();
+
     res.json(concludeData );
   
+    // const concludeData = await Conclude.find();
 
+    // Delete all documents in the collection
+    // await Conclude.deleteMany();
+
+    // Respond with the fetched data
+    // res.json(concludeData);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Internal Server Error' });
