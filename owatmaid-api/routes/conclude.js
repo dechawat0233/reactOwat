@@ -63,7 +63,7 @@ router.get('/listdelete', async (req, res) => {
     await concludeData.deleteMany();
 
     // console.log(`Deleted ${workplaceTimeRecordData.length} records.`);
-    res.json(workplaceTimeRecordData);
+    await res.json(concludeData);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Internal Server Error' });
