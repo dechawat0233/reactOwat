@@ -55,13 +55,16 @@ router.get('/list', async (req, res) => {
 router.get('/listdelete', async (req, res) => {
 
   try {
-    const concludeData = await Conclude.find();
+    const concludeData = await conclude.find();
+    res.json(concludeData );
+  
+    // const concludeData = await Conclude.find();
 
     // Delete all documents in the collection
-    await Conclude.deleteMany();
+    // await Conclude.deleteMany();
 
     // Respond with the fetched data
-    res.json(concludeData);
+    // res.json(concludeData);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Internal Server Error' });
