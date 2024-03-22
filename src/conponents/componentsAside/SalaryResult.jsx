@@ -1458,11 +1458,16 @@ if(response ){
                               <div className="popup">
                                 <h4>Salary Details</h4>
                                 <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
-                                  {deductSalaryList.map((deductsalary, index) => (
+                                  {deductSalaryList.map((deductsalary, index) => {
+                                    {deductsalary.name !== '' && (
+
                                     <li key={index} style={{ marginBottom: '10px' }}>
                                       {deductsalary.name} - หัก: {deductsalary.amount} ฿
                                     </li>
-                                  ))}
+                                    )}
+
+                                    })}
+
                                 </ul>
                                 <button onClick={togglePopup}>Close</button>
                               </div>
