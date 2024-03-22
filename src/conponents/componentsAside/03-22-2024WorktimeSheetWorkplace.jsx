@@ -54,7 +54,6 @@ function WorktimeSheetWorkplace() {
     const [workplaceDataList, setWorkplaceDataList] = useState([]);
     const [workplaceDataListDayOff, setWorkplaceDataListDayOff] = useState([]);
     const [workplaceDataListAddSalary, setWorkplaceDataListAddSalary] = useState([]);
-    const [workplaceDataWorkTime, setWorkplaceDataWorkTime] = useState([]);
     const [workplaceDataWorkOfHour, setWorkplaceDataWorkOfHour] = useState([]);
 
     const [WName, setWName] = useState('');
@@ -169,6 +168,20 @@ function WorktimeSheetWorkplace() {
             });
     }, []);
 
+    // useEffect(() => {
+    //     // Fetch data from the API when the component mounts
+    //     fetch(endpoint + '/employee/list')
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             // Update the state with the fetched data
+    //             setEmploeeData(data);
+    //             // alert(data[0].workplaceName);
+    //         })
+    //         .catch(error => {
+    //             console.error('Error fetching data:', error);
+    //         });
+    // }, []);
+
     console.log(workplaceList);
 
     const [employeelist, setEmployeelist] = useState([]);
@@ -201,6 +214,130 @@ function WorktimeSheetWorkplace() {
     const [listTableDayoff, setListTableDayoff] = useState([]);
     //data for check list dayoff
     const [data_listDayoff, setData_listDayoff] = useState([]);
+
+    // useEffect(() => {
+    //     setListDayOff({});
+    //     const emp_workplace = employeelist.find(item => item.employeeId === result_data[0].employeeId);
+    //     console.log('emp_workplace', emp_workplace);
+
+    //     if (emp_workplace) {
+    //         const wid = emp_workplace.workplace;
+    //         const empWorkplace = workplaceList.find(item => item.workplaceId === wid);
+    //         // alert(JSON.stringify(empWorkplace ,null,2));
+    //         console.log('empWorkplace', empWorkplace);
+    //         console.log('wid', wid);
+
+    //         const df = [];
+    //         if (empWorkplace.workday7 !== "true") {
+    //             df.push('1');
+    //         }
+    //         if (empWorkplace.workday6 !== "true") {
+    //             df.push('7');
+    //         }
+    //         if (empWorkplace.workday5 !== "true") {
+    //             df.push('6');
+    //         }
+    //         if (empWorkplace.workday4 !== "true") {
+    //             df.push('5');
+    //         }
+    //         if (empWorkplace.workday3 !== "true") {
+    //             df.push('4');
+    //         }
+    //         if (empWorkplace.workday2 !== "true") {
+    //             df.push('3');
+    //         }
+    //         if (empWorkplace.workday1 !== "true") {
+    //             df.push('2');
+    //         }
+
+    //         setListDayOff(df);
+
+    //         //get totalday of month
+    //         let m = parseInt(result_data[0].month, 10); // Convert month to integer and subtract 1
+    //         // alert(result_data[0].month );
+    //         let totalDay = new Date(result_data[0].timerecordId, m, 0).getDate()
+    //         // alert(JSON.stringify(result_data , null,2));
+    //         // alert(totalDay );
+    //         let dateString = result_data[0].timerecordId + '/' + m + '/21';
+    //         let dateObj = new Date(dateString);
+    //         // alert(dateObj);
+    //         let numstartDay = getDateDayOfWeek(dateObj);
+    //         numstartDay = parseInt(numstartDay, 10);
+    //         console.log('numstartDay', numstartDay);
+    //         let dayoffTable = [];
+    //         let dayoffCheck = [];
+    //         // alert(numstartDay );
+
+    //         for (let i = 21; i <= totalDay; i++) {
+    //             if (numstartDay > 7) {
+    //                 numstartDay = 1;
+    //             }
+
+    //             if (df.includes(numstartDay.toString())) {
+    //                 // alert(i);
+    //                 dayoffTable.push({ [i]: "หยุด" });
+    //                 dayoffCheck.push(i);
+
+    //             } else {
+    //                 dayoffTable.push({ [i]: " " });
+    //             }
+
+    //             //next day
+    //             numstartDay = numstartDay + 1;
+    //         } //end for
+
+    //         //any month < 31 day , add to 31 day for show in table
+    //         if (totalDay < 31) {
+    //             for (let j = totalDay + 1; j <= 31; j++) {
+    //                 dayoffTable.push({ [j]: " " });
+    //             }
+    //         }
+    //         // alert(dayoffTable.length);
+    //         //next month 1 - 20 
+    //         // m = m +1;
+    //         m = parseInt(result_data[0].month, 10); // Convert month to integer and subtract 1
+
+    //         // alert(m);
+    //         let s = result_data[0].timerecordId + '/' + (m + 1) + '/1';
+    //         let sObj = new Date(s);
+    //         // alert(sObj);
+    //         let numstartDay1 = getDateDayOfWeek(sObj);
+    //         numstartDay1 = parseInt(numstartDay1, 10);
+    //         // alert('x' + numstartDay1 );
+    //         for (let l = 1; l <= 20; l++) {
+    //             if (numstartDay1 > 7) {
+    //                 numstartDay1 = 1;
+    //             }
+    //             // alert("วันที่ " + l + "ตัวเลข" + numstartDay1  );  
+    //             if (df.includes(numstartDay1.toString())) {
+    //                 // alert(i);
+    //                 dayoffTable.push({ [l]: "หยุด" });
+    //                 // alert(l + "หยุด")
+    //                 dayoffCheck.push(l);
+    //                 //next day
+    //                 numstartDay1 = numstartDay1 + 1;
+
+    //             } else {
+    //                 dayoffTable.push({ [l]: " " });
+    //                 //next day
+    //                 numstartDay1 = numstartDay1 + 1;
+
+    //             }
+
+    //         } //end for
+    //         // alert(dayoffTable.length);
+
+
+    //         setData_listDayoff(dayoffCheck);
+    //         setListTableDayoff(dayoffTable);
+
+    //         // alert(df);
+    //         // alert(dayoffCheck);
+    //         //xx
+
+    //     }
+
+    // }, [result_data]);
 
     console.log('data_listDayoff', data_listDayoff);
     console.log('listTableDayoff', listTableDayoff);
@@ -1436,9 +1573,6 @@ function WorktimeSheetWorkplace() {
 
         // const filteredDataAddSalary = workplaceDataList.filter(item => item.workplaceId === searchWorkplaceId);
         // setWorkplaceDataListAddSalary(filteredDataAddSalary);
-
-        const workTime = filteredData.map(item => item.workOfHour);
-        setWorkplaceDataWorkTime
         const addSalaryArray = filteredData.map(item => item.addSalary).flat();
         setWorkplaceDataListAddSalary(addSalaryArray);
 
@@ -1589,7 +1723,7 @@ function WorktimeSheetWorkplace() {
     commonNumbers.forEach(number => {
         holidayList.push(number);
     });
-
+    
     // Adding elements from commonNumbers123 array to falseWorkdays
     commonNumbers.forEach(number => {
         falseWorkdays.push(number);
@@ -1771,6 +1905,46 @@ function WorktimeSheetWorkplace() {
 
     console.log('filteredUniqueDatesArray', filteredUniqueDatesArray);
 
+    // useEffect(() => {
+    //     // Fetch data from the API when the component mounts
+    //     fetch(endpoint + '/employee/list')
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             // Update the state with the fetched data
+    //             setEmploeeData(data);
+    //             // const employeeIdsToFind = [1001, 1002, 1004, 1005, 1006];
+    //             // employeeIdsArray
+    //             // const filteredEmployees123 = data.filter(employee => employeeIdsArray.includes(parseInt(employee.employeeId, 10)));
+    //             const filteredEmployees = data.filter(employee => employeeIdsArray.includes(parseInt(employee.employeeId, 10)));
+
+    //             // Do something with the filtered employees
+    //             // console.log('filteredEmployees', filteredEmployees);
+
+    //             // Extract specific information from filtered employees
+    //             const extractedData = filteredEmployees.map(employee => [
+
+    //                 employee.name + ' ' + employee.lastName,
+    //                 employee.employeeId,
+    //                 'กะเช้า',
+    //                 'กะดึก',
+    //                 // Add more properties as needed
+
+    //             ]);
+    //             const extractedDataAddSalary = filteredEmployees.map(employee => [
+    //                 employee.addSalary
+    //             ]);
+
+    //             // Do something with the extracted data
+    //             // console.log('extractedData', extractedData);
+    //             setEmploeeDataSearch(extractedData);
+    //             setArraytestEmpAddSalary(extractedDataAddSalary);
+
+    //         })
+    //         .catch(error => {
+    //             console.error('Error fetching data:', error);
+    //         });
+    // }, [employeeIdsArray]);
+
     useEffect(() => {
         // Fetch data from the API when the component mounts
         fetch(endpoint + '/employee/list')
@@ -1802,11 +1976,87 @@ function WorktimeSheetWorkplace() {
     ]);
     console.log('extractedDataAddSalary', extractedDataAddSalary);
 
+    // useEffect(() => {
+
+    //     const filteredEmployees = emploeeData.filter(employee => employeeIdsArray.includes(parseInt(employee.employeeId, 10)));
+
+    //     // Do something with the filtered employees
+    //     console.log('filteredEmployees', filteredEmployees);
+
+    //     // Extract specific information from filtered employees
+    //     const extractedData = filteredEmployees.map(employee => [
+
+    //         employee.name + ' ' + employee.lastName,
+    //         employee.employeeId,
+    //         'กะเช้า',
+    //         'กะดึก',
+    //         // Add more properties as needed
+
+    //     ]);
+    //     const extractedDataAddSalary = filteredEmployees.map(employee => [
+    //         employee.addSalary
+    //     ]);
+
+    //     // Do something with the extracted data
+    //     // console.log('extractedData', extractedData);
+    //     setEmploeeDataSearch(extractedData);
+    //     setArraytestEmpAddSalary(extractedDataAddSalary);
+
+    //     console.log('extractedData', extractedData);
+    //     console.log('extractedDataAddSalary', extractedDataAddSalary);
+
+    // }, [employeeIdsArray]);
+
+    // Call the function whenever employeeIdsArray changes
+
+
     console.log('EmploeeData', emploeeData);
     // console.log('EmploeeDataSearch', emploeeDataSearch);
     // console.log('arraytestEmpAddSalary', arraytestEmpAddSalary);
 
     const arraylistNameEmp = extractedData;
+
+    // const arraytest = uniqueDatesArray.map(datesArray => {
+    //     return resultArray.map(day => (datesArray.includes(day) ? '1' : ''));
+    // });
+    // // วันทำงานที่ได้จากการค้นหา
+    // console.log('Final Result Array:', arraytest);
+
+    // const arraytest = [[1001, 1, 1, 1, 1, '', 1, 1, 1, 1, '', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.5],
+    // [1, 1, 1, 1, 1, 1, 1],
+    // [1, 1, 1, 1, 1, 1, 1],
+    // [1, 1, 1, 1, 1, 1, 1],
+    // [1, 1, 1, 1, 1, 1, 1],
+    // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9],];
+
+    // const sumArray = arraytest.map((subArray) => subArray.reduce((acc, val) => acc + val, 0));
+
+    // วันที่ทำงาน
+    // const arraytest = [];
+    // const arrayWorkHoliday = [];
+
+
+    // // Initialize the array
+    // Object.keys(combinedArray).forEach(employeeId => {
+    //     const datesArray = combinedArray[employeeId].map(entry => Number(entry.dates));
+    //     const employeeResultArray = resultArray.map(day => {
+    //         const workplaceIdIndex = datesArray.indexOf(day);
+    //         if (workplaceIdIndex !== -1) {
+    //             const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].workplaceId;
+    //             return currentWorkplaceId === searchWorkplaceId ? 1 : parseInt(currentWorkplaceId, 10);
+    //         } else {
+    //             return '';
+    //         }
+    //     });
+    //     arraytest.push(employeeResultArray);
+    // });
+
+
+    // console.log('Result Position Array:', arraytest);
+
+    // filteredDaysOff
+    // holidayList
 
     const arraytest = [];
 
@@ -2062,12 +2312,12 @@ function WorktimeSheetWorkplace() {
         //         return '';
         //     }
         // });
-        // const commonDates3 = datesArray.filter(date => !(filteredDaysOff.includes(date) || holidayList.includes(date)));
-        // console.log('commonDates3', commonDates3);
+        const commonDates3 = datesArray.filter(date => !(filteredDaysOff.includes(date) || holidayList.includes(date)));
+        console.log('commonDates3', commonDates3);
 
         datesArray
         const employeeResultArray3 = resultArray.map(day => {
-            const workplaceIdIndex = datesArray.indexOf(day);
+            const workplaceIdIndex = commonDates3.indexOf(day);
             // if (workplaceIdIndex !== -1) {
             //     const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].workplaceId;
             //     return currentWorkplaceId === searchWorkplaceId ? 1 : currentWorkplaceId;
@@ -2076,7 +2326,7 @@ function WorktimeSheetWorkplace() {
             // }
             if (workplaceIdIndex !== -1) {
                 const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].workplaceId;
-                console.log('currentWorkplaceId', currentWorkplaceId);
+
                 if (currentWorkplaceId === searchWorkplaceId) {
                     return 1;
                 } else if (currentWorkplaceId === '') {
@@ -2139,10 +2389,6 @@ function WorktimeSheetWorkplace() {
     const sumArrayAllTime = arrayAllTime.map(subArray =>
         subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
     );
-
-    // WorkplaceDataWorkOfHour
-    const dividedArray = sumArrayAllTime.map(sum => sum / workplaceDataWorkOfHour);
-    console.log('dividedArray',dividedArray);
 
     const sumArrayOTAllTime = arrayOTAllTime.map(subArray =>
         subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
@@ -3817,8 +4063,7 @@ function WorktimeSheetWorkplace() {
                 }
                 // arrayAllTime
 
-                // drawArrayText(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex));
-
+                drawArrayText(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex));
                 // drawArrayText(extractedDataAddSalary);
                 // drawArrayTextAllTime
                 drawArrayTextAllTime(arrayAllTime.slice(pageStartIndex, pageEndIndex));
@@ -3831,14 +4076,8 @@ function WorktimeSheetWorkplace() {
                 drawArrayTextOTHoliday(arrayWorkOTHoliday.slice(pageStartIndex, pageEndIndex));
 
                 drawArrayNumHead(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), indexArray.slice(pageStartIndex, pageEndIndex));
-
-                //วันเต็ม
                 // drawArrayTextSumWork(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
-                //วันหารชั่วโมง+สักอย่าง
-                // drawArrayTextSumWork(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArraySumarrayAllHolioday.slice(pageStartIndex, pageEndIndex));
-                 //วันหารชั่วโมง
-                drawArrayTextSumWork(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), dividedArray.slice(pageStartIndex, pageEndIndex));
-
+                drawArrayTextSumWork(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArraySumarrayAllHolioday.slice(pageStartIndex, pageEndIndex));
                 // drawArrayTextSumWorkOT(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArrayOT.slice(pageStartIndex, pageEndIndex));
                 drawArrayTextSumWorkHoli(arrayWorkHoli.slice(pageStartIndex, pageEndIndex), sumArrayAllTime.slice(pageStartIndex, pageEndIndex));
                 drawArrayTextSumWorkHoliday(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), sumArrayOTAllTime.slice(pageStartIndex, pageEndIndex));
