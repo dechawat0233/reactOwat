@@ -50,6 +50,24 @@ bank: String,
 total: String
 }],
 createBy: String,
+addSalary: [{
+  id: String,
+  name: String,
+  SpSalary: String,
+  roundOfSalary: String,
+  StaffType: String,
+  nameType: String,
+  message: String,
+}],
+deductSalary: [{
+  id: String,
+  name: String,
+  amount: String,
+  payType: String,
+  installment: String,
+  nameType: String,
+  message: String,
+}],
 status: String
 });
 
@@ -221,6 +239,7 @@ if (deductSalary ) {
     let promises = [];
     let promises1 = [];
     let promisesDeduct = [];
+let addSalaryList = [];
 
     for (let k = 0; k < response.data.addSalary.length; k++) {
         const promise = await checkCalSocial(response.data.addSalary[k].id || '0');
@@ -228,6 +247,16 @@ if (deductSalary ) {
 
         await promises.push(promise);
         await promises1.push(promise1);
+
+        //push addSalary to account
+        if(response.data.addSalary[k].roundOfSalary == "daily") {
+          let dailyTmp = await response.data.addSalary[k];
+          dailyTmp.message = await countDay;
+          await addSalaryList.push(dailyTmp);
+        } else {
+          await addSalaryList.push(response.data.addSalary[k]);
+        }
+console.log(response.data.addSalary[k].roundOfSalary );
     }
 
     for (let l = 0; l < response.data.deductSalary.length; l++) {
@@ -344,6 +373,7 @@ data.accountingRecord.socialSecurity = (sumSocial * 0.05) || 0;
     data.accountingRecord.bank = 0;
     data.accountingRecord.total = total || 0;
     data.accountingRecord.sumSalaryForTax = sumCalTax || 0;
+    data.accountingRecord.addSalary = addSalaryList || [];
 
 }
 
