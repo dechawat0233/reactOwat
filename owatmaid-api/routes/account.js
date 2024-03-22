@@ -373,7 +373,7 @@ data.accountingRecord.socialSecurity = (sumSocial * 0.05) || 0;
     data.accountingRecord.bank = 0;
     data.accountingRecord.total = total || 0;
     data.accountingRecord.sumSalaryForTax = sumCalTax || 0;
-    data.accountingRecord.addSalary = addSalaryList || [];
+    data.addSalary = addSalaryList || [];
 
 }
 
