@@ -1371,17 +1371,20 @@ function Salaryresult() {
                                 <h4>รายการเงินเพิ่ม</h4>
                                 <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
 
-                                  {addSalaryList.map((addsalary, index) => (
+                                  {addSalaryList && (
+                                  addSalaryList.map((addsalary, index) => (
                                     (addsalary.name !== '' && (
                                       <li key={index} style={{ marginBottom: '10px' }}>
                                         {addsalary.name} - จำนวน: {addsalary.SpSalary} {addsalary.roundOfSalary == 'daily' && (<>* {addsalary.message} วัน</>)}
                                       </li>
                                     ))
-                                  ))}
+                                  )))}
+
                                 </ul>
                                 <button onClick={togglePopup}>Close</button>
                               </div>
-                            )}
+                            )
+                            }
 
                             {/* {(overAddSalaryDaySum + sumSpSalaryResult).toFixed(2)} */}
 
@@ -1458,7 +1461,8 @@ function Salaryresult() {
                               <div className="popup">
                                 <h4>รายการงินหัก</h4>
                                 <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
-                                  {deductSalaryList.map((deductsalary, index) => {
+                                  {deductSalaryList && (
+                                  deductSalaryList.map((deductsalary, index) => {
                                     {
                                       deductsalary.name !== '' && (
 
@@ -1468,7 +1472,7 @@ function Salaryresult() {
                                       )
                                     }
 
-                                  })}
+                                  }))}
 
                                 </ul>
                                 <button onClick={togglePopup}>Close</button>
