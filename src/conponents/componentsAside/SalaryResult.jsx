@@ -198,7 +198,7 @@ function Salaryresult() {
   //       console.error('Error fetching data:', error);
   //     });
   // }, []);
-const [addSalaryList , setAddSalaryList] = useState([]);
+  const [addSalaryList, setAddSalaryList] = useState([]);
 
   useEffect(() => {
     const fetchData = () => {
@@ -211,10 +211,10 @@ const [addSalaryList , setAddSalaryList] = useState([]);
       axios.post(endpoint + '/accounting/calsalarylist', dataTest)
         .then(response => {
           const responseData = response.data;
-if(response ){
-  setAddSalaryList(response.data[0].addSalary);
-  // alert(JSON.stringify(response.data[0].addSalary,null,2));
-}
+          if (response) {
+            setAddSalaryList(response.data[0].addSalary);
+            // alert(JSON.stringify(response.data[0].addSalary,null,2));
+          }
           console.log('responseData', responseData);
           const filteredData = responseData.filter(item => item.employeeId === staffId);
           console.log('filteredData', filteredData);
@@ -1148,7 +1148,7 @@ if(response ){
     parseFloat(socialSecurity) +
     parseFloat(bank);
 
-    const namelist = [];
+  const namelist = [];
 
 
   // const namelist = [
@@ -1362,18 +1362,18 @@ if(response ){
                           {/* <td style={cellStyle}>{(overAddSalaryDaySum + sumSpSalaryResult).toFixed(2) + `(` + (overAddSalaryDaySum).toFixed(2) + `+` + (sumSpSalaryResult).toFixed(2) + `)`}</td> */}
                           <td style={cellStyle}>
                             <p onClick={togglePopup} style={{ color: color, cursor: 'pointer' }}>
-                            {isNaN(Number(addAmountBeforeTax + addAmountAfterTax)) ? 0.00 : Number(addAmountBeforeTax + addAmountAfterTax).toFixed(2)}
+                              {isNaN(Number(addAmountBeforeTax + addAmountAfterTax)) ? 0.00 : Number(addAmountBeforeTax + addAmountAfterTax).toFixed(2)}
                             </p>
                             {showPopup && (
                               <div className="popup">
                                 <h4>Salary Details</h4>
                                 <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
 
-                                  {addSalaryList.map((addsalary , index) => (
+                                  {addSalaryList.map((addsalary, index) => (
                                     (addsalary.name !== '' && (
                                       <li key={index} style={{ marginBottom: '10px' }}>
-                                      {addsalary.name} - จำนวน: {addsalary.SpSalary} {addsalary.roundOfSalary == 'daily' && ( <>* {addsalary.message} วัน</> )}
-                                    </li>
+                                        {addsalary.name} - จำนวน: {addsalary.SpSalary} {addsalary.roundOfSalary == 'daily' && (<>* {addsalary.message} วัน</>)}
+                                      </li>
                                     ))
                                   ))}
                                 </ul>

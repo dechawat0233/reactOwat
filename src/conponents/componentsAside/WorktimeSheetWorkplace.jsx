@@ -193,7 +193,25 @@ function WorktimeSheetWorkplace() {
             });
     }, []); // The empty array [] ensures that the effect runs only once after the initial render
 
+    useEffect(() => {
+        const fetchData = () => {
+            const dataTest = {
+                timerecordId: '2024', // Specify the timerecordId here
+                month: '03', // Specify the month here
+            };
+            axios.post(endpoint + '/timerecord/listemp', dataTest)
+                .then(response => {
+                    // Handle the response data here
+                    console.log('test123', response.data);
+                })
+                .catch(error => {
+                    // Handle errors here
+                    console.error('Error fetching data:', error);
+                });
+        };
 
+        fetchData(); // Call the fetchData function when component mounts or whenever needed
+    }, []);
 
     console.log('employeelist', employeelist);
 
@@ -2142,7 +2160,7 @@ function WorktimeSheetWorkplace() {
 
     // WorkplaceDataWorkOfHour
     const dividedArray = sumArrayAllTime.map(sum => sum / workplaceDataWorkOfHour);
-    console.log('dividedArray',dividedArray);
+    console.log('dividedArray', dividedArray);
 
     const sumArrayOTAllTime = arrayOTAllTime.map(subArray =>
         subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
@@ -3836,7 +3854,7 @@ function WorktimeSheetWorkplace() {
                 // drawArrayTextSumWork(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
                 //วันหารชั่วโมง+สักอย่าง
                 // drawArrayTextSumWork(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArraySumarrayAllHolioday.slice(pageStartIndex, pageEndIndex));
-                 //วันหารชั่วโมง
+                //วันหารชั่วโมง
                 drawArrayTextSumWork(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), dividedArray.slice(pageStartIndex, pageEndIndex));
 
                 // drawArrayTextSumWorkOT(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArrayOT.slice(pageStartIndex, pageEndIndex));
