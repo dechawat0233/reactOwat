@@ -240,6 +240,7 @@ if (deductSalary ) {
     let promises1 = [];
     let promisesDeduct = [];
 let addSalaryList = [];
+let deductSalaryList = [];
 
     for (let k = 0; k < response.data.addSalary.length; k++) {
         const promise = await checkCalSocial(response.data.addSalary[k].id || '0');
@@ -263,6 +264,8 @@ console.log(response.data.addSalary[k].roundOfSalary );
       const promisesDeduct1 = await checkCalTax(response.data.deductSalary[l].id || '0');
 
       await promisesDeduct.push(promisesDeduct1 );
+await deductSalaryList.push(response.data.deductSalary[l] );
+      
   }
 
     await Promise.all(promises)
@@ -374,6 +377,7 @@ data.accountingRecord.socialSecurity = (sumSocial * 0.05) || 0;
     data.accountingRecord.total = total || 0;
     data.accountingRecord.sumSalaryForTax = sumCalTax || 0;
     data.addSalary = addSalaryList || [];
+data.deductSalary = deductSalaryList || [];
 
 }
 
