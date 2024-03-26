@@ -55,7 +55,7 @@ function WorktimeSheetWorkplace() {
     const [workplaceDataListDayOff, setWorkplaceDataListDayOff] = useState([]);
     const [workplaceDataListAddSalary, setWorkplaceDataListAddSalary] = useState([]);
     const [workplaceDataWorkTime, setWorkplaceDataWorkTime] = useState([]);
-    const [workplaceDataWorkOfHour, setWorkplaceDataWorkOfHour] = useState([]);
+    const [workplaceDataWorkOfHour, setWorkplaceDataWorkOfHour] = useState('');
 
     const [WName, setWName] = useState('');
 
@@ -1536,7 +1536,7 @@ function WorktimeSheetWorkplace() {
     // const monthTest = "09"; // Assuming "09" represents September
     const commonNumbers123 = new Set();
 
-    if (workplace) {
+    if (workplace && year) {
         const matchingDays = workplace.daysOff.filter(date => {
             const dateObj = new Date(date);
             return (dateObj.getMonth() + 1).toString().padStart(2, '0') === month; // +1 because getMonth() returns zero-based month index
@@ -1558,7 +1558,7 @@ function WorktimeSheetWorkplace() {
 
     const commonNumbers = new Set();
 
-    if (workplace) {
+    if (workplace && year) {
         const stopWorkTimeDay = workplace.workTimeDay.find(day => day.workOrStop == "stop");
 
         console.log("stopWorkTimeDay", stopWorkTimeDay);

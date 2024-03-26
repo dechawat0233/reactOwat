@@ -41,6 +41,15 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
             minWidth: "4rem"
         }
     };
+    const thaiToEnglishDayMap = {
+        'จันทร์': ['Mon'],
+        'อังคาร': ['Tue'],
+        'พุธ': ['Wed'],
+        'พฤหัส': ['Thu'],
+        'ศุกร์': ['Fri'],
+        'เสาร์': ['Sat'],
+        'อาทิตย์': ['Sun'],
+    };
     const [dataset, setDataset] = useState([]);
 
     const [workplaceList, setWorkplaceList] = useState([]);
@@ -53,6 +62,7 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
     const [timerecordAllList, setTimerecordAllList] = useState([]);
     const [emploeeData, setEmploeeData] = useState([]);
     const [emploeeDataSearch, setEmploeeDataSearch] = useState([]);
+    const [workplaceDataWorkOfHour, setWorkplaceDataWorkOfHour] = useState([]);
 
     const [arraytestEmpAddSalary, setArraytestEmpAddSalary] = useState([]);
 
@@ -1478,6 +1488,19 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
             return acc;
         }, []);
         setWorkplaceDataListDayOff(dayOffData);
+
+        const addSalaryArrayWorkOfHour = filteredData.map(item => item.workOfHour);
+        setWorkplaceDataWorkOfHour(addSalaryArrayWorkOfHour);
+
+        // const addSalary = filteredData.reduce((acc, item) => {
+        //     if (item.addSalary && Array.isArray(item.addSalary)) {
+        //         acc.push(...item.addSalary);
+        //     }
+        //     return acc;
+        // }, []);
+        // setAddSalary();
+        setWorkplaceDataListDayOff(dayOffData);
+
     }, [searchWorkplaceId, workplaceList]);
 
 
@@ -1511,26 +1534,132 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
     //         falseWorkdays.push(daysOfWeek[i - 1]);
     //     }
     // }
-    for (let i = 1; i <= 7; i++) {
-        const workdayProperty = `workday${i}`;
+    // for (let i = 1; i <= 7; i++) {
+    //     const workdayProperty = `workday${i}`;
 
-        // Check if workplaceDataList is not empty and has at least one item
-        if (workplaceDataList.length > 0 && workplaceDataList.some(item => item.hasOwnProperty(workdayProperty) && item[workdayProperty] === 'false')) {
-            falseWorkdays.push(daysOfWeek[i - 1]);
-        }
+    //     // Check if workplaceDataList is not empty and has at least one item
+    //     if (workplaceDataList.length > 0 && workplaceDataList.some(item => item.hasOwnProperty(workdayProperty) && item[workdayProperty] === 'false')) {
+    //         falseWorkdays.push(daysOfWeek[i - 1]);
+    //     }
+    // }
+
+
+
+    // const arrays = [array1, array2];
+    // // กรองวันหยุดประจำสัปดา
+    // falseWorkdays.forEach(day => {
+    //     arrays.forEach(array => {
+    //         if (array[day]) {
+    //             holidayList.push(...array[day]);
+    //         }
+    //     });
+    // });
+
+    // // console.log('holidayList', holidayList);
+    // console.log('filteredDaysOff', filteredDaysOff);
+    // console.log('falseWorkdays', falseWorkdays);
+    // console.log('holidayList', holidayList);
+
+    const workplace = workplaceList.find(workplace => workplace.workplaceId === searchWorkplaceId);
+
+    console.log('workplace123', workplace);
+
+    // const monthTest = "09"; // Assuming "09" represents September
+    const commonNumbers123 = new Set();
+
+    if (workplace && year) {
+        const matchingDays = workplace.daysOff.filter(date => {
+            const dateObj = new Date(date);
+            return (dateObj.getMonth() + 1).toString().padStart(2, '0') === month; // +1 because getMonth() returns zero-based month index
+        });
+
+        console.log('matchingDays', matchingDays);
+        // Iterate over matchingDays and add day numbers to commonNumbers set
+
+        matchingDays.forEach(date => {
+            const dateObj = new Date(date);
+            const day = dateObj.getDate(); // Get the day number (1-31)
+            commonNumbers123.add(day); // Add day number to the set
+        });
+
+        console.log('commonNumbers123', commonNumbers123);
+    } else {
+        console.error('Workplace not found');
     }
 
+    const commonNumbers = new Set();
 
+    if (workplace && year) {
+        const stopWorkTimeDay = workplace.workTimeDay.find(day => day.workOrStop == "stop");
 
-    const arrays = [array1, array2];
-    // กรองวันหยุดประจำสัปดา
-    falseWorkdays.forEach(day => {
-        arrays.forEach(array => {
-            if (array[day]) {
-                holidayList.push(...array[day]);
-            }
-        });
+        console.log("stopWorkTimeDay", stopWorkTimeDay);
+
+        if (stopWorkTimeDay) {
+            const { startDay, endDay } = stopWorkTimeDay;
+            console.log("Found stop workTimeDay:", startDay, endDay);
+
+            const daysInBetween = getDaysInBetween(startDay, endDay);
+            console.log("daysInBetween:", daysInBetween);
+
+            daysInBetween.forEach(day => {
+                const englishDayArray = thaiToEnglishDayMap[day];
+                console.log("englishDayArray:", englishDayArray);
+
+                englishDayArray.forEach(englishDay => {
+                    // Use forEach to add each element to commonNumbers
+                    // commonNumbers.add(...array1[englishDayArray]);
+                    array1[englishDay].forEach(value => commonNumbers.add(value));
+                    array2[englishDay].forEach(value => commonNumbers.add(value));
+                });
+                // englishDayArray.forEach(englishDay => {
+                //     // Check if the key exists in array1 before attempting to access it
+                //     if (array1.hasOwnProperty(englishDay)) {
+                //         // Access the array and perform operations if the key exists
+                //         array1[englishDay].forEach(value => commonNumbers.add(value));
+                //     } else {
+                //         console.log(`Key ${englishDay} does not exist in array1`);
+                //     }
+                // });
+            });
+
+            // setHoliday(commonNumbers);
+            // console.log("Common Numbers:", commonNumbers);
+        } else {
+            console.log("No stop workTimeDay found.");
+        }
+    } else {
+        console.log("Workplace not found.");
+    }
+
+    commonNumbers123.forEach(number => {
+        commonNumbers.add(number);
     });
+
+    commonNumbers.forEach(number => {
+        holidayList.push(number);
+    });
+
+    // Adding elements from commonNumbers123 array to falseWorkdays
+    commonNumbers.forEach(number => {
+        falseWorkdays.push(number);
+    });
+
+    console.log("Common Numbers:", commonNumbers);
+
+    const commonNumbersArray = [...commonNumbers].map(value => value.toString());
+
+
+    function getDaysInBetween(startDay, endDay) {
+        const weekdays = ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัส', 'ศุกร์', 'เสาร์', 'อาทิตย์'];
+        const startIndex = weekdays.indexOf(startDay);
+        const endIndex = weekdays.indexOf(endDay);
+
+        if (startIndex === -1 || endIndex === -1) {
+            return [];
+        }
+
+        return weekdays.slice(startIndex, endIndex + 1);
+    }
 
     // console.log('holidayList', holidayList);
     console.log('filteredDaysOff', filteredDaysOff);
@@ -1544,7 +1673,10 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
     console.log('WorkplaceDataListDayOff', workplaceDataListDayOff);
     // console.log('setDaysOffArray', dayOffData);
 
-
+    // const addSalaryWorkplace = workplaceDataList.flatMap(workplace => workplace.addSalary);
+    const addSalaryWorkplace = workplaceDataList.flatMap(workplace => workplace.addSalary)
+        .filter(item => item.name !== '' && item.name !== null);
+    console.log('addSalaryWorkplace', addSalaryWorkplace);
 
     // const desiredMonthInt = parseInt(month, 10);
 
@@ -1750,10 +1882,6 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
         // Add more properties as needed
     ]);
     console.log('extractedData', extractedData);
-    const extractedDataAddSalary = filteredEmployees.map(employee => [
-        employee.addSalary
-    ]);
-    console.log('extractedDataAddSalary', extractedDataAddSalary);
 
     // useEffect(() => {
 
@@ -1839,6 +1967,7 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
 
     const arraytest = [];
     const arraytestOT = [];
+    const arrayAllTime = [];
 
     const arrayWorkNormalDay = [];
     const arrayWorkOTNormalDay = [];
@@ -1874,7 +2003,30 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
         // });
         console.log('employeeResultArray', employeeResultArray);
 
+        // รวมชั่วโมงทำงาน
+        const employeeResultArrayAllTime = resultArray.map(day => {
+            const workplaceIdIndex = datesArray.indexOf(day);
+            // if (workplaceIdIndex !== -1) {
+            //     const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].workplaceId;
+            //     return currentWorkplaceId === searchWorkplaceId ? '1' : currentWorkplaceId;
+            // } else {
+            //     return '';
+            // }
+            if (workplaceIdIndex !== -1) {
+                const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].allTimes;
 
+                if (currentWorkplaceId === '') {
+                    return '';
+                } else {
+                    return parseFloat(currentWorkplaceId, 10);
+                }
+            } else {
+                return '';
+            }
+        });
+
+        arrayAllTime.push(employeeResultArrayAllTime);
+        console.log('arrayAllTime', arrayAllTime);
 
         arraytest.push(employeeResultArray);
         console.log('arraytest123', arraytest);
@@ -1973,18 +2125,28 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
     const sumArrayOT = arrayWorkOTNormalDay.map(subArray =>
         subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
     );
+    console.log('sumArrayOT', sumArrayOT);
 
     const sumArrayHoli = arrayWorkHoli.map(subArray =>
         subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
     );
+    console.log('sumArrayHoli', sumArrayHoli);
 
     const sumArrayHoliday = arrayWorkHoliday.map(subArray =>
         subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
     );
+    console.log('sumArrayHoliday', sumArrayHoliday);
 
     const sumArrayOTHoliday = arrayWorkOTHoliday.map(subArray =>
         subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
     );
+    console.log('sumArrayOTHoliday', sumArrayOTHoliday);
+
+    const sumArrayAllTime = arrayAllTime.map(subArray =>
+        subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
+    );
+    const dividedArray = sumArrayAllTime.map(sum => sum / workplaceDataWorkOfHour);
+    console.log('dividedArray', dividedArray);
 
     // นับวันที่ทำในวันหยุดวันนักขัตฤกษ์
     const occurrencesCount = filteredUniqueDatesArray.map(subArray => {
@@ -2017,6 +2179,78 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
 
 
     console.log('sumArray', sumArray);
+
+    addSalaryWorkplace.sort((a, b) => a.name.localeCompare(b.name, 'th'));
+
+    // const extractedDataAddSalary = filteredEmployees.flatMap(employee => [
+    //     employee.addSalary
+    // ]);
+    // const extractedDataAddSalary = filteredEmployees.map(employee => [
+    //     employee.addSalary
+    // ]);
+    const addSalaryNames = new Set(addSalaryWorkplace.map(item => item.name));
+
+    // Map filteredEmployees to set SpSalary based on the position of the corresponding name in addSalaryWorkplace
+    const extractedDataAddSalary = filteredEmployees.map(employee => {
+        // Initialize an array to hold SpSalary values
+        const spSalaryArray = [];
+        // Iterate over addSalaryWorkplace
+        addSalaryWorkplace.forEach(salaryItem => {
+            // Find the position of salaryItem.name in employee.addSalary
+            const index = employee.addSalary.findIndex(item => item.name === salaryItem.name);
+            // If the name exists in employee.addSalary, push the SpSalary as an integer to spSalaryArray
+            if (index !== -1) {
+                spSalaryArray.push(parseInt(employee.addSalary[index].SpSalary));
+            } else {
+                // If the name doesn't exist in employee.addSalary, push 0 as an integer
+                spSalaryArray.push('');
+            }
+        });
+        return spSalaryArray;
+    });
+
+    console.log('extractedDataAddSalary', extractedDataAddSalary);
+
+    // Filter extractedDataAddSalary to include only elements with 'daily' roundOfSalary
+    // const dailyExtractedDataAddSalary = extractedDataAddSalary.map(salaryArray => {
+    //     return salaryArray.map((value, index) => {
+    //         // If roundOfSalary is 'daily', multiply the value by the corresponding element in sumArray
+    //         return value !== '' && addSalaryWorkplace[index].roundOfSalary === 'daily' ? value * sumArray[index] : value;
+    //     });
+    // });
+    // 
+    // console.log('dailyExtractedDataAddSalary', dailyExtractedDataAddSalary);
+
+    // Calculate the adjusted dailyExtractedDataAddSalary
+    const adjustedDailyExtractedDataAddSalary = extractedDataAddSalary.map((salaryArray, outerIndex) => {
+        return salaryArray.map((value, innerIndex) => {
+            // If the value is not an empty string and roundOfSalary is 'daily'
+            if (value !== '' && addSalaryWorkplace[innerIndex].roundOfSalary === 'daily') {
+                // Multiply the value by the corresponding count in sumArray
+                return value * sumArray[outerIndex];
+            } else {
+                // Otherwise, keep the value unchanged
+                return value;
+            }
+        });
+    });
+
+    console.log('adjustedDailyExtractedDataAddSalary', adjustedDailyExtractedDataAddSalary);
+
+    const adjustedDailyExtractedDataAddSalaryCount = extractedDataAddSalary.map((salaryArray, outerIndex) => {
+        return salaryArray.map((value, innerIndex) => {
+            // If the value is not an empty string and roundOfSalary is 'daily'
+            if (value !== '' && addSalaryWorkplace[innerIndex].roundOfSalary === 'daily') {
+                // Multiply the value by the corresponding count in sumArray
+                return sumArray[outerIndex];
+            } else {
+                // Otherwise, keep the value unchanged
+                return '';
+            }
+        });
+    });
+
+    console.log('adjustedDailyExtractedDataAddSalaryCount', adjustedDailyExtractedDataAddSalaryCount);
 
     // const arraytestEmpAddSalary = [[
     //     {
@@ -2235,53 +2469,53 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
             const arraylistOT =
                 ['1.5', '2', '3'];
 
-            const addSalaryWorkplace =
-                [{
-                    name: "ค่าเดินทาง",
-                    codeSpSalary: "1001",
-                    SpSalary: "1000",
-                    roundOfSalary: "monthly",
-                    StaffType: "all",
-                    nameType: "",
-                    _id: "656025d1fd5375965d5028a3"
-                },
-                {
-                    name: "ค่าอาหาร",
-                    codeSpSalary: "2534",
-                    SpSalary: "100",
-                    roundOfSalary: "daily",
-                    StaffType: "all",
-                    nameType: "ทดลอง",
-                    _id: "656025d1fd5375965d5028a4"
-                },
-                {
-                    name: "ค่าโทรศัพท์",
-                    codeSpSalary: "8467",
-                    SpSalary: "300",
-                    roundOfSalary: "daily",
-                    StaffType: "header",
-                    nameType: "",
-                    _id: "656025d1fd5375965d5028a5"
-                },
-                {
-                    name: "ค่าตำแหน่ง",
-                    codeSpSalary: "4392",
-                    SpSalary: "800",
-                    roundOfSalary: "monthly",
-                    StaffType: "header",
-                    nameType: "",
-                    _id: "656025d1fd5375965d5028a6"
-                },
-                {
-                    name: "เบี้ยขยัน",
-                    codeSpSalary: "1358",
-                    SpSalary: "500",
-                    roundOfSalary: "monthly",
-                    StaffType: "all",
-                    nameType: "",
-                    _id: "656025d1fd5375965d5028a7"
-                },
-                ];
+            // const addSalaryWorkplace =
+            //     [{
+            //         name: "ค่าเดินทาง",
+            //         codeSpSalary: "1001",
+            //         SpSalary: "1000",
+            //         roundOfSalary: "monthly",
+            //         StaffType: "all",
+            //         nameType: "",
+            //         _id: "656025d1fd5375965d5028a3"
+            //     },
+            //     {
+            //         name: "ค่าอาหาร",
+            //         codeSpSalary: "2534",
+            //         SpSalary: "100",
+            //         roundOfSalary: "daily",
+            //         StaffType: "all",
+            //         nameType: "ทดลอง",
+            //         _id: "656025d1fd5375965d5028a4"
+            //     },
+            //     {
+            //         name: "ค่าโทรศัพท์",
+            //         codeSpSalary: "8467",
+            //         SpSalary: "300",
+            //         roundOfSalary: "daily",
+            //         StaffType: "header",
+            //         nameType: "",
+            //         _id: "656025d1fd5375965d5028a5"
+            //     },
+            //     {
+            //         name: "ค่าตำแหน่ง",
+            //         codeSpSalary: "4392",
+            //         SpSalary: "800",
+            //         roundOfSalary: "monthly",
+            //         StaffType: "header",
+            //         nameType: "",
+            //         _id: "656025d1fd5375965d5028a6"
+            //     },
+            //     {
+            //         name: "เบี้ยขยัน",
+            //         codeSpSalary: "1358",
+            //         SpSalary: "500",
+            //         roundOfSalary: "monthly",
+            //         StaffType: "all",
+            //         nameType: "",
+            //         _id: "656025d1fd5375965d5028a7"
+            //     },
+            //     ];
             // const arraylistNameEmp = ['สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย'];
 
             // const arrayLength = arraylistNameEmp.length;
@@ -2737,11 +2971,12 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
             const drawArrayTextOT = (dataArray) => {
                 for (let i = 0; i < dataArray.length; i++) {
                     let currentX = startX - 1;
-                    let currentY = startY + 3 + cellHeight;
+                    // let currentY = startY + 3 + cellHeight;
+                    let currentY = startY + (3 * 3);
 
                     for (let j = 0; j < dataArray[i].length; j++) {
                         // const elementWidth = calculateElementWidth(dataArray[i][j]);
-                        doc.text(dataArray[i][j].toString(), currentX + 2, 3 + currentY + i * verticalDistance, { align: 'left' });
+                        doc.text(dataArray[i][j].toString(), currentX + 2, 4 + currentY + i * verticalDistance, { align: 'left' });
                         // currentX += elementWidth + cellWidth; 
                         currentX += cellWidth;
                     }
@@ -2933,6 +3168,56 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
                         const text = `${adjustedSpSalary}`;
                         doc.text(text, currentX + 2 + (cellWidthSpSalary * x), 3 + currentY + i * verticalDistance, { align: 'center' });
                         // currentX += cellWidthSpSalary;
+                    }
+                }
+            };
+
+            const drawArrayTextAddSalaryTestCount = (dataArray) => {
+                for (let i = 0; i < dataArray.length; i++) {
+                    // const arrayText = dataArray[i].join('      ');
+                    // const arrayText = dataArray[i].join('     '); // Use spaces to mimic the width
+                    let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 5);
+                    let currentY = startY + 3.7;
+
+                    for (let j = 0; j < dataArray[i].length; j++) {
+                        // const elementWidth = calculateElementWidth(dataArray[i][j]);
+                        const textToDraw = dataArray[i][j].toString();
+
+                        // const alignment = textToDraw.length > 3 ? { align: 'left', angle: 90, xOffset: 5 } : { align: 'left' };
+
+                        if (textToDraw.length > 3) {
+                            doc.text(textToDraw, currentX + 2, 3 + currentY + i * verticalDistance, { align: 'center' });
+                        } else {
+                            doc.text(textToDraw, currentX + 1, 3 + currentY + i * verticalDistance, { align: 'center' });
+                        }
+                        // doc.text(textToDraw, currentX + 2, 3 + currentY + i * verticalDistance, alignment);
+                        // currentX += elementWidth + cellWidth; 
+                        currentX += cellWidthSpSalary;
+                    }
+                }
+            };
+
+            const drawArrayTextAddSalaryTest = (dataArray) => {
+                for (let i = 0; i < dataArray.length; i++) {
+                    // const arrayText = dataArray[i].join('      ');
+                    // const arrayText = dataArray[i].join('     '); // Use spaces to mimic the width
+                    let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 5);
+                    let currentY = startY + 3.7;
+
+                    for (let j = 0; j < dataArray[i].length; j++) {
+                        // const elementWidth = calculateElementWidth(dataArray[i][j]);
+                        const textToDraw = dataArray[i][j].toString();
+
+                        // const alignment = textToDraw.length > 3 ? { align: 'left', angle: 90, xOffset: 5 } : { align: 'left' };
+
+                        if (textToDraw.length > 3) {
+                            doc.text(textToDraw, currentX + 2, 6 + currentY + i * verticalDistance, { align: 'center' });
+                        } else {
+                            doc.text(textToDraw, currentX + 1, 6 + currentY + i * verticalDistance, { align: 'center' });
+                        }
+                        // doc.text(textToDraw, currentX + 2, 3 + currentY + i * verticalDistance, alignment);
+                        // currentX += elementWidth + cellWidth; 
+                        currentX += cellWidthSpSalary;
                     }
                 }
             };
@@ -3249,6 +3534,20 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
                         doc.text((340 * workOt3) / 8 + ' .-', 7 + startXSpSalary + (cellWidthSpSalary * 4), 54.8, { angle: 90 });
 
                         // doc.text(addSalaryWorkplace, 171, 54, { angle: 90 });
+                        // addSalaryWorkplace.forEach((item, index) => {
+                        //     const NameSp = `${item.name} ${item.SpSalary}`;
+                        //     let roundOfSalaryText = '';
+
+                        //     if (item.roundOfSalary === 'monthly') {
+                        //         roundOfSalaryText = 'เดือน';
+                        //     } else if (item.roundOfSalary === 'daily') {
+                        //         roundOfSalaryText = 'วัน';
+                        //     } doc.text(NameSp, 5 + (cellWidthSpSalary * 5) + startXSpSalary + index * (cellWidthSpSalary), 54.8, { angle: 90 });
+                        //     doc.text('ต่อ ' + roundOfSalaryText, 8 + (cellWidthSpSalary * 5) + startXSpSalary + index * (cellWidthSpSalary), 54.8, { angle: 90 });
+                        // });
+
+                        addSalaryWorkplace.sort((a, b) => a.name.localeCompare(b.name, 'th'));
+
                         addSalaryWorkplace.forEach((item, index) => {
                             const NameSp = `${item.name} ${item.SpSalary}`;
                             let roundOfSalaryText = '';
@@ -3257,9 +3556,12 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
                                 roundOfSalaryText = 'เดือน';
                             } else if (item.roundOfSalary === 'daily') {
                                 roundOfSalaryText = 'วัน';
-                            } doc.text(NameSp, 5 + (cellWidthSpSalary * 5) + startXSpSalary + index * (cellWidthSpSalary), 54.8, { angle: 90 });
+                            }
+                            doc.text(NameSp, 5 + (cellWidthSpSalary * 5) + startXSpSalary + index * (cellWidthSpSalary), 54.8, { angle: 90 });
                             doc.text('ต่อ ' + roundOfSalaryText, 8 + (cellWidthSpSalary * 5) + startXSpSalary + index * (cellWidthSpSalary), 54.8, { angle: 90 });
                         });
+
+
 
                         drawTableTop();
                         drawTableLeftHeadTop();
@@ -3293,8 +3595,13 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
                 }
 
                 drawArrayText(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex));
+                
+                //สวัสดิการ
+                drawArrayTextAddSalaryTestCount(adjustedDailyExtractedDataAddSalaryCount.slice(pageStartIndex, pageEndIndex));
+                drawArrayTextAddSalaryTest(adjustedDailyExtractedDataAddSalary.slice(pageStartIndex, pageEndIndex));
 
-                drawArrayTextAddSalary(extractedDataAddSalary.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
+                //สวัสดิการ
+                // drawArrayTextAddSalary(extractedDataAddSalary.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
                 // drawArrayText(extractedDataAddSalary);
 
                 drawArrayTextOT(arrayWorkOTNormalDay.slice(pageStartIndex, pageEndIndex));
@@ -3303,7 +3610,6 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
 
                 drawArrayTextHoliday(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex));
                 drawArrayTextOTHoliday(arrayWorkOTHoliday.slice(pageStartIndex, pageEndIndex));
-
 
                 drawArrayTextSumWork(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
                 drawArrayTextSumWorkOT(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArrayOT.slice(pageStartIndex, pageEndIndex));
