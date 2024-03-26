@@ -633,14 +633,16 @@ const formattedDateTmp = await `${dayTmp}/${monthTmp}/${yearTmp}`;
 let dayTemp = await i.toString().padStart(2, '0') ;
 let dataTmp = await data.filter(record => record.date === dayTemp );
 let tmp = {};
+// console.log(dataTmp );
+
 //check date > 20 then new conclude next month
 if(dayTemp <=  20 ) {
 
-if(dataTmp != [] ){
+if(dataTmp.length !== 0){
   //timeRecord of date is set
   tmp.day = await `${dayTemp}/${monthTmp}/${yearTmp}`;
 
-  // await concludeRecordTmp.push(tmp);
+  await concludeRecordTmp.push(tmp);
 
 } else {
   //timeRecord of date is not set
