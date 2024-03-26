@@ -2222,10 +2222,29 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
     // console.log('dailyExtractedDataAddSalary', dailyExtractedDataAddSalary);
 
     // Calculate the adjusted dailyExtractedDataAddSalary
+    // const adjustedDailyExtractedDataAddSalary = extractedDataAddSalary.map((salaryArray, outerIndex) => {
+    //     return salaryArray.map((value, innerIndex) => {
+    //         // If the value is not an empty string and roundOfSalary is 'daily'
+    //         if (value !== '' && addSalaryWorkplace[innerIndex].roundOfSalary === 'daily') {
+    //             // Multiply the value by the corresponding count in sumArray
+    //             return value * sumArray[outerIndex];
+    //         } else {
+    //             // Otherwise, keep the value unchanged
+    //             return value;
+    //         }
+    //     });
+    // });
+
+    // console.log('adjustedDailyExtractedDataAddSalary', adjustedDailyExtractedDataAddSalary);
     const adjustedDailyExtractedDataAddSalary = extractedDataAddSalary.map((salaryArray, outerIndex) => {
         return salaryArray.map((value, innerIndex) => {
-            // If the value is not an empty string and roundOfSalary is 'daily'
-            if (value !== '' && addSalaryWorkplace[innerIndex].roundOfSalary === 'daily') {
+            // Find the corresponding salary item in employee.addSalary
+            const employeeSalaryItem = filteredEmployees[outerIndex].addSalary.find(item => item.name === addSalaryWorkplace[innerIndex].name);
+
+            // Check if the value is not an empty string and roundOfSalary is 'daily' in both addSalaryWorkplace and employee.addSalary
+            // if (value !== '' && addSalaryWorkplace[innerIndex].roundOfSalary === 'daily' && employeeSalaryItem && employeeSalaryItem.roundOfSalary === 'daily') {
+            if (employeeSalaryItem && employeeSalaryItem.roundOfSalary === 'daily') {
+
                 // Multiply the value by the corresponding count in sumArray
                 return value * sumArray[outerIndex];
             } else {
@@ -2236,6 +2255,7 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
     });
 
     console.log('adjustedDailyExtractedDataAddSalary', adjustedDailyExtractedDataAddSalary);
+
 
     const adjustedDailyExtractedDataAddSalaryCount = extractedDataAddSalary.map((salaryArray, outerIndex) => {
         return salaryArray.map((value, innerIndex) => {
@@ -3595,7 +3615,7 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
                 }
 
                 drawArrayText(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex));
-                
+
                 //สวัสดิการ
                 drawArrayTextAddSalaryTestCount(adjustedDailyExtractedDataAddSalaryCount.slice(pageStartIndex, pageEndIndex));
                 drawArrayTextAddSalaryTest(adjustedDailyExtractedDataAddSalary.slice(pageStartIndex, pageEndIndex));
