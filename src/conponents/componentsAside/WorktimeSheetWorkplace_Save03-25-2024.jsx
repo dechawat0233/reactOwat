@@ -10,8 +10,14 @@ import 'jspdf-autotable';
 import html2pdf from 'html2pdf.js';
 import { useTable } from 'react-table';
 
+import th from 'date-fns/locale/th'; // Import Thai locale data from date-fns
+import en from 'date-fns/locale/en-US';
 
-function WorktimeSheetWorkplace_Save01_22_2024() {
+
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
+function WorktimeSheetWorkplace() {
     const vertical1 = {
         borderCollapse: "collapse",
         width: "100%",
@@ -42,11 +48,62 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
         }
     };
     const [dataset, setDataset] = useState([]);
+    const [workplaceIdEMP, setWorkplaceIdEMP] = useState(''); //รหัสหน่วยงาน
 
     const [workplaceList, setWorkplaceList] = useState([]);
     const [workplaceDataList, setWorkplaceDataList] = useState([]);
     const [workplaceDataListDayOff, setWorkplaceDataListDayOff] = useState([]);
     const [workplaceDataListAddSalary, setWorkplaceDataListAddSalary] = useState([]);
+    const [workplaceDataWorkTime, setWorkplaceDataWorkTime] = useState([]);
+    const [workplaceDataWorkOfHour, setWorkplaceDataWorkOfHour] = useState([]);
+
+    const [WName, setWName] = useState('');
+
+    const [workDate, setWorkDate] = useState(new Date());
+
+    // const handleWorkDateChange = (date) => {
+    //     setWorkDate(date);
+    // };
+
+    function formatThaiBuddhistYear(d) {
+        const thaiYear = d.getFullYear() + 543; // Add 543 to convert to Thai Buddhist year
+        return thaiYear;
+    }
+
+    function convertToThaiBuddhistDate(date) {
+        const thaiYear = date.getFullYear() + 543;
+        return new Date(thaiYear, date.getMonth(), date.getDate());
+    }
+
+    const thaiWorkDate = convertToThaiBuddhistDate(workDate);
+
+
+    const GregorianToThaiBuddhist = (gregorianDate) => {
+        const thaiYear = gregorianDate.getFullYear() + 543;
+        return new Date(thaiYear, gregorianDate.getMonth(), gregorianDate.getDate());
+    };
+
+    const ThaiBuddhistToGregorian = (thaiDate) => {
+        const gregorianYear = thaiDate.getFullYear() - 543;
+        return new Date(gregorianYear, thaiDate.getMonth(), thaiDate.getDate());
+    };
+
+    const initialThaiDate = new Date();
+    initialThaiDate.setFullYear(initialThaiDate.getFullYear() + 543); // Add 543 years to the current year
+
+    const [selectedThaiDate, setSelectedThaiDate] = useState(initialThaiDate);
+    const [selectedGregorianDate, setSelectedGregorianDate] = useState(new Date());
+
+    const handleThaiDateChange = (date) => {
+        setSelectedThaiDate(date);
+        setSelectedGregorianDate(ThaiBuddhistToGregorian(date));
+        setWorkDate(date)
+    };
+
+    const handleGregorianDateChange = (date) => {
+        setSelectedGregorianDate(date);
+        setSelectedThaiDate(GregorianToThaiBuddhist(date));
+    };
 
     const [daysOffArray, setDaysOffArray] = useState([]);
     const [result_data, setResult_data] = useState([]);
@@ -57,6 +114,30 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
     const [arraytestEmpAddSalary, setArraytestEmpAddSalary] = useState([]);
 
     const [empIDlist, setEmpIDlist] = useState([]);
+
+    const getThaiMonthName = (month) => {
+        const thaiMonths = [
+            "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
+            "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+        ];
+
+        // Ensure the month is a valid number between 1 and 12
+        const monthNumber = parseInt(month, 10);
+        if (isNaN(monthNumber) || monthNumber < 1 || monthNumber > 12) {
+            return "Invalid Month";
+        }
+
+        return thaiMonths[monthNumber - 1];
+    };
+    const thaiToEnglishDayMap = {
+        'จันทร์': ['Mon'],
+        'อังคาร': ['Tue'],
+        'พุธ': ['Wed'],
+        'พฤหัส': ['Thu'],
+        'ศุกร์': ['Fri'],
+        'เสาร์': ['Sat'],
+        'อาทิตย์': ['Sun'],
+    };
 
 
 
@@ -88,20 +169,6 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
             });
     }, []);
 
-    // useEffect(() => {
-    //     // Fetch data from the API when the component mounts
-    //     fetch(endpoint + '/employee/list')
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             // Update the state with the fetched data
-    //             setEmploeeData(data);
-    //             // alert(data[0].workplaceName);
-    //         })
-    //         .catch(error => {
-    //             console.error('Error fetching data:', error);
-    //         });
-    // }, []);
-
     console.log(workplaceList);
 
     const [employeelist, setEmployeelist] = useState([]);
@@ -126,136 +193,32 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
             });
     }, []); // The empty array [] ensures that the effect runs only once after the initial render
 
+    useEffect(() => {
+        const fetchData = () => {
+            const dataTest = {
+                timerecordId: '2024', // Specify the timerecordId here
+                month: '03', // Specify the month here
+            };
+            axios.post(endpoint + '/timerecord/listemp', dataTest)
+                .then(response => {
+                    // Handle the response data here
+                    console.log('test123', response.data);
+                })
+                .catch(error => {
+                    // Handle errors here
+                    console.error('Error fetching data:', error);
+                });
+        };
+
+        fetchData(); // Call the fetchData function when component mounts or whenever needed
+    }, []);
+
     console.log('employeelist', employeelist);
 
     //data for show in table
     const [listTableDayoff, setListTableDayoff] = useState([]);
     //data for check list dayoff
     const [data_listDayoff, setData_listDayoff] = useState([]);
-
-    // useEffect(() => {
-    //     setListDayOff({});
-    //     const emp_workplace = employeelist.find(item => item.employeeId === result_data[0].employeeId);
-    //     console.log('emp_workplace', emp_workplace);
-
-    //     if (emp_workplace) {
-    //         const wid = emp_workplace.workplace;
-    //         const empWorkplace = workplaceList.find(item => item.workplaceId === wid);
-    //         // alert(JSON.stringify(empWorkplace ,null,2));
-    //         console.log('empWorkplace', empWorkplace);
-    //         console.log('wid', wid);
-
-    //         const df = [];
-    //         if (empWorkplace.workday7 !== "true") {
-    //             df.push('1');
-    //         }
-    //         if (empWorkplace.workday6 !== "true") {
-    //             df.push('7');
-    //         }
-    //         if (empWorkplace.workday5 !== "true") {
-    //             df.push('6');
-    //         }
-    //         if (empWorkplace.workday4 !== "true") {
-    //             df.push('5');
-    //         }
-    //         if (empWorkplace.workday3 !== "true") {
-    //             df.push('4');
-    //         }
-    //         if (empWorkplace.workday2 !== "true") {
-    //             df.push('3');
-    //         }
-    //         if (empWorkplace.workday1 !== "true") {
-    //             df.push('2');
-    //         }
-
-    //         setListDayOff(df);
-
-    //         //get totalday of month
-    //         let m = parseInt(result_data[0].month, 10); // Convert month to integer and subtract 1
-    //         // alert(result_data[0].month );
-    //         let totalDay = new Date(result_data[0].timerecordId, m, 0).getDate()
-    //         // alert(JSON.stringify(result_data , null,2));
-    //         // alert(totalDay );
-    //         let dateString = result_data[0].timerecordId + '/' + m + '/21';
-    //         let dateObj = new Date(dateString);
-    //         // alert(dateObj);
-    //         let numstartDay = getDateDayOfWeek(dateObj);
-    //         numstartDay = parseInt(numstartDay, 10);
-    //         console.log('numstartDay', numstartDay);
-    //         let dayoffTable = [];
-    //         let dayoffCheck = [];
-    //         // alert(numstartDay );
-
-    //         for (let i = 21; i <= totalDay; i++) {
-    //             if (numstartDay > 7) {
-    //                 numstartDay = 1;
-    //             }
-
-    //             if (df.includes(numstartDay.toString())) {
-    //                 // alert(i);
-    //                 dayoffTable.push({ [i]: "หยุด" });
-    //                 dayoffCheck.push(i);
-
-    //             } else {
-    //                 dayoffTable.push({ [i]: " " });
-    //             }
-
-    //             //next day
-    //             numstartDay = numstartDay + 1;
-    //         } //end for
-
-    //         //any month < 31 day , add to 31 day for show in table
-    //         if (totalDay < 31) {
-    //             for (let j = totalDay + 1; j <= 31; j++) {
-    //                 dayoffTable.push({ [j]: " " });
-    //             }
-    //         }
-    //         // alert(dayoffTable.length);
-    //         //next month 1 - 20 
-    //         // m = m +1;
-    //         m = parseInt(result_data[0].month, 10); // Convert month to integer and subtract 1
-
-    //         // alert(m);
-    //         let s = result_data[0].timerecordId + '/' + (m + 1) + '/1';
-    //         let sObj = new Date(s);
-    //         // alert(sObj);
-    //         let numstartDay1 = getDateDayOfWeek(sObj);
-    //         numstartDay1 = parseInt(numstartDay1, 10);
-    //         // alert('x' + numstartDay1 );
-    //         for (let l = 1; l <= 20; l++) {
-    //             if (numstartDay1 > 7) {
-    //                 numstartDay1 = 1;
-    //             }
-    //             // alert("วันที่ " + l + "ตัวเลข" + numstartDay1  );  
-    //             if (df.includes(numstartDay1.toString())) {
-    //                 // alert(i);
-    //                 dayoffTable.push({ [l]: "หยุด" });
-    //                 // alert(l + "หยุด")
-    //                 dayoffCheck.push(l);
-    //                 //next day
-    //                 numstartDay1 = numstartDay1 + 1;
-
-    //             } else {
-    //                 dayoffTable.push({ [l]: " " });
-    //                 //next day
-    //                 numstartDay1 = numstartDay1 + 1;
-
-    //             }
-
-    //         } //end for
-    //         // alert(dayoffTable.length);
-
-
-    //         setData_listDayoff(dayoffCheck);
-    //         setListTableDayoff(dayoffTable);
-
-    //         // alert(df);
-    //         // alert(dayoffCheck);
-    //         //xx
-
-    //     }
-
-    // }, [result_data]);
 
     console.log('data_listDayoff', data_listDayoff);
     console.log('listTableDayoff', listTableDayoff);
@@ -282,8 +245,15 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
 
     const [month, setMonth] = useState('');
 
+    const currentYear = new Date().getFullYear();
+    const years = Array.from({ length: currentYear - 1998 }, (_, index) => currentYear - index);
+
+    const [year, setYear] = useState('');
+
     const [searchWorkplaceId, setSearchWorkplaceId] = useState(''); //รหัสหน่วยงาน
     const [searchWorkplaceName, setSearchWorkplaceName] = useState(''); //ชื่อหน่วยงาน
+    const [codePage, setCodePage] = useState('FM-HR-005-03'); //ชื่อหน่วยงาน
+
     const [searchEmployeeId, setSearchEmployeeId] = useState('');
     const [searchEmployeeName, setSearchEmployeeName] = useState('');
     const [searchResult, setSearchResult] = useState([]);
@@ -295,7 +265,7 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
 
     const [calendarData1, setCalendarData1] = useState([]);
     const [calendarData2, setCalendarData2] = useState([]);
-    const yeartest = 2023;
+    // const yeartest = 2023;
     const monthtest = 3; // 3 represents March using 1-based indexing
     async function handleSearch(event) {
         event.preventDefault();
@@ -316,7 +286,7 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
             'employee_workplaceRecord.workplaceId': searchWorkplaceId,
             // 'employee_workplaceRecord.workplaceName': searchWorkplaceName,
 
-        }; console.log(searchWorkplaceId);
+        }; console.log('searchWorkplaceId', searchWorkplaceId);
 
         const parsedNumber = await parseInt(month, 10) - 1;
         const formattedResult = await String(parsedNumber).padStart(2, '0');
@@ -353,6 +323,7 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
         const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         const dates1 = [];
         const dates2 = [];
+
 
         // Loop through the days of the week
         for (let i = 0; i < 7; i++) {
@@ -670,6 +641,21 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
 
     console.log('datasetTest', Datasetsec);
 
+    useEffect(() => {
+        if (searchWorkplaceId !== '') {
+            const workplacesearch = workplaceList.find(workplace => workplace.workplaceId === searchWorkplaceId);
+            if (workplacesearch) {
+                setSearchWorkplaceName(workplacesearch.workplaceName);
+            } else {
+                setSearchWorkplaceName('');
+            }
+            console.log('workplacesearch', workplacesearch);
+
+        }
+
+    }, [searchWorkplaceId]);
+    console.log('workplaceList', workplaceList);
+    console.log('searchWorkplaceId', searchWorkplaceId);
 
     //set salaty calculate
     const [workRate, setWorkRate] = useState(''); //ค่าจ้างต่อวัน
@@ -733,11 +719,7 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
     console.log('testcal', monthset);
     console.log('testRe', result);
 
-
-    const currentYear = new Date().getFullYear();
-    const years = Array.from({ length: currentYear - 1998 }, (_, index) => currentYear - index);
-
-    const [year, setYear] = useState('');    // const [calendarData, setCalendarData] = useState([]);
+    // const [calendarData, setCalendarData] = useState([]);
 
     const [workMonth, setWorkMonth] = useState([]);
 
@@ -1066,8 +1048,8 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
         doc.setFontSize(8);
         doc.text(title, 171, 55, { angle: 90 });
 
-        const CheckMonth = 1;
-        const CheckYear = 2023;
+        // const CheckMonth = 1;
+        // const CheckYear = 2023;
 
         const daysInMonth = getDaysInMonth(CheckMonth, CheckYear);
         // const daysInMonth = 30;
@@ -1318,7 +1300,7 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
                 // roundpage++
             }
             drawArrayText(arraytest.slice(pageStartIndex, pageEndIndex));
-            doc.addPage();
+            // doc.addPage();
         }
 
 
@@ -1360,6 +1342,8 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
 
     const CheckMonth = parseInt(month, 10);
     const CheckYear = year;
+    // const CheckMonth = 5;
+    // const CheckYear = 2023;
 
     let countdownMonth;
     if (CheckMonth === 1) {
@@ -1467,8 +1451,17 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
 
         // Filter workplaceDataList to find items with dayOff
         // const dayOffData = filteredData.filter(item => item.daysOff); // Assuming 'dayOff' is a property in the items
-        const filteredDataAddSalary = workplaceList.filter(item => item.workplaceId === searchWorkplaceId);
-        setWorkplaceDataListAddSalary(filteredDataAddSalary);
+
+        // const filteredDataAddSalary = workplaceDataList.filter(item => item.workplaceId === searchWorkplaceId);
+        // setWorkplaceDataListAddSalary(filteredDataAddSalary);
+
+        const workTime = filteredData.map(item => item.workOfHour);
+        setWorkplaceDataWorkTime
+        const addSalaryArray = filteredData.map(item => item.addSalary).flat();
+        setWorkplaceDataListAddSalary(addSalaryArray);
+
+        const addSalaryArrayWorkOfHour = filteredData.map(item => item.workOfHour);
+        setWorkplaceDataWorkOfHour(addSalaryArrayWorkOfHour);
 
         // Filter workplaceDataList to find items with dayOff
         const dayOffData = filteredData.reduce((acc, item) => {
@@ -1477,10 +1470,14 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
             }
             return acc;
         }, []);
+        // วันหยุดนัก
         setWorkplaceDataListDayOff(dayOffData);
     }, [searchWorkplaceId, workplaceList]);
 
+    console.log('WorkplaceDataListAddSalary', workplaceDataListAddSalary);
+    const addSalaryWorkplace = workplaceDataListAddSalary;
 
+    // workplaceDataListAddSalary
     // วันหยุดนักขัต
     const filteredDaysOff = workplaceDataListDayOff
         .filter(item => {
@@ -1498,39 +1495,140 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
     const holidayList = [];
     const falseWorkdays = [];
 
-    // Days of the week
-    // กรองวันที่ที่ในสัปดา
-    const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    // // Days of the week
+    // // กรองวันที่ที่ในสัปดา
+    // const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-    // Loop through each day of the week
+    // // Loop through each day of the week
+    // // for (let i = 1; i <= 7; i++) {
+    // //     const workdayProperty = `workday${i}`;
+
+    // //     // Check if the workday property is set to false
+    // //     if (workplaceDataList.some(item => item[workdayProperty] === 'false')) {
+    // //         falseWorkdays.push(daysOfWeek[i - 1]);
+    // //     }
+    // // }
     // for (let i = 1; i <= 7; i++) {
     //     const workdayProperty = `workday${i}`;
 
-    //     // Check if the workday property is set to false
-    //     if (workplaceDataList.some(item => item[workdayProperty] === 'false')) {
+    //     // Check if workplaceDataList is not empty and has at least one item
+    //     if (workplaceDataList.length > 0 && workplaceDataList.some(item => item.hasOwnProperty(workdayProperty) && item[workdayProperty] === 'false')) {
     //         falseWorkdays.push(daysOfWeek[i - 1]);
     //     }
     // }
-    for (let i = 1; i <= 7; i++) {
-        const workdayProperty = `workday${i}`;
 
-        // Check if workplaceDataList is not empty and has at least one item
-        if (workplaceDataList.length > 0 && workplaceDataList.some(item => item.hasOwnProperty(workdayProperty) && item[workdayProperty] === 'false')) {
-            falseWorkdays.push(daysOfWeek[i - 1]);
-        }
+
+
+    // const arrays = [array1, array2];
+    // // กรองวันหยุดประจำสัปดา
+    // falseWorkdays.forEach(day => {
+    //     arrays.forEach(array => {
+    //         if (array[day]) {
+    //             holidayList.push(...array[day]);
+    //         }
+    //     });
+    // });
+
+    const workplace = workplaceList.find(workplace => workplace.workplaceId === searchWorkplaceId);
+
+    console.log('workplace123', workplace);
+
+    // const monthTest = "09"; // Assuming "09" represents September
+    const commonNumbers123 = new Set();
+
+    if (workplace) {
+        const matchingDays = workplace.daysOff.filter(date => {
+            const dateObj = new Date(date);
+            return (dateObj.getMonth() + 1).toString().padStart(2, '0') === month; // +1 because getMonth() returns zero-based month index
+        });
+
+        console.log('matchingDays', matchingDays);
+        // Iterate over matchingDays and add day numbers to commonNumbers set
+
+        matchingDays.forEach(date => {
+            const dateObj = new Date(date);
+            const day = dateObj.getDate(); // Get the day number (1-31)
+            commonNumbers123.add(day); // Add day number to the set
+        });
+
+        console.log('commonNumbers123', commonNumbers123);
+    } else {
+        console.error('Workplace not found');
     }
 
+    const commonNumbers = new Set();
 
+    if (workplace) {
+        const stopWorkTimeDay = workplace.workTimeDay.find(day => day.workOrStop == "stop");
 
-    const arrays = [array1, array2];
-    // กรองวันหยุดประจำสัปดา
-    falseWorkdays.forEach(day => {
-        arrays.forEach(array => {
-            if (array[day]) {
-                holidayList.push(...array[day]);
-            }
-        });
+        console.log("stopWorkTimeDay", stopWorkTimeDay);
+
+        if (stopWorkTimeDay) {
+            const { startDay, endDay } = stopWorkTimeDay;
+            console.log("Found stop workTimeDay:", startDay, endDay);
+
+            const daysInBetween = getDaysInBetween(startDay, endDay);
+            console.log("daysInBetween:", daysInBetween);
+
+            daysInBetween.forEach(day => {
+                const englishDayArray = thaiToEnglishDayMap[day];
+                console.log("englishDayArray:", englishDayArray);
+
+                englishDayArray.forEach(englishDay => {
+                    // Use forEach to add each element to commonNumbers
+                    // commonNumbers.add(...array1[englishDayArray]);
+                    array1[englishDay].forEach(value => commonNumbers.add(value));
+                    array2[englishDay].forEach(value => commonNumbers.add(value));
+                });
+                // englishDayArray.forEach(englishDay => {
+                //     // Check if the key exists in array1 before attempting to access it
+                //     if (array1.hasOwnProperty(englishDay)) {
+                //         // Access the array and perform operations if the key exists
+                //         array1[englishDay].forEach(value => commonNumbers.add(value));
+                //     } else {
+                //         console.log(`Key ${englishDay} does not exist in array1`);
+                //     }
+                // });
+            });
+
+            // setHoliday(commonNumbers);
+            // console.log("Common Numbers:", commonNumbers);
+        } else {
+            console.log("No stop workTimeDay found.");
+        }
+    } else {
+        console.log("Workplace not found.");
+    }
+
+    commonNumbers123.forEach(number => {
+        commonNumbers.add(number);
     });
+
+    commonNumbers.forEach(number => {
+        holidayList.push(number);
+    });
+
+    // Adding elements from commonNumbers123 array to falseWorkdays
+    commonNumbers.forEach(number => {
+        falseWorkdays.push(number);
+    });
+
+    console.log("Common Numbers:", commonNumbers);
+
+    const commonNumbersArray = [...commonNumbers].map(value => value.toString());
+
+
+    function getDaysInBetween(startDay, endDay) {
+        const weekdays = ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัส', 'ศุกร์', 'เสาร์', 'อาทิตย์'];
+        const startIndex = weekdays.indexOf(startDay);
+        const endIndex = weekdays.indexOf(endDay);
+
+        if (startIndex === -1 || endIndex === -1) {
+            return [];
+        }
+
+        return weekdays.slice(startIndex, endIndex + 1);
+    }
 
     // console.log('holidayList', holidayList);
     console.log('filteredDaysOff', filteredDaysOff);
@@ -1563,6 +1661,13 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
         desiredMonthLower = ((parseInt(desiredMonth, 10) - 1 + 12) % 12).toString().padStart(2, '0');
     }
     // Filter the entries based on the criteria
+
+    const thaiMonthName = getThaiMonthName(desiredMonth);
+    const thaiMonthNameLower = getThaiMonthName(desiredMonthLower);
+
+    console.log('thaiMonthName', thaiMonthName); // Thai month name based on desiredMonth
+    console.log('thaiMonthNameLower', thaiMonthNameLower); // Thai month name based on desiredMonthLower
+
     const filteredEntries = timerecordAllList.filter(entry =>
         entry.timerecordId === desiredTimerecordId &&
         entry.month === desiredMonth
@@ -1684,46 +1789,6 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
 
     console.log('filteredUniqueDatesArray', filteredUniqueDatesArray);
 
-    // useEffect(() => {
-    //     // Fetch data from the API when the component mounts
-    //     fetch(endpoint + '/employee/list')
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             // Update the state with the fetched data
-    //             setEmploeeData(data);
-    //             // const employeeIdsToFind = [1001, 1002, 1004, 1005, 1006];
-    //             // employeeIdsArray
-    //             // const filteredEmployees123 = data.filter(employee => employeeIdsArray.includes(parseInt(employee.employeeId, 10)));
-    //             const filteredEmployees = data.filter(employee => employeeIdsArray.includes(parseInt(employee.employeeId, 10)));
-
-    //             // Do something with the filtered employees
-    //             // console.log('filteredEmployees', filteredEmployees);
-
-    //             // Extract specific information from filtered employees
-    //             const extractedData = filteredEmployees.map(employee => [
-
-    //                 employee.name + ' ' + employee.lastName,
-    //                 employee.employeeId,
-    //                 'กะเช้า',
-    //                 'กะดึก',
-    //                 // Add more properties as needed
-
-    //             ]);
-    //             const extractedDataAddSalary = filteredEmployees.map(employee => [
-    //                 employee.addSalary
-    //             ]);
-
-    //             // Do something with the extracted data
-    //             // console.log('extractedData', extractedData);
-    //             setEmploeeDataSearch(extractedData);
-    //             setArraytestEmpAddSalary(extractedDataAddSalary);
-
-    //         })
-    //         .catch(error => {
-    //             console.error('Error fetching data:', error);
-    //         });
-    // }, [employeeIdsArray]);
-
     useEffect(() => {
         // Fetch data from the API when the component mounts
         fetch(endpoint + '/employee/list')
@@ -1755,90 +1820,20 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
     ]);
     console.log('extractedDataAddSalary', extractedDataAddSalary);
 
-    // useEffect(() => {
-
-    //     const filteredEmployees = emploeeData.filter(employee => employeeIdsArray.includes(parseInt(employee.employeeId, 10)));
-
-    //     // Do something with the filtered employees
-    //     console.log('filteredEmployees', filteredEmployees);
-
-    //     // Extract specific information from filtered employees
-    //     const extractedData = filteredEmployees.map(employee => [
-
-    //         employee.name + ' ' + employee.lastName,
-    //         employee.employeeId,
-    //         'กะเช้า',
-    //         'กะดึก',
-    //         // Add more properties as needed
-
-    //     ]);
-    //     const extractedDataAddSalary = filteredEmployees.map(employee => [
-    //         employee.addSalary
-    //     ]);
-
-    //     // Do something with the extracted data
-    //     // console.log('extractedData', extractedData);
-    //     setEmploeeDataSearch(extractedData);
-    //     setArraytestEmpAddSalary(extractedDataAddSalary);
-
-    //     console.log('extractedData', extractedData);
-    //     console.log('extractedDataAddSalary', extractedDataAddSalary);
-
-    // }, [employeeIdsArray]);
-
-    // Call the function whenever employeeIdsArray changes
-
-
     console.log('EmploeeData', emploeeData);
     // console.log('EmploeeDataSearch', emploeeDataSearch);
     // console.log('arraytestEmpAddSalary', arraytestEmpAddSalary);
 
     const arraylistNameEmp = extractedData;
 
-    // const arraytest = uniqueDatesArray.map(datesArray => {
-    //     return resultArray.map(day => (datesArray.includes(day) ? '1' : ''));
-    // });
-    // // วันทำงานที่ได้จากการค้นหา
-    // console.log('Final Result Array:', arraytest);
-
-    // const arraytest = [[1001, 1, 1, 1, 1, '', 1, 1, 1, 1, '', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.5],
-    // [1, 1, 1, 1, 1, 1, 1],
-    // [1, 1, 1, 1, 1, 1, 1],
-    // [1, 1, 1, 1, 1, 1, 1],
-    // [1, 1, 1, 1, 1, 1, 1],
-    // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9],];
-
-    // const sumArray = arraytest.map((subArray) => subArray.reduce((acc, val) => acc + val, 0));
-
-    // วันที่ทำงาน
-    // const arraytest = [];
-    // const arrayWorkHoliday = [];
-
-
-    // // Initialize the array
-    // Object.keys(combinedArray).forEach(employeeId => {
-    //     const datesArray = combinedArray[employeeId].map(entry => Number(entry.dates));
-    //     const employeeResultArray = resultArray.map(day => {
-    //         const workplaceIdIndex = datesArray.indexOf(day);
-    //         if (workplaceIdIndex !== -1) {
-    //             const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].workplaceId;
-    //             return currentWorkplaceId === searchWorkplaceId ? 1 : parseInt(currentWorkplaceId, 10);
-    //         } else {
-    //             return '';
-    //         }
-    //     });
-    //     arraytest.push(employeeResultArray);
-    // });
-
-
-    // console.log('Result Position Array:', arraytest);
-
-    // filteredDaysOff
-    // holidayList
-
     const arraytest = [];
+
+    const arrayAllTime = [];
+
     const arraytestOT = [];
+
+    const arrayOTAllTime = [];
+
 
     const arrayWorkNormalDay = [];
     const arrayWorkOTNormalDay = [];
@@ -1850,16 +1845,113 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
     const arrayWorkOTHoliday = [];
     Object.keys(combinedArray).forEach(employeeId => {
         // วันที่ทำงานทั้งหมด
+        // const datesArray = combinedArray[employeeId].map(entry => Number(entry.dates));
+        // const employeeResultArray = resultArray.map(day => {
+        //     const workplaceIdIndex = datesArray.indexOf(day);
+        //     if (workplaceIdIndex !== -1) {
+        //         const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].workplaceId;
+        //         return currentWorkplaceId === searchWorkplaceId ? 1 : parseInt(currentWorkplaceId, 10);
+        //     } else {
+        //         return '';
+        //     }
+        // });
         const datesArray = combinedArray[employeeId].map(entry => Number(entry.dates));
+
+        // Filter only numeric values in datesArray
+        const numericDatesArray = datesArray.filter(date => !isNaN(date));
+
+        const datesSet = new Set(datesArray);
+        const uniqueDatesArray = Array.from(datesSet);
+
         const employeeResultArray = resultArray.map(day => {
             const workplaceIdIndex = datesArray.indexOf(day);
+            // if (workplaceIdIndex !== -1) {
+            //     const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].workplaceId;
+            //     return currentWorkplaceId === searchWorkplaceId ? '1' : currentWorkplaceId;
+            // } else {
+            //     return '';
+            // }
             if (workplaceIdIndex !== -1) {
                 const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].workplaceId;
-                return currentWorkplaceId === searchWorkplaceId ? 1 : parseInt(currentWorkplaceId, 10);
+
+                if (currentWorkplaceId === searchWorkplaceId) {
+                    return 1;
+                } else if (currentWorkplaceId === '') {
+                    return '';
+                } else {
+                    return currentWorkplaceId;
+                }
             } else {
                 return '';
             }
         });
+        // const employeeResultArray = resultArray.map(day => {
+        //     const workplaceIdIndex = datesArray.indexOf(day);
+        //     if (workplaceIdIndex !== -1) {
+        //         const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].workplaceId;
+        //         return currentWorkplaceId === searchWorkplaceId ? '1' : currentWorkplaceId;
+        //     } else {
+        //         return '';
+        //     }
+        // });
+
+        // รวมชั่วโมงทำงาน
+        const employeeResultArrayAllTime = resultArray.map(day => {
+            const workplaceIdIndex = datesArray.indexOf(day);
+            // if (workplaceIdIndex !== -1) {
+            //     const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].workplaceId;
+            //     return currentWorkplaceId === searchWorkplaceId ? '1' : currentWorkplaceId;
+            // } else {
+            //     return '';
+            // }
+            if (workplaceIdIndex !== -1) {
+                const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].allTimes;
+
+                if (currentWorkplaceId === '') {
+                    return '';
+                } else {
+                    return parseFloat(currentWorkplaceId, 10);
+                }
+            } else {
+                return '';
+            }
+        });
+
+        arrayAllTime.push(employeeResultArrayAllTime);
+        console.log('arrayAllTime', arrayAllTime);
+
+        // รวมชั่วโมงทำงาน
+        const employeeResultArrayOTAllTime = resultArray.map(day => {
+            const workplaceIdIndex = datesArray.indexOf(day);
+            // if (workplaceIdIndex !== -1) {
+            //     const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].workplaceId;
+            //     return currentWorkplaceId === searchWorkplaceId ? '1' : currentWorkplaceId;
+            // } else {
+            //     return '';
+            // }
+            if (workplaceIdIndex !== -1) {
+                const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].otTimes;
+
+                if (currentWorkplaceId === '') {
+                    return '';
+                } else {
+                    return parseFloat(currentWorkplaceId, 10);
+                }
+            } else {
+                return '';
+            }
+        });
+
+        arrayOTAllTime.push(employeeResultArrayOTAllTime);
+        console.log('arrayOTAllTime', arrayOTAllTime);
+
+
+        combinedArray
+        console.log('combinedArray', combinedArray);
+        console.log('datesArray', datesArray);
+        console.log('numericDatesArray', numericDatesArray);
+        console.log('uniqueDatesArray', uniqueDatesArray);
+
 
         // const datesArray = combinedArray[employeeId].map(entry => Number(entry.dates));
         // const employeeResultArray = resultArray.map(day => {
@@ -1898,9 +1990,22 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
         );
         const employeeResultArray2Holi = resultArray.map(day => {
             const workplaceIdIndex = commonDatesHoli.indexOf(day);
+            // if (workplaceIdIndex !== -1) {
+            //     const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].allTimes;
+            //     return currentWorkplaceId === searchWorkplaceId ? 1 : parseInt(currentWorkplaceId, 10);
+            // } else {
+            //     return '';
+            // }
             if (workplaceIdIndex !== -1) {
                 const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].allTimes;
-                return currentWorkplaceId === searchWorkplaceId ? 1 : parseInt(currentWorkplaceId, 10);
+
+                if (currentWorkplaceId === searchWorkplaceId) {
+                    return 1;
+                } else if (currentWorkplaceId === '') {
+                    return '';
+                } else {
+                    return parseFloat(currentWorkplaceId, 10);
+                }
             } else {
                 return '';
             }
@@ -1911,9 +2016,22 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
         const commonDates = datesArray.filter(date => filteredDaysOff.includes(date));
         const employeeResultArray2 = resultArray.map(day => {
             const workplaceIdIndex = commonDates.indexOf(day);
+            // if (workplaceIdIndex !== -1) {
+            //     const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].allTimes;
+            //     return currentWorkplaceId === searchWorkplaceId ? 1 : parseInt(currentWorkplaceId, 10);
+            // } else {
+            //     return '';
+            // }
             if (workplaceIdIndex !== -1) {
                 const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].allTimes;
-                return currentWorkplaceId === searchWorkplaceId ? 1 : parseInt(currentWorkplaceId, 10);
+
+                if (currentWorkplaceId === searchWorkplaceId) {
+                    return 1;
+                } else if (currentWorkplaceId === '') {
+                    return '';
+                } else {
+                    return parseFloat(currentWorkplaceId, 10);
+                }
             } else {
                 return '';
             }
@@ -1922,11 +2040,28 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
 
         // วันที่ทำงานในวันหยุดนักขัตฤกษ์OT(ช.ม.)
         const commonDatesOT = datesArray.filter(date => filteredDaysOff.includes(date));
+        // const employeeResultArray2OT = resultArray.map(day => {
+        //     const workplaceIdIndex = commonDatesOT.indexOf(day);
+        //     if (workplaceIdIndex !== -1) {
+        //         const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].otTimes;
+        //         return currentWorkplaceId === searchWorkplaceId ? 1 : parseInt(currentWorkplaceId, 10);
+        //     } else {
+        //         return '';
+        //     }
+        // });
         const employeeResultArray2OT = resultArray.map(day => {
             const workplaceIdIndex = commonDatesOT.indexOf(day);
+
             if (workplaceIdIndex !== -1) {
                 const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].otTimes;
-                return currentWorkplaceId === searchWorkplaceId ? 1 : parseInt(currentWorkplaceId, 10);
+
+                if (currentWorkplaceId === searchWorkplaceId) {
+                    return 1;
+                } else if (currentWorkplaceId === '') {
+                    return '';
+                } else {
+                    return parseFloat(currentWorkplaceId, 10);
+                }
             } else {
                 return '';
             }
@@ -1935,12 +2070,38 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
 
 
         // วันที่ทำงานปกติ
-        const commonDates3 = datesArray.filter(date => !(filteredDaysOff.includes(date) || holidayList.includes(date)));
+        // const commonDates3 = datesArray.filter(date => !(filteredDaysOff.includes(date) || holidayList.includes(date)));
+        // const employeeResultArray3 = resultArray.map(day => {
+        //     const workplaceIdIndex = commonDates3.indexOf(day);
+        //     if (workplaceIdIndex !== -1) {
+        //         const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].workplaceId;
+        //         return currentWorkplaceId === searchWorkplaceId ? 1 : parseInt(currentWorkplaceId, 10);
+        //     } else {
+        //         return '';
+        //     }
+        // });
+        // const commonDates3 = datesArray.filter(date => !(filteredDaysOff.includes(date) || holidayList.includes(date)));
+        // console.log('commonDates3', commonDates3);
+
+        datesArray
         const employeeResultArray3 = resultArray.map(day => {
-            const workplaceIdIndex = commonDates3.indexOf(day);
+            const workplaceIdIndex = datesArray.indexOf(day);
+            // if (workplaceIdIndex !== -1) {
+            //     const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].workplaceId;
+            //     return currentWorkplaceId === searchWorkplaceId ? 1 : currentWorkplaceId;
+            // } else {
+            //     return '';
+            // }
             if (workplaceIdIndex !== -1) {
                 const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].workplaceId;
-                return currentWorkplaceId === searchWorkplaceId ? 1 : parseInt(currentWorkplaceId, 10);
+                console.log('currentWorkplaceId', currentWorkplaceId);
+                if (currentWorkplaceId === searchWorkplaceId) {
+                    return 1;
+                } else if (currentWorkplaceId === '') {
+                    return '';
+                } else {
+                    return currentWorkplaceId;
+                }
             } else {
                 return '';
             }
@@ -1950,17 +2111,38 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
 
         // วันที่ทำงานปกติOT
         const commonDates3OT = datesArray.filter(date => !(filteredDaysOff.includes(date) || holidayList.includes(date)));
+        console.log('commonDates3OT', commonDates3OT);
+        // const employeeResultArray3OT = resultArray.map(day => {
+        //     const workplaceIdIndex = commonDates3OT.indexOf(day);
+        //     if (workplaceIdIndex !== -1) {
+        //         const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].otTimes;
+        //         return currentWorkplaceId === searchWorkplaceId ? 1 : parseFloat(currentWorkplaceId, 10);
+        //     } else {
+        //         return '';
+        //     }
+        // });
         const employeeResultArray3OT = resultArray.map(day => {
             const workplaceIdIndex = commonDates3OT.indexOf(day);
+
             if (workplaceIdIndex !== -1) {
                 const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].otTimes;
-                return currentWorkplaceId === searchWorkplaceId ? 1 : parseInt(currentWorkplaceId, 10);
+
+                if (currentWorkplaceId === searchWorkplaceId) {
+                    return 1;
+                } else if (currentWorkplaceId === '') {
+                    return '';
+                } else {
+                    return parseFloat(currentWorkplaceId, 10);
+                }
             } else {
                 return '';
             }
         });
 
+
         arrayWorkOTNormalDay.push(employeeResultArray3OT);
+
+
     });
 
     console.log('Result Position Array:', arraytest);
@@ -1969,6 +2151,20 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
     console.log('arrayWorkOTNormalDay:', arrayWorkOTNormalDay);
     console.log('arrayWorkHoli:', arrayWorkHoli);
 
+    // const makePage = Math.ceil(arrayWorkNormalDay.length / 5);
+    // console.log('makePage', makePage);
+
+    const sumArrayAllTime = arrayAllTime.map(subArray =>
+        subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
+    );
+
+    // WorkplaceDataWorkOfHour
+    const dividedArray = sumArrayAllTime.map(sum => sum / workplaceDataWorkOfHour);
+    console.log('dividedArray', dividedArray);
+
+    const sumArrayOTAllTime = arrayOTAllTime.map(subArray =>
+        subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
+    );
 
     const sumArrayOT = arrayWorkOTNormalDay.map(subArray =>
         subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
@@ -2013,10 +2209,110 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
     //     [1, 12, '', '', '', '', ''],
     //     // ... other subarrays
     // ];
-    const sumArray = arrayWorkNormalDay.map(subarray => subarray.map(item => (typeof item === 'number' ? 1 : item)).reduce((count, item) => (item === 1 ? count + 1 : count), 0));
+    // const sumArray = arrayWorkNormalDay.map(subarray => subarray.map(item => (typeof item === 'number' ? 1 : item)).reduce((count, item) => (item === 1 ? count + 1 : count), 0));
 
+    const sumArray = arrayWorkNormalDay.map(subarray =>
+        subarray.reduce((count, item) => {
+            if (typeof item === 'string') {
+                const stringLength = item.length;
+
+                if (stringLength >= 4) {
+                    return count + 1;
+                } else if (stringLength > 0) {
+                    return count + parseFloat(item) || 0;
+                }
+            } else if (typeof item === 'number') {
+                return count + item;
+            }
+
+            return count;
+        }, 0)
+    );
 
     console.log('sumArray', sumArray);
+    console.log('sumArrayHoli', sumArrayHoli);
+    console.log('sumArrayHoliday', sumArrayHoliday);
+    console.log('sumArrayAllTime', sumArrayAllTime);
+    console.log('sumArrayOTAllTime', sumArrayOTAllTime);
+    console.log('sumArrayOTHoliday', sumArrayOTHoliday);
+    console.log('sumArrayOT', sumArrayOT);
+
+    const indexArray = Array.from({ length: sumArray.length }, (_, index) => index + 1);
+
+    console.log('indexArray', indexArray);
+
+    const sumHoliAllTime = sumArrayOT.map((value, index) => value + sumArrayHoli[index]);
+
+    console.log('sumHoliAllTime', sumHoliAllTime);
+
+    // workplaceDataWorkOfHour
+    // sumArrayHoliday
+    // sumArrayHoli
+
+    const sumarrayAllHoloday = sumArrayHoli.map((valueHoli, index) => {
+        const valueHoliday = sumArrayHoliday[index] || 0; // If undefined, treat as 0
+        const sum = valueHoli + valueHoliday;
+        return sum / workplaceDataWorkOfHour;
+    });
+    // addSalaryWorkplace
+    const sumArraySumarrayAllHolioday = sumArray.map((value, index) => value + sumarrayAllHoloday[index]);
+
+    const resultAllSalaryEmp = [];
+
+    // for (let i = 0; i < sumArraySumarrayAllHoloday.length; i++) {
+    //     const item = workplaceDataListAddSalary[i];
+    //     const salaryValue = item.roundOfSalary === 'monthly' ? parseInt(item.SpSalary, 10) : parseInt(item.SpSalary, 10) * sumArraySumarrayAllHoloday[i];
+    //     resultAllSalaryEmp.push([salaryValue]);
+    //   }
+
+    // for (let i = 0; i < sumArraySumarrayAllHoloday.length; i++) {
+    //     const item = workplaceDataListAddSalary[i];
+    //     const salaryValue = item.StaffType;
+    //     resultAllSalaryEmp.push([salaryValue]);
+    //     console.log('salaryValue', salaryValue);
+
+    // }
+
+
+
+    // รวมคำนวนสวัสดิการ
+    const SpSalaryArray = workplaceDataListAddSalary.map(item => item.SpSalary);
+    const roundOfSalaryArray = workplaceDataListAddSalary.map(item => item.roundOfSalary);
+
+    console.log('SpSalaryArray', SpSalaryArray);
+    console.log('roundOfSalaryArray', roundOfSalaryArray);
+
+    const resultArraySumAddSalary = [];
+
+    for (let i = 0; i < sumArraySumarrayAllHolioday.length; i++) {
+        const calculatedValues = [];
+
+        for (let j = 0; j < SpSalaryArray.length; j++) {
+            const originalValue = parseInt(SpSalaryArray[j], 10);
+            const roundOfSalary = roundOfSalaryArray[j];
+
+            let calculatedValue;
+
+            if (roundOfSalary === 'monthly') {
+                calculatedValue = originalValue;
+            } else if (roundOfSalary === 'daily') {
+                calculatedValue = sumArraySumarrayAllHolioday[i] * originalValue;
+            }
+
+            calculatedValues.push(calculatedValue);
+        }
+
+        resultArraySumAddSalary.push(calculatedValues);
+    }
+
+    console.log('resultArraySum', resultArraySumAddSalary);
+
+    console.log('resultAllSalaryEmp', resultAllSalaryEmp);
+
+    console.log('sumarrayAllHoloday', sumarrayAllHoloday);
+
+    console.log('sumArraySumarrayAllHolioday', sumArraySumarrayAllHolioday);
+
 
     // const arraytestEmpAddSalary = [[
     //     {
@@ -2159,6 +2455,8 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
     // ]
     // ];
 
+    // const = workplaceDataList
+    const yearThai = parseFloat(year, 10) + 543;
     // เริ่มฟังค์ชั่นpdf
 
     const generatePDFTest123 = () => {
@@ -2235,53 +2533,53 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
             const arraylistOT =
                 ['1.5', '2', '3'];
 
-            const addSalaryWorkplace =
-                [{
-                    name: "ค่าเดินทาง",
-                    codeSpSalary: "1001",
-                    SpSalary: "1000",
-                    roundOfSalary: "monthly",
-                    StaffType: "all",
-                    nameType: "",
-                    _id: "656025d1fd5375965d5028a3"
-                },
-                {
-                    name: "ค่าอาหาร",
-                    codeSpSalary: "2534",
-                    SpSalary: "100",
-                    roundOfSalary: "daily",
-                    StaffType: "all",
-                    nameType: "ทดลอง",
-                    _id: "656025d1fd5375965d5028a4"
-                },
-                {
-                    name: "ค่าโทรศัพท์",
-                    codeSpSalary: "8467",
-                    SpSalary: "300",
-                    roundOfSalary: "daily",
-                    StaffType: "header",
-                    nameType: "",
-                    _id: "656025d1fd5375965d5028a5"
-                },
-                {
-                    name: "ค่าตำแหน่ง",
-                    codeSpSalary: "4392",
-                    SpSalary: "800",
-                    roundOfSalary: "monthly",
-                    StaffType: "header",
-                    nameType: "",
-                    _id: "656025d1fd5375965d5028a6"
-                },
-                {
-                    name: "เบี้ยขยัน",
-                    codeSpSalary: "1358",
-                    SpSalary: "500",
-                    roundOfSalary: "monthly",
-                    StaffType: "all",
-                    nameType: "",
-                    _id: "656025d1fd5375965d5028a7"
-                },
-                ];
+            // const addSalaryWorkplace =
+            //     [{
+            //         name: "ค่าเดินทาง",
+            //         codeSpSalary: "1001",
+            //         SpSalary: "1000",
+            //         roundOfSalary: "monthly",
+            //         StaffType: "all",
+            //         nameType: "",
+            //         _id: "656025d1fd5375965d5028a3"
+            //     },
+            //     {
+            //         name: "ค่าอาหาร",
+            //         codeSpSalary: "2534",
+            //         SpSalary: "100",
+            //         roundOfSalary: "daily",
+            //         StaffType: "all",
+            //         nameType: "ทดลอง",
+            //         _id: "656025d1fd5375965d5028a4"
+            //     },
+            //     {
+            //         name: "ค่าโทรศัพท์",
+            //         codeSpSalary: "8467",
+            //         SpSalary: "300",
+            //         roundOfSalary: "daily",
+            //         StaffType: "header",
+            //         nameType: "",
+            //         _id: "656025d1fd5375965d5028a5"
+            //     },
+            //     {
+            //         name: "ค่าตำแหน่ง",
+            //         codeSpSalary: "4392",
+            //         SpSalary: "800",
+            //         roundOfSalary: "monthly",
+            //         StaffType: "header",
+            //         nameType: "",
+            //         _id: "656025d1fd5375965d5028a6"
+            //     },
+            //     {
+            //         name: "เบี้ยขยัน",
+            //         codeSpSalary: "1358",
+            //         SpSalary: "500",
+            //         roundOfSalary: "monthly",
+            //         StaffType: "all",
+            //         nameType: "",
+            //         _id: "656025d1fd5375965d5028a7"
+            //     },
+            //     ];
             // const arraylistNameEmp = ['สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย'];
 
             // const arrayLength = arraylistNameEmp.length;
@@ -2315,9 +2613,9 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
 
             const numRows = 7;
             const numCols = daysInMonth;
-            const cellWidth = 4.125;
+            const cellWidth = 6.5;
             const cellHeight = 3.5;
-            const startX = 35; // Adjust the starting X-coordinate as needed
+            const startX = 55; // Adjust the starting X-coordinate as needed
             const startY = 55; // Adjust the starting Y-coordinate as needed
             const borderWidth = 0.5; // Adjust the border width as needed
 
@@ -2370,37 +2668,48 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
             };
 
 
-            const numRowsLeftHead = 7;
+            const numRowsLeftHead = 1;
             const numColsLeftHead = 1;
-            const cellWidthLeftHead = 30;
+            const cellWidthLeftHead = 50;
             const cellHeightLeftHead = 3.5;
             const startXLeftHead = 5; // Adjust the starting X-coordinate as needed
             // const startYLeftHead = 20; // Adjust the starting Y-coordinate as needed
             const borderWidthLeftHead = 0.5; // Adjust the border width as needed
 
             const drawTableLeftHead = (tableNumber) => {
-                for (let i = 0; i < numRows; i++) {
+                for (let i = 0; i < 1; i++) {
                     for (let j = 0; j < numColsLeftHead; j++) {
                         const x = startXLeftHead + j * cellWidthLeftHead;
                         const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 3.7);
                         // drawCell(x, y, cellWidthLeftHead, cellHeight);
-                        const adjustedCellHeight = i === 0 ? cellHeight * 2 : cellHeight;
+                        // const adjustedCellHeight = i === 0 ? cellHeight * 2 : cellHeight;
+                        const adjustedCellHeight = cellHeight * 8;
 
-                        if (i === 0) {
-                            drawCell(x, y, cellWidthLeftHead, adjustedCellHeight);
+                        // if (i === 0) {
+                        //     drawCell(x, y, cellWidthLeftHead, adjustedCellHeight);
 
-                        } else {
-                            drawCell(x, y + cellHeight, cellWidthLeftHead, adjustedCellHeight);
+                        // } else {
+                        //     drawCell(x, y + cellHeight, cellWidthLeftHead, adjustedCellHeight);
 
-                        }
+                        // }
+                        drawCell(x, y, cellWidthLeftHead, adjustedCellHeight);
 
-                        if (i >= numRows - 3) {
-                            const arrayIndex = i - (numRows - 3); // 0 for the last row, 1 for the second last row
-                            if (arraylistOT[arrayIndex]) {
-                                const cellText = arraylistOT[arrayIndex].toString(); // Convert to string if needed
-                                doc.text("โอที " + cellText, x + 26, y - 1, { align: 'center' }); // Use the entire cellText
-                            }
-                        }
+
+                        // if (i >= numRows - 3) {
+                        //     const arrayIndex = i - (numRows - 3); // 0 for the last row, 1 for the second last row
+                        //     if (arraylistOT[arrayIndex]) {
+                        //         const cellText = arraylistOT[arrayIndex].toString(); // Convert to string if needed
+                        //         doc.text("โอที " + cellText, x + 46, y + 2.5, { align: 'center' }); // Use the entire cellText
+                        //     }
+                        // }
+                        const cellText0 = arraylistOT[0].toString(); // Convert to string if needed
+                        const cellText1 = arraylistOT[1].toString(); // Convert to string if needed
+                        const cellText2 = arraylistOT[2].toString(); // Convert to string if needed
+
+                        doc.text("โอที " + cellText0, x + 46, y + 2.5 + (3.5 * 4), { align: 'center' }); // Use the entire cellText
+                        doc.text("โอที " + cellText1, x + 46, y + 2.5 + (3.5 * 5), { align: 'center' }); // Use the entire cellText
+                        doc.text("โอที " + cellText2, x + 46, y + 2.5 + (3.5 * 6), { align: 'center' }); // Use the entire cellText
+
                     }
                 }
             };
@@ -2414,27 +2723,48 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
             // const startYNumHead = 20; // Adjust the starting Y-coordinate as needed
             const borderWidthNumHead = 0.5; // Adjust the border width as needed
 
+            // const drawTableNumHead = (tableNumber) => {
+            //     for (let i = 0; i < numRows; i++) {
+            //         for (let j = 0; j < numColsNumHead; j++) {
+            //             const x = startXNumHead + j * cellWidthNumHead;
+            //             const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 3.7);
+            //             // drawCell(x, y, cellWidthNumHead, cellHeight);
+            //             const adjustedCellHeight = i === 0 ? cellHeight * 2 : cellHeight;
+
+            //             if (i === 0) {
+            //                 drawCell(x, y, cellWidthNumHead, adjustedCellHeight);
+
+            //             } else {
+            //                 drawCell(x, y + cellHeight, cellWidthNumHead, adjustedCellHeight);
+
+            //             }
+            //         }
+            //     }
+            // };
             const drawTableNumHead = (tableNumber) => {
-                for (let i = 0; i < numRows; i++) {
+                for (let i = 0; i < 1; i++) {
                     for (let j = 0; j < numColsNumHead; j++) {
                         const x = startXNumHead + j * cellWidthNumHead;
                         const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 3.7);
                         // drawCell(x, y, cellWidthNumHead, cellHeight);
-                        const adjustedCellHeight = i === 0 ? cellHeight * 2 : cellHeight;
+                        // const adjustedCellHeight = i === 0 ? cellHeight * 2 : cellHeight;
+                        const adjustedCellHeight = cellHeight * 8;
 
-                        if (i === 0) {
-                            drawCell(x, y, cellWidthNumHead, adjustedCellHeight);
+                        // if (i === 0) {
+                        //     drawCell(x, y, cellWidthNumHead, adjustedCellHeight);
 
-                        } else {
-                            drawCell(x, y + cellHeight, cellWidthNumHead, adjustedCellHeight);
+                        // } else {
+                        //     drawCell(x, y + cellHeight, cellWidthNumHead, adjustedCellHeight);
 
-                        }
+                        // }
+                        drawCell(x, y, cellWidthNumHead, adjustedCellHeight);
+
                     }
                 }
             };
 
             const numRowsSpSalary = 7;
-            const numColsSpSalary = 3 + 7 + 1;
+            const numColsSpSalary = 3;
             const cellWidthSpSalary = 10;
             const cellHeightSpSalary = 3.5;
             const borderWidthSpSalary = 0.5; // Adjust the border width as needed
@@ -2442,13 +2772,13 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
             let startXSpSalary; // Declare startXSpSalary before using it
 
             if (daysInMonth === 28) {
-                startXSpSalary = 150.5;
+                startXSpSalary = 157;
             } else if (daysInMonth === 29) {
-                startXSpSalary = 154.5;
+                startXSpSalary = 163.5;
             } else if (daysInMonth === 30) {
-                startXSpSalary = 158.75;
+                startXSpSalary = 170;
             } else if (daysInMonth === 31) {
-                startXSpSalary = 162.75;
+                startXSpSalary = 176.5;
             };
             // console.log('startXSpSalary:', startXSpSalary);
             // console.log('cellHeightSpSalary:', cellHeightSpSalary);
@@ -2459,7 +2789,7 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
             const drawTableSpSalary = (tableNumber) => {
                 for (let i = 0; i < numRows; i++) {
                     for (let j = 0; j < numColsSpSalary; j++) {
-                        const x = startXSpSalary + j * cellWidthSpSalary;
+                        const x = startXSpSalary + j * cellWidthSpSalary + (cellWidthSpSalary * 8);
                         const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 3.7);
                         // drawCell(x, y, cellWidthSpSalary, cellHeight);
                         const adjustedCellHeight = i === 0 ? cellHeight * 2 : cellHeight;
@@ -2477,18 +2807,18 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
 
             const numRowsMess = 7;
             const numColsMess = 1;
-            const cellWidthMess = 15;
+            const cellWidthMess = 25;
             const cellHeightMess = 3.5;
             let startXMess; // Declare startXSpSalary before using it
 
             if (daysInMonth === 28) {
-                startXMess = 260.5;
+                startXMess = 247;
             } else if (daysInMonth === 29) {
-                startXMess = 264.5;
+                startXMess = 253.5;
             } else if (daysInMonth === 30) {
-                startXMess = 268.75;
+                startXMess = 260;
             } else if (daysInMonth === 31) {
-                startXMess = 272.75;
+                startXMess = 266.5;
             };
             const borderWidthMess = 0.5;
             const drawTableMess = (tableNumber, arraylistOT) => {
@@ -2571,6 +2901,7 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
             const startXTop = 50; // Adjust the starting X-coordinate as needed
             const startYTop = 30; // Adjust the starting Y-coordinate as needed
             const cellHeightTop = 25;
+
             const drawTableTop = () => {
                 for (let i = 0; i < numRowsTop; i++) {
                     for (let j = 0; j < numCols; j++) {
@@ -2580,6 +2911,33 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
                     }
                 }
             };
+
+            const numRowsTopHead = 1;
+            const startXTopHead = 1; // Adjust the starting X-coordinate as needed
+            const startYTopHead = 24; // Adjust the starting Y-coordinate as needed
+            const cellHeightTopHead = 6;
+            // const cellWidthTopHead = 200;
+            let cellWidthTopHead;
+            if (daysInMonth === 28) {
+                // 267
+                cellWidthTopHead = 262;
+            } else if (daysInMonth === 29) {
+                cellWidthTopHead = 268.5;
+            } else if (daysInMonth === 30) {
+                cellWidthTopHead = 275;
+            } else if (daysInMonth === 31) {
+                cellWidthTopHead = 281.5;
+            };
+            const drawTableTopHead = () => {
+                for (let i = 0; i < numRowsTopHead; i++) {
+                    // for (let j = 0; j < numCols; j++) {
+                    const x = startXNumHead + i * cellWidth;
+                    const y = startYTopHead + i * cellHeightTopHead;
+                    drawCell(x, y, cellWidthTopHead, cellHeightTopHead);
+                    // }
+                }
+            };
+
             const drawTableLeftHeadTop = () => {
                 for (let i = 0; i < numRowsTop; i++) {
                     for (let j = 0; j < numColsLeftHead; j++) {
@@ -2601,7 +2959,7 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
             const drawTableSpSalaryTop = () => {
                 for (let i = 0; i < numRowsTop; i++) {
                     for (let j = 0; j < numColsSpSalary; j++) {
-                        const x = startXSpSalary + j * cellWidthSpSalary;
+                        const x = startXSpSalary + j * cellWidthSpSalary + (cellWidthSpSalary * 8);
                         const y = startYTop + i * cellHeightTop;
                         drawCell(x, y, cellWidthSpSalary, cellHeightTop);
                     }
@@ -2663,6 +3021,55 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
                     }
                 }
             };
+
+            // แสดงตารางวันทำงานธรรมดาช.ใ.
+            const drawArrayTextAllTime = (dataArray) => {
+                for (let i = 0; i < dataArray.length; i++) {
+                    // const arrayText = dataArray[i].join('      ');
+                    // const arrayText = dataArray[i].join('     '); // Use spaces to mimic the width
+                    let currentX = startX;
+                    let currentY = startY + (3.5 * 2);
+
+                    for (let j = 0; j < dataArray[i].length; j++) {
+                        // const elementWidth = calculateElementWidth(dataArray[i][j]);
+                        const textToDraw = dataArray[i][j].toString();
+                        const alignment = textToDraw.length > 3 ? { align: 'left', angle: 90, xOffset: 5 } : { align: 'left' };
+
+                        if (textToDraw.length > 3) {
+                            doc.text(textToDraw, currentX + 2, 3 + currentY + i * verticalDistance, alignment);
+                        } else {
+                            doc.text(textToDraw, currentX + 1, 3 + currentY + i * verticalDistance, alignment);
+                        }
+                        // doc.text(textToDraw, currentX + 2, 3 + currentY + i * verticalDistance, alignment);
+                        // currentX += elementWidth + cellWidth; 
+                        currentX += cellWidth;
+                    }
+                }
+            };
+
+
+
+            const drawArrayTextSumWorkAddSalary = (dataArray, sumArray, addSalaryWorkplace) => {
+                for (let i = 0; i < dataArray.length; i++) {
+                    let currentX = startXSpSalary + 3;
+                    let currentY = startY + i * verticalDistance + addmove;
+
+                    const roundOfSalary = addSalaryWorkplace[i]?.roundOfSalary || ''; // Get roundOfSalary for the current index
+
+                    // Check roundOfSalary and display the appropriate text
+                    if (roundOfSalary === 'monthly') {
+                        doc.text(addSalaryWorkplace[i].SpSalary, currentX + 2, 3 + currentY, { align: 'center' });
+                    } else if (roundOfSalary === 'daily') {
+                        // Calculate the product and convert it to a string
+                        const product = (sumArray[i] * addSalaryWorkplace[i].SpSalary).toString();
+                        doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
+                    } else {
+                        // Handle other cases or set default text
+                        doc.text('N/A', currentX + 2, 3 + currentY, { align: 'center' });
+                    }
+                }
+            };
+
 
             // const drawArrayTextWithColor = (dataArray, columnIndex, rowIndex) => {
             //     const currentX = startX + columnIndex * cellWidth;
@@ -2737,11 +3144,11 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
             const drawArrayTextOT = (dataArray) => {
                 for (let i = 0; i < dataArray.length; i++) {
                     let currentX = startX - 1;
-                    let currentY = startY + 3 + cellHeight;
+                    let currentY = startY + 3 + (cellHeight * 2);
 
                     for (let j = 0; j < dataArray[i].length; j++) {
                         // const elementWidth = calculateElementWidth(dataArray[i][j]);
-                        doc.text(dataArray[i][j].toString(), currentX + 2, 3 + currentY + i * verticalDistance, { align: 'left' });
+                        doc.text(dataArray[i][j].toString(), currentX + 2, 6 + currentY + i * verticalDistance, { align: 'left' });
                         // currentX += elementWidth + cellWidth; 
                         currentX += cellWidth;
                     }
@@ -2754,7 +3161,7 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
                     // const arrayText = dataArray[i].join('      ');
                     // const arrayText = dataArray[i].join('     '); // Use spaces to mimic the width
                     let currentX = startX - 1;
-                    let currentY = startY + (3 * 3);
+                    let currentY = startY + (3 * 4);
 
                     for (let j = 0; j < dataArray[i].length; j++) {
                         // const elementWidth = calculateElementWidth(dataArray[i][j]);
@@ -2775,7 +3182,7 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
                     // const arrayText = dataArray[i].join('      ');
                     // const arrayText = dataArray[i].join('     '); // Use spaces to mimic the width
                     let currentX = startX - 1;
-                    let currentY = startY + (3 * 4);
+                    let currentY = startY + (3 * 5);
 
                     for (let j = 0; j < dataArray[i].length; j++) {
                         // const elementWidth = calculateElementWidth(dataArray[i][j]);
@@ -2793,13 +3200,27 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
             const drawArrayTextOTHoliday = (dataArray) => {
                 for (let i = 0; i < dataArray.length; i++) {
                     let currentX = startX - 1;
-                    let currentY = startY + (3 * 5);
+                    let currentY = startY + (3 * 6);
 
                     for (let j = 0; j < dataArray[i].length; j++) {
                         // const elementWidth = calculateElementWidth(dataArray[i][j]);
                         doc.text(dataArray[i][j].toString(), currentX + 2, 5 + currentY + i * verticalDistance, { align: 'left' });
                         // currentX += elementWidth + cellWidth; 
                         currentX += cellWidth;
+                    }
+                }
+            };
+
+            const drawArrayTextAddSalary = (dataArray) => {
+                for (let i = 0; i < dataArray.length; i++) {
+                    let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 5);
+                    let currentY = startY + i * verticalDistance + addmove;
+
+                    for (let j = 0; j < dataArray[i].length; j++) {
+                        // const elementWidth = calculateElementWidth(dataArray[i][j]);
+                        doc.text(dataArray[i][j].toString(), currentX + 2, 3 + currentY, { align: 'left' });
+                        // currentX += elementWidth + cellWidth; 
+                        currentX += cellWidthSpSalary;
                     }
                 }
             };
@@ -2817,19 +3238,21 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
             // ผลรวมวันทำงานวันธรรรมดา
             const drawArrayTextSumWork = (dataArray, sumArray) => {
                 for (let i = 0; i < dataArray.length; i++) {
-                    let currentX = startXSpSalary + 3;
+                    let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 8);
                     let currentY = startY + i * verticalDistance + addmove;
 
                     // Calculate the product and convert it to a string
                     const product = (sumArray[i] * countalldaywork).toString();
 
                     doc.text(sumArray[i].toString(), currentX + 2, 3 + currentY, { align: 'center' });
-                    doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
+                    // doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
                 }
             };
+
+
             const drawArrayTextSumWorkOT = (dataArray, sumArrayOT) => {
                 for (let i = 0; i < dataArray.length; i++) {
-                    let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 3);
+                    let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 11);
                     let currentY = startY + i * verticalDistance + addmove;
 
                     // Calculate the product and convert it to a string
@@ -2846,28 +3269,86 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
             // ผลรวมวันทำงานวันหยุด
             const drawArrayTextSumWorkHoli = (dataArray, sumArrayHoli) => {
                 for (let i = 0; i < dataArray.length; i++) {
-                    let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 1);
+                    let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 9);
                     let currentY = startY + i * verticalDistance + addmove;
 
                     // Calculate the product and convert it to a string
                     const product = (sumArrayHoli[i] * (1.5 * (countalldaywork / 8))).toString();
 
-                    doc.text(sumArrayHoli[i].toString(), currentX + 2, 3 + currentY, { align: 'center' });
-                    doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
+                    doc.text(sumArrayHoli[i].toString(), currentX + 2, 6.5 + currentY, { align: 'center' });
+                    // doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
                 }
             };
+
+
+            // นับเลขหัวตาราง
+
+            const drawArrayNumHead = (dataArray, indexArray) => {
+                for (let i = 0; i < dataArray.length; i++) {
+                    let currentX = startXNumHead + 3;
+                    let currentY = startY + i * verticalDistance + addmove;
+
+                    // Calculate the product and convert it to a string
+                    const product = (indexArray[i] * (2 * (countalldaywork / 8))).toString();
+
+                    doc.text(indexArray[i].toString(), currentX + 2, currentY, { align: 'center' });
+                    // doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
+                }
+            };
+
             // ผลรวมวันทำงานวันหยุดนักขัตฤกษ์
 
             const drawArrayTextSumWorkHoliday = (dataArray, sumArrayHoliday) => {
                 for (let i = 0; i < dataArray.length; i++) {
-                    let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 2);
+                    let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 10);
                     let currentY = startY + i * verticalDistance + addmove;
 
                     // Calculate the product and convert it to a string
                     const product = (sumArrayHoliday[i] * (2 * (countalldaywork / 8))).toString();
 
-                    doc.text(sumArrayHoliday[i].toString(), currentX + 2, 3 + currentY, { align: 'center' });
-                    doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
+                    doc.text(sumArrayHoliday[i].toString(), currentX + 2, 10.5 + currentY, { align: 'center' });
+                    // doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
+                }
+            };
+            // รวมช.ม.ทำงาน1.5
+            const drawArrayTextSumWorkHoliday1q5 = (dataArray, sumArrayHoliday) => {
+                for (let i = 0; i < dataArray.length; i++) {
+                    let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 10);
+                    let currentY = startY + i * verticalDistance + addmove;
+
+                    // Calculate the product and convert it to a string
+                    const product = (sumArrayHoliday[i] * (2 * (countalldaywork / 8))).toString();
+
+                    doc.text(sumArrayHoliday[i].toString(), currentX + 2, 14 + currentY, { align: 'center' });
+                    // doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
+                }
+            };
+
+            // รวมช.ม.ทำงาน2
+            const drawArrayTextSumWorkHoliday2 = (dataArray, sumArrayHoliday) => {
+                for (let i = 0; i < dataArray.length; i++) {
+                    let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 10);
+                    let currentY = startY + i * verticalDistance + addmove;
+
+                    // Calculate the product and convert it to a string
+                    const product = (sumArrayHoliday[i] * (2 * (countalldaywork / 8))).toString();
+
+                    doc.text(sumArrayHoliday[i].toString(), currentX + 2, 17.5 + currentY, { align: 'center' });
+                    // doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
+                }
+            };
+
+            // รวมช.ม.ทำงาน3
+            const drawArrayTextSumWorkHoliday3 = (dataArray, sumArrayHoliday) => {
+                for (let i = 0; i < dataArray.length; i++) {
+                    let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 10);
+                    let currentY = startY + i * verticalDistance + addmove;
+
+                    // Calculate the product and convert it to a string
+                    const product = (sumArrayHoliday[i] * (2 * (countalldaywork / 8))).toString();
+
+                    doc.text(sumArrayHoliday[i].toString(), currentX + 2, 21 + currentY, { align: 'center' });
+                    // doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
                 }
             };
 
@@ -2910,37 +3391,55 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
             //         }
             //     }
             // };
-            const drawArrayTextAddSalary = (dataArray, sumArray) => {
+
+
+            const drawArrayTextSumWorkTest = (dataArray, sumArraySumarrayAllHoloday) => {
                 for (let i = 0; i < dataArray.length; i++) {
                     let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 5);
-                    let currentY = startY + addmove;
+                    let currentY = startY + i * verticalDistance + addmove;
 
-                    for (let j = 0; j < dataArray[i].length; j++) {
-                        const item = dataArray[i][j];
-
-                        // Check if dataArray[i][j].name exists in addSalaryWorkplace
-                        const position = addSalaryWorkplace.findIndex(
-                            (salaryItem) => salaryItem.name === item.name
-                        );
-
-                        // If the position is found, use it as x; otherwise, use a default value (e.g., 0)
-                        const x = position !== -1 ? position : 0;
-
-                        // If roundOfSalary is "daily", multiply SpSalary by the corresponding value in sumArray
-                        // If roundOfSalary is "monthly", keep SpSalary as is
-                        const adjustedSpSalary = item.roundOfSalary === 'daily' ? item.SpSalary * sumArray[i] : item.SpSalary;
-
-                        const text = `${adjustedSpSalary}`;
-                        doc.text(text, currentX + 2 + (cellWidthSpSalary * x), 3 + currentY + i * verticalDistance, { align: 'center' });
-                        // currentX += cellWidthSpSalary;
-                    }
+                    // Calculate the product and convert it to a string
+                    doc.text(sumArraySumarrayAllHoloday[i].toString(), currentX + 2, 3 + currentY, { align: 'center' });
                 }
             };
 
 
+            // sumArrayHoliday
+            // sumArrayHoli
+            // sumArray
+
+            // const drawArrayTextAddSalary2 = (dataArray, addSalaryWorkplace, sumArraySumarrayAllHoloday) => {
+            //     for (let i = 0; i < dataArray.length; i++) {
+            //         let currentX = startXSpSalary + 3 + (cellWidthSpSalary * 5);
+            //         let currentY = startY + addmove;
+
+            //         for (let j = 0; j < dataArray[i].length; j++) {
+            //             const item = dataArray[i][j];
+
+            //             // Check if dataArray[i][j].name exists in addSalaryWorkplace
+            //             const salaryItem = addSalaryWorkplace.find(salary => salary.name === item.name);
+
+            //             if (salaryItem) {
+            //                 // If roundOfSalary is "daily", multiply SpSalary by the corresponding value in sumArraySumarrayAllHoloday
+            //                 // If roundOfSalary is "monthly", keep SpSalary as is
+            //                 const adjustedSpSalary = salaryItem.roundOfSalary === 'daily' ?
+            //                     salaryItem.SpSalary * sumArraySumarrayAllHoloday[i] :
+            //                     salaryItem.SpSalary;
+
+            //                 const text = `${adjustedSpSalary}`;
+            //                 doc.text(text, currentX + 2, 3 + currentY + i * verticalDistance, { align: 'center' });
+            //             }
+
+            //             currentX += cellWidthSpSalary;
+            //         }
+            //     }
+            // };
+
+            // Use drawArrayTextAddSalary2 with the appropriate slices            
+
             const drawArrayTextName = (dataArray) => {
                 for (let i = 0; i < dataArray.length; i++) {
-                    let currentX = startX - 13;
+                    let currentX = startX - 20;
                     let currentY = startY + i * verticalDistance;
 
                     for (let j = 0; j < dataArray[i].length; j++) {
@@ -2949,22 +3448,23 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
                         let yAdjustment = 0;
 
                         if (j === 0) {
-                            xAdjustment = -8;
+                            xAdjustment = -20;
                         }
                         if (j === 1) {
-                            xAdjustment = -8;
+                            xAdjustment = +10;
+                            yAdjustment = -3.5;
                         }
                         if (j === 2) {
-                            xAdjustment = 8;
-                            yAdjustment = -3.5;
+                            xAdjustment = +15;
+                            // yAdjustment = -3.5;
                         }
                         if (j === 3) {
-                            xAdjustment = 8;
-                            yAdjustment = -3.5;
+                            xAdjustment = +15;
+                            // yAdjustment = -3.5;
                         }
 
                         if (j === 4) {
-                            yAdjustment = 7;
+                            yAdjustment = 10.5;
                         }
                         doc.text(
                             dataArray[i][j].toString(),
@@ -3063,13 +3563,15 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
             //     drawArrayText(arraytest.slice(pageStartIndex, pageEndIndex));
             //     doc.addPage();
             // } 
-            const title = ' ใบลงเวลาการปฏิบัติงาน';
+            const title = 'บริษัท โอวาท โปร แอนด์ ควิก จำกัด';
+            const subTitle = 'ใบแสดงเวลาปฏิบัติงาน'; // Replace with your desired subtitle text
+            const TriTitle = 'หน่วยงาน ' + searchWorkplaceName; // Replace with your desired subtitle text
 
             const alldaywork = 'รวมวันทำงาน';
-            const countalldaywork = 340;
+            const countalldaywork = '';
 
-            const alldayworkHoliday = 'วันหยุด';
-            const countalldayworkHoliday = '340';
+            const alldayworkHoliday = 'รวมชั่วโมงทำงาน';
+            const countalldayworkHoliday = '';
             const workOt = '1.5';
             const workOt2 = '2';
             const workOt3 = '3';
@@ -3114,11 +3616,15 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
 
                 // doc.text(title, titleX, 30, { angle: 90 });
 
-                const subTitle = workMonth; // Replace with your desired subtitle text
                 doc.setFontSize(12); // You can adjust the font size for the subtitle
                 const subTitleWidth = doc.getStringUnitWidth(subTitle) * doc.internal.getFontSize() / doc.internal.scaleFactor;
                 const subTitleX = (pageWidth - subTitleWidth) / 2;
-                // doc.text(subTitle, subTitleX, 20); // Adjust the vertical position as needed
+                doc.text(subTitle, subTitleX, 15); // Adjust the vertical position as needed
+
+                doc.setFontSize(12); // You can adjust the font size for the subtitle
+                const TriTitleWidth = doc.getStringUnitWidth(TriTitle) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                const TriTitleX = (pageWidth - TriTitleWidth) / 2;
+                doc.text(TriTitle, TriTitleX, 20); // Adjust the vertical position as needed
 
                 // Convert the table to a PDF using jsPDF and jsPDF-AutoTable
 
@@ -3139,19 +3645,18 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
                 // const daysInMonth = getDaysInMonth(CheckMonth, CheckYear);
 
                 // doc.text('จำนวนวัน' + daysInMonth, 10, 10);
-                doc.setFontSize(8);
-                doc.text(title, 171, 55, { angle: 90 });
+                doc.setFontSize(12);
+                // doc.text(title, 171, 55, { angle: 90 });
 
                 // const CheckMonth = 3;
                 // const CheckYear = 2023;
 
                 // const daysInMonth = getDaysInMonth(CheckMonth, CheckYear);
 
-
-
-                doc.text('จำนวนวัน ' + daysInMonth, 10, 10);
-
-
+                // workplaceDataListAddSalary.map(item => item.SpSalary);
+                const workplaceid = workplaceDataList.map(item => item.workplaceId);
+                doc.text('แผนก ' + workplaceid, 250, 10);
+                doc.setFontSize(8);
 
                 const pageStartIndex = pageIndex * 5;
                 const pageEndIndex = Math.min((pageIndex + 1) * 5, arraytest.length);
@@ -3209,11 +3714,30 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
 
                 doc.text('ลำดับ', startXNumHead + 2, cellHeightTop + startYTop - 2);
                 doc.text('ชื่อ - นามสกุล', startXLeftHead + 10, cellHeightTop + startYTop - 2);
-                doc.text('วันหยุด', startXSpSalary + 11, startYTop + 3);
-                doc.text('โอที', startXSpSalary + (cellWidthSpSalary * 2) + 3, startYTop + 3);
-                doc.text('สวัสดีการ', startXSpSalary + (cellWidthSpSalary * 5) + 3, startYTop + 3);
 
-                doc.text('หักประกันสังคม 5%', startXMess - 5, cellHeightTop + startYTop - 1, { angle: 90 });
+                doc.setFontSize(12);
+                // let startXHeadTable; // Declare startXSpSalary before using it
+
+                // if (daysInMonth === 28) {
+                //     startXHeadTable = 0;
+                // } else if (daysInMonth === 29) {
+                //     startXHeadTable = 3;
+                // } else if (daysInMonth === 30) {
+                //     startXHeadTable = 6;
+                // } else if (daysInMonth === 31) {
+                //     startXHeadTable = 9;
+                // };
+                const period = 'งวดวันที่ 21 ' + thaiMonthNameLower + ' - 20 ' + thaiMonthName + ' พ.ศ. ' + yearThai;
+                const periodWidth = doc.getStringUnitWidth(period) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                const periodX = (pageWidth - periodWidth) / 2;
+                doc.text(period, periodX, startYTop - 2); // Adjust the vertical position as needed
+                // doc.text(period, (startXSpSalary - 10), startYTop - 2);
+                doc.setFontSize(8);
+
+                // doc.text('โอที', startXSpSalary + (cellWidthSpSalary * 2) + 3, startYTop + 3);
+                // doc.text('สวัสดีการ', startXSpSalary + (cellWidthSpSalary * 5) + 3, startYTop + 3);
+
+                // doc.text('หักประกันสังคม 5%', startXMess - 5, cellHeightTop + startYTop - 1, { angle: 90 });
 
                 doc.text('หมายเหตุ', startXMess + 3, cellHeightTop + startYTop - 2);
 
@@ -3235,38 +3759,56 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
                         doc.setFillColor(...squareColor);
 
                         // Draw a square with the specified size and color
-                        doc.rect(startXSpSalary, startYTop, (cellWidthSpSalary * numColsSpSalary) - 0.2, cellHeightTop, 'F');
+                        doc.rect(startXSpSalary + (cellWidthSpSalary * 8), startYTop, (cellWidthSpSalary * numColsSpSalary) - 0.2, cellHeightTop, 'F');
 
-                        doc.text(alldaywork + ' ' + countalldaywork, 5 + startXSpSalary, 54.8, { angle: 90 });
-                        doc.text(alldayworkHoliday + ' ' + countalldayworkHoliday, 5 + startXSpSalary + cellWidthSpSalary, 54.8, { angle: 90 });
-                        doc.text('วันนักขัตฤกษ์' + ' ' + workOt2 + 'เท่า', 3 + startXSpSalary + (cellWidthSpSalary * 2), 54.8, { angle: 90 });
-                        doc.text((340 * workOt2) / 8 + ' .-', 7 + startXSpSalary + (cellWidthSpSalary * 2), 54.8, { angle: 90 });
+                        doc.text(alldaywork + ' ' + countalldaywork, 5 + startXSpSalary + (cellWidthSpSalary * 8), 54.8, { angle: 90 });
+                        doc.text(alldayworkHoliday + ' ' + countalldayworkHoliday, 5 + startXSpSalary + (cellWidthSpSalary * 9), 54.8, { angle: 90 });
 
-                        doc.text('โอที' + ' ' + workOt + 'เท่า', 3 + startXSpSalary + (cellWidthSpSalary * 3), 54.8, { angle: 90 });
-                        doc.text((340 * workOt) / 8 + ' .-', 7 + startXSpSalary + (cellWidthSpSalary * 3), 54.8, { angle: 90 });
+                        doc.text('รวมชั่วโมงโอทีวันหยุด', 3 + startXSpSalary + (cellWidthSpSalary * 10), 54.8, { angle: 90 });
+                        // doc.text('รวมชั่วโมงโอที' + ' ' + workOt2 + 'เท่า', 3 + startXSpSalary + (cellWidthSpSalary * 10), 54.8, { angle: 90 });
 
-                        doc.text('โอที' + ' ' + workOt3 + 'เท่า', 3 + startXSpSalary + (cellWidthSpSalary * 4), 54.8, { angle: 90 });
-                        doc.text((340 * workOt3) / 8 + ' .-', 7 + startXSpSalary + (cellWidthSpSalary * 4), 54.8, { angle: 90 });
+                        // doc.text('วันนักขัตฤกษ์' + ' ' + workOt2 + 'เท่า', 3 + startXSpSalary + (cellWidthSpSalary * 2), 54.8, { angle: 90 });
+
+                        // for (let i = 0; i < workplaceDataListAddSalary.length; i++) {
+                        //     let currentX = startXSpSalary + 5 + (cellWidthSpSalary * 5) + (i * cellWidthSpSalary);
+                        //     let currentY = startY + verticalDistance + addmove;
+
+                        //     const item = workplaceDataListAddSalary[i];
+
+                        //     // Display the name and SpSalary
+                        //     doc.text(`${item.name}`, currentX + 2, 54.8, { align: 'center', angle: 90 });
+                        //     doc.text(`${item.SpSalary} .-`, currentX + 5, 54.8, { align: 'center', angle: 90 });
+
+                        // }
+                        // doc.text((340 * workOt2) / 8 + ' .-', 7 + startXSpSalary + (cellWidthSpSalary * 2), 54.8, { angle: 90 });
+
+                        // doc.text('โอที' + ' ' + workOt + 'เท่า', 3 + startXSpSalary + (cellWidthSpSalary * 3), 54.8, { angle: 90 });
+                        // doc.text((340 * workOt) / 8 + ' .-', 7 + startXSpSalary + (cellWidthSpSalary * 3), 54.8, { angle: 90 });
+
+                        // doc.text('โอที' + ' ' + workOt3 + 'เท่า', 3 + startXSpSalary + (cellWidthSpSalary * 4), 54.8, { angle: 90 });
+                        // doc.text((340 * workOt3) / 8 + ' .-', 7 + startXSpSalary + (cellWidthSpSalary * 4), 54.8, { angle: 90 });
 
                         // doc.text(addSalaryWorkplace, 171, 54, { angle: 90 });
-                        addSalaryWorkplace.forEach((item, index) => {
-                            const NameSp = `${item.name} ${item.SpSalary}`;
-                            let roundOfSalaryText = '';
+                        // addSalaryWorkplace.forEach((item, index) => {
+                        //     const NameSp = `${item.name} ${item.SpSalary}`;
+                        //     let roundOfSalaryText = '';
 
-                            if (item.roundOfSalary === 'monthly') {
-                                roundOfSalaryText = 'เดือน';
-                            } else if (item.roundOfSalary === 'daily') {
-                                roundOfSalaryText = 'วัน';
-                            } doc.text(NameSp, 5 + (cellWidthSpSalary * 5) + startXSpSalary + index * (cellWidthSpSalary), 54.8, { angle: 90 });
-                            doc.text('ต่อ ' + roundOfSalaryText, 8 + (cellWidthSpSalary * 5) + startXSpSalary + index * (cellWidthSpSalary), 54.8, { angle: 90 });
-                        });
+                        //     if (item.roundOfSalary === 'monthly') {
+                        //         roundOfSalaryText = 'เดือน';
+                        //     } else if (item.roundOfSalary === 'daily') {
+                        //         roundOfSalaryText = 'วัน';
+                        //     } doc.text(NameSp, 5 + (cellWidthSpSalary * 5) + startXSpSalary + index * (cellWidthSpSalary), 54.8, { angle: 90 });
+                        //     doc.text('ต่อ ' + roundOfSalaryText, 8 + (cellWidthSpSalary * 5) + startXSpSalary + index * (cellWidthSpSalary), 54.8, { angle: 90 });
+                        // });
 
                         drawTableTop();
+                        drawTableTopHead();
                         drawTableLeftHeadTop();
                         drawTableNumHeadTop();
                         drawTableSpSalaryTop();
-                        drawTableSpSalaryHeadTop();
-                        drawTableMessTop();
+                        // drawTableSpSalaryHeadTop();
+                        // drawTableMessTop();
+
                         // drawTableOT();
                         // drawTableOT(arraylistOT);
 
@@ -3284,18 +3826,20 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
                         drawTableLeftHead(i, arrayWorkNormalDay.slice(dataIdx, dataIdx + 1));
                         drawTableNumHead(i, arrayWorkNormalDay.slice(dataIdx, dataIdx + 1));
                         drawTableSpSalary(i, arrayWorkNormalDay.slice(dataIdx, dataIdx + 1));
-                        drawTableMess(i, arrayWorkNormalDay.slice(dataIdx, dataIdx + 1));
+                        // drawTableMess(i, arrayWorkNormalDay.slice(dataIdx, dataIdx + 1));
                         // drawArrayText(arraytest, dataIdx, dataIdx + 1);
 
                         // drawArrayText(arraytest.slice(dataIdx, dataIdx + 1));
 
                     }
                 }
+                // arrayAllTime
 
-                drawArrayText(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex));
+                // drawArrayText(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex));
 
-                drawArrayTextAddSalary(extractedDataAddSalary.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
                 // drawArrayText(extractedDataAddSalary);
+                // drawArrayTextAllTime
+                drawArrayTextAllTime(arrayAllTime.slice(pageStartIndex, pageEndIndex));
 
                 drawArrayTextOT(arrayWorkOTNormalDay.slice(pageStartIndex, pageEndIndex));
 
@@ -3304,14 +3848,38 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
                 drawArrayTextHoliday(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex));
                 drawArrayTextOTHoliday(arrayWorkOTHoliday.slice(pageStartIndex, pageEndIndex));
 
+                drawArrayNumHead(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), indexArray.slice(pageStartIndex, pageEndIndex));
 
-                drawArrayTextSumWork(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
-                drawArrayTextSumWorkOT(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArrayOT.slice(pageStartIndex, pageEndIndex));
+                //วันเต็ม
+                // drawArrayTextSumWork(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
+                //วันหารชั่วโมง+สักอย่าง
+                // drawArrayTextSumWork(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArraySumarrayAllHolioday.slice(pageStartIndex, pageEndIndex));
+                //วันหารชั่วโมง
+                drawArrayTextSumWork(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), dividedArray.slice(pageStartIndex, pageEndIndex));
 
-                drawArrayTextSumWorkHoli(arrayWorkHoli.slice(pageStartIndex, pageEndIndex), sumArrayHoli.slice(pageStartIndex, pageEndIndex));
+                // drawArrayTextSumWorkOT(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArrayOT.slice(pageStartIndex, pageEndIndex));
+                drawArrayTextSumWorkHoli(arrayWorkHoli.slice(pageStartIndex, pageEndIndex), sumArrayAllTime.slice(pageStartIndex, pageEndIndex));
+                drawArrayTextSumWorkHoliday(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), sumArrayOTAllTime.slice(pageStartIndex, pageEndIndex));
 
-                drawArrayTextSumWorkHoliday(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), sumArrayHoliday.slice(pageStartIndex, pageEndIndex));
-                drawArrayTextSumWorkOTHoliday(arrayWorkOTHoliday.slice(pageStartIndex, pageEndIndex), sumArrayOTHoliday.slice(pageStartIndex, pageEndIndex));
+                // 1.5
+                drawArrayTextSumWorkHoliday1q5(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), sumHoliAllTime.slice(pageStartIndex, pageEndIndex));
+                // 2
+                drawArrayTextSumWorkHoliday2(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), sumArrayHoliday.slice(pageStartIndex, pageEndIndex));
+                // 3
+                drawArrayTextSumWorkHoliday3(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), sumArrayOTHoliday.slice(pageStartIndex, pageEndIndex));
+                // drawArrayTextSumWorkOTHoliday(arrayWorkOTHoliday.slice(pageStartIndex, pageEndIndex), sumArrayOTHoliday.slice(pageStartIndex, pageEndIndex));
+
+
+                // resultArraySumAddSalary
+                // drawArrayTextAddSalary(resultArraySumAddSalary.slice(pageStartIndex, pageEndIndex));
+
+                // drawArrayTextSumWorkAddSalary(addSalaryWorkplace.slice(pageStartIndex, pageEndIndex));
+                // drawArrayTextAddSalary(extractedDataAddSalary.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
+
+                // drawArrayTextSumWorkTest(addSalaryWorkplace.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
+                // drawArrayTextSumWorkTest(sumArraySumarrayAllHoloday.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
+                // สวัสดิการ
+                drawArrayTextSumWorkTest(sumArraySumarrayAllHoloday.slice(pageStartIndex, pageEndIndex), sumArraySumarrayAllHoloday.slice(pageStartIndex, pageEndIndex));
 
                 // drawArrayTextAddSalary(arraytest.slice(pageStartIndex, pageEndIndex), extractedDataAddSalary.slice(pageStartIndex, pageEndIndex));
                 // drawArrayTextAddSalary(extractedDataAddSalary.slice(pageStartIndex, pageEndIndex));
@@ -3325,8 +3893,20 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
                 //     drawArrayText(arraytest.slice(pageStartIndex, pageEndIndex));
                 // }
 
+                // for (let pageIndex = 0; pageIndex < makePage; pageIndex++) 
+                const formattedDate = workDate.toLocaleDateString('en-GB'); // Use 'en-GB' to get the "day/month/year" format
 
-                doc.addPage();
+                doc.text(codePage + '' + formattedDate + '' + (pageIndex + 1) + ' of ' + makePage, 250, 210);
+
+                if (pageIndex < makePage - 1) {
+                    doc.addPage();
+
+                }
+                // doc.text('pageStartIndex', 10 + 10, 10 + 10 - 2);
+
+                // doc.addPage();
+
+
             }
             // If an error occurs, throw an exception 
             // doc.save('your_table.pdf');
@@ -3343,9 +3923,6 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
             // throw error;
             // return;
         }
-
-
-
 
     };
 
@@ -3456,21 +4033,10 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
                                     <div class="col-md-12">
                                         <h2 class="title">ค้นหา</h2>
                                         <div class="col-md-12">
-                                            <form onSubmit={handleSearch}>
+                                            {/* <form onSubmit={handleSearch}> */}
+                                            <form >
                                                 <div class="row">
-                                                    <div class="col-md-2">
-                                                        <div class="form-group">
-                                                            <label role="searchWorkplaceId">รหัสหน่วยงาน</label>
-                                                            <input type="text" class="form-control" id="searchWorkplaceId" placeholder="หน่วยงาน" value={searchWorkplaceId} onChange={(e) => setSearchWorkplaceId(e.target.value)} />
-                                                        </div>
-                                                    </div>
                                                     <div class="col-md-3">
-                                                        <div class="form-group">
-                                                            <label role="searchWorkplaceName">ชื่อหน่วยงาน</label>
-                                                            <input type="text" class="form-control" id="searchWorkplaceName" placeholder="ชื่อหน่วยงาน" value={searchWorkplaceName} onChange={(e) => setSearchWorkplaceName(e.target.value)} />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-2">
                                                         <div class="form-group">
                                                             <label role="searchEmployeeId">เดือน</label>
                                                             <select className="form-control" value={month} onChange={(e) => setMonth(e.target.value)} >
@@ -3490,29 +4056,81 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-2">
+                                                    <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label role="searchEmployeeId">ปี</label>
                                                             <select className="form-control" value={year} onChange={(e) => setYear(e.target.value)} >
                                                                 <option value="" >เลือกปี</option>
                                                                 {years.map((y) => (
                                                                     <option key={y} value={y}>
-                                                                        {y}
+                                                                        {y + 543}
                                                                     </option>
                                                                 ))}
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <div class="form-group" style={{ position: 'absolute', bottom: '0' }}>
-                                                                <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา</button>
+
+
+                                                </div>
+                                                <div class="row">
+
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label role="searchWorkplaceId">รหัสหน่วยงาน</label>
+                                                            <input type="text" class="form-control" id="searchWorkplaceId" placeholder="หน่วยงาน" value={searchWorkplaceId} onChange={(e) => setSearchWorkplaceId(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label role="searchWorkplaceName">ชื่อหน่วยงาน</label>
+                                                            <input type="text" class="form-control" id="searchWorkplaceName" placeholder="ชื่อหน่วยงาน" value={searchWorkplaceName} onChange={(e) => setSearchWorkplaceName(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label role="codePage">รหัสประดาษ</label>
+                                                            <input type="text" class="form-control" id="codePage" placeholder="รหัสประดาษ" value={codePage} onChange={(e) => setCodePage(e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label role="datetime">วันที่</label>
+                                                            <div style=
+                                                                {{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
+                                                                {/* <DatePicker id="datetime" name="datetime"
+                                                                    className="form-control" // Apply Bootstrap form-control class
+                                                                    popperClassName="datepicker-popper" // Apply custom popper class if needed
+                                                                    selected={workDate}
+                                                                    onChange={handleWorkDateChange}
+                                                                    dateFormat="dd/MM/yyyy"
+                                                                // showMonthYearPicker
+                                                                /> */}
+
+                                                                <DatePicker
+                                                                    className="form-control"
+                                                                    selected={selectedThaiDate}
+                                                                    onChange={handleThaiDateChange}
+                                                                    dateFormat="dd/MM/yyyy"
+                                                                    locale={th}
+                                                                />
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+
+
+                                                <div class="row">
+                                                    <div class="col-md-12" style={{ marginTop: '5rem' }}>
+                                                        <div class="form-group" style={{ position: 'absolute', bottom: '0' }}>
+                                                            {/* <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา</button> */}
+                                                            <button onClick={generatePDFTest123} class="btn b_save"><i class="nav-icon fas fa-search"></i>พิมพ์รายงาน</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </form>
-                                            <div class="d-flex justify-content-center">
+                                            {/* <div class="d-flex justify-content-center">
                                                 <h2 class="title">ผลลัพธ์ {result_data.length} รายการ</h2>
                                             </div>
                                             <div class="d-flex justify-content-center">
@@ -3532,7 +4150,7 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                 </section>
@@ -3568,80 +4186,9 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
                             </div>
                         </div>
                         <br />
-                        <div class="row">
-                            <div class="col-md-3">
-                                วันทำงานทั้งหมด {countWork} วัน
-                            </div>
-                        </div>
 
-                        <form>
-                            <div class="row">
-                                <div class="col-md-9">
-                                    <section class="Frame">
-                                        <div class="container" style={{ overflowX: 'scroll' }}>
-                                            {/* <table class="table table-bordered "> */}
-                                            <button onClick={generatePDFTest}>Generate PDF</button>
-                                            <button onClick={generatePDFTest123}>Generate PDF2</button>
 
-                                            <table ref={tableRef} className="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th style={styles.th}></th>
-                                                        {combinedRange.map((number, index) => (
-                                                            <th key={index} style={styles.th}>{number}</th>
-                                                        ))}
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td style={verticalTextHeader} >วันทำงาน</td>
-                                                        {tableData.map((data, index) => (
-                                                            <td key={index}>
-                                                                {data.workplaceId <= 31 ? null : data.workplaceId}
 
-                                                            </td>
-
-                                                        ))}
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td></td>
-                                                        {listTableDayoff.map((item, index) => {
-                                                            const [day, s] = Object.entries(item)[0];
-
-                                                            return (
-                                                                <td key={index}>{s}</td>
-                                                            )
-
-                                                        }
-
-                                                        )}
-                                                    </tr>
-                                                    <tr>
-                                                        <td>ช.ม. ทำงาน</td>
-                                                        {tableData.map((data, index) => (
-                                                            <td key={index}>
-                                                                {data.allTime}
-                                                            </td>
-                                                        ))}
-                                                    </tr>
-                                                    <tr>
-                                                        <td>ช.ม. โอที</td>
-                                                        {tableData.map((data, index) => (
-                                                            <td key={index}>
-                                                                {data.otTime}
-                                                            </td>
-                                                        ))}
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-
-                                    </section>
-                                </div>
-                            </div>
-                        </form>
-                        {/* </form> */}
                     </section>
                     {/* <!-- /.content --> */}
                 </div >
@@ -3684,4 +4231,4 @@ const getDateDayOfWeek = (dateString) => {
 // console.log('',getDateDayOfWeek);
 
 
-export default WorktimeSheetWorkplace_Save01_22_2024
+export default WorktimeSheetWorkplace
