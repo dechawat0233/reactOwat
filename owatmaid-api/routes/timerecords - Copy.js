@@ -1,7 +1,4 @@
 const connectionString = require('../config');
-const sURL = 'http://localhost:3000';
-
-const axios = require('axios');
 
 var express = require('express');
 var router = express.Router();
@@ -79,6 +76,7 @@ const workplaceTimerecordEmp = mongoose.model('employeeTimerecord', employeeTime
 
 // Get list of workplaceTimerecords
 router.get('/list', async (req, res) => {
+
   const workplaceTimeRecordData = await workplaceTimerecord.find();
   res.json(workplaceTimeRecordData);
 });
@@ -89,8 +87,6 @@ router.get('/listemp', async (req, res) => {
   try {
     // Fetch the data first
     const workplaceTimeRecordData = await workplaceTimerecordEmp.find();
-    // console.log(workplaceTimeRecordData[0].employee_workplaceRecord );
-    createConclude("2024", "02", "100x" , workplaceTimeRecordData[0].employee_workplaceRecord );
 
 console.log(workplaceTimeRecordData.length);
     res.json(workplaceTimeRecordData);
@@ -380,6 +376,34 @@ console.log(workplaceTimeRecordData );
 });
 
 
+
+// Update a workplaceTimeRecordData  by its workplaceTimeRecordData  
+// router.put('/update/:workplaceRecordId', async (req, res) => {
+//   const workplaceIdToUpdate = req.params.workplaceRecordId;
+//   const updateFields = req.body;
+
+//   try {
+//     // Find the resource by ID and update it
+//     const updatedResource = await workplaceTimerecord.findByIdAndUpdate(
+//       workplaceIdToUpdate,
+//       updateFields,
+//       { new: true } // To get the updated document as the result
+//     );
+//     if (!updatedResource) {
+//       return res.status(404).json({ message: 'Resource not found' });
+//     }
+
+//     // Send the updated resource as the response
+//     res.json(updatedResource);
+
+
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// });
+
+
 // Update a employeeTimeRecordData  by its employeeTimeRecordData  
 router.put('/updateemp/:employeeRecordId', async (req, res) => {
   const employeeIdToUpdate = req.params.employeeRecordId;
@@ -405,6 +429,144 @@ router.put('/updateemp/:employeeRecordId', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+
+// async function setToEmployee(selectWorkplaceId , selectworkplaceName ,selectMonth , workplaceTimeRecordData ){
+//   console.log('setToEmployee working');
+// console.log(selectMonth );
+// const dateParts = await selectMonth.split('/');
+//   //set employee id and month of record
+// const workplaceId = await selectWorkplaceId;
+// const workplaceName = await selectworkplaceName;
+//  const month =await dateParts[1];
+//  const query = {};
+
+// //  console.log(workplaceTimeRecordData );
+// const timerecordId_year = await dateParts[2];
+// const day  = await dateParts[0];
+// await console.log('workplace ID: '+ workplaceId );
+// await console.log('year '+ timerecordId_year );
+// await console.log('month: '+ month);
+// await console.log('day ' + day);
+
+// await workplaceTimeRecordData.forEach(async element => {
+//   // console.log(element['employeeRecord'] );
+//   // console.log('========');
+
+// //check emty from input record
+//     if(element.staffId  !== ''){
+// //       await console.log('employee: '+ element1.staffId);
+// //       await console.log('month: '+ month)
+// //       await console.log('========');
+
+//       try {
+//         //check employee timerecord from database
+//          query.employeeId= await element.staffId;
+//         query.month = await { $regex: new RegExp(month, 'i') };
+        
+//           const recordworkplace  = await workplaceTimerecordEmp.find(query);
+//         // await console.log(recordworkplace  .length);
+
+//         //check employee timerecord 
+//         if(recordworkplace  .length > 0){
+// // employee timerecord is created
+
+// //update employeeTimerecord Data
+// // await console.log('recordworkplace _id '+ recordworkplace[0]._id );
+
+// //push data to employee_workplaceRecord in employee timerecord 
+
+// await recordworkplace[0].employee_workplaceRecord.push({
+//   'workplaceId': workplaceId,
+//   'workplaceName': workplaceName,
+//   'date':  day,
+//   'shift': element.shift,
+//   'startTime': element.startTime,
+//   'endTime': element.endTime,
+//   'allTime': element.allTime,
+//   'otTime': element.otTime,
+//   'selectotTime': element.selectotTime,
+//   'selectotTimeOut': element.selectotTimeOut,
+// });
+// // await console.log(recordworkplace);
+
+// const employeeIdToUpdate = await recordworkplace[0]._id;
+// const updateFields = await recordworkplace;
+// // await console.log('updateFields ' +updateFields );
+
+// try {
+//   // Find the resource by ID and update it
+
+//   const updatedDocument = await workplaceTimerecordEmp.findByIdAndUpdate(
+//     employeeIdToUpdate,
+//     recordworkplace[0],
+//     { new: true } // Return the updated document
+//   );
+
+//   if (updatedDocument) {
+//     console.log('Document updated successfully.');
+//     // res.json(updatedDocument);
+//   } else {
+//     console.log('Document not found.');
+//     // res.status(404).json({ error: 'Document not found' });
+//   }
+
+
+// } catch (error) {
+//   console.error('error '+ error);
+// }
+
+// //
+//         } else {
+//           // employee timerecord is no data
+//             const timerecordId = await timerecordId_year ;
+//             const employeeId = await element.staffId;
+//             const  employeeName = element.staffName;
+//             const  month = await dateParts[1];
+//             const employee_workplaceRecord = {
+//               'workplaceId': workplaceId,
+//               'workplaceName': workplaceName,
+//               'date': day,
+//               'shift': element.shift,
+//               'startTime': element.startTime,
+//               'endTime': element.endTime,
+//               'allTime': element.allTime,
+//               'otTime': element.otTime,
+//               'selectotTime': element.selectotTime,
+//               'selectotTimeOut': element.selectotTimeOut,
+//             };
+      
+//           // Create employee record
+//           const workplaceTimeRecordData = await new workplaceTimerecordEmp({
+//             timerecordId,
+//             employeeId,
+//             employeeName,
+//             month,
+//             employee_workplaceRecord
+//           });
+// // console.log(workplaceTimeRecordData );        
+
+//           try {
+//             await workplaceTimeRecordData.save();
+//             // res.json(workplaceTimeRecordData);
+//           } catch (err) {
+//             await console.log(err);
+//             // res.status(400).json({ error: err.message });
+//           }
+        
+        
+//         }
+//        } catch (error) {
+//          console.error(error);
+//        }
+      
+//     } //end if
+
+
+// }); //end  loop
+
+// //end function
+// }
 
 
 async function setToEmployee(selectWorkplaceId, selectworkplaceName, selectMonth, workplaceTimeRecordData) {
@@ -588,91 +750,33 @@ router.put('/updateemp/:employeeId/timerecord/:recordId', async (req, res) => {
   }
 });
 
-//create all update conclude
-async function createConclude(year , month , employeeId  , data ){
-  const dataSearch = await {
-    year: year, 
-    month: month,
-    concludeDate: "",
-    employeeId: employeeId
-  };
-const newConclude = {};
+// Update existing records in workplaceTimerecordEmp
+// router.put('/updateemp/:timeRecord_id', async (req, res) => {
+//   const workplaceIdToUpdate = req.params.employeeRecordId;
+//   const updateFields = req.body;
 
+//   try {
+//     // Find the resource by ID and update it
+//     const updatedResource = await workplaceTimerecordEmp.findByIdAndUpdate(
+//       workplaceIdToUpdate ,
+//       updateFields,
+//       { new: true } // To get the updated document as the result
+//     );
+//     if (!updatedResource) {
+//       return res.status(404).json({ message: 'Resource not found' });
+//     }
 
-try {
-  const responseConclude = await axios.post(sURL + '/conclude/search', dataSearch);
-  const resultWorkplace = await axios.get(sURL + '/workplace/list');
-  const workplaceList = await resultWorkplace.data;
-  // console.log(workplaceList[0].workplaceId);
+//     // Update records in workplaceTimerecordEmp using setToEmployee with updateRecord set to true
+//     await setToEmployee(updatedResource.employeeId, updatedResource.employeeName , updatedResource.month , updatedResource.employee_workplaceRecord , true);
 
-let workplaceTmp = await workplaceList.find(item => item.workplaceId == '1001');
-// await console.log(workplaceTmp );  
+//     // Send the updated resource as the response
+//     res.json(updatedResource);
 
-  if (responseConclude.data.recordConclude.length > 0) {
-// conclude created
-// console.log(responseConclude.data.recordConclude);
-
-  } else{ 
-//No data 
-newConclude.year = await year;
-  newConclude.month = await month;
-
-  const currentDateTmp = await new Date();
-const dayTmp = await currentDateTmp.getDate();
-const monthTmp = await currentDateTmp.getMonth() + 1; // Month is zero-indexed, so we add 1
-const yearTmp = await currentDateTmp.getFullYear();
-const formattedDateTmp = await `${dayTmp}/${monthTmp}/${yearTmp}`;
-
-  newConclude.concludeDate = await formattedDateTmp ;
-  newConclude.employeeId = await employeeId;
-
-  const concludeRecordTmp = [];
-
-  //loop day of month
-  for(let i = 1; i <= new Date(year, month, 0).getDate(); i++){
-let dayTemp = await i.toString().padStart(2, '0') ;
-let dataTmp = await data.filter(record => record.date === dayTemp );
-let tmp = {};
-//check date > 20 then new conclude next month
-if(dayTemp <=  20 ) {
-
-if(dataTmp != [] ){
-  //timeRecord of date is set
-  tmp.day = await `${dayTemp}/${monthTmp}/${yearTmp}`;
-
-  // await concludeRecordTmp.push(tmp);
-
-} else {
-  //timeRecord of date is not set
-  tmp.day = await `${dayTemp}/${monthTmp}/${yearTmp}`;
-
-  await concludeRecordTmp.push(tmp);
-}
-} else {
-
-}
-  }
-
-  newConclude.concludeRecord = await concludeRecordTmp;
-//   concludeRecord: [{ 
-//   day: String, 
-//   workplaceId: String, 
-//   allTimes: String, 
-//   workRate: String, 
-//   otTimes: String, 
-//   workRateOT: String, 
-//   addSalaryDay: String 
-// }],
-// createBy: String
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
 // });
-await console.log(JSON.stringify(newConclude,null,2));
 
-  }
-
-} catch (e) {
-console.log(e);
-}
-
-}
 
 module.exports = router;
