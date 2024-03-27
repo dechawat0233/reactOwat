@@ -154,6 +154,8 @@ router.post('/calsalarylist', async (req, res) => {
         data.accountingRecord = {};
 
         let countDay = 0;
+        let countHour = 0;
+        let countOtHour = 0;
         let amountDay = 0;
         let amountOt = 0;
         let amountSpecial = 0;
@@ -170,6 +172,8 @@ let total = 0;
           amountDay += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0);
           amountOt += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT || 0);
           amountSpecial += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].addSalaryDay || 0);
+          countHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+          countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
 
           if (responseConclude.data.recordConclude[c].concludeRecord[i].workRate !== undefined) {
             countDay++;
@@ -177,6 +181,9 @@ let total = 0;
         }
 
         data.accountingRecord.countDay = countDay;
+        data.accountingRecord.countHour = countHour;
+        data.accountingRecord.countOtHour = countOtHour;
+
         data.accountingRecord.amountDay = amountDay;
         data.accountingRecord.amountOt = amountOt;
 
