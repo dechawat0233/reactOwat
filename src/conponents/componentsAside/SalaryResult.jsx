@@ -1370,7 +1370,6 @@ function Salaryresult() {
                               <div className="popup">
                                 <h4>รายการเงินเพิ่ม</h4>
                                 <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
-
                                   {addSalaryList && (
                                   addSalaryList.map((addsalary, index) => (
                                     (addsalary.name !== '' && (
