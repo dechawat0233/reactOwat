@@ -56,6 +56,8 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
     const [workplaceDataList, setWorkplaceDataList] = useState([]);
     const [workplaceDataListDayOff, setWorkplaceDataListDayOff] = useState([]);
     const [workplaceDataListAddSalary, setWorkplaceDataListAddSalary] = useState([]);
+    const [workplaceDataListWorkRate, setWorkplaceDataListWorkRate] = useState();
+
 
     const [daysOffArray, setDaysOffArray] = useState([]);
     const [result_data, setResult_data] = useState([]);
@@ -1488,6 +1490,9 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
             return acc;
         }, []);
         setWorkplaceDataListDayOff(dayOffData);
+
+        const addSalaryArrayWorkRate = filteredData.map(item => item.workRate);
+        setWorkplaceDataListWorkRate(addSalaryArrayWorkRate);
 
         const addSalaryArrayWorkOfHour = filteredData.map(item => item.workOfHour);
         setWorkplaceDataWorkOfHour(addSalaryArrayWorkOfHour);
@@ -3371,10 +3376,10 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
             const title = ' ใบลงเวลาการปฏิบัติงาน';
 
             const alldaywork = 'รวมวันทำงาน';
-            const countalldaywork = 340;
+            const countalldaywork = workplaceDataListWorkRate;
 
             const alldayworkHoliday = 'วันหยุด';
-            const countalldayworkHoliday = '340';
+            const countalldayworkHoliday = workplaceDataListWorkRate;
             const workOt = '1.5';
             const workOt2 = '2';
             const workOt3 = '3';
@@ -3545,13 +3550,13 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
                         doc.text(alldaywork + ' ' + countalldaywork, 5 + startXSpSalary, 54.8, { angle: 90 });
                         doc.text(alldayworkHoliday + ' ' + countalldayworkHoliday, 5 + startXSpSalary + cellWidthSpSalary, 54.8, { angle: 90 });
                         doc.text('วันนักขัตฤกษ์' + ' ' + workOt2 + 'เท่า', 3 + startXSpSalary + (cellWidthSpSalary * 2), 54.8, { angle: 90 });
-                        doc.text((340 * workOt2) / 8 + ' .-', 7 + startXSpSalary + (cellWidthSpSalary * 2), 54.8, { angle: 90 });
+                        doc.text((workplaceDataListWorkRate * workOt2) / 8 + ' .-', 7 + startXSpSalary + (cellWidthSpSalary * 2), 54.8, { angle: 90 });
 
                         doc.text('โอที' + ' ' + workOt + 'เท่า', 3 + startXSpSalary + (cellWidthSpSalary * 3), 54.8, { angle: 90 });
-                        doc.text((340 * workOt) / 8 + ' .-', 7 + startXSpSalary + (cellWidthSpSalary * 3), 54.8, { angle: 90 });
+                        doc.text((workplaceDataListWorkRate * workOt) / 8 + ' .-', 7 + startXSpSalary + (cellWidthSpSalary * 3), 54.8, { angle: 90 });
 
                         doc.text('โอที' + ' ' + workOt3 + 'เท่า', 3 + startXSpSalary + (cellWidthSpSalary * 4), 54.8, { angle: 90 });
-                        doc.text((340 * workOt3) / 8 + ' .-', 7 + startXSpSalary + (cellWidthSpSalary * 4), 54.8, { angle: 90 });
+                        doc.text((workplaceDataListWorkRate * workOt3) / 8 + ' .-', 7 + startXSpSalary + (cellWidthSpSalary * 4), 54.8, { angle: 90 });
 
                         // doc.text(addSalaryWorkplace, 171, 54, { angle: 90 });
                         // addSalaryWorkplace.forEach((item, index) => {
