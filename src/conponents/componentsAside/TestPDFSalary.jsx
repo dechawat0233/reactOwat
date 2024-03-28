@@ -982,8 +982,8 @@ function TestPDFSalary() {
       pdf.text(`ลงชื่อพนักงาน`, 125, 130);//ตารางหลัก Earnings
 
       // เรียงarray 
-      // pdf.text(`Name: ${names[i]}`, x + 10, 50);
-      // pdf.text(`Age: ${ages[i]}`, x + 10, 60);
+      pdf.text(`Name: ${names[i]}`, x + 10, 50);
+      pdf.text(`Age: ${ages[i]}`, x + 10, 60);
 
       // Move to the next column
       // x += 80;
@@ -1094,8 +1094,8 @@ function TestPDFSalary() {
         pdf.text(`ลงชื่อพนักงาน`, 125, head2 + 105);//ตารางหลัก Earnings
 
         // เรียงarray 
-        // pdf.text(`Name: ${names[i + 1]}`, 7, 166);
-        // pdf.text(`Age: ${ages[i + 1]}`, 7, 176);
+        pdf.text(`Name: ${names[i + 1]}`, 7, 166);
+        pdf.text(`Age: ${ages[i + 1]}`, 7, 176);
       }
 
       // Reset position for the next row
