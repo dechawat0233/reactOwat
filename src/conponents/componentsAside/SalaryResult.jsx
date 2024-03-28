@@ -202,18 +202,40 @@ function Salaryresult() {
   const [deductSalaryList, setDeductSalaryList] = useState([]);
 
   useEffect(() => {
-    const fetchData = () => {
-      const dataTest = {
+    const getemp = async () => {
+
+try{
+  const dataTest1 =  await {
+    employeeId: staffId,
+    year: year,
+    month: month,
+  };
+alert(staffId)
+//ws
+const x =   await axios.post(endpoint + '/accounting/calsalaryemp', dataTest1)
+if (x){
+  alert(x.data[0].employeeId)
+}
+} catch (e){
+// alert(e);
+}
+}
+getemp();
+
+
+    const fetchData = async () => {
+      const dataTest = await {
         employeeId: staffId,
         year: year,
         month: month,
       };
-
-      axios.post(endpoint + '/accounting/calsalarylist', dataTest)
+await setAddSalaryList([]);
+      await axios.post(endpoint + '/accounting/calsalarylist', dataTest)
         .then(response => {
           const responseData = response.data;
-          if (response) {
+          if (response.data) {
             setAddSalaryList(response.data[0].addSalary);
+            // alert(response.data[0].addSalary.length);
             setDeductSalaryList(response.data[0].deductSalary);
             // alert(JSON.stringify(response.data[0].addSalary,null,2));
           }
