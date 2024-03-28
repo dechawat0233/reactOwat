@@ -605,7 +605,7 @@ try {
   const workplaceList = await resultWorkplace.data;
   // console.log(workplaceList[0].workplaceId);
 
-let workplaceTmp = await workplaceList.find(item => item.workplaceId == '1001');
+// let workplaceTmp = await workplaceList.find(item => item.workplaceId == '1001');
 // await console.log(workplaceTmp );  
 
   if (responseConclude.data.recordConclude.length > 0) {
@@ -639,15 +639,26 @@ let tmp = {};
 if(dayTemp <=  20 ) {
 
 if(dataTmp.length !== 0){
-  //timeRecord of date is set
-  tmp.day = await `${dayTemp}/${monthTmp}/${yearTmp}`;
+  //timeRecord of date is setฃ
+  let workplaceTmp = await workplaceList.find(item => item.workplaceId == dataTmp[0].workplaceId );
+
+  tmp.day = await `${dayTemp}/${monthTmp}/${yearTmp + 543}`;
+  tmp.workplaceId = await dataTmp[0].workplaceId || '';
+  tmp.allTimes = await dataTmp[0].allTime || '';
+  tmp.workRate = await '';
+  tmp.otTimes= await dataTmp[0].otTime || '';
+  tmp.workRateOT = await '';
+  tmp.addSalaryDay = await '';
+
+await console.log(dataTmp[0].workplaceId);
 
   await concludeRecordTmp.push(tmp);
 
 } else {
   //timeRecord of date is not set
-  tmp.day = await `${dayTemp}/${monthTmp}/${yearTmp}`;
-
+  tmp.day = await `${dayTemp}/${monthTmp}/${yearTmp + 543}`;
+  tmp.workRateOT = await "";
+  tmp.addSalaryDay = await "";
   await concludeRecordTmp.push(tmp);
 }
 } else {
