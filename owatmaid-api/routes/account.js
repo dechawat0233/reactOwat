@@ -126,6 +126,288 @@ res.json(x.data);
 
 });
 
+//get accounting by id
+router.post('/calsalaryemp', async (req, res) => {
+  try {
+    const { year, month , employeeId} = req.body;
+
+    const dataSearch = {
+      year: year, 
+      month: month,
+      concludeDate: "",
+      employeeId: employeeId
+    };
+
+    const responseConclude = await axios.post(sURL + '/conclude/search', dataSearch);
+
+    const dataList = [];
+
+    if (responseConclude.data.recordConclude.length > 0) {
+      for (let c = 0; c < responseConclude.data.recordConclude.length; c++) {
+        const data = {}; // Initialize data object inside the loop
+
+
+        data.year = responseConclude.data.recordConclude[c].year;
+        data.month = responseConclude.data.recordConclude[c].month;
+        data.createDate = new Date().toLocaleDateString('en-GB');
+        data.employeeId = responseConclude.data.recordConclude[c].employeeId;
+        data.accountingRecord = {};
+
+        let countDay = 0;
+        let countHour = 0;
+        let countOtHour = 0;
+        let amountDay = 0;
+        let amountOt = 0;
+        let amountSpecial = 0;
+        let sumSocial = 0;
+let sumCalTax = 0;
+let sumCalTaxNonSalary = 0;
+let sumNonTaxNonSalary = 0;
+let sumDeductWithTax = 0;
+let sumDeductUncalculateTax = 0;
+let tax = 0;
+let total = 0;
+
+        for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.length; i++) {
+          amountDay += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0);
+          amountOt += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT || 0);
+          amountSpecial += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].addSalaryDay || 0);
+          countHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+          countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+
+          if (responseConclude.data.recordConclude[c].concludeRecord[i].workRate !== undefined) {
+            countDay++;
+          }
+        }
+
+        data.accountingRecord.countDay = countDay;
+        data.accountingRecord.countHour = countHour;
+        data.accountingRecord.countOtHour = countOtHour;
+
+        data.accountingRecord.amountDay = amountDay;
+        data.accountingRecord.amountOt = amountOt;
+
+      sumSocial = await sumSocial + amountDay;
+      sumCalTax = await sumCalTax + amountDay;
+      sumCalTax = await sumCalTax + amountOt;
+
+// await console.log(sumSocial );
+
+// Get employee data by employeeId
+const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
+if (response) {
+    data.workplace = await response.data.workplace;
+    data.accountingRecord.tax = await response.data.tax ||0;
+tax = await response.data.tax ||0; 
+
+    // data.employeeId = responseConclude.data.recordConclude[c].employeeId;
+    data.name = await response.data.name;
+    data.lastName = await response.data.lastName;
+
+    let position1230 = '1230';
+    const addSalary = response.data.addSalary.find(salary => salary.id === position1230);
+
+    if (addSalary) {
+        data.accountingRecord.amountPosition = addSalary.SpSalary;
+    } else {
+        data.accountingRecord.amountPosition = 0;
+    }
+    
+    let amountHardWorking1410 = '1410';
+    const addSalary1 = response.data.addSalary.find(salary => salary.id === amountHardWorking1410 );
+
+    if (addSalary1) {
+        data.accountingRecord.amountHardWorking = addSalary1.SpSalary;
+    } else {
+      data.accountingRecord.amountHardWorking = 0;
+    }
+
+    let amountSpecial1560 = '1560';
+    const addSalary2 = response.data.addSalary.find(salary => salary.id === amountSpecial1560 );
+
+    if (addSalary2) {
+        data.accountingRecord.amountSpecial = addSalary2.SpSalary;
+    } else {
+      data.accountingRecord.amountSpecial = 0;
+    }
+
+//check deduct 
+let advancePayment2330 = '2330';
+const deductSalary = response.data.deductSalary.find(salary => salary.id === advancePayment2330 );
+
+if (deductSalary ) {
+  data.accountingRecord.advancePayment = deductSalary.amount;
+} else {
+  data.accountingRecord.advancePayment = 0;
+}
+
+
+    //check cal social 
+    let promises = [];
+    let promises1 = [];
+    let promisesDeduct = [];
+let addSalaryList = [];
+let deductSalaryList = [];
+
+    for (let k = 0; k < response.data.addSalary.length; k++) {
+        const promise = await checkCalSocial(response.data.addSalary[k].id || '0');
+        const promise1 = await checkCalTax(response.data.addSalary[k].id || '0');
+
+        await promises.push(promise);
+        await promises1.push(promise1);
+
+        //push addSalary to account
+        if(response.data.addSalary[k].roundOfSalary == "daily") {
+          let dailyTmp = await response.data.addSalary[k];
+          dailyTmp.message = await countDay;
+          await addSalaryList.push(dailyTmp);
+        } else {
+          await addSalaryList.push(response.data.addSalary[k]);
+        }
+console.log(response.data.addSalary[k].roundOfSalary );
+    }
+
+    for (let l = 0; l < response.data.deductSalary.length; l++) {
+      const promisesDeduct1 = await checkCalTax(response.data.deductSalary[l].id || '0');
+
+      await promisesDeduct.push(promisesDeduct1 );
+await deductSalaryList.push(response.data.deductSalary[l] );
+      
+  }
+
+    await Promise.all(promises)
+        .then(results => {
+            // let sumSocial = 0;
+            results.forEach((result, k) => {
+                if (result === true) {
+                    sumSocial += parseFloat(response.data.addSalary[k].SpSalary || 0);
+                    // console.log(`Promise ${k} is resolved`);
+                    // console.log(response.data.addSalary[k].SpSalary);
+                }
+            });
+            console.log(sumSocial);
+        })
+        .catch(error => {
+            console.error('Error occurred while processing promises:', error);
+        });
+    
+//check cal tax
+await Promise.all(promises1)
+.then(results => {
+    // let sumSocial = 0;
+    results.forEach((result, k) => {
+        if (result === true) {
+          if(response.data.addSalary[k].roundOfSalary === "daily") {
+            sumCalTax+= parseFloat(response.data.addSalary[k].SpSalary || 0) * countDay;
+            sumCalTaxNonSalary += parseFloat(response.data.addSalary[k].SpSalary || 0) *countDay;
+
+          } else {
+            sumCalTax+= parseFloat(response.data.addSalary[k].SpSalary || 0);
+            sumCalTaxNonSalary += parseFloat(response.data.addSalary[k].SpSalary || 0);
+
+          }
+
+            // console.log(`Promise ${k} is resolved`);
+            // console.log(response.data.addSalary[k].SpSalary);
+        }  else {
+          if(response.data.addSalary[k].roundOfSalary === "daily") {
+            sumNonTaxNonSalary+= parseFloat(response.data.addSalary[k].SpSalary || 0) * countDay;
+          } else {
+            sumNonTaxNonSalary+= parseFloat(response.data.addSalary[k].SpSalary || 0);
+          }
+
+        }
+    });
+    console.log(sumCalTax);
+})
+.catch(error => {
+    console.error('Error occurred while processing promises:', error);
+});
+
+//check deduct calculate tax
+await Promise.all(promisesDeduct)
+.then(results => {
+    // let sumSocial = 0;
+    results.forEach((result, k) => {
+        if (result === true) {
+            sumDeductWithTax += parseFloat(response.data.deductSalary[k].amount || 0);
+
+        }  else {
+          // sumNonTaxNonSalary+= parseFloat(response.data.addSalary[k].SpSalary || 0);
+          sumDeductUncalculateTax += parseFloat(response.data.deductSalary[k].amount || 0);
+
+        }
+    });
+    console.log(sumCalTax);
+})
+.catch(error => {
+    console.error('Error occurred while processing promises:', error);
+});
+
+// await console.log(
+//   "amount day" +amountDay +   
+//   "amount Ot" +amountOt + 
+// "sum calculate tax" +    sumCalTaxNonSalary + 
+// "sum deduct with tax" +     sumDeductWithTax 
+//   +"tax " + tax
+//   +" social" + sumSocial * 0.05
+//   +"sum non tax" + sumNonTaxNonSalary 
+//   + "deduct un tax" +  sumDeductUncalculateTax );
+  
+  
+//total
+total = await amountDay + amountOt + sumCalTaxNonSalary - sumDeductWithTax 
+- tax
+- ((sumSocial * 0.05) || 0)
++ (sumNonTaxNonSalary || 0)
+- (sumDeductUncalculateTax || 0);
+
+    // Other properties
+    data.accountingRecord.amountHoliday = 0;
+    data.accountingRecord.addAmountBeforeTax = sumCalTaxNonSalary || 0;
+    data.accountingRecord.deductBeforeTax = sumDeductWithTax || 0;
+    // data.accountingRecord.tax = sumCalTax || 0;
+    // Assuming sumSocial is defined somewhere before this code
+// Check if sumSocial is greater than 15000
+if (sumSocial > 15000) {
+  sumSocial = await 15000; // Set sumSocial to 15000
+}
+
+// Calculate socialSecurity based on sumSocial
+data.accountingRecord.socialSecurity = (sumSocial * 0.05) || 0;
+
+    // data.accountingRecord.socialSecurity = (sumSocial * 0.05) || 0;
+    data.accountingRecord.addAmountAfterTax = sumNonTaxNonSalary || 0;
+    // data.accountingRecord.advancePayment = 0;
+    data.accountingRecord.deductAfterTax = sumDeductUncalculateTax || 0;
+    data.accountingRecord.bank = 0;
+    data.accountingRecord.total = total || 0;
+    data.accountingRecord.sumSalaryForTax = sumCalTax || 0;
+    data.addSalary = addSalaryList || [];
+data.deductSalary = deductSalaryList || [];
+
+}
+
+        dataList.push(data);
+      }
+    } else {
+      console.log('no data conclude');
+    }
+
+    // console.log(JSON.stringify(dataList, null, 2));
+
+    if (dataList.length > 0) {
+      res.json(dataList);
+    } else {
+      res.status(404).json({ error: 'accounting not found' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
 //get all accounting
 router.post('/calsalarylist', async (req, res) => {
   try {
