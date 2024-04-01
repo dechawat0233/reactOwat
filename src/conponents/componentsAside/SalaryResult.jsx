@@ -1155,7 +1155,8 @@ await setAddSalaryList([]);
     parseFloat(amountHoliday) +
     parseFloat(addAmountAfterTax) +
     parseFloat(amountSpecial);
-
+    
+    // amountDay + amountOt + addAmountBeforeTax + addAmountAfterTax
   //   overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult
 
   const totalSumDeduct =
@@ -1392,13 +1393,13 @@ await setAddSalaryList([]);
                                 <h4>รายการเงินเพิ่ม</h4>
                                 <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
                                   {addSalaryList && (
-                                  addSalaryList.map((addsalary, index) => (
-                                    (addsalary.name !== '' && (
-                                      <li key={index} style={{ marginBottom: '10px' }}>
-                                        {addsalary.name} - จำนวน: {addsalary.SpSalary} {addsalary.roundOfSalary == 'daily' && (<>* {addsalary.message} วัน</>)}
-                                      </li>
-                                    ))
-                                  )))}
+                                    addSalaryList.map((addsalary, index) => (
+                                      (addsalary.name !== '' && (
+                                        <li key={index} style={{ marginBottom: '10px' }}>
+                                          {addsalary.name} - จำนวน: {addsalary.SpSalary} {addsalary.roundOfSalary == 'daily' && (<>* {addsalary.message} วัน</>)}
+                                        </li>
+                                      ))
+                                    )))}
 
                                 </ul>
                                 <button onClick={togglePopup}>Close</button>
@@ -1482,17 +1483,17 @@ await setAddSalaryList([]);
                                 <h4>รายการเงินหัก</h4>
                                 <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
                                   {deductSalaryList && (
-                                  deductSalaryList.map((deductsalary, index) => {
-                                    {
-                                      deductsalary.name !== '' && (
+                                    deductSalaryList.map((deductsalary, index) => {
+                                      {
+                                        deductsalary.name !== '' && (
 
-                                        <li key={index} style={{ marginBottom: '10px' }}>
-                                          {deductsalary.name} - หัก: {deductsalary.amount} ฿
-                                        </li>
-                                      )
-                                    }
+                                          <li key={index} style={{ marginBottom: '10px' }}>
+                                            {deductsalary.name} - หัก: {deductsalary.amount} ฿
+                                          </li>
+                                        )
+                                      }
 
-                                  }))}
+                                    }))}
 
                                 </ul>
                                 <button onClick={togglePopup}>Close</button>
