@@ -998,377 +998,6 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
 
     const tableRef = useRef(null);
 
-    const generatePDFTest = () => {
-        const doc = new jsPDF({
-            orientation: 'landscape',
-            unit: 'mm',
-            format: 'a4',
-        });
-        const table = tableRef.current;
-        const fontPath = '/assets/fonts/THSarabunNew.ttf';
-        doc.addFileToVFS(fontPath);
-        doc.addFont(fontPath, 'THSarabunNew', 'normal');
-
-        // Override the default stylestable for jspdf-autotable
-        const stylestable = {
-            font: 'THSarabunNew',
-            fontStyle: 'normal',
-            fontSize: 10,
-        };
-
-        const arraytest = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]];
-        // const arraylistNameEmp = ['สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย','สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย','สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย','สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย', 'สนไหม'];
-        const arraylistNameEmp = ['สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย', 'สนไหม'];
-        // const arraylistNameEmp = ['สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย'];
-
-        // const arrayLength = arraylistNameEmp.length;
-        const arrayLength = 9;
-        // Set title with the Thai font
-        const makePage = Math.ceil(arrayLength / 6);
-        let roundpage = 0;
-
-        // for (let page = 0; page < makePage; page++) {
-
-        const title = ' ใบลงเวลาการปฏิบัติงาน';
-
-        doc.setFont('THSarabunNew');
-        doc.setFontSize(16);
-        const titleWidth = doc.getStringUnitWidth(title) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-        const pageWidth = doc.internal.pageSize.getWidth();
-        const titleX = (pageWidth - titleWidth) / 2;
-        doc.text(title, titleX, 10);
-
-        // const titleY = (doc.internal.pageSize.getHeight() - titleWidth) / 2;
-
-        doc.text(title, titleX, 30, { angle: 90 });
-
-        const subTitle = workMonth; // Replace with your desired subtitle text
-        doc.setFontSize(12); // You can adjust the font size for the subtitle
-        const subTitleWidth = doc.getStringUnitWidth(subTitle) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-        const subTitleX = (pageWidth - subTitleWidth) / 2;
-        // doc.text(subTitle, subTitleX, 20); // Adjust the vertical position as needed
-
-        // Convert the table to a PDF using jsPDF and jsPDF-AutoTable
-
-        // doc.autoTable({
-        //     html: table,
-        //     styles: stylestable,
-        //     margin: { top: 30 },
-        // });
-        function getDaysInMonth(month, year) {
-            // Months are 0-based, so we subtract 1 from the provided month
-            const lastDayOfMonth = new Date(year, month, 0).getDate();
-            return lastDayOfMonth;
-        }
-
-        // const CheckMonth = 2; 
-        // const CheckYear = 2023;
-
-        // const daysInMonth = getDaysInMonth(CheckMonth, CheckYear);
-
-        // doc.text('จำนวนวัน' + daysInMonth, 10, 10);
-        doc.setFontSize(8);
-        doc.text(title, 171, 55, { angle: 90 });
-
-        const CheckMonth = 1;
-        const CheckYear = 2023;
-
-        const daysInMonth = getDaysInMonth(CheckMonth, CheckYear);
-        // const daysInMonth = 30;
-        doc.text('จำนวนวัน' + daysInMonth, 10, 10);
-
-        const numRows = 7;
-        const numCols = daysInMonth;
-        const cellWidth = 4.125;
-        const cellHeight = 3.5;
-        const startX = 50; // Adjust the starting X-coordinate as needed
-        const startY = 60; // Adjust the starting Y-coordinate as needed
-        const borderWidth = 0.5; // Adjust the border width as needed
-
-        // Function to draw a cell with borders
-        const drawCell = (x, y, width, height) => {
-            doc.rect(x, y, width, height);
-        };
-
-        // Function to draw the entire table
-        // const drawTable = () => {
-        //     for (let i = 0; i < numRows; i++) {
-        //         for (let j = 0; j < numCols; j++) {
-        //             const x = startX + j * cellWidth;
-        //             const y = startY + i * cellHeight;
-        //             drawCell(x, y, cellWidth, cellHeight);
-        //         }
-        //     }
-        // };
-
-        const drawTable = (tableNumber) => {
-            for (let i = 0; i < numRows; i++) {
-                for (let j = 0; j < numCols; j++) {
-                    const x = startX + j * cellWidth;
-                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 0.2);
-                    drawCell(x, y, cellWidth, cellHeight);
-                }
-            }
-        };
-
-        const numRowsLeftHead = 7;
-        const numColsLeftHead = 1;
-        const cellWidthLeftHead = 40;
-        const cellHeightLeftHead = 3.5;
-        const startXLeftHead = 10; // Adjust the starting X-coordinate as needed
-        // const startYLeftHead = 20; // Adjust the starting Y-coordinate as needed
-        const borderWidthLeftHead = 0.5; // Adjust the border width as needed
-
-        const drawTableLeftHead = (tableNumber) => {
-            for (let i = 0; i < numRows; i++) {
-                for (let j = 0; j < numColsLeftHead; j++) {
-                    const x = startXLeftHead + j * cellWidthLeftHead;
-                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 0.2);
-                    drawCell(x, y, cellWidthLeftHead, cellHeight);
-                }
-            }
-        };
-        const numRowsNumHead = 7;
-        const numColsNumHead = 1;
-        const cellWidthNumHead = 10;
-        const cellHeightNumHead = 3.5;
-        const startXNumHead = 10; // Adjust the starting X-coordinate as needed
-        // const startYNumHead = 20; // Adjust the starting Y-coordinate as needed
-        const borderWidthNumHead = 0.5; // Adjust the border width as needed
-
-        const drawTableNumHead = (tableNumber) => {
-            for (let i = 0; i < numRows; i++) {
-                for (let j = 0; j < numColsNumHead; j++) {
-                    const x = startXNumHead + j * cellWidthNumHead;
-                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 0.2);
-                    drawCell(x, y, cellWidthNumHead, cellHeight);
-                }
-            }
-        };
-
-        const numRowsSpSalary = 7;
-        const numColsSpSalary = 8;
-        const cellWidthSpSalary = 10;
-        const cellHeightSpSalary = 3.5;
-        const borderWidthSpSalary = 0.5; // Adjust the border width as needed
-
-        let startXSpSalary; // Declare startXSpSalary before using it
-
-        if (daysInMonth === 28) {
-            startXSpSalary = 165.5;
-        } else if (daysInMonth === 29) {
-            startXSpSalary = 169.5;
-        } else if (daysInMonth === 30) {
-            startXSpSalary = 173.75;
-        } else if (daysInMonth === 31) {
-            startXSpSalary = 177.75;
-        };
-        // console.log('startXSpSalary:', startXSpSalary);
-        // console.log('cellHeightSpSalary:', cellHeightSpSalary);
-
-        // const startXSpSalary = 182; // Adjust the starting X-coordinate as needed
-        // const startYSpSalary = 20; // Adjust the starting Y-coordinate as needed
-
-        const drawTableSpSalary = (tableNumber) => {
-            for (let i = 0; i < numRows; i++) {
-                for (let j = 0; j < numColsSpSalary; j++) {
-                    const x = startXSpSalary + j * cellWidthSpSalary;
-                    const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 0.2);
-                    drawCell(x, y, cellWidthSpSalary, cellHeight);
-                }
-            }
-        };
-
-        const numRowsMess = 7;
-        const numColsMess = 1;
-        const cellWidthMess = 25;
-        const cellHeightMess = 3.5;
-        // let startXMess; // Declare startXSpSalary before using it
-
-        // if (daysInMonth === 28) {
-        //     startXMess = 245.5;
-        // } else if (daysInMonth === 29) {
-        //     startXMess = 249.5;
-        // } else if (daysInMonth === 30) {
-        //     startXMess = 253.75;
-        // } else if (daysInMonth === 31) {
-        //     startXMess = 255.75;
-        // };
-        // // const startXMess = 262; // Adjust the starting X-coordinate as needed
-        // // const startYMess = 20; // Adjust the starting Y-coordinate as needed
-        // const borderWidthMess = 0.5; // Adjust the border width as needed
-
-        // const drawTableMess = (tableNumber) => {
-        //     for (let i = 0; i < numRows; i++) {
-        //         for (let j = 0; j < numColsMess; j++) {
-        //             const x = startXMess + j * cellWidthMess;
-        //             const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 0.2);
-        //             drawCell(x, y, cellWidthMess, cellHeight);
-        //         }
-        //     }
-        // };
-
-        // Draw the table
-        // drawTable();
-        // for (let i = 0; i < arrayLength; i++) {
-
-        //     drawTable(i);
-        //     drawTableLeftHead(i);
-        //     drawTableNumHead(i);
-        //     drawTableSpSalary(i);
-        //     drawTableMess(i);
-        //     if ((i + 1) % 6 === 0 && i + 1 < arrayLength) {
-        //         doc.addPage(); // Add a new page after every 6 iterations
-        //     }
-        // }
-
-        // body table//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        const numRowsTop = 1;
-        const startXTop = 50; // Adjust the starting X-coordinate as needed
-        const startYTop = 30; // Adjust the starting Y-coordinate as needed
-        const cellHeightTop = 25;
-        const drawTableTop = () => {
-            for (let i = 0; i < numRowsTop; i++) {
-                for (let j = 0; j < numCols; j++) {
-                    const x = startX + j * cellWidth;
-                    const y = startYTop + i * cellHeightTop;
-                    drawCell(x, y, cellWidth, cellHeightTop);
-                }
-            }
-        };
-        const drawTableLeftHeadTop = () => {
-            for (let i = 0; i < numRowsTop; i++) {
-                for (let j = 0; j < numColsLeftHead; j++) {
-                    const x = startXLeftHead + j * cellWidthLeftHead;
-                    const y = startYTop + i * cellHeightTop;
-                    drawCell(x, y, cellWidthLeftHead, cellHeightTop);
-                }
-            }
-        };
-        const drawTableNumHeadTop = () => {
-            for (let i = 0; i < numRowsTop; i++) {
-                for (let j = 0; j < numColsNumHead; j++) {
-                    const x = startXNumHead + j * cellWidthNumHead;
-                    const y = startYTop + i * cellHeightTop;
-                    drawCell(x, y, cellWidthNumHead, cellHeightTop);
-                }
-            }
-        };
-        const drawTableSpSalaryTop = () => {
-            for (let i = 0; i < numRowsTop; i++) {
-                for (let j = 0; j < numColsSpSalary; j++) {
-                    const x = startXSpSalary + j * cellWidthSpSalary;
-                    const y = startYTop + i * cellHeightTop;
-                    drawCell(x, y, cellWidthSpSalary, cellHeightTop);
-                }
-            }
-        };
-
-        const drawTableMessTop = () => {
-            for (let i = 0; i < numRowsTop; i++) {
-                for (let j = 0; j < numColsMess; j++) {
-                    const x = startXMess + j * cellWidthMess;
-                    const y = startYTop + i * cellHeightTop;
-                    drawCell(x, y, cellWidthMess, cellHeightTop);
-                }
-            }
-        };
-        const verticalDistance = 24.7; // Set your desired vertical distance
-
-        // const drawArrayText = (dataArray) => {
-        //     const arrayText = dataArray.map(row => row.join(' ')).join('\n');
-        //     doc.text(arrayText, startX, startY, { align: 'left' });
-        // };
-
-        const calculateElementWidth = (element) => {
-            const fontSize = doc.internal.getFontSize();
-            const elementWidth = (element.toString().length * fontSize / doc.internal.scaleFactor);
-            return elementWidth;
-        };
-
-        const drawArrayText = (dataArray) => {
-            for (let i = 0; i < dataArray.length; i++) {
-                // const arrayText = dataArray[i].join('      ');
-                // const arrayText = dataArray[i].join('     '); // Use spaces to mimic the width
-                let currentX = startX;
-                let currentY = startY;
-
-                for (let j = 0; j < dataArray[i].length; j++) {
-                    // const elementWidth = calculateElementWidth(dataArray[i][j]);
-                    doc.text(dataArray[i][j].toString(), currentX + 2, 3 + currentY + i * verticalDistance, { align: 'left' });
-                    // currentX += elementWidth + cellWidth; 
-                    currentX += cellWidth;
-                }
-            }
-        };
-        // drawArrayText(arraytest);
-        for (let dataarray = 0; dataarray < arraytest.length; dataarray += 6) {
-            const pageStartIndex = dataarray;
-            const pageEndIndex = Math.min(dataarray + 6, arraytest.length);
-
-            for (let i = 0; i < 6; i++) {
-                drawTableTop();
-                drawTableLeftHeadTop();
-                drawTableNumHeadTop();
-                drawTableSpSalaryTop();
-                drawTableMessTop();
-
-                drawTable(i);
-                drawTableLeftHead(i);
-                drawTableNumHead(i);
-                drawTableSpSalary(i);
-                drawTableMess(i);
-                // roundpage++
-            }
-            drawArrayText(arraytest.slice(pageStartIndex, pageEndIndex));
-            doc.addPage();
-        }
-
-
-
-
-
-        // doc.addPage();
-        // for (let i = 0; i < 6 && (page * 6 + i) < arrayLength; i++) {
-        //     const currentIndex = page * 6 + i;
-
-        //     // Draw top tables on each page
-        //     drawTableTop();
-        //     drawTableLeftHeadTop();
-        //     drawTableNumHeadTop();
-        //     drawTableSpSalaryTop();
-        //     drawTableMessTop();
-
-        //     // Draw the tables for the current page
-        //     drawTable(currentIndex);
-        //     drawTableLeftHead(currentIndex);
-        //     drawTableNumHead(currentIndex);
-        //     drawTableSpSalary(currentIndex);
-        //     drawTableMess(currentIndex);
-        // }
-
-        // Add a new page if there are more tables remaining
-        // if ((page + 1) * 6 < arrayLength) {
-        //     doc.addPage();
-        // }
-
-        // }
-
-
-        // doc.save('your_table.pdf');
-        const pdfContent = doc.output('bloburl');
-        window.open(pdfContent, '_blank');
-    };
-
 
     const CheckMonth = parseInt(month, 10);
     const CheckYear = year;
@@ -3374,6 +3003,8 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
             //     doc.addPage();
             // } 
             const title = ' ใบลงเวลาการปฏิบัติงาน';
+            const subTitle = 'ใบแสดงเวลาปฏิบัติงาน'; // Replace with your desired subtitle text
+            const TriTitle = 'หน่วยงาน ' + searchWorkplaceName; // Replace with your desired subtitle text
 
             const alldaywork = 'รวมวันทำงาน';
             const countalldaywork = workplaceDataListWorkRate;
@@ -3424,10 +3055,21 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
 
                 // doc.text(title, titleX, 30, { angle: 90 });
 
-                const subTitle = workMonth; // Replace with your desired subtitle text
+                // const subTitle = workMonth; // Replace with your desired subtitle text
+                // doc.setFontSize(12); // You can adjust the font size for the subtitle
+                // const subTitleWidth = doc.getStringUnitWidth(subTitle) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                // const subTitleX = (pageWidth - subTitleWidth) / 2;
+
                 doc.setFontSize(12); // You can adjust the font size for the subtitle
                 const subTitleWidth = doc.getStringUnitWidth(subTitle) * doc.internal.getFontSize() / doc.internal.scaleFactor;
                 const subTitleX = (pageWidth - subTitleWidth) / 2;
+                doc.text(subTitle, subTitleX, 15); // Adjust the vertical position as needed
+
+                doc.setFontSize(12); // You can adjust the font size for the subtitle
+                const TriTitleWidth = doc.getStringUnitWidth(TriTitle) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                const TriTitleX = (pageWidth - TriTitleWidth) / 2;
+                doc.text(TriTitle, TriTitleX, 20); // Adjust the vertical position as needed
+
                 // doc.text(subTitle, subTitleX, 20); // Adjust the vertical position as needed
 
                 // Convert the table to a PDF using jsPDF and jsPDF-AutoTable
@@ -3437,6 +3079,10 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
                 //     styles: stylestable,
                 //     margin: { top: 30 },
                 // });
+
+                const workplaceid = workplaceDataList.map(item => item.workplaceId);
+                doc.text('แผนก ' + workplaceid, 250, 10);
+
                 function getDaysInMonth(month, year) {
                     // Months are 0-based, so we subtract 1 from the provided month
                     const lastDayOfMonth = new Date(year, month, 0).getDate();
@@ -3911,7 +3557,6 @@ function WorktimeSheetWorkplace_Save01_22_2024() {
                                     <section class="Frame">
                                         <div class="container" style={{ overflowX: 'scroll' }}>
                                             {/* <table class="table table-bordered "> */}
-                                            <button onClick={generatePDFTest}>Generate PDF</button>
                                             <button onClick={generatePDFTest123}>Generate PDF2</button>
 
                                             <table ref={tableRef} className="table table-bordered">
