@@ -210,17 +210,16 @@ try{
     year: year,
     month: month,
   };
-alert(staffId)
-//ws
+
 const x =   await axios.post(endpoint + '/accounting/calsalaryemp', dataTest1)
 if (x){
-  alert(x.data[0].employeeId)
+  alert(x.data[0].addSalary.length)
 }
 } catch (e){
 // alert(e);
 }
 }
-getemp();
+// getemp();
 
 
     const fetchData = async () => {
@@ -230,7 +229,7 @@ getemp();
         month: month,
       };
 await setAddSalaryList([]);
-      await axios.post(endpoint + '/accounting/calsalarylist', dataTest)
+      await axios.post(endpoint + '/accounting/calsalaryemp', dataTest)
         .then(response => {
           const responseData = response.data;
           if (response.data) {
@@ -1480,7 +1479,7 @@ await setAddSalaryList([]);
                             </p>
                             {showPopup && (
                               <div className="popup">
-                                <h4>รายการงินหัก</h4>
+                                <h4>รายการเงินหัก</h4>
                                 <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
                                   {deductSalaryList && (
                                   deductSalaryList.map((deductsalary, index) => {
@@ -1501,7 +1500,7 @@ await setAddSalaryList([]);
                             )}
                             {/* {isNaN(Number(deductBeforeTax) + Number(deductAfterTax)) ? 0.00 : (Number(deductBeforeTax) + Number(deductAfterTax)).toFixed(2)} */}
                           </td>
-                          <td style={cellStyle}>{isNaN(Number(deductBeforeTax) + Number(deductAfterTax) + Number(tax) + Number(socialSecurity) + Number(bank)) ? 0.00 : (Number(deductBeforeTax) + Number(deductAfterTax) + Number(tax) + Number(socialSecurity) + Number(bank)).toFixed(2)}</td>
+                          <td style={cellStyle}>{isNaN(Number(deductBeforeTax) + Number(deductAfterTax) + Number(tax) + Math.ceil(Number(socialSecurity)) + Number(bank)) ? 0.00 : (Number(deductBeforeTax) + Number(deductAfterTax) + Number(tax) + Number(socialSecurity) + Number(bank)).toFixed(2)}</td>
                           {/* <td style={cellStyle}>({anyMinus} + {tax} + {((overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary) * socialSecurity).toFixed()} + {bankCustom} + {sumDeduct} + {sumDeductInstallment})</td> */}
                           <td style={cellStyle}>
                             <button class="btn btn-danger" style={{ width: '3rem' }}>แก้ไข</button>
