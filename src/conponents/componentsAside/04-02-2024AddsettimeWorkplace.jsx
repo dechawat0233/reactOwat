@@ -152,17 +152,17 @@ function AddsettimeWorkplace() {
 
 
     const GregorianToThaiBuddhist = (gregorianDate) => {
-        const thaiYear = gregorianDate.getFullYear();
+        const thaiYear = gregorianDate.getFullYear() + 543;
         return new Date(thaiYear, gregorianDate.getMonth(), gregorianDate.getDate());
     };
 
     const ThaiBuddhistToGregorian = (thaiDate) => {
-        const gregorianYear = thaiDate.getFullYear();
+        const gregorianYear = thaiDate.getFullYear() - 543;
         return new Date(gregorianYear, thaiDate.getMonth(), thaiDate.getDate());
     };
 
     const initialThaiDate = new Date();
-    initialThaiDate.setFullYear(initialThaiDate.getFullYear()); // Add 543 years to the current year
+    initialThaiDate.setFullYear(initialThaiDate.getFullYear() + 543); // Add 543 years to the current year
 
     const [selectedThaiDate, setSelectedThaiDate] = useState(initialThaiDate);
     const [selectedGregorianDate, setSelectedGregorianDate] = useState(new Date());

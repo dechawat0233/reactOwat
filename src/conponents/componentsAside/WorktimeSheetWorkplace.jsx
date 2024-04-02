@@ -1232,6 +1232,17 @@ function WorktimeSheetWorkplace() {
                 }
             }
         };
+
+        const drawTableTopHead = () => {
+            for (let i = 0; i < numRowsTopHead; i++) {
+                // for (let j = 0; j < numCols; j++) {
+                const x = startXNumHead + i * cellWidth;
+                const y = startYTopHead + i * cellHeightTopHead;
+                drawCell(x, y, cellWidthTopHead, cellHeightTopHead);
+                // }
+            }
+        };
+
         const drawTableLeftHeadTop = () => {
             for (let i = 0; i < numRowsTop; i++) {
                 for (let j = 0; j < numColsLeftHead; j++) {
@@ -1304,6 +1315,7 @@ function WorktimeSheetWorkplace() {
 
             for (let i = 0; i < 6; i++) {
                 drawTableTop();
+                drawTableTopHead();
                 drawTableLeftHeadTop();
                 drawTableNumHeadTop();
                 drawTableSpSalaryTop();
@@ -2628,7 +2640,8 @@ function WorktimeSheetWorkplace() {
     const yearThai = parseFloat(year, 10) + 543;
     // เริ่มฟังค์ชั่นpdf
 
-    const generatePDFTest123 = () => {
+    const generatePDFTest123 = (event) => {
+        event.preventDefault();
         try {
             // Your code here
             // handleEmployeeFilter();
@@ -4097,7 +4110,8 @@ function WorktimeSheetWorkplace() {
 
     //////////////////////////////////////////////////
 
-    const generatePDFTest123Old = () => {
+    const generatePDFTest123Old = (event) => {
+        event.preventDefault();
         try {
             // Your code here
             // handleEmployeeFilter();
@@ -4514,6 +4528,34 @@ function WorktimeSheetWorkplace() {
                         const y = startYTop + i * cellHeightTop;
                         drawCell(x, y, cellWidth, cellHeightTop);
                     }
+                }
+            };
+
+
+            const numRowsTopHead = 1;
+            const startXTopHead = 1; // Adjust the starting X-coordinate as needed
+            const startYTopHead = 24; // Adjust the starting Y-coordinate as needed
+            const cellHeightTopHead = 6;
+            // const cellWidthTopHead = 200;
+            let cellWidthTopHead;
+            if (daysInMonth === 28) {
+                // 267
+                cellWidthTopHead = 270.5;
+            } else if (daysInMonth === 29) {
+                cellWidthTopHead = 274.5;
+            } else if (daysInMonth === 30) {
+                cellWidthTopHead = 278.5;
+            } else if (daysInMonth === 31) {
+                cellWidthTopHead = 282.5;
+            };
+
+            const drawTableTopHead = () => {
+                for (let i = 0; i < numRowsTopHead; i++) {
+                    // for (let j = 0; j < numCols; j++) {
+                    const x = startXNumHead + i * cellWidth;
+                    const y = startYTopHead + i * cellHeightTopHead;
+                    drawCell(x, y, cellWidthTopHead, cellHeightTopHead);
+                    // }
                 }
             };
             const drawTableLeftHeadTop = () => {
@@ -5153,7 +5195,7 @@ function WorktimeSheetWorkplace() {
 
 
 
-                doc.text('จำนวนวัน ' + daysInMonth, 10, 10);
+                // doc.text('จำนวนวัน ' + daysInMonth, 10, 10);
 
 
 
@@ -5212,6 +5254,12 @@ function WorktimeSheetWorkplace() {
 
 
                 doc.text('ลำดับ', startXNumHead + 2, cellHeightTop + startYTop - 2);
+
+                const period = 'งวดวันที่ 21 ' + thaiMonthNameLower + ' - 20 ' + thaiMonthName + ' พ.ศ. ' + yearThai;
+                const periodWidth = doc.getStringUnitWidth(period) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                const periodX = (pageWidth - periodWidth) / 2;
+                doc.text(period, periodX, startYTop - 2);
+
                 doc.text('ชื่อ - นามสกุล', startXLeftHead + 10, cellHeightTop + startYTop - 2);
                 doc.text('วันหยุด', startXSpSalary + 11, startYTop + 3);
                 doc.text('โอที', startXSpSalary + (cellWidthSpSalary * 2) + 3, startYTop + 3);
@@ -5281,11 +5329,13 @@ function WorktimeSheetWorkplace() {
                         });
 
                         drawTableTop();
+                        drawTableTopHead();
                         drawTableLeftHeadTop();
                         drawTableNumHeadTop();
                         drawTableSpSalaryTop();
                         drawTableSpSalaryHeadTop();
                         drawTableMessTop();
+
                         // drawTableOT();
                         // drawTableOT(arraylistOT);
 
@@ -5637,7 +5687,7 @@ function WorktimeSheetWorkplace() {
                                                         <div class="form-group" style={{ position: 'absolute', bottom: '0' }}>
                                                             {/* <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา</button> */}
                                                             <br />
-                                                            <button onClick={generatePDFTest123} class="btn b_save"><i class="nav-icon fas fa-search"></i>พิมพ์รายงาน</button>
+                                                            <button onClick={generatePDFTest123} type='button ' class="btn b_save"><i class="nav-icon fas fa-search"></i>พิมพ์รายงาน</button>
                                                             <button onClick={generatePDFTest123Old} style={{ marginLeft: '1rem', width: '10rem' }} class="btn b_save"><i class="nav-icon fas fa-search"></i>พิมพ์รายงานเก่า</button>
                                                         </div>
                                                     </div>
