@@ -581,16 +581,21 @@ function Compensation() {
 
 
     const [addSalaryDay, setAddSalaryDay] = useState(0);
+    const [addSalaryDayList , setAddSalaryDayList ] = useState([]);
+
     useEffect(() => {
         // alert(employee?.addSalary?.length );
 
         const getAddSalaryDay = async () => {
             await setAddSalaryDay(0);
+await setAddSalaryDayList([]);
 
             if (employee?.addSalary?.length > 0) {
+let tmpAddSalaryList = [];
 
                 const sum = await employee.addSalary.reduce(async (accumulator, item) => {
                     if (item.roundOfSalary === 'daily') {
+await tmpAddSalaryList.push(item);
                         if (parseFloat(item.SpSalary) < 100) {
                             return await accumulator + parseFloat(item.SpSalary, 10);
                         } else {
@@ -602,21 +607,24 @@ function Compensation() {
                         return accumulator;
                     }
                 }, 0);
+                await setAddSalaryDayList(tmpAddSalaryList);
 
                 await setAddSalaryDay(sum);
             }
 
-
         };
 
+
         getAddSalaryDay();
+
+
         if (employee) {
             setWorkplaceIdEMP(employee.workplace ? employee.workplace : '');
-
         }
 
-
     }, [employee]);
+
+
 
     console.log('searchResult', searchResult);
     console.log('searchResultLower', searchResultLower);
@@ -1339,9 +1347,27 @@ function Compensation() {
                                                                     workplaceRecord.workRateOT}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {editIndex === index ?
-                                                                    <input type="text" className="form-control" value={formData.addSalaryDay} onChange={handleInputChange} name="addSalaryDay" readOnly /> :
-                                                                    workplaceRecord.addSalaryDay}
+                                                                {editIndex === index ?(
+
+                                                                    <div className="popup">
+                                                                    <h4>รายการเงินเพิ่ม</h4>
+                                                                    <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
+                                                                      {addSalaryDayList && (
+                                                                      addSalaryDayList.map((addsalary, index) => (
+                                                                        (addsalary.name !== '' && (
+                                                                          <li key={index} style={{ marginBottom: '10px' }}>
+                                                                            {addsalary.name} - จำนวน: {addsalary.SpSalary} {addsalary.roundOfSalary == 'daily' && (<>/ {addsalary.message} วัน</>)}
+                                                                            <button type="button">ลบ</button>
+                                                                          </li>
+                                                                        ))
+                                                                      )))}
+                                    
+                                                                    </ul>
+                                                                  </div>
+                                    
+                                                                ): (
+                                                                    workplaceRecord.addSalaryDay
+                                                                    )}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                 {/* <a href="https://example.com" class="link1" style={{ color: 'red' }}><b>ลบ</b></a> / <a href="#" class="link2" style={{ color: 'blue' }} onClick={openModal}><b>แก้ไข</b></a> */}
@@ -1499,6 +1525,7 @@ function Compensation() {
                     </section>
                 </div>
             </div>
+            {JSON.stringify( dataTable)}
         </body>
         // </div>  )
     )
