@@ -4319,18 +4319,6 @@ function WorktimeSheetWorkplace() {
                 }
             };
 
-            const drawArrayNumHead = (dataArray, indexArray) => {
-                for (let i = 0; i < dataArray.length; i++) {
-                    let currentX = startXNumHead + 3;
-                    let currentY = startY + i * verticalDistance + addmove;
-
-                    // Calculate the product and convert it to a string
-                    const product = (indexArray[i] * (2 * (countalldaywork / 8))).toString();
-
-                    doc.text(indexArray[i].toString(), currentX + 2, currentY, { align: 'center' });
-                    // doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
-                }
-            };
 
             const numRowsLeftHead = 7;
             const numColsLeftHead = 1;
@@ -4340,68 +4328,29 @@ function WorktimeSheetWorkplace() {
             // const startYLeftHead = 20; // Adjust the starting Y-coordinate as needed
             const borderWidthLeftHead = 0.5; // Adjust the border width as needed
 
-            // 02/04/2024
-            // const drawTableLeftHead = (tableNumber) => {
-            //     for (let i = 0; i < numRows; i++) {
-            //         for (let j = 0; j < numColsLeftHead; j++) {
-            //             const x = startXLeftHead + j * cellWidthLeftHead;
-            //             const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 3.7);
-            //             // drawCell(x, y, cellWidthLeftHead, cellHeight);
-            //             const adjustedCellHeight = i === 0 ? cellHeight * 2 : cellHeight;
-
-            //             if (i === 0) {
-            //                 drawCell(x, y, cellWidthLeftHead, adjustedCellHeight);
-
-            //             } else {
-            //                 drawCell(x, y + cellHeight, cellWidthLeftHead, adjustedCellHeight);
-
-            //             }
-
-            //             if (i >= numRows - 3) {
-            //                 const arrayIndex = i - (numRows - 3); // 0 for the last row, 1 for the second last row
-            //                 if (arraylistOT[arrayIndex]) {
-            //                     const cellText = arraylistOT[arrayIndex].toString(); // Convert to string if needed
-            //                     doc.text("โอที " + cellText, x + 26, y - 1, { align: 'center' }); // Use the entire cellText
-            //                 }
-            //             }
-            //         }
-            //     }
-            // };
-
             const drawTableLeftHead = (tableNumber) => {
-                for (let i = 0; i < 1; i++) {
+                for (let i = 0; i < numRows; i++) {
                     for (let j = 0; j < numColsLeftHead; j++) {
                         const x = startXLeftHead + j * cellWidthLeftHead;
                         const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 3.7);
                         // drawCell(x, y, cellWidthLeftHead, cellHeight);
-                        // const adjustedCellHeight = i === 0 ? cellHeight * 2 : cellHeight;
-                        const adjustedCellHeight = cellHeight * 8;
+                        const adjustedCellHeight = i === 0 ? cellHeight * 2 : cellHeight;
 
-                        // if (i === 0) {
-                        //     drawCell(x, y, cellWidthLeftHead, adjustedCellHeight);
+                        if (i === 0) {
+                            drawCell(x, y, cellWidthLeftHead, adjustedCellHeight);
 
-                        // } else {
-                        //     drawCell(x, y + cellHeight, cellWidthLeftHead, adjustedCellHeight);
+                        } else {
+                            drawCell(x, y + cellHeight, cellWidthLeftHead, adjustedCellHeight);
 
-                        // }
-                        drawCell(x, y, cellWidthLeftHead, adjustedCellHeight);
+                        }
 
-
-                        // if (i >= numRows - 3) {
-                        //     const arrayIndex = i - (numRows - 3); // 0 for the last row, 1 for the second last row
-                        //     if (arraylistOT[arrayIndex]) {
-                        //         const cellText = arraylistOT[arrayIndex].toString(); // Convert to string if needed
-                        //         doc.text("โอที " + cellText, x + 46, y + 2.5, { align: 'center' }); // Use the entire cellText
-                        //     }
-                        // }
-                        const cellText0 = arraylistOT[0].toString(); // Convert to string if needed
-                        const cellText1 = arraylistOT[1].toString(); // Convert to string if needed
-                        const cellText2 = arraylistOT[2].toString(); // Convert to string if needed
-
-                        doc.text("โอที " + cellText0, x + 26, y - 1 + (3.5 * 4), { align: 'center' }); // Use the entire cellText
-                        doc.text("โอที " + cellText1, x + 26, y - 1 + (3.5 * 5), { align: 'center' }); // Use the entire cellText
-                        doc.text("โอที " + cellText2, x + 26, y - 1 + (3.5 * 6), { align: 'center' }); // Use the entire cellText
-
+                        if (i >= numRows - 3) {
+                            const arrayIndex = i - (numRows - 3); // 0 for the last row, 1 for the second last row
+                            if (arraylistOT[arrayIndex]) {
+                                const cellText = arraylistOT[arrayIndex].toString(); // Convert to string if needed
+                                doc.text("โอที " + cellText, x + 26, y - 1, { align: 'center' }); // Use the entire cellText
+                            }
+                        }
                     }
                 }
             };
@@ -4415,44 +4364,21 @@ function WorktimeSheetWorkplace() {
             // const startYNumHead = 20; // Adjust the starting Y-coordinate as needed
             const borderWidthNumHead = 0.5; // Adjust the border width as needed
 
-            //02/04/2024
-            // const drawTableNumHead = (tableNumber) => {
-            //     for (let i = 0; i < numRows; i++) {
-            //         for (let j = 0; j < numColsNumHead; j++) {
-            //             const x = startXNumHead + j * cellWidthNumHead;
-            //             const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 3.7);
-            //             // drawCell(x, y, cellWidthNumHead, cellHeight);
-            //             const adjustedCellHeight = i === 0 ? cellHeight * 2 : cellHeight;
-
-            //             if (i === 0) {
-            //                 drawCell(x, y, cellWidthNumHead, adjustedCellHeight);
-
-            //             } else {
-            //                 drawCell(x, y + cellHeight, cellWidthNumHead, adjustedCellHeight);
-
-            //             }
-            //         }
-            //     }
-            // };
-
             const drawTableNumHead = (tableNumber) => {
-                for (let i = 0; i < 1; i++) {
+                for (let i = 0; i < numRows; i++) {
                     for (let j = 0; j < numColsNumHead; j++) {
                         const x = startXNumHead + j * cellWidthNumHead;
                         const y = startY + i * cellHeight + tableNumber * (numRows * cellHeight + 3.7);
                         // drawCell(x, y, cellWidthNumHead, cellHeight);
-                        // const adjustedCellHeight = i === 0 ? cellHeight * 2 : cellHeight;
-                        const adjustedCellHeight = cellHeight * 8;
+                        const adjustedCellHeight = i === 0 ? cellHeight * 2 : cellHeight;
 
-                        // if (i === 0) {
-                        //     drawCell(x, y, cellWidthNumHead, adjustedCellHeight);
+                        if (i === 0) {
+                            drawCell(x, y, cellWidthNumHead, adjustedCellHeight);
 
-                        // } else {
-                        //     drawCell(x, y + cellHeight, cellWidthNumHead, adjustedCellHeight);
+                        } else {
+                            drawCell(x, y + cellHeight, cellWidthNumHead, adjustedCellHeight);
 
-                        // }
-                        drawCell(x, y, cellWidthNumHead, adjustedCellHeight);
-
+                        }
                     }
                 }
             };
@@ -5461,9 +5387,6 @@ function WorktimeSheetWorkplace() {
 
                 drawArrayTextSumWorkHoliday(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), sumArrayHoliday.slice(pageStartIndex, pageEndIndex));
                 drawArrayTextSumWorkOTHoliday(arrayWorkOTHoliday.slice(pageStartIndex, pageEndIndex), sumArrayOTHoliday.slice(pageStartIndex, pageEndIndex));
-
-                drawArrayNumHead(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), indexArray.slice(pageStartIndex, pageEndIndex));
-
 
                 // drawArrayTextAddSalary(arraytest.slice(pageStartIndex, pageEndIndex), extractedDataAddSalary.slice(pageStartIndex, pageEndIndex));
                 // drawArrayTextAddSalary(extractedDataAddSalary.slice(pageStartIndex, pageEndIndex));
