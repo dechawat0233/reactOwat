@@ -200,6 +200,21 @@ if (response) {
     data.accountingRecord.tax = await response.data.tax ||0;
 tax = await response.data.tax ||0; 
 
+  console.log('hi');
+//get special day 
+const dataSearch1 = await {
+  searchWorkplaceId: response.data.workplace, 
+  searchWorkplaceName: '' 
+};
+const responseSpecialDay= await axios.post(sURL + '/workplace/search', dataSearch1);
+
+if(responseSpecialDay){
+await console.log(responseSpecialDay);
+} else {
+  await console.log(responseSpecialDay);
+
+}
+
     // data.employeeId = responseConclude.data.recordConclude[c].employeeId;
     data.name = await response.data.name;
     data.lastName = await response.data.lastName;
@@ -264,7 +279,7 @@ let deductSalaryList = [];
         } else {
           await addSalaryList.push(response.data.addSalary[k]);
         }
-console.log(response.data.addSalary[k].roundOfSalary );
+// console.log(response.data.addSalary[k].roundOfSalary );
     }
 
     for (let l = 0; l < response.data.deductSalary.length; l++) {
@@ -285,10 +300,10 @@ await deductSalaryList.push(response.data.deductSalary[l] );
                     // console.log(response.data.addSalary[k].SpSalary);
                 }
             });
-            console.log(sumSocial);
+            // console.log(sumSocial);
         })
         .catch(error => {
-            console.error('Error occurred while processing promises:', error);
+            // console.error('Error occurred while processing promises:', error);
         });
     
 //check cal tax
@@ -318,7 +333,7 @@ await Promise.all(promises1)
 
         }
     });
-    console.log(sumCalTax);
+    // console.log(sumCalTax);
 })
 .catch(error => {
     console.error('Error occurred while processing promises:', error);
@@ -338,7 +353,7 @@ await Promise.all(promisesDeduct)
 
         }
     });
-    console.log(sumCalTax);
+    // console.log(sumCalTax);
 })
 .catch(error => {
     console.error('Error occurred while processing promises:', error);
@@ -546,7 +561,7 @@ let deductSalaryList = [];
         } else {
           await addSalaryList.push(response.data.addSalary[k]);
         }
-console.log(response.data.addSalary[k].roundOfSalary );
+// console.log(response.data.addSalary[k].roundOfSalary );
     }
 
     for (let l = 0; l < response.data.deductSalary.length; l++) {
@@ -567,7 +582,7 @@ await deductSalaryList.push(response.data.deductSalary[l] );
                     // console.log(response.data.addSalary[k].SpSalary);
                 }
             });
-            console.log(sumSocial);
+            // console.log(sumSocial);
         })
         .catch(error => {
             console.error('Error occurred while processing promises:', error);
@@ -600,7 +615,7 @@ await Promise.all(promises1)
 
         }
     });
-    console.log(sumCalTax);
+    // console.log(sumCalTax);
 })
 .catch(error => {
     console.error('Error occurred while processing promises:', error);
@@ -620,7 +635,7 @@ await Promise.all(promisesDeduct)
 
         }
     });
-    console.log(sumCalTax);
+    // console.log(sumCalTax);
 })
 .catch(error => {
     console.error('Error occurred while processing promises:', error);
@@ -947,10 +962,10 @@ async function checkCalSocial(id) {
   const idToCheck = await id;
   
   if (idList.includes(idToCheck)) {
-      console.log(`ID ${idToCheck} is included in the list.`);
+      // console.log(`ID ${idToCheck} is included in the list.`);
       return await true;
   } else {
-      console.log(`ID ${idToCheck} is not included in the list.`);
+      // console.log(`ID ${idToCheck} is not included in the list.`);
       return await false;
   }
   
@@ -962,10 +977,10 @@ async function checkCalTax(id) {
   const idToCheck = await id;
   
   if (idList.includes(idToCheck)) {
-      console.log(`ID ${idToCheck} is included in the list.`);
+      // console.log(`ID ${idToCheck} is included in the list.`);
       return await true;
   } else {
-      console.log(`ID ${idToCheck} is not included in the list.`);
+      // console.log(`ID ${idToCheck} is not included in the list.`);
       return await false;
   }
 }
