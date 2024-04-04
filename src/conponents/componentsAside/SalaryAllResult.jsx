@@ -613,14 +613,36 @@ function SalaryAllResult() {
         const groupedByWorkplace = responseDataAll.reduce((acc, employee) => {
             const { workplace } = employee;
             acc[workplace] = acc[workplace] || {
-                employees: [], totalSalary: 0, totalAmountOt: 0,
-                totalAmountSpecial: 0, totalAmountPosition: 0
-                , totalAmountHardWorking: 0, totalAmountHoliday: 0, totalDeductBeforeTax: 0, totalAddAmountBeforeTax: 0,
-                totalTax: 0, totalSocialSecurity: 0, totalAddAmountAfterTax: 0, totalAdvancePayment: 0
-                , totalDeductAfterTax: 0, totalBank: 0, totalTotal: 0, totalEmp: 0
+                employees: [],
+                totalSalary: 0,
+                totalAmountOt: 0,
+                totalAmountSpecial: 0,
+                totalAmountPosition: 0,
+                totalAmountHardWorking: 0,
+                totalAmountHoliday: 0,
+                totalDeductBeforeTax: 0,
+                totalAddAmountBeforeTax: 0,
+                totalTax: 0,
+                totalSocialSecurity: 0,
+                totalAddAmountAfterTax: 0,
+                totalAdvancePayment: 0,
+                totalDeductAfterTax: 0,
+                totalBank: 0,
+                totalTotal: 0,
+                totalEmp: 0,
+                totalSpSalary: 0 // Add a new property for sum of SpSalary
+
             };
             acc[workplace].employees.push(employee);
             // acc[workplace].name.push(employee.name);
+
+            const addSalary = employee.addSalary || [];
+            const spSalarySum = addSalary.reduce((total, item) => {
+                if (item.id === "1250" || item.id === "1555") {
+                    return total + parseFloat(item.SpSalary || 0);
+                }
+                return total;
+            }, 0);
 
             // Adjust this line based on your specific structure to get the salary or any other relevant data
             acc[workplace].totalSalary += parseFloat(employee.accountingRecord.amountDay || 0);
@@ -639,6 +661,12 @@ function SalaryAllResult() {
             acc[workplace].totalBank += parseFloat(employee.accountingRecord.bank || 0);
             acc[workplace].totalTotal += parseFloat(employee.accountingRecord.total ?? 0);
 
+            acc[workplace].totalSpSalary += parseFloat(spSalarySum ?? 0); // Add the sum to totalSpSalary
+
+
+
+
+
             acc[workplace].totalEmp += 1;
 
             return acc;
@@ -656,7 +684,7 @@ function SalaryAllResult() {
                     employees, totalSalary, totalAmountOt, totalAmountSpecial, totalAmountPosition,
                     totalAmountHardWorking, totalAmountHoliday, totalAddAmountBeforeTax, totalDeductBeforeTax,
                     totalTax, totalSocialSecurity, totalAddAmountAfterTax, totalAdvancePayment,
-                    totalDeductAfterTax, totalBank, totalTotal, totalEmp
+                    totalDeductAfterTax, totalBank, totalTotal, totalEmp,totalSpSalary
                 } = groupedByWorkplace[workplaceKey];
 
                 const workplaceDetails = workplaceListAll.find(w => w.workplaceId == workplaceKey) || { name: 'Unknown' };
@@ -899,20 +927,46 @@ function SalaryAllResult() {
 
                 // เงินเดือน
                 pdf.text(`${totalSalary.toFixed(2)}`, 85, currentY, { align: 'right' });
+
                 // ค่าล่วงเวลา
                 pdf.text(`${totalAmountOt.toFixed(2)}`, 85 + (cellWidthOT), currentY, { align: 'right' });
-                pdf.text(`${totalAmountSpecial.toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
+
+                //ค่ารถ โทร ตำแหน่ง
+                // pdf.text(`${totalAmountSpecial.toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
+                pdf.text(`${totalSpSalary.toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
+
+                //สวัสดิการ
                 pdf.text(`${totalAmountPosition.toFixed(2)}`, 85 + (cellWidthOT * 3), currentY, { align: 'right' });
+
+                // เบี้ยขยัน
                 pdf.text(`${totalAmountHardWorking.toFixed(2)}`, 85 + (cellWidthOT * 4), currentY, { align: 'right' });
+
+                // นักขัติ
                 pdf.text(`${totalAmountHoliday.toFixed(2)}`, 85 + (cellWidthOT * 5), currentY, { align: 'right' });
+
+                // บวกอื่นๆ
                 pdf.text(`${totalAddAmountBeforeTax.toFixed(2)}`, 85 + (cellWidthOT * 6), currentY, { align: 'right' });
+
+                // หักอื่นๆ
                 pdf.text(`${totalDeductBeforeTax.toFixed(2)}`, 85 + (cellWidthOT * 7), currentY, { align: 'right' });
+
+                // หักภาษี
                 pdf.text(`${totalTax.toFixed(0)}`, 85 + (cellWidthOT * 8), currentY, { align: 'right' });
+
+                // หักปกส
                 pdf.text(`${totalSocialSecurity.toFixed(0)}`, 85 + (cellWidthOT * 9), currentY, { align: 'right' });
+
+                // บวกอื่นๆ
                 pdf.text(`${totalAddAmountAfterTax.toFixed(2)}`, 85 + (cellWidthOT * 10), currentY, { align: 'right' });
+
+                // หักอื่นๆ
                 pdf.text(`${totalDeductAfterTax.toFixed(2)}`, 85 + (cellWidthOT * 11), currentY, { align: 'right' });
+
+                // เบิกล่วงหน้า
                 pdf.text(`${totalAdvancePayment.toFixed(2)}`, 85 + (cellWidthOT * 12), currentY, { align: 'right' });
+
                 // pdf.text(`${totalBank.toFixed(2)}`, 278, currentY, { align: 'right' });
+                // สุทธิ
                 pdf.text(`${totalTotal.toFixed(2)}`, 85 + (cellWidthOT * 13), currentY, { align: 'right' });
 
                 currentY += 5;
