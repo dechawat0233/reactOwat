@@ -942,7 +942,7 @@ function SalaryAllResult() {
                 // pdf.text(`${Number(totalSpSalary * totalCountDay).toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
                 // console.log('totalSpSalary', totalSpSalary)
                 // console.log('accountingRecord.countDay', totalCountDay)
-                sumSpSalaryall
+                // sumSpSalaryall
                 pdf.text(`${Number(sumSpSalaryall).toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
 
                 //สวัสดิการ
@@ -1074,7 +1074,7 @@ function SalaryAllResult() {
         };
 
 
-        const cellWidthName = 40;
+        const cellWidthName = 50;
         const startXName = 20; // Adjust the starting X-coordinate as needed
         const startYName = 55; // Adjust the starting Y-coordinate as needed
 
@@ -1468,6 +1468,11 @@ function SalaryAllResult() {
         let totalAdvancePaymentSum = 0;
         let totalDeductAfterTaxSum = 0;
         let totalTotalSum = 0;
+        let totalSumSpSalaryall = 0;
+
+
+        let sumSpSalaryall = 0;
+
 
         Object.keys(groupedByWorkplace)
             .sort((a, b) => a.localeCompare(b)) // Sort keys in ascending order
@@ -1491,11 +1496,11 @@ function SalaryAllResult() {
                 employees.sort((a, b) => a.employeeId.localeCompare(b.employeeId));
 
                 // Display employee information
-                employees.forEach(({ employeeId, lastName, name, accountingRecord }) => {
+                employees.forEach(({ employeeId, lastName, name, accountingRecord, addSalary }) => {
 
                     drawID();
                     drawName();
-                    drawAllDay();
+                    // drawAllDay();
                     drawSalary();
                     drawOT();
                     drawWelfare();
@@ -1511,6 +1516,15 @@ function SalaryAllResult() {
                     drawMinusAfterDeductTax();
                     // drawBank();
                     drawResult();
+
+                    const filteredSalary = addSalary.filter(item => item.id === "1230" || item.id === "1520" || item.id === "1350");
+                    // Calculate the sum of SpSalary values in the filtered array
+                    const sumSpSalary = filteredSalary.reduce((total, item) => total + parseFloat(item.SpSalary || 0), 0);
+                    // Now you can use sumSpSalary wherever you need to display the total sum, for example:
+                    pdf.text(`${(sumSpSalary * accountingRecord.countDay).toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
+
+                    sumSpSalaryall += (sumSpSalary * accountingRecord.countDay);
+
 
                     // Check if there's not enough space on the current page
                     if (currentY > pdf.internal.pageSize.height - 20) {
@@ -1536,22 +1550,74 @@ function SalaryAllResult() {
 
                 pdf.text(`${workplaceName} : ${workplaceKey}`, 25, currentY);
 
-                pdf.text(`${totalEmp} คน`, 68, currentY, { align: 'right' });
+                // pdf.text(`${totalEmp} คน`, 68, currentY, { align: 'right' });
 
+                // pdf.text(`${totalSalary.toFixed(2)}`, 85, currentY, { align: 'right' });
+
+                // pdf.text(`${totalAmountOt.toFixed(2)}`, 85 + (cellWidthOT), currentY, { align: 'right' });
+                // // pdf.text(`${totalAmountSpecial.toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
+                //  // sumSpSalaryall
+                //  pdf.text(`${Number(sumSpSalaryall).toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
+                // pdf.text(`${totalAmountPosition.toFixed(2)}`, 85 + (cellWidthOT * 3), currentY, { align: 'right' });
+                // pdf.text(`${totalAmountHardWorking.toFixed(2)}`, 85 + (cellWidthOT * 4), currentY, { align: 'right' });
+                // pdf.text(`${totalAmountHoliday.toFixed(2)}`, 85 + (cellWidthOT * 5), currentY, { align: 'right' });
+                // pdf.text(`${totalAddAmountBeforeTax.toFixed(2)}`, 85 + (cellWidthOT * 6), currentY, { align: 'right' });
+                // pdf.text(`${totalDeductBeforeTax.toFixed(2)}`, 85 + (cellWidthOT * 7), currentY, { align: 'right' });
+                // pdf.text(`${totalTax.toFixed(0)}`, 85 + (cellWidthOT * 8), currentY, { align: 'right' });
+                // pdf.text(`${totalSocialSecurity.toFixed(0)}`, 85 + (cellWidthOT * 9), currentY, { align: 'right' });
+                // pdf.text(`${totalAddAmountAfterTax.toFixed(2)}`, 85 + (cellWidthOT * 10), currentY, { align: 'right' });
+                // pdf.text(`${totalAdvancePayment.toFixed(2)}`, 85 + (cellWidthOT * 11), currentY, { align: 'right' });
+                // pdf.text(`${totalDeductAfterTax.toFixed(2)}`, 85 + (cellWidthOT * 12), currentY, { align: 'right' });
+                // // pdf.text(`${totalBank.toFixed(2)}`, 278, currentY, { align: 'right' });
+                // pdf.text(`${totalTotal.toFixed(2)}`, 85 + (cellWidthOT * 13), currentY, { align: 'right' });
+
+
+                // เงินเดือน
                 pdf.text(`${totalSalary.toFixed(2)}`, 85, currentY, { align: 'right' });
+
+                // ค่าล่วงเวลา
                 pdf.text(`${totalAmountOt.toFixed(2)}`, 85 + (cellWidthOT), currentY, { align: 'right' });
-                pdf.text(`${totalAmountSpecial.toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
+
+                //ค่ารถ โทร ตำแหน่ง
+                // pdf.text(`${totalAmountSpecial.toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
+                // pdf.text(`${Number(totalSpSalary * totalCountDay).toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
+                // console.log('totalSpSalary', totalSpSalary)
+                // console.log('accountingRecord.countDay', totalCountDay)
+                // sumSpSalaryall
+                pdf.text(`${Number(sumSpSalaryall).toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
+
+                //สวัสดิการ
                 pdf.text(`${totalAmountPosition.toFixed(2)}`, 85 + (cellWidthOT * 3), currentY, { align: 'right' });
+
+                // เบี้ยขยัน
                 pdf.text(`${totalAmountHardWorking.toFixed(2)}`, 85 + (cellWidthOT * 4), currentY, { align: 'right' });
+
+                // นักขัติ
                 pdf.text(`${totalAmountHoliday.toFixed(2)}`, 85 + (cellWidthOT * 5), currentY, { align: 'right' });
+
+                // บวกอื่นๆ
                 pdf.text(`${totalAddAmountBeforeTax.toFixed(2)}`, 85 + (cellWidthOT * 6), currentY, { align: 'right' });
+
+                // หักอื่นๆ
                 pdf.text(`${totalDeductBeforeTax.toFixed(2)}`, 85 + (cellWidthOT * 7), currentY, { align: 'right' });
+
+                // หักภาษี
                 pdf.text(`${totalTax.toFixed(0)}`, 85 + (cellWidthOT * 8), currentY, { align: 'right' });
+
+                // หักปกส
                 pdf.text(`${totalSocialSecurity.toFixed(0)}`, 85 + (cellWidthOT * 9), currentY, { align: 'right' });
+
+                // บวกอื่นๆ
                 pdf.text(`${totalAddAmountAfterTax.toFixed(2)}`, 85 + (cellWidthOT * 10), currentY, { align: 'right' });
-                pdf.text(`${totalAdvancePayment.toFixed(2)}`, 85 + (cellWidthOT * 11), currentY, { align: 'right' });
-                pdf.text(`${totalDeductAfterTax.toFixed(2)}`, 85 + (cellWidthOT * 12), currentY, { align: 'right' });
+
+                // หักอื่นๆ
+                pdf.text(`${totalDeductAfterTax.toFixed(2)}`, 85 + (cellWidthOT * 11), currentY, { align: 'right' });
+
+                // เบิกล่วงหน้า
+                pdf.text(`${totalAdvancePayment.toFixed(2)}`, 85 + (cellWidthOT * 12), currentY, { align: 'right' });
+
                 // pdf.text(`${totalBank.toFixed(2)}`, 278, currentY, { align: 'right' });
+                // สุทธิ
                 pdf.text(`${totalTotal.toFixed(2)}`, 85 + (cellWidthOT * 13), currentY, { align: 'right' });
 
                 currentY += 5;
@@ -1580,21 +1646,23 @@ function SalaryAllResult() {
                 totalAdvancePaymentSum += totalAdvancePayment;
                 totalDeductAfterTaxSum += totalDeductAfterTax;
                 totalTotalSum += totalTotal;
+                totalSumSpSalaryall += sumSpSalaryall
 
             });
         pdf.text(`${totalSalarySum.toFixed(2)}`, 85, currentY, { align: 'right' }); // Adjust coordinates as needed
         pdf.text(`${totalAmountOtSum.toFixed(2)}`, 85 + (cellWidthOT * 1), currentY, { align: 'right' }); // Adjust coordinates as needed
-        pdf.text(`${totalAmountSpecialSum.toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' }); // Adjust coordinates as needed
+        // pdf.text(`${totalAmountSpecialSum.toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' }); // Adjust coordinates as needed
+        pdf.text(`${totalSumSpSalaryall.toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' }); // Adjust coordinates as needed
         pdf.text(`${totalAmountPositionSum.toFixed(2)}`, 85 + (cellWidthOT * 3), currentY, { align: 'right' }); // Adjust coordinates as needed
         pdf.text(`${totalAmountHardWorkingSum.toFixed(2)}`, 85 + (cellWidthOT * 4), currentY, { align: 'right' }); // Adjust coordinates as needed
         pdf.text(`${totalAmountHolidaySum.toFixed(2)}`, 85 + (cellWidthOT * 5), currentY, { align: 'right' }); // Adjust coordinates as needed
         pdf.text(`${totalAddAmountBeforeTaxSum.toFixed(2)}`, 85 + (cellWidthOT * 6), currentY, { align: 'right' }); // Adjust coordinates as needed
         pdf.text(`${totalDeductBeforeTaxSum.toFixed(2)}`, 85 + (cellWidthOT * 7), currentY, { align: 'right' }); // Adjust coordinates as needed
         pdf.text(`${totalTaxSum.toFixed(2)}`, 85 + (cellWidthOT * 8), currentY, { align: 'right' }); // Adjust coordinates as needed
-        pdf.text(`${totalSocialSecuritySum.toFixed(2)}`, 85 + (cellWidthOT * 9), currentY, { align: 'right' }); // Adjust coordinates as needed
+        pdf.text(`${totalSocialSecuritySum.toFixed(0)}`, 85 + (cellWidthOT * 9), currentY, { align: 'right' }); // Adjust coordinates as needed
         pdf.text(`${totalAddAmountAfterTaxSum.toFixed(2)}`, 85 + (cellWidthOT * 10), currentY, { align: 'right' }); // Adjust coordinates as needed
-        pdf.text(`${totalAdvancePaymentSum.toFixed(2)}`, 85 + (cellWidthOT * 11), currentY, { align: 'right' }); // Adjust coordinates as needed
-        pdf.text(`${totalDeductAfterTaxSum.toFixed(2)}`, 85 + (cellWidthOT * 12), currentY, { align: 'right' }); // Adjust coordinates as needed
+        pdf.text(`${totalDeductAfterTaxSum.toFixed(2)}`, 85 + (cellWidthOT * 11), currentY, { align: 'right' }); // Adjust coordinates as needed
+        pdf.text(`${totalAdvancePaymentSum.toFixed(2)}`, 85 + (cellWidthOT * 12), currentY, { align: 'right' }); // Adjust coordinates as needed
         pdf.text(`${totalTotalSum.toFixed(2)}`, 85 + (cellWidthOT * 13), currentY, { align: 'right' }); // Adjust coordinates as needed
 
 
@@ -1828,8 +1896,8 @@ function SalaryAllResult() {
                                     </div>
                                     <br />
 
-                                    <button class="btn btn-success" onClick={generatePDF01}>Generate PDF</button>
-                                    <button class="btn btn-success" onClick={generatePDF02}>แบบหน่วงงานทั้งหมด</button>
+                                    <button class="btn btn-success" style={{ width: "10rem" }} onClick={generatePDF01}>PDF รายหน่วยงาน</button>
+                                    <button class="btn btn-success" style={{ marginLeft: "1rem", width: "11rem" }} onClick={generatePDF02}>PDF หน่วงงานทั้งหมด</button>
 
                                 </div>
                                 {/* <label>Thai Date:</label> */}
