@@ -935,7 +935,7 @@ function SalaryAllResult() {
 
                 //ค่ารถ โทร ตำแหน่ง
                 // pdf.text(`${totalAmountSpecial.toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
-                pdf.text(`${(totalSpSalary * countDay).toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
+                pdf.text(`${Number(totalSpSalary * countDay).toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
 
                 //สวัสดิการ
                 pdf.text(`${totalAmountPosition.toFixed(2)}`, 85 + (cellWidthOT * 3), currentY, { align: 'right' });
