@@ -614,6 +614,7 @@ function SalaryAllResult() {
             const { workplace } = employee;
             acc[workplace] = acc[workplace] || {
                 employees: [],
+                totalCountDay: 0,
                 totalSalary: 0,
                 totalAmountOt: 0,
                 totalAmountSpecial: 0,
@@ -638,13 +639,14 @@ function SalaryAllResult() {
 
             const addSalary = employee.addSalary || [];
             const spSalarySum = addSalary.reduce((total, item) => {
-                if (item.id === "1250" || item.id === "1555") {
+                if (item.id === "1230" || item.id === "1520" || item.id === "1350") {
                     return total + parseFloat(item.SpSalary || 0);
                 }
                 return total;
             }, 0);
 
             // Adjust this line based on your specific structure to get the salary or any other relevant data
+            acc[workplace].totalCountDay += parseFloat(employee.accountingRecord.countDay || 0);
             acc[workplace].totalSalary += parseFloat(employee.accountingRecord.amountDay || 0);
             acc[workplace].totalAmountOt += parseFloat(employee.accountingRecord.amountOt || 0);
             acc[workplace].totalAmountSpecial += parseFloat(employee.accountingRecord.amountSpecial || 0);
@@ -684,7 +686,7 @@ function SalaryAllResult() {
                     employees, totalSalary, totalAmountOt, totalAmountSpecial, totalAmountPosition,
                     totalAmountHardWorking, totalAmountHoliday, totalAddAmountBeforeTax, totalDeductBeforeTax,
                     totalTax, totalSocialSecurity, totalAddAmountAfterTax, totalAdvancePayment,
-                    totalDeductAfterTax, totalBank, totalTotal, totalEmp,totalSpSalary
+                    totalDeductAfterTax, totalBank, totalTotal, totalEmp, totalSpSalary, countDay
                 } = groupedByWorkplace[workplaceKey];
 
                 const workplaceDetails = workplaceListAll.find(w => w.workplaceId == workplaceKey) || { name: 'Unknown' };
@@ -821,7 +823,7 @@ function SalaryAllResult() {
                     // Calculate the sum of SpSalary values in the filtered array
                     const sumSpSalary = filteredSalary.reduce((total, item) => total + parseFloat(item.SpSalary || 0), 0);
                     // Now you can use sumSpSalary wherever you need to display the total sum, for example:
-                    pdf.text(`${sumSpSalary.toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
+                    pdf.text(`${(sumSpSalary * accountingRecord.countDay).toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
 
                     const formattedAmountPosition = Number(accountingRecord.amountPosition ?? 0).toFixed(2);
                     pdf.text(`${formattedAmountPosition}`, 85 + (cellWidthOT * 3), currentY, { align: 'right' });
@@ -933,7 +935,7 @@ function SalaryAllResult() {
 
                 //ค่ารถ โทร ตำแหน่ง
                 // pdf.text(`${totalAmountSpecial.toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
-                pdf.text(`${totalSpSalary.toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
+                pdf.text(`${(totalSpSalary * countDay).toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
 
                 //สวัสดิการ
                 pdf.text(`${totalAmountPosition.toFixed(2)}`, 85 + (cellWidthOT * 3), currentY, { align: 'right' });
