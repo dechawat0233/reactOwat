@@ -686,7 +686,7 @@ function SalaryAllResult() {
                     employees, totalSalary, totalAmountOt, totalAmountSpecial, totalAmountPosition,
                     totalAmountHardWorking, totalAmountHoliday, totalAddAmountBeforeTax, totalDeductBeforeTax,
                     totalTax, totalSocialSecurity, totalAddAmountAfterTax, totalAdvancePayment,
-                    totalDeductAfterTax, totalBank, totalTotal, totalEmp, totalSpSalary, countDay
+                    totalDeductAfterTax, totalBank, totalTotal, totalEmp, totalSpSalary, totalCountDay
                 } = groupedByWorkplace[workplaceKey];
 
                 const workplaceDetails = workplaceListAll.find(w => w.workplaceId == workplaceKey) || { name: 'Unknown' };
@@ -935,9 +935,9 @@ function SalaryAllResult() {
 
                 //ค่ารถ โทร ตำแหน่ง
                 // pdf.text(`${totalAmountSpecial.toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
-                pdf.text(`${Number(totalSpSalary * accountingRecord.countDay).toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
+                pdf.text(`${Number(totalSpSalary * totalCountDay).toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
                 console.log('totalSpSalary',totalSpSalary)
-                console.log('accountingRecord.countDay',accountingRecord.countDay)
+                console.log('totalCountDay',totalCountDay)
 
                 //สวัสดิการ
                 pdf.text(`${totalAmountPosition.toFixed(2)}`, 85 + (cellWidthOT * 3), currentY, { align: 'right' });
