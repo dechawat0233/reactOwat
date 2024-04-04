@@ -38,6 +38,20 @@ function TestPDFResultSalay() {
             });
     }, []);
 
+    useEffect(() => {
+        // Fetch data from the API when the component mounts
+        fetch(endpoint + '/employee/list')
+            .then(response => response.json())
+            .then(data => {
+                // Update the state with the fetched data
+                setWorkplaceListAll(data);
+                // alert(data[0].workplaceName);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, []);
+
     console.log('workplaceListAll', workplaceListAll);
 
     useEffect(() => {
@@ -174,6 +188,16 @@ function TestPDFResultSalay() {
             pdf.text(`แผนก`, 110, head);
             pdf.text(`เลขที่บัญชี`, 165, head);
 
+            const namesWithSpecificIds = responseDataAll[i].addSalary
+                // "1230" || item.id === "1520" || item.id === "1350"
+                .filter(item => ['1230', '1520', '1350'].includes(item.id)) // Filter based on specific IDs
+                .map(item => item.name) // Extract names
+            // Concatenate names if there are any
+            const concatenatedNames = namesWithSpecificIds.length > 0 ? namesWithSpecificIds.join('/') : '';
+            // Show concatenated names in the PDF
+
+            console.log('namesWithSpecificIds', namesWithSpecificIds);
+            console.log('concatenatedNames', concatenatedNames);
             // Draw a square frame around the first name
             pdf.rect(7, 28, 155, 74);//ตารางหลัก
             pdf.rect(7, 28, 155, 12);//ตารางหลัก หัวตาราง
@@ -189,9 +213,12 @@ function TestPDFResultSalay() {
             pdf.text(`ค่าล่วงเวลา 1.5 เท่า`, 8, 56.3);//ตารางหลัก Earnings
             pdf.text(`ค่าล่วงเวลา 2 เท่า(วันหยุด/นักขัติ)`, 8, 60.4);//ตารางหลัก 
             pdf.text(`ค่าล่วงเวลา 3 เท่า`, 8, 64.5);//ตารางหลัก Earnings
-            pdf.text(`วันหยุดนักขัติฤกษ์`, 8, 68.6);//ตารางหลัก 
-            pdf.text(`ค่าเดินทาง/ตำแหน่ง/โทรศัพท์`, 8, 72.7);//ตารางหลัก Earnings
-            pdf.text(`เบี้ยขยัน`, 8, 76.8);//ตารางหลัก Earnings
+
+            // pdf.text(`ค่าเดินทาง/ตำแหน่ง/โทรศัพท์`, 8, 68.6);//ตารางหลัก Earnings 68.6
+            pdf.text(`${concatenatedNames}`, 8, 68.6);
+
+            pdf.text(`เบี้ยขยัน`, 8, 72.7);//ตารางหลัก Earnings 72.7
+            pdf.text(`วันหยุดนักขัติฤกษ์`, 8, 76.8);//ตารางหลัก  76.8
             pdf.text(`เงินเพิ่มพิเศษ/ค่าร้อน/หุงข้าว/ค่ากะ`, 8, 80.9);//ตารางหลัก 
             pdf.text(`จ่าย่วย/พักร้อน/ลาคลอด/เลิกจ้าง/อื่นๆ`, 8, 85);//ตารางหลัก Earnings
             // pdf.text(`อัตรา`, 8, 44);//ตารางหลัก 
@@ -263,7 +290,7 @@ function TestPDFResultSalay() {
             pdf.text(`ลงชื่อพนักงาน`, 125, 130);//ตารางหลัก Earnings
 
             // เรียงarray 
-            pdf.text(` ${responseDataAll[i].employeeId}`, 12, head);
+            pdf.text(`${responseDataAll[i].employeeId}`, 12, head);
             pdf.text(`${responseDataAll[i].name} ${responseDataAll[i].lastName}`, 60, head);
 
             //แถวเงินเดือน
@@ -341,6 +368,15 @@ function TestPDFResultSalay() {
                 pdf.text(`Earnings`, 22, head2 + 12);//ตารางหลัก Earnings
 
                 /////////////////
+
+                const namesWithSpecificIds = responseDataAll[i + 1].addSalary
+                    // "1230" || item.id === "1520" || item.id === "1350"
+                    .filter(item => ['1230', '1520', '1350'].includes(item.id)) // Filter based on specific IDs
+                    .map(item => item.name) // Extract names
+                // Concatenate names if there are any
+                const concatenatedNames = namesWithSpecificIds.length > 0 ? namesWithSpecificIds.join('/') : '';
+                // Show concatenated names in the PDF
+
                 //////////////////////// หัวข้อ
                 pdf.text(`อัตรา`, 8, head2 + 19);//ตารางหลัก 
                 pdf.text(`เงินเดือน`, 8, head2 + 23.1);//ตารางหลัก Earnings
@@ -348,9 +384,12 @@ function TestPDFResultSalay() {
                 pdf.text(`ค่าล่วงเวลา 1.5 เท่า`, 8, head2 + 31.3);//ตารางหลัก Earnings
                 pdf.text(`ค่าล่วงเวลา 2 เท่า(วันหยุด/นักขัติ)`, 8, head2 + 35.4);//ตารางหลัก 
                 pdf.text(`ค่าล่วงเวลา 3 เท่า`, 8, head2 + 39.5);//ตารางหลัก Earnings
-                pdf.text(`วันหยุดนักขัติฤกษ์`, 8, head2 + 43.6);//ตารางหลัก 
-                pdf.text(`ค่าเดินทาง/ตำแหน่ง/โทรศัพท์`, 8, head2 + 47.7);//ตารางหลัก Earnings
-                pdf.text(`เบี้ยขยัน`, 8, head2 + 51.8);//ตารางหลัก Earnings
+
+                // pdf.text(`ค่าเดินทาง/ตำแหน่ง/โทรศัพท์`, 8, head2 + 43.6);//ตารางหลัก Earnings  43.6
+                pdf.text(`${concatenatedNames}`, 8, head2 + 43.6);
+
+                pdf.text(`เบี้ยขยัน`, 8, head2 + 47.7);//ตารางหลัก Earnings 47.7
+                pdf.text(`วันหยุดนักขัติฤกษ์`, 8, head2 + 51.8);//ตารางหลัก 
                 pdf.text(`เงินเพิ่มพิเศษ/ค่าร้อน/หุงข้าว/ค่ากะ`, 8, head2 + 55.9);//ตารางหลัก 
                 pdf.text(`จ่าย่วย/พักร้อน/ลาคลอด/เลิกจ้าง/อื่นๆ`, 8, head2 + 60);//ตารางหลัก Earnings
 
