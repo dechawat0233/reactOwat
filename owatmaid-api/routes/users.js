@@ -161,4 +161,50 @@ role
 });
 
 
+router.put('/update/:_id', async (req, res) => {
+  //    console.log('hello');
+  const userToUpdate = req.params._id;
+  const updateFields = req.body;
+
+  try {
+      // Find the resource by ID and update it
+      const updatedResource = await User.findByIdAndUpdate(
+        userToUpdate ,
+          updateFields,
+          { new: true } // To get the updated document as the result
+      );
+      if (!updatedResource) {
+          return res.status(404).json({ message: 'Resource not found' });
+      }
+
+      // Send the updated resource as the response
+      res.json(updatedResource);
+
+
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+router.delete('/delete/:_id', async (req, res) => {
+  const userIdToDelete = req.params._id;
+
+  try {
+      // Find the user by ID and delete it
+      const deletedUser = await User.findByIdAndDelete(userIdToDelete);
+
+      if (!deletedUser) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
+      // Send a success message as the response
+      res.json({ message: 'User deleted successfully' });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 module.exports = router;
