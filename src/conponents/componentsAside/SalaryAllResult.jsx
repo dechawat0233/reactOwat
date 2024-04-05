@@ -855,7 +855,7 @@ function SalaryAllResult() {
                     pdf.text(`${formattedDeductBeforeTax}`, 85 + (cellWidthOT * 7), currentY, { align: 'right' });
 
                     // หัก ปกส
-                    const formattedTax = Number(accountingRecord.tax ?? 0).toFixed(2);
+                    const formattedTax = Number(accountingRecord.tax ?? 0).toFixed(0);
                     pdf.text(`${formattedTax}`, 85 + (cellWidthOT * 8), currentY, { align: 'right' });
 
                     // บวกอื่นๆหลัง
@@ -1658,7 +1658,7 @@ function SalaryAllResult() {
         pdf.text(`${totalAmountHolidaySum.toFixed(2)}`, 85 + (cellWidthOT * 5), currentY, { align: 'right' }); // Adjust coordinates as needed
         pdf.text(`${totalAddAmountBeforeTaxSum.toFixed(2)}`, 85 + (cellWidthOT * 6), currentY, { align: 'right' }); // Adjust coordinates as needed
         pdf.text(`${totalDeductBeforeTaxSum.toFixed(2)}`, 85 + (cellWidthOT * 7), currentY, { align: 'right' }); // Adjust coordinates as needed
-        pdf.text(`${totalTaxSum.toFixed(2)}`, 85 + (cellWidthOT * 8), currentY, { align: 'right' }); // Adjust coordinates as needed
+        pdf.text(`${totalTaxSum.toFixed(0)}`, 85 + (cellWidthOT * 8), currentY, { align: 'right' }); // Adjust coordinates as needed
         pdf.text(`${totalSocialSecuritySum.toFixed(0)}`, 85 + (cellWidthOT * 9), currentY, { align: 'right' }); // Adjust coordinates as needed
         pdf.text(`${totalAddAmountAfterTaxSum.toFixed(2)}`, 85 + (cellWidthOT * 10), currentY, { align: 'right' }); // Adjust coordinates as needed
         pdf.text(`${totalDeductAfterTaxSum.toFixed(2)}`, 85 + (cellWidthOT * 11), currentY, { align: 'right' }); // Adjust coordinates as needed
