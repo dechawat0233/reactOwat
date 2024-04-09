@@ -581,21 +581,21 @@ function Compensation() {
 
 
     const [addSalaryDay, setAddSalaryDay] = useState(0);
-    const [addSalaryDayList , setAddSalaryDayList ] = useState([]);
+    const [addSalaryDayList, setAddSalaryDayList] = useState([]);
 
     useEffect(() => {
         // alert(employee?.addSalary?.length );
 
         const getAddSalaryDay = async () => {
             await setAddSalaryDay(0);
-await setAddSalaryDayList([]);
+            await setAddSalaryDayList([]);
 
             if (employee?.addSalary?.length > 0) {
-let tmpAddSalaryList = [];
+                let tmpAddSalaryList = [];
 
                 const sum = await employee.addSalary.reduce(async (accumulator, item) => {
                     if (item.roundOfSalary === 'daily') {
-await tmpAddSalaryList.push(item);
+                        await tmpAddSalaryList.push(item);
                         if (parseFloat(item.SpSalary) < 100) {
                             return await accumulator + parseFloat(item.SpSalary, 10);
                         } else {
@@ -1347,35 +1347,37 @@ await tmpAddSalaryList.push(item);
                                                                     workplaceRecord.workRateOT}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {editIndex === index ?(
+                                                                {editIndex === index ? (
 
                                                                     <div className="popup">
-                                                                    <h4>รายการเงินเพิ่ม</h4>
-                                                                    <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
-                                                                      {addSalaryDayList && (
-                                                                      addSalaryDayList.map((addsalary, index) => (
-                                                                        (addsalary.name !== '' && (
-                                                                          <li key={index} style={{ marginBottom: '10px' }}>
-                                                                            {addsalary.name} - จำนวน: {addsalary.SpSalary} {addsalary.roundOfSalary == 'daily' && (<>/ {addsalary.message} วัน</>)}
-                                                                            <button type="button">ลบ</button>
-                                                                          </li>
-                                                                        ))
-                                                                      )))}
-                                    
-                                                                    </ul>
-                                                                  </div>
-                                    
-                                                                ): (
+                                                                        <h4>รายการเงินเพิ่ม</h4>
+                                                                        <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
+                                                                            {addSalaryDayList && (
+                                                                                addSalaryDayList.map((addsalary, index) => (
+                                                                                    (addsalary.name !== '' && (
+                                                                                        <li key={index} style={{ marginBottom: '10px' }}>
+                                                                                            {addsalary.name} - จำนวน: {addsalary.SpSalary} {addsalary.roundOfSalary == 'daily' && (<>/ {addsalary.message} วัน</>)}
+                                                                                            <button type="button">ลบ</button>
+                                                                                        </li>
+                                                                                    ))
+                                                                                )))}
+
+                                                                        </ul>
+                                                                    </div>
+
+                                                                ) : (
                                                                     workplaceRecord.addSalaryDay
-                                                                    )}
+                                                                )}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                 {/* <a href="https://example.com" class="link1" style={{ color: 'red' }}><b>ลบ</b></a> / <a href="#" class="link2" style={{ color: 'blue' }} onClick={openModal}><b>แก้ไข</b></a> */}
 
                                                                 {editIndex === index ? (
-                                                                    <button class="btn btn-info" style={{ width: '3rem' }} onClick={saveFormData}>Save</button>
+                                                                    <button class="btn btn-info" style={{ width: '4rem' }} onClick={saveFormData}>Save</button>
                                                                 ) : (
-                                                                    <button class="btn btn-danger" style={{ width: '3rem' }} onClick={() => editData(index)}>แก้ไข</button>
+                                                                    // <button class="btn btn-danger" style={{ width: '3rem' }} onClick={() => editData(index)}>แก้ไข</button>
+                                                                    <button class="btn btn-danger" style={{ width: '4rem', textAlign: 'center' }} onClick={() => editData(index)}>แก้ไข</button>
+
                                                                 )}
 
                                                                 <Modal
@@ -1525,7 +1527,7 @@ await tmpAddSalaryList.push(item);
                     </section>
                 </div>
             </div>
-            {JSON.stringify( dataTable)}
+            {JSON.stringify(dataTable)}
         </body>
         // </div>  )
     )

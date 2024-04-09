@@ -204,22 +204,22 @@ function Salaryresult() {
   useEffect(() => {
     const getemp = async () => {
 
-try{
-  const dataTest1 =  await {
-    employeeId: staffId,
-    year: year,
-    month: month,
-  };
+      try {
+        const dataTest1 = await {
+          employeeId: staffId,
+          year: year,
+          month: month,
+        };
 
-const x =   await axios.post(endpoint + '/accounting/calsalaryemp', dataTest1)
-if (x){
-  alert(x.data[0].addSalary.length)
-}
-} catch (e){
-// alert(e);
-}
-}
-// getemp();
+        const x = await axios.post(endpoint + '/accounting/calsalaryemp', dataTest1)
+        if (x) {
+          alert(x.data[0].addSalary.length)
+        }
+      } catch (e) {
+        // alert(e);
+      }
+    }
+    // getemp();
 
 
     const fetchData = async () => {
@@ -228,7 +228,7 @@ if (x){
         year: year,
         month: month,
       };
-await setAddSalaryList([]);
+      await setAddSalaryList([]);
       await axios.post(endpoint + '/accounting/calsalaryemp', dataTest)
         .then(response => {
           const responseData = response.data;
@@ -1155,8 +1155,8 @@ await setAddSalaryList([]);
     parseFloat(amountHoliday) +
     parseFloat(addAmountAfterTax) +
     parseFloat(amountSpecial);
-    
-    // amountDay + amountOt + addAmountBeforeTax + addAmountAfterTax
+
+  // amountDay + amountOt + addAmountBeforeTax + addAmountAfterTax
   //   overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult
 
   const totalSumDeduct =
@@ -1385,9 +1385,9 @@ await setAddSalaryList([]);
                           {/* <td style={cellStyle}>{(overAddSalaryDaySum).toFixed(2) + (sumSpSalary).toFixed(2)}</td> */}
                           {/* <td style={cellStyle}>{(overAddSalaryDaySum + sumSpSalaryResult).toFixed(2) + `(` + (overAddSalaryDaySum).toFixed(2) + `+` + (sumSpSalaryResult).toFixed(2) + `)`}</td> */}
                           <td style={cellStyle}>
-                            <p onClick={togglePopup} style={{ color: color, cursor: 'pointer' }}>
+                            <span onClick={togglePopup} style={{ color: color, cursor: 'pointer' }}>
                               {isNaN(Number(addAmountBeforeTax + addAmountAfterTax)) ? 0.00 : Number(addAmountBeforeTax + addAmountAfterTax).toFixed(2)}
-                            </p>
+                            </span>
                             {showPopup && (
                               <div className="popup">
                                 <h4>รายการเงินเพิ่ม</h4>
@@ -1430,10 +1430,16 @@ await setAddSalaryList([]);
                             />
                           </td> */}
                           {/* <td style={cellStyle}>{(overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult).toFixed(2)}</td> */}
-                          <td style={cellStyle}>{(amountDay + amountOt + addAmountBeforeTax + addAmountAfterTax).toFixed(2)}</td>
+                          <td style={cellStyle}>
+                            {/* {(amountDay + amountOt + addAmountBeforeTax + addAmountAfterTax).toFixed(2)} */}
+                            {isNaN(amountDay + amountOt + addAmountBeforeTax + addAmountAfterTax) ?
+                              '0' :
+                              (amountDay + amountOt + addAmountBeforeTax + addAmountAfterTax).toFixed(2)
+                            }
+                          </td>
 
                           <td style={cellStyle}>
-                            <button class="btn btn-danger" style={{ width: '3rem' }}>แก้ไข</button>
+                            <button class="btn btn-danger" style={{ width: '4rem' }}>แก้ไข</button>
                           </td>
 
                         </tr>
@@ -1475,9 +1481,9 @@ await setAddSalaryList([]);
                             />
                           </td> */}
                           <td style={cellStyle}>
-                            <p onClick={togglePopup} style={{ color: color, cursor: 'pointer' }}>
+                            <span onClick={togglePopup} style={{ color: color, cursor: 'pointer' }}>
                               {isNaN(Number(deductBeforeTax) + Number(deductAfterTax)) ? 0.00 : (Number(deductBeforeTax) + Number(deductAfterTax)).toFixed(2)}
-                            </p>
+                            </span>
                             {showPopup && (
                               <div className="popup">
                                 <h4>รายการเงินหัก</h4>
@@ -1504,7 +1510,7 @@ await setAddSalaryList([]);
                           <td style={cellStyle}>{isNaN(Number(deductBeforeTax) + Number(deductAfterTax) + Number(tax) + Math.ceil(Number(socialSecurity)) + Number(bank)) ? 0.00 : (Number(deductBeforeTax) + Number(deductAfterTax) + Number(tax) + Number(socialSecurity) + Number(bank)).toFixed(2)}</td>
                           {/* <td style={cellStyle}>({anyMinus} + {tax} + {((overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary) * socialSecurity).toFixed()} + {bankCustom} + {sumDeduct} + {sumDeductInstallment})</td> */}
                           <td style={cellStyle}>
-                            <button class="btn btn-danger" style={{ width: '3rem' }}>แก้ไข</button>
+                            <button class="btn btn-danger" style={{ width: '4rem' }}>แก้ไข</button>
                           </td>
                         </tr>
                       </tbody>
