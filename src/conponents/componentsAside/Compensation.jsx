@@ -1580,7 +1580,7 @@ addSalaryList[index].reduce((acc, addsalary) => {
                 </div>
             </div>
             {/* {JSON.stringify( dataTable[30])}{dataTable.length} */}
-            {JSON.stringify( addSalaryList[0])}
+            {/* {JSON.stringify( addSalaryList[0])} */}
             {/* {JSON.stringify( addSalaryList[1])} */}
             {/* <button onClick={() => handleRemoveAddSalaryArray(1, 1)}>Remove addSalary array</button> */}
         </body>
