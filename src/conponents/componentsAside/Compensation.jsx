@@ -585,6 +585,23 @@ function Compensation() {
     const [addSalaryList, setAddSalaryList] = useState([]);
 
 
+  const calculateTotalSalary = () => {
+    let total = 0;
+    addSalaryList.forEach((day, dayIndex)  => {
+        if (dataTable[dayIndex].workplaceId !== undefined && dataTable[dayIndex].workplaceId !== '') {
+      day.forEach(salary => {
+
+        if(salary.SpSalary > 100) {
+    total += parseFloat( (salary.SpSalary / 30).toFixed(2) );
+} else {
+    total += parseFloat( salary.SpSalary);
+}
+      });
+    }
+    });
+    return total;
+  };
+
     useEffect(() => {
         // alert(employee?.addSalary?.length );
 
@@ -1531,7 +1548,10 @@ addSalaryList[index].reduce((acc, addsalary) => {
                                                         <td style={cellStyle}>{sumRate}</td>
                                                         <td></td>
                                                         <td style={cellStyle}>{sumRateOT}</td>
-                                                        <td style={cellStyle}>{sumAddSalary}</td>
+                                                        <td style={cellStyle}>
+                                                            {/* {sumAddSalary} */}
+                                                            {calculateTotalSalary ().toFixed(2) }
+                                                            </td>
                                                         <td></td>
                                                     </tr>
                                                 </tbody>
