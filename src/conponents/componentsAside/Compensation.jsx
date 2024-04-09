@@ -1388,7 +1388,7 @@ await tmpAddSalaryList.push(item);
                                     
                                                                 ): (
                                                                     // workplaceRecord.addSalaryDay
-                                                                    addSalaryList[index] && addSalaryList[index].length > 0 && workplaceRecord.workplaceId !== ''? 
+                                                                    addSalaryList[index] && addSalaryList[index].length > 0 && workplaceRecord.workplaceId !== '' && workplaceRecord.workplaceId !== undefined ? 
 addSalaryList[index].reduce((acc, addsalary) => {
     if (addsalary.name !== '' && addsalary.roundOfSalary === 'daily') {
         if(addsalary.SpSalary > 100 ){
@@ -1396,7 +1396,7 @@ addSalaryList[index].reduce((acc, addsalary) => {
         }else {
             acc += parseFloat(addsalary.SpSalary);
         }
-        
+
     }
     return acc;
 }, 0) : 0
