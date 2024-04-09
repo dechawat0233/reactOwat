@@ -126,6 +126,8 @@ res.json(x.data);
 
 });
 
+
+
 //get accounting by id
 router.post('/calsalaryemp', async (req, res) => {
   try {
@@ -200,20 +202,6 @@ if (response) {
     data.accountingRecord.tax = await response.data.tax ||0;
 tax = await response.data.tax ||0; 
 
-  console.log('hi');
-//get special day 
-const dataSearch1 = await {
-  searchWorkplaceId: response.data.workplace, 
-  searchWorkplaceName: '' 
-};
-const responseSpecialDay= await axios.post(sURL + '/workplace/search', dataSearch1);
-
-if(responseSpecialDay){
-await console.log(responseSpecialDay);
-} else {
-  await console.log(responseSpecialDay);
-
-}
 
     // data.employeeId = responseConclude.data.recordConclude[c].employeeId;
     data.name = await response.data.name;
@@ -427,6 +415,7 @@ data.deductSalary = deductSalaryList || [];
 router.post('/calsalarylist', async (req, res) => {
   try {
     const { year, month } = req.body;
+    const workplaceList = await axios.get(sURL + '/workplace/list');
 
     const dataSearch = {
       year: year, 
@@ -465,30 +454,13 @@ let sumDeductUncalculateTax = 0;
 let tax = 0;
 let total = 0;
 
-        for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.length; i++) {
-          amountDay += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0);
-          amountOt += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT || 0);
-          amountSpecial += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].addSalaryDay || 0);
-          countHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
-          countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+let holidayRate = 0;
+let workDaylist = [];
 
-          if (responseConclude.data.recordConclude[c].concludeRecord[i].workRate !== undefined) {
-            countDay++;
-          }
-        }
+let specialDaylist = [];
+let countSpecialDay = 0;
+let amountSpecialDay = 0;
 
-        data.accountingRecord.countDay = countDay;
-        data.accountingRecord.countHour = countHour;
-        data.accountingRecord.countOtHour = countOtHour;
-
-        data.accountingRecord.amountDay = amountDay;
-        data.accountingRecord.amountOt = amountOt;
-
-      sumSocial = await sumSocial + amountDay;
-      sumCalTax = await sumCalTax + amountDay;
-      sumCalTax = await sumCalTax + amountOt;
-
-// await console.log(sumSocial );
 
 // Get employee data by employeeId
 const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
@@ -496,6 +468,58 @@ if (response) {
     data.workplace = await response.data.workplace;
     data.accountingRecord.tax = await response.data.tax ||0;
 tax = await response.data.tax ||0; 
+
+// await console.log(response.data);
+
+//ss
+// console.log(response.data.workplace );
+    // Find the workplace with the matching ID
+    const foundWorkplace = await workplaceList.data.find(workplace => workplace.workplaceId === response.data.workplace );
+
+    if (foundWorkplace) {
+      amountSpecial = await foundWorkplace.holiday || 0;
+
+      // Found the workplace
+      // await console.log('Found workplace:', foundWorkplace);
+      // console.log(foundWorkplace.daysOff);
+      await foundWorkplace.daysOff.map(item => {
+        const originalDateString = item;
+        const originalDate = new Date(originalDateString);
+        const month1 = (originalDate.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed, so 
+        const year1 = originalDate.getFullYear();
+        const day1 = originalDate.getDate(); // Increment by 1 to get the next day
+// const day1 = (originalDate.getDate()).toString().padStart(2, '0'); // Ensure day is represented by 
+
+if(month >= 1 ){
+
+if(month -1 == month1 && year == year1 && day1 >= 21) {
+  specialDaylist.push(day1);
+  holidayRate = response.data.salary || foundWorkplace.workRate;
+          }
+        if(month == month1 && year == year1 && day1 <= 20) {
+specialDaylist.push(day1);
+holidayRate = response.data.salary || foundWorkplace.workRate;
+        }
+
+       } else {
+
+        if(month == month1 && year == year1 && day1 <= 20) {
+          specialDaylist.push(day1);
+          holidayRate = response.data.salary || foundWorkplace.workRate;
+                  }
+       }
+
+
+// console.log(year + ' ' + year1 + ' ' + month + ' ' + month1);
+      })
+
+// Format the components as desired
+// const formattedDate = `${year}/${String(month).padStart(2, '0')}/${String(day).padStart(2, '0')}`;
+
+    } else {
+      // Workplace with the given ID not found
+      // await console.log('Workplace not found');
+    }
 
     // data.employeeId = responseConclude.data.recordConclude[c].employeeId;
     data.name = await response.data.name;
@@ -650,8 +674,40 @@ await Promise.all(promisesDeduct)
 //   +" social" + sumSocial * 0.05
 //   +"sum non tax" + sumNonTaxNonSalary 
 //   + "deduct un tax" +  sumDeductUncalculateTax );
-  
-  
+
+// console.log("test" + (specialDaylist.length * holidayRate ) + '*' + amountSpecial);
+//ss1
+for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.length; i++) {
+  amountDay += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0);
+  amountOt += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT || 0);
+  amountSpecial += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].addSalaryDay || 0);
+  countHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+  countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+
+  if (responseConclude.data.recordConclude[c].concludeRecord[i].workRate !== undefined) {
+    countDay++;
+    workDaylist.push(responseConclude.data.recordConclude[c].concludeRecord[i].day.split("/")[0] );
+
+  }
+
+}
+
+data.accountingRecord.countDay = countDay;
+data.accountingRecord.countHour = countHour;
+data.accountingRecord.countOtHour = countOtHour;
+
+data.accountingRecord.amountDay = amountDay;
+data.accountingRecord.amountOt = amountOt;
+
+sumSocial = await sumSocial + amountDay;
+sumCalTax = await sumCalTax + amountDay;
+sumCalTax = await sumCalTax + amountOt;
+
+// await console.log(sumSocial );
+
+const intersection = workDaylist.filter(day => specialDaylist.includes(parseInt(day)));
+
+// console.log(intersection); // Output: ['2', '3', '4']
 //total
 total = await amountDay + amountOt + sumCalTaxNonSalary - sumDeductWithTax 
 - tax
@@ -682,6 +738,12 @@ data.accountingRecord.socialSecurity = (sumSocial * 0.05) || 0;
     data.accountingRecord.sumSalaryForTax = sumCalTax || 0;
     data.addSalary = addSalaryList || [];
 data.deductSalary = deductSalaryList || [];
+
+data.specialDayRate = await holidayRate || 0;
+data.countSpecialDay = await specialDaylist.length || 0;
+data.specialDayListWork = await intersection || [];
+//end point
+
 
 }
 

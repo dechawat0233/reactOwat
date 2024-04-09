@@ -582,22 +582,20 @@ function Compensation() {
 
     const [addSalaryDay, setAddSalaryDay] = useState(0);
     const [addSalaryDayList , setAddSalaryDayList ] = useState([]);
-    const [addSalaryList, setAddSalaryList] = useState([]);
-
 
     useEffect(() => {
         // alert(employee?.addSalary?.length );
 
         const getAddSalaryDay = async () => {
             await setAddSalaryDay(0);
-            await setAddSalaryDayList([]);
+await setAddSalaryDayList([]);
 
             if (employee?.addSalary?.length > 0) {
-                let tmpAddSalaryList = [];
+let tmpAddSalaryList = [];
 
                 const sum = await employee.addSalary.reduce(async (accumulator, item) => {
                     if (item.roundOfSalary === 'daily') {
-                        await tmpAddSalaryList.push(item);
+await tmpAddSalaryList.push(item);
                         if (parseFloat(item.SpSalary) < 100) {
                             return await accumulator + parseFloat(item.SpSalary, 10);
                         } else {
@@ -612,12 +610,6 @@ function Compensation() {
                 await setAddSalaryDayList(tmpAddSalaryList);
 
                 await setAddSalaryDay(sum);
-
-                                // Create addSalaryList array
-                                const addSalaryList = Array(dataTable.length).fill(tmpAddSalaryList);
-
-                                // Update state with the created addSalaryList
-                                setAddSalaryList(addSalaryList);
             }
 
         };
@@ -633,19 +625,6 @@ function Compensation() {
     }, [employee]);
 
 
-  // Function to remove an addSalary array from addSalaryList
-  const removeAddSalaryArray = (listIndex, subArrayIndex) => {
-    setAddSalaryList(prevAddSalaryList => {
-      const newAddSalaryList = [...prevAddSalaryList];
-        newAddSalaryList[listIndex].splice(subArrayIndex, 1);
-      return newAddSalaryList;
-    });
-  };
-
-  // Example usage of removeAddSalaryArray function
-  const handleRemoveAddSalaryArray = (listIndex, subArrayIndex) => {
-    removeAddSalaryArray(listIndex, subArrayIndex);
-  };
 
     console.log('searchResult', searchResult);
     console.log('searchResultLower', searchResultLower);
@@ -1368,17 +1347,17 @@ function Compensation() {
                                                                     workplaceRecord.workRateOT}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {editIndex === index ? (
+                                                                {editIndex === index ?(
 
                                                                     <div className="popup">
                                                                     <h4>รายการเงินเพิ่ม</h4>
                                                                     <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
-                                                                      {addSalaryList[index]&& (
-                                                                      addSalaryList[index].map((addsalary, index) => (
+                                                                      {addSalaryDayList && (
+                                                                      addSalaryDayList.map((addsalary, index) => (
                                                                         (addsalary.name !== '' && (
                                                                           <li key={index} style={{ marginBottom: '10px' }}>
                                                                             {addsalary.name} - จำนวน: {addsalary.SpSalary} {addsalary.roundOfSalary == 'daily' && (<>/ {addsalary.message} วัน</>)}
-                                                                            <button type="button" onClick={() => deleteAddSalary(0, 1)}>ลบ</button>
+                                                                            <button type="button">ลบ</button>
                                                                           </li>
                                                                         ))
                                                                       )))}
@@ -1387,26 +1366,16 @@ function Compensation() {
                                                                   </div>
                                     
                                                                 ): (
-                                                                    // workplaceRecord.addSalaryDay
-                                                                    addSalaryList[index] && addSalaryList[index].length > 0 && workplaceRecord.workplaceId !== ''? 
-addSalaryList[index].reduce((acc, addsalary) => {
-    if (addsalary.name !== '' && addsalary.roundOfSalary === 'daily') {
-        acc += parseFloat(addsalary.SpSalary);
-    }
-    return acc;
-}, 0) : 0
-
-                                                                )}
+                                                                    workplaceRecord.addSalaryDay
+                                                                    )}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                 {/* <a href="https://example.com" class="link1" style={{ color: 'red' }}><b>ลบ</b></a> / <a href="#" class="link2" style={{ color: 'blue' }} onClick={openModal}><b>แก้ไข</b></a> */}
 
                                                                 {editIndex === index ? (
-                                                                    <button class="btn btn-info" style={{ width: '4rem' }} onClick={saveFormData}>Save</button>
+                                                                    <button class="btn btn-info" style={{ width: '3rem' }} onClick={saveFormData}>Save</button>
                                                                 ) : (
-                                                                    // <button class="btn btn-danger" style={{ width: '3rem' }} onClick={() => editData(index)}>แก้ไข</button>
-                                                                    <button class="btn btn-danger" style={{ width: '4rem', textAlign: 'center' }} onClick={() => editData(index)}>แก้ไข</button>
-
+                                                                    <button class="btn btn-danger" style={{ width: '3rem' }} onClick={() => editData(index)}>แก้ไข</button>
                                                                 )}
 
                                                                 <Modal
@@ -1556,10 +1525,7 @@ addSalaryList[index].reduce((acc, addsalary) => {
                     </section>
                 </div>
             </div>
-            {/* {JSON.stringify( dataTable[30])}{dataTable.length} */}
-            {JSON.stringify( addSalaryList[0])}
-            {JSON.stringify( addSalaryList[1])}
-            <button onClick={() => handleRemoveAddSalaryArray(1, 1)}>Remove addSalary array</button>
+            {JSON.stringify( dataTable)}
         </body>
         // </div>  )
     )
