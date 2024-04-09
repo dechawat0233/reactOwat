@@ -582,8 +582,6 @@ function Compensation() {
 
     const [addSalaryDay, setAddSalaryDay] = useState(0);
     const [addSalaryDayList , setAddSalaryDayList ] = useState([]);
-    const [addSalaryList, setAddSalaryList] = useState([]);
-
 
     useEffect(() => {
         // alert(employee?.addSalary?.length );
@@ -612,12 +610,6 @@ await tmpAddSalaryList.push(item);
                 await setAddSalaryDayList(tmpAddSalaryList);
 
                 await setAddSalaryDay(sum);
-
-                                // Create addSalaryList array
-                                const addSalaryList = Array(dataTable.length).fill(tmpAddSalaryList);
-
-                                // Update state with the created addSalaryList
-                                setAddSalaryList(addSalaryList);
             }
 
         };
@@ -633,19 +625,6 @@ await tmpAddSalaryList.push(item);
     }, [employee]);
 
 
-  // Function to remove an addSalary array from addSalaryList
-  const removeAddSalaryArray = (listIndex, subArrayIndex) => {
-    setAddSalaryList(prevAddSalaryList => {
-      const newAddSalaryList = [...prevAddSalaryList];
-        newAddSalaryList[listIndex].splice(subArrayIndex, 1);
-      return newAddSalaryList;
-    });
-  };
-
-  // Example usage of removeAddSalaryArray function
-  const handleRemoveAddSalaryArray = (listIndex, subArrayIndex) => {
-    removeAddSalaryArray(listIndex, subArrayIndex);
-  };
 
     console.log('searchResult', searchResult);
     console.log('searchResultLower', searchResultLower);
@@ -1373,12 +1352,12 @@ await tmpAddSalaryList.push(item);
                                                                     <div className="popup">
                                                                     <h4>รายการเงินเพิ่ม</h4>
                                                                     <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
-                                                                      {addSalaryList[index]&& (
-                                                                      addSalaryList[index].map((addsalary, index) => (
+                                                                      {addSalaryDayList && (
+                                                                      addSalaryDayList.map((addsalary, index) => (
                                                                         (addsalary.name !== '' && (
                                                                           <li key={index} style={{ marginBottom: '10px' }}>
                                                                             {addsalary.name} - จำนวน: {addsalary.SpSalary} {addsalary.roundOfSalary == 'daily' && (<>/ {addsalary.message} วัน</>)}
-                                                                            <button type="button" onClick={() => deleteAddSalary(0, 1)}>ลบ</button>
+                                                                            <button type="button">ลบ</button>
                                                                           </li>
                                                                         ))
                                                                       )))}
@@ -1387,16 +1366,8 @@ await tmpAddSalaryList.push(item);
                                                                   </div>
                                     
                                                                 ): (
-                                                                    // workplaceRecord.addSalaryDay
-                                                                    addSalaryList[index] && addSalaryList[index].length > 0 && workplaceRecord.workplaceId !== ''? 
-addSalaryList[index].reduce((acc, addsalary) => {
-    if (addsalary.name !== '' && addsalary.roundOfSalary === 'daily') {
-        acc += parseFloat(addsalary.SpSalary);
-    }
-    return acc;
-}, 0) : 0
-
-                                                                )}
+                                                                    workplaceRecord.addSalaryDay
+                                                                    )}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                 {/* <a href="https://example.com" class="link1" style={{ color: 'red' }}><b>ลบ</b></a> / <a href="#" class="link2" style={{ color: 'blue' }} onClick={openModal}><b>แก้ไข</b></a> */}
@@ -1554,10 +1525,7 @@ addSalaryList[index].reduce((acc, addsalary) => {
                     </section>
                 </div>
             </div>
-            {/* {JSON.stringify( dataTable[30])}{dataTable.length} */}
-            {JSON.stringify( addSalaryList[0])}
-            {JSON.stringify( addSalaryList[1])}
-            <button onClick={() => handleRemoveAddSalaryArray(1, 1)}>Remove addSalary array</button>
+            {JSON.stringify( dataTable)}
         </body>
         // </div>  )
     )
