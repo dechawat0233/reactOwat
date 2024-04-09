@@ -1377,7 +1377,7 @@ function Compensation() {
                                                                       addSalaryList[index].map((addsalary, index) => (
                                                                         (addsalary.name !== '' && (
                                                                           <li key={index} style={{ marginBottom: '10px' }}>
-                                                                            {addsalary.name} - จำนวน: {addsalary.SpSalary} {addsalary.roundOfSalary == 'daily' && (<>/ {addsalary.message} วัน</>)}
+                                                                            {addsalary.name} - จำนวน: {addsalary.SpSalary > 100 ? (addsalary.SpSalary /30).toFixed(2) : addsalary.SpSalary } {addsalary.roundOfSalary == 'daily' && (<>/ {addsalary.message} วัน</>)}
                                                                             <button type="button" onClick={() => deleteAddSalary(0, 1)}>ลบ</button>
                                                                           </li>
                                                                         ))
@@ -1388,10 +1388,15 @@ function Compensation() {
                                     
                                                                 ): (
                                                                     // workplaceRecord.addSalaryDay
-                                                                    addSalaryList[index] && addSalaryList[index].length > 0 && workplaceRecord.workplaceId !== ''? 
+                                                                    addSalaryList[index] && addSalaryList[index].length > 0 && workplaceRecord.workplaceId !== '' && workplaceRecord.workplaceId !== undefined ? 
 addSalaryList[index].reduce((acc, addsalary) => {
     if (addsalary.name !== '' && addsalary.roundOfSalary === 'daily') {
-        acc += parseFloat(addsalary.SpSalary);
+        if(addsalary.SpSalary > 100 ){
+            acc += parseFloat((addsalary.SpSalary /30 ).toFixed(2) );
+        }else {
+            acc += parseFloat(addsalary.SpSalary);
+        }
+
     }
     return acc;
 }, 0) : 0
