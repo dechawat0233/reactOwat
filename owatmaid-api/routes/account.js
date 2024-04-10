@@ -491,7 +491,7 @@ tax = await response.data.tax ||0;
 const day1 = (originalDate.getDate() +1 ).toString().padStart(2, '0'); // Ensure day is represented by 
 
 if(month1 == '02') {
-day1 = '01';
+day1 = await '01';
 }
 
 if(month >= 1 ){
