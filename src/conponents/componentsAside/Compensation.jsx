@@ -651,12 +651,19 @@ function Compensation() {
 
 
   // Function to remove an addSalary array from addSalaryList
-  const removeAddSalaryArray = (listIndex, subArrayIndex) => {
-    setAddSalaryList(prevAddSalaryList => {
-      const newAddSalaryList = [...prevAddSalaryList];
-        newAddSalaryList[listIndex].splice(subArrayIndex, 1);
-      return newAddSalaryList;
-    });
+  const removeAddSalaryArray = async (listIndex, subArrayIndex) => {
+    const newAddSalaryList = await [...addSalaryList]; 
+
+    await newAddSalaryList[listIndex].splice(subArrayIndex, 1); // Remove the element at the specified index
+    await setAddSalaryList(newAddSalaryList);
+alert(newAddSalaryList .length);
+
+    //zz
+    // setAddSalaryList(prevAddSalaryList => {
+    //   const newAddSalaryList = [...prevAddSalaryList];
+    //     newAddSalaryList[listIndex].splice(subArrayIndex, 1);
+    //   return newAddSalaryList;
+    // });
   };
 
   // Example usage of removeAddSalaryArray function
@@ -1582,9 +1589,9 @@ addSalaryList[index].reduce((acc, addsalary) => {
                 </div>
             </div>
             {/* {JSON.stringify( dataTable[30])}{dataTable.length} */}
-            {/* {JSON.stringify( addSalaryList[0])} */}
-            {/* {JSON.stringify( addSalaryList[1])} */}
-            {/* <button onClick={() => handleRemoveAddSalaryArray(1, 1)}>Remove addSalary array</button> */}
+                0: {JSON.stringify( addSalaryList[0])}
+                1: {JSON.stringify( addSalaryList[1])}
+            <br></br><button onClick={() => handleRemoveAddSalaryArray(1, 0)}>Remove addSalary array</button>
         </body>
         // </div>  )
     )
