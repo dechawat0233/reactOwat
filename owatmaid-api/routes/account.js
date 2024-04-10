@@ -707,7 +707,7 @@ sumCalTax = await sumCalTax + amountOt;
 
 const intersection = workDaylist.filter(day => specialDaylist.includes(parseInt(day)));
 
-// console.log(intersection); // Output: ['2', '3', '4']
+console.log(intersection); // Output: ['2', '3', '4']
 //total
 total = await amountDay + amountOt + sumCalTaxNonSalary - sumDeductWithTax 
 - tax
