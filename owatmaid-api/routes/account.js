@@ -704,13 +704,13 @@ sumCalTax = await sumCalTax + amountDay;
 sumCalTax = await sumCalTax + amountOt;
 
 // await console.log(sumSocial );
-console.log(JSON.stringify(workDaylist,null,2));
-console.log();
-console.log(JSON.stringify(specialDaylist,null,2));
 
-const intersection = workDaylist.filter(day => specialDaylist.includes(parseInt(day)));
+awaitconsole.log(JSON.stringify(workDaylist,null,2));
+await console.log(JSON.stringify(specialDaylist,null,2));
 
-console.log(intersection); // Output: ['2', '3', '4']
+const intersection = await workDaylist.filter(day => specialDaylist.includes(parseInt(day)));
+
+await console.log(intersection); // Output: ['2', '3', '4']
 //total
 total = await amountDay + amountOt + sumCalTaxNonSalary - sumDeductWithTax 
 - tax
