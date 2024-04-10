@@ -1502,7 +1502,7 @@ function Salaryresult() {
                                     }))}
 
                                 </ul>
-                                <button onClick={togglePopup}>Close</button>
+                                {/* <button onClick={togglePopup}>Close</button> */}
                               </div>
                             )}
                             {/* {isNaN(Number(deductBeforeTax) + Number(deductAfterTax)) ? 0.00 : (Number(deductBeforeTax) + Number(deductAfterTax)).toFixed(2)} */}
