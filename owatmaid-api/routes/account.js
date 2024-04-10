@@ -482,35 +482,35 @@ tax = await response.data.tax ||0;
       // Found the workplace
       // await console.log('Found workplace:', foundWorkplace);
       // console.log(foundWorkplace.daysOff);
-      await foundWorkplace.daysOff.map(item => {
-        const originalDateString = item;
-        const originalDate = new Date(originalDateString);
-        const month1 = (originalDate.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed, so 
-        const year1 = originalDate.getFullYear();
-        const day1 = originalDate.getDate(); // Increment by 1 to get the next day
+      await foundWorkplace.daysOff.map(async item => {
+        const originalDateString = await item;
+        const originalDate = await new Date(originalDateString);
+        const month1 = await (originalDate.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed, so 
+        const year1 = await originalDate.getFullYear();
+        const day1 = await originalDate.getDate(); // Increment by 1 to get the next day
 // const day1 = (originalDate.getDate()).toString().padStart(2, '0'); // Ensure day is represented by 
 
 if(month >= 1 ){
   
 if(month -1 == month1 && year == year1 && day1 >= 21) {
-  specialDaylist.push(day1);
-  holidayRate = response.data.salary || foundWorkplace.workRate;
+  await specialDaylist.push(day1);
+  holidayRate = await response.data.salary || foundWorkplace.workRate;
           }
         if(month == month1 && year == year1 && day1 <= 20) {
-specialDaylist.push(day1);
-holidayRate = response.data.salary || foundWorkplace.workRate;
+await specialDaylist.push(day1);
+holidayRate = await response.data.salary || foundWorkplace.workRate;
         }
 
        } else {
 
         if(month == month1 && year == year1 && day1 <= 20) {
-          specialDaylist.push(day1);
-          holidayRate = response.data.salary || foundWorkplace.workRate;
+          await specialDaylist.push(day1);
+          holidayRate = await response.data.salary || foundWorkplace.workRate;
                   }
        }
 
 
-console.log(year + ' ' + year1 + ' ' + month + ' ' + month1);
+// console.log(year + ' ' + year1 + ' ' + month + ' ' + month1);
       })
 
 // Format the components as desired
