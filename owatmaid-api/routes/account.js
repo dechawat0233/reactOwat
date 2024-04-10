@@ -708,7 +708,7 @@ sumCalTax = await sumCalTax + amountOt;
 
 const intersection = await workDaylist.filter(day => specialDaylist.includes(parseInt(day)));
 
-await console.log(data.employeeId + ' ' + month");
+await console.log(data.employeeId + ' ' + month);
 await console.log('workDaylist' + JSON.stringify(workDaylist,null,2))
 await console.log('specialDaylist' + JSON.stringify(specialDaylist,null,2));
 
