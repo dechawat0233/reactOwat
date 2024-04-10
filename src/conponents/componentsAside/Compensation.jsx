@@ -607,14 +607,14 @@ function Compensation() {
 
         const getAddSalaryDay = async () => {
             await setAddSalaryDay(0);
-await setAddSalaryDayList([]);
+            await setAddSalaryDayList([]);
 
             if (employee?.addSalary?.length > 0) {
-let tmpAddSalaryList = [];
+                let tmpAddSalaryList = [];
 
                 const sum = await employee.addSalary.reduce(async (accumulator, item) => {
                     if (item.roundOfSalary === 'daily') {
-await tmpAddSalaryList.push(item);
+                        await tmpAddSalaryList.push(item);
                         if (parseFloat(item.SpSalary) < 100) {
                             return await accumulator + parseFloat(item.SpSalary, 10);
                         } else {
@@ -1392,7 +1392,7 @@ alert(newAddSalaryList .length);
                                                                     workplaceRecord.workRateOT}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {editIndex === index ?(
+                                                                {editIndex === index ? (
 
                                                                     <div className="popup">
                                                                     <h4>รายการเงินเพิ่ม</h4>
@@ -1431,9 +1431,11 @@ addSalaryList[index].reduce((acc, addsalary) => {
                                                                 {/* <a href="https://example.com" class="link1" style={{ color: 'red' }}><b>ลบ</b></a> / <a href="#" class="link2" style={{ color: 'blue' }} onClick={openModal}><b>แก้ไข</b></a> */}
 
                                                                 {editIndex === index ? (
-                                                                    <button class="btn btn-info" style={{ width: '3rem' }} onClick={saveFormData}>Save</button>
+                                                                    <button class="btn btn-info" style={{ width: '4rem' }} onClick={saveFormData}>Save</button>
                                                                 ) : (
-                                                                    <button class="btn btn-danger" style={{ width: '3rem' }} onClick={() => editData(index)}>แก้ไข</button>
+                                                                    // <button class="btn btn-danger" style={{ width: '3rem' }} onClick={() => editData(index)}>แก้ไข</button>
+                                                                    <button class="btn btn-danger" style={{ width: '4rem', textAlign: 'center' }} onClick={() => editData(index)}>แก้ไข</button>
+
                                                                 )}
 
                                                                 <Modal

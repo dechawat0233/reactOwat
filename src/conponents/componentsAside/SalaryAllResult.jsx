@@ -631,7 +631,8 @@ function SalaryAllResult() {
                 totalBank: 0,
                 totalTotal: 0,
                 totalEmp: 0,
-                totalSpSalary: 0 // Add a new property for sum of SpSalary
+                totalSpSalary: 0,// Add a new property for sum of SpSalary
+                totalCountSpecialDay: 0,
 
             };
             acc[workplace].employees.push(employee);
@@ -665,6 +666,25 @@ function SalaryAllResult() {
 
             acc[workplace].totalSpSalary += parseFloat(spSalarySum ?? 0); // Add the sum to totalSpSalary
 
+            // Parse and calculate the value
+            // const countSpecialDay = Number(employee.countSpecialDay);
+            // const specialDayRate = Number(employee.specialDayRate);
+
+            // console.log('countSpecialDay',countSpecialDay);
+            // console.log('specialDayRate',specialDayRate);
+
+
+            // // Check if countSpecialDay and specialDayRate are valid numbers, otherwise default to 0
+            // const parsedCountSpecialDay = isNaN(countSpecialDay) ? 0 : countSpecialDay;
+            // const parsedSpecialDayRate = isNaN(specialDayRate) ? 0 : specialDayRate;
+
+            // // Calculate the product and add to the totalCountSpecialDaySumSpecialDayRate
+            // acc[workplace].totalCountSpecialDaySumSpecialDayRate += parsedCountSpecialDay * parsedSpecialDayRate;
+
+
+            // acc[workplace].totalCountSpecialDaySumSpecialDayRate += parseFloat((Number(employee.countSpecialDay) * Number(employee.specialDayRate)) ?? 0); // Add the sum to totalSpSalary
+
+
 
 
 
@@ -673,11 +693,14 @@ function SalaryAllResult() {
 
             return acc;
         }, {});
+        console.log('groupedByWorkplace', groupedByWorkplace);
 
         // Loop through the grouped data and add content to the PDF
         let currentY = 20;
 
         let sumSpSalaryall = 0;
+        let sumFormattedAmountHoliday = 0;
+
 
         // Loop through the grouped data and add content to the PDF
         // Object.keys(groupedByWorkplace).forEach((workplaceKey, index) => {
@@ -688,7 +711,7 @@ function SalaryAllResult() {
                     employees, totalSalary, totalAmountOt, totalAmountSpecial, totalAmountPosition,
                     totalAmountHardWorking, totalAmountHoliday, totalAddAmountBeforeTax, totalDeductBeforeTax,
                     totalTax, totalSocialSecurity, totalAddAmountAfterTax, totalAdvancePayment,
-                    totalDeductAfterTax, totalBank, totalTotal, totalEmp, totalSpSalary, totalCountDay
+                    totalDeductAfterTax, totalBank, totalTotal, totalEmp, totalSpSalary, totalCountSpecialDaySumSpecialDayRate
                 } = groupedByWorkplace[workplaceKey];
 
                 const workplaceDetails = workplaceListAll.find(w => w.workplaceId == workplaceKey) || { name: 'Unknown' };
@@ -703,7 +726,7 @@ function SalaryAllResult() {
                 employees.sort((a, b) => a.employeeId.localeCompare(b.employeeId));
 
                 // Display employee information
-                employees.forEach(({ employeeId, lastName, name, accountingRecord, addSalary }) => {
+                employees.forEach(({ employeeId, lastName, name, accountingRecord, addSalary, countSpecialDay, specialDayRate }) => {
 
                     drawID();
                     drawName();
@@ -843,8 +866,12 @@ function SalaryAllResult() {
                     pdf.text(`${sumAmountHardWorking.toFixed(2)}`, 85 + (cellWidthOT * 4), currentY, { align: 'right' });
 
                     // นักขัติ
-                    const formattedAmountHoliday = Number(accountingRecord.amountHoliday ?? 0).toFixed(2);
-                    pdf.text(`${formattedAmountHoliday}`, 85 + (cellWidthOT * 5), currentY, { align: 'right' });
+                    // const formattedAmountHoliday = Number(accountingRecord.amountHoliday ?? 0).toFixed(2);
+                    // pdf.text(`${formattedAmountHoliday}`, 85 + (cellWidthOT * 5), currentY, { align: 'right' });
+                    const formattedAmountHoliday = Number((countSpecialDay * specialDayRate) ?? 0);
+                    pdf.text(`${formattedAmountHoliday.toFixed(2)}`, 85 + (cellWidthOT * 5), currentY, { align: 'right' });
+
+                    sumFormattedAmountHoliday += formattedAmountHoliday;
 
                     // บวกอื่นๆ 
                     const formattedAddAmountBeforeTax = Number(accountingRecord.addAmountBeforeTax ?? 0).toFixed(2);
@@ -855,7 +882,7 @@ function SalaryAllResult() {
                     pdf.text(`${formattedDeductBeforeTax}`, 85 + (cellWidthOT * 7), currentY, { align: 'right' });
 
                     // หัก ปกส
-                    const formattedTax = Number(accountingRecord.tax ?? 0).toFixed(2);
+                    const formattedTax = Number(accountingRecord.tax ?? 0).toFixed(0);
                     pdf.text(`${formattedTax}`, 85 + (cellWidthOT * 8), currentY, { align: 'right' });
 
                     // บวกอื่นๆหลัง
@@ -952,7 +979,8 @@ function SalaryAllResult() {
                 pdf.text(`${totalAmountHardWorking.toFixed(2)}`, 85 + (cellWidthOT * 4), currentY, { align: 'right' });
 
                 // นักขัติ
-                pdf.text(`${totalAmountHoliday.toFixed(2)}`, 85 + (cellWidthOT * 5), currentY, { align: 'right' });
+                // pdf.text(`${totalAmountHoliday.toFixed(2)}`, 85 + (cellWidthOT * 5), currentY, { align: 'right' });
+                pdf.text(`${Number(sumFormattedAmountHoliday).toFixed(2)}`, 85 + (cellWidthOT * 5), currentY, { align: 'right' });
 
                 // บวกอื่นๆ
                 pdf.text(`${totalAddAmountBeforeTax.toFixed(2)}`, 85 + (cellWidthOT * 6), currentY, { align: 'right' });
@@ -1658,7 +1686,7 @@ function SalaryAllResult() {
         pdf.text(`${totalAmountHolidaySum.toFixed(2)}`, 85 + (cellWidthOT * 5), currentY, { align: 'right' }); // Adjust coordinates as needed
         pdf.text(`${totalAddAmountBeforeTaxSum.toFixed(2)}`, 85 + (cellWidthOT * 6), currentY, { align: 'right' }); // Adjust coordinates as needed
         pdf.text(`${totalDeductBeforeTaxSum.toFixed(2)}`, 85 + (cellWidthOT * 7), currentY, { align: 'right' }); // Adjust coordinates as needed
-        pdf.text(`${totalTaxSum.toFixed(2)}`, 85 + (cellWidthOT * 8), currentY, { align: 'right' }); // Adjust coordinates as needed
+        pdf.text(`${totalTaxSum.toFixed(0)}`, 85 + (cellWidthOT * 8), currentY, { align: 'right' }); // Adjust coordinates as needed
         pdf.text(`${totalSocialSecuritySum.toFixed(0)}`, 85 + (cellWidthOT * 9), currentY, { align: 'right' }); // Adjust coordinates as needed
         pdf.text(`${totalAddAmountAfterTaxSum.toFixed(2)}`, 85 + (cellWidthOT * 10), currentY, { align: 'right' }); // Adjust coordinates as needed
         pdf.text(`${totalDeductAfterTaxSum.toFixed(2)}`, 85 + (cellWidthOT * 11), currentY, { align: 'right' }); // Adjust coordinates as needed

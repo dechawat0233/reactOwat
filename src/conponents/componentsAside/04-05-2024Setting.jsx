@@ -174,6 +174,22 @@ function Setting() {
 
     };
 
+    // const calculateTimeDifference = (startTime, endTime) => {
+    //     const [startHour, startMinute] = startTime.split('.').map(Number);
+    //     const [endHour, endMinute] = endTime.split('.').map(Number);
+
+    //     let resultHour = endHour - startHour;
+    //     let resultMinute = endMinute - startMinute;
+
+    //     if (resultMinute < 0) {
+    //         resultHour -= 1;
+    //         resultMinute += 60;
+    //     }
+
+    //     return `${resultHour.toString().padStart(2, '0')}.${resultMinute.toString().padStart(2, '0')}`;
+    // };
+
+
     const calculateTimeDifference = (startTime, endTime) => {
         const [startHour, startMinute] = startTime.split('.').map(Number);
         const [endHour, endMinute] = endTime.split('.').map(Number);
@@ -193,6 +209,49 @@ function Setting() {
 
         return `${resultHour.toString().padStart(2, '0')}.${resultMinute.toString().padStart(2, '0')}`;
     };
+
+
+
+    // Function to calculate time difference
+    // const calculateTimeDifference = (startTime, endTime) => {
+    //     const [startHour, startMinute] = startTime.split(':').map(Number);
+    //     const [endHour, endMinute] = endTime.split(':').map(Number);
+
+    //     let resultHour = endHour - startHour;
+    //     let resultMinute = endMinute - startMinute;
+
+    //     if (resultMinute < 0) {
+    //         resultHour -= 1;
+    //         resultMinute += 60;
+    //     }
+
+    //     const resultTime = `${resultHour.toString().padStart(2, '0')}:${resultMinute.toString().padStart(2, '0')}`;
+    //     return resultTime;
+    // };
+
+    // const calculateTimeDifference = (startTime, endTime) => {
+    //     const start = new Date(`1970-01-01T${startTime}`);
+    //     const end = new Date(`1970-01-01T${endTime}`);
+
+    //     // Ensure valid dates
+    //     if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+    //         return 'Invalid Time';
+    //     }
+
+    //     let diff = end - start;
+
+    //     if (diff < 0) {
+    //         // Add 24 hours to handle cases where endTime is earlier than startTime
+    //         diff += 24 * 60 * 60 * 1000;
+    //     }
+
+    //     const hours = Math.floor(diff / (60 * 60 * 1000));
+    //     const minutes = Math.floor((diff % (60 * 60 * 1000)) / (60 * 1000));
+
+    //     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+    // };
+
+
 
 
     const [workTimeDayPerson, setWorkTimeDayPerson] = useState({
@@ -446,7 +505,22 @@ function Setting() {
 
     // const [daysOff, setDaysOff] = useState(Array(10).fill(''));
     const [holidayComment, setHolidayComment] = useState('');
+    // const handleDayOffChange = (index, value) => {
+    //     const updatedDaysOff = [...daysOff];
+    //     updatedDaysOff[index] = value;
+    //     setDaysOff(updatedDaysOff);
+    // };
 
+    // const handleAddDayOff = () => {
+    //     setDaysOff([...daysOff, '']);
+    // };
+
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     // Perform any necessary actions with the daysOff and holidayComment data
+    //     console.log(daysOff);
+    //     console.log(holidayComment);
+    // };
 
     const [employeeIdList, setEmployeeIdList] = useState([]); //รหัสพนักงาน
     const [employeeNameList, setEmployeeNameList] = useState([]); //ชื่อพนักงานที่สังกัด
@@ -572,6 +646,24 @@ function Setting() {
     });
     const [showAdditionalInput, setShowAdditionalInput] = useState([]);
 
+    // const handleSelectChange = (e, index) => {
+    //     const selectedValue = e.target.value;
+    //     handleChange(e, index, 'StaffType');
+
+    //     // Check if "Option3" is selected, and then show the additional input
+    //     const newShowAdditionalInput = [...showAdditionalInput];
+    //     newShowAdditionalInput[index] = selectedValue === 'Option3';
+    //     setShowAdditionalInput(newShowAdditionalInput);
+    // };
+
+    // const handleChangeSpSalary = (e, index, key) => {
+    //     const newFormData = [...formData];
+    //     newFormData[index] = {
+    //         ...newFormData[index],
+    //         [key]: e.target.value,
+    //     };
+    //     setFormData(newFormData);
+    // };
     const handleChangeSpSalary = (e, index, key) => {
         const newAddSalary = [...formData.addSalary];
         newAddSalary[index] = {
@@ -959,8 +1051,57 @@ function Setting() {
         borderLeft: '2px solid #000'
     };
 
+    // const [formData, setFormData] = useState([]);
+    // const [showAdditionalInput, setShowAdditionalInput] = useState([]);
+
+    // const handleSelectChange = (e, index) => {
+    //     const selectedValue = e.target.value;
+    //     handleChange(e, index, 'StaffType');
+
+    //     // Check if "Option3" is selected, and then show the additional input
+    //     const newShowAdditionalInput = [...showAdditionalInput];
+    //     newShowAdditionalInput[index] = selectedValue === 'Option3';
+    //     setShowAdditionalInput(newShowAdditionalInput);
+    // };
+
+    // const handleChangeSpSalary = (e, index, key) => {
+    //     const newFormData = [...formData];
+    //     newFormData[index] = {
+    //         ...newFormData[index],
+    //         [key]: e.target.value,
+    //     };
+    //     setFormData(newFormData);
+    // };
+
+    // const handleAddInput = () => {
+    //     setFormData([...formData, { name: '', SpSalary: '', StaffType: '', nameType: '' }]);
+    //     setShowAdditionalInput([...showAdditionalInput, false]);
+    // };
+
+    // const handleDeleteInput = (index) => {
+    //     const newFormData = [...formData];
+    //     newFormData.splice(index, 1);
+    //     setFormData(newFormData);
+
+    //     const newShowAdditionalInput = [...showAdditionalInput];
+    //     newShowAdditionalInput.splice(index, 1);
+    //     setShowAdditionalInput(newShowAdditionalInput);
+    // };
+
     console.log(formData);
-  
+    // // console.log(showAdditionalInput);
+
+
+    // useEffect(() => {
+    //     let d = holiday || 0;
+    //     let h = workOfHour || 0;
+    //     if (d < 10) {
+    //         let wr = workRate || 0;
+    //         d = wr * d;
+    //     }
+    //     let wrh = d / h;
+    //     setHolidayHour(wrh);
+    // }, [holiday, workOfHour]);
 
     useEffect(() => {
         let d = holiday || 0;
@@ -1176,7 +1317,46 @@ function Setting() {
                                 {/* <!--Frame--> */}
                                 <h2 class="title">สวัสดิการเงินเพิ่มพนักงาน</h2>
                                 <section class="Frame">
-                                   
+                                    {/* <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label role="salaryadd1">ค่ารถ</label>
+                                                <input type="text" class="form-control" id="salaryadd1" placeholder="ค่ารถ" value={salaryadd1} onChange={(e) => setSalaryadd1(e.target.value)} />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label role="salaryadd2">ค่าอาหาร</label>
+                                                <input type="text" class="form-control" id="salaryadd2" placeholder="ค่าอาหาร" value={salaryadd2} onChange={(e) => setSalaryadd2(e.target.value)} />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label role="salaryadd3">เบี้ยขยัน</label>
+                                                <input type="text" class="form-control" id="salaryadd3" placeholder="เบี้ยขยัน" value={salaryadd3} onChange={(e) => setSalaryadd3(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label role="salaryadd4">เงินพิเศษอื่นๆ</label>
+                                                <input type="text" class="form-control" id="salaryadd4" placeholder="เงินพิเศษอื่นๆ" value={salaryadd4} onChange={(e) => setSalaryadd4(e.target.value)} />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label role="salaryadd5">ค่าโทรศัพท์</label>
+                                                <input type="text" class="form-control" id="salaryadd5" placeholder="ค่าโทรศัพท์" value={salaryadd5} onChange={(e) => setSalaryadd5(e.target.value)} />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label role="salaryadd6">เงินประจำตำแหน่ง</label>
+                                                <input type="text" class="form-control" id="salaryadd6" placeholder="เงินประจำตำแหน่ง" value={salaryadd6} onChange={(e) => setSalaryadd6(e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div> */}
 
                                     {formData.addSalary && formData.addSalary.length > 0 && formData.addSalary.map((data, index) => (
                                         <div key={index}>
@@ -1613,7 +1793,18 @@ function Setting() {
                                                 ))
 
                                             ))}
-                                            
+                                            {/* <tr>
+                                                <td style={cellStyle}>จันทร์</td>
+                                                <td style={cellStyle}>ศุกร์</td>
+                                                <td style={cellStyle}>ทำงาน</td>
+                                                <td style={cellStyle}>กะเช้า</td>
+                                                <td style={cellStyle}>8.30</td>
+                                                <td style={cellStyle}>16.30</td>
+                                                <td style={cellStyle}>8</td>
+                                                <td style={cellStyle}>17.00</td>
+                                                <td style={cellStyle}>18.00</td>
+                                                <td style={cellStyle}>1</td>
+                                            </tr> */}
                                             {/* Add more rows as needed */}
                                         </tbody>
                                     </table>
@@ -1754,7 +1945,12 @@ function Setting() {
                                                 </div>
                                             ))}
                                         </div>
-                                       
+                                        {/* <div className="col-md-1">
+                                            <button type="button" aria-label="เพิ่ม"
+                                                onClick={handleAddTimePerson} className="btn btn-primary" style={{ width: '2.5rem' }}>
+                                                <i className="fa">&#xf067;</i>
+                                            </button>
+                                        </div> */}
                                     </div>
                                     <br />
 
@@ -1835,7 +2031,16 @@ function Setting() {
                                 <section class="Frame">
                                     <div>
                                         <label>เลือกวันหยุดของหน่วยงาน:</label>
-                              
+                                        {/* <DatePicker
+                                            className="form-control"
+                                            popperClassName="datepicker-popper"
+                                            selected={null}
+                                            onChange={handleDateChange}
+                                            // dateFormat="MMMM d, yyyy"
+                                            dateFormat="dd/mm/YYYY"
+                                            isClearable
+                                            placeholderText="Select a date"
+                                        /> */}
                                         <div>
                                             <div className="row">
                                                 <div className="col-md-2">
@@ -1892,7 +2097,21 @@ function Setting() {
                                                 เพิ่ม
                                             </button>
                                         </div>
-                                
+                                        {/* {selectedDates.length > 0 && (
+                                            <div>
+                                                <h3>วันหยุดหน่วยงาน</h3>
+                                                <ul>
+                                                    {selectedDates.map((date) => (
+                                                        <li key={date.toString()}>
+                                                            {date.toLocaleDateString()}{' '}
+                                                            <button type="button" onClick={() => handleRemoveDate(date)} class="btn clean" style={{ margin: '0.5rem' }}>
+                                                                ลบออก
+                                                            </button>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )} */}
                                         <br />
                                         {selectedDates.length > 0 && (
                                             <div>
@@ -1930,7 +2149,42 @@ function Setting() {
                                 <h2 class="title">พนักงานในสังกัด</h2>
                                 <section class="Frame">
                                     <div>
-                                      
+                                        {/* <div class="row">
+                                            <div class="col-md-6">
+                                                <label role="vaccination">รหัสพนักงาน:</label>
+                                                <input
+                                                    class="form-control"
+                                                    type="text"
+                                                    name="vaccination"
+                                                    id="vaccination"
+                                                    value={newEmployeeIdList}
+                                                    onChange={handleVaccination}
+                                                    placeholder="รหัสพนักงาน"
+                                                />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label role="vaccination">ชื่อพนักงานที่สังกัด:</label>
+                                                <input
+                                                    class="form-control"
+                                                    type="text"
+                                                    name="EmployeeNameList"
+                                                    id="EmployeeNameList"
+                                                    value={newEmployeeNameList}
+                                                    onChange={handleVaccination2}
+                                                    placeholder="ชื่อพนักงานที่สังกัด"
+                                                />
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <button type="button" class="btn btn-primary" onClick={handleAddVaccination}>เพิ่ม</button>
+                                        <br />
+                                        <br /> */}
+                                        {/* {showEmployeeListResult.length > 0 && (
+                                            <h2>พนักงานในหน่วยงาน {showEmployeeListResult.length} คน</h2>
+
+                                        )
+
+                                        } */}
                                         {showEmployeeListResult.length > 0 && (
                                             <>
                                                 <h3>พนักงานในหน่วยงาน {showEmployeeListResult.length} คน</h3>
@@ -1942,7 +2196,46 @@ function Setting() {
                                                 </ul>
                                             </>
                                         )}
-                                      
+                                        {/* {employeeIdList.length > 0 && (
+                                        <h2>รายการที่เพิ่ม</h2>
+                                        <ul>
+                                            {employeeIdList.map((employeeId, index) => (
+                                                <li key={index}>
+                                                    {employeeId} - {employeeNameList[index]}
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleRemoveVaccination(employeeId)}
+                                                        className="btn btn-info"
+                                                        style={{ margin: '0.5rem', width: "4rem" }}
+                                                    >
+                                                        ลบ
+                                                    </button>
+                                                </li>
+                                            ))}
+
+                                        </ul>
+                                        )} */}
+                                        {/* 
+                                        {employeeIdList.length > 0 && (
+                                            <div>
+                                                <h2>รายการที่เพิ่ม</h2>
+                                                <ul>
+                                                    {employeeIdList.map((employeeId, index) => (
+                                                        <li key={index}>
+                                                            {employeeId} - {employeeNameList[index]}
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => handleRemoveVaccination(employeeId)}
+                                                                className="btn btn-info"
+                                                                style={{ margin: '0.5rem', width: "4rem" }}
+                                                            >
+                                                                ลบ
+                                                            </button>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )} */}
                                     </div>
                                 </section>
                                 {/* <!--Frame--> */}
