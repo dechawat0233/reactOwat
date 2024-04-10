@@ -487,12 +487,9 @@ tax = await response.data.tax ||0;
         const originalDate = await new Date(originalDateString);
         const month1 = await (originalDate.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed, so 
         const year1 = await originalDate.getFullYear();
-        // const day1 = await originalDate.getDate() +1; // Increment by 1 to get the next day
-const day1 = (originalDate.getDate() +1 ).toString().padStart(2, '0'); // Ensure day is represented by 
+        const day1 = await originalDate.getDate() +1; // Increment by 1 to get the next day
+// const day1 = (originalDate.getDate() +1 ).toString().padStart(2, '0'); // Ensure day is represented by 
 
-if(month1 == '02') {
-day1 = await '01';
-}
 
 if(month >= 1 ){
   
