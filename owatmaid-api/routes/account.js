@@ -489,8 +489,8 @@ tax = await response.data.tax ||0;
         const year1 = originalDate.getFullYear();
         const day1 = originalDate.getDate(); // Increment by 1 to get the next day
 // const day1 = (originalDate.getDate()).toString().padStart(2, '0'); // Ensure day is represented by 
-console.log('month' + month );
-console.log('month1' + month1 );
+console.log('month: ' + month );
+console.log('month1: ' + month1 );
 
 if(month >= 1 ){
 
