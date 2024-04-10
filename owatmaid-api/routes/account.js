@@ -707,8 +707,11 @@ sumCalTax = await sumCalTax + amountOt;
 
 
 const intersection = await workDaylist.filter(day => specialDaylist.includes(parseInt(day)));
+
+await console.log(data.employeeId);
 await console.log('workDaylist' + JSON.stringify(workDaylist,null,2))
 await console.log('specialDaylist' + JSON.stringify(specialDaylist,null,2));
+
 await console.log(intersection); // Output: ['2', '3', '4']
 //total
 total = await amountDay + amountOt + sumCalTaxNonSalary - sumDeductWithTax 
