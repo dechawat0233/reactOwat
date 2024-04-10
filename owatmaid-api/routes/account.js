@@ -488,25 +488,8 @@ tax = await response.data.tax ||0;
         const month1 = await (originalDate.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed, so 
         const year1 = await originalDate.getFullYear();
         // const day1 = await originalDate.getDate() +1; // Increment by 1 to get the next day
-const day1 = (originalDate.getDate()).toString().padStart(2, '0'); // Ensure day is represented by 
+const day1 = (originalDate.getDate() +1 ).toString().padStart(2, '0'); // Ensure day is represented by 
 
-
-// Increment the day by 1
-day1 = (parseInt(day1) + 1).toString().padStart(2, '0');
-
-// Check if the incremented day exceeds the number of days in the month
-const daysInMonth = new Date(year1, month1, 0).getDate();
-if (parseInt(day1) > daysInMonth) {
-    // If it does, reset the day to 1 and increment the month
-    day1 = '01'; // Reset day to 1
-    // Increment the month
-    month1 = (parseInt(month1) + 1).toString().padStart(2, '0');
-    // Check if the incremented month exceeds 12, reset it to 1 and increment the year
-    if (parseInt(month1) > 12) {
-        month1 = '01'; // Reset month to January
-        year1++; // Increment the year
-    }
-}
 
 if(month >= 1 ){
   
