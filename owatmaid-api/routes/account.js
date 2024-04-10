@@ -491,8 +491,6 @@ tax = await response.data.tax ||0;
 // const day1 = (originalDate.getDate()).toString().padStart(2, '0'); // Ensure day is represented by 
 
 if(month >= 1 ){
-  console.log('month: ' + month );
-  console.log('month1: ' + month1 );
   
 if(month -1 == month1 && year == year1 && day1 >= 21) {
   specialDaylist.push(day1);
@@ -512,7 +510,7 @@ holidayRate = response.data.salary || foundWorkplace.workRate;
        }
 
 
-// console.log(year + ' ' + year1 + ' ' + month + ' ' + month1);
+console.log(year + ' ' + year1 + ' ' + month + ' ' + month1);
       })
 
 // Format the components as desired
