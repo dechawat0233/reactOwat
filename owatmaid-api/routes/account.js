@@ -489,7 +489,7 @@ tax = await response.data.tax ||0;
         const year1 = await originalDate.getFullYear();
         const day1 = await originalDate.getDate() +1; // Increment by 1 to get the next day
         const tmpDate = await new Date(year1, month1, 0); // month is 0-indexed, so month + 1        
-        await console.log(day1 + '/' + tmpDate.getDate());
+        // await console.log(day1 + '/' + tmpDate.getDate());
 
 if(tmpDate.getDate() < day1 ) {
   // day1  = await day1  - tmpDate.getDate();
