@@ -489,7 +489,7 @@ tax = await response.data.tax ||0;
         const year1 = await originalDate.getFullYear();
         const day1 = await originalDate.getDate() +1; // Increment by 1 to get the next day
         const tmpDate = await new Date(year1, month1, 0); // month is 0-indexed, so month + 1        
-        await console.log(tmpDate.getDate());
+        await console.log(day1 + '/' + tmpDate.getDate());
 
 if(tmpDate.getDate() < day1 ) {
   // day1  = await day1  - tmpDate.getDate();
@@ -716,9 +716,9 @@ sumCalTax = await sumCalTax + amountOt;
 
 const intersection = await workDaylist.filter(day => specialDaylist.includes(parseInt(day)));
 
-await console.log(data.employeeId + ' ' + month);
-await console.log('workDaylist' + JSON.stringify(workDaylist,null,2))
-await console.log('specialDaylist' + JSON.stringify(specialDaylist,null,2));
+// await console.log(data.employeeId + ' ' + month);
+// await console.log('workDaylist' + JSON.stringify(workDaylist,null,2))
+// await console.log('specialDaylist' + JSON.stringify(specialDaylist,null,2));
 
 await console.log(intersection); // Output: ['2', '3', '4']
 //total
