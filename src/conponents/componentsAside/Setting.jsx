@@ -955,12 +955,14 @@ function Setting() {
         }
     }
 
+    console.log('selectedDates', selectedDates);
+    
     const bordertable = {
         borderLeft: '2px solid #000'
     };
 
     console.log(formData);
-  
+
 
     useEffect(() => {
         let d = holiday || 0;
@@ -1176,7 +1178,7 @@ function Setting() {
                                 {/* <!--Frame--> */}
                                 <h2 class="title">สวัสดิการเงินเพิ่มพนักงาน</h2>
                                 <section class="Frame">
-                                   
+
 
                                     {formData.addSalary && formData.addSalary.length > 0 && formData.addSalary.map((data, index) => (
                                         <div key={index}>
@@ -1613,7 +1615,7 @@ function Setting() {
                                                 ))
 
                                             ))}
-                                            
+
                                             {/* Add more rows as needed */}
                                         </tbody>
                                     </table>
@@ -1754,7 +1756,7 @@ function Setting() {
                                                 </div>
                                             ))}
                                         </div>
-                                       
+
                                     </div>
                                     <br />
 
@@ -1835,7 +1837,7 @@ function Setting() {
                                 <section class="Frame">
                                     <div>
                                         <label>เลือกวันหยุดของหน่วยงาน:</label>
-                              
+
                                         <div>
                                             <div className="row">
                                                 <div className="col-md-2">
@@ -1892,7 +1894,7 @@ function Setting() {
                                                 เพิ่ม
                                             </button>
                                         </div>
-                                
+
                                         <br />
                                         {selectedDates.length > 0 && (
                                             <div>
@@ -1930,7 +1932,7 @@ function Setting() {
                                 <h2 class="title">พนักงานในสังกัด</h2>
                                 <section class="Frame">
                                     <div>
-                                      
+
                                         {showEmployeeListResult.length > 0 && (
                                             <>
                                                 <h3>พนักงานในหน่วยงาน {showEmployeeListResult.length} คน</h3>
@@ -1942,7 +1944,7 @@ function Setting() {
                                                 </ul>
                                             </>
                                         )}
-                                      
+
                                     </div>
                                 </section>
                                 {/* <!--Frame--> */}
