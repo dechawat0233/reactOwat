@@ -1735,7 +1735,7 @@ function SalaryAllResult() {
                 // Draw the line
                 // pdf.line(58, currentY - 3, 295, currentY - 3);
 
-                pdf.text(`รวมแผนก`, 5, currentY);
+                pdf.text(`รวมแผนก`, 1, currentY);
 
                 pdf.text(`${workplaceName} : ${workplaceKey}`, 25, currentY);
 
