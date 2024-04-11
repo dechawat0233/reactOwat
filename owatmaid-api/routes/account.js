@@ -488,6 +488,12 @@ tax = await response.data.tax ||0;
         const month1 = await (originalDate.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed, so 
         const year1 = await originalDate.getFullYear();
         const day1 = await originalDate.getDate() +1; // Increment by 1 to get the next day
+
+        const tmpDate = await new Date(year1, month1, 0); // month is 0-indexed, so month + 1        
+if(tmpDate.getDate() < day1 ) {
+  day1  = await day1  - tmpDate.getDate();
+}
+        // const day1 = await originalDate.getDate() +1; // Increment by 1 to get the next day
 // const day1 = (originalDate.getDate() +1 ).toString().padStart(2, '0'); // Ensure day is represented by 
 
 
@@ -733,7 +739,7 @@ if (sumSocial > 15000) {
 }
 
 // Calculate socialSecurity based on sumSocial
-data.accountingRecord.socialSecurity = (sumSocial * 0.05) || 0;
+data.accountingRecord.socialSecurity = Math.ceil((sumSocial * 0.05)) || 0;
 
     // data.accountingRecord.socialSecurity = (sumSocial * 0.05) || 0;
     data.accountingRecord.addAmountAfterTax = sumNonTaxNonSalary || 0;
