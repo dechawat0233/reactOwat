@@ -492,7 +492,7 @@ tax = await response.data.tax ||0;
         await console.log(tmpDate.getDate());
 
 if(tmpDate.getDate() < day1 ) {
-  day1  = await day1  - tmpDate.getDate();
+  // day1  = await day1  - tmpDate.getDate();
 }
         // const day1 = await originalDate.getDate() +1; // Increment by 1 to get the next day
 // const day1 = (originalDate.getDate() +1 ).toString().padStart(2, '0'); // Ensure day is represented by 
