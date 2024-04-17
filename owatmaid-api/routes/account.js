@@ -113,7 +113,7 @@ router.get('/:employeeId', async (req, res) => {
 try {
   const dataTest = await {
     year: "2024", 
-        month: "03",
+        month: req.params.employeeId,
         // employeeId : "1001"
       };
       const x = await axios.post(sURL + '/accounting/calsalarylist', dataTest);
@@ -482,40 +482,45 @@ tax = await response.data.tax ||0;
       // Found the workplace
       // await console.log('Found workplace:', foundWorkplace);
       // console.log(foundWorkplace.daysOff);
-      await foundWorkplace.daysOff.map(async item => {
-        const originalDateString = await item;
-        const originalDate = await new Date(originalDateString);
-        const month1 = await (originalDate.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed, so 
-        const year1 = await originalDate.getFullYear();
-        let day1 = await originalDate.getDate() +1; // Increment by 1 to get the next day
-        const tmpDate = await new Date(year1, month1, 0); // month is 0-indexed, so month + 1        
-        // await console.log(day1 + '/' + tmpDate.getDate());
+      await Promise.all( foundWorkplace.daysOff.map(async item => {
 
-if(tmpDate.getDate() < day1 ) {
-  // day1  = await day1  - tmpDate.getDate();
-  letday1 = await '1';
-}
-await console.log(day1 + '/' + tmpDate.getDate());
-
-        // const day1 = await originalDate.getDate() +1; // Increment by 1 to get the next day
-// const day1 = (originalDate.getDate() +1 ).toString().padStart(2, '0'); // Ensure day is represented by 
-
+  // Parse the date string and create a Date object
+  const day1 = new Date(item);
+  
+  // Increment the date by one day
+  day1.setDate(day1.getDate() + 1);
+  
+  // Determine the month and year of the incremented date
+  const month1= day1.getMonth();
+  const  year1 = day1.getFullYear();
+  
+  // Create a Date object for the last day of the incremented date's month
+  const lastDayOfMonth = new Date(year1, month1+ 1, 0).getDate();
+  
+  // Compare the incremented date with the last day of the month
+  if (day1.getDate() > lastDayOfMonth) {
+    // If the incremented date exceeds the last day of the month, adjust it
+    day1.setDate(day1.getDate() - lastDayOfMonth);
+  }
+  
+  // Log the adjusted date (in the format: "day/month")
+  // console.log(`${day1.getDate()}/${month1+ 1}`);
 
 if(month >= 1 ){
   
 if(month -1 == month1 && year == year1 && day1 >= 21) {
-  await specialDaylist.push(day1);
+  await specialDaylist.push(day1.getDate() );
   holidayRate = await response.data.salary || foundWorkplace.workRate;
           }
         if(month == month1 && year == year1 && day1 <= 20) {
-await specialDaylist.push(day1);
+await specialDaylist.push(day1.getDate() );
 holidayRate = await response.data.salary || foundWorkplace.workRate;
         }
 
        } else {
 
         if(month == month1 && year == year1 && day1 <= 20) {
-          await specialDaylist.push(day1);
+          await specialDaylist.push(day1.getDate() );
           holidayRate = await response.data.salary || foundWorkplace.workRate;
                   }
        }
@@ -523,6 +528,7 @@ holidayRate = await response.data.salary || foundWorkplace.workRate;
 
 // console.log(year + ' ' + year1 + ' ' + month + ' ' + month1);
       })
+    );
 
 // Format the components as desired
 // const formattedDate = `${year}/${String(month).padStart(2, '0')}/${String(day).padStart(2, '0')}`;
@@ -719,11 +725,11 @@ sumCalTax = await sumCalTax + amountOt;
 
 const intersection = await workDaylist.filter(day => specialDaylist.includes(parseInt(day)));
 
-// await console.log(data.employeeId + ' ' + month);
-// await console.log('workDaylist' + JSON.stringify(workDaylist,null,2))
-// await console.log('specialDaylist' + JSON.stringify(specialDaylist,null,2));
+await console.log(data.employeeId + ' ' + month);
+await console.log('workDaylist' + JSON.stringify(workDaylist,null,2))
+await console.log('specialDaylist' + JSON.stringify(specialDaylist,null,2));
 
-await console.log(intersection); // Output: ['2', '3', '4']
+await console.log('intersection: ' + intersection); // Output: ['2', '3', '4']
 //total
 total = await amountDay + amountOt + sumCalTaxNonSalary - sumDeductWithTax 
 - tax
