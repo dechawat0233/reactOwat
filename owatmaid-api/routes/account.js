@@ -523,7 +523,6 @@ holidayRate = await response.data.salary || foundWorkplace.workRate;
   }
 
        } else {
-console.log("dd");
         // month is 01
         if(month == "01" ) {
           if(year1 == year -1 && month1String == "12" && day1 >= 21 ) {
@@ -548,7 +547,7 @@ console.log("dd");
        }
 
 
-console.log(year + ' ' + year1 + ' ' + month + ' ' + month1String);
+// console.log(year + ' ' + year1 + ' ' + month + ' ' + month1String);
       })
     );
 
