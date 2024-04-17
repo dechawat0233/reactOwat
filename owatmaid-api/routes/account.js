@@ -421,7 +421,7 @@ router.post('/calsalarylist', async (req, res) => {
       year: year, 
       month: month,
       concludeDate: "",
-      employeeId: '1001'
+      employeeId: ''
     };
 
     const responseConclude = await axios.post(sURL + '/conclude/search', dataSearch);
