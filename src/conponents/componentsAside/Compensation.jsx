@@ -581,26 +581,26 @@ function Compensation() {
 
 
     const [addSalaryDay, setAddSalaryDay] = useState(0);
-    const [addSalaryDayList , setAddSalaryDayList ] = useState([]);
+    const [addSalaryDayList, setAddSalaryDayList] = useState([]);
     const [addSalaryList, setAddSalaryList] = useState([]);
 
 
-  const calculateTotalSalary = () => {
-    let total = 0;
-    addSalaryList.forEach((day, dayIndex)  => {
-        if (dataTable[dayIndex].workplaceId !== undefined && dataTable[dayIndex].workplaceId !== '') {
-      day.forEach(salary => {
+    const calculateTotalSalary = () => {
+        let total = 0;
+        addSalaryList.forEach((day, dayIndex) => {
+            if (dataTable[dayIndex].workplaceId !== undefined && dataTable[dayIndex].workplaceId !== '') {
+                day.forEach(salary => {
 
-        if(salary.SpSalary > 100) {
-    total += parseFloat( (salary.SpSalary / 30).toFixed(2) );
-} else {
-    total += parseFloat( salary.SpSalary);
-}
-      });
-    }
-    });
-    return total;
-  };
+                    if (salary.SpSalary > 100) {
+                        total += parseFloat((salary.SpSalary / 30).toFixed(2));
+                    } else {
+                        total += parseFloat(salary.SpSalary);
+                    }
+                });
+            }
+        });
+        return total;
+    };
 
     useEffect(() => {
         // alert(employee?.addSalary?.length );
@@ -630,11 +630,11 @@ function Compensation() {
 
                 await setAddSalaryDay(sum);
 
-                                // Create addSalaryList array
-                                const addSalaryList = Array(dataTable.length).fill(tmpAddSalaryList);
+                // Create addSalaryList array
+                const addSalaryList = Array(dataTable.length).fill(tmpAddSalaryList);
 
-                                // Update state with the created addSalaryList
-                                setAddSalaryList(addSalaryList);
+                // Update state with the created addSalaryList
+                setAddSalaryList(addSalaryList);
             }
 
         };
@@ -650,26 +650,26 @@ function Compensation() {
     }, [employee]);
 
 
-  // Function to remove an addSalary array from addSalaryList
-  const removeAddSalaryArray = async (listIndex, subArrayIndex) => {
-    const newAddSalaryList = await [...addSalaryList]; 
+    // Function to remove an addSalary array from addSalaryList
+    const removeAddSalaryArray = async (listIndex, subArrayIndex) => {
+        const newAddSalaryList = await [...addSalaryList];
 
-    await newAddSalaryList[listIndex].splice(subArrayIndex, 1); // Remove the element at the specified index
-    await setAddSalaryList(newAddSalaryList);
-alert(newAddSalaryList .length);
+        await newAddSalaryList[listIndex].splice(subArrayIndex, 1); // Remove the element at the specified index
+        await setAddSalaryList(newAddSalaryList);
+        alert(newAddSalaryList.length);
 
-    //zz
-    // setAddSalaryList(prevAddSalaryList => {
-    //   const newAddSalaryList = [...prevAddSalaryList];
-    //     newAddSalaryList[listIndex].splice(subArrayIndex, 1);
-    //   return newAddSalaryList;
-    // });
-  };
+        //zz
+        // setAddSalaryList(prevAddSalaryList => {
+        //   const newAddSalaryList = [...prevAddSalaryList];
+        //     newAddSalaryList[listIndex].splice(subArrayIndex, 1);
+        //   return newAddSalaryList;
+        // });
+    };
 
-  // Example usage of removeAddSalaryArray function
-  const handleRemoveAddSalaryArray = (listIndex, subArrayIndex) => {
-    removeAddSalaryArray(listIndex, subArrayIndex);
-  };
+    // Example usage of removeAddSalaryArray function
+    const handleRemoveAddSalaryArray = (listIndex, subArrayIndex) => {
+        removeAddSalaryArray(listIndex, subArrayIndex);
+    };
 
     console.log('searchResult', searchResult);
     console.log('searchResultLower', searchResultLower);
@@ -827,10 +827,81 @@ alert(newAddSalaryList .length);
             commonNumbers123.add(day); // Add day number to the set
         });
 
-        console.log('commonNumbers123', commonNumbers123);
+        const filteredNumbers = new Set();
+
+        // Filter day numbers less than 20 and add them to filteredNumbers set
+        commonNumbers123.forEach(day => {
+            if (day < 21) {
+                filteredNumbers.add(day);
+            }
+        });
+
+        // Update commonNumbers123_2nd with filtered day numbers
+        commonNumbers123.clear(); // Clear the original set
+        filteredNumbers.forEach(day => {
+            commonNumbers123.add(day); // Add filtered day numbers back to commonNumbers123_2nd
+        });
+
+        console.log('commonNumbers123_2nd (after filtering)', commonNumbers123);    } else {
+        console.error('Workplace not found');
+    }
+    console.log('month123', month);
+
+    const commonNumbers123_2nd = new Set();
+
+    let monthSet;
+    if (workplace) {
+        const matchingDays = workplace.daysOff.filter(date => {
+            if (month == '01') {
+                monthSet == '12';
+
+            } else {
+                // Convert the month string to a number, subtract 1, and convert it back to a string
+                const currentMonthNumber = parseInt(month, 10); // Parse month string to integer
+                const previousMonthNumber = currentMonthNumber - 1;
+
+                // Handle the case when previousMonthNumber is 0 (transition from January to December)
+                if (previousMonthNumber === 0) {
+                    monthSet = '12'; // Set monthSet to '12' for December
+                } else {
+                    // Convert the previous month number back to a string with leading zero if necessary
+                    monthSet = previousMonthNumber.toString().padStart(2, '0');
+                }
+            }
+            const dateObj = new Date(date);
+            return (dateObj.getMonth() + 1).toString().padStart(2, '0') === monthSet; // +1 because getMonth() returns zero-based month index
+        });
+
+        console.log('matchingDays', matchingDays);
+        // Iterate over matchingDays and add day numbers to commonNumbers set
+
+        matchingDays.forEach(date => {
+            const dateObj = new Date(date);
+            const day = dateObj.getDate(); // Get the day number (1-31)
+            commonNumbers123_2nd.add(day); // Add day number to the set
+        });
+
+        // Create a new Set to store filtered day numbers (< 20)
+        const filteredNumbers = new Set();
+
+        // Filter day numbers less than 20 and add them to filteredNumbers set
+        commonNumbers123_2nd.forEach(day => {
+            if (day > 20) {
+                filteredNumbers.add(day);
+            }
+        });
+
+        // Update commonNumbers123_2nd with filtered day numbers
+        commonNumbers123_2nd.clear(); // Clear the original set
+        filteredNumbers.forEach(day => {
+            commonNumbers123_2nd.add(day); // Add filtered day numbers back to commonNumbers123_2nd
+        });
+
+        console.log('commonNumbers123_2nd (after filtering)', commonNumbers123_2nd);
     } else {
         console.error('Workplace not found');
     }
+
 
     const commonNumbers = new Set();
 
@@ -865,6 +936,10 @@ alert(newAddSalaryList .length);
     }
 
     commonNumbers123.forEach(number => {
+        commonNumbers.add(number);
+    });
+
+    commonNumbers123_2nd.forEach(number => {
         commonNumbers.add(number);
     });
 
@@ -1395,35 +1470,35 @@ alert(newAddSalaryList .length);
                                                                 {editIndex === index ? (
 
                                                                     <div className="popup">
-                                                                    <h4>รายการเงินเพิ่ม</h4>
-                                                                    <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
-                                                                      {addSalaryList[index]&& (
-                                                                      addSalaryList[index].map((addsalary, index) => (
-                                                                        (addsalary.name !== '' && (
-                                                                          <li key={index} style={{ marginBottom: '10px' }}>
-                                                                            {addsalary.name} - จำนวน: {addsalary.SpSalary > 100 ? (addsalary.SpSalary /30).toFixed(2) : addsalary.SpSalary } {addsalary.roundOfSalary == 'daily' && (<>/ {addsalary.message} วัน</>)}
-                                                                            <button type="button" onClick={() => deleteAddSalary(0, 1)}>ลบ</button>
-                                                                          </li>
-                                                                        ))
-                                                                      )))}
-                                    
-                                                                    </ul>
-                                                                  </div>
-                                    
-                                                                ): (
-                                                                    // workplaceRecord.addSalaryDay
-                                                                    addSalaryList[index] && addSalaryList[index].length > 0 && workplaceRecord.workplaceId !== '' && workplaceRecord.workplaceId !== undefined ? 
-addSalaryList[index].reduce((acc, addsalary) => {
-    if (addsalary.name !== '' && addsalary.roundOfSalary === 'daily') {
-        if(addsalary.SpSalary > 100 ){
-            acc += parseFloat((addsalary.SpSalary /30 ).toFixed(2) );
-        }else {
-            acc += parseFloat(addsalary.SpSalary);
-        }
+                                                                        <h4>รายการเงินเพิ่ม</h4>
+                                                                        <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
+                                                                            {addSalaryList[index] && (
+                                                                                addSalaryList[index].map((addsalary, index) => (
+                                                                                    (addsalary.name !== '' && (
+                                                                                        <li key={index} style={{ marginBottom: '10px' }}>
+                                                                                            {addsalary.name} - จำนวน: {addsalary.SpSalary > 100 ? (addsalary.SpSalary / 30).toFixed(2) : addsalary.SpSalary} {addsalary.roundOfSalary == 'daily' && (<>/ {addsalary.message} วัน</>)}
+                                                                                            <button type="button" onClick={() => deleteAddSalary(0, 1)}>ลบ</button>
+                                                                                        </li>
+                                                                                    ))
+                                                                                )))}
 
-    }
-    return acc;
-}, 0) : 0
+                                                                        </ul>
+                                                                    </div>
+
+                                                                ) : (
+                                                                    // workplaceRecord.addSalaryDay
+                                                                    addSalaryList[index] && addSalaryList[index].length > 0 && workplaceRecord.workplaceId !== '' && workplaceRecord.workplaceId !== undefined ?
+                                                                        addSalaryList[index].reduce((acc, addsalary) => {
+                                                                            if (addsalary.name !== '' && addsalary.roundOfSalary === 'daily') {
+                                                                                if (addsalary.SpSalary > 100) {
+                                                                                    acc += parseFloat((addsalary.SpSalary / 30).toFixed(2));
+                                                                                } else {
+                                                                                    acc += parseFloat(addsalary.SpSalary);
+                                                                                }
+
+                                                                            }
+                                                                            return acc;
+                                                                        }, 0) : 0
 
                                                                 )}
                                                             </td>
@@ -1559,8 +1634,8 @@ addSalaryList[index].reduce((acc, addsalary) => {
                                                         <td style={cellStyle}>{sumRateOT}</td>
                                                         <td style={cellStyle}>
                                                             {/* {sumAddSalary} */}
-                                                            {calculateTotalSalary ().toFixed(2) }
-                                                            </td>
+                                                            {calculateTotalSalary().toFixed(2)}
+                                                        </td>
                                                         <td></td>
                                                     </tr>
                                                 </tbody>
@@ -1589,8 +1664,8 @@ addSalaryList[index].reduce((acc, addsalary) => {
                 </div>
             </div>
             {/* {JSON.stringify( dataTable[30])}{dataTable.length} */}
-                0: {JSON.stringify( addSalaryList[0])}
-                1: {JSON.stringify( addSalaryList[1])}
+            0: {JSON.stringify(addSalaryList[0])}
+            1: {JSON.stringify(addSalaryList[1])}
             <br></br><button onClick={() => handleRemoveAddSalaryArray(1, 0)}>Remove addSalary array</button>
         </body>
         // </div>  )
