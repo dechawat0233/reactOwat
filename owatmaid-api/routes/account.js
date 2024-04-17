@@ -531,7 +531,7 @@ tax = await response.data.tax ||0;
   });
 
 if(month !== "01" && month !== "12") {
-  
+  console.log(month1String + ' x ' + previousMonthString )
   if(month == month1String && year == year1 && day1 <= 20) {
     await specialDaylist.push(day1.getDate() );
     holidayRate = await response.data.salary || foundWorkplace.workRate;
