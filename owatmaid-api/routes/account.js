@@ -492,6 +492,10 @@ tax = await response.data.tax ||0;
   
   // Determine the month and year of the incremented date
   const month1= day1.getMonth();
+  const month1String = (month1+ 1).toLocaleString('en-US', {
+    minimumIntegerDigits: 2, // Ensures a two-digit month (e.g. "01", "02", ...)
+  });
+
   const  year1 = day1.getFullYear();
   
   // Create a Date object for the last day of the incremented date's month
@@ -504,29 +508,47 @@ tax = await response.data.tax ||0;
   }
   
   // Log the adjusted date (in the format: "day/month")
-  // console.log(`${day1.getDate()}/${month1+ 1}`);
+  console.log(`${day1.getDate()}/${month1String }`);
 
-if(month >= 1 ){
+if(month !== "01" && month !== "12") {
   
-if(month -1 == month1 && year == year1 && day1 >= 21) {
-  await specialDaylist.push(day1.getDate() );
-  holidayRate = await response.data.salary || foundWorkplace.workRate;
-          }
-        if(month == month1 && year == year1 && day1 <= 20) {
-await specialDaylist.push(day1.getDate() );
+  if(month == month1String && year == year1 && day1 <= 20) {
+    await specialDaylist.push(day1.getDate() );
+    holidayRate = await response.data.salary || foundWorkplace.workRate;
+  } else {
+    if(day1 >= 21) {
+      await specialDaylist.push(day1.getDate() );
 holidayRate = await response.data.salary || foundWorkplace.workRate;
-        }
+    }
+  }
 
        } else {
 
-        if(month == month1 && year == year1 && day1 <= 20) {
-          await specialDaylist.push(day1.getDate() );
-          holidayRate = await response.data.salary || foundWorkplace.workRate;
-                  }
+        // month is 01
+        if(month == "01" ) {
+          if(year1 == year -1 && month1String == "12" && day1 >= 21 ) {
+            await specialDaylist.push(day1.getDate() );
+            holidayRate = await response.data.salary || foundWorkplace.workRate;
+          }
+          if(year1 == year  && month1String == "01" && day1 <= 20 ) {
+            await specialDaylist.push(day1.getDate() );
+            holidayRate = await response.data.salary || foundWorkplace.workRate;
+          }
+
+        }
+        // month is 12
+        if(month == "12" ){
+          if(year1 == year  && month1String == "12" && day1 <= 20 ) {
+            await specialDaylist.push(day1.getDate() );
+            holidayRate = await response.data.salary || foundWorkplace.workRate;
+          }
+
+        }
+
        }
 
 
-// console.log(year + ' ' + year1 + ' ' + month + ' ' + month1);
+console.log(year + ' ' + year1 + ' ' + month + ' ' + month1String);
       })
     );
 
