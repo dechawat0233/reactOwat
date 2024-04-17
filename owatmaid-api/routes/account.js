@@ -510,13 +510,34 @@ tax = await response.data.tax ||0;
   // Log the adjusted date (in the format: "day/month")
   console.log(`${day1.getDate()}/${month1String }`);
 
+    // Format the new month as a two-digit string (e.g. "01", "02", ...)
+    const newMonthString = (month1 + 1).toLocaleString('en-US', {
+      minimumIntegerDigits: 2,
+  });
+  
+  // Calculate the previous month
+  let previousMonth;
+  if (month1 === 0) {
+      // If newMonth is January (0), the previous month is December (12)
+      previousMonth = 12;
+  } else {
+      // Otherwise, subtract 1 from the current month
+      previousMonth = month1;
+  }
+  
+  // Convert the previous month to a two-digit string (e.g. "03")
+  const previousMonthString = previousMonth.toLocaleString('en-US', {
+      minimumIntegerDigits: 2,
+  });
+
 if(month !== "01" && month !== "12") {
+  
   
   if(month == month1String && year == year1 && day1 <= 20) {
     await specialDaylist.push(day1.getDate() );
     holidayRate = await response.data.salary || foundWorkplace.workRate;
   } else {
-    if(day1 >= 21) {
+    if(month1String == previousMonthString && day1 >= 21) {
       await specialDaylist.push(day1.getDate() );
 holidayRate = await response.data.salary || foundWorkplace.workRate;
     }
