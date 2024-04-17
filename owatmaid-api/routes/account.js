@@ -487,12 +487,16 @@ tax = await response.data.tax ||0;
         const originalDate = await new Date(originalDateString);
         const month1 = await (originalDate.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed, so 
         const year1 = await originalDate.getFullYear();
-        const day1 = await originalDate.getDate() +1; // Increment by 1 to get the next day
-
+        let day1 = await originalDate.getDate() +1; // Increment by 1 to get the next day
         const tmpDate = await new Date(year1, month1, 0); // month is 0-indexed, so month + 1        
+        // await console.log(day1 + '/' + tmpDate.getDate());
+
 if(tmpDate.getDate() < day1 ) {
-  day1  = await day1  - tmpDate.getDate();
+  // day1  = await day1  - tmpDate.getDate();
+  letday1 = await '1';
 }
+await console.log(day1 + '/' + tmpDate.getDate());
+
         // const day1 = await originalDate.getDate() +1; // Increment by 1 to get the next day
 // const day1 = (originalDate.getDate() +1 ).toString().padStart(2, '0'); // Ensure day is represented by 
 
@@ -715,9 +719,9 @@ sumCalTax = await sumCalTax + amountOt;
 
 const intersection = await workDaylist.filter(day => specialDaylist.includes(parseInt(day)));
 
-await console.log(data.employeeId + ' ' + month);
-await console.log('workDaylist' + JSON.stringify(workDaylist,null,2))
-await console.log('specialDaylist' + JSON.stringify(specialDaylist,null,2));
+// await console.log(data.employeeId + ' ' + month);
+// await console.log('workDaylist' + JSON.stringify(workDaylist,null,2))
+// await console.log('specialDaylist' + JSON.stringify(specialDaylist,null,2));
 
 await console.log(intersection); // Output: ['2', '3', '4']
 //total
