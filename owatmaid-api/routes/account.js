@@ -530,13 +530,12 @@ tax = await response.data.tax ||0;
       minimumIntegerDigits: 2,
   });
 
-if(month !== "01" && month !== "12") {
-  console.log(month1String + ' x ' + previousMonthString )
+if(month !== "01" && month !== "12" && year == year1 ) {
   if(month == month1String && year == year1 && day1 <= 20) {
     await specialDaylist.push(day1.getDate() );
     holidayRate = await response.data.salary || foundWorkplace.workRate;
   } else {
-    if(month1String == previousMonthString && day1 >= 21) {
+    if( day1 >= 21) {
       await specialDaylist.push(day1.getDate() );
 holidayRate = await response.data.salary || foundWorkplace.workRate;
     }
