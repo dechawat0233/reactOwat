@@ -511,18 +511,18 @@ tax = await response.data.tax ||0;
   // console.log(`${day1.getDate()}/${month1String }`);
 
     // Format the new month as a two-digit string (e.g. "01", "02", ...)
-    const newMonthString = (month ).toLocaleString('en-US', {
+    const newMonthString = (month -1).toLocaleString('en-US', {
       minimumIntegerDigits: 2,
   });
   
   // Calculate the previous month
   let previousMonth;
-  if (month === 0) {
+  if (newMonthString === 0) {
       // If newMonth is January (0), the previous month is December (12)
       previousMonth = 12;
   } else {
       // Otherwise, subtract 1 from the current month
-      previousMonth = month;
+      previousMonth = newMonthString ;
   }
   
   // Convert the previous month to a two-digit string (e.g. "03")
