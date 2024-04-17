@@ -531,8 +531,7 @@ tax = await response.data.tax ||0;
   });
 
 if(month !== "01" && month !== "12" && year == year1 ) {
-console.log(previousMonthString );
-
+console.log(month + ' x ' + month1String )
   if(month == month1String && year == year1 && day1 <= 20) {
     await specialDaylist.push(day1.getDate() );
     holidayRate = await response.data.salary || foundWorkplace.workRate;
