@@ -511,7 +511,7 @@ tax = await response.data.tax ||0;
   // console.log(`${day1.getDate()}/${month1String }`);
 
     // Format the new month as a two-digit string (e.g. "01", "02", ...)
-    const newMonthString = (month + 1).toLocaleString('en-US', {
+    const newMonthString = (month ).toLocaleString('en-US', {
       minimumIntegerDigits: 2,
   });
   
@@ -522,7 +522,7 @@ tax = await response.data.tax ||0;
       previousMonth = 12;
   } else {
       // Otherwise, subtract 1 from the current month
-      previousMonth = month1;
+      previousMonth = month;
   }
   
   // Convert the previous month to a two-digit string (e.g. "03")
@@ -531,6 +531,7 @@ tax = await response.data.tax ||0;
   });
 
 if(month !== "01" && month !== "12" && year == year1 ) {
+console.log(previousMonthString );
 
   if(month == month1String && year == year1 && day1 <= 20) {
     await specialDaylist.push(day1.getDate() );
