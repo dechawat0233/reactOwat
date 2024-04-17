@@ -531,11 +531,14 @@ tax = await response.data.tax ||0;
   });
 
 if(month !== "01" && month !== "12" && year == year1 ) {
+
   if(month == month1String && year == year1 && day1 <= 20) {
     await specialDaylist.push(day1.getDate() );
     holidayRate = await response.data.salary || foundWorkplace.workRate;
   } else {
     if( day1 >= 21) {
+      console.log(year + ' ' + year1 + ' ' + month + ' ' + month1String);
+
       await specialDaylist.push(day1.getDate() );
 holidayRate = await response.data.salary || foundWorkplace.workRate;
     }
