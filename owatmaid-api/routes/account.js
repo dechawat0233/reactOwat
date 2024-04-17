@@ -508,16 +508,16 @@ tax = await response.data.tax ||0;
   }
   
   // Log the adjusted date (in the format: "day/month")
-  console.log(`${day1.getDate()}/${month1String }`);
+  // console.log(`${day1.getDate()}/${month1String }`);
 
     // Format the new month as a two-digit string (e.g. "01", "02", ...)
-    const newMonthString = (month1 + 1).toLocaleString('en-US', {
+    const newMonthString = (month + 1).toLocaleString('en-US', {
       minimumIntegerDigits: 2,
   });
   
   // Calculate the previous month
   let previousMonth;
-  if (month1 === 0) {
+  if (month === 0) {
       // If newMonth is January (0), the previous month is December (12)
       previousMonth = 12;
   } else {
@@ -531,7 +531,6 @@ tax = await response.data.tax ||0;
   });
 
 if(month !== "01" && month !== "12") {
-  console.log(month1String + ' x '+  previousMonthString )
   
   if(month == month1String && year == year1 && day1 <= 20) {
     await specialDaylist.push(day1.getDate() );
