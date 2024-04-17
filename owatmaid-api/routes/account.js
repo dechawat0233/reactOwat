@@ -641,7 +641,7 @@ let deductSalaryList = [];
         await promises1.push(promise1);
 
         //push addSalary to account
-        if(response.data.addSalary[k].roundOfSalary == "daily") {
+        if(response.data.addSalary[k].roundOfSalary == "daily" && response.data.addSalary[k].SpSalary != "") {
           let dailyTmp = await response.data.addSalary[k];
           dailyTmp.message = await countDay;
           await addSalaryList.push(dailyTmp);
