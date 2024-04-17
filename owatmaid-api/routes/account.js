@@ -537,7 +537,7 @@ console.log(previousMonthString );
     await specialDaylist.push(day1.getDate() );
     holidayRate = await response.data.salary || foundWorkplace.workRate;
   } else {
-    if( day1 >= 21) {
+    if(previousMonthString  == month1String && day1 >= 21) {
       console.log(year + ' ' + year1 + ' ' + month + ' ' + month1String);
 
       await specialDaylist.push(day1.getDate() );
