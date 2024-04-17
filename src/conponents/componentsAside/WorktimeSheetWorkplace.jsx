@@ -5654,6 +5654,74 @@ function WorktimeSheetWorkplace() {
                                             {/* <form onSubmit={handleSearch}> */}
                                             <form >
                                                 <div class="row">
+
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label role="searchWorkplaceId">รหัสหน่วยงาน</label>
+                                                            <input type="text" class="form-control" id="searchWorkplaceId"
+                                                                placeholder="หน่วยงาน" value={searchWorkplaceId}
+                                                                // onChange={(e) => setSearchWorkplaceId(e.target.value)}
+                                                                onChange={handleStaffIdChange}
+                                                                list="WorkplaceIdList"
+                                                            />
+                                                        </div>
+                                                        <datalist id="WorkplaceIdList">
+                                                            {workplaceListAll.map(workplace => (
+                                                                <option key={workplace.workplaceId} value={workplace.workplaceId} />
+                                                            ))}
+                                                        </datalist>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label role="searchWorkplaceName">ชื่อหน่วยงาน</label>
+                                                            <input type="text" class="form-control" id="searchWorkplaceName"
+                                                                placeholder="ชื่อหน่วยงาน" value={searchWorkplaceName}
+                                                                // onChange={(e) => setSearchWorkplaceName(e.target.value)}
+                                                                onChange={handleStaffNameChange}
+                                                                list="WorkplaceNameList"
+                                                            />
+                                                        </div>
+                                                        <datalist id="WorkplaceNameList">
+                                                            {workplaceListAll.map(workplace => (
+                                                                <option key={workplace.workplaceId} value={workplace.workplaceName} />
+                                                            ))}
+                                                        </datalist>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label role="searchEmployeeId">เดือน</label>
+                                                            <select className="form-control" value={month} onChange={(e) => setMonth(e.target.value)} >
+                                                                <option value="">เลือกเดือน</option>
+                                                                <option value="01">มกราคม</option>
+                                                                <option value="02">กุมภาพันธ์</option>
+                                                                <option value="03">มีนาคม</option>
+                                                                <option value="04">เมษายน</option>
+                                                                <option value="05">พฤษภาคม</option>
+                                                                <option value="06">มิถุนายน</option>
+                                                                <option value="07">กรกฎาคม</option>
+                                                                <option value="08">สิงหาคม</option>
+                                                                <option value="09">กันยายน</option>
+                                                                <option value="10">ตุลาคม</option>
+                                                                <option value="11">พฤศจิกายน</option>
+                                                                <option value="12">ธันวาคม</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label role="searchEmployeeId">ปี</label>
+                                                            <select className="form-control" value={year} onChange={(e) => setYear(e.target.value)} >
+                                                                <option value="" >เลือกปี</option>
+                                                                {years.map((y) => (
+                                                                    <option key={y} value={y}>
+                                                                        {y + 543}
+                                                                    </option>
+                                                                ))}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/* <div class="row">
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label role="searchEmployeeId">เดือน</label>
@@ -5689,42 +5757,8 @@ function WorktimeSheetWorkplace() {
                                                     </div>
 
 
-                                                </div>
-                                                <div class="row">
+                                                </div> */}
 
-                                                    <div class="col-md-3">
-                                                        <div class="form-group">
-                                                            <label role="searchWorkplaceId">รหัสหน่วยงาน</label>
-                                                            <input type="text" class="form-control" id="searchWorkplaceId"
-                                                                placeholder="หน่วยงาน" value={searchWorkplaceId}
-                                                                // onChange={(e) => setSearchWorkplaceId(e.target.value)}
-                                                                onChange={handleStaffIdChange}
-                                                                list="WorkplaceIdList"
-                                                            />
-                                                        </div>
-                                                        <datalist id="WorkplaceIdList">
-                                                            {workplaceListAll.map(workplace => (
-                                                                <option key={workplace.workplaceId} value={workplace.workplaceId} />
-                                                            ))}
-                                                        </datalist>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <div class="form-group">
-                                                            <label role="searchWorkplaceName">ชื่อหน่วยงาน</label>
-                                                            <input type="text" class="form-control" id="searchWorkplaceName"
-                                                                placeholder="ชื่อหน่วยงาน" value={searchWorkplaceName}
-                                                                // onChange={(e) => setSearchWorkplaceName(e.target.value)}
-                                                                onChange={handleStaffNameChange}
-                                                                list="WorkplaceNameList"
-                                                            />
-                                                        </div>
-                                                        <datalist id="WorkplaceNameList">
-                                                            {workplaceListAll.map(workplace => (
-                                                                <option key={workplace.workplaceId} value={workplace.workplaceName} />
-                                                            ))}
-                                                        </datalist>
-                                                    </div>
-                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-3">
                                                         <div class="form-group">

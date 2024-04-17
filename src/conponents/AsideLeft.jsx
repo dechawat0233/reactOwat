@@ -91,19 +91,19 @@ function AsideLeft() {
                         <Link to="/salarysummary" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> สรุปเงินเดือน</Link>
                       </li> */}
                       <li class="nav-item">
-                        <Link to="/examine" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> ตรวจการทำงาน</Link>
+                        <Link to="/examine" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> เวลาทำงานรายบุคคล</Link>
                       </li>
                       <li class="nav-item">
-                        <Link to="/compensation" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> ตารางค่าตอบแทน</Link>
+                        <Link to="/compensation" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> ค่าตอบแทนรายบุคคล</Link>
                       </li>
                       <li class="nav-item">
-                        <Link to="/salaryresult" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> สรุปเงินเดือน</Link>
+                        <Link to="/salaryresult" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> เงินเดือนรายบุคคล</Link>
                       </li>
                       <li class="nav-item">
-                        <Link to="/salaryAllresult" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> สรุปหน่วยงานทั้งหมด</Link>
+                        <Link to="/salaryAllresult" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> ออกรายงานเงินเดือนพนักงาน</Link>
                       </li>
                       <li class="nav-item">
-                        <Link to="/worktimesheetworkplace" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> สรุปหน่วยงาน</Link>
+                        <Link to="/worktimesheetworkplace" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ออกรายงานเวลาทำงานพนักงาน</Link>
                       </li>
                       {/* <li class="nav-item">
                         <Link to="/worktimeSheetWorkplace_Save01_22_2024" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> สรุปหน่วยงานแบบเก่า</Link>

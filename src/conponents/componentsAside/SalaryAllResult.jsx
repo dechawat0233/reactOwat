@@ -766,7 +766,7 @@ function SalaryAllResult() {
                 employees.sort((a, b) => a.employeeId.localeCompare(b.employeeId));
 
                 // Display employee information
-                employees.forEach(({ employeeId, lastName, name, accountingRecord, addSalary, countSpecialDay, specialDayRate }) => {
+                employees.forEach(({ employeeId, lastName, name, accountingRecord, addSalary, countSpecialDay, specialDayRate, specialDayListWork }) => {
 
                     drawID();
                     drawName();
@@ -793,7 +793,11 @@ function SalaryAllResult() {
 
                     pdf.text(`${employeeId}`, startX, currentY);
                     pdf.text(`${name} ${lastName}`, startXName + 1, currentY);
-                    pdf.text(`${accountingRecord.countDay} `, startXAllDay + 5, currentY, { align: 'right' });
+
+                    const countSpecialDayListWork = specialDayListWork.length;
+                    const countcal = accountingRecord.countDay - countSpecialDayListWork;
+                    // pdf.text(`${accountingRecord.countDay} `, startXAllDay + 5, currentY, { align: 'right' });
+                    pdf.text(`${countcal} `, startXAllDay + 5, currentY, { align: 'right' });
 
 
                     // // เงินเดือน
@@ -883,7 +887,7 @@ function SalaryAllResult() {
                     pdf.text(`${formattedAmountDay}`,
                         startXSalary + 16, currentY, { align: 'right' });
                     // ค่าล่วงเวลา
-                    const formattedAmountOt = Number(accountingRecord.amountOt ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    const formattedAmountOt = Number(accountingRecord.amountOt + (countSpecialDayListWork * specialDayRate) ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                     pdf.text(`${formattedAmountOt}`,
                         startXOT + cellWidthOT, currentY, { align: 'right' });
 

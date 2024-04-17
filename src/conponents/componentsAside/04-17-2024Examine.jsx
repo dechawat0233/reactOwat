@@ -242,8 +242,8 @@ function Examine() {
     const thaiMonthLowerName = getThaiMonthName(parseInt(countdownMonth, 10));
 
     useEffect(() => {
-        localStorage.setItem('staffFullName', staffFullName);
-    }, [staffFullName]); async function handleSearch(event) {
+localStorage.setItem('staffFullName', staffFullName);
+    }, [staffFullName]);    async function handleSearch(event) {
 
 
         event.preventDefault();
@@ -479,101 +479,6 @@ function Examine() {
     const workplace = workplaceList.find(workplace => workplace.workplaceId === workplaceIdEMP);
     console.log('workplace', workplace);
 
-    // const monthTest = "09"; // Assuming "09" represents September
-    const commonNumbers123 = new Set();
-
-    if (workplace) {
-        const matchingDays = workplace.daysOff.filter(date => {
-            const dateObj = new Date(date);
-            return (dateObj.getMonth() + 1).toString().padStart(2, '0') === month; // +1 because getMonth() returns zero-based month index
-        });
-
-        console.log('matchingDays', matchingDays);
-        // Iterate over matchingDays and add day numbers to commonNumbers set
-
-        matchingDays.forEach(date => {
-            const dateObj = new Date(date);
-            const day = dateObj.getDate(); // Get the day number (1-31)
-            commonNumbers123.add(day); // Add day number to the set
-        });
-
-        const filteredNumbers = new Set();
-
-        // Filter day numbers less than 20 and add them to filteredNumbers set
-        commonNumbers123.forEach(day => {
-            if (day < 21) {
-                filteredNumbers.add(day);
-            }
-        });
-
-        // Update commonNumbers123_2nd with filtered day numbers
-        commonNumbers123.clear(); // Clear the original set
-        filteredNumbers.forEach(day => {
-            commonNumbers123.add(day); // Add filtered day numbers back to commonNumbers123_2nd
-        });
-
-        console.log('commonNumbers123_2nd (after filtering)', commonNumbers123);
-    } else {
-        console.error('Workplace not found');
-    }
-    console.log('month123', month);
-
-    const commonNumbers123_2nd = new Set();
-
-    let monthSet;
-    if (workplace) {
-        const matchingDays = workplace.daysOff.filter(date => {
-            if (month == '01') {
-                monthSet == '12';
-
-            } else {
-                // Convert the month string to a number, subtract 1, and convert it back to a string
-                const currentMonthNumber = parseInt(month, 10); // Parse month string to integer
-                const previousMonthNumber = currentMonthNumber - 1;
-
-                // Handle the case when previousMonthNumber is 0 (transition from January to December)
-                if (previousMonthNumber === 0) {
-                    monthSet = '12'; // Set monthSet to '12' for December
-                } else {
-                    // Convert the previous month number back to a string with leading zero if necessary
-                    monthSet = previousMonthNumber.toString().padStart(2, '0');
-                }
-            }
-            const dateObj = new Date(date);
-            return (dateObj.getMonth() + 1).toString().padStart(2, '0') === monthSet; // +1 because getMonth() returns zero-based month index
-        });
-
-        console.log('matchingDays', matchingDays);
-        // Iterate over matchingDays and add day numbers to commonNumbers set
-
-        matchingDays.forEach(date => {
-            const dateObj = new Date(date);
-            const day = dateObj.getDate(); // Get the day number (1-31)
-            commonNumbers123_2nd.add(day); // Add day number to the set
-        });
-
-        // Create a new Set to store filtered day numbers (< 20)
-        const filteredNumbers = new Set();
-
-        // Filter day numbers less than 20 and add them to filteredNumbers set
-        commonNumbers123_2nd.forEach(day => {
-            if (day > 20) {
-                filteredNumbers.add(day);
-            }
-        });
-
-        // Update commonNumbers123_2nd with filtered day numbers
-        commonNumbers123_2nd.clear(); // Clear the original set
-        filteredNumbers.forEach(day => {
-            commonNumbers123_2nd.add(day); // Add filtered day numbers back to commonNumbers123_2nd
-        });
-
-        console.log('commonNumbers123_2nd (after filtering)', commonNumbers123_2nd);
-    } else {
-        console.error('Workplace not found');
-    }
-
-
     let commonNumbers = new Set();
 
     if (workplace) {
@@ -605,16 +510,6 @@ function Examine() {
     } else {
         console.log("Workplace not found.");
     }
-
-
-    commonNumbers123.forEach(number => {
-        commonNumbers.add(number);
-    });
-
-    commonNumbers123_2nd.forEach(number => {
-        commonNumbers.add(number);
-    });
-
 
     // const commonNumbersArray = [...commonNumbers];
     const commonNumbersArray = [...commonNumbers].map(value => value.toString());

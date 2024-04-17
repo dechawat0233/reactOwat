@@ -1103,7 +1103,7 @@ function Salary() {
                                                 </div>
                                             ))} */}
                                             <section class="Frame">
-                                                <h3>เงินเพิ่มของหน่วยงาน</h3>
+                                                <h4>เงินเพิ่มของหน่วยงาน</h4>
                                                 <div className="row">
                                                     <div className="col-md-2">
                                                         <label role="salaryadd6">ชื่อรายการ</label>
@@ -1202,7 +1202,7 @@ function Salary() {
                                                 ))}
                                             </section>
                                             <section class="Frame">
-                                                <h3>เงินเพิ่มที่ได้รับ</h3>
+                                                <h4>เงินเพิ่มที่ได้รับ</h4>
                                                 <div className="row">
                                                     <div className="col-md-2">
                                                         <label role="salaryadd6">ชื่อรายการ</label>

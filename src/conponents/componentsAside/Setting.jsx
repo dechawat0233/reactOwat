@@ -956,7 +956,7 @@ function Setting() {
     }
 
     console.log('selectedDates', selectedDates);
-    
+
     const bordertable = {
         borderLeft: '2px solid #000'
     };
@@ -1098,13 +1098,13 @@ function Setting() {
                                 <h2 class="title">เวลาทำงาน</h2>
                                 <section class="Frame">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label role="workOfHour">ชั่วโมงทำงาน</label>
                                                 <input type="text" class="form-control" id="workOfHour" placeholder="ชั่วโมงทำงาน" value={workOfHour} onChange={(e) => setWorkOfHour(e.target.value)} />
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label role="workOfOT">ชั่วโมง OT</label>
                                                 <input type="text" class="form-control" id="workOfOT" placeholder="ชั่วโมง OT" value={workOfOT} onChange={(e) => setWorkOfOT(e.target.value)} />
@@ -1840,22 +1840,22 @@ function Setting() {
 
                                         <div>
                                             <div className="row">
-                                                <div className="col-md-2">
+                                                <div className="col-md-3">
                                                     <label style={{ marginRight: '0.5rem' }}>เดือน:</label>
 
                                                 </div>
-                                                <div className="col-md-2">
+                                                <div className="col-md-3">
                                                     <label style={{ margin: '0.5rem' }}>วันที่:</label>
 
                                                 </div>
-                                                <div className="col-md-2">
+                                                <div className="col-md-3">
                                                     <label style={{ margin: '0.5rem' }}>ปี:</label>
 
                                                 </div>
                                             </div>
 
                                             <div className="row">
-                                                <div className="col-md-2">
+                                                <div className="col-md-3">
                                                     <select className="form-control" value={month} onChange={(e) => setMonth(e.target.value)}>
                                                         <option value="">Select month</option>
                                                         {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
@@ -1865,7 +1865,7 @@ function Setting() {
                                                         ))}
                                                     </select>
                                                 </div>
-                                                <div className="col-md-2">
+                                                <div className="col-md-3">
                                                     <select className="form-control" value={day} onChange={(e) => setDay(e.target.value)}>
                                                         <option value="">Select day</option>
                                                         {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => (
@@ -1875,7 +1875,7 @@ function Setting() {
                                                         ))}
                                                     </select>
                                                 </div>
-                                                <div className="col-md-2">
+                                                <div className="col-md-3">
                                                     <select className="form-control" value={year} onChange={(e) => setYear(e.target.value)}>
                                                         <option value="">Select year</option>
                                                         {Array.from({ length: 7 }, (_, i) => new Date().getFullYear() + 3 - i).map(
@@ -1899,24 +1899,34 @@ function Setting() {
                                         {selectedDates.length > 0 && (
                                             <div>
                                                 {/* <h4>วันหยุดหน่วยงาน</h4> */}
-                                                วันหยุดหน่วยงาน  (เดือน/วัน/ปี)
+                                                วันหยุดหน่วยงาน (เดือน/วัน/ปี)
                                                 <br />
 
 
                                                 <ol>
                                                     {selectedDates.map((date, index) => (
                                                         <li key={index}>
-                                                            {date instanceof Date && !isNaN(date.getTime())
-                                                                ? date.toLocaleDateString()
-                                                                : `${day}/${month}/${year} (Invalid Date)`}{' '}
-                                                            <button
-                                                                type="button"
-                                                                onClick={() => handleRemoveDate(date)}
-                                                                className="btn clean"
-                                                                style={{ margin: '0.5rem', width: "6rem" }}
-                                                            >
-                                                                ลบออก
-                                                            </button>
+                                                            <div className="row" >
+                                                                <div className="col-md-1" style={{ borderTop: '2px solid black' }}>
+                                                                    {date instanceof Date && !isNaN(date.getTime())
+                                                                        ? date.toLocaleDateString()
+                                                                        : `${day}/${month}/${year} (Invalid Date)`}{' '}
+                                                                </div>
+                                                                <div className="col-md-1" style={{ borderTop: '2px solid black' }}>
+                                                                    <button
+                                                                        type="button"
+                                                                        onClick={() => handleRemoveDate(date)}
+                                                                        className="btn clean"
+                                                                        style={{ margin: '0.5rem', width: "6rem" }}
+                                                                    >
+                                                                        ลบออก
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+
+
+
+
                                                         </li>
                                                     ))}
                                                 </ol>
