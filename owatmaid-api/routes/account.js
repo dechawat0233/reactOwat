@@ -837,9 +837,9 @@ data.accountingRecord.socialSecurity = Math.ceil((sumSocial * 0.05)) || 0;
     data.accountingRecord.bank = 0;
     data.accountingRecord.total = total || 0;
 
+    data.accountingRecord.sumAddSalaryBeforeTax = sumAddSalaryBeforeTax || 0;
     data.accountingRecord.sumAddSalaryBeforeTaxNonSocial = sumAddSalaryBeforeTaxNonSocial || 0;
     data.accountingRecord.sumDeductBeforeTaxWithSocial = sumDeductBeforeTaxWithSocial || 0;
-    data.accountingRecord.sumAddSalaryBeforeTax = sumAddSalaryBeforeTax || 0;
     data.accountingRecord.sumDeductBeforeTax = sumDeductBeforeTax || 0;
     data.accountingRecord.sumAddSalaryAfterTax = sumAddSalaryAfterTax || 0;
     data.accountingRecord.sumDeductAfterTax = sumDeductAfterTax || 0;
