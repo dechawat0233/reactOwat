@@ -252,12 +252,28 @@ if (deductSalary ) {
 let addSalaryList = [];
 let deductSalaryList = [];
 
-    for (let k = 0; k < response.data.addSalary.length; k++) {
+    for(let k = 0; k < response.data.addSalary.length; k++) {
         const promise = await checkCalSocial(response.data.addSalary[k].id || '0');
         const promise1 = await checkCalTax(response.data.addSalary[k].id || '0');
 
-        await promises.push(promise);
-        await promises1.push(promise1);
+        if(promise1 ) {
+          //cal tax
+          if(promise ){
+//cal social
+
+          } else {
+//non Social
+
+          }
+          await promises1.push(promise1);
+          await promises.push(promise);
+
+        } else {
+          //Non tax
+
+          await promises.push(promise);
+        }
+
 
         //push addSalary to account
         if(response.data.addSalary[k].roundOfSalary == "daily") {
@@ -445,13 +461,23 @@ router.post('/calsalarylist', async (req, res) => {
         let amountDay = 0;
         let amountOt = 0;
         let amountSpecial = 0;
-        let sumSocial = 0;
 let sumCalTax = 0;
 let sumCalTaxNonSalary = 0;
 let sumNonTaxNonSalary = 0;
-let sumDeductWithTax = 0;
 let sumDeductUncalculateTax = 0;
+let sumDeductWithTax = 0;
+
+let sumAddSalaryBeforeTaxNonSocial = 0;
+let sumDeductBeforeTaxWithSocial = 0;
+let sumAddSalaryBeforeTax = 0;
+let sumDeductBeforeTax = 0;
+
+let sumSocial = 0;
 let tax = 0;
+
+let sumAddSalaryAfterTax = 0;
+let sumDeductAfterTax = 0;
+
 let total = 0;
 
 let holidayRate = 0;
@@ -634,19 +660,26 @@ let addSalaryList = [];
 let deductSalaryList = [];
 
     for (let k = 0; k < response.data.addSalary.length; k++) {
-        const promise = await checkCalSocial(response.data.addSalary[k].id || '0');
         const promise1 = await checkCalTax(response.data.addSalary[k].id || '0');
+
+        const promise = await checkCalSocial(response.data.addSalary[k].id || '0');
 
         await promises.push(promise);
         await promises1.push(promise1);
 
         //push addSalary to account
-        if(response.data.addSalary[k].roundOfSalary == "daily") {
-          let dailyTmp = await response.data.addSalary[k];
-          dailyTmp.message = await countDay;
-          await addSalaryList.push(dailyTmp);
+        if(response.data.addSalary[k].roundOfSalary == "daily" ) {
+          if( response.data.addSalary[k].SpSalary !== "") {
+            let dailyTmp = await response.data.addSalary[k];
+            dailyTmp.message = await countDay;
+            await addSalaryList.push(dailyTmp);
+          }
+
         } else {
+          if( response.data.addSalary[k].SpSalary !== "") {
           await addSalaryList.push(response.data.addSalary[k]);
+          }
+
         }
 // console.log(response.data.addSalary[k].roundOfSalary );
     }
@@ -803,6 +836,14 @@ data.accountingRecord.socialSecurity = Math.ceil((sumSocial * 0.05)) || 0;
     data.accountingRecord.deductAfterTax = sumDeductUncalculateTax || 0;
     data.accountingRecord.bank = 0;
     data.accountingRecord.total = total || 0;
+
+    data.accountingRecord.sumAddSalaryBeforeTax = sumAddSalaryBeforeTax || 0;
+    data.accountingRecord.sumAddSalaryBeforeTaxNonSocial = sumAddSalaryBeforeTaxNonSocial || 0;
+    data.accountingRecord.sumDeductBeforeTaxWithSocial = sumDeductBeforeTaxWithSocial || 0;
+    data.accountingRecord.sumDeductBeforeTax = sumDeductBeforeTax || 0;
+    data.accountingRecord.sumAddSalaryAfterTax = sumAddSalaryAfterTax || 0;
+    data.accountingRecord.sumDeductAfterTax = sumDeductAfterTax || 0;
+
     data.accountingRecord.sumSalaryForTax = sumCalTax || 0;
     data.addSalary = addSalaryList || [];
 data.deductSalary = deductSalaryList || [];
