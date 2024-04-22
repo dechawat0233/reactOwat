@@ -614,6 +614,7 @@ holidayRate = await response.data.salary || foundWorkplace.workRate;
     data.name = await response.data.name;
     data.lastName = await response.data.lastName;
 
+      
     let position1230 = '1230';
     const addSalary = response.data.addSalary.find(salary => salary.id === position1230);
 
