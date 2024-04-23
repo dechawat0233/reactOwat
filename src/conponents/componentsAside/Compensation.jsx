@@ -1207,10 +1207,12 @@ if(addSalaryList != []) {
         const tmpyear = tmpcurrentDate.getFullYear();
         const formattedDate = `${tmpday}-${tmpmonth}-${tmpyear}`;
 
-        await dataTable.map((item , index) => {
+        await dataTable.map( async (item , index) => {
 if(! item.workplaceId) {
     // alert(index);
-addSalaryList[index] = [];
+const tmp = await [... addSalaryList];
+tmp[index] = await [];
+await setAddSalaryList(tmp);
 }
         });
 
