@@ -1212,7 +1212,7 @@ if(! item.workplaceId) {
     // alert(index);
 const tmp = await [... addSalaryList];
 tmp[index] = await [];
-// await setAddSalaryList(tmp);
+await setAddSalaryList(tmp);
 }
         });
 

@@ -38,15 +38,8 @@ concludeRecord: [{
   workRateOT: String, 
   addSalaryDay: String
 }],
-addSalary: [{
-  id: String,
-  name: String,
-  SpSalary: String,
-  roundOfSalary: String,
-  StaffType: String,
-  nameType: String,
-  message: String,
-}],
+addSalary: [
+  ],
 createBy: String
 });
 
@@ -159,8 +152,8 @@ router.post('/create', async (req, res) => {
     concludeDate,
     employeeId,
     createBy,
-   addSalary,
-    concludeRecord } = req.body;
+    concludeRecord,
+    addSalary } = req.body;
 
 
   try {
