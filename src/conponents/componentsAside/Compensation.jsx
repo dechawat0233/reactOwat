@@ -651,18 +651,17 @@ if(addSalaryList != []) {
 
     // Function to remove an addSalary array from addSalaryList
     const removeAddSalaryArray = async (listIndex, subArrayIndex) => {
-        const newAddSalaryList = await [...addSalaryList];
-// alert(addSalaryList[listIndex][1])
-        await newAddSalaryList[listIndex].splice(0, 1); // Remove the element at the specified index
+        const newAddSalaryList = await [... addSalaryList];
+        if (newAddSalaryList[listIndex] && subArrayIndex  < newAddSalaryList[listIndex].length ) {
+        const tmpObj = await [...newAddSalaryList[listIndex]];
+        const removedElement = await tmpObj.filter((item, index) => index !== subArrayIndex );
+        
+        newAddSalaryList[listIndex] = await removedElement;
+// alert(listIndex+ ' x ' +  subArrayIndex);
+// await alert(JSON.stringify( newAddSalaryList[listIndex],null,2));
         await setAddSalaryList(newAddSalaryList);
-        // alert(newAddSalaryList.length);
+        }
 
-        //zz
-        // setAddSalaryList(prevAddSalaryList => {
-        //   const newAddSalaryList = [...prevAddSalaryList];
-        //     newAddSalaryList[listIndex].splice(subArrayIndex, 1);
-        //   return newAddSalaryList;
-        // });
     };
 
     // Example usage of removeAddSalaryArray function
@@ -1208,12 +1207,20 @@ if(addSalaryList != []) {
         const tmpyear = tmpcurrentDate.getFullYear();
         const formattedDate = `${tmpday}-${tmpmonth}-${tmpyear}`;
 
+        await dataTable.map((item , index) => {
+if(! item.workplaceId) {
+    // alert(index);
+addSalaryList[index] = [];
+}
+        });
+
         const data = await {
             year: year,
             month: month,
             concludeDate: formattedDate,
             employeeId: staffId,
             concludeRecord: dataTable,
+            addSalary: addSalaryList,
             createBy: jsonObject.name
         };
 
@@ -1472,11 +1479,11 @@ if(addSalaryList != []) {
                                                                         <h4>รายการเงินเพิ่ม</h4>
                                                                         <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
                                                                             {addSalaryList[index] && (
-                                                                                addSalaryList[index].map((addsalary, index) => (
+                                                                                addSalaryList[index].map((addsalary, index1) => (
                                                                                     (addsalary.name !== '' && (
-                                                                                        <li key={index} style={{ marginBottom: '10px' }}>
+                                                                                        <li key={index1} style={{ marginBottom: '10px' }}>
                                                                                             {addsalary.name} - จำนวน: {addsalary.SpSalary > 100 ? (addsalary.SpSalary / 30).toFixed(2) : addsalary.SpSalary} {addsalary.roundOfSalary == 'daily' && (<>/ {addsalary.message} วัน</>)}
-                                                                                            <button type="button" onClick={() => deleteAddSalary(0, 1)}>ลบ</button>
+                                                                                            <button type="button" onClick={() => handleRemoveAddSalaryArray(index, index1)}>ลบ</button>
                                                                                         </li>
                                                                                     ))
                                                                                 )))}

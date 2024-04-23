@@ -36,16 +36,16 @@ concludeRecord: [{
   workRate: String, 
   otTimes: String, 
   workRateOT: String, 
-  addSalaryDay: String,
-  addSalary: [{
-    id: String,
-    name: String,
-    SpSalary: String,
-    roundOfSalary: String,
-    StaffType: String,
-    nameType: String,
-    message: String,
-  }]
+  addSalaryDay: String
+}],
+addSalary: [{
+  id: String,
+  name: String,
+  SpSalary: String,
+  roundOfSalary: String,
+  StaffType: String,
+  nameType: String,
+  message: String,
 }],
 createBy: String
 });
