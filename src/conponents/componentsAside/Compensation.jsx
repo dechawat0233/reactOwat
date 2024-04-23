@@ -636,12 +636,11 @@ function Compensation() {
                 // Update state with the created addSalaryList
                 setAddSalaryList(addSalaryList);
             }
-
         };
 
-
+if(addSalaryList != []) {
         getAddSalaryDay();
-
+}
 
         if (employee) {
             setWorkplaceIdEMP(employee.workplace ? employee.workplace : '');
@@ -653,10 +652,10 @@ function Compensation() {
     // Function to remove an addSalary array from addSalaryList
     const removeAddSalaryArray = async (listIndex, subArrayIndex) => {
         const newAddSalaryList = await [...addSalaryList];
-
-        await newAddSalaryList[listIndex].splice(subArrayIndex, 1); // Remove the element at the specified index
+// alert(addSalaryList[listIndex][1])
+        await newAddSalaryList[listIndex].splice(0, 1); // Remove the element at the specified index
         await setAddSalaryList(newAddSalaryList);
-        alert(newAddSalaryList.length);
+        // alert(newAddSalaryList.length);
 
         //zz
         // setAddSalaryList(prevAddSalaryList => {
@@ -1664,9 +1663,7 @@ function Compensation() {
                 </div>
             </div>
             {/* {JSON.stringify( dataTable[30])}{dataTable.length} */}
-            0: {JSON.stringify(addSalaryList[0])}
-            1: {JSON.stringify(addSalaryList[1])}
-            <br></br><button onClick={() => handleRemoveAddSalaryArray(1, 0)}>Remove addSalary array</button>
+
         </body>
         // </div>  )
     )
