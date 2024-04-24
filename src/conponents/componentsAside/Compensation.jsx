@@ -595,7 +595,9 @@ function Compensation() {
     const calculateTotalSalary = () => {
         let total = 0;
         addSalaryList.forEach((day, dayIndex) => {
-            if (dataTable[dayIndex].workplaceId !== undefined && dataTable[dayIndex].workplaceId !== '') {
+
+            if(dataTable[dayIndex]) {
+            if(dataTable[dayIndex].workplaceId !== undefined && dataTable[dayIndex].workplaceId !== '') {
                 day.forEach(salary => {
 
                     if (salary.SpSalary > 100) {
@@ -605,6 +607,8 @@ function Compensation() {
                     }
                 });
             }
+        }
+
         });
         return total;
     };
