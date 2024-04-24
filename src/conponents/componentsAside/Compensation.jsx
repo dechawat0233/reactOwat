@@ -84,6 +84,11 @@ function Compensation() {
         return thaiMonthNames[monthNumber - 1];
     };
 
+    const [addSalaryDay, setAddSalaryDay] = useState(0);
+    const [addSalaryDayList, setAddSalaryDayList] = useState([]);
+    const [addSalaryList, setAddSalaryList] = useState([]);
+
+
     useEffect(() => {
         setMonth("01");
 
@@ -375,6 +380,7 @@ function Compensation() {
     const thaiMonthLowerName = getThaiMonthName(parseInt(countdownMonth, 10));
 
     const [concludeResult, setConcludeResult] = useState([]);
+    const [addSalaryResult, setAddSalaryResult] = useState([]);
 
     async function handleSearch(event) {
         event.preventDefault();
@@ -419,6 +425,8 @@ function Compensation() {
 
                 } else {
                     await setConcludeResult(response.data.recordConclude[0].concludeRecord);
+                    await setAddSalaryResult(response.data.recordConclude[0].addSalary);
+
                     await setLoadStatus('load');
                     await setUpdate(response.data.recordConclude[0]._id);
                 }
@@ -559,6 +567,9 @@ function Compensation() {
 
     useEffect(() => {
         setDataTable(concludeResult);
+        setAddSalaryList(addSalaryResult || []);
+// alert(JSON.stringify(addSalaryResult ,null,2));
+
         let ans = 0;
         let ans1 = 0;
 
@@ -579,10 +590,6 @@ function Compensation() {
         return employeeList.find(employee => employee.employeeId === id);
     };
 
-
-    const [addSalaryDay, setAddSalaryDay] = useState(0);
-    const [addSalaryDayList, setAddSalaryDayList] = useState([]);
-    const [addSalaryList, setAddSalaryList] = useState([]);
 
 
     const calculateTotalSalary = () => {
@@ -634,7 +641,10 @@ function Compensation() {
                 const addSalaryList = Array(dataTable.length).fill(tmpAddSalaryList);
 
                 // Update state with the created addSalaryList
+if(loadStatus !== 'load') {
                 setAddSalaryList(addSalaryList);
+}
+
             }
         };
 
