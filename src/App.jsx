@@ -60,6 +60,8 @@ import WorktimeSheetWorkplace from "./conponents/componentsAside/WorktimeSheetWo
 import WorktimeSheetWorkplace_Save01_22_2024 from "./conponents/componentsAside/WorktimeSheetWorkplace_Save01-22-2024";
 
 import TestPDF from "./conponents/componentsAside/TestPDF";
+
+import SalarySlipPDF from "./conponents/componentsAside/SalarySlipPDF";
 // import SendEmployeePDF from "./conponents/componentsAside/sendEmployeePDF";
 import SendEmployeePDF from "./conponents/componentsAside/SendEmployeePDF";
 import SendEmployeePDF2 from "./conponents/componentsAside/SendEmployeePDF2";
@@ -145,6 +147,8 @@ function App() {
               <Route path="/compensation" element={<Compensation />} />
               <Route path="/salaryresult" element={<Salaryresult />} />
               <Route path="/salaryAllresult" element={<SalaryAllResult />} />
+              <Route path="/salarySlipPDF" element={<SalarySlipPDF />} />
+
 
               <Route path="/worktimesheet" element={<Worktimesheet />} />
               <Route path="/worktimesheetworkplace" element={<WorktimeSheetWorkplace />} />
