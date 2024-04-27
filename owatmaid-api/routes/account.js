@@ -557,10 +557,10 @@ tax = await response.data.tax ||0;
   });
 
 if(month !== "01" && month !== "12" && year == year1 ) {
-console.log(month + ' x ' + month1String )
+// console.log(month + ' x ' + month1String )
 
   if(month == month1String && year == year1 && day1.getDate()  <= 20) {
-    console.log(year + ' ' + year1 + ' ' + month + ' ' + month1String);
+    // console.log(year + ' ' + year1 + ' ' + month + ' ' + month1String);
 
     await specialDaylist.push(day1.getDate() );
     holidayRate = await response.data.salary || foundWorkplace.workRate;
@@ -660,13 +660,35 @@ if (deductSalary ) {
 let addSalaryList = [];
 let deductSalaryList = [];
 
+
     for (let k = 0; k < response.data.addSalary.length; k++) {
+      //check addSalary with tax and cal social
         const promise1 = await checkCalTax(response.data.addSalary[k].id || '0');
-
         const promise = await checkCalSocial(response.data.addSalary[k].id || '0');
-
+        
         await promises.push(promise);
         await promises1.push(promise1);
+
+        //check tax 
+        if(response.data.addSalary[k].SpSalary !== ""){
+        if(promise1) {
+          //data cal tax
+
+          //check cal social
+if(promise) {
+//data cal social
+sumAddSalaryBeforeTax = sumAddSalaryBeforeTax + response.data.addSalary[k].SpSalary || 0;
+} else {
+//data non social
+sumAddSalaryBeforeTaxNonSocial = sumAddSalaryBeforeTaxNonSocial  + response.data.addSalary[k].SpSalary || 0;
+}
+          console.log('tax' + response.data.addSalary[k].id || '0'); 
+
+        } else {
+          console.log('non tax' + response.data.addSalary[k].id || '0');
+          sumAddSalaryAfterTax  = sumAddSalaryAfterTax  + response.data.addSalary[k].SpSalary || 0;
+        }
+      }
 
         //push addSalary to account
         if(response.data.addSalary[k].roundOfSalary == "daily" ) {
@@ -709,6 +731,8 @@ await deductSalaryList.push(response.data.deductSalary[l] );
             console.error('Error occurred while processing promises:', error);
         });
     
+
+
 //check cal tax
 await Promise.all(promises1)
 .then(results => {
@@ -1143,6 +1167,20 @@ async function checkCalSocial(id) {
   
 }
 
+// async function checkCalTax(id) {
+//   const idList = await ["1110","1120","1130","1140","1150","1210","1230","1231","1233","1241","1242","1251","1330","1350","1410","1422","1423","1428","1434","1440","1441","1444","1445","1446","1520","1522","1524","1525","1526","1528","1535","1540","1541","1550","1560","1447","1613","1561","1542","1536","1529","1531","1532","1533","1534","1442","1435","1429","1427","1412","1245","1234","1159","2111","2113","2116","2117","2120","2124","2160","2430","1190","1211","1212","1214","1235","1236","1243","1351","1411","1425","1426","1431","1448","1449","1527","1562","2114","2123","1543","1443","1544"];
+  
+//   const idToCheck = await id;
+  
+//   if (idList.includes(idToCheck)) {
+//       // console.log(`ID ${idToCheck} is included in the list.`);
+//       return await true;
+//   } else {
+//       // console.log(`ID ${idToCheck} is not included in the list.`);
+//       return await false;
+//   }
+// }
+
 async function checkCalTax(id) {
   const idList = await ["1110","1120","1130","1140","1150","1210","1230","1231","1233","1241","1242","1251","1330","1350","1410","1422","1423","1428","1434","1440","1441","1444","1445","1446","1520","1522","1524","1525","1526","1528","1535","1540","1541","1550","1560","1447","1613","1561","1542","1536","1529","1531","1532","1533","1534","1442","1435","1429","1427","1412","1245","1234","1159","2111","2113","2116","2117","2120","2124","2160","2430","1190","1211","1212","1214","1235","1236","1243","1351","1411","1425","1426","1431","1448","1449","1527","1562","2114","2123","1543","1443","1544"];
   
@@ -1156,5 +1194,6 @@ async function checkCalTax(id) {
       return await false;
   }
 }
+
 
 module.exports = router;
