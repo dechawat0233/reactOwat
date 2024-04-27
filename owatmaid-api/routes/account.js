@@ -677,16 +677,16 @@ let deductSalaryList = [];
           //check cal social
 if(promise) {
 //data cal social
-sumAddSalaryBeforeTax = sumAddSalaryBeforeTax + response.data.addSalary[k].SpSalary || 0;
+sumAddSalaryBeforeTax = sumAddSalaryBeforeTax + parseFloat(response.data.addSalary[k].SpSalary || 0);
 } else {
 //data non social
-sumAddSalaryBeforeTaxNonSocial = sumAddSalaryBeforeTaxNonSocial  + response.data.addSalary[k].SpSalary || 0;
+sumAddSalaryBeforeTaxNonSocial = sumAddSalaryBeforeTaxNonSocial  + parseFloat(response.data.addSalary[k].SpSalary || 0);
 }
           console.log('tax' + response.data.addSalary[k].id || '0'); 
 
         } else {
           console.log('non tax' + response.data.addSalary[k].id || '0');
-          sumAddSalaryAfterTax  = sumAddSalaryAfterTax  + response.data.addSalary[k].SpSalary || 0;
+          sumAddSalaryAfterTax  = sumAddSalaryAfterTax  + parseFloat(response.data.addSalary[k].SpSalary || 0);
         }
       }
 
@@ -721,16 +721,16 @@ await deductSalaryList.push(response.data.deductSalary[l] );
             //check cal social
   if(promisesDeduct2 ) {
   //data cal social
-  sumDeductBeforeTaxWithSocial = sumDeductBeforeTaxWithSocial + response.data.deductSalary[l].amount || 0;
+  sumDeductBeforeTaxWithSocial = sumDeductBeforeTaxWithSocial + parseFloat(response.data.deductSalary[l].amount || 0);
 
   } else {
   //data non social
-  sumDeductBeforeTax = sumDeductBeforeTax + response.data.deductSalary[l].amount || 0;
+  sumDeductBeforeTax = sumDeductBeforeTax + parseFloat(response.data.deductSalary[l].amount || 0);
 
   }
   
           } else {
-            sumDeductAfterTax = sumDeductAfterTax + response.data.deductSalary[l].amount || 0;
+            sumDeductAfterTax = sumDeductAfterTax + parseFloat(response.data.deductSalary[l].amount || 0);
 
           }
         
