@@ -709,10 +709,32 @@ sumAddSalaryBeforeTaxNonSocial = sumAddSalaryBeforeTaxNonSocial  + response.data
 
     for (let l = 0; l < response.data.deductSalary.length; l++) {
       const promisesDeduct1 = await checkCalTax(response.data.deductSalary[l].id || '0');
+      const promisesDeduct = await checkCalSocial(response.data.deductSalary[l].id || '0');
 
       await promisesDeduct.push(promisesDeduct1 );
 await deductSalaryList.push(response.data.deductSalary[l] );
-      
+
+        //check tax 
+          if(promisesDeduct1 ) {
+            //data cal tax
+  
+            //check cal social
+  if(promisesDeduct ) {
+  //data cal social
+  sumDeductBeforeTaxWithSocial = sumDeductBeforeTaxWithSocial + response.data.deductSalary[l].amount || 0;
+
+  } else {
+  //data non social
+  sumDeductBeforeTax = sumDeductBeforeTax + response.data.deductSalary[l].amount || 0;
+
+  }
+  
+          } else {
+            sumDeductAfterTax = sumDeductAfterTax + response.data.deductSalary[l].amount || 0;
+
+          }
+        
+  
   }
 
     await Promise.all(promises)
