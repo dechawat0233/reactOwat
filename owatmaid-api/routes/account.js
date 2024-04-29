@@ -648,15 +648,48 @@ holidayRate = await response.data.salary || foundWorkplace.workRate;
     data.name = await response.data.name;
     data.lastName = await response.data.lastName;
 
-      
     let position1230 = '1230';
     const addSalary = response.data.addSalary.find(salary => salary.id === position1230);
 
     if (addSalary) {
+      if(addSalary.SpSalary > 100) {
+        let tmp = await parseFloat(addSalary.SpSalary) /30;
+        data.accountingRecord.amountPosition = tmp;
+      } else {
         data.accountingRecord.amountPosition = addSalary.SpSalary;
+      }
     } else {
         data.accountingRecord.amountPosition = 0;
     }
+
+    let tel1350 = '1230';
+    const addSalary1350 = response.data.addSalary.find(salary => salary.id === tel1350 );
+
+    if (addSalary1350 ) {
+      if(addSalary1350.SpSalary > 100) {
+let tmp = await parseFloat(addSalary1350.SpSalary) / 30;
+data.accountingRecord.tel = tmp;
+      } else {
+        data.accountingRecord.tel = addSalary1350.SpSalary;
+      }
+    } else {
+        data.accountingRecord.tel = 0;
+    }
+
+    let travel1520 = '1520';
+    const addSalary1520 = response.data.addSalary.find(salary => salary.id === travel1520 );
+
+    if (addSalary1520 ) {
+if(addSalary1520.SpSalary > 100) {
+  let tmp = await parseFloat(addSalary1520.SpSalary || 0) / 30;
+  data.accountingRecord.travel = await tmp;
+} else {
+  data.accountingRecord.travel = addSalary1520.SpSalary;
+}
+    } else {
+        data.accountingRecord.travel = 0;
+    }
+      
     
     let amountHardWorking1410 = '1410';
     const addSalary1 = response.data.addSalary.find(salary => salary.id === amountHardWorking1410 );
