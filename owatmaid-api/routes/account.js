@@ -653,13 +653,15 @@ holidayRate = await response.data.salary || foundWorkplace.workRate;
     let position1230 = '1230';
     const addSalary = response.data.addSalary.find(salary => salary.id === position1230);
 
-    if (addSalary) {
+    if (addSalary ) {
+      if(addSalary.roundOfSalary == 'monthly') {
       if(addSalary.SpSalary > 100) {
         let tmp = await (parseFloat(addSalary.SpSalary) /30).toFixed(2);
         data.accountingRecord.amountPosition = tmp;
       } else {
         data.accountingRecord.amountPosition = addSalary.SpSalary;
       }
+    }
     } else {
         data.accountingRecord.amountPosition = 0;
     }
@@ -668,12 +670,14 @@ holidayRate = await response.data.salary || foundWorkplace.workRate;
     const addSalary1350 = response.data.addSalary.find(salary => salary.id === tel1350 );
 
     if (addSalary1350 ) {
+      if(addSalary1350.roundOfSalary == 'monthly') {
       if(addSalary1350.SpSalary > 100) {
 let tmp = await (parseFloat(addSalary1350.SpSalary) / 30).toFixed(2);
 data.accountingRecord.tel = tmp;
       } else {
         data.accountingRecord.tel = addSalary1350.SpSalary;
       }
+    }
     } else {
         data.accountingRecord.tel = 0;
     }
@@ -682,12 +686,14 @@ data.accountingRecord.tel = tmp;
     const addSalary1520 = response.data.addSalary.find(salary => salary.id === travel1520 );
 
     if (addSalary1520 ) {
+      if(addSalary1520.roundOfSalary == 'monthly') {
 if(addSalary1520.SpSalary > 100) {
   let tmp = await (parseFloat(addSalary1520.SpSalary || 0) / 30).toFixed(2);
   data.accountingRecord.travel = await tmp;
 } else {
   data.accountingRecord.travel = addSalary1520.SpSalary;
 }
+      }
     } else {
         data.accountingRecord.travel = 0;
     }
