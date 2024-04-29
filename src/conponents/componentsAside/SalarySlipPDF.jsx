@@ -18,6 +18,14 @@ function SalarySlipPDF() {
     const [workplaceListAll, setWorkplaceListAll] = useState([]);
     const [employeeListAll, setEmployeeListAll] = useState([]);
 
+    const [staffId, setStaffId] = useState(''); //รหัสหน่วยงาน
+    const [staffName, setStaffName] = useState(''); //รหัสหน่วยงาน
+    const [staffLastname, setStaffLastname] = useState(''); //รหัสหน่วยงาน
+    const [staffFullName, setStaffFullName] = useState(''); //รหัสหน่วยงาน
+
+    const [searchEmployeeId, setSearchEmployeeId] = useState('');
+    const [searchEmployeeName, setSearchEmployeeName] = useState('');
+
     const [responseDataAll, setResponseDataAll] = useState([]);
 
     const [month, setMonth] = useState('');
@@ -25,6 +33,32 @@ function SalarySlipPDF() {
     const EndYear = 2010;
     const currentYear = new Date().getFullYear(); // 2024
     const years = Array.from({ length: currentYear - EndYear + 1 }, (_, index) => EndYear + index).reverse();
+
+    const [selectedOption, setSelectedOption] = useState('option1');
+
+    const handleSelectChange = (e) => {
+        const value = e.target.value;
+        setSelectedOption(value);
+
+        // Set setStaffId based on the selected option
+        if (value === 'option1') {
+            setStaffId('');
+            setSearchEmployeeId('');
+            setStaffName('');
+            setStaffFullName('');
+            setSearchEmployeeName('');
+
+            setResponseDataAll('');
+        } else if (value === 'option2') {
+            // Set setStaffId to another value if needed
+            setWorkplacrId('');
+            setWorkplacrName('');
+
+            setResponseDataAll('');
+
+        }
+    };
+
 
     useEffect(() => {
         // Fetch data from the API when the component mounts
@@ -55,6 +89,23 @@ function SalarySlipPDF() {
     }, []);
 
     console.log('workplaceListAll', workplaceListAll);
+
+    const [employeeList, setEmployeeList] = useState([]);
+
+    useEffect(() => {
+        // Fetch data from the API when the component mounts
+        fetch(endpoint + '/employee/list')
+            .then(response => response.json())
+            .then(data => {
+                // Update the state with the fetched data
+                setEmployeeList(data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, []); // The empty array [] ensures that the effect runs only once after the initial render
+
+    console.log(employeeList);
 
     // useEffect(() => {
     //     const fetchData = () => {
@@ -92,29 +143,59 @@ function SalarySlipPDF() {
 
             axios.post(endpoint + '/accounting/calsalarylist', dataTest)
                 .then(response => {
-                    const responseData = response.data;
-                    console.log('responseData', responseData);
+                    if (selectedOption == 'option1') {
+                        const responseData = response.data;
+                        console.log('responseData', responseData);
+                        console.log('searchWorkplaceId', searchWorkplaceId);
 
-                    // Filter data based on searchWorkplaceId if provided
-                    const filteredData = searchWorkplaceId ? responseData.filter(item => item.workplace === searchWorkplaceId) : responseData;
 
-                    // Sort filteredData by workplace in ascending order
-                    filteredData.sort((a, b) => {
-                        // Convert workplace values to numbers for comparison
-                        const workplaceA = Number(a.workplace);
-                        const workplaceB = Number(b.workplace);
+                        // Filter data based on searchWorkplaceId if provided
+                        const filteredData = searchWorkplaceId ? responseData.filter(item => item.workplace === searchWorkplaceId) : responseData;
 
-                        // Compare workplace values
-                        if (workplaceA < workplaceB) {
-                            return -1; // a should come before b
-                        }
-                        if (workplaceA > workplaceB) {
-                            return 1; // a should come after b
-                        }
-                        return 0; // workplace values are equal
-                    });
+                        // Sort filteredData by workplace in ascending order
+                        filteredData.sort((a, b) => {
+                            // Convert workplace values to numbers for comparison
+                            const workplaceA = Number(a.workplace);
+                            const workplaceB = Number(b.workplace);
 
-                    setResponseDataAll(filteredData);
+                            // Compare workplace values
+                            if (workplaceA < workplaceB) {
+                                return -1; // a should come before b
+                            }
+                            if (workplaceA > workplaceB) {
+                                return 1; // a should come after b
+                            }
+                            return 0; // workplace values are equal
+                        });
+                        // searchEmployeeId
+                        setResponseDataAll(filteredData);
+                    } else if (selectedOption == 'option2') {
+                        const responseData = response.data;
+                        console.log('responseData', responseData);
+                        console.log('searchEmployeeId', searchEmployeeId);
+
+                        // Filter data based on searchWorkplaceId if provided
+                        const filteredData = searchEmployeeId ? responseData.filter(item => item.employeeId === searchEmployeeId) : responseData;
+
+                        // Sort filteredData by workplace in ascending order
+                        filteredData.sort((a, b) => {
+                            // Convert workplace values to numbers for comparison
+                            const workplaceA = Number(a.workplace);
+                            const workplaceB = Number(b.workplace);
+
+                            // Compare workplace values
+                            if (workplaceA < workplaceB) {
+                                return -1; // a should come before b
+                            }
+                            if (workplaceA > workplaceB) {
+                                return 1; // a should come after b
+                            }
+                            return 0; // workplace values are equal
+                        });
+
+                        setResponseDataAll(filteredData);
+                    }
+
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -123,10 +204,11 @@ function SalarySlipPDF() {
 
         // Call fetchData when year, month, or searchWorkplaceId changes
         fetchData();
-    }, [year, month, searchWorkplaceId]);
-    // console.log('responseDataAll', responseDataAll);
+    }, [year, month, searchWorkplaceId, searchEmployeeId]);
 
     console.log('responseDataAll', responseDataAll);
+
+    // console.log('searchEmployeeId', searchEmployeeId);
 
     const handleStaffIdChange = (e) => {
         const selectWorkPlaceId = e.target.value;
@@ -162,6 +244,45 @@ function SalarySlipPDF() {
             // setWorkplacrName('');
         }
         setWorkplacrName(selectWorkplaceName);
+    };
+
+    const handleStaffIdChange2 = (e) => {
+        const selectedStaffId = e.target.value;
+        setStaffId(selectedStaffId);
+        setSearchEmployeeId(selectedStaffId);
+        // Find the corresponding employee and set the staffName
+        const selectedEmployee = employeeList.find(employee => employee.employeeId === selectedStaffId);
+        if (selectedEmployee) {
+            // setStaffName(selectedEmployee.name);
+            // setStaffLastname(selectedEmployee.lastName);
+            setStaffFullName(selectedEmployee.name + ' ' + selectedEmployee.lastName);
+
+
+        } else {
+            setStaffName('');
+            setStaffFullName('');
+            setSearchEmployeeName('');
+        }
+    };
+
+    const handleStaffNameChange2 = (e) => {
+        const selectedStaffName = e.target.value;
+
+        // Find the corresponding employee and set the staffId
+        const selectedEmployee = employeeList.find(employee => (employee.name + " " + employee.lastName) === selectedStaffName);
+        const selectedEmployeeFName = employeeList.find(employee => employee.name === selectedStaffName);
+
+        if (selectedEmployee) {
+            setStaffId(selectedEmployee.employeeId);
+            setSearchEmployeeId(selectedEmployee.employeeId);
+        } else {
+            setStaffId('');
+            // searchEmployeeId('');
+        }
+
+        // setStaffName(selectedStaffName);
+        setStaffFullName(selectedStaffName);
+        setSearchEmployeeName(selectedEmployeeFName);
     };
 
 
@@ -362,7 +483,7 @@ function SalarySlipPDF() {
             pdf.text(`${formattedAmountHoliday.toFixed(2)}`, 92, 76.8, { align: 'right' });
 
             //เงินเพิ่ม 1 เบี้ยขยัน
-            const formattedAmountHardWorking = responseDataAll[1].addSalary.filter(item => item.id === "1410");
+            const formattedAmountHardWorking = responseDataAll[i].addSalary.filter(item => item.id === "1410");
             // Calculate the sum of SpSalary values in the filtered array
             const sumAmountHardWorking = formattedAmountHardWorking.reduce((total, item) => total + parseFloat(item.SpSalary || 0), 0);
             pdf.text(`${sumAmountHardWorking.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
@@ -387,13 +508,21 @@ function SalarySlipPDF() {
 
 
             //รวมเงินได้
+            const sumAddSalaryAfterTax = parseFloat(responseDataAll[i].accountingRecord.sumAddSalaryAfterTax ?? 0);
+            const formattedSumAddSalaryAfterTax1 = sumAddSalaryAfterTax.toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
             const sumSalary =
                 // responseDataAll[i].accountingRecord.countDay +
                 responseDataAll[i].accountingRecord.amountDay +
                 responseDataAll[i].accountingRecord.amountOt +
-                Number(formattedAmountHoliday2_0) +
-                Number(formattedAmountHoliday) +
-                Number(formattedSumAddSalaryAfterTax) +
+                // Number(formattedAmountHoliday2_0) +
+                Number((countSpecialDayListWork * responseDataAll[i].specialDayRate) ?? 0) +
+                // Number(formattedAmountHoliday) +
+                Number((responseDataAll[i].countSpecialDay * responseDataAll[i].specialDayRate) ?? 0) +
+                // Number(formattedSumAddSalaryAfterTax) +
+                (responseDataAll[i].accountingRecord.sumAddSalaryAfterTax ?? 0) +
                 responseDataAll[i].accountingRecord.addAmountBeforeTax +
                 responseDataAll[i].accountingRecord.addAmountAfterTax;
 
@@ -569,7 +698,7 @@ function SalarySlipPDF() {
                 //เงินเพิ่ม 2 
                 // pdf.text(`${responseDataAll[i + 1].accountingRecord.addAmountAfterTax.toFixed(2)}`, 92, head2 + 55.9, { align: 'right' });
                 //เงินเพิ่มพิเศษ 
-                const formattedSumAddSalaryAfterTax = Number(responseDataAll[i].accountingRecord.sumAddSalaryAfterTax ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                const formattedSumAddSalaryAfterTax = Number(responseDataAll[i + 1].accountingRecord.sumAddSalaryAfterTax ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                 pdf.text(`${formattedSumAddSalaryAfterTax}`, 92, head2 + 55.9, { align: 'right' });
                 //จ่ายป่วย 
                 pdf.text(`0.00`, 92, head2 + 60, { align: 'right' });
@@ -589,9 +718,12 @@ function SalarySlipPDF() {
                     // responseDataAll[i + 1].accountingRecord.countDay +
                     responseDataAll[i + 1].accountingRecord.amountDay +
                     responseDataAll[i + 1].accountingRecord.amountOt +
-                    Number(formattedAmountHoliday2_0) +
-                    Number(formattedAmountHoliday) +
-                    Number(formattedSumAddSalaryAfterTax) +
+                    // Number(formattedAmountHoliday2_0) +
+                    Number((countSpecialDayListWork * responseDataAll[i + 1].specialDayRate) ?? 0) +
+                    // Number(formattedAmountHoliday) +
+                    Number((responseDataAll[i + 1].countSpecialDay * responseDataAll[i + 1].specialDayRate) ?? 0) +
+                    // Number(formattedSumAddSalaryAfterTax) +
+                    (responseDataAll[i + 1].accountingRecord.sumAddSalaryAfterTax ?? 0) +
                     responseDataAll[i + 1].accountingRecord.addAmountBeforeTax +
                     responseDataAll[i + 1].accountingRecord.addAmountAfterTax;
 
@@ -642,11 +774,102 @@ function SalarySlipPDF() {
                             <h2 class="title">สรุปหน่วยงานทั้งหมด</h2>
                             <section class="Frame">
                                 <div class="form-group">
-                                    <div class="row">
+                                    <select
+                                        value={selectedOption}
+                                        onChange={handleSelectChange}
+                                    >
+                                        {/* <option value="">Select Option</option> */}
+                                        <option value="option1">แบบหน่วงงาน</option>
+                                        <option value="option2">แบบพนักงาน</option>
+                                    </select>
+                                    {/* Conditionally render content based on the selected option */}
+                                    {selectedOption === 'option1' && (
+                                        <div>
+                                            <h2>แบบหน่วงงาน</h2>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label role="searchEmployeeId">รหัสหน่อยงาน</label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        id="staffId"
+                                                        placeholder="รหัสหน่อยงาน"
+                                                        value={workplacrId}
+                                                        onChange={handleStaffIdChange}
+                                                        list="WorkplaceIdList"
+                                                    />
+                                                    <datalist id="WorkplaceIdList">
+                                                        {workplaceListAll.map(workplace => (
+                                                            <option key={workplace.workplaceId} value={workplace.workplaceId} />
+                                                        ))}
+                                                    </datalist>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label role="searchname">ชื่อหน่วยงาน</label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        id="staffName"
+                                                        placeholder="ชื่อพนักงาน"
+                                                        value={workplacrName}
+                                                        onChange={handleStaffNameChange}
+                                                        list="WorkplaceNameList"
+                                                    />
 
+                                                    <datalist id="WorkplaceNameList">
+                                                        {workplaceListAll.map(workplace => (
+                                                            <option key={workplace.workplaceId} value={workplace.workplaceName} />
+                                                        ))}
+                                                    </datalist>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {selectedOption === 'option2' && (
+                                        <div>
+                                            <h2>แบบพนักงาน</h2>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label role="searchEmployeeId">รหัสพนักงาน</label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        id="staffId"
+                                                        placeholder="รหัสพนักงาน"
+                                                        value={staffId}
+                                                        onChange={handleStaffIdChange2}
+                                                        list="staffIdList"
+                                                    />
+                                                    <datalist id="staffIdList">
+                                                        {employeeList.map(employee => (
+                                                            <option key={employee.employeeId} value={employee.employeeId} />
+                                                        ))}
+                                                    </datalist>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label role="searchname">ชื่อพนักงาน</label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        id="staffName"
+                                                        placeholder="ชื่อพนักงาน"
+                                                        value={staffFullName}
+                                                        onChange={handleStaffNameChange2}
+                                                        list="staffNameList"
+                                                    />
+                                                    <datalist id="staffNameList">
+                                                        {employeeList.map(employee => (
+                                                            <option key={employee.employeeId} value={employee.name + " " + employee.lastName} />
+                                                        ))}
+                                                    </datalist>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                    {/* <div class="row">
                                         <div class="col-md-3">
                                             <label role="searchEmployeeId">รหัสหน่อยงาน</label>
-                                            {/* <input type="text" class="form-control" id="searchEmployeeId" placeholder="รหัสพนักงาน" value={searchEmployeeId} onChange={(e) => setSearchWorkplaceId(e.target.value)} /> */}
                                             <input
                                                 type="text"
                                                 className="form-control"
@@ -664,7 +887,6 @@ function SalarySlipPDF() {
                                         </div>
                                         <div class="col-md-3">
                                             <label role="searchname">ชื่อหน่วยงาน</label>
-                                            {/* <input type="text" class="form-control" id="searchname" placeholder="ชื่อพนักงาน" value={searchEmployeeName} onChange={(e) => setSearchEmployeeName(e.target.value)} /> */}
                                             <input
                                                 type="text"
                                                 className="form-control"
@@ -681,6 +903,48 @@ function SalarySlipPDF() {
                                                 ))}
                                             </datalist>
                                         </div>
+                                    </div> */}
+                                    {/* <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label role="searchEmployeeId">รหัสพนักงาน</label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="staffId"
+                                                    placeholder="รหัสพนักงาน"
+                                                    value={staffId}
+                                                    onChange={handleStaffIdChange2}
+                                                    list="staffIdList"
+                                                />
+                                                <datalist id="staffIdList">
+                                                    {employeeList.map(employee => (
+                                                        <option key={employee.employeeId} value={employee.employeeId} />
+                                                    ))}
+                                                </datalist>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label role="searchname">ชื่อพนักงาน</label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="staffName"
+                                                    placeholder="ชื่อพนักงาน"
+                                                    value={staffFullName}
+                                                    onChange={handleStaffNameChange2}
+                                                    list="staffNameList"
+                                                />
+                                                <datalist id="staffNameList">
+                                                    {employeeList.map(employee => (
+                                                        <option key={employee.employeeId} value={employee.name + " " + employee.lastName} />
+                                                    ))}
+                                                </datalist>
+                                            </div>
+                                        </div>
+                                    </div> */}
+                                    <div class="row">
                                         <div class="col-md-3">
                                             <label role="agencyname">เดือน</label>
                                             <select className="form-control" value={month} onChange={(e) => setMonth(e.target.value)} >
@@ -713,6 +977,7 @@ function SalarySlipPDF() {
                                     </div>
 
                                 </div>
+
                                 <button onClick={generatePDF}>Generate PDF</button>
 
                             </section>
