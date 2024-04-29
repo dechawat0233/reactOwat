@@ -653,7 +653,7 @@ holidayRate = await response.data.salary || foundWorkplace.workRate;
 
     if (addSalary) {
       if(addSalary.SpSalary > 100) {
-        let tmp = await parseFloat(addSalary.SpSalary) /30;
+        let tmp = await (parseFloat(addSalary.SpSalary) /30).toFixed(2);
         data.accountingRecord.amountPosition = tmp;
       } else {
         data.accountingRecord.amountPosition = addSalary.SpSalary;
@@ -667,7 +667,7 @@ holidayRate = await response.data.salary || foundWorkplace.workRate;
 
     if (addSalary1350 ) {
       if(addSalary1350.SpSalary > 100) {
-let tmp = await parseFloat(addSalary1350.SpSalary) / 30;
+let tmp = await (parseFloat(addSalary1350.SpSalary) / 30).toFixed(2);
 data.accountingRecord.tel = tmp;
       } else {
         data.accountingRecord.tel = addSalary1350.SpSalary;
@@ -681,7 +681,7 @@ data.accountingRecord.tel = tmp;
 
     if (addSalary1520 ) {
 if(addSalary1520.SpSalary > 100) {
-  let tmp = await parseFloat(addSalary1520.SpSalary || 0) / 30;
+  let tmp = await (parseFloat(addSalary1520.SpSalary || 0) / 30).toFixed(2);
   data.accountingRecord.travel = await tmp;
 } else {
   data.accountingRecord.travel = addSalary1520.SpSalary;
