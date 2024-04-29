@@ -648,6 +648,8 @@ holidayRate = await response.data.salary || foundWorkplace.workRate;
     data.name = await response.data.name;
     data.lastName = await response.data.lastName;
 
+
+
     let position1230 = '1230';
     const addSalary = response.data.addSalary.find(salary => salary.id === position1230);
 
@@ -689,7 +691,10 @@ if(addSalary1520.SpSalary > 100) {
     } else {
         data.accountingRecord.travel = 0;
     }
-      
+
+    data.accountingRecord.benefitNonSocial = 0;
+
+
     
     let amountHardWorking1410 = '1410';
     const addSalary1 = response.data.addSalary.find(salary => salary.id === amountHardWorking1410 );
