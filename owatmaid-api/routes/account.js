@@ -914,9 +914,33 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
     //check addSalary day from conclude
     // console.log("addSalary "+ JSON.stringify( responseConclude.data.recordConclude[c].addSalary ,null,2) );
 console.log(responseConclude.data.recordConclude[c].addSalary[i].length );
+responseConclude.data.recordConclude[c].addSalary[i].map((item, index) => {
+if(item.id == '1230') {
+  x1230 += parseFloat(item.SpSalary);
+}
+if(item.id == '1350') {
+  x1350 += parseFloat(item.SpSalary);
+}
+if(item.id == '1520') {
+  x1520 += parseFloat(item.SpSalary);
+}
+
+});
   }
 
 }
+
+//set data to position , tel , travel
+if(x1230 >0 ) {
+  data.accountingRecord.amountPosition = x1230;
+}
+if(x1350 >0 ) {
+  data.accountingRecord.tel = x1350;
+}
+if(x1520 >0 ) {
+  data.accountingRecord.travel = x1520;
+}
+
 
 data.accountingRecord.countDay = countDay;
 data.accountingRecord.countHour = countHour;
