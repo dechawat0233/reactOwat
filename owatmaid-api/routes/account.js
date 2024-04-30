@@ -912,7 +912,8 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
     workDaylist.push(responseConclude.data.recordConclude[c].concludeRecord[i].day.split("/")[0] );
 
     //check addSalary day from conclude
-    console.log("addSalary "+ JSON.stringify( responseConclude.data.recordConclude[c].addSalary ,null,2) );
+    // console.log("addSalary "+ JSON.stringify( responseConclude.data.recordConclude[c].addSalary ,null,2) );
+console.log(responseConclude.data.recordConclude[c].addSalary.length );
   }
 
 }
