@@ -656,9 +656,18 @@ function SalaryAllResult() {
                 employees: [],
                 totalCountDay: 0,
                 totalSalary: 0,
+
+                totalAmountPosition: 0,
+                totalTel: 0,
+                totalTravel: 0,
+                totalAllAddSalary: 0,
+                totalBenefitNonSocial: 0,
+
+                totalAddSalary: 0,
+
                 totalAmountOt: 0,
                 totalAmountSpecial: 0,
-                totalAmountPosition: 0,
+                // totalAmountPosition: 0,
                 totalAmountHardWorking: 0,
                 totalAmountHoliday: 0,
                 totalDeductBeforeTax: 0,
@@ -674,13 +683,14 @@ function SalaryAllResult() {
                 totalSpSalary: 0,// Add a new property for sum of SpSalary
                 totalCountSpecialDay: 0,
 
-
                 totalSumAddSalaryBeforeTax: 0,
                 totalSumAddSalaryBeforeTaxNonSocial: 0,
                 totalSumDeductBeforeTaxWithSocial: 0,
                 totalSumDeductBeforeTax: 0,
                 totalSumAddSalaryAfterTax: 0,
                 totalSumDeductAfterTax: 0,
+
+                totalSum: 0,
             };
             acc[workplace].employees.push(employee);
             // acc[workplace].name.push(employee.name);
@@ -696,11 +706,22 @@ function SalaryAllResult() {
             // Adjust this line based on your specific structure to get the salary or any other relevant data
             acc[workplace].totalCountDay += parseFloat(employee.accountingRecord.countDay || 0);
             acc[workplace].totalSalary += parseFloat(employee.accountingRecord.amountDay || 0);
+
+            acc[workplace].totalAmountPosition += parseFloat(employee.accountingRecord.amountPosition || 0);
+            acc[workplace].totalTel += parseFloat(employee.accountingRecord.tel || 0);
+            acc[workplace].totalTravel += parseFloat(employee.accountingRecord.travel || 0);
+
+            // acc[workplace].totalAllAddSalary += parseFloat(employee.accountingRecord.amountPosition + employee.accountingRecord.tel + employee.accountingRecord.travel || 0);
+
+            acc[workplace].totalBenefitNonSocial += parseFloat(employee.accountingRecord.benefitNonSocial || 0);
+
             acc[workplace].totalAmountOt += parseFloat(employee.accountingRecord.amountOt || 0);
             acc[workplace].totalAmountSpecial += parseFloat(employee.accountingRecord.amountSpecial || 0);
-            acc[workplace].totalAmountPosition += parseFloat(employee.accountingRecord.amountPosition || 0);
+            // acc[workplace].totalAmountPosition += parseFloat(employee.accountingRecord.amountPosition || 0);
             acc[workplace].totalAmountHardWorking += parseFloat(employee.accountingRecord.amountHardWorking || 0);
+
             acc[workplace].totalAmountHoliday += parseFloat(employee.accountingRecord.amountHoliday || 0);
+
             acc[workplace].totalDeductBeforeTax += parseFloat(employee.accountingRecord.deductBeforeTax || 0);
             acc[workplace].totalAddAmountBeforeTax += parseFloat(employee.accountingRecord.addAmountBeforeTax || 0);
             acc[workplace].totalTax += parseFloat(employee.accountingRecord.tax || 0);
@@ -713,12 +734,16 @@ function SalaryAllResult() {
 
             acc[workplace].totalSpSalary += parseFloat(employee.sumAddSalaryBeforeTax ?? 0); // Add the sum to totalSpSalary
 
-            acc[workplace].totalSumAddSalaryBeforeTax += parseFloat(employee.accountingRecord.sumAddSalaryBeforeTaxNonSocial ?? 0);
+            acc[workplace].totalSumAddSalaryBeforeTax += parseFloat(employee.accountingRecord.sumAddSalaryBeforeTax ?? 0);
             acc[workplace].totalSumAddSalaryBeforeTaxNonSocial += parseFloat(employee.accountingRecord.sumAddSalaryBeforeTaxNonSocial ?? 0);
             acc[workplace].totalSumDeductBeforeTaxWithSocial += parseFloat(employee.accountingRecord.sumDeductBeforeTaxWithSocial ?? 0);
             acc[workplace].totalSumDeductBeforeTax += parseFloat(employee.accountingRecord.sumDeductBeforeTax ?? 0);
             acc[workplace].totalSumAddSalaryAfterTax += parseFloat(employee.accountingRecord.sumAddSalaryAfterTax ?? 0);
             acc[workplace].totalSumDeductAfterTax += parseFloat(employee.accountingRecord.sumDeductAfterTax ?? 0);
+
+
+            const sum = parseFloat(employee.countSpecialDay * employee.specialDayRate || 0);
+            acc[workplace].totalSum += sum;
 
 
             // Parse and calculate the value
@@ -768,9 +793,17 @@ function SalaryAllResult() {
                 const {
                     employees,
                     totalSalary,
+                    totalAddSalary,
                     totalAmountOt,
                     totalAmountSpecial,
+
                     totalAmountPosition,
+                    totalTel,
+                    totalTravel,
+
+                    totalAllAddSalary,
+                    totalBenefitNonSocial,
+
                     totalAmountHardWorking,
                     totalAmountHoliday,
                     totalAddAmountBeforeTax,
@@ -793,7 +826,7 @@ function SalaryAllResult() {
                     totalSumAddSalaryAfterTax,
                     totalSumDeductAfterTax,
 
-
+                    totalSum,
 
 
                 } = groupedByWorkplace[workplaceKey];
@@ -845,6 +878,11 @@ function SalaryAllResult() {
 
                     sumNewamountOt += (countSpecialDayListWork * specialDayRate);
                     console.log('sumNewamountOt', sumNewamountOt);
+
+
+                    totalBenefitNonSocial
+                    console.log('totalBenefitNonSocial', totalBenefitNonSocial);
+
                     // // เงินเดือน
                     // const formattedAmountDay = Number(accountingRecord.amountDay ?? 0).toFixed(2);
                     // // pdf.text(`${formattedAmountDay}`, pdf.internal.pageSize.width - 10, currentY, { align: 'right' });
@@ -945,18 +983,34 @@ function SalaryAllResult() {
                     // ค่ารถ/โทร/ตน.
                     // const formattedAmountSpecial = Number(accountingRecord.amountSpecial ?? 0).toFixed(2);
                     // pdf.text(`${formattedAmountSpecial}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
-                    // สวัสดิการ(ไม่คิด ปกส)
+
                     ////////
                     const filteredSalary = addSalary.filter(item => item.id === "1230" || item.id === "1520" || item.id === "1350");
                     // Calculate the sum of SpSalary values in the filtered array
-                    const sumSpSalary = filteredSalary.reduce((total, item) => total + parseFloat(item.SpSalary || 0), 0);
+
+                    // const sumSpSalary = filteredSalary.reduce((total, item) => total + parseFloat(item.SpSalary || 0), 0);
+                    const sumSpSalary = filteredSalary.reduce((total, item) => {
+                        // Parse the SpSalary value to a number
+                        const spSalary = parseFloat(item.SpSalary || 0);
+
+                        // If SpSalary is greater than 100, divide it by 30, otherwise, keep the original value
+                        const adjustedSpSalary = spSalary > 100 ? spSalary / 30 : spSalary;
+
+                        // Add the adjusted SpSalary to the total
+                        return total + adjustedSpSalary;
+                    }, 0);
                     // Now you can use sumSpSalary wherever you need to display the total sum, for example:
-                    pdf.text(`${(sumSpSalary * accountingRecord.countDay).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+
+                    const total = parseFloat(accountingRecord.amountPosition || 0) + parseFloat(accountingRecord.tel || 0) + parseFloat(accountingRecord.travel || 0);
+                    const formattedTotalSalary = total.toFixed(2);
+
+                    pdf.text(`${formattedTotalSalary}`,
                         startXWelfare + cellWidthWelfare, currentY, { align: 'right' });
 
-                    sumSpSalaryall += (sumSpSalary * accountingRecord.countDay);
+                    // sumSpSalaryall += (totalAddSalary * accountingRecord.countDay);
 
-                    const formattedAmountPosition = Number(accountingRecord.amountPosition ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    // สวัสดิการ(ไม่คิด ปกส)
+                    const formattedAmountPosition = Number(accountingRecord.benefitNonSocial ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                     pdf.text(`${formattedAmountPosition}`,
                         startXRoleWork + cellWidthRoleWork, currentY, { align: 'right' });
 
@@ -1131,13 +1185,22 @@ function SalaryAllResult() {
                 // sumSpSalaryall
 
                 // pdf.text(`${Number(sumSpSalaryall).toFixed(2)}`, startXWelfare + cellWidthWelfare, currentY, { align: 'right' });
-                const formattedSumSpSalaryall = sumSpSalaryall.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                // const formattedSumSpSalaryall = sumSpSalaryall.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                // // Display the formatted totalSalary with commas
+                // pdf.text(`${formattedSumSpSalaryall}`, startXWelfare + cellWidthWelfare, currentY, { align: 'right' });
+                // totalAllAddSalary
+                const formattedTotalAllAddSalary = totalAllAddSalary.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                 // Display the formatted totalSalary with commas
-                pdf.text(`${formattedSumSpSalaryall}`, startXWelfare + cellWidthWelfare, currentY, { align: 'right' });
+
+                const total = parseFloat(totalAmountPosition || 0) + parseFloat(totalTel || 0) + parseFloat(totalTravel || 0);
+                const formattedTotalSalaryAll = total.toFixed(2);
+
+                pdf.text(`${formattedTotalSalaryAll}`, startXWelfare + cellWidthWelfare, currentY, { align: 'right' });
+
 
                 //สวัสดิการ
-                const formattedTotalAmountPosition = totalAmountPosition.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                pdf.text(`${formattedTotalAmountPosition}`, startXRoleWork + cellWidthRoleWork, currentY, { align: 'right' });
+                const formattedTotalBenefitNonSocial = totalBenefitNonSocial.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                pdf.text(`${formattedTotalBenefitNonSocial}`, startXRoleWork + cellWidthRoleWork, currentY, { align: 'right' });
 
                 // เบี้ยขยัน
                 const formattedTotalAmountHardWorking = totalAmountHardWorking.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -1145,22 +1208,24 @@ function SalaryAllResult() {
 
                 // นักขัติ
                 // pdf.text(`${totalAmountHoliday.toFixed(2)}`, 85 + (cellWidthOT * 5), currentY, { align: 'right' });
-                const formattedSumFormattedAmountHoliday = sumFormattedAmountHoliday.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                pdf.text(`${formattedSumFormattedAmountHoliday}`, startXHoliday + cellWidthHoliday, currentY, { align: 'right' });
+                // const formattedSumFormattedAmountHoliday = sumFormattedAmountHoliday.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                const formattedSumFormattedAmountHoliday = totalSum.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-                // บวกอื่นๆ
+                pdf.text(`${formattedSumFormattedAmountHoliday}`, startXHoliday + cellWidthHoliday, currentY, { align: 'right' });
+                // totalSum
+                // บวกอื่นๆ 
                 // const formattedTotalAddAmountBeforeTax = totalAddAmountBeforeTax.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                 const formattedTotalAddAmountBeforeTax = totalSumAddSalaryBeforeTax.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                 pdf.text(`${formattedTotalAddAmountBeforeTax}`, startXAddBeforeDeductTax + cellWidthAddBeforeDeductTax, currentY, { align: 'right' });
 
-                // หักอื่นๆ
+                // หักอื่นๆ totalSumDeductBeforeTaxWithSocial
                 // const formattedTotalDeductBeforeTax = totalDeductBeforeTax.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                const formattedTotalDeductBeforeTax = totalSumAddSalaryBeforeTaxNonSocial.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                pdf.text(`${formattedTotalDeductBeforeTax}`, startXMinusBeforeDeductTax + cellWidthMinusBeforeDeductTax, currentY, { align: 'right' });
+                const formattedTotalSumDeductBeforeTaxWithSocial = totalSumDeductBeforeTaxWithSocial.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                pdf.text(`${formattedTotalSumDeductBeforeTaxWithSocial}`, startXMinusBeforeDeductTax + cellWidthMinusBeforeDeductTax, currentY, { align: 'right' });
 
-                // บวกอื่นๆ อันที่ 2
+                // บวกอื่นๆ อันที่ 2 totalSumAddSalaryBeforeTaxNonSocial
                 // const formattedTotalAddAmountBeforeTax = totalAddAmountBeforeTax.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                const formattedTotalAddAmountBeforeTax2nd = totalSumDeductBeforeTaxWithSocial.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                const formattedTotalAddAmountBeforeTax2nd = totalSumAddSalaryBeforeTaxNonSocial.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                 pdf.text(`${formattedTotalAddAmountBeforeTax2nd}`, startXAddBeforeDeductTax2nd + cellWidthAddBeforeDeductTax2nd, currentY, { align: 'right' });
 
                 // หักอื่นๆ อันที่ 2
