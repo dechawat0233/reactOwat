@@ -915,7 +915,7 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
     //check addSalary day from conclude
     // console.log("addSalary "+ JSON.stringify( responseConclude.data.recordConclude[c].addSalary ,null,2) );
 // console.log(responseConclude.data.recordConclude[c].addSalary[i].length );
-if(responseConclude.data.recordConclude[c].addSalary[i]) {}
+if(responseConclude.data.recordConclude[c].addSalary[i]) {
 await responseConclude.data.recordConclude[c].addSalary[i].map((item, index) => {
 if(item.id == '1230') {
   x1230 += parseFloat(item.SpSalary);
@@ -929,7 +929,7 @@ if(item.id == '1520') {
 
 });
   }
-  
+
   }
 
 }
