@@ -913,7 +913,7 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
 
     //check addSalary day from conclude
     // console.log("addSalary "+ JSON.stringify( responseConclude.data.recordConclude[c].addSalary ,null,2) );
-console.log(responseConclude.data.recordConclude[c].addSalary.length );
+console.log(responseConclude.data.recordConclude[c].addSalary[i].length );
   }
 
 }
