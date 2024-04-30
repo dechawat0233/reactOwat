@@ -478,6 +478,7 @@ router.post('/calsalarylist', async (req, res) => {
     const dataList = [];
 
     if (responseConclude.data.recordConclude.length > 0) {
+
       for (let c = 0; c < responseConclude.data.recordConclude.length; c++) {
         const data = {}; // Initialize data object inside the loop
 
@@ -519,7 +520,7 @@ let workDaylist = [];
 let specialDaylist = [];
 let countSpecialDay = 0;
 let amountSpecialDay = 0;
-
+let x1230 =0; let x1350 =0; let x1520 = 0;
 
 // Get employee data by employeeId
 const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
@@ -897,6 +898,7 @@ await Promise.all(promisesDeduct)
 //   + "deduct un tax" +  sumDeductUncalculateTax );
 
 // console.log("test" + (specialDaylist.length * holidayRate ) + '*' + amountSpecial);
+
 //ss1
 for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.length; i++) {
   amountDay += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0);
@@ -909,6 +911,8 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
     countDay++;
     workDaylist.push(responseConclude.data.recordConclude[c].concludeRecord[i].day.split("/")[0] );
 
+    //check addSalary day from conclude
+    console.log("addSalary "+ JSON.stringify( responseConclude.data.recordConclude[c].addSalary ,null,2) );
   }
 
 }
