@@ -521,7 +521,7 @@ let workDaylist = [];
 let specialDaylist = [];
 let countSpecialDay = 0;
 let amountSpecialDay = 0;
-let x1230 =0; let x1350 =0; let x1520 = 0;
+let x1230 =0; let x1350 =0; let x1520 = 0; let x1535 = 0;
 
 // Get employee data by employeeId
 const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
@@ -700,10 +700,25 @@ if(addSalary1520.SpSalary > 100) {
         data.accountingRecord.travel = 0;
     }
 
-    data.accountingRecord.benefitNonSocial = 0;
+    let benefitNonSocial1535 = '1535';
+    const addSalary1535 = response.data.addSalary.find(salary => salary.id === benefitNonSocial1535 );
+
+    if (addSalary1535 ) {
+      if(addSalary1535.roundOfSalary == 'monthly') {
+if(addSalary1535.SpSalary > 100) {
+  let tmp = await (parseFloat(addSalary1535.SpSalary || 0) / 30).toFixed(2);
+  data.accountingRecord.benefitNonSocial = await tmp;
+} else {
+  data.accountingRecord.benefitNonSocial = addSalary1535.SpSalary;
+
+}
+      }
+    } else {
+        data.accountingRecord.benefitNonSocial = 0;
+    }
 
 
-    
+
     let amountHardWorking1410 = '1410';
     const addSalary1 = response.data.addSalary.find(salary => salary.id === amountHardWorking1410 );
 
@@ -926,6 +941,9 @@ if(item.id == '1350') {
 if(item.id == '1520') {
   x1520 += parseFloat(item.SpSalary);
 }
+if(item.id == '1535') {
+  x1535 += parseFloat(item.SpSalary);
+}
 
 });
   }
@@ -943,6 +961,9 @@ if(x1350 >0 ) {
 }
 if(x1520 >0 ) {
   data.accountingRecord.travel = x1520;
+}
+if(x1535 >0 ) {
+  data.accountingRecord.benefitNonSocial = x1535;
 }
 
 
