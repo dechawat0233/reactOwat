@@ -10,9 +10,19 @@ import EmployeesSelected from './EmployeesSelected';
 import Calendar from 'react-calendar';
 import '../editwindowcss.css';
 import EmployeeWorkDay from './componentsetting/EmployeeWorkDay';
+import { useLocation } from 'react-router-dom';
 
 
 function Setting() {
+
+    // Use useLocation hook to access query parameters from URL
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const workplaceIdSend = queryParams.get('workplaceId');
+    const workplaceNameSend = queryParams.get('workplaceName');
+
+    console.log('workplaceId123', workplaceIdSend);
+    console.log('workplaceName123', workplaceNameSend);
 
 
     const tableStyle = {
@@ -796,7 +806,15 @@ function Setting() {
     const [searchResult, setSearchResult] = useState([]);
     const [employeeListResult, setEmployeeListResult] = useState([]);
 
-
+    useEffect(() => {
+        if (workplaceIdSend && workplaceNameSend) {
+            setSearchWorkplaceId(workplaceIdSend);
+            setSearchWorkplaceName(workplaceNameSend);
+        } else {
+            setSearchWorkplaceId('');
+            setSearchWorkplaceName('');
+        }
+    }, [workplaceIdSend, workplaceNameSend]); // Depend on the URL parameter
     async function handleSearch(event) {
         event.preventDefault();
 
