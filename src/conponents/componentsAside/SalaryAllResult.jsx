@@ -690,7 +690,9 @@ function SalaryAllResult() {
                 totalSumAddSalaryAfterTax: 0,
                 totalSumDeductAfterTax: 0,
 
-                totalSum: 0,
+                totalSumtest: 0,
+                totalSumOT: 0,
+
             };
             acc[workplace].employees.push(employee);
             // acc[workplace].name.push(employee.name);
@@ -743,9 +745,10 @@ function SalaryAllResult() {
 
 
             const sum = parseFloat(employee.countSpecialDay * employee.specialDayRate || 0);
-            acc[workplace].totalSum += sum;
+            acc[workplace].totalSumtest += sum;
 
-
+            const sumOT = parseFloat(employee.accountingRecord.amountOt + (employee.specialDayListWork * employee.specialDayRate) || 0);
+            acc[workplace].totalSumOT += sumOT;
             // Parse and calculate the value
             // const countSpecialDay = Number(employee.countSpecialDay);
             // const specialDayRate = Number(employee.specialDayRate);
@@ -826,7 +829,8 @@ function SalaryAllResult() {
                     totalSumAddSalaryAfterTax,
                     totalSumDeductAfterTax,
 
-                    totalSum,
+                    totalSumtest,
+                    totalSumOT,
 
 
                 } = groupedByWorkplace[workplaceKey];
@@ -1172,7 +1176,14 @@ function SalaryAllResult() {
                 // ค่าล่วงเวลา
                 // pdf.text(`${totalAmountOt.toFixed(2)}`, startXOT + cellWidthOT, currentY, { align: 'right' });
                 // const formattedTotalAmountOt = totalAmountOt.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                const formattedTotalAmountOt = (totalAmountOt + sumNewamountOt).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+                // const formattedTotalAmountOt = (totalAmountOt + sumNewamountOt).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                // // Display the formatted totalSalary with commas
+                // console.log('sumNewamountOt', sumNewamountOt);
+                // pdf.text(`${formattedTotalAmountOt}`, startXOT + cellWidthOT, currentY, { align: 'right' });
+
+                totalSumOT
+                const formattedTotalAmountOt = totalSumOT.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                 // Display the formatted totalSalary with commas
                 console.log('sumNewamountOt', sumNewamountOt);
                 pdf.text(`${formattedTotalAmountOt}`, startXOT + cellWidthOT, currentY, { align: 'right' });
@@ -1209,7 +1220,7 @@ function SalaryAllResult() {
                 // นักขัติ
                 // pdf.text(`${totalAmountHoliday.toFixed(2)}`, 85 + (cellWidthOT * 5), currentY, { align: 'right' });
                 // const formattedSumFormattedAmountHoliday = sumFormattedAmountHoliday.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                const formattedSumFormattedAmountHoliday = totalSum.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                const formattedSumFormattedAmountHoliday = totalSumtest.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
                 pdf.text(`${formattedSumFormattedAmountHoliday}`, startXHoliday + cellWidthHoliday, currentY, { align: 'right' });
                 // totalSum
