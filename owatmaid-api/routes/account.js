@@ -137,8 +137,9 @@ router.post('/calsalaryemp', async (req, res) => {
       year: year, 
       month: month,
       concludeDate: "",
-      employeeId: employeeId
+      employeeId: ''
     };
+    //employeeId
 
     const responseConclude = await axios.post(sURL + '/conclude/search', dataSearch);
 
@@ -478,6 +479,7 @@ router.post('/calsalarylist', async (req, res) => {
     const dataList = [];
 
     if (responseConclude.data.recordConclude.length > 0) {
+
       for (let c = 0; c < responseConclude.data.recordConclude.length; c++) {
         const data = {}; // Initialize data object inside the loop
 
@@ -519,7 +521,7 @@ let workDaylist = [];
 let specialDaylist = [];
 let countSpecialDay = 0;
 let amountSpecialDay = 0;
-
+let x1230 =0; let x1350 =0; let x1520 = 0; let x1535 = 0;
 
 // Get employee data by employeeId
 const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
@@ -698,10 +700,25 @@ if(addSalary1520.SpSalary > 100) {
         data.accountingRecord.travel = 0;
     }
 
-    data.accountingRecord.benefitNonSocial = 0;
+    let benefitNonSocial1535 = '1535';
+    const addSalary1535 = response.data.addSalary.find(salary => salary.id === benefitNonSocial1535 );
+
+    if (addSalary1535 ) {
+      if(addSalary1535.roundOfSalary == 'monthly') {
+if(addSalary1535.SpSalary > 100) {
+  let tmp = await (parseFloat(addSalary1535.SpSalary || 0) / 30).toFixed(2);
+  data.accountingRecord.benefitNonSocial = await tmp;
+} else {
+  data.accountingRecord.benefitNonSocial = addSalary1535.SpSalary;
+
+}
+      }
+    } else {
+        data.accountingRecord.benefitNonSocial = 0;
+    }
 
 
-    
+
     let amountHardWorking1410 = '1410';
     const addSalary1 = response.data.addSalary.find(salary => salary.id === amountHardWorking1410 );
 
@@ -897,6 +914,7 @@ await Promise.all(promisesDeduct)
 //   + "deduct un tax" +  sumDeductUncalculateTax );
 
 // console.log("test" + (specialDaylist.length * holidayRate ) + '*' + amountSpecial);
+
 //ss1
 for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.length; i++) {
   amountDay += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0);
@@ -909,9 +927,45 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
     countDay++;
     workDaylist.push(responseConclude.data.recordConclude[c].concludeRecord[i].day.split("/")[0] );
 
+    //check addSalary day from conclude
+    // console.log("addSalary "+ JSON.stringify( responseConclude.data.recordConclude[c].addSalary ,null,2) );
+// console.log(responseConclude.data.recordConclude[c].addSalary[i].length );
+if(responseConclude.data.recordConclude[c].addSalary[i]) {
+await responseConclude.data.recordConclude[c].addSalary[i].map((item, index) => {
+if(item.id == '1230') {
+  x1230 += parseFloat(item.SpSalary);
+}
+if(item.id == '1350') {
+  x1350 += parseFloat(item.SpSalary);
+}
+if(item.id == '1520') {
+  x1520 += parseFloat(item.SpSalary);
+}
+if(item.id == '1535') {
+  x1535 += parseFloat(item.SpSalary);
+}
+
+});
+  }
+
   }
 
 }
+
+//set data to position , tel , travel
+if(x1230 >0 ) {
+  data.accountingRecord.amountPosition = x1230;
+}
+if(x1350 >0 ) {
+  data.accountingRecord.tel = x1350;
+}
+if(x1520 >0 ) {
+  data.accountingRecord.travel = x1520;
+}
+if(x1535 >0 ) {
+  data.accountingRecord.benefitNonSocial = x1535;
+}
+
 
 data.accountingRecord.countDay = countDay;
 data.accountingRecord.countHour = countHour;
