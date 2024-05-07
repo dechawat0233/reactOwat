@@ -12,6 +12,9 @@ import '../editwindowcss.css';
 import EmployeeWorkDay from './componentsetting/EmployeeWorkDay';
 import './salarysummary/styleCom.css';
 
+import th from 'date-fns/locale/th'; // Import Thai locale data from date-fns
+
+
 function Salaryresult() {
   document.title = 'สรุปเงินเดือน';
 
@@ -93,6 +96,68 @@ function Salaryresult() {
   const getThaiMonthName = (monthNumber) => {
     return thaiMonthNames[monthNumber - 1];
   };
+
+  const initialThaiDate = new Date();
+  initialThaiDate.setFullYear(initialThaiDate.getFullYear()); // Add 543 years to the current year
+
+  // ใช้ลา
+  const [remainArray, setRemainArray] = useState([]);
+  const [selectedThaiDate, setSelectedThaiDate] = useState(initialThaiDate);
+  const [remainCode, setRemainCode] = useState('');
+  const [remainName, setRemainName] = useState('');
+  const [remainSalary, setRemainSalary] = useState(''); //
+  const [remainComment, setRemainComment] = useState(''); //
+
+  const handleThaiDateChange = (date) => {
+    setSelectedThaiDate(date);
+    setSelectedGregorianDate(ThaiBuddhistToGregorian(date));
+    setWorkDate(ThaiBuddhistToGregorian(date))
+  };
+
+  const handleRemainCodeChange = (event) => {
+    setRemainCode(event.target.value);
+  };
+
+  const handleRemainNameChange = (event) => {
+    setRemainName(event.target.value);
+  };
+
+  const handleRemainSalaryChange = (event) => {
+    setRemainSalary(event.target.value);
+  };
+
+  const handleRemainCommentChange = (event) => {
+    setRemainComment(event.target.value);
+  };
+
+  const handleAddData = () => {
+    // Create a new object with the input values
+    const newData = {
+      thaiDate: selectedThaiDate,
+      code: remainCode,
+      name: remainName,
+      salary: remainSalary,
+      comment: remainComment
+    };
+
+    // Add the new data object to the dataArray state
+    setRemainArray([...remainArray, newData]);
+
+    // Reset input fields after adding the data
+    // setSelectedThaiDate('');
+    setRemainCode('');
+    setRemainName('');
+    setRemainSalary('');
+    setRemainComment('');
+  };
+
+  const handleDeleteData = (index) => {
+    const newDataArray = [...remainArray];
+    newDataArray.splice(index, 1);
+    setRemainArray(newDataArray);
+  };
+
+  console.log('remainArray', remainArray);
 
   useEffect(() => {
     setMonth("01");
@@ -1309,6 +1374,140 @@ function Salaryresult() {
                   </div> */}
                 </div>
               </section>
+              <h2 class="title">สรุปวันลา</h2>
+              <section class="Frame">
+                <div class="row">
+                  <div class="col-md-6">
+                    <table border="1" style={tableStyle}>
+                      <thead>
+                        <tr>
+                          <th style={headerCellStyle}>ลาป่วย</th>
+                          <th style={headerCellStyle}>ลากิจ</th>
+                          <th style={headerCellStyle}>ลาพักร้อน</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {/* sumSpSalary */}
+                        <tr>
+                          <td style={cellStyle}>{employee.remainsickleave}</td>
+                          <td style={cellStyle}>{employee.remainbusinessleave}</td>
+                          <td style={cellStyle}>{employee.remainvacation}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <br />
+                <div class="row">
+                  <div class="col-md-2">
+                    <label role="agencyname">วันที่</label>
+                  </div>
+                  <div class="col-md-2">
+                    <label role="agencyname">ประเภคการลา</label>
+
+                  </div>
+                  <div class="col-md-2">
+                    <label role="agencyname"></label>
+
+                  </div>
+                  <div class="col-md-2">
+                    <label role="agencyname">จำนวนเงิน</label>
+
+                  </div>
+                  <div class="col-md-2">
+                    <label role="agencyname">หมายเหตุ</label>
+
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-2">
+                    <div style=
+                      {{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
+                      <DatePicker
+                        className="form-control"
+                        selected={selectedThaiDate}
+                        onChange={handleThaiDateChange}
+                        dateFormat="dd/MM/yyyy"
+                        locale={th}
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={remainCode}
+                      onChange={handleRemainCodeChange}
+                      placeholder="Code"
+                    />
+
+                  </div>
+                  <div class="col-md-2">
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={remainName}
+                      onChange={handleRemainNameChange}
+                      placeholder="Name"
+                    />
+                  </div>
+                  <div class="col-md-2">
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={remainSalary}
+                      onChange={handleRemainSalaryChange}
+                      placeholder="Salary"
+                    />
+
+                  </div>
+                  <div class="col-md-2">
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={remainComment}
+                      onChange={handleRemainCommentChange}
+                      placeholder="Comment"
+                    />
+
+                  </div>
+                  <div class="col-md-2">
+                    <button type="button" onClick={handleAddData} class="btn b_save"><i class="custom-icon-font"> + </i>ปิดงวด</button>
+
+
+                  </div>
+                </div>
+                <br />
+                <table border="1" style={tableStyle}>
+                  <thead>
+                    <tr>
+                      <th style={headerCellStyle}>No.</th>
+                      <th style={headerCellStyle}>วันที่</th>
+                      <th style={headerCellStyle}>รหัส</th>
+                      <th style={headerCellStyle}>รายการ</th>
+                      <th style={headerCellStyle}>จำนวนเงิน</th>
+                      <th style={headerCellStyle}>หมายเหตุ</th>
+                      <th style={headerCellStyle}>ลบ</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {remainArray.map((data, index) => (
+                      <tr key={index}>
+                        <td style={cellStyle}>{index + 1}</td>
+                        <td style={cellStyle}>
+                          {data.thaiDate.toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+                        </td>
+                        <td style={cellStyle}>{data.code}</td>
+                        <td style={cellStyle}>{data.name}</td>
+                        <td style={cellStyle}>{data.salary}</td>
+                        <td style={cellStyle}>{data.comment}</td>
+                        <td style={cellStyle}><button class="btn btn-danger" style={{ width: '4rem' }} onClick={() => handleDeleteData(index)}>ลบ</button></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+
+              </section>
               <h2 class="title">สรุปเงินเดือน</h2>
               <section class="Frame">
                 {staffFullName ? (
@@ -1456,7 +1655,7 @@ function Salaryresult() {
                         <tr>
                           <th style={headerCellStyle}>หักภาษี</th>
                           <th style={headerCellStyle}>หักประกันสังคม</th>
-                          <th style={headerCellStyle}>ธรรมเนียมธนาคาร</th>
+                          {/* <th style={headerCellStyle}>ธรรมเนียมธนาคาร</th> */}
                           <th style={headerCellStyle}>เงินหัก</th>
                           <th style={headerCellStyle}>รวมเงินหัก</th>
                           <th style={headerCellStyle}>แก้ไข</th>
@@ -1468,7 +1667,7 @@ function Salaryresult() {
                           {/* <td style={cellStyle}>{((overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary) * socialSecurity).toFixed(2)}</td> */}
                           {/* <td style={cellStyle}>{isNaN(Number(socialSecurity)) ? 0 : Number(socialSecurity).toFixed(0)}</td> */}
                           <td style={cellStyle}>{isNaN(Number(socialSecurity)) ? 0 : Math.ceil(Number(socialSecurity))}</td>
-                          <td style={cellStyle}>{isNaN(Number(bank)) ? 0.00 : Number(bank).toFixed(2)}</td>
+                          {/* <td style={cellStyle}>{isNaN(Number(bank)) ? 0.00 : Number(bank).toFixed(2)}</td> */}
                           {/* <td style={cellStyle}>
                             <input
                               type="text"
