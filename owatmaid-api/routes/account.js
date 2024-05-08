@@ -539,7 +539,7 @@ tax = await response.data.tax ||0;
 
     if (foundWorkplace) {
       amountSpecial = await foundWorkplace.holiday || 0;
-      await console.log("workTimeDay " + JSON.stringify(foundWorkplace.workTimeDay ) );
+      // await console.log("workTimeDay " + JSON.stringify(foundWorkplace.workTimeDay ) );
 
       // Found the workplace
       // await console.log('Found workplace:', foundWorkplace);
@@ -934,15 +934,18 @@ if(responseConclude.data.recordConclude[c].addSalary[i]) {
 await responseConclude.data.recordConclude[c].addSalary[i].map((item, index) => {
 if(item.id == '1230') {
   x1230 += parseFloat(item.SpSalary);
-}
+} else
 if(item.id == '1350') {
   x1350 += parseFloat(item.SpSalary);
-}
+} else
 if(item.id == '1520') {
   x1520 += parseFloat(item.SpSalary);
-}
+} else
 if(item.id == '1535') {
   x1535 += parseFloat(item.SpSalary);
+} else {
+  console.log(item.SpSalary);
+  
 }
 
 });
