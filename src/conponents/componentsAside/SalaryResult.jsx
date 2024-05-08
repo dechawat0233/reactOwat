@@ -1403,7 +1403,7 @@ function Salaryresult() {
                     <label role="agencyname">วันที่</label>
                   </div>
                   <div class="col-md-2">
-                    <label role="agencyname">ประเภคการลา</label>
+                    <label role="agencyname">ประเภทการลา</label>
 
                   </div>
                   <div class="col-md-2">
@@ -1438,7 +1438,7 @@ function Salaryresult() {
                       className="form-control"
                       value={remainCode}
                       onChange={handleRemainCodeChange}
-                      placeholder="Code"
+                      placeholder="รหัส"
                     />
 
                   </div>
@@ -1448,7 +1448,7 @@ function Salaryresult() {
                       className="form-control"
                       value={remainName}
                       onChange={handleRemainNameChange}
-                      placeholder="Name"
+                      placeholder="ชื่อ"
                     />
                   </div>
                   <div class="col-md-2">
@@ -1457,7 +1457,7 @@ function Salaryresult() {
                       className="form-control"
                       value={remainSalary}
                       onChange={handleRemainSalaryChange}
-                      placeholder="Salary"
+                      placeholder="บาท"
                     />
 
                   </div>
@@ -1467,7 +1467,7 @@ function Salaryresult() {
                       className="form-control"
                       value={remainComment}
                       onChange={handleRemainCommentChange}
-                      placeholder="Comment"
+                      placeholder="หมายเหตุ"
                     />
 
                   </div>

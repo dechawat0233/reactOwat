@@ -1708,7 +1708,7 @@ console.log('allDayOff', allDayOff);
     }
 
     // console.log('holidayList', holidayList);
-    console.log('allDayOff', allDayOff);
+    console.log('filteredDaysOff', filteredDaysOff);
     console.log('falseWorkdays', falseWorkdays);
     console.log('holidayList', holidayList);
 
@@ -2062,7 +2062,7 @@ console.log('allDayOff', allDayOff);
         console.log('arraytest123', arraytest);
 
 
-        // const commonDates = datesArray.filter(date => allDayOff.includes(date) || holidayList.includes(date));
+        // const commonDates = datesArray.filter(date => filteredDaysOff.includes(date) || holidayList.includes(date));
         // const employeeResultArray2 = resultArray.map(day => {
         //     const workplaceIdIndex = commonDates.indexOf(day);
         //     if (workplaceIdIndex !== -1) {
@@ -2076,7 +2076,7 @@ console.log('allDayOff', allDayOff);
 
         // วันที่ทำงานในวันหยุดธรรมดา(ช.ม.)
         const commonDatesHoli = datesArray.filter(date =>
-            holidayList.includes(date) && !allDayOff.includes(date)
+            holidayList.includes(date) && !filteredDaysOff.includes(date)
         );
         const employeeResultArray2Holi = resultArray.map(day => {
             const workplaceIdIndex = commonDatesHoli.indexOf(day);
@@ -2108,7 +2108,7 @@ console.log('allDayOff', allDayOff);
         arrayWorkHoli.push(employeeResultArray2Holi);
 
         // วันที่ทำงานในวันหยุดนักขัตฤกษ์(ช.ม.)
-        const commonDates = datesArray.filter(date => allDayOff.includes(date));
+        const commonDates = datesArray.filter(date => filteredDaysOff.includes(date));
         const employeeResultArray2 = resultArray.map(day => {
             const workplaceIdIndex = commonDates.indexOf(day);
             // if (workplaceIdIndex !== -1) {
@@ -2139,7 +2139,7 @@ console.log('allDayOff', allDayOff);
         arrayWorkHoliday.push(employeeResultArray2);
 
         // วันที่ทำงานในวันหยุดนักขัตฤกษ์OT(ช.ม.)
-        const commonDatesOT = datesArray.filter(date => allDayOff.includes(date));
+        const commonDatesOT = datesArray.filter(date => filteredDaysOff.includes(date));
         // const employeeResultArray2OT = resultArray.map(day => {
         //     const workplaceIdIndex = commonDatesOT.indexOf(day);
         //     if (workplaceIdIndex !== -1) {
@@ -2175,7 +2175,7 @@ console.log('allDayOff', allDayOff);
 
 
         // วันที่ทำงานปกติ
-        // const commonDates3 = datesArray.filter(date => !(allDayOff.includes(date) || holidayList.includes(date)));
+        // const commonDates3 = datesArray.filter(date => !(filteredDaysOff.includes(date) || holidayList.includes(date)));
         // const employeeResultArray3 = resultArray.map(day => {
         //     const workplaceIdIndex = commonDates3.indexOf(day);
         //     if (workplaceIdIndex !== -1) {
@@ -2185,7 +2185,7 @@ console.log('allDayOff', allDayOff);
         //         return '';
         //     }
         // });
-        // const commonDates3 = datesArray.filter(date => !(allDayOff.includes(date) || holidayList.includes(date)));
+        // const commonDates3 = datesArray.filter(date => !(filteredDaysOff.includes(date) || holidayList.includes(date)));
         // console.log('commonDates3', commonDates3);
 
         datesArray
@@ -2215,7 +2215,7 @@ console.log('allDayOff', allDayOff);
         arrayWorkNormalDay.push(employeeResultArray3);
 
         // วันที่ทำงานปกติ
-        const commonDates3 = datesArray.filter(date => !(allDayOff.includes(date) || holidayList.includes(date)));
+        const commonDates3 = datesArray.filter(date => !(filteredDaysOff.includes(date) || holidayList.includes(date)));
         const employeeResultArray3Old = resultArray.map(day => {
             const workplaceIdIndex = commonDates3.indexOf(day);
             if (workplaceIdIndex !== -1) {
@@ -2229,7 +2229,7 @@ console.log('allDayOff', allDayOff);
         arrayWorkNormalDayOld.push(employeeResultArray3Old);
 
         // วันที่ทำงานปกติOT
-        const commonDates3OT = datesArray.filter(date => !(allDayOff.includes(date) || holidayList.includes(date)));
+        const commonDates3OT = datesArray.filter(date => !(filteredDaysOff.includes(date) || holidayList.includes(date)));
         console.log('commonDates3OT', commonDates3OT);
         // const employeeResultArray3OT = resultArray.map(day => {
         //     const workplaceIdIndex = commonDates3OT.indexOf(day);
@@ -2309,7 +2309,7 @@ console.log('allDayOff', allDayOff);
 
     // นับวันที่ทำในวันหยุดวันนักขัตฤกษ์
     const occurrencesCount = filteredUniqueDatesArray.map(subArray => {
-        const count = subArray.filter(value => allDayOff.includes(value)).length;
+        const count = subArray.filter(value => filteredDaysOff.includes(value)).length;
         return count;
     });
 
@@ -2317,7 +2317,7 @@ console.log('allDayOff', allDayOff);
 
     // นับวันที่ทำในวันหยุด ไม่รวมวันนักขัตฤกษ์
     const occurrencesCount2 = filteredUniqueDatesArray.map(subArray => {
-        const count = subArray.filter(value => holidayList.includes(value) && !allDayOff.includes(value)).length;
+        const count = subArray.filter(value => holidayList.includes(value) && !filteredDaysOff.includes(value)).length;
         return count;
     });
 
@@ -3302,9 +3302,9 @@ console.log('allDayOff', allDayOff);
             //     const currentX = startX + columnIndex * cellWidth;
             //     const currentY = startY + 3.7 + rowIndex * verticalDistance;
 
-            //     // Set color based on holidayList and allDayOff
+            //     // Set color based on holidayList and filteredDaysOff
             //     const currentNumber = resultArray[rowIndex];
-            //     const isHighlighted = holidayList.includes(currentNumber) || allDayOff.includes(currentNumber);
+            //     const isHighlighted = holidayList.includes(currentNumber) || filteredDaysOff.includes(currentNumber);
 
             //     // Draw a colored rectangle for each column
             //     if (isHighlighted) {
@@ -3329,9 +3329,9 @@ console.log('allDayOff', allDayOff);
                 const currentX = startX + columnIndex * cellWidth;
                 const currentY = startY + 3.7 + rowIndex * verticalDistance;
 
-                // Set color based on holidayList and allDayOff
+                // Set color based on holidayList and filteredDaysOff
                 const currentNumber = resultArray[columnIndex];
-                const isHighlighted = holidayList.includes(currentNumber) || allDayOff.includes(currentNumber);
+                const isHighlighted = holidayList.includes(currentNumber) || filteredDaysOff.includes(currentNumber);
 
                 // Draw a colored rectangle for each column
                 if (isHighlighted) {
@@ -3360,7 +3360,7 @@ console.log('allDayOff', allDayOff);
             // for (let i = 0; i < resultArray.length; i++) {
             //     const currentNumber = resultArray[i];
 
-            //     if (holidayList.includes(currentNumber) || allDayOff.includes(currentNumber)) {
+            //     if (holidayList.includes(currentNumber) || filteredDaysOff.includes(currentNumber)) {
             //         // Set loop position color
             //         doc.rect(startX + i * cellWidth, startYTop + 80, cellWidth - 0.2, cellHeightTop, 'F');
             //     } else {
@@ -3898,7 +3898,7 @@ console.log('allDayOff', allDayOff);
                 // for (let i = 0; i < resultArray.length; i++) {
                 //     const currentNumber = resultArray[i];
 
-                //     if (holidayList.includes(currentNumber) || allDayOff.includes(currentNumber)) {
+                //     if (holidayList.includes(currentNumber) || filteredDaysOff.includes(currentNumber)) {
                 //         // Set loop position color
                 //         doc.rect(startX + i * cellWidth, startYTop + 80, cellWidth - 0.2, cellHeightTop, 'F');
                 //     } else {
@@ -3924,7 +3924,7 @@ console.log('allDayOff', allDayOff);
                 for (let i = 0; i < resultArray.length; i++) {
                     const currentNumber = resultArray[i];
 
-                    if (holidayList.includes(currentNumber) || allDayOff.includes(currentNumber)) {
+                    if (holidayList.includes(currentNumber) || filteredDaysOff.includes(currentNumber)) {
                         // Set loop position color
                         doc.rect(startX + i * cellWidth, startYTop, cellWidth - 0.2, cellHeightTop, 'F');
                     } else {
@@ -4765,9 +4765,9 @@ console.log('allDayOff', allDayOff);
             //     const currentX = startX + columnIndex * cellWidth;
             //     const currentY = startY + 3.7 + rowIndex * verticalDistance;
 
-            //     // Set color based on holidayList and allDayOff
+            //     // Set color based on holidayList and filteredDaysOff
             //     const currentNumber = resultArray[rowIndex];
-            //     const isHighlighted = holidayList.includes(currentNumber) || allDayOff.includes(currentNumber);
+            //     const isHighlighted = holidayList.includes(currentNumber) || filteredDaysOff.includes(currentNumber);
 
             //     // Draw a colored rectangle for each column
             //     if (isHighlighted) {
@@ -4792,9 +4792,9 @@ console.log('allDayOff', allDayOff);
                 const currentX = startX + columnIndex * cellWidth;
                 const currentY = startY + 3.7 + rowIndex * verticalDistance;
 
-                // Set color based on holidayList and allDayOff
+                // Set color based on holidayList and filteredDaysOff
                 const currentNumber = resultArray[columnIndex];
-                const isHighlighted = holidayList.includes(currentNumber) || allDayOff.includes(currentNumber);
+                const isHighlighted = holidayList.includes(currentNumber) || filteredDaysOff.includes(currentNumber);
 
                 // Draw a colored rectangle for each column
                 if (isHighlighted) {
@@ -4823,7 +4823,7 @@ console.log('allDayOff', allDayOff);
             // for (let i = 0; i < resultArray.length; i++) {
             //     const currentNumber = resultArray[i];
 
-            //     if (holidayList.includes(currentNumber) || allDayOff.includes(currentNumber)) {
+            //     if (holidayList.includes(currentNumber) || filteredDaysOff.includes(currentNumber)) {
             //         // Set loop position color
             //         doc.rect(startX + i * cellWidth, startYTop + 80, cellWidth - 0.2, cellHeightTop, 'F');
             //     } else {
@@ -5331,7 +5331,7 @@ console.log('allDayOff', allDayOff);
                 // for (let i = 0; i < resultArray.length; i++) {
                 //     const currentNumber = resultArray[i];
 
-                //     if (holidayList.includes(currentNumber) || allDayOff.includes(currentNumber)) {
+                //     if (holidayList.includes(currentNumber) || filteredDaysOff.includes(currentNumber)) {
                 //         // Set loop position color
                 //         doc.rect(startX + i * cellWidth, startYTop + 80, cellWidth - 0.2, cellHeightTop, 'F');
                 //     } else {
@@ -5357,7 +5357,7 @@ console.log('allDayOff', allDayOff);
                 for (let i = 0; i < resultArray.length; i++) {
                     const currentNumber = resultArray[i];
 
-                    if (holidayList.includes(currentNumber) || allDayOff.includes(currentNumber)) {
+                    if (holidayList.includes(currentNumber) || filteredDaysOff.includes(currentNumber)) {
                         // Set loop position color
                         doc.rect(startX + i * cellWidth, startYTop, cellWidth - 0.2, cellHeightTop, 'F');
                     } else {
