@@ -777,6 +777,7 @@ function Setting() {
 
 
     }
+    console.log('showEmployeeListResult', showEmployeeListResult);
 
     const handleCheckboxChange1 = () => {
         setWorkday1(!workday1);

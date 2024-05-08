@@ -14,6 +14,22 @@ import { Link } from 'react-router-dom';
 
 
 function SettingAllList() {
+
+    const tableStyle = {
+        borderCollapse: 'collapse',
+        width: '100%',
+    };
+
+    const cellStyle = {
+        border: '1px solid black',
+        padding: '8px',
+        textAlign: 'center',
+    };
+
+    const headerCellStyle = {
+        ...cellStyle,
+        backgroundColor: '#f2f2f2',
+    };
     const [searchTerm, setSearchTerm] = useState('');
     const [workplaceList, setWorkplaceList] = useState([]);
 
@@ -24,6 +40,22 @@ function SettingAllList() {
             .then(data => {
                 // Update the state with the fetched data
                 setWorkplaceList(data);
+                // alert(data[0].workplaceName);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, []);
+
+    const [employeeList, setEmployeeList] = useState([]);
+
+    useEffect(() => {
+        // Fetch data from the API when the component mounts
+        fetch(endpoint + '/employee/list')
+            .then(response => response.json())
+            .then(data => {
+                // Update the state with the fetched data
+                setEmployeeList(data);
                 // alert(data[0].workplaceName);
             })
             .catch(error => {
@@ -50,6 +82,15 @@ function SettingAllList() {
 
     filteredData.sort((a, b) => a.workplaceId.localeCompare(b.workplaceId));
 
+
+    const employeeCountMap = {};
+    employeeList.forEach(employee => {
+        if (!employeeCountMap[employee.workplace]) {
+            employeeCountMap[employee.workplace] = 1;
+        } else {
+            employeeCountMap[employee.workplace]++;
+        }
+    });
 
     return (
         <body class="hold-transition sidebar-mini" className='editlaout'>
@@ -107,14 +148,63 @@ function SettingAllList() {
                                                     <strong> Workplace Name:</strong> {data.workplaceName}
                                                 </li>
                                             ))} */}
-                                            {filteredData.map((data, index) => (
+                                            {/* {filteredData.map((data, index) => (
                                                 <li key={index}>
                                                     <Link to={`/setting?workplaceId=${data.workplaceId}&workplaceName=${data.workplaceName}`}>
                                                         <strong>Workplace ID:</strong> {data.workplaceId},
                                                         <strong> Workplace Name:</strong> {data.workplaceName}
                                                     </Link>
                                                 </li>
-                                            ))}
+                                            ))} */}
+
+                                            <table border="1" style={tableStyle}>
+                                                <thead>
+                                                    <tr>
+                                                        <th style={headerCellStyle}>รหัสหน่วยงาน</th>
+                                                        <th style={headerCellStyle}>ชื่อหน่วยงาน</th>
+                                                        <th style={headerCellStyle}>จำนวนคน</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {/* {filteredData.map((data, index) => (
+                                                        <tr key={index}>
+                                                            <td style={cellStyle}>
+                                                                <Link to={`/setting?workplaceId=${data.workplaceId}&workplaceName=${data.workplaceName}`}>
+                                                                    {data.workplaceId}
+                                                                </Link>
+                                                            </td>
+                                                            <td style={cellStyle}>
+                                                                <Link to={`/setting?workplaceId=${data.workplaceId}&workplaceName=${data.workplaceName}`}>
+                                                                    {data.workplaceName}
+                                                                </Link>
+                                                            </td>
+                                                            <td style={cellStyle}>
+                                                                <Link to={`/setting?workplaceId=${data.workplaceId}&workplaceName=${data.workplaceName}`}>
+                                                                    {data.workplaceName}
+                                                                </Link>
+                                                            </td>
+                                                        </tr>
+                                                    ))} */}
+
+                                                    {filteredData.map((data, index) => (
+                                                        <tr key={index}>
+                                                            <td style={cellStyle}>
+                                                                <Link to={`/setting?workplaceId=${data.workplaceId}&workplaceName=${data.workplaceName}`}>
+                                                                    {data.workplaceId}
+                                                                </Link>
+                                                            </td>
+                                                            <td style={cellStyle}>
+                                                                <Link to={`/setting?workplaceId=${data.workplaceId}&workplaceName=${data.workplaceName}`}>
+                                                                    {data.workplaceName}
+                                                                </Link>
+                                                            </td>
+                                                            <td style={cellStyle}>
+                                                                {employeeCountMap[data.workplaceId] || 0}
+                                                            </td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
                                         </ul>
                                     </form>
                                 </div>
