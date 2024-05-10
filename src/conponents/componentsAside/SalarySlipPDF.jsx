@@ -381,17 +381,12 @@ function SalarySlipPDF() {
 
             pdf.text(`ใบจ่ายเงินเดือน`, 73, 12);
 
-            // pdf.text(`ใบจ่ายเงินเดือน`, 73.05, 12);
-            // pdf.text(`ใบจ่ายเงินเดือน`, 72.95, 12);
-            // pdf.text(`ใบจ่ายเงินเดือน`, 73, 12.05);
-            // pdf.text(`ใบจ่ายเงินเดือน`, 73, 11.95);
-
             pdf.text(`บริษัท โอวาท โปร แอนด์ คริก จำกัด`, 55, 18);
 
             pdf.setFontSize(12);
 
             const head = 25;
-            const head2 = 150;
+            const head2 = 155;
 
             pdf.text(`รหัส`, 7, head);
             pdf.text(`ชื่อ-สกุล`, 50, head);
@@ -872,8 +867,8 @@ function SalarySlipPDF() {
                 console.log('textArray', textArray);
                 console.log('valueArray', valueArray);
 
-                pdf.text(`ใบจ่ายเงินเดือน`, 73, 137);
-                pdf.text(`บริษัท โอวาท โปร แอนด์ คริก จำกัด`, 55, 143);
+                pdf.text(`ใบจ่ายเงินเดือน`, 73, 142);
+                pdf.text(`บริษัท โอวาท โปร แอนด์ คริก จำกัด`, 55, 148);
                 pdf.setFontSize(12);
 
                 pdf.text(`รหัส`, 7, head2);
@@ -1050,7 +1045,7 @@ function SalarySlipPDF() {
                 // // pdf.text(`${responseDataAll[i + 1].accountingRecord.bank.toFixed(2)}`, 160, head2 + 64.1, { align: 'right' });
                 // // pdf.text(`Age: ${ages[i + 1]} `, 7, 176);
 
-                let y = 169; // Initial y position
+                let y = 174; // Initial y position
 
                 textArray.forEach(text => {
                     // Output each element of the textArray at the current y position
@@ -1060,7 +1055,7 @@ function SalarySlipPDF() {
                     y += 4.1;
                 });
 
-                let y2 = 169; // Initial y position
+                let y2 = 174; // Initial y position
 
                 countArray.forEach(text => {
                     // Output each element of the textArray at the current y position
@@ -1070,7 +1065,7 @@ function SalarySlipPDF() {
                     y2 += 4.1;
                 });
 
-                let y3 = 169; // Initial y position
+                let y3 = 174; // Initial y position
 
                 valueArray.forEach(text => {
                     // Output each element of the textArray at the current y position
@@ -1080,7 +1075,7 @@ function SalarySlipPDF() {
                     y3 += 4.1;
                 });
 
-                let y4 = 169; // Initial y position
+                let y4 = 174; // Initial y position
 
                 textDedustArray.forEach(text => {
                     // Output each element of the textArray at the current y position
@@ -1089,7 +1084,7 @@ function SalarySlipPDF() {
                     // Increment y position for the next line
                     y4 += 4.1;
                 });
-                let y5 = 169; // Initial y position
+                let y5 = 174; // Initial y position
 
                 valueDedustArray.forEach(text => {
                     // Output each element of the textArray at the current y position
