@@ -164,7 +164,7 @@ function WorktimeSheetWorkplace() {
             .then(response => response.json())
             .then(data => {
                 // Update the state with the fetched data
-                setTimerecordAllList(data);
+                setTimerecordAllList(data || []);
                 // alert(data[0].workplaceName);
             })
             .catch(error => {
@@ -1744,6 +1744,8 @@ console.log('allDayOff', allDayOff);
 
     console.log('thaiMonthName', thaiMonthName); // Thai month name based on desiredMonth
     console.log('thaiMonthNameLower', thaiMonthNameLower); // Thai month name based on desiredMonthLower
+
+    console.log('timerecordAllList', timerecordAllList); // Thai month name based on desiredMonthLower
 
     const filteredEntries = timerecordAllList.filter(entry =>
         entry.timerecordId === desiredTimerecordId &&
