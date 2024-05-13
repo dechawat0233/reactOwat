@@ -158,19 +158,38 @@ function WorktimeSheetWorkplace() {
             });
     }, []); // The empty array [] ensures that the effect runs only once after the initial render
 
+    // useEffect(() => {
+    //     // Fetch data from the API when the component mounts
+    //     fetch(endpoint + '/timerecord/listemp')
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             // Update the state with the fetched data
+    //             setTimerecordAllList(data);
+    //             // alert(data[0].workplaceName);
+    //         })
+    //         .catch(error => {
+    //             console.error('Error fetching data:', error);
+    //         });
+    // }, []);
+
     useEffect(() => {
         // Fetch data from the API when the component mounts
         fetch(endpoint + '/timerecord/listemp')
             .then(response => response.json())
             .then(data => {
                 // Update the state with the fetched data
-                setTimerecordAllList(data);
-                // alert(data[0].workplaceName);
+                if (Array.isArray(data) && data.length > 0) {
+                    setTimerecordAllList(data);
+                } else {
+                    // If data is empty or not found, set state to an empty array
+                    setTimerecordAllList([]);
+                }
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
     }, []);
+
 
     useEffect(() => {
         // Fetch data from the API when the component mounts
@@ -1531,7 +1550,7 @@ function WorktimeSheetWorkplace() {
             return date.getDate(); // Extract day part of the date
         });
 
-        const filteredDaysOff_lower21 = filteredDaysOff.filter(day => day < 21);
+    const filteredDaysOff_lower21 = filteredDaysOff.filter(day => day < 21);
 
     console.log('filteredDaysOff_lower21', filteredDaysOff_lower21);
 
@@ -1561,13 +1580,13 @@ function WorktimeSheetWorkplace() {
     console.log('filteredDaysOff2', filteredDaysOff2);
 
 
-const filteredDaysOff2_upper20 = filteredDaysOff2.filter(day => day > 20);
+    const filteredDaysOff2_upper20 = filteredDaysOff2.filter(day => day > 20);
 
-console.log('filteredDaysOff2_upper20', filteredDaysOff2_upper20);
+    console.log('filteredDaysOff2_upper20', filteredDaysOff2_upper20);
 
-const allDayOff = [...filteredDaysOff2_upper20, ...filteredDaysOff_lower21];
+    const allDayOff = [...filteredDaysOff2_upper20, ...filteredDaysOff_lower21];
 
-console.log('allDayOff', allDayOff);
+    console.log('allDayOff', allDayOff);
 
     const holidayList = [];
     const falseWorkdays = [];
