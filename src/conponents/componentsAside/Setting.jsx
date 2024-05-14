@@ -215,7 +215,7 @@ function Setting() {
 
     // const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     // const shiftWork = ['Shift 1', 'Shift 2', 'Shift 3'];
-    const positionWork = ['หัวหน้า', 'ทำความสะอาด', 'กวาดพื้น'];
+    const positionWork = ['หัวหน้า','ผู้ช่วยหัวหน้า', 'ทำความสะอาด', 'กวาดพื้น'];
 
     const handleInputPersonChange = (e) => {
         const { name, value } = e.target;
@@ -1266,6 +1266,7 @@ function Setting() {
                                                         <option value="">เลือกตำแหน่งที่จะมอบให้</option>
                                                         <option value="all">ทั้งหมด</option>
                                                         <option value="header">หัวหน้างาน</option>
+                                                        <option value="headerTa">ผู้ช่วยหัวหน้างาน</option>
                                                         <option value="custom">กำหนดเอง</option>
                                                     </select>
                                                 </div>
