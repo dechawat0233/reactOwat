@@ -1764,6 +1764,8 @@ function WorktimeSheetWorkplace() {
     console.log('thaiMonthName', thaiMonthName); // Thai month name based on desiredMonth
     console.log('thaiMonthNameLower', thaiMonthNameLower); // Thai month name based on desiredMonthLower
 
+    console.log('timerecordAllList', timerecordAllList); // Thai month name based on desiredMonthLower
+
     const filteredEntries = timerecordAllList.filter(entry =>
         entry.timerecordId === desiredTimerecordId &&
         entry.month === desiredMonth
