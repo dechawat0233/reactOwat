@@ -16,12 +16,16 @@ import EmployeeWorkDay from './componentsetting/EmployeeWorkDay';
 
 import Compensation from './Compensation';
 
+// import './Examine.css';
+
 function Examine() {
     document.title = 'ตรวจการทำงาน';
 
     const tableStyle = {
         borderCollapse: 'collapse',
         width: '100%',
+        overflowX: 'auto',
+        overflowY: 'auto',
     };
 
     const cellStyle = {
@@ -31,7 +35,7 @@ function Examine() {
     };
 
     const headerCellStyle = {
-        ...cellStyle,
+        // ...cellStyle,
         backgroundColor: '#f2f2f2',
     };
 
@@ -658,7 +662,7 @@ function Examine() {
 
     return (
         // <div>
-        <body class="hold-transition sidebar-mini" className='editlaout'>
+        <body class="hold-transition sidebar-mini" className='editlaout' id='test123'>
             <div class="wrapper">
 
                 <div class="content-wrapper">
@@ -675,7 +679,7 @@ function Examine() {
                             </div>
                         </div>
                     </div>
-                    <section class="content">
+                    <section class="content" id='123'>
                         <div class="container-fluid">
                             <h2 class="title">ตรวจการทำงาน</h2>
                             <section class="Frame">
@@ -814,23 +818,22 @@ function Examine() {
                                 <br />
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="form-group">
-                                            <table border="1" style={tableStyle}>
-                                                <thead>
-                                                    <tr>
-                                                        <th style={headerCellStyle}>วันที่</th>
-                                                        <th style={headerCellStyle}>หน่วยงาน</th>
-                                                        <th style={headerCellStyle}>เวลาเข้า</th>
-                                                        <th style={headerCellStyle}>เวลาออก</th>
-                                                        <th style={headerCellStyle}>เวลาเข้า OT</th>
-                                                        <th style={headerCellStyle}>เวลาออก OT</th>
-                                                        <th style={headerCellStyle}>ชั่วโมงทำงาน</th>
-                                                        <th style={headerCellStyle}>ชั่วโมง OT</th>
-                                                        {/* <th style={headerCellStyle}>แก้/ลบ</th> */}
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {/* {resultArray.map((value, index) => (
+                                        <table border="1" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col" class="text-center" style={headerCellStyle}>วันที่</th>
+                                                    <th scope="col" class="text-center" style={headerCellStyle}>หน่วยงาน</th>
+                                                    <th scope="col" class="text-center" style={headerCellStyle}>เวลาเข้า</th>
+                                                    <th scope="col" class="text-center" style={headerCellStyle}>เวลาออก</th>
+                                                    <th scope="col" class="text-center" style={headerCellStyle}>เวลาเข้า OT</th>
+                                                    <th scope="col" class="text-center" style={headerCellStyle}>เวลาออก OT</th>
+                                                    <th scope="col" class="text-center" style={headerCellStyle}>ชั่วโมงทำงาน</th>
+                                                    <th class="text-center" style={headerCellStyle}>ชั่วโมง OT</th>
+                                                    {/* <th style={headerCellStyle}>แก้/ลบ</th> */}
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {/* {resultArray.map((value, index) => (
                                                         // <tr key={index}>
                                                         //     <td>{resultArray{$index}}</td>
                                                         // </tr>
@@ -839,7 +842,7 @@ function Examine() {
                                                         </tr>
                                                     ))} */}
 
-                                                    {/* {resultArray.map((value, index) => (
+                                                {/* {resultArray.map((value, index) => (
                                                         <tr key={index}>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                 {value}
@@ -872,52 +875,51 @@ function Examine() {
                                                     ))} */}
 
 
-                                                    {resultArrayWithWorkplaceRecords.map((workplaceRecord, index) => (
-                                                        workplaceRecord.editdata == true ? (
-                                                            <tr>
-                                                                <td><input type="text" /></td>
-                                                            </tr>
-                                                        ) : (
+                                                {resultArrayWithWorkplaceRecords.map((workplaceRecord, index) => (
+                                                    workplaceRecord.editdata == true ? (
+                                                        <tr>
+                                                            <td><input type="text" /></td>
+                                                        </tr>
+                                                    ) : (
 
-                                                            <tr key={index}>
-                                                                {/* <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}> */}
-                                                                {/* <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}> */}
-                                                                <td style={commonNumbersArray.includes(resultArray2[index].toString()) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                        <tr key={index}>
+                                                            {/* <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}> */}
+                                                            {/* <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}> */}
+                                                            <td style={commonNumbersArray.includes(resultArray2[index].toString()) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
 
-                                                                    {resultArray[index]}
-                                                                </td>
-                                                                <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                    {workplaceRecord.workplaceId}
-                                                                </td>
-                                                                <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                    {workplaceRecord.startTime}
-                                                                </td>
-                                                                <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                    {workplaceRecord.endTime}
-                                                                </td>
-                                                                <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                    {workplaceRecord.selectotTime}
-                                                                </td>
-                                                                <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                    {workplaceRecord.selectotTimeOut}
-                                                                </td>
-                                                                <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                    {workplaceRecord.allTimes}
-                                                                </td>
-                                                                <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                    {workplaceRecord.otTimes}
-                                                                </td>
-                                                                {/* <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {resultArray[index]}
+                                                            </td>
+                                                            <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {workplaceRecord.workplaceId}
+                                                            </td>
+                                                            <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {workplaceRecord.startTime}
+                                                            </td>
+                                                            <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {workplaceRecord.endTime}
+                                                            </td>
+                                                            <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {workplaceRecord.selectotTime}
+                                                            </td>
+                                                            <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {workplaceRecord.selectotTimeOut}
+                                                            </td>
+                                                            <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {workplaceRecord.allTimes}
+                                                            </td>
+                                                            <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                {workplaceRecord.otTimes}
+                                                            </td>
+                                                            {/* <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                     <a href="https://example.com" class="link1" style={{ color: 'red' }}><b>ลบ</b></a> / <a href="#" onClick={(e) => editdata(index, workplaceRecord)} class="link2" style={{ color: 'blue' }}><b>แก้ไข</b></a>
                                                                 </td> */}
-                                                            </tr>
-                                                        )
+                                                        </tr>
+                                                    )
 
 
-                                                    ))}
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                ))}
+                                            </tbody>
+                                        </table>
 
                                     </div>
                                 </div>

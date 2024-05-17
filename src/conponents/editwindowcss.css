@@ -1,6 +1,22 @@
-.editlaout {
+/* website */
+@media (min-width: 390px) {
+  .editlaout {
     width: 105%;
+    /* Adjust width for desktop */
     margin-left: -3.8rem;
   }
+}
 
-  /* style={{width:'105%',marginLeft:'-3.8rem'}} */
+/* Media query for screens smaller than or equal to iPhone width */
+@media (max-width: 390px) {
+  .editlaout {
+    width: 100%;
+    margin-left: 0rem;
+
+    /* Adjust width for mobile */
+    /* margin-left: 0rem; */
+    /* Reset margin for mobile */
+  }
+}
+
+/* style={{width:'105%',marginLeft:'-3.8rem'}} */
