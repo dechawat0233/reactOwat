@@ -265,6 +265,7 @@ function Salaryresult() {
   // }, []);
   const [addSalaryList, setAddSalaryList] = useState([]);
   const [deductSalaryList, setDeductSalaryList] = useState([]);
+const [sumAddSalaryList , setSumAddSalaryList ] = useState(0);
 
   useEffect(() => {
     const getemp = async () => {
@@ -299,6 +300,13 @@ function Salaryresult() {
           const responseData = response.data;
           if (response.data) {
             setAddSalaryList(response.data[0].addSalary);
+            if(response.data[0].addSalary) {
+              let tmp = 0;
+              response.data[0].addSalary.map(item => {
+tmp += parseFloat(item.SpSalary);
+              });
+setSumAddSalaryList(tmp);
+            }
             // alert(response.data[0].addSalary.length);
             setDeductSalaryList(response.data[0].deductSalary);
             // alert(JSON.stringify(response.data[0].addSalary,null,2));
@@ -1585,7 +1593,8 @@ function Salaryresult() {
                           {/* <td style={cellStyle}>{(overAddSalaryDaySum + sumSpSalaryResult).toFixed(2) + `(` + (overAddSalaryDaySum).toFixed(2) + `+` + (sumSpSalaryResult).toFixed(2) + `)`}</td> */}
                           <td style={cellStyle}>
                             <span onClick={togglePopup} style={{ color: color, cursor: 'pointer' }}>
-                              {isNaN(Number(addAmountBeforeTax + addAmountAfterTax)) ? 0.00 : Number(addAmountBeforeTax + addAmountAfterTax).toFixed(2)}
+                              {/* {isNaN(Number(addAmountBeforeTax + addAmountAfterTax)) ? 0.00 : Number(addAmountBeforeTax + addAmountAfterTax).toFixed(2)}  */}
+                              {sumAddSalaryList.toFixed(2)}
                             </span>
                             {showPopup && (
                               <div className="popup">
