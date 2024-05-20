@@ -265,7 +265,7 @@ function Salaryresult() {
   // }, []);
   const [addSalaryList, setAddSalaryList] = useState([]);
   const [deductSalaryList, setDeductSalaryList] = useState([]);
-const [sumAddSalaryList , setSumAddSalaryList ] = useState(0);
+  const [sumAddSalaryList, setSumAddSalaryList] = useState(0);
 
   useEffect(() => {
     const getemp = async () => {
@@ -300,12 +300,12 @@ const [sumAddSalaryList , setSumAddSalaryList ] = useState(0);
           const responseData = response.data;
           if (response.data) {
             setAddSalaryList(response.data[0].addSalary);
-            if(response.data[0].addSalary) {
+            if (response.data[0].addSalary) {
               let tmp = 0;
               response.data[0].addSalary.map(item => {
-tmp += parseFloat(item.SpSalary);
+                tmp += parseFloat(item.SpSalary);
               });
-setSumAddSalaryList(tmp);
+              setSumAddSalaryList(tmp);
             }
             // alert(response.data[0].addSalary.length);
             setDeductSalaryList(response.data[0].deductSalary);

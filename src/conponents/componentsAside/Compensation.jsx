@@ -476,11 +476,27 @@ function Compensation() {
                     .map(record => {
                         const matchedWorkplace = workplaceList.find(workplace => workplace.workplaceId == record.workplaceId);
 
-                        const workRate = record ?
-                            (record.shift == 'specialt_shift' && record.cashSalary == '' ? record.specialtSalary : matchedWorkplace.workRate) : '';
+                        // const workRate = record ?
+                        //     (record.shift == 'specialt_shift' && record.cashSalary == '' ? record.specialtSalary : matchedWorkplace.workRate) : '';
 
-                        const workRateOT = record ?
-                            (record.shift == 'specialt_shift' && record.cashSalary == '' ? record.specialtSalary : matchedWorkplace.workRateOT) : '';
+                        // const workRateOT = record ?
+                        //     (record.shift == 'specialt_shift' && record.cashSalary == '' ? record.specialtSalaryOT : matchedWorkplace.workRateOT) : '';
+
+                        let workRate = '';
+                        let workRateOT = '';
+
+                        if (record.shift === 'specialt_shift' && record.cashSalary === '') {
+                            workRate = record.specialtSalary || 0;
+                            workRateOT = record.specialtSalaryOT || 0;
+                        } else if (record.shift === 'specialt_shift' && record.cashSalary === 'true') {
+                            workRate = 0;
+                            workRateOT = 0;
+                        }
+                        else if (matchedWorkplace) {
+                            workRate = matchedWorkplace.workRate || 0;
+                            workRateOT = matchedWorkplace.workRateOT || 0;
+                        }
+
                         return {
                             workplaceId: record.workplaceId,
                             dates: record.date,
@@ -501,6 +517,7 @@ function Compensation() {
                             holidayOT: matchedWorkplace ? matchedWorkplace.holidayOT : '',
                             shift: record.shift,
                             specialtSalary: record.specialtSalary,
+                            specialtSalaryOT: record.specialtSalaryOT,
                             cashSalary: record.cashSalary,
 
                         };
@@ -556,11 +573,26 @@ function Compensation() {
                         //     console.log('specialt_shift : false', test123);
                         //     const workRate = matchedWorkplace.workRate;
                         // }
-                        const workRate = record ?
-                            (record.shift == 'specialt_shift' && record.cashSalary == '' ? record.specialtSalary : matchedWorkplace.workRate) : '';
+                        // const workRate = record ?
+                        //     (record.shift == 'specialt_shift' && record.cashSalary == '' ? record.specialtSalary : 0) : '';
 
-                        const workRateOT = record ?
-                            (record.shift == 'specialt_shift' && record.cashSalary == '' ? record.specialtSalary : matchedWorkplace.workRateOT) : '';
+                        // const workRateOT = record ?
+                        //     (record.shift == 'specialt_shift' && record.cashSalary == '' ? record.specialtSalaryOT : 0) : '';
+
+                        let workRate = '';
+                        let workRateOT = '';
+
+                        if (record.shift === 'specialt_shift' && record.cashSalary === '') {
+                            workRate = record.specialtSalary || 0;
+                            workRateOT = record.specialtSalaryOT || 0;
+                        } else if (record.shift === 'specialt_shift' && record.cashSalary === 'true') {
+                            workRate = 0;
+                            workRateOT = 0;
+                        }
+                        else if (matchedWorkplace) {
+                            workRate = matchedWorkplace.workRate || 0;
+                            workRateOT = matchedWorkplace.workRateOT || 0;
+                        }
                         return {
                             workplaceId: record.workplaceId,
                             dates: record.date,
@@ -579,6 +611,7 @@ function Compensation() {
                             holidayOT: matchedWorkplace ? matchedWorkplace.holidayOT : '',
                             shift: record.shift,
                             specialtSalary: record.specialtSalary,
+                            specialtSalaryOT: record.specialtSalaryOT,
                             cashSalary: record.cashSalary,
 
 
@@ -1125,29 +1158,6 @@ function Compensation() {
         const numericDate = parseInt(record.dates, 10);
         console.log('numericDate', numericDate);
         if (!isNaN(numericDate) && commonNumbersArray.includes(numericDate.toString())) {
-            // if (parseInt(record.dates, 10) && commonNumbersArray.includes(record.dates)) {
-
-            // if (record && parseInt(record.dates, 10) && commonNumbersArray.includes(record.dates)) {
-
-            // const workOfHour = parseFloat(record.workOfHour) || 0;//เวลาทำงานเซ็ตไว้
-            // const workRate = parseFloat(record.workRate) || 0;
-            // // const workRateOTMatch = record.workRateOT.match(/\((.*?)\)/);
-            // const otTimes = parseFloat(record.otTimes) || 0;//เวลาทำOT
-
-            // const workRateOT = parseFloat(record.workRateOT) || 0;
-            // const dayoffRateHour = parseFloat(record.dayoffRateHour) || 0;
-            // const dayoffRateOT = parseFloat(record.dayoffRateOT) || 0;
-
-            // // Calculate the product of workRate and workRateOT
-            // const calculatedValue = workRate * dayoffRateHour;
-            // const calculatedValueOT = ((workRate / workOfHour) * dayoffRateOT) * otTimes;
-
-            // // Return a new object with the calculated value
-            // return {
-            //     ...record,
-            //     calculatedValue,
-            //     calculatedValueOT,
-            // };
 
             if (commonNumbers123.has(numericDate)) {
                 // const workOfHour = parseFloat(record.workOfHour) || 0;
@@ -1159,16 +1169,35 @@ function Compensation() {
                 const holiday = parseFloat(record.holiday) || 0;
                 const holidayOT = parseFloat(record.holidayOT) || 0;
 
-                const calculatedValue = workRate * holiday;
-                const calculatedValueOT = ((workRate / workOfHour) * holidayOT) * otTimes;
+                // const calculatedValue = workRate * holiday;
+                // const calculatedValueOT = ((workRate / workOfHour) * holidayOT) * otTimes;
 
-                return {
-                    ...record,
-                    calculatedValue,
-                    calculatedValueOT,
-                };
+                if (record.shift == 'specialt_shift' && record.cashSalary == '') {
+                    const calculatedValue = parseFloat(record.specialtSalary) || 0;
+                    const calculatedValueOT = parseFloat(record.specialtSalaryOT) || 0;
+                    return {
+                        ...record,
+                        calculatedValue,
+                        calculatedValueOT,
+                    };
+                } else {
+                    const calculatedValue = workRate * holiday;
+                    const calculatedValueOT = ((workRate / workOfHour) * holidayOT) * otTimes;
+                    return {
+                        ...record,
+                        calculatedValue,
+                        calculatedValueOT,
+                    };
+                }
+
+                // return {
+                //     ...record,
+                //     calculatedValue,
+                //     calculatedValueOT,
+                // };
             } else {
                 // const workOfHour = parseFloat(record.workOfHour) || 0;
+
                 const workOfHour = parseFloat(record.workOfHour) || 0;
 
                 const workRate = parseFloat(record.workRate) || 0;
@@ -1177,14 +1206,33 @@ function Compensation() {
                 const dayoffRateHour = parseFloat(record.dayoffRateHour) || 0;
                 const dayoffRateOT = parseFloat(record.dayoffRateOT) || 0;
 
-                const calculatedValue = workRate * dayoffRateHour;
-                const calculatedValueOT = ((workRate / workOfHour) * dayoffRateOT) * otTimes;
+                // const calculatedValue = workRate * dayoffRateHour;
+                // const calculatedValueOT = ((workRate / workOfHour) * dayoffRateOT) * otTimes;
 
-                return {
-                    ...record,
-                    calculatedValue,
-                    calculatedValueOT,
-                };
+                if (record.shift == 'specialt_shift' && record.cashSalary == '') {
+                    const calculatedValue = parseFloat(record.specialtSalary) || 0;
+                    const calculatedValueOT = parseFloat(record.specialtSalaryOT) || 0;
+                    return {
+                        ...record,
+                        calculatedValue,
+                        calculatedValueOT,
+                    };
+                } else {
+                    const calculatedValue = workRate * dayoffRateHour;
+                    const calculatedValueOT = ((workRate / workOfHour) * dayoffRateOT) * otTimes;
+                    return {
+                        ...record,
+                        calculatedValue,
+                        calculatedValueOT,
+                    };
+                }
+
+
+                // return {
+                //     ...record,
+                //     calculatedValue,
+                //     calculatedValueOT,
+                // };
             }
 
         }
@@ -1211,9 +1259,26 @@ function Compensation() {
             }
 
             // commonNumbersArray
-            const workRateOT2 = !isNaN(item.workRate) && !isNaN(item.workOfHour) && !isNaN(item.workRateOT) ?
-                `${(((item.workRate / item.workOfHour) * item.workRateOT) * item.otTimes).toFixed(2)} (${item.workRateOT})` :
-                ''; // If any of the values are not numbers, workRateOT will be an empty string
+
+            // const workRateOT2 = !isNaN(item.workRate) && !isNaN(item.workOfHour) && !isNaN(item.workRateOT) ?
+            //     `${(((item.workRate / item.workOfHour) * item.workRateOT) * item.otTimes).toFixed(2)} (${item.workRateOT})` : '';
+
+            let workRateOT2 = '';
+            if (item.shift == 'specialt_shift' && item.cashSalary == '') {
+                // Apply special shift logic if needed
+                // workRateOT2 = !isNaN(item.workRate) && !isNaN(item.workOfHour) && !isNaN(item.workRateOT) ?
+                //     `${item.specialtSalaryOT.toFixed(2)} (${item.workRateOT})` : '';
+                workRateOT2 = !isNaN(item.specialtSalaryOT) && !isNaN(item.workRateOT) ?
+                    `${parseFloat(item.specialtSalaryOT).toFixed(2)}` : '';
+            } else {
+                // Apply regular shift logic
+                workRateOT2 = !isNaN(item.workRate) && !isNaN(item.workOfHour) && !isNaN(item.workRateOT) ?
+                    `${(((item.workRate / item.workOfHour) * item.workRateOT) * item.otTimes).toFixed(2)} (${item.workRateOT})` : '';
+            }
+
+            // const workRateOT2 = !isNaN(item.workRate) && !isNaN(item.workOfHour) && !isNaN(item.workRateOT) ?
+            //     `${(((item.workRate / item.workOfHour) * item.workRateOT) * item.otTimes).toFixed(2)} (${item.workRateOT})` :
+            //     ''; // If any of the values are not numbers, workRateOT will be an empty string
 
             const hasCalculatedValues = typeof item === 'object' && 'calculatedValue' in item;
             const hasCalculatedValuesOT = typeof item === 'object' && 'calculatedValueOT' in item;
@@ -1222,7 +1287,14 @@ function Compensation() {
 
             // }
             // Update workRate and workRateOT based on the presence of calculated values
-            const workRate = hasCalculatedValues ? item.calculatedValue : item.workRate;
+            // const workRate = hasCalculatedValues ? item.calculatedValue : item.workRate;
+            let workRate = '';
+            if (item.shift == 'specialt_shift' && item.cashSalary == '') {
+                // Apply special shift logic if needed
+                workRate = item.specialtSalary;
+            } else {
+                workRate = hasCalculatedValues ? item.calculatedValue : item.workRate;
+            }
             let workRateOT = '';
 
             if (commonNumbers123.has(parseInt(item.dates, 10))) {
