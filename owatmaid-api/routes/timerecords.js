@@ -41,7 +41,7 @@ const workplaceTimerecordSchema = new mongoose.Schema({
     selectotTimeOut: String,
     cashSalary: String,
     specialtSalary: String,
-    specialOtSalary: String,
+    specialtSalaryOT: String,
             messageSalary: String,
   }]
 });
@@ -68,7 +68,7 @@ const employeeTimerecordSchema = new mongoose.Schema({
     selectotTimeOut: String,
     cashSalary: String,
 specialtSalary: String,
-specialOtSalary: String,
+specialtSalaryOT: String,
         messageSalary: String,
 }]
 });
@@ -446,7 +446,7 @@ async function setToEmployee(selectWorkplaceId, selectworkplaceName, selectMonth
             'selectotTimeOut': element.selectotTimeOut,
             'cashSalary': element.cashSalary,
             'specialtSalary': element.specialtSalary,
-            'specialOtSalary': element.specialOtSalary,
+            'specialtSalaryOT': element.specialtSalaryOT,
                     'messageSalary': element.messageSalary,
           });
 
@@ -472,7 +472,7 @@ async function setToEmployee(selectWorkplaceId, selectworkplaceName, selectMonth
             'selectotTimeOut': element.selectotTimeOut,
             'cashSalary': element.cashSalary,
             'specialtSalary': element.specialtSalary,
-            'specialOtSalary': element.specialOtSalary,
+            'specialtSalaryOT': element.specialtSalaryOT,
                     'messageSalary': element.messageSalary,
           };
 

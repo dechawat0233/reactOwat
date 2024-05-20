@@ -1542,7 +1542,7 @@ function AddsettimeEmployee() {
                                                     <input type="text" class="form-control" id="specialtSalary" placeholder="เป็นเงิน" value={specialtSalary} onChange={(e) => setSpecialtSalary(e.target.value)} />
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <input type="text" class="form-control" id="specialtSalaryOT" placeholder="OT เป็นเงิน" value={specialtSalaryOT} onChange={(e) => setSpecialtSalaryOT(e.target.value)} />
+                                                    <input type="text" class="form-control" id="specialtSalaryOT" placeholder="เป็นเงิน" value={specialtSalaryOT} onChange={(e) => setSpecialtSalaryOT(e.target.value)} />
                                                 </div>
                                                 <div class="col-md-3">
                                                     <input type="text" class="form-control" id="messageSalary" placeholder="หมายเหตุ" value={messageSalary} onChange={(e) => setMessageSalary(e.target.value)} />
