@@ -41,6 +41,11 @@ function Setting() {
         backgroundColor: '#f2f2f2',
     };
 
+
+    const [file, setFile] = useState(null);
+    const [preview, setPreview] = useState(null);
+
+
     // State for selected values
     const [selectedDay, setSelectedDay] = useState('');
     const [selectedPosition, setSelectedPosition] = useState('');
@@ -215,7 +220,7 @@ function Setting() {
 
     // const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     // const shiftWork = ['Shift 1', 'Shift 2', 'Shift 3'];
-    const positionWork = ['หัวหน้า','ผู้ช่วยหัวหน้า', 'ทำความสะอาด', 'กวาดพื้น'];
+    const positionWork = ['หัวหน้า', 'ผู้ช่วยหัวหน้า', 'ทำความสะอาด', 'กวาดพื้น'];
 
     const handleInputPersonChange = (e) => {
         const { name, value } = e.target;
@@ -910,7 +915,7 @@ function Setting() {
             workRateDayoff: workRateDayoff,
             workRateDayoffNumber: workRateDayoffNumber,
             workRateDayoffRate: workRateDayoffRate,
-            workplaceAddress: workplaceAddress,
+            // workplaceAddress: workplaceAddress,
             daysOff: selectedDates,
             reason: reason,
 
@@ -938,6 +943,10 @@ function Setting() {
             workTimeDay: workTimeDayList,
             workTimeDayPerson: workTimeDayPersonList
         };
+
+        // if (file) {
+        //     data.append('reason', file);
+        // }
         // await alert(JSON.stringify(formData.addSalary,null,2));
 
         //check create or update Employee
@@ -1000,6 +1009,34 @@ function Setting() {
 
         setHolidayHour(wrh);
     }, [holiday, workOfHour, workRate]);
+
+
+    function handleChange(e) {
+        const selectedFile = e.target.files[0];
+        setFile(selectedFile);
+        setPreview(URL.createObjectURL(selectedFile));
+    }
+
+    // async function handleUpload() {
+    //     if (!file) {
+    //         alert('Please select a file first.');
+    //         return;
+    //     }
+
+    //     const formData = new FormData();
+    //     formData.append('image', file);
+
+    //     try {
+    //         const response = await axios.post(endpoint + '/workplace/search', formData, {
+    //             headers: {
+    //                 'Content-Type': 'multipart/form-data',
+    //             },
+    //         });
+    //         console.log('Upload success:', response.data);
+    //     } catch (error) {
+    //         console.error('Upload error:', error);
+    //     }
+    // }
 
 
     return (
@@ -1977,6 +2014,10 @@ function Setting() {
 
                                     </div>
                                 </section>
+                                <h2>Add Image:</h2>
+                                <input type="file" onChange={handleChange} />
+                                {preview && <img src={preview} style={{ width: '300px', height: '200px' }} alt="Selected" />}
+                                {/* <button onClick={handleUpload}>Upload</button> */}
                                 {/* <!--Frame--> */}
                                 <div class="line_btn">
                                     {newWorkplace ? (
@@ -1989,6 +2030,9 @@ function Setting() {
                                 </div>
 
                             </form >
+
+
+
 
                         </div >
                         {/* <!-- /.container-fluid --> */}
