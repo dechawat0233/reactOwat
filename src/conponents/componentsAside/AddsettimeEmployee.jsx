@@ -26,6 +26,8 @@ function AddsettimeEmployee() {
 
     const [cashSalary, setCashSalary] = useState(false);
     const [specialtSalary, setSpecialtSalary] = useState('');
+    const [specialtSalaryOT, setSpecialtSalaryOT] = useState('');
+
     const [messageSalary, setMessageSalary] = useState('');
 
     const handleCheckboxChange = () => {
@@ -574,6 +576,7 @@ function AddsettimeEmployee() {
         selectotTimeOut: '',
         cashSalary: '',
         specialtSalary: '',
+        specialtSalaryOT: '',
         messageSalary: '',
     };
 
@@ -966,6 +969,8 @@ function AddsettimeEmployee() {
             selectotTimeOut: wSelectOtTimeout || '',
             cashSalary: cashSalary || '',
             specialtSalary: specialtSalary || '',
+            specialtSalaryOT: specialtSalaryOT || '',
+
             messageSalary: messageSalary || '',
         };
 
@@ -982,6 +987,7 @@ function AddsettimeEmployee() {
         // await setWSelectOtTimeout('');
         await setCashSalary('');
         await setSpecialtSalary('');
+        await setSpecialtSalaryOT('');
         await setMessageSalary('');
 
     }
@@ -1513,10 +1519,13 @@ function AddsettimeEmployee() {
                                                 <div class="col-md-2">
                                                     <label >จ่ายสด</label>
                                                 </div>
-                                                <div class="col-md-5">
+                                                <div class="col-md-3">
                                                     <label role="specialtSalary">เป็นเงิน</label>
                                                 </div>
-                                                <div class="col-md-5">
+                                                <div class="col-md-3">
+                                                    <label role="specialtSalaryOT">เป็นเงินOT</label>
+                                                </div>
+                                                <div class="col-md-3">
                                                     <label role="messageSalary">หมายเหตุ</label>
                                                 </div>
                                             </div>
@@ -1529,10 +1538,13 @@ function AddsettimeEmployee() {
                                                         onChange={handleCheckboxChange}
                                                     />
                                                 </div>
-                                                <div class="col-md-5">
+                                                <div class="col-md-3">
                                                     <input type="text" class="form-control" id="specialtSalary" placeholder="เป็นเงิน" value={specialtSalary} onChange={(e) => setSpecialtSalary(e.target.value)} />
                                                 </div>
-                                                <div class="col-md-5">
+                                                <div class="col-md-3">
+                                                    <input type="text" class="form-control" id="specialtSalaryOT" placeholder="เป็นเงิน" value={specialtSalaryOT} onChange={(e) => setSpecialtSalaryOT(e.target.value)} />
+                                                </div>
+                                                <div class="col-md-3">
                                                     <input type="text" class="form-control" id="messageSalary" placeholder="หมายเหตุ" value={messageSalary} onChange={(e) => setMessageSalary(e.target.value)} />
                                                 </div>
                                             </div>

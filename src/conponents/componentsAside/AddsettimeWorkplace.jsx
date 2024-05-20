@@ -101,6 +101,8 @@ function AddsettimeWorkplace() {
 
     const [cashSalary, setCashSalary] = useState(false);
     const [specialtSalary, setSpecialtSalary] = useState('');
+    const [specialtSalaryOT, setSpecialtSalaryOT] = useState('');
+
     const [messageSalary, setMessageSalary] = useState('');
 
     const [shift1start, setShift1start] = useState('');
@@ -1238,6 +1240,8 @@ function AddsettimeWorkplace() {
             selectotTimeOut: selectotTimeOut || '',
             cashSalary: cashSalary || '',
             specialtSalary: specialtSalary || '',
+            specialtSalaryOT: specialtSalaryOT || '',
+
             messageSalary: messageSalary || '',
         };
 
@@ -1257,6 +1261,7 @@ function AddsettimeWorkplace() {
         // setSelectotTimeOut('');
         setCashSalary(!cashSalary);
         setSpecialtSalary('');
+        setSpecialtSalaryOT('');
         setMessageSalary('');
         setCashSalary(''); // Toggle the checkbox state
         setShift('morning_shift');
@@ -1602,6 +1607,9 @@ function AddsettimeWorkplace() {
                                                 <label role="specialtSalary">เป็นเงิน</label>
                                             </div>
                                             <div class="col-md-2">
+                                                <label role="specialtSalaryOT">เป็นเงินOT</label>
+                                            </div>
+                                            <div class="col-md-2">
                                                 <label role="messageSalary">หมายเหตุ</label>
                                             </div>
                                         </div>
@@ -1616,6 +1624,9 @@ function AddsettimeWorkplace() {
                                             </div>
                                             <div class="col-md-2">
                                                 <input type="text" class="form-control" id="specialtSalary" placeholder="เป็นเงิน" value={specialtSalary} onChange={(e) => setSpecialtSalary(e.target.value)} />
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input type="text" class="form-control" id="specialtSalaryOT" placeholder="เป็นเงิน" value={specialtSalaryOT} onChange={(e) => setSpecialtSalaryOT(e.target.value)} />
                                             </div>
                                             <div class="col-md-2">
                                                 <input type="text" class="form-control" id="messageSalary" placeholder="หมายเหตุ" value={messageSalary} onChange={(e) => setMessageSalary(e.target.value)} />

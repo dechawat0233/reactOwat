@@ -550,7 +550,7 @@ function AddEditEmployee() {
                                                                                     value="delete"
                                                                                     onClick={() => handleDelete(workplace._id)} // Pass the actual employeeId
                                                                                     className="btn btn-danger"
-                                                                                    style={{ width: "5rem",marginLeft:"1rem" }}
+                                                                                    style={{ width: "5rem", marginLeft: "1rem" }}
                                                                                 >
                                                                                     &nbsp;ลบ
                                                                                 </button>
@@ -621,7 +621,18 @@ function AddEditEmployee() {
                                                             <div class="col-md-3">
                                                                 <div class="form-group">
                                                                     <label role="name">ประเภทการจ้าง</label>
-                                                                    <input type="text" name="jobtype" class="form-control" id="jobtype" placeholder="ประเภทการจ้าง" value={jobtype} onChange={(e) => setJobtype(e.target.value)} />
+                                                                    {/* <input type="text" name="jobtype" class="form-control" id="jobtype" placeholder="ประเภทการจ้าง"  /> */}
+                                                                    <select
+                                                                        name="jobtype"
+                                                                        className="form-control"
+                                                                        value={jobtype} onChange={(e) => setJobtype(e.target.value)}
+                                                                    >
+                                                                        <option value="">เลือกวัน</option>
+                                                                        <option value="daily">รายวัน</option>
+                                                                        <option value="monthly">รายเดือน</option>
+
+                                                                      
+                                                                    </select>
                                                                 </div>
                                                             </div>
                                                         </div>

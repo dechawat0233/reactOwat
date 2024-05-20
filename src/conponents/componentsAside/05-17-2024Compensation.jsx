@@ -475,20 +475,12 @@ function Compensation() {
                     .filter(record => record.date <= 20)
                     .map(record => {
                         const matchedWorkplace = workplaceList.find(workplace => workplace.workplaceId == record.workplaceId);
-
-                        const workRate = record ?
-                            (record.shift == 'specialt_shift' && record.cashSalary == '' ? record.specialtSalary : matchedWorkplace.workRate) : '';
-
-                        const workRateOT = record ?
-                            (record.shift == 'specialt_shift' && record.cashSalary == '' ? record.specialtSalary : matchedWorkplace.workRateOT) : '';
                         return {
                             workplaceId: record.workplaceId,
                             dates: record.date,
                             workOfHour: matchedWorkplace ? matchedWorkplace.workOfHour : '', // Default value if not found
-                            // workRate: matchedWorkplace ? matchedWorkplace.workRate : '', // Default value if not found
-                            // workRateOT: matchedWorkplace ? matchedWorkplace.workRateOT : '',
-                            workRate: workRate,
-                            workRateOT: workRateOT,
+                            workRate: matchedWorkplace ? matchedWorkplace.workRate : '', // Default value if not found
+                            workRateOT: matchedWorkplace ? matchedWorkplace.workRateOT : '',
                             allTimes: record.allTime,
                             otTimes: record.otTime,
                             startTime: record.startTime,
@@ -499,10 +491,6 @@ function Compensation() {
                             dayoffRateOT: matchedWorkplace ? matchedWorkplace.dayoffRateOT : '',
                             holiday: matchedWorkplace ? matchedWorkplace.holiday : '',
                             holidayOT: matchedWorkplace ? matchedWorkplace.holidayOT : '',
-                            shift: record.shift,
-                            specialtSalary: record.specialtSalary,
-                            cashSalary: record.cashSalary,
-
                         };
                     })
             );
@@ -510,63 +498,17 @@ function Compensation() {
             // console.log(entriesData);
 
 
-            // const entriesDataLower = filteredEntriesLower.map(entry =>
-            //     entry.employee_workplaceRecord
-            //         .filter(record => record.date >= 21)
-            //         .map(record => {
-            //             const matchedWorkplace = workplaceList.find(workplace => workplace.workplaceId === record.workplaceId);
-            //             return {
-            //                 workplaceId: record.workplaceId,
-            //                 dates: record.date,
-            //                 workOfHour: matchedWorkplace ? matchedWorkplace.workOfHour : '', // Default value if not found
-            //                 workRate: matchedWorkplace ? matchedWorkplace.workRate : '', // Default value if not found
-            //                 workRateOT: matchedWorkplace ? matchedWorkplace.workRateOT : '',
-            //                 allTimes: record.allTime,
-            //                 otTimes: record.otTime,
-            //                 startTime: record.startTime,
-            //                 endTime: record.endTime,
-            //                 selectotTime: record.selectotTime,
-            //                 selectotTimeOut: record.selectotTimeOut,
-            //                 dayoffRateHour: matchedWorkplace ? matchedWorkplace.dayoffRateHour : '',
-            //                 dayoffRateOT: matchedWorkplace ? matchedWorkplace.dayoffRateOT : '',
-            //                 holiday: matchedWorkplace ? matchedWorkplace.holiday : '',
-            //                 holidayOT: matchedWorkplace ? matchedWorkplace.holidayOT : '',
-            //             };
-            //         })
-            // );
-
             const entriesDataLower = filteredEntriesLower.map(entry =>
                 entry.employee_workplaceRecord
                     .filter(record => record.date >= 21)
                     .map(record => {
-                        const matchedWorkplace = workplaceList.find(workplace => workplace.workplaceId == record.workplaceId);
-
-                        // const workRate = matchedWorkplace ?
-                        //     (record.shift == 'specialt_shift' && record.cashSalary == '' ? matchedWorkplace.shift : matchedWorkplace.shift) : '';
-
-                        // const workRateOT = matchedWorkplace ?
-                        //     (record.shift == 'specialt_shift' && record.cashSalary == '' ? matchedWorkplace.shift : matchedWorkplace.shift) : '';
-
-                        const test123 = record.date;
-
-                        // if (record.shift == 'specialt_shift' && record.cashSalary == '') {
-                        //     console.log('specialt_shift : true', test123);
-                        //     const workRate = matchedWorkplace.specialtSalary;
-                        // } else {
-                        //     console.log('specialt_shift : false', test123);
-                        //     const workRate = matchedWorkplace.workRate;
-                        // }
-                        const workRate = record ?
-                            (record.shift == 'specialt_shift' && record.cashSalary == '' ? record.specialtSalary : matchedWorkplace.workRate) : '';
-
-                        const workRateOT = record ?
-                            (record.shift == 'specialt_shift' && record.cashSalary == '' ? record.specialtSalary : matchedWorkplace.workRateOT) : '';
+                        const matchedWorkplace = workplaceList.find(workplace => workplace.workplaceId === record.workplaceId);
                         return {
                             workplaceId: record.workplaceId,
                             dates: record.date,
                             workOfHour: matchedWorkplace ? matchedWorkplace.workOfHour : '', // Default value if not found
-                            workRate: workRate,
-                            workRateOT: workRateOT,
+                            workRate: matchedWorkplace ? matchedWorkplace.workRate : '', // Default value if not found
+                            workRateOT: matchedWorkplace ? matchedWorkplace.workRateOT : '',
                             allTimes: record.allTime,
                             otTimes: record.otTime,
                             startTime: record.startTime,
@@ -577,15 +519,9 @@ function Compensation() {
                             dayoffRateOT: matchedWorkplace ? matchedWorkplace.dayoffRateOT : '',
                             holiday: matchedWorkplace ? matchedWorkplace.holiday : '',
                             holidayOT: matchedWorkplace ? matchedWorkplace.holidayOT : '',
-                            shift: record.shift,
-                            specialtSalary: record.specialtSalary,
-                            cashSalary: record.cashSalary,
-
-
                         };
                     })
             );
-
 
             setAlldaywork(entriesData);
             setAlldayworkLower(entriesDataLower);
@@ -632,7 +568,7 @@ function Compensation() {
     useEffect(() => {
         setDataTable(concludeResult);
         setAddSalaryList(addSalaryResult || []);
-        // alert(JSON.stringify(addSalaryResult ,null,2));
+// alert(JSON.stringify(addSalaryResult ,null,2));
 
         let ans = 0;
         let ans1 = 0;
@@ -660,18 +596,18 @@ function Compensation() {
         let total = 0;
         addSalaryList.forEach((day, dayIndex) => {
 
-            if (dataTable[dayIndex]) {
-                if (dataTable[dayIndex].workplaceId !== undefined && dataTable[dayIndex].workplaceId !== '') {
-                    day.forEach(salary => {
+            if(dataTable[dayIndex]) {
+            if(dataTable[dayIndex].workplaceId !== undefined && dataTable[dayIndex].workplaceId !== '') {
+                day.forEach(salary => {
 
-                        if (salary.SpSalary > 100) {
-                            total += parseFloat((salary.SpSalary / 30).toFixed(2));
-                        } else {
-                            total += parseFloat(salary.SpSalary);
-                        }
-                    });
-                }
+                    if (salary.SpSalary > 100) {
+                        total += parseFloat((salary.SpSalary / 30).toFixed(2));
+                    } else {
+                        total += parseFloat(salary.SpSalary);
+                    }
+                });
             }
+        }
 
         });
         return total;
@@ -709,16 +645,16 @@ function Compensation() {
                 const addSalaryList = Array(dataTable.length).fill(tmpAddSalaryList);
 
                 // Update state with the created addSalaryList
-                if (loadStatus !== 'load') {
-                    setAddSalaryList(addSalaryList);
-                }
+if(loadStatus !== 'load') {
+                setAddSalaryList(addSalaryList);
+}
 
             }
         };
 
-        if (addSalaryList != []) {
-            getAddSalaryDay();
-        }
+if(addSalaryList != []) {
+        getAddSalaryDay();
+}
 
         if (employee) {
             setWorkplaceIdEMP(employee.workplace ? employee.workplace : '');
@@ -729,15 +665,15 @@ function Compensation() {
 
     // Function to remove an addSalary array from addSalaryList
     const removeAddSalaryArray = async (listIndex, subArrayIndex) => {
-        const newAddSalaryList = await [...addSalaryList];
-        if (newAddSalaryList[listIndex] && subArrayIndex < newAddSalaryList[listIndex].length) {
-            const tmpObj = await [...newAddSalaryList[listIndex]];
-            const removedElement = await tmpObj.filter((item, index) => index !== subArrayIndex);
-
-            newAddSalaryList[listIndex] = await removedElement;
-            // alert(listIndex+ ' x ' +  subArrayIndex);
-            // await alert(JSON.stringify( newAddSalaryList[listIndex],null,2));
-            await setAddSalaryList(newAddSalaryList);
+        const newAddSalaryList = await [... addSalaryList];
+        if (newAddSalaryList[listIndex] && subArrayIndex  < newAddSalaryList[listIndex].length ) {
+        const tmpObj = await [...newAddSalaryList[listIndex]];
+        const removedElement = await tmpObj.filter((item, index) => index !== subArrayIndex );
+        
+        newAddSalaryList[listIndex] = await removedElement;
+// alert(listIndex+ ' x ' +  subArrayIndex);
+// await alert(JSON.stringify( newAddSalaryList[listIndex],null,2));
+        await setAddSalaryList(newAddSalaryList);
         }
 
     };
@@ -918,8 +854,7 @@ function Compensation() {
             commonNumbers123.add(day); // Add filtered day numbers back to commonNumbers123_2nd
         });
 
-        console.log('commonNumbers123_2nd (after filtering)', commonNumbers123);
-    } else {
+        console.log('commonNumbers123_2nd (after filtering)', commonNumbers123);    } else {
         console.error('Workplace not found');
     }
     console.log('month123', month);
@@ -1150,9 +1085,7 @@ function Compensation() {
             // };
 
             if (commonNumbers123.has(numericDate)) {
-                // const workOfHour = parseFloat(record.workOfHour) || 0;
                 const workOfHour = parseFloat(record.workOfHour) || 0;
-
                 const workRate = parseFloat(record.workRate) || 0;
                 const otTimes = parseFloat(record.otTimes) || 0;
                 const workRateOT = parseFloat(record.workRateOT) || 0;
@@ -1168,9 +1101,7 @@ function Compensation() {
                     calculatedValueOT,
                 };
             } else {
-                // const workOfHour = parseFloat(record.workOfHour) || 0;
                 const workOfHour = parseFloat(record.workOfHour) || 0;
-
                 const workRate = parseFloat(record.workRate) || 0;
                 const otTimes = parseFloat(record.otTimes) || 0;
                 const workRateOT = parseFloat(record.workRateOT) || 0;
@@ -1210,6 +1141,17 @@ function Compensation() {
                 // }
             }
 
+
+            // if (item !== '') {
+            //     // If item is not an empty string
+            //     if (commonNumbers123.has(parseInt(item.dates, 10))) {
+            //         // Check if commonNumbers123 contains the date from item
+            //         addSalaryDay1 = addSalaryDay;
+            //     }else{
+
+            //     }
+            // }
+
             // commonNumbersArray
             const workRateOT2 = !isNaN(item.workRate) && !isNaN(item.workOfHour) && !isNaN(item.workRateOT) ?
                 `${(((item.workRate / item.workOfHour) * item.workRateOT) * item.otTimes).toFixed(2)} (${item.workRateOT})` :
@@ -1218,9 +1160,6 @@ function Compensation() {
             const hasCalculatedValues = typeof item === 'object' && 'calculatedValue' in item;
             const hasCalculatedValuesOT = typeof item === 'object' && 'calculatedValueOT' in item;
 
-            // if (item.cashSalary == '' && item.shift == 'specialt_shift') {
-
-            // }
             // Update workRate and workRateOT based on the presence of calculated values
             const workRate = hasCalculatedValues ? item.calculatedValue : item.workRate;
             let workRateOT = '';
@@ -1282,13 +1221,13 @@ function Compensation() {
         const tmpyear = tmpcurrentDate.getFullYear();
         const formattedDate = `${tmpday}-${tmpmonth}-${tmpyear}`;
 
-        await dataTable.map(async (item, index) => {
-            if (!item.workplaceId) {
-                // alert(index);
-                const tmp = await [...addSalaryList];
-                tmp[index] = await [];
-                await setAddSalaryList(tmp);
-            }
+        await dataTable.map( async (item , index) => {
+if(! item.workplaceId) {
+    // alert(index);
+const tmp = await [... addSalaryList];
+tmp[index] = await [];
+await setAddSalaryList(tmp);
+}
         });
 
         const data = await {
@@ -1523,11 +1462,6 @@ function Compensation() {
                                                                     <input type="text" className="form-control" value={formData.day} onChange={handleInputChange} name="day" readOnly /> :
                                                                     workplaceRecord.day}
                                                             </td>
-                                                            {/* <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {editIndex === index ?
-                                                                    <input type="text" className="form-control" value={formData.day} onChange={handleInputChange} name="day" readOnly /> :
-                                                                    workplaceRecord.shift}
-                                                            </td> */}
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
                                                                 {editIndex === index ?
                                                                     <input type="text" className="form-control" value={formData.workplaceId} onChange={handleInputChange} name="workplaceId" readOnly /> :
