@@ -268,37 +268,23 @@ function Salaryresult() {
   const [sumAddSalaryList, setSumAddSalaryList] = useState(0);
 
   useEffect(() => {
-    const getemp = async () => {
-
-      try {
-        const dataTest1 = await {
-          employeeId: staffId,
-          year: year,
-          month: month,
-        };
-
-        const x = await axios.post(endpoint + '/accounting/calsalaryemp', dataTest1)
-        if (x) {
-          alert(x.data[0].addSalary.length)
-        }
-      } catch (e) {
-        // alert(e);
-      }
-    }
-    // getemp();
-
 
     const fetchData = async () => {
+      if(year && month && staffId ) {
       const dataTest = await {
-        employeeId: staffId,
-        year: year,
-        month: month,
+        employeeId: staffId ||'',
+        year: year ||'',
+        month: month || '',
       };
+
       await setAddSalaryList([]);
       await axios.post(endpoint + '/accounting/calsalaryemp', dataTest)
         .then(response => {
           const responseData = response.data;
+
+          alert('hello');
           if (response.data) {
+
             setAddSalaryList(response.data[0].addSalary);
             if (response.data[0].addSalary) {
               let tmp = 0;
@@ -316,16 +302,11 @@ function Salaryresult() {
           console.log('filteredData', filteredData);
           setCalsalarylist(filteredData);
 
-          // Now you can use the data as needed
-          // For example, you can iterate over the array of data
-          // responseData.forEach(item => {
-          //   console.log(item);
-          //   // Your logic with each item
-          // });
         })
         .catch(error => {
           console.error('Error:', error);
         });
+      } 
     };
 
     // Call fetchData when year or month changes
