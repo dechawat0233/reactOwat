@@ -92,6 +92,8 @@ function SettingAllList() {
         }
     });
 
+    const countData = filteredData.length;
+
     return (
         <body class="hold-transition sidebar-mini" className='editlaout'>
             <div class="wrapper">
@@ -128,7 +130,9 @@ function SettingAllList() {
                                             ))}
                                         </ul> */}
                                         {/* Input for filtering */}
+                                        <label>ค้นหา</label>
                                         <div className="row">
+                                            
                                             <div className="col-md-6">
                                                 <input
                                                     type="text"
@@ -156,6 +160,10 @@ function SettingAllList() {
                                                     </Link>
                                                 </li>
                                             ))} */}
+
+                                            <div>จำนวนหน่วยงานทั้งหมด {countData}</div>
+                                            <br />
+
 
                                             <table border="1" style={tableStyle}>
                                                 <thead>
