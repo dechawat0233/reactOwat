@@ -1320,7 +1320,7 @@ function Setting() {
                                                     </div>
                                                 )}
                                                 <div className="col-md-1">
-                                                    <button onClick={() => handleDeleteInput(index)} className="btn btn-danger" style={{ width: "3rem", position: 'absolute', bottom: '0' }}>ลบ</button>
+                                                    <button type='button' onClick={() => handleDeleteInput(index)} className="btn btn-danger" style={{ width: "3rem", position: 'absolute', bottom: '0' }}>ลบ</button>
                                                 </div>
                                             </div>
                                             {/* <div className="row">
