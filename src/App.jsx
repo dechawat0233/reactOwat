@@ -39,6 +39,7 @@ import AddEditEmployee from "./conponents/componentsAside/AddEditEmployee";
 import AddEditSalaryEmployee from "./conponents/componentsAside/AddEditSalaryEmployee";
 
 import Setting from "./conponents/componentsAside/Setting";
+import SettingComplex from "./conponents/componentsAside/SettingComplex";
 import SettingAllList from "./conponents/componentsAside/SettingAllList";
 import SettingSpecial from "./conponents/componentsAside/SettingSpecail";
 import EmployeeWorkDay from "./conponents/componentsAside/componentsetting/EmployeeWorkDay";
@@ -168,6 +169,7 @@ function App() {
               <Route path="/search_results" element={<SearchResults />} />
 
               <Route path="/setting" element={<Setting />} />
+              <Route path="/settingcomplex" element={<SettingComplex />} />
               <Route path="/settingAllList" element={<SettingAllList />} />
               <Route path="/settingspecial" element={<SettingSpecial />} />
 
