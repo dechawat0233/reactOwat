@@ -14,6 +14,7 @@ var timerecordsRouter = require('./routes/timerecords');
 var timerecordsoutsideRouter = require('./routes/timerecordsoutside');
 var concludeRouter = require('./routes/conclude');
 var accountingRouter = require('./routes/account');
+var welfareRouter = require('./routes/welfare');
 
 var addsalaryRouter = require('./routes/addsalary');
 var oldemployeesRouter = require('./routes/oldemployees');
@@ -45,6 +46,7 @@ app.use('/oldemployee', oldemployeesRouter);
 app.use('/imgemployee', imgemployeeRouter);
 app.use('/conclude', concludeRouter );
 app.use('/accounting', accountingRouter );
+app.use('/welfare', welfareRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

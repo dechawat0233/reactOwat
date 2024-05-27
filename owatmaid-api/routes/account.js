@@ -1,11 +1,12 @@
-const connectionString = require('../config');
 const sURL = 'http://localhost:3000';
+const accounting = require('./models/accountingModel');
+const welfare = require('./models/welfareModel');
+
 
 const axios = require('axios');
 
 var express = require('express');
 var router = express.Router();
-const mongoose = require('mongoose');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -14,97 +15,18 @@ const { months } = require('moment');
 const { el, ca } = require('date-fns/locale');
 
 
-//Connect mongodb
-mongoose.connect(connectionString, {
-  useNewUrlParser: true, useUnifiedTopology:
-    true
-});
-
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
-
-// Define time record schema for workplace
-const accountingSchema = new mongoose.Schema({
-  year: String,
-  month: String,
- createDate: String,
-  employeeId: String,
-  workplace: String,
-accountingRecord: [{ 
-  countDay: String, 
- amountDay: String, 
- amountOt: String, 
- amountSpecial: String,
- amountPosition: String,
- amountHardWorking: String,
-amountHoliday: String,
-addAmountBeforeTax:String,
-deductBeforeTax: String,
-tax: String,
-socialSecurity: String,
-addAmountAfterTax:String,
-advancePayment: String, 
-deductAfterTax: String,
-bank: String,
-total: String
-}],
-createBy: String,
-addSalary: [{
-  id: String,
-  name: String,
-  SpSalary: String,
-  roundOfSalary: String,
-  StaffType: String,
-  nameType: String,
-  message: String,
-}],
-deductSalary: [{
-  id: String,
-  name: String,
-  amount: String,
-  payType: String,
-  installment: String,
-  nameType: String,
-  message: String,
-}],
-status: String
-});
-
-// Create the conclude record time model based on the schema
-const accounting= mongoose.model('accounting', accountingSchema );
-
-
 // Get list of accounting
 router.get('/list', async (req, res) => {
-// try{
-//   const response = await axios.get('http://localhost:3000/employee/list/');
-// // await console.log(response.data[0] );
-// const emp = await response.data[0];
-// const employees = await Object.values(emp);
-// if (!Array.isArray(employees )) {
-//   console.error('Employees data is not an array');
-//   // Handle the error appropriately, or return from the function
-// }
 
-// // Grouping employees by workplace
-// const groupedEmployees = await employees.reduce((acc, employee) => {
-//   const { workplace } = employee;
-//   if (!acc[workplace]) {
-//     acc[workplace] = [];
-//   }
-//   acc[workplace].push(employee);
-//   return acc;
-// }, {});
+  try{
+const acount = await accounting.find({});
+ res.status(200).send(acount );
 
-// // await console.log(groupedEmployees );
-
-// } catch (e) {
-// console.log(e);
-// }
-
-  const accountingData = await accounting.find();
-  res.json(accountingData );
+  } catch (e) {
+    console.log(e);
+    res.status(500).send(e);
+  }
+  
 });
 
 

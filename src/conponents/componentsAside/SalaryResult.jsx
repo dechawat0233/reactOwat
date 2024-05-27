@@ -108,6 +108,44 @@ function Salaryresult() {
   const [remainSalary, setRemainSalary] = useState(''); //
   const [remainComment, setRemainComment] = useState(''); //
 
+
+  useEffect(() => {
+    setMonth("01");
+
+    const currentYear = new Date().getFullYear();
+    setYear(currentYear);
+
+    const getdata = async () => {
+
+      const savedEmployeeId = await localStorage.getItem('employeeId');
+      const savedEmployeeName = await localStorage.getItem('employeeName') || '';
+      const savedMonth = await localStorage.getItem('month');
+      const savedYear = await localStorage.getItem('year');
+      if (savedEmployeeId) {
+        await setSearchEmployeeId(savedEmployeeId);
+        await setSearchEmployeeName(savedEmployeeName);
+        await setStaffId(savedEmployeeId);
+        // setStaffFullName(savedEmployeeName);
+
+        const event = await new Event('submit'); // Creating a synthetic event object
+        await handleSearch(event); // Call handleSearch with the event
+        await localStorage.removeItem('employeeId');
+      }
+      if (savedMonth) {
+        await setMonth(savedMonth);
+        await localStorage.removeItem('month');
+      }
+      if (savedYear) {
+        await setYear(savedYear);
+        await localStorage.removeItem('year');
+      }
+    }
+
+    getdata();
+
+  }, []); // Run this effect only once on component mount
+
+
   const handleThaiDateChange = (date) => {
     setSelectedThaiDate(date);
     setSelectedGregorianDate(ThaiBuddhistToGregorian(date));
@@ -282,7 +320,6 @@ function Salaryresult() {
         .then(response => {
           const responseData = response.data;
 
-          alert('hello');
           if (response.data) {
 
             setAddSalaryList(response.data[0].addSalary);
@@ -562,42 +599,6 @@ function Salaryresult() {
 
   const thaiMonthName = getThaiMonthName(parseInt(CheckMonth, 10));
   const thaiMonthLowerName = getThaiMonthName(parseInt(countdownMonth, 10));
-
-  useEffect(() => {
-    setMonth("01");
-
-    const currentYear = new Date().getFullYear();
-    setYear(currentYear);
-
-    const getdata = async () => {
-
-      const savedEmployeeId = await localStorage.getItem('employeeId');
-      const savedEmployeeName = await localStorage.getItem('employeeName') || '';
-      const savedMonth = await localStorage.getItem('month');
-      const savedYear = await localStorage.getItem('year');
-      if (savedEmployeeId) {
-        await setSearchEmployeeId(savedEmployeeId);
-        await setSearchEmployeeName(savedEmployeeName);
-        await setStaffId(savedEmployeeId);
-        // setStaffFullName(savedEmployeeName);
-
-        const event = await new Event('submit'); // Creating a synthetic event object
-        await handleSearch(event); // Call handleSearch with the event
-        await localStorage.removeItem('employeeId');
-      }
-      if (savedMonth) {
-        await setMonth(savedMonth);
-        await localStorage.removeItem('month');
-      }
-      if (savedYear) {
-        await setYear(savedYear);
-        await localStorage.removeItem('year');
-      }
-    }
-
-    getdata();
-
-  }, []); // Run this effect only once on component mount
 
   async function handleSearch(event) {
     event.preventDefault();
@@ -1461,7 +1462,7 @@ function Salaryresult() {
 
                   </div>
                   <div class="col-md-2">
-                    <button type="button" onClick={handleAddData} class="btn b_save"><i class="custom-icon-font"> + </i>ปิดงวด</button>
+                    <button type="button" onClick={handleAddData} class="btn b_save"><i class="custom-icon-font"> + </i>เพิ่ม</button>
 
 
                   </div>
