@@ -5,7 +5,6 @@
 
 //config for server 
 
-
 const username = 'admin';
 const password = 'friendlydev214';
 const host = '172.17.0.2';

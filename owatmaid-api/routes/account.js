@@ -1745,10 +1745,11 @@ data.accountingRecord.amountOt = amountOt;
 sumSocial = await sumSocial + amountDay;
 sumCalTax = await sumCalTax + amountDay;
 sumCalTax = await sumCalTax + amountOt;
+console.log(addSalaryList .length);
 
 //concat addSalary
 addSalaryList  = await addSalaryList .concat(addSalaryDayArray);
-
+console.log(addSalaryList .length);
 // Variables for summation
 let sumAddSalaryBeforeTaxTmp = 0;
 let sumAddSalaryBeforeTaxNonSocialTmp = 0;
