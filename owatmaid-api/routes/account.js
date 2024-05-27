@@ -19,7 +19,7 @@ const { el, ca } = require('date-fns/locale');
 router.get('/list', async (req, res) => {
 
   try{
-const acount = await accounting.find({});
+const acount = await accounting.find();
  res.status(200).send(acount );
 
   } catch (e) {
@@ -569,16 +569,16 @@ if(item.id == '1535') {
 
 //set data to position , tel , travel
 if(x1230 >0 ) {
-  data.accountingRecord.amountPosition = x1230;
+  // data.accountingRecord.amountPosition = x1230;
 }
 if(x1350 >0 ) {
-  data.accountingRecord.tel = x1350;
+  // data.accountingRecord.tel = x1350;
 }
 if(x1520 >0 ) {
-  data.accountingRecord.travel = x1520;
+  // data.accountingRecord.travel = x1520;
 }
 if(x1535 >0 ) {
-  data.accountingRecord.benefitNonSocial = x1535;
+  // data.accountingRecord.benefitNonSocial = x1535;
 }
 
 
@@ -593,6 +593,75 @@ data.accountingRecord.amountOt = amountOt;
 sumSocial = await sumSocial + amountDay;
 sumCalTax = await sumCalTax + amountDay;
 sumCalTax = await sumCalTax + amountOt;
+
+//concat addSalary
+addSalaryList  = await addSalaryList .concat(addSalaryDayArray);
+
+// Variables for summation
+let sumAddSalaryBeforeTaxTmp = 0;
+let sumAddSalaryBeforeTaxNonSocialTmp = 0;
+let sumAddSalaryAfterTaxTmp = 0;
+
+//check addSalary with cal tax and social 
+await (async () => {
+  await Promise.all(addSalaryList.map(async item => {
+
+    if(item.id === '1230' || item.id === '1350' || item.id === '1520' || item.id === '1535') {
+      if(item.id === '1230') {
+          data.accountingRecord.amountPosition = await item.SpSalary || 0;
+      }  else {
+        data.accountingRecord.amountPosition =  await 0;
+      }
+          if(item.id === '1350' ) {
+  data.accountingRecord.tel = await item.SpSalary || 0;
+          }  else {
+            data.accountingRecord.tel = await 0;
+          }
+if(item.id === '1520') {
+  data.accountingRecord.travel = await item.SpSalary || 0;
+}  else {
+  data.accountingRecord.travel =  await 0;
+}
+if(item.id === '1535') {
+  data.accountingRecord.benefitNonSocial = await item.SpSalary || 0;
+} else {
+  data.accountingRecord.benefitNonSocial = await 0;
+}
+
+    } else {
+
+    let taxStatus = await checkCalTax(item.id);
+    console.log('taxStatus ' + item.id + ' ' + taxStatus + ' ' + item.SpSalary);
+
+    if (taxStatus) {
+      // Calculate tax
+      let socialStatus = await checkCalSocial(item.id);
+      console.log('socialStatus ' + item.id + ' ' + socialStatus + ' ' + item.SpSalary);
+
+      if (socialStatus) {
+        // Calculate social
+        sumAddSalaryBeforeTaxTmp += parseFloat(item.SpSalary);
+      } else {
+        // Non-social
+        sumAddSalaryBeforeTaxNonSocialTmp += parseFloat(item.SpSalary);
+      }
+    } else {
+      // Non-tax
+      sumAddSalaryAfterTaxTmp += parseFloat(item.SpSalary);
+    }
+  }
+  
+  }));
+
+  sumAddSalaryBeforeTax = sumAddSalaryBeforeTaxTmp;
+  sumAddSalaryBeforeTaxNonSocial = sumAddSalaryBeforeTaxNonSocialTmp;
+  sumAddSalaryAfterTax = sumAddSalaryAfterTaxTmp;
+  console.log('sumAddSalaryBeforeTax ' + sumAddSalaryBeforeTax);
+  console.log('sumAddSalaryBeforeTaxNonSocial ' + sumAddSalaryBeforeTaxNonSocial);
+  console.log('sumAddSalaryAfterTax ' + sumAddSalaryAfterTax);
+})();
+
+
 
 // await console.log(sumSocial );
 
@@ -641,7 +710,7 @@ data.accountingRecord.socialSecurity = Math.ceil((sumSocial * 0.05)) || 0;
 
     data.accountingRecord.sumSalaryForTax = sumCalTax || 0;
 
-    addSalaryList  = await addSalaryList .concat(addSalaryDayArray);
+    // addSalaryList  = await addSalaryList .concat(addSalaryDayArray);
     data.addSalary = await addSalaryList || [];
 
 data.deductSalary = deductSalaryList || [];
@@ -1625,21 +1694,21 @@ if(tmp.id === item.id) {
     // await console.log('update"' + item.id );
   }
 
-// if(item.id == '1230') {
-//   x1230 += parseFloat(item.SpSalary);
-// } else
-// if(item.id == '1350') {
-//   x1350 += parseFloat(item.SpSalary);
-// } else
-// if(item.id == '1520') {
-//   x1520 += parseFloat(item.SpSalary);
-// } else
-// if(item.id == '1535') {
-//   x1535 += parseFloat(item.SpSalary);
-// } else {
-//   // console.log(item.SpSalary);
+if(item.id == '1230') {
+  x1230 += parseFloat(item.SpSalary);
+} else
+if(item.id == '1350') {
+  x1350 += parseFloat(item.SpSalary);
+} else
+if(item.id == '1520') {
+  x1520 += parseFloat(item.SpSalary);
+} else
+if(item.id == '1535') {
+  x1535 += parseFloat(item.SpSalary);
+} else {
+  // console.log(item.SpSalary);
   
-// }
+}
 
 });
 
