@@ -720,7 +720,8 @@ function SalaryAllResult() {
             acc[workplace].totalAmountOt += parseFloat(employee.accountingRecord.amountOt || 0);
             acc[workplace].totalAmountSpecial += parseFloat(employee.accountingRecord.amountSpecial || 0);
             // acc[workplace].totalAmountPosition += parseFloat(employee.accountingRecord.amountPosition || 0);
-            acc[workplace].totalAmountHardWorking += parseFloat(employee.accountingRecord.amountHardWorking || 0);
+
+            // acc[workplace].totalAmountHardWorking += parseFloat(employee.accountingRecord.amountHardWorking || 0);
 
             acc[workplace].totalAmountHoliday += parseFloat(employee.accountingRecord.amountHoliday || 0);
 
@@ -743,12 +744,24 @@ function SalaryAllResult() {
             acc[workplace].totalSumAddSalaryAfterTax += parseFloat(employee.accountingRecord.sumAddSalaryAfterTax ?? 0);
             acc[workplace].totalSumDeductAfterTax += parseFloat(employee.accountingRecord.sumDeductAfterTax ?? 0);
 
-
-            const sum = parseFloat(employee.countSpecialDay * employee.specialDayRate || 0);
+            // ((countSpecialDay - countSpecialDayListWork) * specialDayRate)
+            const sum = parseFloat(Number((employee.countSpecialDay - employee.specialDayListWork.length) * employee.specialDayRate) || 0);
             acc[workplace].totalSumtest += sum;
 
-            const sumOT = parseFloat(employee.accountingRecord.amountOt + (employee.specialDayListWork * employee.specialDayRate) || 0);
+            // const sumOT = parseFloat(employee.accountingRecord.amountOt + (employee.specialDayListWork * employee.specialDayRate) || 0);
+            const sumOT = parseFloat(employee.accountingRecord.amountOt || 0);
             acc[workplace].totalSumOT += sumOT;
+
+            const spSalaryHardWorkSum = addSalary.reduce((total, item) => {
+                if (item.id === "1410") {
+                    return total + parseFloat(item.SpSalary || 0);
+                }
+                return total;
+            }, 0);
+            acc[workplace].totalAmountHardWorking += spSalaryHardWorkSum;
+
+            acc[workplace].totalSumOT += sumOT;
+
             // Parse and calculate the value
             // const countSpecialDay = Number(employee.countSpecialDay);
             // const specialDayRate = Number(employee.specialDayRate);
@@ -977,7 +990,9 @@ function SalaryAllResult() {
                         startXSalary + 16, currentY, { align: 'right' });
                     // ค่าล่วงเวลา
 
-                    const formattedAmountOt = Number(accountingRecord.amountOt + (countSpecialDayListWork * specialDayRate) ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    // const formattedAmountOt = Number(accountingRecord.amountOt + (countSpecialDayListWork * specialDayRate) ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    const formattedAmountOt = Number(accountingRecord.amountOt ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
                     pdf.text(`${formattedAmountOt}`,
                         startXOT + cellWidthOT, currentY, { align: 'right' });
                     // sumNewamountOt += parseFloat(formattedAmountOt);
@@ -1185,7 +1200,7 @@ function SalaryAllResult() {
                 // console.log('sumNewamountOt', sumNewamountOt);
                 // pdf.text(`${formattedTotalAmountOt}`, startXOT + cellWidthOT, currentY, { align: 'right' });
 
-                totalSumOT
+                // totalSumOT
                 const formattedTotalAmountOt = totalSumOT.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                 // Display the formatted totalSalary with commas
                 console.log('sumNewamountOt', sumNewamountOt);
