@@ -876,7 +876,9 @@ function SalaryAllResult() {
                     pdf.text(`${name} ${lastName}`, startXName + 1, currentY);
 
                     const countSpecialDayListWork = specialDayListWork.length;
-                    const countcal = accountingRecord.countDay - countSpecialDayListWork;
+                    // const countcal = accountingRecord.countDay - countSpecialDayListWork;
+                    const countcal = accountingRecord.countDay;
+
                     // pdf.text(`${accountingRecord.countDay} `, startXAllDay + 5, currentY, { align: 'right' });
                     pdf.text(`${countcal} `, startXAllDay + 5, currentY, { align: 'right' });
 
@@ -1032,13 +1034,14 @@ function SalaryAllResult() {
                     // นักขัติ
                     // const formattedAmountHoliday = Number(accountingRecord.amountHoliday ?? 0).toFixed(2);
                     // pdf.text(`${formattedAmountHoliday}`, 85 + (cellWidthOT * 5), currentY, { align: 'right' });
-                    const formattedAmountHoliday = Number((countSpecialDay * specialDayRate) ?? 0);
+                    const formattedAmountHoliday = Number(((countSpecialDay - countSpecialDayListWork) * specialDayRate) ?? 0);
                     pdf.text(`${formattedAmountHoliday.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
                         startXHoliday + cellWidthHoliday, currentY, { align: 'right' });
 
                     sumFormattedAmountHoliday += formattedAmountHoliday;
                     console.log('countSpecialDay', countSpecialDay);
                     console.log('specialDayRate', specialDayRate);
+                    console.log('countSpecialDayListWork', countSpecialDayListWork);
 
 
                     // บวกอื่นๆ 
