@@ -522,6 +522,11 @@ if(item.id === '1535') {
 } else {
   // data.accountingRecord.benefitNonSocial = await 0;
 }
+if(item.id === '1410') {
+  data.accountingRecord.amountHardWorking = await item.SpSalary || 0;
+} else {
+  // data.accountingRecord.benefitNonSocial = await 0;
+}
 
     } else {
 
@@ -580,6 +585,12 @@ if (data?.accountingRecord?.benefitNonSocial ?? false) {
 } else {
   // The property is not set or it is falsy
     data.accountingRecord.benefitNonSocial =  await 0;
+}
+if (data?.accountingRecord?.amountHardWorking ?? false) {
+  // The property is set and truthy
+} else {
+  // The property is not set or it is falsy
+    data.accountingRecord.amountHardWorking =  await 0;
 }
 
 // await console.log(sumSocial );
@@ -2270,6 +2281,11 @@ if(item.id === '1535') {
 } else {
   // data.accountingRecord.benefitNonSocial = await 0;
 }
+if(item.id === '1410') {
+  data.accountingRecord.amountHardWorking = await item.SpSalary || 0;
+} else {
+  // data.accountingRecord.benefitNonSocial = await 0;
+}
 
     } else {
 
@@ -2328,6 +2344,12 @@ if (data?.accountingRecord?.benefitNonSocial ?? false) {
 } else {
   // The property is not set or it is falsy
     data.accountingRecord.benefitNonSocial =  await 0;
+}
+if (data?.accountingRecord?.amountHardWorking ?? false) {
+  // The property is set and truthy
+} else {
+  // The property is not set or it is falsy
+    data.accountingRecord.amountHardWorking =  await 0;
 }
 
 // await console.log(sumSocial );
@@ -3863,6 +3885,11 @@ if(item.id === '1535') {
 } else {
   // data.accountingRecord.benefitNonSocial = await 0;
 }
+if(item.id === '1410') {
+  data.accountingRecord.amountHardWorking = await item.SpSalary || 0;
+} else {
+  // data.accountingRecord.benefitNonSocial = await 0;
+}
 
     } else {
 
@@ -3921,6 +3948,12 @@ if (data?.accountingRecord?.benefitNonSocial ?? false) {
 } else {
   // The property is not set or it is falsy
     data.accountingRecord.benefitNonSocial =  await 0;
+}
+if (data?.accountingRecord?.amountHardWorking ?? false) {
+  // The property is set and truthy
+} else {
+  // The property is not set or it is falsy
+    data.accountingRecord.amountHardWorking =  await 0;
 }
 
 // await console.log(sumSocial );
