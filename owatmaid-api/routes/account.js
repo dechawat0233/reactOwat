@@ -605,7 +605,7 @@ await console.log('specialDaylist' + JSON.stringify(specialDaylist,null,2));
 
 await console.log('intersection: ' + intersection); // Output: ['2', '3', '4']
 //total
-total = await amountDay + amountOt + sumCalTaxNonSalary - sumDeductWithTax 
+total = await total  + amountDay + amountOt + sumCalTaxNonSalary - sumDeductWithTax 
 - tax
 - ((sumSocial * 0.05) || 0)
 + (sumNonTaxNonSalary || 0)
@@ -1759,7 +1759,7 @@ await Promise.all(promisesDeduct)
   
   
 //total
-total = await amountDay + amountOt + sumCalTaxNonSalary - sumDeductWithTax 
+total = await total  + amountDay + amountOt + sumCalTaxNonSalary - sumDeductWithTax 
 - tax
 - ((sumSocial * 0.05) || 0)
 + (sumNonTaxNonSalary || 0)
@@ -2366,7 +2366,7 @@ await console.log('specialDaylist' + JSON.stringify(specialDaylist,null,2));
 
 await console.log('intersection: ' + intersection); // Output: ['2', '3', '4']
 //total
-total = await amountDay + amountOt + sumCalTaxNonSalary - sumDeductWithTax 
+total = await total  + amountDay + amountOt + sumCalTaxNonSalary - sumDeductWithTax 
 - tax
 - ((sumSocial * 0.05) || 0)
 + (sumNonTaxNonSalary || 0)
@@ -3970,7 +3970,7 @@ await console.log('specialDaylist' + JSON.stringify(specialDaylist,null,2));
 
 await console.log('intersection: ' + intersection); // Output: ['2', '3', '4']
 //total
-total = await amountDay + amountOt + sumCalTaxNonSalary - sumDeductWithTax 
+total = await total  + amountDay + amountOt + sumCalTaxNonSalary - sumDeductWithTax 
 - tax
 - ((sumSocial * 0.05) || 0)
 + (sumNonTaxNonSalary || 0)
