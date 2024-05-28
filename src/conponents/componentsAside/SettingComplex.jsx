@@ -511,6 +511,11 @@ function SettingComplex() {
     const [_id, set_id] = useState('');
     const [workplaceId, setWorkplaceId] = useState(''); //รหัสหน่วยงาน
     const [workplaceName, setWorkplaceName] = useState(''); //ชื่อหน่วยงาน
+
+    const [workplaceComplexId, setWorkplaceComplexId] = useState(''); //รหัสหน่วยงานหย่อย
+    const [workplaceComplexName, setWorkplaceComplexName] = useState(''); //ชื่อหน่วยงานหย่อย
+    const [workplacesComplex, setWorkplacesComplex] = useState([]);
+
     const [workplaceArea, setWorkplaceArea] = useState(''); //สถานที่ปฏิบัติงาน
     const [workOfWeek, setWorkOfWeek] = useState(''); //วันทำงานต่อสัปดาห์
 
@@ -598,6 +603,20 @@ function SettingComplex() {
             ...formData,
             addSalary: newAddSalary
         });
+    };
+
+    const handleAddWorkplaceComplex = () => {
+        // e.preventDefault();
+
+        if (workplaceComplexId && workplaceComplexName) {
+            const newWorkplace = {
+                id: workplaceComplexId,
+                name: workplaceComplexName,
+            };
+            setWorkplacesComplex([...workplacesComplex, newWorkplace]);
+            setWorkplaceComplexId('');
+            setWorkplaceComplexName('');
+        }
     };
 
     // const handleAddInput = () => {
@@ -1995,28 +2014,88 @@ function SettingComplex() {
                                         <input type="text" class="form-control" value={reason} onChange={handleReasonChange} />
                                     </div>
                                 </section>
-
-                                <h2 class="title">พนักงานในสังกัด</h2>
                                 <section class="Frame">
-                                    <div>
+                                    <h2 class="title">พนักงานในสังกัด</h2>
+                                    <section class="Frame">
+                                        <div>
 
-                                        {showEmployeeListResult.length > 0 && (
-                                            <>
-                                                <h3>พนักงานในหน่วยงาน {showEmployeeListResult.length} คน</h3>
-                                                <ul>
-                                                    {showEmployeeListResult.map((employee, index) => (
-                                                        <li key={index}>{employee.employeeId}: {employee.name} {employee.lastName}</li>
-                                                        // Replace "name" with the property you want to display for each employee
-                                                    ))}
-                                                </ul>
-                                            </>
-                                        )}
+                                            {showEmployeeListResult.length > 0 && (
+                                                <>
+                                                    <h3>พนักงานในหน่วยงาน {showEmployeeListResult.length} คน</h3>
+                                                    <ul>
+                                                        {showEmployeeListResult.map((employee, index) => (
+                                                            <li key={index}>{employee.employeeId}: {employee.name} {employee.lastName}</li>
+                                                            // Replace "name" with the property you want to display for each employee
+                                                        ))}
+                                                    </ul>
+                                                </>
+                                            )}
 
-                                    </div>
+                                        </div>
+                                    </section>
                                 </section>
-                                <h2>Add Image:</h2>
+
+
+                                <section class="Frame">
+                                    <h2 class="title">กลุ่มงานย่อย</h2>
+                                    <section class="Frame">
+                                        <div>
+                                            <div className="row">
+                                                <div className="col-md-4">
+                                                    <label style={{ marginRight: '0.5rem' }}>รหัส:</label>
+
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <label style={{ margin: '0.5rem' }}>ชื่อหน่วย:</label>
+
+                                                </div>
+                                            </div>
+
+                                            <div className="row">
+                                                <div className="col-md-4">
+                                                    <input
+                                                        type="text"
+                                                        value={workplaceComplexId}
+                                                        class="form-control"
+                                                        onChange={(e) => setWorkplaceComplexId(e.target.value)}
+                                                    />
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <input
+                                                        type="text"
+                                                        value={workplaceComplexName}
+                                                        class="form-control"
+                                                        onChange={(e) => setWorkplaceComplexName(e.target.value)}
+                                                    />
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <button type="button" className="btn btn-primary" onClick={handleAddWorkplaceComplex}>
+                                                        เพิ่ม
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                            <br />
+
+                                            {/* <button type="button" className="btn btn-primary" onClick={handleAddWorkplaceComplex}>
+                                                เพิ่ม
+                                            </button> */}
+                                        </div>
+                                        <label role="workRateDayoffRate">รายชื่อหน่วย</label>
+
+                                        <ul>
+                                            {workplacesComplex.map((workplace, index) => (
+                                                <li key={index}>
+                                                    {workplace.id} - {workplace.name}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </section>
+                                </section>
+
+                                {/* <h2>Add Image:</h2>
                                 <input type="file" onChange={handleChange} />
-                                {preview && <img src={preview} style={{ width: '300px', height: '200px' }} alt="Selected" />}
+                                {preview && <img src={preview} style={{ width: '300px', height: '200px' }} alt="Selected" />} */}
                                 {/* <button onClick={handleUpload}>Upload</button> */}
                                 {/* <!--Frame--> */}
                                 <div class="line_btn">
