@@ -1995,28 +1995,31 @@ function Setting() {
                                         <input type="text" class="form-control" value={reason} onChange={handleReasonChange} />
                                     </div>
                                 </section>
-
-                                <h2 class="title">พนักงานในสังกัด</h2>
                                 <section class="Frame">
-                                    <div>
+                                    <h2 class="title">พนักงานในสังกัด</h2>
+                                    <section class="Frame">
+                                        <div>
 
-                                        {showEmployeeListResult.length > 0 && (
-                                            <>
-                                                <h3>พนักงานในหน่วยงาน {showEmployeeListResult.length} คน</h3>
-                                                <ul>
-                                                    {showEmployeeListResult.map((employee, index) => (
-                                                        <li key={index}>{employee.employeeId}: {employee.name} {employee.lastName}</li>
-                                                        // Replace "name" with the property you want to display for each employee
-                                                    ))}
-                                                </ul>
-                                            </>
-                                        )}
+                                            {showEmployeeListResult.length > 0 && (
+                                                <>
+                                                    <h3>พนักงานในหน่วยงาน {showEmployeeListResult.length} คน</h3>
+                                                    <ul>
+                                                        {showEmployeeListResult.map((employee, index) => (
+                                                            <li key={index}>{employee.employeeId}: {employee.name} {employee.lastName}</li>
+                                                            // Replace "name" with the property you want to display for each employee
+                                                        ))}
+                                                    </ul>
+                                                </>
+                                            )}
 
-                                    </div>
+                                        </div>
+                                    </section>
                                 </section>
-                                <h2>Add Image:</h2>
+
+                                
+                                {/* <h2>Add Image:</h2>
                                 <input type="file" onChange={handleChange} />
-                                {preview && <img src={preview} style={{ width: '300px', height: '200px' }} alt="Selected" />}
+                                {preview && <img src={preview} style={{ width: '300px', height: '200px' }} alt="Selected" />} */}
                                 {/* <button onClick={handleUpload}>Upload</button> */}
                                 {/* <!--Frame--> */}
                                 <div class="line_btn">
