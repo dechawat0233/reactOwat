@@ -3865,7 +3865,7 @@ let sumAddSalaryBeforeTaxNonSocialTmp = 0;
 let sumAddSalaryAfterTaxTmp = 0;
 
 await addSalaryList.forEach(item => {
-total = total + item.SpSalary || 0;
+total = total + parseFloat( item.SpSalary || 0);
 });
 
 //check addSalary with cal tax and social 
