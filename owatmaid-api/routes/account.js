@@ -3868,9 +3868,9 @@ let sumAddSalary = 0;
 //check addSalary with cal tax and social 
 await (async () => {
   await Promise.all(addSalaryList.map(async item => {
-    sumAddSalary  += await ' ' +item.SpSalary || 0;
+    sumAddSalary  = await sumAddSalary + ' ' +item.SpSalary || 0;
     console.log('item.SpSalary  ' + item.SpSalary );
-    
+
     if(item.id === '1230' || item.id === '1350' || item.id === '1520' || item.id === '1535' || item.id === '1410') {
       if(item.id === '1230') {
           data.accountingRecord.amountPosition = await item.SpSalary || 0;
