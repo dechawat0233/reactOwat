@@ -1146,19 +1146,19 @@ function SettingComplex() {
                                 <section class="Frame">
                                     <div class="col-md-12">
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label role="workplaceId">รหัสหน่วยงาน</label>
                                                     <input type="text" class="form-control" id="workplaceId" placeholder="รหัสหน่วยงาน" value={workplaceId} onChange={(e) => setWorkplaceId(e.target.value)} />
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label role="workplaceName">ชื่อหน่วยงาน</label>
                                                     <input type="text" class="form-control" id="workplaceName" placeholder="ชื่อหน่วยงาน" value={workplaceName} onChange={(e) => setWorkplaceName(e.target.value)} />
                                                 </div>
                                             </div>
-                                            <div className="col-md-4">
+                                            <div className="col-md-3">
                                                 <label role="workplaceName">ชื่อกลุ่ม</label>
                                                 <input
                                                     type="text"
@@ -1168,21 +1168,7 @@ function SettingComplex() {
                                                     onChange={(e) => setWorkplaceComplexId(e.target.value)}
                                                 />
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label role="workplaceArea">สถานที่ปฏิบัติงาน</label>
-                                                    <input type="text" class="form-control" id="workplaceArea" placeholder="สถานที่ปฏิบัติงาน" value={workplaceArea} onChange={(e) => setWorkplaceArea(e.target.value)} />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label role="workOfWeek">จำนวนวันทำงานต่อสัปดาห์</label>
-                                                    <input type="text" class="form-control" id="workOfWeek" placeholder="จำนวนวันทำงานต่อสัปดาห์" value={workOfWeek} onChange={(e) => setWorkOfWeek(e.target.value)} />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label role="workOfWeek">select</label>
                                                     <select name="endDay" className="form-control" value={workplaceComplexName} onChange={handleSelectChange}>
@@ -1197,6 +1183,20 @@ function SettingComplex() {
                                                         <option value='9' >9 </option>
                                                         <option value='10' >10 </option>
                                                     </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label role="workplaceArea">สถานที่ปฏิบัติงาน</label>
+                                                    <input type="text" class="form-control" id="workplaceArea" placeholder="สถานที่ปฏิบัติงาน" value={workplaceArea} onChange={(e) => setWorkplaceArea(e.target.value)} />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label role="workOfWeek">จำนวนวันทำงานต่อสัปดาห์</label>
+                                                    <input type="text" class="form-control" id="workOfWeek" placeholder="จำนวนวันทำงานต่อสัปดาห์" value={workOfWeek} onChange={(e) => setWorkOfWeek(e.target.value)} />
                                                 </div>
                                             </div>
                                         </div>
@@ -2070,7 +2070,7 @@ function SettingComplex() {
                                 </section>
 
 
-                                <section class="Frame">
+                                {/* <section class="Frame">
                                     <h2 class="title">กลุ่มงานย่อย</h2>
                                     <section class="Frame">
                                         <div>
@@ -2085,7 +2085,7 @@ function SettingComplex() {
                                                 </div>
                                             </div>
 
-                                            {/* <div className="row">
+                                            <div className="row">
                                                 <div className="col-md-4">
                                                     <input
                                                         type="text"
@@ -2108,14 +2108,14 @@ function SettingComplex() {
                                                     </button>
                                                 </div>
 
-                                            </div> */}
+                                            </div>
                                             <br />
 
-                                            {/* <button type="button" className="btn btn-primary" onClick={handleAddWorkplaceComplex}>
+                                            <button type="button" className="btn btn-primary" onClick={handleAddWorkplaceComplex}>
                                                 เพิ่ม
-                                            </button> */}
+                                            </button>
                                         </div>
-                                        {/* <label role="workRateDayoffRate">รายชื่อหน่วย</label>
+                                        <label role="workRateDayoffRate">รายชื่อหน่วย</label>
 
                                         <ul>
                                             {workplacesComplex.map((workplace, index) => (
@@ -2123,11 +2123,11 @@ function SettingComplex() {
                                                     {workplace.id} - {workplace.name}
                                                 </li>
                                             ))}
-                                        </ul> */}
+                                        </ul>
 
 
                                     </section>
-                                </section>
+                                </section> */}
 
                                 {/* <h2>Add Image:</h2>
                                 <input type="file" onChange={handleChange} />
