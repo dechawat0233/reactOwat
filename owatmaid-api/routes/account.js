@@ -3927,6 +3927,8 @@ if(item.id === '1410') {
   console.log('sumAddSalaryBeforeTax ' + sumAddSalaryBeforeTax);
   console.log('sumAddSalaryBeforeTaxNonSocial ' + sumAddSalaryBeforeTaxNonSocial);
   console.log('sumAddSalaryAfterTax ' + sumAddSalaryAfterTax);
+  console.log('sumAddSalary  ' + sumAddSalary  );
+  
 })();
 
 //check isset amountPosition , tel, travel and benefitNonSocial
