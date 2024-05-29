@@ -3969,6 +3969,7 @@ await console.log(data.employeeId + ' ' + month);
 await console.log('specialDaylist' + JSON.stringify(specialDaylist,null,2));
 
 await console.log('intersection: ' + intersection); // Output: ['2', '3', '4']
+await console.log('total ' + total );
 //total
 total = await total  + amountDay + amountOt + sumCalTaxNonSalary - sumDeductWithTax 
 - tax
