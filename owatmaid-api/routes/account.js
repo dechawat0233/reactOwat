@@ -3898,6 +3898,7 @@ if(item.id === '1410') {
 }
 
     } else {
+      total  = await total  + parseFloat(item.SpSalary || 0);
 
     let taxStatus = await checkCalTax(item.id);
     console.log('taxStatus ' + item.id + ' ' + taxStatus + ' ' + item.SpSalary);
