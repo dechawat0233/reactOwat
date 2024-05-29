@@ -760,7 +760,7 @@ function SalaryAllResult() {
             }, 0);
             acc[workplace].totalAmountHardWorking += spSalaryHardWorkSum;
 
-            acc[workplace].totalSumOT += sumOT;
+            // acc[workplace].totalSumOT += sumOT;
 
             // Parse and calculate the value
             // const countSpecialDay = Number(employee.countSpecialDay);
