@@ -3868,7 +3868,7 @@ let sumAddSalary = 0;
 //check addSalary with cal tax and social 
 await (async () => {
   await Promise.all(addSalaryList.map(async item => {
-    sumAddSalary  += await item.SpSalary || 0;
+    sumAddSalary  += await ' ' +item.SpSalary || 0;
     if(item.id === '1230' || item.id === '1350' || item.id === '1520' || item.id === '1535' || item.id === '1410') {
       if(item.id === '1230') {
           data.accountingRecord.amountPosition = await item.SpSalary || 0;
@@ -3928,7 +3928,7 @@ if(item.id === '1410') {
   console.log('sumAddSalaryBeforeTaxNonSocial ' + sumAddSalaryBeforeTaxNonSocial);
   console.log('sumAddSalaryAfterTax ' + sumAddSalaryAfterTax);
   console.log('sumAddSalary  ' + sumAddSalary  );
-  
+
 })();
 
 //check isset amountPosition , tel, travel and benefitNonSocial
