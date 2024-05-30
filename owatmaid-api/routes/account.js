@@ -3511,8 +3511,14 @@ tax = await response.data.tax ||0;
       // Found the workplace
       // await console.log('Found workplace:', foundWorkplace);
       
-      console.log(JSON.stringify( foundWorkplace.workTimeDay,null,2));
+      // console.log(JSON.stringify( foundWorkplace.workTimeDay,null,2));
+      if(foundWorkplace.workTimeDay ){
+if(foundWorkplace.workTimeDay.workOrStop === 'stop'){
+      // console.log(JSON.stringify( foundWorkplace.workTimeDay.workOrStop ,null,2));
 
+}
+      }
+      
       // console.log(foundWorkplace.daysOff);
 
       await Promise.all( foundWorkplace.daysOff.map(async item => {
