@@ -1711,6 +1711,29 @@ function Salaryresult() {
                   </div> */}
                 </div>
                 <br />
+
+                <div class="row">
+                  <div class="col-md-8">
+                    <table border="1" style={tableStyle}>
+                      <thead>
+                        <tr>
+                          <th style={headerCellStyle}>วันหยุดนักขัติ</th>
+                          <th style={headerCellStyle}>สวัสดิการ</th>
+                          <th style={headerCellStyle}>ยอดรวม</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td style={cellStyle}></td>
+                          <td style={cellStyle}></td>
+                          <td style={cellStyle}></td>                          
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <br />
+
                 <div class="row">
                   <div class="col-md-8">
                     <table border="1" style={tableStyle}>
