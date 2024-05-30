@@ -3984,8 +3984,9 @@ await console.log('specialDaylist' + JSON.stringify(specialDaylist,null,2));
 await console.log('intersection: ' + intersection); // Output: ['2', '3', '4']
 await console.log('total ' + total );
 
+let calSP = await (specialDaylist.length ||0) - (intersection.length || 0 ) * holidayRate ;
 //total
-total = await total  + amountDay + amountOt -((sumSocial * 0.05) || 0);
+total = await total  + amountDay + amountOt + calSP -((sumSocial * 0.05) || 0);
 
 // total = await total  + amountDay + amountOt + sumCalTaxNonSalary - sumDeductWithTax 
 // - tax
