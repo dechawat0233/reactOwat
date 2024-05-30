@@ -3914,12 +3914,12 @@ if(item.id === '1410') {
     } else {
 
     let taxStatus = await checkCalTax(item.id);
-    console.log('taxStatus ' + item.id + ' ' + taxStatus + ' ' + item.SpSalary);
+    // console.log('taxStatus ' + item.id + ' ' + taxStatus + ' ' + item.SpSalary);
 
     if (taxStatus) {
       // Calculate tax
       let socialStatus = await checkCalSocial(item.id);
-      console.log('socialStatus ' + item.id + ' ' + socialStatus + ' ' + item.SpSalary);
+      // console.log('socialStatus ' + item.id + ' ' + socialStatus + ' ' + item.SpSalary);
 
       if (socialStatus) {
         // Calculate social
