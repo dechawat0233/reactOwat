@@ -308,42 +308,42 @@ function Salaryresult() {
   useEffect(() => {
 
     const fetchData = async () => {
-      if(year && month && staffId ) {
-      const dataTest = await {
-        employeeId: staffId ||'',
-        year: year ||'',
-        month: month || '',
-      };
+      if (year && month && staffId) {
+        const dataTest = await {
+          employeeId: staffId || '',
+          year: year || '',
+          month: month || '',
+        };
 
-      await setAddSalaryList([]);
-      await axios.post(endpoint + '/accounting/calsalaryemp', dataTest)
-        .then(response => {
-          const responseData = response.data;
+        await setAddSalaryList([]);
+        await axios.post(endpoint + '/accounting/calsalaryemp', dataTest)
+          .then(response => {
+            const responseData = response.data;
 
-          if (response.data) {
+            if (response.data) {
 
-            setAddSalaryList(response.data[0].addSalary);
-            if (response.data[0].addSalary) {
-              let tmp = 0;
-              response.data[0].addSalary.map(item => {
-                tmp += parseFloat(item.SpSalary);
-              });
-              setSumAddSalaryList(tmp);
+              setAddSalaryList(response.data[0].addSalary);
+              if (response.data[0].addSalary) {
+                let tmp = 0;
+                response.data[0].addSalary.map(item => {
+                  tmp += parseFloat(item.SpSalary);
+                });
+                setSumAddSalaryList(tmp);
+              }
+              // alert(response.data[0].addSalary.length);
+              setDeductSalaryList(response.data[0].deductSalary);
+              // alert(JSON.stringify(response.data[0].addSalary,null,2));
             }
-            // alert(response.data[0].addSalary.length);
-            setDeductSalaryList(response.data[0].deductSalary);
-            // alert(JSON.stringify(response.data[0].addSalary,null,2));
-          }
-          console.log('responseData', responseData);
-          const filteredData = responseData.filter(item => item.employeeId === staffId);
-          console.log('filteredData', filteredData);
-          setCalsalarylist(filteredData);
+            console.log('responseData', responseData);
+            const filteredData = responseData.filter(item => item.employeeId === staffId);
+            console.log('filteredData', filteredData);
+            setCalsalarylist(filteredData);
 
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-      } 
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+      }
     };
 
     // Call fetchData when year or month changes
@@ -1622,9 +1622,9 @@ function Salaryresult() {
                           {/* <td style={cellStyle}>{(overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult).toFixed(2)}</td> */}
                           <td style={cellStyle}>
                             {/* {(amountDay + amountOt + addAmountBeforeTax + addAmountAfterTax).toFixed(2)} */}
-                            {isNaN(amountDay + amountOt + addAmountBeforeTax + addAmountAfterTax) ?
+                            {isNaN(amountDay + amountOt + sumAddSalaryList) ?
                               '0' :
-                              (amountDay + amountOt + addAmountBeforeTax + addAmountAfterTax).toFixed(2)
+                              (amountDay + amountOt + sumAddSalaryList).toFixed(2)
                             }
                           </td>
 
@@ -1726,7 +1726,7 @@ function Salaryresult() {
                         <tr>
                           <td style={cellStyle}></td>
                           <td style={cellStyle}></td>
-                          <td style={cellStyle}></td>                          
+                          <td style={cellStyle}></td>
                         </tr>
                       </tbody>
                     </table>
@@ -1751,9 +1751,9 @@ function Salaryresult() {
                           <td style={cellStyle}>{(totalSumDeduct).toFixed(2)}</td>
                           <td style={cellStyle}>{(totalSumSalary - totalSumDeduct).toFixed(2)}</td> */}
 
-                          <td style={cellStyle}>{isNaN(totalSumSalary) ? 0.00 : (totalSumSalary).toFixed(2)}</td>
+                          <td style={cellStyle}>{isNaN(amountDay + amountOt + sumAddSalaryList) ? 0.00 : (amountDay + amountOt + sumAddSalaryList).toFixed(2)}</td>
                           <td style={cellStyle}>{isNaN(totalSumDeduct) ? 0.00 : (totalSumDeduct).toFixed(2)}</td>
-                          <td style={cellStyle}>{isNaN(totalSumSalary - totalSumDeduct) ? 0.00 : (totalSumSalary - totalSumDeduct).toFixed(2)}</td>
+                          <td style={cellStyle}>{isNaN(amountDay + amountOt + sumAddSalaryList - totalSumDeduct) ? 0.00 : (amountDay + amountOt + sumAddSalaryList - totalSumDeduct).toFixed(2)}</td>
                         </tr>
                       </tbody>
                     </table>

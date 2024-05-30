@@ -436,8 +436,8 @@ function Setting() {
                     // Show alert for duplicate date selection
                     alert(day + '/' + month + '/' + year + '  Selected date already exists in the list.');
                 }
-                setDay('');
-                setMonth('');
+                // setDay('');
+                // setMonth('');
                 setYear(new Date().getFullYear());
             } else {
                 // Show alert for invalid date selection
