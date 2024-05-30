@@ -3514,7 +3514,7 @@ tax = await response.data.tax ||0;
       // console.log(JSON.stringify( foundWorkplace.workTimeDay,null,2));
       if(foundWorkplace.workTimeDay ){
         await foundWorkplace.workTimeDay.map(item => {
-          if(foundWorkplace.workTimeDay.workOrStop === 'stop'){
+          if(item.workOrStop === 'stop'){
             console.log(JSON.stringify( item.workOrStop ,null,2));
       
       }
