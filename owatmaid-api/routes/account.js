@@ -3939,9 +3939,9 @@ if(item.id === '1410') {
   sumAddSalaryBeforeTax = sumAddSalaryBeforeTaxTmp;
   sumAddSalaryBeforeTaxNonSocial = sumAddSalaryBeforeTaxNonSocialTmp;
   sumAddSalaryAfterTax = sumAddSalaryAfterTaxTmp;
-  console.log('sumAddSalaryBeforeTax ' + sumAddSalaryBeforeTax);
-  console.log('sumAddSalaryBeforeTaxNonSocial ' + sumAddSalaryBeforeTaxNonSocial);
-  console.log('sumAddSalaryAfterTax ' + sumAddSalaryAfterTax);
+  // console.log('sumAddSalaryBeforeTax ' + sumAddSalaryBeforeTax);
+  // console.log('sumAddSalaryBeforeTaxNonSocial ' + sumAddSalaryBeforeTaxNonSocial);
+  // console.log('sumAddSalaryAfterTax ' + sumAddSalaryAfterTax);
 
 })();
 
