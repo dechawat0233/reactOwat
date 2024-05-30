@@ -3984,7 +3984,9 @@ await console.log('specialDaylist' + JSON.stringify(specialDaylist,null,2));
 await console.log('intersection: ' + intersection); // Output: ['2', '3', '4']
 await console.log('total ' + total );
 console.log('specialDaylist.length ' + specialDaylist.length + 'intersection.length '+ intersection.length + 'holidayRate '+ holidayRate )
-let calSP = await ((specialDaylist.length ||0 - intersection.length || 0 ) * holidayRate );
+let s1 = await specialDaylist.length ||0;
+let s2 = await intersection.length || 0;
+let calSP = await ((s1 - s2) * holidayRate );
 console.log(calSP );
 //total
 total = await total  + amountDay + amountOt + calSP -((sumSocial * 0.05) || 0);
