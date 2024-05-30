@@ -3983,12 +3983,15 @@ await console.log('specialDaylist' + JSON.stringify(specialDaylist,null,2));
 
 await console.log('intersection: ' + intersection); // Output: ['2', '3', '4']
 await console.log('total ' + total );
+
 //total
-total = await total  + amountDay + amountOt + sumCalTaxNonSalary - sumDeductWithTax 
-- tax
-- ((sumSocial * 0.05) || 0)
-+ (sumNonTaxNonSalary || 0)
-- (sumDeductUncalculateTax || 0);
+total = await total  + amountDay + amountOt -((sumSocial * 0.05) || 0);
+
+// total = await total  + amountDay + amountOt + sumCalTaxNonSalary - sumDeductWithTax 
+// - tax
+// - ((sumSocial * 0.05) || 0)
+// + (sumNonTaxNonSalary || 0)
+// - (sumDeductUncalculateTax || 0);
 
     // Other properties
     data.accountingRecord.amountHoliday = 0;
