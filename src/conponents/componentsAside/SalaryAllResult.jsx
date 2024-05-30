@@ -55,7 +55,6 @@ function SalaryAllResult() {
     });
 
     useEffect(() => {
-        // Fetch data from the API when the component mounts
         fetch(endpoint + '/workplace/list')
             .then(response => response.json())
             .then(data => {
