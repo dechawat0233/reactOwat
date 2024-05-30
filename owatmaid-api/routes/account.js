@@ -3510,7 +3510,11 @@ tax = await response.data.tax ||0;
 
       // Found the workplace
       // await console.log('Found workplace:', foundWorkplace);
+      
+      console.log(foundWorkplace.workTimeDay);
+
       // console.log(foundWorkplace.daysOff);
+
       await Promise.all( foundWorkplace.daysOff.map(async item => {
 
   // Parse the date string and create a Date object
@@ -3983,21 +3987,17 @@ await console.log('specialDaylist' + JSON.stringify(specialDaylist,null,2));
 
 await console.log('intersection: ' + intersection); // Output: ['2', '3', '4']
 await console.log('total ' + total );
-console.log('specialDaylist.length ' + specialDaylist.length + 'intersection.length '+ intersection.length + 'holidayRate '+ holidayRate )
+// console.log('specialDaylist.length ' + specialDaylist.length + 'intersection.length '+ intersection.length + 'holidayRate '+ holidayRate )
 let s1 = await specialDaylist.length ||0;
 let s2 = await intersection.length || 0;
 let calSP = await ((s1 - s2) * holidayRate );
-console.log(calSP );
+// console.log(calSP );
 //total
-total = await total  + amountDay + amountOt + calSP -((sumSocial * 0.05) || 0);
-
-// total = await total  + amountDay + amountOt + sumCalTaxNonSalary - sumDeductWithTax 
-// - tax
-// - ((sumSocial * 0.05) || 0)
-// + (sumNonTaxNonSalary || 0)
-// - (sumDeductUncalculateTax || 0);
+total = await total  + amountDay + amountOt + calSP -((sumSocial * 0.05) || 0) - tax;
 
     // Other properties
+    data.accountingRecord.amountSpecialDay= await calSP ||0;
+
     data.accountingRecord.amountHoliday = 0;
     data.accountingRecord.addAmountBeforeTax = sumCalTaxNonSalary || 0;
     data.accountingRecord.deductBeforeTax = sumDeductWithTax || 0;
