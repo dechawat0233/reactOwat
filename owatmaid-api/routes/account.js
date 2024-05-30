@@ -3511,7 +3511,7 @@ tax = await response.data.tax ||0;
       // Found the workplace
       // await console.log('Found workplace:', foundWorkplace);
       
-      console.log(foundWorkplace.workTimeDay);
+      console.log(JSON.stringify( foundWorkplace.workTimeDay,null,2));
 
       // console.log(foundWorkplace.daysOff);
 
@@ -3651,10 +3651,10 @@ if(promise) {
 //data non social
 // sumAddSalaryBeforeTaxNonSocial = sumAddSalaryBeforeTaxNonSocial  + parseFloat(response.data.addSalary[k].SpSalary || 0);
 }
-          console.log('tax' + response.data.addSalary[k].id || '0'); 
+          // console.log('tax' + response.data.addSalary[k].id || '0'); 
 
         } else {
-          console.log('non tax' + response.data.addSalary[k].id || '0');
+          // console.log('non tax' + response.data.addSalary[k].id || '0');
           // sumAddSalaryAfterTax  = sumAddSalaryAfterTax  + parseFloat(response.data.addSalary[k].SpSalary || 0);
         }
       }
