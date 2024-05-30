@@ -3985,6 +3985,7 @@ await console.log('intersection: ' + intersection); // Output: ['2', '3', '4']
 await console.log('total ' + total );
 
 let calSP = await (specialDaylist.length ||0) - (intersection.length || 0 ) * holidayRate ;
+console.log(calSP );
 //total
 total = await total  + amountDay + amountOt + calSP -((sumSocial * 0.05) || 0);
 
