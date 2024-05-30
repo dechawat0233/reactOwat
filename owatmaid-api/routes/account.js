@@ -3838,7 +3838,7 @@ if(item.id == '1535') {
   }
 
 }
-await console.log('addSalaryDayArray '+ JSON.stringify(addSalaryDayArray ,null,2));
+// await console.log('addSalaryDayArray '+ JSON.stringify(addSalaryDayArray ,null,2));
 
 //set data to position , tel , travel
 if(x1230 >0 ) {
