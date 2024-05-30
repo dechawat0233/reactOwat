@@ -497,10 +497,14 @@ let sumAddSalaryBeforeTaxTmp = 0;
 let sumAddSalaryBeforeTaxNonSocialTmp = 0;
 let sumAddSalaryAfterTaxTmp = 0;
 
+await addSalaryList.forEach(item => {
+  total = total + parseFloat( item.SpSalary || 0);
+  });
+  
+  
 //check addSalary with cal tax and social 
 await (async () => {
   await Promise.all(addSalaryList.map(async item => {
-    total  = await total  + parseFloat(item.SpSalary || 0);
 
 
     if(item.id === '1230' || item.id === '1350' || item.id === '1520' || item.id === '1535' || item.id === '1410') {
@@ -2258,10 +2262,14 @@ let sumAddSalaryBeforeTaxTmp = 0;
 let sumAddSalaryBeforeTaxNonSocialTmp = 0;
 let sumAddSalaryAfterTaxTmp = 0;
 
+await addSalaryList.forEach(item => {
+  total = total + parseFloat( item.SpSalary || 0);
+  });
+  
+  
 //check addSalary with cal tax and social 
 await (async () => {
   await Promise.all(addSalaryList.map(async item => {
-    total  = await total  + parseFloat(item.SpSalary || 0);
 
 
     if(item.id === '1230' || item.id === '1350' || item.id === '1520' || item.id === '1535' || item.id === '1410') {
