@@ -1158,16 +1158,6 @@ function SettingComplex() {
                                                     <input type="text" class="form-control" id="workplaceName" placeholder="ชื่อหน่วยงาน" value={workplaceName} onChange={(e) => setWorkplaceName(e.target.value)} />
                                                 </div>
                                             </div>
-                                            <div className="col-md-3">
-                                                <label role="workplaceName">ชื่อกลุ่ม</label>
-                                                <input
-                                                    type="text"
-                                                    value={workplaceComplexId}
-                                                    class="form-control"
-                                                    placeholder="ชื่อกลุ่ม"
-                                                    onChange={(e) => setWorkplaceComplexId(e.target.value)}
-                                                />
-                                            </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label role="workOfWeek">select</label>
@@ -1185,6 +1175,17 @@ function SettingComplex() {
                                                     </select>
                                                 </div>
                                             </div>
+                                            <div className="col-md-3">
+                                                <label role="workplaceName">ชื่อกลุ่ม</label>
+                                                <input
+                                                    type="text"
+                                                    value={workplaceComplexId}
+                                                    class="form-control"
+                                                    placeholder="ชื่อกลุ่ม"
+                                                    onChange={(e) => setWorkplaceComplexId(e.target.value)}
+                                                />
+                                            </div>
+                                           
                                         </div>
                                         <div class="row">
                                             <div class="col-md-3">

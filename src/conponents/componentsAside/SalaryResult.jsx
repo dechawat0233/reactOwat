@@ -369,6 +369,12 @@ function Salaryresult() {
   const bank = calsalarylist ? calsalarylist[0]?.accountingRecord.bank : null;
   const total = calsalarylist ? calsalarylist[0]?.accountingRecord.total : null;
   const sumSalaryForTax = calsalarylist ? calsalarylist[0]?.accountingRecord.sumSalaryForTax : null;
+
+  const countSpecialDay = calsalarylist ? calsalarylist[0]?.countSpecialDay : null;
+  const specialDayListWork = calsalarylist ? calsalarylist[0]?.specialDayListWork.length : null;
+  const specialDayRate = calsalarylist ? calsalarylist[0]?.specialDayRate : null;
+
+
   console.log('amountDay', amountDay);
 
 
@@ -1724,7 +1730,7 @@ function Salaryresult() {
                       </thead>
                       <tbody>
                         <tr>
-                          <td style={cellStyle}></td>
+                          <td style={cellStyle}>{isNaN((countSpecialDay - specialDayListWork) * specialDayRate) ? 0.00 : ((countSpecialDay - specialDayListWork) * specialDayRate).toFixed(2)}</td>
                           <td style={cellStyle}></td>
                           <td style={cellStyle}></td>
                         </tr>
