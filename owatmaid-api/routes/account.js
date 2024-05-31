@@ -12,7 +12,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const { months } = require('moment');
-const { el, ca } = require('date-fns/locale');
+const { el, ca, it } = require('date-fns/locale');
 
 
 // Get list of accounting
@@ -3423,6 +3423,41 @@ async function checkCalTax(id) {
   }
 }
 
+// Function to get the day number from a date string in YYYY-MM-DD format
+async function getDayNumberFromDate(dateString) {
+  // Create a Date object from the date string
+  const date = await new Date(dateString);
+
+  // Check if the date is valid
+  if (isNaN(date)) {
+      // throw new Error('Invalid date');
+  }
+  
+  // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+  const dayNumber = await date.getDay();
+  
+  return await dayNumber;
+}
+
+// Create a mapping of day names to their corresponding numbers
+const daysOfWeek = {
+  'อาทิตย์': 0,
+  'จันทร์': 1,
+  'อังคาร': 2,
+  'พุธ': 3,
+  'พฤหัส': 4,
+  'ศุกร์': 5,
+  'เสาร์': 6
+};
+
+// Function to get the number of the day in the week by name of the day
+function getDayNumber(dayName) {
+  const dayNumber = daysOfWeek[dayName];
+  if (dayNumber === undefined) {
+      throw new Error('Invalid day name');
+  }
+  return dayNumber;
+}
 
 //==========x
 //get all accounting
@@ -3454,6 +3489,7 @@ router.post('/calsalarytest', async (req, res) => {
         data.employeeId = responseConclude.data.recordConclude[c].employeeId;
         data.accountingRecord = {};
 
+        let salary = 0;
         let countDay = 0;
         let countHour = 0;
         let countOtHour = 0;
@@ -3489,6 +3525,9 @@ let countSpecialDay = 0;
 let amountSpecialDay = 0;
 let x1230 =0; let x1350 =0; let x1520 = 0; let x1535 = 0;
 let addSalaryDayArray = [];
+let dayOffList = [];
+let dayOffSum = 0;
+let dayOffSumWork = 0;
 
 // Get employee data by employeeId
 const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
@@ -3496,6 +3535,7 @@ if (response) {
     data.workplace = await response.data.workplace;
     data.accountingRecord.tax = await response.data.tax ||0;
 tax = await response.data.tax ||0; 
+salary = await response.data.salary || 0;
 
 // await console.log(response.data);
 
@@ -3508,9 +3548,107 @@ tax = await response.data.tax ||0;
       amountSpecial = await foundWorkplace.holiday || 0;
       // await console.log("workTimeDay " + JSON.stringify(foundWorkplace.workTimeDay ) );
 
+      //employee salary is not set use with workplace
+      if(salary === 0 ) {
+        salary = await parseFloat(foundWorkplace.workRate|| 0);
+      }
+      
       // Found the workplace
       // await console.log('Found workplace:', foundWorkplace);
+      
+      // console.log(JSON.stringify( foundWorkplace.workTimeDay,null,2));
+      if(foundWorkplace.workTimeDay ){
+        await foundWorkplace.workTimeDay.map(item => {
+          if(item.workOrStop === 'stop'){
+            // console.log(JSON.stringify( item.workOrStop ,null,2));
+
+            //get day off of week
+try {
+let startDay = getDayNumber(item.startDay);
+let endDay = getDayNumber(item.endDay);
+  console.log('startDay '+ startDay );
+  console.log('endDay ' + endDay );
+
+  if(startDay <= endDay) {
+    if(startDay === endDay) {
+      dayOffList.push(startDay);
+    } else {
+      for(let i = startDay; i <= endDay; i++) {
+        dayOffList.push(i);
+      }
+    }
+  
+  } else {
+    for(let i = endDay; i <= 6; i++){
+      dayOffList.push(i);
+    }
+    for(let j = 0; j <= startDay ; j++){
+      dayOffList.push(j);
+    }
+  }
+} catch (error) {
+  console.error(error.message);
+}
+          }
+        })
+      }
+
+      console.log('dayOffList ' + dayOffList);
+          // Format the new month as a two-digit string (e.g. "01", "02", ...)
+    const newMonthStringX = (month -1).toLocaleString('en-US', {
+      minimumIntegerDigits: 2,
+  });
+  
+  // Calculate the previous month
+  let previousMonthX;
+  if (newMonthStringX === 0) {
+      // If newMonth is January (0), the previous month is December (12)
+      previousMonthX = 12;
+  } else {
+      // Otherwise, subtract 1 from the current month
+      previousMonthX = newMonthStringX;
+  }
+  
+  // Convert the previous month to a two-digit string (e.g. "03")
+  const previousMonthStringX = previousMonthX.toLocaleString('en-US', {
+      minimumIntegerDigits: 2,
+  });
+
+  let endM1 = new Date(year, previousMonthStringX, 0).getDate();
+
+      // console.log(year + '-' + month + ' ' + previousMonthStringX  + endM1);
+for(m1 = 21; m1 <= endM1; m1 ++){
+  let dateString = `${year}-${previousMonthStringX}-${m1}`;
+  console.log(dateString);
+
+  let dayNumber =   new Date(dateString).getDate();
+
+  console.log('m1 ' + dayNumber + ' ' + JSON.stringify(dayNumber, null, 2));
+
+  if (dayOffList.includes(dayNumber)) {
+      dayOffSum += 1;
+  }
+
+//   let item = new Date(year, previousMonthStringX, m1).getDate();
+//   console.log(year + '-' + previousMonthStringX +'-' + item);
+//   let tmp = getDayNumberFromDate(year + '-' + previousMonthStringX +'-' + item);
+
+// console.log('m1 ' + item + ' ' + JSON.stringify(tmp ,null,2) );
+// if(dayOffList.includes( getDayNumberFromDate(year + '-' + previousMonthStringX +'-' + item) ) ) {
+// dayOffSum += 1;
+// }
+}
+
+for(m2 = 1; m2 <= 20; m2 ++){
+  let item = new Date(year, month, m2).getDate();
+if(dayOffList.includes( getDayNumberFromDate(year + '-' + month+'-' + item) ) ) {
+dayOffSum += 1;
+}
+}
+
+console.log('dayOffSum ' + dayOffSum);
       // console.log(foundWorkplace.daysOff);
+
       await Promise.all( foundWorkplace.daysOff.map(async item => {
 
   // Parse the date string and create a Date object
@@ -3647,10 +3785,10 @@ if(promise) {
 //data non social
 // sumAddSalaryBeforeTaxNonSocial = sumAddSalaryBeforeTaxNonSocial  + parseFloat(response.data.addSalary[k].SpSalary || 0);
 }
-          console.log('tax' + response.data.addSalary[k].id || '0'); 
+          // console.log('tax' + response.data.addSalary[k].id || '0'); 
 
         } else {
-          console.log('non tax' + response.data.addSalary[k].id || '0');
+          // console.log('non tax' + response.data.addSalary[k].id || '0');
           // sumAddSalaryAfterTax  = sumAddSalaryAfterTax  + parseFloat(response.data.addSalary[k].SpSalary || 0);
         }
       }
@@ -3785,6 +3923,13 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
 
   if (responseConclude.data.recordConclude[c].concludeRecord[i].workRate !== undefined) {
     countDay++;
+
+    if(dayOffList.includes( getDayNumberFromDate( responseConclude.data.recordConclude[c].concludeRecord[i].day) ) ) {
+// console.log(getDayNumberFromDate( responseConclude.data.recordConclude[c].concludeRecord[i].day) );
+dayOffSumWork += 1;      
+    }
+// console.log(getDayNumberFromDate( responseConclude.data.recordConclude[c].concludeRecord[i].day) );
+
     workDaylist.push(responseConclude.data.recordConclude[c].concludeRecord[i].day.split("/")[0] );
 
     //check addSalary day from conclude
@@ -3834,7 +3979,7 @@ if(item.id == '1535') {
   }
 
 }
-await console.log('addSalaryDayArray '+ JSON.stringify(addSalaryDayArray ,null,2));
+// await console.log('addSalaryDayArray '+ JSON.stringify(addSalaryDayArray ,null,2));
 
 //set data to position , tel , travel
 if(x1230 >0 ) {
@@ -3859,7 +4004,7 @@ data.accountingRecord.amountDay = amountDay;
 data.accountingRecord.amountOt = amountOt;
 
 
-sumSocial = await sumSocial + amountDay;
+// sumSocial = await sumSocial + amountDay;
 sumCalTax = await sumCalTax + amountDay;
 sumCalTax = await sumCalTax + amountOt;
 console.log(addSalaryDayArray.length);
@@ -3910,12 +4055,12 @@ if(item.id === '1410') {
     } else {
 
     let taxStatus = await checkCalTax(item.id);
-    console.log('taxStatus ' + item.id + ' ' + taxStatus + ' ' + item.SpSalary);
+    // console.log('taxStatus ' + item.id + ' ' + taxStatus + ' ' + item.SpSalary);
 
     if (taxStatus) {
       // Calculate tax
       let socialStatus = await checkCalSocial(item.id);
-      console.log('socialStatus ' + item.id + ' ' + socialStatus + ' ' + item.SpSalary);
+      // console.log('socialStatus ' + item.id + ' ' + socialStatus + ' ' + item.SpSalary);
 
       if (socialStatus) {
         // Calculate social
@@ -3935,9 +4080,9 @@ if(item.id === '1410') {
   sumAddSalaryBeforeTax = sumAddSalaryBeforeTaxTmp;
   sumAddSalaryBeforeTaxNonSocial = sumAddSalaryBeforeTaxNonSocialTmp;
   sumAddSalaryAfterTax = sumAddSalaryAfterTaxTmp;
-  console.log('sumAddSalaryBeforeTax ' + sumAddSalaryBeforeTax);
-  console.log('sumAddSalaryBeforeTaxNonSocial ' + sumAddSalaryBeforeTaxNonSocial);
-  console.log('sumAddSalaryAfterTax ' + sumAddSalaryAfterTax);
+  // console.log('sumAddSalaryBeforeTax ' + sumAddSalaryBeforeTax);
+  // console.log('sumAddSalaryBeforeTaxNonSocial ' + sumAddSalaryBeforeTaxNonSocial);
+  // console.log('sumAddSalaryAfterTax ' + sumAddSalaryAfterTax);
 
 })();
 
@@ -3983,14 +4128,21 @@ await console.log('specialDaylist' + JSON.stringify(specialDaylist,null,2));
 
 await console.log('intersection: ' + intersection); // Output: ['2', '3', '4']
 await console.log('total ' + total );
-//total
-total = await total  + amountDay + amountOt + sumCalTaxNonSalary - sumDeductWithTax 
-- tax
-- ((sumSocial * 0.05) || 0)
-+ (sumNonTaxNonSalary || 0)
-- (sumDeductUncalculateTax || 0);
+// console.log('specialDaylist.length ' + specialDaylist.length + 'intersection.length '+ intersection.length + 'holidayRate '+ holidayRate )
+let s1 = await specialDaylist.length ||0;
+let s2 = await intersection.length || 0;
+let calSP = await ((s1 - s2) * holidayRate );
+// console.log(calSP );
+sumSocial  = await sumSocial  + calSP ;
+let workDaySocial = await countDay - dayOffSumWork - s2;
+sumSocial = await sumSocial  + (workDaySocial * salary);
+await console.log('countDay '+ countDay + ' dayOffSumWork ' + dayOffSumWork  + ' s2 '  +s2 + 'workDaySocial ' + workDaySocial );
+
+console.log('workDaySocial '+ (workDaySocial * salary) + 'sumSocial '+ sumSocial );
 
     // Other properties
+    data.accountingRecord.amountSpecialDay= await calSP ||0;
+
     data.accountingRecord.amountHoliday = 0;
     data.accountingRecord.addAmountBeforeTax = sumCalTaxNonSalary || 0;
     data.accountingRecord.deductBeforeTax = sumDeductWithTax || 0;
@@ -4003,6 +4155,9 @@ if (sumSocial > 15000) {
 
 // Calculate socialSecurity based on sumSocial
 data.accountingRecord.socialSecurity = Math.ceil((sumSocial * 0.05)) || 0;
+
+//total
+total = await total  + amountDay + amountOt + calSP -(Math.ceil((sumSocial * 0.05) || 0)) - tax;
 
     // data.accountingRecord.socialSecurity = (sumSocial * 0.05) || 0;
     data.accountingRecord.addAmountAfterTax = sumNonTaxNonSalary || 0;
