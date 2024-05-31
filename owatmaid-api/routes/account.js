@@ -3619,7 +3619,7 @@ let endDay = getDayNumber(item.endDay);
       // console.log(year + '-' + month + ' ' + previousMonthStringX  + endM1);
 for(m1 = 21; m1 <= endM1; m1 ++){
   let item = new Date(year, previousMonthStringX, m1).getDate();
-console.log('m1 ' + getDayNumberFromDate(year + '-' + previousMonthStringX +'-' + item) );
+console.log('m1 ' + item + ' ' + getDayNumberFromDate(year + '-' + previousMonthStringX +'-' + item) );
 if(dayOffList.includes( getDayNumberFromDate(year + '-' + previousMonthStringX +'-' + item) ) ) {
 dayOffSum += 1;
 }
@@ -4122,7 +4122,7 @@ let calSP = await ((s1 - s2) * holidayRate );
 sumSocial  = await sumSocial  + calSP ;
 let workDaySocial = await countDay - dayOffSumWork - s2;
 sumSocial = await sumSocial  + (workDaySocial * salary);
-await console.log('countDay '+ countDay + 'dayOffSumWork ' + dayOffSumWork  + 's2 '  +s2 + 'workDaySocial ' + workDaySocial );
+await console.log('countDay '+ countDay + ' dayOffSumWork ' + dayOffSumWork  + ' s2 '  +s2 + 'workDaySocial ' + workDaySocial );
 
 console.log('workDaySocial '+ (workDaySocial * salary) + 'sumSocial '+ sumSocial );
 
