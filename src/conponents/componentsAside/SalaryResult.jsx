@@ -130,6 +130,7 @@ function Salaryresult() {
         const event = await new Event('submit'); // Creating a synthetic event object
         await handleSearch(event); // Call handleSearch with the event
         await localStorage.removeItem('employeeId');
+
       }
       if (savedMonth) {
         await setMonth(savedMonth);
