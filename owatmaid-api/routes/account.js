@@ -3620,7 +3620,8 @@ let endDay = getDayNumber(item.endDay);
 for(m1 = 21; m1 <= endM1; m1 ++){
   let item = new Date(year, previousMonthStringX, m1).getDate();
   console.log(year + '-' + previousMonthStringX +'-' + item);
-console.log('m1 ' + item + ' ' + JSON.stringify(getDayNumberFromDate(year + '-' + previousMonthStringX +'-' + item),null,2) );
+  let tmp = getDayNumberFromDate(year + '-' + previousMonthStringX +'-' + item);
+console.log('m1 ' + item + ' ' + JSON.stringify(tmp ,null,2) );
 if(dayOffList.includes( getDayNumberFromDate(year + '-' + previousMonthStringX +'-' + item) ) ) {
 dayOffSum += 1;
 }
