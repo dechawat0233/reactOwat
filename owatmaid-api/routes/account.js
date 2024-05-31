@@ -3430,7 +3430,7 @@ async function getDayNumberFromDate(dateString) {
   
   // Check if the date is valid
   if (isNaN(date)) {
-      throw new Error('Invalid date');
+      // throw new Error('Invalid date');
   }
   
   // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
