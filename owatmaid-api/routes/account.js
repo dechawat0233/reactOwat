@@ -4124,7 +4124,7 @@ let workDaySocial = await countDay - dayOffSumWork - s2;
 sumSocial = await sumSocial  + (workDaySocial * salary);
 
 
-console.log('workDaySocial '+ (workDaySocial * salary) +'sumSocial '+ sumSocial );
+console.log('workDaySocial '+ (workDaySocial * salary) + 'sumSocial '+ sumSocial );
 
     // Other properties
     data.accountingRecord.amountSpecialDay= await calSP ||0;
