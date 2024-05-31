@@ -3424,9 +3424,9 @@ async function checkCalTax(id) {
 }
 
 // Function to get the day number from a date string in YYYY-MM-DD format
-function getDayNumberFromDate(dateString) {
+async function getDayNumberFromDate(dateString) {
   // Create a Date object from the date string
-  const date = new Date(dateString);
+  const date = await new Date(dateString);
   
   // Check if the date is valid
   if (isNaN(date)) {
@@ -3434,9 +3434,9 @@ function getDayNumberFromDate(dateString) {
   }
   
   // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-  const dayNumber = date.getDay();
+  const dayNumber = await date.getDay();
   
-  return dayNumber;
+  return await dayNumber;
 }
 
 // Create a mapping of day names to their corresponding numbers
