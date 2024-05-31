@@ -3429,9 +3429,9 @@ async function getDayNumberFromDate(dateString) {
   const date = await new Date(dateString);
   
   // Check if the date is valid
-  // if (isNaN(date)) {
-  //     throw new Error('Invalid date');
-  // }
+  if (isNaN(date)) {
+      throw new Error('Invalid date');
+  }
   
   // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
   const dayNumber = await date.getDay();
