@@ -3427,7 +3427,7 @@ async function checkCalTax(id) {
 async function getDayNumberFromDate(dateString) {
   // Create a Date object from the date string
   const date = await new Date(dateString);
-  
+
   // Check if the date is valid
   if (isNaN(date)) {
       // throw new Error('Invalid date');
@@ -3618,15 +3618,25 @@ let endDay = getDayNumber(item.endDay);
 
       // console.log(year + '-' + month + ' ' + previousMonthStringX  + endM1);
 for(m1 = 21; m1 <= endM1; m1 ++){
-  let item = new Date(year, previousMonthStringX, m1).getDate();
-  console.log(year + '-' + previousMonthStringX +'-' + item);
-  // let tmp = getDayNumberFromDate(year + '-' + previousMonthStringX +'-' + item);
-  let tmp = getDayNumberFromDate('2024'+ '-' + '02' +'-' + item);
+  let dateString = `${year}-${previousMonthStringX}-${m1}`;
+  console.log(dateString);
 
-console.log('m1 ' + item + ' ' + JSON.stringify(tmp ,null,2) );
-if(dayOffList.includes( getDayNumberFromDate(year + '-' + previousMonthStringX +'-' + item) ) ) {
-dayOffSum += 1;
-}
+  let dayNumber =   new Date(dateString).getDate();
+
+  console.log('m1 ' + dayNumber + ' ' + JSON.stringify(dayNumber, null, 2));
+
+  if (dayOffList.includes(dayNumber)) {
+      dayOffSum += 1;
+  }
+
+//   let item = new Date(year, previousMonthStringX, m1).getDate();
+//   console.log(year + '-' + previousMonthStringX +'-' + item);
+//   let tmp = getDayNumberFromDate(year + '-' + previousMonthStringX +'-' + item);
+
+// console.log('m1 ' + item + ' ' + JSON.stringify(tmp ,null,2) );
+// if(dayOffList.includes( getDayNumberFromDate(year + '-' + previousMonthStringX +'-' + item) ) ) {
+// dayOffSum += 1;
+// }
 }
 
 for(m2 = 1; m2 <= 20; m2 ++){
