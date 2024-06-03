@@ -3618,12 +3618,18 @@ let endDay = getDayNumber(item.endDay);
 
       // console.log(year + '-' + month + ' ' + previousMonthStringX  + endM1);
 for(m1 = 21; m1 <= endM1; m1 ++){
-  let dateString = `${year}-${previousMonthStringX}-${m1}`;
+  let dateString = `${year}-${previousMonthString}-${m1.toString().padStart(2, '0')}`;
   console.log(dateString);
 
-  let dayNumber =   new Date(dateString).getDate();
+  let dayNumber = new Date(dateString).getDay(); // getDay() returns the day of the week (0-6)
 
-  console.log('dayOffList ' + dayOffList + 'm1 ' + dayNumber + ' ' + JSON.stringify(dayNumber, null, 2));
+  console.log('m1 ' + dayNumber + ' ' + JSON.stringify(dayNumber, null, 2));
+  // let dateString = `${year}-${previousMonthStringX}-${m1}`;
+  // console.log(dateString);
+
+  // let dayNumber =   new Date(dateString).getDate();
+
+  // console.log('dayOffList ' + dayOffList + 'm1 ' + dayNumber + ' ' + JSON.stringify(dayNumber, null, 2));
 
   if (dayOffList.includes(dayNumber)) {
       dayOffSum += 1;
