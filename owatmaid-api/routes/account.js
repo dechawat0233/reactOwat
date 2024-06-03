@@ -4131,7 +4131,7 @@ await console.log('total ' + total );
 // console.log('specialDaylist.length ' + specialDaylist.length + 'intersection.length '+ intersection.length + 'holidayRate '+ holidayRate )
 let s1 = await specialDaylist.length ||0;
 let s2 = await intersection.length || 0;
-let test = await s1 - s2;
+let test = await dayOffSumWork ;
 
 data.accountingRecord.test= await test||0;
 
