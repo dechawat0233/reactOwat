@@ -3623,7 +3623,7 @@ for(m1 = 21; m1 <= endM1; m1 ++){
 
   let dayNumber = new Date(dateString).getDay(); // getDay() returns the day of the week (0-6)
 
-  console.log('m1 ' + dayNumber + ' ' + JSON.stringify(dayNumber, null, 2));
+  // console.log('m1 ' + dayNumber + ' ' + JSON.stringify(dayNumber, null, 2));
 
   if (dayOffList.includes(dayNumber)) {
       dayOffSum += 1;
@@ -3637,17 +3637,13 @@ for(m2 = 1; m2 <= 20; m2 ++){
 
   let dayNumber = new Date(dateString).getDay(); // getDay() returns the day of the week (0-6)
 
-  console.log('m2 ' + dayNumber + ' ' + JSON.stringify(dayNumber, null, 2));
+  // console.log('m2 ' + dayNumber + ' ' + JSON.stringify(dayNumber, null, 2));
 
   if (dayOffList.includes(dayNumber)) {
       dayOffSum += 1;
   }
 
 
-//   let item = new Date(year, month, m2).getDate();
-// if(dayOffList.includes( getDayNumberFromDate(year + '-' + month+'-' + item) ) ) {
-// dayOffSum += 1;
-// }
 }
 
 console.log('dayOffSum ' + dayOffSum);
