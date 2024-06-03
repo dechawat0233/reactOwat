@@ -4131,15 +4131,13 @@ await console.log('total ' + total );
 // console.log('specialDaylist.length ' + specialDaylist.length + 'intersection.length '+ intersection.length + 'holidayRate '+ holidayRate )
 let s1 = await specialDaylist.length ||0;
 let s2 = await intersection.length || 0;
-let test = await dayOffSumWork ;
-
-data.accountingRecord.test= await test||0;
-
-
 let calSP = await ((s1 - s2) * holidayRate );
 
-console.log('calSP '+ calSP );
+// console.log('calSP '+ calSP );
 sumSocial  = await sumSocial  + calSP ;
+let test = await sumSocial  ;
+
+data.accountingRecord.test= await test||0;
 
 let workDaySocial = await countDay - dayOffSumWork - s2;
 
