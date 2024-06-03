@@ -3647,7 +3647,7 @@ for(m2 = 1; m2 <= 20; m2 ++){
 }
 
 console.log('*dayOffSum ' + dayOffSum);
-      console.log(foundWorkplace.daysOff);
+      // console.log(foundWorkplace.daysOff);
 
       await Promise.all( foundWorkplace.daysOff.map(async item => {
 
@@ -4135,6 +4135,7 @@ let calSP = await ((s1 - s2) * holidayRate );
 // console.log(calSP );
 sumSocial  = await sumSocial  + calSP ;
 let workDaySocial = await countDay - dayOffSumWork - s2;
+await console.log('*' +sumSocial );
 sumSocial = await sumSocial  + (workDaySocial * salary);
 await console.log('countDay '+ countDay + ' dayOffSumWork ' + dayOffSumWork  + ' s2 '  +s2 + 'workDaySocial ' + workDaySocial );
 
