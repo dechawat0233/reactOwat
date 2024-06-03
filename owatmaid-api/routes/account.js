@@ -3923,7 +3923,7 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
   countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
 
   //check work rate is not standard day
-  if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) !== salary) {
+  if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) == parseFloat(salary) ) {
 dayOffWork += 1;
   }
 
