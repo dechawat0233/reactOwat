@@ -130,6 +130,7 @@ function Salaryresult() {
         const event = await new Event('submit'); // Creating a synthetic event object
         await handleSearch(event); // Call handleSearch with the event
         await localStorage.removeItem('employeeId');
+
       }
       if (savedMonth) {
         await setMonth(savedMonth);
@@ -1253,6 +1254,13 @@ function Salaryresult() {
 
   };
 
+  const sumwork = isNaN(amountDay + amountOt + sumAddSalaryList) ? 0.00 : (amountDay + amountOt + sumAddSalaryList).toFixed(2)
+
+  const workHoliday = isNaN((countSpecialDay - specialDayListWork) * specialDayRate) ? 0.00 : ((countSpecialDay - specialDayListWork) * specialDayRate).toFixed(2)
+
+  const totalSum = (parseFloat(sumwork) + parseFloat(workHoliday)).toFixed(2);
+
+
   return (
     // <div>
 
@@ -1730,7 +1738,8 @@ function Salaryresult() {
                       </thead>
                       <tbody>
                         <tr>
-                          <td style={cellStyle}>{isNaN((countSpecialDay - specialDayListWork) * specialDayRate) ? 0.00 : ((countSpecialDay - specialDayListWork) * specialDayRate).toFixed(2)}</td>
+                          {/* <td style={cellStyle}>{isNaN((countSpecialDay - specialDayListWork) * specialDayRate) ? 0.00 : ((countSpecialDay - specialDayListWork) * specialDayRate).toFixed(2)}</td> */}
+                          <td style={cellStyle}>{workHoliday}</td>
                           <td style={cellStyle}></td>
                           <td style={cellStyle}></td>
                         </tr>
@@ -1757,9 +1766,12 @@ function Salaryresult() {
                           <td style={cellStyle}>{(totalSumDeduct).toFixed(2)}</td>
                           <td style={cellStyle}>{(totalSumSalary - totalSumDeduct).toFixed(2)}</td> */}
 
-                          <td style={cellStyle}>{isNaN(amountDay + amountOt + sumAddSalaryList) ? 0.00 : (amountDay + amountOt + sumAddSalaryList).toFixed(2)}</td>
+                          {/* <td style={cellStyle}>{isNaN(amountDay + amountOt + sumAddSalaryList) ? 0.00 : (amountDay + amountOt + sumAddSalaryList).toFixed(2)}</td>
                           <td style={cellStyle}>{isNaN(totalSumDeduct) ? 0.00 : (totalSumDeduct).toFixed(2)}</td>
-                          <td style={cellStyle}>{isNaN(amountDay + amountOt + sumAddSalaryList - totalSumDeduct) ? 0.00 : (amountDay + amountOt + sumAddSalaryList - totalSumDeduct).toFixed(2)}</td>
+                          <td style={cellStyle}>{isNaN(amountDay + amountOt + sumAddSalaryList - totalSumDeduct) ? 0.00 : (amountDay + amountOt + sumAddSalaryList - totalSumDeduct).toFixed(2)}</td> */}
+                          <td style={cellStyle}>{totalSum}</td>
+                          <td style={cellStyle}>{totalSumDeduct}</td>
+                          <td style={cellStyle}>{totalSum - totalSumDeduct}</td>
                         </tr>
                       </tbody>
                     </table>
