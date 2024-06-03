@@ -3528,6 +3528,7 @@ let addSalaryDayArray = [];
 let dayOffList = [];
 let dayOffSum = 0;
 let dayOffSumWork = 0;
+let dayOffWork = 0;
 
 // Get employee data by employeeId
 const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
@@ -3646,7 +3647,7 @@ for(m2 = 1; m2 <= 20; m2 ++){
 
 }
 
-console.log('*dayOffSum ' + dayOffSum);
+console.log('dayOffSum ' + dayOffSum);
       // console.log(foundWorkplace.daysOff);
 
       await Promise.all( foundWorkplace.daysOff.map(async item => {
@@ -3921,6 +3922,11 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
   countHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
   countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
 
+  //check work rate is not standard day
+  if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) !== salary) {
+dayOffWork += 1;
+  }
+
   if (responseConclude.data.recordConclude[c].concludeRecord[i].workRate !== undefined) {
     countDay++;
 
@@ -4136,7 +4142,7 @@ let calSP = await ((s1 - s2) * holidayRate );
 // console.log('calSP '+ calSP );
 sumSocial  = await sumSocial  + calSP ;
 
-let workDaySocial = await countDay - dayOffSum - s2;
+let workDaySocial = await dayOffWork - dayOffSum - s2;
 let test = await workDaySocial;
 
 data.accountingRecord.test= await test||0;
