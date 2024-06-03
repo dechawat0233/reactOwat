@@ -3647,7 +3647,7 @@ for(m2 = 1; m2 <= 20; m2 ++){
 }
 
 console.log('*dayOffSum ' + dayOffSum);
-      // console.log(foundWorkplace.daysOff);
+      console.log(foundWorkplace.daysOff);
 
       await Promise.all( foundWorkplace.daysOff.map(async item => {
 
