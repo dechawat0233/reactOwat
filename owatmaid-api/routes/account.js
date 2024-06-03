@@ -4144,7 +4144,7 @@ let calSP = await ((s1 - s2) * holidayRate );
 
 let workDaySocial = await dayOffWork - dayOffSum - s2;
 
-sumSocial = await sumSocial  + (workDaySocial * salary) +sumSocial  + calSP ;
+sumSocial = await sumSocial  + (workDaySocial * salary) + calSP ;
 await console.log('*' +workDaySocial );
 // let test = await sumSocial;
 
