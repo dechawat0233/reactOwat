@@ -316,7 +316,7 @@ function Salaryresult() {
           month: month || '',
         };
 
-        await setAddSalaryList([]);
+        // await setAddSalaryList([]);
         await axios.post(endpoint + '/accounting/calsalaryemp', dataTest)
           .then(response => {
             const responseData = response.data;
@@ -352,6 +352,8 @@ function Salaryresult() {
   }, [year, month, staffId]);
 
   console.log('calsalarylist', calsalarylist);
+  console.log('addSalaryList', addSalaryList);
+
 
   const countDay = calsalarylist ? calsalarylist[0]?.accountingRecord.countDay : null;
   const amountDay = calsalarylist ? calsalarylist[0]?.accountingRecord.amountDay : null;
