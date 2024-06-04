@@ -60,7 +60,7 @@ router.post('/calsalaryemp', async (req, res) => {
       year: year, 
       month: month,
       concludeDate: "",
-      employeeId: ''
+      employeeId: employeeId
     };
 
     const responseConclude = await axios.post(sURL + '/conclude/search', dataSearch);
@@ -3057,7 +3057,6 @@ console.log('workDaySocial '+ (workDaySocial * salary) + 'sumSocial '+ sumSocial
     // Other properties
     data.accountingRecord.amountSpecialDay= await calSP ||0;
     data.accountingRecord.countDayWork = await dayOffWork ||0;
-    data.accountingRecord.test = await addSalaryList.length ||0;
 
     data.accountingRecord.amountHoliday = 0;
     data.accountingRecord.addAmountBeforeTax = sumCalTaxNonSalary || 0;
