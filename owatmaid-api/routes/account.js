@@ -503,6 +503,7 @@ await Promise.all(promisesDeduct)
     console.error('Error occurred while processing promises:', error);
 });
 
+addSalaryDayArray = [];  
 
 //ss1
 for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.length; i++) {
@@ -1723,6 +1724,7 @@ await Promise.all(promisesDeduct)
     console.error('Error occurred while processing promises:', error);
 });
 
+addSalaryDayArray = [];  
 
 //ss1
 for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.length; i++) {
@@ -2814,10 +2816,10 @@ await Promise.all(promisesDeduct)
     console.error('Error occurred while processing promises:', error);
 });
 
+addSalaryDayArray = [];  
 
 //ss1
 for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.length; i++) {
-addSalaryDayArray = [];  
   amountDay += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0);
   amountOt += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT || 0);
   amountSpecial += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].addSalaryDay || 0);
