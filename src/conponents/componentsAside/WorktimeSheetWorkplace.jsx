@@ -1900,8 +1900,9 @@ function WorktimeSheetWorkplace() {
             });
     }, []);
 
-    const filteredEmployees = emploeeData.filter(employee => employeeIdsArray.includes(parseInt(employee.employeeId, 10)));
-
+    // const filteredEmployees = emploeeData.filter(employee => employeeIdsArray.includes(parseInt(employee.employeeId, 10)));
+    const filteredEmployees = emploeeData.filter(employee => employeeIdsArray.includes(parseInt(employee.employeeId, 10)))
+        .sort((a, b) => parseInt(a.employeeId, 10) - parseInt(b.employeeId, 10));
     //     // Do something with the filtered employees
     console.log('filteredEmployees', filteredEmployees);
 
@@ -2038,7 +2039,7 @@ function WorktimeSheetWorkplace() {
         });
 
         arrayAllTime.push(employeeResultArrayAllTime);
-        console.log('arrayAllTime', arrayAllTime);
+        console.log('arrayAllTime123', arrayAllTime);
 
         // รวมชั่วโมงทำงาน
         const employeeResultArrayOTAllTime = resultArray.map(day => {
