@@ -503,6 +503,7 @@ await Promise.all(promisesDeduct)
     console.error('Error occurred while processing promises:', error);
 });
 
+addSalaryDayArray = [];  
 
 //ss1
 for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.length; i++) {
@@ -1723,6 +1724,7 @@ await Promise.all(promisesDeduct)
     console.error('Error occurred while processing promises:', error);
 });
 
+addSalaryDayArray = [];  
 
 //ss1
 for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.length; i++) {
@@ -2666,6 +2668,7 @@ let deductSalaryList = [];
 
 
     for (let k = 0; k < response.data.addSalary.length; k++) {
+
       //check addSalary with tax and cal social
         const promise1 = await checkCalTax(response.data.addSalary[k].id || '0');
         const promise = await checkCalSocial(response.data.addSalary[k].id || '0');
@@ -2813,6 +2816,7 @@ await Promise.all(promisesDeduct)
     console.error('Error occurred while processing promises:', error);
 });
 
+addSalaryDayArray = [];  
 
 //ss1
 for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.length; i++) {
@@ -3053,6 +3057,7 @@ console.log('workDaySocial '+ (workDaySocial * salary) + 'sumSocial '+ sumSocial
     // Other properties
     data.accountingRecord.amountSpecialDay= await calSP ||0;
     data.accountingRecord.countDayWork = await dayOffWork ||0;
+    data.accountingRecord.test = await addSalaryList.length ||0;
 
     data.accountingRecord.amountHoliday = 0;
     data.accountingRecord.addAmountBeforeTax = sumCalTaxNonSalary || 0;
