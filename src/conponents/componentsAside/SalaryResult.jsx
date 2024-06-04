@@ -377,6 +377,10 @@ function Salaryresult() {
   const specialDayListWork = calsalarylist ? calsalarylist[0]?.specialDayListWork.length : null;
   const specialDayRate = calsalarylist ? calsalarylist[0]?.specialDayRate : null;
 
+  const amountSpecialDay = calsalarylist ? calsalarylist[0]?.accountingRecord.amountSpecialDay : null;
+  const countDayWork = calsalarylist ? calsalarylist[0]?.accountingRecord.countDayWork : null;
+
+
 
   console.log('amountDay', amountDay);
 
@@ -1741,7 +1745,8 @@ function Salaryresult() {
                       <tbody>
                         <tr>
                           {/* <td style={cellStyle}>{isNaN((countSpecialDay - specialDayListWork) * specialDayRate) ? 0.00 : ((countSpecialDay - specialDayListWork) * specialDayRate).toFixed(2)}</td> */}
-                          <td style={cellStyle}>{workHoliday}</td>
+                          {/* <td style={cellStyle}>{workHoliday}</td> */}
+                          <td style={cellStyle}>{amountSpecialDay}</td>
                           <td style={cellStyle}></td>
                           <td style={cellStyle}></td>
                         </tr>
@@ -1773,7 +1778,12 @@ function Salaryresult() {
                           <td style={cellStyle}>{isNaN(amountDay + amountOt + sumAddSalaryList - totalSumDeduct) ? 0.00 : (amountDay + amountOt + sumAddSalaryList - totalSumDeduct).toFixed(2)}</td> */}
                           <td style={cellStyle}>{totalSum}</td>
                           <td style={cellStyle}>{totalSumDeduct}</td>
-                          <td style={cellStyle}>{totalSum - totalSumDeduct}</td>
+                          {/* <td style={cellStyle}>{totalSum - totalSumDeduct}</td> */}
+                          <td style={cellStyle}>
+                            {/* {isNaN(Number(total)) ? 0.00 : Number(total).toFixed(2)} */}
+                            {isNaN(Number(total)) ? 0.00 : (Math.ceil(Number(total) * 100) / 100).toFixed(2)}
+                          </td>
+
                         </tr>
                       </tbody>
                     </table>
