@@ -380,7 +380,16 @@ function Salaryresult() {
   const amountSpecialDay = calsalarylist ? calsalarylist[0]?.accountingRecord.amountSpecialDay : null;
   const countDayWork = calsalarylist ? calsalarylist[0]?.accountingRecord.countDayWork : null;
 
+  const [amountSpecialDayReadyUpDate, setAmountSpecialDayReadyUpDate] = useState(amountSpecialDay === "null" ? '' : amountSpecialDay);
+  // Update state when amountSpecialDay changes
+  useEffect(() => {
+    setAmountSpecialDayReadyUpDate(amountSpecialDay === "null" ? '' : amountSpecialDay);
+  }, [amountSpecialDay]);
 
+  // Handle input change
+  const handleAmountSpecialDayChange = (e) => {
+    setAmountSpecialDayReadyUpDate(e.target.value);
+  };
 
   console.log('amountDay', amountDay);
 
@@ -1268,7 +1277,7 @@ function Salaryresult() {
 
 
   const handleAddSalary = () => {
-    localStorage.setItem('searchEmployeeId', staffId );
+    localStorage.setItem('searchEmployeeId', staffId);
     window.location.href = '/addEdit_SalaryEmployee';
   }
 
@@ -1752,7 +1761,23 @@ function Salaryresult() {
                         <tr>
                           {/* <td style={cellStyle}>{isNaN((countSpecialDay - specialDayListWork) * specialDayRate) ? 0.00 : ((countSpecialDay - specialDayListWork) * specialDayRate).toFixed(2)}</td> */}
                           {/* <td style={cellStyle}>{workHoliday}</td> */}
-                          <td style={cellStyle}>{amountSpecialDay}</td>
+                          <td style={cellStyle}>
+
+                            {/* {amountSpecialDay} */}
+                            <div class="row">
+                              <div class="col-md-6">
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  id="staffId"
+                                  placeholder=""
+                                  value={amountSpecialDayReadyUpDate}
+                                  onChange={handleAmountSpecialDayChange}
+                                />
+                              </div>
+                            </div>
+
+                          </td>
                           <td style={cellStyle}></td>
                           <td style={cellStyle}></td>
                         </tr>
