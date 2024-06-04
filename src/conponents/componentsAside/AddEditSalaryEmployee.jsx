@@ -26,6 +26,10 @@ function AddEditSalaryEmployee() {
 
 
     useEffect(() => {
+        //get searchEmployeeId from localStorage
+        const tmp = localStorage.getItem('searchEmployeeId');
+        setSearchEmployeeId(tmp || '');
+        
         setMonth("01");
         //get data from master employee
 

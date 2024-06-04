@@ -1261,6 +1261,12 @@ function Salaryresult() {
   const totalSum = (parseFloat(sumwork) + parseFloat(workHoliday)).toFixed(2);
 
 
+  const handleAddSalary = () => {
+    localStorage.setItem('searchEmployeeId', staffId );
+    window.location.href = '/addEdit_SalaryEmployee';
+  }
+
+
   return (
     // <div>
 
@@ -1643,7 +1649,7 @@ function Salaryresult() {
                           </td>
 
                           <td style={cellStyle}>
-                            <button class="btn btn-danger" style={{ width: '4rem' }}>แก้ไข</button>
+                            <button type="button" onClick={handleAddSalary} class="btn btn-danger" style={{ width: '4rem' }}>แก้ไข</button>
                           </td>
 
                         </tr>
@@ -1714,7 +1720,7 @@ function Salaryresult() {
                           <td style={cellStyle}>{isNaN(Number(deductBeforeTax) + Number(deductAfterTax) + Number(tax) + Math.ceil(Number(socialSecurity)) + Number(bank)) ? 0.00 : (Number(deductBeforeTax) + Number(deductAfterTax) + Number(tax) + Number(socialSecurity) + Number(bank)).toFixed(2)}</td>
                           {/* <td style={cellStyle}>({anyMinus} + {tax} + {((overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary) * socialSecurity).toFixed()} + {bankCustom} + {sumDeduct} + {sumDeductInstallment})</td> */}
                           <td style={cellStyle}>
-                            <button class="btn btn-danger" style={{ width: '4rem' }}>แก้ไข</button>
+                            <button type="button" onClick={handleAddSalary} class="btn btn-danger" style={{ width: '4rem' }}>แก้ไข</button>
                           </td>
                         </tr>
                       </tbody>
