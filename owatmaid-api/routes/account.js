@@ -2666,6 +2666,7 @@ let deductSalaryList = [];
 
 
     for (let k = 0; k < response.data.addSalary.length; k++) {
+
       //check addSalary with tax and cal social
         const promise1 = await checkCalTax(response.data.addSalary[k].id || '0');
         const promise = await checkCalSocial(response.data.addSalary[k].id || '0');
@@ -2816,6 +2817,7 @@ await Promise.all(promisesDeduct)
 
 //ss1
 for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.length; i++) {
+addSalaryDayArray = [];  
   amountDay += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0);
   amountOt += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT || 0);
   amountSpecial += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].addSalaryDay || 0);
