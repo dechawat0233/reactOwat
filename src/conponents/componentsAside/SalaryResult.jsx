@@ -325,8 +325,6 @@ function Salaryresult() {
 
               setAddSalaryList(response.data[0].addSalary);
               if (response.data[0].addSalary) {
-                alert( response.data[0].employeeId + ' ' + response.data[0].addSalary.length);
-                alert(staffId );
                 let tmp = 0;
                 response.data[0].addSalary.map(item => {
                   tmp += parseFloat(item.SpSalary);
