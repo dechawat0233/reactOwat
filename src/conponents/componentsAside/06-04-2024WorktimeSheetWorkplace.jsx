@@ -1905,27 +1905,14 @@ function WorktimeSheetWorkplace() {
     //     // Do something with the filtered employees
     console.log('filteredEmployees', filteredEmployees);
 
-    // const extractedData = filteredEmployees.map(employee => [
-    //     employee.name + ' ' + employee.lastName,
-    //     employee.employeeId,
-    //     'กะเช้า',
-    //     'กะดึก',
-    // ]);
-
-    const extractedData = filteredEmployees
-        .map(employee => [
-            employee.name + ' ' + employee.lastName,
-            employee.employeeId,
-            'กะเช้า',
-            'กะดึก',
-        ])
-        .sort((a, b) => {
-            const idA = parseInt(a[1], 10);
-            const idB = parseInt(b[1], 10);
-            return idA - idB;
-        });
-
-    console.log('extractedData123', extractedData);
+    const extractedData = filteredEmployees.map(employee => [
+        employee.name + ' ' + employee.lastName,
+        employee.employeeId,
+        'กะเช้า',
+        'กะดึก',
+        // Add more properties as needed
+    ]);
+    console.log('extractedData', extractedData);
 
     // const extractedDataAddSalary = filteredEmployees.map(employee => [
     //     employee.addSalary
@@ -1971,7 +1958,6 @@ function WorktimeSheetWorkplace() {
         // });
         const datesArray = combinedArray[employeeId].map(entry => Number(entry.dates));
 
-        console.log('datesArray123', datesArray);
         // Filter only numeric values in datesArray
         const numericDatesArray = datesArray.filter(date => !isNaN(date));
 
@@ -4101,7 +4087,7 @@ function WorktimeSheetWorkplace() {
 
                 // drawArrayText(extractedDataAddSalary);
                 // drawArrayTextAllTime
-
+                
                 drawArrayTextAllTime(arrayAllTime.slice(pageStartIndex, pageEndIndex));
 
                 drawArrayTextOT(arrayWorkOTNormalDay.slice(pageStartIndex, pageEndIndex));
