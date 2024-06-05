@@ -128,7 +128,7 @@ function Salaryresult() {
         // setStaffFullName(savedEmployeeName);
 
         const event = await new Event('submit'); // Creating a synthetic event object
-        await handleSearch(event); // Call handleSearch with the event
+        // await handleSearch(event); // Call handleSearch with the event
         await localStorage.removeItem('employeeId');
 
       }
@@ -199,11 +199,12 @@ function Salaryresult() {
   console.log('remainArray', remainArray);
 
   useEffect(() => {
-    setMonth("01");
+    // setMonth("01");
 
     const currentYear = new Date().getFullYear();
     setYear(currentYear);
   }, []); // Run this effect only once on component mount
+
   const EndYear = 2010;
   const currentYear = new Date().getFullYear(); // 2024
   const years = Array.from({ length: currentYear - EndYear + 1 }, (_, index) => EndYear + index).reverse();
@@ -261,18 +262,6 @@ function Salaryresult() {
     setSearchEmployeeName(selectedEmployeeFName);
   };
 
-  // useEffect(() => {
-  //   // Fetch data from the API when the component mounts
-  //   fetch(endpoint + '/workplace/list')
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       // Update the state with the fetched data
-  //       setWorkplaceList(data);
-  //     })
-  //     .catch(error => {
-  //       console.error('Error fetching data:', error);
-  //     });
-  // }, []);
 
   useEffect(() => {
     // Fetch data from the API when the component mounts
@@ -289,19 +278,6 @@ function Salaryresult() {
   console.log('concludeList', concludeList);
 
 
-  // useEffect(() => {
-  //   // Fetch data from the API when the component mounts
-  //   fetch(endpoint + '/accounting/calsalarylist')
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       // Update the state with the fetched data
-  //       setCalsalarylist(data);
-  //       // alert(data[0].workplaceName);
-  //     })
-  //     .catch(error => {
-  //       console.error('Error fetching data:', error);
-  //     });
-  // }, []);
   const [addSalaryList, setAddSalaryList] = useState([]);
   const [deductSalaryList, setDeductSalaryList] = useState([]);
   const [sumAddSalaryList, setSumAddSalaryList] = useState(0);
