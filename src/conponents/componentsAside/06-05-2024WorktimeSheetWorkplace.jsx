@@ -2393,23 +2393,18 @@ function WorktimeSheetWorkplace() {
     );
 
     // วันหยุด
-    const sumArrayHolid = arrayWorkHoli.map(subArray =>
-        subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
-    );
-
-    const sumArrayTotal = sumArrayOT.map((sumOT, index) => sumOT + (sumArrayHolid[index] || 0));
-
+    // const sumArrayHoli = arrayWorkHoli.map(subArray =>
+    //     subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
+    // );
 
     const countSpecialDays = responseDataAll.map(item => item.countSpecialDay);
     const specialDayListWorks = responseDataAll.map(item => item.specialDayListWork.length);
-    // const specialDayRate = responseDataAll.map(item => item.specialDayRate);
-    const specialDayRate = responseDataAll.map(item => parseInt(item.specialDayRate, 10));
-
-    console.log('specialDayRate', specialDayRate);
-
+    const specialDayRate = responseDataAll.map(item => item.specialDayRate);
 
     console.log('countSpecialDays', countSpecialDays);
     console.log('specialDayListWorks', specialDayListWorks);
+    console.log('specialDayRate', specialDayRate);
+
 
     const sumArrayHoli = countSpecialDays.map((countSpecialDay, index) => countSpecialDay - specialDayListWorks[index]);
     console.log('differences', sumArrayHoli);
@@ -5065,9 +5060,7 @@ function WorktimeSheetWorkplace() {
                     let currentY = startY + i * verticalDistance + addmove;
 
                     // Calculate the product and convert it to a string
-                    // const product = (sumArrayHoli[i] * (1.5 * (countalldaywork / 8))).toString();
-                    const product = (sumArrayHoli[i] * specialDayRate[i]).toString();
-
+                    const product = (sumArrayHoli[i] * (1.5 * (countalldaywork / 8))).toString();
                     // responseDataAll
 
                     doc.text(sumArrayHoli[i].toString(), currentX + 2, 3 + currentY, { align: 'center' });
@@ -5621,16 +5614,11 @@ function WorktimeSheetWorkplace() {
                 drawArrayTextOTHoliday(arrayWorkOTHoliday.slice(pageStartIndex, pageEndIndex));
 
                 // drawArrayTextSumWork(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
-               
-                // วันทำงาน
                 drawArrayTextSumWork(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArrayOld.slice(pageStartIndex, pageEndIndex));
 
-                // ot 1.5
-                // drawArrayTextSumWorkOT(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArrayOT.slice(pageStartIndex, pageEndIndex));
-                drawArrayTextSumWorkOT(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArrayTotal.slice(pageStartIndex, pageEndIndex));
+                drawArrayTextSumWorkOT(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArrayOT.slice(pageStartIndex, pageEndIndex));
 
-                
-                // วันหยุด เงินตรง
+                // วันหยุด ผลรวม
                 drawArrayTextSumWorkHoli(arrayWorkHoli.slice(pageStartIndex, pageEndIndex), sumArrayHoli.slice(pageStartIndex, pageEndIndex));
 
                 drawArrayTextSumWorkHoliday(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), sumArrayHoliday.slice(pageStartIndex, pageEndIndex));
