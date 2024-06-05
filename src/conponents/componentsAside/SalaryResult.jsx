@@ -309,7 +309,7 @@ function Salaryresult() {
   useEffect(() => {
 
     const fetchData = async () => {
-      if (year && month && staffId !== '') {
+      if (year !== '' && month !== '' && staffId !== '') {
         const dataTest = await {
           employeeId: staffId || '',
           year: year || '',
