@@ -1160,7 +1160,7 @@ function SalaryAllResult() {
                 pdf.text(`รวมแผนก`, startX, currentY);
 
                 // pdf.text(`${workplaceName} : ${workplaceKey}`, startXName + 1, currentY);
-                pdf.text(`${workplaceKey} `, startXName + 1, currentY);
+                pdf.text(`${workplaceName} `, startXName + 1, currentY);
 
 
                 pdf.text(`${totalEmp} คน`, startXAllDay + 5, currentY, { align: 'right' });
@@ -1979,8 +1979,8 @@ function SalaryAllResult() {
                 pdf.text(`รวมแผนก`, 1, currentY);
 
                 // pdf.text(`${workplaceName} : ${workplaceKey}`, startXName + 1, currentY);
-                // pdf.text(`${workplaceName} `, startXName + 1, currentY);
-                pdf.text(`${workplaceKey} `, startXName + 1, currentY);
+                pdf.text(`${workplaceName} `, startXName + 1, currentY);
+
 
                 // pdf.text(`${totalEmp} คน`, 68, currentY, { align: 'right' });
 
