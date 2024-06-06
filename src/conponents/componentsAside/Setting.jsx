@@ -319,6 +319,64 @@ function Setting() {
 
     };
 
+
+    const [searchAddSalaryList, setSearchAddSalaryList] = useState([]);
+    const [searchDeductSalaryList, setSearchDeductSalaryList] = useState([]);
+
+
+    //First load component
+useEffect(() => {
+    const getMaster = async () => {
+        const data = await {
+            employeeId: '0001',
+            name: '',
+            idCard: '',
+            workPlace: '',
+        };
+
+        try {
+            const response = await axios.post(endpoint + '/employee/search', data);
+            if (response) {
+                await setSearchAddSalaryList(response.data.employees[0].addSalary);
+                await setSearchDeductSalaryList(response.data.employees[0].deductSalary);
+            }
+            // await alert(JSON.stringify(response.data.employees[0].addSalary ,null,2 ));
+            // await alert(JSON.stringify(response.data.employees[0].deductSalary ,null,2 ));
+
+        } catch (e) {
+        }
+    }
+
+    getMaster();
+
+}, [] );
+
+
+const [addSalaryId , setAddSalaryId ] = useState('');
+const [addSalaryName , setAddSalaryName ] = useState('');
+const [addSalarySpSalary, setAddSalarySpSalary] = useState('');
+const [roundOfSalary , setRoundOfSalary] = useState('');
+const [staffType , setStaffType] = useState('');
+
+  //search addSalary
+  useEffect(() => {
+    const findObjectById = (id) => {
+        return searchAddSalaryList.find(item => item.id === id);
+    };
+
+    if (addSalaryId) {
+        setAddSalaryName('');
+        setAddSalarySpSalary('');
+        setRoundOfSalary('');
+setStaffType('');
+
+        const foundObject = findObjectById(addSalaryId.trim());
+        if (foundObject) {
+            setAddSalaryName(foundObject.name); // Set only the name property
+        }
+    }
+}, [addSalaryId, searchAddSalaryList]);
+
     //set data to 7 day
     useEffect(() => {
         //clean data
@@ -587,18 +645,50 @@ function Setting() {
     });
     const [showAdditionalInput, setShowAdditionalInput] = useState([]);
 
-    const handleChangeSpSalary = (e, index, key) => {
-        const newAddSalary = [...formData.addSalary];
-        newAddSalary[index] = {
-            ...newAddSalary[index],
-            [key]: e.target.value,
-        };
 
-        setFormData({
+    const handleChangeSpSalary = async (e, index, key) => {
+        // alert(key);
+        
+        const newAddSalary = await [...formData.addSalary];
+        if(key === 'codeSpSalary'){
+            // alert(e.target.value);
+
+            setAddSalaryName('');
+
+// setAddSalaryId(e.target.value);
+const numericValue = await e.target.value.trim().replace(/[^0-9]/g, '');
+// let tmp = await searchAddSalaryList.find(item => item.id === numericValue );
+
+setAddSalaryId(numericValue);
+
+if(tmp) {
+    newAddSalary[index] = await {
+        ...newAddSalary[index],
+        ['name']: addSalaryName,
+    };
+
+} else {
+    newAddSalary[index] = await {
+        ...newAddSalary[index],
+        [key]: e.target.value,
+        name: '',
+    };
+}
+
+        } else {
+            newAddSalary[index] = await {
+                ...newAddSalary[index],
+                [key]: e.target.value,
+            };
+    
+        }
+
+        await setFormData({
             ...formData,
             addSalary: newAddSalary
         });
     };
+
 
     // const handleAddInput = () => {
     //     setFormData([...formData, { name: '', SpSalary: '', StaffType: '', nameType: '' }]);
@@ -1245,7 +1335,7 @@ function Setting() {
                                                         type="text"
                                                         name="codeSpSalary"
                                                         className="form-control"
-                                                        value={data.codeSpSalary}
+                                                        value={data.codeSpSalary || ''}
                                                         onChange={(e) => handleChangeSpSalary(e, index, 'codeSpSalary')}
                                                     />
                                                 </div>

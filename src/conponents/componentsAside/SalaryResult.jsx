@@ -327,6 +327,7 @@ function Salaryresult() {
     fetchData();
   }, [year, month, staffId]);
 
+  
   console.log('calsalarylist', calsalarylist);
   console.log('addSalaryList', addSalaryList);
 
