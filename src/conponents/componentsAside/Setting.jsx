@@ -352,31 +352,6 @@ useEffect(() => {
 }, [] );
 
 
-const [addSalaryId , setAddSalaryId ] = useState('');
-const [addSalaryName , setAddSalaryName ] = useState('');
-const [addSalarySpSalary, setAddSalarySpSalary] = useState('');
-const [roundOfSalary , setRoundOfSalary] = useState('');
-const [staffType , setStaffType] = useState('');
-
-  //search addSalary
-  useEffect(() => {
-    const findObjectById = (id) => {
-        return searchAddSalaryList.find(item => item.id === id);
-    };
-
-    if (addSalaryId) {
-        setAddSalaryName('');
-        setAddSalarySpSalary('');
-        setRoundOfSalary('');
-setStaffType('');
-
-        const foundObject = findObjectById(addSalaryId.trim());
-        if (foundObject) {
-            setAddSalaryName(foundObject.name); // Set only the name property
-        }
-    }
-}, [addSalaryId, searchAddSalaryList]);
-
     //set data to 7 day
     useEffect(() => {
         //clean data
@@ -647,38 +622,32 @@ setStaffType('');
 
 
     const handleChangeSpSalary = async (e, index, key) => {
-        // alert(key);
+        const tmpId = await e.target.value;
         
         const newAddSalary = await [...formData.addSalary];
         if(key === 'codeSpSalary'){
-            // alert(e.target.value);
 
-            setAddSalaryName('');
-
-// setAddSalaryId(e.target.value);
-const numericValue = await e.target.value.trim().replace(/[^0-9]/g, '');
-// let tmp = await searchAddSalaryList.find(item => item.id === numericValue );
-
-setAddSalaryId(numericValue);
-
+let tmp = await searchAddSalaryList.find(item => item.id === tmpId);
 if(tmp) {
     newAddSalary[index] = await {
         ...newAddSalary[index],
-        ['name']: addSalaryName,
+        [key]: tmpId,
+        name: tmp.name
     };
 
-} else {
+}else {
     newAddSalary[index] = await {
         ...newAddSalary[index],
-        [key]: e.target.value,
-        name: '',
+        [key]: tmpId,
+        name: ''
     };
+
 }
 
         } else {
             newAddSalary[index] = await {
                 ...newAddSalary[index],
-                [key]: e.target.value,
+                [key]: tmpId,
             };
     
         }
@@ -1335,7 +1304,7 @@ if(tmp) {
                                                         type="text"
                                                         name="codeSpSalary"
                                                         className="form-control"
-                                                        value={data.codeSpSalary || ''}
+                                                        value={data.codeSpSalary}
                                                         onChange={(e) => handleChangeSpSalary(e, index, 'codeSpSalary')}
                                                     />
                                                 </div>
