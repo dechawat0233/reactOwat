@@ -1960,10 +1960,14 @@ function WorktimeSheetWorkplace() {
                 console.error('Error fetching data:', error);
             });
     }, []);
-
+    // responseDataAll
     // const filteredEmployees = emploeeData.filter(employee => employeeIdsArray.includes(parseInt(employee.employeeId, 10)));
-    const filteredEmployees = emploeeData.filter(employee => employeeIdsArray.includes(parseInt(employee.employeeId, 10)))
+
+    // const filteredEmployees = emploeeData.filter(employee => employeeIdsArray.includes(parseInt(employee.employeeId, 10)))
+    //     .sort((a, b) => parseInt(a.employeeId, 10) - parseInt(b.employeeId, 10));
+    const filteredEmployees = responseDataAll.filter(employee => employeeIdsArray.includes(parseInt(employee.employeeId, 10)))
         .sort((a, b) => parseInt(a.employeeId, 10) - parseInt(b.employeeId, 10));
+
     //     // Do something with the filtered employees
     console.log('filteredEmployees', filteredEmployees);
 
@@ -2574,7 +2578,8 @@ function WorktimeSheetWorkplace() {
             if (employeeSalaryItem && employeeSalaryItem.roundOfSalary === 'daily') {
 
                 // Multiply the value by the corresponding count in sumArray
-                return value * sumArrayOld[outerIndex];
+                // return value * sumArrayOld[outerIndex];
+                return value * employeeSalaryItem.message;
             } else {
                 // Otherwise, keep the value unchanged
                 return value;
@@ -2588,9 +2593,12 @@ function WorktimeSheetWorkplace() {
     const adjustedDailyExtractedDataAddSalaryCount = extractedDataAddSalary.map((salaryArray, outerIndex) => {
         return salaryArray.map((value, innerIndex) => {
             // If the value is not an empty string and roundOfSalary is 'daily'
+            const employeeSalaryItem = filteredEmployees[outerIndex].addSalary.find(item => item.name === addSalaryWorkplace[innerIndex].name);
+
             if (value !== '' && addSalaryWorkplace[innerIndex].roundOfSalary === 'daily') {
                 // Multiply the value by the corresponding count in sumArray
-                return sumArrayOld[outerIndex];
+                // return sumArrayOld[outerIndex];
+                return employeeSalaryItem.message;
             } else {
                 // Otherwise, keep the value unchanged
                 return '';
@@ -5621,7 +5629,7 @@ function WorktimeSheetWorkplace() {
                 drawArrayTextOTHoliday(arrayWorkOTHoliday.slice(pageStartIndex, pageEndIndex));
 
                 // drawArrayTextSumWork(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
-               
+
                 // วันทำงาน
                 drawArrayTextSumWork(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArrayOld.slice(pageStartIndex, pageEndIndex));
 
@@ -5629,7 +5637,7 @@ function WorktimeSheetWorkplace() {
                 // drawArrayTextSumWorkOT(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArrayOT.slice(pageStartIndex, pageEndIndex));
                 drawArrayTextSumWorkOT(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArrayTotal.slice(pageStartIndex, pageEndIndex));
 
-                
+
                 // วันหยุด เงินตรง
                 drawArrayTextSumWorkHoli(arrayWorkHoli.slice(pageStartIndex, pageEndIndex), sumArrayHoli.slice(pageStartIndex, pageEndIndex));
 
