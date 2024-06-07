@@ -64,7 +64,7 @@ res.json(x.data);
 //get accounting by id
 router.post('/calsalaryemp', async (req, res) => {
   try {
-    const { year, month , employeeId} = await req.body;
+    const { year, month , employeeId , updateStatus} = await req.body;
     const workplaceList = await axios.get(sURL + '/workplace/list');
 
     const dataSearch = await {
@@ -78,10 +78,20 @@ router.post('/calsalaryemp', async (req, res) => {
 const accountData = await accounting.findOne({year , month , employeeId});
 const dataList = [];
 
+  //check update or save accounting
+  if(updateStatus !== '') {
+
+    if(accountData ) {
+      await accounting.deleteOne({ _id: accountData._id });
+    }
+
+  }
+
+
 if(accountData ) {
   // console.log(JSON.stringify(accountData ,null,2));
   await console.log('* isset accounting');
-  await console.log(accountData );
+  // await console.log(accountData );
 await dataList .push(accountData );
     await res.json(dataList );
 
@@ -3164,6 +3174,33 @@ data.specialDayListWork = await intersection || [];
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Update amountSpecialDay endpoint
+router.post('/updateSpecialDay', async (req, res) => {
+  const { id, amountSpecialDay } = req.body;
+
+  try {
+    const accountingRecord = await accounting.findById(id);
+    if (!accountingRecord) {
+      return res.status(404).send({ error: 'Accounting record not found' });
+    }
+
+    // Update the amountSpecialDay field
+    if (Array.isArray(accountingRecord.accountingRecord)) {
+      accountingRecord.accountingRecord[0].amountSpecialDay = amountSpecialDay;
+    } else {
+      accountingRecord.accountingRecord.amountSpecialDay = amountSpecialDay;
+    }
+
+    // Save the updated record
+    await accountingRecord.save();
+
+    res.status(200).send({ message: 'amountSpecialDay updated successfully', accountingRecord });
+  } catch (error) {
+    console.error('Error updating amountSpecialDay:', error);
+    res.status(500).send({ error: 'Internal server error' });
   }
 });
 
