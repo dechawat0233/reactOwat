@@ -277,10 +277,12 @@ function Salaryresult() {
   }, []);
   console.log('concludeList', concludeList);
 
-
+const [accountingData , setAccountingData ] = useState([]);
   const [addSalaryList, setAddSalaryList] = useState([]);
   const [deductSalaryList, setDeductSalaryList] = useState([]);
   const [sumAddSalaryList, setSumAddSalaryList] = useState(0);
+const [updateStatus , setUpdateStatus ] = useState('');
+const [tmpamountSpecialDay , setTmpamountSpecialDay] = useState(0); 
 
   useEffect(() => {
 
@@ -290,16 +292,22 @@ function Salaryresult() {
           employeeId: staffId || '',
           year: year || '',
           month: month || '',
+          updateStatus: updateStatus || '',
         };
 
-        // await setAddSalaryList([]);
+        await setAddSalaryList([]);
         await axios.post(endpoint + '/accounting/calsalaryemp', dataTest)
-          .then(response => {
-            const responseData = response.data;
+          .then(async  response => {
+            const responseData = await response.data;
+// alert(JSON.stringify(responseData ,null,2));
 
             if (response.data) {
 
-              setAddSalaryList(response.data[0].addSalary);
+setUpdateStatus('');
+await setAccountingData(response.data[0]);
+await setTmpamountSpecialDay(response.data[0].accountingRecord.amountSpecialDay  || response.data[0].accountingRecord[0].amountSpecialDay );
+
+              await setAddSalaryList(response.data[0].addSalary);
               if (response.data[0].addSalary) {
                 let tmp = 0;
                 response.data[0].addSalary.map(item => {
@@ -325,7 +333,16 @@ function Salaryresult() {
 
     // Call fetchData when year or month changes
     fetchData();
-  }, [year, month, staffId]);
+  }, [year, month, staffId , updateStatus]);
+
+  const handleTmpamountChange = (e) => {
+    setTmpamountSpecialDay(e.target.value);
+  };
+
+const handleUpdateStatus = (updateStatus ) => {
+setUpdateStatus(updateStatus );
+// alert(updateStatus );
+}
 
 
   console.log('calsalarylist', calsalarylist);
@@ -353,7 +370,9 @@ function Salaryresult() {
   const sumSalaryForTax = calsalarylist ? calsalarylist[0]?.accountingRecord.sumSalaryForTax : null;
 
   const countSpecialDay = calsalarylist ? calsalarylist[0]?.countSpecialDay : null;
-  const specialDayListWork = calsalarylist ? calsalarylist[0]?.specialDayListWork.length : null;
+  // const specialDayListWork = calsalarylist ? calsalarylist[0]?.specialDayListWork.length : null;
+  const specialDayListWork = calsalarylist[0]?.specialDayListWork || 0;
+
   const specialDayRate = calsalarylist ? calsalarylist[0]?.specialDayRate : null;
 
   const amountSpecialDay = calsalarylist ? calsalarylist[0]?.accountingRecord.amountSpecialDay : null;
@@ -1261,6 +1280,33 @@ function Salaryresult() {
   }
 
 
+  //save data in accounting 
+  const handleSaveAccounting = async () => {
+    if (accountingData && accountingData.accountingRecord) {
+      if (Array.isArray(accountingData.accountingRecord)) {
+        accountingData.accountingRecord[0].amountSpecialDay = tmpamountSpecialDay;
+      } else {
+        accountingData.accountingRecord.amountSpecialDay = tmpamountSpecialDay;
+      }
+      // await alert(accountingData.accountingRecord[0].amountSpecialDay);
+
+      try {
+        const id = accountingData._id;
+        const updatedValue = tmpamountSpecialDay;
+        await axios.post(endpoint + '/accounting/updateSpecialDay', { id, amountSpecialDay: updatedValue });
+        setUpdateStatus(''); // Trigger fetchData to refresh the data
+        alert('Updated amountSpecialDay to: ' + updatedValue);
+      } catch (error) {
+        console.error('Error updating amountSpecialDay:', error);
+      }
+    }
+
+const id = await accountingData._id;
+// await alert(accountingData.accountingRecord[0].amountSpecialDay);
+// await alert(id);
+
+  }
+
   return (
     // <div>
 
@@ -1734,7 +1780,7 @@ function Salaryresult() {
                     <table border="1" style={tableStyle}>
                       <thead>
                         <tr>
-                          <th style={headerCellStyle}>วันหยุดนักขัติ</th>
+                          <th style={headerCellStyle}>วันหยุดนักขัต</th>
                           <th style={headerCellStyle}>สวัสดิการ</th>
                           <th style={headerCellStyle}>ยอดรวม</th>
                         </tr>
@@ -1753,8 +1799,8 @@ function Salaryresult() {
                                   className="form-control"
                                   id="staffId"
                                   placeholder=""
-                                  value={amountSpecialDayReadyUpDate}
-                                  onChange={handleAmountSpecialDayChange}
+                                  value={tmpamountSpecialDay || ''}
+                                  onChange={handleTmpamountChange}
                                 />
                               </div>
                             </div>
@@ -1809,14 +1855,14 @@ function Salaryresult() {
                   </div>
                   <div class="col-md-2">
                     <div class="line_btn">
-                      <button type="button" class="btn b_save"><i class=""></i> &nbsp;คำนวณใหม่</button>
+                      <button type="button" onClick={() => handleUpdateStatus('update') } class="btn b_save"><i class=""></i> &nbsp;คำนวณใหม่</button>
                     </div>
                   </div>
                 </div>
 
               </section>
               <div class="line_btn">
-                <button type="button" class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;ปิดงวด</button>
+                <button type="button" onClick={handleSaveAccounting} class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
 
                 {/* <Link to="/Salaryresult"> */}
                 <button type="button" class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
