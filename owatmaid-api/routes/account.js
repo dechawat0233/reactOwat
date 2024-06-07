@@ -29,6 +29,17 @@ const acount = await accounting.find();
   
 });
 
+router.get('/listdelete', async (req, res) => {
+
+  try {
+    const result = await accounting.deleteMany({});
+    res.status(200).send({ message: `${result.deletedCount} document(s) were deleted.` });
+  } catch (e) {
+    console.log(e);
+    res.status(500).send(e);
+  }  
+});
+
 
 // Get  accounting record by accounting Id
 router.get('/:employeeId', async (req, res) => {
@@ -75,7 +86,20 @@ router.post('/calsalaryemp', async (req, res) => {
 
         data.year = responseConclude.data.recordConclude[c].year;
         data.month = responseConclude.data.recordConclude[c].month;
-        data.createDate = new Date().toLocaleDateString('en-GB');
+        // data.createDate = new Date().toLocaleDateString('en-GB');
+        const now = new Date();
+
+        // Format the date and time
+        const options = {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false // This makes sure the time is in 24-hour format
+        };
+        
+        data.createDate = now.toLocaleString('en-GB', options);
         data.employeeId = responseConclude.data.recordConclude[c].employeeId;
         data.accountingRecord = {};
 
@@ -788,6 +812,10 @@ data.specialDayListWork = await intersection || [];
 
 
 }
+
+const salaryRecord = new accounting(data);
+await salaryRecord.save();
+await console.log(salaryRecord);
 
         dataList.push(data);
       }

@@ -331,8 +331,6 @@ function Salaryresult() {
   console.log('calsalarylist', calsalarylist);
   console.log('addSalaryList', addSalaryList);
 
-  
-  const createDate = calsalarylist ? calsalarylist[0]?.createDate : null;
 
   const countDay = calsalarylist ? calsalarylist[0]?.accountingRecord.countDay : null;
   const amountDay = calsalarylist ? calsalarylist[0]?.accountingRecord.amountDay : null;
@@ -1517,7 +1515,7 @@ function Salaryresult() {
                 {staffFullName ? (
                   <div class="row">
                     <div class="col-md-12">
-                      ชื่อ: {staffFullName} คำนวณเมื่อ {createDate}
+                      ชื่อ: {staffFullName}
                     </div>
                   </div>) : (
                   <div>
