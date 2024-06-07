@@ -64,15 +64,29 @@ res.json(x.data);
 //get accounting by id
 router.post('/calsalaryemp', async (req, res) => {
   try {
-    const { year, month , employeeId} = req.body;
+    const { year, month , employeeId} = await req.body;
     const workplaceList = await axios.get(sURL + '/workplace/list');
 
-    const dataSearch = {
+    const dataSearch = await {
       year: year, 
       month: month,
       concludeDate: "",
       employeeId: employeeId
     };
+
+    //check accounting record in database
+const accountData = await accounting.findOne({year , month , employeeId});
+const dataList = [];
+
+if(accountData ) {
+  // console.log(JSON.stringify(accountData ,null,2));
+  await console.log('* isset accounting');
+  await console.log(accountData );
+await dataList .push(accountData );
+    await res.json(dataList );
+
+} else {
+  await console.log('* accounting not save');
 
     const responseConclude = await axios.post(sURL + '/conclude/search', dataSearch);
 
@@ -830,10 +844,14 @@ await console.log(salaryRecord);
     } else {
       res.status(404).json({ error: 'accounting not found' });
     }
+  }     //check accounting record in database
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
+
+
 });
 
 

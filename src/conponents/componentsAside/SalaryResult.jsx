@@ -296,7 +296,7 @@ function Salaryresult() {
         await axios.post(endpoint + '/accounting/calsalaryemp', dataTest)
           .then(response => {
             const responseData = response.data;
-
+// alert(JSON.stringify(responseData ,null,2));
             if (response.data) {
 
               setAddSalaryList(response.data[0].addSalary);
@@ -353,7 +353,9 @@ function Salaryresult() {
   const sumSalaryForTax = calsalarylist ? calsalarylist[0]?.accountingRecord.sumSalaryForTax : null;
 
   const countSpecialDay = calsalarylist ? calsalarylist[0]?.countSpecialDay : null;
-  const specialDayListWork = calsalarylist ? calsalarylist[0]?.specialDayListWork.length : null;
+  // const specialDayListWork = calsalarylist ? calsalarylist[0]?.specialDayListWork.length : null;
+  const specialDayListWork = calsalarylist[0]?.specialDayListWork || 0;
+
   const specialDayRate = calsalarylist ? calsalarylist[0]?.specialDayRate : null;
 
   const amountSpecialDay = calsalarylist ? calsalarylist[0]?.accountingRecord.amountSpecialDay : null;
