@@ -327,11 +327,11 @@ function Salaryresult() {
     fetchData();
   }, [year, month, staffId]);
 
-  
+
   console.log('calsalarylist', calsalarylist);
   console.log('addSalaryList', addSalaryList);
 
-  
+
   const createDate = calsalarylist ? calsalarylist[0]?.createDate : null;
 
   const countDay = calsalarylist ? calsalarylist[0]?.accountingRecord.countDay : null;
@@ -1516,8 +1516,11 @@ function Salaryresult() {
               <section class="Frame">
                 {staffFullName ? (
                   <div class="row">
-                    <div class="col-md-12">
-                      ชื่อ: {staffFullName} คำนวณเมื่อ {createDate}
+                    <div class="col-md-10">
+                      ชื่อ: {staffFullName}
+                    </div>
+                    <div class="col-md-2">
+                      คำนวณเมื่อ {createDate}
                     </div>
                   </div>) : (
                   <div>
@@ -1799,6 +1802,18 @@ function Salaryresult() {
                     </table>
                   </div>
                 </div>
+
+                <div class="row">
+                  <div class="col-md-10">
+
+                  </div>
+                  <div class="col-md-2">
+                    <div class="line_btn">
+                      <button type="button" class="btn b_save"><i class=""></i> &nbsp;คำนวณใหม่</button>
+                    </div>
+                  </div>
+                </div>
+
               </section>
               <div class="line_btn">
                 <button type="button" class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;ปิดงวด</button>

@@ -2380,13 +2380,63 @@ function WorktimeSheetWorkplace() {
     // const makePage = Math.ceil(arrayWorkNormalDay.length / 5);
     // console.log('makePage', makePage);
 
-    const sumArrayAllTime = arrayAllTime.map(subArray =>
-        subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
-    );
+    // const sumArrayAllTime = arrayAllTime.map(subArray =>
+    //     subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
+    // );
+
+    // const sumArrayAllTime = arrayAllTime.map(subArray => {
+    //     const totalMinutes = subArray.reduce((acc, val) => {
+    //         if (typeof val === 'number') {
+    //             // Convert the time to total minutes
+    //             const hours = Math.floor(val);
+    //             const minutes = (val - hours) * 60;
+    //             return acc + (hours * 60) + minutes;
+    //         }
+    //         return acc;
+    //     }, 0);
+
+    //     // Convert total minutes back to hours and fractional hours
+    //     const totalHours = Math.floor(totalMinutes / 60);
+    //     const remainingMinutes = totalMinutes % 60;
+    //     const fractionalHours = remainingMinutes / 60;
+
+    //     return totalHours + fractionalHours;
+    // });
+
+    // console.log('sumArrayAllTime', sumArrayAllTime);
+
+    const sumArrayAllTime = arrayAllTime.map(subArray => {
+        let totalHours = 0;
+        let totalMinutes = 0;
+
+        subArray.forEach(val => {
+            if (typeof val === 'number') {
+                const [hours, minutes] = val.toString().split('.').map(Number);
+                totalHours += hours;
+                totalMinutes += minutes ? minutes * 10 : 0; // 0.1 hour is 6 minutes
+            }
+        });
+
+        // Convert total minutes to hours
+        totalHours += Math.floor(totalMinutes / 60);
+        totalMinutes = totalMinutes % 60;
+
+        // Convert remaining minutes back to hours (fractional hours)
+        totalHours += totalMinutes / 60;
+
+        return totalHours;
+    });
+
+    console.log('sumArrayAllTime', sumArrayAllTime);
+
 
     // WorkplaceDataWorkOfHour
-    const dividedArray = sumArrayAllTime.map(sum => sum / workplaceDataWorkOfHour);
+    // const dividedArray = sumArrayAllTime.map(sum => sum / workplaceDataWorkOfHour);
+    // console.log('dividedArray', dividedArray);
+
+    const dividedArray = sumArrayAllTime.map(sum => (sum / workplaceDataWorkOfHour).toFixed(2));
     console.log('dividedArray', dividedArray);
+
 
     const sumArrayOTAllTime = arrayOTAllTime.map(subArray =>
         subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
@@ -4206,7 +4256,8 @@ function WorktimeSheetWorkplace() {
                 // drawArrayTextSumWork(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
                 //วันหารชั่วโมง+สักอย่าง
                 // drawArrayTextSumWork(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArraySumarrayAllHolioday.slice(pageStartIndex, pageEndIndex));
-                //วันหารชั่วโมง
+
+                //วันหารชั่วโมง //วันเต็มทั้งหมด
                 drawArrayTextSumWork(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), dividedArray.slice(pageStartIndex, pageEndIndex));
 
                 // drawArrayTextSumWorkOT(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArrayOT.slice(pageStartIndex, pageEndIndex));
