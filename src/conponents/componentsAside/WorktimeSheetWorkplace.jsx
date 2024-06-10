@@ -314,7 +314,9 @@ function WorktimeSheetWorkplace() {
                 month: month,
             };
 
-            axios.post(endpoint + '/accounting/calsalarylist', dataTest)
+            // axios.get(endpoint + '/accounting/list', dataTest)
+            axios.get(endpoint + '/accounting/calsalarylist', dataTest)
+
                 .then(response => {
                     const responseData = response.data;
 
@@ -2070,14 +2072,15 @@ function WorktimeSheetWorkplace() {
     const sumArrayTotal = sumArrayOT.map((sumOT, index) => sumOT + (sumArrayHolid[index] || 0));
 
 
-    const countSpecialDays = responseDataAll.map(item => item.countSpecialDay);
-    const specialDayListWorks = responseDataAll.map(item => item.specialDayListWork.length);
+    const countSpecialDays = responseDataAll.map(item => Number(item.countSpecialDay) || 0);
+    const specialDayListWorks = responseDataAll.map(item => (item.specialDayListWork ? item.specialDayListWork.length : 0));
+
     // const specialDayRate = responseDataAll.map(item => item.specialDayRate);
     const specialDayRate = responseDataAll.map(item => parseInt(item.specialDayRate, 10));
     const amountSpecialDay = responseDataAll.map(item => parseInt(item.accountingRecord.amountSpecialDay, 10));
 
 
-    console.log('specialDayRate', specialDayRate);
+    console.log('amountSpecialDay', amountSpecialDay);
 
 
     console.log('countSpecialDays', countSpecialDays);
