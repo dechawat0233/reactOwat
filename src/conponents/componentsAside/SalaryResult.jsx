@@ -282,8 +282,10 @@ const [accountingData , setAccountingData ] = useState([]);
   const [deductSalaryList, setDeductSalaryList] = useState([]);
   const [sumAddSalaryList, setSumAddSalaryList] = useState(0);
 const [updateStatus , setUpdateStatus ] = useState('');
-const [tmpamountSpecialDay , setTmpamountSpecialDay] = useState(0); 
-const [tmpamountDay, setTmpamountDay] = useState(0); 
+const [wsAmountSpecialDay , setWsAmountSpecialDay] = useState(0); 
+const [wsAmountDay, setWsAmountDay] = useState(0); 
+const [wsAmountOt , setWsAmountOt] = useState(0);
+const [wsSocialSecurity , setWsSocialSecurity ] = useState(0);
 
   useEffect(() => {
 
@@ -306,8 +308,10 @@ const [tmpamountDay, setTmpamountDay] = useState(0);
 
 setUpdateStatus('');
 await setAccountingData(response.data[0]);
-await setTmpamountSpecialDay(response.data[0].accountingRecord.amountSpecialDay  || response.data[0].accountingRecord[0].amountSpecialDay );
-await setTmpamountDay(parseFloat(response.data[0].accountingRecord.amountDay) || parseFloat(response.data[0].accountingRecord[0].amountDay));
+await setWsAmountSpecialDay(response.data[0].accountingRecord.amountSpecialDay  || response.data[0].accountingRecord[0].amountSpecialDay );
+await setWsAmountDay(parseFloat(response.data[0].accountingRecord.amountDay) || parseFloat(response.data[0].accountingRecord[0].amountDay));
+await setWsAmountOt(response.data[0].accountingRecord.amountOt || response.data[0].accountingRecord[0].amountOt );
+await setWsSocialSecurity(response.data[0].accountingRecord.socialSecurity || response.data[0].accountingRecord[0].socialSecurity);
 
               await setAddSalaryList(response.data[0].addSalary);
               if (response.data[0].addSalary) {
@@ -338,7 +342,7 @@ await setTmpamountDay(parseFloat(response.data[0].accountingRecord.amountDay) ||
   }, [year, month, staffId , updateStatus]);
 
   const handleTmpamountChange = (e) => {
-    setTmpamountSpecialDay(e.target.value);
+    setWsAmountSpecialDay(e.target.value);
   };
 
 const handleUpdateStatus = (updateStatus ) => {
@@ -1290,9 +1294,9 @@ setUpdateStatus(updateStatus );
   const handleSaveAccounting = async () => {
     if (accountingData && accountingData.accountingRecord) {
       if (Array.isArray(accountingData.accountingRecord)) {
-        accountingData.accountingRecord[0].amountSpecialDay = tmpamountSpecialDay;
+        accountingData.accountingRecord[0].amountSpecialDay = wsAmountSpecialDay;
       } else {
-        accountingData.accountingRecord.amountSpecialDay = tmpamountSpecialDay;
+        accountingData.accountingRecord.amountSpecialDay = wsAmountSpecialDay;
       }
       // await alert(accountingData.accountingRecord[0].amountSpecialDay);
 
@@ -1314,8 +1318,8 @@ setUpdateStatus(updateStatus );
       }
     }
 
-const id = await accountingData._id;
-await alert(accountingData.accountingRecord[0].amountSpecialDay);
+// const id = await accountingData._id;
+// await alert(accountingData.accountingRecord[0].amountSpecialDay);
 // await alert(id);
 
   }
@@ -1644,7 +1648,7 @@ await alert(accountingData.accountingRecord[0].amountSpecialDay);
                           {/* <td style={cellStyle}>{(overWorkRateSum).toFixed(2)}</td>
                           <td style={cellStyle}>{(overWorkRateOTSum).toFixed(2)}</td> */}
 
-                          <td style={cellStyle}>{isNaN(Number(tmpamountDay)) ? 0.00 : Number(tmpamountDay).toFixed(2)}</td>
+                          <td style={cellStyle}>{isNaN(Number(wsAmountDay)) ? 0.00 : Number(wsAmountDay).toFixed(2)}</td>
                           <td style={cellStyle}>{isNaN(Number(amountOt)) ? 0.00 : Number(amountOt).toFixed(2)}</td>
 
                           {/* <td style={cellStyle}>{(overAddSalaryDaySum).toFixed(2) + (sumSpSalary).toFixed(2)}</td> */}
@@ -1733,7 +1737,7 @@ await alert(accountingData.accountingRecord[0].amountSpecialDay);
                           <td style={cellStyle}>{isNaN(Number(tax)) ? 0.00 : Number(tax).toFixed(2)}</td>
                           {/* <td style={cellStyle}>{((overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary) * socialSecurity).toFixed(2)}</td> */}
                           {/* <td style={cellStyle}>{isNaN(Number(socialSecurity)) ? 0 : Number(socialSecurity).toFixed(0)}</td> */}
-                          <td style={cellStyle}>{isNaN(Number(socialSecurity)) ? 0 : Math.ceil(Number(socialSecurity))}</td>
+                          <td style={cellStyle}>{isNaN(Number(wsSocialSecurity)) ? 0 : Math.ceil(Number(wsSocialSecurity))}</td>
                           {/* <td style={cellStyle}>{isNaN(Number(bank)) ? 0.00 : Number(bank).toFixed(2)}</td> */}
                           {/* <td style={cellStyle}>
                             <input
@@ -1812,7 +1816,7 @@ await alert(accountingData.accountingRecord[0].amountSpecialDay);
                                   className="form-control"
                                   id="staffId"
                                   placeholder=""
-                                  value={tmpamountSpecialDay || ''}
+                                  value={wsAmountSpecialDay || ''}
                                   onChange={handleTmpamountChange}
                                 />
                               </div>
