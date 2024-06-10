@@ -354,7 +354,11 @@ setUpdateStatus(updateStatus );
   const createDate = calsalarylist ? calsalarylist[0]?.createDate : null;
 
   const countDay = calsalarylist ? calsalarylist[0]?.accountingRecord.countDay : null;
-  const amountDay = calsalarylist ? calsalarylist[0]?.accountingRecord.amountDay : null;
+
+  // 07/06/2024
+  // const amountDay = calsalarylist ? calsalarylist[0]?.accountingRecord.amountDay : null;
+  const amountDay = calsalarylist?.[0]?.accountingRecord?.[0]?.amountDay ?? null;
+
   const amountOt = calsalarylist ? calsalarylist[0]?.accountingRecord.amountOt : null;
   const tax = calsalarylist ? calsalarylist[0]?.accountingRecord.tax : null;
   const amountPosition = calsalarylist ? calsalarylist[0]?.accountingRecord.amountPosition : null;
