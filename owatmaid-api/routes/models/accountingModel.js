@@ -63,7 +63,10 @@ deductSalary: [{
   nameType: String,
   message: String,
 }],
-status: String
+status: String,
+specialDayRate: String,
+countSpecialDay: String,
+specialDayListWork: []
 });
 
 // Create the conclude record time model based on the schema
