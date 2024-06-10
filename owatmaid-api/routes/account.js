@@ -91,7 +91,7 @@ const dataList = [];
 if(accountData ) {
   // console.log(JSON.stringify(accountData ,null,2));
   await console.log('* isset accounting');
-  // await console.log(accountData );
+  await console.log(accountData );
 await dataList .push(accountData );
     await res.json(dataList );
 
@@ -3171,6 +3171,32 @@ data.specialDayListWork = await intersection || [];
     } else {
       res.status(404).json({ error: 'accounting not found' });
     }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+router.put('/update/:_id', async (req, res) => {
+  const accountingIdToUpdate = req.params._id;
+  const updateFields = req.body;
+
+  try {
+    // Find the resource by ID and update it
+    const updatedResource = await accounting.findByIdAndUpdate(
+      accountingIdToUpdate ,
+      updateFields,
+      { new: true } // To get the updated document as the result
+    );
+    if (!updatedResource) {
+      return res.status(404).json({ message: 'Resource not found' });
+    }
+
+    // Send the updated resource as the response
+    res.json(updatedResource);
+
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });

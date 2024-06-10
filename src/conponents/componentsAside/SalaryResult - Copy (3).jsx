@@ -283,7 +283,6 @@ const [accountingData , setAccountingData ] = useState([]);
   const [sumAddSalaryList, setSumAddSalaryList] = useState(0);
 const [updateStatus , setUpdateStatus ] = useState('');
 const [tmpamountSpecialDay , setTmpamountSpecialDay] = useState(0); 
-const [tmpamountDay, setTmpamountDay] = useState(0); 
 
   useEffect(() => {
 
@@ -307,7 +306,6 @@ const [tmpamountDay, setTmpamountDay] = useState(0);
 setUpdateStatus('');
 await setAccountingData(response.data[0]);
 await setTmpamountSpecialDay(response.data[0].accountingRecord.amountSpecialDay  || response.data[0].accountingRecord[0].amountSpecialDay );
-await setTmpamountDay(parseFloat(response.data[0].accountingRecord.amountDay) || parseFloat(response.data[0].accountingRecord[0].amountDay));
 
               await setAddSalaryList(response.data[0].addSalary);
               if (response.data[0].addSalary) {
@@ -1293,25 +1291,18 @@ setUpdateStatus(updateStatus );
       // await alert(accountingData.accountingRecord[0].amountSpecialDay);
 
       try {
-        const response = await axios.put(endpoint + '/accounting/update/' + accountingData._id, accountingData);
-        // setEmployeesResult(response.data.employees);
-        if (response) {
-            alert("บันทึกสำเร็จ");
-            // localStorage.setItem('selectedEmployees' , JSON.stringify(response.data.employees));
-        }
-
-        // const id = accountingData.accountingRecord[0]._id;
-        // const updatedValue = tmpamountSpecialDay;
-        // await axios.post(endpoint + '/accounting/updateSpecialDay', { id, amountSpecialDay: updatedValue });
-        // setUpdateStatus(''); // Trigger fetchData to refresh the data
-        // alert('Updated amountSpecialDay to: ' + updatedValue);
+        const id = accountingData._id;
+        const updatedValue = tmpamountSpecialDay;
+        await axios.post(endpoint + '/accounting/updateSpecialDay', { id, amountSpecialDay: updatedValue });
+        setUpdateStatus(''); // Trigger fetchData to refresh the data
+        alert('Updated amountSpecialDay to: ' + updatedValue);
       } catch (error) {
         console.error('Error updating amountSpecialDay:', error);
       }
     }
 
 const id = await accountingData._id;
-await alert(accountingData.accountingRecord[0].amountSpecialDay);
+// await alert(accountingData.accountingRecord[0].amountSpecialDay);
 // await alert(id);
 
   }
@@ -1640,7 +1631,7 @@ await alert(accountingData.accountingRecord[0].amountSpecialDay);
                           {/* <td style={cellStyle}>{(overWorkRateSum).toFixed(2)}</td>
                           <td style={cellStyle}>{(overWorkRateOTSum).toFixed(2)}</td> */}
 
-                          <td style={cellStyle}>{isNaN(Number(tmpamountDay)) ? 0.00 : Number(tmpamountDay).toFixed(2)}</td>
+                          <td style={cellStyle}>{isNaN(Number(amountDay)) ? 0.00 : Number(amountDay).toFixed(2)}</td>
                           <td style={cellStyle}>{isNaN(Number(amountOt)) ? 0.00 : Number(amountOt).toFixed(2)}</td>
 
                           {/* <td style={cellStyle}>{(overAddSalaryDaySum).toFixed(2) + (sumSpSalary).toFixed(2)}</td> */}
