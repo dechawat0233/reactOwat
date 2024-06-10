@@ -307,6 +307,39 @@ function WorktimeSheetWorkplace() {
     const monthtest = 3; // 3 represents March using 1-based indexing
 
 
+    // useEffect(() => {
+    //     const fetchData = () => {
+    //         const dataTest = {
+    //             year: year,
+    //             month: month,
+    //         };
+
+    //         // axios.get(endpoint + '/accounting/list', dataTest)
+    //         axios.get(endpoint + '/accounting/calsalarylist', dataTest)
+
+    //             .then(response => {
+    //                 const responseData = response.data;
+
+    //                 console.log('searchWorkplaceId', searchWorkplaceId);
+
+    //                 console.log('responseData', responseData);
+    //                 const filteredData = searchWorkplaceId ? responseData.filter(item => item.workplace === searchWorkplaceId) : responseData;
+
+    //                 // Sort the filtered data by employeeId in ascending order
+    //                 const sortedData = filteredData.sort((a, b) => a.employeeId - b.employeeId);
+
+    //                 setResponseDataAll(sortedData);
+
+    //             })
+    //             .catch(error => {
+    //                 console.error('Error:', error);
+    //             });
+    //     };
+
+    //     // Call fetchData when year or month changes
+    //     fetchData();
+    // }, [year, month, searchWorkplaceId]);
+
     useEffect(() => {
         const fetchData = () => {
             const dataTest = {
@@ -314,9 +347,7 @@ function WorktimeSheetWorkplace() {
                 month: month,
             };
 
-            // axios.get(endpoint + '/accounting/list', dataTest)
-            axios.get(endpoint + '/accounting/calsalarylist', dataTest)
-
+            axios.post(endpoint + '/accounting/calsalarylist', dataTest)
                 .then(response => {
                     const responseData = response.data;
 
@@ -324,8 +355,6 @@ function WorktimeSheetWorkplace() {
 
                     console.log('responseData', responseData);
                     const filteredData = searchWorkplaceId ? responseData.filter(item => item.workplace === searchWorkplaceId) : responseData;
-
-                    // Sort the filtered data by employeeId in ascending order
                     const sortedData = filteredData.sort((a, b) => a.employeeId - b.employeeId);
 
                     setResponseDataAll(sortedData);
@@ -339,6 +368,7 @@ function WorktimeSheetWorkplace() {
         // Call fetchData when year or month changes
         fetchData();
     }, [year, month, searchWorkplaceId]);
+
 
     console.log('responseDataAll', responseDataAll);
 
@@ -2077,7 +2107,12 @@ function WorktimeSheetWorkplace() {
 
     // const specialDayRate = responseDataAll.map(item => item.specialDayRate);
     const specialDayRate = responseDataAll.map(item => parseInt(item.specialDayRate, 10));
-    const amountSpecialDay = responseDataAll.map(item => parseInt(item.accountingRecord.amountSpecialDay, 10));
+    // const amountSpecialDay = responseDataAll.map(item => parseInt(item.accountingRecord.amountSpecialDay, 10));
+    const amountSpecialDay = responseDataAll.map(item => {
+        const accountingRecord = item.accountingRecord?.[0];
+        return accountingRecord ? parseInt(accountingRecord.amountSpecialDay, 10) : 0;
+    });
+
 
 
     console.log('amountSpecialDay', amountSpecialDay);
