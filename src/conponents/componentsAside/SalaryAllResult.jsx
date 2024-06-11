@@ -1248,7 +1248,7 @@ function SalaryAllResult() {
                 // นักขัติ
                 // pdf.text(`${totalAmountHoliday.toFixed(2)}`, 85 + (cellWidthOT * 5), currentY, { align: 'right' });
                 // const formattedSumFormattedAmountHoliday = sumFormattedAmountHoliday.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                const formattedSumFormattedAmountHoliday = totalSumtest.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                const formattedSumFormattedAmountHoliday = totalAmountSpecialDay.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
                 pdf.text(`${formattedSumFormattedAmountHoliday}`, startXHoliday + cellWidthHoliday, currentY, { align: 'right' });
                 // totalSum
@@ -1800,6 +1800,8 @@ function SalaryAllResult() {
                 totalAmountPosition: 0,
                 totalAmountHardWorking: 0,
                 totalAmountHoliday: 0,
+                totalAmountSpecialDay: 0,
+
                 totalDeductBeforeTax: 0,
                 totalAddAmountBeforeTax: 0,
                 totalTax: 0,
@@ -1830,6 +1832,8 @@ function SalaryAllResult() {
             acc[workplace].totalAmountPosition += parseFloat(employee.accountingRecord?.[0]?.amountPosition || 0);
             acc[workplace].totalAmountHardWorking += parseFloat(employee.accountingRecord?.[0]?.amountHardWorking || 0);
             acc[workplace].totalAmountHoliday += parseFloat(employee.accountingRecord?.[0]?.amountHoliday || 0);
+            acc[workplace].totalAmountSpecialDay += parseFloat(employee.accountingRecord?.[0]?.amountSpecialDay || 0);
+
             acc[workplace].totalDeductBeforeTax += parseFloat(employee.accountingRecord?.[0]?.deductBeforeTax || 0);
             acc[workplace].totalAddAmountBeforeTax += parseFloat(employee.accountingRecord?.[0]?.addAmountBeforeTax || 0);
             acc[workplace].totalTax += parseFloat(employee.accountingRecord?.[0]?.tax || 0);
@@ -1846,7 +1850,7 @@ function SalaryAllResult() {
             acc[workplace].totalSumDeductBeforeTax += parseFloat(employee.accountingRecord?.[0]?.sumDeductBeforeTax || 0);
             acc[workplace].totalSumAddSalaryAfterTax += parseFloat(employee.accountingRecord?.[0]?.sumAddSalaryAfterTax || 0);
             acc[workplace].totalSumDeductAfterTax += parseFloat(employee.accountingRecord?.[0]?.sumDeductAfterTax || 0);
-
+            // amountSpecialDay
 
             acc[workplace].totalEmp += 1;
 
@@ -1867,6 +1871,8 @@ function SalaryAllResult() {
         let totalAmountPositionSum = 0;
         let totalAmountHardWorkingSum = 0;
         let totalAmountHolidaySum = 0;
+        let totalAmountSpecialDaySum = 0;
+
         let totalAddAmountBeforeTaxSum = 0;
         let totalDeductBeforeTaxSum = 0;
         let totalTaxSum = 0;
@@ -1899,6 +1905,7 @@ function SalaryAllResult() {
                     totalAmountPosition,
                     totalAmountHardWorking,
                     totalAmountHoliday,
+                    totalAmountSpecialDay,
                     totalAddAmountBeforeTax,
                     totalDeductBeforeTax,
                     totalTax,
@@ -1965,6 +1972,10 @@ function SalaryAllResult() {
                     const formattedAmountHoliday = Number((countSpecialDay * specialDayRate) ?? 0);
 
                     sumFormattedAmountHolidayAll += formattedAmountHoliday;
+                    // sumSpSalaryall += (accountingRecord?.[0]?.amountSpecialDay);
+
+                    // sumFormattedAmountHolidayAll += formattedSumFormattedAmountHoliday;
+                    // sumFormattedAmountHolidayAll += (accountingRecord?.[0]?.amountSpecialDay);
 
 
                     // Check if there's not enough space on the current page
@@ -2038,7 +2049,9 @@ function SalaryAllResult() {
                 // นักขัติ
                 // pdf.text(`${totalAmountHoliday.toFixed(2)}`, 85 + (cellWidthOT * 5), currentY, { align: 'right' });
                 // pdf.text(`${formattedAmountHoliday.toFixed(2)}`, 85 + (cellWidthOT * 5), currentY, { align: 'right' });
-                pdf.text(`${Number(sumFormattedAmountHolidayAll).toFixed(2)}`, startXHoliday + cellWidthHoliday, currentY, { align: 'right' });
+                // totalAmountSpecialDay
+                // pdf.text(`${Number(sumFormattedAmountHolidayAll).toFixed(2)}`, startXHoliday + cellWidthHoliday, currentY, { align: 'right' });
+                pdf.text(`${Number(totalAmountSpecialDay).toFixed(2)}`, startXHoliday + cellWidthHoliday, currentY, { align: 'right' });
 
                 // sumFormattedAmountHolidayAll
                 // บวกอื่นๆ
@@ -2097,6 +2110,7 @@ function SalaryAllResult() {
                 totalAmountHardWorkingSum += totalAmountHardWorking;
                 // totalAmountHolidaySum += totalAmountHoliday;sumFormattedAmountHolidayAll
                 totalAmountHolidaySum += sumFormattedAmountHolidayAll;
+                totalAmountSpecialDaySum += totalAmountSpecialDay;
 
                 totalAddAmountBeforeTaxSum += totalAddAmountBeforeTax;
                 totalDeductBeforeTaxSum += totalDeductBeforeTax;
@@ -2134,8 +2148,11 @@ function SalaryAllResult() {
         pdf.text(`${totalAmountHardWorkingSum.toFixed(2)}`,
             startXDiligenceAllowance + cellWidthDiligenceAllowance, currentY, { align: 'right' }); // Adjust coordinates as needed
         // นักขัติ
-        pdf.text(`${totalAmountHolidaySum.toFixed(2)}`,
-            startXHoliday + cellWidthHoliday, currentY, { align: 'right' }); // Adjust coordinates as needed
+        // totalAmountSpecialDaySum
+        // pdf.text(`${totalAmountHolidaySum.toFixed(2)}`,
+        //     startXHoliday + cellWidthHoliday, currentY, { align: 'right' }); // Adjust coordinates as needed
+        pdf.text(`${totalAmountSpecialDaySum.toFixed(2)}`,
+            startXHoliday + cellWidthHoliday, currentY, { align: 'right' });
         // บวกอื่นๆ
         // pdf.text(`${totalAddAmountBeforeTaxSum.toFixed(2)}`,
         pdf.text(`${totalSumAddSalaryBeforeTaxAll.toFixed(2)}`,

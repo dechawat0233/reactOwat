@@ -356,16 +356,16 @@ function Salaryresult() {
     // alert(updateStatus );
   }
 
-  //sum salary before deduct
-  useEffect(() => {
-    setWsTotalSum(Number(wsAmountDay) + Number(wsAmountOt) + Number(wsSocialSecurity) + Number(wsTax) + Number(wsAmountSpecialDay) + Number(sumAddSalaryList));
-    //  setWsTotal(Number(wsTotalSum) - Number(wsTotalSumDeduct) );
-  }, [wsAmountSpecialDay]);
-
-  //sum deduct
-  useEffect(() => {
-    setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax));
-  }, [wsSocialSecurity, wsTax]);
+//sum salary before deduct
+useEffect( () => {
+   setWsTotalSum((Number(wsAmountDay) + Number(wsAmountOt) + Number(wsTax) + Number(wsAmountSpecialDay) + Number(sumAddSalaryList)).toFixed(2));
+  //  setWsTotal(Number(wsTotalSum) - Number(wsTotalSumDeduct) );
+  }, [wsAmountSpecialDay] );
+  
+   //sum deduct
+   useEffect(() => {
+setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );    
+   } , [wsSocialSecurity , wsTax] );
 
   console.log('calsalarylist', calsalarylist);
   console.log('addSalaryList', addSalaryList);
