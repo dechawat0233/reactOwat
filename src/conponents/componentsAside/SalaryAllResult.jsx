@@ -893,10 +893,10 @@ function SalaryAllResult() {
                     pdf.text(`${name} ${lastName}`, startXName + 1, currentY);
 
                     const countSpecialDayListWork = specialDayListWork.length;
-                    // const countcal = accountingRecord.countDay - countSpecialDayListWork;
+                    // const countcal = accountingRecord?.[0]?.countDay - countSpecialDayListWork;
                     const countcal = accountingRecord?.[0]?.countDay;
 
-                    // pdf.text(`${accountingRecord.countDay} `, startXAllDay + 5, currentY, { align: 'right' });
+                    // pdf.text(`${accountingRecord?.[0]?.countDay} `, startXAllDay + 5, currentY, { align: 'right' });
                     pdf.text(`${countcal} `, startXAllDay + 5, currentY, { align: 'right' });
 
                     sumNewamountOt += (countSpecialDayListWork * specialDayRate);
@@ -907,7 +907,7 @@ function SalaryAllResult() {
                     console.log('totalBenefitNonSocial', totalBenefitNonSocial);
 
                     // // เงินเดือน
-                    // const formattedAmountDay = Number(accountingRecord.amountDay ?? 0).toFixed(2);
+                    // const formattedAmountDay = Number(accountingRecord?.[0]?.amountDay ?? 0).toFixed(2);
                     // // pdf.text(`${formattedAmountDay}`, pdf.internal.pageSize.width - 10, currentY, { align: 'right' });
                     // pdf.text(`${formattedAmountDay}`, 85, currentY, { align: 'right' });
                     // // ค่าล่วงเวลา
@@ -1035,7 +1035,7 @@ function SalaryAllResult() {
                     // sumSpSalaryall += (totalAddSalary * accountingRecord.countDay);
 
                     // สวัสดิการ(ไม่คิด ปกส)
-                    const formattedAmountPosition = Number(accountingRecord.benefitNonSocial ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    const formattedAmountPosition = Number(accountingRecord?.[0]?.benefitNonSocial ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                     pdf.text(`${formattedAmountPosition}`,
                         startXRoleWork + cellWidthRoleWork, currentY, { align: 'right' });
 
@@ -1824,28 +1824,28 @@ function SalaryAllResult() {
             // acc[workplace].name.push(employee.name);
 
             // Adjust this line based on your specific structure to get the salary or any other relevant data
-            acc[workplace].totalSalary += parseFloat(employee.accountingRecord.amountDay || 0);
-            acc[workplace].totalAmountOt += parseFloat(employee.accountingRecord.amountOt || 0);
-            acc[workplace].totalAmountSpecial += parseFloat(employee.accountingRecord.amountSpecial || 0);
-            acc[workplace].totalAmountPosition += parseFloat(employee.accountingRecord.amountPosition || 0);
-            acc[workplace].totalAmountHardWorking += parseFloat(employee.accountingRecord.amountHardWorking || 0);
-            acc[workplace].totalAmountHoliday += parseFloat(employee.accountingRecord.amountHoliday || 0);
-            acc[workplace].totalDeductBeforeTax += parseFloat(employee.accountingRecord.deductBeforeTax || 0);
-            acc[workplace].totalAddAmountBeforeTax += parseFloat(employee.accountingRecord.addAmountBeforeTax || 0);
-            acc[workplace].totalTax += parseFloat(employee.accountingRecord.tax || 0);
-            acc[workplace].totalSocialSecurity += parseFloat(employee.accountingRecord.socialSecurity || 0);
-            acc[workplace].totalAddAmountAfterTax += parseFloat(employee.accountingRecord.addAmountAfterTax || 0);
-            acc[workplace].totalAdvancePayment += parseFloat(employee.accountingRecord.advancePayment || 0);
-            acc[workplace].totalDeductAfterTax += parseFloat(employee.accountingRecord.deductAfterTax || 0);
-            acc[workplace].totalBank += parseFloat(employee.accountingRecord.bank || 0);
-            acc[workplace].totalTotal += parseFloat(employee.accountingRecord.total ?? 0);
+            acc[workplace].totalSalary += parseFloat(employee.accountingRecord?.[0]?.amountDay || 0);
+            acc[workplace].totalAmountOt += parseFloat(employee.accountingRecord?.[0]?.amountOt || 0);
+            acc[workplace].totalAmountSpecial += parseFloat(employee.accountingRecord?.[0]?.amountSpecial || 0);
+            acc[workplace].totalAmountPosition += parseFloat(employee.accountingRecord?.[0]?.amountPosition || 0);
+            acc[workplace].totalAmountHardWorking += parseFloat(employee.accountingRecord?.[0]?.amountHardWorking || 0);
+            acc[workplace].totalAmountHoliday += parseFloat(employee.accountingRecord?.[0]?.amountHoliday || 0);
+            acc[workplace].totalDeductBeforeTax += parseFloat(employee.accountingRecord?.[0]?.deductBeforeTax || 0);
+            acc[workplace].totalAddAmountBeforeTax += parseFloat(employee.accountingRecord?.[0]?.addAmountBeforeTax || 0);
+            acc[workplace].totalTax += parseFloat(employee.accountingRecord?.[0]?.tax || 0);
+            acc[workplace].totalSocialSecurity += parseFloat(employee.accountingRecord?.[0]?.socialSecurity || 0);
+            acc[workplace].totalAddAmountAfterTax += parseFloat(employee.accountingRecord?.[0]?.addAmountAfterTax || 0);
+            acc[workplace].totalAdvancePayment += parseFloat(employee.accountingRecord?.[0]?.advancePayment || 0);
+            acc[workplace].totalDeductAfterTax += parseFloat(employee.accountingRecord?.[0]?.deductAfterTax || 0);
+            acc[workplace].totalBank += parseFloat(employee.accountingRecord?.[0]?.bank || 0);
+            acc[workplace].totalTotal += parseFloat(employee.accountingRecord?.[0]?.total ?? 0);
 
-            acc[workplace].totalSumAddSalaryBeforeTax += parseFloat(employee.accountingRecord.sumAddSalaryBeforeTaxNonSocial || 0);
-            acc[workplace].totalSumAddSalaryBeforeTaxNonSocial += parseFloat(employee.accountingRecord.sumAddSalaryBeforeTaxNonSocial || 0);
-            acc[workplace].totalSumDeductBeforeTaxWithSocial += parseFloat(employee.accountingRecord.sumDeductBeforeTaxWithSocial || 0);
-            acc[workplace].totalSumDeductBeforeTax += parseFloat(employee.accountingRecord.sumDeductBeforeTax || 0);
-            acc[workplace].totalSumAddSalaryAfterTax += parseFloat(employee.accountingRecord.sumAddSalaryAfterTax || 0);
-            acc[workplace].totalSumDeductAfterTax += parseFloat(employee.accountingRecord.sumDeductAfterTax || 0);
+            acc[workplace].totalSumAddSalaryBeforeTax += parseFloat(employee.accountingRecord?.[0]?.sumAddSalaryBeforeTaxNonSocial || 0);
+            acc[workplace].totalSumAddSalaryBeforeTaxNonSocial += parseFloat(employee.accountingRecord?.[0]?.sumAddSalaryBeforeTaxNonSocial || 0);
+            acc[workplace].totalSumDeductBeforeTaxWithSocial += parseFloat(employee.accountingRecord?.[0]?.sumDeductBeforeTaxWithSocial || 0);
+            acc[workplace].totalSumDeductBeforeTax += parseFloat(employee.accountingRecord?.[0]?.sumDeductBeforeTax || 0);
+            acc[workplace].totalSumAddSalaryAfterTax += parseFloat(employee.accountingRecord?.[0]?.sumAddSalaryAfterTax || 0);
+            acc[workplace].totalSumDeductAfterTax += parseFloat(employee.accountingRecord?.[0]?.sumDeductAfterTax || 0);
 
 
             acc[workplace].totalEmp += 1;
@@ -1958,9 +1958,9 @@ function SalaryAllResult() {
                     // Calculate the sum of SpSalary values in the filtered array
                     const sumSpSalary = filteredSalary.reduce((total, item) => total + parseFloat(item.SpSalary || 0), 0);
                     // Now you can use sumSpSalary wherever you need to display the total sum, for example:
-                    // pdf.text(`${(sumSpSalary * accountingRecord.countDay).toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
+                    // pdf.text(`${(sumSpSalary * accountingRecord?.[0]?.countDay).toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
 
-                    sumSpSalaryall += (sumSpSalary * accountingRecord.countDay);
+                    sumSpSalaryall += (sumSpSalary * accountingRecord?.[0]?.countDay);
 
                     const formattedAmountHoliday = Number((countSpecialDay * specialDayRate) ?? 0);
 
@@ -2025,7 +2025,7 @@ function SalaryAllResult() {
                 // pdf.text(`${totalAmountSpecial.toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
                 // pdf.text(`${Number(totalSpSalary * totalCountDay).toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
                 // console.log('totalSpSalary', totalSpSalary)
-                // console.log('accountingRecord.countDay', totalCountDay)
+                // console.log('accountingRecord?.[0]?.countDay', totalCountDay)
                 // sumSpSalaryall
                 pdf.text(`${Number(sumSpSalaryall).toFixed(2)}`, startXWelfare + cellWidthWelfare, currentY, { align: 'right' });
 
