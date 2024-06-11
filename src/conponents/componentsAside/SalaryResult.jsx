@@ -277,10 +277,11 @@ function Salaryresult() {
   }, []);
   console.log('concludeList', concludeList);
 
-const [accountingData , setAccountingData ] = useState([]);
+  const [accountingData, setAccountingData] = useState([]);
   const [addSalaryList, setAddSalaryList] = useState([]);
   const [deductSalaryList, setDeductSalaryList] = useState([]);
   const [sumAddSalaryList, setSumAddSalaryList] = useState(0);
+<<<<<<< HEAD
 const [updateStatus , setUpdateStatus ] = useState('');
 const [wsAmountSpecialDay , setWsAmountSpecialDay] = useState(0); 
 const [wsAmountDay, setWsAmountDay] = useState(0); 
@@ -290,6 +291,13 @@ const [wsTax , setWsTax] = useState(0);
 const [wsTotal , setWsTotal] = useState(0);
 const [wsTotalSum , setWsTotalSum] = useState(0);
 const [wsTotalSumDeduct , setWsTotalSumDeduct] = useState(0);
+=======
+  const [updateStatus, setUpdateStatus] = useState('');
+  const [wsAmountSpecialDay, setWsAmountSpecialDay] = useState(0);
+  const [wsAmountDay, setWsAmountDay] = useState(0);
+  const [wsAmountOt, setWsAmountOt] = useState(0);
+  const [wsSocialSecurity, setWsSocialSecurity] = useState(0);
+>>>>>>> dc124377514770243c48359be67305aa0355733a
 
   useEffect(() => {
 
@@ -304,12 +312,13 @@ const [wsTotalSumDeduct , setWsTotalSumDeduct] = useState(0);
 
         await setAddSalaryList([]);
         await axios.post(endpoint + '/accounting/calsalaryemp', dataTest)
-          .then(async  response => {
+          .then(async response => {
             const responseData = await response.data;
-// alert(JSON.stringify(responseData ,null,2));
+            // alert(JSON.stringify(responseData ,null,2));
 
             if (response.data) {
 
+<<<<<<< HEAD
 setUpdateStatus('');
 await setAccountingData(response.data[0]);
 await setWsAmountSpecialDay(response.data[0].accountingRecord.amountSpecialDay  || response.data[0].accountingRecord[0].amountSpecialDay );
@@ -318,6 +327,14 @@ await setWsAmountOt(response.data[0].accountingRecord.amountOt || response.data[
 await setWsSocialSecurity(response.data[0].accountingRecord.socialSecurity || response.data[0].accountingRecord[0].socialSecurity);
 await setWsTax(response.data[0].accountingRecord.tax || response.data[0].accountingRecord[0].tax);
 await setWsTotal(response.data[0].accountingRecord.total || response.data[0].accountingRecord[0].total );
+=======
+              setUpdateStatus('');
+              await setAccountingData(response.data[0]);
+              await setWsAmountSpecialDay(response.data[0].accountingRecord.amountSpecialDay || response.data[0].accountingRecord[0].amountSpecialDay);
+              await setWsAmountDay(parseFloat(response.data[0].accountingRecord.amountDay) || parseFloat(response.data[0].accountingRecord[0].amountDay));
+              await setWsAmountOt(response.data[0].accountingRecord.amountOt || response.data[0].accountingRecord[0].amountOt);
+              await setWsSocialSecurity(response.data[0].accountingRecord.socialSecurity || response.data[0].accountingRecord[0].socialSecurity);
+>>>>>>> dc124377514770243c48359be67305aa0355733a
 
               await setAddSalaryList(response.data[0].addSalary);
               if (response.data[0].addSalary) {
@@ -345,16 +362,16 @@ await setWsTotal(response.data[0].accountingRecord.total || response.data[0].acc
 
     // Call fetchData when year or month changes
     fetchData();
-  }, [year, month, staffId , updateStatus]);
+  }, [year, month, staffId, updateStatus]);
 
   const handleTmpamountChange = (e) => {
     setWsAmountSpecialDay(e.target.value);
   };
 
-const handleUpdateStatus = (updateStatus ) => {
-setUpdateStatus(updateStatus );
-// alert(updateStatus );
-}
+  const handleUpdateStatus = (updateStatus) => {
+    setUpdateStatus(updateStatus);
+    // alert(updateStatus );
+  }
 
 //sum salary before deduct
 useEffect( () => {
@@ -377,32 +394,61 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
 
   // 07/06/2024
   // const amountDay = calsalarylist ? calsalarylist[0]?.accountingRecord.amountDay : null;
-  const amountDay = calsalarylist?.[0]?.accountingRecord?.[0]?.amountDay ?? null;
+  // const amountOt = calsalarylist ? calsalarylist[0]?.accountingRecord.amountOt : null;
+  // const tax = calsalarylist ? calsalarylist[0]?.accountingRecord.tax : null;
+  // const amountPosition = calsalarylist ? calsalarylist[0]?.accountingRecord.amountPosition : null;
+  // const amountHardWorking = calsalarylist ? calsalarylist[0]?.accountingRecord.amountHardWorking : null;
+  // const amountSpecial = calsalarylist ? calsalarylist[0]?.accountingRecord.amountSpecial : null;
+  // const advancePayment = calsalarylist ? calsalarylist[0]?.accountingRecord.advancePayment : null;
+  // const amountHoliday = calsalarylist ? calsalarylist[0]?.accountingRecord.amountHoliday : null;
+  // const addAmountBeforeTax = calsalarylist ? calsalarylist[0]?.accountingRecord.addAmountBeforeTax : null;
+  // const deductBeforeTax = calsalarylist ? calsalarylist[0]?.accountingRecord.deductBeforeTax : null;
+  // const socialSecurity = calsalarylist ? calsalarylist[0]?.accountingRecord.socialSecurity : null;
+  // const addAmountAfterTax = calsalarylist ? calsalarylist[0]?.accountingRecord.addAmountAfterTax : null;
+  // const deductAfterTax = calsalarylist ? calsalarylist[0]?.accountingRecord.deductAfterTax : null;
+  // const bank = calsalarylist ? calsalarylist[0]?.accountingRecord.bank : null;
+  // const total = calsalarylist ? calsalarylist[0]?.accountingRecord.total : null;
+  // const sumSalaryForTax = calsalarylist ? calsalarylist[0]?.accountingRecord.sumSalaryForTax : null;
 
-  const amountOt = calsalarylist ? calsalarylist[0]?.accountingRecord.amountOt : null;
-  const tax = calsalarylist ? calsalarylist[0]?.accountingRecord.tax : null;
-  const amountPosition = calsalarylist ? calsalarylist[0]?.accountingRecord.amountPosition : null;
-  const amountHardWorking = calsalarylist ? calsalarylist[0]?.accountingRecord.amountHardWorking : null;
-  const amountSpecial = calsalarylist ? calsalarylist[0]?.accountingRecord.amountSpecial : null;
-  const advancePayment = calsalarylist ? calsalarylist[0]?.accountingRecord.advancePayment : null;
-  const amountHoliday = calsalarylist ? calsalarylist[0]?.accountingRecord.amountHoliday : null;
-  const addAmountBeforeTax = calsalarylist ? calsalarylist[0]?.accountingRecord.addAmountBeforeTax : null;
-  const deductBeforeTax = calsalarylist ? calsalarylist[0]?.accountingRecord.deductBeforeTax : null;
-  const socialSecurity = calsalarylist ? calsalarylist[0]?.accountingRecord.socialSecurity : null;
-  const addAmountAfterTax = calsalarylist ? calsalarylist[0]?.accountingRecord.addAmountAfterTax : null;
-  const deductAfterTax = calsalarylist ? calsalarylist[0]?.accountingRecord.deductAfterTax : null;
-  const bank = calsalarylist ? calsalarylist[0]?.accountingRecord.bank : null;
-  const total = calsalarylist ? calsalarylist[0]?.accountingRecord.total : null;
-  const sumSalaryForTax = calsalarylist ? calsalarylist[0]?.accountingRecord.sumSalaryForTax : null;
+  // const countSpecialDay = calsalarylist ? calsalarylist[0]?.countSpecialDay : null;
+  // // const specialDayListWork = calsalarylist ? calsalarylist[0]?.specialDayListWork.length : null;
+  // const specialDayListWork = calsalarylist[0]?.specialDayListWork || 0;
 
-  const countSpecialDay = calsalarylist ? calsalarylist[0]?.countSpecialDay : null;
-  // const specialDayListWork = calsalarylist ? calsalarylist[0]?.specialDayListWork.length : null;
-  const specialDayListWork = calsalarylist[0]?.specialDayListWork || 0;
+  // const specialDayRate = calsalarylist ? calsalarylist[0]?.specialDayRate : null;
 
-  const specialDayRate = calsalarylist ? calsalarylist[0]?.specialDayRate : null;
+  // const amountSpecialDay = calsalarylist ? calsalarylist[0]?.accountingRecord.amountSpecialDay : null;
+  // const countDayWork = calsalarylist ? calsalarylist[0]?.accountingRecord.countDayWork : null;
 
-  const amountSpecialDay = calsalarylist ? calsalarylist[0]?.accountingRecord.amountSpecialDay : null;
-  const countDayWork = calsalarylist ? calsalarylist[0]?.accountingRecord.countDayWork : null;
+  const amountDay = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.amountDay ?? 0);
+  const amountOt = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.amountOt ?? 0);
+
+  const tax = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.tax ?? null);
+  const amountPosition = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.amountPosition ?? null);
+  const amountHardWorking = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.amountHardWorking ?? null);
+  const amountSpecial = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.amountSpecial ?? null);
+  const advancePayment = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.advancePayment ?? null);
+  const amountHoliday = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.amountHoliday ?? null);
+  const addAmountBeforeTax = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.addAmountBeforeTax ?? null);
+  const deductBeforeTax = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.deductBeforeTax ?? null);
+  const socialSecurity = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.socialSecurity ?? null);
+  const addAmountAfterTax = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.addAmountAfterTax ?? null);
+  const deductAfterTax = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.deductAfterTax ?? null);
+  const bank = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.bank ?? null);
+  const total = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.total ?? null);
+  const sumSalaryForTax = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.sumSalaryForTax ?? null);
+
+  const countSpecialDay = Number(calsalarylist?.[0]?.countSpecialDay?.[0] ?? null);
+  // const specialDayListWork = calsalarylist ? calsalarylist[0]?.specialDayListWork.length : null);
+  const specialDayListWork = Number(calsalarylist?.[0]?.specialDayListWork?.[0] ?? null);
+
+  const specialDayRate = Number(calsalarylist?.[0]?.specialDayRate?.[0] ?? null);
+
+  const amountSpecialDay = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.amountSpecialDay ?? null);
+  const countDayWork = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.countDayWork ?? null);
+
+
+  const totalAmount = amountDay + amountOt + sumAddSalaryList;
+  console.log('totalAmount', totalAmount);
 
   const [amountSpecialDayReadyUpDate, setAmountSpecialDayReadyUpDate] = useState(amountSpecialDay === "null" ? '' : amountSpecialDay);
   // Update state when amountSpecialDay changes
@@ -1320,8 +1366,8 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
         const response = await axios.put(endpoint + '/accounting/update/' + accountingData._id, accountingData);
         // setEmployeesResult(response.data.employees);
         if (response) {
-            alert("บันทึกสำเร็จ");
-            // localStorage.setItem('selectedEmployees' , JSON.stringify(response.data.employees));
+          alert("บันทึกสำเร็จ");
+          // localStorage.setItem('selectedEmployees' , JSON.stringify(response.data.employees));
         }
 
         // const id = accountingData.accountingRecord[0]._id;
@@ -1334,9 +1380,9 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
       }
     }
 
-// const id = await accountingData._id;
-// await alert(accountingData.accountingRecord[0].amountSpecialDay);
-// await alert(id);
+    // const id = await accountingData._id;
+    // await alert(accountingData.accountingRecord[0].amountSpecialDay);
+    // await alert(id);
 
   }
 
@@ -1893,7 +1939,7 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
                   </div>
                   <div class="col-md-2">
                     <div class="line_btn">
-                      <button type="button" onClick={() => handleUpdateStatus('update') } class="btn b_save"><i class=""></i> &nbsp;คำนวณใหม่</button>
+                      <button type="button" onClick={() => handleUpdateStatus('update')} class="btn b_save"><i class=""></i> &nbsp;คำนวณใหม่</button>
                     </div>
                   </div>
                 </div>
