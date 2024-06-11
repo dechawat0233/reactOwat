@@ -281,15 +281,15 @@ function Salaryresult() {
   const [addSalaryList, setAddSalaryList] = useState([]);
   const [deductSalaryList, setDeductSalaryList] = useState([]);
   const [sumAddSalaryList, setSumAddSalaryList] = useState(0);
-const [updateStatus , setUpdateStatus ] = useState('');
-const [wsAmountSpecialDay , setWsAmountSpecialDay] = useState(0); 
-const [wsAmountDay, setWsAmountDay] = useState(0); 
-const [wsAmountOt , setWsAmountOt] = useState(0);
-const [wsSocialSecurity , setWsSocialSecurity ] = useState(0);
-const [wsTax , setWsTax] = useState(0);
-const [wsTotal , setWsTotal] = useState(0);
-const [wsTotalSum , setWsTotalSum] = useState(0);
-const [wsTotalSumDeduct , setWsTotalSumDeduct] = useState(0);
+  const [updateStatus, setUpdateStatus] = useState('');
+  const [wsAmountSpecialDay, setWsAmountSpecialDay] = useState(0);
+  const [wsAmountDay, setWsAmountDay] = useState(0);
+  const [wsAmountOt, setWsAmountOt] = useState(0);
+  const [wsSocialSecurity, setWsSocialSecurity] = useState(0);
+  const [wsTax, setWsTax] = useState(0);
+  const [wsTotal, setWsTotal] = useState(0);
+  const [wsTotalSum, setWsTotalSum] = useState(0);
+  const [wsTotalSumDeduct, setWsTotalSumDeduct] = useState(0);
 
   useEffect(() => {
 
@@ -310,14 +310,14 @@ const [wsTotalSumDeduct , setWsTotalSumDeduct] = useState(0);
 
             if (response.data) {
 
-setUpdateStatus('');
-await setAccountingData(response.data[0]);
-await setWsAmountSpecialDay(response.data[0].accountingRecord.amountSpecialDay  || response.data[0].accountingRecord[0].amountSpecialDay );
-await setWsAmountDay(parseFloat(response.data[0].accountingRecord.amountDay) || parseFloat(response.data[0].accountingRecord[0].amountDay));
-await setWsAmountOt(response.data[0].accountingRecord.amountOt || response.data[0].accountingRecord[0].amountOt );
-await setWsSocialSecurity(response.data[0].accountingRecord.socialSecurity || response.data[0].accountingRecord[0].socialSecurity);
-await setWsTax(response.data[0].accountingRecord.tax || response.data[0].accountingRecord[0].tax);
-await setWsTotal(response.data[0].accountingRecord.total || response.data[0].accountingRecord[0].total );
+              setUpdateStatus('');
+              await setAccountingData(response.data[0]);
+              await setWsAmountSpecialDay(response.data[0].accountingRecord.amountSpecialDay || response.data[0].accountingRecord[0].amountSpecialDay);
+              await setWsAmountDay(parseFloat(response.data[0].accountingRecord.amountDay) || parseFloat(response.data[0].accountingRecord[0].amountDay));
+              await setWsAmountOt(response.data[0].accountingRecord.amountOt || response.data[0].accountingRecord[0].amountOt);
+              await setWsSocialSecurity(response.data[0].accountingRecord.socialSecurity || response.data[0].accountingRecord[0].socialSecurity);
+              await setWsTax(response.data[0].accountingRecord.tax || response.data[0].accountingRecord[0].tax);
+              await setWsTotal(response.data[0].accountingRecord.total || response.data[0].accountingRecord[0].total);
 
               await setAddSalaryList(response.data[0].addSalary);
               if (response.data[0].addSalary) {
@@ -356,16 +356,16 @@ await setWsTotal(response.data[0].accountingRecord.total || response.data[0].acc
     // alert(updateStatus );
   }
 
-//sum salary before deduct
-useEffect( () => {
-   setWsTotalSum(Number(wsAmountDay) + Number(wsAmountOt) + Number(wsSocialSecurity) + Number(wsTax) + Number(wsAmountSpecialDay) + Number(sumAddSalaryList));
-  //  setWsTotal(Number(wsTotalSum) - Number(wsTotalSumDeduct) );
-  }, [wsAmountSpecialDay] );
-  
-   //sum deduct
-   useEffect(() => {
-setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );    
-   } , [wsSocialSecurity , wsTax] );
+  //sum salary before deduct
+  useEffect(() => {
+    setWsTotalSum(Number(wsAmountDay) + Number(wsAmountOt) + Number(wsSocialSecurity) + Number(wsTax) + Number(wsAmountSpecialDay) + Number(sumAddSalaryList));
+    //  setWsTotal(Number(wsTotalSum) - Number(wsTotalSumDeduct) );
+  }, [wsAmountSpecialDay]);
+
+  //sum deduct
+  useEffect(() => {
+    setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax));
+  }, [wsSocialSecurity, wsTax]);
 
   console.log('calsalarylist', calsalarylist);
   console.log('addSalaryList', addSalaryList);
@@ -1747,7 +1747,7 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
                           {/* <td style={cellStyle}>{(overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult).toFixed(2)}</td> */}
                           <td style={cellStyle}>
                             {/* {(amountDay + amountOt + addAmountBeforeTax + addAmountAfterTax).toFixed(2)} */}
-                            {isNaN( wsAmountDay + wsAmountOt + sumAddSalaryList) ?
+                            {isNaN(wsAmountDay + wsAmountOt + sumAddSalaryList) ?
                               '0' :
                               (Number(wsAmountDay) + Number(wsAmountOt) + Number(sumAddSalaryList)).toFixed(2)
                             }
@@ -1822,7 +1822,7 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
                             )}
                             {/* {isNaN(Number(deductBeforeTax) + Number(deductAfterTax)) ? 0.00 : (Number(deductBeforeTax) + Number(deductAfterTax)).toFixed(2)} */}
                           </td>
-                          <td style={cellStyle}>{isNaN(Number(wsTax) + Number(wsSocialSecurity) ) ? 0.00 : (Number(wsTax) + Number(wsSocialSecurity) ).toFixed(2)}</td>
+                          <td style={cellStyle}>{isNaN(Number(wsTax) + Number(wsSocialSecurity)) ? 0.00 : (Number(wsTax) + Number(wsSocialSecurity)).toFixed(2)}</td>
                           {/* <td style={cellStyle}>({anyMinus} + {tax} + {((overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary) * socialSecurity).toFixed()} + {bankCustom} + {sumDeduct} + {sumDeductInstallment})</td> */}
                           <td style={cellStyle}>
                             <button type="button" onClick={handleAddSalary} class="btn btn-danger" style={{ width: '4rem' }}>แก้ไข</button>
@@ -1869,7 +1869,7 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
 
                           </td>
                           <td style={cellStyle}></td>
-                          <td style={cellStyle}>{isNaN(Number(wsAmountSpecialDay )) ? 0.00 : (Number(wsAmountSpecialDay )).toFixed(2) }</td>
+                          <td style={cellStyle}>{isNaN(Number(wsAmountSpecialDay)) ? 0.00 : (Number(wsAmountSpecialDay)).toFixed(2)}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -1901,13 +1901,13 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
 
 
                           <td style={cellStyle}>{wsTotalSum}</td>
-                          <td style={cellStyle}>{wsTotalSumDeduct }</td>
+                          <td style={cellStyle}>{wsTotalSumDeduct}</td>
                           {/* <td style={cellStyle}>{totalSum - totalSumDeduct}</td> */}
                           <td style={cellStyle}>
                             {/* {isNaN(Number(total)) ? 0.00 : Number(total).toFixed(2)} */}
                             {/* {isNaN(Number(total)) ? 0.00 : (Math.ceil(Number(total) * 100) / 100).toFixed(2)} */}
                             {/* {isNaN(Number(wsTotal)) ? 0.00 : (Number(wsTotal)).toFixed(2)} */}
-{(Number(wsTotalSum) - Number(wsTotalSumDeduct) ).toFixed(2) || 0}
+                            {(Number(wsTotalSum) - Number(wsTotalSumDeduct)).toFixed(2) || 0}
                           </td>
 
                         </tr>
