@@ -1747,7 +1747,7 @@ function Salaryresult() {
                           {/* <td style={cellStyle}>{(overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult).toFixed(2)}</td> */}
                           <td style={cellStyle}>
                             {/* {(amountDay + amountOt + addAmountBeforeTax + addAmountAfterTax).toFixed(2)} */}
-                            {isNaN(wsAmountDay + wsAmountOt + sumAddSalaryList) ?
+                            {isNaN( Number(wsAmountDay) + Number(wsAmountOt) + Number(sumAddSalaryList)) ?
                               '0' :
                               (Number(wsAmountDay) + Number(wsAmountOt) + Number(sumAddSalaryList)).toFixed(2)
                             }
