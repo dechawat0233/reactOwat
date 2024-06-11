@@ -281,7 +281,6 @@ function Salaryresult() {
   const [addSalaryList, setAddSalaryList] = useState([]);
   const [deductSalaryList, setDeductSalaryList] = useState([]);
   const [sumAddSalaryList, setSumAddSalaryList] = useState(0);
-<<<<<<< HEAD
 const [updateStatus , setUpdateStatus ] = useState('');
 const [wsAmountSpecialDay , setWsAmountSpecialDay] = useState(0); 
 const [wsAmountDay, setWsAmountDay] = useState(0); 
@@ -291,13 +290,6 @@ const [wsTax , setWsTax] = useState(0);
 const [wsTotal , setWsTotal] = useState(0);
 const [wsTotalSum , setWsTotalSum] = useState(0);
 const [wsTotalSumDeduct , setWsTotalSumDeduct] = useState(0);
-=======
-  const [updateStatus, setUpdateStatus] = useState('');
-  const [wsAmountSpecialDay, setWsAmountSpecialDay] = useState(0);
-  const [wsAmountDay, setWsAmountDay] = useState(0);
-  const [wsAmountOt, setWsAmountOt] = useState(0);
-  const [wsSocialSecurity, setWsSocialSecurity] = useState(0);
->>>>>>> dc124377514770243c48359be67305aa0355733a
 
   useEffect(() => {
 
@@ -318,7 +310,6 @@ const [wsTotalSumDeduct , setWsTotalSumDeduct] = useState(0);
 
             if (response.data) {
 
-<<<<<<< HEAD
 setUpdateStatus('');
 await setAccountingData(response.data[0]);
 await setWsAmountSpecialDay(response.data[0].accountingRecord.amountSpecialDay  || response.data[0].accountingRecord[0].amountSpecialDay );
@@ -327,14 +318,6 @@ await setWsAmountOt(response.data[0].accountingRecord.amountOt || response.data[
 await setWsSocialSecurity(response.data[0].accountingRecord.socialSecurity || response.data[0].accountingRecord[0].socialSecurity);
 await setWsTax(response.data[0].accountingRecord.tax || response.data[0].accountingRecord[0].tax);
 await setWsTotal(response.data[0].accountingRecord.total || response.data[0].accountingRecord[0].total );
-=======
-              setUpdateStatus('');
-              await setAccountingData(response.data[0]);
-              await setWsAmountSpecialDay(response.data[0].accountingRecord.amountSpecialDay || response.data[0].accountingRecord[0].amountSpecialDay);
-              await setWsAmountDay(parseFloat(response.data[0].accountingRecord.amountDay) || parseFloat(response.data[0].accountingRecord[0].amountDay));
-              await setWsAmountOt(response.data[0].accountingRecord.amountOt || response.data[0].accountingRecord[0].amountOt);
-              await setWsSocialSecurity(response.data[0].accountingRecord.socialSecurity || response.data[0].accountingRecord[0].socialSecurity);
->>>>>>> dc124377514770243c48359be67305aa0355733a
 
               await setAddSalaryList(response.data[0].addSalary);
               if (response.data[0].addSalary) {
