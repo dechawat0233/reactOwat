@@ -358,7 +358,7 @@ await setWsTotal(response.data[0].accountingRecord.total || response.data[0].acc
 
 //sum salary before deduct
 useEffect( () => {
-   setWsTotalSum(Number(wsAmountDay) + Number(wsAmountOt) + Number(wsSocialSecurity) + Number(wsTax) + Number(wsAmountSpecialDay) + Number(sumAddSalaryList));
+   setWsTotalSum((Number(wsAmountDay) + Number(wsAmountOt) + Number(wsTax) + Number(wsAmountSpecialDay) + Number(sumAddSalaryList)).toFixed(2));
   //  setWsTotal(Number(wsTotalSum) - Number(wsTotalSumDeduct) );
   }, [wsAmountSpecialDay] );
   
