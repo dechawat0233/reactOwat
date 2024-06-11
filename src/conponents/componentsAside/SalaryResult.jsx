@@ -291,6 +291,11 @@ function Salaryresult() {
   const [wsTotalSum, setWsTotalSum] = useState(0);
   const [wsTotalSumDeduct, setWsTotalSumDeduct] = useState(0);
 
+  //tmp for cal social
+  const [wsAmountSpecialDayx , setWsAmountSpecialDayx ] = useState(0);
+  const [wsSocialSecurityX, setWsSocialSecurityX] = useState(0);
+
+
   useEffect(() => {
 
     const fetchData = async () => {
@@ -313,9 +318,13 @@ function Salaryresult() {
               setUpdateStatus('');
               await setAccountingData(response.data[0]);
               await setWsAmountSpecialDay(response.data[0].accountingRecord.amountSpecialDay || response.data[0].accountingRecord[0].amountSpecialDay);
+              await setWsAmountSpecialDayx(response.data[0].accountingRecord.amountSpecialDay || response.data[0].accountingRecord[0].amountSpecialDay);
+
               await setWsAmountDay(parseFloat(response.data[0].accountingRecord.amountDay) || parseFloat(response.data[0].accountingRecord[0].amountDay));
               await setWsAmountOt(response.data[0].accountingRecord.amountOt || response.data[0].accountingRecord[0].amountOt);
               await setWsSocialSecurity(response.data[0].accountingRecord.socialSecurity || response.data[0].accountingRecord[0].socialSecurity);
+              await setWsSocialSecurityX(response.data[0].accountingRecord.socialSecurity || response.data[0].accountingRecord[0].socialSecurity);
+
               await setWsTax(response.data[0].accountingRecord.tax || response.data[0].accountingRecord[0].tax);
               await setWsTotal(response.data[0].accountingRecord.total || response.data[0].accountingRecord[0].total);
 
@@ -356,9 +365,33 @@ function Salaryresult() {
     // alert(updateStatus );
   }
 
+
 //sum salary before deduct
 useEffect( () => {
    setWsTotalSum((Number(wsAmountDay) + Number(wsAmountOt) + Number(wsTax) + Number(wsAmountSpecialDay) + Number(sumAddSalaryList)).toFixed(2));
+
+   const calSocial = async () => {
+if(wsSocialSecurity >= 0 ) {
+  const   tmp = await Number(wsAmountSpecialDayx) * 0.05;
+  const tmp1 = await Number(wsAmountSpecialDay) * 0.05;
+  if(tmp < tmp1 ) {
+  await setWsSocialSecurity((wsSocialSecurityX + (tmp1 - tmp)) );
+  } else {
+    let t = tmp - tmp1;
+
+    await setWsSocialSecurity(Number(wsSocialSecurityX) - t );
+
+  }
+  // await alert('tmp ' + tmp);
+
+// await alert('tmp1 ' + tmp1);
+
+  // await setWsSocialSecurity(tmp1);
+  
+}
+   }
+
+   calSocial();
   //  setWsTotal(Number(wsTotalSum) - Number(wsTotalSumDeduct) );
   }, [wsAmountSpecialDay] );
   
@@ -1340,8 +1373,12 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
     if (accountingData && accountingData.accountingRecord) {
       if (Array.isArray(accountingData.accountingRecord)) {
         accountingData.accountingRecord[0].amountSpecialDay = wsAmountSpecialDay;
+        accountingData.accountingRecord[0].socialSecurity = wsSocialSecurity;
+
       } else {
         accountingData.accountingRecord.amountSpecialDay = wsAmountSpecialDay;
+        accountingData.accountingRecord.socialSecurity = wsSocialSecurity;
+
       }
       // await alert(accountingData.accountingRecord[0].amountSpecialDay);
 
