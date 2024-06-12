@@ -1514,7 +1514,9 @@ function WorktimeSheetWorkplace() {
                     workplaceId: record.workplaceId,
                     dates: record.date,
                     allTimes: record.allTime,
-                    otTimes: record.otTime
+                    otTimes: record.otTime,
+                    specialtSalarys: record.specialtSalary,
+                    shift: record.shift
                 }))
         );
 
@@ -1543,7 +1545,10 @@ function WorktimeSheetWorkplace() {
                     workplaceId: record.workplaceId,
                     dates: record.date,
                     allTimes: record.allTime,
-                    otTimes: record.otTime
+                    otTimes: record.otTime,
+                    specialtSalarys: record.specialtSalary,
+                    shift: record.shift
+
                 }))
         );
 
@@ -1683,16 +1688,37 @@ function WorktimeSheetWorkplace() {
         //         return '';
         //     }
         // });
+
         const datesArray = combinedArray[employeeId].map(entry => Number(entry.dates));
 
         console.log('datesArray123', datesArray);
         // Filter only numeric values in datesArray
+
+        const filteredEntriesSpecialt = combinedArray[employeeId].filter(entry =>
+            entry.shift === "specialt_shift" && Number(entry.specialtSalarys) > 300
+        );
+        console.log('filteredEntriesSpecialt', filteredEntriesSpecialt);
+
+        // Extract dates from the filtered entries
+        // const datesArray321 = filteredEntriesSpecialt.map(entry => entry.dates).flat();
+        // const daySpecialt = filteredEntriesSpecialt.map(entry => entry.dates.map(date => parseFloat(date))).flat();
+        // console.log('datesArray321', datesArray321);
+
+        const daySpecialt = filteredEntriesSpecialt.map(entry => parseInt(entry.dates, 10));
+
+        console.log('datesArray321', daySpecialt);
+
+
+        console.log(`Employee ID: ${employeeId}, Dates:`, datesArray);
+
         const numericDatesArray = datesArray.filter(date => !isNaN(date));
 
         const datesSet = new Set(datesArray);
         const uniqueDatesArray = Array.from(datesSet);
 
-        const employeeResultArray = resultArray.map(day => {
+        // const employeeResultArray = resultArray.map(day => {
+        //     const workplaceIdIndex = datesArray.indexOf(day);
+        const employeeResultArray = resultArray.filter(day => !daySpecialt.includes(parseInt(day, 10))).map(day => {
             const workplaceIdIndex = datesArray.indexOf(day);
             // if (workplaceIdIndex !== -1) {
             //     const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].workplaceId;
@@ -1785,7 +1811,7 @@ function WorktimeSheetWorkplace() {
         console.log('arrayOTAllTime', arrayOTAllTime);
 
 
-        combinedArray
+        // combinedArray
         console.log('combinedArray', combinedArray);
         console.log('datesArray', datesArray);
         console.log('numericDatesArray', numericDatesArray);
@@ -1857,7 +1883,15 @@ function WorktimeSheetWorkplace() {
         arrayWorkHoli.push(employeeResultArray2Holi);
 
         // วันที่ทำงานในวันหยุดนักขัตฤกษ์(ช.ม.)
-        const commonDates = datesArray.filter(date => allDayOff.includes(date));
+        const commonDates = datesArray.filter(date => allDayOff.includes(date) || daySpecialt.includes(parseInt(date)));
+        // const commonDates = datesArray.filter(date => allDayOff.includes(date) && daySpecialt.includes(parseInt(date, 10)));
+
+        // const commonDates = datesArray.filter(date => allDayOff.includes(date));
+
+
+        console.log('commonDatestest', commonDates);
+
+
         const employeeResultArray2 = resultArray.map(day => {
             const workplaceIdIndex = commonDates.indexOf(day);
             // if (workplaceIdIndex !== -1) {
@@ -1868,19 +1902,31 @@ function WorktimeSheetWorkplace() {
             // }
             if (workplaceIdIndex !== -1) {
                 const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].allTimes;
+                // const currentWorkplaceId123 = combinedArray[employeeId][workplaceIdIndex].specialtSalarys;
 
-                if (currentWorkplaceId === searchWorkplaceId) {
-                    return 1;
-                } else if (currentWorkplaceId === '') {
+                const specialtSalarys = combinedArray[employeeId][workplaceIdIndex]?.specialtSalarys ?? '';
+
+                const currentWorkplaceId123 = specialtSalarys === "" ? '' : specialtSalarys;
+
+                console.log('currentWorkplaceId123', currentWorkplaceId);
+                // 12/06/2024
+                // if (currentWorkplaceId === searchWorkplaceId) {
+                //     return 1;
+                // } else if (currentWorkplaceId === '') {
+                //     return '';
+                // } else {
+                // return parseFloat(currentWorkplaceId, 10);
+                if (parseFloat(currentWorkplaceId, 10) == 0) {
                     return '';
                 } else {
-                    // return parseFloat(currentWorkplaceId, 10);
-                    if (parseFloat(currentWorkplaceId, 10) == 0) {
-                        return '';
-                    } else {
-                        return parseFloat(currentWorkplaceId, 10);
-                    }
+                    // if (currentWorkplaceId123 == "") {
+                    //     return '';
+                    // } else {
+                    return parseFloat(currentWorkplaceId, 10);
+                    // }
+                    // return parseFloat(currentWorkplaceId123, 10);
                 }
+                // }
             } else {
                 return '';
             }
@@ -1888,7 +1934,7 @@ function WorktimeSheetWorkplace() {
         arrayWorkHoliday.push(employeeResultArray2);
 
         // วันที่ทำงานในวันหยุดนักขัตฤกษ์OT(ช.ม.)
-        const commonDatesOT = datesArray.filter(date => allDayOff.includes(date));
+        const commonDatesOT = datesArray.filter(date => allDayOff.includes(date) || daySpecialt.includes(parseInt(date)));
         // const employeeResultArray2OT = resultArray.map(day => {
         //     const workplaceIdIndex = commonDatesOT.indexOf(day);
         //     if (workplaceIdIndex !== -1) {
@@ -1964,7 +2010,7 @@ function WorktimeSheetWorkplace() {
         arrayWorkNormalDay.push(employeeResultArray3);
 
         // วันที่ทำงานปกติ
-        const commonDates3 = datesArray.filter(date => !(allDayOff.includes(date) || holidayList.includes(date)));
+        const commonDates3 = datesArray.filter(date => !(allDayOff.includes(date) || holidayList.includes(date) || daySpecialt.includes(parseInt(date, 10))));
         const employeeResultArray3Old = resultArray.map(day => {
             const workplaceIdIndex = commonDates3.indexOf(day);
             if (workplaceIdIndex !== -1) {
@@ -1978,7 +2024,7 @@ function WorktimeSheetWorkplace() {
         arrayWorkNormalDayOld.push(employeeResultArray3Old);
 
         // วันที่ทำงานปกติOT
-        const commonDates3OT = datesArray.filter(date => !(allDayOff.includes(date) || holidayList.includes(date)));
+        const commonDates3OT = datesArray.filter(date => !(allDayOff.includes(date) || holidayList.includes(date) || daySpecialt.includes(parseInt(date, 10))));
         console.log('commonDates3OT', commonDates3OT);
         // const employeeResultArray3OT = resultArray.map(day => {
         //     const workplaceIdIndex = commonDates3OT.indexOf(day);
@@ -4010,32 +4056,6 @@ function WorktimeSheetWorkplace() {
                 fontSize: 10,
             };
 
-            // const arraytest = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.5],
-            // [1, 1, 1, 1, 1, 1, 1],
-            // [1, 1, 1, 1, 1, 1, 1],
-            // [1, 1, 1, 1, 1, 1, 1],
-            // [1, 1, 1, 1, 1, 1, 1],
-            // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-            // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9],
-            // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3],
-            // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-            // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-            // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-            // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-            // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-            // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-            // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-            // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-            // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-            // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-            // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-            // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-            // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-            // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-            // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-            // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
-            // [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2]];
-
 
             const arraytestSpSalary = [['', 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0.5],
             [2, 2, 2, 2, 2, '', 2, '', 2],
@@ -4046,70 +4066,10 @@ function WorktimeSheetWorkplace() {
             [3, 3, '', 3, '', 3, 3, 3, 3, '', 1, '', 1, 0.5, 0.5, 1.5],
             ];
 
-            // const arraylistNameEmp = ['สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย','สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย','สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย','สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย', 'สนไหม'];
-            // const arraylistNameEmp =
-            //     [['ภัทรนก แซหว็อง', '612548', 'กะเช้า', 'กะดึก', '1001'],
-            //     ['สมชาย ไม่มา', '165843', 'กะเช้า', 'กะดึก', '1201'],
-            //     ['สมชาย ไม่อยู่', '162847', 'กะเช้า', 'กะดึก', '8401'],
-            //     ['สมชาย กำลัง', '653298', 'กะเช้า', 'กะดึก', '1196'],
-            //     ['สมชาย ไปริด', '7536241', 'กะเช้า', 'กะดึก', '2001'],
-            //     ['สมชาย สมชาย', '999999', 'กะเช้า', 'กะดึก', '1921'],
-            //     ['สมชาย ติดห', '1845270', 'กะเช้า', 'กะดึก', '1548'],
-            //     ['สมชาย สมชาย', '1652305', 'กะเช้า', 'กะดึก', '1078'],
-            //     ['สมชาย สมชาย', '9564832', 'กะเช้า', 'กะดึก', '1009'],
-            //     ['สมชาย สมชาย', '1032568', 'กะเช้า', 'กะดึก', '1005']];
-
             const arraylistOT =
                 ['1.5', '2', '3'];
 
-            // const addSalaryWorkplace =
-            //     [{
-            //         name: "ค่าเดินทาง",
-            //         codeSpSalary: "1001",
-            //         SpSalary: "1000",
-            //         roundOfSalary: "monthly",
-            //         StaffType: "all",
-            //         nameType: "",
-            //         _id: "656025d1fd5375965d5028a3"
-            //     },
-            //     {
-            //         name: "ค่าอาหาร",
-            //         codeSpSalary: "2534",
-            //         SpSalary: "100",
-            //         roundOfSalary: "daily",
-            //         StaffType: "all",
-            //         nameType: "ทดลอง",
-            //         _id: "656025d1fd5375965d5028a4"
-            //     },
-            //     {
-            //         name: "ค่าโทรศัพท์",
-            //         codeSpSalary: "8467",
-            //         SpSalary: "300",
-            //         roundOfSalary: "daily",
-            //         StaffType: "header",
-            //         nameType: "",
-            //         _id: "656025d1fd5375965d5028a5"
-            //     },
-            //     {
-            //         name: "ค่าตำแหน่ง",
-            //         codeSpSalary: "4392",
-            //         SpSalary: "800",
-            //         roundOfSalary: "monthly",
-            //         StaffType: "header",
-            //         nameType: "",
-            //         _id: "656025d1fd5375965d5028a6"
-            //     },
-            //     {
-            //         name: "เบี้ยขยัน",
-            //         codeSpSalary: "1358",
-            //         SpSalary: "500",
-            //         roundOfSalary: "monthly",
-            //         StaffType: "all",
-            //         nameType: "",
-            //         _id: "656025d1fd5375965d5028a7"
-            //     },
-            //     ];
-            // const arraylistNameEmp = ['สมใจ', 'สมหมาย', 'สมมา', 'สมชาย', 'สมชัย'];
+
 
             // const arrayLength = arraylistNameEmp.length;
             const arrayLength = 9;
@@ -4638,11 +4598,11 @@ function WorktimeSheetWorkplace() {
                 const textToDraw = dataArray[0].toString();
                 const alignment = textToDraw.length > 3 ? { align: 'left', angle: 90, xOffset: 5 } : { align: 'left' };
 
-                if (textToDraw.length > 3) {
-                    doc.text(textToDraw, currentX + 2, 3 + currentY, alignment);
-                } else {
-                    doc.text(textToDraw, currentX + 1, 3 + currentY, alignment);
-                }
+                // if (textToDraw.length > 3) {
+                //     doc.text(textToDraw, currentX + 2, 3 + currentY, alignment);
+                // } else {
+                //     doc.text(textToDraw, currentX + 1, 3 + currentY, alignment);
+                // }
             };
 
             // const squareColor2 = [255, 255, 190]; // Red
