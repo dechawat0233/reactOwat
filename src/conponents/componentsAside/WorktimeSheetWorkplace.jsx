@@ -2331,7 +2331,14 @@ function WorktimeSheetWorkplace() {
 
                 // Multiply the value by the corresponding count in sumArray
                 // return value * sumArrayOld[outerIndex];
-                return value * employeeSalaryItem.message;
+                // return $value * employeeSalaryItem.message;
+
+                // const result = value * employeeSalaryItem.message;
+                // // Construct the string template with placeholders and return
+                // return `${value} * ${employeeSalaryItem.message} = ${result}`;
+
+                return value;
+
             } else {
                 // Otherwise, keep the value unchanged
                 return value;
