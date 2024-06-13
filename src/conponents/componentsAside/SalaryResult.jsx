@@ -1879,7 +1879,7 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
                     <table border="1" style={tableStyle}>
                       <thead>
                         <tr>
-                          <th style={headerCellStyle}>วันหยุดนักขัต</th>
+                          <th style={headerCellStyle}>วันหยุดนักขัติ</th>
                           <th style={headerCellStyle}>สวัสดิการ</th>
                           <th style={headerCellStyle}>ยอดรวม</th>
                         </tr>
