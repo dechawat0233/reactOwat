@@ -1163,7 +1163,7 @@ function SalarySlipPDF() {
                                                 onChange={handleSelectChange}
                                             >
                                                 {/* <option value="">Select Option</option> */}
-                                                <option value="option1">แบบหน่วpงาน</option>
+                                                <option value="option1">แบบหน่วยงาน</option>
                                                 <option value="option2">แบบพนักงาน</option>
                                             </select>
                                         </div>
