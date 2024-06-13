@@ -1365,7 +1365,10 @@ function SalarySlipPDF() {
 
                                 </div>
 
-                                <button onClick={generatePDF}>Generate PDF</button>
+                                <button onClick={generatePDF} class="btn b_save">
+                                    {selectedOption === 'option1' ? 'แบบหน่วยงาน' : selectedOption === 'option2' ? 'แบบพนักงาน' : ''}
+
+                                </button>
 
                             </section>
 
