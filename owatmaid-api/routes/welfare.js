@@ -13,7 +13,7 @@ router.get('/listdelete', async (req, res) => {
 
 
 // Create
-router.post('/', async (req, res) => {
+router.post('/create', async (req, res) => {
   const { year, month, employeeId } = req.body;
   try {
     // Check if a record with the same year, month, and employeeId already exists
@@ -31,7 +31,7 @@ router.post('/', async (req, res) => {
 });
 
 // Read All
-router.get('/', async (req, res) => {
+router.get('/list', async (req, res) => {
   try {
     const welfares = await Welfare.find();
     res.json(welfares);
@@ -58,7 +58,7 @@ router.get('/search', async (req, res) => {
 });
 
 // Update
-router.put('/:id', getWelfare, async (req, res) => {
+router.put('/update:id', getWelfare, async (req, res) => {
   Object.assign(res.welfare, req.body);
   try {
     const updatedWelfare = await res.welfare.save();
@@ -69,7 +69,7 @@ router.put('/:id', getWelfare, async (req, res) => {
 });
 
 // Delete
-router.delete('/:id', getWelfare, async (req, res) => {
+router.delete('/delete:id', getWelfare, async (req, res) => {
   try {
     await res.welfare.remove();
     res.json({ message: 'Deleted Welfare' });
@@ -79,7 +79,7 @@ router.delete('/:id', getWelfare, async (req, res) => {
 });
 
 // Delete by Employee ID
-router.delete('/employee/:employeeId', async (req, res) => {
+router.delete('/deleteemployee/:employeeId', async (req, res) => {
   const { employeeId } = req.params;
   try {
     const result = await Welfare.deleteMany({ employeeId: employeeId });
