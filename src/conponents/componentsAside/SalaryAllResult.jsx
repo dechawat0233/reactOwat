@@ -990,14 +990,14 @@ function SalaryAllResult() {
                     const formattedSumFormattedAmountHoliday = sumFormattedAmountHoliday.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
                     // const formattedAmountDay = Number(accountingRecord.amountDay ?? 0).toFixed(2);
-                    const formattedAmountDay = Number(accountingRecord?.[0]?.amountDay ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    const formattedAmountDay = Number(accountingRecord?.[0]?.amountCountDayWork ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                     // pdf.text(`${formattedAmountDay}`, pdf.internal.pageSize.width - 10, currentY, { align: 'right' });
                     pdf.text(`${formattedAmountDay}`,
                         startXSalary + 16, currentY, { align: 'right' });
 
                     // ค่าล่วงเวลา
                     // const formattedAmountOt = Number(accountingRecord.amountOt + (countSpecialDayListWork * specialDayRate) ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                    const formattedAmountOt = Number(accountingRecord?.[0]?.amountOt ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    const formattedAmountOt = Number(accountingRecord?.[0]?.amountCountDayWorkOt ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
                     pdf.text(`${formattedAmountOt}`,
                         startXOT + cellWidthOT, currentY, { align: 'right' });
