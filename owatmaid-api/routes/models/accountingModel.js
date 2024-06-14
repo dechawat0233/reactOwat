@@ -43,6 +43,7 @@ sumDeductBeforeTax: String,
 sumAddSalaryAfterTax: String,
 sumDeductAfterTax: String,
 sumSalaryForTax: String,
+sumAddSalary: String, 
 
 }],
 addSalary: [{
