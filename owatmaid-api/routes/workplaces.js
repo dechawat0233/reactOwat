@@ -28,6 +28,11 @@ const workplaceSchema = new mongoose.Schema({
     workplaceName: {
         type: String
     },
+    workplaceGroup: [{
+        workplaceComplexId: String,
+        workplaceComplexName: String,
+        workplaceComplexData: {}
+}],
     workplaceArea: {
         type: String
     },

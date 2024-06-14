@@ -64,7 +64,7 @@ res.json(x.data);
 //get accounting by id
 router.post('/calsalaryemp', async (req, res) => {
   try {
-    const { year, month , employeeId , updateStatus} = await req.body;
+    const { year, month ,   employeeId , updateStatus} = await req.body;
     const workplaceList = await axios.get(sURL + '/workplace/list');
 
     const dataSearch = await {
@@ -167,6 +167,7 @@ let dayOffList = [];
 let dayOffSum = 0;
 let dayOffSumWork = 0;
 let dayOffWork = 0;
+let sumAddSalary = 0;
 
 // Get employee data by employeeId
 const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
@@ -664,6 +665,8 @@ let sumAddSalaryAfterTaxTmp = 0;
 
 await addSalaryList.forEach(item => {
 total = total + parseFloat( item.SpSalary || 0);
+sumAddSalary = sumAddSalary + parseFloat( item.SpSalary || 0);
+
 });
 
 //check addSalary with cal tax and social 
@@ -802,6 +805,9 @@ console.log('workDaySocial '+ (workDaySocial * salary) + 'sumSocial '+ sumSocial
 if (sumSocial > 15000) {
   sumSocial = await 15000; // Set sumSocial to 15000
 }
+if (sumSocial < 1650) {
+  sumSocial = await 83; // Set sumSocial to 83
+}
 
 // Calculate socialSecurity based on sumSocial
 data.accountingRecord.socialSecurity = Math.ceil((sumSocial * 0.05)) || 0;
@@ -824,6 +830,8 @@ total = await total  + amountDay + amountOt + calSP -(Math.ceil((sumSocial * 0.0
     data.accountingRecord.sumDeductAfterTax = sumDeductAfterTax || 0;
 
     data.accountingRecord.sumSalaryForTax = sumCalTax || 0;
+
+    data.accountingRecord.sumAddSalary = await sumAddSalary ||0;
 
     data.addSalary = await addSalaryList || [];
 
@@ -1099,7 +1107,9 @@ router.post('/calsalarylist', async (req, res) => {
     let dayOffSum = 0;
     let dayOffSumWork = 0;
     let dayOffWork = 0;
-    
+    let sumAddSalary = 0;
+
+
     // Get employee data by employeeId
     const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
     if (response) {
@@ -1596,6 +1606,8 @@ router.post('/calsalarylist', async (req, res) => {
     
     await addSalaryList.forEach(item => {
     total = total + parseFloat( item.SpSalary || 0);
+    sumAddSalary = sumAddSalary + parseFloat( item.SpSalary || 0);
+
     });
     
     //check addSalary with cal tax and social 
@@ -1734,7 +1746,10 @@ router.post('/calsalarylist', async (req, res) => {
     if (sumSocial > 15000) {
       sumSocial = await 15000; // Set sumSocial to 15000
     }
-    
+    if (sumSocial < 1650) {
+      sumSocial = await 83; // Set sumSocial to 83
+    }
+            
     // Calculate socialSecurity based on sumSocial
     data.accountingRecord.socialSecurity = Math.ceil((sumSocial * 0.05)) || 0;
     
@@ -1756,7 +1771,9 @@ router.post('/calsalarylist', async (req, res) => {
         data.accountingRecord.sumDeductAfterTax = sumDeductAfterTax || 0;
     
         data.accountingRecord.sumSalaryForTax = sumCalTax || 0;
-    
+
+        data.accountingRecord.sumAddSalary = sumAddSalary || 0;
+
         data.addSalary = await addSalaryList || [];
     
     data.deductSalary = deductSalaryList || [];
@@ -2945,6 +2962,8 @@ let dayOffList = [];
 let dayOffSum = 0;
 let dayOffSumWork = 0;
 let dayOffWork = 0;
+let sumAddSalary = 0;
+
 
 // Get employee data by employeeId
 const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
@@ -3443,6 +3462,8 @@ let sumAddSalaryAfterTaxTmp = 0;
 
 await addSalaryList.forEach(item => {
 total = total + parseFloat( item.SpSalary || 0);
+sumAddSalary = sumAddSalary + parseFloat( item.SpSalary || 0);
+
 });
 
 //check addSalary with cal tax and social 
@@ -3581,6 +3602,10 @@ console.log('workDaySocial '+ (workDaySocial * salary) + 'sumSocial '+ sumSocial
 if (sumSocial > 15000) {
   sumSocial = await 15000; // Set sumSocial to 15000
 }
+if (sumSocial < 1650) {
+  sumSocial = await 83; // Set sumSocial to 83
+}
+
 
 // Calculate socialSecurity based on sumSocial
 data.accountingRecord.socialSecurity = Math.ceil((sumSocial * 0.05)) || 0;
@@ -3603,6 +3628,8 @@ total = await total  + amountDay + amountOt + calSP -(Math.ceil((sumSocial * 0.0
     data.accountingRecord.sumDeductAfterTax = sumDeductAfterTax || 0;
 
     data.accountingRecord.sumSalaryForTax = sumCalTax || 0;
+
+    data.accountingRecord.sumAddSalary = sumAddSalary || 0;
 
     data.addSalary = await addSalaryList || [];
 

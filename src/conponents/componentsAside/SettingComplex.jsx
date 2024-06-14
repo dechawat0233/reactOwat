@@ -512,9 +512,11 @@ function SettingComplex() {
     const [workplaceId, setWorkplaceId] = useState(''); //รหัสหน่วยงาน
     const [workplaceName, setWorkplaceName] = useState(''); //ชื่อหน่วยงาน
 
-    const [workplaceComplexId, setWorkplaceComplexId] = useState(''); //รหัสหน่วยงานหย่อย
-    const [workplaceComplexName, setWorkplaceComplexName] = useState(''); //ชื่อหน่วยงานหย่อย
+    const [workplaceComplexId, setWorkplaceComplexId] = useState(''); //รหัสกลุ่มงานย่อย
+    const [workplaceComplexName, setWorkplaceComplexName] = useState(''); //ชื่อกลุ่มงานย่อย
     const [workplacesComplex, setWorkplacesComplex] = useState([]);
+    const [standardWorkplace , setStandardWorkplace ] = useState({});
+    const [checkSetStandard, setCheckSetStandard] = useState('');
 
 
     const [workplaceArea, setWorkplaceArea] = useState(''); //สถานที่ปฏิบัติงาน
@@ -614,17 +616,51 @@ function SettingComplex() {
                 id: workplaceComplexId,
                 name: workplaceComplexName,
             };
-            setWorkplacesComplex([...workplacesComplex, newWorkplace]);
-            setWorkplaceComplexId('');
-            setWorkplaceComplexName('');
+            // setWorkplacesComplex([...workplacesComplex, newWorkplace]);
+            // setWorkplaceComplexId('');
+            // setWorkplaceComplexName('');
         }
     };
 
-    const handleSelectChange = (e) => {
-        setSelectedDay(e.target.value);
+    const handleSelectChange = async (e) => {
+        // setSelectedDay(e.target.value);
         // setWorkplaceComplexName(`Complex Name ${e.target.value}`);
-        setWorkplaceComplexName(e.target.value);
+        await setWorkplaceComplexId(e.target.value);
     };
+
+
+
+    useEffect(() => {
+        setWorkplaceComplexName('');
+
+        const setGroupData = async () => {
+if(workplaceComplexId === '') {
+    //no selection group
+    // alert('No selection group');
+    await setCheckSetStandard('seted');
+    await handleClickResult(standardWorkplace);
+} else {
+
+    if(workplacesComplex.length == 0 ) {
+//No data set to workplace group 
+alert('No data set to workplace group ' + workplacesComplex.length );
+await setCheckSetStandard('seted');
+await handleClickResult(standardWorkplace);
+    } else {
+        //set data to workplace group 
+let c = await Number(workplaceComplexId) - 1;
+await setWorkplaceComplexName(standardWorkplace.workplaceGroup[c].workplaceComplexName || '');
+await setCheckSetStandard('seted');
+
+        await handleClickResult(workplacesComplex[c].workplaceComplexData);
+
+    }
+}
+        }
+
+        setGroupData();
+
+    } , [workplaceComplexId]);
 
     // const handleAddInput = () => {
     //     setFormData([...formData, { name: '', SpSalary: '', StaffType: '', nameType: '' }]);
@@ -672,6 +708,16 @@ function SettingComplex() {
     //set data to form
     function handleClickResult(workplace) {
         setNewWorkplace(false);
+        if(checkSetStandard == 'seted') {
+ setWorkplacesComplex(standardWorkplace.workplaceGroup);
+setStandardWorkplace(standardWorkplace);
+        } else {
+            setWorkplacesComplex(workplace.workplaceGroup);
+            setStandardWorkplace(workplace);
+            
+        }
+         setCheckSetStandard('');
+
         setShowEmployeeListResult(employeeListResult);
         set_id(workplace._id);
         setWorkplaceId(workplace.workplaceId);
@@ -895,7 +941,7 @@ function SettingComplex() {
         event.preventDefault();
 
         //get data from input in useState to data 
-        const data = {
+        const dataTmp  = await {
             workplaceId: workplaceId,
             workplaceName: workplaceName,
             workplaceArea: workplaceArea,
@@ -969,6 +1015,58 @@ function SettingComplex() {
             workTimeDay: workTimeDayList,
             workTimeDayPerson: workTimeDayPersonList
         };
+
+        // let data = { ...dataTmp };
+let data = standardWorkplace;
+
+if (workplaceComplexId !== '') {
+    if (workplaceComplexId >= workplacesComplex.length) {
+        // new group
+        const tmpG = {
+            workplaceComplexId: workplaceComplexId,
+            workplaceComplexName: workplaceComplexName,
+            workplaceComplexData: dataTmp
+        };
+
+        const newGroup = [...workplacesComplex, tmpG];
+        data = {
+            ...dataTmp,
+            workplaceGroup: newGroup
+        };
+    } else {
+                // update existing group
+                const updatedGroup = workplacesComplex.map(group => 
+                    group.workplaceComplexId === workplaceComplexId 
+                        ? { ...group, workplaceComplexData: dataTmp } 
+                        : group
+                );
+                data = {
+                    ...dataTmp,
+                    workplaceGroup: updatedGroup
+                };
+    }
+}
+
+        // if(workplaceComplexId !== '') {
+        //     //selected group 
+        //     if(workplaceComplexId  >= workplacesComplex.length) {
+        //         //new group
+        //         const tmpG = await {
+        //             workplaceComplexId: workplaceComplexId,
+        //             workplaceComplexName: workplaceComplexName,
+        //             workplaceComplexData: data
+        //         };
+
+        //         const newGroup = await [... workplacesComplex , tmpG ]
+        //         const data = await {
+        //             ... 
+        //             dataTmp,
+        //             workplaceGroup: newGroup
+        //         };
+
+        //     }
+        // }
+
 
         // if (file) {
         //     data.append('reason', file);
@@ -1160,29 +1258,31 @@ function SettingComplex() {
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <label role="workOfWeek">select</label>
-                                                    <select name="endDay" className="form-control" value={workplaceComplexName} onChange={handleSelectChange}>
-                                                        <option value='1' >1 </option>
-                                                        <option value='2' >2 </option>
-                                                        <option value='3' >3 </option>
-                                                        <option value='4' >4 </option>
-                                                        <option value='5' >5 </option>
-                                                        <option value='6' >6 </option>
-                                                        <option value='7' >7 </option>
-                                                        <option value='8' >8 </option>
-                                                        <option value='9' >9 </option>
-                                                        <option value='10' >10 </option>
+                                                    <label role="selectGroup">เลือกกลุ่มงาน</label>
+                                                    <select name="selectGroup" className="form-control" value={workplaceComplexId} onChange={handleSelectChange}>
+                                                    <option value='' >เลือกกลุ่มงาน</option>
+                                                    <option value='1' > 1</option>
+                                                    <option value='2' > 2</option>
+                                                    <option value='3' > 3</option>
+                                                    <option value='4' > 4</option>
+                                                    <option value='5' > 5</option>
+                                                    <option value='6' > 6</option>
+                                                    <option value='7' > 7</option>
+                                                    <option value='8' > 8</option>
+                                                    <option value='9' > 9</option>
+                                                    <option value='10' > 10</option>
+
                                                     </select>
                                                 </div>
                                             </div>
                                             <div className="col-md-3">
-                                                <label role="workplaceName">ชื่อกลุ่ม</label>
+                                                <label role="workplaceName">ชื่อกลุ่มงาน</label>
                                                 <input
                                                     type="text"
-                                                    value={workplaceComplexId}
+                                                    value={workplaceComplexName}
                                                     class="form-control"
-                                                    placeholder="ชื่อกลุ่ม"
-                                                    onChange={(e) => setWorkplaceComplexId(e.target.value)}
+                                                    placeholder="ชื่อกลุ่มงาน"
+                                                    onChange={(e) => setWorkplaceComplexName(e.target.value)}
                                                 />
                                             </div>
                                            
@@ -2137,7 +2237,7 @@ function SettingComplex() {
                                 {/* <!--Frame--> */}
                                 <div class="line_btn">
                                     {newWorkplace ? (
-                                        <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;สร้างหน่วยงานใหม่</button>
+                                        <button class="btn b_save" disabled ><i class="nav-icon fas fa-save"></i> &nbsp;สร้างหน่วยงานใหม่</button>
                                     ) : (
                                         <button class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
 
