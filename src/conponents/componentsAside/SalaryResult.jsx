@@ -375,11 +375,20 @@ if(wsSocialSecurity >= 0 ) {
   const   tmp = await Number(wsAmountSpecialDayx) * 0.05;
   const tmp1 = await Number(wsAmountSpecialDay) * 0.05;
   if(tmp < tmp1 ) {
-  await setWsSocialSecurity((wsSocialSecurityX + (tmp1 - tmp)) );
+let ans = await (wsSocialSecurityX + (tmp1 - tmp));
+if(ans < 83) {
+  ans = await 83;
+}
+  await setWsSocialSecurity();
+
   } else {
     let t = tmp - tmp1;
-
-    await setWsSocialSecurity(Number(wsSocialSecurityX) - t );
+    let ans = await Number(wsSocialSecurityX) - t;
+    if(ans < 83) {
+      ans = await 83;
+    }
+    
+    await setWsSocialSecurity(ans);
 
   }
   // await alert('tmp ' + tmp);
