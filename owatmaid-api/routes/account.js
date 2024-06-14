@@ -168,6 +168,7 @@ let dayOffSum = 0;
 let dayOffSumWork = 0;
 let dayOffWork = 0;
 let sumAddSalary = 0;
+let sumAmountDayWork = 0;
 
 // Get employee data by employeeId
 const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
@@ -792,9 +793,15 @@ await console.log('countDay '+ countDay + ' dayOffSumWork ' + dayOffSumWork  + '
 
 console.log('workDaySocial '+ (workDaySocial * salary) + 'sumSocial '+ sumSocial );
 
+sumAmountDayWork  = await Number(dayOffWork) * Number(salary);
+let  calOtWork = await (Number(amountDay) - Number(sumAmountDayWork ) ) + Number(amountOt) || 0;
+
     // Other properties
     data.accountingRecord.amountSpecialDay= await calSP ||0;
     data.accountingRecord.countDayWork = await dayOffWork ||0;
+    data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
+    data.accountingRecord.amountCountDayWorkOt = await calOtWork ||0;
+
 
     data.accountingRecord.amountHoliday = 0;
     data.accountingRecord.addAmountBeforeTax = sumCalTaxNonSalary || 0;
@@ -1108,6 +1115,7 @@ router.post('/calsalarylist', async (req, res) => {
     let dayOffSumWork = 0;
     let dayOffWork = 0;
     let sumAddSalary = 0;
+    let sumAmountDayWork = 0;
 
 
     // Get employee data by employeeId
@@ -1733,10 +1741,16 @@ router.post('/calsalarylist', async (req, res) => {
     
     console.log('workDaySocial '+ (workDaySocial * salary) + 'sumSocial '+ sumSocial );
     
+    sumAmountDayWork  = await Number(dayOffWork) * Number(salary);
+    let  calOtWork = await (Number(amountDay) - Number(sumAmountDayWork ) ) + Number(amountOt) || 0;
+
         // Other properties
         data.accountingRecord.amountSpecialDay= await calSP ||0;
         data.accountingRecord.countDayWork = await dayOffWork ||0;
-    
+        data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
+        data.accountingRecord.amountCountDayWorkOt = await calOtWork ||0;
+
+        
         data.accountingRecord.amountHoliday = 0;
         data.accountingRecord.addAmountBeforeTax = sumCalTaxNonSalary || 0;
         data.accountingRecord.deductBeforeTax = sumDeductWithTax || 0;
@@ -2963,6 +2977,7 @@ let dayOffSum = 0;
 let dayOffSumWork = 0;
 let dayOffWork = 0;
 let sumAddSalary = 0;
+let sumAmountDayWork = 0;
 
 
 // Get employee data by employeeId
@@ -3589,9 +3604,14 @@ await console.log('countDay '+ countDay + ' dayOffSumWork ' + dayOffSumWork  + '
 
 console.log('workDaySocial '+ (workDaySocial * salary) + 'sumSocial '+ sumSocial );
 
+sumAmountDayWork  = await Number(dayOffWork) * Number(salary);
+let  calOtWork = await (Number(amountDay) - Number(sumAmountDayWork ) ) + Number(amountOt) || 0;
+
     // Other properties
     data.accountingRecord.amountSpecialDay= await calSP ||0;
     data.accountingRecord.countDayWork = await dayOffWork ||0;
+    data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
+    data.accountingRecord.amountCountDayWorkOt = await calOtWork ||0;
 
     data.accountingRecord.amountHoliday = 0;
     data.accountingRecord.addAmountBeforeTax = sumCalTaxNonSalary || 0;
