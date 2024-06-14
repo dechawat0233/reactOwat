@@ -1163,7 +1163,7 @@ function SalarySlipPDF() {
                                                 onChange={handleSelectChange}
                                             >
                                                 {/* <option value="">Select Option</option> */}
-                                                <option value="option1">แบบหน่วงงาน</option>
+                                                <option value="option1">แบบหน่วยงาน</option>
                                                 <option value="option2">แบบพนักงาน</option>
                                             </select>
                                         </div>
@@ -1172,10 +1172,10 @@ function SalarySlipPDF() {
                                     {/* Conditionally render content based on the selected option */}
                                     {selectedOption === 'option1' && (
                                         <div>
-                                            <h2>แบบหน่วงงาน</h2>
+                                            <h2>แบบหน่วยงาน</h2>
                                             <div class="row">
                                                 <div class="col-md-3">
-                                                    <label role="searchEmployeeId">รหัสหน่อยงาน</label>
+                                                    <label role="searchEmployeeId">รหัสหน่วยงาน</label>
                                                     <input
                                                         type="text"
                                                         className="form-control"
