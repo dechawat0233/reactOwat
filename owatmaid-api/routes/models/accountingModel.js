@@ -44,6 +44,8 @@ sumAddSalaryAfterTax: String,
 sumDeductAfterTax: String,
 sumSalaryForTax: String,
 sumAddSalary: String, 
+amountCountDayWork : String, 
+amountCountDayWorkOt: String, 
 
 }],
 addSalary: [{
