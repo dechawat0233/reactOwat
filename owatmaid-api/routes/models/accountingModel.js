@@ -18,6 +18,7 @@ accountingRecord: [{
  countHour: String,
 countOtHour: String,
 amountPosition: String,
+benefitNonSocial : String,
 amountHardWorking: String,
 tel:String,
 travel: String,
