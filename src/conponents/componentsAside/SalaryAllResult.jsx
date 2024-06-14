@@ -894,7 +894,9 @@ function SalaryAllResult() {
 
                     const countSpecialDayListWork = specialDayListWork.length;
                     // const countcal = accountingRecord?.[0]?.countDay - countSpecialDayListWork;
-                    const countcal = accountingRecord?.[0]?.countDay;
+                    // const countcal = accountingRecord?.[0]?.countDay;
+
+                    const countcal = accountingRecord?.[0]?.countDayWork;
 
                     // pdf.text(`${accountingRecord?.[0]?.countDay} `, startXAllDay + 5, currentY, { align: 'right' });
                     pdf.text(`${countcal} `, startXAllDay + 5, currentY, { align: 'right' });
