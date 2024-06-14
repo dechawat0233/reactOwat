@@ -111,7 +111,7 @@ function TestPDFResultSalay() {
 
     const [daysOffArray, setDaysOffArray] = useState([]);
     const [result_data, setResult_data] = useState([]);
-    const [timerecordAllList, setTimerecordAllList] = useState([]);
+    const [conclude, setConclude] = useState([]);
     const [emploeeData, setEmploeeData] = useState([]);
     const [emploeeDataSearch, setEmploeeDataSearch] = useState([]);
 
@@ -180,10 +180,10 @@ function TestPDFResultSalay() {
             .then(data => {
                 // Update the state with the fetched data
                 if (Array.isArray(data) && data.length > 0) {
-                    setTimerecordAllList(data);
+                    setConclude(data);
                 } else {
                     // If data is empty or not found, set state to an empty array
-                    setTimerecordAllList([]);
+                    setConclude([]);
                 }
             })
             .catch(error => {
@@ -1449,7 +1449,7 @@ function TestPDFResultSalay() {
     console.log('thaiMonthName', thaiMonthName); // Thai month name based on desiredMonth
     console.log('thaiMonthNameLower', thaiMonthNameLower); // Thai month name based on desiredMonthLower
 
-    console.log('timerecordAllList', timerecordAllList); // Thai month name based on desiredMonthLower
+    console.log('conclude', conclude); // Thai month name based on desiredMonthLower
 
     // const filteredEntries = timerecordAllList.filter(entry =>
     //     entry.timerecordId === desiredTimerecordId &&
@@ -1458,7 +1458,7 @@ function TestPDFResultSalay() {
     //     entry.employee_workplaceRecord.some(record => record.workplaceId === desiredWorkplaceId)
     // );
 
-    const filteredEntries = timerecordAllList
+    const filteredEntries = conclude
         .filter(entry =>
             entry.timerecordId === desiredTimerecordId &&
             entry.month === desiredMonth &&
@@ -1480,7 +1480,7 @@ function TestPDFResultSalay() {
     //     entry.employee_workplaceRecord.some(record => record.workplaceId === desiredWorkplaceId)
     // );
 
-    const filteredEntriesLower = timerecordAllList
+    const filteredEntriesLower = conclude
         .filter(entry =>
             entry.timerecordId === desiredTimerecordId &&
             entry.month === desiredMonthLower &&

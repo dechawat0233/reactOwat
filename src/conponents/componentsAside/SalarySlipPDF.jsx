@@ -343,7 +343,7 @@ function SalarySlipPDF() {
 
             // เรียงarray 
             const countSpecialDayListWork = responseDataAll[i].specialDayListWork.length;
-            const countcal = responseDataAll[i].accountingRecord.countDay - countSpecialDayListWork;
+            const countcal = responseDataAll[i].accountingRecord[0].countDay - countSpecialDayListWork;
             console.log('countSpecialDayListWork', countSpecialDayListWork);
             console.log('countcal', countcal);
 
@@ -351,9 +351,9 @@ function SalarySlipPDF() {
             const formattedAmountHoliday2_0 = Number((countSpecialDayListWork * responseDataAll[i].specialDayRate) ?? 0);
 
             // รถโทรตำแหน่ง
-            const formattedAddTel = Number((responseDataAll[i].accountingRecord.tel || 0));
-            const formattedAddAmountPosition = Number((responseDataAll[i].accountingRecord.amountPosition || 0));
-            const formattedAddTravel = Number((responseDataAll[i].accountingRecord.travel || 0));
+            const formattedAddTel = Number((responseDataAll[i].accountingRecord[0].tel || 0));
+            const formattedAddAmountPosition = Number((responseDataAll[i].accountingRecord[0].amountPosition || 0));
+            const formattedAddTravel = Number((responseDataAll[i].accountingRecord[0].travel || 0));
             console.log('formattedAddTel', formattedAddTel);
             console.log('formattedAddAmountPosition', formattedAddAmountPosition);
             console.log('formattedAddTravel', formattedAddTravel);
@@ -371,11 +371,12 @@ function SalarySlipPDF() {
             console.log('formattedAmountHoliday', formattedAmountHoliday);
 
             //เงินพิเศษ
-            const formattedSumAddSalaryAfterTax = Number(responseDataAll[i].accountingRecord.sumAddSalaryAfterTax ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            const formattedSumAddSalaryAfterTax = Number(responseDataAll[i].accountingRecord[0].sumAddSalaryAfterTax ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
             //หัก
             // คืนเงินเบิกล่วงหน้า
-            const advancePayment = parseFloat(responseDataAll[i].accountingRecord.advancePayment || 0).toFixed(2);
+            const advancePayment = parseFloat(responseDataAll[i].accountingRecord[0].advancePayment || 0).toFixed(2);
+
 
             pdf.setFontSize(15);
 
@@ -417,35 +418,78 @@ function SalarySlipPDF() {
             const countArray = [];
             const valueArray = [];
 
-            if (responseDataAll[i].accountingRecord.amountDay != 0 && responseDataAll[i].accountingRecord.amountDay != null) {
+            console.log('responseDataAll[i].accountingRecord[0].amountDay', responseDataAll[i].accountingRecord?.[0].amountDay);
+            if (responseDataAll[i].accountingRecord[0].amountDay != 0 && responseDataAll[i].accountingRecord[0].amountDay != null) {
                 // Push the text to textArray and the value to valueArray
-                textArray.push('อัตรา');
-                countArray.push('');
-                valueArray.push(responseDataAll[i].accountingRecord.amountDay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                // textArray.push('อัตรา');
+                // countArray.push('');
+                // valueArray.push(responseDataAll[i].accountingRecord.amountDay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                const accountingRecord = responseDataAll[i].specialDayRate;
+
+                if (accountingRecord) {
+                    const amountDay = parseFloat(accountingRecord);
+
+                    if (amountDay != 0 && amountDay != null) {
+                        // Push the text to textArray and the value to valueArray
+                        textArray.push('อัตรา');
+                        countArray.push('');
+                        valueArray.push(amountDay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                    }
+                }
+                console.log('1');
             }
-            if (responseDataAll[i].accountingRecord.amountDay != 0 && responseDataAll[i].accountingRecord.amountDay != null) {
+            if (responseDataAll[i].accountingRecord.amountDay != 0 && responseDataAll[i].accountingRecord[0].amountDay != null) {
                 // Push the text to textArray and the value to valueArray
-                textArray.push('เงินเดือน');
-                countArray.push(countcal);
-                valueArray.push(responseDataAll[i].accountingRecord.amountDay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                // textArray.push('เงินเดือน');
+                // countArray.push(countcal);
+                // valueArray.push(responseDataAll[i].accountingRecord?.[0].amountDay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                const accountingRecord = responseDataAll[i].accountingRecord?.[0];
+
+                if (accountingRecord) {
+                    const amountCountDayWork = parseFloat(accountingRecord.amountCountDayWork);
+
+                    if (amountCountDayWork != 0 && amountCountDayWork != null) {
+                        // Push the text to textArray and the value to valueArray
+                        textArray.push('เงินเดือน');
+                        countArray.push(countcal);
+                        valueArray.push(amountCountDayWork.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                    }
+                }
+                console.log('2');
             }
             if (0 != 0 && null != null) {
                 // Push the text to textArray and the value to valueArray
                 textArray.push('ค่าล่วงเวลา 1 เท่า');
                 countArray.push('');
                 valueArray.push(responseDataAll[i].accountingRecord.amountDay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                console.log('3');
             }
-            if (responseDataAll[i].accountingRecord.amountOt != 0 && responseDataAll[i].accountingRecord.amountOt != null) {
+            if (responseDataAll[i].accountingRecord[0].amountOt != 0 && responseDataAll[i].accountingRecord[0].amountOt != null) {
                 // Push the text to textArray and the value to valueArray
-                textArray.push('ค่าล่วงเวลา 1.5 เท่า');
-                countArray.push(responseDataAll[i].accountingRecord.countOtHour.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-                valueArray.push(responseDataAll[i].accountingRecord.amountOt.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                // textArray.push('ค่าล่วงเวลา 1.5 เท่า');
+                // countArray.push(responseDataAll[i].accountingRecord[0].countOtHour.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                // valueArray.push(responseDataAll[i].accountingRecord[0].amountOt.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                const accountingRecord = responseDataAll[i].accountingRecord?.[0];
+
+                if (accountingRecord) {
+                    const amountOt = parseFloat(accountingRecord.amountOt);
+                    const countOtHour = parseFloat(accountingRecord.countOtHour);
+
+                    if (amountOt !== 0 && amountOt != null) {
+                        // Push the text to textArray and the value to valueArray
+                        textArray.push('ค่าล่วงเวลา 1.5 เท่า');
+                        countArray.push(countOtHour.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                        valueArray.push(amountOt.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                    }
+                }
+                console.log('4');
             }
-            if (responseDataAll[i].specialDayListWork.length !== 0 && responseDataAll[i].specialDayListWork.length !== null) {
+            if (countSpecialDayListWork !== 0 && countSpecialDayListWork !== null) {
                 // Push the text to textArray and the value to valueArray
                 textArray.push('ค่าล่วงเวลา 2 เท่า');
                 countArray.push('');
                 valueArray.push(formattedAmountHoliday2_0.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                console.log('5');
             }
             console.log('responseDataAll[i].specialDayListWork.length', responseDataAll[i].specialDayListWork.length);
             if (0 != 0 && null != null) {
@@ -453,6 +497,7 @@ function SalarySlipPDF() {
                 textArray.push('ค่าล่วงเวลา 3 เท่า');
                 countArray.push('');
                 valueArray.push(responseDataAll[i].accountingRecord.amountDay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                console.log('6');
             }
             //รถโทรตำแหน่ง
             if (formattedAddTelAmountPositionTravel != 0 && formattedAddTelAmountPositionTravel != null) {
@@ -460,27 +505,32 @@ function SalarySlipPDF() {
                 textArray.push(concatenatedNames);
                 countArray.push('');
                 valueArray.push(formattedAddTelAmountPositionTravel.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                console.log('7');
             }
             if (sumAmountHardWorking != 0 && sumAmountHardWorking != null) {
                 textArray.push('เบี้ยขยัน');
                 countArray.push('');
                 valueArray.push(sumAmountHardWorking.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                console.log('8');
             }
             if (countSpecialDayListWork !== 0 && countSpecialDayListWork !== null) {
                 textArray.push('วันหยุดนักขัติฤกษ์');
                 // countArray.push(countSpecialDayListWork.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
                 valueArray.push(formattedAmountHoliday.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                console.log('9');
             }
 
             if (formattedSumAddSalaryAfterTax != 0 && formattedSumAddSalaryAfterTax != null) {
                 textArray.push('เงินเพิ่มพิเศษ');
                 countArray.push('');
                 valueArray.push(formattedSumAddSalaryAfterTax.replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                console.log('10');
             }
             if (0 != 0 && 0 != null) {
                 textArray.push('จ่ายป่วย');
                 countArray.push('');
                 valueArray.push(0.00);
+                console.log('11');
             }
 
             const textDedustArray = [];
@@ -489,14 +539,39 @@ function SalarySlipPDF() {
             if (advancePayment != 0 && advancePayment != null) {
                 textDedustArray.push('คืนเงินเบิกล่วงหน้า');
                 valueDedustArray.push(advancePayment);
+                console.log('de1');
             }
-            if (responseDataAll[i].accountingRecord.tax != 0 && responseDataAll[i].accountingRecord.tax != null) {
-                textDedustArray.push('หักภาษีเงินได้');
-                valueDedustArray.push(responseDataAll[i].accountingRecord.tax.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+            if (responseDataAll[i].accountingRecord[0].tax != 0 && responseDataAll[i].accountingRecord[0].tax != null) {
+                // textDedustArray.push('หักภาษีเงินได้');
+                // valueDedustArray.push(responseDataAll[i].accountingRecord.tax.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                const accountingRecord = responseDataAll[i].accountingRecord?.[0];
+
+                if (accountingRecord) {
+                    const tax = parseFloat(accountingRecord.tax);
+
+                    if (tax !== 0 && !isNaN(tax)) {
+                        textDedustArray.push('หักภาษีเงินได้');
+                        valueDedustArray.push(tax.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                        console.log('de3');
+                    }
+                }
+                console.log('de2');
             }
-            if (responseDataAll[i].accountingRecord.socialSecurity != 0 && responseDataAll[i].accountingRecord.socialSecurity != null) {
-                textDedustArray.push('หักสมทบประกันสังคม');
-                valueDedustArray.push(responseDataAll[i].accountingRecord.socialSecurity.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+            if (responseDataAll[i].accountingRecord[0].socialSecurity != 0 && responseDataAll[i].accountingRecord[0].socialSecurity != null) {
+                // textDedustArray.push('หักสมทบประกันสังคม');
+                // valueDedustArray.push(responseDataAll[i].accountingRecord[0].socialSecurity.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                const accountingRecord = responseDataAll[i].accountingRecord?.[0];
+
+                if (accountingRecord) {
+                    const socialSecurity = parseFloat(accountingRecord.socialSecurity);
+
+                    if (socialSecurity !== 0 && !isNaN(socialSecurity)) {
+                        textDedustArray.push('หักสมทบประกันสังคม');
+                        valueDedustArray.push(socialSecurity.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                        console.log('de3');
+                    }
+                }
+                console.log('de3');
             }
 
             console.log('textArray', textArray);
@@ -703,35 +778,24 @@ function SalarySlipPDF() {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
             });
-            const sumSalary =
-                // responseDataAll[i].accountingRecord.countDay +
 
-                // responseDataAll[i].accountingRecord.amountDay +
-                // responseDataAll[i].accountingRecord.amountOt +
-                // // Number(formattedAmountHoliday2_0) +
-                // Number((countSpecialDayListWork * responseDataAll[i].specialDayRate) ?? 0) +
-                // // Number(formattedAmountHoliday) +
-                // Number((responseDataAll[i].countSpecialDay * responseDataAll[i].specialDayRate) ?? 0) +
-                // // Number(formattedSumAddSalaryAfterTax) +
-                // (responseDataAll[i].accountingRecord.sumAddSalaryAfterTax ?? 0) +
-                // responseDataAll[i].accountingRecord.addAmountBeforeTax +
-                // responseDataAll[i].accountingRecord.addAmountAfterTax
-                responseDataAll[i].accountingRecord.amountDay+
-                responseDataAll[i].accountingRecord.amountOt+
-               responseDataAll[i].addSalary.amountOt 
-                ; 
-               
+            const amountDay = parseFloat(responseDataAll[i].accountingRecord[0].amountDay) || 0;
+            const amountOt = parseFloat(responseDataAll[i].accountingRecord[0].amountOt) || 0;
+            const sumAddSalary = parseFloat(responseDataAll[i].addSalary[0].sumAddSalary) || 0;
 
-            // pdf.text(`${sumSalary.toFixed(2)}`, 92, 96, { align: 'right' });
+            const sumSalary = amountDay + amountOt + sumAddSalary;
+
             pdf.text(`${sumSalary.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`, 92, 96, { align: 'right' });
 
             //รวมเงินหัก
-            const sumDeductSalary =
-                parseFloat(responseDataAll[i].accountingRecord.advancePayment) +
-                // advancePayment +
-                responseDataAll[i].accountingRecord.tax +
-                responseDataAll[i].accountingRecord.socialSecurity +
-                responseDataAll[i].accountingRecord.bank;
+
+            const tax = parseFloat(responseDataAll[i].accountingRecord[0].tax) || 0;
+            const socialSecurity = parseFloat(responseDataAll[i].accountingRecord[0].socialSecurity) || 0;
+            const advancePayment2 = parseFloat(advancePayment) || 0;
+
+            // const sumAddSalary = parseFloat(responseDataAll[i].addSalary[0].sumAddSalary) || 0;
+
+            const sumDeductSalary = advancePayment2 + tax + socialSecurity;
 
             pdf.text(`${sumDeductSalary.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`, 160, 96, { align: 'right' });
 
@@ -749,7 +813,7 @@ function SalarySlipPDF() {
 
                 // เรียงarray 
                 const countSpecialDayListWork = responseDataAll[i + 1].specialDayListWork.length;
-                const countcal = responseDataAll[i + 1].accountingRecord.countDay - countSpecialDayListWork;
+                const countcal = responseDataAll[i + 1].accountingRecord[0].countDay - countSpecialDayListWork;
                 console.log('countSpecialDayListWork', countSpecialDayListWork);
                 console.log('countcal', countcal);
 
@@ -788,42 +852,86 @@ function SalarySlipPDF() {
                 const countArray = [];
                 const valueArray = [];
 
-                if (responseDataAll[i + 1].accountingRecord.amountDay != 0 && responseDataAll[i + 1].accountingRecord.amountDay != null) {
+                console.log('responseDataAll[i + 1].accountingRecord.amountDay', responseDataAll[i + 1].accountingRecord[0].amountDay);
+                if (responseDataAll[i + 1].accountingRecord[0].amountDay != 0 && responseDataAll[i + 1].accountingRecord[0].amountDay != null) {
                     // Push the text to textArray and the value to valueArray
-                    textArray.push('อัตรา');
-                    countArray.push('');
-                    valueArray.push(responseDataAll[i + 1].accountingRecord.amountDay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                    // textArray.push('อัตรา');
+                    // countArray.push('');
+                    // valueArray.push(responseDataAll[i + 1].accountingRecord.amountDay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                    const accountingRecord = responseDataAll[i + 1].specialDayRate;
+
+                    if (accountingRecord) {
+                        const amountDay = parseFloat(accountingRecord);
+
+                        if (amountDay != 0 && amountDay != null) {
+                            // Push the text to textArray and the value to valueArray
+                            textArray.push('อัตรา');
+                            countArray.push('');
+                            valueArray.push(amountDay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                        }
+                    }
+                    console.log('11');
                 }
-                if (responseDataAll[i + 1].accountingRecord.amountDay != 0 && responseDataAll[i + 1].accountingRecord.amountDay != null) {
+                if (responseDataAll[i + 1].accountingRecord[0].amountDay != 0 && responseDataAll[i + 1].accountingRecord[0].amountDay != null) {
                     // Push the text to textArray and the value to valueArray
-                    textArray.push('เงินเดือน');
-                    countArray.push(countcal);
-                    valueArray.push(responseDataAll[i + 1].accountingRecord.amountDay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                    // textArray.push('เงินเดือน');
+                    // countArray.push(countcal);
+                    // valueArray.push(responseDataAll[i + 1].accountingRecord.amountDay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                    const accountingRecord = responseDataAll[i + 1].accountingRecord?.[0];
+
+                    if (accountingRecord) {
+                        const amountCountDayWork = parseFloat(accountingRecord.amountCountDayWork);
+
+                        if (amountCountDayWork != 0 && amountCountDayWork != null) {
+                            // Push the text to textArray and the value to valueArray
+                            textArray.push('เงินเดือน');
+                            countArray.push(countcal);
+                            valueArray.push(amountCountDayWork.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                        }
+                    }
+                    console.log('22');
                 }
                 if (0 != 0 && null != null) {
                     // Push the text to textArray and the value to valueArray
                     textArray.push('ค่าล่วงเวลา 1 เท่า');
                     countArray.push('');
                     valueArray.push(responseDataAll[i + 1].accountingRecord.amountDay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                    console.log('33');
                 }
-                if (responseDataAll[i + 1].accountingRecord.amountOt != 0 && responseDataAll[i + 1].accountingRecord.amountOt != null) {
+                if (responseDataAll[i + 1].accountingRecord[0].amountOt != 0 && responseDataAll[i + 1].accountingRecord[0].amountOt != null) {
                     // Push the text to textArray and the value to valueArray
-                    textArray.push('ค่าล่วงเวลา 1.5 เท่า');
-                    countArray.push(responseDataAll[i + 1].accountingRecord.countOtHour.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-                    valueArray.push(responseDataAll[i + 1].accountingRecord.amountOt.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                    // textArray.push('ค่าล่วงเวลา 1.5 เท่า');
+                    // countArray.push(responseDataAll[i + 1].accountingRecord.countOtHour.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                    // valueArray.push(responseDataAll[i + 1].accountingRecord.amountOt.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                    const accountingRecord = responseDataAll[i + 1].accountingRecord?.[0];
+
+                    if (accountingRecord) {
+                        const countOtHour = parseFloat(accountingRecord.countOtHour);
+                        const amountOt = parseFloat(accountingRecord.amountOt);
+
+                        if (countOtHour != 0 && countOtHour != null) {
+                            // Push the text to textArray and the value to valueArray
+                            textArray.push('ค่าล่วงเวลา 1.5 เท่า');
+                            countArray.push(countOtHour.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                            valueArray.push(amountOt.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                        }
+                    }
+                    console.log('44');
                 }
-                if (responseDataAll[i + 1].specialDayListWork.length !== 0 && responseDataAll[i + 1].specialDayListWork.length !== null) {
+
+                if (countSpecialDayListWork !== 0 && countSpecialDayListWork !== null) {
                     // Push the text to textArray and the value to valueArray
                     textArray.push('ค่าล่วงเวลา 2 เท่า');
                     countArray.push('');
                     valueArray.push(formattedAmountHoliday2_0.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                    console.log('55');
                 }
-                console.log('responseDataAll[i +1].specialDayListWork.length', responseDataAll[i + 1].specialDayListWork.length);
                 if (0 != 0 && null != null) {
                     // Push the text to textArray and the value to valueArray
                     textArray.push('ค่าล่วงเวลา 3 เท่า');
                     countArray.push('');
                     valueArray.push(responseDataAll[i + 1].accountingRecord.amountDay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                    console.log('66');
                 }
                 //รถโทรตำแหน่ง
                 if (formattedAddTelAmountPositionTravel != 0 && formattedAddTelAmountPositionTravel != null) {
@@ -831,27 +939,32 @@ function SalarySlipPDF() {
                     textArray.push(concatenatedNames);
                     countArray.push('');
                     valueArray.push(formattedAddTelAmountPositionTravel.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                    console.log('77');
                 }
                 if (sumAmountHardWorking != 0 && sumAmountHardWorking != null) {
                     textArray.push('เบี้ยขยัน');
                     countArray.push('');
                     valueArray.push(sumAmountHardWorking.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                    console.log('88');
                 }
                 if (countSpecialDayListWork !== 0 && countSpecialDayListWork !== null) {
                     textArray.push('วันหยุดนักขัติฤกษ์');
                     // countArray.push(countSpecialDayListWork.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
                     valueArray.push(formattedAmountHoliday.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                    console.log('99');
                 }
 
                 if (formattedSumAddSalaryAfterTax != 0 && formattedSumAddSalaryAfterTax != null) {
                     textArray.push('เงินเพิ่มพิเศษ');
                     countArray.push('');
                     valueArray.push(formattedSumAddSalaryAfterTax.replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                    console.log('1010');
                 }
                 if (0 != 0 && 0 != null) {
                     textArray.push('จ่ายป่วย');
                     countArray.push('');
                     valueArray.push(0.00);
+                    console.log('1111');
                 }
 
                 const textDedustArray = [];
@@ -1100,29 +1213,27 @@ function SalarySlipPDF() {
                     y5 += 4.1;
                 });
 
-                const sumSalary =
-                    // responseDataAll[i + 1].accountingRecord.countDay +
-                    responseDataAll[i + 1].accountingRecord.amountDay +
-                    responseDataAll[i + 1].accountingRecord.amountOt +
-                    // Number(formattedAmountHoliday2_0) +
-                    Number((countSpecialDayListWork * responseDataAll[i + 1].specialDayRate) ?? 0) +
-                    // Number(formattedAmountHoliday) +
-                    Number((responseDataAll[i + 1].countSpecialDay * responseDataAll[i + 1].specialDayRate) ?? 0) +
-                    // Number(formattedSumAddSalaryAfterTax) +
-                    (responseDataAll[i + 1].accountingRecord.sumAddSalaryAfterTax ?? 0) +
-                    responseDataAll[i + 1].accountingRecord.addAmountBeforeTax +
-                    responseDataAll[i + 1].accountingRecord.addAmountAfterTax;
+                const amountDay = parseFloat(responseDataAll[i + 1].accountingRecord[0].amountDay) || 0;
+                const amountOt = parseFloat(responseDataAll[i + 1].accountingRecord[0].amountOt) || 0;
+                // const sumAddSalary = parseFloat(responseDataAll[i + 1].addSalary[0].sumAddSalary) || 0;
+
+                const addSalary = responseDataAll[i + 1]?.addSalary;
+                const sumAddSalary = addSalary && addSalary[0] ? parseFloat(addSalary[0].sumAddSalary) || 0 : 0;
+
+                const sumSalary = amountDay + amountOt + sumAddSalary;
 
                 // pdf.text(`${sumSalary.toFixed(2)}`, 92, head2 + 71, { align: 'right' });
                 pdf.text(`${sumSalary.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`, 92, head2 + 71, { align: 'right' });
 
 
                 //รวมเงินหัก
-                const sumDeductSalary =
-                    responseDataAll[i + 1].accountingRecord.advancePayment +
-                    responseDataAll[i + 1].accountingRecord.tax +
-                    responseDataAll[i + 1].accountingRecord.socialSecurity +
-                    responseDataAll[i + 1].accountingRecord.bank;
+                const tax = parseFloat(responseDataAll[i + 1].accountingRecord[0].tax) || 0;
+                const socialSecurity = parseFloat(responseDataAll[i + 1].accountingRecord[0].socialSecurity) || 0;
+                const advancePayment2 = parseFloat(advancePayment) || 0;
+
+                // const sumAddSalary = parseFloat(responseDataAll[i].addSalary[0].sumAddSalary) || 0;
+
+                const sumDeductSalary = advancePayment2 + tax + socialSecurity;
 
                 pdf.text(`${sumDeductSalary.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`, 160, head2 + 71, { align: 'right' });
 
