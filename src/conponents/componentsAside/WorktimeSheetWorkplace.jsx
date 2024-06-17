@@ -2070,6 +2070,8 @@ function WorktimeSheetWorkplace() {
     console.log('arrayWorkNormalDay:', arrayWorkNormalDay);
     console.log('arrayWorkOTNormalDay:', arrayWorkOTNormalDay);
     console.log('arrayWorkHoli:', arrayWorkHoli);
+    console.log('arrayWorkNormalDayOld:', arrayWorkNormalDayOld);
+    console.log('arrayWorkOTHoliday:', arrayWorkOTHoliday);
 
     // const makePage = Math.ceil(arrayWorkNormalDay.length / 5);
     // console.log('makePage', makePage);
