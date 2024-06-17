@@ -291,12 +291,6 @@ function Salaryresult() {
   const [wsTotalSum, setWsTotalSum] = useState(0);
   const [wsTotalSumDeduct, setWsTotalSumDeduct] = useState(0);
 
-  const [wsCountDayWork , setWsCountDayWork] = useState(0);
-  const [wsAmountCountDayWork , setWsAmountCountDayWork] = useState(0);
-  const [wsAmountCountDayWorkOt , setWsAmountCountDayWorkOt] = useState(0);
-const [wsCountHourWork , setWsCountHourWork] = useState(0);
-const [wsCountOtHourWork, setWsCountOtHourWork] = useState(0);
-
   //tmp for cal social
   const [wsAmountSpecialDayx , setWsAmountSpecialDayx ] = useState(0);
   const [wsSocialSecurityX, setWsSocialSecurityX] = useState(0);
@@ -334,12 +328,6 @@ const [wsCountOtHourWork, setWsCountOtHourWork] = useState(0);
               await setWsTax(response.data[0].accountingRecord.tax || response.data[0].accountingRecord[0].tax);
               await setWsTotal(response.data[0].accountingRecord.total || response.data[0].accountingRecord[0].total);
 
-              await setWsCountDayWork(response.data[0].accountingRecord.countDayWork || response.data[0].accountingRecord[0].countDayWork);
-              await setWsAmountCountDayWork(response.data[0].accountingRecord.amountCountDayWork|| response.data[0].accountingRecord[0].amountCountDayWork);
-              await setWsAmountCountDayWorkOt(response.data[0].accountingRecord.amountCountDayWorkOt || response.data[0].accountingRecord[0].amountCountDayWorkOt);
-              await setWsCountHourWork(response.data[0].accountingRecord.countHourWork || response.data[0].accountingRecord[0].countHourWork);
-              await setWsCountOtHourWork(response.data[0].accountingRecord.countOtHourWork || response.data[0].accountingRecord[0].countOtHourWork);
-              
               await setAddSalaryList(response.data[0].addSalary);
               if (response.data[0].addSalary) {
                 let tmp = 0;
@@ -1723,12 +1711,9 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
                       </thead>
                       <tbody>
                         <tr>
-                          <td style={cellStyle}>{wsCountDayWork}</td>
-                          <td style={cellStyle}>{Number(wsCountHourWork).toFixed(2)}</td>
-                          <td style={cellStyle}>{Number(wsCountOtHourWork).toFixed(2)}</td>
-
-                          {/* <td style={cellStyle}>{(overallAllTimesSum123).toFixed(2)}</td> */}
-                          {/* <td style={cellStyle}>{(overallOtTimesSum123).toFixed(2)}</td> */}
+                          <td style={cellStyle}>{totalCount}</td>
+                          <td style={cellStyle}>{(overallAllTimesSum123).toFixed(2)}</td>
+                          <td style={cellStyle}>{(overallOtTimesSum123).toFixed(2)}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -1754,8 +1739,8 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
                           {/* <td style={cellStyle}>{(overWorkRateSum).toFixed(2)}</td>
                           <td style={cellStyle}>{(overWorkRateOTSum).toFixed(2)}</td> */}
 
-                          <td style={cellStyle}>{isNaN(Number(wsAmountCountDayWork)) ? 0.00 : Number(wsAmountCountDayWork).toFixed(2)}</td>
-                          <td style={cellStyle}>{isNaN(Number(wsAmountCountDayWorkOt)) ? 0.00 : Number(wsAmountCountDayWorkOt).toFixed(2)}</td>
+                          <td style={cellStyle}>{isNaN(Number(wsAmountDay)) ? 0.00 : Number(wsAmountDay).toFixed(2)}</td>
+                          <td style={cellStyle}>{isNaN(Number(wsAmountOt)) ? 0.00 : Number(wsAmountOt).toFixed(2)}</td>
 
                           {/* <td style={cellStyle}>{(overAddSalaryDaySum).toFixed(2) + (sumSpSalary).toFixed(2)}</td> */}
                           {/* <td style={cellStyle}>{(overAddSalaryDaySum + sumSpSalaryResult).toFixed(2) + `(` + (overAddSalaryDaySum).toFixed(2) + `+` + (sumSpSalaryResult).toFixed(2) + `)`}</td> */}
@@ -1903,7 +1888,7 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
                     <table border="1" style={tableStyle}>
                       <thead>
                         <tr>
-                          <th style={headerCellStyle}>วันหยุดนักขัตฤกษ์</th>
+                          <th style={headerCellStyle}>วันหยุดนักขัติ</th>
                           <th style={headerCellStyle}>สวัสดิการ</th>
                           <th style={headerCellStyle}>ยอดรวม</th>
                         </tr>

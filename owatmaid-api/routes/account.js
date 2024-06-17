@@ -91,7 +91,7 @@ const dataList = [];
 if(accountData ) {
   // console.log(JSON.stringify(accountData ,null,2));
   await console.log('* isset accounting');
-  await console.log(accountData );
+  // await console.log(accountData );
 await dataList .push(accountData );
     await res.json(dataList );
 
@@ -169,6 +169,9 @@ let dayOffSumWork = 0;
 let dayOffWork = 0;
 let sumAddSalary = 0;
 let sumAmountDayWork = 0;
+let countHourWork = 0;
+let countOtHourWork = 0;
+
 
 // Get employee data by employeeId
 const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
@@ -562,10 +565,18 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
   amountSpecial += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].addSalaryDay || 0);
   countHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
   countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+  countOtHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
 
+  console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
   //check work rate is not standard day
   if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) == parseFloat(salary) ) {
 dayOffWork += 1;
+countHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+
+console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
+
+  } else {
+    countOtHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
   }
 
   if (responseConclude.data.recordConclude[c].concludeRecord[i].workRate !== undefined) {
@@ -801,6 +812,8 @@ let  calOtWork = await (Number(amountDay) - Number(sumAmountDayWork ) ) + Number
     data.accountingRecord.countDayWork = await dayOffWork ||0;
     data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
     data.accountingRecord.amountCountDayWorkOt = await calOtWork ||0;
+    data.accountingRecord.countHourWork = await countHourWork ||0;
+    data.accountingRecord.countOtHourWork = await countOtHourWork ||0;
 
 
     data.accountingRecord.amountHoliday = 0;
@@ -854,7 +867,7 @@ data.specialDayListWork = await intersection || [];
 
 const salaryRecord = new accounting(data);
 await salaryRecord.save();
-await console.log(salaryRecord);
+// await console.log(salaryRecord);
 
         dataList.push(data);
       }
@@ -927,6 +940,7 @@ for(let i =0; i < responseConclude.data.recordConclude[0].concludeRecord.length;
   amountDay  = await amountDay + parseFloat(responseConclude.data.recordConclude[0].concludeRecord[i].workRate || 0 );
   amountOt = await amountOt + parseFloat(responseConclude.data.recordConclude[0].concludeRecord[i].workRateOT || 0 );
   amountSpecial = await amountSpecial + parseFloat(responseConclude.data.recordConclude[0].concludeRecord[i].addSalaryDay || 0 );
+
 
   if(responseConclude.data.recordConclude[0].concludeRecord[i].workRate !== '' ){
     countDay  = await countDay   + 1;
@@ -1041,12 +1055,12 @@ router.post('/calsalarylist', async (req, res) => {
       const accountData = await accounting.findOne({ year: year, month: month, employeeId: empId });
 
       // Log the result to debug
-      console.log('accountData:', accountData);
+      // console.log('accountData:', accountData);
 
     if(accountData ) {
-      console.log(JSON.stringify(accountData ,null,2));
+      // console.log(JSON.stringify(accountData ,null,2));
       await console.log('* isset accounting');
-      await console.log(accountData );
+      // await console.log(accountData );
     await dataList .push(accountData );
     
     } else {
@@ -1116,8 +1130,9 @@ router.post('/calsalarylist', async (req, res) => {
     let dayOffWork = 0;
     let sumAddSalary = 0;
     let sumAmountDayWork = 0;
-
-
+    let countHourWork = 0;
+    let countOtHourWork = 0;
+    
     // Get employee data by employeeId
     const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
     if (response) {
@@ -1182,7 +1197,7 @@ router.post('/calsalarylist', async (req, res) => {
             })
           }
     
-          console.log('dayOffList ' + dayOffList);
+          // console.log('dayOffList ' + dayOffList);
               // Format the new month as a two-digit string (e.g. "01", "02", ...)
         const newMonthStringX = (month -1).toLocaleString('en-US', {
           minimumIntegerDigits: 2,
@@ -1510,11 +1525,19 @@ router.post('/calsalarylist', async (req, res) => {
       amountSpecial += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].addSalaryDay || 0);
       countHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
       countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
-    
+      countOtHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+
       //check work rate is not standard day
-      if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) == parseFloat(salary) ) {
+      if(Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) == Number(salary) ) {
     dayOffWork += 1;
+    countHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+
+    console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
+    
+      } else {
+        countOtHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
       }
+    
     
       if (responseConclude.data.recordConclude[c].concludeRecord[i].workRate !== undefined) {
         countDay++;
@@ -1749,8 +1772,10 @@ router.post('/calsalarylist', async (req, res) => {
         data.accountingRecord.countDayWork = await dayOffWork ||0;
         data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
         data.accountingRecord.amountCountDayWorkOt = await calOtWork ||0;
-
-        
+        data.accountingRecord.countHourWork = await countHourWork ||0;
+        data.accountingRecord.countOtHourWork = await countOtHourWork ||0;
+    
+          
         data.accountingRecord.amountHoliday = 0;
         data.accountingRecord.addAmountBeforeTax = sumCalTaxNonSalary || 0;
         data.accountingRecord.deductBeforeTax = sumDeductWithTax || 0;
@@ -2978,6 +3003,8 @@ let dayOffSumWork = 0;
 let dayOffWork = 0;
 let sumAddSalary = 0;
 let sumAmountDayWork = 0;
+let countHourWork = 0;
+let countOtHourWork = 0;
 
 
 // Get employee data by employeeId
@@ -3373,12 +3400,20 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
   amountSpecial += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].addSalaryDay || 0);
   countHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
   countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+  countOtHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
 
   //check work rate is not standard day
   if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) == parseFloat(salary) ) {
 dayOffWork += 1;
+countHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+
+console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
+
+  } else {
+    countOtHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
   }
 
+  
   if (responseConclude.data.recordConclude[c].concludeRecord[i].workRate !== undefined) {
     countDay++;
 
@@ -3612,6 +3647,9 @@ let  calOtWork = await (Number(amountDay) - Number(sumAmountDayWork ) ) + Number
     data.accountingRecord.countDayWork = await dayOffWork ||0;
     data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
     data.accountingRecord.amountCountDayWorkOt = await calOtWork ||0;
+    data.accountingRecord.countHourWork = await countHourWork ||0;
+    data.accountingRecord.countOtHourWork = await countOtHourWork ||0;
+
 
     data.accountingRecord.amountHoliday = 0;
     data.accountingRecord.addAmountBeforeTax = sumCalTaxNonSalary || 0;
