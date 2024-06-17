@@ -692,4 +692,17 @@ console.log(e);
 
 }
 
+//get list employee timeRecord by year and month
+// GET timerecords by timerecordId and month
+router.get('/listmonth', async (req, res) => {
+  const { timerecordId, month } = req.query;
+
+  try {
+    const records = await EmployeeTimerecord.find({ timerecordId, month });
+    res.json(records);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 module.exports = router;

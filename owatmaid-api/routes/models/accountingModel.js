@@ -18,6 +18,7 @@ accountingRecord: [{
  countHour: String,
 countOtHour: String,
 amountPosition: String,
+benefitNonSocial : String,
 amountHardWorking: String,
 tel:String,
 travel: String,
@@ -46,6 +47,8 @@ sumSalaryForTax: String,
 sumAddSalary: String, 
 amountCountDayWork : String, 
 amountCountDayWorkOt: String, 
+countHourWork : String,
+countOtHourWork : String,
 
 }],
 addSalary: [{
