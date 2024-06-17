@@ -58,18 +58,12 @@ function WorktimeSheetWorkplace() {
     const [workplaceDataWorkOfHour, setWorkplaceDataWorkOfHour] = useState('');
     const [workplaceDataListWorkRate, setWorkplaceDataListWorkRate] = useState();
     const [workplaceListAll, setWorkplaceListAll] = useState([]);
-    const [conclude, setConclude] = useState([]);
 
     const [responseDataAll, setResponseDataAll] = useState([]);
 
     const [WName, setWName] = useState('');
 
     const [workDate, setWorkDate] = useState(new Date());
-
-    const [workRateWorkplace, setWorkRateWorkplace] = useState(0); //ค่าจ้างต่อวัน
-    const [workRateWorkplaceStage1, setWorkRateWorkplaceStage1] = useState(0); //ค่าจ้างต่อวัน
-    const [workRateWorkplaceStage2, setWorkRateWorkplaceStage2] = useState(0); //ค่าจ้างต่อวัน
-    const [workRateWorkplaceStage3, setWorkRateWorkplaceStage3] = useState(0);
 
     // const handleWorkDateChange = (date) => {
     //     setWorkDate(date);
@@ -159,11 +153,6 @@ function WorktimeSheetWorkplace() {
                 // Update the state with the fetched data
                 setWorkplaceList(data);
                 // alert(data[0].workplaceName);
-                setWorkRateWorkplace(data[0].workRate);
-                setWorkRateWorkplaceStage1(data[0].workRateOT);
-                setWorkRateWorkplaceStage2(data[0].holiday);
-                setWorkRateWorkplaceStage3(data[0].holidayOT);
-
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -259,27 +248,6 @@ function WorktimeSheetWorkplace() {
         };
 
         fetchData(); // Call the fetchData function when component mounts or whenever needed
-    }, []);
-
-    useEffect(() => {
-        // Fetch data from the API when the component mounts
-        // conclude / list
-        // fetch(endpoint + '/timerecord/listemp')
-        fetch(endpoint + '/conclude/list')
-
-            .then(response => response.json())
-            .then(data => {
-                // Update the state with the fetched data
-                if (Array.isArray(data) && data.length > 0) {
-                    setConclude(data);
-                } else {
-                    // If data is empty or not found, set state to an empty array
-                    setConclude([]);
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
     }, []);
 
     console.log('employeelist', employeelist);
@@ -1489,135 +1457,6 @@ function WorktimeSheetWorkplace() {
     //     entry.employee_workplaceRecord.date < 21 &&
     //     entry.employee_workplaceRecord.some(record => record.workplaceId === desiredWorkplaceId)
     // );
-
-
-    const filteredEntriesTest = conclude
-        .filter(entry =>
-            entry.year === desiredTimerecordId &&
-            entry.month === desiredMonth
-        );
-    console.log('filteredEntriesTest', filteredEntriesTest);
-
-    // Initialize objects to store the grouped times
-    const allTimesByEmployee = {};
-    const otTimesByEmployee = {};
-
-    const allTimesByEmployee2 = {};
-    const otTimesByEmployee2 = {};
-
-    const allTimesByEmployee3 = {};
-    const otTimesByEmployee3 = {};
-
-    // Iterate over filteredEntriesTest to populate the objects
-    filteredEntriesTest.forEach(entry => {
-        // Initialize arrays to store the results for the current employeeId
-        let allTimesArray = [];
-        let otTimesArray = [];
-
-        let allTimesArray2 = [];
-        let otTimesArray2 = [];
-
-        let allTimesArray3 = [];
-        let otTimesArray3 = [];
-        let test = 0;
-
-        // Iterate over each concludeRecord
-        entry.concludeRecord.forEach(record => {
-            // Check if workRate or workRateOT exists
-            // const 
-            // if (record.workRate || record.workRateOT) {
-            //     // Push allTimes and otTimes to respective arrays
-            //     allTimesArray.push(parseFloat(record.allTimes));
-            //     otTimesArray.push(parseFloat(record.otTimes));
-            //     test += 1;
-            // } else {
-            //     // Push empty strings if workRate and workRateOT do not exist
-            //     allTimesArray.push('');
-            //     otTimesArray.push('');
-            // }
-            if (record.workRate / workRateWorkplace < workRateWorkplaceStage1) {
-                // Push allTimes and otTimes to respective arrays
-                allTimesArray.push(parseFloat(record.allTimes));
-                otTimesArray.push(parseFloat(record.otTimes));
-            } else {
-                // Push empty strings if workRate and workRateOT do not exist
-                allTimesArray.push('');
-                otTimesArray.push('');
-            }
-            if (record.workRate / workRateWorkplace >= workRateWorkplaceStage1 &&
-                record.workRate / workRateWorkplace <= workRateWorkplaceStage2
-            ) {
-                // Push allTimes and otTimes to respective arrays
-                allTimesArray2.push(parseFloat(record.allTimes));
-                otTimesArray2.push(parseFloat(record.otTimes));
-            } else {
-                // Push empty strings if workRate and workRateOT do not exist
-                allTimesArray2.push('');
-                otTimesArray2.push('');
-            }
-            if (record.workRate / workRateWorkplace >= workRateWorkplaceStage2) {
-                // Push allTimes and otTimes to respective arrays
-                allTimesArray3.push(parseFloat(record.allTimes));
-                otTimesArray3.push(parseFloat(record.otTimes));
-            } else {
-                // Push empty strings if workRate and workRateOT do not exist
-                allTimesArray3.push('');
-                otTimesArray3.push('');
-            }
-        });
-
-        // Store the arrays in the objects by employeeId
-        if (!allTimesByEmployee[entry.employeeId]) {
-            allTimesByEmployee[entry.employeeId] = [];
-        }
-        if (!otTimesByEmployee[entry.employeeId]) {
-            otTimesByEmployee[entry.employeeId] = [];
-        }
-        allTimesByEmployee[entry.employeeId].push(allTimesArray);
-        otTimesByEmployee[entry.employeeId].push(otTimesArray);
-
-        //
-        if (!allTimesByEmployee2[entry.employeeId]) {
-            allTimesByEmployee2[entry.employeeId] = [];
-        }
-        if (!otTimesByEmployee2[entry.employeeId]) {
-            otTimesByEmployee2[entry.employeeId] = [];
-        }
-        allTimesByEmployee2[entry.employeeId].push(allTimesArray2);
-        otTimesByEmployee2[entry.employeeId].push(otTimesArray2);
-
-        //
-        if (!allTimesByEmployee3[entry.employeeId]) {
-            allTimesByEmployee3[entry.employeeId] = [];
-        }
-        if (!otTimesByEmployee3[entry.employeeId]) {
-            otTimesByEmployee3[entry.employeeId] = [];
-        }
-        allTimesByEmployee3[entry.employeeId].push(allTimesArray3);
-        otTimesByEmployee3[entry.employeeId].push(otTimesArray3);
-        // console.log("testtest123", test);
-    });
-
-    // Convert the objects to arrays of arrays
-    const newAllTimes = Object.values(allTimesByEmployee).flat();
-    const newOtTimes = Object.values(otTimesByEmployee).flat();
-
-    const newAllTimes2 = Object.values(allTimesByEmployee2).flat();
-    const newOtTimes2 = Object.values(otTimesByEmployee2).flat();
-
-    const newAllTimes3 = Object.values(allTimesByEmployee3).flat();
-    const newOtTimes3 = Object.values(otTimesByEmployee3).flat();
-
-    // Log the results
-    console.log('allTimes:', newAllTimes);
-    console.log('otTimes:', newOtTimes);
-
-    console.log('allTimes2:', newAllTimes2);
-    console.log('otTimes2:', newOtTimes2);
-
-    console.log('allTimes3:', newAllTimes3);
-    console.log('otTimes3:', newOtTimes3);
-
 
     const filteredEntries = timerecordAllList
         .filter(entry =>
@@ -5458,27 +5297,14 @@ function WorktimeSheetWorkplace() {
                 //สวัสดิการ
                 // drawArrayTextAddSalary(extractedDataAddSalary.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
                 // drawArrayText(extractedDataAddSalary);
-                
-                // save17/06/2027
-                // drawArrayTextOT(arrayWorkOTNormalDay.slice(pageStartIndex, pageEndIndex));
 
-                // drawArrayTextHoli(arrayWorkHoli.slice(pageStartIndex, pageEndIndex));
+                drawArrayTextOT(arrayWorkOTNormalDay.slice(pageStartIndex, pageEndIndex));
 
-                // drawArrayTextHoliday(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex));
-                // drawArrayTextOTHoliday(arrayWorkOTHoliday.slice(pageStartIndex, pageEndIndex));
+                drawArrayTextHoli(arrayWorkHoli.slice(pageStartIndex, pageEndIndex));
 
+                drawArrayTextHoliday(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex));
+                drawArrayTextOTHoliday(arrayWorkOTHoliday.slice(pageStartIndex, pageEndIndex));
 
-                drawArrayTextOT(newAllTimes2.slice(pageStartIndex, pageEndIndex));
-                drawArrayTextOT(newOtTimes.slice(pageStartIndex, pageEndIndex));
-
-                // drawArrayTextOT(newOtTimes2.slice(pageStartIndex, pageEndIndex));
-
-                // drawArrayTextHoli(newOtTimes2.slice(pageStartIndex, pageEndIndex));
-
-                drawArrayTextHoliday(newAllTimes3.slice(pageStartIndex, pageEndIndex));
-                drawArrayTextHoliday(newOtTimes2.slice(pageStartIndex, pageEndIndex));
-                drawArrayTextOTHoliday(newOtTimes3.slice(pageStartIndex, pageEndIndex));
-                // 
                 // drawArrayTextSumWork(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
 
                 // วันทำงาน
