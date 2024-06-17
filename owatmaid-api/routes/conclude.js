@@ -208,15 +208,15 @@ router.put('/update/:concludeRecordId', async (req, res) => {
 
 
 // Auto Create new conclude
-router.post('/autocreate', async (req, res) => {
+router.get('/autocreate', async (req, res) => {
 const workplaceList = await [];
 
   const { 
     year,
     month,
     // concludeDate,
-    employeeId,
-    createBy,
+    // employeeId,
+    // createBy,
     // concludeRecord 
   } = await req.body;
 
