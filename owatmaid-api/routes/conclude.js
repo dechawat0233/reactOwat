@@ -34,8 +34,10 @@ concludeRecord: [{
   workplaceId: String, 
   allTimes: String, 
   workRate: String, 
+  workRateMultiply: String, 
   otTimes: String, 
   workRateOT: String, 
+  workRateOTMultiply: String, 
   addSalaryDay: String
 }],
 addSalary: [
