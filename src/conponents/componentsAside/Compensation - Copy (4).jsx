@@ -1128,11 +1128,6 @@ function Compensation() {
         setFormData({ ...formData, [name]: value });
     };
 
-
-    function roundToNearestHalf(num) {
-        return Math.round(num * 2) / 2;
-    }
-
     const saveFormData = async () => {
         if (editIndex !== null) {
             await setLoadStatus('load');
@@ -1177,34 +1172,21 @@ function Compensation() {
                 // const calculatedValue = workRate * holiday;
                 // const calculatedValueOT = ((workRate / workOfHour) * holidayOT) * otTimes;
 
-                //calculator Rate
                 if (record.shift == 'specialt_shift' && record.cashSalary == '') {
                     const calculatedValue = parseFloat(record.specialtSalary) || 0;
                     const calculatedValueOT = parseFloat(record.specialtSalaryOT) || 0;
-                    const workRateMultiply = roundToNearestHalf((parseFloat(record.specialtSalary) || 0)/ workRate );
-                    const workRateOTMultiply = roundToNearestHalf((parseFloat(record.specialtSalaryOT) || 0) / workRate);
-
                     return {
                         ...record,
                         calculatedValue,
                         calculatedValueOT,
-                        workRateMultiply ,
-                        workRateOTMultiply ,
                     };
                 } else {
                     const calculatedValue = workRate * holiday;
                     const calculatedValueOT = ((workRate / workOfHour) * holidayOT) * otTimes;
-                    const workRateMultiply = holiday;
-                    const workRateOTMultiply = holidayOT;
-
-                    // alert('workRate ' + workRate )
-                    // alert('holidayOT ' + holidayOT);
                     return {
                         ...record,
                         calculatedValue,
                         calculatedValueOT,
-                        workRateMultiply ,
-                        workRateOTMultiply ,
                     };
                 }
 
@@ -1230,31 +1212,18 @@ function Compensation() {
                 if (record.shift == 'specialt_shift' && record.cashSalary == '') {
                     const calculatedValue = parseFloat(record.specialtSalary) || 0;
                     const calculatedValueOT = parseFloat(record.specialtSalaryOT) || 0;
-                    const workRateMultiply = roundToNearestHalf((parseFloat(record.specialtSalary) || 0)/ workRate );
-                    const workRateOTMultiply = roundToNearestHalf((parseFloat(record.specialtSalaryOT) || 0) / workRate);
-                    
                     return {
                         ...record,
                         calculatedValue,
                         calculatedValueOT,
-                        workRateMultiply ,
-                        workRateOTMultiply ,
                     };
                 } else {
                     const calculatedValue = workRate * dayoffRateHour;
                     const calculatedValueOT = ((workRate / workOfHour) * dayoffRateOT) * otTimes;
-                    const workRateMultiply = dayoffRateHour;
-                    const workRateOTMultiply = dayoffRateOT;
-                    // alert('dayoffRateHour ' + dayoffRateHour)
-                    // alert('workRate day off' + workRate )
-                    // alert('dayoffRateOT' + dayoffRateOT);
-
                     return {
                         ...record,
                         calculatedValue,
                         calculatedValueOT,
-                        workRateMultiply ,
-                        workRateOTMultiply,
                     };
                 }
 
