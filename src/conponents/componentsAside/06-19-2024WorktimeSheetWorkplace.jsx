@@ -2343,6 +2343,26 @@ function WorktimeSheetWorkplace() {
         });
     };
 
+    const separateAndFixDecimals = (array) => {
+        return array.map(subArray => {
+            return subArray.map(val => {
+                if (typeof val === 'number' && !isNaN(val)) {
+                    const parts = val.toString().split('.');
+                    const beforeDecimal = parseFloat(parts[0]) || 0;
+                    const afterDecimal = parts[1] ? parseFloat(parts[1].padEnd(2, '0')) : 0;
+
+                    // Convert fractional part to tens digit
+                    const afterDecimalTens = afterDecimal < 10 ? afterDecimal * 10 : afterDecimal;
+
+                    return [beforeDecimal, afterDecimalTens];
+                } else {
+                    return [0, 0]; // Return zero for non-number or empty values
+                }
+            });
+        });
+    };
+
+
 
     // Ensure all values are numbers
     const convertToNumbers = (array) => {
@@ -2434,14 +2454,10 @@ function WorktimeSheetWorkplace() {
         return accountingRecord ? parseInt(accountingRecord.amountSpecialDay, 10) : 0;
     });
 
+
+
     console.log('amountSpecialDay', amountSpecialDay);
 
-    const countHour = responseDataAll.map(item => {
-        const accountingRecord = item.accountingRecord?.[0];
-        return accountingRecord ? parseInt(accountingRecord.countHour, 10) : 0;
-    });
-
-    console.log('countHour', countHour);
 
     console.log('countSpecialDays', countSpecialDays);
     console.log('specialDayListWorks', specialDayListWorks);
