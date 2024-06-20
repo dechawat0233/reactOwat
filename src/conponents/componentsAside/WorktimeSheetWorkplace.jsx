@@ -1498,186 +1498,6 @@ function WorktimeSheetWorkplace() {
     // );
 
 
-    const filteredEntriesTest = conclude
-        .filter(entry =>
-            entry.year === desiredTimerecordId &&
-            entry.month === desiredMonth
-        );
-    console.log('filteredEntriesTest', filteredEntriesTest);
-
-    // Initialize objects to store the grouped times
-    const dayWork = {};
-
-    const allTimesByEmployee = {};
-    const otTimesByEmployee = {};
-
-    const allTimesByEmployee2 = {};
-    const otTimesByEmployee2 = {};
-
-    const allTimesByEmployee3 = {};
-    const otTimesByEmployee3 = {};
-
-    // Iterate over filteredEntriesTest to populate the objects
-    filteredEntriesTest.forEach(entry => {
-        // Initialize arrays to store the results for the current employeeId
-        let dayWorkArray = [];
-
-        let allTimesArray = [];
-        let otTimesArray = [];
-
-        let allTimesArray2 = [];
-        let otTimesArray2 = [];
-
-        let allTimesArray3 = [];
-        let otTimesArray3 = [];
-        let test = 0;
-
-        // Iterate over each concludeRecord
-        entry.concludeRecord.forEach(record => {
-            // Check if workRate or workRateOT exists
-            // const 
-            // if (record.workRate || record.workRateOT) {
-            //     // Push allTimes and otTimes to respective arrays
-            //     allTimesArray.push(parseFloat(record.allTimes));
-            //     otTimesArray.push(parseFloat(record.otTimes));
-            //     test += 1;
-            // } else {
-            //     // Push empty strings if workRate and workRateOT do not exist
-            //     allTimesArray.push('');
-            //     otTimesArray.push('');
-            // }
-            // const day = parseInt(record.day.split('/')[0]);
-
-            if (record.workRate != 0 && record.workRate != null) {
-                // Push allTimes and otTimes to respective arrays
-                dayWorkArray.push(parseFloat(record.day));
-                // const day = parseInt(record.day.split('/')[0]);
-
-            } else {
-                // Push empty strings if workRate and workRateOT do not exist
-                dayWorkArray.push('');
-            }
-
-            if (record.workRate != 0 && record.workRate != null && record.workRate / workRateWorkplace < workRateWorkplaceStage1) {
-                // Push allTimes and otTimes to respective arrays
-                allTimesArray.push(parseFloat(record.allTimes));
-                otTimesArray.push(parseFloat(record.otTimes));
-                // dayWorkArray.push(parseFloat(record.day));
-                // const day = parseInt(record.day.split('/')[0]);
-
-            } else {
-                // Push empty strings if workRate and workRateOT do not exist
-                allTimesArray.push('');
-                otTimesArray.push('');
-                // dayWorkArray.push('');
-            }
-            if (record.workRate != 0 && record.workRate != null && record.workRate / workRateWorkplace >= workRateWorkplaceStage1 &&
-                record.workRate / workRateWorkplace < workRateWorkplaceStage2
-            ) {
-                // Push allTimes and otTimes to respective arrays
-                allTimesArray2.push(parseFloat(record.allTimes));
-                otTimesArray2.push(parseFloat(record.otTimes));
-            } else {
-                // Push empty strings if workRate and workRateOT do not exist
-                allTimesArray2.push('');
-                otTimesArray2.push('');
-            }
-            if (record.workRate != 0 && record.workRate != null && record.workRate / workRateWorkplace >= workRateWorkplaceStage2) {
-                // Push allTimes and otTimes to respective arrays
-                allTimesArray3.push(parseFloat(record.allTimes));
-                otTimesArray3.push(parseFloat(record.otTimes));
-            } else {
-                // Push empty strings if workRate and workRateOT do not exist
-                allTimesArray3.push('');
-                otTimesArray3.push('');
-            }
-
-        });
-
-        // Store the arrays in the objects by employeeId
-
-        if (!dayWork[entry.employeeId]) {
-            dayWork[entry.employeeId] = [];
-        }
-        dayWork[entry.employeeId].push(dayWorkArray);
-
-        if (!allTimesByEmployee[entry.employeeId]) {
-            allTimesByEmployee[entry.employeeId] = [];
-        }
-        if (!otTimesByEmployee[entry.employeeId]) {
-            otTimesByEmployee[entry.employeeId] = [];
-        }
-        allTimesByEmployee[entry.employeeId].push(allTimesArray);
-        otTimesByEmployee[entry.employeeId].push(otTimesArray);
-
-        //
-        if (!allTimesByEmployee2[entry.employeeId]) {
-            allTimesByEmployee2[entry.employeeId] = [];
-        }
-        if (!otTimesByEmployee2[entry.employeeId]) {
-            otTimesByEmployee2[entry.employeeId] = [];
-        }
-        allTimesByEmployee2[entry.employeeId].push(allTimesArray2);
-        otTimesByEmployee2[entry.employeeId].push(otTimesArray2);
-
-        //
-        if (!allTimesByEmployee3[entry.employeeId]) {
-            allTimesByEmployee3[entry.employeeId] = [];
-        }
-        if (!otTimesByEmployee3[entry.employeeId]) {
-            otTimesByEmployee3[entry.employeeId] = [];
-        }
-        allTimesByEmployee3[entry.employeeId].push(allTimesArray3);
-        otTimesByEmployee3[entry.employeeId].push(otTimesArray3);
-        // console.log("testtest123", test);
-    });
-
-    // Convert the objects to arrays of arrays
-    const dayWorks = Object.values(dayWork).flat();
-
-    const newAllTimes = Object.values(allTimesByEmployee).flat();
-    const newOtTimes = Object.values(otTimesByEmployee).flat();
-
-    const newAllTimes2 = Object.values(allTimesByEmployee2).flat();
-    const newOtTimes2 = Object.values(otTimesByEmployee2).flat();
-
-    const newAllTimes3 = Object.values(allTimesByEmployee3).flat();
-    const newOtTimes3 = Object.values(otTimesByEmployee3).flat();
-
-    // Log the results
-    console.log('dayWorks:', dayWorks);
-
-    const updateDayWorks = (dayWorks, allDayOff, holidayList) => {
-        return dayWorks.map(subArray => 
-            subArray.map(day => 
-                (allDayOff.includes(day) || holidayList.includes(day)) ? '' : day
-            )
-        );
-    };
-    
-    const updatedDayWorks = updateDayWorks(dayWorks, allDayOff, holidayList);
-    console.log('updatedDayWorks',updatedDayWorks);
-
-    const changeNumbersToOne = (array) => {
-        return array.map(subArray => 
-            subArray.map(day => 
-                typeof day === 'number' && day !== '' ? 1 : day
-            )
-        );
-    };
-    
-    const finalUpdatedDayWorks = changeNumbersToOne(updatedDayWorks);
-    console.log('finalUpdatedDayWorks',finalUpdatedDayWorks);
-
-    console.log('allTimes:', newAllTimes);
-    console.log('otTimes:', newOtTimes);
-
-    console.log('allTimes2:', newAllTimes2);
-    console.log('otTimes2:', newOtTimes2);
-
-    console.log('allTimes3:', newAllTimes3);
-    console.log('otTimes3:', newOtTimes3);
-
 
     const filteredEntries = timerecordAllList
         .filter(entry =>
@@ -1897,6 +1717,10 @@ function WorktimeSheetWorkplace() {
 
     const arrayWorkHoliday = [];
     const arrayWorkOTHoliday = [];
+
+    const daySpecialts = [];
+
+
     Object.keys(combinedArray).forEach(employeeId => {
         // วันที่ทำงานทั้งหมด
         // const datesArray = combinedArray[employeeId].map(entry => Number(entry.dates));
@@ -1928,6 +1752,8 @@ function WorktimeSheetWorkplace() {
         const daySpecialt = filteredEntriesSpecialt.map(entry => parseInt(entry.dates, 10));
 
         console.log('datesArray321', daySpecialt);
+
+        daySpecialts.push(daySpecialt);
 
 
         console.log(`Employee ID: ${employeeId}, Dates:`, datesArray);
@@ -2296,6 +2122,192 @@ function WorktimeSheetWorkplace() {
     console.log('arrayWorkNormalDayOld:', arrayWorkNormalDayOld);
     console.log('arrayWorkOTHoliday:', arrayWorkOTHoliday);
 
+    const filteredEntriesTest = conclude
+        .filter(entry =>
+            entry.year === desiredTimerecordId &&
+            entry.month === desiredMonth
+        );
+    console.log('filteredEntriesTest', filteredEntriesTest);
+
+    // Initialize objects to store the grouped times
+    const dayWork = {};
+
+    const allTimesByEmployee = {};
+    const otTimesByEmployee = {};
+
+    const allTimesByEmployee2 = {};
+    const otTimesByEmployee2 = {};
+
+    const allTimesByEmployee3 = {};
+    const otTimesByEmployee3 = {};
+
+    // Iterate over filteredEntriesTest to populate the objects
+    filteredEntriesTest.forEach(entry => {
+        // Initialize arrays to store the results for the current employeeId
+        let dayWorkArray = [];
+
+        let allTimesArray = [];
+        let otTimesArray = [];
+
+        let allTimesArray2 = [];
+        let otTimesArray2 = [];
+
+        let allTimesArray3 = [];
+        let otTimesArray3 = [];
+        let test = 0;
+
+        // Iterate over each concludeRecord
+        entry.concludeRecord.forEach(record => {
+            // Check if workRate or workRateOT exists
+            // const 
+            // if (record.workRate || record.workRateOT) {
+            //     // Push allTimes and otTimes to respective arrays
+            //     allTimesArray.push(parseFloat(record.allTimes));
+            //     otTimesArray.push(parseFloat(record.otTimes));
+            //     test += 1;
+            // } else {
+            //     // Push empty strings if workRate and workRateOT do not exist
+            //     allTimesArray.push('');
+            //     otTimesArray.push('');
+            // }
+            // const day = parseInt(record.day.split('/')[0]);
+
+            if (record.workRate != 0 && record.workRate != null) {
+                // Push allTimes and otTimes to respective arrays
+                dayWorkArray.push(parseFloat(record.day));
+                // const day = parseInt(record.day.split('/')[0]);
+
+            } else {
+                // Push empty strings if workRate and workRateOT do not exist
+                dayWorkArray.push('');
+            }
+
+            if (record.workRate != 0 && record.workRate != null && record.workRate / workRateWorkplace < workRateWorkplaceStage1) {
+                // Push allTimes and otTimes to respective arrays
+                allTimesArray.push(parseFloat(record.allTimes));
+                otTimesArray.push(parseFloat(record.otTimes));
+                // dayWorkArray.push(parseFloat(record.day));
+                // const day = parseInt(record.day.split('/')[0]);
+
+            } else {
+                // Push empty strings if workRate and workRateOT do not exist
+                allTimesArray.push('');
+                otTimesArray.push('');
+                // dayWorkArray.push('');
+            }
+            if (record.workRate != 0 && record.workRate != null && record.workRate / workRateWorkplace >= workRateWorkplaceStage1 &&
+                record.workRate / workRateWorkplace < workRateWorkplaceStage2
+            ) {
+                // Push allTimes and otTimes to respective arrays
+                allTimesArray2.push(parseFloat(record.allTimes));
+                otTimesArray2.push(parseFloat(record.otTimes));
+            } else {
+                // Push empty strings if workRate and workRateOT do not exist
+                allTimesArray2.push('');
+                otTimesArray2.push('');
+            }
+            if (record.workRate != 0 && record.workRate != null && record.workRate / workRateWorkplace >= workRateWorkplaceStage2) {
+                // Push allTimes and otTimes to respective arrays
+                allTimesArray3.push(parseFloat(record.allTimes));
+                otTimesArray3.push(parseFloat(record.otTimes));
+            } else {
+                // Push empty strings if workRate and workRateOT do not exist
+                allTimesArray3.push('');
+                otTimesArray3.push('');
+            }
+
+        });
+
+        // Store the arrays in the objects by employeeId
+
+        if (!dayWork[entry.employeeId]) {
+            dayWork[entry.employeeId] = [];
+        }
+        dayWork[entry.employeeId].push(dayWorkArray);
+
+        if (!allTimesByEmployee[entry.employeeId]) {
+            allTimesByEmployee[entry.employeeId] = [];
+        }
+        if (!otTimesByEmployee[entry.employeeId]) {
+            otTimesByEmployee[entry.employeeId] = [];
+        }
+        allTimesByEmployee[entry.employeeId].push(allTimesArray);
+        otTimesByEmployee[entry.employeeId].push(otTimesArray);
+
+        //
+        if (!allTimesByEmployee2[entry.employeeId]) {
+            allTimesByEmployee2[entry.employeeId] = [];
+        }
+        if (!otTimesByEmployee2[entry.employeeId]) {
+            otTimesByEmployee2[entry.employeeId] = [];
+        }
+        allTimesByEmployee2[entry.employeeId].push(allTimesArray2);
+        otTimesByEmployee2[entry.employeeId].push(otTimesArray2);
+
+        //
+        if (!allTimesByEmployee3[entry.employeeId]) {
+            allTimesByEmployee3[entry.employeeId] = [];
+        }
+        if (!otTimesByEmployee3[entry.employeeId]) {
+            otTimesByEmployee3[entry.employeeId] = [];
+        }
+        allTimesByEmployee3[entry.employeeId].push(allTimesArray3);
+        otTimesByEmployee3[entry.employeeId].push(otTimesArray3);
+        // console.log("testtest123", test);
+    });
+
+    // Convert the objects to arrays of arrays
+    const dayWorks = Object.values(dayWork).flat();
+
+    const newAllTimes = Object.values(allTimesByEmployee).flat();
+    const newOtTimes = Object.values(otTimesByEmployee).flat();
+
+    const newAllTimes2 = Object.values(allTimesByEmployee2).flat();
+    const newOtTimes2 = Object.values(otTimesByEmployee2).flat();
+
+    const newAllTimes3 = Object.values(allTimesByEmployee3).flat();
+    const newOtTimes3 = Object.values(otTimesByEmployee3).flat();
+
+    // Log the results
+    console.log('dayWorks:', dayWorks);
+
+    const singleArrayOfDates = daySpecialts.flat();
+    console.log('singleArrayOfDates:', singleArrayOfDates);
+
+
+    const updateDayWorks = (dayWorks, allDayOff, holidayList, singleArrayOfDates) => {
+        return dayWorks.map(subArray =>
+            subArray.map(day =>
+                (allDayOff.includes(day) || holidayList.includes(day) || singleArrayOfDates.includes(day)) ? '' : day
+            )
+        );
+    };
+
+    const updatedDayWorks = updateDayWorks(dayWorks, allDayOff, holidayList, singleArrayOfDates);
+    console.log('updatedDayWorks', updatedDayWorks);
+
+    const changeNumbersToOne = (array) => {
+        return array.map(subArray =>
+            subArray.map(day =>
+                typeof day === 'number' && day !== '' ? 1 : day
+            )
+        );
+    };
+
+    const finalUpdatedDayWorks = changeNumbersToOne(updatedDayWorks);
+    console.log('finalUpdatedDayWorks', finalUpdatedDayWorks);
+
+    console.log('allTimes:', newAllTimes);
+    console.log('otTimes:', newOtTimes);
+
+    console.log('allTimes2:', newAllTimes2);
+    console.log('otTimes2:', newOtTimes2);
+
+    console.log('allTimes3:', newAllTimes3);
+    console.log('otTimes3:', newOtTimes3);
+
+
+
     // const makePage = Math.ceil(arrayWorkNormalDay.length / 5);
     // console.log('makePage', makePage);
 
@@ -2640,7 +2652,7 @@ function WorktimeSheetWorkplace() {
         // Iterate over addSalaryWorkplace
         addSalaryWorkplace.forEach(salaryItem => {
             // Find the position of salaryItem.name in employee.addSalary
-            const index = employee.addSalary.findIndex(item => item.name === salaryItem.name);
+            const index = employee.addSalary.findIndex(item => item.id === salaryItem.codeSpSalary);
             // If the name exists in employee.addSalary, push the SpSalary as an integer to spSalaryArray
             if (index !== -1) {
                 spSalaryArray.push(parseInt(employee.addSalary[index].SpSalary));
@@ -2712,6 +2724,7 @@ function WorktimeSheetWorkplace() {
         return salaryArray.map((value, innerIndex) => {
             // If the value is not an empty string and roundOfSalary is 'daily'
             const employeeSalaryItem = filteredEmployees[outerIndex].addSalary.find(item => item.name === addSalaryWorkplace[innerIndex].name);
+            // const employeeSalaryItem = filteredEmployees[outerIndex].addSalary.find(item => item.id == addSalaryWorkplace[innerIndex].codeSpSalary);
 
             if (value !== '' && addSalaryWorkplace[innerIndex].roundOfSalary === 'daily') {
                 // Multiply the value by the corresponding count in sumArray
@@ -5692,11 +5705,11 @@ function WorktimeSheetWorkplace() {
                 }
 
                 // drawArrayText(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex));
-                
+
                 //20/06/2024 drawArrayText(dayWorks.slice(pageStartIndex, pageEndIndex));
                 drawArrayText(finalUpdatedDayWorks.slice(pageStartIndex, pageEndIndex));
 
-                
+
 
                 //สวัสดิการ
                 drawArrayTextAddSalaryTestCount(adjustedDailyExtractedDataAddSalaryCount.slice(pageStartIndex, pageEndIndex));
