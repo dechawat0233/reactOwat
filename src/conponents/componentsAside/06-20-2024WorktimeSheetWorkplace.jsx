@@ -2450,16 +2450,6 @@ function WorktimeSheetWorkplace() {
     console.log('differences', sumArrayHoli);
 
 
-    const adjustedAmountSpecialDay = amountSpecialDay.map((amount, index) => {
-        if (isNaN(amount) || amount === 0) {
-            sumArrayHoli[index] = 0;
-            return 0;
-        }
-        return amount;
-    });
-    
-    console.log('adjustedAmountSpecialDay',adjustedAmountSpecialDay); // Output: [0, 1050, 1050, 1050, 1050]
-
     // const sumArrayHoliday = arrayWorkHoliday.map(subArray =>
     //     subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
     // );
@@ -5071,14 +5061,9 @@ function WorktimeSheetWorkplace() {
 
                     doc.text(sumArrayHoli[i].toString(), currentX + 2, 3 + currentY, { align: 'center' });
                     // doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
-                    // doc.text(amountSpecialDay[i].toString(), currentX + 2, 3 + currentY + 3, { align: 'center' });
-                    // adjustedAmountSpecialDay
-                    doc.text(adjustedAmountSpecialDay[i].toString(), currentX + 2, 3 + currentY + 3, { align: 'center' });
-
+                    doc.text(amountSpecialDay[i].toString(), currentX + 2, 3 + currentY + 3, { align: 'center' });
                 }
             };
-
-
             // ผลรวมวันทำงานวันหยุดนักขัตฤกษ์
             // 2 เท่า
             const drawArrayTextSumWorkHoliday = (dataArray, sumArrayHoliday) => {
