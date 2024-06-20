@@ -2723,8 +2723,8 @@ function WorktimeSheetWorkplace() {
     const adjustedDailyExtractedDataAddSalaryCount = extractedDataAddSalary.map((salaryArray, outerIndex) => {
         return salaryArray.map((value, innerIndex) => {
             // If the value is not an empty string and roundOfSalary is 'daily'
-            const employeeSalaryItem = filteredEmployees[outerIndex].addSalary.find(item => item.name === addSalaryWorkplace[innerIndex].name);
-            // const employeeSalaryItem = filteredEmployees[outerIndex].addSalary.find(item => item.id == addSalaryWorkplace[innerIndex].codeSpSalary);
+            // const employeeSalaryItem = filteredEmployees[outerIndex].addSalary.find(item => item.name === addSalaryWorkplace[innerIndex].name);
+            const employeeSalaryItem = filteredEmployees[outerIndex].addSalary.find(item => item.id === addSalaryWorkplace[innerIndex].codeSpSalary);
 
             if (value !== '' && addSalaryWorkplace[innerIndex].roundOfSalary === 'daily') {
                 // Multiply the value by the corresponding count in sumArray
