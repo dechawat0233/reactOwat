@@ -159,16 +159,12 @@ function WorktimeSheetWorkplace() {
                 // Update the state with the fetched data
                 setWorkplaceList(data);
                 // alert(data[0].workplaceName);
-                setWorkRateWorkplace(data[0].workRate);
-                setWorkRateWorkplaceStage1(data[0].workRateOT);
-                setWorkRateWorkplaceStage2(data[0].holiday);
-                setWorkRateWorkplaceStage3(data[0].holidayOT);
-
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
     }, []); // The empty array [] ensures that the effect runs only once after the initial render
+
 
     // useEffect(() => {
     //     // Fetch data from the API when the component mounts
@@ -217,7 +213,7 @@ function WorktimeSheetWorkplace() {
             });
     }, []);
 
-    console.log(workplaceList);
+    console.log('testhello', workplaceList);
 
     const [employeelist, setEmployeelist] = useState([]);
     const [employee, setEmployee] = useState([]);
@@ -1214,6 +1210,13 @@ function WorktimeSheetWorkplace() {
         const filteredData = workplaceList.filter(item => item.workplaceId === searchWorkplaceId);
         setWorkplaceDataList(filteredData);
 
+        if (filteredData.length > 0) {
+            setWorkRateWorkplace(filteredData[0].workRate);
+            setWorkRateWorkplaceStage1(filteredData[0].workRateOT);
+            setWorkRateWorkplaceStage2(filteredData[0].holiday);
+            setWorkRateWorkplaceStage3(filteredData[0].holidayOT);
+        }
+
         // Filter workplaceDataList to find items with dayOff
         // const dayOffData = filteredData.filter(item => item.daysOff); // Assuming 'dayOff' is a property in the items
 
@@ -1246,6 +1249,10 @@ function WorktimeSheetWorkplace() {
         // วันหยุดนัก
         setWorkplaceDataListDayOff(dayOffData);
     }, [searchWorkplaceId, workplaceList]);
+
+    console.log('workplaceDataList', workplaceDataList);
+
+    console.log('workRateWorkplaceStage1', workRateWorkplaceStage1);
 
     console.log('WorkplaceDataListAddSalary', workplaceDataListAddSalary);
     console.log('WorkplaceDataListDayOff', workplaceDataListDayOff);
@@ -1499,6 +1506,8 @@ function WorktimeSheetWorkplace() {
     console.log('filteredEntriesTest', filteredEntriesTest);
 
     // Initialize objects to store the grouped times
+    const dayWork = {};
+
     const allTimesByEmployee = {};
     const otTimesByEmployee = {};
 
@@ -1511,6 +1520,8 @@ function WorktimeSheetWorkplace() {
     // Iterate over filteredEntriesTest to populate the objects
     filteredEntriesTest.forEach(entry => {
         // Initialize arrays to store the results for the current employeeId
+        let dayWorkArray = [];
+
         let allTimesArray = [];
         let otTimesArray = [];
 
@@ -1535,14 +1546,30 @@ function WorktimeSheetWorkplace() {
             //     allTimesArray.push('');
             //     otTimesArray.push('');
             // }
+            // const day = parseInt(record.day.split('/')[0]);
+
+            if (record.workRate != 0 && record.workRate != null) {
+                // Push allTimes and otTimes to respective arrays
+                dayWorkArray.push(parseFloat(record.day));
+                // const day = parseInt(record.day.split('/')[0]);
+
+            } else {
+                // Push empty strings if workRate and workRateOT do not exist
+                dayWorkArray.push('');
+            }
+
             if (record.workRate != 0 && record.workRate != null && record.workRate / workRateWorkplace < workRateWorkplaceStage1) {
                 // Push allTimes and otTimes to respective arrays
                 allTimesArray.push(parseFloat(record.allTimes));
                 otTimesArray.push(parseFloat(record.otTimes));
+                // dayWorkArray.push(parseFloat(record.day));
+                // const day = parseInt(record.day.split('/')[0]);
+
             } else {
                 // Push empty strings if workRate and workRateOT do not exist
                 allTimesArray.push('');
                 otTimesArray.push('');
+                // dayWorkArray.push('');
             }
             if (record.workRate != 0 && record.workRate != null && record.workRate / workRateWorkplace >= workRateWorkplaceStage1 &&
                 record.workRate / workRateWorkplace < workRateWorkplaceStage2
@@ -1564,9 +1591,16 @@ function WorktimeSheetWorkplace() {
                 allTimesArray3.push('');
                 otTimesArray3.push('');
             }
+
         });
 
         // Store the arrays in the objects by employeeId
+
+        if (!dayWork[entry.employeeId]) {
+            dayWork[entry.employeeId] = [];
+        }
+        dayWork[entry.employeeId].push(dayWorkArray);
+
         if (!allTimesByEmployee[entry.employeeId]) {
             allTimesByEmployee[entry.employeeId] = [];
         }
@@ -1599,6 +1633,8 @@ function WorktimeSheetWorkplace() {
     });
 
     // Convert the objects to arrays of arrays
+    const dayWorks = Object.values(dayWork).flat();
+
     const newAllTimes = Object.values(allTimesByEmployee).flat();
     const newOtTimes = Object.values(otTimesByEmployee).flat();
 
@@ -1609,6 +1645,30 @@ function WorktimeSheetWorkplace() {
     const newOtTimes3 = Object.values(otTimesByEmployee3).flat();
 
     // Log the results
+    console.log('dayWorks:', dayWorks);
+
+    const updateDayWorks = (dayWorks, allDayOff, holidayList) => {
+        return dayWorks.map(subArray => 
+            subArray.map(day => 
+                (allDayOff.includes(day) || holidayList.includes(day)) ? '' : day
+            )
+        );
+    };
+    
+    const updatedDayWorks = updateDayWorks(dayWorks, allDayOff, holidayList);
+    console.log('updatedDayWorks',updatedDayWorks);
+
+    const changeNumbersToOne = (array) => {
+        return array.map(subArray => 
+            subArray.map(day => 
+                typeof day === 'number' && day !== '' ? 1 : day
+            )
+        );
+    };
+    
+    const finalUpdatedDayWorks = changeNumbersToOne(updatedDayWorks);
+    console.log('finalUpdatedDayWorks',finalUpdatedDayWorks);
+
     console.log('allTimes:', newAllTimes);
     console.log('otTimes:', newOtTimes);
 
@@ -2144,7 +2204,7 @@ function WorktimeSheetWorkplace() {
         // const commonDates3 = datesArray.filter(date => !(allDayOff.includes(date) || holidayList.includes(date)));
         // console.log('commonDates3', commonDates3);
 
-        datesArray
+        // datesArray
         const employeeResultArray3 = resultArray.map(day => {
             const workplaceIdIndex = datesArray.indexOf(day);
             // if (workplaceIdIndex !== -1) {
@@ -2171,7 +2231,9 @@ function WorktimeSheetWorkplace() {
         arrayWorkNormalDay.push(employeeResultArray3);
 
         // วันที่ทำงานปกติ
-        const commonDates3 = datesArray.filter(date => !(allDayOff.includes(date) || holidayList.includes(date) || daySpecialt.includes(parseInt(date, 10))));
+        // const commonDates3 = datesArray.filter(date => !(allDayOff.includes(date) || holidayList.includes(date) || daySpecialt.includes(parseInt(date, 10))));
+        const commonDates3 = datesArray.filter(date => !(allDayOff.includes(date) || holidayList.includes(date)));
+
         const employeeResultArray3Old = resultArray.map(day => {
             const workplaceIdIndex = commonDates3.indexOf(day);
             if (workplaceIdIndex !== -1) {
@@ -2181,7 +2243,7 @@ function WorktimeSheetWorkplace() {
                 return '';
             }
         });
-
+        console.log('commonDates3', commonDates3);
         arrayWorkNormalDayOld.push(employeeResultArray3Old);
 
         // วันที่ทำงานปกติOT
@@ -5039,7 +5101,7 @@ function WorktimeSheetWorkplace() {
                     // Calculate the product and convert it to a string
                     // const product = (sumArray[i] * countalldaywork).toString();
                     // doc.text(sumArray[i].toString(), currentX + 2, 3 + currentY, { align: 'center' });
-                  
+
                     const product = (countDayWork[i] * countalldaywork).toString();
 
                     doc.text(countDayWork[i].toString(), currentX + 2, 3 + currentY, { align: 'center' });
@@ -5629,7 +5691,12 @@ function WorktimeSheetWorkplace() {
                     }
                 }
 
-                drawArrayText(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex));
+                // drawArrayText(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex));
+                
+                //20/06/2024 drawArrayText(dayWorks.slice(pageStartIndex, pageEndIndex));
+                drawArrayText(finalUpdatedDayWorks.slice(pageStartIndex, pageEndIndex));
+
+                
 
                 //สวัสดิการ
                 drawArrayTextAddSalaryTestCount(adjustedDailyExtractedDataAddSalaryCount.slice(pageStartIndex, pageEndIndex));
@@ -5903,6 +5970,9 @@ function WorktimeSheetWorkplace() {
                                                             ))}
                                                         </datalist>
                                                     </div>
+                                                    {/* {workRateWorkplaceStage1}
+                                                    {workRateWorkplaceStage2}
+                                                    {workRateWorkplaceStage3} */}
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label role="searchEmployeeId">เดือน</label>
