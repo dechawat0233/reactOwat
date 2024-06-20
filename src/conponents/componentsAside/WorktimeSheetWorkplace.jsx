@@ -2433,15 +2433,19 @@ function WorktimeSheetWorkplace() {
         const accountingRecord = item.accountingRecord?.[0];
         return accountingRecord ? parseInt(accountingRecord.amountSpecialDay, 10) : 0;
     });
-
     console.log('amountSpecialDay', amountSpecialDay);
 
     const countHour = responseDataAll.map(item => {
         const accountingRecord = item.accountingRecord?.[0];
         return accountingRecord ? parseInt(accountingRecord.countHour, 10) : 0;
     });
-
     console.log('countHour', countHour);
+
+    const countDayWork = responseDataAll.map(item => {
+        const accountingRecord = item.accountingRecord?.[0];
+        return accountingRecord ? parseInt(accountingRecord.countDayWork, 10) : 0;
+    });
+    console.log('countDayWork', countDayWork);
 
     console.log('countSpecialDays', countSpecialDays);
     console.log('specialDayListWorks', specialDayListWorks);
@@ -2457,8 +2461,8 @@ function WorktimeSheetWorkplace() {
         }
         return amount;
     });
-    
-    console.log('adjustedAmountSpecialDay',adjustedAmountSpecialDay); // Output: [0, 1050, 1050, 1050, 1050]
+
+    console.log('adjustedAmountSpecialDay', adjustedAmountSpecialDay); // Output: [0, 1050, 1050, 1050, 1050]
 
     // const sumArrayHoliday = arrayWorkHoliday.map(subArray =>
     //     subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
@@ -5033,9 +5037,13 @@ function WorktimeSheetWorkplace() {
                     let currentY = startY + i * verticalDistance + addmove;
 
                     // Calculate the product and convert it to a string
-                    const product = (sumArray[i] * countalldaywork).toString();
+                    // const product = (sumArray[i] * countalldaywork).toString();
+                    // doc.text(sumArray[i].toString(), currentX + 2, 3 + currentY, { align: 'center' });
+                  
+                    const product = (countDayWork[i] * countalldaywork).toString();
 
-                    doc.text(sumArray[i].toString(), currentX + 2, 3 + currentY, { align: 'center' });
+                    doc.text(countDayWork[i].toString(), currentX + 2, 3 + currentY, { align: 'center' });
+
                     doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
                 }
             };
