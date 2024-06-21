@@ -190,7 +190,7 @@ let workRate = ((wpResponse1.data.holiday * (wpResponse1.data.workRate / 8) ) * 
 tmp.workRate = workRate  || '';
 tmp.workRateMultiply = wpResponse1.data.holiday || '';
 
-let workRateOT = ((wpResponse1.data.holidayOT * wpResponse1.data.workRate) * Number(otTime ));
+let workRateOT = ((wpResponse1.data.holidayOT * (wpResponse1.data.workRate / 8 ) ) * Number(otTime ));
 tmp.workRateOT = workRateOT  || '';
 tmp.workRateOTMultiply = wpResponse1.data.holidayOT || '0';
 
@@ -201,7 +201,7 @@ let workRate = ((wpResponse1.data.dayoffRateHour * (wpResponse1.data.workRate /8
 tmp.workRate = workRate || '';
 tmp.workRateMultiply = wpResponse1.data.dayoffRateHour || '';
 
-let workRateOT = ((wpResponse1.data.dayoffRateOT * wpResponse1.data.workRate) * Number(otTime ));
+let workRateOT = ((wpResponse1.data.dayoffRateOT * (wpResponse1.data.workRate /8) ) * Number(otTime ));
 tmp.workRateOT = workRateOT || '';
 tmp.workRateOTMultiply = wpResponse1.data.dayoffRateOT || '';
 
@@ -328,7 +328,7 @@ let workRate = ((wpResponse.data.holiday * (wpResponse.data.workRate / 8) ) * Nu
 tmp.workRate = workRate  || '';
 tmp.workRateMultiply = wpResponse.data.holiday || '';
 
-let workRateOT = ((wpResponse.data.holidayOT * wpResponse.data.workRate) * Number(otTime ));
+let workRateOT = ((wpResponse.data.holidayOT * (wpResponse.data.workRate / 8) ) * Number(otTime ));
 tmp.workRateOT = workRateOT  || '';
 tmp.workRateOTMultiply = wpResponse.data.holidayOT || '0';
 
@@ -339,7 +339,7 @@ let workRate = ((wpResponse.data.dayoffRateHour * (wpResponse.data.workRate /8 )
 tmp.workRate = workRate || '';
 tmp.workRateMultiply = wpResponse.data.dayoffRateHour || '';
 
-let workRateOT = ((wpResponse.data.dayoffRateOT * wpResponse.data.workRate) * Number(otTime ));
+let workRateOT = ((wpResponse.data.dayoffRateOT * (wpResponse.data.workRate / 8) ) * Number(otTime ));
 tmp.workRateOT = workRateOT || '';
 tmp.workRateOTMultiply = wpResponse.data.dayoffRateOT || '';
 
