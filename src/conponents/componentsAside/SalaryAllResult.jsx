@@ -708,7 +708,7 @@ function SalaryAllResult() {
 
             // Adjust this line based on your specific structure to get the salary or any other relevant data
             acc[workplace].totalCountDay += parseFloat(employee.accountingRecord?.[0]?.countDay || 0);
-            acc[workplace].totalSalary += parseFloat(employee.accountingRecord?.[0]?.amountDay || 0);
+            acc[workplace].totalSalary += parseFloat(employee.accountingRecord?.[0]?.amountCountDayWork || 0);
 
             acc[workplace].totalAmountPosition += parseFloat(employee.accountingRecord?.[0]?.amountPosition || 0);
             acc[workplace].totalTel += parseFloat(employee.accountingRecord?.[0]?.tel || 0);
@@ -721,7 +721,7 @@ function SalaryAllResult() {
             acc[workplace].totalAmountSpecialDay += parseFloat(employee.accountingRecord?.[0]?.amountSpecialDay || 0);
 
 
-            acc[workplace].totalAmountOt += parseFloat(employee.accountingRecord?.[0]?.amountOt || 0);
+            acc[workplace].totalAmountOt += parseFloat(employee.accountingRecord?.[0]?.amountCountDayWorkOt || 0);
             acc[workplace].totalAmountSpecial += parseFloat(employee.accountingRecord?.[0]?.amountSpecial || 0);
             // acc[workplace].totalAmountPosition += parseFloat(employee.accountingRecord?.[0]?.amountPosition || 0);
 
@@ -753,7 +753,7 @@ function SalaryAllResult() {
             acc[workplace].totalSumtest += sum;
 
             // const sumOT = parseFloat(employee.accountingRecord?.[0]?.amountOt + (employee.specialDayListWork * employee.specialDayRate) || 0);
-            const sumOT = parseFloat(employee.accountingRecord?.[0]?.amountOt || 0);
+            const sumOT = parseFloat(employee.accountingRecord?.[0]?.amountCountDayWorkOt || 0);
             acc[workplace].totalSumOT += sumOT;
 
             const spSalaryHardWorkSum = addSalary.reduce((total, item) => {

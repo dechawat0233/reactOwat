@@ -17,7 +17,7 @@ import en from 'date-fns/locale/en-US';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-function TestPDFResultSalay() {
+function WorktimeSheetWorkplace() {
     const vertical1 = {
         borderCollapse: "collapse",
         width: "100%",
@@ -58,15 +58,6 @@ function TestPDFResultSalay() {
     const [workplaceDataWorkOfHour, setWorkplaceDataWorkOfHour] = useState('');
     const [workplaceDataListWorkRate, setWorkplaceDataListWorkRate] = useState();
     const [workplaceListAll, setWorkplaceListAll] = useState([]);
-
-    const [workRateWorkplace, setWorkRateWorkplace] = useState(0); //ค่าจ้างต่อวัน
-    const [workRateOT, setWorkRateOT] = useState(''); //ค่าจ้าง OT ต่อชั่วโมง
-    const [holiday, setHoliday] = useState(''); //ค่าจ้างวันหยุดนักขัตฤกษ์ 
-    const [holidayHour, setHolidayHour] = useState(''); //ค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง
-
-    const [workRateWorkplaceStage1, setWorkRateWorkplaceStage1] = useState(0); //ค่าจ้างต่อวัน
-    const [workRateWorkplaceStage2, setWorkRateWorkplaceStage2] = useState(0); //ค่าจ้างต่อวัน
-    const [workRateWorkplaceStage3, setWorkRateWorkplaceStage3] = useState(0); //ค่าจ้างต่อวัน
 
     const [responseDataAll, setResponseDataAll] = useState([]);
 
@@ -120,7 +111,7 @@ function TestPDFResultSalay() {
 
     const [daysOffArray, setDaysOffArray] = useState([]);
     const [result_data, setResult_data] = useState([]);
-    const [conclude, setConclude] = useState([]);
+    const [timerecordAllList, setTimerecordAllList] = useState([]);
     const [emploeeData, setEmploeeData] = useState([]);
     const [emploeeDataSearch, setEmploeeDataSearch] = useState([]);
 
@@ -162,18 +153,11 @@ function TestPDFResultSalay() {
                 // Update the state with the fetched data
                 setWorkplaceList(data);
                 // alert(data[0].workplaceName);
-                setWorkRateWorkplace(data[0].workRate);
-                setWorkRateWorkplaceStage1(data[0].workRateOT);
-                setWorkRateWorkplaceStage2(data[0].holiday);
-                setWorkRateWorkplaceStage3(data[0].holidayOT);
-
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
     }, []); // The empty array [] ensures that the effect runs only once after the initial render
-    console.log('workplacelist123321', workplaceList);
-    console.log('workRate123321', workRateWorkplace);
 
     // useEffect(() => {
     //     // Fetch data from the API when the component mounts
@@ -191,18 +175,15 @@ function TestPDFResultSalay() {
 
     useEffect(() => {
         // Fetch data from the API when the component mounts
-        // conclude / list
-        // fetch(endpoint + '/timerecord/listemp')
-        fetch(endpoint + '/conclude/list')
-
+        fetch(endpoint + '/timerecord/listemp')
             .then(response => response.json())
             .then(data => {
                 // Update the state with the fetched data
                 if (Array.isArray(data) && data.length > 0) {
-                    setConclude(data);
+                    setTimerecordAllList(data);
                 } else {
                     // If data is empty or not found, set state to an empty array
-                    setConclude([]);
+                    setTimerecordAllList([]);
                 }
             })
             .catch(error => {
@@ -781,6 +762,11 @@ function TestPDFResultSalay() {
     console.log('workplaceList', workplaceList);
     console.log('searchWorkplaceId', searchWorkplaceId);
 
+    //set salaty calculate
+    const [workRate, setWorkRate] = useState(''); //ค่าจ้างต่อวัน
+    const [workRateOT, setWorkRateOT] = useState(''); //ค่าจ้าง OT ต่อชั่วโมง
+    const [holiday, setHoliday] = useState(''); //ค่าจ้างวันหยุดนักขัตฤกษ์ 
+    const [holidayHour, setHolidayHour] = useState(''); //ค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง
     const [addSalary, setAddSalary] = useState([]); //เงิ่นเพิ่มพิเศษ
 
     const [workplaceIdListSearch, setWorkplaceIdListSearch] = useState([]); //หน่วยงานที่ค้นหาและทำงาน
@@ -796,6 +782,7 @@ function TestPDFResultSalay() {
     console.log('addSalary123', addSalary);
     console.log('setEmpData', EmpData);
 
+    console.log('workplaceList', workplaceList);
     console.log('workplaceIdList', workplaceIdList);
     console.log('EmpData', EmpData); // Can access EmpData here
 
@@ -1462,7 +1449,7 @@ function TestPDFResultSalay() {
     console.log('thaiMonthName', thaiMonthName); // Thai month name based on desiredMonth
     console.log('thaiMonthNameLower', thaiMonthNameLower); // Thai month name based on desiredMonthLower
 
-    console.log('conclude', conclude); // Thai month name based on desiredMonthLower
+    console.log('timerecordAllList', timerecordAllList); // Thai month name based on desiredMonthLower
 
     // const filteredEntries = timerecordAllList.filter(entry =>
     //     entry.timerecordId === desiredTimerecordId &&
@@ -1471,135 +1458,7 @@ function TestPDFResultSalay() {
     //     entry.employee_workplaceRecord.some(record => record.workplaceId === desiredWorkplaceId)
     // );
 
-    const filteredEntriesTest = conclude
-        .filter(entry =>
-            entry.year === desiredTimerecordId &&
-            entry.month === desiredMonth
-        );
-    console.log('filteredEntriesTest', filteredEntriesTest);
-
-    // Initialize objects to store the grouped times
-    const allTimesByEmployee = {};
-    const otTimesByEmployee = {};
-
-    const allTimesByEmployee2 = {};
-    const otTimesByEmployee2 = {};
-
-    const allTimesByEmployee3 = {};
-    const otTimesByEmployee3 = {};
-
-    // Iterate over filteredEntriesTest to populate the objects
-    filteredEntriesTest.forEach(entry => {
-        // Initialize arrays to store the results for the current employeeId
-        let allTimesArray = [];
-        let otTimesArray = [];
-
-        let allTimesArray2 = [];
-        let otTimesArray2 = [];
-
-        let allTimesArray3 = [];
-        let otTimesArray3 = [];
-        let test = 0;
-
-        // Iterate over each concludeRecord
-        entry.concludeRecord.forEach(record => {
-            // Check if workRate or workRateOT exists
-            // const 
-            // if (record.workRate || record.workRateOT) {
-            //     // Push allTimes and otTimes to respective arrays
-            //     allTimesArray.push(parseFloat(record.allTimes));
-            //     otTimesArray.push(parseFloat(record.otTimes));
-            //     test += 1;
-            // } else {
-            //     // Push empty strings if workRate and workRateOT do not exist
-            //     allTimesArray.push('');
-            //     otTimesArray.push('');
-            // }
-            if (record.workRate / workRateWorkplace < workRateWorkplaceStage1) {
-                // Push allTimes and otTimes to respective arrays
-                allTimesArray.push(parseFloat(record.allTimes));
-                otTimesArray.push(parseFloat(record.otTimes));
-            } else {
-                // Push empty strings if workRate and workRateOT do not exist
-                allTimesArray.push('');
-                otTimesArray.push('');
-            }
-            if (record.workRate / workRateWorkplace >= workRateWorkplaceStage1 &&
-                record.workRate / workRateWorkplace <= workRateWorkplaceStage2
-            ) {
-                // Push allTimes and otTimes to respective arrays
-                allTimesArray2.push(parseFloat(record.allTimes));
-                otTimesArray2.push(parseFloat(record.otTimes));
-            } else {
-                // Push empty strings if workRate and workRateOT do not exist
-                allTimesArray2.push('');
-                otTimesArray2.push('');
-            }
-            if (record.workRate / workRateWorkplace >= workRateWorkplaceStage2) {
-                // Push allTimes and otTimes to respective arrays
-                allTimesArray3.push(parseFloat(record.allTimes));
-                otTimesArray3.push(parseFloat(record.otTimes));
-            } else {
-                // Push empty strings if workRate and workRateOT do not exist
-                allTimesArray3.push('');
-                otTimesArray3.push('');
-            }
-        });
-
-        // Store the arrays in the objects by employeeId
-        if (!allTimesByEmployee[entry.employeeId]) {
-            allTimesByEmployee[entry.employeeId] = [];
-        }
-        if (!otTimesByEmployee[entry.employeeId]) {
-            otTimesByEmployee[entry.employeeId] = [];
-        }
-        allTimesByEmployee[entry.employeeId].push(allTimesArray);
-        otTimesByEmployee[entry.employeeId].push(otTimesArray);
-
-        //
-        if (!allTimesByEmployee2[entry.employeeId]) {
-            allTimesByEmployee2[entry.employeeId] = [];
-        }
-        if (!otTimesByEmployee2[entry.employeeId]) {
-            otTimesByEmployee2[entry.employeeId] = [];
-        }
-        allTimesByEmployee2[entry.employeeId].push(allTimesArray2);
-        otTimesByEmployee2[entry.employeeId].push(otTimesArray2);
-
-        //
-        if (!allTimesByEmployee3[entry.employeeId]) {
-            allTimesByEmployee3[entry.employeeId] = [];
-        }
-        if (!otTimesByEmployee3[entry.employeeId]) {
-            otTimesByEmployee3[entry.employeeId] = [];
-        }
-        allTimesByEmployee3[entry.employeeId].push(allTimesArray3);
-        otTimesByEmployee3[entry.employeeId].push(otTimesArray3);
-        // console.log("testtest123", test);
-    });
-
-    // Convert the objects to arrays of arrays
-    const newAllTimes = Object.values(allTimesByEmployee).flat();
-    const newOtTimes = Object.values(otTimesByEmployee).flat();
-
-    const newAllTimes2 = Object.values(allTimesByEmployee2).flat();
-    const newOtTimes2 = Object.values(otTimesByEmployee2).flat();
-
-    const newAllTimes3 = Object.values(allTimesByEmployee3).flat();
-    const newOtTimes3 = Object.values(otTimesByEmployee3).flat();
-
-    // Log the results
-    console.log('allTimes:', newAllTimes);
-    console.log('otTimes:', newOtTimes);
-
-    console.log('allTimes2:', newAllTimes2);
-    console.log('otTimes2:', newOtTimes2);
-
-    console.log('allTimes3:', newAllTimes3);
-    console.log('otTimes3:', newOtTimes3);
-
-
-    const filteredEntries = conclude
+    const filteredEntries = timerecordAllList
         .filter(entry =>
             entry.timerecordId === desiredTimerecordId &&
             entry.month === desiredMonth &&
@@ -1621,7 +1480,7 @@ function TestPDFResultSalay() {
     //     entry.employee_workplaceRecord.some(record => record.workplaceId === desiredWorkplaceId)
     // );
 
-    const filteredEntriesLower = conclude
+    const filteredEntriesLower = timerecordAllList
         .filter(entry =>
             entry.timerecordId === desiredTimerecordId &&
             entry.month === desiredMonthLower &&
@@ -2124,6 +1983,7 @@ function TestPDFResultSalay() {
         // const commonDates3 = datesArray.filter(date => !(allDayOff.includes(date) || holidayList.includes(date)));
         // console.log('commonDates3', commonDates3);
 
+        datesArray
         const employeeResultArray3 = resultArray.map(day => {
             const workplaceIdIndex = datesArray.indexOf(day);
             // if (workplaceIdIndex !== -1) {
@@ -2149,7 +2009,7 @@ function TestPDFResultSalay() {
 
         arrayWorkNormalDay.push(employeeResultArray3);
 
-        // วันที่ทำงานปกติ 1
+        // วันที่ทำงานปกติ
         const commonDates3 = datesArray.filter(date => !(allDayOff.includes(date) || holidayList.includes(date) || daySpecialt.includes(parseInt(date, 10))));
         const employeeResultArray3Old = resultArray.map(day => {
             const workplaceIdIndex = commonDates3.indexOf(day);
@@ -2782,14 +2642,8 @@ function TestPDFResultSalay() {
             //     ['สมชาย สมชาย', '9564832', 'กะเช้า', 'กะดึก', '1009'],
             //     ['สมชาย สมชาย', '1032568', 'กะเช้า', 'กะดึก', '1005']];
 
-
             const arraylistOT =
-                [
-                    parseFloat(workplaceList[0].dayoffRate),
-                    parseFloat(workplaceList[0].holiday),
-                    parseFloat(workplaceList[0].holidayOT)
-                ];
-
+                ['1.5', '2', '3'];
 
             // const addSalaryWorkplace =
             //     [{
@@ -4221,22 +4075,9 @@ function TestPDFResultSalay() {
             [3, 3, '', 3, '', 3, 3, 3, 3, '', 1, '', 1, 0.5, 0.5, 1.5],
             ];
 
-            // const arraylistOT =
-            //     ['1.5', '2', '3'];
-            // const arraylistOT = [
-            //     workplaceList.dayoffRate,
-            //     workplaceList.holiday,
-            //     workplaceList.holidayOT
-            // ];
-
             const arraylistOT =
-                [
-                    parseFloat(workplaceList[0].dayoffRate),
-                    parseFloat(workplaceList[0].holiday),
-                    parseFloat(workplaceList[0].holidayOT)
-                ];
+                ['1.5', '2', '3'];
 
-            console.log('arraylistOT', arraylistOT);
 
 
             // const arrayLength = arraylistNameEmp.length;
@@ -4720,8 +4561,6 @@ function TestPDFResultSalay() {
                     }
                 }
             };
-
-
 
             // const drawArrayTextWithColor = (dataArray, columnIndex, rowIndex) => {
             //     const currentX = startX + columnIndex * cellWidth;
@@ -5214,8 +5053,7 @@ function TestPDFResultSalay() {
 
             const spaceWidth = 10;
 
-            // const makePage = Math.ceil(arrayWorkNormalDayOld.length / 5);
-            const makePage = Math.ceil(newAllTimes.length / 5);
+            const makePage = Math.ceil(arrayWorkNormalDayOld.length / 5);
 
             for (let pageIndex = 0; pageIndex < makePage; pageIndex++) {
 
@@ -5315,9 +5153,7 @@ function TestPDFResultSalay() {
                 // }
 
                 const pageStartIndexName = pageIndex * 5;
-                // const pageEndIndexName = Math.min((pageIndex + 1) * 5, arrayWorkNormalDayOld.length);
-                const pageEndIndexName = Math.min((pageIndex + 1) * 5, newAllTimes.length);
-
+                const pageEndIndexName = Math.min((pageIndex + 1) * 5, arrayWorkNormalDayOld.length);
                 drawArrayTextName(arraylistNameEmp.slice(pageStartIndex, pageEndIndex));
 
                 const squareColor = [255, 255, 0]; // Red
@@ -5363,9 +5199,7 @@ function TestPDFResultSalay() {
 
                 for (let i = 0; i < 5; i++) {
                     const dataIdx = pageIndex * 5 + i;
-                    // if (dataIdx < arrayWorkNormalDayOld.length) {
-                    if (dataIdx < newAllTimes.length) {
-
+                    if (dataIdx < arrayWorkNormalDayOld.length) {
                         // Set the color of the square (RGB values)
                         const squareColor = [255, 255, 0]; // Red
 
@@ -5435,33 +5269,25 @@ function TestPDFResultSalay() {
                         // drawTableOT(arraylistOT);
 
                         // for (let i = pageStartIndex; i < pageEndIndex; i++) {
-                        // const rowData = arrayWorkNormalDayOld[i];
-                        const rowData = newAllTimes[i];
+                        const rowData = arrayWorkNormalDayOld[i];
 
                         // Draw text with color for each column
                         for (let j = 0; j < resultArray.length; j++) {
                             drawArrayTextWithColor([rowData[j]], j, i);
                         }
                         // }
-                        // drawTable(i, arrayWorkNormalDayOld.slice(dataIdx, dataIdx + 1));
-                        // drawTableLeftHead(i, arrayWorkNormalDayOld.slice(dataIdx, dataIdx + 1));
-                        // drawTableNumHead(i, arrayWorkNormalDayOld.slice(dataIdx, dataIdx + 1));
-                        // drawTableSpSalary(i, arrayWorkNormalDayOld.slice(dataIdx, dataIdx + 1));
-                        // drawTableMess(i, arrayWorkNormalDayOld.slice(dataIdx, dataIdx + 1));
+                        drawTable(i, arrayWorkNormalDayOld.slice(dataIdx, dataIdx + 1));
+                        drawTableLeftHead(i, arrayWorkNormalDayOld.slice(dataIdx, dataIdx + 1));
+                        drawTableNumHead(i, arrayWorkNormalDayOld.slice(dataIdx, dataIdx + 1));
+                        drawTableSpSalary(i, arrayWorkNormalDayOld.slice(dataIdx, dataIdx + 1));
+                        drawTableMess(i, arrayWorkNormalDayOld.slice(dataIdx, dataIdx + 1));
                         // drawArrayText(arraytest, dataIdx, dataIdx + 1);
-
-                        drawTable(i, newAllTimes.slice(dataIdx, dataIdx + 1));
-                        drawTableLeftHead(i, newAllTimes.slice(dataIdx, dataIdx + 1));
-                        drawTableNumHead(i, newAllTimes.slice(dataIdx, dataIdx + 1));
-                        drawTableSpSalary(i, newAllTimes.slice(dataIdx, dataIdx + 1));
-                        drawTableMess(i, newAllTimes.slice(dataIdx, dataIdx + 1));
 
                         // drawArrayText(arraytest.slice(dataIdx, dataIdx + 1));
 
                     }
                 }
 
-                // drawArrayText(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex));
                 drawArrayText(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex));
 
                 //สวัสดิการ
@@ -5478,19 +5304,15 @@ function TestPDFResultSalay() {
 
                 drawArrayTextHoliday(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex));
                 drawArrayTextOTHoliday(arrayWorkOTHoliday.slice(pageStartIndex, pageEndIndex));
-                // drawArrayTextOTHoliday(allTimes.slice(pageStartIndex, pageEndIndex));
-                // drawArrayTextOTHoliday(otTimes.slice(pageStartIndex, pageEndIndex));
 
                 // drawArrayTextSumWork(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
 
                 // วันทำงาน
-                // drawArrayTextSumWork(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArrayOld.slice(pageStartIndex, pageEndIndex));
-                drawArrayTextSumWork(newAllTimes.slice(pageStartIndex, pageEndIndex), sumArrayOld.slice(pageStartIndex, pageEndIndex));
+                drawArrayTextSumWork(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArrayOld.slice(pageStartIndex, pageEndIndex));
 
                 // ot 1.5
                 // drawArrayTextSumWorkOT(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArrayOT.slice(pageStartIndex, pageEndIndex));
-                // drawArrayTextSumWorkOT(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArrayTotal.slice(pageStartIndex, pageEndIndex));
-                drawArrayTextSumWorkOT(newAllTimes.slice(pageStartIndex, pageEndIndex), sumArrayTotal.slice(pageStartIndex, pageEndIndex));
+                drawArrayTextSumWorkOT(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArrayTotal.slice(pageStartIndex, pageEndIndex));
 
 
                 // วันหยุด เงินตรง
@@ -5513,6 +5335,7 @@ function TestPDFResultSalay() {
                 //     const pageEndIndex = Math.min(dataarray + 6, arraytest.length);
                 //     drawArrayText(arraytest.slice(pageStartIndex, pageEndIndex));
                 // }
+
 
                 doc.addPage();
             }
@@ -5941,4 +5764,4 @@ const getDateDayOfWeek = (dateString) => {
 // console.log('',getDateDayOfWeek);
 
 
-export default TestPDFResultSalay
+export default WorktimeSheetWorkplace

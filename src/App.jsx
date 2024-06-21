@@ -71,6 +71,7 @@ import SendEmployeePDF3 from "./conponents/componentsAside/SendEmployeePDF3";
 import Testapp from "./conponents/componentsAside/Test";
 import TestPDFSalary from "./conponents/componentsAside/TestPDFSalary";
 import TestPDFResultSalay from "./conponents/componentsAside/TestPDFResultSalay";
+import TestPDFResultSalayNew from "./conponents/componentsAside/TestPDFResultSalayNew";
 
 // import Time from "./conponents/Time";
 import Testcal from "./conponents/Testcal";
@@ -195,7 +196,7 @@ function App() {
 
               <Route path="/testPDF" element={<Testapp />} />
               <Route path="/testPDFSalary" element={<TestPDFSalary />} />
-              <Route path="/testPDFResultSalay" element={<TestPDFResultSalay />} />
+              <Route path="/testPDFResultSalay" element={<TestPDFResultSalayNew />} />
 
               <Route path="/time" element={<Testcal />} />
               <Route path="/countday" element={<Countday />} />

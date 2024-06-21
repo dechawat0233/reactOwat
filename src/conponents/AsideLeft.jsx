@@ -103,7 +103,7 @@ function AsideLeft() {
                         <Link to="/salaryAllresult" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> ออกรายงานเงินเดือนพนักงาน</Link>
                       </li>
                       <li class="nav-item">
-                        <Link to="/worktimesheetworkplace" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ออกรายงานเวลาทำงานพนักงาน</Link>
+                        <Link to="/worktimesheetworkplace" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ตารางเวลาทำงานพนักงาน</Link>
                       </li>
                       <li class="nav-item">
                         <Link to="/salarySlipPDF" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ออกสลิปเงินเดือน</Link>
