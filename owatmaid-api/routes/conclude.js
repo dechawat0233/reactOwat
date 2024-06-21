@@ -51,19 +51,19 @@ const conclude = mongoose.model('conclude', concludeSchema );
 
 // router.get('/autocreate', async (req, res) => {
   router.post('/autocreate', async (req, res) => {
-    const { 
-      year ,
-      month ,
-      employeeId } = await req.body;
+    // const { 
+    //   year ,
+    //   month ,
+    //   employeeId } = await req.body;
   
     
 try {
 
   const dataConclude = {};
   const concludeRecord = [];
-// const year = '2024';
-// const month = '02';
-// const employeeId = '1001';
+const year = '2024';
+const month = '03';
+const employeeId = '1001';
 
   dataConclude.year = await year;
   dataConclude.month = await month;
