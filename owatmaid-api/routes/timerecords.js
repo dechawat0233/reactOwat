@@ -92,10 +92,9 @@ router.get('/listemp', async (req, res) => {
     // Fetch the data first
     const workplaceTimeRecordData = await workplaceTimerecordEmp.find();
     // console.log(workplaceTimeRecordData[0].employee_workplaceRecord );
-    createConclude("2024", "02", "100x" , workplaceTimeRecordData[0].employee_workplaceRecord );
 
 console.log(workplaceTimeRecordData.length);
-    res.json(workplaceTimeRecordData);
+    res.json(workplaceTimeRecordData );
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Internal Server Error' });

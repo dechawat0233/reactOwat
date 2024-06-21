@@ -49,6 +49,387 @@ createBy: String
 const conclude = mongoose.model('conclude', concludeSchema );
 
 
+// router.get('/autocreate', async (req, res) => {
+  router.post('/autocreate', async (req, res) => {
+  
+try {
+  const { 
+    year ,
+    month ,
+    employeeId } = req.body;
+
+
+  const dataConclude = {};
+  const concludeRecord = [];
+// const year = '2024';
+// const month = '02';
+// const employeeId = '1001';
+
+  dataConclude.year = year;
+  dataConclude.month = month;
+
+  const today = new Date();
+const dd = String(today.getDate()).padStart(2, '0');
+const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+const yyyy = today.getFullYear();
+const hh = String(today.getHours()).padStart(2, '0');
+const min = String(today.getMinutes()).padStart(2, '0');
+const concludeDate = `${dd}-${mm}-${yyyy} ${hh}:${min}`;
+console.log(concludeDate); // Example output: "20-06-2024 14:30"
+
+dataConclude.concludeDate = concludeDate || '';
+dataConclude.employeeId = employeeId;
+
+// data.concludeRecord.day = '';
+// data.concludeRecord.workplaceId = '';
+// data.concludeRecord.allTimes = '';
+// data.concludeRecord.workRate = '';
+// data.concludeRecord.workRateMultiply = '';
+// data.concludeRecord.otTimes = '';
+// data.concludeRecord.workRateOT = '';
+// data.concludeRecord.workRateOTMultiply = '';
+// data.concludeRecord.addSalaryDay = '';
+
+dataConclude.addSalary = [];
+
+let year1 = Number(year);
+// Convert the month string to an integer
+let monthInt = parseInt(month, 10);
+
+// Subtract one to get the previous month
+let prevMonthInt = monthInt - 1;
+
+// Handle the case where the month is January
+if (prevMonthInt === 0) {
+  prevMonthInt = 12;
+  year1 = year1 -1;
+}
+
+// Convert the result back to a two-digit string
+let prevMonth = prevMonthInt.toString().padStart(2, '0');
+const lastday = new Date(year1, prevMonth , 0).getDate();
+
+// console.log('Previous month:', prevMonth); // Output: "02"
+const searchData1 = {
+  employeeId: employeeId || '',
+  month: prevMonth || '',
+  timerecordId: year1 || ''
+};
+const response1 = await axios.post(sURL + '/timerecord/searchemp', searchData1 );
+// console.log(JSON.stringify( response.data, null,2) );
+const data1 = await response1.data;
+// console.log(JSON.stringify( data.recordworkplace) );
+
+console.log('*x ' + JSON.stringify(data1.recordworkplace , null ,2) );
+if(data1.recordworkplace.length !== 0){
+//get workplaceId in first employee_workplaceRecord
+let wpId1 = data1.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
+
+const wpDataCalculator1 = {
+month: prevMonth || '',
+year: year1 || '',
+workplaceId: wpId1
+};
+
+//get workplace data for calculator
+const wpResponse1 = await axios.post(sURL + '/workplace/caldata', wpDataCalculator1 );
+console.log(JSON.stringify( wpResponse1.data, null,2) );
+const dayOff1 = wpResponse1.data.workplaceDayOffList;
+const specialDayOff1 = wpResponse1.data.specialDaylist;
+const dayOffCheck1 = [];
+
+dayOff1.forEach(item => {
+let dateoffParts = item.split('-');
+let   str2 = parseInt(dateoffParts[2], 10);
+// console.log(str2 );
+dayOffCheck1.push(str2 );
+});
+
+data1.recordworkplace[0].employee_workplaceRecord.forEach(element => {
+// console.log(element.workplaceId);
+const tmp = {};
+
+let dateParts = element.date.split('/');
+let   str1 = parseInt(dateParts[0], 10);
+console.log(str1 );
+
+//start 20 and end is last day of month
+console.log('lastday ' + lastday );
+if(str1 > 20  && str1 <= lastday ) {
+
+tmp.day =str1 +'/' + prevMonth + '/' + year1;
+tmp.workplaceId = element.workplaceId || '';
+let parts = element.allTime.split('.');
+
+// Extract hours and minutes
+let hours = parseInt(parts[0], 10) || 0;
+let minutes = parts.length > 1 ? parseInt(parts[1], 10) : 0;
+
+// Scale the minutes
+let scaledMinutes = (minutes * 100) / 60;
+let allTime = `${hours}.${scaledMinutes}` || '0';
+tmp.allTimes = `${hours}.${scaledMinutes}` || '0';
+
+let parts1 = element.otTime.split('.');
+
+// Extract hours and minutes
+let hours1 = parseInt(parts1[0], 10);
+let minutes1 = parts1.length > 1 ? parseInt(parts1[1], 10) : 0;
+
+// Scale the minutes
+let scaledMinutes1 = (minutes1 * 100) / 60;
+let otTime = `${hours1}.${scaledMinutes1}` || '0';
+
+tmp.otTimes = otTime || '0';
+
+
+//check special day off 
+if(specialDayOff1.includes(Number(str1) ) ) {
+//calculator special day off
+let workRate = ((wpResponse1.data.holiday * (wpResponse1.data.workRate / 8) ) * Number(allTime));
+tmp.workRate = workRate  || '';
+tmp.workRateMultiply = wpResponse1.data.holiday || '';
+
+let workRateOT = ((wpResponse1.data.holidayOT * wpResponse1.data.workRate) * Number(otTime ));
+tmp.workRateOT = workRateOT  || '';
+tmp.workRateOTMultiply = wpResponse1.data.holidayOT || '0';
+
+} else 
+if(dayOffCheck1.includes(str1 )  ){
+//calculator day off
+let workRate = ((wpResponse1.data.dayoffRateHour * (wpResponse1.data.workRate /8 ) ) * Number(allTime));
+tmp.workRate = workRate || '';
+tmp.workRateMultiply = wpResponse1.data.dayoffRateHour || '';
+
+let workRateOT = ((wpResponse1.data.dayoffRateOT * wpResponse1.data.workRate) * Number(otTime ));
+tmp.workRateOT = workRateOT || '';
+tmp.workRateOTMultiply = wpResponse1.data.dayoffRateOT || '';
+
+} else {
+//calculator 
+let workRate = ((wpResponse1.data.workRate / 8) * Number(allTime)).toFixed(2);
+tmp.workRate = workRate  || '';
+tmp.workRateMultiply = '1';
+
+let workRateOT = (((wpResponse1.data.workRate /8 ) * wpResponse1.data.workRateOT )* Number(otTime )).toFixed(2);
+tmp.workRateOT = workRateOT  || '0';
+tmp.workRateOTMultiply = wpResponse1.data.workRateOT || '0';
+
+}
+
+
+tmp.addSalaryDay = '';
+
+concludeRecord.push(tmp);
+} //end if
+});
+}
+
+//check day is null and place data 
+for(let i = 21; i <= lastday ; i++){
+// tmp.day =str1 +'/' + month + '/' + year;
+let d = i +'/' + prevMonth + '/' + year1;
+let x = concludeRecord.some(record => record.day === d);
+
+if(x) {
+// console.log('i ' + d);
+} else {
+concludeRecord.push({'day': d});
+}
+}
+
+// Sort the array by date directly in the main code
+concludeRecord.sort((a, b) => {
+const dateA = new Date(a.day.split('/').reverse().join('/'));
+const dateB = new Date(b.day.split('/').reverse().join('/'));
+return dateA - dateB;
+});
+
+console.log('Sorted concludeRecord:', concludeRecord);
+
+
+console.log('Sorted concludeRecord:', concludeRecord);
+// dataConclude.concludeRecord = concludeRecord || [];
+
+//=========
+  const searchData = {
+    employeeId: employeeId || '',
+    month: month || '',
+    timerecordId: year || ''
+  };
+  const response = await axios.post(sURL + '/timerecord/searchemp', searchData );
+  // console.log(JSON.stringify( response.data, null,2) );
+  const data = await response .data;
+  // console.log(JSON.stringify( data.recordworkplace) );
+
+  if(data.recordworkplace.length !== 0) {
+//get workplaceId in first employee_workplaceRecord
+let wpId = data.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
+
+const wpDataCalculator = {
+  month: month || '',
+  year: year || '',
+  workplaceId: wpId
+};
+
+//get workplace data for calculator
+const wpResponse = await axios.post(sURL + '/workplace/caldata', wpDataCalculator );
+  console.log(JSON.stringify( wpResponse.data, null,2) );
+const dayOff = wpResponse.data.workplaceDayOffList;
+const specialDayOff = wpResponse.data.specialDaylist;
+const dayOffCheck = [];
+
+dayOff.forEach(item => {
+  let dateoffParts = item.split('-');
+let   str2 = parseInt(dateoffParts[2], 10);
+  // console.log(str2 );
+  dayOffCheck.push(str2 );
+});
+
+data.recordworkplace[0].employee_workplaceRecord.forEach(element => {
+  // console.log(element.workplaceId);
+  const tmp = {};
+
+  let dateParts = element.date.split('/');
+let   str1 = parseInt(dateParts[0], 10);
+  console.log(str1 );
+
+
+  tmp.day =str1 +'/' + month + '/' + year;
+  tmp.workplaceId = element.workplaceId || '';
+  let parts = element.allTime.split('.');
+
+  // Extract hours and minutes
+  let hours = parseInt(parts[0], 10) || 0;
+  let minutes = parts.length > 1 ? parseInt(parts[1], 10) : 0;
+
+  // Scale the minutes
+  let scaledMinutes = (minutes * 100) / 60;
+let allTime = `${hours}.${scaledMinutes}` || '0';
+  tmp.allTimes = `${hours}.${scaledMinutes}` || '0';
+
+  let parts1 = element.otTime.split('.');
+
+  // Extract hours and minutes
+  let hours1 = parseInt(parts1[0], 10);
+  let minutes1 = parts1.length > 1 ? parseInt(parts1[1], 10) : 0;
+
+  // Scale the minutes
+  let scaledMinutes1 = (minutes1 * 100) / 60;
+let otTime = `${hours1}.${scaledMinutes1}` || '0';
+
+  tmp.otTimes = otTime || '0';
+
+
+  //check special day off 
+if(specialDayOff.includes(Number(str1) ) ) {
+//calculator special day off
+let workRate = ((wpResponse.data.holiday * (wpResponse.data.workRate / 8) ) * Number(allTime));
+tmp.workRate = workRate  || '';
+tmp.workRateMultiply = wpResponse.data.holiday || '';
+
+let workRateOT = ((wpResponse.data.holidayOT * wpResponse.data.workRate) * Number(otTime ));
+tmp.workRateOT = workRateOT  || '';
+tmp.workRateOTMultiply = wpResponse.data.holidayOT || '0';
+
+} else 
+if(dayOffCheck.includes(str1 )  ){
+//calculator day off
+let workRate = ((wpResponse.data.dayoffRateHour * (wpResponse.data.workRate /8 ) ) * Number(allTime));
+tmp.workRate = workRate || '';
+tmp.workRateMultiply = wpResponse.data.dayoffRateHour || '';
+
+let workRateOT = ((wpResponse.data.dayoffRateOT * wpResponse.data.workRate) * Number(otTime ));
+tmp.workRateOT = workRateOT || '';
+tmp.workRateOTMultiply = wpResponse.data.dayoffRateOT || '';
+
+} else {
+  //calculator 
+  let workRate = ((wpResponse.data.workRate / 8) * Number(allTime)).toFixed(2);
+  tmp.workRate = workRate  || '';
+  tmp.workRateMultiply = '1';
+
+  let workRateOT = (((wpResponse.data.workRate /8 ) * wpResponse.data.workRateOT )* Number(otTime )).toFixed(2);
+  tmp.workRateOT = workRateOT  || '0';
+  tmp.workRateOTMultiply = wpResponse.data.workRateOT || '0';
+
+}
+
+
+  tmp.addSalaryDay = '';
+  
+  concludeRecord.push(tmp);
+
+});
+  } //end if
+
+//check day is null and place data 
+for(let i = 1; i <= 20; i++){
+  // tmp.day =str1 +'/' + month + '/' + year;
+  let d = i +'/' + month + '/' + year;
+  let x = concludeRecord.some(record => record.day === d);
+
+if(x) {
+// console.log('i ' + d);
+} else {
+  concludeRecord.push({'day': d});
+}
+}
+
+// Sort the array by date directly in the main code
+concludeRecord.sort((a, b) => {
+  const dateA = new Date(a.day.split('/').reverse().join('/'));
+  const dateB = new Date(b.day.split('/').reverse().join('/'));
+  return dateA - dateB;
+});
+
+console.log('Sorted concludeRecord:', concludeRecord);
+
+
+console.log('Sorted concludeRecord:', concludeRecord);
+dataConclude.concludeRecord = concludeRecord || [];
+
+
+try {
+  // Find the existing document by year, month, and employeeId
+  const existingRecord = await conclude.findOne({
+    year: dataConclude.year,
+    month: dataConclude.month,
+    employeeId: dataConclude.employeeId
+  });
+
+  // If an existing record is found, delete it
+  if (existingRecord) {
+    await conclude.deleteOne({
+      _id: existingRecord._id
+    });
+    console.log('Existing record deleted');
+  }
+
+  // Create a new Conclude document
+  const newConclude = new conclude(dataConclude);
+
+  // Save the new document to the database
+  const savedConclude = await newConclude.save();
+  console.log('New record saved successfully:', savedConclude);
+    res.json(dataConclude);
+
+} catch (error) {
+  console.error('Error processing record:', error);
+}
+
+  // res.json(dataConclude);
+
+  // await   console.log('Employee Time Record:', data[0].month);
+} catch (e) {
+  console.log(e);
+}
+
+  const concludeData = await conclude.find();
+  // res.json(concludeData );
+});
+
+
 // Get list of conclude 
 router.get('/list', async (req, res) => {
 
@@ -208,58 +589,6 @@ router.put('/update/:concludeRecordId', async (req, res) => {
   }
 });
 
-
-// Auto Create new conclude
-router.get('/autocreate', async (req, res) => {
-const workplaceList = await [];
-
-  const { 
-    year,
-    month,
-    // concludeDate,
-    // employeeId,
-    // createBy,
-    // concludeRecord 
-  } = await req.body;
-
-  try {
-    const workplaceResult = await axios.get(sURL + '/workplace/list');
-    await console.log(JSON.stringify(workplaceResult.data[0].workTimeDay ) );
-    const dataTest = await {
-      timerecordId: "2024", 
-          month: "03",
-          employeeId : "1001"
-        };
-        // const x = await axios.post(sURL + '/timerecord/searchemp', dataTest);
-// console.log(JSON.stringify(x,null,2));    
-    
-  } catch (e) {
-    await console.log(e);
-  }
-  
-  
-
-  // try {
-  //     //create conclude record
-  //     const recordConclude = new conclude({
-  //       year,
-  //       month,
-  //       concludeDate,
-  //       employeeId,
-  //       concludeRecord,
-  //       createBy });
-
-  //   const ans = await recordConclude .save();
-  //   if (ans) {
-  //     console.log('Create workplace time record success');
-  //   }
-
-  //   res.json(recordConclude );
-  // } catch (err) {
-  //   console.error(err);
-  //   res.status(400).json({ error: err.message });
-  // }
-});
 
 
 
