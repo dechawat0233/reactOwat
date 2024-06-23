@@ -416,9 +416,6 @@ function Compensation() {
 
             if (response.data.recordConclude.length < 1) {
                 // alert('conclude is null');
-                //create conclude
-                const response = await axios.post(endpoint + '/conclude/autocreate', serchConclude);
-alert("กำลังประมวลผล กรุณาค้นหาอีกครั้งหากยังไม่พบกรุณาตรวจสอบการลงเวลา");
             } else {
                 //check update time record then reset data conclude
                 // await alert(editStatus);
@@ -429,7 +426,7 @@ alert("กำลังประมวลผล กรุณาค้นหาอ
                 } else {
                     await setConcludeResult(response.data.recordConclude[0].concludeRecord);
                     await setAddSalaryResult(response.data.recordConclude[0].addSalary);
-// setStaffFullName(response.data.recordConclude[0].);
+
                     await setLoadStatus('load');
                     await setUpdate(response.data.recordConclude[0]._id);
                 }
@@ -451,7 +448,6 @@ alert("กำลังประมวลผล กรุณาค้นหาอ
         try {
             //get employee data
             await setEmployee(findEmployeeById(searchEmployeeId));
-setStaffFullName(employee.name);
 
             const filteredEntries = await timerecordAllList.filter(entry =>
                 entry.employeeId === searchEmployeeId &&
@@ -1590,7 +1586,7 @@ setStaffFullName(employee.name);
                                 {/* {month ? (
                                     <div class="row">
                                         <div class="col-md-12">
-                                            ตั้งแต่วันที่ 21 {thaiMonthLowerName} - 20 {thaiMonthName} ปี {year}
+                                            ตั้งแต่วันที่ 20 {thaiMonthLowerName} - 21 {thaiMonthName} ปี {year}
                                         </div>
                                     </div>) : (
                                     <div>
@@ -1599,7 +1595,7 @@ setStaffFullName(employee.name);
 
                                 <div class="row">
                                     <div class="col-md-12">
-                                        ตั้งแต่วันที่ 21 {thaiMonthLowerName} - 20 {thaiMonthName} ปี {parseInt(year, 10) + 543}
+                                        ตั้งแต่วันที่ 20 {thaiMonthLowerName} - 21 {thaiMonthName} ปี {parseInt(year, 10) + 543}
                                     </div>
                                 </div>
                                 <br />
@@ -1826,7 +1822,7 @@ setStaffFullName(employee.name);
                                                         <td></td>
                                                         <td style={cellStyle}>{sumRate}</td>
                                                         <td></td>
-                                                        <td style={cellStyle}>{sumRateOT }</td>
+                                                        <td style={cellStyle}>{sumRateOT}</td>
                                                         <td style={cellStyle}>
                                                             {/* {sumAddSalary} */}
                                                             {calculateTotalSalary().toFixed(2)}

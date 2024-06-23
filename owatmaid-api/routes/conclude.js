@@ -51,19 +51,44 @@ const conclude = mongoose.model('conclude', concludeSchema );
 
 // router.get('/autocreate', async (req, res) => {
   router.post('/autocreate', async (req, res) => {
-    // const { 
-    //   year ,
-    //   month ,
-    //   employeeId } = await req.body;
+    const { 
+      year ,
+      month ,
+      employeeId } = await req.body;
   
     
 try {
 
   const dataConclude = {};
   const concludeRecord = [];
-const year = '2024';
-const month = '03';
-const employeeId = '1001';
+// const year = '2024';
+// const month = '02';
+// const employeeId = '1001';
+const addSalaryDaily = [];
+
+//get employee add salary data
+const searchEmp = await {
+  employeeId: employeeId, 
+  name: '', 
+  idCard: '', 
+  workPlace: ''
+};
+const responseEmp = await axios.post(sURL + '/employee/search', searchEmp );
+const dataEmp = await responseEmp.data;
+
+  // console.log('*x ' + JSON.stringify(dataEmp.employees[0].addSalary ,null ,2) );
+if(dataEmp.employees.length !== 0){
+  await dataEmp.employees[0].addSalary.forEach(item => {
+if(item.roundOfSalary == 'daily') {
+// if(item.SpSalary > 100) {
+//  item.SpSalary = Number(item.SpSalary ) / 30;
+// }
+addSalaryDaily.push(item);
+}
+  });
+}
+const addSalaryList = [];
+
 
   dataConclude.year = await year;
   dataConclude.month = await month;
@@ -173,7 +198,7 @@ tmp.allTimes = `${hours}.${scaledMinutes}` || '0';
 let parts1 = element.otTime.split('.');
 
 // Extract hours and minutes
-let hours1 = parseInt(parts1[0], 10);
+let hours1 = parseInt(parts1[0], 10) || 0;
 let minutes1 = parts1.length > 1 ? parseInt(parts1[1], 10) : 0;
 
 // Scale the minutes
@@ -311,7 +336,7 @@ let allTime = `${hours}.${scaledMinutes}` || '0';
   let parts1 = element.otTime.split('.');
 
   // Extract hours and minutes
-  let hours1 = parseInt(parts1[0], 10);
+  let hours1 = parseInt(parts1[0], 10) || 0;
   let minutes1 = parts1.length > 1 ? parseInt(parts1[1], 10) : 0;
 
   // Scale the minutes
@@ -386,9 +411,13 @@ concludeRecord.sort((a, b) => {
 console.log('Sorted concludeRecord:', concludeRecord);
 
 
-console.log('Sorted concludeRecord:', concludeRecord);
+// console.log('Sorted concludeRecord:', concludeRecord);
 dataConclude.concludeRecord = concludeRecord || [];
 
+for(let c =0; c < concludeRecord .length; c++){
+await addSalaryList.push(addSalaryDaily);
+}
+dataConclude.addSalary = addSalaryList;
 
 try {
   // Find the existing document by year, month, and employeeId
@@ -406,13 +435,17 @@ try {
     console.log('Existing record deleted');
   }
 
+  if(concludeRecord .length !== 0){
   // Create a new Conclude document
   const newConclude = new conclude(dataConclude);
 
   // Save the new document to the database
   const savedConclude = await newConclude.save();
   console.log('New record saved successfully:', savedConclude);
+  
     res.json(dataConclude);
+  }
+  res.json(dataConclude);
 
 } catch (error) {
   console.error('Error processing record:', error);
