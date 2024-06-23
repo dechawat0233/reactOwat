@@ -677,8 +677,8 @@ setStaffFullName(employee.name);
         const s = concludeResult.map((item, index) => {
 
             if (!isNaN(item.workRate)) {
-                ans = ans + parseFloat(item.workRate, 10);
-                ans1 = ans1 + parseFloat(item.workRateOT, 10);
+                ans = ans + parseFloat(item.workRate, 10) || 0;
+                ans1 = ans1 + parseFloat(item.workRateOT, 10) || 0;
             }
             return ans;
         })
