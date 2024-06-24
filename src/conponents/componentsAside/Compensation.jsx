@@ -678,13 +678,19 @@ setStaffFullName(employee.name);
 
             if (!isNaN(item.workRate)) {
                 ans = ans + parseFloat(item.workRate, 10) || 0;
-                ans1 = ans1 + parseFloat(item.workRateOT, 10) || 0;
+                // ans1 = ans1 + parseFloat(item.workRateOT, 10) || 0;
+                // setSumRateOT(ans1);
+            }
+            if (item.workRateOT && !isNaN(item.workRateOT) && item.workRateOT !== 0 ) {
+                ans1 = ans1 + parseFloat(item.workRateOT, 10);
+                setSumRateOT(ans1);
             }
             return ans;
         })
         //ccss
         setSumRate(ans);
-        setSumRateOT(ans1);
+        // setSumRateOT(ans1);
+        // alert(sumRateOT);
     }, [concludeResult])
 
     const findEmployeeById = (id) => {
