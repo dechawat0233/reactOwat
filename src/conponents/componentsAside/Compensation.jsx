@@ -418,7 +418,7 @@ function Compensation() {
                 // alert('conclude is null');
                 //create conclude
                 const response = await axios.post(endpoint + '/conclude/autocreate', serchConclude);
-alert("กำลังประมวลผล กรุณาค้นหาอีกครั้งหากยังไม่พบกรุณาตรวจสอบการลงเวลา");
+                alert("กำลังประมวลผล กรุณาค้นหาอีกครั้งหากยังไม่พบกรุณาตรวจสอบการลงเวลา");
             } else {
                 //check update time record then reset data conclude
                 // await alert(editStatus);
@@ -429,7 +429,7 @@ alert("กำลังประมวลผล กรุณาค้นหาอ
                 } else {
                     await setConcludeResult(response.data.recordConclude[0].concludeRecord);
                     await setAddSalaryResult(response.data.recordConclude[0].addSalary);
-// setStaffFullName(response.data.recordConclude[0].);
+                    // setStaffFullName(response.data.recordConclude[0].);
                     await setLoadStatus('load');
                     await setUpdate(response.data.recordConclude[0]._id);
                 }
@@ -451,7 +451,7 @@ alert("กำลังประมวลผล กรุณาค้นหาอ
         try {
             //get employee data
             await setEmployee(findEmployeeById(searchEmployeeId));
-setStaffFullName(employee.name);
+            setStaffFullName(employee.name);
 
             const filteredEntries = await timerecordAllList.filter(entry =>
                 entry.employeeId === searchEmployeeId &&
@@ -681,7 +681,7 @@ setStaffFullName(employee.name);
                 // ans1 = ans1 + parseFloat(item.workRateOT, 10) || 0;
                 // setSumRateOT(ans1);
             }
-            if (item.workRateOT && !isNaN(item.workRateOT) && item.workRateOT !== 0 ) {
+            if (item.workRateOT && !isNaN(item.workRateOT) && item.workRateOT !== 0) {
                 ans1 = ans1 + parseFloat(item.workRateOT, 10);
                 setSumRateOT(ans1);
             }
@@ -1191,15 +1191,15 @@ setStaffFullName(employee.name);
                 if (record.shift == 'specialt_shift' && record.cashSalary == '') {
                     const calculatedValue = parseFloat(record.specialtSalary) || 0;
                     const calculatedValueOT = parseFloat(record.specialtSalaryOT) || 0;
-                    const workRateMultiply = roundToNearestHalf((parseFloat(record.specialtSalary) || 0)/ workRate );
+                    const workRateMultiply = roundToNearestHalf((parseFloat(record.specialtSalary) || 0) / workRate);
                     const workRateOTMultiply = roundToNearestHalf((parseFloat(record.specialtSalaryOT) || 0) / workRate);
 
                     return {
                         ...record,
                         calculatedValue,
                         calculatedValueOT,
-                        workRateMultiply ,
-                        workRateOTMultiply ,
+                        workRateMultiply,
+                        workRateOTMultiply,
                     };
                 } else {
                     const calculatedValue = workRate * holiday;
@@ -1213,8 +1213,8 @@ setStaffFullName(employee.name);
                         ...record,
                         calculatedValue,
                         calculatedValueOT,
-                        workRateMultiply ,
-                        workRateOTMultiply ,
+                        workRateMultiply,
+                        workRateOTMultiply,
                     };
                 }
 
@@ -1240,15 +1240,15 @@ setStaffFullName(employee.name);
                 if (record.shift == 'specialt_shift' && record.cashSalary == '') {
                     const calculatedValue = parseFloat(record.specialtSalary) || 0;
                     const calculatedValueOT = parseFloat(record.specialtSalaryOT) || 0;
-                    const workRateMultiply = roundToNearestHalf((parseFloat(record.specialtSalary) || 0)/ workRate );
+                    const workRateMultiply = roundToNearestHalf((parseFloat(record.specialtSalary) || 0) / workRate);
                     const workRateOTMultiply = roundToNearestHalf((parseFloat(record.specialtSalaryOT) || 0) / workRate);
-                    
+
                     return {
                         ...record,
                         calculatedValue,
                         calculatedValueOT,
-                        workRateMultiply ,
-                        workRateOTMultiply ,
+                        workRateMultiply,
+                        workRateOTMultiply,
                     };
                 } else {
                     const calculatedValue = workRate * dayoffRateHour;
@@ -1263,7 +1263,7 @@ setStaffFullName(employee.name);
                         ...record,
                         calculatedValue,
                         calculatedValueOT,
-                        workRateMultiply ,
+                        workRateMultiply,
                         workRateOTMultiply,
                     };
                 }
@@ -1604,8 +1604,15 @@ setStaffFullName(employee.name);
                                 )} */}
 
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-2">
                                         ตั้งแต่วันที่ 21 {thaiMonthLowerName} - 20 {thaiMonthName} ปี {parseInt(year, 10) + 543}
+                                    </div>
+                                    <div class="col-md-8">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="d-flex justify-content-center">
+                                            <button class="btn b_save"> คำนวณใหม่</button>
+                                        </div>
                                     </div>
                                 </div>
                                 <br />
@@ -1832,7 +1839,7 @@ setStaffFullName(employee.name);
                                                         <td></td>
                                                         <td style={cellStyle}>{sumRate}</td>
                                                         <td></td>
-                                                        <td style={cellStyle}>{sumRateOT }</td>
+                                                        <td style={cellStyle}>{sumRateOT}</td>
                                                         <td style={cellStyle}>
                                                             {/* {sumAddSalary} */}
                                                             {calculateTotalSalary().toFixed(2)}
