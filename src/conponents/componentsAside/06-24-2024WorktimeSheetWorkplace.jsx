@@ -2380,42 +2380,42 @@ function WorktimeSheetWorkplace() {
     // 1.5
     // Function to sum each sub-array
 
-    const sumArray321 = (array) => {
-        return array.map(subArray =>
-            subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
-        );
-    };
-
     // const sumArray321 = (array) => {
-    //     return array.map(subArray => {
-    //         let sumBeforeDecimal = 0;
-    //         let sumAfterDecimal = 0;
-
-    //         subArray.forEach(val => {
-    //             if (typeof val === 'number' && !isNaN(val)) {
-    //                 const parts = val.toString().split('.');
-    //                 const beforeDecimal = parseFloat(parts[0]) || 0;
-    //                 const afterDecimal = parts[1] ? parseFloat(parts[1].padEnd(2, '0')) : 0;
-
-    //                 // Convert fractional part to tens digit
-    //                 const afterDecimalTens = afterDecimal < 10 ? afterDecimal * 10 : afterDecimal;
-
-    //                 sumBeforeDecimal += beforeDecimal;
-    //                 sumAfterDecimal += afterDecimalTens;
-    //             }
-    //         });
-
-    //         // Convert the summed minutes into hours and minutes
-    //         const totalMinutes = sumAfterDecimal;
-    //         const additionalHours = Math.floor(totalMinutes / 60);
-    //         const remainingMinutes = totalMinutes % 60;
-
-    //         const totalHours = sumBeforeDecimal + additionalHours;
-    //         const totalTime = totalHours + (remainingMinutes / 100);
-
-    //         return totalTime.toFixed(2);
-    //     });
+    //     return array.map(subArray =>
+    //         subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
+    //     );
     // };
+
+    const sumArray321 = (array) => {
+        return array.map(subArray => {
+            let sumBeforeDecimal = 0;
+            let sumAfterDecimal = 0;
+
+            subArray.forEach(val => {
+                if (typeof val === 'number' && !isNaN(val)) {
+                    const parts = val.toString().split('.');
+                    const beforeDecimal = parseFloat(parts[0]) || 0;
+                    const afterDecimal = parts[1] ? parseFloat(parts[1].padEnd(2, '0')) : 0;
+
+                    // Convert fractional part to tens digit
+                    const afterDecimalTens = afterDecimal < 10 ? afterDecimal * 10 : afterDecimal;
+
+                    sumBeforeDecimal += beforeDecimal;
+                    sumAfterDecimal += afterDecimalTens;
+                }
+            });
+
+            // Convert the summed minutes into hours and minutes
+            const totalMinutes = sumAfterDecimal;
+            const additionalHours = Math.floor(totalMinutes / 60);
+            const remainingMinutes = totalMinutes % 60;
+
+            const totalHours = sumBeforeDecimal + additionalHours;
+            const totalTime = totalHours + (remainingMinutes / 100);
+
+            return totalTime.toFixed(2);
+        });
+    };
 
 
     // Ensure all values are numbers
@@ -2515,12 +2515,6 @@ function WorktimeSheetWorkplace() {
     });
     console.log('countHour', countHour);
 
-    const countDay = responseDataAll.map(item => {
-        const accountingRecord = item.accountingRecord?.[0];
-        return accountingRecord ? parseInt(accountingRecord.countDay, 10) : 0;
-    });
-    console.log('countDay', countDay);
-    countDay
     const countDayWork = responseDataAll.map(item => {
         const accountingRecord = item.accountingRecord?.[0];
         return accountingRecord ? parseInt(accountingRecord.countDayWork, 10) : 0;
@@ -2528,7 +2522,6 @@ function WorktimeSheetWorkplace() {
     console.log('countDayWork', countDayWork);
     console.log('countSpecialDays', countSpecialDays);
     console.log('specialDayListWorks', specialDayListWorks);
-    
 
     const sumArrayHoli = countSpecialDays.map((countSpecialDay, index) => countSpecialDay - specialDayListWorks[index]);
     console.log('differences', sumArrayHoli);
@@ -4364,10 +4357,7 @@ function WorktimeSheetWorkplace() {
                 // drawArrayTextSumWork(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArraySumarrayAllHolioday.slice(pageStartIndex, pageEndIndex));
 
                 //วันหารชั่วโมง //วันเต็มทั้งหมด
-                // drawArrayTextSumWork(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), dividedArray.slice(pageStartIndex, pageEndIndex));
-                // countDay
-                drawArrayTextSumWork(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), countDay.slice(pageStartIndex, pageEndIndex));
-
+                drawArrayTextSumWork(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), dividedArray.slice(pageStartIndex, pageEndIndex));
 
                 // drawArrayTextSumWorkOT(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex), sumArrayOT.slice(pageStartIndex, pageEndIndex));
                 // // รวมช.ม.ที่งานไม่รวมOT
@@ -4377,15 +4367,10 @@ function WorktimeSheetWorkplace() {
                 drawArrayTextSumWorkHoliday(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), sumArrayOTAllTime.slice(pageStartIndex, pageEndIndex));
 
                 // 1.5
-                // drawArrayTextSumWorkHoliday1q5(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), sumHoliAllTime.slice(pageStartIndex, pageEndIndex));
-                // sumArrayTotal
-                drawArrayTextSumWorkHoliday1q5(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), sumArrayTotal.slice(pageStartIndex, pageEndIndex));
-
+                drawArrayTextSumWorkHoliday1q5(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), sumHoliAllTime.slice(pageStartIndex, pageEndIndex));
                 // 2
-                // drawArrayTextSumWorkHoliday2(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), sumArrayHoliday.slice(pageStartIndex, pageEndIndex));
                 drawArrayTextSumWorkHoliday2(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), sumArrayHoliday.slice(pageStartIndex, pageEndIndex));
-
-                // 3 
+                // 3
                 drawArrayTextSumWorkHoliday3(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), sumArrayOTHoliday.slice(pageStartIndex, pageEndIndex));
                 // drawArrayTextSumWorkOTHoliday(arrayWorkOTHoliday.slice(pageStartIndex, pageEndIndex), sumArrayOTHoliday.slice(pageStartIndex, pageEndIndex));
 
@@ -5758,10 +5743,8 @@ function WorktimeSheetWorkplace() {
                 // drawArrayTextSumWork(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArray.slice(pageStartIndex, pageEndIndex));
 
                 // วันทำงาน
-                // drawArrayTextSumWork(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArrayOld.slice(pageStartIndex, pageEndIndex));
-                drawArrayTextSumWork(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), countDayWork.slice(pageStartIndex, pageEndIndex));
+                drawArrayTextSumWork(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArrayOld.slice(pageStartIndex, pageEndIndex));
 
-                
                 // ot 1.5
                 // drawArrayTextSumWorkOT(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArrayOT.slice(pageStartIndex, pageEndIndex));
                 drawArrayTextSumWorkOT(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArrayTotal.slice(pageStartIndex, pageEndIndex));
