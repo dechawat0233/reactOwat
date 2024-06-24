@@ -51,34 +51,34 @@ const conclude = mongoose.model('conclude', concludeSchema );
 
 // router.get('/autocreate', async (req, res) => {
   router.post('/autocreate', async (req, res) => {
+    // const { 
+    //   year ,
+    //   month ,
+    //   employeeId } = await req.body;
   
+    
 try {
-  const { 
-    year ,
-    month ,
-    employeeId } = req.body;
-
 
   const dataConclude = {};
   const concludeRecord = [];
-// const year = '2024';
-// const month = '02';
-// const employeeId = '1001';
+const year = '2024';
+const month = '03';
+const employeeId = '1001';
 
-  dataConclude.year = year;
-  dataConclude.month = month;
+  dataConclude.year = await year;
+  dataConclude.month = await month;
 
-  const today = new Date();
-const dd = String(today.getDate()).padStart(2, '0');
-const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
-const yyyy = today.getFullYear();
-const hh = String(today.getHours()).padStart(2, '0');
-const min = String(today.getMinutes()).padStart(2, '0');
-const concludeDate = `${dd}-${mm}-${yyyy} ${hh}:${min}`;
-console.log(concludeDate); // Example output: "20-06-2024 14:30"
+  const today = await new Date();
+const dd = await String(today.getDate()).padStart(2, '0');
+const mm = await String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+const yyyy = await today.getFullYear();
+const hh = await String(today.getHours()).padStart(2, '0');
+const min = await String(today.getMinutes()).padStart(2, '0');
+const concludeDate = await `${dd}-${mm}-${yyyy} ${hh}:${min}`;
+await console.log(concludeDate); // Example output: "20-06-2024 14:30"
 
-dataConclude.concludeDate = concludeDate || '';
-dataConclude.employeeId = employeeId;
+dataConclude.concludeDate = await concludeDate || '';
+dataConclude.employeeId = await employeeId;
 
 // data.concludeRecord.day = '';
 // data.concludeRecord.workplaceId = '';
@@ -90,27 +90,27 @@ dataConclude.employeeId = employeeId;
 // data.concludeRecord.workRateOTMultiply = '';
 // data.concludeRecord.addSalaryDay = '';
 
-dataConclude.addSalary = [];
+// dataConclude.addSalary = [];
 
-let year1 = Number(year);
+let year1 = await Number(year);
 // Convert the month string to an integer
-let monthInt = parseInt(month, 10);
+let monthInt = await parseInt(month, 10);
 
 // Subtract one to get the previous month
-let prevMonthInt = monthInt - 1;
+let prevMonthInt = await monthInt - 1;
 
 // Handle the case where the month is January
 if (prevMonthInt === 0) {
-  prevMonthInt = 12;
-  year1 = year1 -1;
+  prevMonthInt = await 12;
+  year1 = await year1 -1;
 }
 
 // Convert the result back to a two-digit string
-let prevMonth = prevMonthInt.toString().padStart(2, '0');
-const lastday = new Date(year1, prevMonth , 0).getDate();
+let prevMonth = await prevMonthInt.toString().padStart(2, '0');
+const lastday = await new Date(year1, prevMonth , 0).getDate();
 
 // console.log('Previous month:', prevMonth); // Output: "02"
-const searchData1 = {
+const searchData1 = await {
   employeeId: employeeId || '',
   month: prevMonth || '',
   timerecordId: year1 || ''
@@ -120,12 +120,12 @@ const response1 = await axios.post(sURL + '/timerecord/searchemp', searchData1 )
 const data1 = await response1.data;
 // console.log(JSON.stringify( data.recordworkplace) );
 
-console.log('*x ' + JSON.stringify(data1.recordworkplace , null ,2) );
+await console.log('*x ' + JSON.stringify(data1.recordworkplace , null ,2) );
 if(data1.recordworkplace.length !== 0){
 //get workplaceId in first employee_workplaceRecord
-let wpId1 = data1.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
+let wpId1 = await data1.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
 
-const wpDataCalculator1 = {
+const wpDataCalculator1 = await {
 month: prevMonth || '',
 year: year1 || '',
 workplaceId: wpId1
@@ -134,11 +134,11 @@ workplaceId: wpId1
 //get workplace data for calculator
 const wpResponse1 = await axios.post(sURL + '/workplace/caldata', wpDataCalculator1 );
 console.log(JSON.stringify( wpResponse1.data, null,2) );
-const dayOff1 = wpResponse1.data.workplaceDayOffList;
-const specialDayOff1 = wpResponse1.data.specialDaylist;
+const dayOff1 = await wpResponse1.data.workplaceDayOffList;
+const specialDayOff1 = await wpResponse1.data.specialDaylist;
 const dayOffCheck1 = [];
 
-dayOff1.forEach(item => {
+await dayOff1.forEach(item => {
 let dateoffParts = item.split('-');
 let   str2 = parseInt(dateoffParts[2], 10);
 // console.log(str2 );
@@ -190,7 +190,7 @@ let workRate = ((wpResponse1.data.holiday * (wpResponse1.data.workRate / 8) ) * 
 tmp.workRate = workRate  || '';
 tmp.workRateMultiply = wpResponse1.data.holiday || '';
 
-let workRateOT = ((wpResponse1.data.holidayOT * wpResponse1.data.workRate) * Number(otTime ));
+let workRateOT = ((wpResponse1.data.holidayOT * (wpResponse1.data.workRate / 8 ) ) * Number(otTime ));
 tmp.workRateOT = workRateOT  || '';
 tmp.workRateOTMultiply = wpResponse1.data.holidayOT || '0';
 
@@ -201,7 +201,7 @@ let workRate = ((wpResponse1.data.dayoffRateHour * (wpResponse1.data.workRate /8
 tmp.workRate = workRate || '';
 tmp.workRateMultiply = wpResponse1.data.dayoffRateHour || '';
 
-let workRateOT = ((wpResponse1.data.dayoffRateOT * wpResponse1.data.workRate) * Number(otTime ));
+let workRateOT = ((wpResponse1.data.dayoffRateOT * (wpResponse1.data.workRate /8) ) * Number(otTime ));
 tmp.workRateOT = workRateOT || '';
 tmp.workRateOTMultiply = wpResponse1.data.dayoffRateOT || '';
 
@@ -228,27 +228,27 @@ concludeRecord.push(tmp);
 //check day is null and place data 
 for(let i = 21; i <= lastday ; i++){
 // tmp.day =str1 +'/' + month + '/' + year;
-let d = i +'/' + prevMonth + '/' + year1;
-let x = concludeRecord.some(record => record.day === d);
+let d = await i +'/' + prevMonth + '/' + year1;
+let x = await concludeRecord.some(record => record.day === d);
 
 if(x) {
 // console.log('i ' + d);
 } else {
-concludeRecord.push({'day': d});
+  await concludeRecord.push({'day': d});
 }
 }
 
 // Sort the array by date directly in the main code
-concludeRecord.sort((a, b) => {
+await concludeRecord.sort((a, b) => {
 const dateA = new Date(a.day.split('/').reverse().join('/'));
 const dateB = new Date(b.day.split('/').reverse().join('/'));
 return dateA - dateB;
 });
 
-console.log('Sorted concludeRecord:', concludeRecord);
+await console.log('Sorted concludeRecord:', concludeRecord);
 
 
-console.log('Sorted concludeRecord:', concludeRecord);
+// console.log('Sorted concludeRecord:', concludeRecord);
 // dataConclude.concludeRecord = concludeRecord || [];
 
 //=========
@@ -328,7 +328,7 @@ let workRate = ((wpResponse.data.holiday * (wpResponse.data.workRate / 8) ) * Nu
 tmp.workRate = workRate  || '';
 tmp.workRateMultiply = wpResponse.data.holiday || '';
 
-let workRateOT = ((wpResponse.data.holidayOT * wpResponse.data.workRate) * Number(otTime ));
+let workRateOT = ((wpResponse.data.holidayOT * (wpResponse.data.workRate / 8) ) * Number(otTime ));
 tmp.workRateOT = workRateOT  || '';
 tmp.workRateOTMultiply = wpResponse.data.holidayOT || '0';
 
@@ -339,7 +339,7 @@ let workRate = ((wpResponse.data.dayoffRateHour * (wpResponse.data.workRate /8 )
 tmp.workRate = workRate || '';
 tmp.workRateMultiply = wpResponse.data.dayoffRateHour || '';
 
-let workRateOT = ((wpResponse.data.dayoffRateOT * wpResponse.data.workRate) * Number(otTime ));
+let workRateOT = ((wpResponse.data.dayoffRateOT * (wpResponse.data.workRate / 8) ) * Number(otTime ));
 tmp.workRateOT = workRateOT || '';
 tmp.workRateOTMultiply = wpResponse.data.dayoffRateOT || '';
 
