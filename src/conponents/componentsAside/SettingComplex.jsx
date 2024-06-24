@@ -652,7 +652,9 @@ let c = await Number(workplaceComplexId) - 1;
 await setWorkplaceComplexName(standardWorkplace.workplaceGroup[c].workplaceComplexName || '');
 await setCheckSetStandard('seted');
 
-        await handleClickResult(workplacesComplex[c].workplaceComplexData);
+        // await handleClickResult(workplacesComplex[c].workplaceComplexData);
+                await setFormDataGroup (        standardWorkplace.workplaceGroup[c].workplaceComplexData);
+
 
     }
 }
@@ -711,9 +713,10 @@ await setCheckSetStandard('seted');
         if(checkSetStandard == 'seted') {
  setWorkplacesComplex(standardWorkplace.workplaceGroup);
 setStandardWorkplace(standardWorkplace);
+
         } else {
             setWorkplacesComplex(workplace.workplaceGroup);
-            setStandardWorkplace(workplace);
+                setStandardWorkplace(workplace);
             
         }
          setCheckSetStandard('');
@@ -855,6 +858,146 @@ setStandardWorkplace(standardWorkplace);
 
     }
     console.log('showEmployeeListResult', showEmployeeListResult);
+
+
+    const setFormDataGroup = (async (workplace) => {
+        setShowEmployeeListResult(employeeListResult);
+        // setWorkplacesComplex(workplace.workplaceGroup);
+
+
+        set_id(workplace._id);
+        setWorkplaceId(workplace.workplaceId);
+        setWorkplaceName(workplace.workplaceName);
+        setWorkplaceArea(workplace.workplaceArea);
+        setWorkOfWeek(workplace.workOfWeek);
+
+        setWorkStart1(workplace.workStart1);
+        setWorkEnd1(workplace.workEnd1);
+        setWorkStart2(workplace.workStart2);
+        setWorkEnd2(workplace.workEnd2);
+        setWorkStart3(workplace.workStart3);
+        setWorkEnd3(workplace.workEnd3);
+
+        setWorkStartOt1(workplace.workStartOt1);
+        setWorkEndOt1(workplace.workEndOt1);
+        setWorkStartOt2(workplace.workStartOt2);
+        setWorkEndOt2(workplace.workEndOt2);
+        setWorkStartOt3(workplace.workStartOt3);
+        setWorkEndOt3(workplace.workEndOt3);
+
+        setWorkOfHour(workplace.workOfHour);
+        setWorkOfOT(workplace.workOfOT);
+        setWorkRate(workplace.workRate);
+        setWorkRateOT(workplace.workRateOT);
+        setWorkTotalPeople(workplace.workTotalPeople);
+        setDayoffRate(workplace.dayoffRate);
+        setDayoffRateOT(workplace.dayoffRateOT);
+        setDayoffRateHour(workplace.dayoffRateHour);
+        setHoliday(workplace.holiday);
+        setHolidayOT(workplace.holidayOT);
+        setHolidayHour(workplace.holidayHour);
+        setSalaryadd1(workplace.salaryadd1);
+        setSalaryadd2(workplace.salaryadd2);
+        setSalaryadd3(workplace.salaryadd3);
+        setSalaryadd4(workplace.salaryadd4);
+        setSalaryadd5(workplace.salaryadd5);
+        setSalaryadd6(workplace.salaryadd6);
+        setPersonalLeave(workplace.personalLeave);
+        setPersonalLeaveNumber(workplace.personalLeaveNumber);
+        setPersonalLeaveRate(workplace.personalLeaveRate);
+        setSickLeave(workplace.sickLeave);
+        setSickLeaveNumber(workplace.sickLeaveNumber);
+        setSickLeaveRate(workplace.sickLeaveRate);
+        setWorkRateDayoff(workplace.workRateDayoff);
+        setWorkRateDayoffNumber(workplace.workRateDayoffNumber);
+        setworkRateDayoffRate(workplace.workRateDayoffRate);
+        setWorkplaceAddress(workplace.workplaceAddress);
+        //setSelectedDates([...selectedDates, workplace.daysOff]);
+
+        ////////work day
+        if (workplace.workday1 == 'false') {
+            setWorkday1(false)
+        } else {
+            setWorkday1(workplace.workday1);
+        }
+        if (workplace.workday2 == 'false') {
+            setWorkday2(false)
+        } else {
+            setWorkday2(workplace.workday2);
+        }
+        if (workplace.workday3 == 'false') {
+            setWorkday3(false)
+        } else {
+            setWorkday3(workplace.workday3);
+        }
+        if (workplace.workday4 == 'false') {
+            setWorkday4(false)
+        } else {
+            setWorkday4(workplace.workday4);
+        }
+        if (workplace.workday5 == 'false') {
+            setWorkday5(false)
+        } else {
+            setWorkday5(workplace.workday5);
+        }
+        if (workplace.workday6 == 'false') {
+            setWorkday6(false)
+        } else {
+            setWorkday6(workplace.workday6);
+        }
+        if (workplace.workday7 == 'false') {
+            setWorkday7(false)
+        } else {
+            setWorkday7(workplace.workday7);
+        }
+
+        setWorkcount1(workplace.workcount1);
+        setWorkcount2(workplace.workcount2);
+        setWorkcount3(workplace.workcount3);
+        setWorkcount4(workplace.workcount4);
+        setWorkcount5(workplace.workcount5);
+        setWorkcount6(workplace.workcount6);
+        setWorkcount7(workplace.workcount7);
+        const dates = workplace.daysOff.map((dateString) => new Date(dateString));
+
+        setSelectedDates(dates);
+        setReason(workplace.reason);
+
+        // employeeIdLists
+
+
+        const initialFormData = {
+            addSalary: workplace.addSalary.map((item) => ({
+                name: item.name || '',
+                codeSpSalary: item.codeSpSalary || '',
+                SpSalary: item.SpSalary || '',
+                roundOfSalary: item.roundOfSalary || '',
+                StaffType: item.StaffType || '',
+                nameType: item.nameType || '',
+            })),
+        };
+
+        setFormData(initialFormData);
+        // setFormData(workplace.addSalary);
+
+
+
+        const employeeIdLists = workplace.employeeIdList.map((item) => [...item]);
+        setEmployeeIdList(employeeIdLists);
+
+        const employeeNameLists = workplace.employeeNameList.map((item) => [...item]);
+        setEmployeeNameList(employeeNameLists);
+
+        setListEmployeeDay(workplace.listEmployeeDay);
+        setListSpecialWorktime(workplace.listSpecialWorktime);
+        setWorkTimeDayList(workplace.workTimeDay);
+        setWorkTimeDayPersonList(workplace.workTimeDayPerson);
+
+        // console.log(workplace);
+        // // console.log(initialFormData);
+        // console.log("formData", formData);
+
+    });
 
     const handleCheckboxChange1 = () => {
         setWorkday1(!workday1);
