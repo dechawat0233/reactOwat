@@ -344,7 +344,6 @@ function SalarySlipPDF() {
             // เรียงarray 
             const countSpecialDayListWork = responseDataAll[i].specialDayListWork.length;
             // const countcal = responseDataAll[i].accountingRecord[0].countDay - countSpecialDayListWork;
-            // const countcal = responseDataAll[i].accountingRecord[0].countDayWork
             const countcal = responseDataAll[i].accountingRecord[0].countDayWork
 
             console.log('countSpecialDayListWork', countSpecialDayListWork);
@@ -467,8 +466,7 @@ function SalarySlipPDF() {
                 valueArray.push(responseDataAll[i].accountingRecord.amountDay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
                 console.log('3');
             }
-            // if (responseDataAll[i].accountingRecord[0].amountOt != 0 && responseDataAll[i].accountingRecord[0].amountOt != null) {
-            if (responseDataAll[i].accountingRecord[0].amountOneFive != 0 && responseDataAll[i].accountingRecord[0].amountOneFive != null) {
+            if (responseDataAll[i].accountingRecord[0].amountOt != 0 && responseDataAll[i].accountingRecord[0].amountOt != null) {
                 // Push the text to textArray and the value to valueArray
                 // textArray.push('ค่าล่วงเวลา 1.5 เท่า');
                 // countArray.push(responseDataAll[i].accountingRecord[0].countOtHour.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
@@ -476,10 +474,8 @@ function SalarySlipPDF() {
                 const accountingRecord = responseDataAll[i].accountingRecord?.[0];
 
                 if (accountingRecord) {
-                    // const amountOt = parseFloat(accountingRecord.amountOt);
-                    // const countOtHour = parseFloat(accountingRecord.countOtHour);
-                    const countOtHour = parseFloat(accountingRecord.hourOneFive);
-                    const amountOt = parseFloat(accountingRecord.amountOneFive);
+                    const amountOt = parseFloat(accountingRecord.amountOt);
+                    const countOtHour = parseFloat(accountingRecord.countOtHour);
 
                     if (amountOt !== 0 && amountOt != null) {
                         // Push the text to textArray and the value to valueArray
@@ -490,50 +486,19 @@ function SalarySlipPDF() {
                 }
                 console.log('4');
             }
-            // if (countSpecialDayListWork !== 0 && countSpecialDayListWork !== null) {
-            if (responseDataAll[i].accountingRecord[0].amountTwo != 0 && responseDataAll[i].accountingRecord[0].amountTwo != null) {
+            if (countSpecialDayListWork !== 0 && countSpecialDayListWork !== null) {
                 // Push the text to textArray and the value to valueArray
-                // textArray.push('ค่าล่วงเวลา 2 เท่า');
-                // countArray.push('');
-                // valueArray.push(formattedAmountHoliday2_0.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-                const accountingRecord = responseDataAll[i].accountingRecord?.[0];
-
-                if (accountingRecord) {
-                    // const amountOt = parseFloat(accountingRecord.amountOt);
-                    // const countOtHour = parseFloat(accountingRecord.countOtHour);
-                    const countOtHour = parseFloat(accountingRecord.hourTwo);
-                    const amountOt = parseFloat(accountingRecord.amountTwo);
-
-                    if (amountOt !== 0 && amountOt != null) {
-                        // Push the text to textArray and the value to valueArray
-                        textArray.push('ค่าล่วงเวลา 2 เท่า');
-                        countArray.push(countOtHour.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-                        valueArray.push(amountOt.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-                    }
-                }
+                textArray.push('ค่าล่วงเวลา 2 เท่า');
+                countArray.push('');
+                valueArray.push(formattedAmountHoliday2_0.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
                 console.log('5');
             }
-            // if (0 != 0 && null != null) {
-            if (responseDataAll[i].accountingRecord[0].amountThree != 0 && responseDataAll[i].accountingRecord[0].amountThree != null) {
+            console.log('responseDataAll[i].specialDayListWork.length', responseDataAll[i].specialDayListWork.length);
+            if (0 != 0 && null != null) {
                 // Push the text to textArray and the value to valueArray
-                // textArray.push('ค่าล่วงเวลา 3 เท่า');
-                // countArray.push('');
-                // valueArray.push(responseDataAll[i].accountingRecord.amountDay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-                const accountingRecord = responseDataAll[i].accountingRecord?.[0];
-
-                if (accountingRecord) {
-                    // const amountOt = parseFloat(accountingRecord.amountOt);
-                    // const countOtHour = parseFloat(accountingRecord.countOtHour);
-                    const countOtHour = parseFloat(accountingRecord.hourThree);
-                    const amountOt = parseFloat(accountingRecord.amountThree);
-
-                    if (amountOt !== 0 && amountOt != null) {
-                        // Push the text to textArray and the value to valueArray
-                        textArray.push('ค่าล่วงเวลา 3 เท่า');
-                        countArray.push(countOtHour.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-                        valueArray.push(amountOt.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-                    }
-                }
+                textArray.push('ค่าล่วงเวลา 3 เท่า');
+                countArray.push('');
+                valueArray.push(responseDataAll[i].accountingRecord.amountDay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
                 console.log('6');
             }
             //รถโทรตำแหน่ง
@@ -550,38 +515,10 @@ function SalarySlipPDF() {
                 valueArray.push(sumAmountHardWorking.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
                 console.log('8');
             }
-            // if (countSpecialDayListWork !== 0 && countSpecialDayListWork !== null) {
-            //     textArray.push('วันหยุดนักขัติฤกษ์');
-            //     // countArray.push(countSpecialDayListWork.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-            //     valueArray.push(formattedAmountHoliday.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-            //     console.log('9');
-            // }
-            if (responseDataAll[i + 1].accountingRecord[0].amountSpecialDay != 0 && responseDataAll[i + 1].accountingRecord[0].amountSpecialDay != null) {
-
-                const accountingRecord = responseDataAll[i + 1].accountingRecord?.[0];
-
-                //     textArray.push('วันหยุดนักขัติฤกษ์');
-                // // countArray.push(countSpecialDayListWork.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-                // valueArray.push(formattedAmountHoliday.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-
-                if (accountingRecord) {
-                    // const amountOt = parseFloat(accountingRecord.amountOt);
-                    // const countOtHour = parseFloat(accountingRecord.countOtHour);
-
-                    const amountSpecialDay = parseFloat(accountingRecord.amountSpecialDay);
-
-                    const specialDayListWorks = responseDataAll[i].specialDayListWork ? responseDataAll[i].specialDayListWork.length : 0;
-                    const countSpecialDay = parseFloat(responseDataAll[i].countSpecialDay);
-                    const countspecialDayF = countSpecialDay - specialDayListWorks;
-
-                    if (amountSpecialDay !== 0 && amountSpecialDay != null) {
-                        // Push the text to textArray and the value to valueArray
-                        textArray.push('วันหยุดนักขัติฤกษ์');
-                        countArray.push(countspecialDayF.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-                        valueArray.push(amountSpecialDay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-                    }
-                }
-
+            if (countSpecialDayListWork !== 0 && countSpecialDayListWork !== null) {
+                textArray.push('วันหยุดนักขัติฤกษ์');
+                // countArray.push(countSpecialDayListWork.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                valueArray.push(formattedAmountHoliday.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
                 console.log('9');
             }
 
@@ -946,7 +883,6 @@ function SalarySlipPDF() {
 
                     if (accountingRecord) {
                         const amountCountDayWork = parseFloat(accountingRecord.amountCountDayWork);
-                        console.log('amountCountDayWork', amountCountDayWork);
 
                         if (amountCountDayWork != 0 && amountCountDayWork != null) {
                             // Push the text to textArray and the value to valueArray
@@ -964,22 +900,17 @@ function SalarySlipPDF() {
                     valueArray.push(responseDataAll[i + 1].accountingRecord.amountDay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
                     console.log('33');
                 }
-                // if (responseDataAll[i + 1].accountingRecord[0].amountOt != 0 && responseDataAll[i + 1].accountingRecord[0].amountOt != null) {
-                if (responseDataAll[i + 1].accountingRecord[0].amountOneFive != 0 && responseDataAll[i + 1].accountingRecord[0].amountOneFive != null) {
-
+                if (responseDataAll[i + 1].accountingRecord[0].amountOt != 0 && responseDataAll[i + 1].accountingRecord[0].amountOt != null) {
                     // Push the text to textArray and the value to valueArray
                     // textArray.push('ค่าล่วงเวลา 1.5 เท่า');
                     // countArray.push(responseDataAll[i + 1].accountingRecord.countOtHour.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
                     // valueArray.push(responseDataAll[i + 1].accountingRecord.amountOt.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
                     const accountingRecord = responseDataAll[i + 1].accountingRecord?.[0];
 
-
                     if (accountingRecord) {
-                        const amountOt = parseFloat(accountingRecord.hourOneFive);
-                        const countOtHour = parseFloat(accountingRecord.amountOneFive);
+                        const countOtHour = parseFloat(accountingRecord.countOtHour);
+                        const amountOt = parseFloat(accountingRecord.amountOt);
 
-                        console.log('amountOt', amountOt);
-                        
                         if (countOtHour != 0 && countOtHour != null) {
                             // Push the text to textArray and the value to valueArray
                             textArray.push('ค่าล่วงเวลา 1.5 เท่า');
@@ -990,52 +921,18 @@ function SalarySlipPDF() {
                     console.log('44');
                 }
 
-                // if (countSpecialDayListWork !== 0 && countSpecialDayListWork !== null) {
-                if (responseDataAll[i + 1].accountingRecord[0].amountTwo != 0 && responseDataAll[i + 1].accountingRecord[0].amountTwo != null) {
-
+                if (countSpecialDayListWork !== 0 && countSpecialDayListWork !== null) {
                     // Push the text to textArray and the value to valueArray
-                    // textArray.push('ค่าล่วงเวลา 2 เท่า');
-                    // countArray.push('');
-                    // valueArray.push(formattedAmountHoliday2_0.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-                    const accountingRecord = responseDataAll[i + 1].accountingRecord?.[0];
-
-                    if (accountingRecord) {
-                        // const amountOt = parseFloat(accountingRecord.amountOt);
-                        // const countOtHour = parseFloat(accountingRecord.countOtHour);
-                        const countOtHour = parseFloat(accountingRecord.hourTwo);
-                        const amountOt = parseFloat(accountingRecord.amountTwo);
-
-                        if (amountOt !== 0 && amountOt != null) {
-                            // Push the text to textArray and the value to valueArray
-                            textArray.push('ค่าล่วงเวลา 2 เท่า');
-                            countArray.push(countOtHour.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-                            valueArray.push(amountOt.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-                        }
-                    }
+                    textArray.push('ค่าล่วงเวลา 2 เท่า');
+                    countArray.push('');
+                    valueArray.push(formattedAmountHoliday2_0.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
                     console.log('55');
                 }
-                // if (0 != 0 && null != null) {
-                if (responseDataAll[i + 1].accountingRecord[0].amountThree != 0 && responseDataAll[i + 1].accountingRecord[0].amountThree != null) {
-
+                if (0 != 0 && null != null) {
                     // Push the text to textArray and the value to valueArray
-                    // textArray.push('ค่าล่วงเวลา 3 เท่า');
-                    // countArray.push('');
-                    // valueArray.push(responseDataAll[i + 1].accountingRecord.amountDay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-                    const accountingRecord = responseDataAll[i + 1].accountingRecord?.[0];
-
-                    if (accountingRecord) {
-                        // const amountOt = parseFloat(accountingRecord.amountOt);
-                        // const countOtHour = parseFloat(accountingRecord.countOtHour);
-                        const countOtHour = parseFloat(accountingRecord.hourThree);
-                        const amountOt = parseFloat(accountingRecord.amountThree);
-
-                        if (amountOt !== 0 && amountOt != null) {
-                            // Push the text to textArray and the value to valueArray
-                            textArray.push('ค่าล่วงเวลา 3 เท่า');
-                            countArray.push(countOtHour.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-                            valueArray.push(amountOt.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-                        }
-                    }
+                    textArray.push('ค่าล่วงเวลา 3 เท่า');
+                    countArray.push('');
+                    valueArray.push(responseDataAll[i + 1].accountingRecord.amountDay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
                     console.log('66');
                 }
                 //รถโทรตำแหน่ง
@@ -1052,33 +949,10 @@ function SalarySlipPDF() {
                     valueArray.push(sumAmountHardWorking.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
                     console.log('88');
                 }
-                // if (countSpecialDayListWork !== 0 && countSpecialDayListWork !== null) {
-                if (responseDataAll[i + 1].accountingRecord[0].amountSpecialDay != 0 && responseDataAll[i + 1].accountingRecord[0].amountSpecialDay != null) {
-
-                    const accountingRecord = responseDataAll[i + 1].accountingRecord?.[0];
-
-                    //     textArray.push('วันหยุดนักขัติฤกษ์');
-                    // // countArray.push(countSpecialDayListWork.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-                    // valueArray.push(formattedAmountHoliday.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-
-                    if (accountingRecord) {
-                        // const amountOt = parseFloat(accountingRecord.amountOt);
-                        // const countOtHour = parseFloat(accountingRecord.countOtHour);
-
-                        const amountSpecialDay = parseFloat(accountingRecord.amountSpecialDay);
-
-                        const specialDayListWorks = responseDataAll[i + 1].specialDayListWork ? responseDataAll[i + 1].specialDayListWork.length : 0;
-                        const countSpecialDay = parseFloat(responseDataAll[i + 1].countSpecialDay);
-                        const countspecialDayF = countSpecialDay - specialDayListWorks;
-
-                        if (amountSpecialDay !== 0 && amountSpecialDay != null) {
-                            // Push the text to textArray and the value to valueArray
-                            textArray.push('วันหยุดนักขัติฤกษ์');
-                            countArray.push(countspecialDayF.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-                            valueArray.push(amountSpecialDay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-                        }
-                    }
-
+                if (countSpecialDayListWork !== 0 && countSpecialDayListWork !== null) {
+                    textArray.push('วันหยุดนักขัติฤกษ์');
+                    // countArray.push(countSpecialDayListWork.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+                    valueArray.push(formattedAmountHoliday.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
                     console.log('99');
                 }
 
