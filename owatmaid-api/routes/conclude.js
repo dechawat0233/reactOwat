@@ -148,7 +148,8 @@ const data1 = await response1.data;
 await console.log('*x ' + JSON.stringify(data1.recordworkplace , null ,2) );
 if(data1.recordworkplace.length !== 0){
 //get workplaceId in first employee_workplaceRecord
-let wpId1 = await data1.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
+// let wpId1 = await data1.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
+let wpId1 = await '399-751';
 
 const wpDataCalculator1 = await {
 month: prevMonth || '',
