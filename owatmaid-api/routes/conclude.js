@@ -293,9 +293,9 @@ await console.log('Sorted concludeRecord:', concludeRecord);
 // let wpId = data.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
 let wpId  = '';
 data.recordworkplace[0].forEach(item => {
+if(wpId  === ''){
   wpId = item.employee_workplaceRecord[0].workplaceId || '';
-if(wpId  !== ''){
-break;
+
 }
 });
 
