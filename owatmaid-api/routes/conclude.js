@@ -300,6 +300,7 @@ if(item.workplaceId){
 }
   });
 }
+console.log('*wpId ' + wpId );
 const wpDataCalculator = {
   month: month || '',
   year: year || '',
