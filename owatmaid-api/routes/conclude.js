@@ -148,7 +148,8 @@ const data1 = await response1.data;
 await console.log('*x ' + JSON.stringify(data1.recordworkplace , null ,2) );
 if(data1.recordworkplace.length !== 0){
 //get workplaceId in first employee_workplaceRecord
-let wpId1 = await data1.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
+// let wpId1 = await data1.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
+let wpId1 = await '399-751';
 
 const wpDataCalculator1 = await {
 month: prevMonth || '',
@@ -271,7 +272,7 @@ const dateB = new Date(b.day.split('/').reverse().join('/'));
 return dateA - dateB;
 });
 
-await console.log('Sorted concludeRecord:', concludeRecord);
+// await console.log('Sorted concludeRecord:', concludeRecord);
 
 
 // console.log('Sorted concludeRecord:', concludeRecord);
@@ -290,7 +291,8 @@ await console.log('Sorted concludeRecord:', concludeRecord);
 
   if(data.recordworkplace.length !== 0) {
 //get workplaceId in first employee_workplaceRecord
-let wpId = data.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
+// let wpId = data.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
+let wpId  = '399-751';
 
 const wpDataCalculator = {
   month: month || '',
@@ -450,7 +452,7 @@ try {
   
     res.json(dataConclude);
   }
-  res.json(dataConclude);
+  // res.json(dataConclude);
 
 } catch (error) {
   console.error('Error processing record:', error);
@@ -560,7 +562,7 @@ router.post('/search', async (req, res) => {
     await res.status(200).json({ recordConclude  });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    // res.status(500).json({ message: 'Internal server error' });
   }
 });
 

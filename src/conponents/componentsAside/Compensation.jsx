@@ -382,6 +382,27 @@ function Compensation() {
     const [concludeResult, setConcludeResult] = useState([]);
     const [addSalaryResult, setAddSalaryResult] = useState([]);
 
+//recreate conclude
+    async function recal() {
+        const serchConclude = await {
+            year: year,
+            month: month,
+            concludeDate: '',
+            employeeId: searchEmployeeId,
+            employeeName: searchEmployeeName
+        };
+alert(serchConclude .month)
+        try {
+                //create conclude
+                const response = await axios.post(endpoint + '/conclude/autocreate', serchConclude);
+alert(response .data);
+                // alert("กำลังประมวลผล กรุณาค้นหาอีกครั้งหากยังไม่พบกรุณาตรวจสอบการลงเวลา");
+        } catch (e) {
+            console.log(e);
+            alert(e);
+        }
+    }
+
     async function handleSearch(event) {
         event.preventDefault();
         await localStorage.setItem('employeeId', searchEmployeeId);
@@ -411,14 +432,14 @@ function Compensation() {
 
         try {
             const response = await axios.post(endpoint + '/conclude/search', serchConclude);
-            // await alert(response.data.recordConclude.length);
+            await alert(response.data.recordConclude.length);
             // await alert(JSON.stringify(response,null,2));
 
             if (response.data.recordConclude.length < 1) {
                 // alert('conclude is null');
                 //create conclude
-                const response = await axios.post(endpoint + '/conclude/autocreate', serchConclude);
-                alert("กำลังประมวลผล กรุณาค้นหาอีกครั้งหากยังไม่พบกรุณาตรวจสอบการลงเวลา");
+                // const response = await axios.post(endpoint + '/conclude/autocreate', serchConclude);
+                // alert("กำลังประมวลผล กรุณาค้นหาอีกครั้งหากยังไม่พบกรุณาตรวจสอบการลงเวลา");
             } else {
                 //check update time record then reset data conclude
                 // await alert(editStatus);
@@ -1611,7 +1632,7 @@ function Compensation() {
                                     </div>
                                     <div class="col-md-2">
                                         <div class="d-flex justify-content-center">
-                                            <button class="btn b_save"> คำนวณใหม่</button>
+                                            <button type='button' onClick={recal} class="btn b_save"> คำนวณใหม่</button>
                                         </div>
                                     </div>
                                 </div>

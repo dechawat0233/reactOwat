@@ -172,6 +172,17 @@ let sumAmountDayWork = 0;
 let countHourWork = 0;
 let countOtHourWork = 0;
 
+let amountOne = 0;
+let amountOneFive = 0;
+let amountTwo = 0;
+let amountTwoFive = 0;
+let amountThree = 0;
+let hourOne = 0;
+let hourOneFive = 0;
+let hourTwo = 0;
+let hourTwoFive = 0;
+let hourThree = 0;
+
 
 // Get employee data by employeeId
 const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
@@ -567,6 +578,48 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
   countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
   countOtHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
 
+  //get hour rate
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '1') {
+    amountOne = Number(amountOne ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
+    hourOne = Number(hourOne) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOTMultiply === '1'){
+    amountOne = Number(amountOne ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT);
+    hourOne = Number(hourOne) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '1.5') {
+    amountOneFive = Number(amountOneFive ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
+    hourOneFive = Number(hourOneFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOTMultiply === '1.5'){
+    amountOneFive = Number(amountOneFive ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT);
+    hourOneFive = Number(hourOneFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '2') {
+    amountTwo = Number(amountTwo ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
+    hourTwo = Number(hourTwo) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOTMultiply === '2'){
+    amountTwo = Number(amountTwo ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT);
+    hourTwo = Number(hourTwo) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '2.5') {
+    amountTwoFive = Number(amountTwoFive ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
+    hourTwoFive = Number(hourTwoFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOTMultiply === '2.5'){
+    amountTwoFive = Number(amountTwoFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT);
+    hourTwoFive = Number(hourTwoFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '3') {
+    amountThree = Number(amountThree ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
+    hourThree = Number(hourThree) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOTMultiply === '3'){
+    amountThree = Number(amountThree ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT);
+    hourThree = Number(hourThree) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+  }
+
   console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
   //check work rate is not standard day
   if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) == parseFloat(salary) ) {
@@ -814,6 +867,18 @@ let  calOtWork = await (Number(amountDay) - Number(sumAmountDayWork ) ) + Number
     data.accountingRecord.amountCountDayWorkOt = await calOtWork ||0;
     data.accountingRecord.countHourWork = await countHourWork ||0;
     data.accountingRecord.countOtHourWork = await countOtHourWork ||0;
+
+    //data for hour amount
+    data.accountingRecord.amountOne = await amountOne ||0;
+    data.accountingRecord.hourOne = await hourOne ||0;
+    data.accountingRecord.amountOneFive = await amountOneFive ||0;
+    data.accountingRecord.hourOneFive = await hourOneFive ||0;
+    data.accountingRecord.amountTwo = await amountTwo ||0;
+    data.accountingRecord.hourTwo = await hourTwo ||0;
+    data.accountingRecord.amountTwoFive = await amountTwoFive ||0;
+    data.accountingRecord.hourTwoFive = await hourTwoFive ||0;
+    data.accountingRecord.amountThree = await amountThree ||0;
+    data.accountingRecord.hourThree = await hourThree ||0;
 
 
     data.accountingRecord.amountHoliday = 0;
@@ -1133,6 +1198,18 @@ router.post('/calsalarylist', async (req, res) => {
     let countHourWork = 0;
     let countOtHourWork = 0;
     
+    let amountOne = 0;
+let amountOneFive = 0;
+let amountTwo = 0;
+let amountTwoFive = 0;
+let amountThree = 0;
+let hourOne = 0;
+let hourOneFive = 0;
+let hourTwo = 0;
+let hourTwoFive = 0;
+let hourThree = 0;
+
+
     // Get employee data by employeeId
     const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
     if (response) {
@@ -1527,6 +1604,48 @@ router.post('/calsalarylist', async (req, res) => {
       countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
       countOtHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
 
+  //get hour rate
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '1') {
+    amountOne = Number(amountOne ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
+    hourOne = Number(hourOne) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOTMultiply === '1'){
+    amountOne = Number(amountOne ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT);
+    hourOne = Number(hourOne) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '1.5') {
+    amountOneFive = Number(amountOneFive ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
+    hourOneFive = Number(hourOneFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOTMultiply === '1.5'){
+    amountOneFive = Number(amountOneFive ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT);
+    hourOneFive = Number(hourOneFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '2') {
+    amountTwo = Number(amountTwo ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
+    hourTwo = Number(hourTwo) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOTMultiply === '2'){
+    amountTwo = Number(amountTwo ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT);
+    hourTwo = Number(hourTwo) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '2.5') {
+    amountTwoFive = Number(amountTwoFive ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
+    hourTwoFive = Number(hourTwoFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOTMultiply === '2.5'){
+    amountTwoFive = Number(amountTwoFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT);
+    hourTwoFive = Number(hourTwoFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '3') {
+    amountThree = Number(amountThree ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
+    hourThree = Number(hourThree) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOTMultiply === '3'){
+    amountThree = Number(amountThree ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT);
+    hourThree = Number(hourThree) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+  }
+
       //check work rate is not standard day
       if(Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) == Number(salary) ) {
     dayOffWork += 1;
@@ -1775,7 +1894,18 @@ router.post('/calsalarylist', async (req, res) => {
         data.accountingRecord.countHourWork = await countHourWork ||0;
         data.accountingRecord.countOtHourWork = await countOtHourWork ||0;
     
-          
+              //data for hour amount
+    data.accountingRecord.amountOne = await amountOne ||0;
+    data.accountingRecord.hourOne = await hourOne ||0;
+    data.accountingRecord.amountOneFive = await amountOneFive ||0;
+    data.accountingRecord.hourOneFive = await hourOneFive ||0;
+    data.accountingRecord.amountTwo = await amountTwo ||0;
+    data.accountingRecord.hourTwo = await hourTwo ||0;
+    data.accountingRecord.amountTwoFive = await amountTwoFive ||0;
+    data.accountingRecord.hourTwoFive = await hourTwoFive ||0;
+    data.accountingRecord.amountThree = await amountThree ||0;
+    data.accountingRecord.hourThree = await hourThree ||0;
+
         data.accountingRecord.amountHoliday = 0;
         data.accountingRecord.addAmountBeforeTax = sumCalTaxNonSalary || 0;
         data.accountingRecord.deductBeforeTax = sumDeductWithTax || 0;
@@ -3006,6 +3136,17 @@ let sumAmountDayWork = 0;
 let countHourWork = 0;
 let countOtHourWork = 0;
 
+let amountOne = 0;
+let amountOneFive = 0;
+let amountTwo = 0;
+let amountTwoFive = 0;
+let amountThree = 0;
+let hourOne = 0;
+let hourOneFive = 0;
+let hourTwo = 0;
+let hourTwoFive = 0;
+let hourThree = 0;
+
 
 // Get employee data by employeeId
 const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
@@ -3402,6 +3543,48 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
   countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
   countOtHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
 
+  //get hour rate
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '1') {
+    amountOne = Number(amountOne ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
+    hourOne = Number(hourOne) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOTMultiply === '1'){
+    amountOne = Number(amountOne ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT);
+    hourOne = Number(hourOne) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '1.5') {
+    amountOneFive = Number(amountOneFive ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
+    hourOneFive = Number(hourOneFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOTMultiply === '1.5'){
+    amountOneFive = Number(amountOneFive ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT);
+    hourOneFive = Number(hourOneFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '2') {
+    amountTwo = Number(amountTwo ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
+    hourTwo = Number(hourTwo) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOTMultiply === '2'){
+    amountTwo = Number(amountTwo ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT);
+    hourTwo = Number(hourTwo) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '2.5') {
+    amountTwoFive = Number(amountTwoFive ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
+    hourTwoFive = Number(hourTwoFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOTMultiply === '2.5'){
+    amountTwoFive = Number(amountTwoFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT);
+    hourTwoFive = Number(hourTwoFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '3') {
+    amountThree = Number(amountThree ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
+    hourThree = Number(hourThree) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+  }
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOTMultiply === '3'){
+    amountThree = Number(amountThree ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT);
+    hourThree = Number(hourThree) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+  }
+  
   //check work rate is not standard day
   if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) == parseFloat(salary) ) {
 dayOffWork += 1;
@@ -3651,6 +3834,19 @@ let  calOtWork = await (Number(amountDay) - Number(sumAmountDayWork ) ) + Number
     data.accountingRecord.countOtHourWork = await countOtHourWork ||0;
 
 
+        //data for hour amount
+        data.accountingRecord.amountOne = await amountOne ||0;
+        data.accountingRecord.hourOne = await hourOne ||0;
+        data.accountingRecord.amountOneFive = await amountOneFive ||0;
+        data.accountingRecord.hourOneFive = await hourOneFive ||0;
+        data.accountingRecord.amountTwo = await amountTwo ||0;
+        data.accountingRecord.hourTwo = await hourTwo ||0;
+        data.accountingRecord.amountTwoFive = await amountTwoFive ||0;
+        data.accountingRecord.hourTwoFive = await hourTwoFive ||0;
+        data.accountingRecord.amountThree = await amountThree ||0;
+        data.accountingRecord.hourThree = await hourThree ||0;
+    
+    
     data.accountingRecord.amountHoliday = 0;
     data.accountingRecord.addAmountBeforeTax = sumCalTaxNonSalary || 0;
     data.accountingRecord.deductBeforeTax = sumDeductWithTax || 0;
