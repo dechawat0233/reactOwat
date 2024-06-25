@@ -295,7 +295,7 @@ let wpId  = '';
 data.recordworkplace[0].employee_workplaceRecord.forEach(item => {
 if(wpId  === ''){
   wpId = item.workplaceId || '';
-
+console.log('item.workplaceId ' + item.workplaceId );
 }
 });
 
