@@ -272,7 +272,7 @@ const dateB = new Date(b.day.split('/').reverse().join('/'));
 return dateA - dateB;
 });
 
-await console.log('Sorted concludeRecord:', concludeRecord);
+// await console.log('Sorted concludeRecord:', concludeRecord);
 
 
 // console.log('Sorted concludeRecord:', concludeRecord);
@@ -562,7 +562,7 @@ router.post('/search', async (req, res) => {
     await res.status(200).json({ recordConclude  });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    // res.status(500).json({ message: 'Internal server error' });
   }
 });
 
