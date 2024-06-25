@@ -292,8 +292,14 @@ return dateA - dateB;
   if(data.recordworkplace.length !== 0) {
 //get workplaceId in first employee_workplaceRecord
 // let wpId = data.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
-let wpId  = '399-751';
-
+// let wpId  = '';
+if(data.recordworkplace){
+  data.recordworkplace[0].employee_workplaceRecord.forEach(item => {
+if(item.workplaceId){
+  wpId   = item.workplaceId || '';
+}
+  });
+}
 const wpDataCalculator = {
   month: month || '',
   year: year || '',
