@@ -292,8 +292,7 @@ return dateA - dateB;
   if(data.recordworkplace.length !== 0) {
 //get workplaceId in first employee_workplaceRecord
 // let wpId = data.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
-let wpId  = dataEmp.workPlace;
-console.log('dataEmp  ' + dataEmp.workPlace );
+let wpId  = dataEmp.employees[0].workPlace;
 const wpDataCalculator = {
   month: month || '',
   year: year || '',
