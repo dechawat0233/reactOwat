@@ -290,7 +290,14 @@ await console.log('Sorted concludeRecord:', concludeRecord);
 
   if(data.recordworkplace.length !== 0) {
 //get workplaceId in first employee_workplaceRecord
-let wpId = data.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
+// let wpId = data.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
+let wpId  = '';
+data.recordworkplace[0].forEach(item => {
+  wpId = item.employee_workplaceRecord[0].workplaceId || '';
+if(wpId  !== ''){
+break;
+}
+});
 
 const wpDataCalculator = {
   month: month || '',
