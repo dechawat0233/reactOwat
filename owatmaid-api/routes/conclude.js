@@ -292,13 +292,7 @@ await console.log('Sorted concludeRecord:', concludeRecord);
   if(data.recordworkplace.length !== 0) {
 //get workplaceId in first employee_workplaceRecord
 // let wpId = data.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
-let wpId  = '';
-data.recordworkplace[0].employee_workplaceRecord.forEach(item => {
-if(wpId  === ''){
-  wpId = item.workplaceId || '';
-console.log('item.workplaceId ' + item.workplaceId );
-}
-});
+let wpId  = '399-751';
 
 const wpDataCalculator = {
   month: month || '',
@@ -458,7 +452,7 @@ try {
   
     res.json(dataConclude);
   }
-  res.json(dataConclude);
+  // res.json(dataConclude);
 
 } catch (error) {
   console.error('Error processing record:', error);
