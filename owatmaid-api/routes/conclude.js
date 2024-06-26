@@ -359,6 +359,15 @@ let otTime = `${hours1}.${scaledMinutes1}` || '0';
 
   tmp.otTimes = otTime || '0';
 
+//check special day work
+if(element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
+  tmp.workRate = element.specialtSalary || '';
+  tmp.workRateMultiply = Number(element.specialtSalary || 0 ) / Number(wpResponse1.data.workRate || 0);
+
+  tmp.workRateOT = element.specialtSalaryOT || '';
+  tmp.workRateOTMultiply = Number(element.specialtSalaryOT || 0) / Number(wpResponse1.data.workRate || '');
+
+}else {
 
   //check special day off 
 if(specialDayOff.includes(Number(str1) ) ) {
@@ -393,7 +402,7 @@ tmp.workRateOTMultiply = wpResponse.data.dayoffRateOT || '';
   tmp.workRateOTMultiply = wpResponse.data.workRateOT || '0';
 
 }
-
+} //end check special day work
 
   tmp.addSalaryDay = '';
   
