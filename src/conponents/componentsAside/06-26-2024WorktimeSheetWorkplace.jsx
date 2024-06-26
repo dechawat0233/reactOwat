@@ -398,7 +398,7 @@ function WorktimeSheetWorkplace() {
     }, [year, month, searchWorkplaceId]);
 
 
-    console.log('responseDataAll123', responseDataAll);
+    console.log('responseDataAll', responseDataAll);
 
     async function handleSearch(event) {
         event.preventDefault();
@@ -1659,7 +1659,7 @@ function WorktimeSheetWorkplace() {
 
     // const filteredEmployees = emploeeData.filter(employee => employeeIdsArray.includes(parseInt(employee.employeeId, 10)))
     //     .sort((a, b) => parseInt(a.employeeId, 10) - parseInt(b.employeeId, 10));
-    const filteredEmployees = responseDataAll
+    const filteredEmployees = responseDataAll.filter(employee => employeeIdsArray.includes(parseInt(employee.employeeId, 10)))
         .sort((a, b) => parseInt(a.employeeId, 10) - parseInt(b.employeeId, 10));
 
     //     // Do something with the filtered employees
@@ -1678,12 +1678,12 @@ function WorktimeSheetWorkplace() {
             employee.employeeId,
             'กะเช้า',
             'กะดึก',
-        ]);
-        // .sort((a, b) => {
-        //     const idA = parseInt(a[1], 10);
-        //     const idB = parseInt(b[1], 10);
-        //     return idA - idB;
-        // });
+        ])
+        .sort((a, b) => {
+            const idA = parseInt(a[1], 10);
+            const idB = parseInt(b[1], 10);
+            return idA - idB;
+        });
 
     console.log('extractedData123', extractedData);
 
@@ -2127,12 +2127,6 @@ function WorktimeSheetWorkplace() {
             entry.year === desiredTimerecordId &&
             entry.month === desiredMonth
         );
-
-    filteredEntriesTest.sort((a, b) => {
-        // Assuming employeeId is a string, convert it to a number for numerical comparison
-        return Number(a.employeeId) - Number(b.employeeId);
-      });
-
     console.log('filteredEntriesTest', filteredEntriesTest);
 
     // Initialize objects to store the grouped times
@@ -5489,7 +5483,7 @@ function WorktimeSheetWorkplace() {
 
             const spaceWidth = 10;
 
-            const makePage = Math.ceil(newAllTimes.length / 5);
+            const makePage = Math.ceil(arrayWorkNormalDayOld.length / 5);
 
             for (let pageIndex = 0; pageIndex < makePage; pageIndex++) {
 
@@ -5560,7 +5554,7 @@ function WorktimeSheetWorkplace() {
 
 
                 const pageStartIndex = pageIndex * 5;
-                const pageEndIndex = Math.min((pageIndex + 1) * 5, newAllTimes.length);
+                const pageEndIndex = Math.min((pageIndex + 1) * 5, arraytest.length);
 
                 const squareColor2 = [255, 255, 190]; // Red
 
@@ -5589,7 +5583,7 @@ function WorktimeSheetWorkplace() {
                 // }
 
                 const pageStartIndexName = pageIndex * 5;
-                const pageEndIndexName = Math.min((pageIndex + 1) * 5, newAllTimes.length);
+                const pageEndIndexName = Math.min((pageIndex + 1) * 5, arrayWorkNormalDayOld.length);
                 drawArrayTextName(arraylistNameEmp.slice(pageStartIndex, pageEndIndex));
 
                 const squareColor = [255, 255, 0]; // Red
@@ -5635,7 +5629,7 @@ function WorktimeSheetWorkplace() {
 
                 for (let i = 0; i < 5; i++) {
                     const dataIdx = pageIndex * 5 + i;
-                    if (dataIdx < newAllTimes.length) {
+                    if (dataIdx < arrayWorkNormalDayOld.length) {
                         // Set the color of the square (RGB values)
                         const squareColor = [255, 255, 0]; // Red
 
@@ -5705,18 +5699,18 @@ function WorktimeSheetWorkplace() {
                         // drawTableOT(arraylistOT);
 
                         // for (let i = pageStartIndex; i < pageEndIndex; i++) {
-                        const rowData = newAllTimes[i];
+                        const rowData = arrayWorkNormalDayOld[i];
 
                         // Draw text with color for each column
                         for (let j = 0; j < resultArray.length; j++) {
                             drawArrayTextWithColor([rowData[j]], j, i);
                         }
                         // }
-                        drawTable(i, newAllTimes.slice(dataIdx, dataIdx + 1));
-                        drawTableLeftHead(i, newAllTimes.slice(dataIdx, dataIdx + 1));
-                        drawTableNumHead(i, newAllTimes.slice(dataIdx, dataIdx + 1));
-                        drawTableSpSalary(i, newAllTimes.slice(dataIdx, dataIdx + 1));
-                        drawTableMess(i, newAllTimes.slice(dataIdx, dataIdx + 1));
+                        drawTable(i, arrayWorkNormalDayOld.slice(dataIdx, dataIdx + 1));
+                        drawTableLeftHead(i, arrayWorkNormalDayOld.slice(dataIdx, dataIdx + 1));
+                        drawTableNumHead(i, arrayWorkNormalDayOld.slice(dataIdx, dataIdx + 1));
+                        drawTableSpSalary(i, arrayWorkNormalDayOld.slice(dataIdx, dataIdx + 1));
+                        drawTableMess(i, arrayWorkNormalDayOld.slice(dataIdx, dataIdx + 1));
                         // drawArrayText(arraytest, dataIdx, dataIdx + 1);
 
                         // drawArrayText(arraytest.slice(dataIdx, dataIdx + 1));
@@ -5765,12 +5759,12 @@ function WorktimeSheetWorkplace() {
 
                 // วันทำงาน
                 // drawArrayTextSumWork(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArrayOld.slice(pageStartIndex, pageEndIndex));
-                drawArrayTextSumWork(newAllTimes.slice(pageStartIndex, pageEndIndex), countDayWork.slice(pageStartIndex, pageEndIndex));
+                drawArrayTextSumWork(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), countDayWork.slice(pageStartIndex, pageEndIndex));
 
                 
                 // ot 1.5
                 // drawArrayTextSumWorkOT(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArrayOT.slice(pageStartIndex, pageEndIndex));
-                drawArrayTextSumWorkOT(newAllTimes.slice(pageStartIndex, pageEndIndex), sumArrayTotal.slice(pageStartIndex, pageEndIndex));
+                drawArrayTextSumWorkOT(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArrayTotal.slice(pageStartIndex, pageEndIndex));
 
 
                 // วันหยุด เงินตรง
