@@ -234,7 +234,7 @@ workRateOT  = 0;
 } else 
 if(dayOffCheck1.includes(str1 )  ){
 //calculator day off
-let workRate = ((wpResponse1.data.dayoffRateHour * (wpResponse1.data.workRate /8 ) ) * Number(allTime));
+let workRate = ((Number(wpResponse1.data.dayoffRateHour || 0) * (Number(wpResponse1.data.workRate || 0) /8 ) ) * Number(allTime));
 tmp.workRate = workRate || '';
 tmp.workRateMultiply = wpResponse1.data.dayoffRateHour || '';
 
