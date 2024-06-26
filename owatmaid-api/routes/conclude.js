@@ -216,7 +216,7 @@ if(element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
   tmp.workRateMultiply = Number(element.specialtSalary || 0 ) / Number(wpResponse1.data.workRate || 0);
 
   tmp.workRateOT = element.specialtSalaryOT || '';
-  tmp.workRateOTMultiply = Number(element.specialtSalaryOT || 0) / Number(wpResponse1.data.workRate || '');
+  tmp.workRateOTMultiply = Number(element.specialtSalaryOT || 0) / (Number(wpResponse1.data.workRate || 0) /8);
 
 }else {
 //check special day off 
