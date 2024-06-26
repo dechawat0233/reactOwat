@@ -391,11 +391,11 @@ function Compensation() {
             employeeId: searchEmployeeId,
             employeeName: searchEmployeeName
         };
-alert(serchConclude .month)
+// alert(serchConclude .month)
         try {
                 //create conclude
                 const response = await axios.post(endpoint + '/conclude/autocreate', serchConclude);
-alert(response .data);
+// alert(response .data);
                 // alert("กำลังประมวลผล กรุณาค้นหาอีกครั้งหากยังไม่พบกรุณาตรวจสอบการลงเวลา");
         } catch (e) {
             console.log(e);
@@ -432,7 +432,7 @@ alert(response .data);
 
         try {
             const response = await axios.post(endpoint + '/conclude/search', serchConclude);
-            await alert(response.data.recordConclude.length);
+            // await alert(response.data.recordConclude.length);
             // await alert(JSON.stringify(response,null,2));
 
             if (response.data.recordConclude.length < 1) {
