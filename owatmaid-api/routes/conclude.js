@@ -149,11 +149,11 @@ await console.log('*x ' + JSON.stringify(data1.recordworkplace , null ,2) );
 if(data1.recordworkplace.length !== 0){
 //get workplaceId in first employee_workplaceRecord
 // let wpId1 = await data1.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
-let wpId1 = await '399-751';
+let wpId1  = dataEmp.employees[0].workplace || '';
 
 const wpDataCalculator1 = await {
-month: prevMonth || '',
-year: year1 || '',
+month: month || '',
+year: year || '',
 workplaceId: wpId1
 };
 
@@ -170,6 +170,7 @@ let   str2 = parseInt(dateoffParts[2], 10);
 // console.log(str2 );
 dayOffCheck1.push(str2 );
 });
+console.log('dayOffCheck1' + JSON.stringify(dayOffCheck1,null,2));
 }
 
 data1.recordworkplace[0].employee_workplaceRecord.forEach(element => {
@@ -178,10 +179,10 @@ const tmp = {};
 
 let dateParts = element.date.split('/');
 let   str1 = parseInt(dateParts[0], 10);
-console.log(str1 );
+// console.log('*str1 ' + str1 );
 
 //start 20 and end is last day of month
-console.log('lastday ' + lastday );
+// console.log('lastday ' + lastday );
 if(str1 > 20  && str1 <= lastday ) {
 
 tmp.day =str1 +'/' + prevMonth + '/' + year1;
@@ -210,6 +211,15 @@ let otTime = `${hours1}.${scaledMinutes1}` || '0';
 tmp.otTimes = otTime || '0';
 
 
+//check special day work
+if(element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
+  tmp.workRate = element.specialtSalary || '';
+  tmp.workRateMultiply = Number(element.specialtSalary || 0 ) / Number(wpResponse1.data.workRate || 0);
+
+  tmp.workRateOT = element.specialtSalaryOT || '';
+  tmp.workRateOTMultiply = Number(element.specialtSalaryOT || 0) / (Number(wpResponse1.data.workRate || 0) /8);
+
+}else {
 //check special day off 
 if(specialDayOff1.includes(Number(str1) ) ) {
 //calculator special day off
@@ -220,17 +230,20 @@ tmp.workRateMultiply = wpResponse1.data.holiday || '';
 let workRateOT = ((wpResponse1.data.holidayOT * (wpResponse1.data.workRate / 8 ) ) * Number(otTime ));
 tmp.workRateOT = workRateOT  || '';
 tmp.workRateOTMultiply = wpResponse1.data.holidayOT || '0';
-
+workRate  = 0;
+workRateOT  = 0;
 } else 
 if(dayOffCheck1.includes(str1 )  ){
 //calculator day off
-let workRate = ((wpResponse1.data.dayoffRateHour * (wpResponse1.data.workRate /8 ) ) * Number(allTime));
+let workRate = ((Number(wpResponse1.data.dayoffRateHour || 0) * (Number(wpResponse1.data.workRate || 0) /8 ) ) * Number(allTime));
 tmp.workRate = workRate || '';
 tmp.workRateMultiply = wpResponse1.data.dayoffRateHour || '';
 
 let workRateOT = ((wpResponse1.data.dayoffRateOT * (wpResponse1.data.workRate /8) ) * Number(otTime ));
 tmp.workRateOT = workRateOT || '';
 tmp.workRateOTMultiply = wpResponse1.data.dayoffRateOT || '';
+workRate  = 0;
+workRateOT  = 0;
 
 } else {
 //calculator 
@@ -241,9 +254,11 @@ tmp.workRateMultiply = '1';
 let workRateOT = (((wpResponse1.data.workRate /8 ) * wpResponse1.data.workRateOT )* Number(otTime )).toFixed(2);
 tmp.workRateOT = workRateOT  || '0';
 tmp.workRateOTMultiply = wpResponse1.data.workRateOT || '0';
+workRate  = 0;
+workRateOT  = 0;
 
 }
-
+} //end check special day work
 
 tmp.addSalaryDay = '';
 
@@ -292,7 +307,7 @@ return dateA - dateB;
   if(data.recordworkplace.length !== 0) {
 //get workplaceId in first employee_workplaceRecord
 // let wpId = data.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
-let wpId  = '399-751';
+let wpId  = dataEmp.employees[0].workplace || '';
 
 const wpDataCalculator = {
   month: month || '',
@@ -350,6 +365,15 @@ let otTime = `${hours1}.${scaledMinutes1}` || '0';
 
   tmp.otTimes = otTime || '0';
 
+//check special day work
+if(element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
+  tmp.workRate = element.specialtSalary || '';
+  tmp.workRateMultiply = Number(element.specialtSalary || 0 ) / Number(wpResponse1.data.workRate || 0);
+
+  tmp.workRateOT = element.specialtSalaryOT || '';
+  tmp.workRateOTMultiply = Number(element.specialtSalaryOT || 0) / (Number(wpResponse1.data.workRate || 0) / 8);
+
+}else {
 
   //check special day off 
 if(specialDayOff.includes(Number(str1) ) ) {
@@ -384,7 +408,7 @@ tmp.workRateOTMultiply = wpResponse.data.dayoffRateOT || '';
   tmp.workRateOTMultiply = wpResponse.data.workRateOT || '0';
 
 }
-
+} //end check special day work
 
   tmp.addSalaryDay = '';
   
