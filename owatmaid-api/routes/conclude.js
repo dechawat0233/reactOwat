@@ -167,6 +167,7 @@ if(dayOff1.length !== 0) {
 await dayOff1.forEach(item => {
 let dateoffParts = item.split('-');
 let   str2 = parseInt(dateoffParts[2], 10);
+str2  -= 1;
 // console.log(str2 );
 dayOffCheck1.push(str2 );
 });
