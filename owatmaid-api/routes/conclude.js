@@ -152,8 +152,8 @@ if(data1.recordworkplace.length !== 0){
 let wpId1  = dataEmp.employees[0].workplace || '';
 
 const wpDataCalculator1 = await {
-month: prevMonth || '',
-year: year1 || '',
+month: month || '',
+year: year || '',
 workplaceId: wpId1
 };
 
@@ -167,7 +167,6 @@ if(dayOff1.length !== 0) {
 await dayOff1.forEach(item => {
 let dateoffParts = item.split('-');
 let   str2 = parseInt(dateoffParts[2], 10);
-str2  -= 1;
 // console.log(str2 );
 dayOffCheck1.push(str2 );
 });
