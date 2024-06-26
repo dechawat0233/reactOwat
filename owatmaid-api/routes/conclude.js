@@ -178,10 +178,10 @@ const tmp = {};
 
 let dateParts = element.date.split('/');
 let   str1 = parseInt(dateParts[0], 10);
-console.log('*str1 ' + str1 );
+// console.log('*str1 ' + str1 );
 
 //start 20 and end is last day of month
-console.log('lastday ' + lastday );
+// console.log('lastday ' + lastday );
 if(str1 > 20  && str1 <= lastday ) {
 
 tmp.day =str1 +'/' + prevMonth + '/' + year1;
@@ -229,7 +229,8 @@ tmp.workRateMultiply = wpResponse1.data.holiday || '';
 let workRateOT = ((wpResponse1.data.holidayOT * (wpResponse1.data.workRate / 8 ) ) * Number(otTime ));
 tmp.workRateOT = workRateOT  || '';
 tmp.workRateOTMultiply = wpResponse1.data.holidayOT || '0';
-
+workRate  = 0;
+workRateOT  = 0;
 } else 
 if(dayOffCheck1.includes(str1 )  ){
 //calculator day off
@@ -240,6 +241,8 @@ tmp.workRateMultiply = wpResponse1.data.dayoffRateHour || '';
 let workRateOT = ((wpResponse1.data.dayoffRateOT * (wpResponse1.data.workRate /8) ) * Number(otTime ));
 tmp.workRateOT = workRateOT || '';
 tmp.workRateOTMultiply = wpResponse1.data.dayoffRateOT || '';
+workRate  = 0;
+workRateOT  = 0;
 
 } else {
 //calculator 
@@ -250,6 +253,8 @@ tmp.workRateMultiply = '1';
 let workRateOT = (((wpResponse1.data.workRate /8 ) * wpResponse1.data.workRateOT )* Number(otTime )).toFixed(2);
 tmp.workRateOT = workRateOT  || '0';
 tmp.workRateOTMultiply = wpResponse1.data.workRateOT || '0';
+workRate  = 0;
+workRateOT  = 0;
 
 }
 } //end check special day work
