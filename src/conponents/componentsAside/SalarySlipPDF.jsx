@@ -556,9 +556,9 @@ function SalarySlipPDF() {
             //     valueArray.push(formattedAmountHoliday.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
             //     console.log('9');
             // }
-            if (responseDataAll[i + 1].accountingRecord[0].amountSpecialDay != 0 && responseDataAll[i + 1].accountingRecord[0].amountSpecialDay != null) {
+            if (responseDataAll[i].accountingRecord[0].amountSpecialDay != 0 && responseDataAll[i].accountingRecord[0].amountSpecialDay != null) {
 
-                const accountingRecord = responseDataAll[i + 1].accountingRecord?.[0];
+                const accountingRecord = responseDataAll[i].accountingRecord?.[0];
 
                 //     textArray.push('วันหยุดนักขัติฤกษ์');
                 // // countArray.push(countSpecialDayListWork.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
@@ -979,7 +979,7 @@ function SalarySlipPDF() {
                         const countOtHour = parseFloat(accountingRecord.amountOneFive);
 
                         console.log('amountOt', amountOt);
-                        
+
                         if (countOtHour != 0 && countOtHour != null) {
                             // Push the text to textArray and the value to valueArray
                             textArray.push('ค่าล่วงเวลา 1.5 เท่า');
