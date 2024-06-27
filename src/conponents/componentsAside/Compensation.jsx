@@ -396,7 +396,7 @@ function Compensation() {
                 //create conclude
                 const response = await axios.post(endpoint + '/conclude/autocreate', serchConclude);
 // alert(response .data);
-                // alert("กำลังประมวลผล กรุณาค้นหาอีกครั้งหากยังไม่พบกรุณาตรวจสอบการลงเวลา");
+                alert("กำลังประมวลผล กรุณาค้นหาอีกครั้งหากยังไม่พบกรุณาตรวจสอบการลงเวลา");
         } catch (e) {
             console.log(e);
             alert(e);
@@ -438,8 +438,8 @@ function Compensation() {
             if (response.data.recordConclude.length < 1) {
                 // alert('conclude is null');
                 //create conclude
-                // const response = await axios.post(endpoint + '/conclude/autocreate', serchConclude);
-                // alert("กำลังประมวลผล กรุณาค้นหาอีกครั้งหากยังไม่พบกรุณาตรวจสอบการลงเวลา");
+                const response = await axios.post(endpoint + '/conclude/autocreate', serchConclude);
+                alert("กำลังประมวลผล กรุณาค้นหาอีกครั้งหากยังไม่พบกรุณาตรวจสอบการลงเวลา");
             } else {
                 //check update time record then reset data conclude
                 // await alert(editStatus);
