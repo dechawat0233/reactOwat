@@ -247,11 +247,10 @@ function Examine() {
 
     useEffect(() => {
         localStorage.setItem('staffFullName', staffFullName);
-    }, [staffFullName]); 
+    }, [staffFullName]); async function handleSearch(event) {
 
-    async function handleSearch(event) {
+
         event.preventDefault();
-
         await localStorage.setItem('employeeId', searchEmployeeId);
         await localStorage.setItem('month', month);
         await localStorage.setItem('year', year);
@@ -819,8 +818,6 @@ function Examine() {
                                 <br />
                                 <div class="row">
                                     <div class="col-md-12">
-                                    {resultArrayWithWorkplaceRecords.length}
-
                                         <table border="1" class="table table-bordered">
                                             <thead>
                                                 <tr>
@@ -876,6 +873,7 @@ function Examine() {
                                                             </td>
                                                         </tr>
                                                     ))} */}
+
 
                                                 {resultArrayWithWorkplaceRecords.map((workplaceRecord, index) => (
                                                     workplaceRecord.editdata == true ? (
@@ -950,7 +948,7 @@ function Examine() {
                     </section>
                 </div>
             </div>
-{/* {JSON.stringify(AlldayworkLower || '' ,null,2)} */}
+
         </body>
         // </div>
     )
