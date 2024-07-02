@@ -1149,7 +1149,7 @@ function Compensation() {
     console.log("Count:", sumWorkRate.count);
 
     //edit data table
-    const [formData, setFormData] = useState({ day: '', workplaceId: '', allTimes: '', workRate: '', otTimes: '', workRateOT: '', addSalaryDay: '' });
+    const [formData, setFormData] = useState({ day: '', workplaceId: '', allTimes: '', workRate: '', workRateMultiply: '' ,otTimes: '', workRateOT: '',workRateOTMultiply: '', addSalaryDay: '' });
     const [dataTable, setDataTable] = useState([]);
     const [editIndex, setEditIndex] = useState(null);
     const [loadStatus, setLoadStatus] = useState(null);
@@ -1181,8 +1181,8 @@ function Compensation() {
 
     const editData = (index) => {
         setEditIndex(index);
-        const { day, workplaceId, allTimes, workRate, otTimes, workRateOT, addSalaryDay } = dataTable[index];
-        setFormData({ day, workplaceId, allTimes, workRate, otTimes, workRateOT, addSalaryDay });
+        const { day, workplaceId, allTimes, workRate, workRateMultiply, otTimes, workRateOT, workRateOTMultiply, addSalaryDay } = dataTable[index];
+        setFormData({ day, workplaceId, allTimes, workRate, workRateMultiply, otTimes, workRateOT, workRateOTMultiply, addSalaryDay });
     };
 
 
@@ -1680,8 +1680,9 @@ function Compensation() {
                                                                     workplaceRecord.allTimes}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {editIndex === index ?
-                                                                    <input type="text" className="form-control" value={formData.workRate} onChange={handleInputChange} name="workRate" /> :
+                                                                {editIndex === index ? (
+                                                                    <><input type="text" className="form-control" value={formData.workRate} onChange={handleInputChange} name="workRate" />
+                                                                    <input type="hidden" className="form-control" value={formData.workRateMultiply} onChange={handleInputChange} name="workRateMultiply" />  </>):
                                                                     workplaceRecord.workRate}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
@@ -1691,8 +1692,9 @@ function Compensation() {
                                                             </td>
 
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {editIndex === index ?
-                                                                    <input type="text" className="form-control" value={formData.workRateOT} onChange={handleInputChange} name="workRateOT" /> :
+                                                                {editIndex === index ?(
+                                                                    <><input type="text" className="form-control" value={formData.workRateOT} onChange={handleInputChange} name="workRateOT" /> 
+                                                                    <input type="hidden" className="form-control" value={formData.workRateOTMultiply} onChange={handleInputChange} name="workRateOTMultiply" /> </>):
                                                                     workplaceRecord.workRateOT}
                                                             </td>
                                                             <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
