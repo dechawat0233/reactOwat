@@ -379,8 +379,10 @@ function Examine() {
         const matchingEntry = alldaywork.find((entry) => entry.dates === (number < 10 ? '0' + number : '' + number));
 
         if (matchingEntry) {
+
             return `${number}, workplaceId: '${matchingEntry.workplaceId}', allTimes: '${matchingEntry.allTimes}', otTimes: '${matchingEntry.otTimes}'`;
         } else {
+
             return `${number}, workplaceId: '', allTimes: '', otTimes: ''`;
         }
     });
@@ -414,9 +416,135 @@ function Examine() {
     const [countWd, setCountWd] = useState(0);
 
     const resultArrayWithWorkplaceRecords = resultArray2.map(date => {
-        const matchingRecord = resultAllwork.find(record => record.dates == date);
-        return matchingRecord ? { ...matchingRecord } : '';
+        // const matchingRecord = resultAllwork.find(record => record.dates == date);
+        
+        const matchingRecord = allworkFlattened.filter(record => record.dates == date);
+if(matchingRecord.length > 1) {
+    // alert(date);
+    // return matchingRecord ? { ...matchingRecord[1] } : '';
+let r = {};
+    for(let i =0; i < matchingRecord.length; i++ ){
+                // Iterate over each key-value pair in the current record
+                for (let [key, value] of Object.entries(matchingRecord[i])) {
+                    // Create a unique key by appending the index to the original key
+                    r[`${key}_${i}`] = value;
+                }
+    }
+    // alert(JSON.stringify(r,null,2));
+    return r;
+} else {
+    // alert(JSON.stringify(matchingRecord[0] ,null,2))
+        return matchingRecord ? { ...matchingRecord[0] } : '';
+}
     });
+
+    const rowData = (workplaceRecord , d ,d1 , commonNumbersArray , commonNumbers) =>  {
+        const recordKeys = Object.keys(workplaceRecord);
+
+        if(recordKeys .length <= 0) {
+
+            const rows = [];
+            rows.push(
+                <tr>
+                                                {/* <td style={commonNumbersArray.includes(workplaceRecord[`workplaceId_${i}`]?.toString()) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}> */}
+                                                <td style={commonNumbersArray.includes(d1.toString()) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+{d}
+                            </td>
+                            <td style={[...commonNumbers].includes(d1) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}></td>
+                            <td style={[...commonNumbers].includes(d1) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}></td>
+                            <td style={[...commonNumbers].includes(d1) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}></td>
+                            <td style={[...commonNumbers].includes(d1) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}></td>
+                            <td style={[...commonNumbers].includes(d1) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}></td>
+                            <td style={[...commonNumbers].includes(d1) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}></td>
+                            <td style={[...commonNumbers].includes(d1) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}></td>
+
+                            
+                            {/* <td style={commonNumbersArray.includes(workplaceRecord[`workplaceId_${i}`]?.toString()) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}></td>
+                            <td style={commonNumbersArray.includes(workplaceRecord[`startTime_${i}`]?.toString()) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}></td>
+                            <td style={commonNumbersArray.includes(workplaceRecord[`endTime_${i}`]?.toString()) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}></td>
+                            <td style={commonNumbersArray.includes(workplaceRecord[`selectotTime_${i}`]?.toString()) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}></td>
+                            <td style={commonNumbersArray.includes(workplaceRecord[`selectotTimeOut_${i}`]?.toString()) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}></td>
+                            <td style={commonNumbersArray.includes(workplaceRecord[`allTimes_${i}`]?.toString()) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}></td>
+                            <td style={commonNumbersArray.includes(workplaceRecord[`otTimes_${i}`]?.toString()) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}></td> */}
+
+                </tr>
+            );
+                                
+            return rows;
+
+        }
+        const numRecords = Math.max(...recordKeys.map(key => {
+            const match = key.match(/_(\d+)$/);
+            return match ? parseInt(match[1]) : 0;
+        })) + 1;
+
+                // Generate rows for each index
+                const rows = [];
+                for (let i = 0; i < numRecords; i++) {
+                    rows.push(
+                        <tr key={i}>
+                            {/* <td style={commonNumbersArray.includes(workplaceRecord[`workplaceId_${i}`]?.toString()) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}> */}
+                            <td style={commonNumbersArray.includes(d1.toString()) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+{d}
+                            </td>
+                            <td style={[...commonNumbers].includes(d1) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>                                
+                                {workplaceRecord[`workplaceId_${i}`] || workplaceRecord.workplaceId}
+                            </td>
+                            <td style={[...commonNumbers].includes(d1) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>                                
+                                {workplaceRecord[`startTime_${i}`] || workplaceRecord.startTime}
+                            </td>
+                            <td style={[...commonNumbers].includes(d1) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>                                
+                                {workplaceRecord[`endTime_${i}`] || workplaceRecord.endTime}
+                            </td>
+                            <td style={[...commonNumbers].includes(d1) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                {workplaceRecord[`selectotTime_${i}`] || workplaceRecord.selectotTime}
+                            </td>
+                            <td style={[...commonNumbers].includes(d1) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                {workplaceRecord[`selectotTimeOut_${i}`] || workplaceRecord.selectotTimeOut}
+                            </td>
+                            <td style={[...commonNumbers].includes(d1) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                {workplaceRecord[`allTimes_${i}`] || workplaceRecord.allTimes}
+                            </td>
+                            <td style={[...commonNumbers].includes(d1) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                {workplaceRecord[`otTimes_${i}`] || workplaceRecord.otTimes}
+                            </td>
+                        </tr>
+                    );
+                }
+                return rows;
+//         <tr key={index}>
+
+//         <td style={commonNumbersArray.includes(resultArray2[index].toString()) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+//             {/* {resultArray[index]} */}
+// {JSON.stringify( Object.keys(workplaceRecord).length) }
+//         </td>
+//         <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+//             {workplaceRecord.workplaceId}
+//         </td>
+//         <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+//             {workplaceRecord.startTime}
+//         </td>
+//         <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+//             {workplaceRecord.endTime}
+//         </td>
+//         <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+//             {workplaceRecord.selectotTime}
+//         </td>
+//         <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+//             {workplaceRecord.selectotTimeOut}
+//         </td>
+//         <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+//             {workplaceRecord.allTimes}
+//         </td>
+//         <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+//             {workplaceRecord.otTimes}
+//         </td>
+//         {/* <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+//                 <a href="https://example.com" class="link1" style={{ color: 'red' }}><b>ลบ</b></a> / <a href="#" onClick={(e) => editdata(index, workplaceRecord)} class="link2" style={{ color: 'blue' }}><b>แก้ไข</b></a>
+//             </td> */}
+//     </tr>
+
+    }
 
     console.log('resultArrayWithWorkplaceRecords', resultArrayWithWorkplaceRecords);
 
@@ -819,7 +947,6 @@ function Examine() {
                                 <br />
                                 <div class="row">
                                     <div class="col-md-12">
-                                    {resultArrayWithWorkplaceRecords.length}
 
                                         <table border="1" class="table table-bordered">
                                             <thead>
@@ -878,44 +1005,46 @@ function Examine() {
                                                     ))} */}
 
                                                 {resultArrayWithWorkplaceRecords.map((workplaceRecord, index) => (
+
                                                     workplaceRecord.editdata == true ? (
                                                         <tr>
                                                             <td><input type="text" /></td>
                                                         </tr>
                                                     ) : (
+<>                                                    {rowData(workplaceRecord , resultArray[index] , resultArray2[index] , commonNumbersArray , commonNumbers)}
+</>                                                        
+//                                                         <tr key={index}>
+//                                                             {/* <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}> */}
+//                                                             {/* <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}> */}
 
-                                                        <tr key={index}>
-                                                            {/* <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}> */}
-                                                            {/* <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}> */}
-                                                            <td style={commonNumbersArray.includes(resultArray2[index].toString()) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-
-                                                                {resultArray[index]}
-                                                            </td>
-                                                            <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {workplaceRecord.workplaceId}
-                                                            </td>
-                                                            <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {workplaceRecord.startTime}
-                                                            </td>
-                                                            <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {workplaceRecord.endTime}
-                                                            </td>
-                                                            <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {workplaceRecord.selectotTime}
-                                                            </td>
-                                                            <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {workplaceRecord.selectotTimeOut}
-                                                            </td>
-                                                            <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {workplaceRecord.allTimes}
-                                                            </td>
-                                                            <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                {workplaceRecord.otTimes}
-                                                            </td>
-                                                            {/* <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
-                                                                    <a href="https://example.com" class="link1" style={{ color: 'red' }}><b>ลบ</b></a> / <a href="#" onClick={(e) => editdata(index, workplaceRecord)} class="link2" style={{ color: 'blue' }}><b>แก้ไข</b></a>
-                                                                </td> */}
-                                                        </tr>
+//                                                             <td style={commonNumbersArray.includes(resultArray2[index].toString()) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+                                                                //  {resultArray[index]} 
+//                                                             </td>
+//                                                             <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+//                                                                 {workplaceRecord.workplaceId}
+//                                                             </td>
+//                                                             <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+//                                                                 {workplaceRecord.startTime}
+//                                                             </td>
+//                                                             <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+//                                                                 {workplaceRecord.endTime}
+//                                                             </td>
+//                                                             <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+//                                                                 {workplaceRecord.selectotTime}
+//                                                             </td>
+//                                                             <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+//                                                                 {workplaceRecord.selectotTimeOut}
+//                                                             </td>
+//                                                             <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+//                                                                 {workplaceRecord.allTimes}
+//                                                             </td>
+//                                                             <td style={[...commonNumbers].includes(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+//                                                                 {workplaceRecord.otTimes}
+//                                                             </td>
+//                                                             {/* <td style={commonNumbers.has(resultArray2[index]) ? { ...cellStyle, backgroundColor: 'yellow' } : cellStyle}>
+//                                                                     <a href="https://example.com" class="link1" style={{ color: 'red' }}><b>ลบ</b></a> / <a href="#" onClick={(e) => editdata(index, workplaceRecord)} class="link2" style={{ color: 'blue' }}><b>แก้ไข</b></a>
+//                                                                 </td> */}
+//                                                         </tr>
                                                     )
 
 

@@ -180,7 +180,7 @@ const tmp = {};
 
 let dateParts = element.date.split('/');
 let   str1 = parseInt(dateParts[0], 10);
-// console.log('*str1 ' + str1 );
+console.log('*str1 ' + str1 );
 
 //start 20 and end is last day of month
 // console.log('lastday ' + lastday );
