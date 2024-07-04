@@ -476,20 +476,33 @@ await addSalaryList.push(addSalaryDaily);
 dataConclude.addSalary = addSalaryList;
 
 try {
+      // Delete all documents matching the year, month, and employeeId
+      const result = await Conclude.deleteMany({
+        year: dataConclude.year,
+        month: dataConclude.month,
+        employeeId: dataConclude.employeeId
+      });
+
+      if (result.deletedCount > 0) {
+        // res.status(200).send(`${result.deletedCount} record(s) deleted`);
+    console.log('Existing record deleted');
+      } else {
+        // res.status(404).send('No matching records found');
+      }  
   // Find the existing document by year, month, and employeeId
-  const existingRecord = await conclude.findOne({
-    year: dataConclude.year,
-    month: dataConclude.month,
-    employeeId: dataConclude.employeeId
-  });
+  // const existingRecord = await conclude.findOne({
+  //   year: dataConclude.year,
+  //   month: dataConclude.month,
+  //   employeeId: dataConclude.employeeId
+  // });
 
   // If an existing record is found, delete it
-  if (existingRecord) {
-    await conclude.deleteOne({
-      _id: existingRecord._id
-    });
-    console.log('Existing record deleted');
-  }
+  // if (existingRecord) {
+  //   await conclude.deleteOne({
+  //     _id: existingRecord._id
+  //   });
+  //   console.log('Existing record deleted');
+  // }
 
   if(concludeRecord .length !== 0){
   // Create a new Conclude document
