@@ -477,7 +477,7 @@ dataConclude.addSalary = addSalaryList;
 
 try {
       // Delete all documents matching the year, month, and employeeId
-      const result = await Conclude.deleteMany({
+      const result = await conclude.deleteMany({
         year: dataConclude.year,
         month: dataConclude.month,
         employeeId: dataConclude.employeeId
