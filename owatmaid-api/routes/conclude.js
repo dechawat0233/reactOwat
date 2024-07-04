@@ -692,6 +692,26 @@ router.put('/update/:concludeRecordId', async (req, res) => {
 });
 
 
+router.post('/delete-records', async (req, res) => {
+  const dataConclude = req.body;
+
+  try {
+    // Delete all documents matching the year, month, and employeeId
+    const result = await conclude.deleteMany({
+      year: dataConclude.year,
+      month: dataConclude.month,
+      employeeId: dataConclude.employeeId
+    });
+
+    if (result.deletedCount > 0) {
+      res.status(200).send(`${result.deletedCount} record(s) deleted`);
+    } else {
+      res.status(404).send('No matching records found');
+    }
+  } catch (error) {
+    res.status(500).send('Error deleting records: ' + error.message);
+  }
+});
 
 
 module.exports = router;
