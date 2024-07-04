@@ -161,8 +161,8 @@ workplaceId: wpId1
 //get workplace data for calculator
 const wpResponse1 = await axios.post(sURL + '/workplace/caldata', wpDataCalculator1 );
 // console.log(JSON.stringify( wpResponse1.data, null,2) );
-const dayOff1 = await wpResponse1.data.workplaceDayOffList;
-const specialDayOff1 = await wpResponse1.data.specialDaylist;
+const dayOff1 = await wpResponse1.data.workplaceDayOffList || [];
+const specialDayOff1 = await wpResponse1.data.specialDaylist || [];
 const dayOffCheck1 = [];
 if(dayOff1.length !== 0) {
 await dayOff1.forEach(item => {
