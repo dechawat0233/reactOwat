@@ -161,8 +161,8 @@ workplaceId: wpId1
 //get workplace data for calculator
 const wpResponse1 = await axios.post(sURL + '/workplace/caldata', wpDataCalculator1 );
 // console.log(JSON.stringify( wpResponse1.data, null,2) );
-const workOfHour = await wpResponse1.data.workOfHour || '';
-const workOfOT  = await wpResponse1.data.workOfOT  || '';
+const workOfHour = await wpResponse1.data.workOfHour || 0;
+const workOfOT  = await wpResponse1.data.workOfOT  || 0;
 
 const dayOff1 = await wpResponse1.data.workplaceDayOffList || [];
 const specialDayOff1 = await wpResponse1.data.specialDaylist || [];
@@ -287,9 +287,9 @@ tmp.workRate = workRate  || '';
 tmp.workRateMultiply = '1';
 
 //limit OT Hour
-// if(Number(otTime ) < workOfOT && workOfOT !== 0) {
+if(Number(otTime ) < workOfOT && workOfOT !== 0) {
   workOfOT = Number(otTime ) || 0;
-// }
+}
 let workRateOT = (((salary /8 ) * wpResponse1.data.workRateOT )* Number(workOfOT)).toFixed(2);
 tmp.workRateOT = workRateOT  || '0';
 tmp.workRateOTMultiply = wpResponse1.data.workRateOT || '0';
