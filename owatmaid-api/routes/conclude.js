@@ -194,6 +194,7 @@ for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
 
     let scaledMinutes = (minutes * 100) / 60;
     let allTime = Number(`${hours}.${scaledMinutes}` || '0');
+
     tmp.allTimes = `${hours}.${scaledMinutes}` || '0';
 
     let parts1 = element.otTime.split('.');
@@ -221,6 +222,8 @@ for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
 
         if (allTime >= workOfHour) {
           allTime = workOfHour;
+              tmp.otTimes = otTime || '0';
+
         }
 
         let workRate = ((wpResponse1.data.holiday * (salary / 8)) * Number(allTime));
@@ -229,6 +232,7 @@ for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
 
         if (otTime >= workOfOT) {
           otTime = workOfOT;
+          tmp.otTimes = otTime || '0';
         }
 
         let workRateOT = ((wpResponse1.data.holidayOT * (salary / 8)) * Number(otTime));
@@ -252,6 +256,7 @@ for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
 
         if (otTime >= workOfOT) {
           otTime = workOfOT;
+          tmp.otTimes = otTime || '0';
         }
 
         let workRateOT = ((wpResponse1.data.dayoffRateOT * (salary / 8)) * Number(otTime));
@@ -275,6 +280,7 @@ for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
 
         if (otTime >= workOfOT) {
           otTime = workOfOT;
+          tmp.otTimes = otTime || '0';
         }
 
         let workRateOT = (((salary / 8) * wpResponse1.data.workRateOT) * Number(otTime)).toFixed(2);
@@ -300,153 +306,6 @@ if (!x) {
 }
 }
 
-// await data1.recordworkplace[0].employee_workplaceRecord.forEach(async  element => {
-// // console.log(element.workplaceId);
-// const tmp = await {};
-
-// let dateParts = await element.date.split('/');
-// let   str1 = await parseInt(dateParts[0], 10);
-// console.log('*str1 ' + str1 );
-
-// //start 20 and end is last day of month
-// // console.log('lastday ' + lastday );
-// if(str1 > 20  && str1 <= lastday ) {
-
-// tmp.day = await str1 +'/' + prevMonth + '/' + year1;
-// tmp.workplaceId = await element.workplaceId || '';
-// let parts = await element.allTime.split('.');
-
-// // Extract hours and minutes
-// let hours = await parseInt(parts[0], 10) || 0;
-// let minutes = await parts.length > 1 ? parseInt(parts[1], 10) : 0;
-
-// // Scale the minutes
-// let scaledMinutes = await (minutes * 100) / 60;
-// let allTime = await Number(`${hours}.${scaledMinutes}` || '0');
-// tmp.allTimes = await `${hours}.${scaledMinutes}` || '0';
-
-// let parts1 = await element.otTime.split('.');
-
-// // Extract hours and minutes
-// let hours1 = await parseInt(parts1[0], 10) || 0;
-// let minutes1 = await parts1.length > 1 ? parseInt(parts1[1], 10) : 0;
-
-// // Scale the minutes
-// let scaledMinutes1 = await (minutes1 * 100) / 60;
-// let otTime = await Number(`${hours1}.${scaledMinutes1}` || '0');
-
-// tmp.otTimes = await otTime || '0';
-
-
-// //check special day work
-// if(element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
-//   tmp.workRate = await element.specialtSalary || '';
-//   tmp.workRateMultiply = await Number(element.specialtSalary || 0 ) / Number(wpResponse1.data.workRate || 0);
-
-//   tmp.workRateOT = await element.specialtSalaryOT || '';
-//   tmp.workRateOTMultiply = await Number(element.specialtSalaryOT || 0) / (Number(wpResponse1.data.workRate || 0) /8);
-
-// }else {
-// //check special day off 
-// if(specialDayOff1.includes(Number(str1) ) ) {
-// //calculator special day off
-// if(salary === 0) {
-//   salary = await wpResponse1.data.workRate;
-//   }
-
-//   //limit Hour
-//   if(allTime >= workOfHour) {
-//     allTime = await workOfHour;
-//   }
-    
-// let workRate = await ((wpResponse1.data.holiday * (salary / 8) ) * Number(allTime));
-// tmp.workRate = await workRate  || '';
-// tmp.workRateMultiply = await wpResponse1.data.holiday || '';
-
-// if(otTime  >= workOfOT ) {
-//   otTime = await workOfOT;
-// }
-
-// let workRateOT = await ((wpResponse1.data.holidayOT * (salary / 8 ) ) * Number(otTime));
-// tmp.workRateOT = await workRateOT  || '';
-// tmp.workRateOTMultiply = await wpResponse1.data.holidayOT || '0';
-// workRate  = await 0;
-// workRateOT  = await 0;
-// } else 
-// if(dayOffCheck1.includes(str1 )  ){
-// //calculator day off
-// if(salary === 0) {
-// salary = await wpResponse1.data.workRate;
-// }
-
-//   //limit Hour
-//   if(allTime >= workOfHour) {
-//     allTime = await workOfHour;
-//   }
-  
-// let workRate = await ((Number(wpResponse1.data.dayoffRateHour || 0) * (Number(salary || 0) /8 ) ) * Number(allTime));
-// tmp.workRate = await workRate || '';
-// tmp.workRateMultiply = await wpResponse1.data.dayoffRateHour || '';
-
-// //limit OT Hour
-// if(otTime  >= workOfOT ) {
-//   otTime = await workOfOT;
-// }
-
-// let workRateOT = await ((wpResponse1.data.dayoffRateOT * (salary /8) ) * Number(otTime));
-// tmp.workRateOT = await workRateOT || '';
-// tmp.workRateOTMultiply = await wpResponse1.data.dayoffRateOT || '';
-// workRate  = await 0;
-// workRateOT  = await 0;
-
-// } else {
-// //calculator 
-// if(salary === 0) {
-//   salary = await wpResponse1.data.workRate;
-//   }
-   
-//   //limit Hour
-// if(allTime >= workOfHour) {
-//   allTime = await workOfHour;
-// }
-// let workRate = await ((salary / 8) * Number(allTime)).toFixed(2);
-// tmp.workRate = await workRate  || '';
-// tmp.workRateMultiply = await '1';
-
-// //limit OT Hour
-// if(otTime  >= workOfOT ) {
-//   otTime = await workOfOT;
-// }
-
-// let workRateOT = await (((salary /8 ) * wpResponse1.data.workRateOT )* Number(otTime) ).toFixed(2);
-// tmp.workRateOT = await workRateOT  || '0';
-// tmp.workRateOTMultiply = await wpResponse1.data.workRateOT || '0';
-// workRate  = await 0;
-// workRateOT  = await 0;
-
-// }
-// } //end check special day work
-
-// tmp.addSalaryDay = await '';
-
-// await concludeRecord.push(tmp);
-// } //end if
-// });
-// }
-
-// //check day is null and place data 
-//  for(let i = 21; i <= lastday ; i++){
-// // tmp.day =str1 +'/' + month + '/' + year;
-// let d = await i +'/' + prevMonth + '/' + year1;
-// // console.log('d ' + d);
-// let x = await concludeRecord.some(record => record.day == d);
-
-// if(x) {
-// // console.log('i ' + d);
-// } else {
-//   await concludeRecord.push({'day': d});
-// }
-// }
 
 // Sort the array by date directly in the main code
 await concludeRecord.sort((a, b) => {
