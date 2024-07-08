@@ -1228,7 +1228,13 @@ const dayW = [];
 
 
     // Get employee data by employeeId
-    const response = await axios.get(sURL + '/employee/' + '670427');
+    if(responseConclude.data.recordConclude[c].employeeId === '') {
+      const response = null;
+    } else {
+      const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
+    }
+
+    // const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
     if (response) {
         data.workplace = await response.data.workplace || '';
         data.accountingRecord.tax = await response.data.tax ||0;
