@@ -211,7 +211,7 @@ let minutes1 = await parts1.length > 1 ? parseInt(parts1[1], 10) : 0;
 // Scale the minutes
 let scaledMinutes1 = await (minutes1 * 100) / 60;
 let otTime = await `${hours1}.${scaledMinutes1}` || '0';
-
+console.log('otTime ' + otTime );
 tmp.otTimes = await otTime || '0';
 
 
@@ -289,8 +289,6 @@ tmp.workRateMultiply = await '1';
 //limit OT Hour
 if(Number(otTime) < Number(workOfOT) ) {
   // workOfOT = await otTime;
-  workOfOT = await Number(otTime || 0);
-
 }
 
 let workRateOT = await (((salary /8 ) * wpResponse1.data.workRateOT )* Number(workOfOT) ).toFixed(2);
