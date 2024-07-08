@@ -287,8 +287,8 @@ tmp.workRate = workRate  || '';
 tmp.workRateMultiply = '1';
 
 //limit OT Hour
-if(Number(otTime) < Number(workOfOT) ) {
-  workOfOT = otTime;
+if(Number(otTime || 0) < Number(workOfOT) ) {
+  workOfOT = otTime || 0 ;
 }
 let workRateOT = (((salary /8 ) * wpResponse1.data.workRateOT )* Number(workOfOT) ).toFixed(2);
 tmp.workRateOT = workRateOT  || '0';
