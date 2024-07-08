@@ -540,7 +540,7 @@ router.get('/list', async (req, res) => {
 });
 
 
-app.get('/concludedelete', async (req, res) => {
+router.get('/concludedelete', async (req, res) => {
   const { year, month, employeeId } = req.query;
 
   if (!year || !month || !employeeId) {
