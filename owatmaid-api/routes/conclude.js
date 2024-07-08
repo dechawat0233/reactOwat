@@ -539,6 +539,31 @@ router.get('/list', async (req, res) => {
   res.json(concludeData );
 });
 
+
+app.get('/concludedelete', async (req, res) => {
+  const { year, month, employeeId } = req.query;
+
+  if (!year || !month || !employeeId) {
+    return res.status(400).send({ message: 'year, month, and employeeId are required.' });
+  }
+
+  try {
+    // Delete documents based on the provided year, month, and employeeId
+    const result = await accounting.deleteMany({ year, month, employeeId });
+
+    // Fetch the remaining documents to send back in the response
+    const remainingData = await conclude.find();
+
+    res.json({
+      message: `${result.deletedCount} document(s) were deleted.`,
+      remainingData
+    });
+  } catch (err) {
+    console.error('Error deleting documents:', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 router.get('/listdelete', async (req, res) => {
 
   try {
