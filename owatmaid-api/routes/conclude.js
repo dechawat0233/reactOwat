@@ -327,7 +327,7 @@ if(x) {
 
   // Remove duplicates by creating a Set of unique days and filtering the array
   const uniqueDays = new Set();
-  concludeRecord = concludeRecord.filter(record => {
+  concludeRecord= await concludeRecord.filter(record => {
     if (uniqueDays.has(record.day) && record.workRate === '') {
       return false;
     } else {
@@ -335,7 +335,7 @@ if(x) {
       return true;
     }
   });
-  
+
 // Sort the array by date directly in the main code
 await concludeRecord.sort((a, b) => {
 const dateA = new Date(a.day.split('/').reverse().join('/'));
