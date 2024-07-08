@@ -41,7 +41,7 @@ router.get('/listdelete', async (req, res) => {
 });
 
 //delete account record by id year and month
-router.get('/listdelete', async (req, res) => {
+router.get('/accountdelete', async (req, res) => {
   const { year, month, employeeId } = req.query;
 
   if (!year || !month || !employeeId) {
