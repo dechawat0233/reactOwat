@@ -145,7 +145,7 @@ const response1 = await axios.post(sURL + '/timerecord/searchemp', searchData1 )
 const data1 = await response1.data;
 // console.log(JSON.stringify( data.recordworkplace) );
 
-await console.log('*x ' + JSON.stringify(data1.recordworkplace , null ,2) );
+// await console.log('*x ' + JSON.stringify(data1.recordworkplace , null ,2) );
 if(data1.recordworkplace.length !== 0){
 //get workplaceId in first employee_workplaceRecord
 // let wpId1 = await data1.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
@@ -179,7 +179,7 @@ console.log('dayOffCheck1' + JSON.stringify(dayOffCheck1,null,2));
 
 data1.recordworkplace[0].employee_workplaceRecord.forEach(async  element => {
 // console.log(element.workplaceId);
-const tmp = {};
+const tmp = await {};
 
 let dateParts = await element.date.split('/');
 let   str1 = await parseInt(dateParts[0], 10);
@@ -241,10 +241,10 @@ tmp.workRate = await workRate  || '';
 tmp.workRateMultiply = await wpResponse1.data.holiday || '';
 
 if(otTime  >= workOfOT ) {
-  otTime = workOfOT;
+  otTime = await workOfOT;
 }
 
-let workRateOT = await await ((wpResponse1.data.holidayOT * (salary / 8 ) ) * Number(otTime));
+let workRateOT = await ((wpResponse1.data.holidayOT * (salary / 8 ) ) * Number(otTime));
 tmp.workRateOT = await workRateOT  || '';
 tmp.workRateOTMultiply = await wpResponse1.data.holidayOT || '0';
 workRate  = await 0;
@@ -267,7 +267,7 @@ tmp.workRateMultiply = await wpResponse1.data.dayoffRateHour || '';
 
 //limit OT Hour
 if(otTime  >= workOfOT ) {
-  otTime = workOfOT;
+  otTime = await workOfOT;
 }
 
 let workRateOT = await ((wpResponse1.data.dayoffRateOT * (salary /8) ) * Number(otTime));
@@ -292,7 +292,7 @@ tmp.workRateMultiply = await '1';
 
 //limit OT Hour
 if(otTime  >= workOfOT ) {
-  otTime = workOfOT;
+  otTime = await workOfOT;
 }
 
 let workRateOT = await (((salary /8 ) * wpResponse1.data.workRateOT )* Number(otTime) ).toFixed(2);
