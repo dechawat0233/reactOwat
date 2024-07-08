@@ -1127,8 +1127,7 @@ router.post('/calsalarylist', async (req, res) => {
     
           for (let c = 0; c < responseConclude.data.recordConclude.length; c++) {
     //check accounting record in database
-    let empId = '670427';
-    // await responseConclude.data.recordConclude[c].employeeId;
+    let empId = await responseConclude.data.recordConclude[c].employeeId;
     console.log('x'+ responseConclude.data.recordConclude[c].employeeId);
 
     if (responseConclude.data.recordConclude[c].employeeId == '' ) {
