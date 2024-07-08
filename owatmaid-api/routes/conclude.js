@@ -210,7 +210,7 @@ let minutes1 = await parts1.length > 1 ? parseInt(parts1[1], 10) : 0;
 
 // Scale the minutes
 let scaledMinutes1 = await (minutes1 * 100) / 60;
-let otTime = await `${hours1}.${scaledMinutes1}` || '0';
+let otTime = await Number(`${hours1}.${scaledMinutes1}` || '0');
 console.log('otTime ' + otTime );
 
 tmp.otTimes = await otTime || '0';
