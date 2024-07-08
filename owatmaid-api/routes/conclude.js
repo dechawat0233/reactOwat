@@ -344,23 +344,19 @@ const wpDataCalculator = {
   workplaceId: wpId
 };
 
-//get workplace data for calculator
-const wpResponse = await axios.post(sURL + '/workplace/caldata', wpDataCalculator );
-  // console.log(JSON.stringify( wpResponse.data, null,2) );
-  const workOfHour = await wpResponse.data.workOfHour || 0;
-  const workOfOT  = await wpResponse.data.workOfOT  || 0;
-  
-    
+const wpResponse = await axios.post(`${sURL}/workplace/caldata`, wpDataCalculator);
+const workOfHour = wpResponse.data.workOfHour || 0;
+const workOfOT = wpResponse.data.workOfOT || 0;
 const dayOff = wpResponse.data.workplaceDayOffList || [];
 const specialDayOff = wpResponse.data.specialDaylist || [];
 const dayOffCheck = [];
-if(dayOff.length !== 0) {
-dayOff.forEach(item => {
-  let dateoffParts = item.split('-');
-let   str2 = parseInt(dateoffParts[2], 10);
-  // console.log(str2 );
-  dayOffCheck.push(str2 );
-});
+
+if (dayOff.length !== 0) {
+  dayOff.forEach(item => {
+    let dateoffParts = item.split('-');
+    let str2 = parseInt(dateoffParts[2], 10);
+    dayOffCheck.push(str2);
+  });
 }
 
 for (const element of data.recordworkplace[0].employee_workplaceRecord) {
@@ -371,7 +367,7 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
   console.log('*str1 ' + str1);
 
   if (str1 > 0 && str1 <= 31) {
-    tmp.day = str1 + '/' + prevMonth + '/' + year1;
+    tmp.day = str1 + '/' + month + '/' + year;
     tmp.workplaceId = element.workplaceId || '';
     let parts = element.allTime.split('.');
 
@@ -484,7 +480,15 @@ let d = i + '/' + prevMonth + '/' + year1;
 let x = concludeRecord.some(record => record.day === d);
 
 if (!x) {
-  concludeRecord.push({ 'day': d });
+  concludeRecord.push({
+    'day': d,
+    'workplaceId': '',
+    'allTimes': '0',
+    'workRate': '0',
+    'otTimes': '0',
+    'workRateOT': '0',
+    'addSalaryDay': '0'
+  });
 }
 }
 
@@ -494,9 +498,29 @@ let d = i + '/' + month + '/' + year;
 let x = concludeRecord.some(record => record.day === d);
 
 if (!x) {
-  concludeRecord.push({ 'day': d });
+  concludeRecord.push({
+    'day': d,
+    'workplaceId': '',
+    'allTimes': '0',
+    'workRate': '0',
+    'otTimes': '0',
+    'workRateOT': '0',
+    'addSalaryDay': '0'
+  });
 }
 }
+
+// Remove duplicates where workRate is empty
+const uniqueRecords = new Set();
+concludeRecord = concludeRecord.filter(record => {
+const key = record.day;
+if (uniqueRecords.has(key) && record.workRate === '') {
+  return false;
+} else {
+  uniqueRecords.add(key);
+  return true;
+}
+});
 
 // Sort the array by date directly in the main code
 concludeRecord.sort((a, b) => {
@@ -504,6 +528,25 @@ const dateA = new Date(a.day.split('/').reverse().join('/'));
 const dateB = new Date(b.day.split('/').reverse().join('/'));
 return dateA - dateB;
 });
+
+// //get workplace data for calculator
+// const wpResponse = await axios.post(sURL + '/workplace/caldata', wpDataCalculator );
+//   // console.log(JSON.stringify( wpResponse.data, null,2) );
+//   const workOfHour = await wpResponse.data.workOfHour || 0;
+//   const workOfOT  = await wpResponse.data.workOfOT  || 0;
+  
+    
+// const dayOff = wpResponse.data.workplaceDayOffList || [];
+// const specialDayOff = wpResponse.data.specialDaylist || [];
+// const dayOffCheck = [];
+// if(dayOff.length !== 0) {
+// dayOff.forEach(item => {
+//   let dateoffParts = item.split('-');
+// let   str2 = parseInt(dateoffParts[2], 10);
+//   // console.log(str2 );
+//   dayOffCheck.push(str2 );
+// });
+// }
 
 
 // data.recordworkplace[0].employee_workplaceRecord.forEach(element => {
