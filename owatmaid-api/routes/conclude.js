@@ -395,21 +395,19 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
 
     if (element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
       tmp.workRate = element.specialtSalary || '';
-      tmp.workRateMultiply = Number(element.specialtSalary || 0) / Number(wpResponse1.data.workRate || 0);
+      tmp.workRateMultiply = Number(element.specialtSalary || 0) / Number(wpResponse.data.workRate || 0);
 
       tmp.workRateOT = element.specialtSalaryOT || '';
-      tmp.workRateOTMultiply = Number(element.specialtSalaryOT || 0) / (Number(wpResponse1.data.workRate || 0) / 8);
+      tmp.workRateOTMultiply = Number(element.specialtSalaryOT || 0) / (Number(wpResponse.data.workRate || 0) / 8);
 
     } else {
       if (specialDayOff.includes(Number(str1))) {
         if (salary === 0) {
-          salary = wpResponse1.data.workRate;
+          salary = wpResponse.data.workRate;
         }
 
         if (allTime >= workOfHour) {
           allTime = workOfHour;
-              tmp.otTimes = otTime || '0';
-
         }
 
         let workRate = ((wpResponse.data.holiday * (salary / 8)) * Number(allTime));
@@ -418,7 +416,6 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
 
         if (otTime >= workOfOT) {
           otTime = workOfOT;
-          tmp.otTimes = otTime || '0';
         }
 
         let workRateOT = ((wpResponse.data.holidayOT * (salary / 8)) * Number(otTime));
@@ -442,7 +439,6 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
 
         if (otTime >= workOfOT) {
           otTime = workOfOT;
-          tmp.otTimes = otTime || '0';
         }
 
         let workRateOT = ((wpResponse.data.dayoffRateOT * (salary / 8)) * Number(otTime));
@@ -466,7 +462,6 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
 
         if (otTime >= workOfOT) {
           otTime = workOfOT;
-          tmp.otTimes = otTime || '0';
         }
 
         let workRateOT = (((salary / 8) * wpResponse.data.workRateOT) * Number(otTime)).toFixed(2);
@@ -482,6 +477,45 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
   }
 }
 }
+
+// Check day is null and place data for days 21 to last day of the previous month
+for (let i = 21; i <= lastday; i++) {
+let d = i + '/' + prevMonth + '/' + year1;
+let x = concludeRecord.some(record => record.day === d);
+
+if (!x) {
+  concludeRecord.push({ 'day': d });
+}
+}
+
+// Check day is null and place data for days 1 to 20 of the current month
+for (let i = 1; i <= 20; i++) {
+let d = i + '/' + month + '/' + year;
+let x = concludeRecord.some(record => record.day === d);
+
+if (!x) {
+  concludeRecord.push({ 'day': d });
+}
+}
+
+// Remove duplicates where workRate is empty
+const uniqueRecords = new Set();
+concludeRecord = concludeRecord.filter(record => {
+const key = record.day;
+if (uniqueRecords.has(key) && record.workRate === '') {
+  return false;
+} else {
+  uniqueRecords.add(key);
+  return true;
+}
+});
+
+// Sort the array by date directly in the main code
+concludeRecord.sort((a, b) => {
+const dateA = new Date(a.day.split('/').reverse().join('/'));
+const dateB = new Date(b.day.split('/').reverse().join('/'));
+return dateA - dateB;
+});
 
 
 // data.recordworkplace[0].employee_workplaceRecord.forEach(element => {
