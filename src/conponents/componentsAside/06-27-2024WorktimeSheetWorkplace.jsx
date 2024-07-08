@@ -2531,17 +2531,10 @@ function WorktimeSheetWorkplace() {
         const accountingRecord = item.accountingRecord?.[0];
         return accountingRecord ? parseInt(accountingRecord.countDayWork, 10) : 0;
     });
-
-    const amountCountDayWork = responseDataAll.map(item => {
-        const accountingRecord = item.accountingRecord?.[0];
-        return accountingRecord ? parseInt(accountingRecord.amountCountDayWork, 10) : 0;
-    });
-
     console.log('countDayWork', countDayWork);
     console.log('countSpecialDays', countSpecialDays);
     console.log('specialDayListWorks', specialDayListWorks);
-    console.log('amountCountDayWork', amountCountDayWork);
-
+    
 
     const sumArrayHoli = countSpecialDays.map((countSpecialDay, index) => countSpecialDay - specialDayListWorks[index]);
     console.log('differences', sumArrayHoli);
@@ -5772,8 +5765,8 @@ function WorktimeSheetWorkplace() {
 
                 // วันทำงาน
                 // drawArrayTextSumWork(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArrayOld.slice(pageStartIndex, pageEndIndex));
-                // drawArrayTextSumWork(newAllTimes.slice(pageStartIndex, pageEndIndex), countDayWork.slice(pageStartIndex, pageEndIndex));
-                drawArrayTextSumWork(newAllTimes.slice(pageStartIndex, pageEndIndex), amountCountDayWork.slice(pageStartIndex, pageEndIndex));
+                drawArrayTextSumWork(newAllTimes.slice(pageStartIndex, pageEndIndex), countDayWork.slice(pageStartIndex, pageEndIndex));
+
                 
                 // ot 1.5
                 // drawArrayTextSumWorkOT(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArrayOT.slice(pageStartIndex, pageEndIndex));
