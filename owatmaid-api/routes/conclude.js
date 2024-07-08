@@ -326,6 +326,7 @@ return dateA - dateB;
     month: month || '',
     timerecordId: year || ''
   };
+  
   const response = await axios.post(sURL + '/timerecord/searchemp', searchData );
   // console.log(JSON.stringify( response.data, null,2) );
   const data = await response .data;
@@ -346,6 +347,10 @@ const wpDataCalculator = {
 //get workplace data for calculator
 const wpResponse = await axios.post(sURL + '/workplace/caldata', wpDataCalculator );
   // console.log(JSON.stringify( wpResponse.data, null,2) );
+  const workOfHour = await wpResponse.data.workOfHour || 0;
+  const workOfOT  = await wpResponse.data.workOfOT  || 0;
+  
+    
 const dayOff = wpResponse.data.workplaceDayOffList || [];
 const specialDayOff = wpResponse.data.specialDaylist || [];
 const dayOffCheck = [];
@@ -358,106 +363,227 @@ let   str2 = parseInt(dateoffParts[2], 10);
 });
 }
 
-data.recordworkplace[0].employee_workplaceRecord.forEach(element => {
-  // console.log(element.workplaceId);
+for (const element of data.recordworkplace[0].employee_workplaceRecord) {
   const tmp = {};
 
   let dateParts = element.date.split('/');
-let   str1 = parseInt(dateParts[0], 10);
-  console.log(str1 );
+  let str1 = parseInt(dateParts[0], 10);
+  console.log('*str1 ' + str1);
 
-//check  day is 1  - 20
-if(str1 <= 20 && str1 >= 1) {
-  tmp.day =str1 +'/' + month + '/' + year;
-  tmp.workplaceId = element.workplaceId || '';
-  let parts = element.allTime.split('.');
+  if (str1 > 0 && str1 <= 31) {
+    tmp.day = str1 + '/' + prevMonth + '/' + year1;
+    tmp.workplaceId = element.workplaceId || '';
+    let parts = element.allTime.split('.');
 
-  // Extract hours and minutes
-  let hours = parseInt(parts[0], 10) || 0;
-  let minutes = parts.length > 1 ? parseInt(parts[1], 10) : 0;
+    let hours = parseInt(parts[0], 10) || 0;
+    let minutes = parts.length > 1 ? parseInt(parts[1], 10) : 0;
 
-  // Scale the minutes
-  let scaledMinutes = (minutes * 100) / 60;
-let allTime = `${hours}.${scaledMinutes}` || '0';
-  tmp.allTimes = `${hours}.${scaledMinutes}` || '0';
+    let scaledMinutes = (minutes * 100) / 60;
+    let allTime = Number(`${hours}.${scaledMinutes}` || '0');
 
-  let parts1 = element.otTime.split('.');
+    tmp.allTimes = `${hours}.${scaledMinutes}` || '0';
 
-  // Extract hours and minutes
-  let hours1 = parseInt(parts1[0], 10) || 0;
-  let minutes1 = parts1.length > 1 ? parseInt(parts1[1], 10) : 0;
+    let parts1 = element.otTime.split('.');
 
-  // Scale the minutes
-  let scaledMinutes1 = (minutes1 * 100) / 60;
-let otTime = `${hours1}.${scaledMinutes1}` || '0';
+    let hours1 = parseInt(parts1[0], 10) || 0;
+    let minutes1 = parts1.length > 1 ? parseInt(parts1[1], 10) : 0;
 
-  tmp.otTimes = otTime || '0';
+    let scaledMinutes1 = (minutes1 * 100) / 60;
+    let otTime = Number(`${hours1}.${scaledMinutes1}` || '0');
 
-//check special day work
-if(element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
-  tmp.workRate = element.specialtSalary || '';
-  tmp.workRateMultiply = Number(element.specialtSalary || 0 ) / Number(wpResponse1.data.workRate || 0);
+    tmp.otTimes = otTime || '0';
 
-  tmp.workRateOT = element.specialtSalaryOT || '';
-  tmp.workRateOTMultiply = Number(element.specialtSalaryOT || 0) / (Number(wpResponse1.data.workRate || 0) / 8);
+    if (element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
+      tmp.workRate = element.specialtSalary || '';
+      tmp.workRateMultiply = Number(element.specialtSalary || 0) / Number(wpResponse1.data.workRate || 0);
 
-}else {
+      tmp.workRateOT = element.specialtSalaryOT || '';
+      tmp.workRateOTMultiply = Number(element.specialtSalaryOT || 0) / (Number(wpResponse1.data.workRate || 0) / 8);
 
-  //check special day off 
-if(specialDayOff.includes(Number(str1) ) ) {
-//calculator special day off
-if(salary === 0) {
-  salary = wpResponse1.data.workRate;
-  }
-  
-let workRate = ((wpResponse.data.holiday * (salary / 8) ) * Number(allTime));
-tmp.workRate = workRate  || '';
-tmp.workRateMultiply = wpResponse.data.holiday || '';
+    } else {
+      if (specialDayOff1.includes(Number(str1))) {
+        if (salary === 0) {
+          salary = wpResponse1.data.workRate;
+        }
 
-let workRateOT = ((wpResponse.data.holidayOT * (salary / 8) ) * Number(otTime ));
-tmp.workRateOT = workRateOT  || '';
-tmp.workRateOTMultiply = wpResponse.data.holidayOT || '0';
+        if (allTime >= workOfHour) {
+          allTime = workOfHour;
+              tmp.otTimes = otTime || '0';
 
-} else 
-if(dayOffCheck.includes(str1 )  ){
-//calculator day off
-if(salary === 0) {
-  salary = wpResponse1.data.workRate;
-  }
+        }
 
-let workRate = ((wpResponse.data.dayoffRateHour * (salary /8 ) ) * Number(allTime));
-tmp.workRate = workRate || '';
-tmp.workRateMultiply = wpResponse.data.dayoffRateHour || '';
+        let workRate = ((wpResponse1.data.holiday * (salary / 8)) * Number(allTime));
+        tmp.workRate = workRate || '';
+        tmp.workRateMultiply = wpResponse1.data.holiday || '';
 
-let workRateOT = ((wpResponse.data.dayoffRateOT * (salary / 8) ) * Number(otTime ));
-tmp.workRateOT = workRateOT || '';
-tmp.workRateOTMultiply = wpResponse.data.dayoffRateOT || '';
+        if (otTime >= workOfOT) {
+          otTime = workOfOT;
+          tmp.otTimes = otTime || '0';
+        }
 
-} else {
-  //calculator 
-  if(salary === 0) {
-    salary = wpResponse1.data.workRate;
+        let workRateOT = ((wpResponse1.data.holidayOT * (salary / 8)) * Number(otTime));
+        tmp.workRateOT = workRateOT || '';
+        tmp.workRateOTMultiply = wpResponse1.data.holidayOT || '0';
+        workRate = 0;
+        workRateOT = 0;
+
+      } else if (dayOffCheck1.includes(str1)) {
+        if (salary === 0) {
+          salary = wpResponse1.data.workRate;
+        }
+
+        if (allTime >= workOfHour) {
+          allTime = workOfHour;
+        }
+
+        let workRate = ((Number(wpResponse1.data.dayoffRateHour || 0) * (Number(salary || 0) / 8)) * Number(allTime));
+        tmp.workRate = workRate || '';
+        tmp.workRateMultiply = wpResponse1.data.dayoffRateHour || '';
+
+        if (otTime >= workOfOT) {
+          otTime = workOfOT;
+          tmp.otTimes = otTime || '0';
+        }
+
+        let workRateOT = ((wpResponse1.data.dayoffRateOT * (salary / 8)) * Number(otTime));
+        tmp.workRateOT = workRateOT || '';
+        tmp.workRateOTMultiply = wpResponse1.data.dayoffRateOT || '';
+        workRate = 0;
+        workRateOT = 0;
+
+      } else {
+        if (salary === 0) {
+          salary = wpResponse1.data.workRate;
+        }
+
+        if (allTime >= workOfHour) {
+          allTime = workOfHour;
+        }
+
+        let workRate = ((salary / 8) * Number(allTime)).toFixed(2);
+        tmp.workRate = workRate || '';
+        tmp.workRateMultiply = '1';
+
+        if (otTime >= workOfOT) {
+          otTime = workOfOT;
+          tmp.otTimes = otTime || '0';
+        }
+
+        let workRateOT = (((salary / 8) * wpResponse1.data.workRateOT) * Number(otTime)).toFixed(2);
+        tmp.workRateOT = workRateOT || '0';
+        tmp.workRateOTMultiply = wpResponse1.data.workRateOT || '0';
+        workRate = 0;
+        workRateOT = 0;
+      }
     }
-  
-  let workRate = ((salary / 8) * Number(allTime)).toFixed(2);
-  tmp.workRate = workRate  || '';
-  tmp.workRateMultiply = '1';
+    tmp.addSalaryDay = '';
 
-  let workRateOT = (((salary /8 ) * wpResponse.data.workRateOT )* Number(otTime )).toFixed(2);
-  tmp.workRateOT = workRateOT  || '0';
-  tmp.workRateOTMultiply = wpResponse.data.workRateOT || '0';
-
+    concludeRecord.push(tmp);
+  }
 }
-} //end check special day work
-
-  tmp.addSalaryDay = '';
-  
-  concludeRecord.push(tmp);
 }
 
-});
 
-  } //end if
+// data.recordworkplace[0].employee_workplaceRecord.forEach(element => {
+//   // console.log(element.workplaceId);
+//   const tmp = {};
+
+//   let dateParts = element.date.split('/');
+// let   str1 = parseInt(dateParts[0], 10);
+//   console.log(str1 );
+
+// //check  day is 1  - 20
+// if(str1 <= 20 && str1 >= 1) {
+//   tmp.day =str1 +'/' + month + '/' + year;
+//   tmp.workplaceId = element.workplaceId || '';
+//   let parts = element.allTime.split('.');
+
+//   // Extract hours and minutes
+//   let hours = parseInt(parts[0], 10) || 0;
+//   let minutes = parts.length > 1 ? parseInt(parts[1], 10) : 0;
+
+//   // Scale the minutes
+//   let scaledMinutes = (minutes * 100) / 60;
+// let allTime = `${hours}.${scaledMinutes}` || '0';
+//   tmp.allTimes = `${hours}.${scaledMinutes}` || '0';
+
+//   let parts1 = element.otTime.split('.');
+
+//   // Extract hours and minutes
+//   let hours1 = parseInt(parts1[0], 10) || 0;
+//   let minutes1 = parts1.length > 1 ? parseInt(parts1[1], 10) : 0;
+
+//   // Scale the minutes
+//   let scaledMinutes1 = (minutes1 * 100) / 60;
+// let otTime = `${hours1}.${scaledMinutes1}` || '0';
+
+//   tmp.otTimes = otTime || '0';
+
+// //check special day work
+// if(element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
+//   tmp.workRate = element.specialtSalary || '';
+//   tmp.workRateMultiply = Number(element.specialtSalary || 0 ) / Number(wpResponse1.data.workRate || 0);
+
+//   tmp.workRateOT = element.specialtSalaryOT || '';
+//   tmp.workRateOTMultiply = Number(element.specialtSalaryOT || 0) / (Number(wpResponse1.data.workRate || 0) / 8);
+
+// }else {
+
+//   //check special day off 
+// if(specialDayOff.includes(Number(str1) ) ) {
+// //calculator special day off
+// if(salary === 0) {
+//   salary = wpResponse1.data.workRate;
+//   }
+  
+// let workRate = ((wpResponse.data.holiday * (salary / 8) ) * Number(allTime));
+// tmp.workRate = workRate  || '';
+// tmp.workRateMultiply = wpResponse.data.holiday || '';
+
+// let workRateOT = ((wpResponse.data.holidayOT * (salary / 8) ) * Number(otTime ));
+// tmp.workRateOT = workRateOT  || '';
+// tmp.workRateOTMultiply = wpResponse.data.holidayOT || '0';
+
+// } else 
+// if(dayOffCheck.includes(str1 )  ){
+// //calculator day off
+// if(salary === 0) {
+//   salary = wpResponse1.data.workRate;
+//   }
+
+// let workRate = ((wpResponse.data.dayoffRateHour * (salary /8 ) ) * Number(allTime));
+// tmp.workRate = workRate || '';
+// tmp.workRateMultiply = wpResponse.data.dayoffRateHour || '';
+
+// let workRateOT = ((wpResponse.data.dayoffRateOT * (salary / 8) ) * Number(otTime ));
+// tmp.workRateOT = workRateOT || '';
+// tmp.workRateOTMultiply = wpResponse.data.dayoffRateOT || '';
+
+// } else {
+//   //calculator 
+//   if(salary === 0) {
+//     salary = wpResponse1.data.workRate;
+//     }
+  
+//   let workRate = ((salary / 8) * Number(allTime)).toFixed(2);
+//   tmp.workRate = workRate  || '';
+//   tmp.workRateMultiply = '1';
+
+//   let workRateOT = (((salary /8 ) * wpResponse.data.workRateOT )* Number(otTime )).toFixed(2);
+//   tmp.workRateOT = workRateOT  || '0';
+//   tmp.workRateOTMultiply = wpResponse.data.workRateOT || '0';
+
+// }
+// } //end check special day work
+
+//   tmp.addSalaryDay = '';
+  
+//   concludeRecord.push(tmp);
+// }
+
+// });
+
+//   } //end if
 
 //check day is null and place data 
 for(let i = 1; i <= 20; i++){
