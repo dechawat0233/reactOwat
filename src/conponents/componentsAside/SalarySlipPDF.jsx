@@ -975,8 +975,8 @@ function SalarySlipPDF() {
 
 
                     if (accountingRecord) {
-                        const amountOt = parseFloat(accountingRecord.hourOneFive);
-                        const countOtHour = parseFloat(accountingRecord.amountOneFive);
+                        const countOtHour = parseFloat(accountingRecord.hourOneFive);
+                        const amountOt = parseFloat(accountingRecord.amountOneFive);
 
                         console.log('amountOt', amountOt);
 

@@ -150,6 +150,7 @@ if(data1.recordworkplace.length !== 0){
 //get workplaceId in first employee_workplaceRecord
 // let wpId1 = await data1.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
 let wpId1  = dataEmp.employees[0].workplace || '';
+let salary = dataEmp.employees[0].salary || 0;
 
 const wpDataCalculator1 = await {
 month: month || '',
@@ -160,8 +161,8 @@ workplaceId: wpId1
 //get workplace data for calculator
 const wpResponse1 = await axios.post(sURL + '/workplace/caldata', wpDataCalculator1 );
 // console.log(JSON.stringify( wpResponse1.data, null,2) );
-const dayOff1 = await wpResponse1.data.workplaceDayOffList;
-const specialDayOff1 = await wpResponse1.data.specialDaylist;
+const dayOff1 = await wpResponse1.data.workplaceDayOffList || [];
+const specialDayOff1 = await wpResponse1.data.specialDaylist || [];
 const dayOffCheck1 = [];
 if(dayOff1.length !== 0) {
 await dayOff1.forEach(item => {
@@ -179,7 +180,7 @@ const tmp = {};
 
 let dateParts = element.date.split('/');
 let   str1 = parseInt(dateParts[0], 10);
-// console.log('*str1 ' + str1 );
+console.log('*str1 ' + str1 );
 
 //start 20 and end is last day of month
 // console.log('lastday ' + lastday );
@@ -223,11 +224,15 @@ if(element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
 //check special day off 
 if(specialDayOff1.includes(Number(str1) ) ) {
 //calculator special day off
-let workRate = ((wpResponse1.data.holiday * (wpResponse1.data.workRate / 8) ) * Number(allTime));
+if(salary === 0) {
+  salary = wpResponse1.data.workRate;
+  }
+  
+let workRate = ((wpResponse1.data.holiday * (salary / 8) ) * Number(allTime));
 tmp.workRate = workRate  || '';
 tmp.workRateMultiply = wpResponse1.data.holiday || '';
 
-let workRateOT = ((wpResponse1.data.holidayOT * (wpResponse1.data.workRate / 8 ) ) * Number(otTime ));
+let workRateOT = ((wpResponse1.data.holidayOT * (salary / 8 ) ) * Number(otTime ));
 tmp.workRateOT = workRateOT  || '';
 tmp.workRateOTMultiply = wpResponse1.data.holidayOT || '0';
 workRate  = 0;
@@ -235,11 +240,14 @@ workRateOT  = 0;
 } else 
 if(dayOffCheck1.includes(str1 )  ){
 //calculator day off
-let workRate = ((Number(wpResponse1.data.dayoffRateHour || 0) * (Number(wpResponse1.data.workRate || 0) /8 ) ) * Number(allTime));
+if(salary === 0) {
+salary = wpResponse1.data.workRate;
+}
+let workRate = ((Number(wpResponse1.data.dayoffRateHour || 0) * (Number(salary || 0) /8 ) ) * Number(allTime));
 tmp.workRate = workRate || '';
 tmp.workRateMultiply = wpResponse1.data.dayoffRateHour || '';
 
-let workRateOT = ((wpResponse1.data.dayoffRateOT * (wpResponse1.data.workRate /8) ) * Number(otTime ));
+let workRateOT = ((wpResponse1.data.dayoffRateOT * (salary /8) ) * Number(otTime ));
 tmp.workRateOT = workRateOT || '';
 tmp.workRateOTMultiply = wpResponse1.data.dayoffRateOT || '';
 workRate  = 0;
@@ -247,11 +255,15 @@ workRateOT  = 0;
 
 } else {
 //calculator 
-let workRate = ((wpResponse1.data.workRate / 8) * Number(allTime)).toFixed(2);
+if(salary === 0) {
+  salary = wpResponse1.data.workRate;
+  }
+  
+let workRate = ((salary / 8) * Number(allTime)).toFixed(2);
 tmp.workRate = workRate  || '';
 tmp.workRateMultiply = '1';
 
-let workRateOT = (((wpResponse1.data.workRate /8 ) * wpResponse1.data.workRateOT )* Number(otTime )).toFixed(2);
+let workRateOT = (((salary /8 ) * wpResponse1.data.workRateOT )* Number(otTime )).toFixed(2);
 tmp.workRateOT = workRateOT  || '0';
 tmp.workRateOTMultiply = wpResponse1.data.workRateOT || '0';
 workRate  = 0;
@@ -308,6 +320,7 @@ return dateA - dateB;
 //get workplaceId in first employee_workplaceRecord
 // let wpId = data.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
 let wpId  = dataEmp.employees[0].workplace || '';
+let salary = dataEmp.employees[0].salary || 0;
 
 const wpDataCalculator = {
   month: month || '',
@@ -318,8 +331,8 @@ const wpDataCalculator = {
 //get workplace data for calculator
 const wpResponse = await axios.post(sURL + '/workplace/caldata', wpDataCalculator );
   console.log(JSON.stringify( wpResponse.data, null,2) );
-const dayOff = wpResponse.data.workplaceDayOffList;
-const specialDayOff = wpResponse.data.specialDaylist;
+const dayOff = wpResponse.data.workplaceDayOffList || [];
+const specialDayOff = wpResponse.data.specialDaylist || [];
 const dayOffCheck = [];
 if(dayOff.length !== 0) {
 dayOff.forEach(item => {
@@ -378,32 +391,44 @@ if(element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
   //check special day off 
 if(specialDayOff.includes(Number(str1) ) ) {
 //calculator special day off
-let workRate = ((wpResponse.data.holiday * (wpResponse.data.workRate / 8) ) * Number(allTime));
+if(salary === 0) {
+  salary = wpResponse1.data.workRate;
+  }
+  
+let workRate = ((wpResponse.data.holiday * (salary / 8) ) * Number(allTime));
 tmp.workRate = workRate  || '';
 tmp.workRateMultiply = wpResponse.data.holiday || '';
 
-let workRateOT = ((wpResponse.data.holidayOT * (wpResponse.data.workRate / 8) ) * Number(otTime ));
+let workRateOT = ((wpResponse.data.holidayOT * (salary / 8) ) * Number(otTime ));
 tmp.workRateOT = workRateOT  || '';
 tmp.workRateOTMultiply = wpResponse.data.holidayOT || '0';
 
 } else 
 if(dayOffCheck.includes(str1 )  ){
 //calculator day off
-let workRate = ((wpResponse.data.dayoffRateHour * (wpResponse.data.workRate /8 ) ) * Number(allTime));
+if(salary === 0) {
+  salary = wpResponse1.data.workRate;
+  }
+
+let workRate = ((wpResponse.data.dayoffRateHour * (salary /8 ) ) * Number(allTime));
 tmp.workRate = workRate || '';
 tmp.workRateMultiply = wpResponse.data.dayoffRateHour || '';
 
-let workRateOT = ((wpResponse.data.dayoffRateOT * (wpResponse.data.workRate / 8) ) * Number(otTime ));
+let workRateOT = ((wpResponse.data.dayoffRateOT * (salary / 8) ) * Number(otTime ));
 tmp.workRateOT = workRateOT || '';
 tmp.workRateOTMultiply = wpResponse.data.dayoffRateOT || '';
 
 } else {
   //calculator 
-  let workRate = ((wpResponse.data.workRate / 8) * Number(allTime)).toFixed(2);
+  if(salary === 0) {
+    salary = wpResponse1.data.workRate;
+    }
+  
+  let workRate = ((salary / 8) * Number(allTime)).toFixed(2);
   tmp.workRate = workRate  || '';
   tmp.workRateMultiply = '1';
 
-  let workRateOT = (((wpResponse.data.workRate /8 ) * wpResponse.data.workRateOT )* Number(otTime )).toFixed(2);
+  let workRateOT = (((salary /8 ) * wpResponse.data.workRateOT )* Number(otTime )).toFixed(2);
   tmp.workRateOT = workRateOT  || '0';
   tmp.workRateOTMultiply = wpResponse.data.workRateOT || '0';
 
@@ -451,20 +476,33 @@ await addSalaryList.push(addSalaryDaily);
 dataConclude.addSalary = addSalaryList;
 
 try {
+      // Delete all documents matching the year, month, and employeeId
+      const result = await conclude.deleteMany({
+        year: dataConclude.year,
+        month: dataConclude.month,
+        employeeId: dataConclude.employeeId
+      });
+
+      if (result.deletedCount > 0) {
+        // res.status(200).send(`${result.deletedCount} record(s) deleted`);
+    console.log('Existing record deleted' + result.deletedCount );
+      } else {
+        // res.status(404).send('No matching records found');
+      }  
   // Find the existing document by year, month, and employeeId
-  const existingRecord = await conclude.findOne({
-    year: dataConclude.year,
-    month: dataConclude.month,
-    employeeId: dataConclude.employeeId
-  });
+  // const existingRecord = await conclude.findOne({
+  //   year: dataConclude.year,
+  //   month: dataConclude.month,
+  //   employeeId: dataConclude.employeeId
+  // });
 
   // If an existing record is found, delete it
-  if (existingRecord) {
-    await conclude.deleteOne({
-      _id: existingRecord._id
-    });
-    console.log('Existing record deleted');
-  }
+  // if (existingRecord) {
+  //   await conclude.deleteOne({
+  //     _id: existingRecord._id
+  //   });
+  //   console.log('Existing record deleted');
+  // }
 
   if(concludeRecord .length !== 0){
   // Create a new Conclude document
@@ -499,6 +537,31 @@ router.get('/list', async (req, res) => {
 
   const concludeData = await conclude.find();
   res.json(concludeData );
+});
+
+
+router.get('/concludedelete', async (req, res) => {
+  const { year, month, employeeId } = req.query;
+
+  if (!year || !month || !employeeId) {
+    return res.status(400).send({ message: 'year, month, and employeeId are required.' });
+  }
+
+  try {
+    // Delete documents based on the provided year, month, and employeeId
+    const result = await conclude.deleteMany({ year, month, employeeId });
+
+    // Fetch the remaining documents to send back in the response
+    const remainingData = await conclude.find();
+
+    res.json({
+      message: `${result.deletedCount} document(s) were deleted.`,
+      remainingData
+    });
+  } catch (err) {
+    console.error('Error deleting documents:', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 router.get('/listdelete', async (req, res) => {
@@ -654,6 +717,26 @@ router.put('/update/:concludeRecordId', async (req, res) => {
 });
 
 
+router.post('/delete-records', async (req, res) => {
+  const dataConclude = req.body;
+
+  try {
+    // Delete all documents matching the year, month, and employeeId
+    const result = await conclude.deleteMany({
+      year: dataConclude.year,
+      month: dataConclude.month,
+      employeeId: dataConclude.employeeId
+    });
+
+    if (result.deletedCount > 0) {
+      res.status(200).send(`${result.deletedCount} record(s) deleted`);
+    } else {
+      res.status(404).send('No matching records found');
+    }
+  } catch (error) {
+    res.status(500).send('Error deleting records: ' + error.message);
+  }
+});
 
 
 module.exports = router;

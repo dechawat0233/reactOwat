@@ -40,6 +40,22 @@ router.get('/listdelete', async (req, res) => {
   }  
 });
 
+//delete account record by id year and month
+router.get('/accountdelete', async (req, res) => {
+  const { year, month, employeeId } = req.query;
+
+  if (!year || !month || !employeeId) {
+    return res.status(400).send({ message: 'year, month, and employeeId are required.' });
+  }
+
+  try {
+    const result = await accounting.deleteMany({ year, month, employeeId });
+    res.status(200).send({ message: `${result.deletedCount} document(s) were deleted.` });
+  } catch (e) {
+    console.error('Error deleting documents:', e);
+    res.status(500).send({ message: 'An error occurred while deleting documents.' });
+  }
+});
 
 // Get  accounting record by accounting Id
 router.get('/:employeeId', async (req, res) => {
@@ -1208,12 +1224,19 @@ let hourOneFive = 0;
 let hourTwo = 0;
 let hourTwoFive = 0;
 let hourThree = 0;
+const dayW = [];
 
 
     // Get employee data by employeeId
-    const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
+    if(responseConclude.data.recordConclude[c].employeeId === '') {
+      const response = null;
+    } else {
+      const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
+    }
+
+    // const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
     if (response) {
-        data.workplace = await response.data.workplace;
+        data.workplace = await response.data.workplace || '';
         data.accountingRecord.tax = await response.data.tax ||0;
     tax = await response.data.tax ||0; 
     salary = await response.data.salary || 0;
@@ -1604,10 +1627,13 @@ let hourThree = 0;
       countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
       countOtHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
 
+      let checkDaywork = 0;
+
   //get hour rate
   if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '1') {
     amountOne = Number(amountOne ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
     hourOne = Number(hourOne) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+    checkDaywork = Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
   }
   if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOTMultiply === '1'){
     amountOne = Number(amountOne ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT);
@@ -1647,8 +1673,14 @@ let hourThree = 0;
   }
 
       //check work rate is not standard day
-      if(Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) == Number(salary) ) {
+      // if(Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) == Number(salary) ) {
+        if(checkDaywork !== 0) {
+if(! dayW.includes( getDayNumberFromDate( responseConclude.data.recordConclude[c].concludeRecord[i].day) )){
     dayOffWork += 1;
+    dayW.push(getDayNumberFromDate( responseConclude.data.recordConclude[c].concludeRecord[i].day) );
+  } 
+
+  
     countHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
 
     console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );

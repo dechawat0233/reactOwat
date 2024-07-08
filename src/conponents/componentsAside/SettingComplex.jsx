@@ -319,6 +319,38 @@ function SettingComplex() {
 
     };
 
+    const [searchAddSalaryList, setSearchAddSalaryList] = useState([]);
+    const [searchDeductSalaryList, setSearchDeductSalaryList] = useState([]);
+
+
+    //First load component
+useEffect(() => {
+    const getMaster = async () => {
+        const data = await {
+            employeeId: '0001',
+            name: '',
+            idCard: '',
+            workPlace: '',
+        };
+
+        try {
+            const response = await axios.post(endpoint + '/employee/search', data);
+            if (response) {
+                await setSearchAddSalaryList(response.data.employees[0].addSalary);
+                await setSearchDeductSalaryList(response.data.employees[0].deductSalary);
+            }
+            // await alert(JSON.stringify(response.data.employees[0].addSalary ,null,2 ));
+            // await alert(JSON.stringify(response.data.employees[0].deductSalary ,null,2 ));
+
+        } catch (e) {
+        }
+    }
+
+    getMaster();
+
+}, [] );
+
+
     //set data to 7 day
     useEffect(() => {
         //clean data
@@ -595,18 +627,56 @@ function SettingComplex() {
     });
     const [showAdditionalInput, setShowAdditionalInput] = useState([]);
 
-    const handleChangeSpSalary = (e, index, key) => {
-        const newAddSalary = [...formData.addSalary];
-        newAddSalary[index] = {
-            ...newAddSalary[index],
-            [key]: e.target.value,
-        };
+    const handleChangeSpSalary = async (e, index, key) => {
+        const tmpId = await e.target.value;
+        
+        const newAddSalary = await [...formData.addSalary];
+        if(key === 'codeSpSalary'){
 
-        setFormData({
+let tmp = await searchAddSalaryList.find(item => item.id === tmpId);
+if(tmp) {
+    newAddSalary[index] = await {
+        ...newAddSalary[index],
+        [key]: tmpId,
+        name: tmp.name
+    };
+
+}else {
+    newAddSalary[index] = await {
+        ...newAddSalary[index],
+        [key]: tmpId,
+        name: ''
+    };
+
+}
+
+        } else {
+            newAddSalary[index] = await {
+                ...newAddSalary[index],
+                [key]: tmpId,
+            };
+    
+        }
+
+        await setFormData({
             ...formData,
             addSalary: newAddSalary
         });
     };
+
+
+    // const handleChangeSpSalary = (e, index, key) => {
+    //     const newAddSalary = [...formData.addSalary];
+    //     newAddSalary[index] = {
+    //         ...newAddSalary[index],
+    //         [key]: e.target.value,
+    //     };
+
+    //     setFormData({
+    //         ...formData,
+    //         addSalary: newAddSalary
+    //     });
+    // };
 
     const handleAddWorkplaceComplex = () => {
         // e.preventDefault();
@@ -648,20 +718,25 @@ await setCheckSetStandard('seted');
 await handleClickResult(standardWorkplace);
     } else {
         //set data to workplace group 
-let c = await Number(workplaceComplexId) - 1;
-await setWorkplaceComplexName(standardWorkplace.workplaceGroup[c].workplaceComplexName || '');
-await setCheckSetStandard('seted');
+        let dataSelect = workplacesComplex.find(item => item.workplaceComplexId === workplaceComplexId)
+if(dataSelect) {
+    await setWorkplaceComplexName(dataSelect.workplaceComplexName || '');
+    await setCheckSetStandard('seted');
+    await setFormDataGroup (dataSelect.workplaceComplexData);
+} else {
+    await setFormDataGroup (standardWorkplace);
 
-        // await handleClickResult(workplacesComplex[c].workplaceComplexData);
-                await setFormDataGroup (        standardWorkplace.workplaceGroup[c].workplaceComplexData);
-
+}
+// await setWorkplaceComplexName(standardWorkplace.workplaceGroup[c].workplaceComplexName || '');
+// await setCheckSetStandard('seted');
+                // await setFormDataGroup (        standardWorkplace.workplaceGroup[c].workplaceComplexData);
 
     }
 }
         }
 
         setGroupData();
-
+// alert(workplaceComplexId);
     } , [workplaceComplexId]);
 
     // const handleAddInput = () => {
@@ -1161,9 +1236,14 @@ setStandardWorkplace(standardWorkplace);
 
         // let data = { ...dataTmp };
 let data = standardWorkplace;
+const _id = standardWorkplace._id;
+// alert('_id = '+ _id)
 
 if (workplaceComplexId !== '') {
-    if (workplaceComplexId >= workplacesComplex.length) {
+    let check = workplacesComplex.find(item => item.workplaceComplexId === workplaceComplexId );
+    // if (workplaceComplexId >= workplacesComplex.length) {
+
+        if(! check ){
         // new group
         const tmpG = {
             workplaceComplexId: workplaceComplexId,
@@ -1178,43 +1258,23 @@ if (workplaceComplexId !== '') {
         };
     } else {
                 // update existing group
+                // alert(' update existing group ');
                 const updatedGroup = workplacesComplex.map(group => 
                     group.workplaceComplexId === workplaceComplexId 
-                        ? { ...group, workplaceComplexData: dataTmp } 
+                        ? { ...group, 
+                            workplaceComplexName: workplaceComplexName,
+                            workplaceComplexData: dataTmp } 
                         : group
                 );
                 data = {
                     ...dataTmp,
                     workplaceGroup: updatedGroup
                 };
+                
     }
 }
 
-        // if(workplaceComplexId !== '') {
-        //     //selected group 
-        //     if(workplaceComplexId  >= workplacesComplex.length) {
-        //         //new group
-        //         const tmpG = await {
-        //             workplaceComplexId: workplaceComplexId,
-        //             workplaceComplexName: workplaceComplexName,
-        //             workplaceComplexData: data
-        //         };
-
-        //         const newGroup = await [... workplacesComplex , tmpG ]
-        //         const data = await {
-        //             ... 
-        //             dataTmp,
-        //             workplaceGroup: newGroup
-        //         };
-
-        //     }
-        // }
-
-
-        // if (file) {
-        //     data.append('reason', file);
-        // }
-        // await alert(JSON.stringify(formData.addSalary,null,2));
+// alert(data.workplaceGroup.length );
 
         //check create or update Employee
         if (newWorkplace) {
@@ -1234,7 +1294,6 @@ if (workplaceComplexId !== '') {
 
             // Make the API call to update the resource by ID
             try {
-
                 const response = await axios.put(endpoint + '/workplace/update/' + _id, data);
                 // setEmployeesResult(response.data.employees);
                 if (response) {
@@ -2401,6 +2460,7 @@ if (workplaceComplexId !== '') {
 
             </div >
             {/* {JSON.stringify(workTimeDayPersonList, null, 2)} */}
+
         </body >
     );
 }
