@@ -289,7 +289,7 @@ if(salary === 0) {
 let workRate = await ((salary / 8) * Number(workOfHour)).toFixed(2);
 tmp.workRate = await workRate  || '';
 tmp.workRateMultiply = await '1';
-
+console.log('otTime x '+ otTime);
 //limit OT Hour
 if(Number(otTime) < Number(workOfOT) ) {
   workOfOT = await otTime;
