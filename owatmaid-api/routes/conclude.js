@@ -549,7 +549,7 @@ router.get('/concludedelete', async (req, res) => {
 
   try {
     // Delete documents based on the provided year, month, and employeeId
-    const result = await accounting.deleteMany({ year, month, employeeId });
+    const result = await conclude.deleteMany({ year, month, employeeId });
 
     // Fetch the remaining documents to send back in the response
     const remainingData = await conclude.find();
