@@ -177,7 +177,7 @@ dayOffCheck1.push(str2 );
 console.log('dayOffCheck1' + JSON.stringify(dayOffCheck1,null,2));
 }
 
-data1.recordworkplace[0].employee_workplaceRecord.forEach(async  element => {
+await data1.recordworkplace[0].employee_workplaceRecord.forEach(async  element => {
 // console.log(element.workplaceId);
 const tmp = await {};
 
@@ -312,7 +312,9 @@ await concludeRecord.push(tmp);
 }
 
 //check day is null and place data 
-for(let i = 21; i <= lastday ; i++){
+(async () => {
+
+ for(let i = 21; i <= lastday ; i++){
 // tmp.day =str1 +'/' + month + '/' + year;
 let d = await i +'/' + prevMonth + '/' + year1;
 // console.log('d ' + d);
@@ -324,6 +326,8 @@ if(x) {
   await concludeRecord.push({'day': d});
 }
 }
+
+});
 
 // Sort the array by date directly in the main code
 await concludeRecord.sort((a, b) => {
