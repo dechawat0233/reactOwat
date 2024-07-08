@@ -312,8 +312,6 @@ await concludeRecord.push(tmp);
 }
 
 //check day is null and place data 
-(async () => {
-
  for(let i = 21; i <= lastday ; i++){
 // tmp.day =str1 +'/' + month + '/' + year;
 let d = await i +'/' + prevMonth + '/' + year1;
@@ -327,8 +325,17 @@ if(x) {
 }
 }
 
-});
-
+  // Remove duplicates by creating a Set of unique days and filtering the array
+  const uniqueDays = new Set();
+  concludeRecord = concludeRecord.filter(record => {
+    if (uniqueDays.has(record.day) && record.workRate === '') {
+      return false;
+    } else {
+      uniqueDays.add(record.day);
+      return true;
+    }
+  });
+  
 // Sort the array by date directly in the main code
 await concludeRecord.sort((a, b) => {
 const dateA = new Date(a.day.split('/').reverse().join('/'));
