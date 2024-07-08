@@ -606,7 +606,7 @@ let checkDaywork = 0;
   if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '1') {
     amountOne = Number(amountOne ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
     hourOne = Number(hourOne) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
-    checkDaywork = Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+    checkDaywork = 
   }
   if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOTMultiply === '1'){
     amountOne = Number(amountOne ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT);
@@ -647,15 +647,8 @@ let checkDaywork = 0;
 
   console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
   //check work rate is not standard day
-//   if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) == parseFloat(salary) ) {
-// dayOffWork += 1;
-if(checkDaywork !== 0) {
-  if(dayW.includes( getDayNumberFromDate( responseConclude.data.recordConclude[c].concludeRecord[i].day) )){
-      dayOffWork += 1;
-  dayW.push(getDayNumberFromDate( responseConclude.data.recordConclude[c].concludeRecord[i].day) );
-    }
-  
-  
+  if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) == parseFloat(salary) ) {
+dayOffWork += 1;
 countHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
 
 console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
