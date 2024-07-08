@@ -1228,7 +1228,7 @@ const dayW = [];
 
 
     // Get employee data by employeeId
-    const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
+    const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId || '');
     if (response) {
         data.workplace = await response.data.workplace || '';
         data.accountingRecord.tax = await response.data.tax ||0;
@@ -1669,11 +1669,12 @@ const dayW = [];
       //check work rate is not standard day
       // if(Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) == Number(salary) ) {
         if(checkDaywork !== 0) {
-if(dayW.includes( getDayNumberFromDate( responseConclude.data.recordConclude[c].concludeRecord[i].day) )){
+if(! dayW.includes( getDayNumberFromDate( responseConclude.data.recordConclude[c].concludeRecord[i].day) )){
     dayOffWork += 1;
-dayW.push(getDayNumberFromDate( responseConclude.data.recordConclude[c].concludeRecord[i].day) );
-  }
+    dayW.push(getDayNumberFromDate( responseConclude.data.recordConclude[c].concludeRecord[i].day) );
+  } 
 
+  
     countHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
 
     console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
