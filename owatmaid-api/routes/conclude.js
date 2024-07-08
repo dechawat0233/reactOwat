@@ -543,7 +543,7 @@ try {
 
   // Save the new document to the database
   const savedConclude = await newConclude.save();
-  console.log('New record saved successfully:', savedConclude);
+  // console.log('New record saved successfully:', savedConclude);
   
     res.json(dataConclude);
   }
