@@ -289,7 +289,7 @@ tmp.workRateMultiply = await '1';
 //limit OT Hour
 if(Number(otTime) < Number(workOfOT) ) {
   // workOfOT = await otTime;
-  workOfOT = await Number(otTime ) || 0;
+  workOfOT = await Number(otTime || 0);
 
 }
 
