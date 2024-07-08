@@ -363,7 +363,7 @@ const wpDataCalculator = {
 
 //get workplace data for calculator
 const wpResponse = await axios.post(sURL + '/workplace/caldata', wpDataCalculator );
-  console.log(JSON.stringify( wpResponse.data, null,2) );
+  // console.log(JSON.stringify( wpResponse.data, null,2) );
 const dayOff = wpResponse.data.workplaceDayOffList || [];
 const specialDayOff = wpResponse.data.specialDaylist || [];
 const dayOffCheck = [];
@@ -497,7 +497,7 @@ concludeRecord.sort((a, b) => {
   return dateA - dateB;
 });
 
-console.log('Sorted concludeRecord:', concludeRecord);
+// console.log('Sorted concludeRecord:', concludeRecord);
 
 
 // console.log('Sorted concludeRecord:', concludeRecord);
