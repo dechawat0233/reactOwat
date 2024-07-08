@@ -315,12 +315,13 @@ await concludeRecord.push(tmp);
 for(let i = 21; i <= lastday ; i++){
 // tmp.day =str1 +'/' + month + '/' + year;
 let d = await i +'/' + prevMonth + '/' + year1;
+console.log('d ' + d);
 let x = await concludeRecord.some(record => record.day === d);
 
 if(x) {
 // console.log('i ' + d);
 } else {
-  // await concludeRecord.push({'day': d});
+  await concludeRecord.push({'day': d});
 }
 }
 
