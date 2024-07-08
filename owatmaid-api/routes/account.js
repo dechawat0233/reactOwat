@@ -1224,12 +1224,13 @@ let hourOneFive = 0;
 let hourTwo = 0;
 let hourTwoFive = 0;
 let hourThree = 0;
+const dayW = [];
 
 
     // Get employee data by employeeId
     const response = await axios.get(sURL + '/employee/' + responseConclude.data.recordConclude[c].employeeId);
     if (response) {
-        data.workplace = await response.data.workplace;
+        data.workplace = await response.data.workplace || '';
         data.accountingRecord.tax = await response.data.tax ||0;
     tax = await response.data.tax ||0; 
     salary = await response.data.salary || 0;
@@ -1620,10 +1621,13 @@ let hourThree = 0;
       countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
       countOtHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
 
+      let checkDaywork = 0;
+
   //get hour rate
   if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '1') {
     amountOne = Number(amountOne ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
     hourOne = Number(hourOne) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+    checkDaywork = Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
   }
   if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOTMultiply === '1'){
     amountOne = Number(amountOne ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT);
@@ -1663,8 +1667,13 @@ let hourThree = 0;
   }
 
       //check work rate is not standard day
-      if(Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) == Number(salary) ) {
+      // if(Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) == Number(salary) ) {
+        if(checkDaywork !== 0) {
+if(dayW.includes( getDayNumberFromDate( responseConclude.data.recordConclude[c].concludeRecord[i].day) )){
     dayOffWork += 1;
+dayW.push(getDayNumberFromDate( responseConclude.data.recordConclude[c].concludeRecord[i].day) );
+  }
+
     countHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
 
     console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
