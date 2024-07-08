@@ -319,9 +319,9 @@ let d = i +'/' + prevMonth + '/' + year1;
 let x = concludeRecord.some(record => record.day === d);
 
 if(x) {
-// console.log('i ' + d);
+console.log('i ' + d);
 } else {
-  concludeRecord.push({'day': d});
+  // concludeRecord.push({'day': d});
 }
 }
 
