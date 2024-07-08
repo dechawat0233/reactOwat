@@ -177,11 +177,11 @@ dayOffCheck1.push(str2 );
 console.log('dayOffCheck1' + JSON.stringify(dayOffCheck1,null,2));
 }
 
-data1.recordworkplace[0].employee_workplaceRecord.forEach(element => {
+data1.recordworkplace[0].employee_workplaceRecord.forEach(async  element => {
 // console.log(element.workplaceId);
 const tmp = {};
 
-let dateParts = element.date.split('/');
+let dateParts = await element.date.split('/');
 let   str1 = parseInt(dateParts[0], 10);
 console.log('*str1 ' + str1 );
 
@@ -287,9 +287,10 @@ tmp.workRate = workRate  || '';
 tmp.workRateMultiply = '1';
 
 //limit OT Hour
-if(Number(otTime || 0) < Number(workOfOT) ) {
+if(Number(otTime) < Number(workOfOT) ) {
   workOfOT = otTime || 0 ;
 }
+
 let workRateOT = (((salary /8 ) * wpResponse1.data.workRateOT )* Number(workOfOT) ).toFixed(2);
 tmp.workRateOT = workRateOT  || '0';
 tmp.workRateOTMultiply = wpResponse1.data.workRateOT || '0';
