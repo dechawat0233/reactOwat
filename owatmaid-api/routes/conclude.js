@@ -528,18 +528,6 @@ if (!x) {
       }
     }
 
-    // Remove duplicates where workRate is empty
-    const uniqueRecords = new Set();
-    concludeRecord = concludeRecord.filter(record => {
-      const key = record.day;
-      if (uniqueRecords.has(key) && record.workRate === '0') {
-        return false;
-      } else {
-        uniqueRecords.add(key);
-        return true;
-      }
-    });
-
     // Sort the array by date directly in the main code
     concludeRecord.sort((a, b) => {
       const dateA = new Date(a.day.split('/').reverse().join('/'));
