@@ -40,6 +40,22 @@ router.get('/listdelete', async (req, res) => {
   }  
 });
 
+//delete account record by id year and month
+router.get('/listdelete', async (req, res) => {
+  const { year, month, employeeId } = req.query;
+
+  if (!year || !month || !employeeId) {
+    return res.status(400).send({ message: 'year, month, and employeeId are required.' });
+  }
+
+  try {
+    const result = await accounting.deleteMany({ year, month, employeeId });
+    res.status(200).send({ message: `${result.deletedCount} document(s) were deleted.` });
+  } catch (e) {
+    console.error('Error deleting documents:', e);
+    res.status(500).send({ message: 'An error occurred while deleting documents.' });
+  }
+});
 
 // Get  accounting record by accounting Id
 router.get('/:employeeId', async (req, res) => {
