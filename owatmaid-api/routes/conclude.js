@@ -288,9 +288,9 @@ tmp.workRateMultiply = '1';
 
 //limit OT Hour
 if(Number(otTime ) < Number(workOfOT) ) {
-  workOfOT = otTime;
+  workOfOT = awNumber(otTime);
 }
-let workRateOT = (((salary /8 ) * wpResponse1.data.workRateOT )* Number(workOfOT)).toFixed(2);
+let workRateOT = (((salary /8 ) * wpResponse1.data.workRateOT )* workOfOT).toFixed(2);
 tmp.workRateOT = workRateOT  || '0';
 tmp.workRateOTMultiply = wpResponse1.data.workRateOT || '0';
 workRate  = 0;
