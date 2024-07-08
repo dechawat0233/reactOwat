@@ -606,7 +606,7 @@ let checkDaywork = 0;
   if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '1') {
     amountOne = Number(amountOne ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
     hourOne = Number(hourOne) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
-    checkDaywork = 
+    checkDaywork = Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
   }
   if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOTMultiply === '1'){
     amountOne = Number(amountOne ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT);
