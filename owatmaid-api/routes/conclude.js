@@ -212,6 +212,9 @@ let minutes1 = await parts1.length > 1 ? parseInt(parts1[1], 10) : 0;
 let scaledMinutes1 = await (minutes1 * 100) / 60;
 let otTime = await Number(`${hours1}.${scaledMinutes1}` || '0');
 console.log('otTime ' + otTime );
+if(otTime  >= workOfOT ) {
+  otTime = workOfOT;
+}
 
 tmp.otTimes = await otTime || '0';
 
