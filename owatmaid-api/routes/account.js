@@ -198,6 +198,7 @@ let hourOneFive = 0;
 let hourTwo = 0;
 let hourTwoFive = 0;
 let hourThree = 0;
+const dayW = [];
 
 
 // Get employee data by employeeId
@@ -3178,6 +3179,7 @@ let hourOneFive = 0;
 let hourTwo = 0;
 let hourTwoFive = 0;
 let hourThree = 0;
+const dayW = [];
 
 
 // Get employee data by employeeId

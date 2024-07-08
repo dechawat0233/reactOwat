@@ -648,6 +648,9 @@ data.dayoffRateOT = workplace.dayoffRateOT  || 0;
 data.holiday = workplace.holiday ||0;
 data.holidayOT = workplace.holidayOT ||0;
 
+data.workOfHour= workplace.workOfHour||0;
+data.workOfOT = workplace.workOfOT||0;
+
 
             res.json(data);
 

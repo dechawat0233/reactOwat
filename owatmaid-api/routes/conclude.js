@@ -161,6 +161,9 @@ workplaceId: wpId1
 //get workplace data for calculator
 const wpResponse1 = await axios.post(sURL + '/workplace/caldata', wpDataCalculator1 );
 // console.log(JSON.stringify( wpResponse1.data, null,2) );
+const workOfHour = await wpResponse1.data.workOfHour || '';
+const workOfOT  = await wpResponse1.data.workOfOT  || '';
+
 const dayOff1 = await wpResponse1.data.workplaceDayOffList || [];
 const specialDayOff1 = await wpResponse1.data.specialDaylist || [];
 const dayOffCheck1 = [];
@@ -227,12 +230,19 @@ if(specialDayOff1.includes(Number(str1) ) ) {
 if(salary === 0) {
   salary = wpResponse1.data.workRate;
   }
+  //limit hour
+  if(Number(allTime) < workOfHour && workOfHour !== 0) {
+  workOfHour = Number(allTime) || 0 ;
+  } 
   
-let workRate = ((wpResponse1.data.holiday * (salary / 8) ) * Number(allTime));
+let workRate = ((wpResponse1.data.holiday * (salary / 8) ) * Number(workOfHour));
 tmp.workRate = workRate  || '';
 tmp.workRateMultiply = wpResponse1.data.holiday || '';
 
-let workRateOT = ((wpResponse1.data.holidayOT * (salary / 8 ) ) * Number(otTime ));
+if(Number(otTime ) < workOfOT && workOfOT !== 0) {
+  workOfOT = Number(otTime ) || 0;
+}
+let workRateOT = ((wpResponse1.data.holidayOT * (salary / 8 ) ) * Number(workOfOT));
 tmp.workRateOT = workRateOT  || '';
 tmp.workRateOTMultiply = wpResponse1.data.holidayOT || '0';
 workRate  = 0;
@@ -243,11 +253,20 @@ if(dayOffCheck1.includes(str1 )  ){
 if(salary === 0) {
 salary = wpResponse1.data.workRate;
 }
-let workRate = ((Number(wpResponse1.data.dayoffRateHour || 0) * (Number(salary || 0) /8 ) ) * Number(allTime));
+
+//limit hour
+if(Number(allTime) < workOfHour && workOfHour !== 0) {
+  workOfHour = Number(allTime) || 0;
+}
+let workRate = ((Number(wpResponse1.data.dayoffRateHour || 0) * (Number(salary || 0) /8 ) ) * Number(workOfHour));
 tmp.workRate = workRate || '';
 tmp.workRateMultiply = wpResponse1.data.dayoffRateHour || '';
 
-let workRateOT = ((wpResponse1.data.dayoffRateOT * (salary /8) ) * Number(otTime ));
+//limit OT Hour
+if(Number(otTime ) < workOfOT && workOfOT !== 0) {
+  workOfOT = Number(otTime ) || 0;
+}
+let workRateOT = ((wpResponse1.data.dayoffRateOT * (salary /8) ) * Number(workOfOT));
 tmp.workRateOT = workRateOT || '';
 tmp.workRateOTMultiply = wpResponse1.data.dayoffRateOT || '';
 workRate  = 0;
@@ -259,11 +278,19 @@ if(salary === 0) {
   salary = wpResponse1.data.workRate;
   }
   
-let workRate = ((salary / 8) * Number(allTime)).toFixed(2);
+  //limit Hour
+  if(Number(allTime) < workOfHour && workOfHour !== 0) {
+    workOfHour = Number(allTime) || 0;
+    }
+let workRate = ((salary / 8) * Number(workOfHour)).toFixed(2);
 tmp.workRate = workRate  || '';
 tmp.workRateMultiply = '1';
 
-let workRateOT = (((salary /8 ) * wpResponse1.data.workRateOT )* Number(otTime )).toFixed(2);
+//limit OT Hour
+if(Number(otTime ) < workOfOT && workOfOT !== 0) {
+  workOfOT = Number(otTime ) || 0;
+}
+let workRateOT = (((salary /8 ) * wpResponse1.data.workRateOT )* Number(workOfOT)).toFixed(2);
 tmp.workRateOT = workRateOT  || '0';
 tmp.workRateOTMultiply = wpResponse1.data.workRateOT || '0';
 workRate  = 0;
