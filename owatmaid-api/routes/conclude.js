@@ -427,7 +427,7 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
         workRate = 0;
         workRateOT = 0;
 
-      } else if (dayOffCheck1.includes(str1)) {
+      } else if (dayOffCheck.includes(str1)) {
         if (salary === 0) {
           salary = wpResponse.data.workRate;
         }
