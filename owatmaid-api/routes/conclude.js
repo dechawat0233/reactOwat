@@ -212,9 +212,6 @@ let minutes1 = await parts1.length > 1 ? parseInt(parts1[1], 10) : 0;
 let scaledMinutes1 = await (minutes1 * 100) / 60;
 let otTime = await Number(`${hours1}.${scaledMinutes1}` || '0');
 console.log('otTime ' + otTime );
-if(otTime  >= workOfOT ) {
-  otTime = workOfOT;
-}
 
 tmp.otTimes = await otTime || '0';
 
@@ -243,10 +240,11 @@ let workRate = await ((wpResponse1.data.holiday * (salary / 8) ) * Number(workOf
 tmp.workRate = await workRate  || '';
 tmp.workRateMultiply = await wpResponse1.data.holiday || '';
 
-if(Number(otTime ) < workOfOT && workOfOT !== 0) {
-  workOfOT = await Number(otTime ) || 0;
+if(otTime  >= workOfOT ) {
+  otTime = workOfOT;
 }
-let workRateOT = await await ((wpResponse1.data.holidayOT * (salary / 8 ) ) * Number(workOfOT));
+
+let workRateOT = await await ((wpResponse1.data.holidayOT * (salary / 8 ) ) * Number(otTime));
 tmp.workRateOT = await workRateOT  || '';
 tmp.workRateOTMultiply = await wpResponse1.data.holidayOT || '0';
 workRate  = await 0;
@@ -267,10 +265,11 @@ tmp.workRate = await workRate || '';
 tmp.workRateMultiply = await wpResponse1.data.dayoffRateHour || '';
 
 //limit OT Hour
-if(Number(otTime ) < workOfOT && workOfOT !== 0) {
-  workOfOT = await Number(otTime ) || 0;
+if(otTime  >= workOfOT ) {
+  otTime = workOfOT;
 }
-let workRateOT = await ((wpResponse1.data.dayoffRateOT * (salary /8) ) * Number(workOfOT));
+
+let workRateOT = await ((wpResponse1.data.dayoffRateOT * (salary /8) ) * Number(otTime));
 tmp.workRateOT = await workRateOT || '';
 tmp.workRateOTMultiply = await wpResponse1.data.dayoffRateOT || '';
 workRate  = await 0;
@@ -289,13 +288,15 @@ if(salary === 0) {
 let workRate = await ((salary / 8) * Number(workOfHour)).toFixed(2);
 tmp.workRate = await workRate  || '';
 tmp.workRateMultiply = await '1';
-console.log('otTime x '+ otTime);
-//limit OT Hour
-if(Number(otTime) < Number(workOfOT) ) {
-  workOfOT = await otTime;
-}
 
-let workRateOT = await (((salary /8 ) * wpResponse1.data.workRateOT )* Number(workOfOT) ).toFixed(2);
+//limit OT Hour
+if(otTime  >= workOfOT ) {
+  otTime = workOfOT;
+}
+console.log('otTime x '+ otTime);
+
+
+let workRateOT = await (((salary /8 ) * wpResponse1.data.workRateOT )* Number(otTime) ).toFixed(2);
 tmp.workRateOT = await workRateOT  || '0';
 tmp.workRateOTMultiply = await wpResponse1.data.workRateOT || '0';
 workRate  = await 0;
