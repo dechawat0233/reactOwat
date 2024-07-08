@@ -198,7 +198,6 @@ let hourOneFive = 0;
 let hourTwo = 0;
 let hourTwoFive = 0;
 let hourThree = 0;
-const dayW = [];
 
 
 // Get employee data by employeeId
@@ -594,19 +593,11 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
   countHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
   countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
   countOtHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
-        if(checkDaywork !== 0) {
-if(dayW.includes( getDayNumberFromDate( responseConclude.data.recordConclude[c].concludeRecord[i].day) )){
-    dayOffWork += 1;
-dayW.push(getDayNumberFromDate( responseConclude.data.recordConclude[c].concludeRecord[i].day) );
-  }
-
-let checkDaywork = 0;
 
   //get hour rate
   if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '1') {
     amountOne = Number(amountOne ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
     hourOne = Number(hourOne) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
-    checkDaywork = Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
   }
   if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOTMultiply === '1'){
     amountOne = Number(amountOne ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT);
