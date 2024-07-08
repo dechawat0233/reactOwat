@@ -401,7 +401,7 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
       tmp.workRateOTMultiply = Number(element.specialtSalaryOT || 0) / (Number(wpResponse1.data.workRate || 0) / 8);
 
     } else {
-      if (specialDayOff1.includes(Number(str1))) {
+      if (specialDayOff.includes(Number(str1))) {
         if (salary === 0) {
           salary = wpResponse1.data.workRate;
         }
