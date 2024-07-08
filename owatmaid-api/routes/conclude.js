@@ -199,7 +199,7 @@ let minutes = await parts.length > 1 ? parseInt(parts[1], 10) : 0;
 
 // Scale the minutes
 let scaledMinutes = await (minutes * 100) / 60;
-let allTime = await `${hours}.${scaledMinutes}` || '0';
+let allTime = await Number(`${hours}.${scaledMinutes}` || '0');
 tmp.allTimes = await `${hours}.${scaledMinutes}` || '0';
 
 let parts1 = await element.otTime.split('.');
@@ -211,7 +211,6 @@ let minutes1 = await parts1.length > 1 ? parseInt(parts1[1], 10) : 0;
 // Scale the minutes
 let scaledMinutes1 = await (minutes1 * 100) / 60;
 let otTime = await Number(`${hours1}.${scaledMinutes1}` || '0');
-console.log('otTime ' + otTime );
 
 tmp.otTimes = await otTime || '0';
 
@@ -231,12 +230,13 @@ if(specialDayOff1.includes(Number(str1) ) ) {
 if(salary === 0) {
   salary = await wpResponse1.data.workRate;
   }
-  //limit hour
-  if(Number(allTime) < workOfHour && workOfHour !== 0) {
-  workOfHour = await Number(allTime) || 0 ;
-  } 
-  
-let workRate = await ((wpResponse1.data.holiday * (salary / 8) ) * Number(workOfHour));
+
+  //limit Hour
+  if(allTime >= workOfHour) {
+    allTime = await workOfHour;
+  }
+    
+let workRate = await ((wpResponse1.data.holiday * (salary / 8) ) * Number(allTime));
 tmp.workRate = await workRate  || '';
 tmp.workRateMultiply = await wpResponse1.data.holiday || '';
 
@@ -256,11 +256,12 @@ if(salary === 0) {
 salary = await wpResponse1.data.workRate;
 }
 
-//limit hour
-if(Number(allTime) < workOfHour && workOfHour !== 0) {
-  workOfHour = await Number(allTime) || 0;
-}
-let workRate = await ((Number(wpResponse1.data.dayoffRateHour || 0) * (Number(salary || 0) /8 ) ) * Number(workOfHour));
+  //limit Hour
+  if(allTime >= workOfHour) {
+    allTime = await workOfHour;
+  }
+  
+let workRate = await ((Number(wpResponse1.data.dayoffRateHour || 0) * (Number(salary || 0) /8 ) ) * Number(allTime));
 tmp.workRate = await workRate || '';
 tmp.workRateMultiply = await wpResponse1.data.dayoffRateHour || '';
 
@@ -280,12 +281,12 @@ workRateOT  = await 0;
 if(salary === 0) {
   salary = await wpResponse1.data.workRate;
   }
-  
+   
   //limit Hour
-  if(Number(allTime) < workOfHour && workOfHour !== 0) {
-    workOfHour = await Number(allTime) || 0;
-    }
-let workRate = await ((salary / 8) * Number(workOfHour)).toFixed(2);
+if(allTime >= workOfHour) {
+  allTime = await workOfHour;
+}
+let workRate = await ((salary / 8) * Number(allTime)).toFixed(2);
 tmp.workRate = await workRate  || '';
 tmp.workRateMultiply = await '1';
 
@@ -293,8 +294,6 @@ tmp.workRateMultiply = await '1';
 if(otTime  >= workOfOT ) {
   otTime = workOfOT;
 }
-console.log('otTime x '+ otTime);
-
 
 let workRateOT = await (((salary /8 ) * wpResponse1.data.workRateOT )* Number(otTime) ).toFixed(2);
 tmp.workRateOT = await workRateOT  || '0';
