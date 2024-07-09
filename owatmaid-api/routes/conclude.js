@@ -38,7 +38,8 @@ concludeRecord: [{
   otTimes: String, 
   workRateOT: String, 
   workRateOTMultiply: String, 
-  addSalaryDay: String
+  addSalaryDay: String,
+  shift: String
 }],
 addSalary: [
   ],
@@ -291,6 +292,7 @@ for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
       }
     }
     tmp.addSalaryDay = '';
+tmp.shift = element.shift || 0;
 
     concludeRecord.push(tmp);
   }
@@ -468,6 +470,7 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
       }
     }
     tmp.addSalaryDay = '';
+    tmp.shift = element.shift || 0;
 
     concludeRecord.push(tmp);
   }
