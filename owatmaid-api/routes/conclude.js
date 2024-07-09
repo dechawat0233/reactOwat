@@ -223,8 +223,7 @@ for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
 
         if (allTime >= workOfHour) {
           allTime = workOfHour;
-              tmp.otTimes = otTime || '0';
-
+tmp.allTime = workOfHour;
         }
 
         let workRate = ((wpResponse1.data.holiday * (salary / 8)) * Number(allTime));
@@ -233,7 +232,7 @@ for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
 
         if (otTime >= workOfOT) {
           otTime = workOfOT;
-          tmp.otTimes = otTime || '0';
+          tmp.otTimes = workOfOT || '0';
         }
 
         let workRateOT = ((wpResponse1.data.holidayOT * (salary / 8)) * Number(otTime));
@@ -249,6 +248,7 @@ for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
 
         if (allTime >= workOfHour) {
           allTime = workOfHour;
+          tmp.allTime = workOfHour;
         }
 
         let workRate = ((Number(wpResponse1.data.dayoffRateHour || 0) * (Number(salary || 0) / 8)) * Number(allTime));
@@ -257,7 +257,7 @@ for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
 
         if (otTime >= workOfOT) {
           otTime = workOfOT;
-          tmp.otTimes = otTime || '0';
+          tmp.otTimes = workOfOT || '0';
         }
 
         let workRateOT = ((wpResponse1.data.dayoffRateOT * (salary / 8)) * Number(otTime));
@@ -273,6 +273,7 @@ for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
 
         if (allTime >= workOfHour) {
           allTime = workOfHour;
+          tmp.allTime = workOfHour || 0;
         }
 
         let workRate = ((salary / 8) * Number(allTime)).toFixed(2);
@@ -281,7 +282,7 @@ for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
 
         if (otTime >= workOfOT) {
           otTime = workOfOT;
-          tmp.otTimes = otTime || '0';
+          tmp.otTimes = workOfOT|| '0';
         }
 
         let workRateOT = (((salary / 8) * wpResponse1.data.workRateOT) * Number(otTime)).toFixed(2);
