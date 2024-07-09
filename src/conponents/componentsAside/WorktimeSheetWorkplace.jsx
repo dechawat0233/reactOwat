@@ -2541,6 +2541,8 @@ function WorktimeSheetWorkplace() {
     console.log('countSpecialDays', countSpecialDays);
     console.log('specialDayListWorks', specialDayListWorks);
     console.log('amountCountDayWork', amountCountDayWork);
+    console.log('amountCountDayWork', amountCountDayWork);
+
 
 
     const sumArrayHoli = countSpecialDays.map((countSpecialDay, index) => countSpecialDay - specialDayListWorks[index]);
