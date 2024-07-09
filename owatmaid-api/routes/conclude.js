@@ -465,7 +465,7 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
         tmp.workRateMultiply = '1';
 
         if (Number(otTime) >= workOfOT) {
-          tmp.otTime = workOfOT || 0;
+          tmp.otTime = 2.66;
 
           otTime = workOfOT;
           // tmp.otTime = workOfOT || 0;
