@@ -671,24 +671,24 @@ if (!x) {
 //   } //end if
 
 //check day is null and place data 
-for(let i = 1; i <= 20; i++){
-  // tmp.day =str1 +'/' + month + '/' + year;
-  let d = i +'/' + month + '/' + year;
-  let x = concludeRecord.some(record => record.day === d);
+// for(let i = 1; i <= 20; i++){
+//   // tmp.day =str1 +'/' + month + '/' + year;
+//   let d = i +'/' + month + '/' + year;
+//   let x = concludeRecord.some(record => record.day === d);
 
-if(x) {
-// console.log('i ' + d);
-} else {
-  concludeRecord.push({'day': d});
-}
-}
+// if(x) {
+// // console.log('i ' + d);
+// } else {
+//   concludeRecord.push({'day': d});
+// }
+// }
 
-// Sort the array by date directly in the main code
-concludeRecord.sort((a, b) => {
-  const dateA = new Date(a.day.split('/').reverse().join('/'));
-  const dateB = new Date(b.day.split('/').reverse().join('/'));
-  return dateA - dateB;
-});
+// // Sort the array by date directly in the main code
+// concludeRecord.sort((a, b) => {
+//   const dateA = new Date(a.day.split('/').reverse().join('/'));
+//   const dateB = new Date(b.day.split('/').reverse().join('/'));
+//   return dateA - dateB;
+// });
 
 // console.log('Sorted concludeRecord:', concludeRecord);
 
