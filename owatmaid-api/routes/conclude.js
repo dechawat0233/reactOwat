@@ -468,7 +468,7 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
           tmp.otTime = workOfOT || 0;
 
           otTime = workOfOT;
-          tmp.otTime = workOfOT || 0;
+          // tmp.otTime = workOfOT || 0;
         }
 
         let workRateOT = (((salary / 8) * wpResponse.data.workRateOT) * Number(otTime)).toFixed(2);
