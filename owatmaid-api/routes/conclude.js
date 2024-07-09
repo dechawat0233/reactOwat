@@ -396,6 +396,8 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
       tmp.workRate = element.specialtSalary || '';
       tmp.workRateMultiply = Number(element.specialtSalary || 0) / Number(wpResponse.data.workRate || 0);
 
+      tmp.otTimes = otTime || '0';
+
       tmp.workRateOT = element.specialtSalaryOT || '';
       tmp.workRateOTMultiply = Number(element.specialtSalaryOT || 0) / (Number(wpResponse.data.workRate || 0) / 8);
 
@@ -467,6 +469,8 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
         if (Number(otTime) >= workOfOT) {
           otTime = workOfOT;
           tmp.otTime = workOfOT || 0;
+          console.log('*x*');
+          
         }
 
         let workRateOT = (((salary / 8) * wpResponse.data.workRateOT) * Number(otTime)).toFixed(2);
