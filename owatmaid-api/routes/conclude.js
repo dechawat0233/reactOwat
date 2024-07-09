@@ -369,7 +369,7 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
   let str1 = parseInt(dateParts[0], 10);
   console.log('*str1 ' + str1);
 
-  if (str1 > 0 && str1 <= 31) {
+  if (str1 > 0 && str1 <= 20) {
     tmp.day = str1 + '/' + month + '/' + year;
     tmp.workplaceId = element.workplaceId || '';
     let parts = element.allTime.split('.');
@@ -390,7 +390,7 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
     let scaledMinutes1 = (minutes1 * 100) / 60;
     let otTime = Number(`${hours1}.${scaledMinutes1}` || '0');
 
-    tmp.otTimes = otTime || '0';
+    // tmp.otTimes = otTime || '0';
 
     if (element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
       tmp.workRate = element.specialtSalary || '';
@@ -466,9 +466,8 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
 
         if (Number(otTime) >= workOfOT) {
           otTime = workOfOT;
-          // tmp.otTime = workOfOT || 0;
+          tmp.otTime = workOfOT || 0;
         }
-        tmp.otTime = 2.66;
 
         let workRateOT = (((salary / 8) * wpResponse.data.workRateOT) * Number(otTime)).toFixed(2);
         tmp.workRateOT = workRateOT || '0';
