@@ -416,7 +416,7 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
           otTime = workOfOT;
         }
 
-        let workRateOT = ((wpResponse.data.holidayOT * (salary / 8)) * Number(otTime));
+        let workRateOT = ((wpResponse.data.holidayOT * (salary / 8)) * Number(otTime)).toFixed(2);
         tmp.workRateOT = workRateOT || '';
         tmp.workRateOTMultiply = wpResponse.data.holidayOT || '0';
         workRate = 0;
@@ -431,7 +431,7 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
           allTime = workOfHour;
         }
 
-        let workRate = ((Number(wpResponse.data.dayoffRateHour || 0) * (Number(salary || 0) / 8)) * Number(allTime));
+        let workRate = ((Number(wpResponse.data.dayoffRateHour || 0) * (Number(salary || 0) / 8)) * Number(allTime)).toFixed(2);
         tmp.workRate = workRate || '';
         tmp.workRateMultiply = wpResponse.data.dayoffRateHour || '';
 
@@ -439,7 +439,7 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
           otTime = workOfOT;
         }
 
-        let workRateOT = ((wpResponse.data.dayoffRateOT * (salary / 8)) * Number(otTime));
+        let workRateOT = ((wpResponse.data.dayoffRateOT * (salary / 8)) * Number(otTime)).toFixed(2);
         tmp.workRateOT = workRateOT || '';
         tmp.workRateOTMultiply = wpResponse.data.dayoffRateOT || '';
         workRate = 0;
