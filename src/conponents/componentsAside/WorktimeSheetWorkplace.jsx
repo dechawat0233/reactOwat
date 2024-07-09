@@ -5149,7 +5149,7 @@ function WorktimeSheetWorkplace() {
                     doc.text(countDayWork[i].toString(), currentX + 2, 3 + currentY, { align: 'center' });
 
                     // doc.text(product, currentX + 2, 3 + currentY + 3, { align: 'center' });
-                    doc.text(amountCountDayWork, currentX + 2, 3 + currentY + 3, { align: 'center' });
+                    doc.text(amountCountDayWork[i].toString(), currentX + 2, 3 + currentY + 3, { align: 'center' });
                 }
             };
             // 1.5
