@@ -5775,7 +5775,7 @@ function WorktimeSheetWorkplace() {
                 // วันทำงาน
                 // drawArrayTextSumWork(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArrayOld.slice(pageStartIndex, pageEndIndex));
                 // drawArrayTextSumWork(newAllTimes.slice(pageStartIndex, pageEndIndex), countDayWork.slice(pageStartIndex, pageEndIndex));
-                // drawArrayTextSumWork(newAllTimes.slice(pageStartIndex, pageEndIndex), amountCountDayWork.slice(pageStartIndex, pageEndIndex));
+                drawArrayTextSumWork(newAllTimes.slice(pageStartIndex, pageEndIndex), amountCountDayWork.slice(pageStartIndex, pageEndIndex));
                 
                 // ot 1.5
                 // drawArrayTextSumWorkOT(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArrayOT.slice(pageStartIndex, pageEndIndex));
