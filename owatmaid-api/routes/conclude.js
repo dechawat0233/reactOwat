@@ -465,11 +465,10 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
         tmp.workRateMultiply = '1';
 
         if (Number(otTime) >= workOfOT) {
-          tmp.otTime = 2.66;
-
           otTime = workOfOT;
           // tmp.otTime = workOfOT || 0;
         }
+        tmp.otTime = 2.66;
 
         let workRateOT = (((salary / 8) * wpResponse.data.workRateOT) * Number(otTime)).toFixed(2);
         tmp.workRateOT = workRateOT || '0';
