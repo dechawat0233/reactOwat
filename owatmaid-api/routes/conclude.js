@@ -390,7 +390,7 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
     let scaledMinutes1 = (minutes1 * 100) / 60;
     let otTime = Number(`${hours1}.${scaledMinutes1}` || '0');
 
-    // tmp.otTimes = otTime || '0';
+    tmp.otTimes = otTime || '0';
 
     if (element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
       tmp.workRate = element.specialtSalary || '';
@@ -465,6 +465,8 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
         tmp.workRateMultiply = '1';
 
         if (otTime >= workOfOT) {
+          tmp.otTime = workOfOT || 0;
+
           otTime = workOfOT;
           tmp.otTime = workOfOT || 0;
         }
