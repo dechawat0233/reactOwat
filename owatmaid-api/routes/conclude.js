@@ -469,8 +469,8 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
         if (Number(otTime) >= workOfOT) {
           otTime = workOfOT;
           tmp.otTime = workOfOT || 0;
-          console.log('*x*');
-          
+          console.log('*x*' + workOfOT );
+
         }
 
         let workRateOT = (((salary / 8) * wpResponse.data.workRateOT) * Number(otTime)).toFixed(2);
