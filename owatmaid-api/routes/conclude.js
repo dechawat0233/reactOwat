@@ -367,8 +367,10 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
 
   let dateParts = element.date.split('/');
   let str1 = parseInt(dateParts[0], 10);
+  if(str1 > 15){
   console.log('*str1 ' + str1);
-
+  }
+  
   if (str1 > 0 && str1 <= 20) {
     tmp.day = str1 + '/' + month + '/' + year;
     tmp.workplaceId = element.workplaceId || '';
