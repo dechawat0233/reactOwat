@@ -814,9 +814,11 @@ router.get('/listdelete', async (req, res) => {
 
 
 // Get  conclude record by conclude Id
-router.get('/:employeeId', async (req, res) => {
+router.get('/:month/:employeeId', async (req, res) => {
   try {
-    const concludeData = await conclude.findOne({ employeeId: req.params.employeeId});
+    const concludeData = await conclude.findOne({ employeeId: req.params.employeeId, 
+      month: req.params.month
+    });
 
     if (concludeData ) {
       res.json(concludeData );
