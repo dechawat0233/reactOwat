@@ -464,6 +464,8 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
         if (allTime >= workOfHour) {
           allTime = workOfHour;
           tmp.allTimes = workOfHour || 0;
+        } else {
+          tmp.allTimes = allTime || 0;
         }
 
         let workRate = ((salary / 8) * Number(allTime)).toFixed(2);
