@@ -369,8 +369,10 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
   let str1 = parseInt(dateParts[0], 10);
   if(str1 > 15){
   console.log('*str1 ' + str1);
-  }
+  console.log('OT ' + element.otTime);
   
+  }
+
   if (str1 > 0 && str1 <= 20) {
     tmp.day = str1 + '/' + month + '/' + year;
     tmp.workplaceId = element.workplaceId || '';
@@ -471,7 +473,7 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
         if (otTime >= workOfOT) {
           otTime = workOfOT;
           tmp.otTimes = workOfOT || 0;
-          console.log('*x*' + workOfOT );
+          // console.log('*x*' + workOfOT );
 
         }
 
