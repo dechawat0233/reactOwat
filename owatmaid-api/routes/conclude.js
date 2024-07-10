@@ -475,7 +475,8 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
         if (otTime >= workOfOT) {
           otTime = workOfOT;
           tmp.otTimes = workOfOT || 0;
-          // console.log('*x*' + workOfOT );
+        } else {
+          tmp.otTimes = otTime || 0;
 
         }
 
