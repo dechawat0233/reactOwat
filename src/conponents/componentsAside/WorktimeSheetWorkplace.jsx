@@ -2902,6 +2902,7 @@ function WorktimeSheetWorkplace() {
       ? parseInt(accountingRecord.amountCountDayWork, 10)
       : 0;
   });
+  console.log('amountCountDayWork',amountCountDayWork);
 
   const sumArrayHoli = countSpecialDays.map(
     (countSpecialDay, index) => countSpecialDay - specialDayListWorks[index]

@@ -1171,7 +1171,7 @@ router.post('/calsalarylist', async (req, res) => {
             };
             
             data.createDate = now.toLocaleString('en-GB', options);
-            data.employeeId = responseConclude.data.recordConclude[c].employeeId;
+            data.employeeId = responseConclude.data.recordConclude[c].employeeId || '';
             data.accountingRecord = {};
     
             let salary = 0;
