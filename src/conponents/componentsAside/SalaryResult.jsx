@@ -369,7 +369,7 @@ const [wsCountOtHourWork, setWsCountOtHourWork] = useState(0);
   }, [year, month, staffId, updateStatus]);
 
   const handleTmpamountChange = (e) => {
-    setWsAmountSpecialDay(e.target.value);
+    setWsAmountSpecialDay(Number(e.target.value) );
   };
 
   const handleUpdateStatus = (updateStatus) => {
@@ -380,10 +380,10 @@ const [wsCountOtHourWork, setWsCountOtHourWork] = useState(0);
 
 //sum salary before deduct
 useEffect( () => {
-   setWsTotalSum((Number(wsAmountDay) + Number(wsAmountOt) + Number(wsTax) + Number(wsAmountSpecialDay) + Number(sumAddSalaryList)).toFixed(2));
+   setWsTotalSum((Number(wsAmountDay || 0 ) + Number(wsAmountOt || 0) + Number(wsTax || 0 ) + Number(wsAmountSpecialDay || 0) + Number(sumAddSalaryList || 0)).toFixed(2) || 0);
 
    const calSocial = async () => {
-if(wsSocialSecurity >= 0 ) {
+if(Number(wsSocialSecurity) >= 0 ) {
   const   tmp = await Number(wsAmountSpecialDayx) * 0.05;
   const tmp1 = await Number(wsAmountSpecialDay) * 0.05;
   if(tmp < tmp1 ) {
