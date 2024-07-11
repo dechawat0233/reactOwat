@@ -843,6 +843,23 @@ router.get('/:month/:employeeId', async (req, res) => {
   }
 
 });
+// Get  conclude record by conclude month
+router.get('/:month', async (req, res) => {
+  try {
+    const concludeData = await conclude.findOne({ month: req.params.month
+    });
+
+    if (concludeData ) {
+      res.json(concludeData );
+    } else {
+      res.status(404).json({ error: 'workplace not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+
+});
+
 
 
 // Get  conclude record by conclude Id
