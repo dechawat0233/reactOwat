@@ -1231,7 +1231,7 @@ let hourTwoFive = 0;
 let hourThree = 0;
 const dayW = [];
 
-const response = null;
+const response = '';
 
     // Get employee data by employeeId
     if(responseConclude.data.recordConclude[c].employeeId === '') {
