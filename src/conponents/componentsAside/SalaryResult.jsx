@@ -321,6 +321,9 @@ const [wsCountOtHourWork, setWsCountOtHourWork] = useState(0);
 
             if (response.data) {
 
+              if(updateStatus !== '') {
+alert('ระบบทำการคำนวนใหม่แล้ว กรุณากดค้นหาอีกครั้ง');
+              }
               setUpdateStatus('');
               await setAccountingData(response.data[0]);
               await setWsAmountSpecialDay(response.data[0].accountingRecord.amountSpecialDay || response.data[0].accountingRecord[0].amountSpecialDay);
@@ -387,15 +390,15 @@ if(Number(wsSocialSecurity) >= 0 ) {
   const   tmp = await Number(wsAmountSpecialDayx) * 0.05;
   const tmp1 = await Number(wsAmountSpecialDay) * 0.05;
   if(tmp < tmp1 ) {
-let ans = await (wsSocialSecurityX + (tmp1 - tmp));
+let ans = await (Number(wsSocialSecurityX) + (Number(tmp1) - Number(tmp)));
 if(ans < 83) {
   ans = await 83;
 }
-  await setWsSocialSecurity();
+  await setWsSocialSecurity(ans );
 
   } else {
-    let t = tmp - tmp1;
-    let ans = await Number(wsSocialSecurityX) - t;
+    let t = Number(tmp) - Number(tmp1);
+    let ans = await Number(wsSocialSecurityX) - Number(t);
     if(ans < 83) {
       ans = await 83;
     }
@@ -1883,7 +1886,7 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
                             )}
                             {/* {isNaN(Number(deductBeforeTax) + Number(deductAfterTax)) ? 0.00 : (Number(deductBeforeTax) + Number(deductAfterTax)).toFixed(2)} */}
                           </td>
-                          <td style={cellStyle}>{isNaN(Number(wsTax) + Number(wsSocialSecurity)) ? 0.00 : (Number(wsTax) + Number(wsSocialSecurity)).toFixed(2)}</td>
+                          <td style={cellStyle}>{isNaN(Number(wsTax) + Number(wsSocialSecurity)) ? 0.00 : (Math.ceil(Number(wsTax) + Number(wsSocialSecurity)) ).toFixed(2)}</td>
                           {/* <td style={cellStyle}>({anyMinus} + {tax} + {((overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary) * socialSecurity).toFixed()} + {bankCustom} + {sumDeduct} + {sumDeductInstallment})</td> */}
                           <td style={cellStyle}>
                             <button type="button" onClick={handleAddSalary} class="btn btn-danger" style={{ width: '4rem' }}>แก้ไข</button>
@@ -1962,13 +1965,13 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
 
 
                           <td style={cellStyle}>{wsTotalSum}</td>
-                          <td style={cellStyle}>{wsTotalSumDeduct}</td>
+                          <td style={cellStyle}>{Math.ceil(wsTotalSumDeduct) }</td>
                           {/* <td style={cellStyle}>{totalSum - totalSumDeduct}</td> */}
                           <td style={cellStyle}>
                             {/* {isNaN(Number(total)) ? 0.00 : Number(total).toFixed(2)} */}
                             {/* {isNaN(Number(total)) ? 0.00 : (Math.ceil(Number(total) * 100) / 100).toFixed(2)} */}
                             {/* {isNaN(Number(wsTotal)) ? 0.00 : (Number(wsTotal)).toFixed(2)} */}
-                            {(Number(wsTotalSum) - Number(wsTotalSumDeduct)).toFixed(2) || 0}
+                            {(Number(wsTotalSum) - Math.ceil(Number(wsTotalSumDeduct)) ).toFixed(2) || 0}
                           </td>
 
                         </tr>
