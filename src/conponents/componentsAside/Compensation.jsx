@@ -34,6 +34,11 @@ function Compensation() {
         backgroundColor: '#f2f2f2',
     };
 
+const [sumWorkHourX , setSumWorkHourX] = useState(0);
+const [sumWorkRateX , setSumWorkRateX] = useState(0);
+const [sumWorkHourOtX , setSumWorkHourOtX] = useState(0);
+const [sumWorkRateOtX , setSumWorkRateOtX] = useState(0);
+
     const [employeeId, setEmployeeId] = useState(''); //รหัสหน่วยงาน
     const [name, setName] = useState(''); //ชื่อหน่วยงาน
     const [lastName, setLastname] = useState(''); //ชื่อหน่วยงาน
@@ -448,6 +453,8 @@ function Compensation() {
                     await setUpdate(response.data.recordConclude[0]._id);
 
                 } else {
+                    alert(response.data.recordConclude[0].sumWorkHourOt);
+
                     await setConcludeResult(response.data.recordConclude[0].concludeRecord);
                     await setAddSalaryResult(response.data.recordConclude[0].addSalary);
                     // setStaffFullName(response.data.recordConclude[0].);

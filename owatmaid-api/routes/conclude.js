@@ -219,9 +219,9 @@ for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
       tmp.workRateOTMultiply = Number(element.specialtSalaryOT || 0) / (Number(wpResponse1.data.workRate || 0) / 8);
 tmp.workType = 'specialtSalary';
 
-sumWorkHour += allTime ||0;
+sumWorkHour += Number(allTime) ||0;
 sumWorkRate += Number(element.specialtSalary || '');
-sumWorkHourOt += otTime || 0;;
+sumWorkHourOt += Number(otTime) || 0;;
 sumWorkRateOt += Number(element.specialtSalaryOT || 0);
 
     } else {
@@ -252,9 +252,9 @@ tmp.allTime = workOfHour;
         tmp.workRateOT = workRateOT || '';
         tmp.workRateOTMultiply = wpResponse1.data.holidayOT || '0';
         
-        sumWorkHour += allTime ||0;
+        sumWorkHour += Number(allTime) ||0;
 sumWorkRate += Number(workRate || '');
-sumWorkHourOt += otTime || 0;
+sumWorkHourOt += Number(otTime) || 0;
 sumWorkRateOt += Number(workRateOT || 0);
 
         workRate = 0;
@@ -288,9 +288,9 @@ tmp.workType = 'specialDayOff';
         tmp.workRateOT = workRateOT || '';
         tmp.workRateOTMultiply = wpResponse1.data.dayoffRateOT || '';
 
-        sumWorkHour += allTime ||0;
+        sumWorkHour += Number(allTime) ||0;
         sumWorkRate += Number(workRate || '');
-        sumWorkHourOt += otTime || 0;
+        sumWorkHourOt += Number(otTime) || 0;
         sumWorkRateOt += Number(workRateOT || 0);
         
         workRate = 0;
@@ -324,9 +324,9 @@ tmp.workType = 'dayOff';
         tmp.workRateOT = workRateOT || '0';
         tmp.workRateOTMultiply = wpResponse1.data.workRateOT || '0';
 
-        sumWorkHour += allTime ||0;
+        sumWorkHour += Number(allTime) ||0;
         sumWorkRate += Number(workRate || '');
-        sumWorkHourOt += otTime || 0;
+        sumWorkHourOt += Number(otTime) || 0;
         sumWorkRateOt += Number(workRateOT || 0);
         
         workRate = 0;
@@ -425,9 +425,9 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
       tmp.workRateOTMultiply = Number(element.specialtSalaryOT || 0) / (Number(wpResponse.data.workRate || 0) / 8);
 tmp.workType = 'specialtSalary';
 
-sumWorkHour += allTime ||0;
+sumWorkHour += Number(allTime) ||0;
 sumWorkRate += Number(element.specialtSalary || '');
-sumWorkHourOt += otTime || 0;;
+sumWorkHourOt += Number(otTime) || 0;;
 sumWorkRateOt += Number(element.specialtSalaryOT || 0);
 
     } else {
@@ -458,9 +458,9 @@ sumWorkRateOt += Number(element.specialtSalaryOT || 0);
         tmp.workRateOT = workRateOT || '';
         tmp.workRateOTMultiply = wpResponse.data.holidayOT || '0';
 
-        sumWorkHour += allTime ||0;
+        sumWorkHour += Number(allTime) ||0;
         sumWorkRate += Number(workRate || '');
-        sumWorkHourOt += otTime || 0;
+        sumWorkHourOt += Number(otTime) || 0;
         sumWorkRateOt += Number(workRateOT || 0);
         
         workRate = 0;
@@ -494,9 +494,9 @@ sumWorkRateOt += Number(element.specialtSalaryOT || 0);
         tmp.workRateOT = workRateOT || '';
         tmp.workRateOTMultiply = wpResponse.data.dayoffRateOT || '';
 
-        sumWorkHour += allTime ||0;
+        sumWorkHour += Number(allTime) ||0;
         sumWorkRate += Number(workRate || '');
-        sumWorkHourOt += otTime || 0;
+        sumWorkHourOt += Number(otTime) || 0;
         sumWorkRateOt += Number(workRateOT || 0);
 
         workRate = 0;
@@ -530,9 +530,9 @@ sumWorkRateOt += Number(element.specialtSalaryOT || 0);
         tmp.workRateOT = workRateOT || '0';
         tmp.workRateOTMultiply = wpResponse.data.workRateOT || '0';
 
-        sumWorkHour += allTime ||0;
+        sumWorkHour += Number(allTime) ||0;
         sumWorkRate += Number(workRate || '');
-        sumWorkHourOt += otTime || 0;
+        sumWorkHourOt += Number(otTime) || 0;
         sumWorkRateOt += Number(workRateOT || 0);
 
         workRate = 0;
