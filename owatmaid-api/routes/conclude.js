@@ -61,7 +61,12 @@ const conclude = mongoose.model('conclude', concludeSchema );
       month ,
       employeeId } = await req.body;
   
-    
+      sumWorkHour = 0;
+      sumWorkRate = 0;
+      sumWorkHourOt = 0;
+      sumWorkRateOt = 0;
+      
+      
 try {
 
   const dataConclude = {};
@@ -214,6 +219,11 @@ for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
       tmp.workRateOTMultiply = Number(element.specialtSalaryOT || 0) / (Number(wpResponse1.data.workRate || 0) / 8);
 tmp.workType = 'specialtSalary';
 
+sumWorkHour += allTime ||0;
+sumWorkRate += Number(element.specialtSalary || '');
+sumWorkHourOt += otTime || 0;;
+sumWorkRateOt += Number(element.specialtSalaryOT || 0);
+
     } else {
       if (specialDayOff1.includes(Number(str1))) {
         if (salary === 0) {
@@ -241,6 +251,12 @@ tmp.allTime = workOfHour;
         let workRateOT = ((wpResponse1.data.holidayOT * (salary / 8)) * Number(otTime));
         tmp.workRateOT = workRateOT || '';
         tmp.workRateOTMultiply = wpResponse1.data.holidayOT || '0';
+        
+        sumWorkHour += allTime ||0;
+sumWorkRate += Number(workRate || '');
+sumWorkHourOt += otTime || 0;
+sumWorkRateOt += Number(workRateOT || 0);
+
         workRate = 0;
         workRateOT = 0;
 tmp.workType = 'specialDayOff';
@@ -271,6 +287,12 @@ tmp.workType = 'specialDayOff';
         let workRateOT = ((wpResponse1.data.dayoffRateOT * (salary / 8)) * Number(otTime));
         tmp.workRateOT = workRateOT || '';
         tmp.workRateOTMultiply = wpResponse1.data.dayoffRateOT || '';
+
+        sumWorkHour += allTime ||0;
+        sumWorkRate += Number(workRate || '');
+        sumWorkHourOt += otTime || 0;
+        sumWorkRateOt += Number(workRateOT || 0);
+        
         workRate = 0;
         workRateOT = 0;
 tmp.workType = 'dayOff';
@@ -301,6 +323,12 @@ tmp.workType = 'dayOff';
         let workRateOT = (((salary / 8) * wpResponse1.data.workRateOT) * Number(otTime)).toFixed(2);
         tmp.workRateOT = workRateOT || '0';
         tmp.workRateOTMultiply = wpResponse1.data.workRateOT || '0';
+
+        sumWorkHour += allTime ||0;
+        sumWorkRate += Number(workRate || '');
+        sumWorkHourOt += otTime || 0;
+        sumWorkRateOt += Number(workRateOT || 0);
+        
         workRate = 0;
         workRateOT = 0;
         tmp.workType = 'workDay';
@@ -315,30 +343,8 @@ tmp.shift = element.shift || 0;
 }
 }
 
-// for (let i = 21; i <= lastday; i++) {
-// let d = i + '/' + prevMonth + '/' + year1;
-// let x = concludeRecord.some(record => record.day == d);
-
-// if (!x) {
-//   concludeRecord.push({ 'day': d });
-// }
-// }
-
-
-// // Sort the array by date directly in the main code
-// await concludeRecord.sort((a, b) => {
-// const dateA = new Date(a.day.split('/').reverse().join('/'));
-// const dateB = new Date(b.day.split('/').reverse().join('/'));
-// return dateA - dateB;
-// });
-
-// await console.log('Sorted concludeRecord:', concludeRecord);
-
-
-// console.log('Sorted concludeRecord:', concludeRecord);
-// dataConclude.concludeRecord = concludeRecord || [];
-
 //=========
+
   const searchData = {
     employeeId: employeeId || '',
     month: month || '',
@@ -417,6 +423,12 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
 
       tmp.workRateOT = element.specialtSalaryOT || '';
       tmp.workRateOTMultiply = Number(element.specialtSalaryOT || 0) / (Number(wpResponse.data.workRate || 0) / 8);
+tmp.workType = 'specialtSalary';
+
+sumWorkHour += allTime ||0;
+sumWorkRate += Number(element.specialtSalary || '');
+sumWorkHourOt += otTime || 0;;
+sumWorkRateOt += Number(element.specialtSalaryOT || 0);
 
     } else {
       if (specialDayOff.includes(Number(str1))) {
@@ -445,9 +457,16 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
         let workRateOT = ((wpResponse.data.holidayOT * (salary / 8)) * Number(otTime)).toFixed(2);
         tmp.workRateOT = workRateOT || '';
         tmp.workRateOTMultiply = wpResponse.data.holidayOT || '0';
+
+        sumWorkHour += allTime ||0;
+        sumWorkRate += Number(workRate || '');
+        sumWorkHourOt += otTime || 0;
+        sumWorkRateOt += Number(workRateOT || 0);
+        
         workRate = 0;
         workRateOT = 0;
-
+        tmp.workType = 'specialDayOff';
+      
       } else if (dayOffCheck.includes(str1)) {
         if (salary === 0) {
           salary = wpResponse.data.workRate;
@@ -474,8 +493,15 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
         let workRateOT = ((wpResponse.data.dayoffRateOT * (salary / 8)) * Number(otTime)).toFixed(2);
         tmp.workRateOT = workRateOT || '';
         tmp.workRateOTMultiply = wpResponse.data.dayoffRateOT || '';
+
+        sumWorkHour += allTime ||0;
+        sumWorkRate += Number(workRate || '');
+        sumWorkHourOt += otTime || 0;
+        sumWorkRateOt += Number(workRateOT || 0);
+
         workRate = 0;
         workRateOT = 0;
+        tmp.workType = 'dayOff';
 
       } else {
         if (salary === 0) {
@@ -498,14 +524,21 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
           tmp.otTimes = workOfOT || 0;
         } else {
           tmp.otTimes = otTime || 0;
-
         }
 
         let workRateOT = (((salary / 8) * wpResponse.data.workRateOT) * Number(otTime)).toFixed(2);
         tmp.workRateOT = workRateOT || '0';
         tmp.workRateOTMultiply = wpResponse.data.workRateOT || '0';
+
+        sumWorkHour += allTime ||0;
+        sumWorkRate += Number(workRate || '');
+        sumWorkHourOt += otTime || 0;
+        sumWorkRateOt += Number(workRateOT || 0);
+
         workRate = 0;
         workRateOT = 0;
+        tmp.workType = 'workDay';
+
       }
     }
     tmp.addSalaryDay = '';
@@ -728,6 +761,11 @@ for(let c =0; c < concludeRecord .length; c++){
 await addSalaryList.push(addSalaryDaily);
 }
 dataConclude.addSalary = addSalaryList;
+
+dataConclude.sumWorkHour = sumWorkHour  || 0;
+dataConclude.sumWorkRate = sumWorkRate  || 0;
+dataConclude.sumWorkHourOt = sumWorkHourOt  || 0;
+dataConclude.sumWorkRateOt = sumWorkRateOt  || 0;
 
 try {
       // Delete all documents matching the year, month, and employeeId
