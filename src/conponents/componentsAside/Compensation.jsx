@@ -39,6 +39,55 @@ const [sumWorkRateX , setSumWorkRateX] = useState(0);
 const [sumWorkHourOtX , setSumWorkHourOtX] = useState(0);
 const [sumWorkRateOtX , setSumWorkRateOtX] = useState(0);
 
+const [statusEditSum , setStatusEditSum] = useState(false);
+const handleClickEditSum = () => {
+    // Toggle the status between true and false
+    setStatusEditSum((prevStatus) => !prevStatus);
+  };
+
+  const handleChangeSumWorkHourX = (e) => {
+    const value = e.target.value;
+
+    // Ensure that the value is a number and not empty
+    if (!isNaN(value) && value !== "") {
+      setSumWorkHourX(parseFloat(value));
+    } else {
+      setSumWorkHourX(0);
+    }
+  };
+  const handleChangeSumWorkRateX= (e) => {
+    const value = e.target.value;
+
+    // Ensure that the value is a number and not empty
+    if (!isNaN(value) && value !== "") {
+      setSumWorkRateX(parseFloat(value));
+    } else {
+      setSumWorkRateX(0);
+    }
+  };
+  
+  const handleChangeSumWorkHourOtX= (e) => {
+    const value = e.target.value;
+
+    // Ensure that the value is a number and not empty
+    if (!isNaN(value) && value !== "") {
+      setSumWorkHourOtX(parseFloat(value));
+    } else {
+      setSumWorkHourOtX(0);
+    }
+  };
+  
+  const handleChangeSumWorkRateOtX= (e) => {
+    const value = e.target.value;
+
+    // Ensure that the value is a number and not empty
+    if (!isNaN(value) && value !== "") {
+      setSumWorkRateOtX(parseFloat(value));
+    } else {
+      setSumWorkRateOtX(0);
+    }
+  };
+
     const [employeeId, setEmployeeId] = useState(''); //รหัสหน่วยงาน
     const [name, setName] = useState(''); //ชื่อหน่วยงาน
     const [lastName, setLastname] = useState(''); //ชื่อหน่วยงาน
@@ -453,7 +502,10 @@ const [sumWorkRateOtX , setSumWorkRateOtX] = useState(0);
                     await setUpdate(response.data.recordConclude[0]._id);
 
                 } else {
-                    alert(response.data.recordConclude[0].sumWorkHourOt);
+await setSumWorkHourX(response.data.recordConclude[0].sumWorkHour);
+await setSumWorkRateX(response.data.recordConclude[0].sumWorkRate);
+await setSumWorkHourOtX(response.data.recordConclude[0].sumWorkHourOt);
+await setSumWorkRateOtX(response.data.recordConclude[0].sumWorkRateOt);
 
                     await setConcludeResult(response.data.recordConclude[0].concludeRecord);
                     await setAddSalaryResult(response.data.recordConclude[0].addSalary);
@@ -1439,7 +1491,11 @@ const [sumWorkRateOtX , setSumWorkRateOtX] = useState(0);
             employeeId: staffId,
             concludeRecord: dataTable,
             addSalary: addSalaryList,
-            createBy: jsonObject.name
+            createBy: jsonObject.name,
+            sumWorkHour: sumWorkHourX,
+            sumWorkRate: sumWorkRateX,
+            sumWorkHourOt: sumWorkHourOtX,
+            sumWorkRateOt: sumWorkRateOtX
         };
 
         //ccc
@@ -1869,19 +1925,59 @@ const [sumWorkRateOtX , setSumWorkRateOtX] = useState(0);
                                                     <tr>
                                                         <td style={cellStyle}>สรุป</td>
                                                         <td></td>
-                                                        <td></td>
-                                                        <td style={cellStyle}>{sumRate}</td>
-                                                        <td></td>
-                                                        <td style={cellStyle}>{sumRateOT}</td>
+                                                        <td style={cellStyle}>
+                                                        {statusEditSum ?
+      <input
+      type="text"
+      className="form-control"
+      value={sumWorkHourX }
+      onChange={handleChangeSumWorkHourX}
+      name=""
+    />:
+                                                                    Number(sumWorkHourX).toFixed(2) || 0}
+                                                            </td>
+                                                        <td style={cellStyle}>
+                                                        {statusEditSum ?
+      <input
+      type="text"
+      className="form-control"
+      value={sumWorkRateX}
+      onChange={handleChangeSumWorkRateX}
+      name=""
+    />:
+                                                                    Number(sumWorkRateX).toFixed(2) || 0}
+                                                            </td>
+                                                        <td style={cellStyle}>
+                                                        {statusEditSum ?
+      <input
+      type="text"
+      className="form-control"
+      value={sumWorkHourOtX}
+      onChange={handleChangeSumWorkHourOtX}
+      name=""
+    />:
+                                                                    Number(sumWorkHourOtX).toFixed(2) || 0}
+                                                            </td>
+                                                        <td style={cellStyle}>
+                                                        {statusEditSum ?
+      <input
+      type="text"
+      className="form-control"
+      value={sumWorkRateOtX}
+      onChange={handleChangeSumWorkRateOtX}
+      name=""
+    />:
+                                                                    Number(sumWorkRateOtX).toFixed(2) || 0}
+                                                            </td>
                                                         <td style={cellStyle}>
                                                             {/* {sumAddSalary} */}
                                                             {calculateTotalSalary().toFixed(2)}
                                                         </td>
                                                         <td>
-                                                        {'' === 'x' ? (
-                                                                    <button class="btn btn-info" style={{ width: '4rem' }} onClick={saveFormData}>Save</button>
+                                                        {statusEditSum ? (
+                                                                    <button class="btn btn-info" style={{ width: '4rem' }} onClick={handleClickEditSum}>Save</button>
                                                                 ) : (
-                                                                    <button class="btn btn-danger" style={{ width: '4rem', textAlign: 'center' }} onClick={() => editData(index)}>แก้ไข</button>
+                                                                    <button class="btn btn-danger" style={{ width: '4rem', textAlign: 'center' }} onClick={handleClickEditSum}>แก้ไข</button>
                                                                 )}
 
                                                         </td>
