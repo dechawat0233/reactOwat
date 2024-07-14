@@ -39,18 +39,22 @@ concludeRecord: [{
   workRateOT: String, 
   workRateOTMultiply: String, 
   addSalaryDay: String,
-  shift: String
+  shift: String,
+  workType: String
 }],
 addSalary: [
   ],
-createBy: String
+createBy: String,
+sumWorkHour: String,
+sumWorkRate: String,
+sumWorkHourOt: String,
+sumWorkRateOt: String
 });
 
 // Create the conclude record time model based on the schema
 const conclude = mongoose.model('conclude', concludeSchema );
 
 
-// router.get('/autocreate', async (req, res) => {
   router.post('/autocreate', async (req, res) => {
     const { 
       year ,
@@ -62,9 +66,6 @@ try {
 
   const dataConclude = {};
   const concludeRecord = [];
-// const year = '2024';
-// const month = '02';
-// const employeeId = '1001';
 const addSalaryDaily = [];
 
 //get employee add salary data
@@ -81,9 +82,6 @@ const dataEmp = await responseEmp.data;
 if(dataEmp.employees.length !== 0){
   await dataEmp.employees[0].addSalary.forEach(item => {
 if(item.roundOfSalary == 'daily') {
-// if(item.SpSalary > 100) {
-//  item.SpSalary = Number(item.SpSalary ) / 30;
-// }
 addSalaryDaily.push(item);
 }
   });
@@ -214,6 +212,7 @@ for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
 
       tmp.workRateOT = element.specialtSalaryOT || '';
       tmp.workRateOTMultiply = Number(element.specialtSalaryOT || 0) / (Number(wpResponse1.data.workRate || 0) / 8);
+tmp.workType = 'specialtSalary';
 
     } else {
       if (specialDayOff1.includes(Number(str1))) {
@@ -224,6 +223,8 @@ for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
         if (allTime >= workOfHour) {
           allTime = workOfHour;
 tmp.allTime = workOfHour;
+        } else {
+          tmp.allTime = allTime;
         }
 
         let workRate = ((wpResponse1.data.holiday * (salary / 8)) * Number(allTime));
@@ -233,6 +234,8 @@ tmp.allTime = workOfHour;
         if (otTime >= workOfOT) {
           otTime = workOfOT;
           tmp.otTimes = workOfOT || '0';
+        } else {
+          tmp.otTimes = otTime || '0';
         }
 
         let workRateOT = ((wpResponse1.data.holidayOT * (salary / 8)) * Number(otTime));
@@ -240,6 +243,7 @@ tmp.allTime = workOfHour;
         tmp.workRateOTMultiply = wpResponse1.data.holidayOT || '0';
         workRate = 0;
         workRateOT = 0;
+tmp.workType = 'specialDayOff';
 
       } else if (dayOffCheck1.includes(str1)) {
         if (salary === 0) {
@@ -249,6 +253,8 @@ tmp.allTime = workOfHour;
         if (allTime >= workOfHour) {
           allTime = workOfHour;
           tmp.allTime = workOfHour;
+        } else{ 
+          tmp.allTime = allTime;
         }
 
         let workRate = ((Number(wpResponse1.data.dayoffRateHour || 0) * (Number(salary || 0) / 8)) * Number(allTime));
@@ -258,6 +264,8 @@ tmp.allTime = workOfHour;
         if (otTime >= workOfOT) {
           otTime = workOfOT;
           tmp.otTimes = workOfOT || '0';
+        } else {
+          tmp.otTimes = otTime || '0';
         }
 
         let workRateOT = ((wpResponse1.data.dayoffRateOT * (salary / 8)) * Number(otTime));
@@ -265,6 +273,7 @@ tmp.allTime = workOfHour;
         tmp.workRateOTMultiply = wpResponse1.data.dayoffRateOT || '';
         workRate = 0;
         workRateOT = 0;
+tmp.workType = 'dayOff';
 
       } else {
         if (salary === 0) {
@@ -274,6 +283,8 @@ tmp.allTime = workOfHour;
         if (allTime >= workOfHour) {
           allTime = workOfHour;
           tmp.allTime = workOfHour || 0;
+        } else {
+          tmp.allTime = allTime || 0;
         }
 
         let workRate = ((salary / 8) * Number(allTime)).toFixed(2);
@@ -283,6 +294,8 @@ tmp.allTime = workOfHour;
         if (otTime >= workOfOT) {
           otTime = workOfOT;
           tmp.otTimes = workOfOT|| '0';
+        } else {
+          tmp.otTimes = otTime || '0';
         }
 
         let workRateOT = (((salary / 8) * wpResponse1.data.workRateOT) * Number(otTime)).toFixed(2);
@@ -290,6 +303,8 @@ tmp.allTime = workOfHour;
         tmp.workRateOTMultiply = wpResponse1.data.workRateOT || '0';
         workRate = 0;
         workRateOT = 0;
+        tmp.workType = 'workDay';
+
       }
     }
     tmp.addSalaryDay = '';

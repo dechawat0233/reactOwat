@@ -1869,14 +1869,7 @@ function Compensation() {
                                                             {/* {sumAddSalary} */}
                                                             {calculateTotalSalary().toFixed(2)}
                                                         </td>
-                                                        <td>
-                                                        {'' === 'x' ? (
-                                                                    <button class="btn btn-info" style={{ width: '4rem' }} onClick={saveFormData}>Save</button>
-                                                                ) : (
-                                                                    <button class="btn btn-danger" style={{ width: '4rem', textAlign: 'center' }} onClick={() => editData(index)}>แก้ไข</button>
-                                                                )}
-
-                                                        </td>
+                                                        <td></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
