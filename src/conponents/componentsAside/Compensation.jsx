@@ -1149,7 +1149,7 @@ function Compensation() {
     console.log("Count:", sumWorkRate.count);
 
     //edit data table
-    const [formData, setFormData] = useState({ day: '', workplaceId: '', allTimes: '', workRate: '', workRateMultiply: '' ,otTimes: '', workRateOT: '',workRateOTMultiply: '', addSalaryDay: '' , shift : '' });
+    const [formData, setFormData] = useState({ day: '', workplaceId: '', allTimes: '', workRate: '', workRateMultiply: '' ,otTimes: '', workRateOT: '',workRateOTMultiply: '', addSalaryDay: '' , shift : '', workType: '' });
     const [dataTable, setDataTable] = useState([]);
     const [editIndex, setEditIndex] = useState(null);
     const [loadStatus, setLoadStatus] = useState(null);
@@ -1181,8 +1181,8 @@ function Compensation() {
 
     const editData = (index) => {
         setEditIndex(index);
-        const { day, workplaceId, allTimes, workRate, workRateMultiply, otTimes, workRateOT, workRateOTMultiply, addSalaryDay , shift} = dataTable[index];
-        setFormData({ day, workplaceId, allTimes, workRate, workRateMultiply, otTimes, workRateOT, workRateOTMultiply, addSalaryDay , shift});
+        const { day, workplaceId, allTimes, workRate, workRateMultiply, otTimes, workRateOT, workRateOTMultiply, addSalaryDay , shift , workType} = dataTable[index];
+        setFormData({ day, workplaceId, allTimes, workRate, workRateMultiply, otTimes, workRateOT, workRateOTMultiply, addSalaryDay , shift , workType});
     };
 
 
@@ -1684,6 +1684,7 @@ function Compensation() {
                                                                     <><input type="text" className="form-control" value={formData.workRate} onChange={handleInputChange} name="workRate" />
                                                                     <input type="hidden" className="form-control" value={formData.workRateMultiply} onChange={handleInputChange} name="workRateMultiply" />
                                                                     <input type="hidden" className="form-control" value={formData.shift} onChange={handleInputChange} name="shift" />
+                                                                    <input type="hidden" className="form-control" value={formData.workType} onChange={handleInputChange} name="workType" />
                                                                       </>):
                                                                     workplaceRecord.workRate}
                                                             </td>

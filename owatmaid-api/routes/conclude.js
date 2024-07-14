@@ -973,6 +973,10 @@ router.post('/create', async (req, res) => {
     concludeDate,
     employeeId,
     createBy,
+    sumWorkHour,
+sumWorkRate,
+sumWorkHourOt,
+sumWorkRateOt,
     concludeRecord,
     addSalary } = req.body;
 
@@ -986,7 +990,11 @@ router.post('/create', async (req, res) => {
         employeeId,
         concludeRecord,
         addSalary,
-        createBy });
+        createBy,
+        sumWorkHour,
+        sumWorkRate,
+        sumWorkHourOt,
+        sumWorkRateOt });
 
     const ans = await recordConclude .save();
     if (ans) {
