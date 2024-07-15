@@ -640,7 +640,7 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
   console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
   //check work rate is not standard day
   if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) == parseFloat(salary) ) {
-    if(! workDaylist.includes(getDayNumberFromDate( responseConclude.data.recordConclude[c].concludeRecord[i].day) ) ) {
+    if( workDaylist.includes(getDayNumberFromDate( responseConclude.data.recordConclude[c].concludeRecord[i].day) ) ) {
       dayOffWork += 1;
 
     }
