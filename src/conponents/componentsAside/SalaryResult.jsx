@@ -1921,7 +1921,7 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
                             <div class="row">
                               <div class="col-md-6">
                                 <input
-                                  type="text"
+                                  type="number"
                                   className="form-control"
                                   id="staffId"
                                   placeholder=""
