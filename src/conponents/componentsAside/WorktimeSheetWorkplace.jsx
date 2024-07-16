@@ -2906,45 +2906,44 @@ function WorktimeSheetWorkplace() {
   const hourOneFive = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
     return accountingRecord
-        ? parseFloat(accountingRecord.hourOneFive).toFixed(2)
-        : '0.00';
-});
+      ? parseFloat(accountingRecord.hourOneFive).toFixed(2)
+      : "0.00";
+  });
 
-const amountOneFive = responseDataAll.map((item) => {
+  const amountOneFive = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
     return accountingRecord
-        ? parseFloat(accountingRecord.amountOneFive).toFixed(2)
-        : '0.00';
-});
+      ? parseFloat(accountingRecord.amountOneFive).toFixed(2)
+      : "0.00";
+  });
 
-const hourTwo = responseDataAll.map((item) => {
+  const hourTwo = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
     return accountingRecord
-        ? parseFloat(accountingRecord.hourTwo).toFixed(2)
-        : '0.00';
-});
+      ? parseFloat(accountingRecord.hourTwo).toFixed(2)
+      : "0.00";
+  });
 
-const amountTwo = responseDataAll.map((item) => {
+  const amountTwo = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
     return accountingRecord
-        ? parseFloat(accountingRecord.amountTwo).toFixed(2)
-        : '0.00';
-});
+      ? parseFloat(accountingRecord.amountTwo).toFixed(2)
+      : "0.00";
+  });
 
-const hourThree = responseDataAll.map((item) => {
+  const hourThree = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
     return accountingRecord
-        ? parseFloat(accountingRecord.hourThree).toFixed(2)
-        : '0.00';
-});
+      ? parseFloat(accountingRecord.hourThree).toFixed(2)
+      : "0.00";
+  });
 
-const amountThree = responseDataAll.map((item) => {
+  const amountThree = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
     return accountingRecord
-        ? parseFloat(accountingRecord.amountThree).toFixed(2)
-        : '0.00';
-});
-
+      ? parseFloat(accountingRecord.amountThree).toFixed(2)
+      : "0.00";
+  });
 
   const sumArrayHoli = countSpecialDays.map(
     (countSpecialDay, index) => countSpecialDay - specialDayListWorks[index]
@@ -5627,18 +5626,23 @@ const amountThree = responseDataAll.map((item) => {
             (item) => item.codeSpSalary === dataArray[i][0].codeSpSalary
           );
 
-        //   doc.text(sumArrayOT[i].toString(), currentX + 2, 3 + currentY, {
-        //     align: "center",
-        //   });
-        //   doc.text(product, currentX + 2, 3 + currentY + 3, {
-        //     align: "center",
-        //   });
+          //   doc.text(sumArrayOT[i].toString(), currentX + 2, 3 + currentY, {
+          //     align: "center",
+          //   });
+          //   doc.text(product, currentX + 2, 3 + currentY + 3, {
+          //     align: "center",
+          //   });
           doc.text(hourOneFive[i].toString(), currentX + 2, 3 + currentY, {
             align: "center",
           });
-          doc.text(amountOneFive[i].toString(), currentX + 2, 3 + currentY + 3, {
-            align: "center",
-          });
+          doc.text(
+            amountOneFive[i].toString(),
+            currentX + 2,
+            3 + currentY + 3,
+            {
+              align: "center",
+            }
+          );
         }
       };
       // ผลรวมวันทำงานวันหยุด
@@ -5682,20 +5686,19 @@ const amountThree = responseDataAll.map((item) => {
             (workRateWorkplaceStage2 * (countalldaywork / 8))
           ).toFixed(2);
 
-        //   doc.text(sumArrayHoliday[i].toString(), currentX + 2, 3 + currentY, {
-        //     align: "center",
-        //   });
-        //   doc.text(product, currentX + 2, 3 + currentY + 3, {
-        //     align: "center",
-        //   });
+          //   doc.text(sumArrayHoliday[i].toString(), currentX + 2, 3 + currentY, {
+          //     align: "center",
+          //   });
+          //   doc.text(product, currentX + 2, 3 + currentY + 3, {
+          //     align: "center",
+          //   });
 
-        doc.text(hourTwo[i].toString(), currentX + 2, 3 + currentY, {
+          doc.text(hourTwo[i].toString(), currentX + 2, 3 + currentY, {
             align: "center",
           });
           doc.text(amountTwo[i].toString(), currentX + 2, 3 + currentY + 3, {
             align: "center",
           });
-
         }
       };
 
@@ -5723,23 +5726,20 @@ const amountThree = responseDataAll.map((item) => {
             (workRateWorkplaceStage3 * (countalldaywork / 8))
           ).toFixed(2);
           // Draw the sum and product, both formatted to two decimal places
-       
-          //   doc.text(
-        //     parseFloat(sumArrayOTHoliday[i]).toFixed(2),
-        //     currentX + 2,
-        //     3 + currentY,
-        //     { align: "center" }
-        //   );
-        //   doc.text(product, currentX + 2, 3 + currentY + 3, {
-        //     align: "center",
-        //   });
 
-        doc.text(
-            hourThree[i].toString(),
-            currentX + 2,
-            3 + currentY,
-            { align: "center" }
-          );
+          //   doc.text(
+          //     parseFloat(sumArrayOTHoliday[i]).toFixed(2),
+          //     currentX + 2,
+          //     3 + currentY,
+          //     { align: "center" }
+          //   );
+          //   doc.text(product, currentX + 2, 3 + currentY + 3, {
+          //     align: "center",
+          //   });
+
+          doc.text(hourThree[i].toString(), currentX + 2, 3 + currentY, {
+            align: "center",
+          });
           doc.text(amountThree[i].toString(), currentX + 2, 3 + currentY + 3, {
             align: "center",
           });
