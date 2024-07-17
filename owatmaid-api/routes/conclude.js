@@ -197,7 +197,7 @@ for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
     let minutes = parts.length > 1 ? parseInt(parts[1], 10) : 0;
 
     let scaledMinutes = (minutes * 100) / 60;
-    let allTime = Number(`${hours}.${scaledMinutes}` || '0');
+    let allTime = Number(`${hours}.${scaledMinutes}`) || 0;
 
     tmp.allTimes = `${hours}.${scaledMinutes}` || '0';
 
@@ -207,9 +207,9 @@ for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
     let minutes1 = parts1.length > 1 ? parseInt(parts1[1], 10) : 0;
 
     let scaledMinutes1 = (minutes1 * 100) / 60;
-    let otTime = Number(`${hours1}.${scaledMinutes1}` || 0);
+    let otTime = Number(`${hours1}.${scaledMinutes1}`) || 0;
 
-    tmp.otTimes = otTime || 0;
+    tmp.otTimes = `${hours1}.${scaledMinutes1}` || 0;
 
     if (element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
       tmp.workRate = element.specialtSalary || '';
@@ -328,9 +328,9 @@ tmp.workType = 'dayOff';
         sumWorkRate += Number(workRate) || 0;
         sumWorkHourOt += Number(otTime) || 0;
         sumWorkRateOt += Number(workRateOT) || 0;
-        console.log('sumWorkHourOt  : ' + sumWorkHourOt );
-        console.log('sumWorkRateOt  : ' + sumWorkRateOt );
-        
+        // console.log('sumWorkHourOt  : ' + sumWorkHourOt );
+        // console.log('sumWorkRateOt  : ' + sumWorkRateOt );
+
         workRate = 0;
         workRateOT = 0;
         tmp.workType = 'workDay';
