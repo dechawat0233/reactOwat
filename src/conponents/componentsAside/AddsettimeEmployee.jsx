@@ -808,9 +808,9 @@ function AddsettimeEmployee() {
         // Check if the original total minutes exceed the limit
         if (totalMinutes > limit * 60) {
             const limitHours = Math.floor( ((limit * 60)/ 60) );
-            const limitMinutes = ((limit * 60) % 60);
+            const limitMinutes = Math.round(((limit * 60) % 60));
     
-            return `${limitHours }.${Math.round(limitMinutes) }`;
+            return `${limitHours }.${limitMinutes }`;
         }
     
         const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
