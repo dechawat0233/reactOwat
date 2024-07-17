@@ -211,6 +211,8 @@ for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
 
     tmp.otTimes = `${hours1}.${scaledMinutes1}` || 0;
 
+    console.log('otTime  : ' + otTime );
+    
     if (element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
       tmp.workRate = element.specialtSalary || '';
       tmp.workRateMultiply = Number(element.specialtSalary || 0) / Number(wpResponse1.data.workRate || 0);
