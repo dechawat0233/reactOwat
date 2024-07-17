@@ -321,6 +321,7 @@ tmp.workType = 'dayOff';
         } else {
           tmp.otTimes = otTime || 0;
         }
+console.log('workOfOT : ' + workOfOT);
 
         let workRateOT = (((salary / 8) * Number(wpResponse1.data.workRateOT) ) * Number(otTime)).toFixed(2);
         tmp.workRateOT = workRateOT || 0;
@@ -330,8 +331,6 @@ tmp.workType = 'dayOff';
         sumWorkRate += Number(workRate) || 0;
         sumWorkHourOt += Number(otTime) || 0;
         sumWorkRateOt += Number(workRateOT) || 0;
-        console.log('sumWorkHourOt  : ' + sumWorkHourOt );
-        console.log('sumWorkRateOt  : ' + sumWorkRateOt );
 
         workRate = 0;
         workRateOT = 0;
