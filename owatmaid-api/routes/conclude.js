@@ -316,7 +316,7 @@ tmp.workType = 'dayOff';
         tmp.workRateMultiply = '1';
 
         if (otTime >= workOfOT) {
-          otTime = workOfOT;
+          otTime = Number(workOfOT);
           tmp.otTimes = workOfOT|| 0;
         } else {
           tmp.otTimes = otTime || 0;
