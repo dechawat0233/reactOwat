@@ -207,7 +207,7 @@ for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
     let minutes1 = parts1.length > 1 ? parseInt(parts1[1], 10) : 0;
 
     let scaledMinutes1 = (minutes1 * 100) / 60;
-    let otTime = `${hours1}.${scaledMinutes1}` || 0;
+    let otTime = parseFloat(`${hours1}.${scaledMinutes1}`).toFixed(2) || 0;
 
     tmp.otTimes = `${hours1}.${scaledMinutes1}` || 0;
 
@@ -220,10 +220,10 @@ for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
       tmp.workRateOTMultiply = Number(element.specialtSalaryOT || 0) / (Number(wpResponse1.data.workRate || 0) / 8);
 tmp.workType = 'specialtSalary';
 
-sumWorkHour += Number(allTime) || 0;
-sumWorkRate += Number(element.specialtSalary) || 0;
-sumWorkHourOt += Number(otTime) || 0;
-sumWorkRateOt += Number(element.specialtSalaryOT) || 0;
+sumWorkHour += parseFloat(allTime) || 0;
+sumWorkRate += parseFloat(element.specialtSalary) || 0;
+sumWorkHourOt += parseFloat(otTime) || 0;
+sumWorkRateOt += parseFloat(element.specialtSalaryOT) || 0;
 
     } else {
       if (specialDayOff1.includes(Number(str1))) {
