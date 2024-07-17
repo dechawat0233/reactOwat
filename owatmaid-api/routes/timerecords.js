@@ -89,7 +89,7 @@ router.get('/timerecordempdelete', async (req, res) => {
     const result = await workplaceTimerecordEmp.deleteMany({ timerecordId, month, employeeId });
 
     // Fetch the remaining documents to send back in the response
-    const remainingData = await conclude.find();
+    const remainingData = await workplaceTimerecordEmp.find();
 
     res.json({
       message: `${result.deletedCount} document(s) were deleted.`,
