@@ -315,12 +315,12 @@ tmp.workType = 'dayOff';
 
         if (otTime >= workOfOT) {
           otTime = workOfOT;
-          tmp.otTimes = workOfOT|| '0';
+          tmp.otTimes = workOfOT|| 0;
         } else {
-          tmp.otTimes = otTime || '0';
+          tmp.otTimes = otTime || 0;
         }
 
-        let workRateOT = (((salary / 8) * wpResponse1.data.workRateOT) * Number(otTime)).toFixed(2);
+        let workRateOT = (((salary / 8) * Number(wpResponse1.data.workRateOT) ) * Number(otTime)).toFixed(2);
         tmp.workRateOT = workRateOT || '0';
         tmp.workRateOTMultiply = wpResponse1.data.workRateOT || '0';
 
