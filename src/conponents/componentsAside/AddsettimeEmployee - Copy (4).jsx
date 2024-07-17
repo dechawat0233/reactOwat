@@ -511,8 +511,7 @@ function AddsettimeEmployee() {
                 const workplacesearch = workplaceList.find(workplace => workplace.workplaceId === wId);
                 if (workplacesearch) {
                     if (wShift == 'specialt_shift') {
-                        setWOtTime
-                        (calTime(wSelectOtTime || '', wSelectOtTimeout || '', 24));
+                        setWOtTime(calTime(wSelectOtTime || '', wSelectOtTimeout || '', 24));
                     } else {
                         setWOtTime(calTime(wSelectOtTime || '', wSelectOtTimeout || '', workplacesearch.workOfOT || ''));
                     }
@@ -772,100 +771,49 @@ function AddsettimeEmployee() {
         });
     };
 
+
     function calTime(start, end, limit) {
+
         const startHours = parseFloat(start.split('.')[0]);
         const startMinutes = parseFloat(start.split('.')[1] || 0);
         const endHours = parseFloat(end.split('.')[0]);
         const endMinutes = parseFloat(end.split('.')[1] || 0);
         let hours = endHours - startHours;
         let minutes = endMinutes - startMinutes;
-    
         if (minutes < 0) {
             hours -= 1;
             minutes += 60;
         }
-    
         // Handle cases where endTime is on the next day
         if (hours < 0) {
             hours += 24;
         }
-    
-        // Check if employee worked >= 5 hours and subtract 1 hour
+        //check employee working >= 5 hours 
         if (hours >= 5) {
             hours -= 1;
         }
-    
+
         // Calculate the total time difference in minutes
         const totalMinutes = hours * 60 + minutes;
-    
+        // check employee working > 5 hours
         // Cap the time difference at the maximum work hours
         const cappedTotalMinutes = Math.min(totalMinutes, limit * 60);
-    
         // Convert the capped time difference back to hours and minutes
         const cappedHours = Math.floor(cappedTotalMinutes / 60);
         const cappedMinutes = cappedTotalMinutes % 60;
-    
-        // Check if the original total minutes exceed the limit
-        if (totalMinutes > limit * 60) {
-            return limit.toString();
-        }
-    
         const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
-    
         console.log('cappedHours', cappedHours);
         console.log('cappedMinutes', cappedMinutes);
         console.log('timeDiffFormatted', timeDiffFormatted);
         console.log('limit', limit);
-    
+
+
         if (isNaN(timeDiffFormatted)) {
             return '0';
         }
-    
+
         return timeDiffFormatted;
     }
-    
-    // function calTime(start, end, limit) {
-
-    //     const startHours = parseFloat(start.split('.')[0]);
-    //     const startMinutes = parseFloat(start.split('.')[1] || 0);
-    //     const endHours = parseFloat(end.split('.')[0]);
-    //     const endMinutes = parseFloat(end.split('.')[1] || 0);
-    //     let hours = endHours - startHours;
-    //     let minutes = endMinutes - startMinutes;
-    //     if (minutes < 0) {
-    //         hours -= 1;
-    //         minutes += 60;
-    //     }
-    //     // Handle cases where endTime is on the next day
-    //     if (hours < 0) {
-    //         hours += 24;
-    //     }
-    //     //check employee working >= 5 hours 
-    //     if (hours >= 5) {
-    //         hours -= 1;
-    //     }
-
-    //     // Calculate the total time difference in minutes
-    //     const totalMinutes = hours * 60 + minutes;
-    //     // check employee working > 5 hours
-    //     // Cap the time difference at the maximum work hours
-    //     const cappedTotalMinutes = Math.min(totalMinutes, limit * 60);
-    //     // Convert the capped time difference back to hours and minutes
-    //     const cappedHours = Math.floor(cappedTotalMinutes / 60);
-    //     const cappedMinutes = cappedTotalMinutes % 60;
-    //     const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
-    //     console.log('cappedHours', cappedHours);
-    //     console.log('cappedMinutes', cappedMinutes);
-    //     console.log('timeDiffFormatted', timeDiffFormatted);
-    //     console.log('limit', limit);
-
-
-    //     if (isNaN(timeDiffFormatted)) {
-    //         return '0';
-    //     }
-
-    //     return timeDiffFormatted;
-    // }
 
 
 
