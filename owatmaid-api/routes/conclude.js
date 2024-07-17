@@ -324,10 +324,10 @@ tmp.workType = 'dayOff';
         tmp.workRateOT = workRateOT || '0';
         tmp.workRateOTMultiply = wpResponse1.data.workRateOT || '0';
 
-        sumWorkHour += Number(allTime) || 0;
-        sumWorkRate += Number(workRate || 0);
-        sumWorkHourOt += Number(otTime || 0);
-        sumWorkRateOt += Number(workRateOT || 0);
+        // sumWorkHour += Number(allTime) || 0;
+        // sumWorkRate += Number(workRate || 0);
+        // sumWorkHourOt += Number(otTime || 0);
+        // sumWorkRateOt += Number(workRateOT || 0);
         
         workRate = 0;
         workRateOT = 0;
