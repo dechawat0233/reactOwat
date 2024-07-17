@@ -810,7 +810,7 @@ function AddsettimeEmployee() {
             const limitHours = Math.floor( ((limit * 60)/ 60) );
             const limitMinutes = ((limit * 60) % 60);
     
-            return `${limitHours }.${limitMinutes }`;
+            return `${limitHours }.${Math.round(limitMinutes) }`;
         }
     
         const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
