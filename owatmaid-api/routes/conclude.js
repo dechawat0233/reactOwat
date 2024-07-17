@@ -288,8 +288,8 @@ tmp.workType = 'specialDayOff';
         tmp.workRateOT = workRateOT || '';
         tmp.workRateOTMultiply = wpResponse1.data.dayoffRateOT || '';
 
-        sumWorkHour += Number(allTime) ||0;
-        sumWorkRate += Number(workRate || '');
+        sumWorkHour += Number(allTime || 0);
+        sumWorkRate += Number(workRate || 0);
         sumWorkHourOt += Number(otTime) || 0;
         sumWorkRateOt += Number(workRateOT || 0);
         
@@ -324,9 +324,9 @@ tmp.workType = 'dayOff';
         tmp.workRateOT = workRateOT || '0';
         tmp.workRateOTMultiply = wpResponse1.data.workRateOT || '0';
 
-        sumWorkHour += Number(allTime) ||0;
-        sumWorkRate += Number(workRate || '');
-        sumWorkHourOt += Number(otTime) || 0;
+        sumWorkHour += Number(allTime) || 0;
+        sumWorkRate += Number(workRate || 0);
+        sumWorkHourOt += Number(otTime || 0);
         sumWorkRateOt += Number(workRateOT || 0);
         
         workRate = 0;
