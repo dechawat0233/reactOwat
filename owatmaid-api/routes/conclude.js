@@ -345,6 +345,7 @@ tmp.shift = element.shift || 0;
 
 //=========
 
+/*
   const searchData = {
     employeeId: employeeId || '',
     month: month || '',
@@ -602,6 +603,7 @@ if (!x) {
         });
       }
     }
+*/
 
     // Sort the array by date directly in the main code
     concludeRecord.sort((a, b) => {
