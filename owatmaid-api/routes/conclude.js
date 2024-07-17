@@ -252,9 +252,9 @@ tmp.allTime = workOfHour;
         tmp.workRateOT = workRateOT || '';
         tmp.workRateOTMultiply = wpResponse1.data.holidayOT || '0';
         
-        sumWorkHour += Number(allTime) ||0;
+        sumWorkHour += Number(allTime || 0);
 sumWorkRate += Number(workRate || '');
-sumWorkHourOt += Number(otTime) || 0;
+sumWorkHourOt += Number(otTime || 0);
 sumWorkRateOt += Number(workRateOT || 0);
 
         workRate = 0;

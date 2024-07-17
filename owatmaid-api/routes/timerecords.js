@@ -77,7 +77,29 @@ specialtSalaryOT: String,
 const workplaceTimerecordEmp = mongoose.model('employeeTimerecord', employeeTimerecordSchema );
 
 
+router.get('/timerecordempdelete', async (req, res) => {
+  const { timerecordId, month, employeeId } = req.query;
 
+  if (!timerecordId || !month || !employeeId) {
+    return res.status(400).send({ message: 'year, month, and employeeId are required.' });
+  }
+
+  try {
+    // Delete documents based on the provided year, month, and employeeId
+    const result = await workplaceTimerecordEmp.deleteMany({ timerecordId, month, employeeId });
+
+    // Fetch the remaining documents to send back in the response
+    const remainingData = await conclude.find();
+
+    res.json({
+      message: `${result.deletedCount} document(s) were deleted.`,
+      remainingData
+    });
+  } catch (err) {
+    console.error('Error deleting documents:', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 // Get list of workplaceTimerecords
 router.get('/list', async (req, res) => {
