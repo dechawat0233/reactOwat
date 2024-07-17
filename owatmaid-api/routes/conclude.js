@@ -321,8 +321,8 @@ tmp.workType = 'dayOff';
         }
 
         let workRateOT = (((salary / 8) * Number(wpResponse1.data.workRateOT) ) * Number(otTime)).toFixed(2);
-        tmp.workRateOT = workRateOT || '0';
-        tmp.workRateOTMultiply = wpResponse1.data.workRateOT || '0';
+        tmp.workRateOT = workRateOT || 'x';
+        tmp.workRateOTMultiply = wpResponse1.data.workRateOT || 0;
 
         sumWorkHour += Number(allTime) || 0;
         sumWorkRate += Number(workRate) || 0;
