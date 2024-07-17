@@ -322,6 +322,7 @@ tmp.workType = 'dayOff';
           tmp.otTimes = otTime || 0;
         }
 console.log('otTime : after set ' + otTime );
+console.log('Number(wpResponse1.data.workRateOT)  : ' + Number(wpResponse1.data.workRateOT) );
 
         let workRateOT = (((salary / 8) * Number(wpResponse1.data.workRateOT) ) * Number(otTime)).toFixed(2);
         tmp.workRateOT = workRateOT || 0;
