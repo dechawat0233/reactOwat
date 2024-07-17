@@ -219,9 +219,9 @@ for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
       tmp.workRateOTMultiply = Number(element.specialtSalaryOT || 0) / (Number(wpResponse1.data.workRate || 0) / 8);
 tmp.workType = 'specialtSalary';
 
-sumWorkHour += Number(allTime) ||0;
+sumWorkHour += Number(allTime || 0);
 sumWorkRate += Number(element.specialtSalary || '');
-sumWorkHourOt += Number(otTime) || 0;;
+sumWorkHourOt += Number(otTime || 0);
 sumWorkRateOt += Number(element.specialtSalaryOT || 0);
 
     } else {
