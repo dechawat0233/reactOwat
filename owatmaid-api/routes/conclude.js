@@ -328,6 +328,8 @@ tmp.workType = 'dayOff';
         sumWorkRate += Number(workRate) || 0;
         sumWorkHourOt += Number(otTime) || 0;
         sumWorkRateOt += Number(workRateOT) || 0;
+        console.log('sumWorkHourOt  : ' + sumWorkHourOt );
+        console.log('sumWorkRateOt  : ' + sumWorkRateOt );
         
         workRate = 0;
         workRateOT = 0;
