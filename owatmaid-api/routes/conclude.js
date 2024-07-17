@@ -324,14 +324,14 @@ tmp.workType = 'dayOff';
 console.log('otTime : after set ' + otTime );
 console.log('Number(wpResponse1.data.workRateOT)  : ' + Number(wpResponse1.data.workRateOT) );
 
-        let workRateOT = (((salary / 8) * Number(wpResponse1.data.workRateOT) ) * Number(otTime)).toFixed(2);
+        let workRateOT = (((salary / 8) * parseFloat(wpResponse1.data.workRateOT) ) * parseFloat(otTime)).toFixed(2);
         tmp.workRateOT = workRateOT || 0;
         tmp.workRateOTMultiply = wpResponse1.data.workRateOT || 0;
 
         sumWorkHour += parseFloat(allTime) || 0;
-        sumWorkRate += Number(workRate) || 0;
+        sumWorkRate += parseFloat(workRate) || 0;
         sumWorkHourOt += parseFloat(otTime) || 0;
-        sumWorkRateOt += Number(workRateOT) || 0;
+        sumWorkRateOt += parseFloat(workRateOT) || 0;
 
         workRate = 0;
         workRateOT = 0;
