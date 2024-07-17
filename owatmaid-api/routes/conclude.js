@@ -166,7 +166,7 @@ workplaceId: wpId1
 const wpResponse1 = await axios.post(sURL + '/workplace/caldata', wpDataCalculator1 );
 // console.log(JSON.stringify( wpResponse1.data, null,2) );
 const workOfHour = await wpResponse1.data.workOfHour || 0;
-const workOfOT  = await wpResponse1.data.workOfOT  || 0;
+const workOfOT  = await Number(wpResponse1.data.workOfOT) || 0;
 
 const dayOff1 = await wpResponse1.data.workplaceDayOffList || [];
 const specialDayOff1 = await wpResponse1.data.specialDaylist || [];
@@ -316,7 +316,7 @@ tmp.workType = 'dayOff';
         tmp.workRateMultiply = '1';
 
         if (otTime >= workOfOT) {
-          otTime = Number(workOfOT);
+          otTime = workOfOT;
           tmp.otTimes = workOfOT|| 0;
         } else {
           tmp.otTimes = otTime || 0;
