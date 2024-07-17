@@ -220,9 +220,9 @@ for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
 tmp.workType = 'specialtSalary';
 
 sumWorkHour += Number(allTime) || 0;
-sumWorkRate += Number(element.specialtSalary || 0);
-sumWorkHourOt += Number(otTime || 0);
-sumWorkRateOt += Number(element.specialtSalaryOT || 0);
+sumWorkRate += Number(element.specialtSalary) || 0;
+sumWorkHourOt += Number(otTime) || 0;
+sumWorkRateOt += Number(element.specialtSalaryOT) || 0;
 
     } else {
       if (specialDayOff1.includes(Number(str1))) {
@@ -253,9 +253,9 @@ tmp.allTime = workOfHour;
         tmp.workRateOTMultiply = wpResponse1.data.holidayOT || '0';
         
         sumWorkHour += Number(allTime)  || 0;
-sumWorkRate += Number(workRate || 0);
-sumWorkHourOt += Number(otTime || 0);
-sumWorkRateOt += Number(workRateOT || 0);
+sumWorkRate += Number(workRate) || 0;
+sumWorkHourOt += Number(otTime) || 0;
+sumWorkRateOt += Number(workRateOT) || 0;
 
         workRate = 0;
         workRateOT = 0;
@@ -289,9 +289,9 @@ tmp.workType = 'specialDayOff';
         tmp.workRateOTMultiply = wpResponse1.data.dayoffRateOT || '';
 
         sumWorkHour += Number(allTime) || 0;
-        sumWorkRate += Number(workRate || 0);
+        sumWorkRate += Number(workRate) || 0;
         sumWorkHourOt += Number(otTime) || 0;
-        sumWorkRateOt += Number(workRateOT || 0);
+        sumWorkRateOt += Number(workRateOT) || 0;
         
         workRate = 0;
         workRateOT = 0;
@@ -325,9 +325,9 @@ tmp.workType = 'dayOff';
         tmp.workRateOTMultiply = wpResponse1.data.workRateOT || '0';
 
         sumWorkHour += Number(allTime) || 0;
-        sumWorkRate += Number(workRate || 0);
-        sumWorkHourOt += Number(otTime || 0);
-        sumWorkRateOt += Number(workRateOT || 0);
+        sumWorkRate += Number(workRate) || 0;
+        sumWorkHourOt += Number(otTime) || 0;
+        sumWorkRateOt += Number(workRateOT) || 0;
         
         workRate = 0;
         workRateOT = 0;
@@ -425,10 +425,10 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
       tmp.workRateOTMultiply = Number(element.specialtSalaryOT || 0) / (Number(wpResponse.data.workRate || 0) / 8);
 tmp.workType = 'specialtSalary';
 
-sumWorkHour += Number(allTime) ||0;
-sumWorkRate += Number(element.specialtSalary || 0);
+sumWorkHour += Number(allTime) || 0;
+sumWorkRate += Number(element.specialtSalary) || 0;
 sumWorkHourOt += Number(otTime) || 0;
-sumWorkRateOt += Number(element.specialtSalaryOT || 0);
+sumWorkRateOt += Number(element.specialtSalaryOT) || 0;
 
     } else {
       if (specialDayOff.includes(Number(str1))) {
@@ -459,9 +459,9 @@ sumWorkRateOt += Number(element.specialtSalaryOT || 0);
         tmp.workRateOTMultiply = wpResponse.data.holidayOT || '0';
 
         sumWorkHour += Number(allTime) || 0;
-        sumWorkRate += Number(workRate || 0);
-        sumWorkHourOt += Number(otTime || 0);
-        sumWorkRateOt += Number(workRateOT || 0);
+        sumWorkRate += Number(workRate) || 0;
+        sumWorkHourOt += Number(otTime) || 0;
+        sumWorkRateOt += Number(workRateOT) || 0;
         
         workRate = 0;
         workRateOT = 0;
@@ -495,9 +495,9 @@ sumWorkRateOt += Number(element.specialtSalaryOT || 0);
         tmp.workRateOTMultiply = wpResponse.data.dayoffRateOT || '';
 
         sumWorkHour += Number(allTime) ||0;
-        sumWorkRate += Number(workRate || 0);
-        sumWorkHourOt += Number(otTime || 0);
-        sumWorkRateOt += Number(workRateOT || 0);
+        sumWorkRate += Number(workRate) || 0;
+        sumWorkHourOt += Number(otTime) || 0;
+        sumWorkRateOt += Number(workRateOT) || 0;
 
         workRate = 0;
         workRateOT = 0;
@@ -531,9 +531,9 @@ sumWorkRateOt += Number(element.specialtSalaryOT || 0);
         tmp.workRateOTMultiply = wpResponse.data.workRateOT || '0';
 
         sumWorkHour += Number(allTime) || 0;
-        sumWorkRate += Number(workRate || 0);
-        sumWorkHourOt += Number(otTime || 0);
-        sumWorkRateOt += Number(workRateOT || 0);
+        sumWorkRate += Number(workRate) || 0;
+        sumWorkHourOt += Number(otTime) || 0;
+        sumWorkRateOt += Number(workRateOT) || 0;
 
         workRate = 0;
         workRateOT = 0;
