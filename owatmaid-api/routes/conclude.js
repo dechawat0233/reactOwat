@@ -324,10 +324,10 @@ tmp.workType = 'dayOff';
         tmp.workRateOT = workRateOT || '0';
         tmp.workRateOTMultiply = wpResponse1.data.workRateOT || '0';
 
-        // sumWorkHour += Number(allTime) || 0;
-        // sumWorkRate += Number(workRate || 0);
-        // sumWorkHourOt += Number(otTime || 0);
-        // sumWorkRateOt += Number(workRateOT || 0);
+        sumWorkHour += Number(allTime) || 0;
+        sumWorkRate += Number(workRate || 0);
+        sumWorkHourOt += Number(otTime || 0);
+        sumWorkRateOt += Number(workRateOT || 0);
         
         workRate = 0;
         workRateOT = 0;
@@ -426,8 +426,8 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
 tmp.workType = 'specialtSalary';
 
 sumWorkHour += Number(allTime) ||0;
-sumWorkRate += Number(element.specialtSalary || '');
-sumWorkHourOt += Number(otTime) || 0;;
+sumWorkRate += Number(element.specialtSalary || 0);
+sumWorkHourOt += Number(otTime) || 0;
 sumWorkRateOt += Number(element.specialtSalaryOT || 0);
 
     } else {
@@ -495,7 +495,7 @@ sumWorkRateOt += Number(element.specialtSalaryOT || 0);
         tmp.workRateOTMultiply = wpResponse.data.dayoffRateOT || '';
 
         sumWorkHour += Number(allTime) ||0;
-        sumWorkRate += Number(workRate || '');
+        sumWorkRate += Number(workRate || 0);
         sumWorkHourOt += Number(otTime) || 0;
         sumWorkRateOt += Number(workRateOT || 0);
 
@@ -531,7 +531,7 @@ sumWorkRateOt += Number(element.specialtSalaryOT || 0);
         tmp.workRateOTMultiply = wpResponse.data.workRateOT || '0';
 
         sumWorkHour += Number(allTime) ||0;
-        sumWorkRate += Number(workRate || '');
+        sumWorkRate += Number(workRate || 0);
         sumWorkHourOt += Number(otTime) || 0;
         sumWorkRateOt += Number(workRateOT || 0);
 
