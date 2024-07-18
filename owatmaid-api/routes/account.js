@@ -854,7 +854,7 @@ if (data?.accountingRecord?.amountHardWorking ?? false) {
 
 // await console.log(sumSocial );
 
-const intersection = await workDaylist.filter(day => specialDaylist.includes(parseInt(day)));
+const intersection = await workDaylist.filter(day => specialDaylist.includes(day));
 
 await console.log(data.employeeId + ' ' + month);
 // await console.log('workDaylist' + JSON.stringify(workDaylist,null,2))
@@ -865,9 +865,11 @@ await console.log('total ' + total );
 // console.log('specialDaylist.length ' + specialDaylist.length + 'intersection.length '+ intersection.length + 'holidayRate '+ holidayRate )
 let s1 = await specialDaylist.length ||0;
 let s2 = await intersection.length || 0;
-let calSP = await ((s1 - s2) * holidayRate );
+let calSP = await ((s1 - s2) * parseFloat(holidayRate) );
+console.log('s1 ' + s1);
+console.log('s2 ' + s2);
 
-// console.log('calSP '+ calSP );
+console.log('calSP '+ calSP );
 // sumSocial  = await sumSocial  + calSP ;
 
 let workDaySocial = await countDay - dayOffSum - s2;
@@ -878,8 +880,8 @@ await console.log('countDay '+ countDay + ' dayOffSumWork ' + dayOffSumWork  + '
 
 console.log('workDaySocial '+ (workDaySocial * salary) + 'sumSocial '+ sumSocial );
 
-sumAmountDayWork  = await Number(dayOffWork) * Number(salary);
-let  calOtWork = await (Number(amountDay) - Number(sumAmountDayWork ) ) + Number(amountOt) || 0;
+sumAmountDayWork  = await parseFloat(dayOffWork) * parseFloat(salary);
+let  calOtWork = await (parseFloat(amountDay) - parseFloat(sumAmountDayWork ) ) + parseFloat(amountOt) || 0;
 
     // Other properties
     data.accountingRecord.amountSpecialDay= await calSP ||0;
