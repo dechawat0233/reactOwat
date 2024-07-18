@@ -2493,7 +2493,7 @@ function WorktimeSheetWorkplace() {
       ) {
         // Push allTimes and otTimes to respective arrays
         allTimesArray.push(parseFloat(record.allTimes));
-        otTimesArray.push(parseFloat(record.otTimes));
+        otTimesArray.push(parseFloat(record.otTimes).toFixed(1));
         // dayWorkArray.push(parseFloat(record.day));
         // const day = parseInt(record.day.split('/')[0]);
       } else {
@@ -2509,8 +2509,8 @@ function WorktimeSheetWorkplace() {
         record.workRate / workRateWorkplace < workRateWorkplaceStage2
       ) {
         // Push allTimes and otTimes to respective arrays
-        allTimesArray2.push(parseFloat(record.allTimes));
-        otTimesArray2.push(parseFloat(record.otTimes));
+        allTimesArray2.push(parseFloat(record.allTimes).toFixed(1));
+        otTimesArray2.push(parseFloat(record.otTimes).toFixed(1));
       } else {
         // Push empty strings if workRate and workRateOT do not exist
         allTimesArray2.push("");
@@ -2522,8 +2522,8 @@ function WorktimeSheetWorkplace() {
         record.workRate / workRateWorkplace >= workRateWorkplaceStage2
       ) {
         // Push allTimes and otTimes to respective arrays
-        allTimesArray3.push(parseFloat(record.allTimes));
-        otTimesArray3.push(parseFloat(record.otTimes));
+        allTimesArray3.push(parseFloat(record.allTimes).toFixed(1));
+        otTimesArray3.push(parseFloat(record.otTimes).toFixed(1));
       } else {
         // Push empty strings if workRate and workRateOT do not exist
         allTimesArray3.push("");
@@ -2594,9 +2594,11 @@ function WorktimeSheetWorkplace() {
   const newOtTimes3 = Object.values(otTimesByEmployee3).flat();
 
   // Log the results
-  console.log("dayWorkMorningAndSSs:", dayWorkMorningAndSSs);
-  console.log("dayWorkAfternoons:", dayWorkAfternoons);
-  console.log("dayWorkNights:", dayWorkNights);
+  console.log("newOtTimes:", newOtTimes);
+
+  // console.log("dayWorkMorningAndSSs:", dayWorkMorningAndSSs);
+  // console.log("dayWorkAfternoons:", dayWorkAfternoons);
+  // console.log("dayWorkNights:", dayWorkNights);
 
   const singleArrayOfDates = daySpecialts.flat();
   console.log("singleArrayOfDates:", singleArrayOfDates);
