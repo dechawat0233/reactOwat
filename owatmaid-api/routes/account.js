@@ -878,8 +878,8 @@ await console.log('countDay '+ countDay + ' dayOffSumWork ' + dayOffSumWork  + '
 
 console.log('workDaySocial '+ (workDaySocial * salary) + 'sumSocial '+ sumSocial );
 
-sumAmountDayWork  = await Number(dayOffWork) * Number(salary);
-let  calOtWork = await (Number(amountDay) - Number(sumAmountDayWork ) ) + Number(amountOt) || 0;
+sumAmountDayWork  = await parseFloat(dayOffWork) * parseFloat(salary);
+let  calOtWork = await (parseFloat(amountDay) - parseFloat(sumAmountDayWork ) ) + parseFloat(amountOt) || 0;
 
     // Other properties
     data.accountingRecord.amountSpecialDay= await calSP ||0;
