@@ -676,11 +676,11 @@ await responseConclude.data.recordConclude[c].addSalary[i].map( async (item, ind
 if(tmp.id === item.id) {
   checkAddSalaryDay   = true;
   
-  if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) > 0) {
+  if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate) > 0) {
   tmp.SpSalary = parseFloat(tmp.SpSalary) + parseFloat(item.SpSalary);
   tmp.message = parseFloat(tmp.message || 1) + 1;
   }
-  
+
 }
   })
 
