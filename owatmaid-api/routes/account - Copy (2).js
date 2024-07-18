@@ -98,9 +98,7 @@ const dataList = [];
   if(updateStatus !== '') {
 
     if(accountData ) {
-      // await accounting.deleteOne({ _id: accountData._id });
-await accounting.deleteMany({year , month , employeeId});
-
+      await accounting.deleteOne({ _id: accountData._id });
     }
 
   }
