@@ -1799,13 +1799,7 @@ function SalaryAllResult() {
                 totalSalary: 0,
                 totalAmountOt: 0,
                 totalAmountSpecial: 0,
-                // totalAmountPosition: 0,
-
                 totalAmountPosition: 0,
-                totalTel: 0,
-                totalTravel: 0,
-                totalAddSalary: 0,
-
                 totalAmountHardWorking: 0,
                 totalAmountHoliday: 0,
                 totalAmountSpecialDay: 0,
@@ -1834,26 +1828,10 @@ function SalaryAllResult() {
             // acc[workplace].name.push(employee.name);
 
             // Adjust this line based on your specific structure to get the salary or any other relevant data
-            acc[workplace].totalSalary += parseFloat(employee.accountingRecord?.[0]?.amountCountDayWork || 0);
-            // acc[workplace].totalAmountOt += parseFloat(employee.accountingRecord?.[0]?.amountOt || 0);
-            const sumOT = parseFloat(employee.accountingRecord?.[0]?.amountCountDayWorkOt || 0);
-            acc[workplace].totalAmountOt += sumOT;
-
-            // acc[workplace].totalAmountPosition += parseFloat(employee.accountingRecord?.[0]?.amountPosition || 0);
-            // acc[workplace].totalTel += parseFloat(employee.accountingRecord?.[0]?.tel || 0);
-            // acc[workplace].totalTravel += parseFloat(employee.accountingRecord?.[0]?.travel || 0);
-            const totalAmountPositio = parseFloat(employee.accountingRecord?.[0]?.amountPosition || 0);
-            const totalTel = parseFloat(employee.accountingRecord?.[0]?.tel || 0);
-            const totalTravel = parseFloat(employee.accountingRecord?.[0]?.travel || 0);
-
-            acc[workplace].totalAmountPositio += totalAmountPositio;
-            acc[workplace].totalTel += totalTel;
-            acc[workplace].totalTravel += totalTravel;
-            acc[workplace].totalAddSalary += totalAmountPositio + totalTel + totalTravel;
-
-
+            acc[workplace].totalSalary += parseFloat(employee.accountingRecord?.[0]?.amountDay || 0);
+            acc[workplace].totalAmountOt += parseFloat(employee.accountingRecord?.[0]?.amountOt || 0);
             acc[workplace].totalAmountSpecial += parseFloat(employee.accountingRecord?.[0]?.amountSpecial || 0);
-            acc[workplace].totalAmountPosition += parseFloat(employee.accountingRecord?.[0]?.benefitNonSocial || 0);
+            acc[workplace].totalAmountPosition += parseFloat(employee.accountingRecord?.[0]?.amountPosition || 0);
             acc[workplace].totalAmountHardWorking += parseFloat(employee.accountingRecord?.[0]?.amountHardWorking || 0);
             acc[workplace].totalAmountHoliday += parseFloat(employee.accountingRecord?.[0]?.amountHoliday || 0);
             acc[workplace].totalAmountSpecialDay += parseFloat(employee.accountingRecord?.[0]?.amountSpecialDay || 0);
@@ -1893,8 +1871,6 @@ function SalaryAllResult() {
         let totalAmountOtSum = 0;
         let totalAmountSpecialSum = 0;
         let totalAmountPositionSum = 0;
-        let totalAddSalary = 0;
-
         let totalAmountHardWorkingSum = 0;
         let totalAmountHolidaySum = 0;
         let totalAmountSpecialDaySum = 0;
@@ -1928,13 +1904,7 @@ function SalaryAllResult() {
                     totalSalary,
                     totalAmountOt,
                     totalAmountSpecial,
-                    // totalAmountPosition,
-
                     totalAmountPosition,
-                    totalTel,
-                    totalTravel,
-                    totalAddSalary,
-
                     totalAmountHardWorking,
                     totalAmountHoliday,
                     totalAmountSpecialDay,
@@ -2070,7 +2040,7 @@ function SalaryAllResult() {
                 // console.log('totalSpSalary', totalSpSalary)
                 // console.log('accountingRecord?.[0]?.countDay', totalCountDay)
                 // sumSpSalaryall
-                pdf.text(`${Number(totalAddSalary).toFixed(2)}`, startXWelfare + cellWidthWelfare, currentY, { align: 'right' });
+                pdf.text(`${Number(sumSpSalaryall).toFixed(2)}`, startXWelfare + cellWidthWelfare, currentY, { align: 'right' });
 
                 //สวัสดิการ
                 pdf.text(`${totalAmountPosition.toFixed(2)}`, startXRoleWork + cellWidthRoleWork, currentY, { align: 'right' });
@@ -2136,12 +2106,7 @@ function SalaryAllResult() {
                 //   currentY = 20;
                 // }
                 totalSalarySum += totalSalary;
-                console.log('totalSalary', totalSalary);
-                console.log('totalSalarySum', totalSalarySum);
                 totalAmountOtSum += totalAmountOt;
-                console.log('totalAmountOt', totalAmountOt);
-                console.log('totalAmountOtSum', totalAmountOtSum);
-
                 totalAmountSpecialSum += totalAmountSpecial;
                 totalAmountPositionSum += totalAmountPosition;
                 totalAmountHardWorkingSum += totalAmountHardWorking;
@@ -2157,7 +2122,7 @@ function SalaryAllResult() {
                 totalAdvancePaymentSum += totalAdvancePayment;
                 totalDeductAfterTaxSum += totalDeductAfterTax;
                 totalTotalSum += totalTotal;
-                totalSumSpSalaryall += totalAddSalary;
+                totalSumSpSalaryall += sumSpSalaryall;
                 totalSumFormattedAmountHolidayAll += sumFormattedAmountHolidayAll;
 
                 totalSumAddSalaryBeforeTaxAll += totalSumAddSalaryBeforeTax;
