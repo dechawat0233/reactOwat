@@ -798,13 +798,18 @@ try {
   // }
 
   if(concludeRecord .length !== 0){
-  // Create a new Conclude document
+    
+    //check emty new record
+    if(data1.recordworkplace.length !== 0 || data.recordworkplace.length !== 0) {
+
+      // Create a new Conclude document
   const newConclude = new conclude(dataConclude);
 
   // Save the new document to the database
   const savedConclude = await newConclude.save();
   // console.log('New record saved successfully:', savedConclude);
-  
+    }
+
     res.json(dataConclude);
   }
   // res.json(dataConclude);
