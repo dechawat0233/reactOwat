@@ -865,7 +865,7 @@ if (data?.accountingRecord?.amountHardWorking ?? false) {
 const intersection = await workDaylist.filter(day => specialDaylist.includes(day));
 console.log('workDaylist :' + JSON.stringify(workDaylist, null,2) );
 console.log('');
-// console.log('specialDaylist ' + specialDaylist);
+console.log('specialDaylist ' + JSON.stringify(specialDaylist,null,2) );
 
 await console.log(data.employeeId + ' ' + month);
 // await console.log('workDaylist' + JSON.stringify(workDaylist,null,2))
