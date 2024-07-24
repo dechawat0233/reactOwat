@@ -6310,31 +6310,7 @@ function WorktimeSheetWorkplace() {
             addSalaryWorkplace.sort((a, b) =>
               a.name.localeCompare(b.name, "th")
             );
-
-            let uniqueSalaries = [];
-
-            // Create a Map to keep track of the lowest SpSalary for each codeSpSalary
-            let salaryMap = new Map();
-
-            // Iterate over the sorted array and populate the salaryMap
-            for (let item of addSalaryWorkplace) {
-              const { codeSpSalary, SpSalary } = item;
-              const currentSpSalary = parseFloat(SpSalary);
-              if (
-                !salaryMap.has(codeSpSalary) ||
-                currentSpSalary < salaryMap.get(codeSpSalary).SpSalary
-              ) {
-                salaryMap.set(codeSpSalary, {
-                  ...item,
-                  SpSalary: currentSpSalary,
-                });
-              }
-            }
-
-            // Convert the Map values to an array
-            uniqueSalaries = Array.from(salaryMap.values());
-
-            uniqueSalaries.forEach((item, index) => {
+            addSalaryWorkplace.forEach((item, index) => {
               const NameSp = `${item.name} ${item.SpSalary}`;
               const CodeSp = `${item.codeSpSalary}`;
 
