@@ -664,7 +664,10 @@ dayOffSumWork += 1;
     }
 // console.log(getDayNumberFromDate( responseConclude.data.recordConclude[c].concludeRecord[i].day) );
 
-    workDaylist.push(responseConclude.data.recordConclude[c].concludeRecord[i].day.split("/")[0] );
+    // workDaylist.push(responseConclude.data.recordConclude[c].concludeRecord[i].day.split("/")[0] );
+if( parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate) > 0 ) {
+  workDaylist.push(responseConclude.data.recordConclude[c].concludeRecord[i].day.split("/")[0] );
+}
 
     //check addSalary day from conclude
     // console.log("addSalary "+ JSON.stringify( responseConclude.data.recordConclude[c].addSalary ,null,2) );
@@ -859,7 +862,10 @@ if (data?.accountingRecord?.amountHardWorking ?? false) {
 
 // await console.log(sumSocial );
 
-const intersection = await workDaylist.filter(day => specialDaylist.includes(day));
+const intersection = await workDaylist.filter(day => specialDaylist.includes(Number(day) ));
+console.log('workDaylist :' + workDaylist );
+console.log('');
+console.log('specialDaylist ' + JSON.stringify(specialDaylist,null,2) );
 
 await console.log(data.employeeId + ' ' + month);
 // await console.log('workDaylist' + JSON.stringify(workDaylist,null,2))
