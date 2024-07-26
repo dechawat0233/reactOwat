@@ -2820,7 +2820,7 @@ function WorktimeSheetWorkplace() {
   const sumArrayOT = sumArray321(combinedArray1_5);
 
   // console.log('combinedA321rray:', combinedArray1_5);
-  // console.log('sumCombinedArray:', sumArrayOT);
+  console.log("sumArrayOT:", sumArrayOT);
   const sumArrayTotal = sumArrayOT;
   // 2
   const newAllTimes3Numbers = convertToNumbers(newAllTimes3);
@@ -2897,6 +2897,7 @@ function WorktimeSheetWorkplace() {
     const accountingRecord = item.accountingRecord?.[0];
     return accountingRecord ? parseInt(accountingRecord.countDayWork, 10) : 0;
   });
+  console.log("countDayWork", countDayWork);
 
   const amountCountDayWork = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
@@ -5619,14 +5620,15 @@ function WorktimeSheetWorkplace() {
 
           // Calculate the product and convert it to a string
           // const product = (sumArrayOT[i] * (countalldaywork / 8)).toString();
-          const product = (
-            parseFloat(sumArrayOT[i]) *
-            (workRateWorkplaceStage1 * (countalldaywork / 8))
-          ).toFixed(2);
+          
+          // const product = (
+          //   parseFloat(sumArrayOT[i]) *
+          //   (workRateWorkplaceStage1 * (countalldaywork / 8))
+          // ).toFixed(2);
 
-          const position = addSalaryWorkplace.findIndex(
-            (item) => item.codeSpSalary === dataArray[i][0].codeSpSalary
-          );
+          // const position = addSalaryWorkplace.findIndex(
+          //   (item) => item.codeSpSalary === dataArray[i][0].codeSpSalary
+          // );
 
           //   doc.text(sumArrayOT[i].toString(), currentX + 2, 3 + currentY, {
           //     align: "center",
@@ -6477,7 +6479,7 @@ function WorktimeSheetWorkplace() {
         // ot 1.5
         // drawArrayTextSumWorkOT(arrayWorkNormalDayOld.slice(pageStartIndex, pageEndIndex), sumArrayOT.slice(pageStartIndex, pageEndIndex));
         drawArrayTextSumWorkOT(
-          newAllTimes.slice(pageStartIndex, pageEndIndex),
+          // newAllTimes.slice(pageStartIndex, pageEndIndex),
           sumArrayTotal.slice(pageStartIndex, pageEndIndex)
         );
 
