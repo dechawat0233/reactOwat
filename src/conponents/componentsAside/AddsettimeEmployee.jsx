@@ -222,19 +222,23 @@ const [ department , setDepartment] = useState('');
             await setWOtTime('');
             await setWSelectOtTime('');
             await setWSelectOtTimeout('');
+const workplaceUsed = await '';
 
             if (wId !== '' && wName !== '') {
                 const workplacesearch = await workplaceList.find(workplace => workplace.workplaceId === wId);
                 if (workplacesearch) {
+// alert('wId ' + wId);
 
                     const complexData = await workplacesearch.workplaceGroup.find(complex => complex.workplaceComplexId === '1');
     if (complexData) {
-        console.log('Found workplaceComplexData:', complexData.workplaceComplexData);
-        workplacesearch = complexData['workplaceComplexData'];
-        alert(JSON.stringify(workplacesearch , null,2));
+        // workplacesearch = await complexData.workplaceComplexData;
+        // alert(JSON.stringify(complexData.workplaceComplexData , null,2));
+        // workplaceUsed  = await 'group';
+        // alert('test :' );
 
     } else {
         console.log('workplaceComplexId not found');
+        // alert('test');
     }
 
                     //add work time with select day
