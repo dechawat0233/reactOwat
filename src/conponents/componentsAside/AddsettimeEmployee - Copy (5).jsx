@@ -90,6 +90,11 @@ function AddsettimeEmployee() {
 
     }, []); // Run this effect only once on component mount
 
+    // const startYear = 2010;
+    // const years = Array.from({ length: new Date().getFullYear() - startYear - 1 }, (_, index) => year - index);
+    // const startYear = 2010;
+    // const years = Array.from({ length: new Date().getFullYear() - startYear + 1 }, (_, index) => index + startYear);
+
     const EndYear = 2010;
     const currentYear = new Date().getFullYear(); // 2024
     const years = Array.from({ length: currentYear - EndYear + 1 }, (_, index) => EndYear + index).reverse();
@@ -136,7 +141,6 @@ function AddsettimeEmployee() {
     const [workRateDayoff, setWorkRateDayoff] = useState(''); //ค่าจ้างวันหยุด ต่อวัน
     const [workRateDayoffHour, setWorkRateDayoffHour] = useState(''); //ค่าจ้างวันหยุดต่อชั่วโมง
     const [workplaceAddress, setWorkplaceAddress] = useState(''); //ที่อยู่หน่วยงาน
-const [ department , setDepartment] = useState('');
 
     //////////////////////////////
     const [employeeList, setEmployeeList] = useState([]);
@@ -222,25 +226,10 @@ const [ department , setDepartment] = useState('');
             await setWOtTime('');
             await setWSelectOtTime('');
             await setWSelectOtTimeout('');
-const workplaceUsed = await '';
 
             if (wId !== '' && wName !== '') {
                 const workplacesearch = await workplaceList.find(workplace => workplace.workplaceId === wId);
                 if (workplacesearch) {
-// alert('wId ' + wId);
-
-                    const complexData = await workplacesearch.workplaceGroup.find(complex => complex.workplaceComplexId === '1');
-    if (complexData) {
-        // workplacesearch = await complexData.workplaceComplexData;
-        // alert(JSON.stringify(complexData.workplaceComplexData , null,2));
-        // workplaceUsed  = await 'group';
-        // alert('test :' );
-
-    } else {
-        console.log('workplaceComplexId not found');
-        // alert('test');
-    }
-
                     //add work time with select day
                     const dayMapping = await {
                         อาทิตย์: 0,
@@ -435,6 +424,55 @@ const workplaceUsed = await '';
                     //                     await alert(wDate);
                     //                     await alert(JSON.stringify(workplacesearch.workTimeDay, null,2))
 
+                    // switch (wShift) {
+                    //     case 'morning_shift':
+                    //         setWStartTime(workplacesearch.workStart1 || '');
+                    //         setWEndTime(workplacesearch.workEnd1 || '');
+                    //         setWAllTime(calTime(workplacesearch.workStart1 || '', workplacesearch.workEnd1 || '', workplacesearch.workOfHour) || '');
+                    //         setWOtTime(calTime(workplacesearch.workStartOt1 || '', workplacesearch.workEndOt1 || '', workplacesearch.workOfOT || '') || '');
+                    //         setWSelectOtTime(workplacesearch.workStartOt1 || '');
+                    //         setWSelectOtTimeout(workplacesearch.workEndOt1 || '');
+                    //         break;
+                    //     case 'afternoon_shift':
+                    //         setWStartTime(workplacesearch.workStart2 || '');
+                    //         setWEndTime(workplacesearch.workEnd2 || '');
+                    //         setWAllTime(calTime(workplacesearch.workStart2 || '', workplacesearch.workEnd2 || '', workplacesearch.workOfHour) || '');
+                    //         setWOtTime(calTime(workplacesearch.workStartOt2 || '', workplacesearch.workEndOt2 || '', workplacesearch.workOfOT || '') || '');
+                    //         setWSelectOtTime(workplacesearch.workStartOt2 || '');
+                    //         setWSelectOtTimeout(workplacesearch.workEndOt2 || '');
+                    //         break;
+                    //     case 'night_shift':
+                    //         setWStartTime(workplacesearch.workStart3 || '');
+                    //         setWEndTime(workplacesearch.workEnd3 || '');
+                    //         setWAllTime(calTime(workplacesearch.workStart3 || '', workplacesearch.workEnd3 || '', workplacesearch.workOfHour) || '');
+                    //         setWOtTime(calTime(workplacesearch.workStartOt3 || '', workplacesearch.workEndOt3 || '', workplacesearch.workOfOT || '') || '');
+                    //         setWSelectOtTime(workplacesearch.workStartOt3 || '');
+                    //         setWSelectOtTimeout(workplacesearch.workEndOt1 || '');
+
+                    //         break;
+                    //     case 'specialt_shift':
+                    //         // setWStartTime(workplacesearch.workStart3 || '');
+                    //         // setWEndTime(workplacesearch.workEnd3 || '');
+                    //         // setWAllTime(calTime(workplacesearch.workStart3 || '', workplacesearch.workEnd3 || '', workplacesearch.workOfHour) || '');
+                    //         // setWOtTime(calTime(workplacesearch.workStartOt3 || '', workplacesearch.workEndOt3 || '', workplacesearch.workOfOT || '') || '');
+                    //         // setWSelectOtTime(workplacesearch.workStartOt3 || '');
+                    //         // setWSelectOtTimeout(workplacesearch.workEndOt1 || '');
+
+                    //         setWStartTime('');
+                    //         setWEndTime('');
+                    //         setWAllTime(calTime('0', '0', '24') || '');
+                    //         setWOtTime(calTime('0', '0', '24') || '');
+                    //         setWSelectOtTime('');
+                    //         setWSelectOtTimeout('');
+                    //         break;
+                    //     default:
+                    //         setWStartTime('');
+                    //         setWEndTime('');
+                    //         setWAllTime('');
+                    //         setWOtTime('');
+                    //         setWSelectOtTime('');
+                    //         setWSelectOtTimeout('');
+                    // }
                 }
 
             }
