@@ -555,6 +555,7 @@ function Employee() {
                                 list="workplaceGroups"
                                 // onChange={(e) => setDepartment(e.target.value)}
                                 onChange={handleWorkplaceGroup}
+                                autocomplete="off"
                               />
                               {/* <datalist id="workplaceGroup">
                                 <option value="">ยังไม่ระบุหน่วยงาน</option>
