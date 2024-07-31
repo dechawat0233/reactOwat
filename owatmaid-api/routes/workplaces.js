@@ -510,8 +510,8 @@ const specialDaylist = [];
                         try {
                             let startDay = getDayNumber(item.startDay);
                             let endDay = getDayNumber(item.endDay);
-                            console.log('startDay ' + startDay);
-                            console.log('endDay ' + endDay);
+                            // console.log('startDay ' + startDay);
+                            // console.log('endDay ' + endDay);
 
                             if (startDay <= endDay) {
                                 for (let i = startDay; i <= endDay; i++) {
@@ -530,7 +530,7 @@ const specialDaylist = [];
                         }
                     }
                 });
-                console.log('dayOffList: ', dayOffList);
+                // console.log('dayOffList: ', dayOffList);
             }
 
             // Convert the month string to an integer
@@ -553,35 +553,35 @@ const specialDaylist = [];
             // Get the number of days in the previous month
             let endM1 = new Date(year, previousMonthX, 0).getDate();
 
-            console.log(`Processing dates for the period: ${year}-${month} (previous month: ${previousMonthStringX}, end day: ${endM1})`);
+            // console.log(`Processing dates for the period: ${year}-${month} (previous month: ${previousMonthStringX}, end day: ${endM1})`);
 
             for (let m1 = 21; m1 <= endM1; m1++) {
                 let dateString = `${year}-${previousMonthStringX}-${m1.toString().padStart(2, '0')}`;
                 let dayNumber = new Date(dateString).getDay();
-                console.log(`m1 loop: dateString ${dateString}, dayNumber ${dayNumber}`);
+                // console.log(`m1 loop: dateString ${dateString}, dayNumber ${dayNumber}`);
                 if (dayOffList.includes(dayNumber)) {
-                    console.log(`*Adding day off for date ${dateString} with dayNumber ${dayNumber}`);
+                    // console.log(`*Adding day off for date ${dateString} with dayNumber ${dayNumber}`);
                     dayOffSum += 1;
                     workplaceDayOffList.push(dateString);
                 }
-                console.log('dayOffSum after m1 loop ' + dayOffSum);
+                // console.log('dayOffSum after m1 loop ' + dayOffSum);
             }
 
             for (let m2 = 1; m2 <= 20; m2++) {
                 let dateString = `${year}-${monthInteger.toString().padStart(2, '0')}-${m2.toString().padStart(2, '0')}`;
                 let dayNumber = new Date(dateString).getDay();
-                console.log(`m2 loop: dateString ${dateString}, dayNumber ${dayNumber}`);
+                // console.log(`m2 loop: dateString ${dateString}, dayNumber ${dayNumber}`);
                 if (dayOffList.includes(dayNumber)) {
-                    console.log(`Adding day off for date ${dateString} with dayNumber ${dayNumber}`);
+                    // console.log(`Adding day off for date ${dateString} with dayNumber ${dayNumber}`);
                     dayOffSum += 1;
                     workplaceDayOffList.push(dateString);
 
                 }
-                console.log('dayOffSum after m2 loop ' + dayOffSum);
+                // console.log('dayOffSum after m2 loop ' + dayOffSum);
             }
 
-            console.log('final dayOffSum ' + dayOffSum);
-            console.log('workplaceDayOffList' + workplaceDayOffList);
+            // console.log('final dayOffSum ' + dayOffSum);
+            // console.log('workplaceDayOffList' + workplaceDayOffList);
 // console.log('daysOff '+ workplace.daysOff);
             // Process daysOff
             await Promise.all(workplace.daysOff.map(async item => {
@@ -633,7 +633,7 @@ const specialDaylist = [];
                 }
             }));
 
-            console.log('specialDaylist: ', specialDaylist);
+            // console.log('specialDaylist: ', specialDaylist);
 
 
 
