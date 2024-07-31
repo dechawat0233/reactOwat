@@ -84,7 +84,8 @@ const responseEmp = await axios.post(sURL + '/employee/search', searchEmp );
 const dataEmp = await responseEmp.data;
 
   // console.log('*x ' + JSON.stringify(dataEmp.employees[0].addSalary ,null ,2) );
-if(dataEmp.employees.length !== 0){
+// if(dataEmp.employees.length !== 0){
+if(dataEmp && dataEmp.employees && Array.isArray(dataEmp.employees) && dataEmp.employees.length !== 0) {
   await dataEmp.employees[0].addSalary.forEach(item => {
 if(item.roundOfSalary == 'daily') {
 addSalaryDaily.push(item);
@@ -359,6 +360,26 @@ tmp.shift = element.shift || 0;
   // console.log(JSON.stringify( data.recordworkplace) );
 
   if(data.recordworkplace.length !== 0) {
+const wCalList = [];
+
+//check employee working in multi workplace
+    const wGroup = await groupByWorkplaceId(data.recordworkplace[0].employee_workplaceRecord);
+await console.log('wGroup  :' + JSON.stringify(wGroup,2,null));
+await console.log('count :' + Object.keys(wGroup).length );
+
+if(wGroup ) {
+if(Object.keys(wGroup).length > 1) {
+  Object.keys(wGroup).forEach(workplaceId => {
+    const group = wGroup[workplaceId];
+    // console.log(`Workplace ID: ${group.workplaceId}, Workplace Name: ${group.workplaceName}`);
+
+    wCalList.push({'workplaceId': group.workplaceId});
+  });
+  
+  await console.log('wCalList : ' + JSON.stringify(wCalList,2,null) );
+}
+}
+
 //get workplaceId in first employee_workplaceRecord
 // let wpId = data.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
 let wpId  = dataEmp.employees[0].workplace || '';
@@ -391,7 +412,7 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
 
   let dateParts = element.date.split('/');
   let str1 = parseInt(dateParts[0], 10);
-  console.log('*str1 ' + str1);
+  // console.log('*str1 ' + str1);
   
 
   if (str1 > 0 && str1 <= 20) {
@@ -1063,6 +1084,23 @@ router.post('/delete-records', async (req, res) => {
     res.status(500).send('Error deleting records: ' + error.message);
   }
 });
+
+
+function groupByWorkplaceId(records) {
+  return records.reduce((acc, record) => {
+    const { workplaceId, workplaceName } = record;
+
+    if (!acc[workplaceId]) {
+      acc[workplaceId] = {
+        workplaceId,
+        workplaceName,
+        // records: []
+      };
+    }
+    // acc[workplaceId].records.push(record);
+    return acc;
+  }, {});
+}
 
 
 module.exports = router;
