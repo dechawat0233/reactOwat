@@ -359,14 +359,19 @@ tmp.shift = element.shift || 0;
   // console.log(JSON.stringify( data.recordworkplace) );
 
   if(data.recordworkplace.length !== 0) {
+const wCalList = [];
 
 //check employee working in multi workplace
     const wGroup = await groupByWorkplaceId(data.recordworkplace[0].employee_workplaceRecord);
 await console.log('wGroup  :' + JSON.stringify(wGroup,2,null));
+
 Object.keys(wGroup).forEach(workplaceId => {
   const group = wGroup[workplaceId];
-  console.log(`Workplace ID: ${group.workplaceId}, Workplace Name: ${group.workplaceName}`);
+  // console.log(`Workplace ID: ${group.workplaceId}, Workplace Name: ${group.workplaceName}`);
+  wCalList.push({'workplaceId': group.workplaceId});
 });
+
+console.log('wCalList : ' + JSON.stringify(wCalList,2,null) );
 
 //get workplaceId in first employee_workplaceRecord
 // let wpId = data.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
