@@ -365,18 +365,18 @@ const wCalList = [];
     const wGroup = await groupByWorkplaceId(data.recordworkplace[0].employee_workplaceRecord);
 await console.log('wGroup  :' + JSON.stringify(wGroup,2,null));
 
-Object.keys(wGroup).forEach(workplaceId => {
-  const group = wGroup[workplaceId];
+Object.keys(wGroup).forEach(async workplaceId => {
+  const group = await wGroup[workplaceId];
   // console.log(`Workplace ID: ${group.workplaceId}, Workplace Name: ${group.workplaceName}`);
-  const wpDataCalculator = {
+  const wpDataCalculator = await {
     month: month || '',
     year: year || '',
     workplaceId: group.workplaceId
   };
 
-  const wpResponse = axios.post(`${sURL}/workplace/caldata`, wpDataCalculator);
+  const wpResponse = await axios.post(`${sURL}/workplace/caldata`, wpDataCalculator);
 
-  wCalList.push({'workplaceId': group.workplaceId ,
+  await wCalList.push({'workplaceId': group.workplaceId ,
     'data': wpResponse
   });
 });
