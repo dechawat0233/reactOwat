@@ -397,6 +397,32 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
 const tmpWP = wCalList.find(item => item.workplaceId === element.workplaceId);
   console.log('workplaceId : ' + JSON.stringify(tmpWP.data.workRateOT ,2 ,null) );
 
+
+  let dateParts = element.date.split('/');
+  let str1 = parseInt(dateParts[0], 10);
+
+  if (str1 > 0 && str1 <= 20) {
+    tmp.day = str1 + '/' + month + '/' + year;
+    tmp.workplaceId = element.workplaceId || '';
+    let parts = element.allTime.split('.');
+
+    let hours = parseInt(parts[0], 10) || 0;
+    let minutes = parts.length > 1 ? parseInt(parts[1], 10) : 0;
+
+    let scaledMinutes = (minutes * 100) / 60;
+    let allTime = `${hours}.${scaledMinutes}` || 0;
+
+    tmp.allTimes = `${hours}.${scaledMinutes}` || 0;
+
+    let parts1 = element.otTime.split('.');
+
+    let hours1 = parseInt(parts1[0], 10) || 0;
+    let minutes1 = parts1.length > 1 ? parseInt(parts1[1], 10) : 0;
+
+    let scaledMinutes1 = (minutes1 * 100) / 60;
+    let otTime = parseFloat(`${hours1}.${scaledMinutes1}`).toFixed(2) || 0;
+
+  } //
 } //end for
 }
 }
