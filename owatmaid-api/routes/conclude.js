@@ -363,7 +363,7 @@ const wCalList = [];
 
 //check employee working in multi workplace
     const wGroup = await groupByWorkplaceId(data.recordworkplace[0].employee_workplaceRecord);
-// await console.log('wGroup  :' + JSON.stringify(wGroup,2,null));
+await console.log('wGroup  :' + JSON.stringify(wGroup,2,null));
 
 Object.keys(wGroup).forEach(workplaceId => {
   const group = wGroup[workplaceId];
