@@ -395,7 +395,7 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
   const tmp = {};
 
 const tmpWP = wCalList.find(item => item.workplaceId === element.workplaceId);
-  console.log('workplaceId : ' + tmpWP.workRate );
+  console.log('workplaceId : ' + JSON.stringify(tmpWP ,2 null) );
 
 } //end for
 }
