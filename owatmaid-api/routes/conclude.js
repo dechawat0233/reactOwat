@@ -1081,7 +1081,7 @@ function groupByWorkplaceId(records) {
         records: []
       };
     }
-    acc[workplaceId].records.push(record);
+    // acc[workplaceId].records.push(record);
     return acc;
   }, {});
 }
