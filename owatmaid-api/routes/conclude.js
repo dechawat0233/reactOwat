@@ -366,14 +366,17 @@ const wCalList = [];
 await console.log('wGroup  :' + JSON.stringify(wGroup,2,null));
 await console.log('count :' + Object.keys(wGroup).length );
 
-Object.keys(wGroup).forEach(workplaceId => {
-  const group = wGroup[workplaceId];
-  // console.log(`Workplace ID: ${group.workplaceId}, Workplace Name: ${group.workplaceName}`);
+if(Object.keys(wGroup).length > 1) {
+  Object.keys(wGroup).forEach(workplaceId => {
+    const group = wGroup[workplaceId];
+    // console.log(`Workplace ID: ${group.workplaceId}, Workplace Name: ${group.workplaceName}`);
+  
 
-  wCalList.push({'workplaceId': group.workplaceId});
-});
-
-await console.log('wCalList : ' + JSON.stringify(wCalList,2,null) );
+    wCalList.push({'workplaceId': group.workplaceId});
+  });
+  
+  await console.log('wCalList : ' + JSON.stringify(wCalList,2,null) );
+}
 
 //get workplaceId in first employee_workplaceRecord
 // let wpId = data.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
