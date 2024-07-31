@@ -365,11 +365,11 @@ const wCalList = [];
     const wGroup = await groupByWorkplaceId(data.recordworkplace[0].employee_workplaceRecord);
 // await console.log('wGroup  :' + JSON.stringify(wGroup,2,null));
 
-Object.keys(wGroup).forEach(async workplaceId => {
-  const group = await wGroup[workplaceId];
+Object.keys(wGroup).forEach(workplaceId => {
+  const group = wGroup[workplaceId];
   // console.log(`Workplace ID: ${group.workplaceId}, Workplace Name: ${group.workplaceName}`);
 
-  await wCalList.push({'workplaceId': group.workplaceId});
+  wCalList.push({'workplaceId': group.workplaceId});
 });
 
 await console.log('wCalList : ' + JSON.stringify(wCalList,2,null) );
