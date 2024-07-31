@@ -363,22 +363,13 @@ const wCalList = [];
 
 //check employee working in multi workplace
     const wGroup = await groupByWorkplaceId(data.recordworkplace[0].employee_workplaceRecord);
-await console.log('wGroup  :' + JSON.stringify(wGroup,2,null));
+// await console.log('wGroup  :' + JSON.stringify(wGroup,2,null));
 
 Object.keys(wGroup).forEach(async workplaceId => {
   const group = await wGroup[workplaceId];
   // console.log(`Workplace ID: ${group.workplaceId}, Workplace Name: ${group.workplaceName}`);
-  const wpDataCalculator = await {
-    month: month || '',
-    year: year || '',
-    workplaceId: group.workplaceId
-  };
 
-  const wpResponse = await axios.post(`${sURL}/workplace/caldata`, wpDataCalculator);
-
-  await wCalList.push({'workplaceId': group.workplaceId ,
-    'data': wpResponse
-  });
+  await wCalList.push({'workplaceId': group.workplaceId});
 });
 
 await console.log('wCalList : ' + JSON.stringify(wCalList,2,null) );
