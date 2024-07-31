@@ -381,7 +381,7 @@ Object.keys(wGroup).forEach(async workplaceId => {
   });
 });
 
-console.log('wCalList : ' + JSON.stringify(wCalList,2,null) );
+await console.log('wCalList : ' + JSON.stringify(wCalList,2,null) );
 
 //get workplaceId in first employee_workplaceRecord
 // let wpId = data.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
