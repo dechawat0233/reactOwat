@@ -396,7 +396,7 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
 
   let dateParts = element.date.split('/');
   let str1 = parseInt(dateParts[0], 10);
-  console.log('*str1 ' + str1);
+  // console.log('*str1 ' + str1);
   
 
   if (str1 > 0 && str1 <= 20) {
