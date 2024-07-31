@@ -391,6 +391,12 @@ if(Object.keys(wGroup).length > 1) {
 
 // Do something with wCalList after all promises have been resolved
 console.log('Workplace Calculation List:', wCalList);
+for (const element of data.recordworkplace[0].employee_workplaceRecord) {
+  const tmp = {};
+
+  console.log('workplaceId : ' + element.workplaceId);
+
+} //end for
 }
 }
 
