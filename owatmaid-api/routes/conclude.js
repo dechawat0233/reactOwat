@@ -388,7 +388,6 @@ if(Object.keys(wGroup).length > 1) {
       console.error(`Error processing workplace ID ${group.workplaceId}:`, error);
     }
   }
-}
 
 // Do something with wCalList after all promises have been resolved
 console.log('Workplace Calculation List:', wCalList);
