@@ -368,7 +368,17 @@ await console.log('wGroup  :' + JSON.stringify(wGroup,2,null));
 Object.keys(wGroup).forEach(workplaceId => {
   const group = wGroup[workplaceId];
   // console.log(`Workplace ID: ${group.workplaceId}, Workplace Name: ${group.workplaceName}`);
-  wCalList.push({'workplaceId': group.workplaceId});
+  const wpDataCalculator = {
+    month: month || '',
+    year: year || '',
+    workplaceId: group.workplaceId
+  };
+
+  const wpResponse = axios.post(`${sURL}/workplace/caldata`, wpDataCalculator);
+
+  wCalList.push({'workplaceId': group.workplaceId ,
+    'data': wpResponse
+  });
 });
 
 console.log('wCalList : ' + JSON.stringify(wCalList,2,null) );
