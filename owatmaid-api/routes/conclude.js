@@ -1078,7 +1078,7 @@ function groupByWorkplaceId(records) {
       acc[workplaceId] = {
         workplaceId,
         workplaceName,
-        records: []
+        // records: []
       };
     }
     // acc[workplaceId].records.push(record);
