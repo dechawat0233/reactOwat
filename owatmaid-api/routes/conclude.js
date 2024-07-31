@@ -84,7 +84,8 @@ const responseEmp = await axios.post(sURL + '/employee/search', searchEmp );
 const dataEmp = await responseEmp.data;
 
   // console.log('*x ' + JSON.stringify(dataEmp.employees[0].addSalary ,null ,2) );
-if(dataEmp.employees.length !== 0){
+// if(dataEmp.employees.length !== 0){
+if(dataEmp && dataEmp.employees && Array.isArray(dataEmp.employees) && dataEmp.employees.length !== 0) {
   await dataEmp.employees[0].addSalary.forEach(item => {
 if(item.roundOfSalary == 'daily') {
 addSalaryDaily.push(item);
@@ -371,7 +372,6 @@ if(Object.keys(wGroup).length > 1) {
   Object.keys(wGroup).forEach(workplaceId => {
     const group = wGroup[workplaceId];
     // console.log(`Workplace ID: ${group.workplaceId}, Workplace Name: ${group.workplaceName}`);
-  
 
     wCalList.push({'workplaceId': group.workplaceId});
   });
