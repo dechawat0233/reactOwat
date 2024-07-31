@@ -370,6 +370,7 @@ const wpDataCalculator = {
   workplaceId: wpId
 };
 
+
 const wpResponse = await axios.post(`${sURL}/workplace/caldata`, wpDataCalculator);
 const workOfHour = await wpResponse.data.workOfHour || 0;
 const workOfOT = await parseFloat(wpResponse.data.workOfOT) || 0;
