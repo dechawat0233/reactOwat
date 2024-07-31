@@ -393,8 +393,9 @@ if(Object.keys(wGroup).length > 1) {
 console.log('Workplace Calculation List:', wCalList);
 for (const element of data.recordworkplace[0].employee_workplaceRecord) {
   const tmp = {};
-
-  // console.log('workplaceId : ' + wCalList[element.workplaceId] );
+  
+const tmpWP = wCalList.find(item => item.workplaceId === element.workplaceId);
+  console.log('workplaceId : ' + tmpWP );
 
 } //end for
 }
