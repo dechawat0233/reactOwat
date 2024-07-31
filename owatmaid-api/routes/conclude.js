@@ -362,7 +362,7 @@ tmp.shift = element.shift || 0;
 
 
     const wGroup = await groupByWorkplaceId(data.recordworkplace[0].employee_workplaceRecord);
-await console.log('wGroup  :' + wGroup );
+await console.log('wGroup  :' + wGroup.length );
 
 //get workplaceId in first employee_workplaceRecord
 // let wpId = data.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
