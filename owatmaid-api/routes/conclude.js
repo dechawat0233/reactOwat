@@ -366,6 +366,7 @@ const wCalList = [];
 await console.log('wGroup  :' + JSON.stringify(wGroup,2,null));
 await console.log('count :' + Object.keys(wGroup).length );
 
+if(wGroup ) {
 if(Object.keys(wGroup).length > 1) {
   Object.keys(wGroup).forEach(workplaceId => {
     const group = wGroup[workplaceId];
@@ -376,6 +377,7 @@ if(Object.keys(wGroup).length > 1) {
   });
   
   await console.log('wCalList : ' + JSON.stringify(wCalList,2,null) );
+}
 }
 
 //get workplaceId in first employee_workplaceRecord
