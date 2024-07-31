@@ -359,6 +359,10 @@ tmp.shift = element.shift || 0;
   // console.log(JSON.stringify( data.recordworkplace) );
 
   if(data.recordworkplace.length !== 0) {
+
+
+    const wGroup = await groupByWorkplaceId(data.recordworkplace[0].employee_workplaceRecord);
+
 //get workplaceId in first employee_workplaceRecord
 // let wpId = data.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
 let wpId  = dataEmp.employees[0].workplace || '';
@@ -1063,6 +1067,23 @@ router.post('/delete-records', async (req, res) => {
     res.status(500).send('Error deleting records: ' + error.message);
   }
 });
+
+
+function groupByWorkplaceId(records) {
+  return records.reduce((acc, record) => {
+    const { workplaceId, workplaceName } = record;
+
+    if (!acc[workplaceId]) {
+      acc[workplaceId] = {
+        workplaceId,
+        workplaceName,
+        records: []
+      };
+    }
+    acc[workplaceId].records.push(record);
+    return acc;
+  }, {});
+}
 
 
 module.exports = router;
