@@ -402,8 +402,6 @@ function WorktimeSheetWorkplace() {
     fetchData();
   }, [year, month, searchWorkplaceId]);
 
-  console.log('responseDataAll',responseDataAll);
-  
   async function handleSearch(event) {
     event.preventDefault();
     // get value from form search
@@ -5631,7 +5629,7 @@ function WorktimeSheetWorkplace() {
           // const product = (sumArray[i] * countalldaywork).toString();
           // doc.text(sumArray[i].toString(), currentX + 2, 3 + currentY, { align: 'center' });
 
-          // const product = (countDayWork[i] * countalldaywork).toString();
+          const product = (countDayWork[i] * countalldaywork).toString();
 
           doc.text(countDayWork[i].toString(), currentX + 2, 3 + currentY, {
             align: "center",
