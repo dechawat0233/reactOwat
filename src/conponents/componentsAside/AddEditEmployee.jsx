@@ -353,6 +353,11 @@ function AddEditEmployee() {
   const handleGender = (event) => {
     setGender(event.target.value);
   };
+
+  const handlePrefix = (event) => {
+    setPrefix(event.target.value);
+  };
+
   const handleEthnicity = (event) => {
     setEthnicity(event.target.value);
   };
@@ -800,7 +805,7 @@ function AddEditEmployee() {
                               <div class="col-md-3">
                                 <div class="form-group">
                                   <label role="prefix">คำนำหน้า</label>
-                                  <input
+                                  {/* <input
                                     required
                                     type="text"
                                     name="prefix"
@@ -809,7 +814,21 @@ function AddEditEmployee() {
                                     placeholder="คำนำหน้า"
                                     value={prefix}
                                     onChange={(e) => setPrefix(e.target.value)}
-                                  />
+                                  /> */}
+                                  <select
+                                  required
+                                    name="prefix"
+                                    id="prefix"
+                                    class="form-control"
+                                    value={prefix}
+                                    onChange={handlePrefix}
+                                  >
+                                    <option value="">ระบุ</option>
+                                    <option value="นาย">นาย</option>
+                                    <option value="นาง">นาง</option>
+                                    <option value="นางสาว">นางสาว</option>
+
+                                  </select>
                                 </div>
                               </div>
                               <div class="col-md-3">
