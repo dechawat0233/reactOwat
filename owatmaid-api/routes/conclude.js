@@ -395,7 +395,7 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
   const tmp = {};
 
 const tmpWP = wCalList.find(item => item.workplaceId === element.workplaceId);
-  console.log('workplaceId : ' + tmpWP[0].dayoffRateHour );
+  console.log('workplaceId : ' + tmpWP[0] );
 
 } //end for
 }
