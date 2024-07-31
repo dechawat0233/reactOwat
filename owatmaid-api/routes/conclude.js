@@ -366,7 +366,7 @@ await console.log('wGroup  :' + JSON.stringify(wGroup,2,null));
 Object.keys(wGroup).forEach(workplaceId => {
   const group = wGroup[workplaceId];
   console.log(`Workplace ID: ${group.workplaceId}, Workplace Name: ${group.workplaceName}`);
-}
+});
 
 //get workplaceId in first employee_workplaceRecord
 // let wpId = data.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
