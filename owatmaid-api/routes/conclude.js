@@ -369,14 +369,29 @@ await console.log('count :' + Object.keys(wGroup).length );
 
 if(wGroup ) {
 if(Object.keys(wGroup).length > 1) {
-  Object.keys(wGroup).forEach(workplaceId => {
+  for (const workplaceId of Object.keys(wGroup)) {
     const group = wGroup[workplaceId];
     // console.log(`Workplace ID: ${group.workplaceId}, Workplace Name: ${group.workplaceName}`);
+    const wpDataCalculator = {
+      month: month || '',
+      year: year || '',
+      workplaceId: group.workplaceId
+    };
 
-    wCalList.push({'workplaceId': group.workplaceId});
-  });
-  
-  await console.log('wCalList : ' + JSON.stringify(wCalList,2,null) );
+    try {
+      const wpResponse = await axios.post(`${sURL}/workplace/caldata`, wpDataCalculator);
+      wCalList.push({
+        'workplaceId': group.workplaceId,
+        'data': wpResponse.data
+      });
+    } catch (error) {
+      console.error(`Error processing workplace ID ${group.workplaceId}:`, error);
+    }
+  }
+}
+
+// Do something with wCalList after all promises have been resolved
+console.log('Workplace Calculation List:', wCalList);
 }
 }
 
