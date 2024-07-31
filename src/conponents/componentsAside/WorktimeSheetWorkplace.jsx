@@ -5681,7 +5681,7 @@ function WorktimeSheetWorkplace() {
           //   }
           // );
 
-          doc.text(`${amountOneFive[i].toString()} (${hourOneFive[i].toString()})`, currentX + 4, 2 + currentY + (3 * 4), {
+          doc.text(`${amountOneFive[i].toString()} (${hourOneFive[i].toString()})`, currentX + 5, 2 + currentY + (3 * 4), {
             align: "center",
           });
         }
@@ -5740,7 +5740,7 @@ function WorktimeSheetWorkplace() {
           // doc.text(amountTwo[i].toString(), currentX + 2, 3 + currentY + 3, {
           //   align: "center",
           // });
-          doc.text(`${amountTwo[i].toString()} (${hourTwo[i].toString()})`, currentX + 2, 2 + currentY + (3 * 5), {
+          doc.text(`${amountTwo[i].toString()} (${hourTwo[i].toString()})`, currentX + 5, 2 + currentY + (3 * 5), {
             align: "center",
           });
           
@@ -5790,7 +5790,7 @@ function WorktimeSheetWorkplace() {
           // doc.text(amountThree[i].toString(), currentX + 2, 3 + currentY + 3, {
           //   align: "center",
           // });
-          doc.text(`${amountThree[i].toString()} (${hourThree[i].toString()})`, currentX + 4, 2 + currentY + (3 * 6), {
+          doc.text(`${amountThree[i].toString()} (${hourThree[i].toString()})`, currentX + 5, 2 + currentY + (3 * 6), {
             align: "center",
           });
         }
@@ -5859,7 +5859,7 @@ function WorktimeSheetWorkplace() {
         for (let i = 0; i < dataArray.length; i++) {
           // const arrayText = dataArray[i].join('      ');
           // const arrayText = dataArray[i].join('     '); // Use spaces to mimic the width
-          let currentX = startXSpSalary + 3 + cellWidthSpSalary * 5;
+          let currentX = startXSpSalary  + cellWidthSpSalary * 4;
           let currentY = startY + 3.7;
 
           for (let j = 0; j < dataArray[i].length; j++) {
@@ -5894,7 +5894,7 @@ function WorktimeSheetWorkplace() {
         for (let i = 0; i < dataArray.length; i++) {
           // const arrayText = dataArray[i].join('      ');
           // const arrayText = dataArray[i].join('     '); // Use spaces to mimic the width
-          let currentX = startXSpSalary + 3 + cellWidthSpSalary * 5;
+          let currentX = startXSpSalary + cellWidthSpSalary * 4;
           let currentY = startY + 3.7;
 
           for (let j = 0; j < dataArray[i].length; j++) {
@@ -6286,7 +6286,7 @@ function WorktimeSheetWorkplace() {
             doc.rect(
               startXSpSalary,
               startYTop,
-              cellWidthSpSalary * numColsSpSalary - 0.2,
+              cellWidthSpSalary * numColsSpSalary - 0.2+5,
               cellHeightTop,
               "F"
             );
@@ -6303,44 +6303,50 @@ function WorktimeSheetWorkplace() {
               54.8,
               { angle: 90 }
             );
+            // doc.text(
+            //   "วันนักขัตฤกษ์" + " " + workRateWorkplaceStage2 + "เท่า",
+            //   3 + startXSpSalary + cellWidthSpSalary * 2,
+            //   54.8,
+            //   { angle: 90 }
+            // );
             doc.text(
-              "วันนักขัตฤกษ์" + " " + workRateWorkplaceStage2 + "เท่า",
+              "เงินโอที" ,
               3 + startXSpSalary + cellWidthSpSalary * 2,
               54.8,
               { angle: 90 }
             );
-            doc.text(
-              (workplaceDataListWorkRate * workRateWorkplaceStage2) / 8 + " .-",
-              7 + startXSpSalary + cellWidthSpSalary * 2,
-              54.8,
-              { angle: 90 }
-            );
+            // doc.text(
+            //   (workplaceDataListWorkRate * workRateWorkplaceStage2) / 8 + " .-",
+            //   7 + startXSpSalary + cellWidthSpSalary * 2,
+            //   54.8,
+            //   { angle: 90 }
+            // );
 
-            doc.text(
-              "โอที" + " " + workRateWorkplaceStage1 + "เท่า",
-              3 + startXSpSalary + cellWidthSpSalary * 3,
-              54.8,
-              { angle: 90 }
-            );
-            doc.text(
-              (workplaceDataListWorkRate * workRateWorkplaceStage1) / 8 + " .-",
-              7 + startXSpSalary + cellWidthSpSalary * 3,
-              54.8,
-              { angle: 90 }
-            );
+            // doc.text(
+            //   "โอที" + " " + workRateWorkplaceStage1 + "เท่า",
+            //   3 + startXSpSalary + cellWidthSpSalary * 3,
+            //   54.8,
+            //   { angle: 90 }
+            // );
+            // doc.text(
+            //   (workplaceDataListWorkRate * workRateWorkplaceStage1) / 8 + " .-",
+            //   7 + startXSpSalary + cellWidthSpSalary * 3,
+            //   54.8,
+            //   { angle: 90 }
+            // );
 
-            doc.text(
-              "โอที" + " " + workRateWorkplaceStage3 + "เท่า",
-              3 + startXSpSalary + cellWidthSpSalary * 4,
-              54.8,
-              { angle: 90 }
-            );
-            doc.text(
-              (workplaceDataListWorkRate / 8) * workRateWorkplaceStage3 + " .-",
-              7 + startXSpSalary + cellWidthSpSalary * 4,
-              54.8,
-              { angle: 90 }
-            );
+            // doc.text(
+            //   "โอที" + " " + workRateWorkplaceStage3 + "เท่า",
+            //   3 + startXSpSalary + cellWidthSpSalary * 4,
+            //   54.8,
+            //   { angle: 90 }
+            // );
+            // doc.text(
+            //   (workplaceDataListWorkRate / 8) * workRateWorkplaceStage3 + " .-",
+            //   7 + startXSpSalary + cellWidthSpSalary * 4,
+            //   54.8,
+            //   { angle: 90 }
+            // );
 
             // doc.text(addSalaryWorkplace, 171, 54, { angle: 90 });
             // addSalaryWorkplace.forEach((item, index) => {
@@ -6395,8 +6401,8 @@ function WorktimeSheetWorkplace() {
               }
               doc.text(
                 CodeSp,
-                5 +
-                  cellWidthSpSalary * 5 +
+                9 +
+                  cellWidthSpSalary * 3 +
                   startXSpSalary +
                   index * cellWidthSpSalary,
                 38,
@@ -6404,8 +6410,8 @@ function WorktimeSheetWorkplace() {
               );
               doc.text(
                 NameSp,
-                5 +
-                  cellWidthSpSalary * 5 +
+                9 +
+                  cellWidthSpSalary * 3 +
                   startXSpSalary +
                   index * cellWidthSpSalary,
                 54.8,
@@ -6413,8 +6419,8 @@ function WorktimeSheetWorkplace() {
               );
               doc.text(
                 "ต่อ " + roundOfSalaryText,
-                8 +
-                  cellWidthSpSalary * 5 +
+                12 +
+                  cellWidthSpSalary * 3 +
                   startXSpSalary +
                   index * cellWidthSpSalary,
                 54.8,
