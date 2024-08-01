@@ -47,31 +47,31 @@ function AddEditEmployee() {
     }
   };
 
-// const handleDateChange = () => {
-//     if (day && month && year) {
-//       const buddhistYear = parseInt(year);
-//       const gregorianYear = buddhistYear - 543;
-//       const dateStr = `${day.toString().padStart(2, "0")}/${month
-//         .toString()
-//         .padStart(2, "0")}/${year}`;
-//       const isoDate = new Date(
-//         gregorianYear,
-//         parseInt(month) - 1,
-//         parseInt(day)
-//       );
-//       setFormattedDate(dateStr);
-//       setShowPopup(false);
-//       setDateOfBirth(isoDate); // Set the dateOfBirth to a Date object
-//       console.log("ISO Date:", isoDate); // To check the converted date format
-//     }
-//   };
-  
+  // const handleDateChange = () => {
+  //     if (day && month && year) {
+  //       const buddhistYear = parseInt(year);
+  //       const gregorianYear = buddhistYear - 543;
+  //       const dateStr = `${day.toString().padStart(2, "0")}/${month
+  //         .toString()
+  //         .padStart(2, "0")}/${year}`;
+  //       const isoDate = new Date(
+  //         gregorianYear,
+  //         parseInt(month) - 1,
+  //         parseInt(day)
+  //       );
+  //       setFormattedDate(dateStr);
+  //       setShowPopup(false);
+  //       setDateOfBirth(isoDate); // Set the dateOfBirth to a Date object
+  //       console.log("ISO Date:", isoDate); // To check the converted date format
+  //     }
+  //   };
+
   const handleClickOutside = (event) => {
     if (popupRef.current && !popupRef.current.contains(event.target)) {
       setShowPopup(false);
     }
   };
-  console.log('formattedDate',formattedDate);
+  console.log("formattedDate", formattedDate);
   useEffect(() => {
     if (showPopup) {
       document.addEventListener("mousedown", handleClickOutside);
@@ -136,7 +136,7 @@ function AddEditEmployee() {
   const [lastName, setLastName] = useState(""); //นามสกุล
   const [nickName, setNickName] = useState(""); //ชื่อเล่น
   const [gender, setGender] = useState(""); //เพศ
-//   const [dateOfBirth, setDateOfBirth] = useState(""); //วดป เกิด
+  //   const [dateOfBirth, setDateOfBirth] = useState(""); //วดป เกิด
   const [age, setAge] = useState(""); //อายุ
   const [idCard, setIdCard] = useState(""); //บัตรประชาชน
   const [ethnicity, setEthnicity] = useState(""); //เชื้อชาติ
@@ -200,7 +200,7 @@ function AddEditEmployee() {
   useEffect(() => {
     if (day && month && year) {
       const dob = `${day}/${month}/${year}`;
-    //   setDateOfBirth(dob);
+      //   setDateOfBirth(dob);
       calculateAge(dob);
     }
   }, [day, month, year]);
@@ -264,7 +264,7 @@ function AddEditEmployee() {
       });
   }, []); // The empty array [] ensures that the effect runs only once after the initial render
 
-  console.log('dateOfBirth',dateOfBirth);
+  console.log("dateOfBirth", dateOfBirth);
 
   async function handleManageEmployee(event) {
     event.preventDefault();
@@ -585,7 +585,7 @@ function AddEditEmployee() {
     };
   }, []);
 
-//   console.log(workplaceList);
+  //   console.log(workplaceList);
 
   /////////////////
   const [selectedOption, setSelectedOption] = useState("agencytime");
@@ -817,9 +817,14 @@ function AddEditEmployee() {
                                     value={jobtype}
                                     onChange={(e) => setJobtype(e.target.value)}
                                   >
-                                    <option value="">เลือกวัน</option>
+                                    {/* <option value="">เลือกวัน</option>
                                     <option value="daily">รายวัน</option>
-                                    <option value="monthly">รายเดือน</option>
+                                    <option value="monthly">รายเดือน</option> */}
+                                    <option value="">ไม่ระบุ</option>
+                                    <option value="ประจำ">ประจำ</option>
+                                    <option value="ไม่ประจำ">ไม่ประจำ</option>
+                                    <option value="รายวัน">รายวัน</option>
+                                    <option value="รายครั้ง">รายครั้ง</option>
                                   </select>
                                 </div>
                               </div>
@@ -839,7 +844,7 @@ function AddEditEmployee() {
                                     onChange={(e) => setPrefix(e.target.value)}
                                   /> */}
                                   <select
-                                  required
+                                    required
                                     name="prefix"
                                     id="prefix"
                                     class="form-control"
@@ -850,7 +855,6 @@ function AddEditEmployee() {
                                     <option value="นาย">นาย</option>
                                     <option value="นาง">นาง</option>
                                     <option value="นางสาว">นางสาว</option>
-
                                   </select>
                                 </div>
                               </div>
@@ -1056,7 +1060,7 @@ function AddEditEmployee() {
                                           >
                                             <option value="">ปี</option>
                                             {years.map((y) => (
-                                              <option key={y} value={y+543}>
+                                              <option key={y} value={y + 543}>
                                                 {y + 543}
                                               </option>
                                             ))}
