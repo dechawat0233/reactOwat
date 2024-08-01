@@ -373,9 +373,7 @@ let wpId  = dataEmp.employees[0].workplace || '';
 let salary = dataEmp.employees[0].salary || 0;
 
 
-if(wGroup ) {
-  console.log('check');
-if(Object.keys(wGroup).length > 1) {
+if(wGroup  && Object.keys(wGroup).length > 1) {
   for (const workplaceId of Object.keys(wGroup)) {
     const group = wGroup[workplaceId];
     // console.log(`Workplace ID: ${group.workplaceId}, Workplace Name: ${group.workplaceName}`);
@@ -576,7 +574,6 @@ sumWorkRateOt += parseFloat(element.specialtSalaryOT) || 0;
 
   } //
 } //end for
-}
 } else {
 
 
