@@ -385,7 +385,7 @@ let salary = dataEmp.employees[0].salary || 0;
 
   // console.log('wGroup X ' + JSON.stringify(wGroup    ,2,null))
   console.log('wGroup X ' + Object.keys(wGroup).length )
-  const keys = null;
+  const keys = await null;
   if (wGroup) {
     keys = await Object.keys(wGroup);
     console.log('wGroup keys:', keys); // Log the keys of wGroup
