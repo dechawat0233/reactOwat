@@ -367,6 +367,12 @@ const wCalList = [];
 await console.log('wGroup  :' + JSON.stringify(wGroup,2,null));
 await console.log('count :' + Object.keys(wGroup).length );
 
+//get workplaceId in first employee_workplaceRecord
+// let wpId = data.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
+let wpId  = dataEmp.employees[0].workplace || '';
+let salary = dataEmp.employees[0].salary || 0;
+
+
 if(wGroup ) {
 if(Object.keys(wGroup).length > 1) {
   for (const workplaceId of Object.keys(wGroup)) {
@@ -397,6 +403,20 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
 const tmpWP = wCalList.find(item => item.workplaceId === element.workplaceId);
   console.log('workRateOT : ' + JSON.stringify(tmpWP.data.workRateOT ,2 ,null) );
 
+  const workOfHour = await tmpWP.data.workOfHour || 0;
+  const workOfOT = await parseFloat(tmpWP.data.workOfOT) || 0;
+  const dayOff = tmpWP.data.workplaceDayOffList || [];
+  const specialDayOff = tmpWP.data.specialDaylist || [];
+  const dayOffCheck = [];
+  
+  if (dayOff.length !== 0) {
+    dayOff.forEach(item => {
+      let dateoffParts = item.split('-');
+      let str2 = parseInt(dateoffParts[2], 10);
+      dayOffCheck.push(str2);
+    });
+  }
+
 
   let dateParts = element.date.split('/');
   let str1 = parseInt(dateParts[0], 10);
@@ -422,15 +442,143 @@ const tmpWP = wCalList.find(item => item.workplaceId === element.workplaceId);
     let scaledMinutes1 = (minutes1 * 100) / 60;
     let otTime = parseFloat(`${hours1}.${scaledMinutes1}`).toFixed(2) || 0;
 
+    if (element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
+      tmp.workRate = element.specialtSalary || '';
+      tmp.workRateMultiply = Number(element.specialtSalary || 0) / Number(wpResponse.data.workRate || 0);
+
+      tmp.otTimes = otTime || 0;
+
+      tmp.workRateOT = element.specialtSalaryOT || '';
+      tmp.workRateOTMultiply = Number(element.specialtSalaryOT || 0) / (Number(wpResponse.data.workRate || 0) / 8);
+tmp.workType = 'specialtSalary';
+
+sumWorkHour += parseFloat(allTime) || 0;
+sumWorkRate += parseFloat(element.specialtSalary) || 0;
+sumWorkHourOt += parseFloat(otTime) || 0;
+sumWorkRateOt += parseFloat(element.specialtSalaryOT) || 0;
+
+    } else {
+      if (specialDayOff.includes(Number(str1))) {
+        if (salary === 0) {
+          salary = tmpWP.data.workRate;
+        }
+
+        if (allTime >= workOfHour) {
+          allTime = workOfHour;
+          tmp.allTimes = workOfHour || 0;
+        } else {
+          tmp.allTimes = allTime || 0;
+        }
+
+        let workRate = ((parseFloat(tmpWP.data.holiday) * (salary / 8)) * parseFloat(allTime));
+        tmp.workRate = workRate || 0;
+        tmp.workRateMultiply = tmpWP.data.holiday || 0;
+
+        if (otTime >= workOfOT) {
+          otTime = workOfOT;
+          tmp.otTimes = workOfOT || 0;
+        } else {
+          tmp.otTimes = otTime || 0;
+        }
+
+        let workRateOT = ((parseFloat(tmpWP.data.holidayOT) * (salary / 8)) * parseFloat(otTime)).toFixed(2);
+        tmp.workRateOT = workRateOT || '';
+        tmp.workRateOTMultiply = tmpWP.data.holidayOT || 0;
+
+        sumWorkHour += parseFloat(allTime) || 0;
+        sumWorkRate += parseFloat(workRate) || 0;
+        sumWorkHourOt += parseFloat(otTime) || 0;
+        sumWorkRateOt += parseFloat(workRateOT) || 0;
+        
+        workRate = 0;
+        workRateOT = 0;
+        tmp.workType = 'specialDayOff';
+      
+      } else if (dayOffCheck.includes(str1)) {
+        if (salary === 0) {
+          salary = tmpWP.data.workRate;
+        }
+
+        if (allTime >= workOfHour) {
+          allTime = workOfHour;
+          tmp.allTimes = workOfHour || 0;
+        } else {
+          tmp.allTimes = allTime || 0;
+        }
+
+        let workRate = ((parseFloat(tmpWP.data.dayoffRateHour || 0) * (parseFloat(salary || 0) / 8)) * parseFloat(allTime)).toFixed(2);
+        tmp.workRate = workRate || 0;
+        tmp.workRateMultiply = tmpWP.data.dayoffRateHour || '';
+
+        if (otTime >= workOfOT) {
+          otTime = workOfOT;
+          tmp.otTimes = workOfOT || 0;
+        } else {
+          tmp.otTimes = otTime || 0;
+        }
+
+        let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * parseFloat(otTime)).toFixed(2);
+        tmp.workRateOT = workRateOT || 0;
+        tmp.workRateOTMultiply = tmpWP.data.dayoffRateOT || 0;
+
+        sumWorkHour += parseFloat(allTime) ||0;
+        sumWorkRate += parseFloat(workRate) || 0;
+        sumWorkHourOt += parseFloat(otTime) || 0;
+        sumWorkRateOt += parseFloat(workRateOT) || 0;
+
+        workRate = 0;
+        workRateOT = 0;
+        tmp.workType = 'dayOff';
+
+      } else {
+        if (salary === 0) {
+          salary = tmpWP.data.workRate;
+        }
+
+        if (allTime >= workOfHour) {
+          allTime = workOfHour;
+          tmp.allTimes = workOfHour || 0;
+        } else {
+          tmp.allTimes = allTime || 0;
+        }
+
+        let workRate = ((salary / 8) * parseFloat(allTime)).toFixed(2);
+        tmp.workRate = workRate || 0;
+        tmp.workRateMultiply = '1';
+
+        if (otTime >= workOfOT) {
+          otTime = workOfOT;
+          tmp.otTimes = workOfOT || 0;
+        } else {
+          tmp.otTimes = otTime || 0;
+        }
+
+        let workRateOT = (((salary / 8) * parseFloat(tmpWP.data.workRateOT) ) * parseFloat(otTime)).toFixed(2);
+        tmp.workRateOT = workRateOT || 0;
+        tmp.workRateOTMultiply = tmpWP.data.workRateOT || 0;
+
+        sumWorkHour += parseFloat(allTime) || 0;
+        sumWorkRate += parseFloat(workRate) || 0;
+        sumWorkHourOt += parseFloat(otTime) || 0;
+        sumWorkRateOt += parseFloat(workRateOT) || 0;
+
+        workRate = 0;
+        workRateOT = 0;
+        tmp.workType = 'workDay';
+
+      }
+    }
+    tmp.addSalaryDay = '';
+    tmp.shift = element.shift || 0;
+
+    concludeRecord.push(tmp);
+
   } //
 } //end for
 }
-}
+} else {
 
-//get workplaceId in first employee_workplaceRecord
-// let wpId = data.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
-let wpId  = dataEmp.employees[0].workplace || '';
-let salary = dataEmp.employees[0].salary || 0;
+
 
 const wpDataCalculator = {
   month: month || '',
@@ -619,6 +767,7 @@ sumWorkRateOt += parseFloat(element.specialtSalaryOT) || 0;
 }
 }
 
+  }
 // Check day is null and place data for days 21 to last day of the previous month
 for (let i = 21; i <= lastday; i++) {
 let d = i + '/' + prevMonth + '/' + year1;
