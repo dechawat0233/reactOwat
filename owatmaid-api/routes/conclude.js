@@ -155,7 +155,8 @@ if(data1.recordworkplace.length !== 0){
   const wCalList1 = [];
 
 //check employee working in multi workplace
-    const wGroup1 = await groupByWorkplaceId(data1.recordworkplace[0].employee_workplaceRecord);
+    // const wGroup1 = await groupByWorkplaceId(data1.recordworkplace[0].employee_workplaceRecord);
+    const wGroup1  = '';
 await console.log('wGroup1  :' + JSON.stringify(wGroup1,2,null));
 await console.log('count1 :' + Object.keys(wGroup1).length );
 
