@@ -387,7 +387,7 @@ if(1 == 1 || wGroup && Object.keys(wGroup).length > 2) {
   console.log('wGroup X ' + JSON.stringify(wGroup    ,2,null))
   console.log('wGroup X ' + Object.keys(wGroup).length )
 
-if(Object.keys(wGroup).length > 1) {
+if(1 == 1 || Object.keys(wGroup).length > 1) {
 
   for (const workplaceId of Object.keys(wGroup)) {
     const group = wGroup[workplaceId];
