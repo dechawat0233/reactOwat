@@ -388,6 +388,7 @@ if(wGroup) {
   console.log('wGroup X ' + Object.keys(wGroup).length )
   // console.log('wGroup keys:', Object.keys(wGroup)); // Log the keys of wGroup
 let mCheck = await Object.keys(wGroup).length;
+console.log('mCheck  '+ mCheck );
 if(mCheck  > 2) {
 console.log('process');
 
