@@ -2668,6 +2668,7 @@ function WorktimeSheetWorkplace() {
   const finalUpdatedDayWorksWorkMorningAndSS = changeNumbersToOne(
     updatedDaysWorkMorningAndSS,searchWorkplaceId
   );
+  
   console.log(
     "finalUpdatedDayWorksWorkMorningAndSS",
     finalUpdatedDayWorksWorkMorningAndSS
