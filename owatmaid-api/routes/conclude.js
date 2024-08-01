@@ -397,12 +397,12 @@ if(Object.keys(wGroup).length > 1) {
   }
 
 // Do something with wCalList after all promises have been resolved
-console.log('Workplace Calculation List:', wCalList);
+// console.log('Workplace Calculation List:', wCalList);
 for (const element of data.recordworkplace[0].employee_workplaceRecord) {
   const tmp = {};
 
 const tmpWP = wCalList.find(item => item.workplaceId === element.workplaceId);
-  console.log('workRateOT : ' + JSON.stringify(tmpWP.data.workRateOT ,2 ,null) );
+  // console.log('workRateOT : ' + JSON.stringify(tmpWP.data.workRateOT ,2 ,null) );
 
   const workOfHour = await tmpWP.data.workOfHour || 0;
   const workOfOT = await parseFloat(tmpWP.data.workOfOT) || 0;
