@@ -421,10 +421,15 @@ for (const element of data.recordworkplace[0].employee_workplaceRecord) {
 const tmpWP = wCalList.find(item => item.workplaceId === element.workplaceId);
   // console.log('workRateOT : ' + JSON.stringify(tmpWP.data.workRateOT ,2 ,null) );
 
-  const workOfHour = await tmpWP.data.workOfHour || 0;
-  const workOfOT = await parseFloat(tmpWP.data.workOfOT) || 0;
-  const dayOff = tmpWP.data.workplaceDayOffList || [];
-  const specialDayOff = tmpWP.data.specialDaylist || [];
+  // const workOfHour = await tmpWP.data.workOfHour || 0;
+    // const workOfOT = await parseFloat(tmpWP.data.workOfOT) || 0;
+    // const dayOff = tmpWP.data.workplaceDayOffList || [];
+  // const specialDayOff = tmpWP.data.specialDaylist || [];
+
+  const workOfHour = await (tmpWP?.data?.workOfHour) ?? 0;
+  const workOfOT = await parseFloat(tmpWP?.data?.workOfOT) ?? 0;
+  const dayOff = await tmpWP?.data?.workplaceDayOffList ?? [];
+const specialDayOff = await tmpWP?.data?.specialDaylist ?? [];
   const dayOffCheck = [];
   
   if (dayOff.length !== 0) {
