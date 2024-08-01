@@ -383,12 +383,12 @@ await console.log('count :' + Object.keys(wGroup).length );
 let wpId  = dataEmp.employees[0].workplace || '';
 let salary = dataEmp.employees[0].salary || 0;
 
-if(Object.keys(wGroup).length > 2) {
+if(wGroup) {
   // console.log('wGroup X ' + JSON.stringify(wGroup    ,2,null))
   console.log('wGroup X ' + Object.keys(wGroup).length )
   // console.log('wGroup keys:', Object.keys(wGroup)); // Log the keys of wGroup
 
-if(Object.keys(wGroup).length > 1) {
+if(Object.keys(wGroup).length > 2) {
 
   for (const workplaceId of Object.keys(wGroup)) {
     const group = wGroup[workplaceId];
