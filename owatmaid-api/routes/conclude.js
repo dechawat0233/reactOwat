@@ -389,6 +389,7 @@ if(wGroup) {
   // console.log('wGroup keys:', Object.keys(wGroup)); // Log the keys of wGroup
 
 if(Object.keys(wGroup).length > 2) {
+console.log('process');
 
   for (const workplaceId of Object.keys(wGroup)) {
     const group = wGroup[workplaceId];
