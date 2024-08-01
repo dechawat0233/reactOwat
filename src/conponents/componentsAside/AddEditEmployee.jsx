@@ -34,6 +34,7 @@ function AddEditEmployee() {
   const [showPopup, setShowPopup] = useState(false);
   const [formattedDate, setFormattedDate] = useState("");
   const popupRef = useRef(null);
+  const [dateOfBirth, setDateOfBirth] = useState(""); //วดป เกิด
 
   const handleDateChange = () => {
     if (day && month && year) {
@@ -42,14 +43,35 @@ function AddEditEmployee() {
         .padStart(2, "0")}/${year}`;
       setFormattedDate(date);
       setShowPopup(false);
+      setDateOfBirth(date);
     }
   };
+
+// const handleDateChange = () => {
+//     if (day && month && year) {
+//       const buddhistYear = parseInt(year);
+//       const gregorianYear = buddhistYear - 543;
+//       const dateStr = `${day.toString().padStart(2, "0")}/${month
+//         .toString()
+//         .padStart(2, "0")}/${year}`;
+//       const isoDate = new Date(
+//         gregorianYear,
+//         parseInt(month) - 1,
+//         parseInt(day)
+//       );
+//       setFormattedDate(dateStr);
+//       setShowPopup(false);
+//       setDateOfBirth(isoDate); // Set the dateOfBirth to a Date object
+//       console.log("ISO Date:", isoDate); // To check the converted date format
+//     }
+//   };
+  
   const handleClickOutside = (event) => {
     if (popupRef.current && !popupRef.current.contains(event.target)) {
       setShowPopup(false);
     }
   };
-
+  console.log('formattedDate',formattedDate);
   useEffect(() => {
     if (showPopup) {
       document.addEventListener("mousedown", handleClickOutside);
@@ -114,7 +136,7 @@ function AddEditEmployee() {
   const [lastName, setLastName] = useState(""); //นามสกุล
   const [nickName, setNickName] = useState(""); //ชื่อเล่น
   const [gender, setGender] = useState(""); //เพศ
-  const [dateOfBirth, setDateOfBirth] = useState(""); //วดป เกิด
+//   const [dateOfBirth, setDateOfBirth] = useState(""); //วดป เกิด
   const [age, setAge] = useState(""); //อายุ
   const [idCard, setIdCard] = useState(""); //บัตรประชาชน
   const [ethnicity, setEthnicity] = useState(""); //เชื้อชาติ
@@ -178,7 +200,7 @@ function AddEditEmployee() {
   useEffect(() => {
     if (day && month && year) {
       const dob = `${day}/${month}/${year}`;
-      setDateOfBirth(dob);
+    //   setDateOfBirth(dob);
       calculateAge(dob);
     }
   }, [day, month, year]);
@@ -241,6 +263,8 @@ function AddEditEmployee() {
         console.error("Error fetching data:", error);
       });
   }, []); // The empty array [] ensures that the effect runs only once after the initial render
+
+  console.log('dateOfBirth',dateOfBirth);
 
   async function handleManageEmployee(event) {
     event.preventDefault();
@@ -561,7 +585,7 @@ function AddEditEmployee() {
     };
   }, []);
 
-  console.log(workplaceList);
+//   console.log(workplaceList);
 
   /////////////////
   const [selectedOption, setSelectedOption] = useState("agencytime");
@@ -772,7 +796,6 @@ function AddEditEmployee() {
                                 <div class="form-group">
                                   <label role="prefix">เงินจ้าง</label>
                                   <input
-                                    required
                                     type="text"
                                     name="salary"
                                     class="form-control"
@@ -868,7 +891,6 @@ function AddEditEmployee() {
                                 <div class="form-group">
                                   <label role="nickName">ชื่อเล่น</label>
                                   <input
-                                    required
                                     type="text"
                                     name="nickName"
                                     class="form-control"
@@ -1034,7 +1056,7 @@ function AddEditEmployee() {
                                           >
                                             <option value="">ปี</option>
                                             {years.map((y) => (
-                                              <option key={y} value={y + 543}>
+                                              <option key={y} value={y+543}>
                                                 {y + 543}
                                               </option>
                                             ))}
@@ -1212,7 +1234,6 @@ function AddEditEmployee() {
                                   </label>
                                   <div class="icheck-primary d-inline">
                                     <input
-                                      required
                                       type="checkbox"
                                       checked={copyAddress}
                                       id=""

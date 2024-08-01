@@ -20,6 +20,7 @@ function Employee() {
   const [showPopup, setShowPopup] = useState(false);
   const [formattedDate, setFormattedDate] = useState("");
   const popupRef = useRef(null);
+  const [dateOfBirth, setDateOfBirth] = useState(""); //วดป เกิด
 
   const handleDateChange = () => {
     if (day && month && year) {
@@ -28,6 +29,7 @@ function Employee() {
         .padStart(2, "0")}/${year}`;
       setFormattedDate(date);
       setShowPopup(false);
+      setDateOfBirth(date);
     }
   };
   const handleClickOutside = (event) => {
@@ -103,7 +105,7 @@ function Employee() {
   const [lastName, setLastName] = useState(""); //นามสกุล
   const [nickName, setNickName] = useState(""); //ชื่อเล่น
   const [gender, setGender] = useState(""); //เพศ
-  const [dateOfBirth, setDateOfBirth] = useState(""); //วดป เกิด
+  // const [dateOfBirth, setDateOfBirth] = useState(""); //วดป เกิด
   const [age, setAge] = useState(""); //อายุ
   const [idCard, setIdCard] = useState(""); //บัตรประชาชน
   const [ethnicity, setEthnicity] = useState(""); //เชื้อชาติ
@@ -297,7 +299,9 @@ function Employee() {
     setNickName(empSelect.nickName);
     setGender(empSelect.gender);
 
-    setDateOfBirth(new Date(empSelect.dateOfBirth));
+    // setDateOfBirth(new Date(empSelect.dateOfBirth));
+    setDateOfBirth(empSelect.dateOfBirth);
+
     setAge(empSelect.age);
     setIdCard(empSelect.idCard);
     setEthnicity(empSelect.ethnicity);
@@ -314,7 +318,16 @@ function Employee() {
     //        alert(temp);
     setVaccination(temp);
     setTreatmentRights(empSelect.treatmentRights);
+
+    set_id(empSelect._id);
+    console.log('_id',_id);
+
+
   }
+
+  // useEffect(() => {
+  //   console.log('_id', _id);
+  // }, [_id]);
 
   async function handleManageEmployee(event) {
     event.preventDefault();
@@ -348,7 +361,6 @@ function Employee() {
       vaccination: vaccination,
       treatmentRights: treatmentRights,
     };
-
     //check create or update Employee
     if (newEmp) {
       // alert('create employee');
@@ -858,7 +870,7 @@ function Employee() {
                             <div class="form-group">
                               <label role="nickName">ชื่อเล่น</label>
                               <input
-                                required
+                                // required
                                 type="text"
                                 name="nickName"
                                 class="form-control"
@@ -961,11 +973,21 @@ function Employee() {
                           <div className="col-md-3">
                             <div className="form-group">
                               {/* <label htmlFor="date">วันเกิด</label> */}
+                              {/* <input
+                                required
+                                type="text"
+                                className="form-control"
+                                // value={formattedDate}
+                                value={dateOfBirth}
+                                placeholder="dd/mm/yyyy"
+                                readOnly
+                              /> */}
                               <input
                                 required
                                 type="text"
                                 className="form-control"
-                                value={formattedDate}
+                                // value={formattedDate}
+                                value={dateOfBirth}
                                 placeholder="dd/mm/yyyy"
                                 readOnly
                                 onClick={() => setShowPopup(true)}
