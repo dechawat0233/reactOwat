@@ -373,6 +373,7 @@ let wpId  = dataEmp.employees[0].workplace || '';
 let salary = dataEmp.employees[0].salary || 0;
 
 if(wGroup    ){
+  console.log('wGroup    ' + JSON.stringify(wGroup    ,2,null))
 if(Object.keys(wGroup).length > 1) {
   for (const workplaceId of Object.keys(wGroup)) {
     const group = wGroup[workplaceId];
