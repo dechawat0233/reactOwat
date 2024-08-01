@@ -387,7 +387,7 @@ let salary = dataEmp.employees[0].salary || 0;
   console.log('wGroup X ' + Object.keys(wGroup).length )
   // console.log('wGroup keys:', Object.keys(wGroup)); // Log the keys of wGroup
   
-if(wGroup && Object.keys(wGroup).length >> 2) {
+if(Object.keys(wGroup).length >> 2) {
 await console.log('process');
 
   for (const workplaceId of Object.keys(wGroup)) {
