@@ -387,8 +387,8 @@ if(wGroup) {
   // console.log('wGroup X ' + JSON.stringify(wGroup    ,2,null))
   console.log('wGroup X ' + Object.keys(wGroup).length )
   // console.log('wGroup keys:', Object.keys(wGroup)); // Log the keys of wGroup
-
-if(Object.keys(wGroup).length > 2) {
+let mCheck = Object.keys(wGroup).length;
+if(mCheck  > 2) {
 console.log('process');
 
   for (const workplaceId of Object.keys(wGroup)) {
