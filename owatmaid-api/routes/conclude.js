@@ -386,11 +386,16 @@ let salary = dataEmp.employees[0].salary || 0;
   // console.log('wGroup X ' + JSON.stringify(wGroup    ,2,null))
   console.log('wGroup X ' + Object.keys(wGroup).length )
   if (wGroup) {
-    const keys = await Object.keys(wGroup);
-    console.log('wGroup keys:', keys); // Log the keys of wGroup
-    console.log('wGroup keys length:', keys.length); // Log the length of the keys
+    let count = 0;
+    for (let key in wGroup) {
+        if (wGroup.hasOwnProperty(key)) {
+            count++;
+        }
+    // const keys = await Object.keys(wGroup);
+    // console.log('wGroup keys:', keys); // Log the keys of wGroup
+    // console.log('wGroup keys length:', keys.length); // Log the length of the keys
 
-    if (keys.length > 2) {  
+    if (count > 2) {  
 console.log('process');
 
   for (const workplaceId of Object.keys(wGroup)) {
