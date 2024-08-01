@@ -390,7 +390,7 @@ if(wGroup) {
 let mCheck = await Object.keys(wGroup).length;
 console.log('mCheck  '+ mCheck );
 if(mCheck  > 2) {
-console.log('process');
+await console.log('process');
 
   for (const workplaceId of Object.keys(wGroup)) {
     const group = wGroup[workplaceId];
