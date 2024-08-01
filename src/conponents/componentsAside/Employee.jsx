@@ -318,7 +318,16 @@ function Employee() {
     //        alert(temp);
     setVaccination(temp);
     setTreatmentRights(empSelect.treatmentRights);
+
+    set_id(empSelect._id);
+    console.log('_id',_id);
+
+
   }
+
+  // useEffect(() => {
+  //   console.log('_id', _id);
+  // }, [_id]);
 
   async function handleManageEmployee(event) {
     event.preventDefault();
@@ -352,7 +361,6 @@ function Employee() {
       vaccination: vaccination,
       treatmentRights: treatmentRights,
     };
-
     //check create or update Employee
     if (newEmp) {
       // alert('create employee');
