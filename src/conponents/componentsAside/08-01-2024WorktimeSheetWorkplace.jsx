@@ -2441,7 +2441,7 @@ function WorktimeSheetWorkplace() {
 
         // dayWorkMorningAndSSArray.push(parseFloat(record.day));
         if (!uniqueDaysMorningAndSS.has(parseFloat(record.day))) {
-          dayWorkMorningAndSSArray.push(record.workplaceId);
+          dayWorkMorningAndSSArray.push(parseFloat(record.day));
           uniqueDaysMorningAndSS.add(parseFloat(record.day));
         }
 
@@ -2596,7 +2596,7 @@ function WorktimeSheetWorkplace() {
   const newOtTimes3 = Object.values(otTimesByEmployee3).flat();
 
   // Log the results
-  console.log("dayWorkMorningAndSSs:", dayWorkMorningAndSSs);
+  console.log("newOtTimes:", newOtTimes);
 
   // console.log("dayWorkMorningAndSSs:", dayWorkMorningAndSSs);
   // console.log("dayWorkAfternoons:", dayWorkAfternoons);
@@ -2622,8 +2622,6 @@ function WorktimeSheetWorkplace() {
     );
   };
 
-  
-
   const updatedDaysWorkMorningAndSS = updateDayWorks(
     dayWorkMorningAndSSs,
     allDayOff,
@@ -2648,27 +2646,15 @@ function WorktimeSheetWorkplace() {
   );
   console.log("updatedDaysWorkNight", updatedDaysWorkNight);
 
-  // const changeNumbersToOne = (array) => {
-  //   return array.map((subArray) =>
-  //     subArray.map((day) => (typeof day === "number" && day !== "" ? 1 : day))
-  //   );
-  // };
-
-  const changeNumbersToOne = (array, searchWorkplaceId) => {
+  const changeNumbersToOne = (array) => {
     return array.map((subArray) =>
-      subArray.map((day) =>
-        typeof day === "string" && day === searchWorkplaceId ? '1' : day
-      )
+      subArray.map((day) => (typeof day === "number" && day !== "" ? 1 : day))
     );
   };
 
-  // const searchWorkplaceId = '399-664';
-
-
   const finalUpdatedDayWorksWorkMorningAndSS = changeNumbersToOne(
-    updatedDaysWorkMorningAndSS,searchWorkplaceId
+    updatedDaysWorkMorningAndSS
   );
-  
   console.log(
     "finalUpdatedDayWorksWorkMorningAndSS",
     finalUpdatedDayWorksWorkMorningAndSS
@@ -2677,11 +2663,23 @@ function WorktimeSheetWorkplace() {
   const finalUpdatedDayWorksWorkAfternoon = changeNumbersToOne(
     updatedDaysWorkAfternoon
   );
-
+  console.log(
+    "finalUpdatedDayWorksWorkAfternoon",
+    finalUpdatedDayWorksWorkAfternoon
+  );
 
   const finalUpdatedDayWorksWorkNight =
     changeNumbersToOne(updatedDaysWorkNight);
+  console.log("finalUpdatedDayWorksWorkNight", finalUpdatedDayWorksWorkNight);
 
+  console.log("allTimes:", newAllTimes);
+  console.log("otTimes:", newOtTimes);
+
+  console.log("allTimes2:", newAllTimes2);
+  console.log("otTimes2:", newOtTimes2);
+
+  console.log("allTimes3:", newAllTimes3);
+  console.log("otTimes3:", newOtTimes3);
 
   // const makePage = Math.ceil(arrayWorkNormalDay.length / 5);
   // console.log('makePage', makePage);
