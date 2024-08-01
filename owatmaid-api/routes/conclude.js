@@ -386,10 +386,11 @@ let salary = dataEmp.employees[0].salary || 0;
   // console.log('wGroup X ' + JSON.stringify(wGroup    ,2,null))
   console.log('wGroup X ' + Object.keys(wGroup).length )
   if (wGroup) {
-    const keys = await Object.keys(wGroup);
+    const keys = Object.keys(wGroup);
     console.log('wGroup keys:', keys); // Log the keys of wGroup
     console.log('wGroup keys length:', keys.length ); // Log the length of the keys
     keys = await Object.keys(wGroup);
+    
     if (keys.length > 2) {  
 console.log('process');
 
