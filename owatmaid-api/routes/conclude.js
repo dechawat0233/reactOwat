@@ -387,7 +387,7 @@ if(wGroup) {
   // console.log('wGroup X ' + JSON.stringify(wGroup    ,2,null))
   console.log('wGroup X ' + Object.keys(wGroup).length )
   // console.log('wGroup keys:', Object.keys(wGroup)); // Log the keys of wGroup
-let mCheck = Number(Object.keys(wGroup).length);
+let mCheck = await Object.keys(wGroup).length;
 if(mCheck  > 2) {
 console.log('process');
 
