@@ -595,8 +595,8 @@ let wpId  = dataEmp.employees[0].workplace || '';
 let salary = dataEmp.employees[0].salary || 0;
 
 if(wGroup && Object.keys(wGroup).length > 2) {
-  // console.log('wGroup X ' + JSON.stringify(wGroup    ,2,null))
-  // console.log('wGroup X ' + Object.keys(wGroup).length )
+  console.log('wGroup X ' + JSON.stringify(wGroup    ,2,null))
+  console.log('wGroup X ' + Object.keys(wGroup).length )
 
 if(Object.keys(wGroup).length > 1) {
 
