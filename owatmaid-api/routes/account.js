@@ -1129,16 +1129,12 @@ router.post('/calsalarylist', async (req, res) => {
     const workplaceList = await axios.get(sURL + '/workplace/list');
 
     const dataSearch = await {
-      year: year, 
+      year: year || new Date().getFullYear(), 
       month: month,
       concludeDate: "",
       employeeId: ''
     };
 
-    if(dataSearch.year  == '') {
-      const currentYear = new Date().getFullYear();
-      dataSearch.year  = currentYear;
-    }
     
         const responseConclude = await axios.post(sURL + '/conclude/search', dataSearch);
     
