@@ -1135,6 +1135,10 @@ router.post('/calsalarylist', async (req, res) => {
       employeeId: ''
     };
 
+    if(dataSearch.year  == '') {
+      const currentYear = new Date().getFullYear();
+      dataSearch.year  = currentYear;
+    }
     
         const responseConclude = await axios.post(sURL + '/conclude/search', dataSearch);
     
@@ -1142,6 +1146,7 @@ router.post('/calsalarylist', async (req, res) => {
     
         if (responseConclude.data.recordConclude && Array.isArray(responseConclude.data.recordConclude) && responseConclude.data.recordConclude.length > 0) {
     
+
           for (let c = 0; c < responseConclude.data.recordConclude.length; c++) {
     //check accounting record in database
     // let empId = await responseConclude.data.recordConclude[c].employeeId;
