@@ -284,10 +284,10 @@ router.post('/search', async (req, res) => {
     }
 
     console.log('Search Parameters:');
-    console.log({ employeeId, name, idCard, workPlace });
+    // console.log({ employeeId, name, idCard, workPlace });
 
-    console.log('Constructed Query:');
-    console.log(query);
+    // console.log('Constructed Query:');
+    // console.log(query);
     if (employeeId == '' && name == '' && idCard == '' && workPlace == '') {
       res.status(200).json({});
     }
@@ -301,7 +301,7 @@ router.post('/search', async (req, res) => {
     res.status(200).json({ employees });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    // res.status(500).json({ message: 'Internal server error' });
   }
 });
 

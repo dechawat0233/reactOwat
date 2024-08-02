@@ -1127,24 +1127,21 @@ router.post('/calsalarylist', async (req, res) => {
   try {
     const { year, month } = req.body;
     const workplaceList = await axios.get(sURL + '/workplace/list');
-    if(year == '' ) {
-      year = new Date().getFullYear();
-    }
 
     const dataSearch = await {
-      year: year || new Date().getFullYear(), 
+      year: year, 
       month: month,
       concludeDate: "",
       employeeId: ''
     };
 
+    
         const responseConclude = await axios.post(sURL + '/conclude/search', dataSearch);
     
         const dataList = [];
     
-        if (responseConclude.data.recordConclude && Array.isArray(responseConclude.data.recordConclude) && responseConclude.data.recordConclude.length > 0) {
+        if (responseConclude.data.recordConclude.length > 0) {
     
-
           for (let c = 0; c < responseConclude.data.recordConclude.length; c++) {
     //check accounting record in database
     // let empId = await responseConclude.data.recordConclude[c].employeeId;
