@@ -1407,7 +1407,7 @@ router.post('/search', async (req, res) => {
     // console.log(query);
 
     if (month== '' && year == '' && employeeId== '' && concludeDate == '') {
-      res.json({});
+      res.status(200).json({});
     }
 
     // Query the workplace collection for matching documents
@@ -1416,7 +1416,8 @@ router.post('/search', async (req, res) => {
     // await console.log('Search Results:');
     // await console.log(recordworkplace  );
     let textSearch = 'conclude';
-    await res.status(200).json({ recordConclude  });
+    // await res.status(200).json({ recordConclude  });
+    return res.status(200).json({});
   } catch (error) {
     console.error(error);
     // res.status(500).json({ message: 'Internal server error' });
