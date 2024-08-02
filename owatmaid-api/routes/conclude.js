@@ -1406,8 +1406,8 @@ router.post('/search', async (req, res) => {
     // console.log('Constructed Query:');
     // console.log(query);
 
-    if (month== '' && year == '' && employeeId== '') {
-      res.status(200).json({});
+    if (month== '' && year == '' && employeeId== '' && concludeDate == '') {
+      res.json({});
     }
 
     // Query the workplace collection for matching documents
