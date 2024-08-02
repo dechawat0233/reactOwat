@@ -1373,56 +1373,107 @@ router.get('/:month', async (req, res) => {
 });
 
 
-
-// Get  conclude record by conclude Id
+// Get conclude record by conclude Id
 router.post('/search', async (req, res) => {
   try {
     const { 
       year,
       month,
       concludeDate,
-      employeeId } = req.body;
+      employeeId 
+    } = req.body;
 
     // Construct the search query based on the provided parameters
     const query = {};
 
-    if (employeeId !== '') {
-      query.employeeId = employeeId ;
+    if (employeeId && employeeId !== '') {
+      query.employeeId = employeeId;
     }
 
-    if (year !== '') {
+    if (year && year !== '') {
       query.year = year;
-      // query.year= { $regex: new RegExp(workplaceName, 'i') };
     }
 
-    if (month !== '') {
+    if (month && month !== '') {
       query.month = month;
     }
-    if (concludeDate !== '') {
+
+    if (concludeDate && concludeDate !== '') {
       query.concludeDate = concludeDate;
     }
 
-// console.log('query.date ' + query.date);
-    // console.log('Constructed Query:');
-    // console.log(query);
+    // Log the constructed query for debugging
+    console.log('Constructed Query:', query);
 
-    if (month== '' && year == '' && employeeId== '' && concludeDate == '') {
-      res.status(200).json({});
+    if (!year && !month && !employeeId && !concludeDate) {
+      console.log('Empty query parameters, returning empty response');
+      return res.status(200).json({});
     }
 
-    // Query the workplace collection for matching documents
-    const recordConclude  = await conclude.find(query);
+    // Query the conclude collection for matching documents
+    const recordConclude = await conclude.find(query);
 
-    // await console.log('Search Results:');
-    // await console.log(recordworkplace  );
-    let textSearch = 'conclude';
-    // await res.status(200).json({ recordConclude  });
-    return res.status(200).json({});
+    // Log the search results
+    console.log('Search Results:', recordConclude);
+
+    res.status(200).json({ recordConclude });
   } catch (error) {
-    console.error(error);
-    // res.status(500).json({ message: 'Internal server error' });
+    console.error('Error occurred during search:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
+
+
+
+// // Get  conclude record by conclude Id
+// router.post('/search', async (req, res) => {
+//   try {
+//     const { 
+//       year,
+//       month,
+//       concludeDate,
+//       employeeId } = req.body;
+
+//     // Construct the search query based on the provided parameters
+//     const query = {};
+
+//     if (employeeId !== '') {
+//       query.employeeId = employeeId ;
+//     }
+
+//     if (year !== '') {
+//       query.year = year;
+//       // query.year= { $regex: new RegExp(workplaceName, 'i') };
+//     }
+
+//     if (month !== '') {
+//       query.month = month;
+//     }
+//     if (concludeDate !== '') {
+//       query.concludeDate = concludeDate;
+//     }
+
+// // console.log('query.date ' + query.date);
+//     // console.log('Constructed Query:');
+//     // console.log(query);
+
+//     if (month== '' && year == '' && employeeId== '' && concludeDate == '') {
+//       res.status(200).json({});
+//     }
+
+//     // Query the workplace collection for matching documents
+//     const recordConclude  = await conclude.find(query);
+
+//     // await console.log('Search Results:');
+//     // await console.log(recordworkplace  );
+//     let textSearch = 'conclude';
+//     // await res.status(200).json({ recordConclude  });
+//     return res.status(200).json({});
+//   } catch (error) {
+//     console.error(error);
+//     // res.status(500).json({ message: 'Internal server error' });
+//   }
+// });
 
 
 // Create new conclude
