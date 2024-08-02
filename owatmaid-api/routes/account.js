@@ -1140,7 +1140,7 @@ router.post('/calsalarylist', async (req, res) => {
     
         const dataList = [];
     
-        if (responseConclude.data.recordConclude.length > 0) {
+        if (responseConclude.data.recordConclude && Array.isArray(responseConclude.data.recordConclude) && responseConclude.data.recordConclude.length > 0) {
     
           for (let c = 0; c < responseConclude.data.recordConclude.length; c++) {
     //check accounting record in database
