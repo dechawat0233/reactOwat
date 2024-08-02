@@ -6416,7 +6416,8 @@ console.log('adjustedDailyExtractedDataAddSalaryCount',adjustedDailyExtractedDat
             uniqueSalaries = Array.from(salaryMap.values());
 
             uniqueSalaries.forEach((item, index) => {
-              const NameSp = `${item.name} ${item.SpSalary}`;
+              const cleanedName = item.name.replace(/\(ไม่คิดปกส.\)/g, '').trim();
+              const NameSp = `${cleanedName} ${item.SpSalary}`;
               const CodeSp = `${item.codeSpSalary}`;
 
               let roundOfSalaryText = "";
