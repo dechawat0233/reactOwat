@@ -152,13 +152,6 @@ const data1 = await response1.data;
 
 // await console.log('*x ' + JSON.stringify(data1.recordworkplace , null ,2) );
 if(data1.recordworkplace.length !== 0){
-//   const wCalList1 = [];
-
-// //check employee working in multi workplace
-//     const wGroup1 = await groupByWorkplaceId(data1.recordworkplace[0].employee_workplaceRecord);
-// await console.log('wGroup1  :' + JSON.stringify(wGroup1,2,null));
-// await console.log('count1 :' + Object.keys(wGroup1).length );
-
 
 //get workplaceId in first employee_workplaceRecord
 // let wpId1 = await data1.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
@@ -166,6 +159,224 @@ let wpId1  = dataEmp.employees[0].workplace || '';
 let salary = dataEmp.employees[0].salary || 0;
 
 
+const wCalList1 = [];
+
+//check employee working in multi workplace
+    const wGroup1 = await groupByWorkplaceId(data1.recordworkplace[0].employee_workplaceRecord);
+await console.log('wGroup1  :' + JSON.stringify(wGroup1,2,null));
+await console.log('count :' + Object.keys(wGroup1).length );
+
+
+if (wGroup1) {
+  const keys = await Object.keys(wGroup1);
+  console.log('wGroup keys:', keys); // Log the keys of wGroup
+  console.log('wGroup keys length:', keys.length ); // Log the length of the keys
+
+  if (keys.length > 1) {  
+console.log('process');
+
+for (const workplaceId of Object.keys(wGroup1)) {
+  const group1 = wGroup1[workplaceId];
+  // console.log(`Workplace ID: ${group.workplaceId}, Workplace Name: ${group.workplaceName}`);
+  const wpDataCalculator1 = {
+    month: month || '',
+    year: year || '',
+    workplaceId: group1.workplaceId
+  };
+
+  try {
+    const wpResponse = await axios.post(`${sURL}/workplace/caldata`, wpDataCalculator1);
+    wCalList1.push({
+      'workplaceId': group1.workplaceId,
+      'data': wpResponse1.data
+    });
+  } catch (error) {
+    console.error(`Error processing workplace ID ${group1.workplaceId}:`, error);
+  }
+}
+
+// Do something with wCalList after all promises have been resolved
+// console.log('Workplace Calculation List:', wCalList1);
+for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
+const tmp = {};
+
+const tmpWP = wCalList1.find(item => item.workplaceId === element.workplaceId);
+// console.log('workRateOT : ' + JSON.stringify(tmpWP.data.workRateOT ,2 ,null) );
+
+const workOfHour = await (tmpWP?.data?.workOfHour) ?? 0;
+const workOfOT = await parseFloat(tmpWP?.data?.workOfOT) ?? 0;
+const dayOff = await tmpWP?.data?.workplaceDayOffList ?? [];
+const specialDayOff = await tmpWP?.data?.specialDaylist ?? [];
+const dayOffCheck = [];
+
+if (dayOff.length !== 0) {
+  dayOff.forEach(item => {
+    let dateoffParts = item.split('-');
+    let str2 = parseInt(dateoffParts[2], 10);
+    dayOffCheck.push(str2);
+  });
+}
+
+
+let dateParts = element.date.split('/');
+let str1 = parseInt(dateParts[0], 10);
+
+if (str1 > 0 && str1 <= 20) {
+  tmp.day = str1 + '/' + month + '/' + year;
+  tmp.workplaceId = element.workplaceId || '';
+  let parts = element.allTime.split('.');
+
+  let hours = parseInt(parts[0], 10) || 0;
+  let minutes = parts.length > 1 ? parseInt(parts[1], 10) : 0;
+
+  let scaledMinutes = (minutes * 100) / 60;
+  let allTime = `${hours}.${scaledMinutes}` || 0;
+
+  tmp.allTimes = `${hours}.${scaledMinutes}` || 0;
+
+  let parts1 = element.otTime.split('.');
+
+  let hours1 = parseInt(parts1[0], 10) || 0;
+  let minutes1 = parts1.length > 1 ? parseInt(parts1[1], 10) : 0;
+
+  let scaledMinutes1 = (minutes1 * 100) / 60;
+  let otTime = parseFloat(`${hours1}.${scaledMinutes1}`).toFixed(2) || 0;
+
+  if (element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
+    tmp.workRate = element.specialtSalary || '';
+    tmp.workRateMultiply = Number(element.specialtSalary || 0) / Number(wpResponse.data.workRate || 0);
+
+    tmp.otTimes = otTime || 0;
+
+    tmp.workRateOT = element.specialtSalaryOT || '';
+    tmp.workRateOTMultiply = Number(element.specialtSalaryOT || 0) / (Number(wpResponse.data.workRate || 0) / 8);
+tmp.workType = 'specialtSalary';
+
+sumWorkHour += parseFloat(allTime) || 0;
+sumWorkRate += parseFloat(element.specialtSalary) || 0;
+sumWorkHourOt += parseFloat(otTime) || 0;
+sumWorkRateOt += parseFloat(element.specialtSalaryOT) || 0;
+
+  } else {
+    if (specialDayOff.includes(Number(str1))) {
+      if (salary === 0) {
+        salary = tmpWP.data.workRate;
+      }
+
+      if (allTime >= workOfHour) {
+        allTime = workOfHour;
+        tmp.allTimes = workOfHour || 0;
+      } else {
+        tmp.allTimes = allTime || 0;
+      }
+
+      let workRate = ((parseFloat(tmpWP.data.holiday) * (salary / 8)) * parseFloat(allTime));
+      tmp.workRate = workRate || 0;
+      tmp.workRateMultiply = tmpWP.data.holiday || 0;
+
+      if (otTime >= workOfOT) {
+        otTime = workOfOT;
+        tmp.otTimes = workOfOT || 0;
+      } else {
+        tmp.otTimes = otTime || 0;
+      }
+
+      let workRateOT = ((parseFloat(tmpWP.data.holidayOT) * (salary / 8)) * parseFloat(otTime)).toFixed(2);
+      tmp.workRateOT = workRateOT || '';
+      tmp.workRateOTMultiply = tmpWP.data.holidayOT || 0;
+
+      sumWorkHour += parseFloat(allTime) || 0;
+      sumWorkRate += parseFloat(workRate) || 0;
+      sumWorkHourOt += parseFloat(otTime) || 0;
+      sumWorkRateOt += parseFloat(workRateOT) || 0;
+      
+      workRate = 0;
+      workRateOT = 0;
+      tmp.workType = 'specialDayOff';
+    
+    } else if (dayOffCheck.includes(str1)) {
+      if (salary === 0) {
+        salary = tmpWP.data.workRate;
+      }
+
+      if (allTime >= workOfHour) {
+        allTime = workOfHour;
+        tmp.allTimes = workOfHour || 0;
+      } else {
+        tmp.allTimes = allTime || 0;
+      }
+
+      let workRate = ((parseFloat(tmpWP.data.dayoffRateHour || 0) * (parseFloat(salary || 0) / 8)) * parseFloat(allTime)).toFixed(2);
+      tmp.workRate = workRate || 0;
+      tmp.workRateMultiply = tmpWP.data.dayoffRateHour || '';
+
+      if (otTime >= workOfOT) {
+        otTime = workOfOT;
+        tmp.otTimes = workOfOT || 0;
+      } else {
+        tmp.otTimes = otTime || 0;
+      }
+
+      let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * parseFloat(otTime)).toFixed(2);
+      tmp.workRateOT = workRateOT || 0;
+      tmp.workRateOTMultiply = tmpWP.data.dayoffRateOT || 0;
+
+      sumWorkHour += parseFloat(allTime) ||0;
+      sumWorkRate += parseFloat(workRate) || 0;
+      sumWorkHourOt += parseFloat(otTime) || 0;
+      sumWorkRateOt += parseFloat(workRateOT) || 0;
+
+      workRate = 0;
+      workRateOT = 0;
+      tmp.workType = 'dayOff';
+
+    } else {
+      if (salary === 0) {
+        salary = tmpWP.data.workRate;
+      }
+
+      if (allTime >= workOfHour) {
+        allTime = workOfHour;
+        tmp.allTimes = workOfHour || 0;
+      } else {
+        tmp.allTimes = allTime || 0;
+      }
+
+      let workRate = ((salary / 8) * parseFloat(allTime)).toFixed(2);
+      tmp.workRate = workRate || 0;
+      tmp.workRateMultiply = '1';
+
+      if (otTime >= workOfOT) {
+        otTime = workOfOT;
+        tmp.otTimes = workOfOT || 0;
+      } else {
+        tmp.otTimes = otTime || 0;
+      }
+
+      let workRateOT = (((salary / 8) * parseFloat(tmpWP.data.workRateOT) ) * parseFloat(otTime)).toFixed(2);
+      tmp.workRateOT = workRateOT || 0;
+      tmp.workRateOTMultiply = tmpWP.data.workRateOT || 0;
+
+      sumWorkHour += parseFloat(allTime) || 0;
+      sumWorkRate += parseFloat(workRate) || 0;
+      sumWorkHourOt += parseFloat(otTime) || 0;
+      sumWorkRateOt += parseFloat(workRateOT) || 0;
+
+      workRate = 0;
+      workRateOT = 0;
+      tmp.workType = 'workDay';
+
+    }
+  }
+  tmp.addSalaryDay = '';
+  tmp.shift = element.shift || 0;
+
+  concludeRecord.push(tmp);
+
+} //
+} //end for
+  }
+} else {
 
 
 const wpDataCalculator1 = await {
@@ -356,6 +567,7 @@ tmp.shift = element.shift || 0;
 }
 }
 
+}
 //=========
 
 
