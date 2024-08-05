@@ -580,7 +580,7 @@ router.post('/autocreate', async (req, res) => {
           let x = concludeRecord.some(record => record.day === d);
     
           if (!x) {
-            concludeRecord.push({
+            await concludeRecord.push({
               'day': d,
               'workplaceId': '',
               'allTimes': '0',
