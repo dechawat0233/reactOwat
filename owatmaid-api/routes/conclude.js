@@ -1455,18 +1455,20 @@ function groupByWorkplaceId(records) {
 
 
 const sortByDate = (data) => {
-  data.forEach(employee => {
-    employee.employee_workplaceRecord.sort((a, b) => {
+  for (let i = 0; i < data.length; i++) {
+    data[i].employee_workplaceRecord.sort((a, b) => {
       const [dayA, monthA, yearA] = a.date.split('/');
       const [dayB, monthB, yearB] = b.date.split('/');
-      
+
       const dateA = new Date(`${yearA}-${monthA}-${dayA}`);
       const dateB = new Date(`${yearB}-${monthB}-${dayB}`);
-      
+
       return dateA - dateB;
     });
-  });
+  }
   return data;
 };
+
+
 
 module.exports = router;
