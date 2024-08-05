@@ -661,6 +661,7 @@ router.post('/autocreate', async (req, res) => {
           let str1 = parseInt(dateParts[0], 10);
 
           if (str1 > 0 && str1 <= 20) {
+            console.log('str1  : ' + str1 )
             tmp.day = str1 + '/' + month + '/' + year;
             tmp.workplaceId = element.workplaceId || '';
             let parts = element.allTime.split('.');
