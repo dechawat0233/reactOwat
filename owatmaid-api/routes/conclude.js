@@ -1132,6 +1132,7 @@ router.post('/autocreate', async (req, res) => {
   // res.json(concludeData );
 });
 */
+
 router.post('/autocreate', async (req, res) => {
   const { year, month, employeeId } = req.body;
 
@@ -1204,10 +1205,14 @@ router.post('/autocreate', async (req, res) => {
     addMissingDays(concludeRecord, 21, lastday, prevMonth, year1);
     addMissingDays(concludeRecord, 1, 20, month, year);
 
+    // Sort the array by date directly in the main code
     concludeRecord.sort((a, b) => {
-      const dateA = new Date(a.day.split('/').reverse().join('/'));
-      const dateB = new Date(b.day.split('/').reverse().join('/'));
-      return dateA - dateB;
+      if (a.day && b.day) {
+        const dateA = new Date(a.day.split('/').reverse().join('/'));
+        const dateB = new Date(b.day.split('/').reverse().join('/'));
+        return dateA - dateB;
+      }
+      return 0; // If one of the days is undefined, keep the original order
     });
 
     dataConclude.concludeRecord = concludeRecord;
@@ -1316,6 +1321,8 @@ function addMissingDays(concludeRecord, startDay, endDay, month, year) {
     }
   }
 }
+
+
 
 // Get list of conclude 
 router.get('/list', async (req, res) => {
