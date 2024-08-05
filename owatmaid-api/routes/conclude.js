@@ -147,12 +147,11 @@ router.post('/autocreate', async (req, res) => {
     };
     const response1 = await axios.post(sURL + '/timerecord/searchemp', searchData1);
     // console.log(JSON.stringify( response.data, null,2) );
-    const data1 = await sortByDate(response1.data);
+    const data1 = await response1.data;
     // console.log(JSON.stringify( data.recordworkplace) );
 
     // await console.log('*x ' + JSON.stringify(data1.recordworkplace , null ,2) );
     if (data1.recordworkplace.length !== 0) {
-      // data1 = await sortByDate(data1);      
       
       //get workplaceId in first employee_workplaceRecord
       // let wpId1 = await data1.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
@@ -1452,18 +1451,6 @@ function groupByWorkplaceId(records) {
     return acc;
   }, {});
 }
-
-
-const sortByDate = (data) => {
-  data.sort((a, b) => {
-    const dateA = new Date(a.employee_workplaceRecord.date.split('/').reverse().join('/'));
-    const dateB = new Date(b.employee_workplaceRecord.date.split('/').reverse().join('/'));
-    return dateA - dateB;
-  });
-
-
-  return data;
-};
 
 
 
