@@ -163,7 +163,7 @@ const wCalList1 = [];
 
 //check employee working in multi workplace
     const wGroup1 = await groupByWorkplaceId(data1.recordworkplace[0].employee_workplaceRecord);
-await console.log('wGroup1  :' + JSON.stringify(wGroup1,2,null));
+// await console.log('wGroup1  :' + JSON.stringify(wGroup1,2,null));
 await console.log('count :' + Object.keys(wGroup1).length );
 
 
@@ -353,7 +353,7 @@ sumWorkRateOt += parseFloat(element.specialtSalaryOT) || 0;
         tmp.otTimes = otTime || 0;
       }
 
-      let workRateOT = (((salary / 8) * parseFloat(tmpWP.data.workRateOT || 0) ) * parseFloat(otTime)).toFixed(2);
+      let workRateOT = (((salary / 8) * parseFloat(tmpWP.data.workRateOT ?? 0) ) * parseFloat(otTime)).toFixed(2);
       tmp.workRateOT = workRateOT || 0;
       tmp.workRateOTMultiply = tmpWP.data.workRateOT || 0;
 
@@ -401,7 +401,7 @@ let   str2 = parseInt(dateoffParts[2], 10);
 // console.log(str2 );
 dayOffCheck1.push(str2 );
 });
-console.log('dayOffCheck1' + JSON.stringify(dayOffCheck1,null,2));
+// console.log('dayOffCheck1' + JSON.stringify(dayOffCheck1,null,2));
 }
 
 for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
