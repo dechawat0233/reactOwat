@@ -353,7 +353,7 @@ sumWorkRateOt += parseFloat(element.specialtSalaryOT) || 0;
         tmp.otTimes = otTime || 0;
       }
 
-      let workRateOT = (((salary / 8) * parseFloat(tmpWP.data.workRateOT) ) * parseFloat(otTime)).toFixed(2);
+      let workRateOT = (((salary / 8) * parseFloat(tmpWP.data.workRateOT || 0) ) * parseFloat(otTime)).toFixed(2);
       tmp.workRateOT = workRateOT || 0;
       tmp.workRateOTMultiply = tmpWP.data.workRateOT || 0;
 
