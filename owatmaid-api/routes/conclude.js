@@ -1067,7 +1067,7 @@ if (!x) {
 
 // console.log('Sorted concludeRecord:', concludeRecord);
 dataConclude.concludeRecord = concludeRecord || [];
-console.log('wCalList1 ' + wCalList1);
+// console.log('wCalList1 ' + wCalList1);
 
 for(let c =0; c < concludeRecord .length; c++){
   // console.log('concludeRecord ' + concludeRecord [c].workplaceId);
