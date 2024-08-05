@@ -375,7 +375,7 @@ sumWorkRateOt += parseFloat(element.specialtSalaryOT) || 0;
 
 } //
 } //end for
-  }
+  // }
 } else {
 
 
@@ -810,7 +810,7 @@ sumWorkRateOt += parseFloat(element.specialtSalaryOT) || 0;
 
   } //
 } //end for
-    // }
+    }
 } else {
 
 
