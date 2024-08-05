@@ -221,7 +221,9 @@ if (dayOff.length !== 0) {
 let dateParts = element.date.split('/');
 let str1 = parseInt(dateParts[0], 10);
 
-if (str1 > 0 && str1 <= 20) {
+// if (str1 > 0 && str1 <= 20) {
+  if (str1 > 20 && str1 <= lastday) {
+
   tmp.day = str1 + '/' + month + '/' + year;
   tmp.workplaceId = element.workplaceId || '';
   let parts = element.allTime.split('.');
