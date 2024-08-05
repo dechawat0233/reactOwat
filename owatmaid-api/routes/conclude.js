@@ -1455,17 +1455,13 @@ function groupByWorkplaceId(records) {
 
 
 const sortByDate = (data) => {
-  for (let i = 0; i < data.length; i++) {
-    data[i].employee_workplaceRecord.sort((a, b) => {
-      const [dayA, monthA, yearA] = a.date.split('/');
-      const [dayB, monthB, yearB] = b.date.split('/');
+  data.sort((a, b) => {
+    const dateA = new Date(a.employee_workplaceRecord.date.split('/').reverse().join('/'));
+    const dateB = new Date(b.employee_workplaceRecord.date.split('/').reverse().join('/'));
+    return dateA - dateB;
+  });
 
-      const dateA = new Date(`${yearA}-${monthA}-${dayA}`);
-      const dateB = new Date(`${yearB}-${monthB}-${dayB}`);
 
-      return dateA - dateB;
-    });
-  }
   return data;
 };
 
