@@ -389,8 +389,7 @@ router.post('/autocreate', async (req, res) => {
         };
 
         //get workplace data for calculator
-        // const wpResponse1 = await axios.post(sURL + '/workplace/caldata', wpDataCalculator1);
-        const wpResponse1  = {};
+        const wpResponse1 = await axios.post(sURL + '/workplace/caldata', wpDataCalculator1);
         // console.log(JSON.stringify( wpResponse1.data, null,2) );
         const workOfHour = await wpResponse1.data.workOfHour || 0;
         const workOfOT = await Number(wpResponse1.data.workOfOT) || 0;
@@ -584,7 +583,8 @@ router.post('/autocreate', async (req, res) => {
       timerecordId: year || ''
     };
 
-    const response = await axios.post(sURL + '/timerecord/searchemp', searchData);
+    // const response = await axios.post(sURL + '/timerecord/searchemp', searchData);
+    const response  = {};
     // console.log(JSON.stringify( response.data, null,2) );
     const data = await response.data;
     // console.log(JSON.stringify( data.recordworkplace) );
