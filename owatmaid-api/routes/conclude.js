@@ -572,6 +572,34 @@ router.post('/autocreate', async (req, res) => {
       }
 
     }
+
+
+        // Check day is null and place data for days 21 to last day of the previous month
+        for (let i = 21; i <= lastday; i++) {
+          let d = i + '/' + prevMonth + '/' + year1;
+          let x = concludeRecord.some(record => record.day === d);
+    
+          if (!x) {
+            concludeRecord.push({
+              'day': d,
+              'workplaceId': '',
+              'allTimes': '0',
+              'workRate': '0',
+              'otTimes': '0',
+              'workRateOT': '0',
+              'addSalaryDay': '0'
+            });
+          }
+        }
+    
+        // Sort the array by date directly in the main code
+        concludeRecord.sort((a, b) => {
+          const dateA = new Date(a.day.split('/').reverse().join('/'));
+          const dateB = new Date(b.day.split('/').reverse().join('/'));
+          return dateA - dateB;
+        });
+    
+    
     //=========
 
 
@@ -1009,23 +1037,8 @@ router.post('/autocreate', async (req, res) => {
 
     }
 
-    // Check day is null and place data for days 21 to last day of the previous month
-    for (let i = 21; i <= lastday; i++) {
-      let d = i + '/' + prevMonth + '/' + year1;
-      let x = concludeRecord.some(record => record.day === d);
 
-      if (!x) {
-        concludeRecord.push({
-          'day': d,
-          'workplaceId': '',
-          'allTimes': '0',
-          'workRate': '0',
-          'otTimes': '0',
-          'workRateOT': '0',
-          'addSalaryDay': '0'
-        });
-      }
-    }
+
 
     // Check day is null and place data for days 1 to 20 of the current month
     for (let i = 1; i <= 20; i++) {
@@ -1045,7 +1058,7 @@ router.post('/autocreate', async (req, res) => {
       }
     }
 
-    
+
     // Sort the array by date directly in the main code
     // concludeRecord.sort((a, b) => {
     //   const dateA = new Date(a.day.split('/').reverse().join('/'));
