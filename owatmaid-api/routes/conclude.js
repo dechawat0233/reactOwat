@@ -382,8 +382,8 @@ sumWorkRateOt += parseFloat(element.specialtSalaryOT) || 0;
 
 
 const wpDataCalculator1 = await {
-month: month || '',
-year: year || '',
+month: prevMonthInt || '',
+year: year1 || '',
 workplaceId: wpId1
 };
 
