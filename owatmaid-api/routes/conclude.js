@@ -583,13 +583,12 @@ router.post('/autocreate', async (req, res) => {
       timerecordId: year || ''
     };
 
-    // const response = await axios.post(sURL + '/timerecord/searchemp', searchData);
-    const response  = {};
+    const response = await axios.post(sURL + '/timerecord/searchemp', searchData);
     // console.log(JSON.stringify( response.data, null,2) );
     const data = await response.data;
     // console.log(JSON.stringify( data.recordworkplace) );
 
-    if (data.recordworkplace.length !== 0) {
+    if ( 1 == 0 && data.recordworkplace.length !== 0) {
       const wCalList = [];
 
       //check employee working in multi workplace
