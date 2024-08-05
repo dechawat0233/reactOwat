@@ -167,12 +167,12 @@ await console.log('wGroup1  :' + JSON.stringify(wGroup1,2,null));
 await console.log('count :' + Object.keys(wGroup1).length );
 
 
-if (wGroup1) {
+// if (wGroup1) {
   const keys = await Object.keys(wGroup1);
   console.log('wGroup keys:', keys); // Log the keys of wGroup
   console.log('wGroup keys length:', keys.length ); // Log the length of the keys
 
-  if (keys.length > 2) {  
+  if (keys.length > 1) {  
 console.log('process');
 
 for (const workplaceId of Object.keys(wGroup1)) {
@@ -602,7 +602,7 @@ let salary = dataEmp.employees[0].salary || 0;
     console.log('wGroup keys:', keys); // Log the keys of wGroup
     console.log('wGroup keys length:', keys.length ); // Log the length of the keys
 
-    if (keys.length > 2) {  
+    if (keys.length > 1) {  
 console.log('process');
 
   for (const workplaceId of Object.keys(wGroup)) {
@@ -810,7 +810,7 @@ sumWorkRateOt += parseFloat(element.specialtSalaryOT) || 0;
 
   } //
 } //end for
-    }
+    // }
 } else {
 
 
