@@ -510,7 +510,7 @@ tmp.workType = 'specialDayOff';
           tmp.otTimes = otTime || 0;
         }
 
-        let workRateOT = ((parseFloat(wpResponse1.data.dayoffRateOT) * (salary / 8)) * parseFloat(otTime));
+        let workRateOT = ((parseFloat(wpResponse1.data.dayoffRateOT ?? 0) * (salary / 8)) * parseFloat(otTime));
         tmp.workRateOT = workRateOT || 0;
         tmp.workRateOTMultiply = wpResponse1.data.dayoffRateOT || 0;
 
@@ -546,7 +546,7 @@ tmp.workType = 'dayOff';
           tmp.otTimes = otTime || 0;
         }
 
-        let workRateOT = (((salary / 8) * parseFloat(wpResponse1.data.workRateOT) ) * parseFloat(otTime)).toFixed(2);
+        let workRateOT = (((salary / 8) * parseFloat(wpResponse1.data.workRateOT ?? 0) ) * parseFloat(otTime)).toFixed(2);
         tmp.workRateOT = workRateOT || 0;
         tmp.workRateOTMultiply = wpResponse1.data.workRateOT || 0;
 
