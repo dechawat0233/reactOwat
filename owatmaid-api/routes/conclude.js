@@ -105,7 +105,7 @@ router.post('/autocreate', async (req, res) => {
     const hh = await String(today.getHours()).padStart(2, '0');
     const min = await String(today.getMinutes()).padStart(2, '0');
     const concludeDate = await `${dd}-${mm}-${yyyy} ${hh}:${min}`;
-    // await console.log(concludeDate); // Example output: "20-06-2024 14:30"
+    await console.log(concludeDate); // Example output: "20-06-2024 14:30"
 
     dataConclude.concludeDate = await concludeDate || '';
     dataConclude.employeeId = await employeeId;
@@ -384,8 +384,8 @@ router.post('/autocreate', async (req, res) => {
         const wpDataCalculator1 = await {
           month: prevMonthInt || '',
           year: year1 || '',
-          // workplaceId: wpId1
-          workplaceId: keys[0]
+          workplaceId: wpId1
+          // workplaceId: keys[0]
         };
 
         //get workplace data for calculator
