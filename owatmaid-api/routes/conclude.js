@@ -186,7 +186,7 @@ for (const workplaceId of Object.keys(wGroup1)) {
 
   try {
     const wpResponse = await axios.post(`${sURL}/workplace/caldata`, wpDataCalculator1);
-    wCalList1.push({
+    await wCalList1.push({
       'workplaceId': group1.workplaceId,
       'data': wpResponse1.data
     });
