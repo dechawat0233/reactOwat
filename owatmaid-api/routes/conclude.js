@@ -172,7 +172,7 @@ router.post('/autocreate', async (req, res) => {
       console.log('wGroup keys length:', keys.length); // Log the length of the keys
 
       if (keys.length > 1) {
-        console.log('process');
+        console.log('process : 21 - '+ lastday);
 
         for (const workplaceId of Object.keys(wGroup1)) {
           const group1 = wGroup1[workplaceId];
@@ -220,7 +220,6 @@ router.post('/autocreate', async (req, res) => {
           let dateParts = element.date.split('/');
           let str1 = parseInt(dateParts[0], 10);
 
-          // if (str1 > 0 && str1 <= 20) {
           if (str1 > 20 && str1 <= lastday) {
 
             tmp.day = str1 + '/' + month + '/' + year;
