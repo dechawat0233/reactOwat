@@ -179,8 +179,8 @@ for (const workplaceId of Object.keys(wGroup1)) {
   const group1 = wGroup1[workplaceId];
   // console.log(`Workplace ID: ${group.workplaceId}, Workplace Name: ${group.workplaceName}`);
   const wpDataCalculator1 = {
-    month: month || '',
-    year: year || '',
+    month: prevMonthInt || '',
+    year: year1 || '',
     workplaceId: group1.workplaceId
   };
 
