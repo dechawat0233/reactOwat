@@ -152,7 +152,7 @@ router.post('/autocreate', async (req, res) => {
 
     // await console.log('*x ' + JSON.stringify(data1.recordworkplace , null ,2) );
     if (data1.recordworkplace.length !== 0) {
-
+      data1 = await sortByDate();
       //get workplaceId in first employee_workplaceRecord
       // let wpId1 = await data1.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
       let wpId1 = dataEmp.employees[0].workplace || '';
@@ -1452,5 +1452,16 @@ function groupByWorkplaceId(records) {
   }, {});
 }
 
+
+const sortByDate = (data) => {
+  data.forEach(employee => {
+    employee.employee_workplaceRecord.sort((a, b) => {
+      const dateA = a.date.split('/').reverse().join('-');
+      const dateB = b.date.split('/').reverse().join('-');
+      return new Date(dateA) - new Date(dateB);
+    });
+  });
+  return data;
+};
 
 module.exports = router;
