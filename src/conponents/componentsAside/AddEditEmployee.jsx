@@ -434,12 +434,14 @@ function AddEditEmployee() {
         );
 
         // setDateOfBirth(response.data.employees[0].dateOfBirth);
-        const isoDate = response.data.employees[0].dateOfBirth;
+        // const isoDate = response.data.employees[0].dateOfBirth;
         // Convert ISO date to JavaScript Date object
-        const dateObject = new Date(isoDate);
+        // const dateObject = new Date(isoDate);
         // Set the formatted date to the state
-        setDateOfBirth(dateObject);
 
+        // setDateOfBirth(response.data.employees[0].dateObject);
+setFormattedDate(response.data.employees[0].dateOfBirth);
+// console.log("321",response.data.employees[0].dateObject);
         setAge(response.data.employees[0].age);
         setIdCard(response.data.employees[0].idCard);
         setEthnicity(response.data.employees[0].ethnicity);
