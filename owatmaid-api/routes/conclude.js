@@ -412,9 +412,11 @@ router.post('/autocreate', async (req, res) => {
 
           let dateParts = element.date.split('/');
           let str1 = parseInt(dateParts[0], 10);
-          console.log('*str1 ' + str1);
+          // console.log('*str1 ' + str1);
 
           if (str1 > 20 && str1 <= lastday) {
+                      console.log('*str1 ' + str1);
+
             tmp.day = str1 + '/' + prevMonth + '/' + year1;
             tmp.workplaceId = element.workplaceId || '';
             let parts = element.allTime.split('.');
@@ -661,7 +663,7 @@ router.post('/autocreate', async (req, res) => {
           let str1 = parseInt(dateParts[0], 10);
 
           if (str1 > 0 && str1 <= 20) {
-            console.log('str1  : ' + str1 )
+            // console.log('str1  : ' + str1 )
             tmp.day = str1 + '/' + month + '/' + year;
             tmp.workplaceId = element.workplaceId || '';
             let parts = element.allTime.split('.');
