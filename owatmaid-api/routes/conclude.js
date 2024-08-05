@@ -1008,23 +1008,23 @@ router.post('/autocreate', async (req, res) => {
       }
 
     }
-    // Check day is null and place data for days 21 to last day of the previous month
-    for (let i = 21; i <= lastday; i++) {
-      let d = i + '/' + prevMonth + '/' + year1;
-      let x = concludeRecord.some(record => record.day === d);
+    // // Check day is null and place data for days 21 to last day of the previous month
+    // for (let i = 21; i <= lastday; i++) {
+    //   let d = i + '/' + prevMonth + '/' + year1;
+    //   let x = concludeRecord.some(record => record.day === d);
 
-      if (!x) {
-        concludeRecord.push({
-          'day': d,
-          'workplaceId': '',
-          'allTimes': '0',
-          'workRate': '0',
-          'otTimes': '0',
-          'workRateOT': '0',
-          'addSalaryDay': '0'
-        });
-      }
-    }
+    //   if (!x) {
+    //     concludeRecord.push({
+    //       'day': d,
+    //       'workplaceId': '',
+    //       'allTimes': '0',
+    //       'workRate': '0',
+    //       'otTimes': '0',
+    //       'workRateOT': '0',
+    //       'addSalaryDay': '0'
+    //     });
+    //   }
+    // }
 
     // Check day is null and place data for days 21 to last day of the previous month
     for (let i = 21; i <= lastday; i++) {
