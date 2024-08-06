@@ -1079,7 +1079,7 @@ console.log('wpResponse1.data.dayoffRateHour ' + wpResponse1.data.dayoffRateHour
 
     dataConclude.concludeRecord = concludeRecord|| [];
 
-    console.log('workplaceListTmp ' + workplaceListTmp);
+    // console.log('workplaceListTmp ' + workplaceListTmp);
 
     const sendData = {
       wIdList: workplaceListTmp 
