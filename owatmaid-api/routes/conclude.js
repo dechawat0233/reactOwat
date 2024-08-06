@@ -406,7 +406,7 @@ const workplaceListTmp = [];
             // console.log(str2 );
             dayOffCheck1.push(str2);
           });
-          // console.log('dayOffCheck1' + JSON.stringify(dayOffCheck1,null,2));
+          console.log('dayOffCheck1' + JSON.stringify(dayOffCheck1,null,2));
         }
 
         for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
