@@ -1061,7 +1061,7 @@ router.post('/autocreate', async (req, res) => {
 
     // concludeRecord.map(async item => {
       let checkOne = concludeRecord.filter(item1 => {
-        return !(item[item1.day] == item.day && item1.workRate === '0');
+        return !(item1[item1.day] == item1.day && item1.workRate === '0');
       });
 // console.log('test ' + item.day + ' ' + item.workRate);
 console.log(checkOne[0].day);
