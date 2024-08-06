@@ -180,7 +180,7 @@ router.post('/autocreate', async (req, res) => {
           const group1 = wGroup1[workplaceId];
           // console.log(`Workplace ID: ${group.workplaceId}, Workplace Name: ${group.workplaceName}`);
           const wpDataCalculator1 = {
-            month: prevMonthInt || '',
+            month: prevMonth || '',
             year: year1 || '',
             workplaceId: group1.workplaceId
           };
@@ -224,7 +224,7 @@ router.post('/autocreate', async (req, res) => {
 
           if (str1 > 20 && str1 <= lastday) {
 
-            tmp.day = str1 + '/' + month + '/' + year;
+            tmp.day = str1 + '/' + prevMonth + '/' + year;
             tmp.workplaceId = element.workplaceId || '';
             let parts = element.allTime.split('.');
 
