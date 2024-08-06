@@ -1064,7 +1064,7 @@ router.post('/autocreate', async (req, res) => {
         return !(item[item1.day] == item.day && item1.workRate === '0');
       });
 // console.log('test ' + item.day + ' ' + item.workRate);
-// console.log(checkOne.day);
+console.log(checkOne.day);
     });
 
     // Sort the array by date directly in the main code
