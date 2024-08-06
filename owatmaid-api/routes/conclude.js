@@ -181,7 +181,7 @@ const workplaceListTmp = [];
           const group1 = wGroup1[workplaceId];
           // console.log(`Workplace ID: ${group.workplaceId}, Workplace Name: ${group.workplaceName}`);
           const wpDataCalculator1 = {
-            month: prevMonth || '',
+            month: month || '',
             year: year1 || '',
             workplaceId: group1.workplaceId
           };
