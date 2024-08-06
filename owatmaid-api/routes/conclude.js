@@ -614,7 +614,7 @@ router.post('/autocreate', async (req, res) => {
     const data = await response.data;
     // console.log(JSON.stringify( data.recordworkplace) );
 
-    if ( 1 == 0 && data.recordworkplace.length !== 0) {
+    if(data.recordworkplace.length !== 0) {
       const wCalList = [];
 
       //check employee working in multi workplace
@@ -1059,22 +1059,7 @@ router.post('/autocreate', async (req, res) => {
     }
 
 
-    let dayCount = concludeRecord.reduce((acc, item) => {
-      acc[item.day] = (acc[item.day] || 0) + 1;
-      return acc;
-    }, {});
     
-    console.log("Day counts:", dayCount);
-    
-    // Step 2: Filter out entries where 'day' is a duplicate
-    let uniqueDays = concludeRecord.filter(item => dayCount[item.day] === 1);
-    
-    console.log("Unique Days Records:", uniqueDays);
-    
-    // Step 3: Further filter out entries where 'workRate' is '0'
-    let finalFilteredRecords = uniqueDays.filter(item => item.workRate !== '0');
-    
-    console.log("Final Filtered Records:", finalFilteredRecords);    
     // Sort the array by date directly in the main code
     // concludeRecord.sort((a, b) => {
     //   const dateA = new Date(a.day.split('/').reverse().join('/'));
