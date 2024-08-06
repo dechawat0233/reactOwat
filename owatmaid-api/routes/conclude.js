@@ -1074,7 +1074,7 @@ router.post('/autocreate', async (req, res) => {
     dataConclude.concludeRecord = concludeRecord1.concat(concludeRecord) || [];
     // console.log('wCalList1 ' + wCalList1);
 
-    for (let c = 0; c < concludeRecord.length; c++) {
+    for (let c = 0; c < concludeRecord1.concat(concludeRecord).length; c++) {
       // console.log('concludeRecord ' + concludeRecord [c].workplaceId);
 
       await addSalaryList.push(addSalaryDaily);
@@ -1115,7 +1115,7 @@ router.post('/autocreate', async (req, res) => {
       //   console.log('Existing record deleted');
       // }
 
-      if (concludeRecord.length !== 0) {
+      if (concludeRecord1.concat(concludeRecord).length !== 0) {
 
         //check emty new record
         if (data1.recordworkplace.length !== 0 || data.recordworkplace.length !== 0) {
@@ -1143,7 +1143,7 @@ router.post('/autocreate', async (req, res) => {
     console.log(e);
   }
 
-  const concludeData = await conclude.find();
+  const concludeData = await concludeRecord1.concat(concludeRecord).find();
   // res.json(concludeData );
 });
 
