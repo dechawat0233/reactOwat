@@ -503,7 +503,7 @@ const workplaceListTmp = [];
                   tmp.allTime = allTime;
                 }
 console.log('salary   ' + salary  );
-                let workRate = ((parseFloat(wpResponse1.data.dayoffRateHour || 0) * (salary  / 8)) * parseFloat(allTime));
+                let workRate = ((parseFloat(wpResponse1.data.dayoffRateHour ) * (salary  / 8)) * parseFloat(allTime));
                 tmp.workRate = workRate || 0;
                 tmp.workRateMultiply = wpResponse1.data.dayoffRateHour || 0;
 
