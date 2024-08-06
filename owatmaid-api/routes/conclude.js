@@ -1059,15 +1059,18 @@ router.post('/autocreate', async (req, res) => {
     }
 
 
-    // concludeRecord.map(async item => {
-      let checkOne = concludeRecord.filter(item1 => {
-        return !(item1[item1.day] == item1.day && item1.workRate === '0');
-      });
-// console.log('test ' + item.day + ' ' + item.workRate);
-// console.log(checkOne[0].day);
-concludeRecord = checkOne;
-    // });
-
+    let dayCount = concludeRecord.reduce((acc, item) => {
+      acc[item.day] = (acc[item.day] || 0) + 1;
+      return acc;
+    }, {});
+    
+    console.log("Day counts:", dayCount);
+    
+    // Step 2: Filter out entries where 'workRate' is '0' and 'day' is duplicate
+    concludeRecord = concludeRecord.filter(item => {
+      return !(dayCount[item.day] > 1 && item.workRate === '0');
+    });
+    
     // Sort the array by date directly in the main code
     // concludeRecord.sort((a, b) => {
     //   const dateA = new Date(a.day.split('/').reverse().join('/'));
