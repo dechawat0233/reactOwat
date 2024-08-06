@@ -65,6 +65,7 @@ router.post('/autocreate', async (req, res) => {
   sumWorkHourOt = 0;
   sumWorkRateOt = 0;
 
+const workplaceListTmp = [];
 
   try {
 
@@ -190,6 +191,8 @@ router.post('/autocreate', async (req, res) => {
               'workplaceId': group1.workplaceId,
               'data': wpResponse1.data
             });
+
+            workplaceListTmp.push(group1.workplaceId);
           } catch (error) {
             console.error(`Error processing workplace ID ${group1.workplaceId}:`, error);
           }
@@ -653,6 +656,8 @@ router.post('/autocreate', async (req, res) => {
               'workplaceId': group.workplaceId,
               'data': wpResponse.data
             });
+
+            workplaceListTmp.push(group.workplaceId);
           } catch (error) {
             console.error(`Error processing workplace ID ${group.workplaceId}:`, error);
           }
@@ -1072,8 +1077,8 @@ router.post('/autocreate', async (req, res) => {
     // console.log('Sorted concludeRecord:', concludeRecord);
 
     dataConclude.concludeRecord = concludeRecord|| [];
-    // console.log('wCalList1 ' + wCalList1);
 
+    console.log('workplaceListTmp ' + workplaceListTmp);
     for (let c = 0; c < concludeRecord.length; c++) {
       // console.log('concludeRecord ' + concludeRecord [c].workplaceId);
 
