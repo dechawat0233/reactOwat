@@ -740,6 +740,7 @@ function Setting() {
   };
 
   const [employeeListResult, setEmployeeListResult] = useState([]);
+  const [showEmployeeListResult, setShowEmployeeListResult] = useState([]);
 
   async function handleSearch(event) {
     event.preventDefault();
@@ -773,7 +774,14 @@ function Setting() {
           endpoint + "/employee/search",
           data1
         );
-        await setEmployeeListResult(response1.data.employees);
+
+        const filteredEmployees = response1.data.employees.filter(
+          (employee) => employee.workplace === searchWorkplaceId
+        );
+
+        // await setEmployeeListResult(response1.data.employees);
+        await setEmployeeListResult(filteredEmployees);
+  
         // await alert(JSON.stringify(response1.data.employees , null ,2));
         // alert(response1.data );
         // alert(employeeListResult.length);
@@ -785,8 +793,6 @@ function Setting() {
     }
   }
   console.log("EmployeeListResult", employeeListResult);
-
-  const [showEmployeeListResult, setShowEmployeeListResult] = useState([]);
 
   //set data to form
   function handleClickResult(workplace) {
@@ -2409,8 +2415,8 @@ function Setting() {
                     />
                   </div>
                 </section>
-                <section class="Frame">
-                  <h2 class="title">พนักงานในสังกัด</h2>
+                {/* <section class="Frame">
+                  <h2 class="title">พนักงานในสังกัด</h2> */}
                   <section class="Frame">
                     <div>
                       {showEmployeeListResult.length > 0 && (
@@ -2431,7 +2437,7 @@ function Setting() {
                       )}
                     </div>
                   </section>
-                </section>
+                {/* </section> */}
 
                 {/* <h2>Add Image:</h2>
                                 <input type="file" onChange={handleChange} />
