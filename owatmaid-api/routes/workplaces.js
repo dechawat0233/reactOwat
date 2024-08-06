@@ -305,8 +305,14 @@ if(workplaces ) {
 
 } //end for
 
+if(ans.length > 0 ) {
+    await res.status(200).json({ ans});
+} else{
+    await res.status(200).json({ );
 
-        await res.status(200).json({ ans});
+}
+        // await res.status(200).json({ ans});
+
     } catch (error) {
         console.error(error);
         // res.status(500).json({ message: 'Internal server error' });
