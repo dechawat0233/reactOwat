@@ -281,14 +281,16 @@ router.post('/getaddsalary', async (req, res) => {
     try {
         const {wIdList} = await req.body;
 
-        await console.log('wIdList : ' + wIdList);
+        // await console.log('wIdList : ' + wIdList);
         let uniqueArray = await [...new Set(wIdList)];
 
-console.log(uniqueArray); // Output: ['123', '456']
+console.log('wIdList : ' + uniqueArray); // Output: ['123', '456']
 
-        const searchWorkplaceId = '1001';
-            const searchWorkplaceName ='';
+for(let wp in uniqueArray ) {
+console.log('wp :' + wp);
+}
 
+/*
         // Construct the search query based on the provided parameters
         const query = {};
 
@@ -321,6 +323,8 @@ console.log(uniqueArray); // Output: ['123', '456']
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
     }
+*/
+
 });
 
 
