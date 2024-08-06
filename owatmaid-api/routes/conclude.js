@@ -1065,7 +1065,7 @@ const concludeRecordTmp = [];
         return !(item[item1.day] === item.day && item.workRate === '0');
       });
 // console.log('test ' + item.day + ' ' + item.workRate);
-console.log(checkOne);
+// console.log(checkOne);
 concludeRecordTmp .push(checkOne);
     });
 
