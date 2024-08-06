@@ -319,11 +319,14 @@ console.log('wp :' + wp);
         // await console.log(workplaces);
         let textSearch = 'workplace';
         await res.status(200).json({ workplaces });
+        */
+
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
     }
-*/
+
 
 });
 
