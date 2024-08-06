@@ -1227,6 +1227,7 @@ function Setting() {
                               <li
                                 key={workplace.id}
                                 onClick={() => handleClickResult(workplace)}
+                                style={{ cursor: "pointer" }}
                               >
                                 รหัส {workplace.workplaceId} หน่วยงาน{" "}
                                 {workplace.workplaceName}

@@ -220,6 +220,7 @@ function Search() {
                           <li
                             key={employee.id}
                             onClick={() => handleClickResult(employee)}
+                            style={{ cursor: "pointer" }}
                           >
                            {employee.employeeId} : {employee.name} - {employee.lastName}
                           </li>
