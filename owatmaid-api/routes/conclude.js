@@ -70,7 +70,6 @@ router.post('/autocreate', async (req, res) => {
 
     const dataConclude = {};
     const concludeRecord = [];
-    const concludeRecord1 = [];
 
     const addSalaryDaily = [];
 
@@ -373,7 +372,7 @@ router.post('/autocreate', async (req, res) => {
             tmp.addSalaryDay = '';
             tmp.shift = element.shift || 0;
 
-            concludeRecord1.push(tmp);
+            concludeRecord.push(tmp);
 
           } //
         } //end for
@@ -567,7 +566,7 @@ router.post('/autocreate', async (req, res) => {
             tmp.addSalaryDay = '';
             tmp.shift = element.shift || 0;
 
-            concludeRecord1.push(tmp);
+            concludeRecord.push(tmp);
           }
         }
 
@@ -579,10 +578,10 @@ router.post('/autocreate', async (req, res) => {
         // Check day is null and place data for days 21 to last day of the previous month
         for (let i = 21; i <= lastday; i++) {
           let d = i + '/' + prevMonth + '/' + year1;
-          let x = concludeRecord1.some(record => record.day === d);
+          let x = concludeRecord.some(record => record.day === d);
     
           if (!x) {
-            await concludeRecord1.push({
+            await concludeRecord.push({
               'day': d,
               'workplaceId': '',
               'allTimes': '0',
@@ -595,7 +594,7 @@ router.post('/autocreate', async (req, res) => {
         }
     
         // Sort the array by date directly in the main code
-        concludeRecord1.sort((a, b) => {
+        concludeRecord.sort((a, b) => {
           const dateA = new Date(a.day.split('/').reverse().join('/'));
           const dateB = new Date(b.day.split('/').reverse().join('/'));
           return dateA - dateB;
@@ -1071,11 +1070,11 @@ router.post('/autocreate', async (req, res) => {
 
 
     // console.log('Sorted concludeRecord:', concludeRecord);
-    dataConclude.concludeRecord = concludeRecord1.concat(concludeRecord) || [];
-    // console.log('wCalList1 ' + wCalList1);
-let cConclude = concludeRecord1.concat(concludeRecord).length;
 
-    for (let c = 0; c < cConclude ; c++) {
+    dataConclude.concludeRecord = concludeRecord|| [];
+    // console.log('wCalList1 ' + wCalList1);
+
+    for (let c = 0; c < concludeRecord.length; c++) {
       // console.log('concludeRecord ' + concludeRecord [c].workplaceId);
 
       await addSalaryList.push(addSalaryDaily);
@@ -1116,7 +1115,7 @@ let cConclude = concludeRecord1.concat(concludeRecord).length;
       //   console.log('Existing record deleted');
       // }
 
-      if (concludeRecord1.concat(concludeRecord).length !== 0) {
+      if (concludeRecord.length !== 0) {
 
         //check emty new record
         if (data1.recordworkplace.length !== 0 || data.recordworkplace.length !== 0) {
@@ -1144,7 +1143,7 @@ let cConclude = concludeRecord1.concat(concludeRecord).length;
     console.log(e);
   }
 
-  const concludeData = await concludeRecord1.concat(concludeRecord).find();
+  const concludeData = await conclude.find();
   // res.json(concludeData );
 });
 
