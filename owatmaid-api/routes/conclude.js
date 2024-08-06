@@ -1060,11 +1060,12 @@ router.post('/autocreate', async (req, res) => {
 
 
     // concludeRecord.map(async item => {
-      let checkOne = concludeRecord.filter(item1 => {
+      concludeRecord = concludeRecord.filter(item1 => {
         return !(item1[item1.day] == item1.day && item1.workRate === '0');
       });
 // console.log('test ' + item.day + ' ' + item.workRate);
-console.log(checkOne[0].day);
+// console.log(checkOne[0].day);
+
     // });
 
     // Sort the array by date directly in the main code
