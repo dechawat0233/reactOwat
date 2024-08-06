@@ -522,6 +522,7 @@ const workplaceListTmp = [];
                 sumWorkRate += parseFloat(workRate) || 0;
                 sumWorkHourOt += parseFloat(otTime) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
+                console.log('workRate ' + workRate );
 
                 workRate = 0;
                 workRateOT = 0;
@@ -542,7 +543,6 @@ const workplaceListTmp = [];
                 let workRate = ((salary / 8) * parseFloat(allTime)).toFixed(2);
                 tmp.workRate = workRate || 0;
                 tmp.workRateMultiply = '1';
-                console.log('workRate ' + workRate );
 
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
