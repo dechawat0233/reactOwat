@@ -1071,8 +1071,8 @@ router.post('/autocreate', async (req, res) => {
 
 
     // console.log('Sorted concludeRecord:', concludeRecord);
-    
-    dataConclude.concludeRecord = concludeRecord1.concat(concludeRecord) || [];
+    concludeRecord = concludeRecord1.concat(concludeRecord) 
+    dataConclude.concludeRecord = concludeRecord || [];
     // console.log('wCalList1 ' + wCalList1);
 
     for (let c = 0; c < concludeRecord.length; c++) {
