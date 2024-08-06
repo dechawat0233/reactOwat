@@ -417,7 +417,6 @@ const workplaceListTmp = [];
           // console.log('*str1 ' + str1);
 
           if (str1 > 20 && str1 <= lastday) {
-                      console.log('*str1 ' + str1);
 
             tmp.day = str1 + '/' + prevMonth + '/' + year1;
             tmp.workplaceId = element.workplaceId || '';
@@ -502,6 +501,8 @@ const workplaceListTmp = [];
                 } else {
                   tmp.allTime = allTime;
                 }
+                console.log('*str1 ' + str1);
+
 console.log('wpResponse1.data.dayoffRateHour ' + wpResponse1.data.dayoffRateHour );
                 let workRate = ((parseFloat(wpResponse1.data.dayoffRateHour ) * (salary  / 8)) * parseFloat(allTime));
                 tmp.workRate = workRate || 0;
