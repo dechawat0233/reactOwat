@@ -1058,15 +1058,13 @@ router.post('/autocreate', async (req, res) => {
       }
     }
 
-const concludeRecordTmp = [];
 
     concludeRecord.map(async item => {
       let checkOne = concludeRecord.filter(item1 => {
         return !(item[item1.day] == item.day && item1.workRate === '0');
       });
 // console.log('test ' + item.day + ' ' + item.workRate);
-// console.log(checkOne);
-concludeRecordTmp .push(checkOne);
+// console.log(checkOne.day);
     });
 
     // Sort the array by date directly in the main code
@@ -1078,7 +1076,7 @@ concludeRecordTmp .push(checkOne);
 
 
     // console.log('Sorted concludeRecord:', concludeRecord);
-    dataConclude.concludeRecord = concludeRecordTmp || [];
+    dataConclude.concludeRecord = concludeRecord || [];
     // console.log('wCalList1 ' + wCalList1);
 
     for (let c = 0; c < concludeRecord.length; c++) {
@@ -1122,7 +1120,7 @@ concludeRecordTmp .push(checkOne);
       //   console.log('Existing record deleted');
       // }
 
-      if (concludeRecordTmp.length !== 0) {
+      if (concludeRecord.length !== 0) {
 
         //check emty new record
         if (data1.recordworkplace.length !== 0 || data.recordworkplace.length !== 0) {
