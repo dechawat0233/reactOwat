@@ -311,7 +311,7 @@ const workplaceListTmp = [];
                 }
 
                 let workRate = ((parseFloat(tmpWP.data.dayoffRateHour ?? 0) * (parseFloat(salary || 0) / 8)) * parseFloat(allTime)).toFixed(2);
-                tmp.workRate = workRate || 0;
+                tmp.workRate = workRate || 60;
                 tmp.workRateMultiply = tmpWP.data.dayoffRateHour || '50';
 
                 if (otTime >= workOfOT) {
