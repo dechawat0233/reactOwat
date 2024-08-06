@@ -275,8 +275,8 @@ router.post('/searchemp', async (req, res) => {
     // Query the workplace collection for matching documents
     const recordworkplace  = await workplaceTimerecordEmp.find(query);
 
-    await console.log('Search Results:');
-    await console.log(recordworkplace  );
+    // await console.log('Search Results:');
+    // await console.log(recordworkplace  );
     let textSearch = 'workplace';
     await res.status(200).json({ recordworkplace  });
   } catch (error) {
