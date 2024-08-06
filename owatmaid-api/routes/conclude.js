@@ -1062,7 +1062,7 @@ const concludeRecordTmp = [];
 
     concludeRecord.map(async item => {
       let checkOne = concludeRecord.filter(item1 => {
-        return !(item[item1.day] === item.day && item.workRate === '0');
+        return !(item[item1.day] == item.day && item1.workRate === '0');
       });
 // console.log('test ' + item.day + ' ' + item.workRate);
 // console.log(checkOne);
