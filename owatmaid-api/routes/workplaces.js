@@ -300,7 +300,7 @@ query.workplaceId = await uniqueArray[i];
         // Query the workplace collection for matching documents
         const workplaces = await Workplace.find(query);
 if(workplaces ) {
-    await ans.push(workplaces );
+    await ans.push(workplaces[0] );
 }
 
 } //end for
