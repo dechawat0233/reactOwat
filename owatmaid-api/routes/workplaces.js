@@ -285,43 +285,27 @@ router.post('/getaddsalary', async (req, res) => {
         let uniqueArray = await [...new Set(wIdList)];
 
 console.log('wIdList : ' + uniqueArray); // Output: ['123', '456']
-
-for (let i = 0; i < uniqueArray.length; i++) {
-    console.log(uniqueArray[i]);
+if(uniqueArray.length <= 0) {
+    res.status(200).json({});
 }
 
-/*
-        // Construct the search query based on the provided parameters
-        const query = {};
+const ans = [];
 
-        if (searchWorkplaceId !== '') {
-            query.workplaceId = searchWorkplaceId;
-        }
-
-
-        if (searchWorkplaceName !== '') {
-            query.workplaceName = { $regex: new RegExp(searchWorkplaceName, 'i') };
-            //{ $regex: name, $options: 'i' };
-        }
-        //    query.searchWorkplaceId = '1001';
-        //    console.log({ employeeId, name, idCard, workPlace });
-
-        console.log('Constructed Query:');
-        console.log(query);
-        if (searchWorkplaceId == '' && searchWorkplaceName == '') {
-            res.status(200).json({});
-        }
+for (let i = 0; i < uniqueArray.length; i++) {
+    await console.log(uniqueArray[i]);
+    const query = {};
+query.workplaceId = await uniqueArray[i];
 
         // Query the workplace collection for matching documents
         const workplaces = await Workplace.find(query);
+if(workplaces ) {
+    ans.push(workplaces );
+}
 
-        // await console.log('Search Results:');
-        // await console.log(workplaces);
-        let textSearch = 'workplace';
-        await res.status(200).json({ workplaces });
-        */
+} //end for
 
 
+        await res.status(200).json({ ans});
     } catch (error) {
         console.error(error);
         // res.status(500).json({ message: 'Internal server error' });
