@@ -440,8 +440,8 @@ function AddEditEmployee() {
         // Set the formatted date to the state
 
         // setDateOfBirth(response.data.employees[0].dateObject);
-setFormattedDate(response.data.employees[0].dateOfBirth);
-// console.log("321",response.data.employees[0].dateObject);
+        setFormattedDate(response.data.employees[0].dateOfBirth);
+        // console.log("321",response.data.employees[0].dateObject);
         setAge(response.data.employees[0].age);
         setIdCard(response.data.employees[0].idCard);
         setEthnicity(response.data.employees[0].ethnicity);
@@ -696,7 +696,10 @@ setFormattedDate(response.data.employees[0].dateOfBirth);
                                     }}
                                   >
                                     {searchResult.map((workplace) => (
-                                      <li key={workplace.id}>
+                                      <li
+                                        key={workplace.id}
+                                        style={{ cursor: "pointer" }}
+                                      >
                                         รหัส {workplace.employeeId} ชื่อ{" "}
                                         {workplace.name} {workplace.lastName}
                                         <button

@@ -322,6 +322,21 @@ function Compensation() {
 
   useEffect(() => {
     // Fetch data from the API when the component mounts
+    fetch(endpoint + "/employee/list")
+      .then((response) => response.json())
+      .then((data) => {
+        // Update the state with the fetched data
+        setEmployeeList(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []); // The empty array [] ensures that the effect runs only once after the initial render
+
+  console.log(employeeList);
+
+  useEffect(() => {
+    // Fetch data from the API when the component mounts
     fetch(endpoint + "/timerecord/listemp")
       .then((response) => response.json())
       .then((data) => {
@@ -338,6 +353,8 @@ function Compensation() {
   const CheckYear = year;
   // const CheckMonth = 5;
   // const CheckYear = 2023;
+  console.log("CheckMonth", CheckMonth);
+  console.log("CheckYear", CheckYear);
 
   let countdownMonth;
   let countdownYear;
@@ -396,6 +413,9 @@ function Compensation() {
   // Concatenate the two arrays
   const resultArray2 = [...firstPart2, ...secondPart2];
 
+  console.log("resultArrayresultArray", resultArray);
+  console.log("resultArrayresultArray2", resultArray2);
+
   function getDaysInMonth2(month, year) {
     // Months are 0-based, so we subtract 1 from the provided month
     return new Date(year, month, 0).getDate();
@@ -432,6 +452,11 @@ function Compensation() {
     // monthLower = month - 1;
     timerecordIdLower = year;
   }
+  monthLower;
+  console.log("monthLower", monthLower);
+  console.log("month", month);
+  console.log("year", year);
+  console.log("timerecordIdLower", timerecordIdLower);
 
   const thaiMonthName = getThaiMonthName(parseInt(CheckMonth, 10));
   const thaiMonthLowerName = getThaiMonthName(parseInt(countdownMonth, 10));
@@ -754,6 +779,8 @@ function Compensation() {
         // setSearchEmployeeId(response.data.employees[0].employeeId);
         // setSearchEmployeeName(response.data.employees[0].name);
 
+        // console.log('workOfOT:', response.data.workplaces[0].workOfOT);
+        // console.log('workOfOT:', endTime);
       }
     } catch (error) {
       // alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา', error);
@@ -887,7 +914,14 @@ function Compensation() {
     removeAddSalaryArray(listIndex, subArrayIndex);
   };
 
+  console.log("searchResult", searchResult);
+  console.log("searchResultLower", searchResultLower);
+
+  console.log("alldaywork", alldaywork);
+  console.log("alldayworkLower", alldayworkLower);
+
   const allwork = [...alldayworkLower, ...alldaywork];
+  console.log("allwork", allwork);
 
   const result = resultArray2.map((number) => {
     const matchingEntry = alldaywork.find(
@@ -900,6 +934,7 @@ function Compensation() {
       return `${number}, workplaceId: '', allTimes: '', otTimes: ''`;
     }
   });
+  console.log("result123", result);
 
   // Convert 'dates' to numbers
   // const allworkWithNumberDates = allwork.map(item => ({
@@ -908,6 +943,7 @@ function Compensation() {
   // }));
   const allworkFlattened = allwork.flat();
 
+  console.log("allworkFlattened", allworkFlattened);
 
   // Filter unique entries based on 'workplaceId' and 'dates'
   const uniqueEntries = allworkFlattened.reduce((acc, curr) => {
@@ -921,6 +957,7 @@ function Compensation() {
   // Extract values from the object to get the final array
   const resultAllwork = Object.values(uniqueEntries);
 
+  console.log("resultAllwork", resultAllwork);
 
   const resultArrayWithWorkplaceRecords = resultArray2.map((date) => {
     const matchingRecord = resultAllwork.find((record) => record.dates == date);
@@ -937,6 +974,7 @@ function Compensation() {
     return [workplaceRecord, date];
   });
 
+  console.log("combinedArray", combinedArray);
 
   const handleStaffIdChange = (e) => {
     const selectedStaffId = e.target.value;
@@ -1015,6 +1053,9 @@ function Compensation() {
     (day) => day >= 21
   );
 
+  console.log("Array 1 (March):", array1);
+  console.log("Array 2 (Countdown):", array2);
+
   // const commonNumbers = new Set([...array2.Mon, ...array1.Mon]);
 
   // const commonNumbers = [...new Set([...array1.Mon, ...array2.Mon])];
@@ -1023,6 +1064,8 @@ function Compensation() {
   const workplace = workplaceList.find(
     (workplace) => workplace.workplaceId === workplaceIdEMP
   );
+
+  console.log("workplace123", workplace);
 
   // const monthTest = "09"; // Assuming "09" represents September
   const commonNumbers123 = new Set();
@@ -1033,6 +1076,7 @@ function Compensation() {
       return (dateObj.getMonth() + 1).toString().padStart(2, "0") === month; // +1 because getMonth() returns zero-based month index
     });
 
+    console.log("matchingDays", matchingDays);
     // Iterate over matchingDays and add day numbers to commonNumbers set
 
     matchingDays.forEach((date) => {
@@ -1056,9 +1100,11 @@ function Compensation() {
       commonNumbers123.add(day); // Add filtered day numbers back to commonNumbers123_2nd
     });
 
+    console.log("commonNumbers123_2nd (after filtering)", commonNumbers123);
   } else {
     console.error("Workplace not found");
   }
+  console.log("month123", month);
 
   const commonNumbers123_2nd = new Set();
 
@@ -1084,6 +1130,7 @@ function Compensation() {
       return (dateObj.getMonth() + 1).toString().padStart(2, "0") === monthSet; // +1 because getMonth() returns zero-based month index
     });
 
+    console.log("matchingDays", matchingDays);
     // Iterate over matchingDays and add day numbers to commonNumbers set
 
     matchingDays.forEach((date) => {
@@ -1108,6 +1155,7 @@ function Compensation() {
       commonNumbers123_2nd.add(day); // Add filtered day numbers back to commonNumbers123_2nd
     });
 
+    console.log("commonNumbers123_2nd (after filtering)", commonNumbers123_2nd);
   } else {
     console.error("Workplace not found");
   }
@@ -1121,8 +1169,10 @@ function Compensation() {
 
     if (stopWorkTimeDay) {
       const { startDay, endDay } = stopWorkTimeDay;
+      console.log("Found stop workTimeDay:", startDay, endDay);
 
       const daysInBetween = getDaysInBetween(startDay, endDay);
+      console.log("daysInBetween:", daysInBetween);
 
       daysInBetween.forEach((day) => {
         const englishDayArray = thaiToEnglishDayMap[day];
@@ -1152,6 +1202,7 @@ function Compensation() {
     commonNumbers.add(number);
   });
 
+  console.log("Common Numbers:", commonNumbers);
 
   // const commonNumbersArray = [...commonNumbers];
   const commonNumbersArray = [...commonNumbers].map((value) =>
@@ -1178,6 +1229,12 @@ function Compensation() {
     return weekdays.slice(startIndex, endIndex + 1);
   }
 
+  console.log("commonNumbersArray123:", commonNumbersArray);
+  console.log("resultArray2[index]:", resultArray2);
+
+  console.log("Array 1 (March):", array1);
+  console.log("Array 2 (Countdown):", array2);
+
   const sumWorkRate = resultArrayWithWorkplaceRecords.reduce(
     (accumulator, workplaceRecord) => {
       const workRateValue = parseFloat(workplaceRecord.workRate);
@@ -1186,6 +1243,7 @@ function Compensation() {
     0
   );
 
+  console.log("sumWorkRate", sumWorkRate);
 
   const sumWorkRateOT = resultArrayWithWorkplaceRecords.reduce(
     (accumulator, workplaceRecord) => {
@@ -1220,9 +1278,11 @@ function Compensation() {
     { sum: 0, count: 0 }
   );
 
+  console.log("Sum:", sumWorkRate.sum);
   if (sumWorkRate.sum) {
     alert(sumWorkRate.sum);
   }
+  console.log("Count:", sumWorkRate.count);
 
   //edit data table
   const [formData, setFormData] = useState({
@@ -1301,6 +1361,7 @@ function Compensation() {
 
   const calculatedArray = resultArrayWithWorkplaceRecords.map((record) => {
     const numericDate = parseInt(record.dates, 10);
+    console.log("numericDate", numericDate);
     if (
       !isNaN(numericDate) &&
       commonNumbersArray.includes(numericDate.toString())
@@ -1421,6 +1482,8 @@ function Compensation() {
     return record;
   });
 
+  console.log("calculatedArray", calculatedArray);
+
   useEffect(() => {
     let ans = 0;
     let ans1 = 0;
@@ -1528,7 +1591,6 @@ function Compensation() {
     }
 
     console.log("updatedDataTable", updatedDataTable);
-    console.log("sumAddSalary", sumAddSalary);
 
     //ccaa
   }, [resultArrayWithWorkplaceRecords]);
