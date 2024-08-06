@@ -1073,6 +1073,7 @@ router.post('/autocreate', async (req, res) => {
     // console.log('Sorted concludeRecord:', concludeRecord);
     dataConclude.concludeRecord = concludeRecord1.concat(concludeRecord) || [];
     // console.log('wCalList1 ' + wCalList1);
+let c = concludeRecord1.concat(concludeRecord).length;
 
     for (let c = 0; c < concludeRecord1.concat(concludeRecord).length; c++) {
       // console.log('concludeRecord ' + concludeRecord [c].workplaceId);
