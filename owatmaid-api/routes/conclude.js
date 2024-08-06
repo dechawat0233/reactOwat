@@ -311,8 +311,8 @@ const workplaceListTmp = [];
                 }
 
                 let workRate = ((parseFloat(tmpWP.data.dayoffRateHour ?? 0) * (parseFloat(salary || 0) / 8)) * parseFloat(allTime)).toFixed(2);
-                tmp.workRate = workRate || 60;
-                tmp.workRateMultiply = tmpWP.data.dayoffRateHour || '50';
+                tmp.workRate = workRate || 0;
+                tmp.workRateMultiply = tmpWP.data.dayoffRateHour || '0';
 
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
@@ -386,8 +386,8 @@ const workplaceListTmp = [];
         const wpDataCalculator1 = await {
           month: prevMonthInt || '',
           year: year1 || '',
-          // workplaceId: wpId1
-          workplaceId: keys[0]
+          workplaceId: wpId1
+          // workplaceId: keys[0]
         };
 
         //get workplace data for calculator
