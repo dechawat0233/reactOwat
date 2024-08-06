@@ -1066,11 +1066,15 @@ router.post('/autocreate', async (req, res) => {
     
     console.log("Day counts:", dayCount);
     
-    // Step 2: Filter out entries where 'workRate' is '0' and 'day' is duplicate
-    concludeRecord = concludeRecord.filter(item => {
-      return !(dayCount[item.day] > 1 && item.workRate === '0');
-    });
+    // Step 2: Filter out entries where 'day' is a duplicate
+    let uniqueDays = concludeRecord.filter(item => dayCount[item.day] === 1);
     
+    console.log("Unique Days Records:", uniqueDays);
+    
+    // Step 3: Further filter out entries where 'workRate' is '0'
+    let finalFilteredRecords = uniqueDays.filter(item => item.workRate !== '0');
+    
+    console.log("Final Filtered Records:", finalFilteredRecords);    
     // Sort the array by date directly in the main code
     // concludeRecord.sort((a, b) => {
     //   const dateA = new Date(a.day.split('/').reverse().join('/'));
