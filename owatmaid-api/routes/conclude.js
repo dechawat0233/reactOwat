@@ -373,7 +373,7 @@ router.post('/autocreate', async (req, res) => {
             tmp.addSalaryDay = '';
             tmp.shift = element.shift || 0;
 
-            concludeRecord.push(tmp);
+            concludeRecord1.push(tmp);
 
           } //
         } //end for
