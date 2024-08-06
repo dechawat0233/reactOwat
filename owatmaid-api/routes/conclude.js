@@ -1066,8 +1066,9 @@ const concludeRecordTmp = [];
       });
 // console.log('test ' + item.day + ' ' + item.workRate);
 console.log(checkOne);
-
+concludeRecordTmp .push(checkOne);
     });
+
     // Sort the array by date directly in the main code
     // concludeRecord.sort((a, b) => {
     //   const dateA = new Date(a.day.split('/').reverse().join('/'));
