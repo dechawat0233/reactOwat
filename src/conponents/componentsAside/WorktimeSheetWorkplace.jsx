@@ -369,7 +369,7 @@ function WorktimeSheetWorkplace() {
     fetchData();
   }, [year, month, searchWorkplaceId]);
 
-  console.log('responseDataAll',responseDataAll);
+  console.log("responseDataAll", responseDataAll);
 
   async function handleSearch(event) {
     event.preventDefault();
@@ -1584,7 +1584,7 @@ function WorktimeSheetWorkplace() {
     (a, b) => parseInt(a.employeeId, 10) - parseInt(b.employeeId, 10)
   );
 
-  console.log('filteredEmployees',filteredEmployees);
+  console.log("filteredEmployees", filteredEmployees);
 
   //     // Do something with the filtered employees
 
@@ -2042,12 +2042,11 @@ function WorktimeSheetWorkplace() {
 
   console.log("filteredEntriesTest", filteredEntriesTest);
 
-
   // const responseDataAll123 = [
   //   {_id: '66ac5eca3aac559797a814e9', year: '2024', month: '06', employeeId: '670427', createDate: '02/08/2024, 04:21'},
   //   {_id: '66ac5f1d3aac559797a855d2', year: '2024', month: '06', employeeId: '670417', createDate: '02/08/2024, 05:21'},
   // ];
-  
+
   // const filteredEntriesTest123 = [
   //   {_id: '66abe9cb0a80f1bc2e76ed1a', year: '2024', month: '06', concludeDate: '01-08-2024 20:02', employeeId: '591560'},
   //   {_id: '66ab4f837724a7731e955b50', year: '2024', month: '06', concludeDate: '01-08-2024 20:03', employeeId: '670427'},
@@ -2055,21 +2054,21 @@ function WorktimeSheetWorkplace() {
   // ];
 
   // Step 1: Extract employeeId values from responseDataAll
-const employeeIdss = responseDataAll.map(entry => entry.employeeId);
+  const employeeIdss = responseDataAll.map((entry) => entry.employeeId);
 
-// Step 2: Filter filteredEntriesTest based on employeeId
-const filteredEntriesqw = filteredEntriesTest.filter(entry => 
-  employeeIdss.includes(entry.employeeId)
-);
+  // Step 2: Filter filteredEntriesTest based on employeeId
+  const filteredEntriesqw = filteredEntriesTest.filter((entry) =>
+    employeeIdss.includes(entry.employeeId)
+  );
 
-console.log("responseDataAll", responseDataAll);
+  console.log("responseDataAll", responseDataAll);
 
-console.log("filteredEntriesqw", filteredEntriesqw);
+  console.log("filteredEntriesqw", filteredEntriesqw);
 
-// Step 3: Sort the filtered entries
-filteredEntriesqw.sort((a, b) => Number(a.employeeId) - Number(b.employeeId));
+  // Step 3: Sort the filtered entries
+  filteredEntriesqw.sort((a, b) => Number(a.employeeId) - Number(b.employeeId));
 
-console.log("filteredEntriesqw", filteredEntriesqw);
+  console.log("filteredEntriesqw", filteredEntriesqw);
 
   //   filteredEntriesTest.forEach(entry => {
   //     const groupedRecords = {};
@@ -2371,6 +2370,7 @@ console.log("filteredEntriesqw", filteredEntriesqw);
   });
 
   console.log("resultArrayNew:", resultArrayNew);
+  console.log("groupedByEmployeeId:", groupedByEmployeeId);
 
   // Initialize objects to store the grouped times
   const dayWorkMorningAndSS = {};
@@ -2489,46 +2489,116 @@ console.log("filteredEntriesqw", filteredEntriesqw);
       if (
         record.workRate != 0 &&
         record.workRate != null &&
-        record.workRate / workRateWorkplace < workRateWorkplaceStage1
+        // record.workRate / workRateWorkplace < workRateWorkplaceStage1
+        parseFloat(record.workRateMultiply) <= 1 // Convert workRateMultiply to float
       ) {
         // Push allTimes and otTimes to respective arrays
         allTimesArray.push(parseFloat(record.allTimes));
-        otTimesArray.push(parseFloat(record.otTimes).toFixed(1));
-        // dayWorkArray.push(parseFloat(record.day));
-        // const day = parseInt(record.day.split('/')[0]);
       } else {
         // Push empty strings if workRate and workRateOT do not exist
         allTimesArray.push("");
-        otTimesArray.push("");
         // dayWorkArray.push('');
       }
       if (
         record.workRate != 0 &&
         record.workRate != null &&
-        record.workRate / workRateWorkplace >= workRateWorkplaceStage1 &&
-        record.workRate / workRateWorkplace < workRateWorkplaceStage2
+        // record.workRate / workRateWorkplace < workRateWorkplaceStage1
+        parseFloat(record.workRateOTMultiply) <= 1.5 // Convert workRateMultiply to float
       ) {
         // Push allTimes and otTimes to respective arrays
-        allTimesArray2.push(parseFloat(record.allTimes).toFixed(1));
-        otTimesArray2.push(parseFloat(record.otTimes).toFixed(1));
+        otTimesArray.push(parseFloat(record.otTimes).toFixed(1));
+      } else {
+        // Push empty strings if workRate and workRateOT do not exist
+        otTimesArray.push("");
+        // dayWorkArray.push('');
+      }
+      // 22
+      if (
+        record.workRate != 0 &&
+        record.workRate != null &&
+        // record.workRate / workRateWorkplace < workRateWorkplaceStage1
+        parseFloat(record.workRateMultiply) <= 2 &&
+        parseFloat(record.workRateMultiply) > 1.5   // Convert workRateMultiply to float
+      ) {
+        // Push allTimes and otTimes to respective arrays
+        allTimesArray2.push(parseFloat(record.allTimes));
       } else {
         // Push empty strings if workRate and workRateOT do not exist
         allTimesArray2.push("");
-        otTimesArray2.push("");
+        // dayWorkArray.push('');
       }
       if (
         record.workRate != 0 &&
         record.workRate != null &&
-        record.workRate / workRateWorkplace >= workRateWorkplaceStage2
+        // record.workRate / workRateWorkplace < workRateWorkplaceStage1
+        parseFloat(record.workRateOTMultiply) < 3 &&
+        parseFloat(record.workRateOTMultiply) > 2 
       ) {
         // Push allTimes and otTimes to respective arrays
-        allTimesArray3.push(parseFloat(record.allTimes).toFixed(1));
-        otTimesArray3.push(parseFloat(record.otTimes).toFixed(1));
+        otTimesArray2.push(parseFloat(record.otTimes).toFixed(1));
+      } else {
+        // Push empty strings if workRate and workRateOT do not exist
+        otTimesArray2.push("");
+        // dayWorkArray.push('');
+      }
+
+      // 33
+      if (
+        record.workRate != 0 &&
+        record.workRate != null &&
+        // record.workRate / workRateWorkplace < workRateWorkplaceStage1
+        parseFloat(record.workRateMultiply) >= 3   // Convert workRateMultiply to float
+      ) {
+        // Push allTimes and otTimes to respective arrays
+        allTimesArray3.push(parseFloat(record.allTimes));
       } else {
         // Push empty strings if workRate and workRateOT do not exist
         allTimesArray3.push("");
-        otTimesArray3.push("");
+        // dayWorkArray.push('');
       }
+      if (
+        record.workRate != 0 &&
+        record.workRate != null &&
+        // record.workRate / workRateWorkplace < workRateWorkplaceStage1
+        parseFloat(record.workRateOTMultiply) >= 3
+      ) {
+        // Push allTimes and otTimes to respective arrays
+        otTimesArray3.push(parseFloat(record.otTimes).toFixed(1));
+      } else {
+        // Push empty strings if workRate and workRateOT do not exist
+        otTimesArray3.push("");
+        // dayWorkArray.push('');
+      }
+
+
+
+      // if (
+      //   record.workRate != 0 &&
+      //   record.workRate != null &&
+      //   record.workRate / workRateWorkplace >= workRateWorkplaceStage1 &&
+      //   record.workRate / workRateWorkplace < workRateWorkplaceStage2
+      // ) {
+      //   // Push allTimes and otTimes to respective arrays
+      //   allTimesArray2.push(parseFloat(record.allTimes).toFixed(1));
+      //   otTimesArray2.push(parseFloat(record.otTimes).toFixed(1));
+      // } else {
+      //   // Push empty strings if workRate and workRateOT do not exist
+      //   allTimesArray2.push("");
+      //   otTimesArray2.push("");
+      // }
+      // if (
+      //   record.workRate != 0 &&
+      //   record.workRate != null &&
+      //   record.workRate / workRateWorkplace >= workRateWorkplaceStage2
+      // ) {
+      //   // Push allTimes and otTimes to respective arrays
+      //   allTimesArray3.push(parseFloat(record.allTimes).toFixed(1));
+      //   otTimesArray3.push(parseFloat(record.otTimes).toFixed(1));
+      // } else {
+      //   // Push empty strings if workRate and workRateOT do not exist
+      //   allTimesArray3.push("");
+      //   otTimesArray3.push("");
+      // }
     });
 
     // Store the arrays in the objects by employeeId
@@ -2594,11 +2664,16 @@ console.log("filteredEntriesqw", filteredEntriesqw);
   const newOtTimes3 = Object.values(otTimesByEmployee3).flat();
 
   // Log the results
-  console.log("dayWorkMorningAndSSs:", dayWorkMorningAndSSs);
-
   // console.log("dayWorkMorningAndSSs:", dayWorkMorningAndSSs);
   // console.log("dayWorkAfternoons:", dayWorkAfternoons);
   // console.log("dayWorkNights:", dayWorkNights);
+
+  console.log("newAllTimes:", newAllTimes);
+  console.log("newOtTimes:", newOtTimes);
+  console.log("newAllTimes2:", newAllTimes2);
+  console.log("newOtTimes2:", newOtTimes2);
+  console.log("newAllTimes3:", newAllTimes3);
+  console.log("newOtTimes3:", newOtTimes3);
 
   const singleArrayOfDates = daySpecialts.flat();
   console.log("singleArrayOfDates:", singleArrayOfDates);
@@ -2619,8 +2694,6 @@ console.log("filteredEntriesqw", filteredEntriesqw);
       )
     );
   };
-
-  
 
   const updatedDaysWorkMorningAndSS = updateDayWorks(
     dayWorkMorningAndSSs,
@@ -2655,16 +2728,16 @@ console.log("filteredEntriesqw", filteredEntriesqw);
   const changeNumbersToOne = (array, searchWorkplaceId) => {
     return array.map((subArray) =>
       subArray.map((day) =>
-        typeof day === "string" && day === searchWorkplaceId ? '1' : day
+        typeof day === "string" && day === searchWorkplaceId ? "1" : day
       )
     );
   };
 
   // const searchWorkplaceId = '399-664';
 
-
   const finalUpdatedDayWorksWorkMorningAndSS = changeNumbersToOne(
-    updatedDaysWorkMorningAndSS,searchWorkplaceId
+    updatedDaysWorkMorningAndSS,
+    searchWorkplaceId
   );
 
   console.log(
@@ -2676,10 +2749,8 @@ console.log("filteredEntriesqw", filteredEntriesqw);
     updatedDaysWorkAfternoon
   );
 
-
   const finalUpdatedDayWorksWorkNight =
     changeNumbersToOne(updatedDaysWorkNight);
-
 
   // const makePage = Math.ceil(arrayWorkNormalDay.length / 5);
   // console.log('makePage', makePage);
@@ -3043,34 +3114,40 @@ console.log("filteredEntriesqw", filteredEntriesqw);
 
   addSalaryWorkplace.sort((a, b) => a.name.localeCompare(b.name, "th"));
 
-  console.log('addSalaryWorkplace',addSalaryWorkplace);
+  console.log("addSalaryWorkplace", addSalaryWorkplace);
 
   const getUniqueEntriesWithLowestSpSalary = (entries) => {
     const uniqueEntriesMap = new Map();
-  
-    entries.forEach(entry => {
+
+    entries.forEach((entry) => {
       const { codeSpSalary, SpSalary } = entry;
       const currentEntry = uniqueEntriesMap.get(codeSpSalary);
-  
-      if (!currentEntry || parseFloat(SpSalary) < parseFloat(currentEntry.SpSalary)) {
+
+      if (
+        !currentEntry ||
+        parseFloat(SpSalary) < parseFloat(currentEntry.SpSalary)
+      ) {
         uniqueEntriesMap.set(codeSpSalary, entry);
       }
     });
-  
+
     return Array.from(uniqueEntriesMap.values());
   };
-  
-  const filteredAddSalaryWorkplace = getUniqueEntriesWithLowestSpSalary(addSalaryWorkplace);
-  
-  console.log('filteredAddSalaryWorkplace', filteredAddSalaryWorkplace);
-  
+
+  const filteredAddSalaryWorkplace =
+    getUniqueEntriesWithLowestSpSalary(addSalaryWorkplace);
+
+  console.log("filteredAddSalaryWorkplace", filteredAddSalaryWorkplace);
+
   // const extractedDataAddSalary = filteredEmployees.flatMap(employee => [
   //     employee.addSalary
   // ]);
   // const extractedDataAddSalary = filteredEmployees.map(employee => [
   //     employee.addSalary
   // ]);
-  const addSalaryNames = new Set(filteredAddSalaryWorkplace.map((item) => item.name));
+  const addSalaryNames = new Set(
+    filteredAddSalaryWorkplace.map((item) => item.name)
+  );
 
   // Map filteredEmployees to set SpSalary based on the position of the corresponding name in filteredAddSalaryWorkplace
   const extractedDataAddSalary = filteredEmployees.map((employee) => {
@@ -3093,7 +3170,7 @@ console.log("filteredEntriesqw", filteredEntriesqw);
     return spSalaryArray;
   });
 
-  console.log('extractedDataAddSalary',extractedDataAddSalary);
+  console.log("extractedDataAddSalary", extractedDataAddSalary);
 
   const adjustedDailyExtractedDataAddSalary = extractedDataAddSalary.map(
     (salaryArray, outerIndex) => {
@@ -3122,7 +3199,8 @@ console.log("filteredEntriesqw", filteredEntriesqw);
         // If the value is not an empty string and roundOfSalary is 'daily'
         // const employeeSalaryItem = filteredEmployees[outerIndex].addSalary.find(item => item.name === filteredAddSalaryWorkplace[innerIndex].name);
         const employeeSalaryItem = filteredEmployees[outerIndex].addSalary.find(
-          (item) => item.id === filteredAddSalaryWorkplace[innerIndex].codeSpSalary
+          (item) =>
+            item.id === filteredAddSalaryWorkplace[innerIndex].codeSpSalary
         );
 
         if (
@@ -3139,7 +3217,10 @@ console.log("filteredEntriesqw", filteredEntriesqw);
       });
     }
   );
-console.log('adjustedDailyExtractedDataAddSalaryCount',adjustedDailyExtractedDataAddSalaryCount);
+  console.log(
+    "adjustedDailyExtractedDataAddSalaryCount",
+    adjustedDailyExtractedDataAddSalaryCount
+  );
   // รวมคำนวนสวัสดิการ
   const SpSalaryArray = workplaceDataListAddSalary.map((item) => item.SpSalary);
   const roundOfSalaryArray = workplaceDataListAddSalary.map(
@@ -3743,7 +3824,8 @@ console.log('adjustedDailyExtractedDataAddSalaryCount',adjustedDailyExtractedDat
           let currentX = startXSpSalary + 3;
           let currentY = startY + i * verticalDistance + addmove;
 
-          const roundOfSalary = filteredAddSalaryWorkplace[i]?.roundOfSalary || ""; // Get roundOfSalary for the current index
+          const roundOfSalary =
+            filteredAddSalaryWorkplace[i]?.roundOfSalary || ""; // Get roundOfSalary for the current index
 
           // Check roundOfSalary and display the appropriate text
           if (roundOfSalary === "monthly") {
@@ -5708,9 +5790,14 @@ console.log('adjustedDailyExtractedDataAddSalaryCount',adjustedDailyExtractedDat
           //   }
           // );
 
-          doc.text(`${amountOneFive[i].toString()} (${hourOneFive[i].toString()})`, currentX + 5, 2 + currentY + (3 * 4), {
-            align: "center",
-          });
+          doc.text(
+            `${amountOneFive[i].toString()} (${hourOneFive[i].toString()})`,
+            currentX + 5,
+            2 + currentY + 3 * 4,
+            {
+              align: "center",
+            }
+          );
         }
       };
       // ผลรวมวันทำงานวันหยุด
@@ -5767,10 +5854,14 @@ console.log('adjustedDailyExtractedDataAddSalaryCount',adjustedDailyExtractedDat
           // doc.text(amountTwo[i].toString(), currentX + 2, 3 + currentY + 3, {
           //   align: "center",
           // });
-          doc.text(`${amountTwo[i].toString()} (${hourTwo[i].toString()})`, currentX + 5, 2 + currentY + (3 * 5), {
-            align: "center",
-          });
-          
+          doc.text(
+            `${amountTwo[i].toString()} (${hourTwo[i].toString()})`,
+            currentX + 5,
+            2 + currentY + 3 * 5,
+            {
+              align: "center",
+            }
+          );
         }
       };
 
@@ -5817,9 +5908,14 @@ console.log('adjustedDailyExtractedDataAddSalaryCount',adjustedDailyExtractedDat
           // doc.text(amountThree[i].toString(), currentX + 2, 3 + currentY + 3, {
           //   align: "center",
           // });
-          doc.text(`${amountThree[i].toString()} (${hourThree[i].toString()})`, currentX + 5, 2 + currentY + (3 * 6), {
-            align: "center",
-          });
+          doc.text(
+            `${amountThree[i].toString()} (${hourThree[i].toString()})`,
+            currentX + 5,
+            2 + currentY + 3 * 6,
+            {
+              align: "center",
+            }
+          );
         }
       };
 
@@ -5886,7 +5982,7 @@ console.log('adjustedDailyExtractedDataAddSalaryCount',adjustedDailyExtractedDat
         for (let i = 0; i < dataArray.length; i++) {
           // const arrayText = dataArray[i].join('      ');
           // const arrayText = dataArray[i].join('     '); // Use spaces to mimic the width
-          let currentX = startXSpSalary  + cellWidthSpSalary * 4;
+          let currentX = startXSpSalary + cellWidthSpSalary * 4;
           let currentY = startY + 3.7;
 
           for (let j = 0; j < dataArray[i].length; j++) {
@@ -6313,7 +6409,7 @@ console.log('adjustedDailyExtractedDataAddSalaryCount',adjustedDailyExtractedDat
             doc.rect(
               startXSpSalary,
               startYTop,
-              cellWidthSpSalary * numColsSpSalary - 0.2+5,
+              cellWidthSpSalary * numColsSpSalary - 0.2 + 5,
               cellHeightTop,
               "F"
             );
@@ -6337,7 +6433,7 @@ console.log('adjustedDailyExtractedDataAddSalaryCount',adjustedDailyExtractedDat
             //   { angle: 90 }
             // );
             doc.text(
-              "เงินโอที" ,
+              "เงินโอที",
               3 + startXSpSalary + cellWidthSpSalary * 2,
               54.8,
               { angle: 90 }
@@ -6416,7 +6512,9 @@ console.log('adjustedDailyExtractedDataAddSalaryCount',adjustedDailyExtractedDat
             uniqueSalaries = Array.from(salaryMap.values());
 
             uniqueSalaries.forEach((item, index) => {
-              const cleanedName = item.name.replace(/\(ไม่คิดปกส.\)/g, '').trim();
+              const cleanedName = item.name
+                .replace(/\(ไม่คิดปกส.\)/g, "")
+                .trim();
               const NameSp = `${cleanedName} ${item.SpSalary}`;
               const CodeSp = `${item.codeSpSalary}`;
 
