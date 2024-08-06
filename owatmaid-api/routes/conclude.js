@@ -469,7 +469,7 @@ const workplaceListTmp = [];
                 }
 
                 let workRate = ((parseFloat(wpResponse1.data.holiday) * (salary / 8)) * parseFloat(allTime));
-                tmp.workRate = workRate || 0;
+                tmp.workRate = 500;
                 tmp.workRateMultiply = wpResponse1.data.holiday || 0;
 
                 if (otTime >= workOfOT) {
