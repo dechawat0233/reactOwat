@@ -529,7 +529,7 @@ const workplaceListTmp = [];
 
               } else {
                 if (salary === 0) {
-                  salary = wpResponse1.data.workRate;
+                  salary = parseFloat( wpResponse1.data.workRate);
                 }
 
                 if (allTime >= workOfHour) {
