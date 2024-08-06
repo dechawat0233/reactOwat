@@ -1058,6 +1058,7 @@ router.post('/autocreate', async (req, res) => {
       }
     }
 
+const concludeRecordTmp = [];
 
     concludeRecord.map(async item => {
       let checkOne = concludeRecord.filter(item1 => {
@@ -1076,7 +1077,7 @@ console.log(checkOne);
 
 
     // console.log('Sorted concludeRecord:', concludeRecord);
-    dataConclude.concludeRecord = concludeRecord || [];
+    dataConclude.concludeRecord = concludeRecordTmp || [];
     // console.log('wCalList1 ' + wCalList1);
 
     for (let c = 0; c < concludeRecord.length; c++) {
@@ -1120,7 +1121,7 @@ console.log(checkOne);
       //   console.log('Existing record deleted');
       // }
 
-      if (concludeRecord.length !== 0) {
+      if (concludeRecordTmp.length !== 0) {
 
         //check emty new record
         if (data1.recordworkplace.length !== 0 || data.recordworkplace.length !== 0) {
