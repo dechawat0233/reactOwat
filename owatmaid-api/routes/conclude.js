@@ -305,7 +305,7 @@ const workplaceListTmp = [];
 
                 if (allTime >= workOfHour) {
                   allTime = workOfHour;
-                  tmp.allTimes = workOfHour;
+                  tmp.allTimes = workOfHour || 0;
                 } else {
                   tmp.allTimes = allTime || 0;
                 }

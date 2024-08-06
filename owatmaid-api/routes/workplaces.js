@@ -278,6 +278,8 @@ router.get('/:workplaceId', async (req, res) => {
 
 
 router.post('/getaddsalary', async (req, res) => {
+    const ans = [];
+
     try {
         const {wIdList} = await req.body;
 
@@ -289,7 +291,6 @@ if(uniqueArray.length <= 0) {
     res.status(200).json({});
 }
 
-const ans = [];
 
 for (let i = 0; i < uniqueArray.length; i++) {
     // await console.log(uniqueArray[i]);
