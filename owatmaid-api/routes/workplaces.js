@@ -286,8 +286,8 @@ router.post('/getaddsalary', async (req, res) => {
 
 console.log('wIdList : ' + uniqueArray); // Output: ['123', '456']
 
-for(let wp in uniqueArray ) {
-console.log('wp :' + wp);
+for (let i = 0; i < uniqueArray.length; i++) {
+    console.log(uniqueArray[i]);
 }
 
 /*
