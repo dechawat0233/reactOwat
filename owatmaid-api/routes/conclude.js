@@ -458,7 +458,7 @@ const workplaceListTmp = [];
             } else {
               if (specialDayOff1.includes(Number(str1))) {
                 if (salary === 0) {
-                  salary = wpResponse1.data.workRate;
+                  salary = parseFloat( wpResponse1.data.workRate);
                 }
 
                 if (allTime >= workOfHour) {
@@ -469,7 +469,7 @@ const workplaceListTmp = [];
                 }
 
                 let workRate = ((parseFloat(wpResponse1.data.holiday) * (salary / 8)) * parseFloat(allTime));
-                tmp.workRate = 500;
+                tmp.workRate = workRate || 0;
                 tmp.workRateMultiply = wpResponse1.data.holiday || 0;
 
                 if (otTime >= workOfOT) {
