@@ -308,7 +308,7 @@ if(workplaces ) {
 if(ans.length > 0 ) {
     await res.status(200).json({ ans});
 } else{
-    await res.status(200).json({});
+    await res.status(200).json();
 
 }
 
