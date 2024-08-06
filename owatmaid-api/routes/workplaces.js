@@ -284,7 +284,7 @@ router.post('/getaddsalary', async (req, res) => {
         // await console.log('wIdList : ' + wIdList);
         let uniqueArray = await [...new Set(wIdList)];
 
-console.log('wIdList : ' + uniqueArray); // Output: ['123', '456']
+// console.log('wIdList : ' + uniqueArray); // Output: ['123', '456']
 if(uniqueArray.length <= 0) {
     res.status(200).json({});
 }
@@ -292,14 +292,14 @@ if(uniqueArray.length <= 0) {
 const ans = [];
 
 for (let i = 0; i < uniqueArray.length; i++) {
-    await console.log(uniqueArray[i]);
+    // await console.log(uniqueArray[i]);
     const query = {};
 query.workplaceId = await uniqueArray[i];
 
         // Query the workplace collection for matching documents
         const workplaces = await Workplace.find(query);
 if(workplaces ) {
-    ans.push(workplaces );
+    await ans.push(workplaces );
 }
 
 } //end for
