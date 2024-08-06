@@ -1061,11 +1061,11 @@ router.post('/autocreate', async (req, res) => {
 
     
     // Sort the array by date directly in the main code
-    // concludeRecord.sort((a, b) => {
-    //   const dateA = new Date(a.day.split('/').reverse().join('/'));
-    //   const dateB = new Date(b.day.split('/').reverse().join('/'));
-    //   return dateA - dateB;
-    // });
+    concludeRecord.sort((a, b) => {
+      const dateA = new Date(a.day.split('/').reverse().join('/'));
+      const dateB = new Date(b.day.split('/').reverse().join('/'));
+      return dateA - dateB;
+    });
 
 
     // console.log('Sorted concludeRecord:', concludeRecord);
