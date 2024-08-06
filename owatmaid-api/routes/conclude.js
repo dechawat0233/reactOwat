@@ -205,7 +205,7 @@ const workplaceListTmp = [];
 
           const tmpWP = wCalList1.find(item => item.workplaceId === element.workplaceId);
           // console.log('workRateOT : ' + JSON.stringify(tmpWP.data.workRateOT ,2 ,null) );
-
+console.log('salary ' + tmpWP.data.workRate);
           const workOfHour = await (tmpWP?.data?.workOfHour) ?? 0;
           const workOfOT = await parseFloat(tmpWP?.data?.workOfOT) ?? 0;
           const dayOff = await tmpWP?.data?.workplaceDayOffList ?? [];
