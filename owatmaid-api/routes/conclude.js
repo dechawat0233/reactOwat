@@ -1059,6 +1059,9 @@ router.post('/autocreate', async (req, res) => {
     }
 
 
+    concludeRecord.map(async item => {
+console.log('test ' + item.day + ' ' + item.workRate);
+    });
     // Sort the array by date directly in the main code
     // concludeRecord.sort((a, b) => {
     //   const dateA = new Date(a.day.split('/').reverse().join('/'));
