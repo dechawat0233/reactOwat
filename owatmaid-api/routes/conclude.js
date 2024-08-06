@@ -70,6 +70,8 @@ router.post('/autocreate', async (req, res) => {
 
     const dataConclude = {};
     const concludeRecord = [];
+    const concludeRecord1 = [];
+
     const addSalaryDaily = [];
 
     //get employee add salary data
@@ -565,7 +567,7 @@ router.post('/autocreate', async (req, res) => {
             tmp.addSalaryDay = '';
             tmp.shift = element.shift || 0;
 
-            concludeRecord.push(tmp);
+            concludeRecord1.push(tmp);
           }
         }
 
@@ -577,10 +579,10 @@ router.post('/autocreate', async (req, res) => {
         // Check day is null and place data for days 21 to last day of the previous month
         for (let i = 21; i <= lastday; i++) {
           let d = i + '/' + prevMonth + '/' + year1;
-          let x = concludeRecord.some(record => record.day === d);
+          let x = concludeRecord1.some(record => record.day === d);
     
           if (!x) {
-            await concludeRecord.push({
+            await concludeRecord1.push({
               'day': d,
               'workplaceId': '',
               'allTimes': '0',
@@ -593,7 +595,7 @@ router.post('/autocreate', async (req, res) => {
         }
     
         // Sort the array by date directly in the main code
-        concludeRecord.sort((a, b) => {
+        concludeRecord1.sort((a, b) => {
           const dateA = new Date(a.day.split('/').reverse().join('/'));
           const dateB = new Date(b.day.split('/').reverse().join('/'));
           return dateA - dateB;
