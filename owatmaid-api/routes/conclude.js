@@ -310,9 +310,9 @@ const workplaceListTmp = [];
                   tmp.allTimes = allTime || 0;
                 }
 
-                let workRate = ((parseFloat(tmpWP.data.dayoffRateHour || 0) * (parseFloat(salary || 0) / 8)) * parseFloat(allTime)).toFixed(2);
+                let workRate = ((parseFloat(tmpWP.data.dayoffRateHour ?? 0) * (parseFloat(salary || 0) / 8)) * parseFloat(allTime)).toFixed(2);
                 tmp.workRate = workRate || 0;
-                tmp.workRateMultiply = tmpWP.data.dayoffRateHour || '';
+                tmp.workRateMultiply = tmpWP.data.dayoffRateHour || '50';
 
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
@@ -1079,6 +1079,12 @@ const workplaceListTmp = [];
     dataConclude.concludeRecord = concludeRecord|| [];
 
     console.log('workplaceListTmp ' + workplaceListTmp);
+
+    const sendData = {
+      wIdList: workplaceListTmp 
+    }
+
+    
     for (let c = 0; c < concludeRecord.length; c++) {
       // console.log('concludeRecord ' + concludeRecord [c].workplaceId);
 
