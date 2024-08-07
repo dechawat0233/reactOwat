@@ -386,8 +386,8 @@ const workplaceListTmp = [];
         const wpDataCalculator1 = await {
           month: month || '',
           year: year1 || '',
-          workplaceId: wpId1
-          // workplaceId: keys[0]
+          // workplaceId: wpId1
+          workplaceId: keys[0]
         };
 
         //get workplace data for calculator
