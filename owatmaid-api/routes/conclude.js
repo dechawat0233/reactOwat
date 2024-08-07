@@ -181,7 +181,7 @@ const workplaceListTmp = [];
           const group1 = wGroup1[workplaceId];
           // console.log(`Workplace ID: ${group.workplaceId}, Workplace Name: ${group.workplaceName}`);
           const wpDataCalculator1 = {
-            month: prevMonth || '',
+            month: month || '',
             year: year1 || '',
             workplaceId: group1.workplaceId
           };
@@ -310,9 +310,9 @@ const workplaceListTmp = [];
                   tmp.allTimes = allTime || 0;
                 }
 
-                let workRate = ((parseFloat(tmpWP.data.dayoffRateHour || 0) * (parseFloat(salary || 0) / 8)) * parseFloat(allTime)).toFixed(2);
+                let workRate = ((parseFloat(tmpWP.data.dayoffRateHour ?? 0) * (parseFloat(salary || 0) / 8)) * parseFloat(allTime)).toFixed(2);
                 tmp.workRate = workRate || 0;
-                tmp.workRateMultiply = tmpWP.data.dayoffRateHour || '';
+                tmp.workRateMultiply = tmpWP.data.dayoffRateHour || '0';
 
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
@@ -384,10 +384,10 @@ const workplaceListTmp = [];
 
 
         const wpDataCalculator1 = await {
-          month: prevMonthInt || '',
+          month: month || '',
           year: year1 || '',
-          // workplaceId: wpId1
-          workplaceId: keys[0]
+          workplaceId: wpId1
+          // workplaceId: keys[0]
         };
 
         //get workplace data for calculator
@@ -406,7 +406,7 @@ const workplaceListTmp = [];
             // console.log(str2 );
             dayOffCheck1.push(str2);
           });
-          // console.log('dayOffCheck1' + JSON.stringify(dayOffCheck1,null,2));
+          console.log('dayOffCheck1' + JSON.stringify(dayOffCheck1,null,2));
         }
 
         for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
@@ -417,7 +417,6 @@ const workplaceListTmp = [];
           // console.log('*str1 ' + str1);
 
           if (str1 > 20 && str1 <= lastday) {
-                      console.log('*str1 ' + str1);
 
             tmp.day = str1 + '/' + prevMonth + '/' + year1;
             tmp.workplaceId = element.workplaceId || '';
@@ -458,7 +457,7 @@ const workplaceListTmp = [];
             } else {
               if (specialDayOff1.includes(Number(str1))) {
                 if (salary === 0) {
-                  salary = wpResponse1.data.workRate;
+                  salary = parseFloat( wpResponse1.data.workRate);
                 }
 
                 if (allTime >= workOfHour) {
@@ -471,7 +470,6 @@ const workplaceListTmp = [];
                 let workRate = ((parseFloat(wpResponse1.data.holiday) * (salary / 8)) * parseFloat(allTime));
                 tmp.workRate = workRate || 0;
                 tmp.workRateMultiply = wpResponse1.data.holiday || 0;
-
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
                   tmp.otTimes = workOfOT || 0;
@@ -503,8 +501,10 @@ const workplaceListTmp = [];
                 } else {
                   tmp.allTime = allTime;
                 }
+                console.log('*str1 ' + str1);
 
-                let workRate = ((parseFloat(wpResponse1.data.dayoffRateHour || 0) * (parseFloat(salary || 0) / 8)) * parseFloat(allTime));
+console.log('wpResponse1.data.dayoffRateHour ' + wpResponse1.data.dayoffRateHour );
+                let workRate = ((parseFloat(wpResponse1.data.dayoffRateHour ) * (salary  / 8)) * parseFloat(allTime));
                 tmp.workRate = workRate || 0;
                 tmp.workRateMultiply = wpResponse1.data.dayoffRateHour || 0;
 
@@ -523,6 +523,7 @@ const workplaceListTmp = [];
                 sumWorkRate += parseFloat(workRate) || 0;
                 sumWorkHourOt += parseFloat(otTime) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
+                console.log('workRate ' + workRate );
 
                 workRate = 0;
                 workRateOT = 0;
@@ -530,7 +531,7 @@ const workplaceListTmp = [];
 
               } else {
                 if (salary === 0) {
-                  salary = wpResponse1.data.workRate;
+                  salary = parseFloat( wpResponse1.data.workRate);
                 }
 
                 if (allTime >= workOfHour) {
@@ -1078,7 +1079,14 @@ const workplaceListTmp = [];
 
     dataConclude.concludeRecord = concludeRecord|| [];
 
-    console.log('workplaceListTmp ' + workplaceListTmp);
+    // console.log('workplaceListTmp ' + workplaceListTmp);
+
+    const sendData = {
+      wIdList: workplaceListTmp 
+    }
+    // const responseWpList = await axios.post(sURL + '/workplace/getaddsalary', sendData );
+    // await console.log(responseWpList .data.ans[1].workplaceId);
+
     for (let c = 0; c < concludeRecord.length; c++) {
       // console.log('concludeRecord ' + concludeRecord [c].workplaceId);
 
