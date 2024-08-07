@@ -2462,7 +2462,7 @@ function WorktimeSheetWorkplace() {
         // dayWorkAfternoonArray.push(parseFloat(record.day));
 
         if (!uniqueDaysAfternoon.has(parseFloat(record.day))) {
-          dayWorkAfternoonArray.push(parseFloat(record.day));
+          dayWorkAfternoonArray.push(parseFloat(record.allTimes));
           uniqueDaysAfternoon.add(parseFloat(record.day));
         }
 
@@ -2478,7 +2478,11 @@ function WorktimeSheetWorkplace() {
         record.shift.includes("night_shift")
       ) {
         // Push allTimes and otTimes to respective arrays
-        dayWorkNightArray.push(parseFloat(record.day));
+        // dayWorkNightArray.push(parseFloat(record.allTimes));
+        if (!uniqueDaysNight.has(parseFloat(record.day))) {
+          dayWorkNightArray.push(record.workplaceId);
+          uniqueDaysNight.add(parseFloat(record.day));
+        }
 
         // const day = parseInt(record.day.split('/')[0]);
       } else {
@@ -2664,16 +2668,16 @@ function WorktimeSheetWorkplace() {
   const newOtTimes3 = Object.values(otTimesByEmployee3).flat();
 
   // Log the results
-  // console.log("dayWorkMorningAndSSs:", dayWorkMorningAndSSs);
-  // console.log("dayWorkAfternoons:", dayWorkAfternoons);
-  // console.log("dayWorkNights:", dayWorkNights);
+  console.log("dayWorkMorningAndSSs:", dayWorkMorningAndSSs);
+  console.log("dayWorkAfternoons:", dayWorkAfternoons);
+  console.log("dayWorkNights:", dayWorkNights);
 
-  console.log("newAllTimes:", newAllTimes);
-  console.log("newOtTimes:", newOtTimes);
-  console.log("newAllTimes2:", newAllTimes2);
-  console.log("newOtTimes2:", newOtTimes2);
-  console.log("newAllTimes3:", newAllTimes3);
-  console.log("newOtTimes3:", newOtTimes3);
+  // console.log("newAllTimes:", newAllTimes);
+  // console.log("newOtTimes:", newOtTimes);
+  // console.log("newAllTimes2:", newAllTimes2);
+  // console.log("newOtTimes2:", newOtTimes2);
+  // console.log("newAllTimes3:", newAllTimes3);
+  // console.log("newOtTimes3:", newOtTimes3);
 
   const singleArrayOfDates = daySpecialts.flat();
   console.log("singleArrayOfDates:", singleArrayOfDates);
@@ -2733,6 +2737,20 @@ function WorktimeSheetWorkplace() {
     );
   };
 
+  const changeNumbersToOne2 = (array) => {
+    return array.map((subArray) =>
+      subArray.map((day) => {
+        if (typeof day === "string" && day === searchWorkplaceId) {
+          return "1";
+        } else if (typeof day === "string" && day !== "") {
+          return "";
+        } else {
+          return day;
+        }
+      })
+    );
+  };
+
   // const searchWorkplaceId = '399-664';
 
   const finalUpdatedDayWorksWorkMorningAndSS = changeNumbersToOne(
@@ -2745,12 +2763,13 @@ function WorktimeSheetWorkplace() {
     finalUpdatedDayWorksWorkMorningAndSS
   );
 
-  const finalUpdatedDayWorksWorkAfternoon = changeNumbersToOne(
+  const finalUpdatedDayWorksWorkAfternoon = changeNumbersToOne2(
     updatedDaysWorkAfternoon
   );
 
   const finalUpdatedDayWorksWorkNight =
-    changeNumbersToOne(updatedDaysWorkNight);
+    changeNumbersToOne2(updatedDaysWorkNight
+    );
 
   // const makePage = Math.ceil(arrayWorkNormalDay.length / 5);
   // console.log('makePage', makePage);
