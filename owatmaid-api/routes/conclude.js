@@ -1084,8 +1084,8 @@ console.log('wpResponse1.data.dayoffRateHour ' + wpResponse1.data.dayoffRateHour
     const sendData = {
       wIdList: workplaceListTmp 
     }
-    const responseWpList = await axios.post(sURL + '/workplace/getaddsalary', sendData );
-    await console.log(responseWpList .data.ans[1].addSalary );
+    // const responseWpList = await axios.post(sURL + '/workplace/getaddsalary', sendData );
+    // await console.log(responseWpList .data.ans[1].workplaceId);
 
     for (let c = 0; c < concludeRecord.length; c++) {
       // console.log('concludeRecord ' + concludeRecord [c].workplaceId);
