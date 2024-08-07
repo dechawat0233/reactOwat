@@ -398,7 +398,7 @@ function Compensation() {
 
   // Concatenate the two arrays
   const resultArray2 = [...firstPart2, ...secondPart2];
-console.log('resultArray2',resultArray2);
+
   function getDaysInMonth2(month, year) {
     // Months are 0-based, so we subtract 1 from the provided month
     return new Date(year, month, 0).getDate();
@@ -1531,15 +1531,6 @@ console.log('resultArray2',resultArray2);
   // console.log("sumRate", sumRate);
   console.log("dataTable", dataTable);
 
-  const extractDayNumber = (dateString) => {
-    const [day] = dateString.split('/');
-    return parseInt(day, 10);
-  };
-  
-  const resultArray22 = dataTable.map(entry => extractDayNumber(entry.day));
-  
-  console.log("resultArray22", resultArray22);
-
   const createBy = localStorage.getItem("user");
   const [update, setUpdate] = useState(null);
 
@@ -1817,7 +1808,7 @@ console.log('resultArray2',resultArray2);
                             <tr key={index}>
                               <td
                                 style={
-                                  commonNumbers.has(resultArray22[index])
+                                  commonNumbers.has(resultArray2[index])
                                     ? {
                                         ...cellStyle,
                                         backgroundColor: "yellow",
@@ -1845,7 +1836,7 @@ console.log('resultArray2',resultArray2);
                                                             </td> */}
                               <td
                                 style={
-                                  commonNumbers.has(resultArray22[index])
+                                  commonNumbers.has(resultArray2[index])
                                     ? {
                                         ...cellStyle,
                                         backgroundColor: "yellow",
@@ -1868,7 +1859,7 @@ console.log('resultArray2',resultArray2);
                               </td>
                               <td
                                 style={
-                                  commonNumbers.has(resultArray22[index])
+                                  commonNumbers.has(resultArray2[index])
                                     ? {
                                         ...cellStyle,
                                         backgroundColor: "yellow",
@@ -1890,7 +1881,7 @@ console.log('resultArray2',resultArray2);
                               </td>
                               <td
                                 style={
-                                  commonNumbers.has(resultArray22[index])
+                                  commonNumbers.has(resultArray2[index])
                                     ? {
                                         ...cellStyle,
                                         backgroundColor: "yellow",
@@ -1935,7 +1926,7 @@ console.log('resultArray2',resultArray2);
                               </td>
                               <td
                                 style={
-                                  commonNumbers.has(resultArray22[index])
+                                  commonNumbers.has(resultArray2[index])
                                     ? {
                                         ...cellStyle,
                                         backgroundColor: "yellow",
@@ -1958,7 +1949,7 @@ console.log('resultArray2',resultArray2);
 
                               <td
                                 style={
-                                  commonNumbers.has(resultArray22[index])
+                                  commonNumbers.has(resultArray2[index])
                                     ? {
                                         ...cellStyle,
                                         backgroundColor: "yellow",
@@ -1989,7 +1980,7 @@ console.log('resultArray2',resultArray2);
                               </td>
                               <td
                                 style={
-                                  commonNumbers.has(resultArray22[index])
+                                  commonNumbers.has(resultArray2[index])
                                     ? {
                                         ...cellStyle,
                                         backgroundColor: "yellow",
@@ -2070,7 +2061,7 @@ console.log('resultArray2',resultArray2);
                               </td>
                               <td
                                 style={
-                                  commonNumbers.has(resultArray22[index])
+                                  commonNumbers.has(resultArray2[index])
                                     ? {
                                         ...cellStyle,
                                         backgroundColor: "yellow",
