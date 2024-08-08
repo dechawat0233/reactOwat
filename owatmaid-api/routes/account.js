@@ -94,7 +94,7 @@ const dataList = [];
     if(accountData ) {
       // await accounting.deleteOne({ _id: accountData._id });
 await accounting.deleteMany({year , month , employeeId});
-
+console.log('delete accounting successed');
     }
 
   }
