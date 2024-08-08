@@ -79,19 +79,16 @@ res.json(x.data);
 
 //get accounting by id
 router.post('/calsalaryemp', async (req, res) => {
-
   try {
     const { year, month ,   employeeId , updateStatus} = await req.body;
     const workplaceList = await axios.get(sURL + '/workplace/list');
-    
-    //search conclude record
+
     const dataSearch = await {
       year: year, 
       month: month,
       concludeDate: "",
       employeeId: employeeId
     };
-
 
     //check accounting record in database
 const accountData = await accounting.findOne({year , month , employeeId});
@@ -103,7 +100,7 @@ const dataList = [];
     if(accountData ) {
       // await accounting.deleteOne({ _id: accountData._id });
 await accounting.deleteMany({year , month , employeeId});
-console.log('delete accounting successed');
+
     }
 
   }
@@ -118,8 +115,6 @@ await dataList .push(accountData );
 
 } else {
   await console.log('* accounting not save');
-
-  
 
     const responseConclude = await axios.post(sURL + '/conclude/search', dataSearch);
 
@@ -215,7 +210,6 @@ if (response) {
     data.accountingRecord.tax = await response.data.tax ||0;
 tax = await response.data.tax ||0; 
 salary = await response.data.salary || 0;
-console.log('salary :' + salary);
 
 // await console.log(response.data);
 
@@ -645,7 +639,7 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
     hourThree = Number(hourThree) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
   }
 
-  // console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
+  console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
   //check work rate is not standard day
   if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) == parseFloat(salary) ) {
     if(! workDaylist.includes(responseConclude.data.recordConclude[c].concludeRecord[i].day.split("/")[0] ) ) {
