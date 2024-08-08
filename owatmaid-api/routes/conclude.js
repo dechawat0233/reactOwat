@@ -59,6 +59,7 @@ router.post('/autocreate', async (req, res) => {
     year,
     month,
     employeeId } = await req.body;
+console.log('*tttt');
 
   sumWorkHour = 0;
   sumWorkRate = 0;
@@ -1109,7 +1110,7 @@ const workplaceListTmp = [];
 
       if (result.deletedCount > 0) {
         // res.status(200).send(`${result.deletedCount} record(s) deleted`);
-        // console.log('Existing record deleted' + result.deletedCount);
+        console.log('Existing record deleted' + result.deletedCount);
       } else {
         // res.status(404).send('No matching records found');
       }
