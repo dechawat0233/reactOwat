@@ -159,6 +159,10 @@ const workplaceListTmp = [];
       let wpId1 = dataEmp.employees[0].workplace || '';
       let salary = dataEmp.employees[0].salary || 0;
       console.log('salary ' + salary );
+//check employee type is month
+if(parseFloat(salary ) >= 1660) {
+  salary  = parseFloat(salary) / 30;
+}
 
 
       const wCalList1 = [];
@@ -218,6 +222,7 @@ const workplaceListTmp = [];
               let str2 = parseInt(dateoffParts[2], 10);
               dayOffCheck.push(str2);
             });
+            // console.log('dayOffCheck  '+ dayOffCheck );
           }
 
 
@@ -380,14 +385,15 @@ const workplaceListTmp = [];
           } //
         } //end for
         // }
+        console.log('1x');
       } else {
-
+console.log('2x');
 
         const wpDataCalculator1 = await {
           month: month || '',
           year: year1 || '',
-          workplaceId: wpId1
-          // workplaceId: keys[0]
+          // workplaceId: wpId1
+          workplaceId: keys[0]
         };
 
         //get workplace data for calculator
@@ -397,6 +403,7 @@ const workplaceListTmp = [];
         const workOfOT = await Number(wpResponse1.data.workOfOT) || 0;
 
         const dayOff1 = await wpResponse1.data.workplaceDayOffList || [];
+        console.log('dayOff1 ' + dayOff1 );
         const specialDayOff1 = await wpResponse1.data.specialDaylist || [];
         const dayOffCheck1 = [];
         if (dayOff1.length !== 0) {
@@ -406,7 +413,7 @@ const workplaceListTmp = [];
             // console.log(str2 );
             dayOffCheck1.push(str2);
           });
-          console.log('dayOffCheck1' + JSON.stringify(dayOffCheck1,null,2));
+          // console.log('dayOffCheck1' + JSON.stringify(dayOffCheck1,null,2));
         }
 
         for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
@@ -442,6 +449,7 @@ const workplaceListTmp = [];
 
 
             if (element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
+              // console.log('special rate')
               tmp.workRate = element.specialtSalary || '';
               tmp.workRateMultiply = Number(element.specialtSalary || 0) / Number(wpResponse1.data.workRate || 0);
 
@@ -456,6 +464,8 @@ const workplaceListTmp = [];
 
             } else {
               if (specialDayOff1.includes(Number(str1))) {
+// console.log('special day off rate');                
+
                 if (salary === 0) {
                   salary = parseFloat( wpResponse1.data.workRate);
                 }
@@ -491,6 +501,8 @@ const workplaceListTmp = [];
                 tmp.workType = 'specialDayOff';
 
               } else if (dayOffCheck1.includes(str1)) {
+                // console.log('day off rate');
+
                 if (salary === 0) {
                   salary = wpResponse1.data.workRate;
                 }
@@ -501,9 +513,7 @@ const workplaceListTmp = [];
                 } else {
                   tmp.allTime = allTime;
                 }
-                console.log('*str1 ' + str1);
 
-console.log('wpResponse1.data.dayoffRateHour ' + wpResponse1.data.dayoffRateHour );
                 let workRate = ((parseFloat(wpResponse1.data.dayoffRateHour ) * (salary  / 8)) * parseFloat(allTime));
                 tmp.workRate = workRate || 0;
                 tmp.workRateMultiply = wpResponse1.data.dayoffRateHour || 0;
@@ -523,13 +533,13 @@ console.log('wpResponse1.data.dayoffRateHour ' + wpResponse1.data.dayoffRateHour
                 sumWorkRate += parseFloat(workRate) || 0;
                 sumWorkHourOt += parseFloat(otTime) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
-                console.log('workRate ' + workRate );
 
                 workRate = 0;
                 workRateOT = 0;
                 tmp.workType = 'dayOff';
 
               } else {
+                // console.log('default rate');
                 if (salary === 0) {
                   salary = parseFloat( wpResponse1.data.workRate);
                 }
@@ -625,19 +635,22 @@ console.log('wpResponse1.data.dayoffRateHour ' + wpResponse1.data.dayoffRateHour
       //check employee working in multi workplace
       const wGroup = await groupByWorkplaceId(data.recordworkplace[0].employee_workplaceRecord);
       // await console.log('wGroup  :' + JSON.stringify(wGroup,2,null));
-      await console.log('count :' + Object.keys(wGroup).length);
+      // await console.log('count :' + Object.keys(wGroup).length);
 
       //get workplaceId in first employee_workplaceRecord
       // let wpId = data.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
       let wpId = dataEmp.employees[0].workplace || '';
       let salary = dataEmp.employees[0].salary || 0;
-
+      if(parseFloat(salary ) >= 1660) {
+        salary  = parseFloat(salary) / 30;
+      }
+      
       // console.log('wGroup X ' + JSON.stringify(wGroup    ,2,null))
-      console.log('wGroup X ' + Object.keys(wGroup).length)
+      // console.log('wGroup X ' + Object.keys(wGroup).length)
       // if (wGroup) {
       const keys = await Object.keys(wGroup);
-      console.log('wGroup keys:', keys); // Log the keys of wGroup
-      console.log('wGroup keys length:', keys.length); // Log the length of the keys
+      // console.log('wGroup keys:', keys); // Log the keys of wGroup
+      // console.log('wGroup keys length:', keys.length); // Log the length of the keys
 
       if (keys.length > 1) {
         console.log('process');
