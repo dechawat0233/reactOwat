@@ -1499,7 +1499,7 @@ alert('ระบบทำการคำนวนใหม่แล้ว กร
   fetchData();
 
 }
-
+console.log('wsCountDayWork',wsCountDayWork);
   return (
     // <div>
 
