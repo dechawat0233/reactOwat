@@ -494,7 +494,6 @@ const workplaceListTmp = [];
                 if (salary === 0) {
                   salary = wpResponse1.data.workRate;
                 }
-console.log('dayOffCheck1 : '+ JSON.stringify(dayOffCheck1,2,null));
 
                 if (allTime >= workOfHour) {
                   allTime = workOfHour;
@@ -541,6 +540,7 @@ console.log('dayOffCheck1 : '+ JSON.stringify(dayOffCheck1,2,null));
                 } else {
                   tmp.allTime = allTime || 0;
                 }
+console.log(salary );
 
                 let workRate = ((salary / 8) * parseFloat(allTime)).toFixed(2);
                 tmp.workRate = workRate || 0;
