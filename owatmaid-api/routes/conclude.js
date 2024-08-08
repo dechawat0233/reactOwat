@@ -639,7 +639,7 @@ const workplaceListTmp = [];
       console.log('wGroup keys:', keys); // Log the keys of wGroup
       console.log('wGroup keys length:', keys.length); // Log the length of the keys
 
-      if ( 1 == 0 && keys.length > 1) {
+      if (keys.length > 1) {
         console.log('process');
 
         for (const workplaceId of Object.keys(wGroup)) {
@@ -869,7 +869,7 @@ const workplaceListTmp = [];
         const specialDayOff = wpResponse.data.specialDaylist || [];
         const dayOffCheck = [];
 
-        if (dayOff.length !== 0) {
+        if (1 == 0 && dayOff.length !== 0) {
           dayOff.forEach(item => {
             let dateoffParts = item.split('-');
             let str2 = parseInt(dateoffParts[2], 10);
