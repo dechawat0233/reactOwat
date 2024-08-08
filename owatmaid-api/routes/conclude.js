@@ -222,7 +222,7 @@ if(parseFloat(salary ) >= 1660) {
               let str2 = parseInt(dateoffParts[2], 10);
               dayOffCheck.push(str2);
             });
-            console.log('dayOffCheck  '+ dayOffCheck );
+            // console.log('dayOffCheck  '+ dayOffCheck );
           }
 
 

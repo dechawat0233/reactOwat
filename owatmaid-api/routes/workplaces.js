@@ -575,7 +575,7 @@ const specialDaylist = [];
                         }
                     }
                 });
-                // console.log('dayOffList: ', dayOffList);
+                console.log('dayOffList: ', dayOffList);
             }
 
             // Convert the month string to an integer
