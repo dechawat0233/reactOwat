@@ -171,8 +171,8 @@ const workplaceListTmp = [];
 
       // if (wGroup1) {
       const keys = await Object.keys(wGroup1);
-      // console.log('wGroup keys:', keys); // Log the keys of wGroup
-      // console.log('wGroup keys length:', keys.length); // Log the length of the keys
+      console.log('wGroup keys:', keys); // Log the keys of wGroup
+      console.log('wGroup keys length:', keys.length); // Log the length of the keys
 
       if (keys.length > 1) {
         console.log('process : 21 - '+ lastday);
@@ -501,9 +501,9 @@ const workplaceListTmp = [];
                 } else {
                   tmp.allTime = allTime;
                 }
-                console.log('*str1 ' + str1);
+                // console.log('*str1 ' + str1);
 
-console.log('wpResponse1.data.dayoffRateHour ' + wpResponse1.data.dayoffRateHour );
+// console.log('wpResponse1.data.dayoffRateHour ' + wpResponse1.data.dayoffRateHour );
                 let workRate = ((parseFloat(wpResponse1.data.dayoffRateHour ) * (salary  / 8)) * parseFloat(allTime));
                 tmp.workRate = workRate || 0;
                 tmp.workRateMultiply = wpResponse1.data.dayoffRateHour || 0;
