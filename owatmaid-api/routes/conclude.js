@@ -443,7 +443,7 @@ console.log('2x');
 
 
             if (element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
-              console.log('special rate')
+              // console.log('special rate')
               tmp.workRate = element.specialtSalary || '';
               tmp.workRateMultiply = Number(element.specialtSalary || 0) / Number(wpResponse1.data.workRate || 0);
 
@@ -458,7 +458,7 @@ console.log('2x');
 
             } else {
               if (specialDayOff1.includes(Number(str1))) {
-console.log('special day off rate');                
+// console.log('special day off rate');                
 
                 if (salary === 0) {
                   salary = parseFloat( wpResponse1.data.workRate);
@@ -495,7 +495,7 @@ console.log('special day off rate');
                 tmp.workType = 'specialDayOff';
 
               } else if (dayOffCheck1.includes(str1)) {
-                console.log('day off rate');
+                // console.log('day off rate');
 
                 if (salary === 0) {
                   salary = wpResponse1.data.workRate;
@@ -507,9 +507,7 @@ console.log('special day off rate');
                 } else {
                   tmp.allTime = allTime;
                 }
-                // console.log('*str1 ' + str1);
 
-// console.log('wpResponse1.data.dayoffRateHour ' + wpResponse1.data.dayoffRateHour );
                 let workRate = ((parseFloat(wpResponse1.data.dayoffRateHour ) * (salary  / 8)) * parseFloat(allTime));
                 tmp.workRate = workRate || 0;
                 tmp.workRateMultiply = wpResponse1.data.dayoffRateHour || 0;
@@ -529,14 +527,13 @@ console.log('special day off rate');
                 sumWorkRate += parseFloat(workRate) || 0;
                 sumWorkHourOt += parseFloat(otTime) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
-                // console.log('workRate ' + workRate );
 
                 workRate = 0;
                 workRateOT = 0;
                 tmp.workType = 'dayOff';
 
               } else {
-                console.log('default rate');
+                // console.log('default rate');
                 if (salary === 0) {
                   salary = parseFloat( wpResponse1.data.workRate);
                 }
