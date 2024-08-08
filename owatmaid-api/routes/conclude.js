@@ -380,8 +380,9 @@ const workplaceListTmp = [];
           } //
         } //end for
         // }
+        console.log('1x');
       } else {
-
+console.log('2x');
 
         const wpDataCalculator1 = await {
           month: month || '',
