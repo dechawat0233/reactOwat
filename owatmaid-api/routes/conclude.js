@@ -402,6 +402,7 @@ console.log('2x');
         const workOfOT = await Number(wpResponse1.data.workOfOT) || 0;
 
         const dayOff1 = await wpResponse1.data.workplaceDayOffList || [];
+        console.log('dayOff1 ' + dayOff1 );
         const specialDayOff1 = await wpResponse1.data.specialDaylist || [];
         const dayOffCheck1 = [];
         if (dayOff1.length !== 0) {
