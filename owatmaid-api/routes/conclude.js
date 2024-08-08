@@ -639,10 +639,7 @@ console.log('2x');
       // let wpId = data.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
       let wpId = dataEmp.employees[0].workplace || '';
       let salary = dataEmp.employees[0].salary || 0;
-      if(parseFloat(salary ) >= 1660) {
-        salary  = parseFloat(salary) / 30;
-      }
-      
+
       // console.log('wGroup X ' + JSON.stringify(wGroup    ,2,null))
       // console.log('wGroup X ' + Object.keys(wGroup).length)
       // if (wGroup) {
