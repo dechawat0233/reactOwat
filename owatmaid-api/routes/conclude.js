@@ -1109,7 +1109,7 @@ const workplaceListTmp = [];
 
       if (result.deletedCount > 0) {
         // res.status(200).send(`${result.deletedCount} record(s) deleted`);
-        console.log('Existing record deleted' + result.deletedCount);
+        // console.log('Existing record deleted' + result.deletedCount);
       } else {
         // res.status(404).send('No matching records found');
       }
