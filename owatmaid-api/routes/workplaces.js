@@ -563,9 +563,11 @@ const specialDaylist = [];
                                     dayOffList.push(i);
                                 }
                             } else {
+
                                 for (let i = endDay; i <= 6; i++) {
                                     dayOffList.push(i);
                                 }
+
                                 for (let i = 0; i <= startDay; i++) {
                                     dayOffList.push(i);
                                 }
@@ -575,7 +577,7 @@ const specialDaylist = [];
                         }
                     }
                 });
-                // console.log('dayOffList: ', dayOffList);
+                console.log('dayOffList: ', dayOffList);
             }
 
             // Convert the month string to an integer
