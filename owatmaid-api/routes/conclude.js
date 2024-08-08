@@ -869,7 +869,7 @@ const workplaceListTmp = [];
         const specialDayOff = wpResponse.data.specialDaylist || [];
         const dayOffCheck = [];
 
-        if (1 == 0 && dayOff.length !== 0) {
+        if (dayOff.length !== 0) {
           dayOff.forEach(item => {
             let dateoffParts = item.split('-');
             let str2 = parseInt(dateoffParts[2], 10);
