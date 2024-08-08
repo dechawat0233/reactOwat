@@ -210,7 +210,7 @@ if (response) {
     data.accountingRecord.tax = await response.data.tax ||0;
 tax = await response.data.tax ||0; 
 salary = await response.data.salary || 0;
-
+console.log('salary :' + salary);
 // await console.log(response.data);
 
 //ss
