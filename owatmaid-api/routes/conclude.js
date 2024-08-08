@@ -639,7 +639,7 @@ const workplaceListTmp = [];
       console.log('wGroup keys:', keys); // Log the keys of wGroup
       console.log('wGroup keys length:', keys.length); // Log the length of the keys
 
-      if (keys.length > 1) {
+      if ( 1 == 0 && keys.length > 1) {
         console.log('process');
 
         for (const workplaceId of Object.keys(wGroup)) {
