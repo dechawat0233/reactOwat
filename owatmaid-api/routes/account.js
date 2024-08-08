@@ -209,8 +209,8 @@ if (response) {
     data.workplace = await response.data.workplace;
     data.accountingRecord.tax = await response.data.tax ||0;
 tax = await response.data.tax ||0; 
-// salary = await response.data.salary || 0;
-salary = 350;
+salary = await response.data.salary || 0;
+
 // await console.log(response.data);
 
 //ss
