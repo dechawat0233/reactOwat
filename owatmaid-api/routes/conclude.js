@@ -625,7 +625,7 @@ const workplaceListTmp = [];
       //check employee working in multi workplace
       const wGroup = await groupByWorkplaceId(data.recordworkplace[0].employee_workplaceRecord);
       // await console.log('wGroup  :' + JSON.stringify(wGroup,2,null));
-      await console.log('count :' + Object.keys(wGroup).length);
+      // await console.log('count :' + Object.keys(wGroup).length);
 
       //get workplaceId in first employee_workplaceRecord
       // let wpId = data.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
