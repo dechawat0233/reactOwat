@@ -159,6 +159,10 @@ const workplaceListTmp = [];
       let wpId1 = dataEmp.employees[0].workplace || '';
       let salary = dataEmp.employees[0].salary || 0;
       console.log('salary ' + salary );
+//check employee type is month
+if(parseFloat(salary ) >= 1660) {
+  salary  = parseFloat(salary) / 30;
+}
 
 
       const wCalList1 = [];
