@@ -59,7 +59,6 @@ router.post('/autocreate', async (req, res) => {
     year,
     month,
     employeeId } = await req.body;
-console.log('*tttt');
 
   sumWorkHour = 0;
   sumWorkRate = 0;
@@ -495,6 +494,7 @@ const workplaceListTmp = [];
                 if (salary === 0) {
                   salary = wpResponse1.data.workRate;
                 }
+console.log('dayOffCheck1 : '+ JSON.stringify(dayOffCheck1,2,null));
 
                 if (allTime >= workOfHour) {
                   allTime = workOfHour;
