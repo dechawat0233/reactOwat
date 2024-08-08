@@ -442,6 +442,7 @@ const workplaceListTmp = [];
 
 
             if (element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
+              console.log('special rate')
               tmp.workRate = element.specialtSalary || '';
               tmp.workRateMultiply = Number(element.specialtSalary || 0) / Number(wpResponse1.data.workRate || 0);
 
@@ -456,6 +457,8 @@ const workplaceListTmp = [];
 
             } else {
               if (specialDayOff1.includes(Number(str1))) {
+console.log('special day off rate');                
+
                 if (salary === 0) {
                   salary = parseFloat( wpResponse1.data.workRate);
                 }
@@ -491,6 +494,8 @@ const workplaceListTmp = [];
                 tmp.workType = 'specialDayOff';
 
               } else if (dayOffCheck1.includes(str1)) {
+                console.log('day off rate');
+
                 if (salary === 0) {
                   salary = wpResponse1.data.workRate;
                 }
@@ -530,6 +535,7 @@ const workplaceListTmp = [];
                 tmp.workType = 'dayOff';
 
               } else {
+                console.log('default rate');
                 if (salary === 0) {
                   salary = parseFloat( wpResponse1.data.workRate);
                 }
@@ -540,7 +546,6 @@ const workplaceListTmp = [];
                 } else {
                   tmp.allTime = allTime || 0;
                 }
-console.log(salary );
 
                 let workRate = ((salary / 8) * parseFloat(allTime)).toFixed(2);
                 tmp.workRate = workRate || 0;
