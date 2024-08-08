@@ -388,6 +388,10 @@ function AddEditEmployee() {
   const handleReligion = (event) => {
     setReligion(event.target.value);
   };
+
+  const handleMaritalStatus = (event) => {
+    setMaritalStatus(event.target.value);
+  };
   async function handleSearch(event) {
     event.preventDefault();
 
@@ -860,6 +864,9 @@ function AddEditEmployee() {
                                     <option value="นาย">นาย</option>
                                     <option value="นาง">นาง</option>
                                     <option value="นางสาว">นางสาว</option>
+                                    <option value="Mr.">Mr.</option>
+                                    <option value="Mrs.">Mrs.</option>
+                                    <option value="Miss">Miss</option>
                                   </select>
                                 </div>
                               </div>
@@ -1181,7 +1188,7 @@ function AddEditEmployee() {
                                   <label role="maritalStatus">
                                     สถานภาพการสมรส
                                   </label>
-                                  <input
+                                  {/* <input
                                     required
                                     type="text"
                                     name="maritalStatus"
@@ -1192,7 +1199,23 @@ function AddEditEmployee() {
                                     onChange={(e) =>
                                       setMaritalStatus(e.target.value)
                                     }
-                                  />
+                                  /> */}
+                                  <select
+                                    required
+                                    name="maritalStatus"
+                                    id="maritalStatus"
+                                    class="form-control"
+                                    value={maritalStatus}
+                                    onChange={handleMaritalStatus}
+                                  >
+                                    <option value="">ระบุ</option>
+                                    <option value="โสด">โสด</option>
+                                    <option value="แต่งงานและอยู่ด้วยกัน">แต่งงานและอยู่ด้วยกัน</option>
+                                    <option value="แต่งงานแต่ไม่ได้อยู่ด้วยกัน">แต่งงานแต่ไม่ได้อยู่ด้วยกัน</option>
+                                    <option value="ไม่แต่งงานแต่อยู่ด้วยกัน">ไม่แต่งงานแต่อยู่ด้วยกัน</option>
+                                    <option value="หม้าย">หม้าย</option>
+                                    <option value="หย่าร้าง/แยกทาง/เลิกกัน">หย่าร้าง/แยกทาง/เลิกกัน</option>
+                                  </select>
                                 </div>
                               </div>
                               <div class="col-md-3">
