@@ -79,16 +79,10 @@ res.json(x.data);
 
 //get accounting by id
 router.post('/calsalaryemp', async (req, res) => {
+
   try {
     const { year, month ,   employeeId , updateStatus} = await req.body;
     const workplaceList = await axios.get(sURL + '/workplace/list');
-
-    const dataSearch = await {
-      year: year, 
-      month: month,
-      concludeDate: "",
-      employeeId: employeeId
-    };
 
     //check accounting record in database
 const accountData = await accounting.findOne({year , month , employeeId});
@@ -115,6 +109,16 @@ await dataList .push(accountData );
 
 } else {
   await console.log('* accounting not save');
+
+  
+    //search conclude record
+    const dataSearch = await {
+      year: year, 
+      month: month,
+      concludeDate: "",
+      employeeId: employeeId
+    };
+
 
     const responseConclude = await axios.post(sURL + '/conclude/search', dataSearch);
 
@@ -211,6 +215,7 @@ if (response) {
 tax = await response.data.tax ||0; 
 salary = await response.data.salary || 0;
 console.log('salary :' + salary);
+
 // await console.log(response.data);
 
 //ss

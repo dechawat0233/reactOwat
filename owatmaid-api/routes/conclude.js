@@ -171,8 +171,8 @@ const workplaceListTmp = [];
 
       // if (wGroup1) {
       const keys = await Object.keys(wGroup1);
-      console.log('wGroup keys:', keys); // Log the keys of wGroup
-      console.log('wGroup keys length:', keys.length); // Log the length of the keys
+      // console.log('wGroup keys:', keys); // Log the keys of wGroup
+      // console.log('wGroup keys length:', keys.length); // Log the length of the keys
 
       if (keys.length > 1) {
         console.log('process : 21 - '+ lastday);
