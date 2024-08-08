@@ -501,7 +501,7 @@ const workplaceListTmp = [];
                 } else {
                   tmp.allTime = allTime;
                 }
-                // console.log('*str1 ' + str1);
+                console.log('*str1 ' + str1);
 
 // console.log('wpResponse1.data.dayoffRateHour ' + wpResponse1.data.dayoffRateHour );
                 let workRate = ((parseFloat(wpResponse1.data.dayoffRateHour ) * (salary  / 8)) * parseFloat(allTime));
@@ -523,7 +523,7 @@ const workplaceListTmp = [];
                 sumWorkRate += parseFloat(workRate) || 0;
                 sumWorkHourOt += parseFloat(otTime) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
-                console.log('workRate ' + workRate );
+                // console.log('workRate ' + workRate );
 
                 workRate = 0;
                 workRateOT = 0;
