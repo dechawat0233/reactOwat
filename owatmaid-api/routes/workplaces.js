@@ -564,13 +564,14 @@ const specialDaylist = [];
                                 }
                             } else {
 
-                                for (let i = endDay; i <= 6; i++) {
-                                    dayOffList.push(i);
+                                for (let j = endDay; j <= 6; j++) {
+                                    dayOffList.push(j);
                                 }
 
-                                for (let i = 0; i <= startDay; i++) {
-                                    dayOffList.push(i);
+                                for (let k = 0; k <= startDay; k++) {
+                                    dayOffList.push(k);
                                 }
+
                             }
                         } catch (error) {
                             console.error(error.message);
