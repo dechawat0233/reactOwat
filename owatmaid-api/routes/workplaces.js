@@ -553,8 +553,8 @@ const specialDaylist = [];
                 workplace.workTimeDay.forEach(item => {
                     if (item.workOrStop === 'stop') {
                         try {
-                            let startDay = getDayNumber(item.startDay);
-                            let endDay = getDayNumber(item.endDay);
+                            let startDay = parseInt(getDayNumber(item.startDay) );
+                            let endDay = parseInt( getDayNumber(item.endDay));
                             console.log('startDay ' + startDay);
                             console.log('endDay ' + endDay);
 
