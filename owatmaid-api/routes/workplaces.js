@@ -560,12 +560,12 @@ const specialDaylist = [];
 
                             if (startDay <= endDay) {
                                 for (let i = startDay; i <= endDay; i++) {
-                                    dayOffList.push(i);
+                                    // dayOffList.push(i);
                                 }
                             } else {
 
                                 for (let j = endDay; j <= 6; j++) {
-                                    dayOffList.push(j);
+                                    // dayOffList.push(j);
                                 }
 
                                 for (let k = 0; k <= startDay; k++) {
