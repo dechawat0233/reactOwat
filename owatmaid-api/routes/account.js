@@ -100,7 +100,7 @@ const dataList = [];
 
     if(accountData ) {
       // await accounting.deleteOne({ _id: accountData._id });
-      result  = await accounting.deleteMany({year , month , employeeId});
+      await accounting.deleteMany({year , month , employeeId});
 // console.log(`delete ${result.deletedCount} record`);
 
     }
