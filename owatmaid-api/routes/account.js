@@ -101,6 +101,7 @@ const dataList = [];
     if(accountData ) {
       // await accounting.deleteOne({ _id: accountData._id });
 await accounting.deleteMany({year , month , employeeId});
+console.log('delete all record');
 
     }
 
@@ -243,7 +244,7 @@ let startDay = getDayNumber(item.startDay);
 let endDay = getDayNumber(item.endDay);
   console.log('startDay '+ startDay );
   console.log('endDay ' + endDay );
-  
+
   if (startDay <= endDay) {
     for (let i = startDay; i <= endDay; i++) {
       dayOffList.push(i);
@@ -259,7 +260,6 @@ let endDay = getDayNumber(item.endDay);
     }
 
 }
-
 
 } catch (error) {
   console.error(error.message);
