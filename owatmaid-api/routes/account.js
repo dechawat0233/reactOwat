@@ -101,7 +101,6 @@ const dataList = [];
     if(accountData ) {
       // await accounting.deleteOne({ _id: accountData._id });
       await accounting.deleteMany({year , month , employeeId});
-// console.log(`delete ${result.deletedCount} record`);
 
     }
 
@@ -650,7 +649,7 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
 // dayOffWork += 1;
 countHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
 
-console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
+// console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
 
   } else {
     countOtHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
