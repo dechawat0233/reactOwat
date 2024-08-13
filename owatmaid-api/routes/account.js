@@ -243,24 +243,24 @@ let startDay = getDayNumber(item.startDay);
 let endDay = getDayNumber(item.endDay);
   console.log('startDay '+ startDay );
   console.log('endDay ' + endDay );
-
-  if(startDay <= endDay) {
-    if(startDay === endDay) {
-      dayOffList.push(startDay);
-    } else {
-      for(let i = startDay; i <= endDay; i++) {
-        dayOffList.push(i);
-      }
-    }
   
-  } else {
-    for(let i = endDay; i <= 6; i++){
+  if (startDay <= endDay) {
+    for (let i = startDay; i <= endDay; i++) {
       dayOffList.push(i);
     }
-    for(let j = 0; j <= startDay ; j++){
+} else {
+
+    for (let j = startDay; j <= 6; j++) {
       dayOffList.push(j);
     }
-  }
+
+    for (let k = 0; k <= endDay; k++) {
+      dayOffList.push(k);
+    }
+
+}
+
+
 } catch (error) {
   console.error(error.message);
 }
