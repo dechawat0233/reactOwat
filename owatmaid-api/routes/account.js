@@ -864,7 +864,7 @@ if (data?.accountingRecord?.amountHardWorking ?? false) {
 // await console.log(sumSocial );
 
 const intersection = await workDaylist.filter(day => specialDaylist.includes(Number(day) ));
-console.log('workDaylist :' + workDaylist );
+// console.log('workDaylist :' + workDaylist );
 console.log('');
 console.log('specialDaylist ' + JSON.stringify(specialDaylist,null,2) );
 
