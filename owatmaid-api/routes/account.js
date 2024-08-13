@@ -242,8 +242,8 @@ salary = await response.data.salary || 0;
 try {
 let startDay = getDayNumber(item.startDay);
 let endDay = getDayNumber(item.endDay);
-  console.log('startDay '+ startDay );
-  console.log('endDay ' + endDay );
+  // console.log('startDay '+ startDay );
+  // console.log('endDay ' + endDay );
 
   if (startDay <= endDay) {
     for (let i = startDay; i <= endDay; i++) {
