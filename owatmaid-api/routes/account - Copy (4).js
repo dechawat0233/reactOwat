@@ -90,7 +90,6 @@ router.post('/calsalaryemp', async (req, res) => {
       employeeId: employeeId
     };
 
-    
     //check accounting record in database
 const accountData = await accounting.findOne({year , month , employeeId});
 const dataList = [];
