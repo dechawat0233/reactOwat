@@ -113,7 +113,7 @@ if(accountData ) {
   await console.log('* isset accounting');
   // await console.log(accountData );
 await dataList .push(accountData );
-    await res.json(dataList );
+    // await res.json(dataList );
 
 } else {
   await console.log('* accounting not save');
