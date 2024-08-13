@@ -588,7 +588,7 @@ await Promise.all(promisesDeduct)
 
 addSalaryDayArray = [];  
 
-console.log('responseConclude.data.recordConclude[c].concludeRecord ' + responseConclude.data.recordConclude[0].concludeRecord);
+console.log('responseConclude.data.recordConclude[c].concludeRecord' + responseConclude.data.recordConclude[0].concludeRecord);
 
 //ss1
 for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.length; i++) {
