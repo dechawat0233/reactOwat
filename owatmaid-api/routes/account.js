@@ -644,7 +644,7 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
   console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
 
   //check work rate is not standard day
-  if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) == parseFloat(salary) ) {
+  if((parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) == parseFloat(salary)) || (parseFloat(salary)/ 30 == parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) ) ) {
     if(! workDaylist.includes(responseConclude.data.recordConclude[c].concludeRecord[i].day.split("/")[0] ) ) {
       dayOffWork += 1;
 
