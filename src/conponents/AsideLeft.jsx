@@ -260,10 +260,10 @@ function AsideLeft() {
               </li>
               {/* <li class="nav-item">
                 <Link to="/testPDFSalary" className="nav-link"><i class="nav-icon fas fa fa-cog" style={{ fontSize: "14px" }}></i> การแจ้งเตือน2</Link>
-              </li>
+              </li> */}
               <li class="nav-item">
                 <Link to="/testPDFResultSalay" className="nav-link"><i class="nav-icon fas fa fa-cog" style={{ fontSize: "14px" }}></i> การแจ้งเตือน3</Link>
-              </li> */}
+              </li>
             </ul>
           </nav>
         </div>

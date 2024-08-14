@@ -445,6 +445,11 @@ function Employee() {
   const handleReligion = (event) => {
     setReligion(event.target.value);
   };
+
+  const handleMaritalStatus = (event) => {
+    setMaritalStatus(event.target.value);
+  };
+  
   const handleMilitaryStatus = (event) => {
     setMilitaryStatus(event.target.value);
   };
@@ -1164,7 +1169,7 @@ function Employee() {
                           <div class="col-md-3">
                             <div class="form-group">
                               <label role="maritalStatus">สถานภาพการสมรส</label>
-                              <input
+                              {/* <input
                                 type="text"
                                 name="maritalStatus"
                                 class="form-control"
@@ -1174,7 +1179,23 @@ function Employee() {
                                 onChange={(e) =>
                                   setMaritalStatus(e.target.value)
                                 }
-                              />
+                              /> */}
+                              <select
+                                    required
+                                    name="maritalStatus"
+                                    id="maritalStatus"
+                                    class="form-control"
+                                    value={maritalStatus}
+                                    onChange={handleMaritalStatus}
+                                  >
+                                    <option value="">ระบุ</option>
+                                    <option value="โสด">โสด</option>
+                                    <option value="แต่งงานและอยู่ด้วยกัน">แต่งงานและอยู่ด้วยกัน</option>
+                                    <option value="แต่งงานแต่ไม่ได้อยู่ด้วยกัน">แต่งงานแต่ไม่ได้อยู่ด้วยกัน</option>
+                                    <option value="ไม่แต่งงานแต่อยู่ด้วยกัน">ไม่แต่งงานแต่อยู่ด้วยกัน</option>
+                                    <option value="หม้าย">หม้าย</option>
+                                    <option value="หย่าร้าง/แยกทาง/เลิกกัน">หย่าร้าง/แยกทาง/เลิกกัน</option>
+                                  </select>
                             </div>
                           </div>
                           <div class="col-md-3">
