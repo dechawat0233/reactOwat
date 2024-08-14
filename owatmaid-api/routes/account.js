@@ -641,7 +641,7 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
     hourThree = Number(hourThree) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
   }
 
-  console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
+  // console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
 
   //check work rate is not standard day
   if((parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate) == parseFloat(salary)) || parseFloat(salary) > 1660 ) {
@@ -892,11 +892,13 @@ let workDaySocial = await countDay - dayOffSum - s2;
 if(salary > 1660 ){
   sumSocial = await sumSocial  + (dayOffWork * (salary /30 )) + calSP ;
   sumAmountDayWork  = await parseFloat(dayOffWork) * (parseFloat(salary) /30);
+  data.accountingRecord.amountSpecialDay= await salary;
 
 } else {
   sumSocial = await sumSocial  + (dayOffWork * salary) + calSP ;
   sumAmountDayWork  = await parseFloat(dayOffWork) * parseFloat(salary);
 
+  data.accountingRecord.amountSpecialDay= await calSP ||0;
 }
 
 await console.log('countDay '+ countDay + ' dayOffSumWork ' + dayOffSumWork  + ' s2 '  +s2 + 'workDaySocial ' + workDaySocial );
@@ -906,7 +908,7 @@ console.log('workDaySocial '+ (workDaySocial * salary) + 'sumSocial '+ sumSocial
 let  calOtWork = await (parseFloat(amountDay) - parseFloat(sumAmountDayWork ) ) + parseFloat(amountOt) || 0;
 
     // Other properties
-    data.accountingRecord.amountSpecialDay= await calSP ||0;
+    // data.accountingRecord.amountSpecialDay= await calSP ||0;
     data.accountingRecord.countDayWork = await dayOffWork ||0;
     data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
     data.accountingRecord.amountCountDayWorkOt = await calOtWork ||0;
