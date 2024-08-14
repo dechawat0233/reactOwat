@@ -553,7 +553,7 @@ const specialDaylist = [];
                 workplace.workTimeDay.forEach(item => {
                     if (item.workOrStop === 'stop') {
                         try {
-                            let startDay = getDayNumber(item.startDay);
+                            let startDay = getDayNumber(item.startDay) ;
                             let endDay = getDayNumber(item.endDay);
                             console.log('startDay ' + startDay);
                             console.log('endDay ' + endDay);
@@ -563,19 +563,22 @@ const specialDaylist = [];
                                     dayOffList.push(i);
                                 }
                             } else {
-                                for (let i = endDay; i <= 6; i++) {
-                                    dayOffList.push(i);
+
+                                for (let j = startDay; j <= 6; j++) {
+                                    dayOffList.push(j);
                                 }
-                                for (let i = 0; i <= startDay; i++) {
-                                    dayOffList.push(i);
+
+                                for (let k = 0; k <= endDay; k++) {
+                                    dayOffList.push(k);
                                 }
+
                             }
                         } catch (error) {
                             console.error(error.message);
                         }
                     }
                 });
-                // console.log('dayOffList: ', dayOffList);
+                console.log('dayOffList: ', dayOffList);
             }
 
             // Convert the month string to an integer
