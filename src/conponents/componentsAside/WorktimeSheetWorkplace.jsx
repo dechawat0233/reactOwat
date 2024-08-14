@@ -384,8 +384,8 @@ function WorktimeSheetWorkplace() {
           const responseData = response.data;
           const filteredData = searchWorkplaceId
             ? responseData.filter(
-                (item) => item.workplace === searchWorkplaceId
-              )
+              (item) => item.workplace === searchWorkplaceId
+            )
             : responseData;
           const sortedData = filteredData.sort(
             (a, b) => a.employeeId - b.employeeId
@@ -900,13 +900,13 @@ function WorktimeSheetWorkplace() {
       // Calculate the number of days in the month, considering February and leap years
       const daysInMonth =
         monthset === "02" &&
-        ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0)
+          ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0)
           ? 29
           : monthset === "02"
-          ? 28
-          : [4, 6, 9, 11].includes(monthset)
-          ? 30
-          : 31;
+            ? 28
+            : [4, 6, 9, 11].includes(monthset)
+              ? 30
+              : 31;
 
       // Calculate the starting point for the table header
       let startingDay = 21;
@@ -1261,7 +1261,7 @@ function WorktimeSheetWorkplace() {
   }, [searchWorkplaceId, workplaceList]);
 
   const addSalaryWorkplace = workplaceDataListAddSalary;
-
+  console.log('addSalaryWorkplace', addSalaryWorkplace);
   // workplaceDataListAddSalary
   // วันหยุดนักขัต
   const filteredDaysOff = workplaceDataListDayOff
@@ -2612,8 +2612,8 @@ function WorktimeSheetWorkplace() {
     return dayWorkMorningAndSSs.map((subArray) =>
       subArray.map((day) =>
         allDayOff.includes(day) ||
-        holidayList.includes(day) ||
-        singleArrayOfDates.includes(day)
+          holidayList.includes(day) ||
+          singleArrayOfDates.includes(day)
           ? ""
           : day
       )
@@ -4749,12 +4749,12 @@ function WorktimeSheetWorkplace() {
 
         doc.text(
           codePage +
-            "" +
-            formattedDate +
-            "" +
-            (pageIndex + 1) +
-            " of " +
-            makePage,
+          "" +
+          formattedDate +
+          "" +
+          (pageIndex + 1) +
+          " of " +
+          makePage,
           250,
           210
         );
@@ -6310,7 +6310,28 @@ function WorktimeSheetWorkplace() {
             addSalaryWorkplace.sort((a, b) =>
               a.name.localeCompare(b.name, "th")
             );
-            addSalaryWorkplace.forEach((item, index) => {
+
+            // Create a new array to hold the unique elements
+            let uniqueSalaries = [];
+
+            // Create a Map to keep track of the lowest SpSalary for each codeSpSalary
+            let salaryMap = new Map();
+
+            // Iterate over the sorted array and populate the salaryMap
+            for (let item of addSalaryWorkplace) {
+              const { codeSpSalary, SpSalary } = item;
+              const currentSpSalary = parseFloat(SpSalary);
+              if (!salaryMap.has(codeSpSalary) || currentSpSalary < salaryMap.get(codeSpSalary).SpSalary) {
+                salaryMap.set(codeSpSalary, { ...item, SpSalary: currentSpSalary });
+              }
+            }
+
+            // Convert the Map values to an array
+            uniqueSalaries = Array.from(salaryMap.values());
+
+            // console.log('uniqueSalaries',uniqueSalaries);
+
+            uniqueSalaries.forEach((item, index) => {
               const NameSp = `${item.name} ${item.SpSalary}`;
               const CodeSp = `${item.codeSpSalary}`;
 
@@ -6324,27 +6345,27 @@ function WorktimeSheetWorkplace() {
               doc.text(
                 CodeSp,
                 5 +
-                  cellWidthSpSalary * 5 +
-                  startXSpSalary +
-                  index * cellWidthSpSalary,
+                cellWidthSpSalary * 5 +
+                startXSpSalary +
+                index * cellWidthSpSalary,
                 38,
                 { align: "center" }
               );
               doc.text(
                 NameSp,
                 5 +
-                  cellWidthSpSalary * 5 +
-                  startXSpSalary +
-                  index * cellWidthSpSalary,
+                cellWidthSpSalary * 5 +
+                startXSpSalary +
+                index * cellWidthSpSalary,
                 54.8,
                 { angle: 90 }
               );
               doc.text(
                 "ต่อ " + roundOfSalaryText,
                 8 +
-                  cellWidthSpSalary * 5 +
-                  startXSpSalary +
-                  index * cellWidthSpSalary,
+                cellWidthSpSalary * 5 +
+                startXSpSalary +
+                index * cellWidthSpSalary,
                 54.8,
                 { angle: 90 }
               );
