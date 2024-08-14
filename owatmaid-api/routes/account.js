@@ -911,7 +911,7 @@ let  calOtWork = await (parseFloat(amountDay) - parseFloat(sumAmountDayWork ) ) 
     // data.accountingRecord.amountSpecialDay= await calSP ||0;
     data.accountingRecord.countDayWork = await dayOffWork ||0;
     data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
-    data.accountingRecord.amountCountDayWorkOt = await calOtWork ||0;
+    data.accountingRecord.amountCountDayWorkOt = await 0;
     data.accountingRecord.countHourWork = await countHourWork ||0;
     data.accountingRecord.countOtHourWork = await countOtHourWork || 0;
 
