@@ -655,10 +655,9 @@ countHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeReco
 
   } else {
     countOtHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
-    console.log('test555');
 
   }
-
+console.log('countHourWork  '+ countHourWork );
   if (responseConclude.data.recordConclude[c].concludeRecord[i].workRate !== undefined) {
     countDay++;
 
