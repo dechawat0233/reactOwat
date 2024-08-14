@@ -650,12 +650,13 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
     }
 // dayOffWork += 1;
 countHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
-console.log('test555');
 
 // console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
 
   } else {
     countOtHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+    console.log('test555');
+
   }
 
   if (responseConclude.data.recordConclude[c].concludeRecord[i].workRate !== undefined) {
