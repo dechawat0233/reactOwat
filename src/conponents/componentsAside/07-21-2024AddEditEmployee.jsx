@@ -1,26 +1,19 @@
 import endpoint from "../../config";
 
 import axios from "axios";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 
 // import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
 
-import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
-import th from "date-fns/locale/th";
-import "react-datepicker/dist/react-datepicker.css";
-import moment from "moment";
-import {
-  format,
-  addYears,
-  subYears,
-  getYear,
-  setYear,
-  getMonth,
-} from "date-fns";
+import DatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
+import th from 'date-fns/locale/th';
+import 'react-datepicker/dist/react-datepicker.css';
+import moment from 'moment';
+import { format, addYears, subYears, getYear, setYear,getMonth } from 'date-fns';
 // Register the Thai locale
-registerLocale("th", th);
-setDefaultLocale("th");
+registerLocale('th', th);
+setDefaultLocale('th');
 import EmployeesSelected from "./EmployeesSelected";
 
 // const toBuddhistYear = (date, formatString) => {
@@ -30,68 +23,53 @@ import EmployeesSelected from "./EmployeesSelected";
 //     return format(date, formatString).replace(christianYear.toString(), buddhistYear.toString());
 // };
 
+
+
+
 function AddEditEmployee() {
-  const [showPopup, setShowPopup] = useState(false);
-  const [formattedDate, setFormattedDate] = useState("");
-  const popupRef = useRef(null);
-  const [dateOfBirth, setDateOfBirth] = useState(""); //วดป เกิด
+    
+const toBuddhistYear = (date) => {
+    if (!date) return '';
+    const christianYear = getYear(date);
+    const buddhistYear = christianYear + 543;
+    return format(date, `dd/MM/${buddhistYear}`);
+};
 
-  const handleDateChange = () => {
-    if (day && month && year) {
-      const date = `${day.toString().padStart(2, "0")}/${month
-        .toString()
-        .padStart(2, "0")}/${year}`;
-      setFormattedDate(date);
-      setShowPopup(false);
-      setDateOfBirth(date);
-    }
-  };
-
-  // const handleDateChange = () => {
-  //     if (day && month && year) {
-  //       const buddhistYear = parseInt(year);
-  //       const gregorianYear = buddhistYear - 543;
-  //       const dateStr = `${day.toString().padStart(2, "0")}/${month
-  //         .toString()
-  //         .padStart(2, "0")}/${year}`;
-  //       const isoDate = new Date(
-  //         gregorianYear,
-  //         parseInt(month) - 1,
-  //         parseInt(day)
-  //       );
-  //       setFormattedDate(dateStr);
-  //       setShowPopup(false);
-  //       setDateOfBirth(isoDate); // Set the dateOfBirth to a Date object
-  //       console.log("ISO Date:", isoDate); // To check the converted date format
-  //     }
-  //   };
-
-  const handleClickOutside = (event) => {
-    if (popupRef.current && !popupRef.current.contains(event.target)) {
-      setShowPopup(false);
-    }
-  };
-  console.log("formattedDate", formattedDate);
-  useEffect(() => {
-    if (showPopup) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+// Function to convert Buddhist Era year to Gregorian year
+const toGregorianYear = (buddhistYear) => {
+    return buddhistYear - 543;
+};
+    const [startDate, setStartDate] = useState(null);
+    const [agee, setAgee] = useState('');
+console.log('startDate',startDate);
+    const handleChange = (date) => {
+        setStartDate(date);
+        if (date) {
+            calculateAgee(date);
+        }
     };
-  }, [showPopup]);
 
-  const popupStyle = {
-    position: "absolute",
-    background: "white",
-    border: "1px solid #ccc",
-    padding: "10px",
-    zIndex: 1000,
-    width: "30rem",
-  };
+    const calculateAgee = (dob) => {
+        const birthDate = new Date(dob);
+        const today = new Date();
+        let ageNow = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            ageNow--;
+        }
+        setAgee(ageNow);
+    };
+    
+    const formatBuddhistYear = (date) => {
+        if (!date) return '';
+        return toBuddhistYear(moment(date), 'DD/MM/YYYY');
+    };
+
+    const parseBuddhistYear = (dateString) => {
+        const [day, month, year] = dateString.split('/').map(Number);
+        return new Date(year - 543, month - 1, day);
+    };
+
   const [storedEmp, setStoredEmp] = useState([]);
 
   const [buttonValue, setButtonValue] = useState("");
@@ -136,7 +114,7 @@ function AddEditEmployee() {
   const [lastName, setLastName] = useState(""); //นามสกุล
   const [nickName, setNickName] = useState(""); //ชื่อเล่น
   const [gender, setGender] = useState(""); //เพศ
-  //   const [dateOfBirth, setDateOfBirth] = useState(""); //วดป เกิด
+  const [dateOfBirth, setDateOfBirth] = useState(""); //วดป เกิด
   const [age, setAge] = useState(""); //อายุ
   const [idCard, setIdCard] = useState(""); //บัตรประชาชน
   const [ethnicity, setEthnicity] = useState(""); //เชื้อชาติ
@@ -200,7 +178,7 @@ function AddEditEmployee() {
   useEffect(() => {
     if (day && month && year) {
       const dob = `${day}/${month}/${year}`;
-      //   setDateOfBirth(dob);
+      setDateOfBirth(dob);
       calculateAge(dob);
     }
   }, [day, month, year]);
@@ -263,8 +241,6 @@ function AddEditEmployee() {
         console.error("Error fetching data:", error);
       });
   }, []); // The empty array [] ensures that the effect runs only once after the initial render
-
-  console.log("dateOfBirth", dateOfBirth);
 
   async function handleManageEmployee(event) {
     event.preventDefault();
@@ -377,20 +353,11 @@ function AddEditEmployee() {
   const handleGender = (event) => {
     setGender(event.target.value);
   };
-
-  const handlePrefix = (event) => {
-    setPrefix(event.target.value);
-  };
-
   const handleEthnicity = (event) => {
     setEthnicity(event.target.value);
   };
   const handleReligion = (event) => {
     setReligion(event.target.value);
-  };
-
-  const handleMaritalStatus = (event) => {
-    setMaritalStatus(event.target.value);
   };
   async function handleSearch(event) {
     event.preventDefault();
@@ -438,14 +405,12 @@ function AddEditEmployee() {
         );
 
         // setDateOfBirth(response.data.employees[0].dateOfBirth);
-        // const isoDate = response.data.employees[0].dateOfBirth;
+        const isoDate = response.data.employees[0].dateOfBirth;
         // Convert ISO date to JavaScript Date object
-        // const dateObject = new Date(isoDate);
+        const dateObject = new Date(isoDate);
         // Set the formatted date to the state
+        setDateOfBirth(dateObject);
 
-        // setDateOfBirth(response.data.employees[0].dateObject);
-        setFormattedDate(response.data.employees[0].dateOfBirth);
-        // console.log("321",response.data.employees[0].dateObject);
         setAge(response.data.employees[0].age);
         setIdCard(response.data.employees[0].idCard);
         setEthnicity(response.data.employees[0].ethnicity);
@@ -591,7 +556,7 @@ function AddEditEmployee() {
     };
   }, []);
 
-  //   console.log(workplaceList);
+  console.log(workplaceList);
 
   /////////////////
   const [selectedOption, setSelectedOption] = useState("agencytime");
@@ -700,10 +665,7 @@ function AddEditEmployee() {
                                     }}
                                   >
                                     {searchResult.map((workplace) => (
-                                      <li
-                                        key={workplace.id}
-                                        style={{ cursor: "pointer" }}
-                                      >
+                                      <li key={workplace.id}>
                                         รหัส {workplace.employeeId} ชื่อ{" "}
                                         {workplace.name} {workplace.lastName}
                                         <button
@@ -744,7 +706,6 @@ function AddEditEmployee() {
                                 <div class="form-group">
                                   <label role="prefix">รหัส</label>
                                   <input
-                                    required
                                     type="text"
                                     class="form-control"
                                     id="employeeId"
@@ -760,7 +721,6 @@ function AddEditEmployee() {
                                 <div class="form-group">
                                   <label role="name">หน่วยงาน</label>
                                   <input
-                                    required
                                     type="text"
                                     id="workplace"
                                     name="workplace"
@@ -787,7 +747,6 @@ function AddEditEmployee() {
                                 <div class="form-group">
                                   <label role="lastName">ตำแหน่ง</label>
                                   <input
-                                    required
                                     type="text"
                                     class="form-control"
                                     id="position"
@@ -820,20 +779,14 @@ function AddEditEmployee() {
                                   <label role="name">ประเภทการจ้าง</label>
                                   {/* <input type="text" name="jobtype" class="form-control" id="jobtype" placeholder="ประเภทการจ้าง"  /> */}
                                   <select
-                                    required
                                     name="jobtype"
                                     className="form-control"
                                     value={jobtype}
                                     onChange={(e) => setJobtype(e.target.value)}
                                   >
-                                    {/* <option value="">เลือกวัน</option>
+                                    <option value="">เลือกวัน</option>
                                     <option value="daily">รายวัน</option>
-                                    <option value="monthly">รายเดือน</option> */}
-                                    <option value="">ไม่ระบุ</option>
-                                    <option value="ประจำ">ประจำ</option>
-                                    <option value="ไม่ประจำ">ไม่ประจำ</option>
-                                    <option value="รายวัน">รายวัน</option>
-                                    <option value="รายครั้ง">รายครั้ง</option>
+                                    <option value="monthly">รายเดือน</option>
                                   </select>
                                 </div>
                               </div>
@@ -842,8 +795,7 @@ function AddEditEmployee() {
                               <div class="col-md-3">
                                 <div class="form-group">
                                   <label role="prefix">คำนำหน้า</label>
-                                  {/* <input
-                                    required
+                                  <input
                                     type="text"
                                     name="prefix"
                                     class="form-control"
@@ -851,30 +803,13 @@ function AddEditEmployee() {
                                     placeholder="คำนำหน้า"
                                     value={prefix}
                                     onChange={(e) => setPrefix(e.target.value)}
-                                  /> */}
-                                  <select
-                                    required
-                                    name="prefix"
-                                    id="prefix"
-                                    class="form-control"
-                                    value={prefix}
-                                    onChange={handlePrefix}
-                                  >
-                                    <option value="">ระบุ</option>
-                                    <option value="นาย">นาย</option>
-                                    <option value="นาง">นาง</option>
-                                    <option value="นางสาว">นางสาว</option>
-                                    <option value="Mr.">Mr.</option>
-                                    <option value="Mrs.">Mrs.</option>
-                                    <option value="Miss">Miss</option>
-                                  </select>
+                                  />
                                 </div>
                               </div>
                               <div class="col-md-3">
                                 <div class="form-group">
                                   <label role="name">ชื่อ</label>
                                   <input
-                                    required
                                     type="text"
                                     name="name"
                                     class="form-control"
@@ -889,7 +824,6 @@ function AddEditEmployee() {
                                 <div class="form-group">
                                   <label role="lastName">นามสกุล</label>
                                   <input
-                                    required
                                     type="text"
                                     name="lastName"
                                     class="form-control"
@@ -925,23 +859,25 @@ function AddEditEmployee() {
                                 <label role="dateOfBirth">เพศ</label>
                               </div>
 
-                              <div class="col-md-3">
-                                <label role="dateOfBirth">วันเดือนปีเกิด</label>
+                              <div class="col-md-2">
+                                <label role="dateOfBirth">วัน</label>
                               </div>
-                              <div class="col-md-3">
-                                <label role="dateOfBirth">อายุ</label>
+                              <div class="col-md-2">
+                                <label role="dateOfBirth">เดือน</label>
                               </div>
-                              {/* <div class="col-md-2">
+                              <div class="col-md-2">
                                 <label role="dateOfBirth">ปีเกิด</label>
-                              </div> */}
+                              </div>
                               <div class="col-md-3">
                                 {" "}
-                                <label role="age">เลขบัตรประจำตัวประชาชน</label>
+                                <label role="age">อายุ</label>
                               </div>
                             </div>
                             <div class="row">
                               <div class="col-md-3">
                                 <div class="form-group">
+                                  {/* <label role="gender">เพศ</label> */}
+                                  {/* <input type="text" name="gender" class="form-control" id="gender" placeholder="เพศ" value={gender} onChange={(e) => setGender(e.target.value)} /> */}
                                   <select
                                     name="gender"
                                     id="gender"
@@ -956,9 +892,25 @@ function AddEditEmployee() {
                                 </div>
                               </div>
 
-                              {/* <div class="col-md-2">
+                              <div class="col-md-2">
                                 <div class="form-group">
-                        
+                                  {/* <div
+                                    style={{
+                                      position: "relative",
+                                      zIndex: 9999,
+                                    }}
+                                  >
+                                    <DatePicker
+                                      id="dateOfBirth"
+                                      name="dateOfBirth"
+                                      className="form-control"
+                                      popperClassName="datepicker-popper"
+                                      selected={dateOfBirth}
+                                      onChange={handleDateOfBirth}
+                                      dateFormat="dd/MM/yyyy"
+                                      autocomplete="off"
+                                    />
+                                  </div> */}
                                   <select
                                     name="day"
                                     className="form-control mr-1"
@@ -1003,92 +955,18 @@ function AddEditEmployee() {
                                     </option>
                                   ))}
                                 </select>
-                              </div> */}
-                              <div className="col-md-3">
-                                <div className="form-group">
-                                  {/* <label htmlFor="date">วันเกิด</label> */}
-                                  <input
-                                    required
-                                    type="text"
-                                    className="form-control"
-                                    value={formattedDate}
-                                    placeholder="dd/mm/yyyy"
-                                    readOnly
-                                    onClick={() => setShowPopup(true)}
-                                  />
-                                  {showPopup && (
-                                    <div
-                                      className="date-popup"
-                                      style={popupStyle}
-                                    >
-                                      <div className="row">
-                                        <div className="col-md-4">วัน</div>
-                                        <div className="col-md-4">เดือน</div>
-                                        <div className="col-md-4">ปี</div>
-                                      </div>
-                                      <div className="row">
-                                        <div className="col-md-4">
-                                          <select
-                                            name="day"
-                                            className="form-control mr-1"
-                                            value={day}
-                                            onChange={(e) =>
-                                              setDay(e.target.value)
-                                            }
-                                          >
-                                            <option value="">วัน</option>
-                                            {days.map((d) => (
-                                              <option key={d} value={d}>
-                                                {d}
-                                              </option>
-                                            ))}
-                                          </select>
-                                        </div>
-                                        <div className="col-md-4">
-                                          <select
-                                            name="month"
-                                            className="form-control mr-1"
-                                            value={month}
-                                            onChange={(e) =>
-                                              setMonth(e.target.value)
-                                            }
-                                          >
-                                            <option value="">เดือน</option>
-                                            {months.map((m) => (
-                                              <option key={m} value={m}>
-                                                {m}
-                                              </option>
-                                            ))}
-                                          </select>
-                                        </div>
-                                        <div className="col-md-4">
-                                          <select
-                                            name="year"
-                                            className="form-control"
-                                            value={year}
-                                            onChange={(e) =>
-                                              setYear(e.target.value)
-                                            }
-                                          >
-                                            <option value="">ปี</option>
-                                            {years.map((y) => (
-                                              <option key={y} value={y + 543}>
-                                                {y + 543}
-                                              </option>
-                                            ))}
-                                          </select>
-                                        </div>
-                                      </div>
-                                      <button
-                                        onClick={handleDateChange}
-                                        className="btn btn-primary mt-2"
-                                      >
-                                        ตกลง
-                                      </button>
-                                    </div>
-                                  )}
-                                </div>
                               </div>
+
+                              {/* <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label role="dateOfBirth">วันเดือนปีเกิด</label>
+                                                            <DatePicker id="dateOfBirth" name="dateOfBirth"
+                                                                selected={dateOfBirth}
+                                                                onChange={handleDateOfBirth}
+                                                                dateFormat="dd/MM/yyyy" />
+                                                        </div>
+                                                    </div> */}
+
                               <div class="col-md-3">
                                 <div class="form-group">
                                   {/* <label role="age">อายุ</label> */}
@@ -1104,13 +982,14 @@ function AddEditEmployee() {
                                   />
                                 </div>
                               </div>
+                            </div>
+                            <div class="row">
                               <div class="col-md-3">
                                 <div class="form-group">
-                                  {/* <label role="idCard">
+                                  <label role="idCard">
                                     เลขบัตรประจำตัวประชาชน
-                                  </label> */}
+                                  </label>
                                   <input
-                                    required
                                     type="text"
                                     name="idCard"
                                     class="form-control"
@@ -1122,7 +1001,6 @@ function AddEditEmployee() {
                                 </div>
                               </div>
                             </div>
-                            <div class="row"></div>
                             <div class="row">
                               <div class="col-md-3">
                                 <div class="form-group">
@@ -1139,7 +1017,6 @@ function AddEditEmployee() {
                                     }
                                   /> */}
                                   <select
-                                    required
                                     name="ethnicity"
                                     id="ethnicity"
                                     class="form-control"
@@ -1169,7 +1046,6 @@ function AddEditEmployee() {
                                     }
                                   /> */}
                                   <select
-                                    required
                                     name="religion"
                                     id="religion"
                                     class="form-control"
@@ -1188,8 +1064,7 @@ function AddEditEmployee() {
                                   <label role="maritalStatus">
                                     สถานภาพการสมรส
                                   </label>
-                                  {/* <input
-                                    required
+                                  <input
                                     type="text"
                                     name="maritalStatus"
                                     class="form-control"
@@ -1199,23 +1074,7 @@ function AddEditEmployee() {
                                     onChange={(e) =>
                                       setMaritalStatus(e.target.value)
                                     }
-                                  /> */}
-                                  <select
-                                    required
-                                    name="maritalStatus"
-                                    id="maritalStatus"
-                                    class="form-control"
-                                    value={maritalStatus}
-                                    onChange={handleMaritalStatus}
-                                  >
-                                    <option value="">ระบุ</option>
-                                    <option value="โสด">โสด</option>
-                                    <option value="แต่งงานและอยู่ด้วยกัน">แต่งงานและอยู่ด้วยกัน</option>
-                                    <option value="แต่งงานแต่ไม่ได้อยู่ด้วยกัน">แต่งงานแต่ไม่ได้อยู่ด้วยกัน</option>
-                                    <option value="ไม่แต่งงานแต่อยู่ด้วยกัน">ไม่แต่งงานแต่อยู่ด้วยกัน</option>
-                                    <option value="หม้าย">หม้าย</option>
-                                    <option value="หย่าร้าง/แยกทาง/เลิกกัน">หย่าร้าง/แยกทาง/เลิกกัน</option>
-                                  </select>
+                                  />
                                 </div>
                               </div>
                               <div class="col-md-3">
@@ -1313,7 +1172,6 @@ function AddEditEmployee() {
                                     เบอร์ติดต่อกรณีฉุกเฉิน
                                   </label>
                                   <input
-                                    required
                                     type="text"
                                     name="emergencyContactNumber"
                                     class="form-control"
@@ -1376,78 +1234,173 @@ function AddEditEmployee() {
                       </button>{" "}
                     </div>
                   </form>
-                  {/* <div className="col-md-6">
-                    <div className="form-group">
-                      <label htmlFor="date">วันเกิด</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={formattedDate}
-                        placeholder="dd/mm/yyyy"
-                        readOnly
-                        onClick={() => setShowPopup(true)}
-                      />
-                      {showPopup && (
-                        <div className="date-popup" style={popupStyle}>
-                          <div className="row">
-                            <div className="col-md-4">
-                              <select
-                                name="day"
-                                className="form-control mr-1"
-                                value={day}
-                                onChange={(e) => setDay(e.target.value)}
-                              >
-                                <option value="">วัน</option>
-                                {days.map((d) => (
-                                  <option key={d} value={d}>
-                                    {d}
-                                  </option>
+                 <div className="col-md-3">
+            <div className="form-group">
+                <label>วันเกิด</label>
+                {/* <DatePicker
+                    selected={startDate}
+                    onChange={handleChange}
+                    dateFormat="dd/MM/yyyy"
+                    placeholderText="เลือกวันเกิด"
+                    className="form-control"
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
+                    renderCustomHeader={({
+                        date,
+                        changeYear,
+                        changeMonth,
+                        decreaseMonth,
+                        increaseMonth,
+                        prevMonthButtonDisabled,
+                        nextMonthButtonDisabled,
+                    }) => (
+                        <div className="custom-header">
+                            <button
+                                onClick={decreaseMonth}
+                                disabled={prevMonthButtonDisabled}
+                            >
+                                {"<"}
+                            </button>
+                            <select
+                                value={getYear(date) + 543}
+                                onChange={({ target: { value } }) =>
+                                    changeYear(value - 543)
+                                }
+                            >
+                                {Array.from(
+                                    { length: 101 },
+                                    (_, i) => getYear(new Date()) - 50 + i + 543
+                                ).map((option) => (
+                                    <option key={option} value={option}>
+                                        {option}
+                                    </option>
                                 ))}
-                              </select>
-                            </div>
-                            <div className="col-md-4">
-                              <select
-                                name="month"
-                                className="form-control mr-1"
-                                value={month}
-                                onChange={(e) => setMonth(e.target.value)}
-                              >
-                                <option value="">เดือน</option>
-                                {months.map((m) => (
-                                  <option key={m} value={m}>
-                                    {m}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-                            <div className="col-md-4">
-                              <select
-                                name="year"
-                                className="form-control"
-                                value={year}
-                                onChange={(e) => setYear(e.target.value)}
-                              >
-                                <option value="">ปี</option>
-                                {years.map((y) => (
-                                  <option key={y} value={y + 543}>
-                                    {y + 543}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-                          </div>
-                          <button
-                            onClick={handleDateChange}
-                            className="btn btn-primary mt-2"
-                          >
-                            ตกลง
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  </div> */}
+                            </select>
 
-                  {/* ///////////////////////////// */}
+                            <select
+                                value={getMonth(date)}
+                                onChange={({ target: { value } }) =>
+                                    changeMonth(value)
+                                }
+                            >
+                                {Array.from(
+                                    { length: 12 },
+                                    (_, i) => i
+                                ).map((option) => (
+                                    <option key={option} value={option}>
+                                        {option + 1}
+                                    </option>
+                                ))}
+                            </select>
+
+                            <button
+                                onClick={increaseMonth}
+                                disabled={nextMonthButtonDisabled}
+                            >
+                                {">"}
+                            </button>
+                        </div>
+                    )}
+                    customInput={
+                        <input
+                            type="text"
+                            value={startDate ? toBuddhistYear(startDate, 'dd/MM/yyyy') : ''}
+                            readOnly
+                            className="form-control"
+                        />
+                    }
+                /> */}
+
+<DatePicker
+                    selected={startDate}
+                    onChange={handleChange}
+                    dateFormat="dd/MM/yyyy"
+                    placeholderText="เลือกวันเกิด"
+                    className="form-control"
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
+                    locale={th}
+                    renderCustomHeader={({
+                        date,
+                        changeYear,
+                        changeMonth,
+                        decreaseMonth,
+                        increaseMonth,
+                        prevMonthButtonDisabled,
+                        nextMonthButtonDisabled,
+                    }) => (
+                        <div className="custom-header">
+                            <button
+                                onClick={decreaseMonth}
+                                disabled={prevMonthButtonDisabled}
+                            >
+                                {"<"}
+                            </button>
+                            <select
+                                value={getYear(date) + 543}
+                                onChange={({ target: { value } }) =>
+                                    changeYear(toGregorianYear(parseInt(value)))
+                                }
+                            >
+                                {Array.from(
+                                    { length: 101 },
+                                    (_, i) => getYear(new Date()) - 50 + i + 543
+                                ).map((option) => (
+                                    <option key={option} value={option}>
+                                        {option}
+                                    </option>
+                                ))}
+                            </select>
+
+                            <select
+                                value={getMonth(date)}
+                                onChange={({ target: { value } }) =>
+                                    changeMonth(parseInt(value))
+                                }
+                            >
+                                {Array.from(
+                                    { length: 12 },
+                                    (_, i) => i
+                                ).map((option) => (
+                                    <option key={option} value={option}>
+                                        {option + 1}
+                                    </option>
+                                ))}
+                            </select>
+
+                            <button
+                                onClick={increaseMonth}
+                                disabled={nextMonthButtonDisabled}
+                            >
+                                {">"}
+                            </button>
+                        </div>
+                    )}
+                    customInput={
+                        <input
+                            type="text"
+                            value={startDate ? toBuddhistYear(startDate) : ''}
+                            readOnly
+                            className="form-control"
+                        />
+                    }
+                />
+            </div>
+            <div className="form-group">
+                <label>อายุ</label>
+                <input
+                    type="text"
+                    name="agee"
+                    className="form-control"
+                    id="agee"
+                    placeholder="อายุ"
+                    value={agee}
+                    readOnly
+                />
+            </div>
+        </div>
                 </div>
               </div>
             </div>

@@ -90,7 +90,6 @@ router.post('/calsalaryemp', async (req, res) => {
       employeeId: employeeId
     };
 
-    
     //check accounting record in database
 const accountData = await accounting.findOne({year , month , employeeId});
 const dataList = [];
@@ -100,8 +99,8 @@ const dataList = [];
 
     if(accountData ) {
       // await accounting.deleteOne({ _id: accountData._id });
-      await accounting.deleteMany({year , month , employeeId});
-accountData  = null;
+await accounting.deleteMany({year , month , employeeId});
+
     }
 
   }
@@ -241,25 +240,26 @@ salary = await response.data.salary || 0;
 try {
 let startDay = getDayNumber(item.startDay);
 let endDay = getDayNumber(item.endDay);
-  // console.log('startDay '+ startDay );
-  // console.log('endDay ' + endDay );
+  console.log('startDay '+ startDay );
+  console.log('endDay ' + endDay );
 
-  if (startDay <= endDay) {
-    for (let i = startDay; i <= endDay; i++) {
+  if(startDay <= endDay) {
+    if(startDay === endDay) {
+      dayOffList.push(startDay);
+    } else {
+      for(let i = startDay; i <= endDay; i++) {
+        dayOffList.push(i);
+      }
+    }
+  
+  } else {
+    for(let i = endDay; i <= 6; i++){
       dayOffList.push(i);
     }
-} else {
-
-    for (let j = startDay; j <= 6; j++) {
+    for(let j = 0; j <= startDay ; j++){
       dayOffList.push(j);
     }
-
-    for (let k = 0; k <= endDay; k++) {
-      dayOffList.push(k);
-    }
-
-}
-
+  }
 } catch (error) {
   console.error(error.message);
 }
@@ -588,8 +588,6 @@ await Promise.all(promisesDeduct)
 
 addSalaryDayArray = [];  
 
-console.log('responseConclude.data.recordConclude[c].concludeRecord' + responseConclude.data.recordConclude[0].concludeRecord);
-
 //ss1
 for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.length; i++) {
   amountDay += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0);
@@ -641,7 +639,7 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
     hourThree = Number(hourThree) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
   }
 
-  // console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
+  console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
   //check work rate is not standard day
   if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) == parseFloat(salary) ) {
     if(! workDaylist.includes(responseConclude.data.recordConclude[c].concludeRecord[i].day.split("/")[0] ) ) {
@@ -651,7 +649,7 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
 // dayOffWork += 1;
 countHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
 
-// console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
+console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
 
   } else {
     countOtHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
@@ -865,7 +863,7 @@ if (data?.accountingRecord?.amountHardWorking ?? false) {
 // await console.log(sumSocial );
 
 const intersection = await workDaylist.filter(day => specialDaylist.includes(Number(day) ));
-// console.log('workDaylist :' + workDaylist );
+console.log('workDaylist :' + workDaylist );
 console.log('');
 console.log('specialDaylist ' + JSON.stringify(specialDaylist,null,2) );
 

@@ -277,6 +277,51 @@ router.get('/:workplaceId', async (req, res) => {
 });
 
 
+router.post('/getaddsalary', async (req, res) => {
+    const ans = [];
+
+    try {
+        const {wIdList} = await req.body;
+
+        // await console.log('wIdList : ' + wIdList);
+        let uniqueArray = await [...new Set(wIdList)];
+
+// console.log('wIdList : ' + uniqueArray); // Output: ['123', '456']
+if(uniqueArray.length <= 0) {
+    res.status(200).json({});
+}
+
+
+for (let i = 0; i < uniqueArray.length; i++) {
+    // await console.log(uniqueArray[i]);
+    const query = {};
+query.workplaceId = await uniqueArray[i];
+
+        // Query the workplace collection for matching documents
+        const workplaces = await Workplace.find(query);
+if(workplaces ) {
+    await ans.push(workplaces[0] );
+}
+
+} //end for
+
+if(ans.length > 0 ) {
+    await res.status(200).json({ ans});
+} else{
+    await res.status(200).json();
+
+}
+
+    } catch (error) {
+        console.error(error);
+        // res.status(500).json({ message: 'Internal server error' });
+    }
+
+
+});
+
+
+
 router.post('/search', async (req, res) => {
     try {
         const { searchWorkplaceId, searchWorkplaceName } = req.body;
@@ -305,8 +350,8 @@ router.post('/search', async (req, res) => {
         // Query the workplace collection for matching documents
         const workplaces = await Workplace.find(query);
 
-        await console.log('Search Results:');
-        await console.log(workplaces);
+        // await console.log('Search Results:');
+        // await console.log(workplaces);
         let textSearch = 'workplace';
         await res.status(200).json({ workplaces });
     } catch (error) {
@@ -508,7 +553,7 @@ const specialDaylist = [];
                 workplace.workTimeDay.forEach(item => {
                     if (item.workOrStop === 'stop') {
                         try {
-                            let startDay = getDayNumber(item.startDay);
+                            let startDay = getDayNumber(item.startDay) ;
                             let endDay = getDayNumber(item.endDay);
                             console.log('startDay ' + startDay);
                             console.log('endDay ' + endDay);
@@ -518,12 +563,15 @@ const specialDaylist = [];
                                     dayOffList.push(i);
                                 }
                             } else {
-                                for (let i = endDay; i <= 6; i++) {
-                                    dayOffList.push(i);
+
+                                for (let j = startDay; j <= 6; j++) {
+                                    dayOffList.push(j);
                                 }
-                                for (let i = 0; i <= startDay; i++) {
-                                    dayOffList.push(i);
+
+                                for (let k = 0; k <= endDay; k++) {
+                                    dayOffList.push(k);
                                 }
+
                             }
                         } catch (error) {
                             console.error(error.message);
@@ -553,35 +601,35 @@ const specialDaylist = [];
             // Get the number of days in the previous month
             let endM1 = new Date(year, previousMonthX, 0).getDate();
 
-            console.log(`Processing dates for the period: ${year}-${month} (previous month: ${previousMonthStringX}, end day: ${endM1})`);
+            // console.log(`Processing dates for the period: ${year}-${month} (previous month: ${previousMonthStringX}, end day: ${endM1})`);
 
             for (let m1 = 21; m1 <= endM1; m1++) {
                 let dateString = `${year}-${previousMonthStringX}-${m1.toString().padStart(2, '0')}`;
                 let dayNumber = new Date(dateString).getDay();
-                console.log(`m1 loop: dateString ${dateString}, dayNumber ${dayNumber}`);
+                // console.log(`m1 loop: dateString ${dateString}, dayNumber ${dayNumber}`);
                 if (dayOffList.includes(dayNumber)) {
-                    console.log(`*Adding day off for date ${dateString} with dayNumber ${dayNumber}`);
+                    // console.log(`*Adding day off for date ${dateString} with dayNumber ${dayNumber}`);
                     dayOffSum += 1;
                     workplaceDayOffList.push(dateString);
                 }
-                console.log('dayOffSum after m1 loop ' + dayOffSum);
+                // console.log('dayOffSum after m1 loop ' + dayOffSum);
             }
 
             for (let m2 = 1; m2 <= 20; m2++) {
                 let dateString = `${year}-${monthInteger.toString().padStart(2, '0')}-${m2.toString().padStart(2, '0')}`;
                 let dayNumber = new Date(dateString).getDay();
-                console.log(`m2 loop: dateString ${dateString}, dayNumber ${dayNumber}`);
+                // console.log(`m2 loop: dateString ${dateString}, dayNumber ${dayNumber}`);
                 if (dayOffList.includes(dayNumber)) {
-                    console.log(`Adding day off for date ${dateString} with dayNumber ${dayNumber}`);
+                    // console.log(`Adding day off for date ${dateString} with dayNumber ${dayNumber}`);
                     dayOffSum += 1;
                     workplaceDayOffList.push(dateString);
 
                 }
-                console.log('dayOffSum after m2 loop ' + dayOffSum);
+                // console.log('dayOffSum after m2 loop ' + dayOffSum);
             }
 
-            console.log('final dayOffSum ' + dayOffSum);
-            console.log('workplaceDayOffList' + workplaceDayOffList);
+            // console.log('final dayOffSum ' + dayOffSum);
+            // console.log('workplaceDayOffList' + workplaceDayOffList);
 // console.log('daysOff '+ workplace.daysOff);
             // Process daysOff
             await Promise.all(workplace.daysOff.map(async item => {
@@ -633,7 +681,7 @@ const specialDaylist = [];
                 }
             }));
 
-            console.log('specialDaylist: ', specialDaylist);
+            // console.log('specialDaylist: ', specialDaylist);
 
 
 

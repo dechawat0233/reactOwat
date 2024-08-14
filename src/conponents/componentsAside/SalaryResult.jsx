@@ -323,6 +323,7 @@ const [wsCountOtHourWork, setWsCountOtHourWork] = useState(0);
 
               if(updateStatus !== '') {
 alert('ระบบทำการคำนวนใหม่แล้ว กรุณากดค้นหาอีกครั้ง');
+handleReLoad();
               }
               setUpdateStatus('');
               await setAccountingData(response.data[0]);
@@ -1430,6 +1431,75 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
 
   }
 
+function handleReLoad() {
+  const fetchData = async () => {
+    if (year !== '' && month !== '' && staffId !== '') {
+      const dataTest = await {
+        employeeId: staffId || '',
+        year: year || '',
+        month: month || '',
+        updateStatus: updateStatus || '',
+      };
+
+      await setAddSalaryList([]);
+      await axios.post(endpoint + '/accounting/calsalaryemp', dataTest)
+        .then(async response => {
+          const responseData = await response.data;
+          // alert(JSON.stringify(responseData ,null,2));
+
+          if (response.data) {
+
+            if(updateStatus !== '') {
+alert('ระบบทำการคำนวนใหม่แล้ว กรุณากดค้นหาอีกครั้ง');
+            }
+            setUpdateStatus('');
+            await setAccountingData(response.data[0]);
+            await setWsAmountSpecialDay(response.data[0].accountingRecord.amountSpecialDay || response.data[0].accountingRecord[0].amountSpecialDay);
+            await setWsAmountSpecialDayx(response.data[0].accountingRecord.amountSpecialDay || response.data[0].accountingRecord[0].amountSpecialDay);
+
+            await setWsAmountDay(parseFloat(response.data[0].accountingRecord.amountDay) || parseFloat(response.data[0].accountingRecord[0].amountDay));
+            await setWsAmountOt(response.data[0].accountingRecord.amountOt || response.data[0].accountingRecord[0].amountOt);
+            await setWsSocialSecurity(response.data[0].accountingRecord.socialSecurity || response.data[0].accountingRecord[0].socialSecurity);
+            await setWsSocialSecurityX(response.data[0].accountingRecord.socialSecurity || response.data[0].accountingRecord[0].socialSecurity);
+
+            await setWsTax(response.data[0].accountingRecord.tax || response.data[0].accountingRecord[0].tax);
+            await setWsTotal(response.data[0].accountingRecord.total || response.data[0].accountingRecord[0].total);
+
+            await setWsCountDayWork(response.data[0].accountingRecord.countDayWork || response.data[0].accountingRecord[0].countDayWork);
+            await setWsAmountCountDayWork(response.data[0].accountingRecord.amountCountDayWork|| response.data[0].accountingRecord[0].amountCountDayWork);
+            await setWsAmountCountDayWorkOt(response.data[0].accountingRecord.amountCountDayWorkOt || response.data[0].accountingRecord[0].amountCountDayWorkOt);
+            await setWsCountHourWork(response.data[0].accountingRecord.countHourWork || response.data[0].accountingRecord[0].countHourWork);
+            await setWsCountOtHourWork(response.data[0].accountingRecord.countOtHourWork || response.data[0].accountingRecord[0].countOtHourWork);
+            
+            await setAddSalaryList(response.data[0].addSalary);
+            if (response.data[0].addSalary) {
+              let tmp = 0;
+              response.data[0].addSalary.map(item => {
+                tmp += parseFloat(item.SpSalary);
+              });
+              setSumAddSalaryList(tmp);
+            }
+            // alert(response.data[0].addSalary.length);
+            setDeductSalaryList(response.data[0].deductSalary);
+            // alert(JSON.stringify(response.data[0].addSalary,null,2));
+          }
+          console.log('responseData', responseData);
+          const filteredData = responseData.filter(item => item.employeeId === staffId);
+          console.log('filteredData', filteredData);
+          setCalsalarylist(filteredData);
+
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
+  };
+
+  // Call fetchData when year or month changes
+  fetchData();
+
+}
+console.log('wsCountDayWork',wsCountDayWork);
   return (
     // <div>
 
@@ -1996,7 +2066,7 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
                 <button type="button" onClick={handleSaveAccounting} class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
 
                 {/* <Link to="/Salaryresult"> */}
-                <button type="button" class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
+                <button type="button" onClick={handleReLoad} class="btn clean" ><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
                 {/* </Link > */}
 
               </div>

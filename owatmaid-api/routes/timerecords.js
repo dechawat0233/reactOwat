@@ -265,8 +265,8 @@ router.post('/searchemp', async (req, res) => {
       query.timerecordId = { $regex: new RegExp(timerecordId , 'i') };
     }
 
-    console.log('Constructed Query:');
-    console.log(query);
+    // console.log('Constructed Query:');
+    // console.log(query);
 
     if (employeeId == '' && employeeName == '' && month == '' && timerecordId == '') {
       res.status(200).json({});
@@ -275,8 +275,8 @@ router.post('/searchemp', async (req, res) => {
     // Query the workplace collection for matching documents
     const recordworkplace  = await workplaceTimerecordEmp.find(query);
 
-    await console.log('Search Results:');
-    await console.log(recordworkplace  );
+    // await console.log('Search Results:');
+    // await console.log(recordworkplace  );
     let textSearch = 'workplace';
     await res.status(200).json({ recordworkplace  });
   } catch (error) {
