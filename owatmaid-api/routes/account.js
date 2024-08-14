@@ -101,7 +101,7 @@ const dataList = [];
     if(accountData ) {
       // await accounting.deleteOne({ _id: accountData._id });
       await accounting.deleteMany({year , month , employeeId});
-accountData  = null;
+accountData  = await null;
     }
 
   }
@@ -642,11 +642,11 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
   }
 
   // console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
+
   //check work rate is not standard day
-  if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) == parseFloat(salary) ) {
+  if((parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate) == parseFloat(salary)) || parseFloat(salary) > 1660 ) {
     if(! workDaylist.includes(responseConclude.data.recordConclude[c].concludeRecord[i].day.split("/")[0] ) ) {
       dayOffWork += 1;
-
     }
 // dayOffWork += 1;
 countHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
@@ -655,6 +655,7 @@ countHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeReco
 
   } else {
     countOtHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+
   }
 
   if (responseConclude.data.recordConclude[c].concludeRecord[i].workRate !== undefined) {
@@ -887,20 +888,35 @@ console.log('calSP '+ calSP );
 
 let workDaySocial = await countDay - dayOffSum - s2;
 
-sumSocial = await sumSocial  + (dayOffWork * salary) + calSP ;
+
+if(salary > 1660 ){
+  sumSocial = await sumSocial  + (dayOffWork * (salary /30 )) + calSP ;
+  sumAmountDayWork  = await parseFloat(dayOffWork) * (parseFloat(salary) /30);
+  let  calOtWork = await amountOt;
+
+  data.accountingRecord.amountSpecialDay= await salary;
+data.accountingRecord.amountCountDayWorkOt = await calOtWork ||0;
+
+} else {
+  sumSocial = await sumSocial  + (dayOffWork * salary) + calSP ;
+  sumAmountDayWork  = await parseFloat(dayOffWork) * parseFloat(salary);
+  let  calOtWork = await (parseFloat(amountDay) - parseFloat(sumAmountDayWork ) ) + parseFloat(amountOt) || 0;
+
+  data.accountingRecord.amountSpecialDay= await calSP ||0;
+  data.accountingRecord.amountCountDayWorkOt = await calOtWork ||0;
+
+}
 
 await console.log('countDay '+ countDay + ' dayOffSumWork ' + dayOffSumWork  + ' s2 '  +s2 + 'workDaySocial ' + workDaySocial );
-
 console.log('workDaySocial '+ (workDaySocial * salary) + 'sumSocial '+ sumSocial );
 
-sumAmountDayWork  = await parseFloat(dayOffWork) * parseFloat(salary);
-let  calOtWork = await (parseFloat(amountDay) - parseFloat(sumAmountDayWork ) ) + parseFloat(amountOt) || 0;
+
 
     // Other properties
-    data.accountingRecord.amountSpecialDay= await calSP ||0;
+    // data.accountingRecord.amountSpecialDay= await calSP ||0;
     data.accountingRecord.countDayWork = await dayOffWork ||0;
     data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
-    data.accountingRecord.amountCountDayWorkOt = await calOtWork ||0;
+    // data.accountingRecord.amountCountDayWorkOt = await calOtWork ||0;
     data.accountingRecord.countHourWork = await countHourWork ||0;
     data.accountingRecord.countOtHourWork = await countOtHourWork || 0;
 
