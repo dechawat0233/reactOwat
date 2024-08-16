@@ -14,6 +14,7 @@ function AddEditSalaryEmployee() {
         borderLeft: '2px solid #000'
     };
 
+    
     const [newWorkplace, setNewWorkplace] = useState(true);
 
     const [searchEmployeeId, setSearchEmployeeId] = useState('');
