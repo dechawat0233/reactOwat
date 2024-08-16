@@ -645,8 +645,8 @@ console.log('special day off rate');
 
       //get workplaceId in first employee_workplaceRecord
       // let wpId = data.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
-      let wpId = dataEmp.employees[0].workplace || '';
-      let salary = dataEmp.employees[0].salary || 0;
+      let wpId = await dataEmp.employees[0].workplace || '';
+      let salary = await dataEmp.employees[0].salary || 0;
       if(parseFloat(salary ) >= 1660) {
         salary  = parseFloat(salary) / 30;
       }
