@@ -718,7 +718,7 @@ console.log('special day off rate');
             
             // console.log('str1  : ' + str1 )
             // console.log('tmpWP.data.workRate ' + tmpWP.data.workRate);
-
+console.log('s1 ' + salary);
             tmp.day = str1 + '/' + month + '/' + year;
             tmp.workplaceId = element.workplaceId || '';
             let parts = element.allTime.split('.');
