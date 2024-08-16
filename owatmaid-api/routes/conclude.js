@@ -829,6 +829,7 @@ console.log('special day off rate');
               } else {
                 if (salary == 0) {
                   salary = tmpWP.data.workRate;
+                  console.log('test');
                 }
 console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
 
