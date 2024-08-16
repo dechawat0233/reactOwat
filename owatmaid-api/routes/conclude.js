@@ -786,6 +786,7 @@ console.log('special day off rate');
                 sumWorkHourOt += parseFloat(otTime) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
 
+                salary = 0;
                 workRate = 0;
                 workRateOT = 0;
                 tmp.workType = 'specialDayOff';
@@ -822,6 +823,7 @@ console.log('special day off rate');
                 sumWorkHourOt += parseFloat(otTime) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
 
+                salary = 0;
                 workRate = 0;
                 workRateOT = 0;
                 tmp.workType = 'dayOff';
