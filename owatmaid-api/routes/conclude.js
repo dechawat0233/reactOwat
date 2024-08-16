@@ -862,6 +862,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
                 sumWorkHourOt += parseFloat(otTime) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
 
+                salary = 0;
                 workRate = 0;
                 workRateOT = 0;
                 tmp.workType = 'workDay';
