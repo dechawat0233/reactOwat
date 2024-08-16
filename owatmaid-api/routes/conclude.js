@@ -177,8 +177,8 @@ if(parseFloat(salary ) >= 1660) {
       const keys = await Object.keys(wGroup1);
       console.log('wGroup keys:', keys); // Log the keys of wGroup
       console.log('wGroup keys length:', keys.length); // Log the length of the keys
-
-      if (keys.length > 1) {
+//check working multi workplace and not 399-105
+      if (keys.length > 1 && dataEmp.employees[0].workplace  !== '399-105') {
         console.log('process : 21 - '+ lastday);
 
         for (const workplaceId of Object.keys(wGroup1)) {
@@ -652,7 +652,7 @@ console.log('special day off rate');
       // console.log('wGroup keys:', keys); // Log the keys of wGroup
       // console.log('wGroup keys length:', keys.length); // Log the length of the keys
 
-      if (keys.length > 1) {
+      if (keys.length > 1 && dataEmp.employees[0].workplace  !== '399-105') {
         console.log('process');
 
         for (const workplaceId of Object.keys(wGroup)) {
@@ -1094,7 +1094,7 @@ console.log('special day off rate');
 
     // console.log('workplaceListTmp ' + workplaceListTmp);
 
-    const sendData = {
+    const sendData = await {
       wIdList: workplaceListTmp 
     }
     // const responseWpList = await axios.post(sURL + '/workplace/getaddsalary', sendData );
