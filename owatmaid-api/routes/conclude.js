@@ -837,8 +837,8 @@ console.log('special day off rate');
                   tmp.allTimes = allTime || 0;
                 }
 
-                let workRate = ((salary / 8) * parseFloat(allTime)).toFixed(2);
-                tmp.workRate = 0;
+                let workRate = ((parseFloat(salary) / 8) * parseFloat(allTime)).toFixed(2);
+                tmp.workRate = workRate || 0;
                 tmp.workRateMultiply = '1';
 
                 if (otTime >= workOfOT) {
