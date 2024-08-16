@@ -650,6 +650,7 @@ console.log('special day off rate');
       if(parseFloat(salary ) >= 1660) {
         salary  = parseFloat(salary) / 30;
       }
+      console.log('s1 ' + salary);
       
       // console.log('wGroup X ' + JSON.stringify(wGroup    ,2,null))
       // console.log('wGroup X ' + Object.keys(wGroup).length)
@@ -718,7 +719,6 @@ console.log('special day off rate');
             
             // console.log('str1  : ' + str1 )
             // console.log('tmpWP.data.workRate ' + tmpWP.data.workRate);
-console.log('s1 ' + salary);
             tmp.day = str1 + '/' + month + '/' + year;
             tmp.workplaceId = element.workplaceId || '';
             let parts = element.allTime.split('.');
