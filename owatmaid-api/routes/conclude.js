@@ -735,7 +735,7 @@ console.log('special day off rate');
 
             let scaledMinutes1 = (minutes1 * 100) / 60;
             let otTime = parseFloat(`${hours1}.${scaledMinutes1}`).toFixed(2) || 0;
-
+console.log('tmpWP.data.workRate ' + tmpWP.data.workRate);
             if (element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
               tmp.workRate = element.specialtSalary || '';
               tmp.workRateMultiply = Number(element.specialtSalary || 0) / Number(wpResponse.data.workRate || 0);
