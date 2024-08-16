@@ -650,6 +650,7 @@ console.log('special day off rate');
       if(parseFloat(salary ) >= 1660) {
         salary  = parseFloat(salary) / 30;
       }
+      console.log('s1' + salary);
       
       // console.log('wGroup X ' + JSON.stringify(wGroup    ,2,null))
       // console.log('wGroup X ' + Object.keys(wGroup).length)
