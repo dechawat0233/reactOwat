@@ -177,6 +177,7 @@ if(parseFloat(salary ) >= 1660) {
       const keys = await Object.keys(wGroup1);
       console.log('wGroup keys:', keys); // Log the keys of wGroup
       console.log('wGroup keys length:', keys.length); // Log the length of the keys
+
 //check working multi workplace and not 399-105
       if (keys.length > 1 && dataEmp.employees[0].workplace  !== '399-105') {
         console.log('process : 21 - '+ lastday);
@@ -403,7 +404,7 @@ console.log('2x');
         const workOfOT = await Number(wpResponse1.data.workOfOT) || 0;
 
         const dayOff1 = await wpResponse1.data.workplaceDayOffList || [];
-        console.log('dayOff1 ' + dayOff1 );
+        // console.log('dayOff1 ' + dayOff1 );
         const specialDayOff1 = await wpResponse1.data.specialDaylist || [];
         const dayOffCheck1 = [];
         if (dayOff1.length !== 0) {
@@ -413,7 +414,7 @@ console.log('2x');
             // console.log(str2 );
             dayOffCheck1.push(str2);
           });
-          console.log('dayOffCheck1' + JSON.stringify(dayOffCheck1,null,2));
+          // console.log('dayOffCheck1' + JSON.stringify(dayOffCheck1,null,2));
         }
 
         for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
