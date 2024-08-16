@@ -714,10 +714,10 @@ console.log('special day off rate');
           let dateParts = element.date.split('/');
           let str1 = parseInt(dateParts[0], 10);
 
-          if (str1 > 10 && str1 <= 20) {
+          if (str1 > 0 && str1 <= 20) {
             
-            console.log('str1  : ' + str1 )
-            console.log('tmpWP.data.workRate ' + tmpWP.data.workRate);
+            // console.log('str1  : ' + str1 )
+            // console.log('tmpWP.data.workRate ' + tmpWP.data.workRate);
 
             tmp.day = str1 + '/' + month + '/' + year;
             tmp.workplaceId = element.workplaceId || '';
@@ -830,6 +830,7 @@ console.log('special day off rate');
                 if (salary === 0) {
                   salary = tmpWP.data.workRate;
                 }
+console.log('salary '+ salary);
 
                 if (allTime >= workOfHour) {
                   allTime = workOfHour;
