@@ -872,7 +872,10 @@ console.log('special day off rate');
         // }
       } else {
 
-
+        if(wpId !== '399-105'){
+          wpId = keys[0]
+        }
+      
 
         const wpDataCalculator = {
           month: month || '',
