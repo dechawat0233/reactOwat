@@ -389,7 +389,7 @@ if(parseFloat(salary ) >= 1660) {
         console.log('1x');
       } else {
 console.log('2x');
-const wpDataCalculator1  = '';
+const wpDataCalculator1  = await {};
 if(wpId1 === '399-105'){
   wpDataCalculator1 = await {
     month: month || '',
