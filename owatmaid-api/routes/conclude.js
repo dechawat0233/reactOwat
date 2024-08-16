@@ -831,7 +831,7 @@ console.log('special day off rate');
                 if (salary === 0) {
                   salary = tmpWP.data.workRate;
                 }
-console.log('salary '+ salary);
+// console.log('salary '+ salary);
 
                 if (allTime >= workOfHour) {
                   allTime = workOfHour;
