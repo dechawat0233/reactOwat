@@ -659,7 +659,7 @@ console.log('special day off rate');
       // console.log('wGroup keys length:', keys.length); // Log the length of the keys
 
       if (keys.length > 1 && dataEmp.employees[0].workplace  !== '399-105') {
-        console.log('process');
+        console.log('process 2');
 
         for (const workplaceId of Object.keys(wGroup)) {
           const group = wGroup[workplaceId];
