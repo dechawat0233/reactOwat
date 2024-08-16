@@ -715,8 +715,8 @@ console.log('special day off rate');
           let str1 = parseInt(dateParts[0], 10);
 
           if (str1 > 0 && str1 <= 20) {
-            // console.log('str1  : ' + str1 )
-            // console.log('tmpWP.data.workRate ' + tmpWP.data.workRate);
+            console.log('str1  : ' + str1 )
+            console.log('tmpWP.data.workRate ' + tmpWP.data.workRate);
 
             tmp.day = str1 + '/' + month + '/' + year;
             tmp.workplaceId = element.workplaceId || '';
