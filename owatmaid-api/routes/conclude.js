@@ -389,16 +389,16 @@ if(parseFloat(salary ) >= 1660) {
         console.log('1x');
       } else {
 console.log('2x');
-
-if(wpId1 == '399-105'){
-  const wpDataCalculator1 = await {
+const wpDataCalculator1  = '';
+if(wpId1 === '399-105'){
+  wpDataCalculator1 = await {
     month: month || '',
     year: year1 || '',
     workplaceId: wpId1
   };
 
 } else {
-        const wpDataCalculator1 = await {
+        wpDataCalculator1 = await {
           month: month || '',
           year: year1 || '',
           // workplaceId: wpId1
