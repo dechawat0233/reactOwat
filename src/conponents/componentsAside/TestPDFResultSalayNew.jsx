@@ -6843,6 +6843,47 @@ function TestPDFResultSalayNew() {
     );
   };
 
+  const setEmptyArrays = (arrayData, numEmptyArrays = 2) => {
+    const indexes = [...Array(arrayData.length).keys()];
+    // Randomly select indices
+    for (let i = 0; i < numEmptyArrays; i++) {
+        if (indexes.length === 0) break; // Safety check
+        const randomIndex = Math.floor(Math.random() * indexes.length);
+        const indexToEmpty = indexes.splice(randomIndex, 1)[0];
+        arrayData[indexToEmpty] = arrayData[indexToEmpty].map(() => "");
+    }
+};
+
+const randomlyReplaceOnes = (arrayData, numToReplace = 2) => {
+    // Flatten the array data into a single list
+    const flatArray = arrayData.flat();
+    
+    // Get indices of all '1's in the flattened array
+    const onesIndices = flatArray
+        .map((val, index) => val === "1" ? index : -1)
+        .filter(index => index !== -1);
+    
+    // Shuffle the indices to ensure random selection
+    for (let i = onesIndices.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [onesIndices[i], onesIndices[j]] = [onesIndices[j], onesIndices[i]];
+    }
+    
+    // Replace a random number of '1's
+    const indicesToReplace = onesIndices.slice(0, Math.min(numToReplace, onesIndices.length));
+    indicesToReplace.forEach(index => {
+        flatArray[index] = "399-158";
+    });
+    
+    // Map the changes back to the original array structure
+    let flatIndex = 0;
+    arrayData.forEach((subArray, subArrayIndex) => {
+        subArray.forEach((_, itemIndex) => {
+            subArray[itemIndex] = flatArray[flatIndex++];
+        });
+    });
+};
+
   const generateTestTimeArray = (numArrays, arraySize) => {
     return Array.from({ length: numArrays }, () =>
       Array.from({ length: arraySize }, () =>
@@ -6863,6 +6904,14 @@ function TestPDFResultSalayNew() {
     const newOtTimesTest = generateTestTimeArray(numTestArrays, daysInMonth);
     const newOtTimes2Test = generateTestTimeArray(numTestArrays, daysInMonth);
     const newOtTimes3Test = generateTestTimeArray(numTestArrays, daysInMonth);
+
+    setEmptyArrays(finalUpdatedDayWorksWorkMorningAndSSTest, 2);
+setEmptyArrays(finalUpdatedDayWorksWorkAfternoonTest, 2);
+setEmptyArrays(finalUpdatedDayWorksWorkNightTest, 2);
+
+randomlyReplaceOnes(finalUpdatedDayWorksWorkMorningAndSSTest, 2);
+randomlyReplaceOnes(finalUpdatedDayWorksWorkAfternoonTest, 2);
+randomlyReplaceOnes(finalUpdatedDayWorksWorkNightTest, 2);
 
 //   const generatePDF987 = () => {
 //     try {
@@ -7067,135 +7116,847 @@ function TestPDFResultSalayNew() {
 
 
 
+// const generatePDF987 = () => {
+//     try {
+//       const doc = new jsPDF({
+//         orientation: "landscape",
+//         unit: "mm",
+//         format: "a4",
+//       });
+//       const fontPath = "/assets/fonts/THSarabunNew.ttf";
+  
+//       doc.addFileToVFS(fontPath);
+//       doc.addFont(fontPath, "THSarabunNew", "normal");
+//       doc.setFont("THSarabunNew");
+//       doc.setFontSize(8);
+  
+//       // Page and cell settings
+//       const pageHeight = 150; // Adjusted A4 page height in mm
+//       const cellWidth = 4.125;
+//       const cellHeight = 3.5;
+//       const startX = 35;
+//       const startY = 55;
+//       let currentY = startY; // Starting Y position
+//       let pageNumber = 1;
+  
+//       // Function to draw a cell
+//       const drawCell = (x, y, width, height, content = "") => {
+//         doc.rect(x, y, width, height);
+//         if (content !== "") {
+//           doc.text(content, x + width / 2, y + height / 2, { align: "center" });
+//         }
+//       };
+  
+//       // Function to draw the table number on the left
+//       const drawTableNumber = (tableNumber, y, height) => {
+//         const numberWidth = 10; // Width of the table number column
+//         const numberX = startX - numberWidth; // Position for table number
+//         drawCell(numberX, y, numberWidth, height, tableNumber.toString());
+//       };
+  
+//       // Function to check if a new page is needed
+//       const checkPageOverflow = (neededHeight) => {
+//         if (currentY + neededHeight > pageHeight) {
+//           doc.addPage();
+//           currentY = startY; // Reset the Y position on a new page
+//           pageNumber += 1;
+//         }
+//       };
+  
+//       // Function to draw a row of data
+//       const drawRow = (data, y, rowHeight) => {
+//         for (let j = 0; j < data.length; j++) {
+//           const x = startX + j * cellWidth;
+//           drawCell(x, y, cellWidth, rowHeight, data[j]);
+//         }
+//       };
+  
+//       // Function to check if a row is empty
+//       const isRowEmpty = (row) => row.every((cell) => cell === "");
+  
+//       // Function to count specific strings in a row
+//       const countSpecificStrings = (row, lengthThreshold = 3) => {
+//         return row.filter((cell) => cell.length > lengthThreshold).length;
+//       };
+  
+//       // Get the maximum number of rows from all datasets
+//       const maxRows = Math.max(
+//         finalUpdatedDayWorksWorkMorningAndSSTest.length,
+//         finalUpdatedDayWorksWorkAfternoonTest.length,
+//         finalUpdatedDayWorksWorkNightTest.length,
+//         newOtTimesTest.length,
+//         newOtTimes2Test.length,
+//         newOtTimes3Test.length
+//       );
+  
+//       let tableCounter = 1; // Initialize table number counter
+  
+//       for (let i = 0; i < maxRows; i++) {
+//         const morningData = finalUpdatedDayWorksWorkMorningAndSSTest[i] || Array(numCols).fill("");
+//         const afternoonData = finalUpdatedDayWorksWorkAfternoonTest[i] || Array(numCols).fill("");
+//         const nightData = finalUpdatedDayWorksWorkNightTest[i] || Array(numCols).fill("");
+//         const newOtTimes = newOtTimesTest[i] || Array(numCols).fill("");
+//         const newOtTimes2 = newOtTimes2Test[i] || Array(numCols).fill("");
+//         const newOtTimes3 = newOtTimes3Test[i] || Array(numCols).fill("");
+  
+//         const isMorningRowEmpty = isRowEmpty(morningData);
+//         const isAfternoonRowEmpty = isRowEmpty(afternoonData);
+//         const isNightRowEmpty = isRowEmpty(nightData);
+//         const isNewOtTimesTestRowEmpty = isRowEmpty(newOtTimes);
+//         const isNewOtTimes2TestRowEmpty = isRowEmpty(newOtTimes2);
+//         const isNewOtTimes3TestRowEmpty = isRowEmpty(newOtTimes3);
+  
+//         if (
+//           isMorningRowEmpty &&
+//           isAfternoonRowEmpty &&
+//           isNightRowEmpty &&
+//           isNewOtTimesTestRowEmpty &&
+//           isNewOtTimes2TestRowEmpty &&
+//           isNewOtTimes3TestRowEmpty
+//         ) {
+//           continue; // Skip empty rows
+//         }
+  
+//         // Check if the morning, afternoon, or night arrays have more than 3 strings like "1001"
+//         const morningRowHeight = countSpecificStrings(morningData, "1001") > 3 ? cellHeight * 2 : cellHeight;
+//         const afternoonRowHeight = countSpecificStrings(afternoonData, "1001") > 3 ? cellHeight * 2 : cellHeight;
+//         const nightRowHeight = countSpecificStrings(nightData, "1001") > 3 ? cellHeight * 2 : cellHeight;
+  
+//         // Calculate the total height needed for this set of rows
+//         const totalHeightNeeded =
+//           (isMorningRowEmpty ? 0 : morningRowHeight) +
+//           (isAfternoonRowEmpty ? 0 : afternoonRowHeight) +
+//           (isNightRowEmpty ? 0 : nightRowHeight) +
+//           (isNewOtTimesTestRowEmpty ? 0 : cellHeight) +
+//           (isNewOtTimes2TestRowEmpty ? 0 : cellHeight) +
+//           (isNewOtTimes3TestRowEmpty ? 0 : cellHeight);
+  
+//         // Check if we need to start a new page
+//         checkPageOverflow(totalHeightNeeded);
+  
+//         // Draw table number for the entire set of rows
+//         drawTableNumber(tableCounter, currentY, totalHeightNeeded);
+  
+//         if (!isMorningRowEmpty) {
+//           drawRow(morningData, currentY, morningRowHeight);
+//           currentY += morningRowHeight;
+//         }
+  
+//         if (!isAfternoonRowEmpty) {
+//           drawRow(afternoonData, currentY, afternoonRowHeight);
+//           currentY += afternoonRowHeight;
+//         }
+  
+//         if (!isNightRowEmpty) {
+//           drawRow(nightData, currentY, nightRowHeight);
+//           currentY += nightRowHeight;
+//         }
+  
+//         if (!isNewOtTimesTestRowEmpty) {
+//           drawRow(newOtTimes, currentY, cellHeight);
+//           currentY += cellHeight;
+//         }
+  
+//         if (!isNewOtTimes2TestRowEmpty) {
+//           drawRow(newOtTimes2, currentY, cellHeight);
+//           currentY += cellHeight;
+//         }
+  
+//         if (!isNewOtTimes3TestRowEmpty) {
+//           drawRow(newOtTimes3, currentY, cellHeight);
+//           currentY += cellHeight;
+//         }
+  
+//         tableCounter++; // Increment table number counter
+//       }
+  
+//       // Output the PDF
+//       const pdfContent = doc.output("bloburl");
+//       window.open(pdfContent, "_blank");
+//     } catch (error) {
+//       alert(`Error: ${error.message}`);
+//       console.error(error);
+//     }
+//   };
+
+
+///////////////////////////////////////////////
+// const countSpecificStrings = (row, lengthThreshold = 3) => {
+//     // Check if any cell's length in the row exceeds the threshold
+//     return row.some(cell => cell.length > lengthThreshold);
+// };
+
+// const generatePDF987 = () => {
+//     try {
+//         const doc = new jsPDF({
+//             orientation: "landscape",
+//             unit: "mm",
+//             format: "a4",
+//         });
+//         const fontPath = "/assets/fonts/THSarabunNew.ttf";
+
+//         doc.addFileToVFS(fontPath);
+//         doc.addFont(fontPath, "THSarabunNew", "normal");
+//         doc.setFont("THSarabunNew");
+//         doc.setFontSize(8);
+
+//         // Page and cell settings
+//         const pageHeight = 150; // Adjusted A4 page height in mm
+//         const cellWidth = 4.125;
+//         const cellHeight = 3.5;
+//         const startX = 35;
+//         const startY = 55;
+//         let currentY = startY; // Starting Y position
+//         let pageNumber = 1;
+
+//         // Function to draw a cell
+//         const drawCell = (x, y, width, height, content = "") => {
+//             doc.rect(x, y, width, height);
+//             if (content !== "") {
+//                 doc.text(content, x + width / 2, y + height / 2, { align: "center" });
+//             }
+//         };
+
+//         // Function to draw the table number on the left
+//         const drawTableNumber = (tableNumber, y, height) => {
+//             const numberWidth = 10; // Width of the table number column
+//             const numberX = startX - numberWidth; // Position for table number
+//             drawCell(numberX, y, numberWidth, height, tableNumber.toString());
+//         };
+
+//         // Function to check if a new page is needed
+//         const checkPageOverflow = (neededHeight) => {
+//             if (currentY + neededHeight > pageHeight) {
+//                 doc.addPage();
+//                 currentY = startY; // Reset the Y position on a new page
+//                 pageNumber += 1;
+//             }
+//         };
+
+//         // Function to draw a row of data
+//         // const drawRow = (data, y, rowHeight) => {
+//         //     for (let j = 0; j < data.length; j++) {
+//         //         const x = startX + j * cellWidth;
+//         //         drawCell(x, y, cellWidth, rowHeight, data[j]);
+//         //     }
+//         // };
+
+//         const drawRow = (data, y, rowHeight, rotateText = false) => {
+//             for (let j = 0; j < data.length; j++) {
+//                 const x = startX + j * cellWidth;
+//                 if (rotateText) {
+//                     // Save the current transformation matrix
+//                     doc.save();
+//                     // Translate to the position where rotation will be applied
+//                     doc.translate(x + cellWidth / 2, y + cellHeight / 2);
+//                     // Rotate the coordinate system
+//                     doc.rotate(Math.PI / 2);
+//                     // Draw the cell border
+//                     doc.rect(-cellHeight / 2, -cellWidth / 2, cellHeight, cellWidth);
+//                     // Draw the rotated text
+//                     doc.text(data[j], 0, 0, { align: "center" });
+//                     // Restore the original transformation matrix
+//                     doc.restore();
+//                 } else {
+//                     // Draw the cell border
+//                     doc.rect(x, y, cellWidth, rowHeight);
+//                     // Draw the text without rotation
+//                     doc.text(data[j], x + cellWidth / 2, y + rowHeight / 2, { align: "center" });
+//                 }
+//             }
+//         };
+        
+
+//         // Function to check if a row is empty
+//         const isRowEmpty = (row) => row.every((cell) => cell === "");
+
+//         // Get the maximum number of rows from all datasets
+//         const maxRows = Math.max(
+//             finalUpdatedDayWorksWorkMorningAndSSTest.length,
+//             finalUpdatedDayWorksWorkAfternoonTest.length,
+//             finalUpdatedDayWorksWorkNightTest.length,
+//             newOtTimesTest.length,
+//             newOtTimes2Test.length,
+//             newOtTimes3Test.length
+//         );
+
+//         let tableCounter = 1; // Initialize table number counter
+
+//         for (let i = 0; i < maxRows; i++) {
+//             const morningData = finalUpdatedDayWorksWorkMorningAndSSTest[i] || Array(numCols).fill("");
+//             const afternoonData = finalUpdatedDayWorksWorkAfternoonTest[i] || Array(numCols).fill("");
+//             const nightData = finalUpdatedDayWorksWorkNightTest[i] || Array(numCols).fill("");
+//             const newOtTimes = newOtTimesTest[i] || Array(numCols).fill("");
+//             const newOtTimes2 = newOtTimes2Test[i] || Array(numCols).fill("");
+//             const newOtTimes3 = newOtTimes3Test[i] || Array(numCols).fill("");
+
+//             const isMorningRowEmpty = isRowEmpty(morningData);
+//             const isAfternoonRowEmpty = isRowEmpty(afternoonData);
+//             const isNightRowEmpty = isRowEmpty(nightData);
+//             const isNewOtTimesTestRowEmpty = isRowEmpty(newOtTimes);
+//             const isNewOtTimes2TestRowEmpty = isRowEmpty(newOtTimes2);
+//             const isNewOtTimes3TestRowEmpty = isRowEmpty(newOtTimes3);
+
+//             if (
+//                 isMorningRowEmpty &&
+//                 isAfternoonRowEmpty &&
+//                 isNightRowEmpty &&
+//                 isNewOtTimesTestRowEmpty &&
+//                 isNewOtTimes2TestRowEmpty &&
+//                 isNewOtTimes3TestRowEmpty
+//             ) {
+//                 continue; // Skip empty rows
+//             }
+
+//             // Determine row heights based on content length
+//             const morningRowHeight = countSpecificStrings(morningData) ? cellHeight * 2 : cellHeight;
+//             const afternoonRowHeight = countSpecificStrings(afternoonData) ? cellHeight * 2 : cellHeight;
+//             const nightRowHeight = countSpecificStrings(nightData) ? cellHeight * 2 : cellHeight;
+
+//             // Calculate the total height needed for this set of rows
+//             const totalHeightNeeded =
+//                 (isMorningRowEmpty ? 0 : morningRowHeight) +
+//                 (isAfternoonRowEmpty ? 0 : afternoonRowHeight) +
+//                 (isNightRowEmpty ? 0 : nightRowHeight) +
+//                 (isNewOtTimesTestRowEmpty ? 0 : cellHeight) +
+//                 (isNewOtTimes2TestRowEmpty ? 0 : cellHeight) +
+//                 (isNewOtTimes3TestRowEmpty ? 0 : cellHeight);
+
+//             // Check if we need to start a new page
+//             checkPageOverflow(totalHeightNeeded);
+
+//             // Draw table number for the entire set of rows
+//             drawTableNumber(tableCounter, currentY, totalHeightNeeded);
+
+//             if (!isMorningRowEmpty) {
+//                 drawRow(morningData, currentY, morningRowHeight);
+//                 currentY += morningRowHeight;
+//             }
+
+//             if (!isAfternoonRowEmpty) {
+//                 drawRow(afternoonData, currentY, afternoonRowHeight);
+//                 currentY += afternoonRowHeight;
+//             }
+
+//             if (!isNightRowEmpty) {
+//                 drawRow(nightData, currentY, nightRowHeight);
+//                 currentY += nightRowHeight;
+//             }
+
+//             if (!isNewOtTimesTestRowEmpty) {
+//                 drawRow(newOtTimes, currentY, cellHeight);
+//                 currentY += cellHeight;
+//             }
+
+//             if (!isNewOtTimes2TestRowEmpty) {
+//                 drawRow(newOtTimes2, currentY, cellHeight);
+//                 currentY += cellHeight;
+//             }
+
+//             if (!isNewOtTimes3TestRowEmpty) {
+//                 drawRow(newOtTimes3, currentY, cellHeight);
+//                 currentY += cellHeight;
+//             }
+
+//             tableCounter++; // Increment table number counter
+//         }
+
+//         // Output the PDF
+//         const pdfContent = doc.output("bloburl");
+//         window.open(pdfContent, "_blank");
+//     } catch (error) {
+//         alert(`Error: ${error.message}`);
+//         console.error(error);
+//     }
+// };
+
+
+///////////////////////////// น่าจะใช้ได้แล้ว
+// const countSpecificStrings = (row, lengthThreshold = 3) => {
+//     // Check if any cell's length in the row exceeds the threshold
+//     return row.some(cell => cell.length > lengthThreshold);
+// };
+
+// const generatePDF987 = () => {
+//     try {
+//         const doc = new jsPDF({
+//             orientation: "landscape",
+//             unit: "mm",
+//             format: "a4",
+//         });
+//         const fontPath = "/assets/fonts/THSarabunNew.ttf";
+
+//         doc.addFileToVFS(fontPath);
+//         doc.addFont(fontPath, "THSarabunNew", "normal");
+//         doc.setFont("THSarabunNew");
+//         doc.setFontSize(8);
+
+//         // Page and cell settings
+//         const pageHeight = 150; // Adjusted A4 page height in mm
+//         const cellWidth = 4.125;
+//         const cellHeight = 3.5;
+//         const startX = 35;
+//         const startY = 55;
+//         let currentY = startY; // Starting Y position
+//         let pageNumber = 1;
+
+//         // Function to draw a cell with optional text rotation
+//         const drawCell = (x, y, width, height, content = "", rotate = false) => {
+//             if (rotate) {
+//                 doc.saveGraphicsState();
+//                 doc.setTextColor(0, 0, 0); // Optional: Set text color if needed
+//                 doc.text(content, x + width +2 , y + height / 2, {
+//                     align: "center",
+//                     angle: 90 // Rotate text 90 degrees
+//                 });
+//                 doc.restoreGraphicsState();
+//             } else {
+//                 doc.rect(x, y, width, height);
+//                 if (content !== "") {
+//                     doc.text(content, x + width / 2, y + height / 2, { align: "center" });
+//                 }
+//             }
+//         };
+
+//         // Function to draw the table number on the left
+//         const drawTableNumber = (tableNumber, y, height) => {
+//             const numberWidth = 10; // Width of the table number column
+//             const numberX = startX - numberWidth; // Position for table number
+//             drawCell(numberX, y, numberWidth, height, tableNumber.toString());
+//         };
+
+//         // Function to check if a new page is needed
+//         const checkPageOverflow = (neededHeight) => {
+//             if (currentY + neededHeight > pageHeight) {
+//                 doc.addPage();
+//                 currentY = startY; // Reset the Y position on a new page
+//                 pageNumber += 1;
+//             }
+//         };
+
+//         // Function to draw a row of data with rotation applied to long strings
+//         const drawRow = (data, y, rowHeight) => {
+//             for (let j = 0; j < data.length; j++) {
+//                 const x = startX + j * cellWidth;
+//                 const rotate = data[j].length > 3; // Apply rotation if string length > 3
+//                 drawCell(x, y, cellWidth, rowHeight, data[j], rotate);
+//             }
+//         };
+
+//         // Function to check if a row is empty
+//         const isRowEmpty = (row) => row.every((cell) => cell === "");
+
+//         // Get the maximum number of rows from all datasets
+//         const maxRows = Math.max(
+//             finalUpdatedDayWorksWorkMorningAndSSTest.length,
+//             finalUpdatedDayWorksWorkAfternoonTest.length,
+//             finalUpdatedDayWorksWorkNightTest.length,
+//             newOtTimesTest.length,
+//             newOtTimes2Test.length,
+//             newOtTimes3Test.length
+//         );
+
+//         let tableCounter = 1; // Initialize table number counter
+
+//         for (let i = 0; i < maxRows; i++) {
+//             const morningData = finalUpdatedDayWorksWorkMorningAndSSTest[i] || Array(numCols).fill("");
+//             const afternoonData = finalUpdatedDayWorksWorkAfternoonTest[i] || Array(numCols).fill("");
+//             const nightData = finalUpdatedDayWorksWorkNightTest[i] || Array(numCols).fill("");
+//             const newOtTimes = newOtTimesTest[i] || Array(numCols).fill("");
+//             const newOtTimes2 = newOtTimes2Test[i] || Array(numCols).fill("");
+//             const newOtTimes3 = newOtTimes3Test[i] || Array(numCols).fill("");
+
+//             const isMorningRowEmpty = isRowEmpty(morningData);
+//             const isAfternoonRowEmpty = isRowEmpty(afternoonData);
+//             const isNightRowEmpty = isRowEmpty(nightData);
+//             const isNewOtTimesTestRowEmpty = isRowEmpty(newOtTimes);
+//             const isNewOtTimes2TestRowEmpty = isRowEmpty(newOtTimes2);
+//             const isNewOtTimes3TestRowEmpty = isRowEmpty(newOtTimes3);
+
+//             if (
+//                 isMorningRowEmpty &&
+//                 isAfternoonRowEmpty &&
+//                 isNightRowEmpty &&
+//                 isNewOtTimesTestRowEmpty &&
+//                 isNewOtTimes2TestRowEmpty &&
+//                 isNewOtTimes3TestRowEmpty
+//             ) {
+//                 continue; // Skip empty rows
+//             }
+
+//             // Determine row heights based on content length
+//             const morningRowHeight = countSpecificStrings(morningData) ? cellHeight * 2 : cellHeight;
+//             const afternoonRowHeight = countSpecificStrings(afternoonData) ? cellHeight * 2 : cellHeight;
+//             const nightRowHeight = countSpecificStrings(nightData) ? cellHeight * 2 : cellHeight;
+
+//             // Calculate the total height needed for this set of rows
+//             const totalHeightNeeded =
+//                 (isMorningRowEmpty ? 0 : morningRowHeight) +
+//                 (isAfternoonRowEmpty ? 0 : afternoonRowHeight) +
+//                 (isNightRowEmpty ? 0 : nightRowHeight) +
+//                 (isNewOtTimesTestRowEmpty ? 0 : cellHeight) +
+//                 (isNewOtTimes2TestRowEmpty ? 0 : cellHeight) +
+//                 (isNewOtTimes3TestRowEmpty ? 0 : cellHeight);
+
+//             // Check if we need to start a new page
+//             checkPageOverflow(totalHeightNeeded);
+
+//             // Draw table number for the entire set of rows
+//             drawTableNumber(tableCounter, currentY, totalHeightNeeded);
+
+//             if (!isMorningRowEmpty) {
+//                 drawRow(morningData, currentY, morningRowHeight);
+//                 currentY += morningRowHeight;
+//             }
+
+//             if (!isAfternoonRowEmpty) {
+//                 drawRow(afternoonData, currentY, afternoonRowHeight);
+//                 currentY += afternoonRowHeight;
+//             }
+
+//             if (!isNightRowEmpty) {
+//                 drawRow(nightData, currentY, nightRowHeight);
+//                 currentY += nightRowHeight;
+//             }
+
+//             if (!isNewOtTimesTestRowEmpty) {
+//                 drawRow(newOtTimes, currentY, cellHeight);
+//                 currentY += cellHeight;
+//             }
+
+//             if (!isNewOtTimes2TestRowEmpty) {
+//                 drawRow(newOtTimes2, currentY, cellHeight);
+//                 currentY += cellHeight;
+//             }
+
+//             if (!isNewOtTimes3TestRowEmpty) {
+//                 drawRow(newOtTimes3, currentY, cellHeight);
+//                 currentY += cellHeight;
+//             }
+
+//             tableCounter++; // Increment table number counter
+//         }
+
+//         // Output the PDF
+//         const pdfContent = doc.output("bloburl");
+//         window.open(pdfContent, "_blank");
+//     } catch (error) {
+//         alert(`Error: ${error.message}`);
+//         console.error(error);
+//     }
+// };
+
+const countSpecificStrings = (row, lengthThreshold = 3) => {
+    // Return true if any string in the row exceeds the length threshold
+    return row.some(cell => cell.length > lengthThreshold);
+};
 
 const generatePDF987 = () => {
     try {
-      const doc = new jsPDF({
-        orientation: "landscape",
-        unit: "mm",
-        format: "a4",
-      });
-      const fontPath = "/assets/fonts/THSarabunNew.ttf";
-  
-      doc.addFileToVFS(fontPath);
-      doc.addFont(fontPath, "THSarabunNew", "normal");
-      doc.setFontSize(8);
-  
-      // Page and cell settings
-      const pageHeight = 150; // Adjusted A4 page height in mm
-      const cellWidth = 4.125;
-      const cellHeight = 3.5;
-      const startX = 35;
-      const startY = 55;
-      let currentY = startY; // Starting Y position
-      let pageNumber = 1;
-  
-      // Function to draw a cell
-      const drawCell = (x, y, width, height, content = "") => {
-        doc.rect(x, y, width, height);
-        if (content !== "") {
-          doc.text(content, x + width / 2, y + height / 2, { align: "center" });
+        const doc = new jsPDF({
+            orientation: "landscape",
+            unit: "mm",
+            format: "a4",
+        });
+        const fontPath = "/assets/fonts/THSarabunNew.ttf";
+
+        doc.addFileToVFS(fontPath);
+        doc.addFont(fontPath, "THSarabunNew", "normal");
+        doc.setFont("THSarabunNew");
+        doc.setFontSize(8);
+
+        // Page and cell settings
+        const pageHeight = 150; // Adjusted A4 page height in mm
+        const cellWidth = 4.125;
+        const cellHeight = 3.5;
+        const startX = 35;
+        const startY = 55;
+        let currentY = startY; // Starting Y position
+        let pageNumber = 1;
+
+
+        const numRowsTop = 1;
+      const startXTop = 50; // Adjust the starting X-coordinate as needed
+      const startYTop = 30; // Adjust the starting Y-coordinate as needed
+      const cellHeightTop = 25;
+      const drawTableTop = () => {
+        for (let i = 0; i < numRowsTop; i++) {
+          for (let j = 0; j < daysInMonth; j++) {
+            const x = startX + j * cellWidth;
+            const y = startYTop + i * cellHeightTop;
+            drawCell(x, y, cellWidth, cellHeightTop);
+          }
         }
       };
-  
-      // Function to draw the table number on the left
-      const drawTableNumber = (tableNumber, y) => {
-        const numberWidth = 10; // Width of the table number column
-        const numberX = startX - numberWidth; // Position for table number
-        const numberHeight = cellHeight;
-        drawCell(numberX, y, numberWidth, numberHeight, tableNumber.toString());
-      };
-  
-      // Function to check if a new page is needed
-      const checkPageOverflow = (neededHeight) => {
-        if (currentY + neededHeight > pageHeight) {
-          doc.addPage();
-          currentY = startY; // Reset the Y position on a new page
-          pageNumber += 1;
-        }
-      };
-  
-      // Function to draw a row of data
-      const drawRow = (data, y) => {
-        for (let j = 0; j < data.length; j++) {
-          const x = startX + j * cellWidth;
-          drawCell(x, y, cellWidth, cellHeight, data[j]);
-        }
-      };
-  
-      // Function to check if a row is empty
-      const isRowEmpty = (row) => row.every((cell) => cell === "");
-  
-      // Get the maximum number of rows from all datasets
-      const maxRows = Math.max(
-        finalUpdatedDayWorksWorkMorningAndSSTest.length,
-        finalUpdatedDayWorksWorkAfternoonTest.length,
-        finalUpdatedDayWorksWorkNightTest.length,
-        newOtTimesTest.length,
-        newOtTimes2Test.length,
-        newOtTimes3Test.length
-      );
-  
-      let tableCounter = 1; // Initialize table number counter
-  
-      for (let i = 0; i < maxRows; i++) {
-        const morningData = finalUpdatedDayWorksWorkMorningAndSSTest[i] || Array(numCols).fill("");
-        const afternoonData = finalUpdatedDayWorksWorkAfternoonTest[i] || Array(numCols).fill("");
-        const nightData = finalUpdatedDayWorksWorkNightTest[i] || Array(numCols).fill("");
-        const newOtTimes = newOtTimesTest[i] || Array(numCols).fill("");
-        const newOtTimes2 = newOtTimes2Test[i] || Array(numCols).fill("");
-        const newOtTimes3 = newOtTimes3Test[i] || Array(numCols).fill("");
-  
-        const isMorningRowEmpty = isRowEmpty(morningData);
-        const isAfternoonRowEmpty = isRowEmpty(afternoonData);
-        const isNightRowEmpty = isRowEmpty(nightData);
-        const isnewOtTimesTestRowEmpty = isRowEmpty(newOtTimes);
-        const isnewOtTimes2TestRowEmpty = isRowEmpty(newOtTimes2);
-        const isnewOtTimes3TestRowEmpty = isRowEmpty(newOtTimes3);
-  
-        if (isMorningRowEmpty && isAfternoonRowEmpty && isNightRowEmpty && isnewOtTimesTestRowEmpty && isnewOtTimes2TestRowEmpty && isnewOtTimes3TestRowEmpty) {
-          continue; // Skip empty rows
-        }
-  
-        // Draw table number and rows
-        drawTableNumber(tableCounter, currentY);
-  
-        checkPageOverflow(cellHeight);
-        if (!isMorningRowEmpty) drawRow(morningData, currentY);
-        currentY += cellHeight;
-  
-        checkPageOverflow(cellHeight);
-        if (!isAfternoonRowEmpty) drawRow(afternoonData, currentY);
-        currentY += cellHeight;
-  
-        checkPageOverflow(cellHeight);
-        if (!isNightRowEmpty) drawRow(nightData, currentY);
-        currentY += cellHeight;
-  
-        checkPageOverflow(cellHeight);
-        if (!isnewOtTimesTestRowEmpty) drawRow(newOtTimes, currentY);
-        currentY += cellHeight;
-  
-        checkPageOverflow(cellHeight);
-        if (!isnewOtTimes2TestRowEmpty) drawRow(newOtTimes2, currentY);
-        currentY += cellHeight;
-  
-        checkPageOverflow(cellHeight);
-        if (!isnewOtTimes3TestRowEmpty) drawRow(newOtTimes3, currentY);
-        currentY += cellHeight;
-  
-        tableCounter++; // Increment table number counter
+
+      const numRowsTopHead = 1;
+      const startXTopHead = 1; // Adjust the starting X-coordinate as needed
+      const startYTopHead = 24; // Adjust the starting Y-coordinate as needed
+      const cellHeightTopHead = 6;
+      // const cellWidthTopHead = 200;
+      let cellWidthTopHead;
+      if (daysInMonth === 28) {
+        // 267
+        cellWidthTopHead = 270.5;
+      } else if (daysInMonth === 29) {
+        cellWidthTopHead = 274.5;
+      } else if (daysInMonth === 30) {
+        cellWidthTopHead = 278.5;
+      } else if (daysInMonth === 31) {
+        cellWidthTopHead = 282.5;
       }
-  
-      // Output the PDF
-      const pdfContent = doc.output("bloburl");
-      window.open(pdfContent, "_blank");
+
+      const startXNumHead = 5; // Adjust the starting X-coordinate as needed
+
+      const drawTableTopHead = () => {
+        for (let i = 0; i < numRowsTopHead; i++) {
+          // for (let j = 0; j < numCols; j++) {
+          const x = startXNumHead + i * cellWidth;
+          const y = startYTopHead + i * cellHeightTopHead;
+          drawCell(x, y, cellWidthTopHead, cellHeightTopHead);
+          // }
+        }
+      };
+      const numColsLeftHead = 1;
+      const cellWidthLeftHead = 30;
+      const startXLeftHead = 5; // Adjust the starting X-coordinate as needed
+
+      const drawTableLeftHeadTop = () => {
+        for (let i = 0; i < numRowsTop; i++) {
+          for (let j = 0; j < numColsLeftHead; j++) {
+            const x = startXLeftHead + j * cellWidthLeftHead;
+            const y = startYTop + i * cellHeightTop;
+            drawCell(x, y, cellWidthLeftHead, cellHeightTop);
+          }
+        }
+      };
+
+      const numColsNumHead = 1;
+      const cellWidthNumHead = 8;
+
+      const drawTableNumHeadTop = () => {
+        for (let i = 0; i < numRowsTop; i++) {
+          for (let j = 0; j < numColsNumHead; j++) {
+            const x = startXNumHead + j * cellWidthNumHead;
+            const y = startYTop + i * cellHeightTop;
+            drawCell(x, y, cellWidthNumHead, cellHeightTop);
+          }
+        }
+      };
+
+      const numColsSpSalary = 3;
+      const cellWidthSpSalary = 10;
+
+      let startXSpSalary; // Declare startXSpSalary before using it
+
+      if (daysInMonth === 28) {
+        startXSpSalary = 150.5;
+      } else if (daysInMonth === 29) {
+        startXSpSalary = 154.5;
+      } else if (daysInMonth === 30) {
+        startXSpSalary = 158.75;
+      } else if (daysInMonth === 31) {
+        startXSpSalary = 162.75;
+      }
+
+      const drawTableSpSalaryTop = () => {
+        for (let i = 0; i < numRowsTop; i++) {
+          for (let j = 0; j < numColsSpSalary; j++) {
+            let x = startXSpSalary + j * cellWidthSpSalary;
+            const y = startYTop + i * cellHeightTop;
+
+            if (j > 2) {
+              x += 5; // Adjust x coordinate for columns after the 4th column
+            }
+
+            if (j == 2) {
+              drawCell(x, y, cellWidthSpSalary + 5, cellHeightTop);
+            } else {
+              drawCell(x, y, cellWidthSpSalary, cellHeightTop);
+            }
+            // drawCell(x, y, cellWidthSpSalary, cellHeightTop);
+          }
+        }
+      };
+      const drawTableSpSalaryHeadTop = () => {
+        for (let i = 0; i < numRowsTop; i++) {
+          for (let j = 0; j < numColsSpSalary - 2; j++) {
+            let x = startXSpSalary + j * cellWidthSpSalary;
+            const y = startYTop + i * 6;
+            // drawCell(x + cellWidthSpSalary, y + 4, cellWidthSpSalary, 6);
+            if (j > 1) {
+              x += 5; // Adjust x coordinate for columns after the 4th column
+            }
+            if (j == 1) {
+              drawCell(x + cellWidthSpSalary, y + 4, cellWidthSpSalary + 5, 6);
+            } else {
+              drawCell(x + cellWidthSpSalary, y + 4, cellWidthSpSalary, 6);
+            }
+          }
+        }
+      };
+
+        // Function to draw a cell with optional text rotation
+        const drawCell = (x, y, width, height, content = "", rotate = false) => {
+            doc.rect(x, y, width, height); // Draw the cell border
+
+            if (rotate && content !== "") {
+                // Save the graphics state to restore later
+                doc.saveGraphicsState();
+
+                // Translate the canvas to the center of the cell and rotate it
+                doc.text(content, x + width +2, y + height / 2, {
+                    align: "center",
+                    angle: 90
+                });
+
+                // Restore the previous graphics state
+                doc.restoreGraphicsState();
+            } else if (content !== "") {
+                doc.text(content, x + width / 2, y + height / 2, { align: "center" });
+            }
+        };
+
+        // Function to draw the table number on the left
+        const drawTableNumber = (tableNumber, y, height) => {
+            const numberWidth = 10; // Width of the table number column
+            const numberX = startX - cellWidthLeftHead; // Position for table number
+            drawCell(numberX, y, cellWidthLeftHead, height, tableNumber.toString());
+        };
+
+        // Function to check if a new page is needed
+        const checkPageOverflow = (neededHeight) => {
+            if (currentY + neededHeight > pageHeight) {
+                doc.addPage();
+                currentY = startY; // Reset the Y position on a new page
+                pageNumber += 1;
+            }
+        };
+
+        // Function to draw a row of data with rotation applied to long strings
+        const drawRow = (data, y, rowHeight) => {
+            for (let j = 0; j < data.length; j++) {
+                const x = startX + j * cellWidth;
+                const rotate = data[j].length > 3; // Apply rotation if string length > 3
+                drawCell(x, y, cellWidth, rowHeight, data[j], rotate);
+            }
+        };
+
+        // Function to check if a row is empty
+        const isRowEmpty = (row) => row.every((cell) => cell === "");
+
+        // Get the maximum number of rows from all datasets
+        const maxRows = Math.max(
+            finalUpdatedDayWorksWorkMorningAndSSTest.length,
+            finalUpdatedDayWorksWorkAfternoonTest.length,
+            finalUpdatedDayWorksWorkNightTest.length,
+            newOtTimesTest.length,
+            newOtTimes2Test.length,
+            newOtTimes3Test.length
+        );
+
+        let tableCounter = 1; // Initialize table number counter
+
+        for (let i = 0; i < maxRows; i++) {
+            const morningData = finalUpdatedDayWorksWorkMorningAndSSTest[i] || Array(numCols).fill("");
+            const afternoonData = finalUpdatedDayWorksWorkAfternoonTest[i] || Array(numCols).fill("");
+            const nightData = finalUpdatedDayWorksWorkNightTest[i] || Array(numCols).fill("");
+            const newOtTimes = newOtTimesTest[i] || Array(numCols).fill("");
+            const newOtTimes2 = newOtTimes2Test[i] || Array(numCols).fill("");
+            const newOtTimes3 = newOtTimes3Test[i] || Array(numCols).fill("");
+
+            const isMorningRowEmpty = isRowEmpty(morningData);
+            const isAfternoonRowEmpty = isRowEmpty(afternoonData);
+            const isNightRowEmpty = isRowEmpty(nightData);
+            const isNewOtTimesTestRowEmpty = isRowEmpty(newOtTimes);
+            const isNewOtTimes2TestRowEmpty = isRowEmpty(newOtTimes2);
+            const isNewOtTimes3TestRowEmpty = isRowEmpty(newOtTimes3);
+
+            if (
+                isMorningRowEmpty &&
+                isAfternoonRowEmpty &&
+                isNightRowEmpty &&
+                isNewOtTimesTestRowEmpty &&
+                isNewOtTimes2TestRowEmpty &&
+                isNewOtTimes3TestRowEmpty
+            ) {
+                continue; // Skip empty rows
+            }
+
+            // Determine row heights based on content length
+            const morningRowHeight = countSpecificStrings(morningData) ? cellHeight * 2 : cellHeight;
+            const afternoonRowHeight = countSpecificStrings(afternoonData) ? cellHeight * 2 : cellHeight;
+            const nightRowHeight = countSpecificStrings(nightData) ? cellHeight * 2 : cellHeight;
+
+            // Calculate the total height needed for this set of rows
+            const totalHeightNeeded =
+                (isMorningRowEmpty ? 0 : morningRowHeight) +
+                (isAfternoonRowEmpty ? 0 : afternoonRowHeight) +
+                (isNightRowEmpty ? 0 : nightRowHeight) +
+                (isNewOtTimesTestRowEmpty ? 0 : cellHeight) +
+                (isNewOtTimes2TestRowEmpty ? 0 : cellHeight) +
+                (isNewOtTimes3TestRowEmpty ? 0 : cellHeight);
+
+
+                drawTableTop();
+                drawTableTopHead();
+                drawTableLeftHeadTop();
+                drawTableNumHeadTop();
+                drawTableSpSalaryTop();
+                drawTableSpSalaryHeadTop();
+
+            // Check if we need to start a new page
+            checkPageOverflow(totalHeightNeeded);
+
+            // Draw table number for the entire set of rows
+            drawTableNumber(tableCounter, currentY, totalHeightNeeded);
+
+            if (!isMorningRowEmpty) {
+                drawRow(morningData, currentY, morningRowHeight);
+                currentY += morningRowHeight;
+            }
+
+            if (!isAfternoonRowEmpty) {
+                drawRow(afternoonData, currentY, afternoonRowHeight);
+                currentY += afternoonRowHeight;
+            }
+
+            if (!isNightRowEmpty) {
+                drawRow(nightData, currentY, nightRowHeight);
+                currentY += nightRowHeight;
+            }
+
+            if (!isNewOtTimesTestRowEmpty) {
+                drawRow(newOtTimes, currentY, cellHeight);
+                currentY += cellHeight;
+            }
+
+            if (!isNewOtTimes2TestRowEmpty) {
+                drawRow(newOtTimes2, currentY, cellHeight);
+                currentY += cellHeight;
+            }
+
+            if (!isNewOtTimes3TestRowEmpty) {
+                drawRow(newOtTimes3, currentY, cellHeight);
+                currentY += cellHeight;
+            }
+
+            tableCounter++; // Increment table number counter
+        }
+
+        // Output the PDF
+        const pdfContent = doc.output("bloburl");
+        window.open(pdfContent, "_blank");
     } catch (error) {
-      alert(`Error: ${error.message}`);
-      console.error(error);
+        alert(`Error: ${error.message}`);
+        console.error(error);
     }
-  };
-  
+};
+
+
+
+
+
   
 
   return (

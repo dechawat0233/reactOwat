@@ -351,8 +351,8 @@ function WorktimeSheetWorkplace() {
           const responseData = response.data;
           const filteredData = searchWorkplaceId
             ? responseData.filter(
-                (item) => item.workplace === searchWorkplaceId
-              )
+              (item) => item.workplace === searchWorkplaceId
+            )
             : responseData;
           const sortedData = filteredData.sort(
             (a, b) => a.employeeId - b.employeeId
@@ -869,13 +869,13 @@ function WorktimeSheetWorkplace() {
       // Calculate the number of days in the month, considering February and leap years
       const daysInMonth =
         monthset === "02" &&
-        ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0)
+          ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0)
           ? 29
           : monthset === "02"
-          ? 28
-          : [4, 6, 9, 11].includes(monthset)
-          ? 30
-          : 31;
+            ? 28
+            : [4, 6, 9, 11].includes(monthset)
+              ? 30
+              : 31;
 
       // Calculate the starting point for the table header
       let startingDay = 21;
@@ -1230,7 +1230,7 @@ function WorktimeSheetWorkplace() {
   }, [searchWorkplaceId, workplaceList]);
 
   const addSalaryWorkplace = workplaceDataListAddSalary;
-
+  console.log('addSalaryWorkplace', addSalaryWorkplace);
   // workplaceDataListAddSalary
   // วันหยุดนักขัต
   const filteredDaysOff = workplaceDataListDayOff
@@ -2691,8 +2691,8 @@ function WorktimeSheetWorkplace() {
     return dayWorkMorningAndSSs.map((subArray) =>
       subArray.map((day) =>
         allDayOff.includes(day) ||
-        holidayList.includes(day) ||
-        singleArrayOfDates.includes(day)
+          holidayList.includes(day) ||
+          singleArrayOfDates.includes(day)
           ? ""
           : day
       )
@@ -4878,12 +4878,12 @@ function WorktimeSheetWorkplace() {
 
         doc.text(
           codePage +
-            "" +
-            formattedDate +
-            "" +
-            (pageIndex + 1) +
-            " of " +
-            makePage,
+          "" +
+          formattedDate +
+          "" +
+          (pageIndex + 1) +
+          " of " +
+          makePage,
           250,
           210
         );
