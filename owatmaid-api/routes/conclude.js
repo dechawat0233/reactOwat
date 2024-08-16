@@ -390,12 +390,21 @@ if(parseFloat(salary ) >= 1660) {
       } else {
 console.log('2x');
 
+if(wpId1 == '399-105'){
+  const wpDataCalculator1 = await {
+    month: month || '',
+    year: year1 || '',
+    workplaceId: wpId1
+  };
+
+} else {
         const wpDataCalculator1 = await {
           month: month || '',
           year: year1 || '',
           // workplaceId: wpId1
           workplaceId: keys[0]
         };
+      }
 
         //get workplace data for calculator
         const wpResponse1 = await axios.post(sURL + '/workplace/caldata', wpDataCalculator1);
