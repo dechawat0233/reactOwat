@@ -390,7 +390,7 @@ if(parseFloat(salary ) >= 1660) {
       } else {
 console.log('2x');
 
-if(wpId1 === '399-105'){
+if(wpId1 !== '399-105'){
   wpId1 = keys[0]
 }
 
