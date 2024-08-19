@@ -1601,13 +1601,13 @@ function TestPDFResultSalayNew() {
   //   // "กะเช้า",
   //   // "กะบ่าย",
   //   // "กะดึก",
-    
+
   // ]);
 
   const extractedData = filteredEmployees.map((employee) => ({
     name: employee.name + " " + employee.lastName,
     employeeId: employee.employeeId,
-}));
+  }));
 
   // .sort((a, b) => {
   //     const idA = parseInt(a[1], 10);
@@ -2504,7 +2504,7 @@ function TestPDFResultSalayNew() {
         parseFloat(record.workRateMultiply) <= 1 // Convert workRateMultiply to float
       ) {
         // Push allTimes and otTimes to respective arrays
-        allTimesArray.push(parseFloat(record.allTimes));
+        allTimesArray.push(parseFloat(record.allTimes).toFixed(1));
       } else {
         // Push empty strings if workRate and workRateOT do not exist
         allTimesArray.push("");
@@ -2532,7 +2532,7 @@ function TestPDFResultSalayNew() {
         parseFloat(record.workRateMultiply) > 1.5 // Convert workRateMultiply to float
       ) {
         // Push allTimes and otTimes to respective arrays
-        allTimesArray2.push(parseFloat(record.allTimes));
+        allTimesArray2.push(parseFloat(record.allTimes).toFixed(1));
       } else {
         // Push empty strings if workRate and workRateOT do not exist
         allTimesArray2.push("");
@@ -2561,7 +2561,7 @@ function TestPDFResultSalayNew() {
         parseFloat(record.workRateMultiply) >= 3 // Convert workRateMultiply to float
       ) {
         // Push allTimes and otTimes to respective arrays
-        allTimesArray3.push(parseFloat(record.allTimes));
+        allTimesArray3.push(parseFloat(record.allTimes).toFixed(1));
       } else {
         // Push empty strings if workRate and workRateOT do not exist
         allTimesArray3.push("");
@@ -2672,6 +2672,7 @@ function TestPDFResultSalayNew() {
   const newAllTimes3 = Object.values(allTimesByEmployee3).flat();
   const newOtTimes3 = Object.values(otTimesByEmployee3).flat();
 
+  console.log("newAllTimes2:", newAllTimes2);
   console.log("newOtTimes3:", newOtTimes3);
 
   // Log the results
@@ -6957,14 +6958,14 @@ function TestPDFResultSalayNew() {
 
   const createEmptyArray = (numRows, numCols) => {
     return Array.from({ length: numRows }, () => Array(numCols).fill(""));
-};
+  };
 
-// Usage
-const numRows = 1; // Number of sub-arrays
-const numCols = 13; // Number of columns in each sub-array
-const emptyArray = createEmptyArray(numRows, numCols);
+  // Usage
+  const numRows = 1; // Number of sub-arrays
+  const numCols = 13; // Number of columns in each sub-array
+  const emptyArray = createEmptyArray(numRows, numCols);
 
-console.log('emptyArray',emptyArray);
+  console.log('emptyArray', emptyArray);
 
 
   // Define the size of each sub-array (e.g., days in a month)
@@ -7261,11 +7262,11 @@ console.log('emptyArray',emptyArray);
       // };
       const drawRow = (data, y, rowHeight) => {
         for (let j = 0; j < data.length; j++) {
-            const x = startX + j * cellWidth;
-            const rotate = data[j] && data[j].length > 5; // Check if data exists and length > 5
-            drawCell(x, y, cellWidth, rowHeight, data[j] || "", rotate); // Use empty string if data[j] is undefined
+          const x = startX + j * cellWidth;
+          const rotate = data[j] && data[j].length > 5; // Check if data exists and length > 5
+          drawCell(x, y, cellWidth, rowHeight, data[j] || "", rotate); // Use empty string if data[j] is undefined
         }
-    };
+      };
 
       // const drawSalaryRow = (data, y, rowHeight) => {
       //   for (let j = 0; j < data.length; j++) {
@@ -7278,13 +7279,35 @@ console.log('emptyArray',emptyArray);
       const drawSalaryRow = (data, y, rowHeight) => {
         const totalColumns = 13; // Number of columns to draw
         const offsetX = startX + daysInMonth * cellWidth; // Initial offset for salary cells
-    
+
         for (let j = 0; j < totalColumns; j++) {
-            const x = offsetX + j * cellWidthSpSalary; // Calculate x position for each cell
-            const rotate = data[j] && data[j].length > 3; // Apply rotation if string length > 3
-            drawCell(x, y, cellWidthSpSalary, rowHeight, data[j] || "", rotate);
+          const x = offsetX + j * cellWidthSpSalary; // Calculate x position for each cell
+          const rotate = data[j] && data[j].length > 3; // Apply rotation if string length > 3
+          drawCell(x, y, cellWidthSpSalary, rowHeight, data[j] || "", rotate);
         }
-    };
+      };
+
+      const drawAddSalaryCountRow = (data, y, rowHeight) => {
+        // Set the x position to start at 5
+        const startXPosition = startX + daysInMonth * cellWidth;
+        for (let j = 0; j < data.length; j++) {
+          // Calculating x position for each cell based on index
+          const x = startXPosition + j * cellWidthSpSalary; // cellWidthSpSalary is width of salary cells
+          const rotate = data[j].length > 20; // Apply rotation if string length > 3
+          drawCell(x+cellWidthSpSalary*2, y, cellWidthSpSalary , rowHeight, data[j], rotate);
+        }
+      };
+      const drawAddSalaryRow = (data, y, rowHeight) => {
+        // Set the x position to start at 5
+        const startXPosition = startX + daysInMonth * cellWidth;
+        for (let j = 0; j < data.length; j++) {
+          // Calculating x position for each cell based on index
+          const x = startXPosition + j * cellWidthSpSalary; // cellWidthSpSalary is width of salary cells
+          const rotate = data[j].length > 20; // Apply rotation if string length > 3
+          drawCell(x+cellWidthSpSalary*2, y, cellWidthSpSalary , rowHeight, data[j], rotate);
+        }
+      };
+
 
       const drawCellRight = (x, y, content) => {
         doc.text(content, x, y, { align: "center" });
@@ -7307,7 +7330,11 @@ console.log('emptyArray',emptyArray);
         finalUpdatedDayWorksWorkNight.length,
         newOtTimes.length,
         newOtTimes2.length,
-        newOtTimes3.length
+        newOtTimes3.length,
+
+        newAllTimes.length,
+        newAllTimes2.length,
+        newAllTimes3.length,
       );
 
       let tableCounter = 1; // Initialize table number counter
@@ -7331,19 +7358,36 @@ console.log('emptyArray',emptyArray);
         const OtTimes2 = newOtTimes2[i] || Array(numCols).fill("");
         const OtTimes3 = newOtTimes3[i] || Array(numCols).fill("");
 
+        const AllTimes = newAllTimes[i] || Array(numCols).fill("");
+        const AllTimes2 = newAllTimes2[i] || Array(numCols).fill("");
+        const AllTimes3 = newAllTimes3[i] || Array(numCols).fill("");
+
         const newOtTimesspace = newOtTimes3Testspace[i] || Array(numCols).fill("");
         const emptyArraytest = emptyArray[i] || Array(numCols).fill("");
 
+        const salaryCountData = adjustedDailyExtractedDataAddSalaryCount[i] || Array(numCols).fill("");
+        // const salaryData = adjustedDailyExtractedDataAddSalary[i] || Array(numCols).fill("");
+        const salaryData = (adjustedDailyExtractedDataAddSalary[i] || Array(numCols).fill("")).map(item => {
+          // Check if the item is a number, convert it to a string
+          return item !== "" ? item.toString() : item;
+      });
         const isMorningRowEmpty = isRowEmpty(morningData);
         const isAfternoonRowEmpty = isRowEmpty(afternoonData);
         const isNightRowEmpty = isRowEmpty(nightData);
         const isNewOtTimesTestRowEmpty = isRowEmpty(OtTimes);
         const isNewOtTimes2TestRowEmpty = isRowEmpty(OtTimes2);
         const isNewOtTimes3TestRowEmpty = isRowEmpty(OtTimes3);
+
+        const isNewAllTimesTestRowEmpty = isRowEmpty(AllTimes);
+        const isNewAllTimes2TestRowEmpty = isRowEmpty(AllTimes2);
+        const isNewAllTimes3TestRowEmpty = isRowEmpty(AllTimes3);
+
         const isNewOtTimes3TestspaceRowEmpty = isRowEmpty(newOtTimesspace);
         const isEmptyArraytestRowEmpty = isRowEmpty(emptyArraytest);
 
-        // alert(OtTimes3);
+        const isSalaryCountRowEmpty = isRowEmpty(salaryCountData);
+        const isSalaryRowEmpty = isRowEmpty(salaryData);
+
         if (
           isMorningRowEmpty &&
           isAfternoonRowEmpty &&
@@ -7364,7 +7408,7 @@ console.log('emptyArray',emptyArray);
         // Calculate the total height needed for this set of rows
         const totalHeightNeeded =
           // (isMorningRowEmpty ? 0 : morningRowHeight ) +
-          (isMorningRowEmpty ? 0 : morningRowHeight + cellHeight ) +
+          (isMorningRowEmpty ? 0 : morningRowHeight + cellHeight) +
           (isAfternoonRowEmpty ? 0 : afternoonRowHeight) +
           (isNightRowEmpty ? 0 : nightRowHeight) +
           (isNewOtTimesTestRowEmpty ? 0 : cellHeight * 2) +
@@ -7372,7 +7416,7 @@ console.log('emptyArray',emptyArray);
           (isNewOtTimes3TestRowEmpty ? 0 : cellHeight * 2);
 
 
-        
+
 
         // Check if we need to start a new page
         checkPageOverflow(totalHeightNeeded);
@@ -7397,17 +7441,28 @@ console.log('emptyArray',emptyArray);
 
         const rightX = 200; // Adjust this value based on your PDF width and margins
 
+        if (!isRowEmpty(salaryCountData)) {
+          // Drawing salary data
+          drawAddSalaryCountRow(salaryCountData, currentY, cellHeight);
+        }
+
+        if (!isRowEmpty(salaryData)) {
+          // Drawing salary data
+          drawAddSalaryRow(salaryData, currentY+morningRowHeight, cellHeight);
+        }
+
         if (!isMorningRowEmpty) {
           drawTableNumber123("", currentY, cellHeight, "กะเช้า");
           drawRow(morningData, currentY, morningRowHeight);
-          drawCellRight(cellHeight * daysInMonth + 59, currentY + (cellHeight / 2) + 1, HourWork[i].toString());
+          drawCellRight(cellHeight * daysInMonth + 59, currentY + (cellHeight / 2) + 1, countDayWork[i].toString());
           drawSalaryRow(emptyArraytest, currentY, morningRowHeight);
           currentY += morningRowHeight;
           drawRow(newOtTimesspace, currentY, cellHeight);
           drawSalaryRow(emptyArraytest, currentY, cellHeight);
-          drawCellRight(cellHeight * daysInMonth + 59, currentY + (cellHeight / 2) + 1, SalaryWork[i].toString());
+          drawCellRight(cellHeight * daysInMonth + 59, currentY + (cellHeight / 2) + 1, amountCountDayWork[i].toString());
           currentY += cellHeight;
         }
+
 
         if (!isAfternoonRowEmpty) {
           // drawTableNumber(tableCounter, currentY, afternoonRowHeight, "กะบ่าย");
@@ -7433,15 +7488,16 @@ console.log('emptyArray',emptyArray);
 
           // drawRow(newOtTimes, currentY, cellHeight);
           drawRow(OtTimes, currentY, cellHeight);
+          drawRow(AllTimes2, currentY, cellHeight);
           drawSalaryRow(emptyArraytest, currentY, cellHeight);
 
-          drawCellRight(cellHeight * daysInMonth + 59, currentY + (cellHeight / 2) + 1, HourWork1[i].toString());
+          drawCellRight(cellHeight * daysInMonth + 59, currentY + (cellHeight / 2) + 1, amountOneFive[i].toString());
 
           currentY += cellHeight;
           drawRow(newOtTimesspace, currentY, cellHeight);
           drawSalaryRow(emptyArraytest, currentY, cellHeight);
 
-          drawCellRight(cellHeight * daysInMonth + 59, currentY + (cellHeight / 2) + 1, SalaryWork1[i].toString());
+          drawCellRight(cellHeight * daysInMonth + 59, currentY + (cellHeight / 2) + 1, hourOneFive[i].toString());
 
           currentY += cellHeight;
         }
@@ -7451,15 +7507,17 @@ console.log('emptyArray',emptyArray);
 
           // drawRow(newOtTimes2, currentY, cellHeight);
           drawRow(OtTimes2, currentY, cellHeight);
+          drawRow(AllTimes3, currentY, cellHeight);
+
           drawSalaryRow(emptyArraytest, currentY, cellHeight);
 
-          drawCellRight(cellHeight * daysInMonth + 59, currentY + (cellHeight / 2) + 1, HourWork2[i].toString());
+          drawCellRight(cellHeight * daysInMonth + 59, currentY + (cellHeight / 2) + 1, amountTwo[i].toString());
 
           currentY += cellHeight;
           drawRow(newOtTimesspace, currentY, cellHeight);
           drawSalaryRow(emptyArraytest, currentY, cellHeight);
 
-          drawCellRight(cellHeight * daysInMonth + 59, currentY + (cellHeight / 2) + 1, SalaryWork2[i].toString());
+          drawCellRight(cellHeight * daysInMonth + 59, currentY + (cellHeight / 2) + 1, hourTwo[i].toString());
 
           currentY += cellHeight;
         }
@@ -7471,13 +7529,13 @@ console.log('emptyArray',emptyArray);
           drawRow(OtTimes3, currentY, cellHeight);
           drawSalaryRow(emptyArraytest, currentY, cellHeight);
 
-          drawCellRight(cellHeight * daysInMonth + 59, currentY + (cellHeight / 2) + 1, HourWork3[i].toString());
+          drawCellRight(cellHeight * daysInMonth + 59, currentY + (cellHeight / 2) + 1, amountThree[i].toString());
 
           currentY += cellHeight;
           drawRow(newOtTimesspace, currentY, cellHeight);
           drawSalaryRow(emptyArraytest, currentY, cellHeight);
 
-          drawCellRight(cellHeight * daysInMonth + 59, currentY + (cellHeight / 2) + 1, SalaryWork3[i].toString());
+          drawCellRight(cellHeight * daysInMonth + 59, currentY + (cellHeight / 2) + 1, hourThree[i].toString());
 
           currentY += cellHeight;
         }
