@@ -178,7 +178,8 @@ if(parseFloat(salary ) >= 1660) {
       console.log('wGroup keys:', keys); // Log the keys of wGroup
       console.log('wGroup keys length:', keys.length); // Log the length of the keys
 
-      if (keys.length > 1) {
+//check working multi workplace and not 399-105
+      if (keys.length > 1 && dataEmp.employees[0].workplace  !== '399-105') {
         console.log('process : 21 - '+ lastday);
 
         for (const workplaceId of Object.keys(wGroup1)) {
@@ -389,12 +390,17 @@ if(parseFloat(salary ) >= 1660) {
       } else {
 console.log('2x');
 
-        const wpDataCalculator1 = await {
-          month: month || '',
-          year: year1 || '',
-          // workplaceId: wpId1
-          workplaceId: keys[0]
-        };
+if(wpId1 !== '399-105'){
+  wpId1 = keys[0]
+}
+
+const         wpDataCalculator1 = await {
+  month: month || '',
+  year: year1 || '',
+  workplaceId: wpId1
+  // workplaceId: keys[0]
+};
+
 
         //get workplace data for calculator
         const wpResponse1 = await axios.post(sURL + '/workplace/caldata', wpDataCalculator1);
@@ -403,7 +409,7 @@ console.log('2x');
         const workOfOT = await Number(wpResponse1.data.workOfOT) || 0;
 
         const dayOff1 = await wpResponse1.data.workplaceDayOffList || [];
-        console.log('dayOff1 ' + dayOff1 );
+        // console.log('dayOff1 ' + dayOff1 );
         const specialDayOff1 = await wpResponse1.data.specialDaylist || [];
         const dayOffCheck1 = [];
         if (dayOff1.length !== 0) {
@@ -413,7 +419,7 @@ console.log('2x');
             // console.log(str2 );
             dayOffCheck1.push(str2);
           });
-          console.log('dayOffCheck1' + JSON.stringify(dayOffCheck1,null,2));
+          // console.log('dayOffCheck1' + JSON.stringify(dayOffCheck1,null,2));
         }
 
         for (const element of data1.recordworkplace[0].employee_workplaceRecord) {
@@ -639,11 +645,12 @@ console.log('special day off rate');
 
       //get workplaceId in first employee_workplaceRecord
       // let wpId = data.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
-      let wpId = dataEmp.employees[0].workplace || '';
-      let salary = dataEmp.employees[0].salary || 0;
+      let wpId = await dataEmp.employees[0].workplace || '';
+      let salary = await dataEmp.employees[0].salary || 0;
       if(parseFloat(salary ) >= 1660) {
         salary  = parseFloat(salary) / 30;
       }
+      console.log('s1 ' + salary);
       
       // console.log('wGroup X ' + JSON.stringify(wGroup    ,2,null))
       // console.log('wGroup X ' + Object.keys(wGroup).length)
@@ -652,8 +659,8 @@ console.log('special day off rate');
       // console.log('wGroup keys:', keys); // Log the keys of wGroup
       // console.log('wGroup keys length:', keys.length); // Log the length of the keys
 
-      if (keys.length > 1) {
-        console.log('process');
+      if (keys.length > 1 && dataEmp.employees[0].workplace  !== '399-105') {
+        console.log('process 2');
 
         for (const workplaceId of Object.keys(wGroup)) {
           const group = wGroup[workplaceId];
@@ -709,7 +716,9 @@ console.log('special day off rate');
           let str1 = parseInt(dateParts[0], 10);
 
           if (str1 > 0 && str1 <= 20) {
+            
             // console.log('str1  : ' + str1 )
+            // console.log('tmpWP.data.workRate ' + tmpWP.data.workRate);
             tmp.day = str1 + '/' + month + '/' + year;
             tmp.workplaceId = element.workplaceId || '';
             let parts = element.allTime.split('.');
@@ -729,7 +738,6 @@ console.log('special day off rate');
 
             let scaledMinutes1 = (minutes1 * 100) / 60;
             let otTime = parseFloat(`${hours1}.${scaledMinutes1}`).toFixed(2) || 0;
-
             if (element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
               tmp.workRate = element.specialtSalary || '';
               tmp.workRateMultiply = Number(element.specialtSalary || 0) / Number(wpResponse.data.workRate || 0);
@@ -778,6 +786,7 @@ console.log('special day off rate');
                 sumWorkHourOt += parseFloat(otTime) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
 
+                salary = 0;
                 workRate = 0;
                 workRateOT = 0;
                 tmp.workType = 'specialDayOff';
@@ -814,14 +823,17 @@ console.log('special day off rate');
                 sumWorkHourOt += parseFloat(otTime) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
 
+                salary = 0;
                 workRate = 0;
                 workRateOT = 0;
                 tmp.workType = 'dayOff';
 
               } else {
-                if (salary === 0) {
+                if (salary == 0) {
                   salary = tmpWP.data.workRate;
+                  console.log('test');
                 }
+console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
 
                 if (allTime >= workOfHour) {
                   allTime = workOfHour;
@@ -830,7 +842,7 @@ console.log('special day off rate');
                   tmp.allTimes = allTime || 0;
                 }
 
-                let workRate = ((salary / 8) * parseFloat(allTime)).toFixed(2);
+                let workRate = ((parseFloat(salary) / 8) * parseFloat(allTime)).toFixed(2);
                 tmp.workRate = workRate || 0;
                 tmp.workRateMultiply = '1';
 
@@ -850,6 +862,7 @@ console.log('special day off rate');
                 sumWorkHourOt += parseFloat(otTime) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
 
+                salary = 0;
                 workRate = 0;
                 workRateOT = 0;
                 tmp.workType = 'workDay';
@@ -866,7 +879,10 @@ console.log('special day off rate');
         // }
       } else {
 
-
+        if(wpId !== '399-105'){
+          wpId = keys[0]
+        }
+      
 
         const wpDataCalculator = {
           month: month || '',
@@ -1094,7 +1110,7 @@ console.log('special day off rate');
 
     // console.log('workplaceListTmp ' + workplaceListTmp);
 
-    const sendData = {
+    const sendData = await {
       wIdList: workplaceListTmp 
     }
     // const responseWpList = await axios.post(sURL + '/workplace/getaddsalary', sendData );
