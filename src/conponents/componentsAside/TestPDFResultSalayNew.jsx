@@ -8041,7 +8041,7 @@ function TestPDFResultSalayNew() {
                             >
                               {/* <button class="btn b_save"><i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา</button> */}
                               <br />
-                              <button
+                              {/* <button
                                 onClick={generatePDFTest123}
                                 type="button "
                                 class="btn b_save"
@@ -8056,7 +8056,7 @@ function TestPDFResultSalayNew() {
                               >
                                 <i class="nav-icon fas fa-search"></i>
                                 พิมพ์รายงานเก่า
-                              </button>
+                              </button> */}
                             </div>
                           </div>
                         </div>
