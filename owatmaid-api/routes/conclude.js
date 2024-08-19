@@ -1128,7 +1128,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
 
     for (let c = 0; c < concludeRecord.length; c++) {
       // console.log('concludeRecord ' + concludeRecord [c].workplaceId);
-      if(responseWpList .data.ans) {
+      if(responseWpList .data.ans && concludeRecord [c].workplaceId !== '399-105') {
       const testx = responseWpList .data.ans.find(item  => item.workplaceId == concludeRecord [c].workplaceId)
 if(testx ) {
   // console.log('testx ' + JSON.stringify(testx.addSalary,null,2) )
