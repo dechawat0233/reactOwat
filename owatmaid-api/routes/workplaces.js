@@ -281,44 +281,88 @@ router.post('/getaddsalary', async (req, res) => {
     const ans = [];
 
     try {
-        const {wIdList} = await req.body;
+        const { wIdList } = await req.body;
 
-        // await console.log('wIdList : ' + wIdList);
         let uniqueArray = await [...new Set(wIdList)];
 
-// console.log('wIdList : ' + uniqueArray); // Output: ['123', '456']
-if(uniqueArray.length <= 0) {
-    res.status(200).json({});
-}
+        if (uniqueArray.length <= 0) {
+            return res.status(200).json({});
+        }
 
+        for (let i = 0; i < uniqueArray.length; i++) {
+            const query = { workplaceId: uniqueArray[i] };
 
-for (let i = 0; i < uniqueArray.length; i++) {
-    // await console.log(uniqueArray[i]);
-    const query = {};
-query.workplaceId = await uniqueArray[i];
+            // Query the workplace collection for matching documents
+            const workplaces = await Workplace.find(query);
 
-        // Query the workplace collection for matching documents
-        const workplaces = await Workplace.find(query);
-if(workplaces ) {
-    await ans.push(workplaces[0] );
-}
+            if (workplaces && workplaces.length > 0) {
+                // Filter the addSalary array by roundOfSalary = 'daily'
+                const filteredWorkplace = workplaces[0];
+                filteredWorkplace.addSalary = filteredWorkplace.addSalary.filter(salary => salary.roundOfSalary === 'daily');
 
-} //end for
+                // Only push to ans if addSalary has at least one item after filtering
+                if (filteredWorkplace.addSalary.length > 0) {
+                    await ans.push(filteredWorkplace);
+                }
+            }
+        }
 
-if(ans.length > 0 ) {
-    await res.status(200).json({ ans});
-} else{
-    await res.status(200).json();
-
-}
+        if (ans.length > 0) {
+            return res.status(200).json({ ans });
+        } else {
+            return res.status(200).json({});
+        }
 
     } catch (error) {
         console.error(error);
-        // res.status(500).json({ message: 'Internal server error' });
+        return res.status(500).json({ message: 'Internal server error' });
     }
-
-
 });
+
+// router.post('/getaddsalary', async (req, res) => {
+//     const ans = [];
+
+//     try {
+//         const {wIdList} = await req.body;
+
+//         // await console.log('wIdList : ' + wIdList);
+//         let uniqueArray = await [...new Set(wIdList)];
+
+// // console.log('wIdList : ' + uniqueArray); // Output: ['123', '456']
+// if(uniqueArray.length <= 0) {
+//     res.status(200).json({});
+// }
+
+
+// for (let i = 0; i < uniqueArray.length; i++) {
+//     // await console.log(uniqueArray[i]);
+//     const query = {};
+// query.workplaceId = await uniqueArray[i];
+
+//         // Query the workplace collection for matching documents
+//         const workplaces = await Workplace.find(query);
+// if(workplaces ) {
+
+//     await ans.push(workplaces[0] );
+
+// }
+
+// } //end for
+
+// if(ans.length > 0 ) {
+//     await res.status(200).json({ ans});
+// } else{
+//     await res.status(200).json();
+
+// }
+
+//     } catch (error) {
+//         console.error(error);
+//         // res.status(500).json({ message: 'Internal server error' });
+//     }
+
+
+// });
 
 
 

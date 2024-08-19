@@ -1122,8 +1122,8 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
     const sendData = await {
       wIdList: workplaceListTmp 
     }
-    // const responseWpList = await axios.post(sURL + '/workplace/getaddsalary', sendData );
-    // await console.log(responseWpList .data.ans[1].workplaceId);
+    const responseWpList = await axios.post(sURL + '/workplace/getaddsalary', sendData );
+    await console.log('add salary = ' + responseWpList .data);
 
     for (let c = 0; c < concludeRecord.length; c++) {
       // console.log('concludeRecord ' + concludeRecord [c].workplaceId);
