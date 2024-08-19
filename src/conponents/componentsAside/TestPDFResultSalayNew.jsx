@@ -290,9 +290,9 @@ function TestPDFResultSalayNew() {
   //data for check list dayoff
   const [data_listDayoff, setData_listDayoff] = useState([]);
 
-  console.log("data_listDayoff", data_listDayoff);
-  console.log("listTableDayoff", listTableDayoff);
-  console.log("df", listDayOff);
+//   console.log("data_listDayoff", data_listDayoff);
+//   console.log("listTableDayoff", listTableDayoff);
+//   console.log("df", listDayOff);
 
   // Generate an array containing numbers from 21 to 31
   const range1 = Array.from({ length: 11 }, (_, i) => i + 21);
@@ -351,8 +351,8 @@ function TestPDFResultSalayNew() {
           const responseData = response.data;
           const filteredData = searchWorkplaceId
             ? responseData.filter(
-              (item) => item.workplace === searchWorkplaceId
-            )
+                (item) => item.workplace === searchWorkplaceId
+              )
             : responseData;
           const sortedData = filteredData.sort(
             (a, b) => a.employeeId - b.employeeId
@@ -369,7 +369,7 @@ function TestPDFResultSalayNew() {
     fetchData();
   }, [year, month, searchWorkplaceId]);
 
-  console.log("responseDataAll", responseDataAll);
+//   console.log("responseDataAll", responseDataAll);
 
   async function handleSearch(event) {
     event.preventDefault();
@@ -869,13 +869,13 @@ function TestPDFResultSalayNew() {
       // Calculate the number of days in the month, considering February and leap years
       const daysInMonth =
         monthset === "02" &&
-          ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0)
+        ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0)
           ? 29
           : monthset === "02"
-            ? 28
-            : [4, 6, 9, 11].includes(monthset)
-              ? 30
-              : 31;
+          ? 28
+          : [4, 6, 9, 11].includes(monthset)
+          ? 30
+          : 31;
 
       // Calculate the starting point for the table header
       let startingDay = 21;
@@ -1584,7 +1584,7 @@ function TestPDFResultSalayNew() {
     (a, b) => parseInt(a.employeeId, 10) - parseInt(b.employeeId, 10)
   );
 
-  console.log("filteredEmployees", filteredEmployees);
+//   console.log("filteredEmployees", filteredEmployees);
 
   //     // Do something with the filtered employees
 
@@ -1620,11 +1620,11 @@ function TestPDFResultSalayNew() {
   // ]);
   // console.log('extractedDataAddSalary', extractedDataAddSalary);
 
-  console.log("EmploeeData", emploeeData);
+//   console.log("EmploeeData", emploeeData);
   // console.log('EmploeeDataSearch', emploeeDataSearch);
 
   const arraylistNameEmp = extractedData;
-  console.log('arraylistNameEmp', arraylistNameEmp);
+//   console.log("arraylistNameEmp", arraylistNameEmp);
 
   const arraytest = [];
 
@@ -2047,7 +2047,7 @@ function TestPDFResultSalayNew() {
     return Number(a.employeeId) - Number(b.employeeId);
   });
 
-  console.log("filteredEntriesTest", filteredEntriesTest);
+//   console.log("filteredEntriesTest", filteredEntriesTest);
 
   // const responseDataAll123 = [
   //   {_id: '66ac5eca3aac559797a814e9', year: '2024', month: '06', employeeId: '670427', createDate: '02/08/2024, 04:21'},
@@ -2068,14 +2068,14 @@ function TestPDFResultSalayNew() {
     employeeIdss.includes(entry.employeeId)
   );
 
-  console.log("responseDataAll", responseDataAll);
+//   console.log("responseDataAll", responseDataAll);
 
-  console.log("filteredEntriesqw", filteredEntriesqw);
+//   console.log("filteredEntriesqw", filteredEntriesqw);
 
   // Step 3: Sort the filtered entries
   filteredEntriesqw.sort((a, b) => Number(a.employeeId) - Number(b.employeeId));
 
-  console.log("filteredEntriesqw", filteredEntriesqw);
+//   console.log("filteredEntriesqw", filteredEntriesqw);
 
   //   filteredEntriesTest.forEach(entry => {
   //     const groupedRecords = {};
@@ -2376,8 +2376,8 @@ function TestPDFResultSalayNew() {
     });
   });
 
-  console.log("resultArrayNew:", resultArrayNew);
-  console.log("groupedByEmployeeId:", groupedByEmployeeId);
+//   console.log("resultArrayNew:", resultArrayNew);
+//   console.log("groupedByEmployeeId:", groupedByEmployeeId);
 
   // Initialize objects to store the grouped times
   const dayWorkMorningAndSS = {};
@@ -2672,13 +2672,13 @@ function TestPDFResultSalayNew() {
   const newAllTimes3 = Object.values(allTimesByEmployee3).flat();
   const newOtTimes3 = Object.values(otTimesByEmployee3).flat();
 
-  console.log("newAllTimes2:", newAllTimes2);
-  console.log("newOtTimes3:", newOtTimes3);
+//   console.log("newAllTimes2:", newAllTimes2);
+//   console.log("newOtTimes3:", newOtTimes3);
 
   // Log the results
-  console.log("dayWorkMorningAndSSs:", dayWorkMorningAndSSs);
-  console.log("dayWorkAfternoons:", dayWorkAfternoons);
-  console.log("dayWorkNights:", dayWorkNights);
+//   console.log("dayWorkMorningAndSSs:", dayWorkMorningAndSSs);
+//   console.log("dayWorkAfternoons:", dayWorkAfternoons);
+//   console.log("dayWorkNights:", dayWorkNights);
 
   // console.log("newAllTimes:", newAllTimes);
   // console.log("newOtTimes:", newOtTimes);
@@ -2688,7 +2688,7 @@ function TestPDFResultSalayNew() {
   // console.log("newOtTimes3:", newOtTimes3);
 
   const singleArrayOfDates = daySpecialts.flat();
-  console.log("singleArrayOfDates:", singleArrayOfDates);
+//   console.log("singleArrayOfDates:", singleArrayOfDates);
 
   const updateDayWorks = (
     dayWorkMorningAndSSs,
@@ -2699,8 +2699,8 @@ function TestPDFResultSalayNew() {
     return dayWorkMorningAndSSs.map((subArray) =>
       subArray.map((day) =>
         allDayOff.includes(day) ||
-          holidayList.includes(day) ||
-          singleArrayOfDates.includes(day)
+        holidayList.includes(day) ||
+        singleArrayOfDates.includes(day)
           ? ""
           : day
       )
@@ -2713,7 +2713,7 @@ function TestPDFResultSalayNew() {
     holidayList,
     singleArrayOfDates
   );
-  console.log("updatedDaysWorkMorningAndSS", updatedDaysWorkMorningAndSS);
+//   console.log("updatedDaysWorkMorningAndSS", updatedDaysWorkMorningAndSS);
 
   const updatedDaysWorkAfternoon = updateDayWorks(
     dayWorkAfternoons,
@@ -2721,7 +2721,7 @@ function TestPDFResultSalayNew() {
     holidayList,
     singleArrayOfDates
   );
-  console.log("updatedDaysWorkAfternoon", updatedDaysWorkAfternoon);
+//   console.log("updatedDaysWorkAfternoon", updatedDaysWorkAfternoon);
 
   const updatedDaysWorkNight = updateDayWorks(
     dayWorkNights,
@@ -2729,7 +2729,7 @@ function TestPDFResultSalayNew() {
     holidayList,
     singleArrayOfDates
   );
-  console.log("updatedDaysWorkNight", updatedDaysWorkNight);
+//   console.log("updatedDaysWorkNight", updatedDaysWorkNight);
 
   // const changeNumbersToOne = (array) => {
   //   return array.map((subArray) =>
@@ -2773,15 +2773,15 @@ function TestPDFResultSalayNew() {
   const finalUpdatedDayWorksWorkNight =
     changeNumbersToOne2(updatedDaysWorkNight);
 
-  console.log(
-    "finalUpdatedDayWorksWorkMorningAndSS",
-    finalUpdatedDayWorksWorkMorningAndSS
-  );
-  console.log(
-    "finalUpdatedDayWorksWorkAfternoon",
-    finalUpdatedDayWorksWorkAfternoon
-  );
-  console.log("finalUpdatedDayWorksWorkNight", finalUpdatedDayWorksWorkNight);
+//   console.log(
+//     "finalUpdatedDayWorksWorkMorningAndSS",
+//     finalUpdatedDayWorksWorkMorningAndSS
+//   );
+//   console.log(
+//     "finalUpdatedDayWorksWorkAfternoon",
+//     finalUpdatedDayWorksWorkAfternoon
+//   );
+//   console.log("finalUpdatedDayWorksWorkNight", finalUpdatedDayWorksWorkNight);
 
   // const makePage = Math.ceil(arrayWorkNormalDay.length / 5);
   // console.log('makePage', makePage);
@@ -2924,7 +2924,7 @@ function TestPDFResultSalayNew() {
   const sumArrayOT = sumArray321(combinedArray1_5);
 
   // console.log('combinedA321rray:', combinedArray1_5);
-  console.log("sumArrayOT:", sumArrayOT);
+//   console.log("sumArrayOT:", sumArrayOT);
   const sumArrayTotal = sumArrayOT;
   // 2
   const newAllTimes3Numbers = convertToNumbers(newAllTimes3);
@@ -3001,8 +3001,8 @@ function TestPDFResultSalayNew() {
     const accountingRecord = item.accountingRecord?.[0];
     return accountingRecord ? parseInt(accountingRecord.countDayWork, 10) : 0;
   });
-  console.log("countDayWork", countDayWork);
-  console.log("responseDataAll", responseDataAll);
+//   console.log("countDayWork", countDayWork);
+//   console.log("responseDataAll", responseDataAll);
 
   const amountCountDayWork = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
@@ -3010,7 +3010,7 @@ function TestPDFResultSalayNew() {
       ? parseFloat(accountingRecord.amountCountDayWork).toFixed(2)
       : 0;
   });
-  console.log("amountCountDayWork", amountCountDayWork);
+//   console.log("amountCountDayWork", amountCountDayWork);
 
   const hourOneFive = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
@@ -3145,7 +3145,7 @@ function TestPDFResultSalayNew() {
 
   addSalaryWorkplace.sort((a, b) => a.name.localeCompare(b.name, "th"));
 
-  console.log("addSalaryWorkplace", addSalaryWorkplace);
+//   console.log("addSalaryWorkplace", addSalaryWorkplace);
 
   const getUniqueEntriesWithLowestSpSalary = (entries) => {
     const uniqueEntriesMap = new Map();
@@ -3168,7 +3168,7 @@ function TestPDFResultSalayNew() {
   const filteredAddSalaryWorkplace =
     getUniqueEntriesWithLowestSpSalary(addSalaryWorkplace);
 
-  console.log("filteredAddSalaryWorkplace", filteredAddSalaryWorkplace);
+//   console.log("filteredAddSalaryWorkplace", filteredAddSalaryWorkplace);
 
   // const extractedDataAddSalary = filteredEmployees.flatMap(employee => [
   //     employee.addSalary
@@ -3201,7 +3201,7 @@ function TestPDFResultSalayNew() {
     return spSalaryArray;
   });
 
-  console.log("extractedDataAddSalary", extractedDataAddSalary);
+//   console.log("extractedDataAddSalary", extractedDataAddSalary);
 
   const adjustedDailyExtractedDataAddSalary = extractedDataAddSalary.map(
     (salaryArray, outerIndex) => {
@@ -3248,10 +3248,10 @@ function TestPDFResultSalayNew() {
       });
     }
   );
-  console.log(
-    "adjustedDailyExtractedDataAddSalaryCount",
-    adjustedDailyExtractedDataAddSalaryCount
-  );
+//   console.log(
+//     "adjustedDailyExtractedDataAddSalaryCount",
+//     adjustedDailyExtractedDataAddSalaryCount
+//   );
   // รวมคำนวนสวัสดิการ
   const SpSalaryArray = workplaceDataListAddSalary.map((item) => item.SpSalary);
   const roundOfSalaryArray = workplaceDataListAddSalary.map(
@@ -4890,12 +4890,12 @@ function TestPDFResultSalayNew() {
 
         doc.text(
           codePage +
-          "" +
-          formattedDate +
-          "" +
-          (pageIndex + 1) +
-          " of " +
-          makePage,
+            "" +
+            formattedDate +
+            "" +
+            (pageIndex + 1) +
+            " of " +
+            makePage,
           250,
           210
         );
@@ -6559,27 +6559,27 @@ function TestPDFResultSalayNew() {
               doc.text(
                 CodeSp,
                 9 +
-                cellWidthSpSalary * 3 +
-                startXSpSalary +
-                index * cellWidthSpSalary,
+                  cellWidthSpSalary * 3 +
+                  startXSpSalary +
+                  index * cellWidthSpSalary,
                 38,
                 { align: "center" }
               );
               doc.text(
                 NameSp,
                 9 +
-                cellWidthSpSalary * 3 +
-                startXSpSalary +
-                index * cellWidthSpSalary,
+                  cellWidthSpSalary * 3 +
+                  startXSpSalary +
+                  index * cellWidthSpSalary,
                 54.8,
                 { angle: 90 }
               );
               doc.text(
                 "ต่อ " + roundOfSalaryText,
                 12 +
-                cellWidthSpSalary * 3 +
-                startXSpSalary +
-                index * cellWidthSpSalary,
+                  cellWidthSpSalary * 3 +
+                  startXSpSalary +
+                  index * cellWidthSpSalary,
                 54.8,
                 { angle: 90 }
               );
@@ -6606,6 +6606,8 @@ function TestPDFResultSalayNew() {
               drawArrayTextWithColor([rowData[j]], j, i);
             }
             // }
+            // console.log('rowData',rowData);
+            // console.log('resultArray',resultArray);
             drawTable(i, newAllTimes.slice(dataIdx, dataIdx + 1));
             drawTableLeftHead(i, newAllTimes.slice(dataIdx, dataIdx + 1));
             drawTableNumHead(i, newAllTimes.slice(dataIdx, dataIdx + 1));
@@ -6860,19 +6862,41 @@ function TestPDFResultSalayNew() {
 
   // Arrays of sample names and last names
   const sampleNames = [
-    "John", "Jane", "Alex", "Emily", "Chris", "Kate",
-    "Michael", "Sarah", "David", "Laura", "Robert", "Olivia"
+    "John",
+    "Jane",
+    "Alex",
+    "Emily",
+    "Chris",
+    "Kate",
+    "Michael",
+    "Sarah",
+    "David",
+    "Laura",
+    "Robert",
+    "Olivia",
   ];
 
   const sampleLastNames = [
-    "Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia",
-    "Miller", "Davis", "Martinez", "Hernandez", "Lopez", "Wilson"
+    "Smith",
+    "Johnson",
+    "Williams",
+    "Brown",
+    "Jones",
+    "Garcia",
+    "Miller",
+    "Davis",
+    "Martinez",
+    "Hernandez",
+    "Lopez",
+    "Wilson",
   ];
 
   // Helper function to generate a random name
   const generateRandomName = () => {
-    const randomFirstName = sampleNames[getRandomInt(0, sampleNames.length - 1)];
-    const randomLastName = sampleLastNames[getRandomInt(0, sampleLastNames.length - 1)];
+    const randomFirstName =
+      sampleNames[getRandomInt(0, sampleNames.length - 1)];
+    const randomLastName =
+      sampleLastNames[getRandomInt(0, sampleLastNames.length - 1)];
     return randomFirstName + " " + randomLastName;
   };
 
@@ -6882,7 +6906,7 @@ function TestPDFResultSalayNew() {
     for (let i = 0; i < numEmployees; i++) {
       employees.push({
         name: generateRandomName(),
-        employeeId: generateRandomEmployeeId()
+        employeeId: generateRandomEmployeeId(),
       });
     }
     return employees;
@@ -6891,19 +6915,14 @@ function TestPDFResultSalayNew() {
   // Usage: Generate 5 random employees
   const extractedDatatest = generateRandomEmployeeData(10);
 
-
   const generateTestArray = (numArrays, arraySize) => {
     return Array.from({ length: numArrays }, () =>
-      Array.from({ length: arraySize }, () =>
-        Math.random() > 0.5 ? "1" : ""
-      )
+      Array.from({ length: arraySize }, () => (Math.random() > 0.5 ? "1" : ""))
     );
   };
   const generateTestArrayspace = (numArrays, arraySize) => {
     return Array.from({ length: numArrays }, () =>
-      Array.from({ length: arraySize }, () =>
-        Math.random() > 0.5 ? "" : ""
-      )
+      Array.from({ length: arraySize }, () => (Math.random() > 0.5 ? "" : ""))
     );
   };
 
@@ -6924,8 +6943,8 @@ function TestPDFResultSalayNew() {
 
     // Get indices of all '1's in the flattened array
     const onesIndices = flatArray
-      .map((val, index) => val === "1" ? index : -1)
-      .filter(index => index !== -1);
+      .map((val, index) => (val === "1" ? index : -1))
+      .filter((index) => index !== -1);
 
     // Shuffle the indices to ensure random selection
     for (let i = onesIndices.length - 1; i > 0; i--) {
@@ -6934,8 +6953,11 @@ function TestPDFResultSalayNew() {
     }
 
     // Replace a random number of '1's
-    const indicesToReplace = onesIndices.slice(0, Math.min(numToReplace, onesIndices.length));
-    indicesToReplace.forEach(index => {
+    const indicesToReplace = onesIndices.slice(
+      0,
+      Math.min(numToReplace, onesIndices.length)
+    );
+    indicesToReplace.forEach((index) => {
       flatArray[index] = "399-158";
     });
 
@@ -6950,9 +6972,7 @@ function TestPDFResultSalayNew() {
 
   const generateTestTimeArray = (numArrays, arraySize) => {
     return Array.from({ length: numArrays }, () =>
-      Array.from({ length: arraySize }, () =>
-        Math.random() > 0.5 ? "8" : ""
-      )
+      Array.from({ length: arraySize }, () => (Math.random() > 0.5 ? "8" : ""))
     );
   };
 
@@ -6965,23 +6985,34 @@ function TestPDFResultSalayNew() {
   const numCols = 13; // Number of columns in each sub-array
   const emptyArray = createEmptyArray(numRows, numCols);
 
-  console.log('emptyArray', emptyArray);
-
+  console.log("emptyArray", emptyArray);
 
   // Define the size of each sub-array (e.g., days in a month)
   //   const daysInMonth = 29; // Adjust as necessary for your needs
   const numTestArrays = 10; // Number of test arrays to create
 
   // Generate test arrays for MorningAndSS, Afternoon, and Night shifts
-  const finalUpdatedDayWorksWorkMorningAndSSTest = generateTestArray(numTestArrays, daysInMonth);
-  const finalUpdatedDayWorksWorkAfternoonTest = generateTestArray(numTestArrays, daysInMonth);
-  const finalUpdatedDayWorksWorkNightTest = generateTestArray(numTestArrays, daysInMonth);
+  const finalUpdatedDayWorksWorkMorningAndSSTest = generateTestArray(
+    numTestArrays,
+    daysInMonth
+  );
+  const finalUpdatedDayWorksWorkAfternoonTest = generateTestArray(
+    numTestArrays,
+    daysInMonth
+  );
+  const finalUpdatedDayWorksWorkNightTest = generateTestArray(
+    numTestArrays,
+    daysInMonth
+  );
 
   const newOtTimesTest = generateTestTimeArray(numTestArrays, daysInMonth);
   const newOtTimes2Test = generateTestTimeArray(numTestArrays, daysInMonth);
   const newOtTimes3Test = generateTestTimeArray(numTestArrays, daysInMonth);
 
-  const newOtTimes3Testspace = generateTestArrayspace(numTestArrays, daysInMonth);
+  const newOtTimes3Testspace = generateTestArrayspace(
+    numTestArrays,
+    daysInMonth
+  );
 
   setEmptyArrays(finalUpdatedDayWorksWorkMorningAndSSTest, 2);
   setEmptyArrays(finalUpdatedDayWorksWorkAfternoonTest, 2);
@@ -7023,20 +7054,37 @@ function TestPDFResultSalayNew() {
       SalaryWork3.push(hour * 2);
     }
 
-    return { HourWork, SalaryWork, HourWork1, SalaryWork1, HourWork2, SalaryWork2, HourWork3, SalaryWork3 };
+    return {
+      HourWork,
+      SalaryWork,
+      HourWork1,
+      SalaryWork1,
+      HourWork2,
+      SalaryWork2,
+      HourWork3,
+      SalaryWork3,
+    };
   };
 
   // Generate the data for 10 entries
-  const { HourWork, SalaryWork, HourWork1, SalaryWork1, HourWork2, SalaryWork2, HourWork3, SalaryWork3 } = generateHourAndSalaryData(10);
+  const {
+    HourWork,
+    SalaryWork,
+    HourWork1,
+    SalaryWork1,
+    HourWork2,
+    SalaryWork2,
+    HourWork3,
+    SalaryWork3,
+  } = generateHourAndSalaryData(10);
 
   console.log("HourWork:", HourWork);
   console.log("SalaryWork:", SalaryWork);
 
-
   //////////////////
   const countSpecificStrings = (row, lengthThreshold = 3) => {
     // Return true if any string in the row exceeds the length threshold
-    return row.some(cell => cell.length > lengthThreshold);
+    return row.some((cell) => cell.length > lengthThreshold);
   };
 
   const generatePDF987 = () => {
@@ -7062,20 +7110,43 @@ function TestPDFResultSalayNew() {
       let currentY = startY; // Starting Y position
       let pageNumber = 1;
 
-
       const numRowsTop = 1;
       const startXTop = 50; // Adjust the starting X-coordinate as needed
       const startYTop = 30; // Adjust the starting Y-coordinate as needed
       const cellHeightTop = 25;
-      const drawTableTop = () => {
+
+    //   const drawTableTop = () => {
+    //     for (let i = 0; i < numRowsTop; i++) {
+    //       for (let j = 0; j < daysInMonth; j++) {
+    //         const x = startX + j * cellWidth;
+    //         const y = startYTop + i * cellHeightTop;
+    //         drawCell(x, y, cellWidth, cellHeightTop);
+    //       }
+    //     }
+    //   };
+    const drawTableTop = () => {
         for (let i = 0; i < numRowsTop; i++) {
-          for (let j = 0; j < daysInMonth; j++) {
-            const x = startX + j * cellWidth;
-            const y = startYTop + i * cellHeightTop;
-            drawCell(x, y, cellWidth, cellHeightTop);
-          }
+            for (let j = 0; j < daysInMonth; j++) {
+                const x = startX + j * cellWidth;
+                const y = startYTop + i * cellHeightTop;
+                const currentNumber = resultArray[j]; // Get the number from resultArray
+    
+                // Check if the currentNumber is in holidayList or allDayOff
+                const isHighlighted =
+                    holidayList.includes(currentNumber) || allDayOff.includes(currentNumber);
+    
+                // Set the background color if the cell is highlighted
+                if (isHighlighted) {
+                    doc.setFillColor(255, 255, 0); // Set your desired color (yellow)
+                    doc.rect(x, y, cellWidth, cellHeightTop, "F"); // Draw the filled rectangle
+                }
+    
+                // Draw the cell border (or other content as needed)
+                drawCell(x, y, cellWidth, cellHeightTop);
+            }
         }
-      };
+    };
+    
 
       const numRowsTopHead = 1;
       const startXTopHead = 1; // Adjust the starting X-coordinate as needed
@@ -7140,7 +7211,7 @@ function TestPDFResultSalayNew() {
       if (daysInMonth === 28) {
         startXSpSalary = 150.5;
       } else if (daysInMonth === 29) {
-        startXSpSalary = 154.5;
+        startXSpSalary = 154.6;
       } else if (daysInMonth === 30) {
         startXSpSalary = 158.75;
       } else if (daysInMonth === 31) {
@@ -7156,7 +7227,7 @@ function TestPDFResultSalayNew() {
             // if (j > 2) {
             //   x += 5; // Adjust x coordinate for columns after the 4th column
             // }
-            // 
+            //
             // if (j == 2) {
             //   drawCell(x, y, cellWidthSpSalary + 5, cellHeightTop);
             // } else {
@@ -7195,7 +7266,7 @@ function TestPDFResultSalayNew() {
           // Translate the canvas to the center of the cell and rotate it
           doc.text(content, x + width + 2, y + height, {
             align: "center",
-            angle: 90
+            angle: 90,
           });
 
           // Restore the previous graphics state
@@ -7223,14 +7294,13 @@ function TestPDFResultSalayNew() {
 
         // Text options
         const textOptions = {
-          align: 'left',      // Align text to the left
-          baseline: 'top'     // Set the baseline to the top
+          align: "left", // Align text to the left
+          baseline: "top", // Set the baseline to the top
         };
 
         // Position the text within the cell
         doc.text(content, numberX + 9, y, textOptions); // Adjust x and y offsets for padding
       };
-
 
       const drawTableNumber123 = (tableNumber, y, height, label = "") => {
         const numberWidth = 30; // Width of the table number column
@@ -7239,7 +7309,9 @@ function TestPDFResultSalayNew() {
 
         // Directly draw the text at the calculated position without a border
         if (content !== "") {
-          doc.text(content, numberWidth + 2, y + height / 2 + 1, { align: "center" });
+          doc.text(content, numberWidth + 2, y + height / 2 + 1, {
+            align: "center",
+          });
         }
       };
 
@@ -7260,13 +7332,39 @@ function TestPDFResultSalayNew() {
       //     drawCell(x, y, cellWidth, rowHeight, data[j], rotate);
       //   }
       // };
-      const drawRow = (data, y, rowHeight) => {
+    //   const drawRow = (data, y, rowHeight) => {
+    //     for (let j = 0; j < data.length; j++) {
+    //       const x = startX + j * cellWidth;
+    //       const rotate = data[j] && data[j].length > 5; // Check if data exists and length > 5
+    //       drawCell(x, y, cellWidth, rowHeight, data[j] || "", rotate); // Use empty string if data[j] is undefined
+    //     }
+    //   };
+    const drawRow = (data, y, rowHeight, rowIndex) => {
         for (let j = 0; j < data.length; j++) {
-          const x = startX + j * cellWidth;
-          const rotate = data[j] && data[j].length > 5; // Check if data exists and length > 5
-          drawCell(x, y, cellWidth, rowHeight, data[j] || "", rotate); // Use empty string if data[j] is undefined
+            const x = startX + j * cellWidth;
+            const cellData = data[j] || ""; // Use empty string if data[j] is undefined
+            const currentNumber = resultArray[j]; // Get the number from resultArray
+    
+            // Check if the currentNumber is in holidayList or allDayOff
+            const isHighlighted =
+                holidayList.includes(currentNumber) || allDayOff.includes(currentNumber);
+    
+            // Set the background color if the cell is highlighted
+            if (isHighlighted) {
+                doc.setFillColor(255, 255, 0); // Set your desired color (yellow)
+                doc.rect(x, y, cellWidth, rowHeight, "F"); // Draw the filled rectangle
+            }
+    
+            // Check if rotation is needed (if the text is longer than 5 characters)
+            const rotate = cellData.length > 5;
+    
+            // Draw the text on top of the colored rectangle
+            drawCell(x, y, cellWidth, rowHeight, cellData, rotate);
         }
-      };
+    };
+    
+    
+    
 
       // const drawSalaryRow = (data, y, rowHeight) => {
       //   for (let j = 0; j < data.length; j++) {
@@ -7294,7 +7392,14 @@ function TestPDFResultSalayNew() {
           // Calculating x position for each cell based on index
           const x = startXPosition + j * cellWidthSpSalary; // cellWidthSpSalary is width of salary cells
           const rotate = data[j].length > 20; // Apply rotation if string length > 3
-          drawCell(x+cellWidthSpSalary*2, y, cellWidthSpSalary , rowHeight, data[j], rotate);
+          drawCell(
+            x + cellWidthSpSalary * 2,
+            y,
+            cellWidthSpSalary,
+            rowHeight,
+            data[j],
+            rotate
+          );
         }
       };
       const drawAddSalaryRow = (data, y, rowHeight) => {
@@ -7304,15 +7409,22 @@ function TestPDFResultSalayNew() {
           // Calculating x position for each cell based on index
           const x = startXPosition + j * cellWidthSpSalary; // cellWidthSpSalary is width of salary cells
           const rotate = data[j].length > 20; // Apply rotation if string length > 3
-          drawCell(x+cellWidthSpSalary*2, y, cellWidthSpSalary , rowHeight, data[j], rotate);
+          drawCell(
+            x + cellWidthSpSalary * 2,
+            y,
+            cellWidthSpSalary,
+            rowHeight,
+            data[j],
+            rotate
+          );
         }
       };
-
 
       const drawCellRight = (x, y, content) => {
         doc.text(content, x, y, { align: "center" });
       };
 
+      
 
       // Function to check if a row is empty
       const isRowEmpty = (row) => row.every((cell) => cell === "");
@@ -7334,14 +7446,16 @@ function TestPDFResultSalayNew() {
 
         newAllTimes.length,
         newAllTimes2.length,
-        newAllTimes3.length,
+        newAllTimes3.length
       );
 
       let tableCounter = 1; // Initialize table number counter
 
       for (let i = 0; i < maxRows; i++) {
-
-        const employeeData = arraylistNameEmp[i] || { name: "", employeeId: "" };
+        const employeeData = arraylistNameEmp[i] || {
+          name: "",
+          employeeId: "",
+        };
         const employeeInfo = `${employeeData.name}\n${employeeData.employeeId}`;
 
         // const morningData = finalUpdatedDayWorksWorkMorningAndSSTest[i] || Array(numCols).fill("");
@@ -7351,9 +7465,12 @@ function TestPDFResultSalayNew() {
         // const newOtTimes2 = newOtTimes2Test[i] || Array(numCols).fill("");
         // const newOtTimes3 = newOtTimes3Test[i] || Array(numCols).fill("");
 
-        const morningData = finalUpdatedDayWorksWorkMorningAndSS[i] || Array(numCols).fill("");
-        const afternoonData = finalUpdatedDayWorksWorkAfternoon[i] || Array(numCols).fill("");
-        const nightData = finalUpdatedDayWorksWorkNight[i] || Array(numCols).fill("");
+        const morningData =
+          finalUpdatedDayWorksWorkMorningAndSS[i] || Array(numCols).fill("");
+        const afternoonData =
+          finalUpdatedDayWorksWorkAfternoon[i] || Array(numCols).fill("");
+        const nightData =
+          finalUpdatedDayWorksWorkNight[i] || Array(numCols).fill("");
         const OtTimes = newOtTimes[i] || Array(numCols).fill("");
         const OtTimes2 = newOtTimes2[i] || Array(numCols).fill("");
         const OtTimes3 = newOtTimes3[i] || Array(numCols).fill("");
@@ -7362,15 +7479,20 @@ function TestPDFResultSalayNew() {
         const AllTimes2 = newAllTimes2[i] || Array(numCols).fill("");
         const AllTimes3 = newAllTimes3[i] || Array(numCols).fill("");
 
-        const newOtTimesspace = newOtTimes3Testspace[i] || Array(numCols).fill("");
+        const newOtTimesspace =
+          newOtTimes3Testspace[i] || Array(numCols).fill("");
         const emptyArraytest = emptyArray[i] || Array(numCols).fill("");
 
-        const salaryCountData = adjustedDailyExtractedDataAddSalaryCount[i] || Array(numCols).fill("");
+        const salaryCountData =
+          adjustedDailyExtractedDataAddSalaryCount[i] ||
+          Array(numCols).fill("");
         // const salaryData = adjustedDailyExtractedDataAddSalary[i] || Array(numCols).fill("");
-        const salaryData = (adjustedDailyExtractedDataAddSalary[i] || Array(numCols).fill("")).map(item => {
+        const salaryData = (
+          adjustedDailyExtractedDataAddSalary[i] || Array(numCols).fill("")
+        ).map((item) => {
           // Check if the item is a number, convert it to a string
           return item !== "" ? item.toString() : item;
-      });
+        });
         const isMorningRowEmpty = isRowEmpty(morningData);
         const isAfternoonRowEmpty = isRowEmpty(afternoonData);
         const isNightRowEmpty = isRowEmpty(nightData);
@@ -7401,9 +7523,15 @@ function TestPDFResultSalayNew() {
         }
 
         // Determine row heights based on content length
-        const morningRowHeight = countSpecificStrings(morningData) ? cellHeight * 2 : cellHeight;
-        const afternoonRowHeight = countSpecificStrings(afternoonData) ? cellHeight * 2 : cellHeight;
-        const nightRowHeight = countSpecificStrings(nightData) ? cellHeight * 2 : cellHeight;
+        const morningRowHeight = countSpecificStrings(morningData)
+          ? cellHeight * 2
+          : cellHeight;
+        const afternoonRowHeight = countSpecificStrings(afternoonData)
+          ? cellHeight * 2
+          : cellHeight;
+        const nightRowHeight = countSpecificStrings(nightData)
+          ? cellHeight * 2
+          : cellHeight;
 
         // Calculate the total height needed for this set of rows
         const totalHeightNeeded =
@@ -7414,9 +7542,6 @@ function TestPDFResultSalayNew() {
           (isNewOtTimesTestRowEmpty ? 0 : cellHeight * 2) +
           (isNewOtTimes2TestRowEmpty ? 0 : cellHeight * 2) +
           (isNewOtTimes3TestRowEmpty ? 0 : cellHeight * 2);
-
-
-
 
         // Check if we need to start a new page
         checkPageOverflow(totalHeightNeeded);
@@ -7431,6 +7556,104 @@ function TestPDFResultSalayNew() {
         //   drawRow(morningData, currentY, morningRowHeight);
         //   currentY += morningRowHeight;
         // }
+
+        // สี
+        const squareColor = [255, 255, 0]; // Red
+
+        doc.setFillColor(...squareColor);
+
+        // Draw a square with the specified size and color
+        doc.rect(
+          startXSpSalary,
+          startYTop,
+          cellWidthSpSalary * numColsSpSalary - 0.2 ,
+          cellHeightTop,
+          "F"
+        );
+
+
+        doc.text(
+            "วันหยุด " + workplaceDataListWorkRate,
+            5 + startXSpSalary + cellWidthSpSalary,
+            54.8,
+            { angle: 90 }
+          );
+
+        for (let i = 0; i < resultArray.length; i++) {
+            const x = startX + i * cellWidth;
+            doc.text(
+              resultArray[i].toString(),
+              x + 1,
+              cellHeightTop + startYTop - 2
+            );
+          }
+
+
+        let uniqueSalaries = [];
+
+            // Create a Map to keep track of the lowest SpSalary for each codeSpSalary
+            let salaryMap = new Map();
+
+            // Iterate over the sorted array and populate the salaryMap
+            for (let item of filteredAddSalaryWorkplace) {
+              const { codeSpSalary, SpSalary } = item;
+              const currentSpSalary = parseFloat(SpSalary);
+              if (
+                !salaryMap.has(codeSpSalary) ||
+                currentSpSalary < salaryMap.get(codeSpSalary).SpSalary
+              ) {
+                salaryMap.set(codeSpSalary, {
+                  ...item,
+                  SpSalary: currentSpSalary,
+                });
+              }
+            }
+
+            // Convert the Map values to an array
+            uniqueSalaries = Array.from(salaryMap.values());
+
+            uniqueSalaries.forEach((item, index) => {
+              const cleanedName = item.name
+                .replace(/\(ไม่คิดปกส.\)/g, "")
+                .trim();
+              const NameSp = `${cleanedName} ${item.SpSalary}`;
+              const CodeSp = `${item.codeSpSalary}`;
+
+              let roundOfSalaryText = "";
+
+              if (item.roundOfSalary === "monthly") {
+                roundOfSalaryText = "เดือน";
+              } else if (item.roundOfSalary === "daily") {
+                roundOfSalaryText = "วัน";
+              }
+              doc.text(
+                CodeSp,
+                4+
+                  cellWidthSpSalary * 2 +
+                  startXSpSalary +
+                  index * cellWidthSpSalary,
+                38,
+                { align: "center" }
+              );
+              doc.text(
+                NameSp,
+                4+
+                  cellWidthSpSalary * 2 +
+                  startXSpSalary +
+                  index * cellWidthSpSalary,
+                54.8,
+                { angle: 90 }
+              );
+              doc.text(
+                "ต่อ " + roundOfSalaryText,
+                7 +
+                  cellWidthSpSalary * 2 +
+                  startXSpSalary +
+                  index * cellWidthSpSalary,
+                54.8,
+                { angle: 90 }
+              );
+            });
 
         drawTableTop();
         drawTableTopHead();
@@ -7448,21 +7671,39 @@ function TestPDFResultSalayNew() {
 
         if (!isRowEmpty(salaryData)) {
           // Drawing salary data
-          drawAddSalaryRow(salaryData, currentY+morningRowHeight, cellHeight);
+          drawAddSalaryRow(salaryData, currentY + morningRowHeight, cellHeight);
         }
 
-        if (!isMorningRowEmpty) {
+        // if (!isMorningRowEmpty) {
           drawTableNumber123("", currentY, cellHeight, "กะเช้า");
-          drawRow(morningData, currentY, morningRowHeight);
-          drawCellRight(cellHeight * daysInMonth + 59, currentY + (cellHeight / 2) + 1, countDayWork[i].toString());
+        //   drawRow(morningData, currentY, morningRowHeight);
+        drawRow(morningData, currentY, morningRowHeight, i);
+          drawCellRight(
+            cellHeight * daysInMonth + 59,
+            currentY + cellHeight / 2 + 1,
+            countDayWork[i].toString()
+          );
+          drawCellRight(
+            cellHeight * daysInMonth + 59+cellWidthSpSalary,
+            currentY + cellHeight / 2 + 1,
+            sumArrayHoli[i].toString()
+          );
           drawSalaryRow(emptyArraytest, currentY, morningRowHeight);
           currentY += morningRowHeight;
           drawRow(newOtTimesspace, currentY, cellHeight);
           drawSalaryRow(emptyArraytest, currentY, cellHeight);
-          drawCellRight(cellHeight * daysInMonth + 59, currentY + (cellHeight / 2) + 1, amountCountDayWork[i].toString());
+          drawCellRight(
+            cellHeight * daysInMonth + 59,
+            currentY + cellHeight / 2 + 1,
+            amountCountDayWork[i].toString()
+          );
+          drawCellRight(
+            cellHeight * daysInMonth + 59+cellWidthSpSalary,
+            currentY + cellHeight / 2 + 1,
+            adjustedAmountSpecialDay[i].toString()
+          );
           currentY += cellHeight;
-        }
-
+        // }
 
         if (!isAfternoonRowEmpty) {
           // drawTableNumber(tableCounter, currentY, afternoonRowHeight, "กะบ่าย");
@@ -7491,13 +7732,21 @@ function TestPDFResultSalayNew() {
           drawRow(AllTimes2, currentY, cellHeight);
           drawSalaryRow(emptyArraytest, currentY, cellHeight);
 
-          drawCellRight(cellHeight * daysInMonth + 59, currentY + (cellHeight / 2) + 1, amountOneFive[i].toString());
+          drawCellRight(
+            cellHeight * daysInMonth + 59,
+            currentY + cellHeight / 2 + 1,
+            amountOneFive[i].toString()
+          );
 
           currentY += cellHeight;
           drawRow(newOtTimesspace, currentY, cellHeight);
           drawSalaryRow(emptyArraytest, currentY, cellHeight);
 
-          drawCellRight(cellHeight * daysInMonth + 59, currentY + (cellHeight / 2) + 1, hourOneFive[i].toString());
+          drawCellRight(
+            cellHeight * daysInMonth + 59,
+            currentY + cellHeight / 2 + 1,
+            hourOneFive[i].toString()
+          );
 
           currentY += cellHeight;
         }
@@ -7511,13 +7760,21 @@ function TestPDFResultSalayNew() {
 
           drawSalaryRow(emptyArraytest, currentY, cellHeight);
 
-          drawCellRight(cellHeight * daysInMonth + 59, currentY + (cellHeight / 2) + 1, amountTwo[i].toString());
+          drawCellRight(
+            cellHeight * daysInMonth + 59,
+            currentY + cellHeight / 2 + 1,
+            amountTwo[i].toString()
+          );
 
           currentY += cellHeight;
           drawRow(newOtTimesspace, currentY, cellHeight);
           drawSalaryRow(emptyArraytest, currentY, cellHeight);
 
-          drawCellRight(cellHeight * daysInMonth + 59, currentY + (cellHeight / 2) + 1, hourTwo[i].toString());
+          drawCellRight(
+            cellHeight * daysInMonth + 59,
+            currentY + cellHeight / 2 + 1,
+            hourTwo[i].toString()
+          );
 
           currentY += cellHeight;
         }
@@ -7529,13 +7786,21 @@ function TestPDFResultSalayNew() {
           drawRow(OtTimes3, currentY, cellHeight);
           drawSalaryRow(emptyArraytest, currentY, cellHeight);
 
-          drawCellRight(cellHeight * daysInMonth + 59, currentY + (cellHeight / 2) + 1, amountThree[i].toString());
+          drawCellRight(
+            cellHeight * daysInMonth + 59,
+            currentY + cellHeight / 2 + 1,
+            amountThree[i].toString()
+          );
 
           currentY += cellHeight;
           drawRow(newOtTimesspace, currentY, cellHeight);
           drawSalaryRow(emptyArraytest, currentY, cellHeight);
 
-          drawCellRight(cellHeight * daysInMonth + 59, currentY + (cellHeight / 2) + 1, hourThree[i].toString());
+          drawCellRight(
+            cellHeight * daysInMonth + 59,
+            currentY + cellHeight / 2 + 1,
+            hourThree[i].toString()
+          );
 
           currentY += cellHeight;
         }
@@ -7551,12 +7816,6 @@ function TestPDFResultSalayNew() {
       console.error(error);
     }
   };
-
-
-
-
-
-
 
   return (
     // <div>
@@ -7798,18 +8057,26 @@ function TestPDFResultSalayNew() {
                                 <i class="nav-icon fas fa-search"></i>
                                 พิมพ์รายงานเก่า
                               </button>
-                              <button
-                                onClick={generatePDF987}
-                                style={{ marginLeft: "1rem", width: "10rem" }}
-                                class="btn b_save"
-                              >
-                                <i class="nav-icon fas fa-search"></i>
-                                พิมพ์รายงานเก่า
-                              </button>
                             </div>
                           </div>
                         </div>
                       </form>
+                      <button
+                        onClick={generatePDFTest123}
+                        type="button "
+                        class="btn b_save"
+                      >
+                        <i class="nav-icon fas fa-search"></i>
+                        พิมพ์รายงาน
+                      </button>
+                      <button
+                        onClick={generatePDF987}
+                        style={{ marginLeft: "1rem", width: "10rem" }}
+                        class="btn b_save"
+                      >
+                        <i class="nav-icon fas fa-search"></i>
+                        พิมพ์รายงานเก่า
+                      </button>
                       {/* <div class="d-flex justify-content-center">
                                                 <h2 class="title">ผลลัพธ์ {result_data.length} รายการ</h2>
                                             </div>
