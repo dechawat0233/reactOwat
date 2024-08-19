@@ -1130,9 +1130,13 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
       // console.log('concludeRecord ' + concludeRecord [c].workplaceId);
       const testx = responseWpList .data.ans.find(item  => item.workplaceId == concludeRecord [c].workplaceId)
 if(testx ) {
-  console.log('testx ' + JSON.stringify(testx.addSalary,null,2) )
+  // console.log('testx ' + JSON.stringify(testx.addSalary,null,2) )
+  await addSalaryList.push(testx.addSalary );
+} else {
+  await addSalaryList.push(addSalaryDaily);
+
 }
-      await addSalaryList.push(addSalaryDaily);
+      // await addSalaryList.push(addSalaryDaily);
     }
     dataConclude.addSalary = addSalaryList;
 
