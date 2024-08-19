@@ -1881,9 +1881,15 @@ console.log('wsCountDayWork',wsCountDayWork);
                           {/* <td style={cellStyle}>{(overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult).toFixed(2)}</td> */}
                           <td style={cellStyle}>
                             {/* {(amountDay + amountOt + addAmountBeforeTax + addAmountAfterTax).toFixed(2)} */}
-                            {isNaN( Number(wsAmountDay) + Number(wsAmountOt) + Number(sumAddSalaryList)) ?
+                            {/* {isNaN( Number(wsAmountDay) + Number(wsAmountOt) + Number(wsAmountSpecialDay) +  Number(sumAddSalaryList)) ?
                               '0' :
-                              (Number(wsAmountDay) + Number(wsAmountOt) + Number(sumAddSalaryList)).toFixed(2)
+                              (Number(wsAmountDay) + Number(wsAmountOt) + Number(wsAmountSpecialDay) + Number(sumAddSalaryList)).toFixed(2)
+
+                            } */}
+                              {isNaN( Number(wsAmountDay) + Number(wsAmountOt)  +  Number(sumAddSalaryList)) ?
+                              '0' :
+                              (Number(wsAmountDay) + Number(wsAmountOt)  + Number(sumAddSalaryList)).toFixed(2)
+
                             }
                           </td>
 

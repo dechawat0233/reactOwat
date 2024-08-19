@@ -70,7 +70,7 @@ function Salary() {
 
     // Convert back to Buddhist year and format the date
     const buddhistDate = addYears(newDate, 543);
-    return format(buddhistDate, 'dd/MM/yyyy');
+    return format(buddhistDate, "dd/MM/yyyy");
     // return buddhistDate;
   };
 
@@ -846,10 +846,14 @@ function Salary() {
                                 value={employeeData.jobtype || ""}
                                 onChange={(e) => handleChange(e, "jobtype")}
                               >
-                                <option value="">ไม่ระบุ</option>
+                                {/* <option value="">ไม่ระบุ</option>
                                 <option value="ประจำ">ประจำ</option>
                                 <option value="ไม่ประจำ">ไม่ประจำ</option>
                                 <option value="รายวัน">รายวัน</option>
+                                <option value="รายครั้ง">รายครั้ง</option> */}
+                                <option value="">ไม่ระบุ</option>
+                                <option value="รายวัน">รายวัน</option>
+                                <option value="รายเดือน">รายเดือน</option>
                                 <option value="รายครั้ง">รายครั้ง</option>
                               </select>
                             </div>
