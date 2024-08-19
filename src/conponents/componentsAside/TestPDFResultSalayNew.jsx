@@ -7256,25 +7256,48 @@ function TestPDFResultSalayNew() {
       };
 
       // Function to draw a cell with optional text rotation
-      const drawCell = (x, y, width, height, content = "", rotate = false) => {
-        doc.rect(x, y, width, height); // Draw the cell border
+    //   const drawCell = (x, y, width, height, content = "", rotate = false) => {
+    //     doc.rect(x, y, width, height); // Draw the cell border
 
-        if (rotate && content !== "") {
-          // Save the graphics state to restore later
-          doc.saveGraphicsState();
+    //     if (rotate && content !== "") {
+    //       // Save the graphics state to restore later
+    //       doc.saveGraphicsState();
 
-          // Translate the canvas to the center of the cell and rotate it
-          doc.text(content, x + width + 2, y + height, {
-            align: "center",
-            angle: 90,
-          });
+    //       // Translate the canvas to the center of the cell and rotate it
+    //       doc.text(content, x + width + 2, y + height, {
+    //         align: "center",
+    //         angle: 90,
+    //       });
 
-          // Restore the previous graphics state
-          doc.restoreGraphicsState();
-        } else if (content !== "") {
-          doc.text(content, x + width / 2, y + height / 2, { align: "center" });
+    //       // Restore the previous graphics state
+    //       doc.restoreGraphicsState();
+    //     } else if (content !== "") {
+    //       doc.text(content, x + width / 2, y + height / 2, { align: "center" });
+    //     }
+    //   };
+
+    const drawCell = (x, y, width, height, content = "", rotate = false, drawBorder = true) => {
+        if (drawBorder) {
+            doc.rect(x, y, width, height); // Draw the cell border
         }
-      };
+    
+        if (rotate && content !== "") {
+            // Save the graphics state to restore later
+            doc.saveGraphicsState();
+    
+            // Translate the canvas to the center of the cell and rotate it
+            doc.text(content, x + width + 2, y + height, {
+                align: "center",
+                angle: 90,
+            });
+    
+            // Restore the previous graphics state
+            doc.restoreGraphicsState();
+        } else if (content !== "") {
+            doc.text(content, x + width / 2, y + height / 2, { align: "center" });
+        }
+    };
+    
 
       // Function to draw the table number on the left
       // const drawTableNumber = (tableNumber, y, height, label = "") => {
@@ -7385,41 +7408,79 @@ function TestPDFResultSalayNew() {
         }
       };
 
-      const drawAddSalaryCountRow = (data, y, rowHeight) => {
-        // Set the x position to start at 5
-        const startXPosition = startX + daysInMonth * cellWidth;
-        for (let j = 0; j < data.length; j++) {
-          // Calculating x position for each cell based on index
-          const x = startXPosition + j * cellWidthSpSalary; // cellWidthSpSalary is width of salary cells
-          const rotate = data[j].length > 20; // Apply rotation if string length > 3
-          drawCell(
-            x + cellWidthSpSalary * 2,
-            y,
-            cellWidthSpSalary,
-            rowHeight,
-            data[j],
-            rotate
-          );
-        }
-      };
-      const drawAddSalaryRow = (data, y, rowHeight) => {
-        // Set the x position to start at 5
-        const startXPosition = startX + daysInMonth * cellWidth;
-        for (let j = 0; j < data.length; j++) {
-          // Calculating x position for each cell based on index
-          const x = startXPosition + j * cellWidthSpSalary; // cellWidthSpSalary is width of salary cells
-          const rotate = data[j].length > 20; // Apply rotation if string length > 3
-          drawCell(
-            x + cellWidthSpSalary * 2,
-            y,
-            cellWidthSpSalary,
-            rowHeight,
-            data[j],
-            rotate
-          );
-        }
-      };
+    //   const drawAddSalaryCountRow = (data, y, rowHeight) => {
+    //     // Set the x position to start at 5
+    //     const startXPosition = startX + daysInMonth * cellWidth;
+    //     for (let j = 0; j < data.length; j++) {
+    //       // Calculating x position for each cell based on index
+    //       const x = startXPosition + j * cellWidthSpSalary; // cellWidthSpSalary is width of salary cells
+    //       const rotate = data[j].length > 20; // Apply rotation if string length > 3
+    //       drawCell(
+    //         x + cellWidthSpSalary * 2,
+    //         y,
+    //         cellWidthSpSalary,
+    //         rowHeight,
+    //         data[j],
+    //         rotate
+    //       );
+    //     }
+    //   };
+    //   const drawAddSalaryRow = (data, y, rowHeight) => {
+    //     // Set the x position to start at 5
+    //     const startXPosition = startX + daysInMonth * cellWidth;
+    //     for (let j = 0; j < data.length; j++) {
+    //       // Calculating x position for each cell based on index
+    //       const x = startXPosition + j * cellWidthSpSalary; // cellWidthSpSalary is width of salary cells
+    //       const rotate = data[j].length > 20; // Apply rotation if string length > 3
+    //       drawCell(
+    //         x + cellWidthSpSalary * 2,
+    //         y,
+    //         cellWidthSpSalary,
+    //         rowHeight,
+    //         data[j],
+    //         rotate
+    //       );
+    //     }
+    //   };
 
+    const drawAddSalaryCountRow = (data, y, rowHeight) => {
+        const startXPosition = startX + daysInMonth * cellWidth;
+        for (let j = 0; j < data.length; j++) {
+            const x = startXPosition + j * cellWidthSpSalary;
+            const rotate = data[j].length > 20;
+            
+            // Draw the text only, without borders
+            drawCell(
+                x + cellWidthSpSalary * 2,
+                y+1,
+                cellWidthSpSalary,
+                rowHeight,
+                data[j],
+                rotate,
+                false // Pass a parameter to indicate no border
+            );
+        }
+    };
+    
+    const drawAddSalaryRow = (data, y, rowHeight) => {
+        const startXPosition = startX + daysInMonth * cellWidth;
+        for (let j = 0; j < data.length; j++) {
+            const x = startXPosition + j * cellWidthSpSalary;
+            const rotate = data[j].length > 20;
+            
+            // Draw the text only, without borders
+            drawCell(
+                x + cellWidthSpSalary * 2,
+                y,
+                cellWidthSpSalary,
+                rowHeight,
+                data[j],
+                rotate,
+                false // Pass a parameter to indicate no border
+            );
+        }
+    };
+    
       const drawCellRight = (x, y, content) => {
         doc.text(content, x, y, { align: "center" });
       };
