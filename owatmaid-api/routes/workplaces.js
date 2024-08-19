@@ -302,7 +302,7 @@ router.post('/getaddsalary', async (req, res) => {
 
                 // Only push to ans if addSalary has at least one item after filtering
                 if (filteredWorkplace.addSalary.length > 0) {
-                    await ans.push(filteredWorkplace);
+                    await ans.push(filteredWorkplace.addSalary );
                 }
             }
         }
