@@ -1130,7 +1130,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
       // console.log('concludeRecord ' + concludeRecord [c].workplaceId);
       const testx = responseWpList .data.ans.find(item  => item.workplaceId == concludeRecord [c].workplaceId)
 if(testx ) {
-  console.log('testx ' + testx.addSalary.length )
+  console.log('testx ' + JSON.stringify(testx.addSalary,null,2) )
 }
       await addSalaryList.push(addSalaryDaily);
     }
