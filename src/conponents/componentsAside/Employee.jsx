@@ -320,9 +320,7 @@ function Employee() {
     setTreatmentRights(empSelect.treatmentRights);
 
     set_id(empSelect._id);
-    console.log('_id',_id);
-
-
+    console.log("_id", _id);
   }
 
   // useEffect(() => {
@@ -449,7 +447,7 @@ function Employee() {
   const handleMaritalStatus = (event) => {
     setMaritalStatus(event.target.value);
   };
-  
+
   const handleMilitaryStatus = (event) => {
     setMilitaryStatus(event.target.value);
   };
@@ -693,9 +691,14 @@ function Employee() {
                                 value={jobtype}
                                 onChange={handleJobtype}
                               >
-                                <option value="ประจำ">ประจำ</option>
+                                {/* <option value="ประจำ">ประจำ</option>
                                 <option value="ไม่ประจำ">ไม่ประจำ</option>
                                 <option value="รายวัน">รายวัน</option>
+                                <option value="รายครั้ง">รายครั้ง</option> */}
+                                <option value="">ไม่ระบุ</option>
+
+                                <option value="รายวัน">รายวัน</option>
+                                <option value="รายเดือน">รายเดือน</option>
                                 <option value="รายครั้ง">รายครั้ง</option>
                               </select>
                             </div>
@@ -899,7 +902,9 @@ function Employee() {
                             <label role="dateOfBirth">อายุ</label>
                           </div>
                           <div class="col-md-3">
-                            <label role="dateOfBirth">เลขบัตรประจำตัวประชาชน</label>
+                            <label role="dateOfBirth">
+                              เลขบัตรประจำตัวประชาชน
+                            </label>
                           </div>
                           {/* <div class="col-md-3">
                             {" "}
@@ -1181,21 +1186,29 @@ function Employee() {
                                 }
                               /> */}
                               <select
-                                    required
-                                    name="maritalStatus"
-                                    id="maritalStatus"
-                                    class="form-control"
-                                    value={maritalStatus}
-                                    onChange={handleMaritalStatus}
-                                  >
-                                    <option value="">ระบุ</option>
-                                    <option value="โสด">โสด</option>
-                                    <option value="แต่งงานและอยู่ด้วยกัน">แต่งงานและอยู่ด้วยกัน</option>
-                                    <option value="แต่งงานแต่ไม่ได้อยู่ด้วยกัน">แต่งงานแต่ไม่ได้อยู่ด้วยกัน</option>
-                                    <option value="ไม่แต่งงานแต่อยู่ด้วยกัน">ไม่แต่งงานแต่อยู่ด้วยกัน</option>
-                                    <option value="หม้าย">หม้าย</option>
-                                    <option value="หย่าร้าง/แยกทาง/เลิกกัน">หย่าร้าง/แยกทาง/เลิกกัน</option>
-                                  </select>
+                                required
+                                name="maritalStatus"
+                                id="maritalStatus"
+                                class="form-control"
+                                value={maritalStatus}
+                                onChange={handleMaritalStatus}
+                              >
+                                <option value="">ระบุ</option>
+                                <option value="โสด">โสด</option>
+                                <option value="แต่งงานและอยู่ด้วยกัน">
+                                  แต่งงานและอยู่ด้วยกัน
+                                </option>
+                                <option value="แต่งงานแต่ไม่ได้อยู่ด้วยกัน">
+                                  แต่งงานแต่ไม่ได้อยู่ด้วยกัน
+                                </option>
+                                <option value="ไม่แต่งงานแต่อยู่ด้วยกัน">
+                                  ไม่แต่งงานแต่อยู่ด้วยกัน
+                                </option>
+                                <option value="หม้าย">หม้าย</option>
+                                <option value="หย่าร้าง/แยกทาง/เลิกกัน">
+                                  หย่าร้าง/แยกทาง/เลิกกัน
+                                </option>
+                              </select>
                             </div>
                           </div>
                           <div class="col-md-3">

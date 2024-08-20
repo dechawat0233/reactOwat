@@ -833,10 +833,13 @@ function AddEditEmployee() {
                                     <option value="daily">รายวัน</option>
                                     <option value="monthly">รายเดือน</option> */}
                                     <option value="">ไม่ระบุ</option>
-                                    <option value="ประจำ">ประจำ</option>
+                                    {/* <option value="ประจำ">ประจำ</option>
                                     <option value="ไม่ประจำ">ไม่ประจำ</option>
                                     <option value="รายวัน">รายวัน</option>
-                                    <option value="รายครั้ง">รายครั้ง</option>
+                                    <option value="รายครั้ง">รายครั้ง</option> */}
+                                     <option value="รายวัน">รายวัน</option>
+                                <option value="รายเดือน">รายเดือน</option>
+                                <option value="รายครั้ง">รายครั้ง</option>
                                   </select>
                                 </div>
                               </div>
