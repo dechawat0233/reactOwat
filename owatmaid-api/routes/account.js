@@ -101,7 +101,7 @@ const dataList = [];
     if(accountData ) {
       // await accounting.deleteOne({ _id: accountData._id });
       await accounting.deleteMany({year , month , employeeId});
-accountData  = await null;
+accountData  = await false;
     }
 
   }
@@ -1151,7 +1151,6 @@ router.post('/calsalarylist', async (req, res) => {
     }
 
     const dataSearch = await
-    
     {
       year: year || new Date().getFullYear(), 
       month: month,
