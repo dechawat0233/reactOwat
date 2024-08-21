@@ -300,7 +300,12 @@ if(parseFloat(salary ) >= 1660) {
                 sumWorkHourOt += parseFloat(otTime) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
 
-                salary = 0;
+                if(dataEmp.employees[0].salary && parseFloat(dataEmp.employees[0].salary) > 0 ) {
+
+                } else {
+                  salary = 0;
+                }
+
                 workRate = 0;
                 workRateOT = 0;
                 tmp.workType = 'specialDayOff';
@@ -337,7 +342,12 @@ if(parseFloat(salary ) >= 1660) {
                 sumWorkHourOt += parseFloat(otTime) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
 
-                salary = 0;
+                if(dataEmp.employees[0].salary && parseFloat(dataEmp.employees[0].salary) > 0 ) {
+
+                } else {
+                  salary = 0;
+                }
+
                 workRate = 0;
                 workRateOT = 0;
                 tmp.workType = 'dayOff';
@@ -374,7 +384,12 @@ if(parseFloat(salary ) >= 1660) {
                 sumWorkHourOt += parseFloat(otTime) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
 
-                salary = 0;
+                if(dataEmp.employees[0].salary && parseFloat(dataEmp.employees[0].salary) > 0 ) {
+
+                } else {
+                  salary = 0;
+                }
+
                 workRate = 0;
                 workRateOT = 0;
                 tmp.workType = 'workDay';
@@ -504,8 +519,12 @@ console.log('special day off rate');
                 sumWorkRate += parseFloat(workRate) || 0;
                 sumWorkHourOt += parseFloat(otTime) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
+                if(dataEmp.employees[0].salary && parseFloat(dataEmp.employees[0].salary) > 0 ) {
 
-                salary = 0;
+                } else {
+                  salary = 0;
+                }
+
                 workRate = 0;
                 workRateOT = 0;
                 tmp.workType = 'specialDayOff';
@@ -543,8 +562,12 @@ console.log('special day off rate');
                 sumWorkRate += parseFloat(workRate) || 0;
                 sumWorkHourOt += parseFloat(otTime) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
+                if(dataEmp.employees[0].salary && parseFloat(dataEmp.employees[0].salary) > 0 ) {
 
-                salary = 0;
+                } else {
+                  salary = 0;
+                }
+
                 workRate = 0;
                 workRateOT = 0;
                 tmp.workType = 'dayOff';
@@ -581,8 +604,12 @@ console.log('special day off rate');
                 sumWorkRate += parseFloat(workRate) || 0;
                 sumWorkHourOt += parseFloat(otTime) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
+                if(dataEmp.employees[0].salary && parseFloat(dataEmp.employees[0].salary) > 0 ) {
 
-                salary = 0;
+                } else {
+                  salary = 0;
+                }
+                
                 workRate = 0;
                 workRateOT = 0;
                 tmp.workType = 'workDay';
