@@ -29,7 +29,7 @@ function SalarySlipPDF() {
 
   const [responseDataAll, setResponseDataAll] = useState([]);
 
-  const [month, setMonth] = useState("");
+  const [month, setMonth] = useState("01");
   const currentYear = new Date().getFullYear(); // 2024
 
   const [year, setYear] = useState(currentYear);
