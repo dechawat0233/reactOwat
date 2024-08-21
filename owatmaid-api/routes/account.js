@@ -259,7 +259,6 @@ let endDay = getDayNumber(item.endDay);
     }
 
 }
-console.log('dayOffList ' + dayOffList.length)
 } catch (error) {
   console.error(error.message);
 }
@@ -267,7 +266,7 @@ console.log('dayOffList ' + dayOffList.length)
         })
       }
 
-      console.log('dayOffList ' + dayOffList);
+      console.log('*dayOffList ' + dayOffList);
           // Format the new month as a two-digit string (e.g. "01", "02", ...)
     const newMonthStringX = (month -1).toLocaleString('en-US', {
       minimumIntegerDigits: 2,
