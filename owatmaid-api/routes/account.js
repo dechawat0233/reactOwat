@@ -259,7 +259,7 @@ let endDay = getDayNumber(item.endDay);
     }
 
 }
-console.log('dayOffList ' + dayOffList)
+console.log('dayOffList ' + dayOffList.length)
 } catch (error) {
   console.error(error.message);
 }
