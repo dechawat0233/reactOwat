@@ -164,63 +164,33 @@ function SalaryAllResult() {
     //         });
     // };
 
-    // useEffect(() => {
-    //     const fetchData = () => {
-    //         const dataTest = {
-    //             year: year,
-    //             month: month,
-    //         };
-
-    //         axios.post(endpoint + '/accounting/calsalarylist', dataTest)
-    //             .then(response => {
-    //                 const responseData = response.data;
-
-    //                 console.log('searchWorkplaceId', searchWorkplaceId);
-
-    //                 console.log('responseData', responseData);
-    //                 const filteredData = searchWorkplaceId ? responseData.filter(item => item.workplace === searchWorkplaceId) : responseData;
-
-    //                 setResponseDataAll(filteredData);
-
-    //             })
-    //             .catch(error => {
-    //                 console.error('Error:', error);
-    //             });
-    //     };
-
-    //     // Call fetchData when year or month changes
-    //     fetchData();
-    // }, [year, month, searchWorkplaceId]);
-
     useEffect(() => {
         const fetchData = () => {
             const dataTest = {
                 year: year,
                 month: month,
             };
-    
+
             axios.post(endpoint + '/accounting/calsalarylist', dataTest)
                 .then(response => {
                     const responseData = response.data;
-    
+
                     console.log('searchWorkplaceId', searchWorkplaceId);
+
                     console.log('responseData', responseData);
-    
-                    // Filter the data by workplace and also ensure name and lastName exist
-                    const filteredData = responseData
-                        .filter(item => searchWorkplaceId ? item.workplace === searchWorkplaceId : true)
-                        .filter(item => item.name && item.lastName);  // Only include items with both name and lastName
-    
+                    const filteredData = searchWorkplaceId ? responseData.filter(item => item.workplace === searchWorkplaceId) : responseData;
+
                     setResponseDataAll(filteredData);
+
                 })
                 .catch(error => {
                     console.error('Error:', error);
                 });
         };
-    
+
+        // Call fetchData when year or month changes
         fetchData();
     }, [year, month, searchWorkplaceId]);
-    
 
     console.log('responseDataAll', responseDataAll);
 
