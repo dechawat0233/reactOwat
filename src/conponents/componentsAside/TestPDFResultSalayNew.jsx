@@ -2528,8 +2528,9 @@ function TestPDFResultSalayNew() {
         record.workRate != 0 &&
         record.workRate != null &&
         // record.workRate / workRateWorkplace < workRateWorkplaceStage1
-        parseFloat(record.workRateMultiply) <= 2 &&
-        parseFloat(record.workRateMultiply) > 1.5 // Convert workRateMultiply to float
+         parseFloat(record.workRateMultiply) > 1.5 &&// Convert workRateMultiply to float
+        parseFloat(record.workRateMultiply) <= 2 
+       
       ) {
         // Push allTimes and otTimes to respective arrays
         allTimesArray2.push(parseFloat(record.allTimes).toFixed(1));
@@ -2672,7 +2673,7 @@ function TestPDFResultSalayNew() {
   const newAllTimes3 = Object.values(allTimesByEmployee3).flat();
   const newOtTimes3 = Object.values(otTimesByEmployee3).flat();
 
-//   console.log("newAllTimes2:", newAllTimes2);
+  console.log("newAllTimes2:", newAllTimes2);
 //   console.log("newOtTimes3:", newOtTimes3);
 
   // Log the results
@@ -7595,14 +7596,24 @@ function TestPDFResultSalayNew() {
           : cellHeight;
 
         // Calculate the total height needed for this set of rows
+        // const totalHeightNeeded =
+        //   // (isMorningRowEmpty ? 0 : morningRowHeight ) +
+        //   (isMorningRowEmpty ? 0 : morningRowHeight + cellHeight) +
+        //   (isAfternoonRowEmpty ? 0 : afternoonRowHeight) +
+        //   (isNightRowEmpty ? 0 : nightRowHeight) +
+        //   (isNewOtTimesTestRowEmpty ? 0 : cellHeight * 2) +
+        //   (isNewOtTimes2TestRowEmpty ? 0 : cellHeight * 2) +
+        //   (isNewOtTimes3TestRowEmpty ? 0 : cellHeight * 2);
+
         const totalHeightNeeded =
-          // (isMorningRowEmpty ? 0 : morningRowHeight ) +
-          (isMorningRowEmpty ? 0 : morningRowHeight + cellHeight) +
-          (isAfternoonRowEmpty ? 0 : afternoonRowHeight) +
-          (isNightRowEmpty ? 0 : nightRowHeight) +
-          (isNewOtTimesTestRowEmpty ? 0 : cellHeight * 2) +
-          (isNewOtTimes2TestRowEmpty ? 0 : cellHeight * 2) +
-          (isNewOtTimes3TestRowEmpty ? 0 : cellHeight * 2);
+    (isMorningRowEmpty ? 0 : morningRowHeight + cellHeight) +
+    (isAfternoonRowEmpty ? 0 : afternoonRowHeight) +
+    (isNightRowEmpty ? 0 : nightRowHeight) +
+    // Add height only if both conditions for each row are false
+    ((isNewOtTimesTestRowEmpty && isNewAllTimesTestRowEmpty) ? 0 : cellHeight * 2) +
+    ((isNewOtTimes2TestRowEmpty && isNewAllTimes2TestRowEmpty) ? 0 : cellHeight * 2) +
+    ((isNewOtTimes3TestRowEmpty && isNewAllTimes3TestRowEmpty) ? 0 : cellHeight * 2);
+
 
         // Check if we need to start a new page
         checkPageOverflow(totalHeightNeeded);
@@ -7639,15 +7650,6 @@ function TestPDFResultSalayNew() {
             54.8,
             { angle: 90 }
           );
-
-        for (let i = 0; i < resultArray.length; i++) {
-            const x = startX + i * cellWidth;
-            doc.text(
-              resultArray[i].toString(),
-              x + 1,
-              cellHeightTop + startYTop - 2
-            );
-          }
 
 
         let uniqueSalaries = [];
@@ -7723,6 +7725,15 @@ function TestPDFResultSalayNew() {
         drawTableSpSalaryTop();
         drawTableSpSalaryHeadTop();
 
+        for (let i = 0; i < resultArray.length; i++) {
+          const x = startX + i * cellWidth;
+          doc.text(
+            resultArray[i].toString(),
+            x + 1,
+            cellHeightTop + startYTop - 2
+          );
+        }
+
         const rightX = 200; // Adjust this value based on your PDF width and margins
 
         if (!isRowEmpty(salaryCountData)) {
@@ -7785,12 +7796,12 @@ function TestPDFResultSalayNew() {
           currentY += nightRowHeight;
         }
 
-        if (!isNewOtTimesTestRowEmpty) {
+        if (!isNewOtTimesTestRowEmpty|| !isNewAllTimesTestRowEmpty) {
           drawTableNumber123("", currentY, cellHeight, "1.5");
 
           // drawRow(newOtTimes, currentY, cellHeight);
           drawRow(OtTimes, currentY, cellHeight);
-          drawRow(AllTimes2, currentY, cellHeight);
+          // drawRow(AllTimes2, currentY, cellHeight);
           drawSalaryRow(emptyArraytest, currentY, cellHeight);
 
           drawCellRight(
@@ -7812,12 +7823,13 @@ function TestPDFResultSalayNew() {
           currentY += cellHeight;
         }
 
-        if (!isNewOtTimes2TestRowEmpty) {
+        if (!isNewOtTimes2TestRowEmpty || !isNewAllTimes2TestRowEmpty) {
           drawTableNumber123("", currentY, cellHeight, "2");
 
           // drawRow(newOtTimes2, currentY, cellHeight);
           drawRow(OtTimes2, currentY, cellHeight);
           drawRow(AllTimes3, currentY, cellHeight);
+          drawRow(AllTimes2, currentY, cellHeight);
 
           drawSalaryRow(emptyArraytest, currentY, cellHeight);
 
@@ -7840,7 +7852,7 @@ function TestPDFResultSalayNew() {
           currentY += cellHeight;
         }
 
-        if (!isNewOtTimes3TestRowEmpty) {
+        if (!isNewOtTimes3TestRowEmpty|| !isNewAllTimes3TestRowEmpty) {
           drawTableNumber123("", currentY, cellHeight, "3");
 
           // drawRow(newOtTimes3, currentY, cellHeight);
