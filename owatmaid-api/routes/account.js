@@ -266,7 +266,7 @@ let endDay = getDayNumber(item.endDay);
         })
       }
 
-      console.log('*dayOffList ' + dayOffList);
+      console.log('dayOffList ' + dayOffList);
           // Format the new month as a two-digit string (e.g. "01", "02", ...)
     const newMonthStringX = (month -1).toLocaleString('en-US', {
       minimumIntegerDigits: 2,
@@ -587,7 +587,7 @@ await Promise.all(promisesDeduct)
 
 addSalaryDayArray = [];  
 
-// console.log('responseConclude.data.recordConclude[c].concludeRecord' + responseConclude.data.recordConclude[0].concludeRecord);
+console.log('responseConclude.data.recordConclude[c].concludeRecord' + responseConclude.data.recordConclude[0].concludeRecord);
 
 //ss1
 for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.length; i++) {
@@ -645,7 +645,7 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
   //check work rate is not standard day
   if((parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate) == parseFloat(salary)) || parseFloat(salary) > 1660 ) {
     if(! workDaylist.includes(responseConclude.data.recordConclude[c].concludeRecord[i].day.split("/")[0] ) ) {
-      dayOffWork += 1;
+      // dayOffWork += 1;
     }
 // dayOffWork += 1;
 countHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
