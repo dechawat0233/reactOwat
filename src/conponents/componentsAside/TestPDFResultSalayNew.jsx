@@ -9035,14 +9035,14 @@ function TestPDFResultSalayNew() {
                           </div>
                         </div>
                       </form>
-                      <button
+                      {/* <button
                         onClick={generatePDFTest123}
                         type="button "
                         class="btn b_save"
                       >
                         <i class="nav-icon fas fa-search"></i>
                         พิมพ์รายงาน
-                      </button>
+                      </button> */}
                       <button
                         onClick={generatePDF987New}
                         type="button "
