@@ -1200,6 +1200,7 @@ if(testx ) {
 }
       } else{
         console.log(concludeRecord [c].day + 'workRateMultiply ' + parseFloat(concludeRecord [c].workRateMultiply) )
+        await addSalaryList.push([]);
 
       }
 
