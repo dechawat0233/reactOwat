@@ -378,7 +378,7 @@ function Setting() {
         }
         // await alert(JSON.stringify(response.data.employees[0].addSalary ,null,2 ));
         // await alert(JSON.stringify(response.data.employees[0].deductSalary ,null,2 ));
-      } catch (e) { }
+      } catch (e) {}
     };
 
     getMaster();
@@ -503,11 +503,11 @@ function Setting() {
           // Show alert for duplicate date selection
           alert(
             day +
-            "/" +
-            month +
-            "/" +
-            year +
-            "  Selected date already exists in the list."
+              "/" +
+              month +
+              "/" +
+              year +
+              "  Selected date already exists in the list."
           );
         }
         // setDay('');
@@ -517,7 +517,7 @@ function Setting() {
         // Show alert for invalid date selection
         alert(
           day / month / year +
-          "Invalid date selection. Please select a valid day, month, and year."
+            "Invalid date selection. Please select a valid day, month, and year."
         );
       }
     } else {
@@ -766,8 +766,8 @@ function Setting() {
           employeeId: "",
           name: "",
           idCard: "",
-          //   workPlace: searchWorkplaceId,
-          workPlace: searchResult.workplaceId,
+        //   workPlace: searchWorkplaceId,
+        workPlace: searchResult.workplaceId,
         };
 
         const response1 = await axios.post(
@@ -781,7 +781,7 @@ function Setting() {
 
         // await setEmployeeListResult(response1.data.employees);
         await setEmployeeListResult(filteredEmployees);
-
+  
         // await alert(JSON.stringify(response1.data.employees , null ,2));
         // alert(response1.data );
         // alert(employeeListResult.length);
@@ -2291,22 +2291,37 @@ function Setting() {
 
                     <div>
                       <div className="row">
-                         <div className="col-md-3">
-                          <label style={{ margin: "0.5rem" }}>วันที่:</label>
-                        </div>
                         <div className="col-md-3">
                           <label style={{ marginRight: "0.5rem" }}>
                             เดือน:
                           </label>
                         </div>
-                       
+                        <div className="col-md-3">
+                          <label style={{ margin: "0.5rem" }}>วันที่:</label>
+                        </div>
                         <div className="col-md-3">
                           <label style={{ margin: "0.5rem" }}>ปี:</label>
                         </div>
                       </div>
 
                       <div className="row">
-                      <div className="col-md-3">
+                        <div className="col-md-3">
+                          <select
+                            className="form-control"
+                            value={month}
+                            onChange={(e) => setMonth(e.target.value)}
+                          >
+                            <option value="">Select month</option>
+                            {Array.from({ length: 12 }, (_, i) => i + 1).map(
+                              (month) => (
+                                <option key={month} value={month}>
+                                  {month}
+                                </option>
+                              )
+                            )}
+                          </select>
+                        </div>
+                        <div className="col-md-3">
                           <select
                             className="form-control"
                             value={day}
@@ -2325,23 +2340,6 @@ function Setting() {
                         <div className="col-md-3">
                           <select
                             className="form-control"
-                            value={month}
-                            onChange={(e) => setMonth(e.target.value)}
-                          >
-                            <option value="">Select month</option>
-                            {Array.from({ length: 12 }, (_, i) => i + 1).map(
-                              (month) => (
-                                <option key={month} value={month}>
-                                  {month}
-                                </option>
-                              )
-                            )}
-                          </select>
-                        </div>
-              
-                        <div className="col-md-3">
-                          <select
-                            className="form-control"
                             value={year}
                             onChange={(e) => setYear(e.target.value)}
                           >
@@ -2351,7 +2349,7 @@ function Setting() {
                               (_, i) => new Date().getFullYear() + 3 - i
                             ).map((year) => (
                               <option key={year} value={year}>
-                                {year + 543}
+                                {year}
                               </option>
                             ))}
                           </select>
@@ -2369,8 +2367,9 @@ function Setting() {
                     </div>
 
                     <br />
-                    {/* {selectedDates.length > 0 && (
+                    {selectedDates.length > 0 && (
                       <div>
+                        {/* <h4>วันหยุดหน่วยงาน</h4> */}
                         วันหยุดหน่วยงาน (เดือน/วัน/ปี)
                         <br />
                         <ol>
@@ -2404,38 +2403,7 @@ function Setting() {
                           ))}
                         </ol>
                       </div>
-                    )} */}
-
-                    {selectedDates.length > 0 && (
-                      <div>
-                        วันหยุดหน่วยงาน (เดือน/วัน/ปี)
-                        <br />
-                        <ol>
-                          {selectedDates.map((date, index) => (
-                            <li key={index}>
-                              <div className="row">
-                                <div className="col-md-1" style={{ borderTop: "2px solid black" }}>
-                                  {date instanceof Date && !isNaN(date.getTime())
-                                    ? `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear() + 543}`
-                                    : `${day}/${month}/${year + 543} (Invalid Date)`}
-                                </div>
-                                <div className="col-md-1" style={{ borderTop: "2px solid black" }}>
-                                  <button
-                                    type="button"
-                                    onClick={() => handleRemoveDate(date)}
-                                    className="btn clean"
-                                    style={{ margin: "0.5rem", width: "6rem" }}
-                                  >
-                                    ลบออก
-                                  </button>
-                                </div>
-                              </div>
-                            </li>
-                          ))}
-                        </ol>
-                      </div>
                     )}
-
                   </div>
                   <div>
                     <label>หมายเหตุ:</label>
@@ -2449,26 +2417,26 @@ function Setting() {
                 </section>
                 {/* <section class="Frame">
                   <h2 class="title">พนักงานในสังกัด</h2> */}
-                <section class="Frame">
-                  <div>
-                    {showEmployeeListResult.length > 0 && (
-                      <>
-                        <h3>
-                          พนักงานในหน่วยงาน {showEmployeeListResult.length} คน
-                        </h3>
-                        <ul>
-                          {showEmployeeListResult.map((employee, index) => (
-                            <li key={index}>
-                              {employee.employeeId}: {employee.name}{" "}
-                              {employee.lastName}
-                            </li>
-                            // Replace "name" with the property you want to display for each employee
-                          ))}
-                        </ul>
-                      </>
-                    )}
-                  </div>
-                </section>
+                  <section class="Frame">
+                    <div>
+                      {showEmployeeListResult.length > 0 && (
+                        <>
+                          <h3>
+                            พนักงานในหน่วยงาน {showEmployeeListResult.length} คน
+                          </h3>
+                          <ul>
+                            {showEmployeeListResult.map((employee, index) => (
+                              <li key={index}>
+                                {employee.employeeId}: {employee.name}{" "}
+                                {employee.lastName}
+                              </li>
+                              // Replace "name" with the property you want to display for each employee
+                            ))}
+                          </ul>
+                        </>
+                      )}
+                    </div>
+                  </section>
                 {/* </section> */}
 
                 {/* <h2>Add Image:</h2>
