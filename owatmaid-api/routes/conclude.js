@@ -1181,7 +1181,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
     // await console.log('add salary = ' + JSON.stringify( responseWpList .data ));
     // await console.log('add salary = ' + responseWpList .data.ans.length );
 
-    for (let c = 0; c < concludeRecord.length; c++) {
+    for (let c = 0; c < 10; c++) {
       // console.log('concludeRecord ' + concludeRecord [c].workplaceId);
 console.log('multiply' + parseFloat(concludeRecord [c].workRateMultiply));
       if(parseFloat(concludeRecord [c].workRateMultiply) == 1) {
