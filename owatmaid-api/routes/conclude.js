@@ -1180,8 +1180,8 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
     const responseWpList = await axios.post(sURL + '/workplace/getaddsalary', sendData );
     // await console.log('add salary = ' + JSON.stringify( responseWpList .data ));
     // await console.log('add salary = ' + responseWpList .data.ans.length );
-//concludeRecord.length
-    for (let c = 0; c < 10; c++) {
+
+    for (let c = 0; c < concludeRecord.length; c++) {
       // console.log('concludeRecord ' + concludeRecord [c].workplaceId);
 
       if(parseFloat(concludeRecord [c].workRateMultiply || 0) <= 1) {
