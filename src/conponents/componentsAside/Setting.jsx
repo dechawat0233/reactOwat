@@ -2291,20 +2291,37 @@ function Setting() {
 
                     <div>
                       <div className="row">
+                         <div className="col-md-3">
+                          <label style={{ margin: "0.5rem" }}>วันที่:</label>
+                        </div>
                         <div className="col-md-3">
                           <label style={{ marginRight: "0.5rem" }}>
                             เดือน:
                           </label>
                         </div>
-                        <div className="col-md-3">
-                          <label style={{ margin: "0.5rem" }}>วันที่:</label>
-                        </div>
+                       
                         <div className="col-md-3">
                           <label style={{ margin: "0.5rem" }}>ปี:</label>
                         </div>
                       </div>
 
                       <div className="row">
+                      <div className="col-md-3">
+                          <select
+                            className="form-control"
+                            value={day}
+                            onChange={(e) => setDay(e.target.value)}
+                          >
+                            <option value="">Select day</option>
+                            {Array.from({ length: 31 }, (_, i) => i + 1).map(
+                              (day) => (
+                                <option key={day} value={day}>
+                                  {day}
+                                </option>
+                              )
+                            )}
+                          </select>
+                        </div>
                         <div className="col-md-3">
                           <select
                             className="form-control"
@@ -2321,22 +2338,7 @@ function Setting() {
                             )}
                           </select>
                         </div>
-                        <div className="col-md-3">
-                          <select
-                            className="form-control"
-                            value={day}
-                            onChange={(e) => setDay(e.target.value)}
-                          >
-                            <option value="">Select day</option>
-                            {Array.from({ length: 31 }, (_, i) => i + 1).map(
-                              (day) => (
-                                <option key={day} value={day}>
-                                  {day}
-                                </option>
-                              )
-                            )}
-                          </select>
-                        </div>
+              
                         <div className="col-md-3">
                           <select
                             className="form-control"
