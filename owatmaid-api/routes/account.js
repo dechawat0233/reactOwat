@@ -101,7 +101,7 @@ const dataList = [];
     if(accountData ) {
       // await accounting.deleteOne({ _id: accountData._id });
       await accounting.deleteMany({year , month , employeeId});
-accountData  = await null;
+// accountData  = false;
     }
 
   }
@@ -259,7 +259,6 @@ let endDay = getDayNumber(item.endDay);
     }
 
 }
-
 } catch (error) {
   console.error(error.message);
 }
@@ -646,12 +645,12 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
   //check work rate is not standard day
   if((parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate) == parseFloat(salary)) || parseFloat(salary) > 1660 ) {
     if(! workDaylist.includes(responseConclude.data.recordConclude[c].concludeRecord[i].day.split("/")[0] ) ) {
-      dayOffWork += 1;
+      dayOffWork = await dayOffWork  + 1;
     }
 // dayOffWork += 1;
 countHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
 
-// console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
+console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
 
   } else {
     countOtHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
@@ -1151,7 +1150,6 @@ router.post('/calsalarylist', async (req, res) => {
     }
 
     const dataSearch = await
-    
     {
       year: year || new Date().getFullYear(), 
       month: month,
