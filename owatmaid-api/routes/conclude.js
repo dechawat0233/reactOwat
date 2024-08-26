@@ -467,7 +467,8 @@ const         wpDataCalculator1 = await {
             let minutes1 = parts1.length > 1 ? parseInt(parts1[1], 10) : 0;
 
             let scaledMinutes1 = (minutes1 * 100) / 60;
-            let otTime = parseFloat(`${hours1}.${scaledMinutes1}`) || 0;
+            // let otTime = parseFloat(`${hours1}.${scaledMinutes1}`).toFixed(4) || 0;
+            let otTime = ((parseFloat(hours1 || 0) *60) + parseFloat(scaledMinutes1 || 0 ) /60).toFixed(4) || 0;
 
             tmp.otTimes = `${hours1}.${scaledMinutes1}` || 0;
 
