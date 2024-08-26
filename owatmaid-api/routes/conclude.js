@@ -424,7 +424,7 @@ const         wpDataCalculator1 = await {
         const wpResponse1 = await axios.post(sURL + '/workplace/caldata', wpDataCalculator1);
         // console.log(JSON.stringify( wpResponse1.data, null,2) );
         const workOfHour = await wpResponse1.data.workOfHour || 0;
-        const workOfOT = await Number(wpResponse1.data.workOfOT) || 0;
+        const workOfOT = await parseFloat(wpResponse1.data.workOfOT) || 0;
 
         const dayOff1 = await wpResponse1.data.workplaceDayOffList || [];
         // console.log('dayOff1 ' + dayOff1 );
@@ -1210,7 +1210,7 @@ if(testx ) {
 
     dataConclude.sumWorkHour = sumWorkHour || 0;
     dataConclude.sumWorkRate = sumWorkRate || 0;
-    dataConclude.sumWorkHourOt = 0;
+    dataConclude.sumWorkHourOt = sumWorkHourOt || 0;
     dataConclude.sumWorkRateOt = sumWorkRateOt || 0;
 
     try {
