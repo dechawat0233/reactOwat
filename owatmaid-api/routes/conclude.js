@@ -424,8 +424,8 @@ const         wpDataCalculator1 = await {
         const wpResponse1 = await axios.post(sURL + '/workplace/caldata', wpDataCalculator1);
         // console.log(JSON.stringify( wpResponse1.data, null,2) );
         const workOfHour = await wpResponse1.data.workOfHour || 0;
-        const workOfOT = await Number(wpResponse1.data.workOfOT) || 0;
-
+        // const workOfOT = await Number(wpResponse1.data.workOfOT) || 0;
+        const workOfOT = 10;
         const dayOff1 = await wpResponse1.data.workplaceDayOffList || [];
         // console.log('dayOff1 ' + dayOff1 );
         const specialDayOff1 = await wpResponse1.data.specialDaylist || [];
