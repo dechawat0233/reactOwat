@@ -990,6 +990,7 @@ await salaryRecord.save();
         dataList.push(data);
 }  else {
   dataList.push([]);
+  console.log('emty data not save');
 }
 
 
