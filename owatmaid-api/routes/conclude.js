@@ -473,7 +473,7 @@ const         wpDataCalculator1 = await {
 
 
             if (element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
-              console.log('special rate')
+              // console.log('special rate')
               tmp.workRate = element.specialtSalary || '';
               tmp.workRateMultiply = Number(element.specialtSalary || 0) / Number(wpResponse1.data.workRate || 0);
 
@@ -488,7 +488,7 @@ const         wpDataCalculator1 = await {
 
             } else {
               if (specialDayOff1.includes(Number(str1))) {
-console.log('special day off rate');                
+// console.log('special day off rate');                
 
                 if (salary === 0) {
                   salary = parseFloat( wpResponse1.data.workRate);
@@ -591,7 +591,7 @@ console.log('special day off rate');
 
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
-                  tmp.otTimes = workOfOT || 0;
+                  tmp.otTimes = 0;
                 } else {
                   tmp.otTimes = otTime || 0;
                 }
