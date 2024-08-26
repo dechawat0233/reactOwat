@@ -982,7 +982,7 @@ data.specialDayListWork = await intersection || [];
 }
 
 //check emty data 
-if(data.calSP  > 0) {
+if(data.accountingRecord.amountSpecialDay > 0) {
 const salaryRecord = new accounting(data);
 await salaryRecord.save();
 // await console.log(salaryRecord);
