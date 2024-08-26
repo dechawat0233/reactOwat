@@ -981,11 +981,18 @@ data.specialDayListWork = await intersection || [];
 
 }
 
+//check emty data 
+if(calSP  > 0) {
 const salaryRecord = new accounting(data);
 await salaryRecord.save();
 // await console.log(salaryRecord);
 
         dataList.push(data);
+}  else {
+  dataList.push([]);
+}
+
+
       }
     } else {
       console.log('no data conclude');
