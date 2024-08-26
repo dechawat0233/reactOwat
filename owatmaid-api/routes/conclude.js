@@ -467,7 +467,7 @@ const         wpDataCalculator1 = await {
             let minutes1 = parts1.length > 1 ? parseInt(parts1[1], 10) : 0;
 
             let scaledMinutes1 = (minutes1 * 100) / 60;
-            let otTime = parseFloat(`${hours1}.${scaledMinutes1}`).toFixed(4) || 0;
+            let otTime = parseFloat(`${hours1}.${scaledMinutes1}`) || 0;
 
             tmp.otTimes = `${hours1}.${scaledMinutes1}` || 0;
 
@@ -593,7 +593,7 @@ const         wpDataCalculator1 = await {
                   otTime = workOfOT;
                   tmp.otTimes = workOfOT || 0;
                 } else {
-                  tmp.otTimes = 0;
+                  tmp.otTimes = otTime || 0;
                 }
 
                 let workRateOT = (((salary / 8) * parseFloat(wpResponse1.data.workRateOT ?? 0)) * parseFloat(otTime)).toFixed(2);
