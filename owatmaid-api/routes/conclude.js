@@ -591,9 +591,9 @@ const         wpDataCalculator1 = await {
 
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
-                  tmp.otTimes = 0;
+                  tmp.otTimes = workOfOT || 0;
                 } else {
-                  tmp.otTimes = otTime || 0;
+                  tmp.otTimes = 0;
                 }
 
                 let workRateOT = (((salary / 8) * parseFloat(wpResponse1.data.workRateOT ?? 0)) * parseFloat(otTime)).toFixed(2);
