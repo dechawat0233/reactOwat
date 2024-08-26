@@ -158,10 +158,13 @@ const workplaceListTmp = [];
       // let wpId1 = await data1.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
       let wpId1 = dataEmp.employees[0].workplace || '';
       let salary = dataEmp.employees[0].salary || 0;
+      let tmpSalary = dataEmp.employees[0].salary || 0;
+
       console.log('salary ' + salary );
 //check employee type is month
 if(parseFloat(salary ) >= 1660) {
   salary  = parseFloat(salary) / 30;
+  tmpSalary  = parseFloat(salary) / 30;
 }
 
 
@@ -469,7 +472,8 @@ const         wpDataCalculator1 = await {
             let scaledMinutes1 = (minutes1 * 100) / 60;
             // let otTime = parseFloat(`${hours1}.${scaledMinutes1}`).toFixed(2) || 0;
             // let otTime = ((parseFloat(hours1 || 0) *60) + parseFloat(scaledMinutes1 || 0 ) /60).toFixed(2) || 0;
-            let otTime = ((parseFloat(hours1 || 0) *60) + parseFloat(scaledMinutes1 || 0 ) % 60) * 0.01;
+            let otTime = `2.${((parseFloat(hours1 || 0) *60) + parseFloat(scaledMinutes1 || 0 ) % 60)} `;
+
             
             // tmp.otTimes = `${hours1}.${scaledMinutes1}` || 0;
 
