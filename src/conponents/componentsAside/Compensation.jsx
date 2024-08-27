@@ -2290,6 +2290,7 @@ console.log('resultArray2',resultArray2);
                           <tr>
                             <td style={cellStyle}>สรุป</td>
                             <td></td>
+                            <td></td>
                             <td style={cellStyle}>
                               {statusEditSum ? (
                                 <input
