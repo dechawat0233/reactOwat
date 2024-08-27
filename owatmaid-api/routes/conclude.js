@@ -690,8 +690,11 @@ const         wpDataCalculator1 = await {
       // let wpId = data.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
       let wpId = await dataEmp.employees[0].workplace || '';
       let salary = await dataEmp.employees[0].salary || 0;
+      let temSalary = await dataEmp.employees[0].salary || 0;
+
       if(parseFloat(salary ) >= 1660) {
         salary  = parseFloat(salary) / 30;
+        temSalary = parseFloat(salary) / 30;
       }
       console.log('s1 ' + salary);
       
@@ -779,8 +782,11 @@ const         wpDataCalculator1 = await {
             let hours1 = parseInt(parts1[0], 10) || 0;
             let minutes1 = parts1.length > 1 ? parseInt(parts1[1], 10) : 0;
 
-            let scaledMinutes1 = (minutes1 * 100) / 60;
-            let otTime = parseFloat(`${hours1}.${scaledMinutes1}`).toFixed(2) || 0;
+            // let scaledMinutes1 = (minutes1 * 100) / 60;
+            // let otTime = parseFloat(`${hours1}.${scaledMinutes1}`).toFixed(2) || 0;
+            let scaledMinutes1 = minutes1;
+            let otTime = `${parseFloat(hours1 || 0)}.${parseFloat(scaledMinutes1 || 0 ) } `;
+
             if (element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
               tmp.workRate = element.specialtSalary || '';
               tmp.workRateMultiply = Number(element.specialtSalary || 0) / Number(wpResponse.data.workRate || 0);
