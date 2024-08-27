@@ -386,7 +386,7 @@ function SalarySlipPDF() {
       console.log("formattedAddTravel", formattedAddTravel);
 
       // The IDs you want to exclude
-      const excludedIds = ["1350", "1230", "1410"];
+      const excludedIds = ["1350", "1230", "1410","1535","1520"];
 
       // Assuming responseDataAll[i].addSalary is an array of salary objects
       const addSalaryFiltered = responseDataAll[i].addSalary
@@ -405,8 +405,20 @@ function SalarySlipPDF() {
       const formattedAmountHardWorking = responseDataAll[i].addSalary.filter(
         (item) => item.id === "1410"
       );
+
+      // ค่าเดินทาง(ไม่คิดประกัน)
+      const formattedAddSalaryTavel = responseDataAll[i].addSalary.filter(
+        (item) => item.id === "1535"
+      );
+      console.log("formattedAddSalaryTavel",formattedAddSalaryTavel);
       // Calculate the sum of SpSalary values in the filtered array
       const sumAmountHardWorking = formattedAmountHardWorking.reduce(
+        (total, item) => total + parseFloat(item.SpSalary || 0),
+        0
+      );
+
+       // Calculate the sum of SpSalary values in the filtered array
+       const sumAddSalaryTavel = formattedAddSalaryTavel.reduce(
         (total, item) => total + parseFloat(item.SpSalary || 0),
         0
       );
@@ -646,6 +658,23 @@ function SalarySlipPDF() {
         );
         console.log("7");
       }
+
+      //ค่าเดินทาง(ไม่คิดประกัน)
+      if (
+        sumAddSalaryTavel != 0 &&
+        sumAddSalaryTavel != null
+      ) {
+        // Push the text to textArray and the value to valueArray
+        textArray.push('ค่าเดินทาง');
+        countArray.push("");
+        valueArray.push(
+          sumAddSalaryTavel
+            .toFixed(2)
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        );
+        console.log("7.1");
+      }
+
       if (sumAmountHardWorking != 0 && sumAmountHardWorking != null) {
         textArray.push("เบี้ยขยัน");
         countArray.push("");
@@ -1083,8 +1112,20 @@ const formattedTotalSpSalary = totalSpSalary.toFixed(2).replace(/\B(?=(\d{3})+(?
         const formattedAmountHardWorking = responseDataAll[
           i + 1
         ].addSalary.filter((item) => item.id === "1410");
+
+        // ค่าเดินทาง(ไม่คิดประกัน)
+      const formattedAddSalaryTavel = responseDataAll[i+1].addSalary.filter(
+        (item) => item.id === "1535"
+      );
+
         // Calculate the sum of SpSalary values in the filtered array
         const sumAmountHardWorking = formattedAmountHardWorking.reduce(
+          (total, item) => total + parseFloat(item.SpSalary || 0),
+          0
+        );
+
+         // Calculate the sum of SpSalary values in the filtered array
+         const sumAddSalaryTavel = formattedAddSalaryTavel.reduce(
           (total, item) => total + parseFloat(item.SpSalary || 0),
           0
         );
@@ -1289,6 +1330,21 @@ const formattedTotalSpSalary = totalSpSalary.toFixed(2).replace(/\B(?=(\d{3})+(?
           );
           console.log("77");
         }
+         //ค่าเดินทาง(ไม่คิดประกัน)
+      if (
+        sumAddSalaryTavel != 0 &&
+        sumAddSalaryTavel != null
+      ) {
+        // Push the text to textArray and the value to valueArray
+        textArray.push('ค่าเดินทาง');
+        countArray.push("");
+        valueArray.push(
+          sumAddSalaryTavel
+            .toFixed(2)
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        );
+        console.log("77.1");
+      }
         if (sumAmountHardWorking != 0 && sumAmountHardWorking != null) {
           textArray.push("เบี้ยขยัน");
           countArray.push("");
