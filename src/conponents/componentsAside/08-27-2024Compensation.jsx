@@ -1609,13 +1609,6 @@ console.log('resultArray2',resultArray2);
     // }
   };
 
-  const shiftMapping = {
-    morning_shift: "กะเช้า",
-    afternoon_shift: "กะบ่าย",
-    night_shift: "กะดึก",
-    special_shift: "กะพิเศษ",
-  };
-
   return (
     // <div>
     <body class="hold-transition sidebar-mini" className="editlaout">
@@ -1811,7 +1804,6 @@ console.log('resultArray2',resultArray2);
                           <tr>
                             <th style={headerCellStyle}>วันที่</th>
                             <th style={headerCellStyle}>หน่วยงาน</th>
-                            <th style={headerCellStyle}>กะ</th>
                             <th style={headerCellStyle}>ชั่วโมงทำงาน</th>
                             <th style={headerCellStyle}>ค่าจ้างปกติ</th>
                             <th style={headerCellStyle}>ชั่วโมง OT</th>
@@ -1872,29 +1864,6 @@ console.log('resultArray2',resultArray2);
                                   />
                                 ) : (
                                   workplaceRecord.workplaceId
-                                )}
-                              </td>
-                              <td
-                                style={
-                                  commonNumbers.has(resultArray22[index])
-                                    ? {
-                                        ...cellStyle,
-                                        backgroundColor: "yellow",
-                                      }
-                                    : cellStyle
-                                }
-                              >
-                                {editIndex === index ? (
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    value={formData.shift}
-                                    onChange={handleInputChange}
-                                    name="shift"
-                                  />
-                                ) : (
-                                  // workplaceRecord.shift
-                                  shiftMapping[workplaceRecord.shift] || workplaceRecord.shift
                                 )}
                               </td>
                               <td
