@@ -604,7 +604,7 @@ const         wpDataCalculator1 = await {
                   tmp.otTimes = otTime || 0;
                 }
 
-                let workRateOT = (((salary / 8) * parseFloat(wpResponse1.data.workRateOT ?? 0)) * parseFloat(otTime)).toFixed(2);
+                let workRateOT = (((salary / 8) * parseFloat(wpResponse1.data.workRateOT ?? 0)) * (parseFloat(otTime)* 1.111) ).toFixed(2);
                 tmp.workRateOT = workRateOT || 0;
                 tmp.workRateOTMultiply = wpResponse1.data.workRateOT || 0;
 
@@ -1114,7 +1114,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
                   tmp.otTimes = otTime || 0;
                 }
 
-                let workRateOT = (((salary / 8) * parseFloat(wpResponse.data.workRateOT)) * (parseFloat(otTime) * 1.111) ).toFixed(2);
+                let workRateOT = (((salary / 8) * parseFloat(wpResponse.data.workRateOT)) * parseFloat(otTime)  ).toFixed(2);
                 tmp.workRateOT = workRateOT || 0;
                 tmp.workRateOTMultiply = wpResponse.data.workRateOT || 0;
 
