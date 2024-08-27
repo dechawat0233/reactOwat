@@ -826,7 +826,7 @@ const         wpDataCalculator1 = await {
                   tmp.otTimes = otTime || 0;
                 }
 
-                let workRateOT = ((parseFloat(tmpWP.data.holidayOT) * (salary / 8)) * parseFloat(otTime)).toFixed(2);
+                let workRateOT = ((parseFloat(tmpWP.data.holidayOT) * (salary / 8)) * (parseFloat(otTime) * 1.111) ).toFixed(2);
                 tmp.workRateOT = workRateOT || '';
                 tmp.workRateOTMultiply = tmpWP.data.holidayOT || 0;
 
@@ -868,7 +868,7 @@ const         wpDataCalculator1 = await {
                   tmp.otTimes = otTime || 0;
                 }
 
-                let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * parseFloat(otTime)).toFixed(2);
+                let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * (parseFloat(otTime) * 1.111) ).toFixed(2);
                 tmp.workRateOT = workRateOT || 0;
                 tmp.workRateOTMultiply = tmpWP.data.dayoffRateOT || 0;
 
@@ -912,7 +912,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
                   tmp.otTimes = otTime || 0;
                 }
 
-                let workRateOT = (((salary / 8) * parseFloat(tmpWP.data.workRateOT)) * parseFloat(otTime)).toFixed(2);
+                let workRateOT = (((salary / 8) * parseFloat(tmpWP.data.workRateOT)) * (parseFloat(otTime) * 1.111) ).toFixed(2);
                 tmp.workRateOT = workRateOT || 0;
                 tmp.workRateOTMultiply = tmpWP.data.workRateOT || 0;
 
@@ -995,8 +995,10 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
             let hours1 = parseInt(parts1[0], 10) || 0;
             let minutes1 = parts1.length > 1 ? parseInt(parts1[1], 10) : 0;
 
-            let scaledMinutes1 = (minutes1 * 100) / 60;
-            let otTime = parseFloat(`${hours1}.${scaledMinutes1}`).toFixed(4) || 0;
+            // let scaledMinutes1 = (minutes1 * 100) / 60;
+            // let otTime = parseFloat(`${hours1}.${scaledMinutes1}`).toFixed(4) || 0;
+            let scaledMinutes1 = minutes1;
+            let otTime = `${parseFloat(hours1 || 0)}.${parseFloat(scaledMinutes1 || 0 ) } `;
 
             // tmp.otTimes = otTime || '0';
 
@@ -1039,7 +1041,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
                   tmp.otTimes = otTime || 0;
                 }
 
-                let workRateOT = ((parseFloat(wpResponse.data.holidayOT) * (salary / 8)) * parseFloat(otTime)).toFixed(2);
+                let workRateOT = ((parseFloat(wpResponse.data.holidayOT) * (salary / 8)) * (parseFloat(otTime) * 1.111) ).toFixed(2);
                 tmp.workRateOT = workRateOT || '';
                 tmp.workRateOTMultiply = wpResponse.data.holidayOT || 0;
 
@@ -1080,7 +1082,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
                   tmp.otTimes = otTime || 0;
                 }
 
-                let workRateOT = ((parseFloat(wpResponse.data.dayoffRateOT) * (salary / 8)) * parseFloat(otTime)).toFixed(2);
+                let workRateOT = ((parseFloat(wpResponse.data.dayoffRateOT) * (salary / 8)) * (parseFloat(otTime) * 1.111) ).toFixed(2);
                 tmp.workRateOT = workRateOT || 0;
                 tmp.workRateOTMultiply = wpResponse.data.dayoffRateOT || 0;
 
@@ -1122,7 +1124,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
                   tmp.otTimes = otTime || 0;
                 }
 
-                let workRateOT = (((salary / 8) * parseFloat(wpResponse.data.workRateOT)) * parseFloat(otTime)  ).toFixed(2);
+                let workRateOT = (((salary / 8) * parseFloat(wpResponse.data.workRateOT)) * (parseFloat(otTime) * 1.111) ).toFixed(2);
                 tmp.workRateOT = workRateOT || 0;
                 tmp.workRateOTMultiply = wpResponse.data.workRateOT || 0;
 
