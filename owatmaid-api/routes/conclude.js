@@ -158,10 +158,13 @@ const workplaceListTmp = [];
       // let wpId1 = await data1.recordworkplace[0].employee_workplaceRecord[0].workplaceId;
       let wpId1 = dataEmp.employees[0].workplace || '';
       let salary = dataEmp.employees[0].salary || 0;
+      let tmpSalary = dataEmp.employees[0].salary || 0;
+
       console.log('salary ' + salary );
 //check employee type is month
 if(parseFloat(salary ) >= 1660) {
   salary  = parseFloat(salary) / 30;
+  tmpSalary  = parseFloat(salary) / 30;
 }
 
 
@@ -424,7 +427,7 @@ const         wpDataCalculator1 = await {
         const wpResponse1 = await axios.post(sURL + '/workplace/caldata', wpDataCalculator1);
         // console.log(JSON.stringify( wpResponse1.data, null,2) );
         const workOfHour = await wpResponse1.data.workOfHour || 0;
-        const workOfOT = await Number(wpResponse1.data.workOfOT) || 0;
+        const workOfOT = await parseFloat(wpResponse1.data.workOfOT) || 0;
 
         const dayOff1 = await wpResponse1.data.workplaceDayOffList || [];
         // console.log('dayOff1 ' + dayOff1 );
@@ -466,14 +469,19 @@ const         wpDataCalculator1 = await {
             let hours1 = parseInt(parts1[0], 10) || 0;
             let minutes1 = parts1.length > 1 ? parseInt(parts1[1], 10) : 0;
 
-            let scaledMinutes1 = (minutes1 * 100) / 60;
-            let otTime = parseFloat(`${hours1}.${scaledMinutes1}`).toFixed(2) || 0;
+            // let scaledMinutes1 = (minutes1 * 100) / 60;
+            let scaledMinutes1 = minutes1;
 
-            tmp.otTimes = `${hours1}.${scaledMinutes1}` || 0;
+            // let otTime = parseFloat(`${hours1}.${scaledMinutes1}`).toFixed(2) || 0;
+            // let otTime = ((parseFloat(hours1 || 0) *60) + parseFloat(scaledMinutes1 || 0 ) /60).toFixed(2) || 0;
+            let otTime = `${parseFloat(hours1 || 0)}.${parseFloat(scaledMinutes1 || 0 ) } `;
+
+            
+            // tmp.otTimes = `${hours1}.${scaledMinutes1}` || 0;
 
 
             if (element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
-              console.log('special rate')
+              // console.log('special rate')
               tmp.workRate = element.specialtSalary || '';
               tmp.workRateMultiply = Number(element.specialtSalary || 0) / Number(wpResponse1.data.workRate || 0);
 
@@ -488,7 +496,7 @@ const         wpDataCalculator1 = await {
 
             } else {
               if (specialDayOff1.includes(Number(str1))) {
-console.log('special day off rate');                
+// console.log('special day off rate');                
 
                 if (salary === 0) {
                   salary = parseFloat( wpResponse1.data.workRate);
@@ -980,7 +988,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
             let minutes1 = parts1.length > 1 ? parseInt(parts1[1], 10) : 0;
 
             let scaledMinutes1 = (minutes1 * 100) / 60;
-            let otTime = parseFloat(`${hours1}.${scaledMinutes1}`).toFixed(2) || 0;
+            let otTime = parseFloat(`${hours1}.${scaledMinutes1}`).toFixed(4) || 0;
 
             // tmp.otTimes = otTime || '0';
 

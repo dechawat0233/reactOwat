@@ -981,11 +981,19 @@ data.specialDayListWork = await intersection || [];
 
 }
 
+//check emty data 
+if(data.accountingRecord.countDayWork > 0) {
 const salaryRecord = new accounting(data);
 await salaryRecord.save();
 // await console.log(salaryRecord);
 
         dataList.push(data);
+}  else {
+  dataList.push([]);
+  console.log('emty data not save');
+}
+
+
       }
     } else {
       console.log('no data conclude');
