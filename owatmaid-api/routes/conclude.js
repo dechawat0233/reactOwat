@@ -1228,7 +1228,7 @@ if(testx ) {
 
     dataConclude.sumWorkHour = sumWorkHour || 0;
     dataConclude.sumWorkRate = sumWorkRate || 0;
-    dataConclude.sumWorkHourOt = sumWorkHourOt || 0;
+    dataConclude.sumWorkHourOt = sumWorkHourOt * 1.111 || 0;
     dataConclude.sumWorkRateOt = sumWorkRateOt || 0;
 
     try {
