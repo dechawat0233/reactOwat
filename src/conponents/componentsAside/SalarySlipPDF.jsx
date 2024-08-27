@@ -386,7 +386,7 @@ function SalarySlipPDF() {
       console.log("formattedAddTravel", formattedAddTravel);
 
       // The IDs you want to exclude
-      const excludedIds = ["1350", "1230", "1410","1535","1520"];
+      const excludedIds = ["1350", "1230", "1410", "1535", "1520"];
 
       // Assuming responseDataAll[i].addSalary is an array of salary objects
       const addSalaryFiltered = responseDataAll[i].addSalary
@@ -396,7 +396,34 @@ function SalarySlipPDF() {
           SpSalary: Number(salary.SpSalary) || 0, // Convert SpSalary to number
         }));
 
-      console.log(addSalaryFiltered);
+      // จ่างชดเชย
+      const excludedIdsPayCompensation = [
+        "1231",
+        "1233",
+        "1422",
+        "1423",
+        "1428",
+        "1434",
+        "1435",
+        "1429",
+        "1427",
+        "1234",
+        "1426",
+        "1425",
+      ];
+
+      // Assuming responseDataAll[i].addSalary is an array of salary objects
+      const addSalaryPayCompensationFiltered = responseDataAll[i].addSalary
+        .filter((salary) => excludedIdsPayCompensation.includes(salary.id)) // Filter out the objects with excluded IDs
+        .map((salary) => ({
+          name: salary.name,
+          SpSalary: Number(salary.SpSalary) || 0, // Convert SpSalary to number
+        }));
+
+      console.log(
+        "addSalaryPayCompensationFiltered",
+        addSalaryPayCompensationFiltered
+      );
 
       const formattedAddTelAmountPositionTravel =
         formattedAddTel + formattedAddAmountPosition + formattedAddTravel;
@@ -410,15 +437,15 @@ function SalarySlipPDF() {
       const formattedAddSalaryTavel = responseDataAll[i].addSalary.filter(
         (item) => item.id === "1535"
       );
-      console.log("formattedAddSalaryTavel",formattedAddSalaryTavel);
+      console.log("formattedAddSalaryTavel", formattedAddSalaryTavel);
       // Calculate the sum of SpSalary values in the filtered array
       const sumAmountHardWorking = formattedAmountHardWorking.reduce(
         (total, item) => total + parseFloat(item.SpSalary || 0),
         0
       );
 
-       // Calculate the sum of SpSalary values in the filtered array
-       const sumAddSalaryTavel = formattedAddSalaryTavel.reduce(
+      // Calculate the sum of SpSalary values in the filtered array
+      const sumAddSalaryTavel = formattedAddSalaryTavel.reduce(
         (total, item) => total + parseFloat(item.SpSalary || 0),
         0
       );
@@ -660,17 +687,12 @@ function SalarySlipPDF() {
       }
 
       //ค่าเดินทาง(ไม่คิดประกัน)
-      if (
-        sumAddSalaryTavel != 0 &&
-        sumAddSalaryTavel != null
-      ) {
+      if (sumAddSalaryTavel != 0 && sumAddSalaryTavel != null) {
         // Push the text to textArray and the value to valueArray
-        textArray.push('ค่าเดินทาง');
+        textArray.push("ค่าเดินทาง");
         countArray.push("");
         valueArray.push(
-          sumAddSalaryTavel
-            .toFixed(2)
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+          sumAddSalaryTavel.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
         );
         console.log("7.1");
       }
@@ -730,34 +752,57 @@ function SalarySlipPDF() {
         console.log("9");
       }
 
-      const totalSpSalary = addSalaryFiltered.reduce((sum, salary) => sum + salary.SpSalary, 0);
+      const totalSpSalary = addSalaryFiltered.reduce(
+        (sum, salary) => sum + salary.SpSalary,
+        0
+      );
 
-// Format the totalSpSalary with commas for thousand separators
-const formattedTotalSpSalary = totalSpSalary.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      // Format the totalSpSalary with commas for thousand separators
+      const formattedTotalSpSalary = totalSpSalary
+        .toFixed(2)
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-    //   if (
-    //     formattedSumAddSalaryAfterTax != 0 &&
-    //     formattedSumAddSalaryAfterTax != null
-    //   ) {
-    //     textArray.push("เงินเพิ่มพิเศษ");
-    //     countArray.push("");
-    //     valueArray.push(
-    //       formattedSumAddSalaryAfterTax.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-    //     );
-    //     console.log("10");
-    //   }
+      const totalSpSalaryCompensation = addSalaryPayCompensationFiltered.reduce(
+        (sum, salary) => sum + salary.SpSalary,
+        0
+      );
 
-    if (totalSpSalary !== 0) {
+      // Format the totalSpSalary with commas for thousand separators
+      const formattedTotalSpSalaryCompensation = totalSpSalaryCompensation
+        .toFixed(2)
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+        const totalSpSalaryCompensationNumber = parseFloat(
+          formattedTotalSpSalaryCompensation.replace(/,/g, "")
+        );
+
+      //   if (
+      //     formattedSumAddSalaryAfterTax != 0 &&
+      //     formattedSumAddSalaryAfterTax != null
+      //   ) {
+      //     textArray.push("เงินเพิ่มพิเศษ");
+      //     countArray.push("");
+      //     valueArray.push(
+      //       formattedSumAddSalaryAfterTax.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+      //     );
+      //     console.log("10");
+      //   }
+
+      if (totalSpSalary !== 0) {
         textArray.push("รวมเงินพิเศษ");
-        countArray.push("");  // You can add the count if needed or leave it as an empty string
+        countArray.push(""); // You can add the count if needed or leave it as an empty string
         valueArray.push(formattedTotalSpSalary);
         console.log("Additional salary added:", formattedTotalSpSalary);
       }
-      
-      if (0 != 0 && 0 != null) {
-        textArray.push("จ่ายป่วย");
+
+      // if (formattedTotalSpSalaryCompensation !== 0) {
+        if (
+          totalSpSalaryCompensationNumber !== 0 &&
+          totalSpSalaryCompensationNumber != null
+        ) {
+        textArray.push("จ่ายชดเชยวันลา");
         countArray.push("");
-        valueArray.push(0.0);
+        valueArray.push(formattedTotalSpSalaryCompensation);
         console.log("11");
       }
 
@@ -1114,9 +1159,9 @@ const formattedTotalSpSalary = totalSpSalary.toFixed(2).replace(/\B(?=(\d{3})+(?
         ].addSalary.filter((item) => item.id === "1410");
 
         // ค่าเดินทาง(ไม่คิดประกัน)
-      const formattedAddSalaryTavel = responseDataAll[i+1].addSalary.filter(
-        (item) => item.id === "1535"
-      );
+        const formattedAddSalaryTavel = responseDataAll[i + 1].addSalary.filter(
+          (item) => item.id === "1535"
+        );
 
         // Calculate the sum of SpSalary values in the filtered array
         const sumAmountHardWorking = formattedAmountHardWorking.reduce(
@@ -1124,8 +1169,8 @@ const formattedTotalSpSalary = totalSpSalary.toFixed(2).replace(/\B(?=(\d{3})+(?
           0
         );
 
-         // Calculate the sum of SpSalary values in the filtered array
-         const sumAddSalaryTavel = formattedAddSalaryTavel.reduce(
+        // Calculate the sum of SpSalary values in the filtered array
+        const sumAddSalaryTavel = formattedAddSalaryTavel.reduce(
           (total, item) => total + parseFloat(item.SpSalary || 0),
           0
         );
@@ -1138,18 +1183,83 @@ const formattedTotalSpSalary = totalSpSalary.toFixed(2).replace(/\B(?=(\d{3})+(?
         );
         console.log("formattedAmountHoliday", formattedAmountHoliday);
 
-        //เงินพิเศษ
-        const formattedSumAddSalaryAfterTax = Number(
-          responseDataAll[i + 1].accountingRecord.sumAddSalaryAfterTax ?? 0
-        ).toLocaleString("en-US", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        });
+        // //เงินพิเศษ
+        // const formattedSumAddSalaryAfterTax = Number(
+        //   responseDataAll[i + 1].accountingRecord.sumAddSalaryAfterTax ?? 0
+        // ).toLocaleString("en-US", {
+        //   minimumFractionDigits: 2,
+        //   maximumFractionDigits: 2,
+        // });
+
+        // //เงินพิเศษ
+        const excludedIds = ["1350", "1230", "1410", "1535", "1520"];
+
+        // Assuming responseDataAll[i].addSalary is an array of salary objects
+        const addSalaryFiltered = responseDataAll[i + 1].addSalary
+          .filter((salary) => !excludedIds.includes(salary.id)) // Filter out the objects with excluded IDs
+          .map((salary) => ({
+            name: salary.name,
+            SpSalary: Number(salary.SpSalary) || 0, // Convert SpSalary to number
+          }));
+
+        const totalSpSalary = addSalaryFiltered.reduce(
+          (sum, salary) => sum + salary.SpSalary,
+          0
+        );
+
+        // Format the totalSpSalary with commas for thousand separators
+        const formattedTotalSpSalary = totalSpSalary
+          .toFixed(2)
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+        // จ่างชดเชย
+        const excludedIdsPayCompensation = [
+          "1231",
+          "1233",
+          "1422",
+          "1423",
+          "1428",
+          "1434",
+          "1435",
+          "1429",
+          "1427",
+          "1234",
+          "1426",
+          "1425",
+        ];
+
+        // Assuming responseDataAll[i].addSalary is an array of salary objects
+        const addSalaryPayCompensationFiltered = responseDataAll[
+          i + 1
+        ].addSalary
+          .filter((salary) => excludedIdsPayCompensation.includes(salary.id)) // Filter out the objects with excluded IDs
+          .map((salary) => ({
+            name: salary.name,
+            SpSalary: Number(salary.SpSalary) || 0, // Convert SpSalary to number
+          }));
+        console.log(
+          "addSalaryPayCompensationFiltered2",
+          addSalaryPayCompensationFiltered
+        );
+
+        const totalSpSalaryCompensation =
+          addSalaryPayCompensationFiltered.reduce(
+            (sum, salary) => sum + salary.SpSalary,
+            0
+          );
+
+        // Format the totalSpSalary with commas for thousand separators
+        const formattedTotalSpSalaryCompensation = totalSpSalaryCompensation
+          .toFixed(2)
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        const totalSpSalaryCompensationNumber = parseFloat(
+          formattedTotalSpSalaryCompensation.replace(/,/g, "")
+        );
 
         //หัก
         // คืนเงินเบิกล่วงหน้า
         const advancePayment = parseFloat(
-          responseDataAll[i + 1].accountingRecord.advancePayment || 0
+          responseDataAll[i + 1].accountingRecord[0].advancePayment || 0
         ).toFixed(2);
 
         const textArray = [];
@@ -1330,21 +1440,16 @@ const formattedTotalSpSalary = totalSpSalary.toFixed(2).replace(/\B(?=(\d{3})+(?
           );
           console.log("77");
         }
-         //ค่าเดินทาง(ไม่คิดประกัน)
-      if (
-        sumAddSalaryTavel != 0 &&
-        sumAddSalaryTavel != null
-      ) {
-        // Push the text to textArray and the value to valueArray
-        textArray.push('ค่าเดินทาง');
-        countArray.push("");
-        valueArray.push(
-          sumAddSalaryTavel
-            .toFixed(2)
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-        );
-        console.log("77.1");
-      }
+        //ค่าเดินทาง(ไม่คิดประกัน)
+        if (sumAddSalaryTavel != 0 && sumAddSalaryTavel != null) {
+          // Push the text to textArray and the value to valueArray
+          textArray.push("ค่าเดินทาง");
+          countArray.push("");
+          valueArray.push(
+            sumAddSalaryTavel.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+          );
+          console.log("77.1");
+        }
         if (sumAmountHardWorking != 0 && sumAmountHardWorking != null) {
           textArray.push("เบี้ยขยัน");
           countArray.push("");
@@ -1402,21 +1507,40 @@ const formattedTotalSpSalary = totalSpSalary.toFixed(2).replace(/\B(?=(\d{3})+(?
           console.log("99");
         }
 
-        if (
-          formattedSumAddSalaryAfterTax != 0 &&
-          formattedSumAddSalaryAfterTax != null
-        ) {
+        // if (
+        //   formattedSumAddSalaryAfterTax != 0 &&
+        //   formattedSumAddSalaryAfterTax != null
+        // ) {
+        //   textArray.push("เงินเพิ่มพิเศษ");
+        //   countArray.push("");
+        //   valueArray.push(
+        //     formattedSumAddSalaryAfterTax.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        //   );
+        //   console.log("1010");
+        // }
+        if (formattedTotalSpSalary != 0 && formattedTotalSpSalary != null) {
           textArray.push("เงินเพิ่มพิเศษ");
           countArray.push("");
           valueArray.push(
-            formattedSumAddSalaryAfterTax.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            formattedTotalSpSalary.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
           );
           console.log("1010");
         }
-        if (0 != 0 && 0 != null) {
-          textArray.push("จ่ายป่วย");
+
+        // if (0 != 0 && 0 != null) {
+        //   textArray.push("จ่ายป่วย");
+        //   countArray.push("");
+        //   valueArray.push(0.0);
+        //   console.log("1111");
+        // }
+        // if (formattedTotalSpSalaryCompensation !== 0 && formattedTotalSpSalaryCompensation != null) {
+        if (
+          totalSpSalaryCompensationNumber !== 0 &&
+          totalSpSalaryCompensationNumber != null
+        ) {
+          textArray.push("จ่ายชดเชยวันลา");
           countArray.push("");
-          valueArray.push(0.0);
+          valueArray.push(formattedTotalSpSalaryCompensation);
           console.log("1111");
         }
 
@@ -1428,8 +1552,8 @@ const formattedTotalSpSalary = totalSpSalary.toFixed(2).replace(/\B(?=(\d{3})+(?
           valueDedustArray.push(advancePayment);
         }
         if (
-          responseDataAll[i + 1].accountingRecord.tax != 0 &&
-          responseDataAll[i + 1].accountingRecord.tax != null
+          responseDataAll[i + 1].accountingRecord[0].tax != 0 &&
+          responseDataAll[i + 1].accountingRecord[0].tax != null
         ) {
           textDedustArray.push("หักภาษีเงินได้");
           valueDedustArray.push(
@@ -1438,20 +1562,41 @@ const formattedTotalSpSalary = totalSpSalary.toFixed(2).replace(/\B(?=(\d{3})+(?
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
           );
         }
+        // if (
+        //   responseDataAll[i + 1].accountingRecord.socialSecurity != 0 &&
+        //   responseDataAll[i + 1].accountingRecord.socialSecurity != null
+        // ) {
+        //   textDedustArray.push("หักสมทบประกันสังคม");
+        //   valueDedustArray.push(
+        //     responseDataAll[i + 1].accountingRecord.socialSecurity
+        //       .toFixed(2)
+        //       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        //   );
+        // }
         if (
-          responseDataAll[i + 1].accountingRecord.socialSecurity != 0 &&
-          responseDataAll[i + 1].accountingRecord.socialSecurity != null
+          responseDataAll[i + 1].accountingRecord[0].socialSecurity != 0 &&
+          responseDataAll[i + 1].accountingRecord[0].socialSecurity != null
         ) {
-          textDedustArray.push("หักสมทบประกันสังคม");
-          valueDedustArray.push(
-            responseDataAll[i + 1].accountingRecord.socialSecurity
-              .toFixed(2)
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-          );
+          const accountingRecord = responseDataAll[i + 1].accountingRecord?.[0];
+
+          if (accountingRecord) {
+            const amountCountDayWork = parseFloat(
+              accountingRecord.socialSecurity
+            );
+
+            if (amountCountDayWork != 0 && amountCountDayWork != null) {
+              // Push the text to textArray and the value to valueArray
+              textDedustArray.push("หักสมทบประกันสังคม");
+                valueDedustArray.push(
+                  amountCountDayWork
+                );
+            }
+          }
+          console.log("22");
         }
 
-        console.log("textArray", textArray);
-        console.log("valueArray", valueArray);
+        console.log("textDedustArray", textDedustArray);
+        console.log("valueDedustArray", valueDedustArray);
 
         pdf.text(`ใบจ่ายเงินเดือน`, 73, 142);
         pdf.text(`บริษัท โอวาท โปร แอนด์ คริก จำกัด`, 55, 148);
@@ -1678,6 +1823,7 @@ const formattedTotalSpSalary = totalSpSalary.toFixed(2).replace(/\B(?=(\d{3})+(?
 
         valueDedustArray.forEach((text) => {
           // Output each element of the textArray at the current y position
+          // pdf.text(`${text}`, 160, y5, { align: "right" });
           pdf.text(`${text}`, 160, y5, { align: "right" });
 
           // Increment y position for the next line
