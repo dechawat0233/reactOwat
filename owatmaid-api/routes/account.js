@@ -917,7 +917,7 @@ console.log('workDaySocial '+ (workDaySocial * salary) + 'sumSocial '+ sumSocial
     data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
     // data.accountingRecord.amountCountDayWorkOt = await calOtWork ||0;
     data.accountingRecord.countHourWork = await countHourWork ||0;
-    data.accountingRecord.countOtHourWork = await countOtHourWork || 0;
+    data.accountingRecord.countOtHourWork = await countOtHourWork * 1.111 || 0;
 
     //data for hour amount
     data.accountingRecord.amountOne = await amountOne ||0;
