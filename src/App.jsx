@@ -1,5 +1,7 @@
-import React from "react";
-import { useState } from 'react';
+// import React from "react";
+import React, { useEffect, useState, useRef } from "react";
+import endpoint from "./config";
+
 // import Posts from "./Post";
 // import Home from "./Home";
 // import Profile from './Profile';
@@ -88,7 +90,21 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 
 function App() {
-  
+  const [workplaceList, setWorkplaceList] = useState([]);
+  useEffect(() => {
+    // Fetch data from the API when the component mounts
+    fetch(endpoint + "/workplace/list")
+      .then((response) => response.json())
+      .then((data) => {
+        // Update the state with the fetched data
+        setWorkplaceList(data);
+        // alert(data[0].workplaceName);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []); 
+
   const [selectedEmployees, setSelectedEmployees] = useState([]);
 
   function handleEmployeeSelect(employee) {
@@ -169,7 +185,8 @@ function App() {
               <Route path="/other_expenses" element={<OtherExpenses />} />
               <Route path="/search_results" element={<SearchResults />} />
 
-              <Route path="/setting" element={<Setting />} />
+              {/* <Route path="/setting" element={<Setting />} /> */}
+              <Route path="/setting" element={<Setting workplaceList={workplaceList} />} />
               <Route path="/settingcomplex" element={<SettingComplex />} />
               <Route path="/settingAllList" element={<SettingAllList />} />
               <Route path="/settingspecial" element={<SettingSpecial />} />
