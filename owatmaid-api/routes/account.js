@@ -598,7 +598,7 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
   countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
 
   //convert minit to 10 base
-  let [hoursTmp, minutesTmp] = parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0).toString().split('.').map(Number);
+  let [hoursTmp, minutesTmp] = responseConclude.data.recordConclude[c].concludeRecord[i].otTimes.toString().split('.').map(Number);
   let decimalFraction = minutesTmp.toFixed(2) / 60;
 
   countOtHourWork += parseFloat(hoursTmp + decimalFraction || 0);
