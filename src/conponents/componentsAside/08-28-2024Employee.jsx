@@ -6,8 +6,6 @@ import React, { useEffect, useState, useRef } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import EmployeesSelected from "./EmployeesSelected";
-import { ThaiDatePicker } from "thaidatepicker-react";
-import { FaCalendarAlt } from "react-icons/fa"; // You can use any icon library
 
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "../editwindowcss.css";
@@ -454,83 +452,12 @@ function Employee() {
     setMilitaryStatus(event.target.value);
   };
 
-  // const handleStartDateChange = (date) => {
-  //   setStartjob(date);
-  // };
-  // const handleEndDateChange = (date) => {
-  //   setEndjob(date);
-  // };
-  const [showDatePickerStart, setShowDatePickerStart] = useState(false);
-  const [selectedDateStart, setSelectedDateStart] = useState(null);
-  const [formattedDate321, setFormattedDateStart] = useState(null);
-
-  const handleDatePickerStartChange = (date) => {
-    setSelectedDateStart(date);
-    setShowDatePickerStart(false); // Hide date picker after selecting a date
-    const newDate = new Date(date);
-    setStartjob(newDate);
+  const handleStartDateChange = (date) => {
+    setStartjob(date);
   };
-
-  useEffect(() => {
-    if (selectedDateStart) {
-      // Convert the string to a Date object
-      const date = new Date(selectedDateStart);
-
-      // Extract day, month, and year
-      const daySelectedDate = date.getDate().toString().padStart(2, "0");
-      const monthSelectedDate = (date.getMonth() + 1)
-        .toString()
-        .padStart(2, "0");
-      const yearSelectedDate = (date.getFullYear() + 543).toString();
-
-      // Format the date
-      const formattedDate = `${daySelectedDate}/${monthSelectedDate}/${yearSelectedDate}`;
-      console.log("formattedDate", formattedDate);
-      setFormattedDateStart(formattedDate);
-    }
-  }, [selectedDateStart]);
-
-  const toggleDatePickerStart = () => {
-    setShowDatePickerStart(!showDatePickerStart);
+  const handleEndDateChange = (date) => {
+    setEndjob(date);
   };
-
-  const [showDatePickerEnd, setShowDatePickerEnd] = useState(false);
-  const [selectedDateEnd, setSelectedDateEnd] = useState(null);
-  const [formattedDate321End, setFormattedDateEnd] = useState(null);
-
-  const handleDatePickerEndChange = (date) => {
-    setSelectedDateEnd(date);
-    setShowDatePickerEnd(false); // Hide date picker after selecting a date
-    const newDate = new Date(date);
-    setEndjob(newDate);
-  };
-
-  useEffect(() => {
-    if (selectedDateEnd) {
-      // Convert the string to a Date object
-      const date = new Date(selectedDateEnd);
-
-      // Extract day, month, and year
-      const daySelectedDate = date.getDate().toString().padStart(2, "0");
-      const monthSelectedDate = (date.getMonth() + 1)
-        .toString()
-        .padStart(2, "0");
-      const yearSelectedDate = (date.getFullYear() + 543).toString();
-
-      // Format the date
-      const formattedDate = `${daySelectedDate}/${monthSelectedDate}/${yearSelectedDate}`;
-      console.log("formattedDate", formattedDate);
-      setFormattedDateEnd(formattedDate);
-    }
-  }, [selectedDateEnd]);
-
-  const toggleDatePickerEnd = () => {
-    setShowDatePickerEnd(!showDatePickerEnd);
-  };
-
-  // console.log('startjob',startjob);
-  // console.log('endjob',endjob);
-
   const handleExceptDateChange = (date) => {
     setExceptjob(date);
   };
@@ -782,7 +709,7 @@ function Employee() {
                               <div
                                 style={{ position: "relative", zIndex: 9999 }}
                               >
-                                {/* <DatePicker
+                                <DatePicker
                                   id="startjob"
                                   name="startjob"
                                   className="form-control"
@@ -790,37 +717,7 @@ function Employee() {
                                   selected={startjob}
                                   onChange={handleStartDateChange}
                                   dateFormat="dd/MM/yyyy"
-                                /> */}
-                                <div
-                                  onClick={toggleDatePickerStart}
-                                  style={{
-                                    cursor: "pointer",
-                                    display: "inline-flex",
-                                    alignItems: "center",
-                                  }}
-                                >
-                                  <FaCalendarAlt size={20} />
-                                  <span style={{ marginLeft: "8px" }}>
-                                    {formattedDate321
-                                      ? formattedDate321
-                                      : "Select Date"}
-                                  </span>
-                                </div>
-
-                                {showDatePickerStart && (
-                                  <div
-                                    style={{
-                                      position: "absolute",
-                                      zIndex: 1000,
-                                    }}
-                                  >
-                                    <ThaiDatePicker
-                                      className="form-control"
-                                      value={selectedDateStart}
-                                      onChange={handleDatePickerStartChange}
-                                    />
-                                  </div>
-                                )}
+                                />
                               </div>
                             </div>
                           </div>
@@ -831,7 +728,7 @@ function Employee() {
                               <div
                                 style={{ position: "relative", zIndex: 9999 }}
                               >
-                                {/* <DatePicker
+                                <DatePicker
                                   id="endjob"
                                   name="endjob"
                                   className="form-control"
@@ -839,37 +736,7 @@ function Employee() {
                                   selected={endjob}
                                   onChange={handleEndDateChange}
                                   dateFormat="dd/MM/yyyy"
-                                /> */}
-                                <div
-                                  onClick={toggleDatePickerEnd}
-                                  style={{
-                                    cursor: "pointer",
-                                    display: "inline-flex",
-                                    alignItems: "center",
-                                  }}
-                                >
-                                  <FaCalendarAlt size={20} />
-                                  <span style={{ marginLeft: "8px" }}>
-                                    {formattedDate321End
-                                      ? formattedDate321End
-                                      : "Select Date"}
-                                  </span>
-                                </div>
-
-                                {showDatePickerEnd && (
-                                  <div
-                                    style={{
-                                      position: "absolute",
-                                      zIndex: 1000,
-                                    }}
-                                  >
-                                    <ThaiDatePicker
-                                      className="form-control"
-                                      value={selectedDateEnd}
-                                      onChange={handleDatePickerEndChange}
-                                    />
-                                  </div>
-                                )}
+                                />
                               </div>
                             </div>
                           </div>

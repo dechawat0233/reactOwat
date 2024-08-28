@@ -1393,7 +1393,7 @@ function Setting() {
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-4">
+                    {/* <div class="col-md-4">
                       <div class="form-group">
                         <label role="dayoffRate">
                           อัตราค่าจ้างวันหยุดประจำสัปดาห์
@@ -1407,7 +1407,7 @@ function Setting() {
                           onChange={(e) => setDayoffRate(e.target.value)}
                         />
                       </div>
-                    </div>
+                    </div> */}
                     <div class="col-md-4">
                       <div class="form-group">
                         <label role="dayoffRateHour">

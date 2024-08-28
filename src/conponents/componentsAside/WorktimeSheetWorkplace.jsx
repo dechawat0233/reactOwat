@@ -3,6 +3,9 @@ import endpoint from "../../config";
 
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
+import { ThaiDatePicker } from "thaidatepicker-react";
+import { FaCalendarAlt } from 'react-icons/fa'; // You can use any icon library
+
 import "../editwindowcss.css";
 // import TestPDF from './TestPDF';
 import { jsPDF } from "jspdf";
@@ -112,7 +115,41 @@ function WorktimeSheetWorkplace() {
   const handleThaiDateChange = (date) => {
     setSelectedThaiDate(date);
     setSelectedGregorianDate(ThaiBuddhistToGregorian(date));
-    setWorkDate(date);
+    // setWorkDate(date);
+  };
+
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [formattedDate321, setFormattedDate] = useState(null);
+
+  const handleDatePickerChange = (date) => {
+      setSelectedDate(date);
+      setShowDatePicker(false); // Hide date picker after selecting a date
+      const newDate = new Date(date);
+      setWorkDate(newDate)
+
+  };
+
+  useEffect(() => {
+    if (selectedDate) {
+      // Convert the string to a Date object
+      const date = new Date(selectedDate);
+  
+      // Extract day, month, and year
+      const daySelectedDate = date.getDate().toString().padStart(2, '0');
+      const monthSelectedDate = (date.getMonth() + 1).toString().padStart(2, '0');
+      const yearSelectedDate = (date.getFullYear() + 543).toString();
+  
+      // Format the date
+      const formattedDate = `${daySelectedDate}/${monthSelectedDate}/${yearSelectedDate}`;
+      console.log('formattedDate', formattedDate);
+      setFormattedDate(formattedDate);
+    }
+  }, [selectedDate]);
+  
+console.log('selectedDate',selectedDate);
+  const toggleDatePicker = () => {
+    setShowDatePicker(!showDatePicker);
   };
 
   const handleGregorianDateChange = (date) => {
@@ -7019,7 +7056,7 @@ function WorktimeSheetWorkplace() {
                             </div>
                           </div>
                           <div class="col-md-3">
-                            <div class="form-group">
+                            {/* <div class="form-group">
                               <label role="datetime">วันที่</label>
                               <div
                                 style={{
@@ -7028,14 +7065,7 @@ function WorktimeSheetWorkplace() {
                                   marginLeft: "0rem",
                                 }}
                               >
-                                {/* <DatePicker id="datetime" name="datetime"
-                                                                    className="form-control" // Apply Bootstrap form-control class
-                                                                    popperClassName="datepicker-popper" // Apply custom popper class if needed
-                                                                    selected={workDate}
-                                                                    onChange={handleWorkDateChange}
-                                                                    dateFormat="dd/MM/yyyy"
-                                                                // showMonthYearPicker
-                                                                /> */}
+                            
 
                                 <DatePicker
                                   className="form-control"
@@ -7045,7 +7075,24 @@ function WorktimeSheetWorkplace() {
                                   locale={th}
                                 />
                               </div>
-                            </div>
+                            </div> */}
+                            <label role="datetime">วันที่</label>
+                             <div onClick={toggleDatePicker} style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem"  }}>
+        <FaCalendarAlt size={20} />
+        <span style={{ marginLeft: '8px' }}>
+          {formattedDate321  ? formattedDate321  : 'Select Date'}
+        </span>
+      </div>
+
+      {showDatePicker && (
+        <div style={{ position: 'absolute', zIndex: 1000 }}>
+          <ThaiDatePicker
+            className="form-control"
+            value={selectedDate}
+            onChange={handleDatePickerChange}
+          />
+        </div>
+      )}
                           </div>
                         </div>
 

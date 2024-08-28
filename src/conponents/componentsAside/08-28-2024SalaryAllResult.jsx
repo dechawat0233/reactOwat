@@ -3,8 +3,6 @@ import endpoint from '../../config';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'; import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
-import { ThaiDatePicker } from "thaidatepicker-react";
-import { FaCalendarAlt } from 'react-icons/fa'; // You can use any icon library
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -121,42 +119,13 @@ function SalaryAllResult() {
     const handleThaiDateChange = (date) => {
         setSelectedThaiDate(date);
         setSelectedGregorianDate(ThaiBuddhistToGregorian(date));
-        // setWorkDate(date)
+        setWorkDate(date)
     };
 
-    const [showDatePicker, setShowDatePicker] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [formattedDate321, setFormattedDate] = useState(null);
-
-  const handleDatePickerChange = (date) => {
-      setSelectedDate(date);
-      setShowDatePicker(false); // Hide date picker after selecting a date
-      const newDate = new Date(date);
-      setWorkDate(newDate)
-
-  };
-
-  useEffect(() => {
-    if (selectedDate) {
-      // Convert the string to a Date object
-      const date = new Date(selectedDate);
-  
-      // Extract day, month, and year
-      const daySelectedDate = date.getDate().toString().padStart(2, '0');
-      const monthSelectedDate = (date.getMonth() + 1).toString().padStart(2, '0');
-      const yearSelectedDate = (date.getFullYear() + 543).toString();
-  
-      // Format the date
-      const formattedDate = `${daySelectedDate}/${monthSelectedDate}/${yearSelectedDate}`;
-      console.log('formattedDate', formattedDate);
-      setFormattedDate(formattedDate);
-    }
-  }, [selectedDate]);
-  
-console.log('selectedDate',selectedDate);
-  const toggleDatePicker = () => {
-    setShowDatePicker(!showDatePicker);
-  };
+    const handleGregorianDateChange = (date) => {
+        setSelectedGregorianDate(date);
+        setSelectedThaiDate(GregorianToThaiBuddhist(date));
+    };
 
     const formattedWorkDateDD = moment(workDate).format('DD');
     const formattedWorkDateMM = moment(workDate).format('MM');
@@ -2482,7 +2451,18 @@ console.log('selectedDate',selectedDate);
                                             </div> */}
 
                                             <label role="datetime">พิมพ์วันที่</label>
-                                            {/* <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
+                                            <div style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
+                                                {/* <DatePicker id="datetime" name="datetime"
+                                                    className="form-control"
+                                                    popperClassName="datepicker-popper"
+                                                    selected={thaiWorkDate} // Using Thai Buddhist calendar date
+                                                    onChange={handleWorkDateChange}
+                                                    dateFormat="dd/MM/yyyy"
+                                                    locale={th}
+                                                    formatWeekDay={nameOfDay => nameOfDay.substr(0, 2)}
+                                                    formatWeekYear={formatThaiBuddhistYear}
+                                                    showWeekNumbers
+                                                /> */}
                                                 <DatePicker
                                                     className="form-control"
                                                     selected={selectedThaiDate}
@@ -2490,23 +2470,7 @@ console.log('selectedDate',selectedDate);
                                                     dateFormat="dd/MM/yyyy"
                                                     locale={th}
                                                 />
-                                            </div> */}
-                                            <div onClick={toggleDatePicker} style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem"  }}>
-        <FaCalendarAlt size={20} />
-        <span style={{ marginLeft: '8px' }}>
-          {formattedDate321  ? formattedDate321  : 'Select Date'}
-        </span>
-      </div>
-
-      {showDatePicker && (
-        <div style={{ position: 'absolute', zIndex: 1000 }}>
-          <ThaiDatePicker
-            className="form-control"
-            value={selectedDate}
-            onChange={handleDatePickerChange}
-          />
-        </div>
-      )}
+                                            </div>
 
                                         </div>
                                         <div class="col-md-3">
