@@ -743,58 +743,6 @@ function Setting({ workplaceList }) {
   const [showEmployeeListResult, setShowEmployeeListResult] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
 
-  // async function handleSearch(event) {
-  //   event.preventDefault();
-
-  //   //clean list employee
-  //   setShowEmployeeListResult([]);
-
-  //   //get value from form search
-  //   const data = {
-  //     searchWorkplaceId: searchWorkplaceId,
-  //     searchWorkplaceName: searchWorkplaceName,
-  //   };
-
-  //   try {
-  //     const response = await axios.post(endpoint + "/workplace/search", data);
-  //     setSearchResult(response.data.workplaces);
-  //     console.log("response", response);
-
-  //     if (response.data.workplaces.length < 1) {
-  //       window.location.reload();
-  //     } else {
-  //       const data1 = {
-  //         employeeId: "",
-  //         name: "",
-  //         idCard: "",
-  //         //   workPlace: searchWorkplaceId,
-  //         workPlace: searchResult.workplaceId,
-  //       };
-
-  //       const response1 = await axios.post(
-  //         endpoint + "/employee/search",
-  //         data1
-  //       );
-
-  //       const filteredEmployees = response1.data.employees.filter(
-  //         (employee) => employee.workplace === searchWorkplaceId
-  //       );
-
-  //       // await setEmployeeListResult(response1.data.employees);
-  //       await setEmployeeListResult(filteredEmployees);
-
-  //       // await alert(JSON.stringify(response1.data.employees , null ,2));
-  //       // alert(response1.data );
-  //       // alert(employeeListResult.length);
-  //     }
-  //   } catch (error) {
-  //     // setMessage('ไม่พบผลการค้นหา กรุณาตรวจสอบข้อมูลที่ใช้ในการค้นหาอีกครั้ง');
-  //     alert("กรุณาตรวจสอบข้อมูลในช่องค้นหา");
-  //     window.location.reload();
-  //   }
-  // }
-  const [filteredWorkplaceList, setFilteredWorkplaceList] = useState([]);
-
   async function handleSearch(event) {
     event.preventDefault();
 
@@ -808,17 +756,10 @@ function Setting({ workplaceList }) {
     };
 
     try {
-      // const response = await axios.post(endpoint + "/workplace/search", data);
-      // setSearchResult(response.data.workplaces);
-      // console.log("response", response);
-      const filteredList = workplaceList.filter((workplace) => {
-        const idMatch = workplace.workplaceId.toString().includes(searchWorkplaceId);
-        const nameMatch = workplace.workplaceName.toLowerCase().includes(searchWorkplaceName.toLowerCase());
-        return idMatch && nameMatch;
-      });
-      setSearchResult(filteredList);
-      setFilteredWorkplaceList(filteredList);
-      console.log('filteredList',filteredList);
+      const response = await axios.post(endpoint + "/workplace/search", data);
+      setSearchResult(response.data.workplaces);
+      console.log("response", response);
+
       if (response.data.workplaces.length < 1) {
         window.location.reload();
       } else {
@@ -848,8 +789,8 @@ function Setting({ workplaceList }) {
       }
     } catch (error) {
       // setMessage('ไม่พบผลการค้นหา กรุณาตรวจสอบข้อมูลที่ใช้ในการค้นหาอีกครั้ง');
-      alert("กรุณาตรวจสอบข้อมูลในช่องค้นหา",error);
-      // window.location.reload();
+      alert("กรุณาตรวจสอบข้อมูลในช่องค้นหา");
+      window.location.reload();
     }
   }
   console.log("EmployeeListResult", employeeListResult);
