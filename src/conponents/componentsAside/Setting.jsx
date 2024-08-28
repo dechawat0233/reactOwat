@@ -969,6 +969,10 @@ function Setting() {
     }
   }, [workplaceIdSend, workplaceNameSend]); // Depend on the URL parameter
 
+  function handleFormSubmit(event) {
+    event.preventDefault(); // Prevent the form from submitting on Enter key press
+  }
+
   async function handleManageWorkplace(event) {
     event.preventDefault();
 
@@ -1247,7 +1251,9 @@ function Setting() {
                 </div>
               </section>
               {/* <!--Frame--> */}
-              <form onSubmit={handleManageWorkplace}>
+              {/* <form onSubmit={handleManageWorkplace}> */}
+    <form onSubmit={handleFormSubmit}>
+
                 <h2 class="title">ตั้งค่าหน่วยงาน</h2>
                 <section class="Frame">
                   <div class="col-md-12">
@@ -2478,12 +2484,12 @@ function Setting() {
                 {/* <!--Frame--> */}
                 <div class="line_btn">
                   {newWorkplace ? (
-                    <button class="btn b_save">
+                    <button type="button" onClick={handleManageWorkplace} class="btn b_save">
                       <i class="nav-icon fas fa-save"></i>{" "}
                       &nbsp;สร้างหน่วยงานใหม่
                     </button>
                   ) : (
-                    <button class="btn b_save">
+                    <button type="button" onClick={handleManageWorkplace} class="btn b_save">
                       <i class="nav-icon fas fa-save"></i> &nbsp;บันทึก
                     </button>
                   )}
