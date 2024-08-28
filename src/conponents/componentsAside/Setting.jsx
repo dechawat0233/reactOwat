@@ -378,7 +378,7 @@ function Setting({ workplaceList }) {
         }
         // await alert(JSON.stringify(response.data.employees[0].addSalary ,null,2 ));
         // await alert(JSON.stringify(response.data.employees[0].deductSalary ,null,2 ));
-      } catch (e) { }
+      } catch (e) {}
     };
 
     getMaster();
@@ -503,11 +503,11 @@ function Setting({ workplaceList }) {
           // Show alert for duplicate date selection
           alert(
             day +
-            "/" +
-            month +
-            "/" +
-            year +
-            "  Selected date already exists in the list."
+              "/" +
+              month +
+              "/" +
+              year +
+              "  Selected date already exists in the list."
           );
         }
         // setDay('');
@@ -517,7 +517,7 @@ function Setting({ workplaceList }) {
         // Show alert for invalid date selection
         alert(
           day / month / year +
-          "Invalid date selection. Please select a valid day, month, and year."
+            "Invalid date selection. Please select a valid day, month, and year."
         );
       }
     } else {
@@ -812,13 +812,17 @@ function Setting({ workplaceList }) {
       // setSearchResult(response.data.workplaces);
       // console.log("response", response);
       const filteredList = workplaceList.filter((workplace) => {
-        const idMatch = workplace.workplaceId.toString().includes(searchWorkplaceId);
-        const nameMatch = workplace.workplaceName.toLowerCase().includes(searchWorkplaceName.toLowerCase());
+        const idMatch = workplace.workplaceId
+          .toString()
+          .includes(searchWorkplaceId);
+        const nameMatch = workplace.workplaceName
+          .toLowerCase()
+          .includes(searchWorkplaceName.toLowerCase());
         return idMatch && nameMatch;
       });
       setSearchResult(filteredList);
       setFilteredWorkplaceList(filteredList);
-      console.log('filteredList',filteredList);
+      console.log("filteredList", filteredList);
       if (response.data.workplaces.length < 1) {
         window.location.reload();
       } else {
@@ -848,7 +852,7 @@ function Setting({ workplaceList }) {
       }
     } catch (error) {
       // setMessage('ไม่พบผลการค้นหา กรุณาตรวจสอบข้อมูลที่ใช้ในการค้นหาอีกครั้ง');
-      alert("กรุณาตรวจสอบข้อมูลในช่องค้นหา",error);
+      alert("กรุณาตรวจสอบข้อมูลในช่องค้นหา", error);
       // window.location.reload();
     }
   }
@@ -1238,7 +1242,7 @@ function Setting({ workplaceList }) {
                       <div class="col-md-6">
                         <div class="form-group">
                           <label role="searchWorkplaceId">รหัสหน่วยงาน</label>
-                          <input
+                          {/* <input
                             type="text"
                             class="form-control"
                             id="searchWorkplaceId"
@@ -1247,7 +1251,25 @@ function Setting({ workplaceList }) {
                             onChange={(e) =>
                               setSearchWorkplaceId(e.target.value)
                             }
+                          /> */}
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="searchWorkplaceId"
+                            list="workplaceIds" // Associate the datalist with the input
+                            placeholder="รหัสหน่วยงาน"
+                            value={searchWorkplaceId}
+                            onChange={(e) =>
+                              setSearchWorkplaceId(e.target.value)
+                            }
                           />
+                          <datalist id="workplaceIds">
+                            {workplaceList.map((workplace) => (
+                              <option key={workplace.workplaceId} value={workplace.workplaceId}>
+                                {workplace.workplaceId}
+                              </option>
+                            ))}
+                          </datalist>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -1311,8 +1333,7 @@ function Setting({ workplaceList }) {
               </section>
               {/* <!--Frame--> */}
               {/* <form onSubmit={handleManageWorkplace}> */}
-    <form onSubmit={handleFormSubmit}>
-
+              <form onSubmit={handleFormSubmit}>
                 <h2 class="title">ตั้งค่าหน่วยงาน</h2>
                 <section class="Frame">
                   <div class="col-md-12">
@@ -2356,7 +2377,7 @@ function Setting({ workplaceList }) {
 
                     <div>
                       <div className="row">
-                         <div className="col-md-3">
+                        <div className="col-md-3">
                           <label style={{ margin: "0.5rem" }}>วันที่:</label>
                         </div>
                         <div className="col-md-3">
@@ -2364,14 +2385,14 @@ function Setting({ workplaceList }) {
                             เดือน:
                           </label>
                         </div>
-                       
+
                         <div className="col-md-3">
                           <label style={{ margin: "0.5rem" }}>ปี:</label>
                         </div>
                       </div>
 
                       <div className="row">
-                      <div className="col-md-3">
+                        <div className="col-md-3">
                           <select
                             className="form-control"
                             value={day}
@@ -2403,7 +2424,7 @@ function Setting({ workplaceList }) {
                             )}
                           </select>
                         </div>
-              
+
                         <div className="col-md-3">
                           <select
                             className="form-control"
@@ -2479,12 +2500,23 @@ function Setting({ workplaceList }) {
                           {selectedDates.map((date, index) => (
                             <li key={index}>
                               <div className="row">
-                                <div className="col-md-1" style={{ borderTop: "2px solid black" }}>
-                                  {date instanceof Date && !isNaN(date.getTime())
-                                    ? `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear() + 543}`
-                                    : `${day}/${month}/${year + 543} (Invalid Date)`}
+                                <div
+                                  className="col-md-1"
+                                  style={{ borderTop: "2px solid black" }}
+                                >
+                                  {date instanceof Date &&
+                                  !isNaN(date.getTime())
+                                    ? `${date.getDate()}/${
+                                        date.getMonth() + 1
+                                      }/${date.getFullYear() + 543}`
+                                    : `${day}/${month}/${
+                                        year + 543
+                                      } (Invalid Date)`}
                                 </div>
-                                <div className="col-md-1" style={{ borderTop: "2px solid black" }}>
+                                <div
+                                  className="col-md-1"
+                                  style={{ borderTop: "2px solid black" }}
+                                >
                                   <button
                                     type="button"
                                     onClick={() => handleRemoveDate(date)}
@@ -2500,7 +2532,6 @@ function Setting({ workplaceList }) {
                         </ol>
                       </div>
                     )}
-
                   </div>
                   <div>
                     <label>หมายเหตุ:</label>
@@ -2543,12 +2574,20 @@ function Setting({ workplaceList }) {
                 {/* <!--Frame--> */}
                 <div class="line_btn">
                   {newWorkplace ? (
-                    <button type="button" onClick={handleManageWorkplace} class="btn b_save">
+                    <button
+                      type="button"
+                      onClick={handleManageWorkplace}
+                      class="btn b_save"
+                    >
                       <i class="nav-icon fas fa-save"></i>{" "}
                       &nbsp;สร้างหน่วยงานใหม่
                     </button>
                   ) : (
-                    <button type="button" onClick={handleManageWorkplace} class="btn b_save">
+                    <button
+                      type="button"
+                      onClick={handleManageWorkplace}
+                      class="btn b_save"
+                    >
                       <i class="nav-icon fas fa-save"></i> &nbsp;บันทึก
                     </button>
                   )}
