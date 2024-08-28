@@ -596,7 +596,12 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
   amountSpecial += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].addSalaryDay || 0);
   countHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
   countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
-  countOtHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+
+  //convert minit to 10 base
+  let [hoursTmp, minutesTmp] = parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0).toString().split('.').map(Number);
+  let decimalFraction = minutesTmp.toFixed(2) / 60;
+
+  countOtHourWork += parseFloat(hoursTmp + decimalFraction || 0);
 
   //get hour rate
   if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '1') {
@@ -653,7 +658,10 @@ countHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeReco
 console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
 
   } else {
-    countOtHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+    let [hoursTmp, minutesTmp] = parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0).toString().split('.').map(Number);
+    let decimalFraction = minutesTmp.toFixed(2) / 60;
+
+    countOtHourWork += parseFloat(hoursTmp + decimalFraction);
 
   }
 
@@ -917,7 +925,7 @@ console.log('workDaySocial '+ (workDaySocial * salary) + 'sumSocial '+ sumSocial
     data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
     // data.accountingRecord.amountCountDayWorkOt = await calOtWork ||0;
     data.accountingRecord.countHourWork = await countHourWork ||0;
-    data.accountingRecord.countOtHourWork = await countOtHourWork * 1.111 || 0;
+    data.accountingRecord.countOtHourWork = await countOtHourWork || 0;
 
     //data for hour amount
     data.accountingRecord.amountOne = await amountOne ||0;
@@ -1682,7 +1690,11 @@ const response = '';
       amountSpecial += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].addSalaryDay || 0);
       countHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
       countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
-      countOtHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+
+      let [hoursTmp, minutesTmp] = parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0).toString().split('.').map(Number);
+      let decimalFraction = minutesTmp.toFixed(2) / 60;
+
+      countOtHourWork += parseFloat(hoursTmp + decimalFraction);
 
       let checkDaywork = 0;
 
@@ -1743,7 +1755,10 @@ if(! dayW.includes( getDayNumberFromDate( responseConclude.data.recordConclude[c
     console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
     
       } else {
-        countOtHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+        let [hoursTmp, minutesTmp] = parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0).toString().split('.').map(Number);
+        let decimalFraction = minutesTmp.toFixed(2) / 60;
+
+        countOtHourWork += parseFloat(hoursTmp + decimalFraction);
       }
     
     
