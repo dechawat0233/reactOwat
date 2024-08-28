@@ -353,19 +353,8 @@ handleReLoad();
                 setSumAddSalaryList(tmp);
               }
               // alert(response.data[0].addSalary.length);
-              // await setDeductSalaryList(response.data[0].deductSalary);
-              if (response.data[0].deductSalary) {
-                let tmp1 = 0;
-                let tmpList = [];
-                response.data[0].deductSalary.map(item => {
-                  tmp1 += parseFloat(item.amount || 0);
-                  if(item.id !== "" ) {
-tmpList.push(item);
-                  }
-                });
-                setDeductSalaryList(tmpList);
-              }
-
+              setDeductSalaryList(response.data[0].deductSalary);
+              // alert(JSON.stringify(response.data[0].addSalary,null,2));
             }
             console.log('responseData', responseData);
             const filteredData = responseData.filter(item => item.employeeId === staffId);
@@ -743,17 +732,6 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
 
   const thaiMonthName = getThaiMonthName(parseInt(CheckMonth, 10));
   const thaiMonthLowerName = getThaiMonthName(parseInt(countdownMonth, 10));
-
-  async function handleSearchAccounting() {
-let tmp = await staffId;
-await setStaffId('');
-setTimeout(async () => {
-  await setStaffId(tmp);
-  // alert('Hi');
-}, 1000); // Adjust the delay time as needed (1000 ms = 1 second)
-
-  }
-  
 
   async function handleSearch(event) {
     event.preventDefault();
@@ -1551,8 +1529,7 @@ console.log('wsCountDayWork',wsCountDayWork);
               <h2 class="title">สรุปเงินเดือน</h2>
               <section class="Frame">
                 <div class="col-md-12">
-                  {/* <form onSubmit={handleSearch}> */}
-                  <form>
+                  <form onSubmit={handleSearch}>
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
@@ -1631,7 +1608,7 @@ console.log('wsCountDayWork',wsCountDayWork);
                       </div>
                     </div>
                     <div class="d-flex justify-content-center">
-                      <button type='button' class="btn b_save" onClick={handleSearchAccounting} ><i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา</button>
+                      <button class="btn b_save" onClick={handleSearch()} ><i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา</button>
                     </div>
                   </form>
                   <br />
@@ -1966,21 +1943,26 @@ console.log('wsCountDayWork',wsCountDayWork);
                               <div className="popup">
                                 <h4>รายการเงินหัก</h4>
                                 <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
-                                {deductSalaryList && (
-                                    deductSalaryList.map((deductSalary , index2) => (
-                                      (deductSalary.name !== '' && (
-                                        <li key={index2} style={{ marginBottom: '10px' }}>
-                                          {deductSalary.name} - จำนวน: {deductSalary.amount}
-                                        </li>
-                                      ))
-                                    )))}
+                                  {deductSalaryList && (
+                                    deductSalaryList.map((deductsalary, index) => {
+                                      {
+                                        deductsalary.name !== '' && (
+
+                                          <li key={index} style={{ marginBottom: '10px' }}>
+                                            {deductsalary.name} - หัก: {deductsalary.amount} ฿
+                                          </li>
+                                        )
+                                      }
+
+                                    }))}
+
                                 </ul>
                                 {/* <button onClick={togglePopup}>Close</button> */}
                               </div>
                             )}
                             {/* {isNaN(Number(deductBeforeTax) + Number(deductAfterTax)) ? 0.00 : (Number(deductBeforeTax) + Number(deductAfterTax)).toFixed(2)} */}
                           </td>
-                          <td style={cellStyle}> {isNaN(Number(wsTax) + Number(wsSocialSecurity) + Number(deductBeforeTax) + Number(deductAfterTax) ) ? 0.00 : (Math.ceil(Number(wsTax) + Number(wsSocialSecurity) + Number(deductBeforeTax) + Number(deductAfterTax) ) ).toFixed(2)}</td>
+                          <td style={cellStyle}>{isNaN(Number(wsTax) + Number(wsSocialSecurity)) ? 0.00 : (Math.ceil(Number(wsTax) + Number(wsSocialSecurity)) ).toFixed(2)}</td>
                           {/* <td style={cellStyle}>({anyMinus} + {tax} + {((overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary) * socialSecurity).toFixed()} + {bankCustom} + {sumDeduct} + {sumDeductInstallment})</td> */}
                           <td style={cellStyle}>
                             <button type="button" onClick={handleAddSalary} class="btn btn-danger" style={{ width: '4rem' }}>แก้ไข</button>
@@ -2059,16 +2041,13 @@ console.log('wsCountDayWork',wsCountDayWork);
 
 
                           <td style={cellStyle}>{wsTotalSum}</td>
-                          {/* <td style={cellStyle}>{Math.ceil(wsTotalSumDeduct) }</td> */}
-                          <td style={cellStyle}>{isNaN(Number(wsTax) + Number(wsSocialSecurity) + Number(deductBeforeTax) + Number(deductAfterTax) ) ? 0.00 : (Math.ceil(Number(wsTax) + Number(wsSocialSecurity) + Number(deductBeforeTax) + Number(deductAfterTax) ) ).toFixed(2)}</td>
+                          <td style={cellStyle}>{Math.ceil(wsTotalSumDeduct) }</td>
                           {/* <td style={cellStyle}>{totalSum - totalSumDeduct}</td> */}
                           <td style={cellStyle}>
                             {/* {isNaN(Number(total)) ? 0.00 : Number(total).toFixed(2)} */}
                             {/* {isNaN(Number(total)) ? 0.00 : (Math.ceil(Number(total) * 100) / 100).toFixed(2)} */}
                             {/* {isNaN(Number(wsTotal)) ? 0.00 : (Number(wsTotal)).toFixed(2)} */}
-                            {/* {(Number(wsTotalSum) - Math.ceil(Number(wsTotalSumDeduct)) ).toFixed(2) || 0} */}
-                            {(Number(wsTotalSum) - (isNaN(Number(wsTax) + Number(wsSocialSecurity) + Number(deductBeforeTax) + Number(deductAfterTax) ) ? 0.00 : (Math.ceil(Number(wsTax) + Number(wsSocialSecurity) + Number(deductBeforeTax) + Number(deductAfterTax) ) ).toFixed(2) ) ).toFixed(2) || 0}
-
+                            {(Number(wsTotalSum) - Math.ceil(Number(wsTotalSumDeduct)) ).toFixed(2) || 0}
                           </td>
 
                         </tr>
