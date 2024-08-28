@@ -744,6 +744,17 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
   const thaiMonthName = getThaiMonthName(parseInt(CheckMonth, 10));
   const thaiMonthLowerName = getThaiMonthName(parseInt(countdownMonth, 10));
 
+  async function handleSearchAccounting() {
+let tmp = await staffId;
+await setStaffId('');
+setTimeout(async () => {
+  await setStaffId(tmp);
+  // alert('Hi');
+}, 1000); // Adjust the delay time as needed (1000 ms = 1 second)
+
+  }
+  
+
   async function handleSearch(event) {
     event.preventDefault();
 
@@ -1540,7 +1551,8 @@ console.log('wsCountDayWork',wsCountDayWork);
               <h2 class="title">สรุปเงินเดือน</h2>
               <section class="Frame">
                 <div class="col-md-12">
-                  <form onSubmit={handleSearch}>
+                  {/* <form onSubmit={handleSearch}> */}
+                  <form>
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
@@ -1619,7 +1631,7 @@ console.log('wsCountDayWork',wsCountDayWork);
                       </div>
                     </div>
                     <div class="d-flex justify-content-center">
-                      <button class="btn b_save" onClick={handleSearch()} ><i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา</button>
+                      <button type='button' class="btn b_save" onClick={handleSearchAccounting} ><i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา</button>
                     </div>
                   </form>
                   <br />
