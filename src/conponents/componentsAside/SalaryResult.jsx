@@ -1,53 +1,52 @@
-import endpoint from '../../config';
- 
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import endpoint from "../../config";
 
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
-import EmployeesSelected from './EmployeesSelected';
-import Calendar from 'react-calendar';
-import '../editwindowcss.css';
-import EmployeeWorkDay from './componentsetting/EmployeeWorkDay';
-import './salarysummary/styleCom.css';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-import th from 'date-fns/locale/th'; // Import Thai locale data from date-fns
+import EmployeesSelected from "./EmployeesSelected";
+import Calendar from "react-calendar";
+import "../editwindowcss.css";
+import EmployeeWorkDay from "./componentsetting/EmployeeWorkDay";
+import "./salarysummary/styleCom.css";
 
+import th from "date-fns/locale/th"; // Import Thai locale data from date-fns
 
 function Salaryresult() {
-  document.title = 'สรุปเงินเดือน';
+  document.title = "สรุปเงินเดือน";
 
   const tableStyle = {
-    borderCollapse: 'collapse',
-    width: '100%',
+    borderCollapse: "collapse",
+    width: "100%",
   };
 
   const cellStyle = {
-    border: '1px solid black',
-    padding: '8px',
-    textAlign: 'center',
+    border: "1px solid black",
+    padding: "8px",
+    textAlign: "center",
   };
 
   const headerCellStyle = {
     ...cellStyle,
-    backgroundColor: '#f2f2f2',
+    backgroundColor: "#f2f2f2",
   };
 
   //variable
   // const [socialSecurity, setSocialSecurity] = useState(0); // ประกันสังคม
-  // const [tax, setTax] = useState(0); //ภาษี 
+  // const [tax, setTax] = useState(0); //ภาษี
 
   const [bankCustom, setBankCustom] = useState(0); //ค่าทำเนียม
   const [sumDeduct, setSumDeduct] = useState(0); //sum deduct immedate
   const [sumDeductInstallment, setSumDeductInstallment] = useState(0); //sum deduct installment
 
-  const [employeeId, setEmployeeId] = useState(''); //รหัสหน่วยงาน
-  const [name, setName] = useState(''); //ชื่อหน่วยงาน
-  const [lastName, setLastname] = useState(''); //ชื่อหน่วยงาน
+  const [employeeId, setEmployeeId] = useState(""); //รหัสหน่วยงาน
+  const [name, setName] = useState(""); //ชื่อหน่วยงาน
+  const [lastName, setLastname] = useState(""); //ชื่อหน่วยงาน
 
-  const [searchWorkplaceId, setSearchWorkplaceId] = useState(''); //รหัสหน่วยงาน
-  const [searchWorkplaceName, setSearchWorkplaceName] = useState(''); //ชื่อหน่วยงาน
+  const [searchWorkplaceId, setSearchWorkplaceId] = useState(""); //รหัสหน่วยงาน
+  const [searchWorkplaceName, setSearchWorkplaceName] = useState(""); //ชื่อหน่วยงาน
 
   const [searchResult, setSearchResult] = useState([]);
   const [searchResultLower, setSearchResultLower] = useState([]);
@@ -68,30 +67,39 @@ function Salaryresult() {
   const [timerecordAllList, setTimerecordAllList] = useState([]);
   const [calsalaryAlllist, setSalsalaryAlllist] = useState([]);
 
-
   const [employeeList, setEmployeeList] = useState([]);
   const [workplaceList, setWorkplaceList] = useState([]);
   const [concludeList, setConcludeList] = useState([]);
   const [calsalarylist, setCalsalarylist] = useState([]);
 
-  const [searchEmployeeId, setSearchEmployeeId] = useState('');
-  const [searchEmployeeName, setSearchEmployeeName] = useState('');
-  const [staffId, setStaffId] = useState(''); //รหัสหน่วยงาน
-  const [staffName, setStaffName] = useState(''); //รหัสหน่วยงาน
-  const [staffLastname, setStaffLastname] = useState(''); //รหัสหน่วยงาน
-  const [staffFullName, setStaffFullName] = useState(''); //รหัสหน่วยงาน
+  const [searchEmployeeId, setSearchEmployeeId] = useState("");
+  const [searchEmployeeName, setSearchEmployeeName] = useState("");
+  const [staffId, setStaffId] = useState(""); //รหัสหน่วยงาน
+  const [staffName, setStaffName] = useState(""); //รหัสหน่วยงาน
+  const [staffLastname, setStaffLastname] = useState(""); //รหัสหน่วยงาน
+  const [staffFullName, setStaffFullName] = useState(""); //รหัสหน่วยงาน
 
   const [alldaywork, setAlldaywork] = useState([]);
   const [alldayworkLower, setAlldayworkLower] = useState([]);
   //   const [month, setMonth] = useState('');
   //   const [year, setYear] = useState('');
-  const [month, setMonth] = useState('01');
+  const [month, setMonth] = useState("01");
   const [year, setYear] = useState(new Date().getFullYear());
   const [employee, setEmployee] = useState({});
 
   const thaiMonthNames = [
-    'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
-    'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
+    "มกราคม",
+    "กุมภาพันธ์",
+    "มีนาคม",
+    "เมษายน",
+    "พฤษภาคม",
+    "มิถุนายน",
+    "กรกฎาคม",
+    "สิงหาคม",
+    "กันยายน",
+    "ตุลาคม",
+    "พฤศจิกายน",
+    "ธันวาคม",
   ];
   const getThaiMonthName = (monthNumber) => {
     return thaiMonthNames[monthNumber - 1];
@@ -103,11 +111,10 @@ function Salaryresult() {
   // ใช้ลา
   const [remainArray, setRemainArray] = useState([]);
   const [selectedThaiDate, setSelectedThaiDate] = useState(initialThaiDate);
-  const [remainCode, setRemainCode] = useState('');
-  const [remainName, setRemainName] = useState('');
-  const [remainSalary, setRemainSalary] = useState(''); //
-  const [remainComment, setRemainComment] = useState(''); //
-
+  const [remainCode, setRemainCode] = useState("");
+  const [remainName, setRemainName] = useState("");
+  const [remainSalary, setRemainSalary] = useState(""); //
+  const [remainComment, setRemainComment] = useState(""); //
 
   useEffect(() => {
     setMonth("01");
@@ -116,41 +123,38 @@ function Salaryresult() {
     setYear(currentYear);
 
     const getdata = async () => {
-
-      const savedEmployeeId = await localStorage.getItem('employeeId');
-      const savedEmployeeName = await localStorage.getItem('employeeName') || '';
-      const savedMonth = await localStorage.getItem('month');
-      const savedYear = await localStorage.getItem('year');
+      const savedEmployeeId = await localStorage.getItem("employeeId");
+      const savedEmployeeName =
+        (await localStorage.getItem("employeeName")) || "";
+      const savedMonth = await localStorage.getItem("month");
+      const savedYear = await localStorage.getItem("year");
       if (savedEmployeeId) {
         await setSearchEmployeeId(savedEmployeeId);
         await setSearchEmployeeName(savedEmployeeName);
         await setStaffId(savedEmployeeId);
         // setStaffFullName(savedEmployeeName);
 
-        const event = await new Event('submit'); // Creating a synthetic event object
+        const event = await new Event("submit"); // Creating a synthetic event object
         // await handleSearch(event); // Call handleSearch with the event
-        await localStorage.removeItem('employeeId');
-
+        await localStorage.removeItem("employeeId");
       }
       if (savedMonth) {
         await setMonth(savedMonth);
-        await localStorage.removeItem('month');
+        await localStorage.removeItem("month");
       }
       if (savedYear) {
         await setYear(savedYear);
-        await localStorage.removeItem('year');
+        await localStorage.removeItem("year");
       }
-    }
+    };
 
     getdata();
-
   }, []); // Run this effect only once on component mount
-
 
   const handleThaiDateChange = (date) => {
     setSelectedThaiDate(date);
     setSelectedGregorianDate(ThaiBuddhistToGregorian(date));
-    setWorkDate(ThaiBuddhistToGregorian(date))
+    setWorkDate(ThaiBuddhistToGregorian(date));
   };
 
   const handleRemainCodeChange = (event) => {
@@ -176,7 +180,7 @@ function Salaryresult() {
       code: remainCode,
       name: remainName,
       salary: remainSalary,
-      comment: remainComment
+      comment: remainComment,
     };
 
     // Add the new data object to the dataArray state
@@ -184,10 +188,10 @@ function Salaryresult() {
 
     // Reset input fields after adding the data
     // setSelectedThaiDate('');
-    setRemainCode('');
-    setRemainName('');
-    setRemainSalary('');
-    setRemainComment('');
+    setRemainCode("");
+    setRemainName("");
+    setRemainSalary("");
+    setRemainComment("");
   };
 
   const handleDeleteData = (index) => {
@@ -196,7 +200,7 @@ function Salaryresult() {
     setRemainArray(newDataArray);
   };
 
-  console.log('remainArray', remainArray);
+  console.log("remainArray", remainArray);
 
   useEffect(() => {
     // setMonth("01");
@@ -207,37 +211,40 @@ function Salaryresult() {
 
   const EndYear = 2010;
   const currentYear = new Date().getFullYear(); // 2024
-  const years = Array.from({ length: currentYear - EndYear + 1 }, (_, index) => EndYear + index).reverse();
+  const years = Array.from(
+    { length: currentYear - EndYear + 1 },
+    (_, index) => EndYear + index
+  ).reverse();
 
   useEffect(() => {
     // Fetch data from the API when the component mounts
-    fetch(endpoint + '/employee/list')
-      .then(response => response.json())
-      .then(data => {
+    fetch(endpoint + "/employee/list")
+      .then((response) => response.json())
+      .then((data) => {
         // Update the state with the fetched data
         setEmployeeList(data);
       })
-      .catch(error => {
-        console.error('Error fetching data:', error);
+      .catch((error) => {
+        console.error("Error fetching data:", error);
       });
   }, []); // The empty array [] ensures that the effect runs only once after the initial render
-
 
   const handleStaffIdChange = (e) => {
     const selectedStaffId = e.target.value;
     setStaffId(selectedStaffId);
     setSearchEmployeeId(selectedStaffId);
     // Find the corresponding employee and set the staffName
-    const selectedEmployee = employeeList.find(employee => employee.employeeId === selectedStaffId);
+    const selectedEmployee = employeeList.find(
+      (employee) => employee.employeeId === selectedStaffId
+    );
     if (selectedEmployee) {
       // setStaffName(selectedEmployee.name);
       // setStaffLastname(selectedEmployee.lastName);
-      setStaffFullName(selectedEmployee.name + ' ' + selectedEmployee.lastName);
-
+      setStaffFullName(selectedEmployee.name + " " + selectedEmployee.lastName);
     } else {
-      setStaffName('');
-      setStaffFullName('');
-      setSearchEmployeeName('');
+      setStaffName("");
+      setStaffFullName("");
+      setSearchEmployeeName("");
     }
   };
 
@@ -245,15 +252,20 @@ function Salaryresult() {
     const selectedStaffName = e.target.value;
 
     // Find the corresponding employee and set the staffId
-    const selectedEmployee = employeeList.find(employee => (employee.name + " " + employee.lastName) === selectedStaffName);
-    const selectedEmployeeFName = employeeList.find(employee => employee.name === selectedStaffName);
+    const selectedEmployee = employeeList.find(
+      (employee) =>
+        employee.name + " " + employee.lastName === selectedStaffName
+    );
+    const selectedEmployeeFName = employeeList.find(
+      (employee) => employee.name === selectedStaffName
+    );
 
     if (selectedEmployee) {
       setStaffId(selectedEmployee.employeeId);
       setSearchEmployeeId(selectedEmployee.employeeId);
       setStaffFullName(selectedEmployee.employeeName);
     } else {
-      setStaffId('');
+      setStaffId("");
       // searchEmployeeId('');
     }
 
@@ -262,26 +274,25 @@ function Salaryresult() {
     setSearchEmployeeName(selectedEmployeeFName);
   };
 
-
   useEffect(() => {
     // Fetch data from the API when the component mounts
-    fetch(endpoint + '/conclude/list')
-      .then(response => response.json())
-      .then(data => {
+    fetch(endpoint + "/conclude/list")
+      .then((response) => response.json())
+      .then((data) => {
         // Update the state with the fetched data
         setConcludeList(data);
       })
-      .catch(error => {
-        console.error('Error fetching data:', error);
+      .catch((error) => {
+        console.error("Error fetching data:", error);
       });
   }, []);
-  console.log('concludeList', concludeList);
+  console.log("concludeList", concludeList);
 
   const [accountingData, setAccountingData] = useState([]);
   const [addSalaryList, setAddSalaryList] = useState([]);
   const [deductSalaryList, setDeductSalaryList] = useState([]);
   const [sumAddSalaryList, setSumAddSalaryList] = useState(0);
-  const [updateStatus, setUpdateStatus] = useState('');
+  const [updateStatus, setUpdateStatus] = useState("");
   const [wsAmountSpecialDay, setWsAmountSpecialDay] = useState(0);
   const [wsAmountDay, setWsAmountDay] = useState(0);
   const [wsAmountOt, setWsAmountOt] = useState(0);
@@ -291,63 +302,100 @@ function Salaryresult() {
   const [wsTotalSum, setWsTotalSum] = useState(0);
   const [wsTotalSumDeduct, setWsTotalSumDeduct] = useState(0);
 
-  const [wsCountDayWork , setWsCountDayWork] = useState(0);
-  const [wsAmountCountDayWork , setWsAmountCountDayWork] = useState(0);
-  const [wsAmountCountDayWorkOt , setWsAmountCountDayWorkOt] = useState(0);
-const [wsCountHourWork , setWsCountHourWork] = useState(0);
-const [wsCountOtHourWork, setWsCountOtHourWork] = useState(0);
+  const [wsCountDayWork, setWsCountDayWork] = useState(0);
+  const [wsAmountCountDayWork, setWsAmountCountDayWork] = useState(0);
+  const [wsAmountCountDayWorkOt, setWsAmountCountDayWorkOt] = useState(0);
+  const [wsCountHourWork, setWsCountHourWork] = useState(0);
+  const [wsCountOtHourWork, setWsCountOtHourWork] = useState(0);
 
   //tmp for cal social
-  const [wsAmountSpecialDayx , setWsAmountSpecialDayx ] = useState(0);
+  const [wsAmountSpecialDayx, setWsAmountSpecialDayx] = useState(0);
   const [wsSocialSecurityX, setWsSocialSecurityX] = useState(0);
 
-
   useEffect(() => {
-
     const fetchData = async () => {
-      if (year !== '' && month !== '' && staffId !== '') {
+      if (year !== "" && month !== "" && staffId !== "") {
         const dataTest = await {
-          employeeId: staffId || '',
-          year: year || '',
-          month: month || '',
-          updateStatus: updateStatus || '',
+          employeeId: staffId || "",
+          year: year || "",
+          month: month || "",
+          updateStatus: updateStatus || "",
         };
 
         await setAddSalaryList([]);
-        await axios.post(endpoint + '/accounting/calsalaryemp', dataTest)
-          .then(async response => {
+        await axios
+          .post(endpoint + "/accounting/calsalaryemp", dataTest)
+          .then(async (response) => {
             const responseData = await response.data;
             // alert(JSON.stringify(responseData ,null,2));
 
             if (response.data) {
-
-              if(updateStatus !== '') {
-alert('ระบบทำการคำนวนใหม่แล้ว กรุณากดค้นหาอีกครั้ง');
-handleReLoad();
+              if (updateStatus !== "") {
+                alert("ระบบทำการคำนวนใหม่แล้ว กรุณากดค้นหาอีกครั้ง");
+                handleReLoad();
               }
-              setUpdateStatus('');
+              setUpdateStatus("");
               await setAccountingData(response.data[0]);
-              await setWsAmountSpecialDay(response.data[0].accountingRecord.amountSpecialDay || response.data[0].accountingRecord[0].amountSpecialDay);
-              await setWsAmountSpecialDayx(response.data[0].accountingRecord.amountSpecialDay || response.data[0].accountingRecord[0].amountSpecialDay);
+              await setWsAmountSpecialDay(
+                response.data[0].accountingRecord.amountSpecialDay ||
+                  response.data[0].accountingRecord[0].amountSpecialDay
+              );
+              await setWsAmountSpecialDayx(
+                response.data[0].accountingRecord.amountSpecialDay ||
+                  response.data[0].accountingRecord[0].amountSpecialDay
+              );
 
-              await setWsAmountDay(parseFloat(response.data[0].accountingRecord.amountDay) || parseFloat(response.data[0].accountingRecord[0].amountDay));
-              await setWsAmountOt(response.data[0].accountingRecord.amountOt || response.data[0].accountingRecord[0].amountOt);
-              await setWsSocialSecurity(response.data[0].accountingRecord.socialSecurity || response.data[0].accountingRecord[0].socialSecurity);
-              await setWsSocialSecurityX(response.data[0].accountingRecord.socialSecurity || response.data[0].accountingRecord[0].socialSecurity);
+              await setWsAmountDay(
+                parseFloat(response.data[0].accountingRecord.amountDay) ||
+                  parseFloat(response.data[0].accountingRecord[0].amountDay)
+              );
+              await setWsAmountOt(
+                response.data[0].accountingRecord.amountOt ||
+                  response.data[0].accountingRecord[0].amountOt
+              );
+              await setWsSocialSecurity(
+                response.data[0].accountingRecord.socialSecurity ||
+                  response.data[0].accountingRecord[0].socialSecurity
+              );
+              await setWsSocialSecurityX(
+                response.data[0].accountingRecord.socialSecurity ||
+                  response.data[0].accountingRecord[0].socialSecurity
+              );
 
-              await setWsTax(response.data[0].accountingRecord.tax || response.data[0].accountingRecord[0].tax);
-              await setWsTotal(response.data[0].accountingRecord.total || response.data[0].accountingRecord[0].total);
+              await setWsTax(
+                response.data[0].accountingRecord.tax ||
+                  response.data[0].accountingRecord[0].tax
+              );
+              await setWsTotal(
+                response.data[0].accountingRecord.total ||
+                  response.data[0].accountingRecord[0].total
+              );
 
-              await setWsCountDayWork(response.data[0].accountingRecord.countDayWork || response.data[0].accountingRecord[0].countDayWork);
-              await setWsAmountCountDayWork(response.data[0].accountingRecord.amountCountDayWork|| response.data[0].accountingRecord[0].amountCountDayWork);
-              await setWsAmountCountDayWorkOt(response.data[0].accountingRecord.amountCountDayWorkOt || response.data[0].accountingRecord[0].amountCountDayWorkOt);
-              await setWsCountHourWork(response.data[0].accountingRecord.countHourWork || response.data[0].accountingRecord[0].countHourWork);
-              await setWsCountOtHourWork(response.data[0].accountingRecord.countOtHourWork || response.data[0].accountingRecord[0].countOtHourWork);
-              
+              await setWsCountDayWork(
+                response.data[0].accountingRecord.countDayWork ||
+                  response.data[0].accountingRecord[0].countDayWork
+              );
+              await setWsAmountCountDayWork(
+                response.data[0].accountingRecord.amountCountDayWork ||
+                  response.data[0].accountingRecord[0].amountCountDayWork
+              );
+              await setWsAmountCountDayWorkOt(
+                response.data[0].accountingRecord.amountCountDayWorkOt ||
+                  response.data[0].accountingRecord[0].amountCountDayWorkOt
+              );
+              await setWsCountHourWork(
+                response.data[0].accountingRecord.countHourWork ||
+                  response.data[0].accountingRecord[0].countHourWork
+              );
+              await setWsCountOtHourWork(
+                response.data[0].accountingRecord.countOtHourWork ||
+                  response.data[0].accountingRecord[0].countOtHourWork
+              );
+
               await setAddSalaryList(response.data[0].addSalary);
               if (response.data[0].addSalary) {
                 let tmp = 0;
-                response.data[0].addSalary.map(item => {
+                response.data[0].addSalary.map((item) => {
                   tmp += parseFloat(item.SpSalary);
                 });
                 setSumAddSalaryList(tmp);
@@ -357,24 +405,24 @@ handleReLoad();
               if (response.data[0].deductSalary) {
                 let tmp1 = 0;
                 let tmpList = [];
-                response.data[0].deductSalary.map(item => {
+                response.data[0].deductSalary.map((item) => {
                   tmp1 += parseFloat(item.amount || 0);
-                  if(item.id !== "" ) {
-tmpList.push(item);
+                  if (item.id !== "") {
+                    tmpList.push(item);
                   }
                 });
                 setDeductSalaryList(tmpList);
               }
-
             }
-            console.log('responseData', responseData);
-            const filteredData = responseData.filter(item => item.employeeId === staffId);
-            console.log('filteredData', filteredData);
+            console.log("responseData", responseData);
+            const filteredData = responseData.filter(
+              (item) => item.employeeId === staffId
+            );
+            console.log("filteredData", filteredData);
             setCalsalarylist(filteredData);
-
           })
-          .catch(error => {
-            console.error('Error:', error);
+          .catch((error) => {
+            console.error("Error:", error);
           });
       }
     };
@@ -384,65 +432,71 @@ tmpList.push(item);
   }, [year, month, staffId, updateStatus]);
 
   const handleTmpamountChange = (e) => {
-    setWsAmountSpecialDay(Number(e.target.value) );
+    setWsAmountSpecialDay(Number(e.target.value));
   };
 
   const handleUpdateStatus = (updateStatus) => {
     setUpdateStatus(updateStatus);
     // alert(updateStatus );
-  }
+  };
 
+  //sum salary before deduct
+  useEffect(() => {
+    setWsTotalSum(
+      (
+        Number(wsAmountDay || 0) +
+        Number(wsAmountOt || 0) +
+        Number(wsTax || 0) +
+        Number(wsAmountSpecialDay || 0) +
+        Number(sumAddSalaryList || 0)
+      ).toFixed(2) || 0
+    );
 
-//sum salary before deduct
-useEffect( () => {
-   setWsTotalSum((Number(wsAmountDay || 0 ) + Number(wsAmountOt || 0) + Number(wsTax || 0 ) + Number(wsAmountSpecialDay || 0) + Number(sumAddSalaryList || 0)).toFixed(2) || 0);
+    const calSocial = async () => {
+      if (Number(wsSocialSecurity) >= 0) {
+        const tmp = (await Number(wsAmountSpecialDayx)) * 0.05;
+        const tmp1 = (await Number(wsAmountSpecialDay)) * 0.05;
+        if (tmp < tmp1) {
+          let ans = await (Number(wsSocialSecurityX) +
+            (Number(tmp1) - Number(tmp)));
+          if (ans < 83) {
+            ans = await 83;
+          }
+          await setWsSocialSecurity(ans);
+        } else {
+          let t = Number(tmp) - Number(tmp1);
+          let ans = (await Number(wsSocialSecurityX)) - Number(t);
+          if (ans < 83) {
+            ans = await 83;
+          }
 
-   const calSocial = async () => {
-if(Number(wsSocialSecurity) >= 0 ) {
-  const   tmp = await Number(wsAmountSpecialDayx) * 0.05;
-  const tmp1 = await Number(wsAmountSpecialDay) * 0.05;
-  if(tmp < tmp1 ) {
-let ans = await (Number(wsSocialSecurityX) + (Number(tmp1) - Number(tmp)));
-if(ans < 83) {
-  ans = await 83;
-}
-  await setWsSocialSecurity(ans );
+          await setWsSocialSecurity(ans);
+        }
+        // await alert('tmp ' + tmp);
 
-  } else {
-    let t = Number(tmp) - Number(tmp1);
-    let ans = await Number(wsSocialSecurityX) - Number(t);
-    if(ans < 83) {
-      ans = await 83;
-    }
-    
-    await setWsSocialSecurity(ans);
+        // await alert('tmp1 ' + tmp1);
 
-  }
-  // await alert('tmp ' + tmp);
+        // await setWsSocialSecurity(tmp1);
+      }
+    };
 
-// await alert('tmp1 ' + tmp1);
+    calSocial();
+    //  setWsTotal(Number(wsTotalSum) - Number(wsTotalSumDeduct) );
+  }, [wsAmountSpecialDay]);
 
-  // await setWsSocialSecurity(tmp1);
-  
-}
-   }
+  //sum deduct
+  useEffect(() => {
+    setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax));
+  }, [wsSocialSecurity, wsTax]);
 
-   calSocial();
-  //  setWsTotal(Number(wsTotalSum) - Number(wsTotalSumDeduct) );
-  }, [wsAmountSpecialDay] );
-  
-   //sum deduct
-   useEffect(() => {
-setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );    
-   } , [wsSocialSecurity , wsTax] );
-
-  console.log('calsalarylist', calsalarylist);
-  console.log('addSalaryList', addSalaryList);
-
+  console.log("calsalarylist", calsalarylist);
+  console.log("addSalaryList", addSalaryList);
 
   const createDate = calsalarylist ? calsalarylist[0]?.createDate : null;
 
-  const countDay = calsalarylist ? calsalarylist[0]?.accountingRecord.countDay : null;
+  const countDay = calsalarylist
+    ? calsalarylist[0]?.accountingRecord.countDay
+    : null;
 
   // 07/06/2024
   // const amountDay = calsalarylist ? calsalarylist[0]?.accountingRecord.amountDay : null;
@@ -471,41 +525,81 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
   // const amountSpecialDay = calsalarylist ? calsalarylist[0]?.accountingRecord.amountSpecialDay : null;
   // const countDayWork = calsalarylist ? calsalarylist[0]?.accountingRecord.countDayWork : null;
 
-  const amountDay = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.amountDay ?? 0);
-  const amountOt = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.amountOt ?? 0);
+  const amountDay = Number(
+    calsalarylist?.[0]?.accountingRecord?.[0]?.amountDay ?? 0
+  );
+  const amountOt = Number(
+    calsalarylist?.[0]?.accountingRecord?.[0]?.amountOt ?? 0
+  );
 
   const tax = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.tax ?? null);
-  const amountPosition = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.amountPosition ?? null);
-  const amountHardWorking = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.amountHardWorking ?? null);
-  const amountSpecial = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.amountSpecial ?? null);
-  const advancePayment = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.advancePayment ?? null);
-  const amountHoliday = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.amountHoliday ?? null);
-  const addAmountBeforeTax = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.addAmountBeforeTax ?? null);
-  const deductBeforeTax = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.deductBeforeTax ?? null);
-  const socialSecurity = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.socialSecurity ?? null);
-  const addAmountAfterTax = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.addAmountAfterTax ?? null);
-  const deductAfterTax = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.deductAfterTax ?? null);
+  const amountPosition = Number(
+    calsalarylist?.[0]?.accountingRecord?.[0]?.amountPosition ?? null
+  );
+  const amountHardWorking = Number(
+    calsalarylist?.[0]?.accountingRecord?.[0]?.amountHardWorking ?? null
+  );
+  const amountSpecial = Number(
+    calsalarylist?.[0]?.accountingRecord?.[0]?.amountSpecial ?? null
+  );
+  const advancePayment = Number(
+    calsalarylist?.[0]?.accountingRecord?.[0]?.advancePayment ?? null
+  );
+  const amountHoliday = Number(
+    calsalarylist?.[0]?.accountingRecord?.[0]?.amountHoliday ?? null
+  );
+  const addAmountBeforeTax = Number(
+    calsalarylist?.[0]?.accountingRecord?.[0]?.addAmountBeforeTax ?? null
+  );
+  const deductBeforeTax = Number(
+    calsalarylist?.[0]?.accountingRecord?.[0]?.deductBeforeTax ?? null
+  );
+  const socialSecurity = Number(
+    calsalarylist?.[0]?.accountingRecord?.[0]?.socialSecurity ?? null
+  );
+  const addAmountAfterTax = Number(
+    calsalarylist?.[0]?.accountingRecord?.[0]?.addAmountAfterTax ?? null
+  );
+  const deductAfterTax = Number(
+    calsalarylist?.[0]?.accountingRecord?.[0]?.deductAfterTax ?? null
+  );
   const bank = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.bank ?? null);
-  const total = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.total ?? null);
-  const sumSalaryForTax = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.sumSalaryForTax ?? null);
+  const total = Number(
+    calsalarylist?.[0]?.accountingRecord?.[0]?.total ?? null
+  );
+  const sumSalaryForTax = Number(
+    calsalarylist?.[0]?.accountingRecord?.[0]?.sumSalaryForTax ?? null
+  );
 
-  const countSpecialDay = Number(calsalarylist?.[0]?.countSpecialDay?.[0] ?? null);
+  const countSpecialDay = Number(
+    calsalarylist?.[0]?.countSpecialDay?.[0] ?? null
+  );
   // const specialDayListWork = calsalarylist ? calsalarylist[0]?.specialDayListWork.length : null);
-  const specialDayListWork = Number(calsalarylist?.[0]?.specialDayListWork?.[0] ?? null);
+  const specialDayListWork = Number(
+    calsalarylist?.[0]?.specialDayListWork?.[0] ?? null
+  );
 
-  const specialDayRate = Number(calsalarylist?.[0]?.specialDayRate?.[0] ?? null);
+  const specialDayRate = Number(
+    calsalarylist?.[0]?.specialDayRate?.[0] ?? null
+  );
 
-  const amountSpecialDay = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.amountSpecialDay ?? null);
-  const countDayWork = Number(calsalarylist?.[0]?.accountingRecord?.[0]?.countDayWork ?? null);
-
+  const amountSpecialDay = Number(
+    calsalarylist?.[0]?.accountingRecord?.[0]?.amountSpecialDay ?? null
+  );
+  const countDayWork = Number(
+    calsalarylist?.[0]?.accountingRecord?.[0]?.countDayWork ?? null
+  );
 
   const totalAmount = amountDay + amountOt + sumAddSalaryList;
-  console.log('totalAmount', totalAmount);
+  console.log("totalAmount", totalAmount);
 
-  const [amountSpecialDayReadyUpDate, setAmountSpecialDayReadyUpDate] = useState(amountSpecialDay === "null" ? '' : amountSpecialDay);
+  const [amountSpecialDayReadyUpDate, setAmountSpecialDayReadyUpDate] =
+    useState(amountSpecialDay === "null" ? "" : amountSpecialDay);
   // Update state when amountSpecialDay changes
   useEffect(() => {
-    setAmountSpecialDayReadyUpDate(amountSpecialDay === "null" ? '' : amountSpecialDay);
+    setAmountSpecialDayReadyUpDate(
+      amountSpecialDay === "null" ? "" : amountSpecialDay
+    );
   }, [amountSpecialDay]);
 
   // Handle input change
@@ -513,13 +607,11 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
     setAmountSpecialDayReadyUpDate(e.target.value);
   };
 
-  console.log('amountDay', amountDay);
-
+  console.log("amountDay", amountDay);
 
   // console.error('workplaceList', workplaceList);
 
   console.log(employeeList);
-
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -541,19 +633,17 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
     setAnyMinus(newValue);
   };
 
-
   const [workTimeDayPerson, setWorkTimeDayPerson] = useState({
     // startDay: '',
     // endDay: '',
-    allTimesPerson: [{ CodeSalary: '', positionWork: '', countPerson: '' }],
+    allTimesPerson: [{ CodeSalary: "", positionWork: "", countPerson: "" }],
   });
 
   const [workTimeDayPersonList, setWorkTimeDayPersonList] = useState([]);
 
   // const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   // const shiftWork = ['Shift 1', 'Shift 2', 'Shift 3'];
-  const positionWork = ['หัวหน้า', 'ทำความสะอาด', 'กวาดพื้น'];
-
+  const positionWork = ["หัวหน้า", "ทำความสะอาด", "กวาดพื้น"];
 
   const handleInputPersonChange = (e) => {
     const { name, value } = e.target;
@@ -578,24 +668,26 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
         allTimesPerson: updatedAllTimesPerson,
       };
     });
-
   };
 
   const handleAddTimePerson = () => {
     setWorkTimeDayPerson((prevData) => ({
       ...prevData,
-      allTimesPerson: [...prevData.allTimesPerson, { CodeSalary: '', positionWork: '', countPerson: '' }],
+      allTimesPerson: [
+        ...prevData.allTimesPerson,
+        { CodeSalary: "", positionWork: "", countPerson: "" },
+      ],
     }));
   };
-
 
   const handleRemoveTimePerson = (indexToRemove) => {
     setWorkTimeDayPerson((prevData) => ({
       ...prevData,
-      allTimesPerson: prevData.allTimesPerson.filter((_, index) => index !== indexToRemove),
+      allTimesPerson: prevData.allTimesPerson.filter(
+        (_, index) => index !== indexToRemove
+      ),
     }));
   };
-
 
   const handleAddTimePersonList = () => {
     setWorkTimeDayPersonList((prevList) => [...prevList, workTimeDayPerson]);
@@ -604,7 +696,7 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
     setWorkTimeDayPerson({
       // startDay: '',
       // endDay: '',
-      allTimesPerson: [{ CodeSalary: '', positionWork: '', countPerson: '' }],
+      allTimesPerson: [{ CodeSalary: "", positionWork: "", countPerson: "" }],
     });
   };
 
@@ -618,7 +710,7 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
 
   console.log(employeeList);
 
-  // 
+  //
   // useEffect(() => {
   //   // Fetch data from the API when the component mounts
   //   fetch(endpoint + '/accounting/calsalarylist')
@@ -637,8 +729,8 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
   const CheckYear = year;
   // const CheckMonth = 5;
   // const CheckYear = 2023;
-  console.log('CheckMonth', CheckMonth);
-  console.log('CheckYear', CheckYear);
+  console.log("CheckMonth", CheckMonth);
+  console.log("CheckYear", CheckYear);
 
   let countdownMonth;
   let countdownYear;
@@ -649,7 +741,6 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
   } else {
     countdownMonth = CheckMonth - 1;
     countdownYear = CheckYear;
-
   }
   const base = 543;
   function getDaysInMonth(month, year) {
@@ -661,15 +752,36 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
   const daysInMonth = getDaysInMonth(countdownMonth, CheckYear);
   const startDay = 21;
   // Create an array from startDay to daysInMonth
-  const firstPart = Array.from({ length: daysInMonth - startDay + 1 }, (_, index) => (startDay + index) + '/' + countdownMonth + '/' + (parseInt(countdownYear, 10) + parseInt(base, 10)));
+  const firstPart = Array.from(
+    { length: daysInMonth - startDay + 1 },
+    (_, index) =>
+      startDay +
+      index +
+      "/" +
+      countdownMonth +
+      "/" +
+      (parseInt(countdownYear, 10) + parseInt(base, 10))
+  );
 
   // Create an array from 1 to 20
-  const secondPart = Array.from({ length: 20 }, (_, index) => index + 1 + '/' + CheckMonth + '/' + (parseInt(CheckYear, 10) + parseInt(base, 10)));
+  const secondPart = Array.from(
+    { length: 20 },
+    (_, index) =>
+      index +
+      1 +
+      "/" +
+      CheckMonth +
+      "/" +
+      (parseInt(CheckYear, 10) + parseInt(base, 10))
+  );
 
   // Concatenate the two arrays
   const resultArray = [...firstPart, ...secondPart];
 
-  const firstPart2 = Array.from({ length: daysInMonth - startDay + 1 }, (_, index) => (startDay + index));
+  const firstPart2 = Array.from(
+    { length: daysInMonth - startDay + 1 },
+    (_, index) => startDay + index
+  );
 
   // Create an array from 1 to 20
   const secondPart2 = Array.from({ length: 20 }, (_, index) => index + 1);
@@ -677,9 +789,8 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
   // Concatenate the two arrays
   const resultArray2 = [...firstPart2, ...secondPart2];
 
-  console.log('resultArrayresultArray', resultArray);
-  console.log('resultArrayresultArray2', resultArray2);
-
+  console.log("resultArrayresultArray", resultArray);
+  console.log("resultArrayresultArray2", resultArray2);
 
   function getDaysInMonth2(month, year) {
     // Months are 0-based, so we subtract 1 from the provided month
@@ -691,7 +802,7 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
 
     for (let day = 1; day <= endDay; day++) {
       const date = new Date(year, month - 1, day);
-      const weekday = date.toLocaleDateString('en-US', { weekday: 'short' });
+      const weekday = date.toLocaleDateString("en-US", { weekday: "short" });
 
       if (!daysArray[weekday]) {
         daysArray[weekday] = [];
@@ -710,18 +821,26 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
 
   // const array1 = createDaysArray(CheckMonth, CheckYear, daysInMonth2, (day) => day <= 20);
   // const array2 = createDaysArray(countdownMonth, CheckYear, daysInCountdownMonth, (day) => day > 21);
-  const array1 = createDaysArray(CheckMonth, CheckYear, daysInMonth2, (day) => day <= 20);
-  const array2 = createDaysArray(countdownMonth, countdownYear, daysInCountdownMonth, (day) => day >= 21);
+  const array1 = createDaysArray(
+    CheckMonth,
+    CheckYear,
+    daysInMonth2,
+    (day) => day <= 20
+  );
+  const array2 = createDaysArray(
+    countdownMonth,
+    countdownYear,
+    daysInCountdownMonth,
+    (day) => day >= 21
+  );
 
-
-  console.log('Array 1 (March):', array1);
-  console.log('Array 2 (Countdown):', array2);
+  console.log("Array 1 (March):", array1);
+  console.log("Array 2 (Countdown):", array2);
 
   const commonNumbers = new Set([...array2.Mon, ...array1.Mon]);
 
   // const commonNumbers = [...new Set([...array1.Mon, ...array2.Mon])];
-  console.log('commonNumbers', commonNumbers);
-
+  console.log("commonNumbers", commonNumbers);
 
   let monthLower;
   let timerecordIdLower;
@@ -731,29 +850,27 @@ setWsTotalSumDeduct(Number(wsSocialSecurity) + Number(wsTax) );
     timerecordIdLower = year - 1;
   } else {
     const monthNumber = parseInt(month, 10);
-    monthLower = (monthNumber - 1).toString().padStart(2, '0');  // Convert back to string, pad with leading zero if needed
+    monthLower = (monthNumber - 1).toString().padStart(2, "0"); // Convert back to string, pad with leading zero if needed
     // monthLower = month - 1;
-    timerecordIdLower = year
+    timerecordIdLower = year;
   }
-  monthLower
-  console.log('monthLower', monthLower);
-  console.log('month', month);
-  console.log('year', year);
-  console.log('timerecordIdLower', timerecordIdLower);
+  monthLower;
+  console.log("monthLower", monthLower);
+  console.log("month", month);
+  console.log("year", year);
+  console.log("timerecordIdLower", timerecordIdLower);
 
   const thaiMonthName = getThaiMonthName(parseInt(CheckMonth, 10));
   const thaiMonthLowerName = getThaiMonthName(parseInt(countdownMonth, 10));
 
   async function handleSearchAccounting() {
-let tmp = await staffId;
-await setStaffId('');
-setTimeout(async () => {
-  await setStaffId(tmp);
-  // alert('Hi');
-}, 1000); // Adjust the delay time as needed (1000 ms = 1 second)
-
+    let tmp = await staffId;
+    await setStaffId("");
+    setTimeout(async () => {
+      await setStaffId(tmp);
+      // alert('Hi');
+    }, 1000); // Adjust the delay time as needed (1000 ms = 1 second)
   }
-  
 
   async function handleSearch(event) {
     event.preventDefault();
@@ -764,7 +881,6 @@ setTimeout(async () => {
       // employeeName: searchEmployeeName,
       month: month,
       timerecordId: year,
-
     };
     const dataLower = await {
       employeeId: searchEmployeeId,
@@ -781,18 +897,20 @@ setTimeout(async () => {
       // const response = await axios.post(endpoint + '/timerecord/listemp', data);
       // const responseLower = await axios.post(endpoint + '/timerecord/listemp', dataLower);
 
-      const filteredEntries = concludeList.filter(entry =>
-        entry.employeeId === searchEmployeeId &&
-        entry.month === month
-        &&
-        entry.year == year
+      const filteredEntries = concludeList.filter(
+        (entry) =>
+          entry.employeeId === searchEmployeeId &&
+          entry.month === month &&
+          entry.year == year
       );
 
       setSearchResult(filteredEntries);
-      console.log('filteredEntries', filteredEntries);
+      console.log("filteredEntries", filteredEntries);
 
-      const concludeRecordArray = filteredEntries.map(entry => entry.concludeRecord);
-      console.log('concludeRecordArray', concludeRecordArray);
+      const concludeRecordArray = filteredEntries.map(
+        (entry) => entry.concludeRecord
+      );
+      console.log("concludeRecordArray", concludeRecordArray);
       setAlldaywork(concludeRecordArray);
 
       const workplaceIdCounts = {};
@@ -804,57 +922,66 @@ setTimeout(async () => {
       //   }
       // });
 
-      concludeRecordArray.forEach(recordArray => {
-        recordArray.forEach(record => {
+      concludeRecordArray.forEach((recordArray) => {
+        recordArray.forEach((record) => {
           if (record.workplaceId) {
             const workplaceId = record.workplaceId;
-            workplaceIdCounts[workplaceId] = (workplaceIdCounts[workplaceId] || 0) + 1;
+            workplaceIdCounts[workplaceId] =
+              (workplaceIdCounts[workplaceId] || 0) + 1;
           }
         });
       });
 
-      console.log('workplaceIdCounts', workplaceIdCounts);
+      console.log("workplaceIdCounts", workplaceIdCounts);
 
-      const totalCount = Object.values(workplaceIdCounts).reduce((sum, count) => sum + count, 0);
+      const totalCount = Object.values(workplaceIdCounts).reduce(
+        (sum, count) => sum + count,
+        0
+      );
       setTotalCount(totalCount);
 
-      console.log('Total Count:', totalCount);
+      console.log("Total Count:", totalCount);
 
-      const filteredEntriesCalsalary = calsalarylist.filter(entry =>
-        entry.employeeId === searchEmployeeId &&
-        entry.month === month
-        &&
-        entry.year == year
+      const filteredEntriesCalsalary = calsalarylist.filter(
+        (entry) =>
+          entry.employeeId === searchEmployeeId &&
+          entry.month === month &&
+          entry.year == year
       );
-      console.log('searchResult', searchResult);
+      console.log("searchResult", searchResult);
 
-      console.log('filteredEntriesCalsalary', filteredEntriesCalsalary);
+      console.log("filteredEntriesCalsalary", filteredEntriesCalsalary);
 
-      const filteredEntriesEmp = employeeList.filter(entry =>
-        entry.employeeId === searchEmployeeId
+      const filteredEntriesEmp = employeeList.filter(
+        (entry) => entry.employeeId === searchEmployeeId
       );
 
-      console.log('filteredEntriesEmp', filteredEntriesEmp);
+      console.log("filteredEntriesEmp", filteredEntriesEmp);
 
       // Assuming filteredEntriesEmp is an array with one element
       if (filteredEntriesEmp.length > 0) {
-        const addSalaryMonthly = filteredEntriesEmp[0].addSalary.filter(salary => salary.roundOfSalary === "monthly");
+        const addSalaryMonthly = filteredEntriesEmp[0].addSalary.filter(
+          (salary) => salary.roundOfSalary === "monthly"
+        );
 
-        console.log('addSalaryMonthly', addSalaryMonthly);
+        console.log("addSalaryMonthly", addSalaryMonthly);
 
         // Now addSalaryMonthly contains only the items with roundOfSalary === "monthly"
         // You can access SpSalary values from addSalaryMonthly array
       }
 
       if (filteredEntriesEmp.length > 0) {
-        const addSalaryMonthly = filteredEntriesEmp[0].addSalary.filter(salary => salary.roundOfSalary === "monthly");
+        const addSalaryMonthly = filteredEntriesEmp[0].addSalary.filter(
+          (salary) => salary.roundOfSalary === "monthly"
+        );
 
         //get deduct data with immedate
-        const deductSalary = filteredEntriesEmp[0].deductSalary.filter(deduct => deduct.payType === "immedate");
+        const deductSalary = filteredEntriesEmp[0].deductSalary.filter(
+          (deduct) => deduct.payType === "immedate"
+        );
         let sum = 0;
         //loop forget socialSecurity and tax
         deductSalary.map((item, index) => {
-
           //check 0001 is social security
           if (item.id == "0001") {
             // alert(item.amount);
@@ -882,51 +1009,57 @@ setTimeout(async () => {
             // alert(item.amount);\
             // setBankCustom(item.amount);
             setBankCustom(0);
-
-          }
-          else {
+          } else {
             sum = sum + parseFloat(item.amount);
           }
-        })
+        });
         setSumDeduct(sum);
         // alert(deductSalary.length);
 
         //get deduct data with installment
-        const deductSalaryInstallment = filteredEntriesEmp[0].deductSalary.filter(deduct => deduct.payType === "installment");
+        const deductSalaryInstallment =
+          filteredEntriesEmp[0].deductSalary.filter(
+            (deduct) => deduct.payType === "installment"
+          );
         let sumInstallment = 0;
         //loop forget socialSecurity and tax
         deductSalaryInstallment.map((item, index) => {
           let amount = parseFloat(item.amount);
           let installment = parseFloat(item.installment);
-          sumInstallment = sumInstallment + parseFloat((amount / installment).toFixed(2));
+          sumInstallment =
+            sumInstallment + parseFloat((amount / installment).toFixed(2));
         });
         setSumDeductInstallment(sumInstallment);
 
-        console.log('addSalaryMonthly', addSalaryMonthly);
+        console.log("addSalaryMonthly", addSalaryMonthly);
 
         // Now addSalaryMonthly contains only the items with roundOfSalary === "monthly"
 
         // Summing SpSalary values using reduce
-        const sumSpSalary = addSalaryMonthly.reduce((sum, salary) => sum + parseFloat(salary.SpSalary || 0), 0);
+        const sumSpSalary = addSalaryMonthly.reduce(
+          (sum, salary) => sum + parseFloat(salary.SpSalary || 0),
+          0
+        );
 
-        console.log('sumSpSalary', sumSpSalary);
+        console.log("sumSpSalary", sumSpSalary);
 
         setSumSpSalaryResult(sumSpSalary);
-        console.log('setSumSpSalaryResult', sumSpSalaryResult);
-
+        console.log("setSumSpSalaryResult", sumSpSalaryResult);
       }
 
-      const entriesData = filteredEntries.map(entry =>
+      const entriesData = filteredEntries.map((entry) =>
         entry.concludeRecord
-          .filter(record => record.date <= 20)
-          .map(record => {
-            const matchedWorkplace = workplaceList.find(workplace => workplace.workplaceId === record.workplaceId);
+          .filter((record) => record.date <= 20)
+          .map((record) => {
+            const matchedWorkplace = workplaceList.find(
+              (workplace) => workplace.workplaceId === record.workplaceId
+            );
             return {
               workplaceId: record.workplaceId,
               dates: record.date,
-              workOfHour: matchedWorkplace ? matchedWorkplace.workOfHour : '', // Default value if not found
-              workRate: matchedWorkplace ? matchedWorkplace.workRate : '', // Default value if not found
-              workRateOT: matchedWorkplace ? matchedWorkplace.workRateOT : '',
+              workOfHour: matchedWorkplace ? matchedWorkplace.workOfHour : "", // Default value if not found
+              workRate: matchedWorkplace ? matchedWorkplace.workRate : "", // Default value if not found
+              workRateOT: matchedWorkplace ? matchedWorkplace.workRateOT : "",
               allTimes: record.allTime,
               otTimes: record.otTime,
               startTime: record.startTime,
@@ -936,7 +1069,6 @@ setTimeout(async () => {
             };
           })
       );
-
 
       // const concludeRecordArray = filteredEntries[0].concludeRecord;
       // const concludeRecordArray = filteredEntries.map(entry => entry.concludeRecord);
@@ -1020,7 +1152,6 @@ setTimeout(async () => {
       //     const workRateOTMatch = record.workRateOT.match(/(\d+\.?\d*)/);
       //     const workRateOTValue = workRateOTMatch ? parseFloat(workRateOTMatch[0]) || 0 : 0;
 
-
       //     const addSalaryDayValue = parseFloat(record.addSalaryDay) || 0;
 
       //     accumulator.allTimes += allTimesValue;
@@ -1063,65 +1194,73 @@ setTimeout(async () => {
       // setOverallAllTimesSum(overallAllTimesSum);
       // alert('overallAllTimesSum');
 
-      const overallOtTimesSum = Object.values(sumCountsByWorkplace).reduce((sum, workplaceData) => {
-        return sum + workplaceData.otTimes;
-      }, 0);
+      const overallOtTimesSum = Object.values(sumCountsByWorkplace).reduce(
+        (sum, workplaceData) => {
+          return sum + workplaceData.otTimes;
+        },
+        0
+      );
 
-      console.log('overallOtTimesSum:', overallOtTimesSum);
+      console.log("overallOtTimesSum:", overallOtTimesSum);
       setOverallOtTimesSum(overallOtTimesSum);
 
-      const overWorkRateSum = Object.values(sumCountsByWorkplace).reduce((sum, workplaceData) => {
-        return sum + workplaceData.workRate;
-      }, 0);
+      const overWorkRateSum = Object.values(sumCountsByWorkplace).reduce(
+        (sum, workplaceData) => {
+          return sum + workplaceData.workRate;
+        },
+        0
+      );
 
-      console.log('overWorkRateSum:', overWorkRateSum);
+      console.log("overWorkRateSum:", overWorkRateSum);
       setOverWorkRateSum(overWorkRateSum);
 
-      const overWorkRateOTSum = Object.values(sumCountsByWorkplace).reduce((sum, workplaceData) => {
-        return sum + workplaceData.workRateOT;
-      }, 0);
+      const overWorkRateOTSum = Object.values(sumCountsByWorkplace).reduce(
+        (sum, workplaceData) => {
+          return sum + workplaceData.workRateOT;
+        },
+        0
+      );
 
-      console.log('overWorkRateOTSum:', overWorkRateOTSum);
+      console.log("overWorkRateOTSum:", overWorkRateOTSum);
       setOverWorkRateOTSum(overWorkRateOTSum);
 
-      const overAddSalaryDaySum = Object.values(sumCountsByWorkplace).reduce((sum, workplaceData) => {
-        return sum + workplaceData.addSalaryDay;
-      }, 0);
+      const overAddSalaryDaySum = Object.values(sumCountsByWorkplace).reduce(
+        (sum, workplaceData) => {
+          return sum + workplaceData.addSalaryDay;
+        },
+        0
+      );
 
-      console.log('overAddSalaryDaySum:', overAddSalaryDaySum);
+      console.log("overAddSalaryDaySum:", overAddSalaryDaySum);
       setOverAddSalaryDaySum(overAddSalaryDaySum);
 
       setAlldaywork(sumCounts);
 
       if (response.data.employees.length < 1) {
         // window.location.reload();
-        setEmployeeId('');
-        setName('');
-        setLastname('');
-        alert('ไม่พบข้อมูล');
-
+        setEmployeeId("");
+        setName("");
+        setLastname("");
+        alert("ไม่พบข้อมูล");
       } else {
         // alert(response.data.employees.length);
 
-        //clean form 
-        setSearchEmployeeId('');
-        setSearchEmployeeName('');
+        //clean form
+        setSearchEmployeeId("");
+        setSearchEmployeeName("");
 
         // Set search values
         setEmployeeId(response.data.employees[0].employeeId);
         setName(response.data.employees[0].name);
         setLastname(response.data.employees[0].lastName);
-
       }
     } catch (error) {
       // alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา', error);
-
       // alert(error);
-
       // window.location.reload();
     }
   }
-  console.log('alldaywork', alldaywork);
+  console.log("alldaywork", alldaywork);
 
   // const overallAllTimesSumSum = alldaywork.reduce((sum, record) => {
   //   // Convert allTimes to number using parseFloat
@@ -1140,17 +1279,17 @@ setTimeout(async () => {
     return sum + allTimesValue;
   }, 0);
   // setOverallAllTimesSum(overallAllTimesSum123);
-  console.log('overallAllTimesSum123:', overallAllTimesSum123);
+  console.log("overallAllTimesSum123:", overallAllTimesSum123);
 
   const overallOtTimesSum123 = flattenedArray.reduce((sum, record) => {
     const otTimesValue = parseFloat(record.otTimes) || 0;
     return sum + otTimesValue;
   }, 0);
   // overallOtTimesSum(overallOtTimesSum123);
-  console.log('overallOtTimesSum123:', overallOtTimesSum123);
+  console.log("overallOtTimesSum123:", overallOtTimesSum123);
 
   const groupedRecords = alldaywork.reduce((groups, record) => {
-    const workplaceId = record.workplaceId || 'default'; // Use a default key if workplaceId is not available
+    const workplaceId = record.workplaceId || "default"; // Use a default key if workplaceId is not available
 
     if (!groups[workplaceId]) {
       groups[workplaceId] = [];
@@ -1160,60 +1299,61 @@ setTimeout(async () => {
     return groups;
   }, {});
 
-  console.log('groupedRecords', groupedRecords);
+  console.log("groupedRecords", groupedRecords);
 
   const sumCountsByWorkplace = {};
 
-  Object.keys(groupedRecords).forEach(workplaceId => {
+  Object.keys(groupedRecords).forEach((workplaceId) => {
+    sumCountsByWorkplace[workplaceId] = groupedRecords[workplaceId].reduce(
+      (accumulator, record) => {
+        const allTimesValue = parseFloat(record.allTimes) || 0;
+        const workRateValue = parseFloat(record.workRate) || 0;
+        const otTimesValue = parseFloat(record.otTimes) || 0;
 
-    sumCountsByWorkplace[workplaceId] = groupedRecords[workplaceId].reduce((accumulator, record) => {
-      const allTimesValue = parseFloat(record.allTimes) || 0;
-      const workRateValue = parseFloat(record.workRate) || 0;
-      const otTimesValue = parseFloat(record.otTimes) || 0;
+        // const workRateOTMatch = record.workRateOT.match(/\((.*?)\)/);
+        // const workRateOTValue = workRateOTMatch ? parseFloat(workRateOTMatch[1]) || 0 : 0;
 
-      // const workRateOTMatch = record.workRateOT.match(/\((.*?)\)/);
-      // const workRateOTValue = workRateOTMatch ? parseFloat(workRateOTMatch[1]) || 0 : 0;
+        // const workRateOTMatch = record.workRateOT.match(/(\d+\.?\d*)/);
+        let workRateOTValue = 0;
+        if (record.workRateOT) {
+          const workRateOTMatch = record.workRateOT.match(/(\d+\.?\d*)/);
+          workRateOTValue = workRateOTMatch
+            ? parseFloat(workRateOTMatch[1]) || 0
+            : 0;
+        }
+        // const workRateOTValue = workRateOTMatch ? parseFloat(workRateOTMatch[0]) || 0 : 0;
 
-      // const workRateOTMatch = record.workRateOT.match(/(\d+\.?\d*)/);
-      let workRateOTValue = 0;
-      if (record.workRateOT) {
-        const workRateOTMatch = record.workRateOT.match(/(\d+\.?\d*)/);
-        workRateOTValue = workRateOTMatch ? parseFloat(workRateOTMatch[1]) || 0 : 0;
+        const addSalaryDayValue = parseFloat(record.addSalaryDay) || 0;
+
+        accumulator.allTimes += allTimesValue;
+        accumulator.workRate += workRateValue;
+        // accumulator.workRate = workRateValue;
+        accumulator.otTimes += otTimesValue;
+        // accumulator.workRateOT += workRateOTValue;
+        accumulator.workRateOT += workRateOTValue;
+        accumulator.addSalaryDay += addSalaryDayValue;
+        accumulator.count += 1;
+
+        return accumulator;
+      },
+      {
+        allTimes: 0,
+        workRate: 0,
+        otTimes: 0,
+        workRateOT: 0,
+        addSalaryDay: 0,
       }
-      // const workRateOTValue = workRateOTMatch ? parseFloat(workRateOTMatch[0]) || 0 : 0;
-
-
-      const addSalaryDayValue = parseFloat(record.addSalaryDay) || 0;
-
-      accumulator.allTimes += allTimesValue;
-      accumulator.workRate += workRateValue;
-      // accumulator.workRate = workRateValue;
-      accumulator.otTimes += otTimesValue;
-      // accumulator.workRateOT += workRateOTValue;
-      accumulator.workRateOT += workRateOTValue;
-      accumulator.addSalaryDay += addSalaryDayValue;
-      accumulator.count += 1;
-
-      return accumulator;
-    }, {
-      allTimes: 0,
-      workRate: 0,
-      otTimes: 0,
-      workRateOT: 0,
-      addSalaryDay: 0,
-    });
+    );
   });
 
-  console.log('sumCountsByWorkplace', sumCountsByWorkplace);
+  console.log("sumCountsByWorkplace", sumCountsByWorkplace);
 
   const findEmployeeById = (id) => {
-    return employeeList.find(employee => employee.employeeId === id);
+    return employeeList.find((employee) => employee.employeeId === id);
   };
-
 
   const [addSalaryDay, setAddSalaryDay] = useState(0);
   useEffect(() => {
-
     setAddSalaryDay(0);
 
     if (employee?.addSalary?.length > 0) {
@@ -1222,22 +1362,22 @@ setTimeout(async () => {
       const ans = 0;
       for (let i = 0; i < employee.addSalary.length; i++) {
         // alert(employee.addSalary[i].roundOfSalary || '');
-        let tmp = employee.addSalary[i].roundOfSalary || '';
-        if (tmp == 'daily') {
+        let tmp = employee.addSalary[i].roundOfSalary || "";
+        if (tmp == "daily") {
           // alert(employee.addSalary[i].SpSalary || 0);
           let tmp1 = employee.addSalary[i].SpSalary || 0;
           // alert(tmp1);
-          setAddSalaryDay(addSalaryDay + parseInt(employee.addSalary[i].SpSalary || 0));
+          setAddSalaryDay(
+            addSalaryDay + parseInt(employee.addSalary[i].SpSalary || 0)
+          );
         }
       }
       // setAddSalaryDay(ans);
-
     }
-
   }, [employee]);
 
-  console.log('searchResult', searchResult);
-  console.log('searchResultLower', searchResultLower);
+  console.log("searchResult", searchResult);
+  console.log("searchResultLower", searchResultLower);
 
   // console.log('alldaywork', alldaywork);
   // console.log('alldayworkLower', alldayworkLower);
@@ -1255,7 +1395,6 @@ setTimeout(async () => {
   //   }
   // });
   // console.log('result', result);
-
 
   // Convert 'dates' to numbers
   // const allworkWithNumberDates = allwork.map(item => ({
@@ -1294,11 +1433,10 @@ setTimeout(async () => {
 
   // console.log('combinedArray', combinedArray);
 
-
   const callHandleStaffNameChangeWithEmployeeId = (employeeId) => {
     // Assuming you have access to the event object or you can create a synthetic event
     // You can create a synthetic event using `new Event('change')`
-    const syntheticEvent = new Event('change');
+    const syntheticEvent = new Event("change");
 
     // You need to attach a `target` property to the synthetic event
     // with a `value` property containing the employeeId
@@ -1307,7 +1445,6 @@ setTimeout(async () => {
     // Call handleStaffNameChange with the synthetic event
     handleStaffNameChange(syntheticEvent);
   };
-
 
   // const sumTime = resultArrayWithWorkplaceRecords.reduce((accumulator, workplaceRecord) => {
   //   const workTime = parseFloat(workplaceRecord.allTimes);
@@ -1384,7 +1521,6 @@ setTimeout(async () => {
 
   const namelist = [];
 
-
   // const namelist = [
   //   { name: 'pop', empID: '1525', workplaceId: '1001-25', salary: '123' },
   //   { name: 'top', empID: '1585', workplaceId: '1021-25', salary: '498' },
@@ -1392,45 +1528,53 @@ setTimeout(async () => {
   // ];
 
   const [showPopup, setShowPopup] = useState(false);
-  const [color, setColor] = useState('blue');
+  const [color, setColor] = useState("blue");
 
-  const sumSalary = namelist.reduce((acc, curr) => acc + parseInt(curr.salary), 0);
+  const sumSalary = namelist.reduce(
+    (acc, curr) => acc + parseInt(curr.salary),
+    0
+  );
 
   const togglePopup = () => {
     setShowPopup(!showPopup);
-    setColor(color === 'blue' ? 'red' : 'blue');
-
+    setColor(color === "blue" ? "red" : "blue");
   };
 
-  const sumwork = isNaN(amountDay + amountOt + sumAddSalaryList) ? 0.00 : (amountDay + amountOt + sumAddSalaryList).toFixed(2)
+  const sumwork = isNaN(amountDay + amountOt + sumAddSalaryList)
+    ? 0.0
+    : (amountDay + amountOt + sumAddSalaryList).toFixed(2);
 
-  const workHoliday = isNaN((countSpecialDay - specialDayListWork) * specialDayRate) ? 0.00 : ((countSpecialDay - specialDayListWork) * specialDayRate).toFixed(2)
+  const workHoliday = isNaN(
+    (countSpecialDay - specialDayListWork) * specialDayRate
+  )
+    ? 0.0
+    : ((countSpecialDay - specialDayListWork) * specialDayRate).toFixed(2);
 
   const totalSum = (parseFloat(sumwork) + parseFloat(workHoliday)).toFixed(2);
 
-
   const handleAddSalary = () => {
-    localStorage.setItem('searchEmployeeId', staffId);
-    window.location.href = '/addEdit_SalaryEmployee';
-  }
+    localStorage.setItem("searchEmployeeId", staffId);
+    window.location.href = "/addEdit_SalaryEmployee";
+  };
 
-
-  //save data in accounting 
+  //save data in accounting
   const handleSaveAccounting = async () => {
     if (accountingData && accountingData.accountingRecord) {
       if (Array.isArray(accountingData.accountingRecord)) {
-        accountingData.accountingRecord[0].amountSpecialDay = wsAmountSpecialDay;
+        accountingData.accountingRecord[0].amountSpecialDay =
+          wsAmountSpecialDay;
         accountingData.accountingRecord[0].socialSecurity = wsSocialSecurity;
-
       } else {
         accountingData.accountingRecord.amountSpecialDay = wsAmountSpecialDay;
         accountingData.accountingRecord.socialSecurity = wsSocialSecurity;
-
       }
       // await alert(accountingData.accountingRecord[0].amountSpecialDay);
 
       try {
-        const response = await axios.put(endpoint + '/accounting/update/' + accountingData._id, accountingData);
+        const response = await axios.put(
+          endpoint + "/accounting/update/" + accountingData._id,
+          accountingData
+        );
         // setEmployeesResult(response.data.employees);
         if (response) {
           alert("บันทึกสำเร็จ");
@@ -1443,127 +1587,180 @@ setTimeout(async () => {
         // setUpdateStatus(''); // Trigger fetchData to refresh the data
         // alert('Updated amountSpecialDay to: ' + updatedValue);
       } catch (error) {
-        console.error('Error updating amountSpecialDay:', error);
+        console.error("Error updating amountSpecialDay:", error);
       }
     }
 
     // const id = await accountingData._id;
     // await alert(accountingData.accountingRecord[0].amountSpecialDay);
     // await alert(id);
-
-  }
-
-function handleReLoad() {
-  const fetchData = async () => {
-    if (year !== '' && month !== '' && staffId !== '') {
-      const dataTest = await {
-        employeeId: staffId || '',
-        year: year || '',
-        month: month || '',
-        updateStatus: updateStatus || '',
-      };
-
-      await setAddSalaryList([]);
-      await axios.post(endpoint + '/accounting/calsalaryemp', dataTest)
-        .then(async response => {
-          const responseData = await response.data;
-          // alert(JSON.stringify(responseData ,null,2));
-
-          if (response.data) {
-
-            if(updateStatus !== '') {
-alert('ระบบทำการคำนวนใหม่แล้ว กรุณากดค้นหาอีกครั้ง');
-            }
-            setUpdateStatus('');
-            await setAccountingData(response.data[0]);
-            await setWsAmountSpecialDay(response.data[0].accountingRecord.amountSpecialDay || response.data[0].accountingRecord[0].amountSpecialDay);
-            await setWsAmountSpecialDayx(response.data[0].accountingRecord.amountSpecialDay || response.data[0].accountingRecord[0].amountSpecialDay);
-
-            await setWsAmountDay(parseFloat(response.data[0].accountingRecord.amountDay) || parseFloat(response.data[0].accountingRecord[0].amountDay));
-            await setWsAmountOt(response.data[0].accountingRecord.amountOt || response.data[0].accountingRecord[0].amountOt);
-            await setWsSocialSecurity(response.data[0].accountingRecord.socialSecurity || response.data[0].accountingRecord[0].socialSecurity);
-            await setWsSocialSecurityX(response.data[0].accountingRecord.socialSecurity || response.data[0].accountingRecord[0].socialSecurity);
-
-            await setWsTax(response.data[0].accountingRecord.tax || response.data[0].accountingRecord[0].tax);
-            await setWsTotal(response.data[0].accountingRecord.total || response.data[0].accountingRecord[0].total);
-
-            await setWsCountDayWork(response.data[0].accountingRecord.countDayWork || response.data[0].accountingRecord[0].countDayWork);
-            await setWsAmountCountDayWork(response.data[0].accountingRecord.amountCountDayWork|| response.data[0].accountingRecord[0].amountCountDayWork);
-            await setWsAmountCountDayWorkOt(response.data[0].accountingRecord.amountCountDayWorkOt || response.data[0].accountingRecord[0].amountCountDayWorkOt);
-            await setWsCountHourWork(response.data[0].accountingRecord.countHourWork || response.data[0].accountingRecord[0].countHourWork);
-            await setWsCountOtHourWork(response.data[0].accountingRecord.countOtHourWork || response.data[0].accountingRecord[0].countOtHourWork);
-            
-            await setAddSalaryList(response.data[0].addSalary);
-            if (response.data[0].addSalary) {
-              let tmp = 0;
-              response.data[0].addSalary.map(item => {
-                tmp += parseFloat(item.SpSalary);
-              });
-              setSumAddSalaryList(tmp);
-            }
-            // alert(response.data[0].addSalary.length);
-            setDeductSalaryList(response.data[0].deductSalary);
-            // alert(JSON.stringify(response.data[0].addSalary,null,2));
-          }
-          console.log('responseData', responseData);
-          const filteredData = responseData.filter(item => item.employeeId === staffId);
-          console.log('filteredData', filteredData);
-          setCalsalarylist(filteredData);
-
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-    }
   };
 
-  // Call fetchData when year or month changes
-  fetchData();
+  function handleReLoad() {
+    const fetchData = async () => {
+      if (year !== "" && month !== "" && staffId !== "") {
+        const dataTest = await {
+          employeeId: staffId || "",
+          year: year || "",
+          month: month || "",
+          updateStatus: updateStatus || "",
+        };
 
-}
-console.log('wsCountDayWork',wsCountDayWork);
+        await setAddSalaryList([]);
+        await axios
+          .post(endpoint + "/accounting/calsalaryemp", dataTest)
+          .then(async (response) => {
+            const responseData = await response.data;
+            // alert(JSON.stringify(responseData ,null,2));
 
-const options = [
-  { id: '1231', name: 'จ่ายลาป่วยมีใบแพทย์' },
-  { id: '1233', name: 'ชดเชยค่าแรงลาคลอด' },
-  { id: '1422', name: 'จ่ายคืนพักร้อน(ครบปี/ใช้สิทธิไม่หมด)' },
-  { id: '1423', name: 'ชดเชยวันลาพักร้อน(ประกันสังคม)' },
-  { id: '1428', name: 'ลากิจธุระจำเป็น (ประกันสังคม)' },
-  { id: '1434', name: 'วันหยุดตามประเพณี (ประกันสังคม)' },
-  { id: '1435', name: 'จ่ายคืนพักร้อน(ครบปี/ใช้สิทธิไม่หมด)รับล่วงหน้า' },
-  { id: '1429', name: 'ลากิจธุระจำเป็น (ประกันสังคม) รับล่วงหน้า' },
-  { id: '1427', name: 'ชดเชยวันลาพักร้อน (ประกันสังคม )รับล่วงหน้า' },
-  { id: '1234', name: 'จ่ายลาป่วยมีใบรับรองแพทย์(รับล่วงหน้า)' },
-  { id: '1426', name: 'จ่ายคืนค่าจ้างพักร้อน(ครบปี/ใช้สิทธิไม่หมด)' },
-  { id: '1425', name: 'ค่าจ้างในวันลาพักร้อน' },
-];
-const [selectedName, setSelectedName] = useState('');
+            if (response.data) {
+              if (updateStatus !== "") {
+                alert("ระบบทำการคำนวนใหม่แล้ว กรุณากดค้นหาอีกครั้ง");
+              }
+              setUpdateStatus("");
+              await setAccountingData(response.data[0]);
+              await setWsAmountSpecialDay(
+                response.data[0].accountingRecord.amountSpecialDay ||
+                  response.data[0].accountingRecord[0].amountSpecialDay
+              );
+              await setWsAmountSpecialDayx(
+                response.data[0].accountingRecord.amountSpecialDay ||
+                  response.data[0].accountingRecord[0].amountSpecialDay
+              );
 
-const handleSelectChange = (event) => {
-  const selectedOption = options.find(option => option.id === event.target.value);
-  setSelectedName(selectedOption ? selectedOption.name : '');
-};
+              await setWsAmountDay(
+                parseFloat(response.data[0].accountingRecord.amountDay) ||
+                  parseFloat(response.data[0].accountingRecord[0].amountDay)
+              );
+              await setWsAmountOt(
+                response.data[0].accountingRecord.amountOt ||
+                  response.data[0].accountingRecord[0].amountOt
+              );
+              await setWsSocialSecurity(
+                response.data[0].accountingRecord.socialSecurity ||
+                  response.data[0].accountingRecord[0].socialSecurity
+              );
+              await setWsSocialSecurityX(
+                response.data[0].accountingRecord.socialSecurity ||
+                  response.data[0].accountingRecord[0].socialSecurity
+              );
+
+              await setWsTax(
+                response.data[0].accountingRecord.tax ||
+                  response.data[0].accountingRecord[0].tax
+              );
+              await setWsTotal(
+                response.data[0].accountingRecord.total ||
+                  response.data[0].accountingRecord[0].total
+              );
+
+              await setWsCountDayWork(
+                response.data[0].accountingRecord.countDayWork ||
+                  response.data[0].accountingRecord[0].countDayWork
+              );
+              await setWsAmountCountDayWork(
+                response.data[0].accountingRecord.amountCountDayWork ||
+                  response.data[0].accountingRecord[0].amountCountDayWork
+              );
+              await setWsAmountCountDayWorkOt(
+                response.data[0].accountingRecord.amountCountDayWorkOt ||
+                  response.data[0].accountingRecord[0].amountCountDayWorkOt
+              );
+              await setWsCountHourWork(
+                response.data[0].accountingRecord.countHourWork ||
+                  response.data[0].accountingRecord[0].countHourWork
+              );
+              await setWsCountOtHourWork(
+                response.data[0].accountingRecord.countOtHourWork ||
+                  response.data[0].accountingRecord[0].countOtHourWork
+              );
+
+              await setAddSalaryList(response.data[0].addSalary);
+              if (response.data[0].addSalary) {
+                let tmp = 0;
+                response.data[0].addSalary.map((item) => {
+                  tmp += parseFloat(item.SpSalary);
+                });
+                setSumAddSalaryList(tmp);
+              }
+              // alert(response.data[0].addSalary.length);
+              setDeductSalaryList(response.data[0].deductSalary);
+              // alert(JSON.stringify(response.data[0].addSalary,null,2));
+            }
+            console.log("responseData", responseData);
+            const filteredData = responseData.filter(
+              (item) => item.employeeId === staffId
+            );
+            console.log("filteredData", filteredData);
+            setCalsalarylist(filteredData);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    };
+
+    // Call fetchData when year or month changes
+    fetchData();
+  }
+  console.log("wsCountDayWork", wsCountDayWork);
+
+  const options = [
+    { id: "1231", name: "จ่ายลาป่วยมีใบแพทย์" },
+    { id: "1233", name: "ชดเชยค่าแรงลาคลอด" },
+    { id: "1422", name: "จ่ายคืนพักร้อน(ครบปี/ใช้สิทธิไม่หมด)" },
+    { id: "1423", name: "ชดเชยวันลาพักร้อน(ประกันสังคม)" },
+    { id: "1428", name: "ลากิจธุระจำเป็น (ประกันสังคม)" },
+    { id: "1434", name: "วันหยุดตามประเพณี (ประกันสังคม)" },
+    { id: "1435", name: "จ่ายคืนพักร้อน(ครบปี/ใช้สิทธิไม่หมด)รับล่วงหน้า" },
+    { id: "1429", name: "ลากิจธุระจำเป็น (ประกันสังคม) รับล่วงหน้า" },
+    { id: "1427", name: "ชดเชยวันลาพักร้อน (ประกันสังคม )รับล่วงหน้า" },
+    { id: "1234", name: "จ่ายลาป่วยมีใบรับรองแพทย์(รับล่วงหน้า)" },
+    { id: "1426", name: "จ่ายคืนค่าจ้างพักร้อน(ครบปี/ใช้สิทธิไม่หมด)" },
+    { id: "1425", name: "ค่าจ้างในวันลาพักร้อน" },
+  ];
+  const [selectedName, setSelectedName] = useState("");
+
+  const handleSelectChange = (event) => {
+    const selectedOption = options.find(
+      (option) => option.id === event.target.value
+    );
+    setSelectedName(selectedOption ? selectedOption.name : "");
+  };
+
+  const [selectedName2, setSelectedName2] = useState("");
+
+  const handleSelectChange2 = (event) => {
+    const selectedOption = options.find(
+      (option) => option.id === event.target.value
+    );
+    setSelectedName2(selectedOption ? selectedOption.name : "");
+  };
   return (
     // <div>
 
     // </div>
     // <div>
 
-
-    < body class="hold-transition sidebar-mini" className='editlaout' >
+    <body class="hold-transition sidebar-mini" className="editlaout">
       <div class="wrapper">
-
         <div class="content-wrapper">
           {/* <!-- Content Header (Page header) --> */}
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><i class="fas fa-home"></i> <a href="index.php">หน้าหลัก</a></li>
-            <li class="breadcrumb-item"><a href="#"> การตั้งค่า</a></li>
+            <li class="breadcrumb-item">
+              <i class="fas fa-home"></i> <a href="index.php">หน้าหลัก</a>
+            </li>
+            <li class="breadcrumb-item">
+              <a href="#"> การตั้งค่า</a>
+            </li>
             <li class="breadcrumb-item active">สรุปเงินเดือน</li>
           </ol>
           <div class="content-header">
             <div class="container-fluid">
               <div class="row mb-2">
-                <h1 class="m-0"><i class="far fa-arrow-alt-circle-right"></i> สรุปเงินเดือน</h1>
+                <h1 class="m-0">
+                  <i class="far fa-arrow-alt-circle-right"></i> สรุปเงินเดือน
+                </h1>
               </div>
             </div>
           </div>
@@ -1584,13 +1781,16 @@ const handleSelectChange = (event) => {
                             className="form-control"
                             id="staffId"
                             placeholder="รหัสพนักงาน"
-                            value={staffId == "null" ? '' : staffId}
+                            value={staffId == "null" ? "" : staffId}
                             onChange={handleStaffIdChange}
                             list="staffIdList"
                           />
                           <datalist id="staffIdList">
-                            {employeeList.map(employee => (
-                              <option key={employee.employeeId} value={employee.employeeId} />
+                            {employeeList.map((employee) => (
+                              <option
+                                key={employee.employeeId}
+                                value={employee.employeeId}
+                              />
                             ))}
                           </datalist>
                         </div>
@@ -1604,25 +1804,31 @@ const handleSelectChange = (event) => {
                             className="form-control"
                             id="staffName"
                             placeholder="ชื่อพนักงาน"
-                            value={staffFullName == "null" ? '' : staffFullName}
+                            value={staffFullName == "null" ? "" : staffFullName}
                             onChange={handleStaffNameChange}
                             list="staffNameList"
                           />
                           <datalist id="staffNameList">
-                            {employeeList.map(employee => (
-                              <option key={employee.employeeId} value={employee.name + " " + employee.lastName} />
+                            {employeeList.map((employee) => (
+                              <option
+                                key={employee.employeeId}
+                                value={employee.name + " " + employee.lastName}
+                              />
                             ))}
                           </datalist>
                         </div>
                       </div>
                     </div>
 
-
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
                           <label role="agencyname">เดือน</label>
-                          <select className="form-control" value={month} onChange={(e) => setMonth(e.target.value)} >
+                          <select
+                            className="form-control"
+                            value={month}
+                            onChange={(e) => setMonth(e.target.value)}
+                          >
                             <option value="01">มกราคม</option>
                             <option value="02">กุมภาพันธ์</option>
                             <option value="03">มีนาคม</option>
@@ -1640,8 +1846,12 @@ const handleSelectChange = (event) => {
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label >ปี</label>
-                          <select className="form-control" value={year} onChange={(e) => setYear(e.target.value)}>
+                          <label>ปี</label>
+                          <select
+                            className="form-control"
+                            value={year}
+                            onChange={(e) => setYear(e.target.value)}
+                          >
                             {years.map((y) => (
                               <option key={y} value={y}>
                                 {y + 543}
@@ -1652,7 +1862,13 @@ const handleSelectChange = (event) => {
                       </div>
                     </div>
                     <div class="d-flex justify-content-center">
-                      <button type='button' class="btn b_save" onClick={handleSearchAccounting} ><i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา</button>
+                      <button
+                        type="button"
+                        class="btn b_save"
+                        onClick={handleSearchAccounting}
+                      >
+                        <i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา
+                      </button>
                     </div>
                   </form>
                   <br />
@@ -1679,23 +1895,31 @@ const handleSelectChange = (event) => {
                           {/* <td style={cellStyle}>{employee.remainsickleave}</td>
                           <td style={cellStyle}>{employee.remainbusinessleave}</td>
                           <td style={cellStyle}>{employee.remainvacation}</td> */}
-                          <td style={cellStyle}> <select onChange={handleSelectChange} className="form-control">
-        <option value="">เลือกตัวเลือก</option>
-        {options.map((option) => (
-          <option key={option.id} value={option.id}>
-            {option.id} - {option.name}
-          </option>
-        ))}
-      </select></td>
-      <td style={cellStyle}> <input
-        type="text"
-        className="form-control mt-2"
-        value={selectedName}
-        placeholder="Selected Name"
-        readOnly
-      /></td>
-       <td style={cellStyle}>{employee.remainsickleave}</td>
-     
+                          <td style={cellStyle}>
+                            {" "}
+                            <select
+                              onChange={handleSelectChange}
+                              className="form-control"
+                            >
+                              <option value="">เลือกตัวเลือก</option>
+                              {options.map((option) => (
+                                <option key={option.id} value={option.id}>
+                                  {option.id} - {option.name}
+                                </option>
+                              ))}
+                            </select>
+                          </td>
+                          <td style={cellStyle}>
+                            {" "}
+                            <input
+                              type="text"
+                              className="form-control mt-2"
+                              value={selectedName}
+                              placeholder="Selected Name"
+                              readOnly
+                            />
+                          </td>
+                          <td style={cellStyle}>{employee.remainsickleave}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -1708,25 +1932,26 @@ const handleSelectChange = (event) => {
                   </div>
                   <div class="col-md-2">
                     <label role="agencyname">ประเภทการลา</label>
-
                   </div>
                   <div class="col-md-2">
                     <label role="agencyname"></label>
-
                   </div>
                   <div class="col-md-2">
                     <label role="agencyname">จำนวนเงิน</label>
-
                   </div>
                   <div class="col-md-2">
                     <label role="agencyname">หมายเหตุ</label>
-
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-md-2">
-                    <div style=
-                      {{ position: 'relative', zIndex: 9999, marginLeft: "0rem" }}>
+                    <div
+                      style={{
+                        position: "relative",
+                        zIndex: 9999,
+                        marginLeft: "0rem",
+                      }}
+                    >
                       <DatePicker
                         className="form-control"
                         selected={selectedThaiDate}
@@ -1737,6 +1962,19 @@ const handleSelectChange = (event) => {
                     </div>
                   </div>
                   <div class="col-md-2">
+                    <select
+                      onChange={handleSelectChange2}
+                      className="form-control"
+                    >
+                      <option value="">เลือกตัวเลือก</option>
+                      {options.map((option) => (
+                        <option key={option.id} value={option.name}>
+                           {option.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div class="col-md-2">
                     <input
                       type="text"
                       className="form-control"
@@ -1744,7 +1982,6 @@ const handleSelectChange = (event) => {
                       onChange={handleRemainCodeChange}
                       placeholder="รหัส"
                     />
-
                   </div>
                   <div class="col-md-2">
                     <input
@@ -1763,7 +2000,6 @@ const handleSelectChange = (event) => {
                       onChange={handleRemainSalaryChange}
                       placeholder="บาท"
                     />
-
                   </div>
                   <div class="col-md-2">
                     <input
@@ -1773,12 +2009,24 @@ const handleSelectChange = (event) => {
                       onChange={handleRemainCommentChange}
                       placeholder="หมายเหตุ"
                     />
-
                   </div>
-                  <div class="col-md-2">
-                    <button type="button" onClick={handleAddData} class="btn b_save"><i class="custom-icon-font"> + </i>เพิ่ม</button>
-
-
+                
+                </div>
+                <br/>
+                <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2">
+                    <button
+                      type="button"
+                      onClick={handleAddData}
+                      class="btn b_save"
+                    >
+                      <i class="custom-icon-font"> + </i>เพิ่ม
+                    </button>
                   </div>
                 </div>
                 <br />
@@ -1799,30 +2047,38 @@ const handleSelectChange = (event) => {
                       <tr key={index}>
                         <td style={cellStyle}>{index + 1}</td>
                         <td style={cellStyle}>
-                          {data.thaiDate.toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+                          {data.thaiDate.toLocaleDateString("th-TH", {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                          })}
                         </td>
                         <td style={cellStyle}>{data.code}</td>
                         <td style={cellStyle}>{data.name}</td>
                         <td style={cellStyle}>{data.salary}</td>
                         <td style={cellStyle}>{data.comment}</td>
-                        <td style={cellStyle}><button class="btn btn-danger" style={{ width: '4rem' }} onClick={() => handleDeleteData(index)}>ลบ</button></td>
+                        <td style={cellStyle}>
+                          <button
+                            class="btn btn-danger"
+                            style={{ width: "4rem" }}
+                            onClick={() => handleDeleteData(index)}
+                          >
+                            ลบ
+                          </button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
-
               </section>
               <h2 class="title">สรุปเงินเดือน</h2>
               <section class="Frame">
                 {staffFullName ? (
                   <div class="row">
-                    <div class="col-md-10">
-                      ชื่อ: {staffFullName}
-                    </div>
-                    <div class="col-md-2">
-                      คำนวณเมื่อ {createDate}
-                    </div>
-                  </div>) : (
+                    <div class="col-md-10">ชื่อ: {staffFullName}</div>
+                    <div class="col-md-2">คำนวณเมื่อ {createDate}</div>
+                  </div>
+                ) : (
                   <div>
                     {/* Content to show when staffFullName is not set */}
                   </div>
@@ -1840,7 +2096,8 @@ const handleSelectChange = (event) => {
 
                 <div class="row">
                   <div class="col-md-12">
-                    ตั้งแต่วันที่ 21 {thaiMonthLowerName} - 20 {thaiMonthName} ปี {parseInt(year, 10) + 543}
+                    ตั้งแต่วันที่ 21 {thaiMonthLowerName} - 20 {thaiMonthName}{" "}
+                    ปี {parseInt(year, 10) + 543}
                   </div>
                 </div>
                 <br />
@@ -1852,14 +2109,17 @@ const handleSelectChange = (event) => {
                           <th style={headerCellStyle}>รวมวันทำงาน</th>
                           <th style={headerCellStyle}>รวมชั่วโมงทำงาน</th>
                           <th style={headerCellStyle}>รวมชั่วโมงOT</th>
-
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
                           <td style={cellStyle}>{wsCountDayWork}</td>
-                          <td style={cellStyle}>{Number(wsCountHourWork).toFixed(2)}</td>
-                          <td style={cellStyle}>{Number(wsCountOtHourWork).toFixed(2)}</td>
+                          <td style={cellStyle}>
+                            {Number(wsCountHourWork).toFixed(2)}
+                          </td>
+                          <td style={cellStyle}>
+                            {Number(wsCountOtHourWork).toFixed(2)}
+                          </td>
 
                           {/* <td style={cellStyle}>{(overallAllTimesSum123).toFixed(2)}</td> */}
                           {/* <td style={cellStyle}>{(overallOtTimesSum123).toFixed(2)}</td> */}
@@ -1888,34 +2148,58 @@ const handleSelectChange = (event) => {
                           {/* <td style={cellStyle}>{(overWorkRateSum).toFixed(2)}</td>
                           <td style={cellStyle}>{(overWorkRateOTSum).toFixed(2)}</td> */}
 
-                          <td style={cellStyle}>{isNaN(Number(wsAmountCountDayWork)) ? 0.00 : Number(wsAmountCountDayWork).toFixed(2)}</td>
-                          <td style={cellStyle}>{isNaN(Number(wsAmountCountDayWorkOt)) ? 0.00 : Number(wsAmountCountDayWorkOt).toFixed(2)}</td>
+                          <td style={cellStyle}>
+                            {isNaN(Number(wsAmountCountDayWork))
+                              ? 0.0
+                              : Number(wsAmountCountDayWork).toFixed(2)}
+                          </td>
+                          <td style={cellStyle}>
+                            {isNaN(Number(wsAmountCountDayWorkOt))
+                              ? 0.0
+                              : Number(wsAmountCountDayWorkOt).toFixed(2)}
+                          </td>
 
                           {/* <td style={cellStyle}>{(overAddSalaryDaySum).toFixed(2) + (sumSpSalary).toFixed(2)}</td> */}
                           {/* <td style={cellStyle}>{(overAddSalaryDaySum + sumSpSalaryResult).toFixed(2) + `(` + (overAddSalaryDaySum).toFixed(2) + `+` + (sumSpSalaryResult).toFixed(2) + `)`}</td> */}
                           <td style={cellStyle}>
-                            <span onClick={togglePopup} style={{ color: color, cursor: 'pointer' }}>
+                            <span
+                              onClick={togglePopup}
+                              style={{ color: color, cursor: "pointer" }}
+                            >
                               {/* {isNaN(Number(addAmountBeforeTax + addAmountAfterTax)) ? 0.00 : Number(addAmountBeforeTax + addAmountAfterTax).toFixed(2)}  */}
                               {sumAddSalaryList.toFixed(2)}
                             </span>
                             {showPopup && (
                               <div className="popup">
                                 <h4>รายการเงินเพิ่ม</h4>
-                                <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
-                                  {addSalaryList && (
-                                    addSalaryList.map((addsalary, index) => (
-                                      (addsalary.name !== '' && (
-                                        <li key={index} style={{ marginBottom: '10px' }}>
-                                          {addsalary.name} - จำนวน: {addsalary.SpSalary} {addsalary.roundOfSalary == 'daily' && (<>* {addsalary.message} วัน</>)}
-                                        </li>
-                                      ))
-                                    )))}
-
+                                <ul
+                                  style={{
+                                    listStyleType: "none",
+                                    padding: 0,
+                                    margin: 0,
+                                  }}
+                                >
+                                  {addSalaryList &&
+                                    addSalaryList.map(
+                                      (addsalary, index) =>
+                                        addsalary.name !== "" && (
+                                          <li
+                                            key={index}
+                                            style={{ marginBottom: "10px" }}
+                                          >
+                                            {addsalary.name} - จำนวน:{" "}
+                                            {addsalary.SpSalary}{" "}
+                                            {addsalary.roundOfSalary ==
+                                              "daily" && (
+                                              <>* {addsalary.message} วัน</>
+                                            )}
+                                          </li>
+                                        )
+                                    )}
                                 </ul>
                                 <button onClick={togglePopup}>Close</button>
                               </div>
-                            )
-                            }
+                            )}
 
                             {/* {(overAddSalaryDaySum + sumSpSalaryResult).toFixed(2)} */}
 
@@ -1926,7 +2210,6 @@ const handleSelectChange = (event) => {
                               </tr>
                             ))} */}
                             {/* {isNaN(Number(addAmountBeforeTax + addAmountAfterTax)) ? 0.00 : Number(addAmountBeforeTax + addAmountAfterTax).toFixed(2)} */}
-
                           </td>
                           {/* <td style={cellStyle}>
                             <input
@@ -1947,17 +2230,29 @@ const handleSelectChange = (event) => {
                               (Number(wsAmountDay) + Number(wsAmountOt) + Number(wsAmountSpecialDay) + Number(sumAddSalaryList)).toFixed(2)
 
                             } */}
-                              {isNaN( Number(wsAmountDay) + Number(wsAmountOt)  +  Number(sumAddSalaryList)) ?
-                              '0' :
-                              (Number(wsAmountDay) + Number(wsAmountOt)  + Number(sumAddSalaryList)).toFixed(2)
-
-                            }
+                            {isNaN(
+                              Number(wsAmountDay) +
+                                Number(wsAmountOt) +
+                                Number(sumAddSalaryList)
+                            )
+                              ? "0"
+                              : (
+                                  Number(wsAmountDay) +
+                                  Number(wsAmountOt) +
+                                  Number(sumAddSalaryList)
+                                ).toFixed(2)}
                           </td>
 
                           <td style={cellStyle}>
-                            <button type="button" onClick={handleAddSalary} class="btn btn-danger" style={{ width: '4rem' }}>แก้ไข</button>
+                            <button
+                              type="button"
+                              onClick={handleAddSalary}
+                              class="btn btn-danger"
+                              style={{ width: "4rem" }}
+                            >
+                              แก้ไข
+                            </button>
                           </td>
-
                         </tr>
                       </tbody>
                     </table>
@@ -1980,10 +2275,18 @@ const handleSelectChange = (event) => {
                       </thead>
                       <tbody>
                         <tr>
-                          <td style={cellStyle}>{isNaN(Number(wsTax)) ? 0.00 : Number(wsTax).toFixed(2)}</td>
+                          <td style={cellStyle}>
+                            {isNaN(Number(wsTax))
+                              ? 0.0
+                              : Number(wsTax).toFixed(2)}
+                          </td>
                           {/* <td style={cellStyle}>{((overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary) * socialSecurity).toFixed(2)}</td> */}
                           {/* <td style={cellStyle}>{isNaN(Number(socialSecurity)) ? 0 : Number(socialSecurity).toFixed(0)}</td> */}
-                          <td style={cellStyle}>{isNaN(Number(wsSocialSecurity)) ? 0 : Math.ceil(Number(wsSocialSecurity))}</td>
+                          <td style={cellStyle}>
+                            {isNaN(Number(wsSocialSecurity))
+                              ? 0
+                              : Math.ceil(Number(wsSocialSecurity))}
+                          </td>
                           {/* <td style={cellStyle}>{isNaN(Number(bank)) ? 0.00 : Number(bank).toFixed(2)}</td> */}
                           {/* <td style={cellStyle}>
                             <input
@@ -1997,31 +2300,74 @@ const handleSelectChange = (event) => {
                             />
                           </td> */}
                           <td style={cellStyle}>
-                            <span onClick={togglePopup} style={{ color: color, cursor: 'pointer' }}>
-                              {isNaN(Number(deductBeforeTax) + Number(deductAfterTax)) ? 0.00 : (Number(deductBeforeTax) + Number(deductAfterTax)).toFixed(2)}
+                            <span
+                              onClick={togglePopup}
+                              style={{ color: color, cursor: "pointer" }}
+                            >
+                              {isNaN(
+                                Number(deductBeforeTax) + Number(deductAfterTax)
+                              )
+                                ? 0.0
+                                : (
+                                    Number(deductBeforeTax) +
+                                    Number(deductAfterTax)
+                                  ).toFixed(2)}
                             </span>
                             {showPopup && (
                               <div className="popup">
                                 <h4>รายการเงินหัก</h4>
-                                <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
-                                {deductSalaryList && (
-                                    deductSalaryList.map((deductSalary , index2) => (
-                                      (deductSalary.name !== '' && (
-                                        <li key={index2} style={{ marginBottom: '10px' }}>
-                                          {deductSalary.name} - จำนวน: {deductSalary.amount}
-                                        </li>
-                                      ))
-                                    )))}
+                                <ul
+                                  style={{
+                                    listStyleType: "none",
+                                    padding: 0,
+                                    margin: 0,
+                                  }}
+                                >
+                                  {deductSalaryList &&
+                                    deductSalaryList.map(
+                                      (deductSalary, index2) =>
+                                        deductSalary.name !== "" && (
+                                          <li
+                                            key={index2}
+                                            style={{ marginBottom: "10px" }}
+                                          >
+                                            {deductSalary.name} - จำนวน:{" "}
+                                            {deductSalary.amount}
+                                          </li>
+                                        )
+                                    )}
                                 </ul>
                                 {/* <button onClick={togglePopup}>Close</button> */}
                               </div>
                             )}
                             {/* {isNaN(Number(deductBeforeTax) + Number(deductAfterTax)) ? 0.00 : (Number(deductBeforeTax) + Number(deductAfterTax)).toFixed(2)} */}
                           </td>
-                          <td style={cellStyle}> {isNaN(Number(wsTax) + Number(wsSocialSecurity) + Number(deductBeforeTax) + Number(deductAfterTax) ) ? 0.00 : (Math.ceil(Number(wsTax) + Number(wsSocialSecurity) + Number(deductBeforeTax) + Number(deductAfterTax) ) ).toFixed(2)}</td>
+                          <td style={cellStyle}>
+                            {" "}
+                            {isNaN(
+                              Number(wsTax) +
+                                Number(wsSocialSecurity) +
+                                Number(deductBeforeTax) +
+                                Number(deductAfterTax)
+                            )
+                              ? 0.0
+                              : Math.ceil(
+                                  Number(wsTax) +
+                                    Number(wsSocialSecurity) +
+                                    Number(deductBeforeTax) +
+                                    Number(deductAfterTax)
+                                ).toFixed(2)}
+                          </td>
                           {/* <td style={cellStyle}>({anyMinus} + {tax} + {((overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary) * socialSecurity).toFixed()} + {bankCustom} + {sumDeduct} + {sumDeductInstallment})</td> */}
                           <td style={cellStyle}>
-                            <button type="button" onClick={handleAddSalary} class="btn btn-danger" style={{ width: '4rem' }}>แก้ไข</button>
+                            <button
+                              type="button"
+                              onClick={handleAddSalary}
+                              class="btn btn-danger"
+                              style={{ width: "4rem" }}
+                            >
+                              แก้ไข
+                            </button>
                           </td>
                         </tr>
                       </tbody>
@@ -2048,7 +2394,6 @@ const handleSelectChange = (event) => {
                           {/* <td style={cellStyle}>{isNaN((countSpecialDay - specialDayListWork) * specialDayRate) ? 0.00 : ((countSpecialDay - specialDayListWork) * specialDayRate).toFixed(2)}</td> */}
                           {/* <td style={cellStyle}>{workHoliday}</td> */}
                           <td style={cellStyle}>
-
                             {/* {amountSpecialDay} */}
                             <div class="row">
                               <div class="col-md-6">
@@ -2057,15 +2402,18 @@ const handleSelectChange = (event) => {
                                   className="form-control"
                                   id="staffId"
                                   placeholder=""
-                                  value={wsAmountSpecialDay || ''}
+                                  value={wsAmountSpecialDay || ""}
                                   onChange={handleTmpamountChange}
                                 />
                               </div>
                             </div>
-
                           </td>
                           <td style={cellStyle}></td>
-                          <td style={cellStyle}>{isNaN(Number(wsAmountSpecialDay)) ? 0.00 : (Number(wsAmountSpecialDay)).toFixed(2)}</td>
+                          <td style={cellStyle}>
+                            {isNaN(Number(wsAmountSpecialDay))
+                              ? 0.0
+                              : Number(wsAmountSpecialDay).toFixed(2)}
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -2081,7 +2429,6 @@ const handleSelectChange = (event) => {
                           <th style={headerCellStyle}>รวมเงินได้</th>
                           <th style={headerCellStyle}>รวมเงินหัก</th>
                           <th style={headerCellStyle}>เงินสุทธิ</th>
-
                         </tr>
                       </thead>
                       <tbody>
@@ -2094,21 +2441,46 @@ const handleSelectChange = (event) => {
                           <td style={cellStyle}>{isNaN(totalSumDeduct) ? 0.00 : (totalSumDeduct).toFixed(2)}</td>
                           <td style={cellStyle}>{isNaN(amountDay + amountOt + sumAddSalaryList - totalSumDeduct) ? 0.00 : (amountDay + amountOt + sumAddSalaryList - totalSumDeduct).toFixed(2)}</td> */}
 
-
-
                           <td style={cellStyle}>{wsTotalSum}</td>
                           {/* <td style={cellStyle}>{Math.ceil(wsTotalSumDeduct) }</td> */}
-                          <td style={cellStyle}>{isNaN(Number(wsTax) + Number(wsSocialSecurity) + Number(deductBeforeTax) + Number(deductAfterTax) ) ? 0.00 : (Math.ceil(Number(wsTax) + Number(wsSocialSecurity) + Number(deductBeforeTax) + Number(deductAfterTax) ) ).toFixed(2)}</td>
+                          <td style={cellStyle}>
+                            {isNaN(
+                              Number(wsTax) +
+                                Number(wsSocialSecurity) +
+                                Number(deductBeforeTax) +
+                                Number(deductAfterTax)
+                            )
+                              ? 0.0
+                              : Math.ceil(
+                                  Number(wsTax) +
+                                    Number(wsSocialSecurity) +
+                                    Number(deductBeforeTax) +
+                                    Number(deductAfterTax)
+                                ).toFixed(2)}
+                          </td>
                           {/* <td style={cellStyle}>{totalSum - totalSumDeduct}</td> */}
                           <td style={cellStyle}>
                             {/* {isNaN(Number(total)) ? 0.00 : Number(total).toFixed(2)} */}
                             {/* {isNaN(Number(total)) ? 0.00 : (Math.ceil(Number(total) * 100) / 100).toFixed(2)} */}
                             {/* {isNaN(Number(wsTotal)) ? 0.00 : (Number(wsTotal)).toFixed(2)} */}
                             {/* {(Number(wsTotalSum) - Math.ceil(Number(wsTotalSumDeduct)) ).toFixed(2) || 0} */}
-                            {(Number(wsTotalSum) - (isNaN(Number(wsTax) + Number(wsSocialSecurity) + Number(deductBeforeTax) + Number(deductAfterTax) ) ? 0.00 : (Math.ceil(Number(wsTax) + Number(wsSocialSecurity) + Number(deductBeforeTax) + Number(deductAfterTax) ) ).toFixed(2) ) ).toFixed(2) || 0}
-
+                            {(
+                              Number(wsTotalSum) -
+                              (isNaN(
+                                Number(wsTax) +
+                                  Number(wsSocialSecurity) +
+                                  Number(deductBeforeTax) +
+                                  Number(deductAfterTax)
+                              )
+                                ? 0.0
+                                : Math.ceil(
+                                    Number(wsTax) +
+                                      Number(wsSocialSecurity) +
+                                      Number(deductBeforeTax) +
+                                      Number(deductAfterTax)
+                                  ).toFixed(2))
+                            ).toFixed(2) || 0}
                           </td>
-
                         </tr>
                       </tbody>
                     </table>
@@ -2116,34 +2488,42 @@ const handleSelectChange = (event) => {
                 </div>
 
                 <div class="row">
-                  <div class="col-md-10">
-
-                  </div>
+                  <div class="col-md-10"></div>
                   <div class="col-md-2">
                     <div class="line_btn">
-                      <button type="button" onClick={() => handleUpdateStatus('update')} class="btn b_save"><i class=""></i> &nbsp;คำนวณใหม่</button>
+                      <button
+                        type="button"
+                        onClick={() => handleUpdateStatus("update")}
+                        class="btn b_save"
+                      >
+                        <i class=""></i> &nbsp;คำนวณใหม่
+                      </button>
                     </div>
                   </div>
                 </div>
-
               </section>
               <div class="line_btn">
-                <button type="button" onClick={handleSaveAccounting} class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
+                <button
+                  type="button"
+                  onClick={handleSaveAccounting}
+                  class="btn b_save"
+                >
+                  <i class="nav-icon fas fa-save"></i> &nbsp;บันทึก
+                </button>
 
                 {/* <Link to="/Salaryresult"> */}
-                <button type="button" onClick={handleReLoad} class="btn clean" ><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
+                <button type="button" onClick={handleReLoad} class="btn clean">
+                  <i class="far fa-window-close"></i> &nbsp;ยกเลิก
+                </button>
                 {/* </Link > */}
-
               </div>
               {/* {JSON.stringify(employee.addSalary,null,2)} */}
             </div>
-
           </section>
         </div>
       </div>
-
-    </body >
-  )
+    </body>
+  );
 }
 
-export default Salaryresult
+export default Salaryresult;

@@ -187,7 +187,7 @@ function App() {
 
               {/* <Route path="/setting" element={<Setting />} /> */}
               <Route path="/setting" element={<Setting workplaceList={workplaceList} />} />
-              <Route path="/settingcomplex" element={<SettingComplex />} />
+              <Route path="/settingcomplex" element={<SettingComplex  workplaceList={workplaceList}  />} />
               <Route path="/settingAllList" element={<SettingAllList />} />
               <Route path="/settingspecial" element={<SettingSpecial />} />
 

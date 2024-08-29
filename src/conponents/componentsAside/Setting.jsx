@@ -852,7 +852,7 @@ function Setting({ workplaceList }) {
       }
     } catch (error) {
       // setMessage('ไม่พบผลการค้นหา กรุณาตรวจสอบข้อมูลที่ใช้ในการค้นหาอีกครั้ง');
-      alert("กรุณาตรวจสอบข้อมูลในช่องค้นหา", error);
+      // alert("กรุณาตรวจสอบข้อมูลในช่องค้นหา", error);
       // window.location.reload();
     }
   }
