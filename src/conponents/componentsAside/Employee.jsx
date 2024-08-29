@@ -283,6 +283,15 @@ function Employee() {
     }
   };
 
+  function formatDateToDMY(dateString) {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, "0"); // Get day and add leading zero if necessary
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Get month (note: months are zero-indexed)
+    const year = date.getFullYear(); // Get full year
+
+    return `${day}/${month}/${year}`; // Return formatted date as day/month/year
+  }
+
   function onEmployeeSelect(empSelect) {
     // alert(empSelect.dateOfBirth);
     set_id(empSelect._id);
@@ -293,7 +302,12 @@ function Employee() {
     setWorkplace(empSelect.workplace);
     setJobtype(empSelect.jobtype);
     setStartjob(empSelect.startjob ? new Date(empSelect.startjob) : "");
-    setEndjob(empSelect.endjob ? new Date(empSelect.startjob) : "");
+    setSelectedDateStart(
+      empSelect.startjob ? new Date(empSelect.startjob) : ""
+    );
+    setEndjob(empSelect.endjob ? new Date(empSelect.endjob) : "");
+    setSelectedDateEnd(empSelect.endjob ? new Date(empSelect.endjob) : "");
+
     setExceptjob(empSelect.exceptjob ? new Date(empSelect.exceptjob) : "");
     setPrefix(empSelect.prefix);
     setName(empSelect.name);
@@ -302,7 +316,10 @@ function Employee() {
     setGender(empSelect.gender);
 
     // setDateOfBirth(new Date(empSelect.dateOfBirth));
-    setDateOfBirth(empSelect.dateOfBirth);
+    // setDateOfBirth(empSelect.dateOfBirth);
+    const formattedDate = formatDateToDMY(empSelect.dateOfBirth);
+    // Now set the formatted date
+    setDateOfBirth(formattedDate);
 
     setAge(empSelect.age);
     setIdCard(empSelect.idCard);
