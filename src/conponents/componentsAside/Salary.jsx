@@ -8,6 +8,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { addDays, subYears, format, parse, addYears } from "date-fns";
 import EmployeesSelected from "./EmployeesSelected";
 import "../editwindowcss.css";
+import { ThaiDatePicker } from "thaidatepicker-react";
+import { FaCalendarAlt } from "react-icons/fa"; // You can use any icon library
 
 function Salary() {
   useEffect(() => {
@@ -91,8 +93,6 @@ function Salary() {
     }
   }, [day, month, year]);
 
-  console.log("startjob", startjob);
-  console.log("exceptjob", exceptjob);
 
   const [showAddSalaryButton, setShowAddSalaryButton] = useState(true);
 
@@ -466,24 +466,101 @@ function Salary() {
       ["exceptjob"]: date,
     }));
   };
-  const handleStartcount = (date) => {
-    setStartcount(date);
-    //add new startcount to employeeData
+  // const handleStartcount = (date) => {
+  //   setStartcount(date);
+  //   //add new startcount to employeeData
+  //   setEmployeeData((prevData) => ({
+  //     ...prevData,
+  //     ["startcount"]: date,
+  //   }));
+  // };
+  const [showDatePickerStartcount, setShowDatePickerStartcount] = useState(false);
+  const [selectedDateStartcount, setSelectedDateStartcount] = useState(null);
+  const [formattedDate321Startcount, setFormattedDateStartcount] = useState(null);
+
+  const handleDatePickerStartcountChange = (date) => {
+    setSelectedDateStartcount(date);
+    setShowDatePickerStartcount(false); // Hide date picker after selecting a date
+    const newDate = new Date(date);
+    setStartcount(newDate);
     setEmployeeData((prevData) => ({
       ...prevData,
-      ["startcount"]: date,
+      ["salarystartcountupdate"]: newDate,
     }));
   };
 
-  const handleSalaryupdate = (date) => {
-    setSalaryupdate(date);
-    //add new salaryupdate to employeeData
-    setEmployeeData((prevData) => ({
-      ...prevData,
-      ["salaryupdate"]: date,
-    }));
+  useEffect(() => {
+    if (selectedDateStartcount) {
+      // Convert the string to a Date object
+      const date = new Date(selectedDateStartcount);
+
+      // Extract day, month, and year
+      const daySelectedDate = date.getDate().toString().padStart(2, "0");
+      const monthSelectedDate = (date.getMonth() + 1)
+        .toString()
+        .padStart(2, "0");
+      const yearSelectedDate = (date.getFullYear() + 543).toString();
+
+      // Format the date
+      const formattedDate = `${daySelectedDate}/${monthSelectedDate}/${yearSelectedDate}`;
+      console.log("formattedDate", formattedDate);
+      setFormattedDateStartcount(formattedDate);
+    }
+  }, [selectedDateStartcount]);
+
+  const toggleDatePickerStartcount = () => {
+    setShowDatePickerStartcount(!showDatePickerStartcount);
   };
-  console.log(employeeData);
+
+
+
+  // const handleSalaryupdate = (date) => {
+  //   setSalaryupdate(date);
+  //   //add new salaryupdate to employeeData
+  //   setEmployeeData((prevData) => ({
+  //     ...prevData,
+  //     ["salaryupdate"]: date,
+  //   }));
+  // };
+  // console.log(employeeData);
+  const [showDatePickerSalaryupdate, setShowDatePickerSalaryupdate] = useState(false);
+  const [selectedDateSalaryupdate, setSelectedDateSalaryupdate] = useState(null);
+  const [formattedDate321Salaryupdate, setFormattedDateSalaryupdate] = useState(null);
+
+  const handleDatePickerSalaryupdateChange = (date) => {
+    setSelectedDateSalaryupdate(date);
+    setShowDatePickerSalaryupdate(false); // Hide date picker after selecting a date
+    const newDate = new Date(date);
+    setSalaryupdate(newDate);
+    setEmployeeData((prevData) => ({
+          ...prevData,
+          ["salaryupdate"]: newDate,
+        }));
+  };
+
+  useEffect(() => {
+    if (selectedDateSalaryupdate) {
+      // Convert the string to a Date object
+      const date = new Date(selectedDateSalaryupdate);
+
+      // Extract day, month, and year
+      const daySelectedDate = date.getDate().toString().padStart(2, "0");
+      const monthSelectedDate = (date.getMonth() + 1)
+        .toString()
+        .padStart(2, "0");
+      const yearSelectedDate = (date.getFullYear() + 543).toString();
+
+      // Format the date
+      const formattedDate = `${daySelectedDate}/${monthSelectedDate}/${yearSelectedDate}`;
+      console.log("formattedDate", formattedDate);
+      setFormattedDateSalaryupdate(formattedDate);
+    }
+  }, [selectedDateSalaryupdate]);
+
+  const toggleDatePickerSalaryupdate = () => {
+    setShowDatePickerSalaryupdate(!showDatePickerSalaryupdate);
+  };
+
 
   async function handleManageSalary(event) {
     event.preventDefault();
@@ -534,12 +611,20 @@ function Salary() {
   }
   console.log("workplaceSelection", workplaceSelection);
 
+  function formatDateToDMY(dateString) {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, "0"); // Get day and add leading zero if necessary
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Get month (note: months are zero-indexed)
+    const year = date.getFullYear(); // Get full year
+
+    return `${day}/${month}/${year+543}`; // Return formatted date as day/month/year
+  }
+
   async function onEmployeeSelect(empSelect) {
     await setEmployeeData(empSelect);
     await setWorkplace(empSelect.workplace || "");
     await setAddSalary(empSelect.addSalary);
     // await alert(JSON.stringify(addSalary, null , 2));
-
     //set workplace to show
     const filtered = await workplaceSelection.filter(
       (wp) =>
@@ -572,22 +657,39 @@ function Salary() {
       setWorkplacearea("");
     }
     if (empSelect.startjob) {
-      await setStartjob(new Date(empSelect.startjob || ""));
+      // await setStartjob(new Date(empSelect.startjob || ""));
+      const formattedDate = formatDateToDMY(empSelect.startjob);
+    // Now set the formatted date
+    await setStartjob(formattedDate);
     }
 
     if (empSelect.exceptjob) {
-      await setExceptjob(new Date(empSelect.exceptjob || ""));
+      // await setExceptjob(new Date(empSelect.exceptjob || ""));
+      const formattedDate = formatDateToDMY(empSelect.startjob);
+      // Now set the formatted date
+      await  setExceptjob(formattedDate);
     }
     if (empSelect.startcount) {
       await setStartcount(
         empSelect.startcount ? new Date(empSelect.startcount) : ""
       );
+      
+      await setFormattedDateStartcount(
+        empSelect.startcount ? new Date(empSelect.startcount) : ""
+      );
+      
+
     }
     if (empSelect.salaryupdate) {
       await setSalaryupdate(
         empSelect.salaryupdate ? new Date(empSelect.salaryupdate) : ""
       );
-    }
+      await setFormattedDateSalaryupdate(
+        empSelect.startcount ? new Date(empSelect.startcount) : ""
+      );
+    }  
+      console.log('salaryupdate',empSelect.salaryupdate);
+
     // await setExceptjob(new Date(empSelect.exceptjob || ''));
     // await setStartcount(empSelect.startcount ? new Date(empSelect.startcount) : '');
     // await setSalaryupdate(empSelect.salaryupdate ? new Date(empSelect.salaryupdate) : '');
@@ -1108,7 +1210,7 @@ function Salary() {
                             <div
                             // style={{ position: 'relative', zIndex: 9999, marginLeft: "2rem" }}
                             >
-                              <DatePicker
+                              {/* <DatePicker
                                 id="startcount"
                                 name="startcount"
                                 className="form-control" // Apply Bootstrap form-control class
@@ -1116,7 +1218,37 @@ function Salary() {
                                 selected={startcount}
                                 onChange={handleStartcount}
                                 dateFormat="dd/MM/yyyy"
-                              />
+                              /> */}
+                                <div
+                                  onClick={toggleDatePickerStartcount}
+                                  style={{
+                                    cursor: "pointer",
+                                    display: "inline-flex",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <FaCalendarAlt size={20} />
+                                  <span style={{ marginLeft: "8px" }}>
+                                    {formattedDate321Startcount
+                                      ? formattedDate321Startcount
+                                      : "Select Date"}
+                                  </span>
+                                </div>
+
+                                {showDatePickerStartcount && (
+                                  <div
+                                    style={{
+                                      position: "absolute",
+                                      zIndex: 1000,
+                                    }}
+                                  >
+                                    <ThaiDatePicker
+                                      className="form-control"
+                                      value={selectedDateStartcount}
+                                      onChange={handleDatePickerStartcountChange}
+                                    />
+                                  </div>
+                                )}
                             </div>
                           </div>
                         </div>
@@ -1208,7 +1340,7 @@ function Salary() {
                               <div
                               // style={{ position: 'relative', zIndex: 9999 }}
                               >
-                                <DatePicker
+                                {/* <DatePicker
                                   id="salaryupdate"
                                   name="salaryupdate"
                                   className="form-control" // Apply Bootstrap form-control class
@@ -1216,7 +1348,37 @@ function Salary() {
                                   selected={salaryupdate}
                                   onChange={handleSalaryupdate}
                                   dateFormat="dd/MM/yyyy"
-                                />
+                                /> */}
+                                  <div
+                                  onClick={toggleDatePickerSalaryupdate}
+                                  style={{
+                                    cursor: "pointer",
+                                    display: "inline-flex",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <FaCalendarAlt size={20} />
+                                  <span style={{ marginLeft: "8px" }}>
+                                    {formattedDate321Salaryupdate
+                                      ? formattedDate321Salaryupdate
+                                      : "Select Date"}
+                                  </span>
+                                </div>
+
+                                {showDatePickerSalaryupdate && (
+                                  <div
+                                    style={{
+                                      position: "absolute",
+                                      zIndex: 1000,
+                                    }}
+                                  >
+                                    <ThaiDatePicker
+                                      className="form-control"
+                                      value={selectedDateSalaryupdate}
+                                      onChange={handleDatePickerSalaryupdateChange}
+                                    />
+                                  </div>
+                                )}
                               </div>
                             </div>
                           </div>

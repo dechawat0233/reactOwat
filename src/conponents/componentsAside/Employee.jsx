@@ -316,10 +316,10 @@ function Employee() {
     setGender(empSelect.gender);
 
     // setDateOfBirth(new Date(empSelect.dateOfBirth));
-    // setDateOfBirth(empSelect.dateOfBirth);
-    const formattedDate = formatDateToDMY(empSelect.dateOfBirth);
-    // Now set the formatted date
-    setDateOfBirth(formattedDate);
+    setDateOfBirth(empSelect.dateOfBirth);
+    // const formattedDate = formatDateToDMY(empSelect.dateOfBirth);
+    // // Now set the formatted date
+    // setDateOfBirth(formattedDate);
 
     setAge(empSelect.age);
     setIdCard(empSelect.idCard);
@@ -1216,6 +1216,12 @@ function Employee() {
                                   >
                                     ตกลง
                                   </button>
+                                  <button
+            onClick={() => setShowPopup(false)}
+            className="btn btn-secondary mt-2 ml-2"
+          >
+            ปิด
+          </button>
                                 </div>
                               )}
                             </div>
