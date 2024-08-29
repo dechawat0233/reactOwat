@@ -306,7 +306,7 @@ if(parseFloat(salary ) >= 1660) {
 
                 sumWorkHour += parseFloat(allTime) || 0;
                 sumWorkRate += parseFloat(workRate) || 0;
-                sumWorkHourOt += parseFloat(otTime) || 0;
+                sumWorkHourOt += parseFloat((parseFloat(hoursTmp + decimalFraction))) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
 
                 if(dataEmp.employees[0].salary && parseFloat(dataEmp.employees[0].salary) > 0 ) {
@@ -351,7 +351,7 @@ if(parseFloat(salary ) >= 1660) {
 
                 sumWorkHour += parseFloat(allTime) || 0;
                 sumWorkRate += parseFloat(workRate) || 0;
-                sumWorkHourOt += parseFloat(otTime) || 0;
+                sumWorkHourOt += parseFloat((parseFloat(hoursTmp + decimalFraction))) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
 
                 if(dataEmp.employees[0].salary && parseFloat(dataEmp.employees[0].salary) > 0 ) {
@@ -397,7 +397,7 @@ if(parseFloat(salary ) >= 1660) {
 
                 sumWorkHour += parseFloat(allTime) || 0;
                 sumWorkRate += parseFloat(workRate) || 0;
-                sumWorkHourOt += parseFloat(otTime) || 0;
+                sumWorkHourOt += parseFloat((parseFloat(hoursTmp + decimalFraction))) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
 
                 if(dataEmp.employees[0].salary && parseFloat(dataEmp.employees[0].salary) > 0 ) {
@@ -490,7 +490,7 @@ const         wpDataCalculator1 = await {
             let otTime = `${parseFloat(hours1 || 0)}.${parseFloat(scaledMinutes1 || 0 ) } `;
 
             
-            // tmp.otTimes = `${hours1}.${scaledMinutes1}` || 0;
+            tmp.otTimes = `${hours1}.${scaledMinutes1}` || 0;
 
 
             if (element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
@@ -542,7 +542,7 @@ const         wpDataCalculator1 = await {
 
                 sumWorkHour += parseFloat(allTime) || 0;
                 sumWorkRate += parseFloat(workRate) || 0;
-                sumWorkHourOt += parseFloat(otTime) || 0;
+                sumWorkHourOt += parseFloat((parseFloat(hoursTmp + decimalFraction))) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
                 if(dataEmp.employees[0].salary && parseFloat(dataEmp.employees[0].salary) > 0 ) {
 
@@ -589,7 +589,7 @@ const         wpDataCalculator1 = await {
 
                 sumWorkHour += parseFloat(allTime) || 0;
                 sumWorkRate += parseFloat(workRate) || 0;
-                sumWorkHourOt += parseFloat(otTime) || 0;
+                sumWorkHourOt += parseFloat((parseFloat(hoursTmp + decimalFraction))) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
                 if(dataEmp.employees[0].salary && parseFloat(dataEmp.employees[0].salary) > 0 ) {
 
@@ -635,7 +635,7 @@ const         wpDataCalculator1 = await {
 
                 sumWorkHour += parseFloat(allTime) || 0;
                 sumWorkRate += parseFloat(workRate) || 0;
-                sumWorkHourOt += parseFloat(otTime) || 0;
+                sumWorkHourOt += parseFloat((parseFloat(hoursTmp + decimalFraction))) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
                 if(dataEmp.employees[0].salary && parseFloat(dataEmp.employees[0].salary) > 0 ) {
 
@@ -822,7 +822,7 @@ const         wpDataCalculator1 = await {
 
               sumWorkHour += parseFloat(allTime) || 0;
               sumWorkRate += parseFloat(element.specialtSalary) || 0;
-              sumWorkHourOt += parseFloat(otTime) || 0;
+              sumWorkHourOt += parseFloat((parseFloat(hoursTmp + decimalFraction))) || 0;
               sumWorkRateOt += parseFloat(element.specialtSalaryOT) || 0;
 
             } else {
@@ -859,7 +859,7 @@ const         wpDataCalculator1 = await {
 
                 sumWorkHour += parseFloat(allTime) || 0;
                 sumWorkRate += parseFloat(workRate) || 0;
-                sumWorkHourOt += parseFloat(otTime) || 0;
+                sumWorkHourOt += parseFloat((parseFloat(hoursTmp + decimalFraction))) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
 
                 if(dataEmp.employees[0].salary && parseFloat(dataEmp.employees[0].salary) > 0 ) {
@@ -905,7 +905,7 @@ const         wpDataCalculator1 = await {
 
                 sumWorkHour += parseFloat(allTime) || 0;
                 sumWorkRate += parseFloat(workRate) || 0;
-                sumWorkHourOt += parseFloat(otTime) || 0;
+                sumWorkHourOt += parseFloat((parseFloat(hoursTmp + decimalFraction))) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
 
                 if(dataEmp.employees[0].salary && parseFloat(dataEmp.employees[0].salary) > 0 ) {
@@ -953,7 +953,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
 
                 sumWorkHour += parseFloat(allTime) || 0;
                 sumWorkRate += parseFloat(workRate) || 0;
-                sumWorkHourOt += parseFloat(otTime) || 0;
+                sumWorkHourOt += parseFloat((parseFloat(hoursTmp + decimalFraction))) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
                 if(dataEmp.employees[0].salary && parseFloat(dataEmp.employees[0].salary) > 0 ) {
 
@@ -1035,7 +1035,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
             let scaledMinutes1 = minutes1;
             let otTime = `${parseFloat(hours1 || 0)}.${parseFloat(scaledMinutes1 || 0 ) } `;
 
-            // tmp.otTimes = otTime || '0';
+            tmp.otTimes = otTime || '0';
 
             if (element.specialtSalary !== '' || element.specialtSalaryOT !== '') {
               tmp.workRate = element.specialtSalary || '';
@@ -1086,7 +1086,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
 
                 sumWorkHour += parseFloat(allTime) || 0;
                 sumWorkRate += parseFloat(workRate) || 0;
-                sumWorkHourOt += parseFloat(otTime) || 0;
+                sumWorkHourOt += parseFloat((parseFloat(hoursTmp + decimalFraction))) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
                 if(dataEmp.employees[0].salary && parseFloat(dataEmp.employees[0].salary) > 0 ) {
 
@@ -1131,7 +1131,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
 
                 sumWorkHour += parseFloat(allTime) || 0;
                 sumWorkRate += parseFloat(workRate) || 0;
-                sumWorkHourOt += parseFloat(otTime) || 0;
+                sumWorkHourOt += parseFloat((parseFloat(hoursTmp + decimalFraction))) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
 
                 if(dataEmp.employees[0].salary && parseFloat(dataEmp.employees[0].salary) > 0 ) {
@@ -1177,7 +1177,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
 
                 sumWorkHour += parseFloat(allTime) || 0;
                 sumWorkRate += parseFloat(workRate) || 0;
-                sumWorkHourOt += parseFloat(otTime) || 0;
+                sumWorkHourOt += parseFloat((parseFloat(hoursTmp + decimalFraction))) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
 
                 if(dataEmp.employees[0].salary && parseFloat(dataEmp.employees[0].salary) > 0 ) {
@@ -1275,7 +1275,7 @@ if(testx ) {
 
     dataConclude.sumWorkHour = sumWorkHour || 0;
     dataConclude.sumWorkRate = sumWorkRate || 0;
-    dataConclude.sumWorkHourOt = sumWorkHourOt * 1.111 || 0;
+    dataConclude.sumWorkHourOt = sumWorkHourOt || 0;
     dataConclude.sumWorkRateOt = sumWorkRateOt || 0;
 
     try {
