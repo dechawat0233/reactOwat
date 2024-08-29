@@ -1522,6 +1522,27 @@ alert('ระบบทำการคำนวนใหม่แล้ว กร
 
 }
 console.log('wsCountDayWork',wsCountDayWork);
+
+const options = [
+  { id: '1231', name: 'จ่ายลาป่วยมีใบแพทย์' },
+  { id: '1233', name: 'ชดเชยค่าแรงลาคลอด' },
+  { id: '1422', name: 'จ่ายคืนพักร้อน(ครบปี/ใช้สิทธิไม่หมด)' },
+  { id: '1423', name: 'ชดเชยวันลาพักร้อน(ประกันสังคม)' },
+  { id: '1428', name: 'ลากิจธุระจำเป็น (ประกันสังคม)' },
+  { id: '1434', name: 'วันหยุดตามประเพณี (ประกันสังคม)' },
+  { id: '1435', name: 'จ่ายคืนพักร้อน(ครบปี/ใช้สิทธิไม่หมด)รับล่วงหน้า' },
+  { id: '1429', name: 'ลากิจธุระจำเป็น (ประกันสังคม) รับล่วงหน้า' },
+  { id: '1427', name: 'ชดเชยวันลาพักร้อน (ประกันสังคม )รับล่วงหน้า' },
+  { id: '1234', name: 'จ่ายลาป่วยมีใบรับรองแพทย์(รับล่วงหน้า)' },
+  { id: '1426', name: 'จ่ายคืนค่าจ้างพักร้อน(ครบปี/ใช้สิทธิไม่หมด)' },
+  { id: '1425', name: 'ค่าจ้างในวันลาพักร้อน' },
+];
+const [selectedName, setSelectedName] = useState('');
+
+const handleSelectChange = (event) => {
+  const selectedOption = options.find(option => option.id === event.target.value);
+  setSelectedName(selectedOption ? selectedOption.name : '');
+};
   return (
     // <div>
 
@@ -1643,7 +1664,7 @@ console.log('wsCountDayWork',wsCountDayWork);
               <h2 class="title">สรุปวันลา</h2>
               <section class="Frame">
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-8">
                     <table border="1" style={tableStyle}>
                       <thead>
                         <tr>
@@ -1655,9 +1676,26 @@ console.log('wsCountDayWork',wsCountDayWork);
                       <tbody>
                         {/* sumSpSalary */}
                         <tr>
-                          <td style={cellStyle}>{employee.remainsickleave}</td>
+                          {/* <td style={cellStyle}>{employee.remainsickleave}</td>
                           <td style={cellStyle}>{employee.remainbusinessleave}</td>
-                          <td style={cellStyle}>{employee.remainvacation}</td>
+                          <td style={cellStyle}>{employee.remainvacation}</td> */}
+                          <td style={cellStyle}> <select onChange={handleSelectChange} className="form-control">
+        <option value="">เลือกตัวเลือก</option>
+        {options.map((option) => (
+          <option key={option.id} value={option.id}>
+            {option.id} - {option.name}
+          </option>
+        ))}
+      </select></td>
+      <td style={cellStyle}> <input
+        type="text"
+        className="form-control mt-2"
+        value={selectedName}
+        placeholder="Selected Name"
+        readOnly
+      /></td>
+       <td style={cellStyle}>{employee.remainsickleave}</td>
+     
                         </tr>
                       </tbody>
                     </table>
