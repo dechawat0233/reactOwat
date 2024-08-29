@@ -9,23 +9,24 @@ const welfareSchema = new mongoose.Schema({
   workplace: String,
 createBy: String,
 status: String,
-welfareRecord: [{ 
+
   id: String,
   name: String,
-  numberDays: String,
-  UseDays: String,
-  amountDays: String,
+  amountDay: String,
+  countDay: String,
+      startDay: String,
+endDay: String,
   comment: String,
-  total: String
-  }],
-  welfareUseRecord: [{ 
-    id: String,
-    name: String,
-    numberDays: String,
-    StartDays: String,
-    amountDays: String,
-    comment: String,
-    total: String
+
+  
+    addSalary: [{
+      id: String,
+      name: String,
+      SpSalary: String,
+      roundOfSalary: String,
+      StaffType: String,
+      nameType: String,
+      message: String,
     }]
   
 });

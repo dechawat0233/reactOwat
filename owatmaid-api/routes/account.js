@@ -901,7 +901,7 @@ if(salary > 1660 ){
   sumAmountDayWork  = await parseFloat(dayOffWork) * (parseFloat(salary) /30);
   let  calOtWork = await amountOt;
 
-  data.accountingRecord.amountSpecialDay= await salary;
+  data.accountingRecord.amountSpecialDay= await 0;
 data.accountingRecord.amountCountDayWorkOt = await calOtWork ||0;
 
 //salary 
