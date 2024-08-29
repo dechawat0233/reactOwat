@@ -13,9 +13,48 @@ const bodyParser = require('body-parser');
 const { months } = require('moment');
 const { el, ca, it } = require('date-fns/locale');
 
+// Get all leave requests
+router.get('/list', async (req, res) => {
+    try {
+        const leaves = await welfare .find();
+        res.send(leaves);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
 
+// Get a single leave request by ID
+router.get('/leaves/:id', async (req, res) => {
+    try {
+        const leave = await welfare.findById(req.params.id);
+        if (!leave) return res.status(404).send('Leave not found');
+        res.send(leave);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
 
+// Update a leave request by ID
+router.patch('/leaves/:id', async (req, res) => {
+    try {
+        const leave = await welfare.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+        if (!leave) return res.status(404).send('Leave not found');
+        res.send(leave);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+});
 
+// Delete a leave request by ID
+router.delete('/leaves/:id', async (req, res) => {
+    try {
+        const leave = await welfare.findByIdAndDelete(req.params.id);
+        if (!leave) return res.status(404).send('Leave not found');
+        res.send(leave);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
 
 
 module.exports = router;
