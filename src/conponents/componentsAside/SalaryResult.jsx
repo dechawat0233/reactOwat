@@ -1704,28 +1704,47 @@ function Salaryresult() {
     fetchData();
   }
   console.log("wsCountDayWork", wsCountDayWork);
-
+  
   const options = [
-    { id: "1231", name: "จ่ายลาป่วยมีใบแพทย์" },
-    { id: "1233", name: "ชดเชยค่าแรงลาคลอด" },
-    { id: "1422", name: "จ่ายคืนพักร้อน(ครบปี/ใช้สิทธิไม่หมด)" },
-    { id: "1423", name: "ชดเชยวันลาพักร้อน(ประกันสังคม)" },
-    { id: "1428", name: "ลากิจธุระจำเป็น (ประกันสังคม)" },
-    { id: "1434", name: "วันหยุดตามประเพณี (ประกันสังคม)" },
-    { id: "1435", name: "จ่ายคืนพักร้อน(ครบปี/ใช้สิทธิไม่หมด)รับล่วงหน้า" },
-    { id: "1429", name: "ลากิจธุระจำเป็น (ประกันสังคม) รับล่วงหน้า" },
-    { id: "1427", name: "ชดเชยวันลาพักร้อน (ประกันสังคม )รับล่วงหน้า" },
-    { id: "1234", name: "จ่ายลาป่วยมีใบรับรองแพทย์(รับล่วงหน้า)" },
-    { id: "1426", name: "จ่ายคืนค่าจ้างพักร้อน(ครบปี/ใช้สิทธิไม่หมด)" },
-    { id: "1425", name: "ค่าจ้างในวันลาพักร้อน" },
+    { id: "ลากิจ", name: "remainbusinessleave" },
+    { id: "ลาป่วย", name: "remainsickleave" },
+    { id: "ลาพักร้อน", name: "remainvacation" },
+    { id: "ลาคลอด", name: "maternityleavesalary" },
+    { id: "ลาเกณฑ์ทหาร", name: "militaryleave" },
+    { id: "ลาเพื่อทำหมัน", name: "sterilization" },
+    { id: "ลาเพื่อฝึกอบรม", name: "leavefortraining" },
   ];
+
+  // const options = [
+  //   { id: "1231", name: "จ่ายลาป่วยมีใบแพทย์" },
+  //   { id: "1233", name: "ชดเชยค่าแรงลาคลอด" },
+  //   { id: "1422", name: "จ่ายคืนพักร้อน(ครบปี/ใช้สิทธิไม่หมด)" },
+  //   { id: "1423", name: "ชดเชยวันลาพักร้อน(ประกันสังคม)" },
+  //   { id: "1428", name: "ลากิจธุระจำเป็น (ประกันสังคม)" },
+  //   { id: "1434", name: "วันหยุดตามประเพณี (ประกันสังคม)" },
+  //   { id: "1435", name: "จ่ายคืนพักร้อน(ครบปี/ใช้สิทธิไม่หมด)รับล่วงหน้า" },
+  //   { id: "1429", name: "ลากิจธุระจำเป็น (ประกันสังคม) รับล่วงหน้า" },
+  //   { id: "1427", name: "ชดเชยวันลาพักร้อน (ประกันสังคม )รับล่วงหน้า" },
+  //   { id: "1234", name: "จ่ายลาป่วยมีใบรับรองแพทย์(รับล่วงหน้า)" },
+  //   { id: "1426", name: "จ่ายคืนค่าจ้างพักร้อน(ครบปี/ใช้สิทธิไม่หมด)" },
+  //   { id: "1425", name: "ค่าจ้างในวันลาพักร้อน" },
+  // ];
   const [selectedName, setSelectedName] = useState("");
+  const [welfareUse , setWelfareUse ] = useState(0);
 
   const handleSelectChange = (event) => {
-    const selectedOption = options.find(
-      (option) => option.id === event.target.value
+    const value = String(event.target.value);
+    let tmp = employeeList.find(
+      (employee) => employee.employeeId === staffId
     );
-    setSelectedName(selectedOption ? selectedOption.name : "");
+if(tmp && value in tmp) {
+    setSelectedName(tmp[value]);
+}
+
+    // const selectedOption = options.find(
+    //   (option) => option.id === event.target.value
+    // );
+    // setSelectedName(selectedOption ? selectedOption.name : "");
   };
 
   const [selectedName2, setSelectedName2] = useState("");
@@ -1884,9 +1903,9 @@ function Salaryresult() {
                     <table border="1" style={tableStyle}>
                       <thead>
                         <tr>
-                          <th style={headerCellStyle}>ลาป่วย</th>
-                          <th style={headerCellStyle}>ลากิจ</th>
-                          <th style={headerCellStyle}>ลาพักร้อน</th>
+                          <th style={headerCellStyle}>สิทธิการลา</th>
+                          <th style={headerCellStyle}>จำนวนวัน</th>
+                          <th style={headerCellStyle}>ใช้สิทธิแล้ว</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1903,9 +1922,9 @@ function Salaryresult() {
                             >
                               <option value="">เลือกตัวเลือก</option>
                               {options.map((option) => (
-                                <option key={option.id} value={option.id}>
-                                  {option.id} - {option.name}
-                                </option>
+                                <option key={option.id} value={option.name}>
+                                  {option.id}                                 
+                                  </option>
                               ))}
                             </select>
                           </td>
@@ -1915,11 +1934,20 @@ function Salaryresult() {
                               type="text"
                               className="form-control mt-2"
                               value={selectedName}
-                              placeholder="Selected Name"
+                              placeholder=""
                               readOnly
                             />
                           </td>
-                          <td style={cellStyle}>{employee.remainsickleave}</td>
+                          <td style={cellStyle}>
+                          {" "}
+                            <input
+                              type="text"
+                              className="form-control mt-2"
+                              value={welfareUse}
+                              placeholder=""
+                              readOnly
+                            />
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -1933,6 +1961,13 @@ function Salaryresult() {
                   <div class="col-md-2">
                     <label role="agencyname">ประเภทการลา</label>
                   </div>
+                  <div class="col-md-2">
+                    <label role="">รหัสเงินเพิ่มเงินหัก</label>
+                  </div>
+                  <div class="col-md-2">
+                    <label role="">ชื่อ</label>
+                  </div>
+
                   <div class="col-md-2">
                     <label role="agencyname"></label>
                   </div>
@@ -1969,7 +2004,7 @@ function Salaryresult() {
                       <option value="">เลือกตัวเลือก</option>
                       {options.map((option) => (
                         <option key={option.id} value={option.name}>
-                           {option.name}
+                           {option.id}
                         </option>
                       ))}
                     </select>
@@ -2035,8 +2070,9 @@ function Salaryresult() {
                     <tr>
                       <th style={headerCellStyle}>No.</th>
                       <th style={headerCellStyle}>วันที่</th>
-                      <th style={headerCellStyle}>รหัส</th>
                       <th style={headerCellStyle}>รายการ</th>
+                      <th style={headerCellStyle}>รหัสเงินเพิ่มเงินหัก</th>
+                      <th style={headerCellStyle}>ชื่อ</th>
                       <th style={headerCellStyle}>จำนวนเงิน</th>
                       <th style={headerCellStyle}>หมายเหตุ</th>
                       <th style={headerCellStyle}>ลบ</th>
