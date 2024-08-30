@@ -312,7 +312,15 @@ function Salaryresult() {
   const [wsAmountSpecialDayx, setWsAmountSpecialDayx] = useState(0);
   const [wsSocialSecurityX, setWsSocialSecurityX] = useState(0);
 
+//master addSalary and deDuctSalary
+const [searchAddSalaryList, setSearchAddSalaryList] = useState([]);
+const [searchDeductSalaryList , setSearchDeductSalaryList] = useState([]);
+const [addSalaryId , setAddSalaryId] = useState('');
+const [addSalaryName , setAddSalaryName] = useState('');
+
+
   useEffect(() => {
+
     const fetchData = async () => {
       if (year !== "" && month !== "" && staffId !== "") {
         const dataTest = await {
@@ -427,10 +435,72 @@ function Salaryresult() {
       }
     };
 
+
+    const getMaster = async () => {
+      const data = await {
+          employeeId: '0001',
+          name: '',
+          idCard: '',
+          workPlace: '',
+      };
+
+      try {
+          const response = await axios.post(endpoint + '/employee/search', data);
+          if (response) {
+              await setSearchAddSalaryList(response.data.employees[0].addSalary);
+              await setSearchDeductSalaryList(response.data.employees[0].deductSalary);
+          }
+          // await alert(JSON.stringify(response.data.employees[0].addSalary ,null,2 ));
+          // await alert(JSON.stringify(response.data.employees[0].deductSalary ,null,2 ));
+      } catch (e) {
+      }
+  }
+
+  getMaster();
+
     // Call fetchData when year or month changes
     fetchData();
+
+
   }, [year, month, staffId, updateStatus]);
 
+  useEffect(() => {
+
+    const getAddSalary = async () => {
+
+    const findObjectById = (id) => {
+      return searchAddSalaryList.find(item => item.id === id);
+    }
+
+  if(remainCode !== '') {
+    setRemainName('');
+    const foundObject = await findObjectById(remainCode );
+    if (foundObject) {
+        setAddSalaryName(foundObject.name); // Set only the name property
+        setRemainName(foundObject.name); // Set only the name property
+
+        let tmp = employeeList.find(
+          (employee) => employee.employeeId === remainCode 
+        );
+    if(tmp && value in tmp) {
+        // setSelectedName(tmp[value]);
+        // setRemainSalary();
+alert(tmp[value]);
+
+    }
+    
+// alert(addSalaryName);
+    }
+  }
+}
+
+getAddSalary();
+  }, [remainCode, searchAddSalaryList]);
+
+  
+  
+
+  
   const handleTmpamountChange = (e) => {
     setWsAmountSpecialDay(Number(e.target.value));
   };
@@ -439,6 +509,8 @@ function Salaryresult() {
     setUpdateStatus(updateStatus);
     // alert(updateStatus );
   };
+
+
 
   //sum salary before deduct
   useEffect(() => {
