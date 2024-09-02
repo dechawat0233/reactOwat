@@ -1968,7 +1968,233 @@ if(tmp && value in tmp) {
                   </div> */}
                 </div>
               </section>
-              
+              <h2 class="title">สรุปวันลา</h2>
+              <section class="Frame">
+                <div class="row">
+                  <div class="col-md-8">
+                    <table border="1" style={tableStyle}>
+                      <thead>
+                        <tr>
+                          <th style={headerCellStyle}>สิทธิการลา</th>
+                          <th style={headerCellStyle}>จำนวนวัน</th>
+                          <th style={headerCellStyle}>ใช้สิทธิแล้ว</th>
+                          <th style={headerCellStyle}>สิทธิคงเหลือ</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {/* sumSpSalary */}
+                        {/* <tr> */}
+                          {/* <td style={cellStyle}>{employee.remainsickleave}</td>
+                          <td style={cellStyle}>{employee.remainbusinessleave}</td>
+                          <td style={cellStyle}>{employee.remainvacation}</td> */}
+
+                                                        {options.map((option) => (
+                                                                                  <tr>
+                                                                                    <td style={cellStyle}>{option.id}</td>
+                                                                                    <td style={cellStyle}></td>
+                                                                                    <td style={cellStyle}></td>
+                                                                                    <td style={cellStyle}></td>
+
+                                                                                    </tr>
+
+
+                              ))}
+
+                        {/* <tr>
+
+                          <td style={cellStyle}>
+                            {" "}
+                            <select
+                              onChange={handleSelectChange}
+                              className="form-control"
+                            >
+                              <option value="">เลือกตัวเลือก</option>
+                              {options.map((option) => (
+                                <option key={option.id} value={option.name}>
+                                  {option.id}                                 
+                                  </option>
+                              ))}
+                            </select>
+                          </td>
+                          <td style={cellStyle}>
+                            {" "}
+                            <input
+                              type="text"
+                              className="form-control mt-2"
+                              value={selectedName}
+                              placeholder=""
+                              readOnly
+                            />
+                          </td>
+                          <td style={cellStyle}>
+                          {" "}
+                            <input
+                              type="text"
+                              className="form-control mt-2"
+                              value={welfareUse}
+                              placeholder=""
+                              readOnly
+                            />
+                          </td>
+                        </tr> */}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <br />
+                <div class="row">
+                  <div class="col-md-2">
+                    <label role="agencyname">วันที่</label>
+                  </div>
+                  <div class="col-md-2">
+                    <label role="agencyname">ประเภทการลา</label>
+                  </div>
+                  <div class="col-md-2">
+                    <label role="">รหัสเงินเพิ่มเงินหัก</label>
+                  </div>
+                  <div class="col-md-2">
+                    <label role="">ชื่อ</label>
+                  </div>
+
+                  <div class="col-md-2">
+                    <label role="agencyname"></label>
+                  </div>
+                  <div class="col-md-2">
+                    <label role="agencyname">จำนวนเงิน</label>
+                  </div>
+                  <div class="col-md-2">
+                    <label role="agencyname">หมายเหตุ</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-2">
+                    <div
+                      style={{
+                        position: "relative",
+                        zIndex: 9999,
+                        marginLeft: "0rem",
+                      }}
+                    >
+                      <DatePicker
+                        className="form-control"
+                        selected={selectedThaiDate}
+                        onChange={handleThaiDateChange}
+                        dateFormat="dd/MM/yyyy"
+                        locale={th}
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <select
+                      onChange={handleSelectChange2}
+                      className="form-control"
+                    >
+                      <option value="">เลือกตัวเลือก</option>
+                      {options.map((option) => (
+                        <option key={option.id} value={option.name}>
+                           {option.id}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div class="col-md-2">
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={remainCode}
+                      onChange={handleRemainCodeChange}
+                      placeholder="รหัส"
+                    />
+                  </div>
+                  <div class="col-md-2">
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={remainName}
+                      onChange={handleRemainNameChange}
+                      placeholder="ชื่อ"
+                    />
+                  </div>
+                  <div class="col-md-2">
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={remainSalary}
+                      onChange={handleRemainSalaryChange}
+                      placeholder="บาท"
+                    />
+                  </div>
+                  <div class="col-md-2">
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={remainComment}
+                      onChange={handleRemainCommentChange}
+                      placeholder="หมายเหตุ"
+                    />
+                  </div>
+                
+                </div>
+                <br/>
+                <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2">
+                    <button
+                      type="button"
+                      onClick={handleAddData}
+                      class="btn b_save"
+                    >
+                      <i class="custom-icon-font"> + </i>เพิ่ม
+                    </button>
+                  </div>
+                </div>
+                <br />
+                <table border="1" style={tableStyle}>
+                  <thead>
+                    <tr>
+                      <th style={headerCellStyle}>No.</th>
+                      <th style={headerCellStyle}>วันที่</th>
+                      <th style={headerCellStyle}>รายการ</th>
+                      <th style={headerCellStyle}>รหัสเงินเพิ่มเงินหัก</th>
+                      <th style={headerCellStyle}>ชื่อ</th>
+                      <th style={headerCellStyle}>จำนวนเงิน</th>
+                      <th style={headerCellStyle}>หมายเหตุ</th>
+                      <th style={headerCellStyle}>ลบ</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {remainArray.map((data, index) => (
+                      <tr key={index}>
+                        <td style={cellStyle}>{index + 1}</td>
+                        <td style={cellStyle}>
+                          {data.thaiDate.toLocaleDateString("th-TH", {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                          })}
+                        </td>
+                        <td style={cellStyle}>{data.code}</td>
+                        <td style={cellStyle}>{data.name}</td>
+                        <td style={cellStyle}>{data.salary}</td>
+                        <td style={cellStyle}>{data.comment}</td>
+                        <td style={cellStyle}>
+                          <button
+                            class="btn btn-danger"
+                            style={{ width: "4rem" }}
+                            onClick={() => handleDeleteData(index)}
+                          >
+                            ลบ
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </section>
               <h2 class="title">สรุปเงินเดือน</h2>
               <section class="Frame">
                 {staffFullName ? (
@@ -2416,233 +2642,6 @@ if(tmp && value in tmp) {
                 {/* </Link > */}
               </div>
               {/* {JSON.stringify(employee.addSalary,null,2)} */}
-              <h2 class="title">สรุปวันลา</h2>
-              <section class="Frame">
-                <div class="row">
-                  <div class="col-md-8">
-                    <table border="1" style={tableStyle}>
-                      <thead>
-                        <tr>
-                          <th style={headerCellStyle}>สิทธิการลา</th>
-                          <th style={headerCellStyle}>จำนวนวัน</th>
-                          <th style={headerCellStyle}>ใช้สิทธิแล้ว</th>
-                          <th style={headerCellStyle}>สิทธิคงเหลือ</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {/* sumSpSalary */}
-                        {/* <tr> */}
-                          {/* <td style={cellStyle}>{employee.remainsickleave}</td>
-                          <td style={cellStyle}>{employee.remainbusinessleave}</td>
-                          <td style={cellStyle}>{employee.remainvacation}</td> */}
-
-                                                        {options.map((option) => (
-                                                                                  <tr>
-                                                                                    <td style={cellStyle}>{option.id}</td>
-                                                                                    <td style={cellStyle}></td>
-                                                                                    <td style={cellStyle}></td>
-                                                                                    <td style={cellStyle}></td>
-
-                                                                                    </tr>
-
-
-                              ))}
-
-                        {/* <tr>
-
-                          <td style={cellStyle}>
-                            {" "}
-                            <select
-                              onChange={handleSelectChange}
-                              className="form-control"
-                            >
-                              <option value="">เลือกตัวเลือก</option>
-                              {options.map((option) => (
-                                <option key={option.id} value={option.name}>
-                                  {option.id}                                 
-                                  </option>
-                              ))}
-                            </select>
-                          </td>
-                          <td style={cellStyle}>
-                            {" "}
-                            <input
-                              type="text"
-                              className="form-control mt-2"
-                              value={selectedName}
-                              placeholder=""
-                              readOnly
-                            />
-                          </td>
-                          <td style={cellStyle}>
-                          {" "}
-                            <input
-                              type="text"
-                              className="form-control mt-2"
-                              value={welfareUse}
-                              placeholder=""
-                              readOnly
-                            />
-                          </td>
-                        </tr> */}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <br />
-                <div class="row">
-                  <div class="col-md-2">
-                    <label role="agencyname">วันที่</label>
-                  </div>
-                  <div class="col-md-2">
-                    <label role="agencyname">ประเภทการลา</label>
-                  </div>
-                  <div class="col-md-2">
-                    <label role="">รหัสเงินเพิ่มเงินหัก</label>
-                  </div>
-                  <div class="col-md-2">
-                    <label role="">ชื่อ</label>
-                  </div>
-
-                  <div class="col-md-2">
-                    <label role="agencyname"></label>
-                  </div>
-                  <div class="col-md-2">
-                    <label role="agencyname">จำนวนเงิน</label>
-                  </div>
-                  <div class="col-md-2">
-                    <label role="agencyname">หมายเหตุ</label>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-2">
-                    <div
-                      style={{
-                        position: "relative",
-                        zIndex: 9999,
-                        marginLeft: "0rem",
-                      }}
-                    >
-                      <DatePicker
-                        className="form-control"
-                        selected={selectedThaiDate}
-                        onChange={handleThaiDateChange}
-                        dateFormat="dd/MM/yyyy"
-                        locale={th}
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <select
-                      onChange={handleSelectChange2}
-                      className="form-control"
-                    >
-                      <option value="">เลือกตัวเลือก</option>
-                      {options.map((option) => (
-                        <option key={option.id} value={option.name}>
-                           {option.id}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div class="col-md-2">
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={remainCode}
-                      onChange={handleRemainCodeChange}
-                      placeholder="รหัส"
-                    />
-                  </div>
-                  <div class="col-md-2">
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={remainName}
-                      onChange={handleRemainNameChange}
-                      placeholder="ชื่อ"
-                    />
-                  </div>
-                  <div class="col-md-2">
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={remainSalary}
-                      onChange={handleRemainSalaryChange}
-                      placeholder="บาท"
-                    />
-                  </div>
-                  <div class="col-md-2">
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={remainComment}
-                      onChange={handleRemainCommentChange}
-                      placeholder="หมายเหตุ"
-                    />
-                  </div>
-                
-                </div>
-                <br/>
-                <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-2"></div>
-                <div class="col-md-2"></div>
-                <div class="col-md-2"></div>
-                <div class="col-md-2"></div>
-                <div class="col-md-2">
-                    <button
-                      type="button"
-                      onClick={handleAddData}
-                      class="btn b_save"
-                    >
-                      <i class="custom-icon-font"> + </i>เพิ่ม
-                    </button>
-                  </div>
-                </div>
-                <br />
-                <table border="1" style={tableStyle}>
-                  <thead>
-                    <tr>
-                      <th style={headerCellStyle}>No.</th>
-                      <th style={headerCellStyle}>วันที่</th>
-                      <th style={headerCellStyle}>รายการ</th>
-                      <th style={headerCellStyle}>รหัสเงินเพิ่มเงินหัก</th>
-                      <th style={headerCellStyle}>ชื่อ</th>
-                      <th style={headerCellStyle}>จำนวนเงิน</th>
-                      <th style={headerCellStyle}>หมายเหตุ</th>
-                      <th style={headerCellStyle}>ลบ</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {remainArray.map((data, index) => (
-                      <tr key={index}>
-                        <td style={cellStyle}>{index + 1}</td>
-                        <td style={cellStyle}>
-                          {data.thaiDate.toLocaleDateString("th-TH", {
-                            day: "2-digit",
-                            month: "2-digit",
-                            year: "numeric",
-                          })}
-                        </td>
-                        <td style={cellStyle}>{data.code}</td>
-                        <td style={cellStyle}>{data.name}</td>
-                        <td style={cellStyle}>{data.salary}</td>
-                        <td style={cellStyle}>{data.comment}</td>
-                        <td style={cellStyle}>
-                          <button
-                            class="btn btn-danger"
-                            style={{ width: "4rem" }}
-                            onClick={() => handleDeleteData(index)}
-                          >
-                            ลบ
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </section>
             </div>
           </section>
         </div>
