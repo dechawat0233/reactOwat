@@ -963,7 +963,7 @@ function Salary() {
                           <div class="col-md-4">
                             <div class="form-group">
                               <label role="costtype">
-                                ลงบัญชีเป็นค่าใช้จ่าย
+                                ลงบัญชีแบบ
                               </label>
                               <div class="" style={{ marginTop: "10px" }}>
                                 <div class="icheck-primary d-inline">
@@ -971,28 +971,28 @@ function Salary() {
                                     type="radio"
                                     id="costtype"
                                     name="costtype"
-                                    value="ทางตรง"
-                                    checked={employeeData.costtype === "ทางตรง"}
+                                    value="ภ.ง.ด.1"
+                                    checked={employeeData.costtype === "ภ.ง.ด.1"}
                                     onChange={(e) =>
                                       handleChange(e, "costtype")
                                     }
                                   />{" "}
-                                  ทางตรง
+                                  ภ.ง.ด.1 (ภาษีเงินได้หักณที่จ่าย)
                                 </div>
                                 <div class="icheck-primary d-inline">
                                   <input
                                     type="radio"
                                     id="costtype"
                                     name="costtype"
-                                    value="ทางอ้อม"
+                                    value="ภ.ง.ด.3"
                                     checked={
-                                      employeeData.costtype === "ทางอ้อม"
+                                      employeeData.costtype === "ภ.ง.ด.3"
                                     }
                                     onChange={(e) =>
                                       handleChange(e, "costtype")
                                     }
                                   />{" "}
-                                  ทางอ้อม
+                                  ภ.ง.ด.3 (หัก ณ ที่จ่าย 3%)
                                 </div>
                               </div>
                             </div>

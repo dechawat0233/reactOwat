@@ -7,7 +7,7 @@ const cors = require('cors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
-
+    
 //Connect mongodb
 mongoose.connect(connectionString, {
   useNewUrlParser: true, useUnifiedTopology:
@@ -114,6 +114,7 @@ const employeeSchema = new mongoose.Schema({
   salarypayment: String,
   salarybank: String,
   banknumber: String,
+salaryTaxType: String, 
 
   salaryadd1: String,
   salaryadd1v: String,
