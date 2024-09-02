@@ -1978,14 +1978,30 @@ if(tmp && value in tmp) {
                           <th style={headerCellStyle}>สิทธิการลา</th>
                           <th style={headerCellStyle}>จำนวนวัน</th>
                           <th style={headerCellStyle}>ใช้สิทธิแล้ว</th>
+                          <th style={headerCellStyle}>สิทธิคงเหลือ</th>
                         </tr>
                       </thead>
                       <tbody>
                         {/* sumSpSalary */}
-                        <tr>
+                        {/* <tr> */}
                           {/* <td style={cellStyle}>{employee.remainsickleave}</td>
                           <td style={cellStyle}>{employee.remainbusinessleave}</td>
                           <td style={cellStyle}>{employee.remainvacation}</td> */}
+
+                                                        {options.map((option) => (
+                                                                                  <tr>
+                                                                                    <td style={cellStyle}>{option.id}</td>
+                                                                                    <td style={cellStyle}></td>
+                                                                                    <td style={cellStyle}></td>
+                                                                                    <td style={cellStyle}></td>
+
+                                                                                    </tr>
+
+
+                              ))}
+
+                        {/* <tr>
+
                           <td style={cellStyle}>
                             {" "}
                             <select
@@ -2020,7 +2036,7 @@ if(tmp && value in tmp) {
                               readOnly
                             />
                           </td>
-                        </tr>
+                        </tr> */}
                       </tbody>
                     </table>
                   </div>
