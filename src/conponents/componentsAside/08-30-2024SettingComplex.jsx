@@ -2596,22 +2596,37 @@ function SettingComplex({ workplaceList }) {
                     <label>เลือกวันหยุดของหน่วยงาน:</label>
 
                     <div>
-                    <div className="row">
-                        <div className="col-md-3">
-                          <label style={{ margin: "0.5rem" }}>วันที่:</label>
-                        </div>
+                      <div className="row">
                         <div className="col-md-3">
                           <label style={{ marginRight: "0.5rem" }}>
                             เดือน:
                           </label>
                         </div>
-
+                        <div className="col-md-3">
+                          <label style={{ margin: "0.5rem" }}>วันที่:</label>
+                        </div>
                         <div className="col-md-3">
                           <label style={{ margin: "0.5rem" }}>ปี:</label>
                         </div>
                       </div>
 
                       <div className="row">
+                        <div className="col-md-3">
+                          <select
+                            className="form-control"
+                            value={month}
+                            onChange={(e) => setMonth(e.target.value)}
+                          >
+                            <option value="">Select month</option>
+                            {Array.from({ length: 12 }, (_, i) => i + 1).map(
+                              (month) => (
+                                <option key={month} value={month}>
+                                  {month}
+                                </option>
+                              )
+                            )}
+                          </select>
+                        </div>
                         <div className="col-md-3">
                           <select
                             className="form-control"
@@ -2631,23 +2646,6 @@ function SettingComplex({ workplaceList }) {
                         <div className="col-md-3">
                           <select
                             className="form-control"
-                            value={month}
-                            onChange={(e) => setMonth(e.target.value)}
-                          >
-                            <option value="">Select month</option>
-                            {Array.from({ length: 12 }, (_, i) => i + 1).map(
-                              (month) => (
-                                <option key={month} value={month}>
-                                  {month}
-                                </option>
-                              )
-                            )}
-                          </select>
-                        </div>
-
-                        <div className="col-md-3">
-                          <select
-                            className="form-control"
                             value={year}
                             onChange={(e) => setYear(e.target.value)}
                           >
@@ -2657,7 +2655,7 @@ function SettingComplex({ workplaceList }) {
                               (_, i) => new Date().getFullYear() + 3 - i
                             ).map((year) => (
                               <option key={year} value={year}>
-                                {year + 543}
+                                {year}
                               </option>
                             ))}
                           </select>
@@ -2675,8 +2673,9 @@ function SettingComplex({ workplaceList }) {
                     </div>
 
                     <br />
-                    {/* {selectedDates.length > 0 && (
+                    {selectedDates.length > 0 && (
                       <div>
+                        {/* <h4>วันหยุดหน่วยงาน</h4> */}
                         วันหยุดหน่วยงาน (เดือน/วัน/ปี)
                         <br />
                         <ol>
@@ -2691,46 +2690,6 @@ function SettingComplex({ workplaceList }) {
                                   !isNaN(date.getTime())
                                     ? date.toLocaleDateString()
                                     : `${day}/${month}/${year} (Invalid Date)`}{" "}
-                                </div>
-                                <div
-                                  className="col-md-1"
-                                  style={{ borderTop: "2px solid black" }}
-                                >
-                                  <button
-                                    type="button"
-                                    onClick={() => handleRemoveDate(date)}
-                                    className="btn clean"
-                                    style={{ margin: "0.5rem", width: "6rem" }}
-                                  >
-                                    ลบออก
-                                  </button>
-                                </div>
-                              </div>
-                            </li>
-                          ))}
-                        </ol>
-                      </div>
-                    )} */}
-                    {selectedDates.length > 0 && (
-                      <div>
-                        วันหยุดหน่วยงาน (เดือน/วัน/ปี)
-                        <br />
-                        <ol>
-                          {selectedDates.map((date, index) => (
-                            <li key={index}>
-                              <div className="row">
-                                <div
-                                  className="col-md-1"
-                                  style={{ borderTop: "2px solid black" }}
-                                >
-                                  {date instanceof Date &&
-                                  !isNaN(date.getTime())
-                                    ? `${date.getDate()}/${
-                                        date.getMonth() + 1
-                                      }/${date.getFullYear() + 543}`
-                                    : `${day}/${month}/${
-                                        year + 543
-                                      } (Invalid Date)`}
                                 </div>
                                 <div
                                   className="col-md-1"

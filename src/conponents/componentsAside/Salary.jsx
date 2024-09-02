@@ -22,8 +22,8 @@ function Salary() {
     position: "absolute",
     background: "white",
     border: "1px solid #ccc",
-    padding: "10px",
-    zIndex: 1000,
+    // padding: "10px",
+    // zIndex: 1000,
     width: "30rem",
   };
 
