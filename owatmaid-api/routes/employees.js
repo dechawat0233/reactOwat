@@ -115,6 +115,7 @@ const employeeSchema = new mongoose.Schema({
   salarybank: String,
   banknumber: String,
 salaryTaxType: String, 
+costtype : String , 
 
   salaryadd1: String,
   salaryadd1v: String,
