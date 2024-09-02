@@ -7,7 +7,7 @@ const cors = require('cors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
-    
+
 //Connect mongodb
 mongoose.connect(connectionString, {
   useNewUrlParser: true, useUnifiedTopology:
