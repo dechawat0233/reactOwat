@@ -47,6 +47,17 @@ router.post('/search', async (req, res) => {
     }
 });
 
+//delete all record 
+router.get('/listdelete', async (req, res) => {
+
+try {
+    const result = await welfare.deleteMany({});
+    res.status(200).send({ message: 'All records deleted successfully', deletedCount: result.deletedCount });
+} catch (error) {
+    res.status(500).send({ error: 'An error occurred while deleting records', details: error.message });
+}
+});
+
 // Get all leave requests
 router.get('/list', async (req, res) => {
     try {
