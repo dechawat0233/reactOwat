@@ -2523,10 +2523,10 @@ if(tmp && value in tmp) {
                   </div>
 
                   <div class="col-md-2">
-                    <label role="agencyname"></label>
+                    <label role="agencyname">จำนวนเงิน</label>
                   </div>
                   <div class="col-md-2">
-                    <label role="agencyname">จำนวนเงิน</label>
+                    <label role="agencyname"></label>
                   </div>
                   <div class="col-md-2">
                     <label role="agencyname">หมายเหตุ</label>
@@ -2662,6 +2662,21 @@ if(tmp && value in tmp) {
                     ))}
                   </tbody>
                 </table>
+                <br/>
+                <div class="row">
+                <div class="col-md-6">
+
+                    </div>
+                  <div class="col-md-6">
+                  <button
+                            class="btn b_save"
+                            style={{ width: "8rem" }}
+                            
+                          >
+                            บันทึกการลา
+                          </button>
+                    </div>
+                  </div>
               </section>
             </div>
           </section>
