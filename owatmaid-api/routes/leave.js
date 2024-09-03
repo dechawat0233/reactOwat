@@ -12,17 +12,40 @@ const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const { months } = require('moment');
 const { el, ca, it } = require('date-fns/locale');
-
-// Create a new leave request
+// Create or update a leave request
 router.post('/create', async (req, res) => {
+    const { employeeId, year, month, record } = req.body;
+
     try {
-        const leave = new welfare (req.body);
-        await leave.save();
-        res.status(201).send(leave);
+        // Check if a welfare record already exists for the given employeeId, year, and month
+        let existingWelfare = await welfare.findOne({ employeeId, year, month });
+
+        if (existingWelfare) {
+            // Update the existing record with the new information
+            existingWelfare.record.push(...record);
+            await existingWelfare.save();
+            res.status(200).send({ message: 'Welfare record updated successfully', data: existingWelfare });
+        } else {
+            // Create a new welfare record if no matching record exists
+            const newWelfare = new welfare(req.body);
+            await newWelfare.save();
+            res.status(201).send({ message: 'Welfare record created successfully', data: newWelfare });
+        }
     } catch (error) {
-        res.status(400).send(error);
+        res.status(400).send({ error: 'An error occurred while creating/updating the welfare record', details: error.message });
     }
 });
+
+// Create a new leave request
+// router.post('/create', async (req, res) => {
+//     try {
+//         const leave = new welfare (req.body);
+//         await leave.save();
+//         res.status(201).send(leave);
+//     } catch (error) {
+//         res.status(400).send(error);
+//     }
+// });
 
 router.post('/search', async (req, res) => {
     try {
