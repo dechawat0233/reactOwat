@@ -22,7 +22,9 @@ router.post('/create', async (req, res) => {
 
         if (existingWelfare) {
             // Update the existing record with the new information
-            existingWelfare.record.push(...record);
+            // existingWelfare.record.push(...record);
+            existingWelfare.record = record;
+
             await existingWelfare.save();
             res.status(200).send({ message: 'Welfare record updated successfully', data: existingWelfare });
         } else {
