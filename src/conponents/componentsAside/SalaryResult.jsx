@@ -268,15 +268,13 @@ if(yearWelfare !== '' && monthWelfare !== '') {
   };
 
   try {
-await axios
-.post(endpoint + "/leave/search", welfareSearch )
-.then((response) => {
-  // const responseData = response.data;
-if(response.data){
-awaitalert(JSON.stringify(response.data.record ));
-  // setRemainArray(responseData[0].record );
+
+const result = await axios.post(endpoint + "/leave/search", welfareSearch );
+if(result && result .data.length >0 ) {
+// await alert(JSON.stringify(result .data[0].record));
+setRemainArray(result .data[0].record );
 }
-});
+
   } catch (e) {
     // alert('get welfare error is' + e)
   }
@@ -2719,13 +2717,13 @@ if(tmp && value in tmp) {
                     {remainArray.map((data, index) => (
                       <tr key={index}>
                         <td style={cellStyle}>{index + 1}</td>
-                        <td style={cellStyle}>
+                        {/* <td style={cellStyle}>
                           {data.startDay.toLocaleDateString("th-TH", {
                             day: "2-digit",
                             month: "2-digit",
                             year: "numeric",
                           })}
-                        </td>
+                        </td> */}
                         <td style={cellStyle}>{data.welfareType}</td>
 
                         <td style={cellStyle}>{data.id}</td>
