@@ -24,6 +24,29 @@ router.post('/create', async (req, res) => {
     }
 });
 
+router.post('/search', async (req, res) => {
+    try {
+        const { year, month } = req.body;
+
+        // Validate input
+        if (!year || !month) {
+            return res.status(400).json({ message: 'Year and month are required.' });
+        }
+
+        // Find welfare records matching the year and month
+        const results = await Welfare.find({ year: year, month: month });
+
+        if (results.length === 0) {
+            return res.status(404).json({ message: 'No records found for the specified year and month.' });
+        }
+
+        res.status(200).json(results);
+    } catch (error) {
+        console.error('Error searching welfare records:', error);
+        res.status(500).json({ message: 'Server error while searching records.' });
+    }
+});
+
 // Get all leave requests
 router.get('/list', async (req, res) => {
     try {
