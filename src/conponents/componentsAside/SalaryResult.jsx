@@ -174,16 +174,29 @@ function Salaryresult() {
   };
 
   const handleAddData = () => {
-    alert(selectedName2.name )
+    // alert(selectedName2.name )
     // Create a new object with the input values
     const newData = {
-      thaiDate: selectedThaiDate || '',
-      selectedName2      : selectedName2.id || '',
-      selectedId      : selectedName2.name || '',
-      code: remainCode || '',
+      startDay: selectedThaiDate || '',
+      endDay: selectedThaiDate || '',
+      welfareType: selectedName2.id || '',
+      welfareTypeEn: selectedName2.name || '',
+      id: remainCode || '',
       name: remainName || '',
-      salary: remainSalary || '',
+      SpSalary: remainSalary || '',
+      roundOfSalary: 'monthly',
+      StaffType: '',
+      nameType: '',
+      message: '',
       comment: remainComment || '',
+    
+      // thaiDate: selectedThaiDate || '',
+      // selectedName2      : selectedName2.id || '',
+      // selectedId      : selectedName2.name || '',
+      // code: remainCode || '',
+      // name: remainName || '',
+      // salary: remainSalary || '',
+      // comment: remainComment || '',
     };
 
     // Add the new data object to the dataArray state
@@ -204,6 +217,75 @@ function Salaryresult() {
   };
 
   console.log("remainArray", remainArray);
+
+const [yearWelfare, setYearWelfare] = useState('');
+const [monthWelfare, setMonthWelfare] = useState('');
+  
+
+  async function handleSaveWelfare(){
+// alert('handleSaveWelfare');
+try {
+  if(remainArray.length > 0 && yearWelfare !== '' && monthWelfare !== '') {
+
+  const welfareSave = await {
+    year: yearWelfare,
+    month: monthWelfare,
+    createDate: '',
+    employeeId: staffId ,
+    workplace: '',
+    createBy: '',
+    status: '',
+    record: remainArray
+  }
+
+
+//save welfare
+await axios
+.post(endpoint + "/leave/create", welfareSave )
+.then(async (response) => {
+  const responseData = await response.data;
+  if(responseData ) {
+    alert('บันทึกสำเร็จ');
+  }
+});
+} else {
+  alert('กรุณาตรวจสอบรายการลา และข้อมูลพนักงาน')
+}
+
+} catch (e) {
+alert('save welfare error is ' + e);
+}
+  }
+
+useEffect(() => {
+// get welfare record with year and month
+const getWelfare = async () => {
+
+if(yearWelfare !== '' && monthWelfare !== '') {
+  const welfareSearch = await {
+    year: yearWelfare,
+    month : monthWelfare
+  };
+  
+  try {
+await axios
+.post(endpoint + "/leave/search", welfareSearch )
+.then((response) => {
+  // const responseData = response.data;
+if(response.data){
+awaitalert(JSON.stringify(response.data.record ));
+  // setRemainArray(responseData[0].record );
+}
+});
+  } catch (e) {
+    alert('get welfare error is' + e)
+  }
+
+}
+}
+
+getWelfare();
+}, [yearWelfare, monthWelfare]);
 
   useEffect(() => {
     // setMonth("01");
@@ -333,7 +415,8 @@ const [addSalaryName , setAddSalaryName] = useState('');
     if(tmp ) {
         setEmpDataSelect(tmp);
     }
-            
+setYearWelfare(          year || '');           
+setMonthWelfare(month ||  '');
         const dataTest = await {
           employeeId: staffId || "",
           year: year || "",
@@ -2637,17 +2720,17 @@ if(tmp && value in tmp) {
                       <tr key={index}>
                         <td style={cellStyle}>{index + 1}</td>
                         <td style={cellStyle}>
-                          {data.thaiDate.toLocaleDateString("th-TH", {
+                          {data.startDay.toLocaleDateString("th-TH", {
                             day: "2-digit",
                             month: "2-digit",
                             year: "numeric",
                           })}
                         </td>
-                        <td style={cellStyle}>{data.selectedName2}</td>
+                        <td style={cellStyle}>{data.welfareType}</td>
 
-                        <td style={cellStyle}>{data.code}</td>
+                        <td style={cellStyle}>{data.id}</td>
                         <td style={cellStyle}>{data.name}</td>
-                        <td style={cellStyle}>{data.salary}</td>
+                        <td style={cellStyle}>{data.SpSalary}</td>
                         <td style={cellStyle}>{data.comment}</td>
                         <td style={cellStyle}>
                           <button
@@ -2668,10 +2751,10 @@ if(tmp && value in tmp) {
 
                     </div>
                   <div class="col-md-6">
-                  <button
+                  <button type="button"
                             class="btn b_save"
                             style={{ width: "8rem" }}
-                            
+                            onClick={handleSaveWelfare}
                           >
                             บันทึกการลา
                           </button>
