@@ -34,7 +34,7 @@ router.post('/search', async (req, res) => {
         }
 
         // Find welfare records matching the year and month
-        const results = await Welfare.find({ year: year, month: month });
+        const results = await welfare.find({ year: year, month: month });
 
         if (results.length === 0) {
             return res.status(404).json({ message: 'No records found for the specified year and month.' });

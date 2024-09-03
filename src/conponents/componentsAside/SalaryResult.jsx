@@ -266,7 +266,7 @@ if(yearWelfare !== '' && monthWelfare !== '') {
     year: yearWelfare,
     month : monthWelfare
   };
-  
+
   try {
 await axios
 .post(endpoint + "/leave/search", welfareSearch )
@@ -278,7 +278,7 @@ awaitalert(JSON.stringify(response.data.record ));
 }
 });
   } catch (e) {
-    alert('get welfare error is' + e)
+    // alert('get welfare error is' + e)
   }
 
 }
