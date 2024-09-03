@@ -11,7 +11,8 @@ import Calendar from "react-calendar";
 import "../editwindowcss.css";
 import EmployeeWorkDay from "./componentsetting/EmployeeWorkDay";
 import "./salarysummary/styleCom.css";
-
+import { ThaiDatePicker } from "thaidatepicker-react";
+import { FaCalendarAlt } from "react-icons/fa"; // You can use any icon library
 import th from "date-fns/locale/th"; // Import Thai locale data from date-fns
 
 function Salaryresult() {
@@ -151,10 +152,48 @@ function Salaryresult() {
     getdata();
   }, []); // Run this effect only once on component mount
 
-  const handleThaiDateChange = (date) => {
-    setSelectedThaiDate(date);
-    setSelectedGregorianDate(ThaiBuddhistToGregorian(date));
-    setWorkDate(ThaiBuddhistToGregorian(date));
+  // const handleThaiDateChange = (date) => {
+  //   setSelectedThaiDate(date);
+  //   setSelectedGregorianDate(ThaiBuddhistToGregorian(date));
+  //   setWorkDate(ThaiBuddhistToGregorian(date));
+  // };
+
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [formattedDate321, setFormattedDate] = useState(null);
+
+  const handleDatePickerChange = (date) => {
+    setSelectedDate(date);
+    setShowDatePicker(false); // Hide date picker after selecting a date
+    const newDate = new Date(date);
+    setSelectedThaiDate(newDate);
+  };
+
+  useEffect(() => {
+    // Function to format a given date
+    const formatDate = (date) => {
+      const day = date.getDate().toString().padStart(2, "0");
+      const month = (date.getMonth() + 1).toString().padStart(2, "0");
+      const year = (date.getFullYear() + 543).toString();
+      return `${day}/${month}/${year}`;
+    };
+
+    if (selectedDate) {
+      // Convert the selected date string to a Date object and format it
+      const date = new Date(selectedDate);
+      const formattedDate = formatDate(date);
+      setFormattedDate(formattedDate);
+    } else {
+      // If selectedDate is null, use the current date
+      const currentDate = new Date();
+      const formattedCurrentDate = formatDate(currentDate);
+      setFormattedDate(formattedCurrentDate);
+      setSelectedDate(currentDate); // Set the initial selected date to the current date
+    }
+  }, [selectedDate]);
+
+  const toggleDatePicker = () => {
+    setShowDatePicker(!showDatePicker);
   };
 
   const handleRemainCodeChange = (event) => {
@@ -177,19 +216,19 @@ function Salaryresult() {
     // alert(selectedName2.name )
     // Create a new object with the input values
     const newData = {
-      startDay: selectedThaiDate || '',
-      endDay: selectedThaiDate || '',
-      welfareType: selectedName2.id || '',
-      welfareTypeEn: selectedName2.name || '',
-      id: remainCode || '',
-      name: remainName || '',
-      SpSalary: remainSalary || '',
-      roundOfSalary: 'monthly',
-      StaffType: '',
-      nameType: '',
-      message: '',
-      comment: remainComment || '',
-    
+      startDay: selectedThaiDate || "",
+      endDay: selectedThaiDate || "",
+      welfareType: selectedName2.id || "",
+      welfareTypeEn: selectedName2.name || "",
+      id: remainCode || "",
+      name: remainName || "",
+      SpSalary: remainSalary || "",
+      roundOfSalary: "monthly",
+      StaffType: "",
+      nameType: "",
+      message: "",
+      comment: remainComment || "",
+
       // thaiDate: selectedThaiDate || '',
       // selectedName2      : selectedName2.id || '',
       // selectedId      : selectedName2.name || '',
@@ -218,73 +257,69 @@ function Salaryresult() {
 
   console.log("remainArray", remainArray);
 
-const [yearWelfare, setYearWelfare] = useState('');
-const [monthWelfare, setMonthWelfare] = useState('');
-  
+  const [yearWelfare, setYearWelfare] = useState("");
+  const [monthWelfare, setMonthWelfare] = useState("");
 
-  async function handleSaveWelfare(){
-// alert('handleSaveWelfare');
-try {
-  if(remainArray.length > 0 && yearWelfare !== '' && monthWelfare !== '') {
+  async function handleSaveWelfare() {
+    // alert('handleSaveWelfare');
+    try {
+      if (remainArray.length > 0 && yearWelfare !== "" && monthWelfare !== "") {
+        const welfareSave = await {
+          year: yearWelfare,
+          month: monthWelfare,
+          createDate: "",
+          employeeId: staffId,
+          workplace: "",
+          createBy: "",
+          status: "",
+          record: remainArray,
+        };
 
-  const welfareSave = await {
-    year: yearWelfare,
-    month: monthWelfare,
-    createDate: '',
-    employeeId: staffId ,
-    workplace: '',
-    createBy: '',
-    status: '',
-    record: remainArray
+        //save welfare
+        await axios
+          .post(endpoint + "/leave/create", welfareSave)
+          .then(async (response) => {
+            const responseData = await response.data;
+            if (responseData) {
+              alert("บันทึกสำเร็จ");
+            }
+          });
+      } else {
+        alert("กรุณาตรวจสอบรายการลา และข้อมูลพนักงาน");
+      }
+    } catch (e) {
+      alert("save welfare error is " + e);
+    }
   }
 
+  useEffect(() => {
+    // get welfare record with year and month
+    const getWelfare = async () => {
+      if (yearWelfare !== "" && monthWelfare !== "") {
+        const welfareSearch = await {
+          year: yearWelfare,
+          month: monthWelfare,
+        };
 
-//save welfare
-await axios
-.post(endpoint + "/leave/create", welfareSave )
-.then(async (response) => {
-  const responseData = await response.data;
-  if(responseData ) {
-    alert('บันทึกสำเร็จ');
-  }
-});
-} else {
-  alert('กรุณาตรวจสอบรายการลา และข้อมูลพนักงาน')
-}
+        try {
+          const result = await axios.post(
+            endpoint + "/leave/search",
+            welfareSearch
+          );
+          if (result && result.data.length > 0) {
+            // await alert(JSON.stringify(result .data[0].record));
+            setRemainArray(result.data[0].record);
+          }
+        } catch (e) {
+          // alert('get welfare error is' + e)
+        }
+      }
+    };
 
-} catch (e) {
-alert('save welfare error is ' + e);
-}
-  }
+    getWelfare();
+  }, [yearWelfare, monthWelfare]);
 
-useEffect(() => {
-// get welfare record with year and month
-const getWelfare = async () => {
-
-if(yearWelfare !== '' && monthWelfare !== '') {
-  const welfareSearch = await {
-    year: yearWelfare,
-    month : monthWelfare
-  };
-
-  try {
-
-const result = await axios.post(endpoint + "/leave/search", welfareSearch );
-if(result && result .data.length >0 ) {
-// await alert(JSON.stringify(result .data[0].record));
-setRemainArray(result .data[0].record );
-}
-
-  } catch (e) {
-    // alert('get welfare error is' + e)
-  }
-
-}
-}
-
-getWelfare();
-}, [yearWelfare, monthWelfare]);
-
+  console.log("remainArray", remainArray);
   useEffect(() => {
     // setMonth("01");
 
@@ -394,27 +429,26 @@ getWelfare();
   //tmp for cal social
   const [wsAmountSpecialDayx, setWsAmountSpecialDayx] = useState(0);
   const [wsSocialSecurityX, setWsSocialSecurityX] = useState(0);
-const [empDataSelect , setEmpDataSelect ] = useState();
+  const [empDataSelect, setEmpDataSelect] = useState();
 
-//master addSalary and deDuctSalary
-const [searchAddSalaryList, setSearchAddSalaryList] = useState([]);
-const [searchDeductSalaryList , setSearchDeductSalaryList] = useState([]);
-const [addSalaryId , setAddSalaryId] = useState('');
-const [addSalaryName , setAddSalaryName] = useState('');
-
+  //master addSalary and deDuctSalary
+  const [searchAddSalaryList, setSearchAddSalaryList] = useState([]);
+  const [searchDeductSalaryList, setSearchDeductSalaryList] = useState([]);
+  const [addSalaryId, setAddSalaryId] = useState("");
+  const [addSalaryName, setAddSalaryName] = useState("");
 
   useEffect(() => {
-
     const fetchData = async () => {
       if (year !== "" && month !== "" && staffId !== "") {
         let tmp = employeeList.find(
-          (employee) => employee.employeeId === staffId);
+          (employee) => employee.employeeId === staffId
+        );
 
-    if(tmp ) {
-        setEmpDataSelect(tmp);
-    }
-setYearWelfare(          year || '');           
-setMonthWelfare(month ||  '');
+        if (tmp) {
+          setEmpDataSelect(tmp);
+        }
+        setYearWelfare(year || "");
+        setMonthWelfare(month || "");
         const dataTest = await {
           employeeId: staffId || "",
           year: year || "",
@@ -527,72 +561,63 @@ setMonthWelfare(month ||  '');
       }
     };
 
-
     const getMaster = async () => {
       const data = await {
-          employeeId: '0001',
-          name: '',
-          idCard: '',
-          workPlace: '',
+        employeeId: "0001",
+        name: "",
+        idCard: "",
+        workPlace: "",
       };
 
       try {
-          const response = await axios.post(endpoint + '/employee/search', data);
-          if (response) {
-              await setSearchAddSalaryList(response.data.employees[0].addSalary);
-              await setSearchDeductSalaryList(response.data.employees[0].deductSalary);
-          }
-          // await alert(JSON.stringify(response.data.employees[0].addSalary ,null,2 ));
-          // await alert(JSON.stringify(response.data.employees[0].deductSalary ,null,2 ));
-      } catch (e) {
-      }
-  }
+        const response = await axios.post(endpoint + "/employee/search", data);
+        if (response) {
+          await setSearchAddSalaryList(response.data.employees[0].addSalary);
+          await setSearchDeductSalaryList(
+            response.data.employees[0].deductSalary
+          );
+        }
+        // await alert(JSON.stringify(response.data.employees[0].addSalary ,null,2 ));
+        // await alert(JSON.stringify(response.data.employees[0].deductSalary ,null,2 ));
+      } catch (e) {}
+    };
 
-  getMaster();
+    getMaster();
 
     // Call fetchData when year or month changes
     fetchData();
-
-
   }, [year, month, staffId, updateStatus]);
 
   useEffect(() => {
-
     const getAddSalary = async () => {
+      const findObjectById = (id) => {
+        return searchAddSalaryList.find((item) => item.id === id);
+      };
 
-    const findObjectById = (id) => {
-      return searchAddSalaryList.find(item => item.id === id);
-    }
+      if (remainCode !== "") {
+        setRemainName("");
+        const foundObject = await findObjectById(remainCode);
+        if (foundObject) {
+          setAddSalaryName(foundObject.name); // Set only the name property
+          setRemainName(foundObject.name); // Set only the name property
 
-  if(remainCode !== '') {
-    setRemainName('');
-    const foundObject = await findObjectById(remainCode );
-    if (foundObject) {
-        setAddSalaryName(foundObject.name); // Set only the name property
-        setRemainName(foundObject.name); // Set only the name property
+          let tmp = employeeList.find(
+            (employee) => employee.employeeId === remainCode
+          );
+          if (tmp && value in tmp) {
+            // setSelectedName(tmp[value]);
+            // setRemainSalary();
+            alert(tmp[value]);
+          }
 
-        let tmp = employeeList.find(
-          (employee) => employee.employeeId === remainCode 
-        );
-    if(tmp && value in tmp) {
-        // setSelectedName(tmp[value]);
-        // setRemainSalary();
-alert(tmp[value]);
+          // alert(addSalaryName);
+        }
+      }
+    };
 
-    }
-    
-// alert(addSalaryName);
-    }
-  }
-}
-
-getAddSalary();
+    getAddSalary();
   }, [remainCode, searchAddSalaryList]);
 
-  
-  
-
-  
   const handleTmpamountChange = (e) => {
     setWsAmountSpecialDay(Number(e.target.value));
   };
@@ -601,8 +626,6 @@ getAddSalary();
     setUpdateStatus(updateStatus);
     // alert(updateStatus );
   };
-
-
 
   //sum salary before deduct
   useEffect(() => {
@@ -1868,7 +1891,7 @@ getAddSalary();
     fetchData();
   }
   console.log("wsCountDayWork", wsCountDayWork);
-  
+
   const options = [
     { id: "ลากิจ", name: "remainbusinessleave" },
     { id: "ลาป่วย", name: "remainsickleave" },
@@ -1894,16 +1917,14 @@ getAddSalary();
   //   { id: "1425", name: "ค่าจ้างในวันลาพักร้อน" },
   // ];
   const [selectedName, setSelectedName] = useState("");
-  const [welfareUse , setWelfareUse ] = useState(0);
+  const [welfareUse, setWelfareUse] = useState(0);
 
   const handleSelectChange = (event) => {
     const value = String(event.target.value);
-    let tmp = employeeList.find(
-      (employee) => employee.employeeId === staffId
-    );
-if(tmp && value in tmp) {
-    setSelectedName(tmp[value]);
-}
+    let tmp = employeeList.find((employee) => employee.employeeId === staffId);
+    if (tmp && value in tmp) {
+      setSelectedName(tmp[value]);
+    }
 
     // const selectedOption = options.find(
     //   (option) => option.id === event.target.value
@@ -2061,7 +2082,7 @@ if(tmp && value in tmp) {
                   </div> */}
                 </div>
               </section>
-              
+
               <h2 class="title">สรุปเงินเดือน</h2>
               <section class="Frame">
                 {staffFullName ? (
@@ -2525,27 +2546,27 @@ if(tmp && value in tmp) {
                       <tbody>
                         {/* sumSpSalary */}
                         {/* <tr> */}
-                          {/* <td style={cellStyle}>{employee.remainsickleave}</td>
+                        {/* <td style={cellStyle}>{employee.remainsickleave}</td>
                           <td style={cellStyle}>{employee.remainbusinessleave}</td>
                           <td style={cellStyle}>{employee.remainvacation}</td> */}
-        {options.map((option) => (
-          <tr key={option.id}>
-            <td style={cellStyle}>{option.id}</td>
-            <td style={cellStyle}>
-              {empDataSelect && empDataSelect[option.name] !== undefined
-                ? empDataSelect[option.name]
-                : 'N/A'}
-            </td>
+                        {options.map((option) => (
+                          <tr key={option.id}>
+                            <td style={cellStyle}>{option.id}</td>
+                            <td style={cellStyle}>
+                              {empDataSelect &&
+                              empDataSelect[option.name] !== undefined
+                                ? empDataSelect[option.name]
+                                : "N/A"}
+                            </td>
 
-            <td style={cellStyle}>
-              {/* Render additional dynamic content based on option if needed */}
-            </td>
-            <td style={cellStyle}>
-              {/* Render additional dynamic content based on option if needed */}
-            </td>
-          </tr>
-        ))}
-
+                            <td style={cellStyle}>
+                              {/* Render additional dynamic content based on option if needed */}
+                            </td>
+                            <td style={cellStyle}>
+                              {/* Render additional dynamic content based on option if needed */}
+                            </td>
+                          </tr>
+                        ))}
 
                         {/* <tr>
                           <td style={cellStyle}>
@@ -2583,7 +2604,6 @@ if(tmp && value in tmp) {
                             />
                           </td>
                         </tr> */}
-                        
                       </tbody>
                     </table>
                   </div>
@@ -2622,13 +2642,36 @@ if(tmp && value in tmp) {
                         marginLeft: "0rem",
                       }}
                     >
-                      <DatePicker
+                      {/* <DatePicker
                         className="form-control"
                         selected={selectedThaiDate}
                         onChange={handleThaiDateChange}
                         dateFormat="dd/MM/yyyy"
                         locale={th}
-                      />
+                      /> */}
+                       <div
+                        onClick={toggleDatePicker}
+                        style={{
+                          position: "relative",
+                          zIndex: 9999,
+                          marginLeft: "0rem",
+                        }}
+                      >
+                        <FaCalendarAlt size={20} />
+                        <span style={{ marginLeft: "8px" }}>
+                          {formattedDate321 ? formattedDate321 : "Select Date"}
+                        </span>
+                      </div>
+
+                      {showDatePicker && (
+                        <div style={{ position: "absolute", zIndex: 1000 }}>
+                          <ThaiDatePicker
+                            className="form-control"
+                            value={selectedDate}
+                            onChange={handleDatePickerChange}
+                          />
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div class="col-md-2">
@@ -2639,7 +2682,7 @@ if(tmp && value in tmp) {
                       <option value="">เลือกตัวเลือก</option>
                       {options.map((option) => (
                         <option key={option.id} value={option.name}>
-                           {option.id}
+                          {option.id}
                         </option>
                       ))}
                     </select>
@@ -2680,16 +2723,15 @@ if(tmp && value in tmp) {
                       placeholder="หมายเหตุ"
                     />
                   </div>
-                
                 </div>
-                <br/>
+                <br />
                 <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-2"></div>
-                <div class="col-md-2"></div>
-                <div class="col-md-2"></div>
-                <div class="col-md-2"></div>
-                <div class="col-md-2">
+                  <div class="col-md-2"></div>
+                  <div class="col-md-2"></div>
+                  <div class="col-md-2"></div>
+                  <div class="col-md-2"></div>
+                  <div class="col-md-2"></div>
+                  <div class="col-md-2">
                     <button
                       type="button"
                       onClick={handleAddData}
@@ -2717,13 +2759,23 @@ if(tmp && value in tmp) {
                     {remainArray.map((data, index) => (
                       <tr key={index}>
                         <td style={cellStyle}>{index + 1}</td>
-                        {/* <td style={cellStyle}>
-                          {data.startDay.toLocaleDateString("th-TH", {
+                        <td style={cellStyle}>
+                          {/* {data.startDay.toLocaleDateString("th-TH", {
                             day: "2-digit",
                             month: "2-digit",
                             year: "numeric",
-                          })}
-                        </td> */}
+                          })} */}
+                          {new Date(data.startDay)
+                            .toLocaleDateString("th-TH", {
+                              day: "2-digit",
+                              month: "2-digit",
+                              year: "numeric",
+                            })
+                            .replace(
+                              /(\d{4})/,
+                              (match) => parseInt(match, 10)
+                            )}
+                        </td>
                         <td style={cellStyle}>{data.welfareType}</td>
 
                         <td style={cellStyle}>{data.id}</td>
@@ -2743,21 +2795,20 @@ if(tmp && value in tmp) {
                     ))}
                   </tbody>
                 </table>
-                <br/>
+                <br />
                 <div class="row">
-                <div class="col-md-6">
-
-                    </div>
+                  <div class="col-md-6"></div>
                   <div class="col-md-6">
-                  <button type="button"
-                            class="btn b_save"
-                            style={{ width: "8rem" }}
-                            onClick={handleSaveWelfare}
-                          >
-                            บันทึกการลา
-                          </button>
-                    </div>
+                    <button
+                      type="button"
+                      class="btn b_save"
+                      style={{ width: "8rem" }}
+                      onClick={handleSaveWelfare}
+                    >
+                      บันทึกการลา
+                    </button>
                   </div>
+                </div>
               </section>
             </div>
           </section>
