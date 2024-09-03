@@ -289,7 +289,7 @@ function Employee() {
     const month = String(date.getMonth() + 1).padStart(2, "0"); // Get month (note: months are zero-indexed)
     const year = date.getFullYear(); // Get full year
 
-    return `${day}/${month}/${year}`; // Return formatted date as day/month/year
+    return `${day}/${month}/${year+543}`; // Return formatted date as day/month/year
   }
 
   function onEmployeeSelect(empSelect) {
@@ -316,10 +316,21 @@ function Employee() {
     setGender(empSelect.gender);
 
     // setDateOfBirth(new Date(empSelect.dateOfBirth));
-    setDateOfBirth(empSelect.dateOfBirth);
+    // setDateOfBirth(empSelect.dateOfBirth);
     // const formattedDate = formatDateToDMY(empSelect.dateOfBirth);
     // // Now set the formatted date
     // setDateOfBirth(formattedDate);
+    const isValidDate = !isNaN(new Date(empSelect.dateOfBirth).getTime());
+
+    if (isValidDate) {
+      // Format the date if it's a valid Date object
+      const formattedDate = formatDateToDMY(empSelect.dateOfBirth);
+      // Set the formatted date
+      setDateOfBirth(formattedDate);
+    } else {
+      // Handle case where dateOfBirth is already in the correct format or is not a date
+      setDateOfBirth(empSelect.dateOfBirth);
+    }
 
     setAge(empSelect.age);
     setIdCard(empSelect.idCard);
@@ -551,9 +562,9 @@ function Employee() {
   const handleExceptDateChange = (date) => {
     setExceptjob(date);
   };
-  const handleDateOfBirth = (date) => {
-    setDateOfBirth(date);
-  };
+  // const handleDateOfBirth = (date) => {
+  //   setDateOfBirth(date);
+  // };
 
   //check create employee or update employee by click select employee
   useEffect(() => {

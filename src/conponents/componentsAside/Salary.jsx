@@ -960,7 +960,7 @@ function Salary() {
                               </select>
                             </div>
                           </div>
-                          <div class="col-md-4">
+                          <div class="col-md-12">
                             <div class="form-group">
                               <label role="costtype">
                                 ลงบัญชีแบบ

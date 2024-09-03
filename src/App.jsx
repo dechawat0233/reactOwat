@@ -105,6 +105,21 @@ function App() {
       });
   }, []); 
 
+  const [employeeList, setEmployeeList] = useState([]);
+
+  useEffect(() => {
+    // Fetch data from the API when the component mounts
+    fetch(endpoint + "/employee/list")
+      .then((response) => response.json())
+      .then((data) => {
+        // Update the state with the fetched data
+        setEmployeeList(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []); 
+
   const [selectedEmployees, setSelectedEmployees] = useState([]);
 
   function handleEmployeeSelect(employee) {
@@ -165,7 +180,7 @@ function App() {
               <Route path="/examine" element={<Examine />} />
               <Route path="/compensation" element={<Compensation />} />
               <Route path="/salaryresult" element={<Salaryresult />} />
-              <Route path="/salaryAllresult" element={<SalaryAllResult />} />
+              <Route path="/salaryAllresult" element={<SalaryAllResult employeeList={employeeList}/>} />
               <Route path="/salarySlipPDF" element={<SalarySlipPDF />} />
 
 
