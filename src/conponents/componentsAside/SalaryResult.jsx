@@ -174,13 +174,16 @@ function Salaryresult() {
   };
 
   const handleAddData = () => {
+    alert(selectedName2.name )
     // Create a new object with the input values
     const newData = {
-      thaiDate: selectedThaiDate,
-      code: remainCode,
-      name: remainName,
-      salary: remainSalary,
-      comment: remainComment,
+      thaiDate: selectedThaiDate || '',
+      selectedName2      : selectedName2.id || '',
+      selectedId      : selectedName2.name || '',
+      code: remainCode || '',
+      name: remainName || '',
+      salary: remainSalary || '',
+      comment: remainComment || '',
     };
 
     // Add the new data object to the dataArray state
@@ -311,6 +314,7 @@ function Salaryresult() {
   //tmp for cal social
   const [wsAmountSpecialDayx, setWsAmountSpecialDayx] = useState(0);
   const [wsSocialSecurityX, setWsSocialSecurityX] = useState(0);
+const [empDataSelect , setEmpDataSelect ] = useState();
 
 //master addSalary and deDuctSalary
 const [searchAddSalaryList, setSearchAddSalaryList] = useState([]);
@@ -323,6 +327,13 @@ const [addSalaryName , setAddSalaryName] = useState('');
 
     const fetchData = async () => {
       if (year !== "" && month !== "" && staffId !== "") {
+        let tmp = employeeList.find(
+          (employee) => employee.employeeId === staffId);
+
+    if(tmp ) {
+        setEmpDataSelect(tmp);
+    }
+            
         const dataTest = await {
           employeeId: staffId || "",
           year: year || "",
@@ -1823,9 +1834,10 @@ if(tmp && value in tmp) {
 
   const handleSelectChange2 = (event) => {
     const selectedOption = options.find(
-      (option) => option.id === event.target.value
+      (option) => option.name === event.target.value
     );
-    setSelectedName2(selectedOption ? selectedOption.name : "");
+    setSelectedName2(selectedOption ? selectedOption : "");
+    // alert(selectedOption.name );
   };
   return (
     // <div>
@@ -2435,21 +2447,26 @@ if(tmp && value in tmp) {
                           {/* <td style={cellStyle}>{employee.remainsickleave}</td>
                           <td style={cellStyle}>{employee.remainbusinessleave}</td>
                           <td style={cellStyle}>{employee.remainvacation}</td> */}
+        {options.map((option) => (
+          <tr key={option.id}>
+            <td style={cellStyle}>{option.id}</td>
+            <td style={cellStyle}>
+              {empDataSelect && empDataSelect[option.name] !== undefined
+                ? empDataSelect[option.name]
+                : 'N/A'}
+            </td>
 
-                                                        {options.map((option) => (
-                                                                                  <tr>
-                                                                                    <td style={cellStyle}>{option.id}</td>
-                                                                                    <td style={cellStyle}></td>
-                                                                                    <td style={cellStyle}></td>
-                                                                                    <td style={cellStyle}></td>
+            <td style={cellStyle}>
+              {/* Render additional dynamic content based on option if needed */}
+            </td>
+            <td style={cellStyle}>
+              {/* Render additional dynamic content based on option if needed */}
+            </td>
+          </tr>
+        ))}
 
-                                                                                    </tr>
-
-
-                              ))}
 
                         {/* <tr>
-
                           <td style={cellStyle}>
                             {" "}
                             <select
@@ -2485,6 +2502,7 @@ if(tmp && value in tmp) {
                             />
                           </td>
                         </tr> */}
+                        
                       </tbody>
                     </table>
                   </div>
@@ -2625,6 +2643,8 @@ if(tmp && value in tmp) {
                             year: "numeric",
                           })}
                         </td>
+                        <td style={cellStyle}>{data.selectedName2}</td>
+
                         <td style={cellStyle}>{data.code}</td>
                         <td style={cellStyle}>{data.name}</td>
                         <td style={cellStyle}>{data.salary}</td>
