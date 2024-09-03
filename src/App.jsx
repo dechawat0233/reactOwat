@@ -181,11 +181,11 @@ function App() {
               <Route path="/compensation" element={<Compensation />} />
               <Route path="/salaryresult" element={<Salaryresult />} />
               <Route path="/salaryAllresult" element={<SalaryAllResult employeeList={employeeList}/>} />
-              <Route path="/salarySlipPDF" element={<SalarySlipPDF />} />
+              <Route path="/salarySlipPDF" element={<SalarySlipPDF  employeeList={employeeList}/>} />
 
 
               <Route path="/worktimesheet" element={<Worktimesheet />} />
-              <Route path="/worktimesheetworkplace" element={<WorktimeSheetWorkplace />} />
+              <Route path="/worktimesheetworkplace" element={<WorktimeSheetWorkplace  employeeList={employeeList}/>} />
               <Route path="/worktimeSheetWorkplace_Save01_22_2024" element={<WorktimeSheetWorkplace_Save01_22_2024 />} />
 
               <Route path="/income_tax" element={<IncomeTax />} />

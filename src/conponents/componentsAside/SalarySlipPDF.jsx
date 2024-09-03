@@ -11,7 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import moment from "moment";
 import "moment/locale/th"; // Import the Thai locale data
-function SalarySlipPDF() {
+function SalarySlipPDF({ employeeList }) {
   const [workplacrId, setWorkplacrId] = useState(""); //รหัสหน่วยงาน
   const [workplacrName, setWorkplacrName] = useState(""); //รหัสหน่วยงาน
 
@@ -93,22 +93,22 @@ function SalarySlipPDF() {
 
   console.log("workplaceListAll", workplaceListAll);
 
-  const [employeeList, setEmployeeList] = useState([]);
+  // const [employeeList, setEmployeeList] = useState([]);
 
-  useEffect(() => {
-    // Fetch data from the API when the component mounts
-    fetch(endpoint + "/employee/list")
-      .then((response) => response.json())
-      .then((data) => {
-        // Update the state with the fetched data
-        setEmployeeList(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []); // The empty array [] ensures that the effect runs only once after the initial render
+  // useEffect(() => {
+  //   // Fetch data from the API when the component mounts
+  //   fetch(endpoint + "/employee/list")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       // Update the state with the fetched data
+  //       setEmployeeList(data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching data:", error);
+  //     });
+  // }, []); // The empty array [] ensures that the effect runs only once after the initial render
 
-  console.log(employeeList);
+  // console.log(employeeList);
 
   // useEffect(() => {
   //     const fetchData = () => {
@@ -181,7 +181,18 @@ function SalarySlipPDF() {
               return 0; // workplace values are equal
             });
             // searchEmployeeId
-            setResponseDataAll(filteredData);
+            const updatedData = filteredData.map(item => {
+              const matchingEmployee = employeeList.find(emp => emp.employeeId === item.employeeId);
+
+              if (matchingEmployee && matchingEmployee.costtype === "ภ.ง.ด.3") {
+                  // Modify the workplace by changing the first digit to '2'
+                  item.workplace = "2" + item.workplace.slice(1);
+              }
+
+              return item;
+          });
+
+            setResponseDataAll(updatedData);
           } else if (selectedOption == "option2") {
             const responseData = response.data;
             console.log("responseData", responseData);
@@ -210,7 +221,18 @@ function SalarySlipPDF() {
               return 0; // workplace values are equal
             });
 
-            setResponseDataAll(filteredData);
+            const updatedData = filteredData.map(item => {
+              const matchingEmployee = employeeList.find(emp => emp.employeeId === item.employeeId);
+
+              if (matchingEmployee && matchingEmployee.costtype === "ภ.ง.ด.3") {
+                  // Modify the workplace by changing the first digit to '2'
+                  item.workplace = "2" + item.workplace.slice(1);
+              }
+
+              return item;
+          });
+
+            setResponseDataAll(updatedData);
           }
         })
         .catch((error) => {
@@ -772,9 +794,9 @@ function SalarySlipPDF() {
         .toFixed(2)
         .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-        const totalSpSalaryCompensationNumber = parseFloat(
-          formattedTotalSpSalaryCompensation.replace(/,/g, "")
-        );
+      const totalSpSalaryCompensationNumber = parseFloat(
+        formattedTotalSpSalaryCompensation.replace(/,/g, "")
+      );
 
       //   if (
       //     formattedSumAddSalaryAfterTax != 0 &&
@@ -796,10 +818,10 @@ function SalarySlipPDF() {
       }
 
       // if (formattedTotalSpSalaryCompensation !== 0) {
-        if (
-          totalSpSalaryCompensationNumber !== 0 &&
-          totalSpSalaryCompensationNumber != null
-        ) {
+      if (
+        totalSpSalaryCompensationNumber !== 0 &&
+        totalSpSalaryCompensationNumber != null
+      ) {
         textArray.push("จ่ายชดเชยวันลา");
         countArray.push("");
         valueArray.push(formattedTotalSpSalaryCompensation);
@@ -1587,9 +1609,7 @@ function SalarySlipPDF() {
             if (amountCountDayWork != 0 && amountCountDayWork != null) {
               // Push the text to textArray and the value to valueArray
               textDedustArray.push("หักสมทบประกันสังคม");
-                valueDedustArray.push(
-                  amountCountDayWork
-                );
+              valueDedustArray.push(amountCountDayWork);
             }
           }
           console.log("22");
