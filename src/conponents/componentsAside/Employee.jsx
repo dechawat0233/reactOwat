@@ -1471,7 +1471,7 @@ function Employee() {
                                 เบอร์ติดต่อกรณีฉุกเฉิน
                               </label>
                               <input
-                                required
+                                
                                 type="text"
                                 name="emergencyContactNumber"
                                 class="form-control"
