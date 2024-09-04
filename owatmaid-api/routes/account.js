@@ -168,6 +168,7 @@ let sumDeductBeforeTax = 0;
 
 let sumSocial = 0;
 let tax = 0;
+let costtype = '';
 
 let sumAddSalaryAfterTax = 0;
 let sumDeductAfterTax = 0;
@@ -210,6 +211,8 @@ if (response) {
     data.workplace = await response.data.workplace;
     data.accountingRecord.tax = await response.data.tax ||0;
 tax = await response.data.tax ||0; 
+costtype = await response.data.costtype  ||0; 
+
 salary = await response.data.salary || 0;
 
 // await console.log(response.data);
@@ -962,8 +965,15 @@ if (sumSocial < 1650) {
 // Calculate socialSecurity based on sumSocial
 data.accountingRecord.socialSecurity = Math.ceil((sumSocial * 0.05)) || 0;
 
+//คำนวนหัก ณ ที่จ่าย 3 %
+if(costtype == 'ภ.ง.ด.3'){
+tax = await (total  + amountDay + amountOt + calSP -(Math.ceil((sumSocial * 0.05) || 0))) * 0.03;
+//total
+await total  + amountDay + amountOt + calSP -(Math.ceil((sumSocial * 0.05) || 0)) ;
+} else {
 //total
 total = await total  + amountDay + amountOt + calSP -(Math.ceil((sumSocial * 0.05) || 0)) - tax;
+}
 
     // data.accountingRecord.socialSecurity = (sumSocial * 0.05) || 0;
     data.accountingRecord.addAmountAfterTax = sumNonTaxNonSalary || 0;
