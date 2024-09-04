@@ -1321,7 +1321,7 @@ function AddEditEmployee() {
                                     เบอร์ติดต่อกรณีฉุกเฉิน
                                   </label>
                                   <input
-                                    required
+                                    // required
                                     type="text"
                                     name="emergencyContactNumber"
                                     class="form-control"
