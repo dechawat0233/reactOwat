@@ -120,7 +120,7 @@ await dataList .push(accountData );
     const responseConclude = await axios.post(sURL + '/conclude/search', dataSearch);
 
     const dataList = [];
-
+  
     if (responseConclude.data.recordConclude.length > 0) {
 
       for (let c = 0; c < responseConclude.data.recordConclude.length; c++) {
