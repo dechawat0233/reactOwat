@@ -966,7 +966,7 @@ if (sumSocial < 1650) {
 data.accountingRecord.socialSecurity = Math.ceil((sumSocial * 0.05)) || 0;
 
 //คำนวนหัก ณ ที่จ่าย 3 %
-if(costtype === "ภ.ง.ด.3"){
+if(1 == 1 || costtype === "ภ.ง.ด.3"){
 tax = await (total  + amountDay + amountOt + calSP -(Math.ceil((sumSocial * 0.05) || 0))) * 0.03;
 //total
 await total  + amountDay + amountOt + calSP -(Math.ceil((sumSocial * 0.05) || 0)) ;
