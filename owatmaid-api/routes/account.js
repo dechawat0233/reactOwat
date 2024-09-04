@@ -120,7 +120,7 @@ await dataList .push(accountData );
     const responseConclude = await axios.post(sURL + '/conclude/search', dataSearch);
 
     const dataList = [];
-
+  
     if (responseConclude.data.recordConclude.length > 0) {
 
       for (let c = 0; c < responseConclude.data.recordConclude.length; c++) {
@@ -168,6 +168,7 @@ let sumDeductBeforeTax = 0;
 
 let sumSocial = 0;
 let tax = 0;
+let costtype = '';
 
 let sumAddSalaryAfterTax = 0;
 let sumDeductAfterTax = 0;
@@ -210,6 +211,8 @@ if (response) {
     data.workplace = await response.data.workplace;
     data.accountingRecord.tax = await response.data.tax ||0;
 tax = await response.data.tax ||0; 
+costtype = await response.data.costtype  ||0; 
+
 salary = await response.data.salary || 0;
 
 // await console.log(response.data);
@@ -962,15 +965,28 @@ if (sumSocial < 1650) {
 // Calculate socialSecurity based on sumSocial
 data.accountingRecord.socialSecurity = Math.ceil((sumSocial * 0.05)) || 0;
 
+//คำนวนหัก ณ ที่จ่าย 3 %
+if( costtype === "ภ.ง.ด.3"){
+tax = await (total  + amountDay + amountOt + calSP -(Math.ceil((sumSocial * 0.05) || 0))) * 0.03;
+data.accountingRecord.tax = await tax|| 0;
+
+//total
+await total  + amountDay + amountOt + calSP -(Math.ceil((sumSocial * 0.05) || 0)) ;
+data.accountingRecord.total = await total || 0;
+
+} else {
 //total
 total = await total  + amountDay + amountOt + calSP -(Math.ceil((sumSocial * 0.05) || 0)) - tax;
+data.accountingRecord.total = await total || 0;
+
+}
 
     // data.accountingRecord.socialSecurity = (sumSocial * 0.05) || 0;
     data.accountingRecord.addAmountAfterTax = sumNonTaxNonSalary || 0;
     // data.accountingRecord.advancePayment = 0;
     data.accountingRecord.deductAfterTax = sumDeductUncalculateTax || 0;
     data.accountingRecord.bank = 0;
-    data.accountingRecord.total = total || 0;
+    // data.accountingRecord.total = total || 0;
 
     data.accountingRecord.sumAddSalaryBeforeTax = sumAddSalaryBeforeTax || 0;
     data.accountingRecord.sumAddSalaryBeforeTaxNonSocial = sumAddSalaryBeforeTaxNonSocial || 0;
