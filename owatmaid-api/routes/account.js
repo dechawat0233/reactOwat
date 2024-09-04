@@ -1177,6 +1177,7 @@ data.accountingRecord.total = await 0;
 
 //======
 
+
 //get all accounting
 router.post('/calsalarylist', async (req, res) => {
   try {
