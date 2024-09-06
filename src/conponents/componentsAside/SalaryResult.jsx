@@ -308,7 +308,7 @@ function Salaryresult() {
             welfareSearch
           );
           if (result && result.data.length > 0) {
-            // await alert(JSON.stringify(result .data[0].record));
+            await alert(JSON.stringify(result .data[0].record));
             setRemainArray(result.data[0].record);
           }
         } catch (e) {
