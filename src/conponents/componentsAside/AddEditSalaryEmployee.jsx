@@ -124,7 +124,7 @@ function AddEditSalaryEmployee() {
     const [minusSalary, setMinusSalary] = useState('');
     const [minusmessage, setMinusmessage] = useState('');
     const [payType, setPayType] = useState('');
-    const [installment, setInstallment] = useState('');
+    const [installment, setInstallment] = useState('1');
 
     const [minusRoundOfSalary, setMinusRoundOfSalary] = useState('');
     const [minusStaffType, setMinusStaffType] = useState('');
@@ -738,7 +738,7 @@ function AddEditSalaryEmployee() {
                                                                 <label role="addSalaryName">ชื่อ</label>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-1">
+                                                        <div class="col-md-2">
                                                             <div class="form-group">
                                                                 <label role="addSalary">จำนวนเงิน</label>
                                                             </div>
@@ -748,11 +748,11 @@ function AddEditSalaryEmployee() {
                                                                 <label role="">การหักเงิน</label>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-2">
+                                                        {/* <div class="col-md-2">
                                                             <div class="form-group">
                                                                 <label role="">จำนวนงวด</label>
                                                             </div>
-                                                        </div>
+                                                        </div> */}
                                                         <div class="col-md-3">
                                                             <div class="form-group">
                                                                 <label role="message">หมายเหตุ</label>
@@ -773,7 +773,7 @@ function AddEditSalaryEmployee() {
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-1">
+                                                        <div class="col-md-2">
                                                             <input type="text" class="form-control" id="addSalaryName" placeholder="จำนวนเงิน" value={minusSalary} onChange={(e) => setMinusSalary(e.target.value)} />
                                                         </div>
 
@@ -789,7 +789,7 @@ function AddEditSalaryEmployee() {
                                                                 <option value="installment">ผ่อนจ่าย</option>
                                                             </select>
                                                         </div>
-                                                        <div className="col-md-2">
+                                                        {/* <div className="col-md-2">
 
                                                             {payType == "installment" ? (
                                                                 <select
@@ -816,7 +816,7 @@ function AddEditSalaryEmployee() {
                                                                 </select>
                                                             )}
 
-                                                        </div>
+                                                        </div> */}
 
                                                         <div class="col-md-2">
                                                             <input type="text" class="form-control" id="minusStaffType" placeholder="หมายเหตุ" value={minusStaffType} onChange={(e) => setMinusStaffType(e.target.value)} />
@@ -843,7 +843,7 @@ function AddEditSalaryEmployee() {
                                                                             <label role="addSalaryName">ชื่อ</label>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-1">
+                                                                    <div class="col-md-2">
                                                                         <div class="form-group">
                                                                             <label role="addSalary">จำนวนเงิน</label>
                                                                         </div>
@@ -853,11 +853,11 @@ function AddEditSalaryEmployee() {
                                                                             <label role="">การหักเงิน</label>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-2">
+                                                                    {/* <div class="col-md-2">
                                                                         <div class="form-group">
                                                                             <label role="">จำนวนงวด</label>
                                                                         </div>
-                                                                    </div>
+                                                                    </div> */}
                                                                     <div class="col-md-3">
                                                                         <div class="form-group">
                                                                             <label role="message">หมายเหตุ</label>
@@ -886,7 +886,7 @@ function AddEditSalaryEmployee() {
 
                                                                                 <div class="col-md-1" style={bordertable}> {item.id}</div>
                                                                                 <div class="col-md-2" style={bordertable}> {item.name} </div>
-                                                                                <div class="col-md-1" style={bordertable}> {item.amount} </div>
+                                                                                <div class="col-md-2" style={bordertable}> {item.amount} </div>
 
                                                                                 {item.payType == "immedate" && (
                                                                                     <div class="col-md-2" style={bordertable}>จ่ายทั้งหมด</div>
@@ -895,7 +895,7 @@ function AddEditSalaryEmployee() {
                                                                                     <div class="col-md-2" style={bordertable}>ผ่อนจ่าย</div>
                                                                                 )}
 
-                                                                                <div class="col-md-2" style={bordertable}>{item.installment}</div>
+                                                                                {/* <div class="col-md-2" style={bordertable}>{item.installment}</div> */}
 
                                                                                 <div class="col-md-2" style={bordertable}> {item.message} </div>
 

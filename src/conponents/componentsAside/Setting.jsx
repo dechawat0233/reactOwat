@@ -1145,11 +1145,16 @@ function Setting({ workplaceList }) {
         // setEmployeesResult(response.data.employees);
         if (response) {
           alert("บันทึกสำเร็จ");
+           // Clear the query parameters
+  const newUrl = window.location.origin + window.location.pathname; // Removes the query string
+
+  // Update the URL without reloading the page
+  window.history.replaceState({}, document.title, newUrl);
           window.location.reload();
         }
       } catch (error) {
         alert("กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล");
-        // window.location.reload();
+        window.location.reload();
       }
     }
   }
