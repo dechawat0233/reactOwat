@@ -1,5 +1,5 @@
 import endpoint from "../../config";
-import { Link } from "react-router-dom";
+import { json, Link } from "react-router-dom";
 
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
@@ -221,7 +221,7 @@ function AddsettimeEmployee() {
       await setWOtTime("");
       await setWSelectOtTime("");
       await setWSelectOtTimeout("");
-      const workplaceUsed = await "";
+      const workplaceUsed = await {};
 
       if (wId !== "" && wName !== "") {
         const workplacesearch = await workplaceList.find(
@@ -230,19 +230,19 @@ function AddsettimeEmployee() {
         if (workplacesearch) {
           // alert('wId ' + wId);
 
-          const complexData = await workplacesearch.workplaceGroup.find(
-            (complex) => complex.workplaceComplexId === "1"
-          );
-          if (complexData) {
-            // workplacesearch = await complexData.workplaceComplexData;
-            // alert(JSON.stringify(complexData.workplaceComplexData , null,2));
-            // workplaceUsed  = await 'group';
-            // alert('test :' );
-          } else {
-            console.log("workplaceComplexId not found");
-            // alert('test');
-          }
+          //department: employee department process
+        if(searchResult[0].workplace === wId && searchResult[0].department !== "") {
+          
+          // alert(searchResult[0].workplace );      
+// alert(searchResult[0].department);      
+// alert(workplacesearch.workplaceGroup[parseInt(searchResult[0].department || 0) -1].workplaceComplexName );
+// let dep = workplacesearch.workplaceGroup[parseInt(searchResult[0].department || 0) -1].workplaceComplexName || '';
 
+// setWName(workplacesearch.workplaceName + ': ' + dep );
+// workplaceUsed = await workplacesearch.workplaceGroup[parseInt(searchResult[0].department || 0) -1].workplaceComplexData;
+// alert(JSON.stringify(workplacesearch.workplaceGroup[parseInt(searchResult[0].department || 0) -1].workplaceComplexData) );
+
+          
           //add work time with select day
           const dayMapping = await {
             อาทิตย์: 0,
@@ -255,6 +255,342 @@ function AddsettimeEmployee() {
           };
           let date = await new Date(year, month - 1, wDate); // Subtract 1 from the month since months are zero-indexed
           let dayOfWeek = await date.getDay(); // This will give you the day of the week, where 0 is Sunday, 1 is
+
+
+          await workplacesearch.workplaceGroup[parseInt(searchResult[0].department || 0) -1].workplaceComplexData.workTimeDay.map(async (item, index) => {
+            //    alert(JSON.stringify(item.allTimes));
+            // const morningTimes = await item.allTimes.filter(time => time.shift === "กะเช้า");
+            // await alert(morningTimes[0].startTime );
+
+            //case start day = end day
+            if (
+              dayMapping[item.startDay] == dayMapping[item.endDay] &&
+              dayMapping[item.startDay] == dayOfWeek
+            ) {
+              switch (wShift) {
+                case "morning_shift":
+                  const morningTimes = await item.allTimes.filter(
+                    (time) => time.shift === "กะเช้า"
+                  );
+
+                  await setWStartTime(morningTimes[0].startTime || "");
+                  await setWEndTime(morningTimes[0].endTime || "");
+                  await setWAllTime(
+                    calTime(
+                      morningTimes[0].startTime || "",
+                      morningTimes[0].endTime || "",
+                      workplacesearch.workOfHour
+                    ) || ""
+                  );
+                  await setWOtTime(
+                    calTime(
+                      morningTimes[0].startTimeOT || "",
+                      morningTimes[0].endTimeOT || "",
+                      workplacesearch.workOfOT || ""
+                    ) || ""
+                  );
+                  await setWSelectOtTime(morningTimes[0].startTimeOT || "");
+                  await setWSelectOtTimeout(morningTimes[0].endTimeOT || "");
+                  break;
+                case "afternoon_shift":
+                  const afternoonTimes = await item.allTimes.filter(
+                    (time) => time.shift === "กะบ่าย"
+                  );
+
+                  await setWStartTime(afternoonTimes[0].startTime || "");
+                  await setWEndTime(afternoonTimes[0].endTime || "");
+                  await setWAllTime(
+                    calTime(
+                      afternoonTimes[0].startTime || "",
+                      afternoonTimes[0].endTime || "",
+                      workplacesearch.workOfHour
+                    ) || ""
+                  );
+                  await setWOtTime(
+                    calTime(
+                      afternoonTimes[0].startTimeOT || "",
+                      afternoonTimes[0].endTimeOT || "",
+                      workplacesearch.workOfOT || ""
+                    ) || ""
+                  );
+                  await setWSelectOtTime(afternoonTimes[0].startTimeOT || "");
+                  await setWSelectOtTimeout(afternoonTimes[0].endTimeOT || "");
+
+                  break;
+                case "night_shift":
+                  const nightTimes = await item.allTimes.filter(
+                    (time) => time.shift === "กะดึก"
+                  );
+
+                  await setWStartTime(nightTimes[0].startTime || "");
+                  await setWEndTime(nightTimes[0].endTime || "");
+                  await setWAllTime(
+                    calTime(
+                      nightTimes[0].startTime || "",
+                      nightTimes[0].endTime || "",
+                      workplacesearch.workOfHour
+                    ) || ""
+                  );
+                  await setWOtTime(
+                    calTime(
+                      nightTimes[0].startTimeOT || "",
+                      nightTimes[0].endTimeOT || "",
+                      workplacesearch.workOfOT || ""
+                    ) || ""
+                  );
+                  await setWSelectOtTime(nightTimes[0].startTimeOT || "");
+                  await setWSelectOtTimeout(nightTimes[0].endTimeOT || "");
+
+                  break;
+                case "specialt_shift":
+                  setWStartTime("");
+                  setWEndTime("");
+                  setWAllTime(calTime("0", "0", "24") || "");
+                  setWOtTime(calTime("0", "0", "24") || "");
+                  setWSelectOtTime("");
+                  setWSelectOtTimeout("");
+                  break;
+                default:
+                  setWStartTime("");
+                  setWEndTime("");
+                  setWAllTime("");
+                  setWOtTime("");
+                  setWSelectOtTime("");
+                  setWSelectOtTimeout("");
+              }
+            }
+
+            //case start day < end day
+            if (
+              dayMapping[item.startDay] < dayMapping[item.endDay] &&
+              dayOfWeek >= dayMapping[item.startDay] &&
+              dayOfWeek <= dayMapping[item.endDay]
+            ) {
+              switch (wShift) {
+                case "morning_shift":
+                  const morningTimes = await item.allTimes.filter(
+                    (time) => time.shift === "กะเช้า"
+                  );
+                  // await alert(morningTimes[0].startTime );
+                  await setWAllTime(
+                    calTime(
+                      morningTimes[0].startTime || "",
+                      morningTimes[0].endTime || "",
+                      workplacesearch.workOfHour
+                    ) || ""
+                  );
+                  await setWStartTime(morningTimes[0].startTime || "");
+                  await setWEndTime(morningTimes[0].endTime || "");
+                  await setWOtTime(
+                    calTime(
+                      morningTimes[0].startTimeOT || "",
+                      morningTimes[0].endTimeOT || "",
+                      workplacesearch.workOfOT || ""
+                    ) || ""
+                  );
+                  await setWSelectOtTime(morningTimes[0].startTimeOT || "");
+                  await setWSelectOtTimeout(morningTimes[0].endTimeOT || "");
+                  break;
+                case "afternoon_shift":
+                  const afternoonTimes = await item.allTimes.filter(
+                    (time) => time.shift === "กะบ่าย"
+                  );
+                  await setWAllTime(
+                    calTime(
+                      afternoonTimes[0].startTime || "",
+                      afternoonTimes[0].endTime || "",
+                      workplacesearch.workOfHour
+                    ) || ""
+                  );
+
+                  await setWStartTime(afternoonTimes[0].startTime || "");
+                  await setWEndTime(afternoonTimes[0].endTime || "");
+                  await setWOtTime(
+                    calTime(
+                      afternoonTimes[0].startTimeOT || "",
+                      afternoonTimes[0].endTimeOT || "",
+                      workplacesearch.workOfOT || ""
+                    ) || ""
+                  );
+                  await setWSelectOtTime(afternoonTimes[0].startTimeOT || "");
+                  await setWSelectOtTimeout(afternoonTimes[0].endTimeOT || "");
+
+                  break;
+                case "night_shift":
+                  const nightTimes = await item.allTimes.filter(
+                    (time) => time.shift === "กะดึก"
+                  );
+                  await setWAllTime(
+                    calTime(
+                      nightTimes[0].startTime || "",
+                      nightTimes[0].endTime || "",
+                      workplacesearch.workOfHour
+                    ) || ""
+                  );
+
+                  await setWStartTime(nightTimes[0].startTime || "");
+                  await setWEndTime(nightTimes[0].endTime || "");
+                  await setWOtTime(
+                    calTime(
+                      nightTimes[0].startTimeOT || "",
+                      nightTimes[0].endTimeOT || "",
+                      workplacesearch.workOfOT || ""
+                    ) || ""
+                  );
+                  await setWSelectOtTime(nightTimes[0].startTimeOT || "");
+                  await setWSelectOtTimeout(nightTimes[0].endTimeOT || "");
+
+                  break;
+                case "specialt_shift":
+                  await setWAllTime(calTime("0", "0", "24") || "");
+
+                  await setWStartTime("");
+                  await setWEndTime("");
+                  await setWOtTime(calTime("0", "0", "24") || "");
+                  await setWSelectOtTime("");
+                  await setWSelectOtTimeout("");
+                  break;
+                default:
+                  await setWStartTime("");
+                  await setWEndTime("");
+                  await setWAllTime("");
+                  await setWOtTime("");
+                  await setWSelectOtTime("");
+                  await setWSelectOtTimeout("");
+              }
+            }
+
+            //case start day > end day
+            if (
+              dayMapping[item.startDay] > dayMapping[item.endDay] &&
+              dayOfWeek >= dayMapping[item.startDay] &&
+              dayOfWeek <= 6 &&
+              dayOfWeek <= dayMapping[item.endDay] &&
+              dayOfWeek >= 0
+            ) {
+              switch (wShift) {
+                case "morning_shift":
+                  const morningTimes = await item.allTimes.filter(
+                    (time) => time.shift === "กะเช้า"
+                  );
+                  // await alert(morningTimes[0].startTime );
+                  await setWAllTime(
+                    calTime(
+                      morningTimes[0].startTime || "",
+                      morningTimes[0].endTime || "",
+                      workplacesearch.workOfHour
+                    ) || ""
+                  );
+                  await setWStartTime(morningTimes[0].startTime || "");
+                  await setWEndTime(morningTimes[0].endTime || "");
+                  await setWOtTime(
+                    calTime(
+                      morningTimes[0].startTimeOT || "",
+                      morningTimes[0].endTimeOT || "",
+                      workplacesearch.workOfOT || ""
+                    ) || ""
+                  );
+                  await setWSelectOtTime(morningTimes[0].startTimeOT || "");
+                  await setWSelectOtTimeout(morningTimes[0].endTimeOT || "");
+                  break;
+                case "afternoon_shift":
+                  const afternoonTimes = await item.allTimes.filter(
+                    (time) => time.shift === "กะบ่าย"
+                  );
+                  await setWAllTime(
+                    calTime(
+                      afternoonTimes[0].startTime || "",
+                      afternoonTimes[0].endTime || "",
+                      workplacesearch.workOfHour
+                    ) || ""
+                  );
+
+                  await setWStartTime(afternoonTimes[0].startTime || "");
+                  await setWEndTime(afternoonTimes[0].endTime || "");
+                  await setWOtTime(
+                    calTime(
+                      afternoonTimes[0].startTimeOT || "",
+                      afternoonTimes[0].endTimeOT || "",
+                      workplacesearch.workOfOT || ""
+                    ) || ""
+                  );
+                  await setWSelectOtTime(afternoonTimes[0].startTimeOT || "");
+                  await setWSelectOtTimeout(afternoonTimes[0].endTimeOT || "");
+
+                  break;
+                case "night_shift":
+                  const nightTimes = await item.allTimes.filter(
+                    (time) => time.shift === "กะดึก"
+                  );
+                  await setWAllTime(
+                    calTime(
+                      nightTimes[0].startTime || "",
+                      nightTimes[0].endTime || "",
+                      workplacesearch.workOfHour
+                    ) || ""
+                  );
+
+                  await setWStartTime(nightTimes[0].startTime || "");
+                  await setWEndTime(nightTimes[0].endTime || "");
+                  await setWOtTime(
+                    calTime(
+                      nightTimes[0].startTimeOT || "",
+                      nightTimes[0].endTimeOT || "",
+                      workplacesearch.workOfOT || ""
+                    ) || ""
+                  );
+                  await setWSelectOtTime(nightTimes[0].startTimeOT || "");
+                  await setWSelectOtTimeout(nightTimes[0].endTimeOT || "");
+
+                  break;
+                case "specialt_shift":
+                  await setWAllTime(calTime("0", "0", "24") || "");
+
+                  await setWStartTime("");
+                  await setWEndTime("");
+                  await setWOtTime(calTime("0", "0", "24") || "");
+                  await setWSelectOtTime("");
+                  await setWSelectOtTimeout("");
+                  break;
+                default:
+                  await setWStartTime("");
+                  await setWEndTime("");
+                  await setWAllTime("");
+                  await setWOtTime("");
+                  await setWSelectOtTime("");
+                  await setWSelectOtTimeout("");
+              }
+            }
+
+            // alert(dayMapping[item.startDay] );
+          });
+
+
+// workplacesearch = await tmp;
+// await alert(JSON.stringify(tmp));
+
+
+  } else {
+          // setWName(workplacesearch.workplaceName);
+          // workplaceUsed  = await workplacesearch;
+          // alert(JSON.stringify('hi2') );
+
+
+          
+          //add work time with select day
+          const dayMapping = await {
+            อาทิตย์: 0,
+            จันทร์: 1,
+            อังคาร: 2,
+            พุธ: 3,
+            พฤหัส: 4,
+            ศุกร์: 5,
+            เสาร์: 6,
+          };
+          let date = await new Date(year, month - 1, wDate); // Subtract 1 from the month since months are zero-indexed
+          let dayOfWeek = await date.getDay(); // This will give you the day of the week, where 0 is Sunday, 1 is
+
+alert(JSON.stringify('hi') );
 
           await workplacesearch.workTimeDay.map(async (item, index) => {
             //    alert(JSON.stringify(item.allTimes));
@@ -564,6 +900,7 @@ function AddsettimeEmployee() {
             // alert(dayMapping[item.startDay] );
           });
 
+        }
           // await alert(dayOfWeek )
           //                     await alert(wDate);
           //                     await alert(JSON.stringify(workplacesearch.workTimeDay, null,2))
@@ -641,7 +978,23 @@ function AddsettimeEmployee() {
         (workplace) => workplace.workplaceId === wId
       );
       if (workplacesearch) {
-        setWName(workplacesearch.workplaceName);
+
+        //department: employee department process
+        if(searchResult[0].workplace === wId && searchResult[0].department !== "") {
+          
+          // alert(searchResult[0].workplace );      
+// alert(searchResult[0].department);      
+// alert(workplacesearch.workplaceGroup[parseInt(searchResult[0].department || 0) -1].workplaceComplexName );
+let dep = workplacesearch.workplaceGroup[parseInt(searchResult[0].department || 0) -1].workplaceComplexName || '';
+
+setWName(workplacesearch.workplaceName + ': ' + dep );
+
+
+
+        } else {
+          setWName(workplacesearch.workplaceName);
+        }
+
         //add work time to selection
         // alert(JSON.stringify(workplacesearch.workTimeDay, null,2))
         //time of work
