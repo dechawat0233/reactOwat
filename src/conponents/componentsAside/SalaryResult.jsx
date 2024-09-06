@@ -295,10 +295,11 @@ function Salaryresult() {
   useEffect(() => {
     // get welfare record with year and month
     const getWelfare = async () => {
-      if (yearWelfare !== "" && monthWelfare !== "") {
+      if (yearWelfare !== "" && monthWelfare !== "" && staffId !== '') {
         const welfareSearch = await {
           year: yearWelfare,
           month: monthWelfare,
+          employeeId: staffId
         };
 
         try {

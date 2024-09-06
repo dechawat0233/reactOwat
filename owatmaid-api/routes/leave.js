@@ -51,6 +51,29 @@ router.post('/create', async (req, res) => {
 
 router.post('/search', async (req, res) => {
     try {
+        const { year, month, employeeId } = req.body;
+
+        // Validate input
+        if (!year || !month || !employeeId) {
+            return res.status(400).json({ message: 'Year, month, and employeeId are required.' });
+        }
+
+        // Find welfare records matching the year, month, and employeeId
+        const results = await welfare.find({ year: year, month: month, employeeId: employeeId });
+
+        if (results.length === 0) {
+            return res.status(404).json({ message: 'No records found for the specified year, month, and employeeId.' });
+        }
+
+        res.status(200).json(results);
+    } catch (error) {
+        console.error('Error searching welfare records:', error);
+        res.status(500).json({ message: 'Server error while searching records.' });
+    }
+});
+
+router.post('/searchmonth', async (req, res) => {
+    try {
         const { year, month } = req.body;
 
         // Validate input
