@@ -273,18 +273,18 @@ function TestPDFResultSalayNew({ employeeList }) {
             )
             .filter((item) => item.name && item.lastName); // Only include items with both name and lastName
 
-          const updatedData = filteredData.map((item) => {
-            const matchingEmployee = employeeList.find(
-              (emp) => emp.employeeId === item.employeeId
-            );
+          // const updatedData = filteredData.map((item) => {
+          //   const matchingEmployee = employeeList.find(
+          //     (emp) => emp.employeeId === item.employeeId
+          //   );
 
-            if (matchingEmployee && matchingEmployee.costtype === "ภ.ง.ด.3") {
-              // Modify the workplace by changing the first digit to '2'
-              item.workplace = "2" + item.workplace.slice(1);
-            }
+          //   if (matchingEmployee && matchingEmployee.costtype === "ภ.ง.ด.3") {
+          //     // Modify the workplace by changing the first digit to '2'
+          //     item.workplace = "2" + item.workplace.slice(1);
+          //   }
 
-            return item;
-          });
+          //   return item;
+          // });
           setResponseDataAll(filteredData);
         })
         .catch((error) => {
@@ -3269,7 +3269,6 @@ function TestPDFResultSalayNew({ employeeList }) {
                                                     <option key={workplace.workplaceId} value={workplace.workplaceName} />
                                                 ))}
                                             </datalist> */}
-                      <label role="searchname">ชื่อหน่วยงาน</label>
                       <input
                         type="text"
                         className="form-control"
