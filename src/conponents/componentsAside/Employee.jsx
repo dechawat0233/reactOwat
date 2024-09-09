@@ -12,6 +12,22 @@ import { FaCalendarAlt } from "react-icons/fa"; // You can use any icon library
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "../editwindowcss.css";
 
+
+const locationData = {
+  Bangkok: {
+    districts: {
+      "District 1": ["SubDistrict 1-1", "SubDistrict 1-2"],
+      "District 2": ["SubDistrict 2-1", "SubDistrict 2-2"],
+    },
+  },
+  ChiangMai: {
+    districts: {
+      "District 3": ["SubDistrict 3-1", "SubDistrict 3-2"],
+      "District 4": ["SubDistrict 4-1", "SubDistrict 4-2"],
+    },
+  },
+};
+
 function Employee() {
   useEffect(() => {
     document.title = "ข้อมูลพนักงาน";
@@ -115,6 +131,60 @@ function Employee() {
   const [maritalStatus, setMaritalStatus] = useState(""); //สถานภาพการสมรส
   const [militaryStatus, setMilitaryStatus] = useState(""); //สถานภาพทางการทหาร
   const [address, setAddress] = useState(""); //ที่อยู่ตามบัตรประชาชน
+
+  const [province, setProvince] = useState(""); //จังหวัด
+  const [district, setDistrict] = useState(""); //อำเภอ
+  const [subDistrict, setSubDistrict] = useState(""); //ตำบล
+  const [postalCode, setPostalCode] = useState(""); //ตำบล
+
+  const [province2, setProvince2] = useState(""); // จังหวัด
+  const [district2, setDistrict2] = useState(""); // อำเภอ
+  const [subDistrict2, setSubDistrict2] = useState(""); // ตำบล
+  const [postalCode2, setPostalCode2] = useState(""); // ไปรษณีย์
+
+  const [districtOptions, setDistrictOptions] = useState([]); // Options for district
+  const [subDistrictOptions, setSubDistrictOptions] = useState([]); // Options for sub-district
+
+  const [isChecked, setIsChecked] = useState(false); // Checkbox state
+
+  // When province changes, update district options and reset selections
+  useEffect(() => {
+    if (province) {
+      const districts = locationData[province]?.districts || {};
+      setDistrictOptions(Object.keys(districts));
+      setDistrict(""); // Reset district when province changes
+      setSubDistrict(""); // Reset sub-district when province changes
+      setSubDistrictOptions([]); // Clear sub-district options
+    }
+  }, [province]);
+
+  // When district changes, update sub-district options
+  useEffect(() => {
+    if (district && province) {
+      const subDistricts = locationData[province]?.districts[district] || [];
+      setSubDistrictOptions(subDistricts);
+      setSubDistrict(""); // Reset sub-district when district changes
+    }
+  }, [district, province]);
+
+  // Handle checkbox toggle to copy values
+  const handleCheckboxToggle = (event) => {
+    setIsChecked(event.target.checked);
+    if (event.target.checked) {
+      // Copy values from primary fields to secondary fields
+      setProvince2(province);
+      setDistrict2(district);
+      setSubDistrict2(subDistrict);
+      setPostalCode2(postalCode);
+    } else {
+      // Allow manual editing if unchecked
+      setProvince2("");
+      setDistrict2("");
+      setSubDistrict2("");
+      setPostalCode2("");
+    }
+  };
+
   const [currentAddress, setCurrentAddress] = useState(""); //ที่อยู่ปัจจุบัน
   const [phoneNumber, setPhoneNumber] = useState(""); //เบอร์โทรศัพท์
   const [emergencyContactNumber, setEmergencyContactNumber] = useState(""); //เบอร์ติดต่อกรณีฉุกเฉิน
@@ -1404,7 +1474,7 @@ function Employee() {
                             </div>
                           </div>
                         </div>
-                        <div class="row">
+                        {/* <div class="row">
                           <div class="col-md-6">
                             <div class="form-group">
                               <label role="address">
@@ -1448,7 +1518,255 @@ function Employee() {
                               ></textarea>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
+
+<div class="row">
+                              <div class="col-md-3">
+                                {/* <div class="form-group">
+                                  <label role="address">
+                                    ที่อยู่ตามบัตรประชาชน
+                                  </label>
+                                  <textarea
+                                    name="address"
+                                    id="address"
+                                    class="form-control"
+                                    rows="3"
+                                    value={address}
+                                    onChange={(e) => setAddress(e.target.value)}
+                                  ></textarea>
+                                </div> */}
+                                <div>
+                                  <label htmlFor="province">จังหวัด </label>
+                                  <select
+                                    id="province"
+                                    value={province}
+                                    onChange={(e) =>
+                                      setProvince(e.target.value)
+                                    }
+                                    class="form-control"
+                                  >
+                                    <option value="">Select Province</option>
+                                    {Object.keys(locationData).map((prov) => (
+                                      <option key={prov} value={prov}>
+                                        {prov}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div>
+                                  <label htmlFor="district">อำเภอ </label>
+                                  <select
+                                    id="district"
+                                    value={district}
+                                    onChange={(e) =>
+                                      setDistrict(e.target.value)
+                                    }
+                                    disabled={!province}
+                                    class="form-control"
+                                  >
+                                    <option value="">Select District</option>
+                                    {districtOptions.map((dist) => (
+                                      <option key={dist} value={dist}>
+                                        {dist}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div>
+                                  <label htmlFor="subDistrict">ตำบล </label>
+                                  <select
+                                    id="subDistrict"
+                                    value={subDistrict}
+                                    onChange={(e) =>
+                                      setSubDistrict(e.target.value)
+                                    }
+                                    disabled={!district}
+                                    class="form-control"
+                                  >
+                                    <option value="">
+                                      Select Sub-District
+                                    </option>
+                                    {subDistrictOptions.map((subDist) => (
+                                      <option key={subDist} value={subDist}>
+                                        {subDist}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div>
+                                  <label htmlFor="subDistrict">
+                                    เลขไปรษณีย์{" "}
+                                  </label>
+                                  <div class="form-group">
+                                    {/* <label role="idCard">
+                                    เลขบัตรประจำตัวประชาชน
+                                  </label> */}
+                                    <input
+                                      required
+                                      type="text"
+                                      name="postalCode"
+                                      class="form-control"
+                                      id="postalCode"
+                                      placeholder="เลขไปรษณีย์"
+                                      value={postalCode}
+                                      onChange={(e) =>
+                                        setPostalCode(e.target.value)
+                                      }
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* <div class="col-md-6">
+                                <div class="form-group">
+                                  <label role="currentAddress">
+                                    ที่อยู่ปัจจุบัน
+                                  </label>
+                                  <div class="icheck-primary d-inline">
+                                    <input
+                                      type="checkbox"
+                                      checked={copyAddress}
+                                      id=""
+                                      name="radio1"
+                                      onChange={handleCheckboxChange}
+                                    />{" "}
+                                    ใช้ที่อยู่ตามบัตรประชาชน
+                                  </div>
+                                  <textarea
+                                    name="currentAddress"
+                                    id="currentAddress"
+                                    class="form-control"
+                                    rows="3"
+                                    value={currentAddress}
+                                    onChange={(e) =>
+                                      setCurrentAddress(e.target.value)
+                                    }
+                                  ></textarea>
+                                </div>
+                              </div> */}
+                            </div>
+                            <div>
+                              <input
+                                type="checkbox"
+                                id="copyCheckbox"
+                                checked={isChecked}
+                                onChange={handleCheckboxToggle}
+                              />
+                              <label htmlFor="copyCheckbox">
+                                ใช้ที่อยู่ตามบัตรประชาชน
+                              </label>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-3">
+                                {/* <div class="form-group">
+                                  <label role="address">
+                                    ที่อยู่ตามบัตรประชาชน
+                                  </label>
+                                  <textarea
+                                    name="address"
+                                    id="address"
+                                    class="form-control"
+                                    rows="3"
+                                    value={address}
+                                    onChange={(e) => setAddress(e.target.value)}
+                                  ></textarea>
+                                </div> */}
+                                <div>
+                                  <label htmlFor="province">จังหวัด </label>
+                                  <select
+                                    id="province2"
+                                    value={province2}
+                                    onChange={(e) =>
+                                      setProvince2(e.target.value)
+                                    }
+                                    class="form-control"
+                                  >
+                                    <option value="">Select Province</option>
+                                    {Object.keys(locationData).map((prov) => (
+                                      <option key={prov} value={prov}>
+                                        {prov}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div>
+                                  <label htmlFor="district">อำเภอ </label>
+                                  <select
+                                    id="district2"
+                                    value={district2}
+                                    onChange={(e) =>
+                                      setDistrict2(e.target.value)
+                                    }
+                                    disabled={!province}
+                                    class="form-control"
+                                  >
+                                    <option value="">Select District</option>
+                                    {districtOptions.map((dist) => (
+                                      <option key={dist} value={dist}>
+                                        {dist}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div>
+                                  <label htmlFor="subDistrict">ตำบล </label>
+                                  <select
+                                    id="subDistrict"
+                                    value={subDistrict2}
+                                    onChange={(e) =>
+                                      setSubDistrict2(e.target.value)
+                                    }
+                                    disabled={!district2}
+                                    class="form-control"
+                                  >
+                                    <option value="">
+                                      Select Sub-District
+                                    </option>
+                                    {subDistrictOptions.map((subDist) => (
+                                      <option key={subDist} value={subDist}>
+                                        {subDist}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div>
+                                  <label htmlFor="subDistrict">
+                                    เลขไปรษณีย์{" "}
+                                  </label>
+                                  <div class="form-group">
+                                    {/* <label role="idCard">
+                                    เลขบัตรประจำตัวประชาชน
+                                  </label> */}
+                                    <input
+                                      required
+                                      type="text"
+                                      name="postalCode2"
+                                      class="form-control"
+                                      id="postalCode2"
+                                      placeholder="เลขไปรษณีย์"
+                                      value={postalCode2}
+                                      onChange={(e) =>
+                                        setPostalCode2(e.target.value)
+                                      }
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <br />
+                            
                         {/* <!--row--> */}
                         <div class="row">
                           <div class="col-md-3">
