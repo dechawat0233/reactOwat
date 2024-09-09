@@ -590,7 +590,7 @@ function AddsettimeEmployee() {
           let date = await new Date(year, month - 1, wDate); // Subtract 1 from the month since months are zero-indexed
           let dayOfWeek = await date.getDay(); // This will give you the day of the week, where 0 is Sunday, 1 is
 
-alert(JSON.stringify('hi') );
+// alert(JSON.stringify('hi') );
 
           await workplacesearch.workTimeDay.map(async (item, index) => {
             //    alert(JSON.stringify(item.allTimes));
