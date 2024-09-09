@@ -201,7 +201,7 @@ function App() {
               <Route path="/search_results" element={<SearchResults />} />
 
               {/* <Route path="/setting" element={<Setting />} /> */}
-              <Route path="/setting" element={<Setting workplaceList={workplaceList} />} />
+              <Route path="/setting" element={<Setting workplaceList={workplaceList}  employeeList={employeeList} />} />
               <Route path="/settingcomplex" element={<SettingComplex  workplaceList={workplaceList}  />} />
               <Route path="/settingAllList" element={<SettingAllList />} />
               <Route path="/settingspecial" element={<SettingSpecial />} />

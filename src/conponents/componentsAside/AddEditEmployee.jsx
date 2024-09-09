@@ -1411,7 +1411,7 @@ function AddEditEmployee() {
                                     เลขบัตรประจำตัวประชาชน
                                   </label> */}
                                     <input
-                                      required
+                                      // required
                                       type="text"
                                       name="postalCode"
                                       class="form-control"
@@ -1553,7 +1553,7 @@ function AddEditEmployee() {
                                     เลขบัตรประจำตัวประชาชน
                                   </label> */}
                                     <input
-                                      required
+                                      // required
                                       type="text"
                                       name="postalCode2"
                                       class="form-control"

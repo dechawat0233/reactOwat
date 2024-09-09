@@ -1608,7 +1608,7 @@ function Employee() {
                                     เลขบัตรประจำตัวประชาชน
                                   </label> */}
                                     <input
-                                      required
+                                      // required
                                       type="text"
                                       name="postalCode"
                                       class="form-control"
@@ -1750,7 +1750,7 @@ function Employee() {
                                     เลขบัตรประจำตัวประชาชน
                                   </label> */}
                                     <input
-                                      required
+                                      // required
                                       type="text"
                                       name="postalCode2"
                                       class="form-control"
@@ -1766,7 +1766,7 @@ function Employee() {
                               </div>
                             </div>
                             <br />
-                            
+
                         {/* <!--row--> */}
                         <div class="row">
                           <div class="col-md-3">
