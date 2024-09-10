@@ -164,11 +164,13 @@ function AddEditEmployee() {
   const [district, setDistrict] = useState(""); //อำเภอ
   const [subDistrict, setSubDistrict] = useState(""); //ตำบล
   const [postalCode, setPostalCode] = useState(""); //ตำบล
+  const [houseNumber, setHouseNumber] = useState(""); //ตำบล
 
   const [province2, setProvince2] = useState(""); // จังหวัด
   const [district2, setDistrict2] = useState(""); // อำเภอ
   const [subDistrict2, setSubDistrict2] = useState(""); // ตำบล
   const [postalCode2, setPostalCode2] = useState(""); // ไปรษณีย์
+  const [houseNumber2, setHouseNumber2] = useState(""); //ตำบล
 
   const [districtOptions, setDistrictOptions] = useState([]); // Options for district
   const [subDistrictOptions, setSubDistrictOptions] = useState([]); // Options for sub-district
@@ -204,12 +206,14 @@ function AddEditEmployee() {
       setDistrict2(district);
       setSubDistrict2(subDistrict);
       setPostalCode2(postalCode);
+      setHouseNumber2(houseNumber);
     } else {
       // Allow manual editing if unchecked
       setProvince2("");
       setDistrict2("");
       setSubDistrict2("");
       setPostalCode2("");
+      setHouseNumber2("");
     }
   };
 
@@ -1454,6 +1458,30 @@ function AddEditEmployee() {
                                 </div>
                               </div> */}
                             </div>
+                            <div class="row">
+                          <div class="col-md-3">
+                            <div>
+                              <label htmlFor="subDistrict">บ้านเลขที่-หมู่</label>
+                              <div class="form-group">
+                                {/* <label role="idCard">
+                                    เลขบัตรประจำตัวประชาชน
+                                  </label> */}
+                                <input
+                                  // required
+                                  type="text"
+                                  name="postalCode2"
+                                  class="form-control"
+                                  id="postalCode2"
+                                  placeholder="เลขไปรษณีย์"
+                                  value={houseNumber}
+                                  onChange={(e) =>
+                                    setHouseNumber(e.target.value)
+                                  }
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                             <div>
                               <input
                                 type="checkbox"
@@ -1568,6 +1596,30 @@ function AddEditEmployee() {
                                 </div>
                               </div>
                             </div>
+                            <div class="row">
+                          <div class="col-md-3">
+                            <div>
+                              <label htmlFor="subDistrict">บ้านเลขที่-หมู่</label>
+                              <div class="form-group">
+                                {/* <label role="idCard">
+                                    เลขบัตรประจำตัวประชาชน
+                                  </label> */}
+                                <input
+                                  // required
+                                  type="text"
+                                  name="postalCode2"
+                                  class="form-control"
+                                  id="postalCode2"
+                                  placeholder="เลขไปรษณีย์"
+                                  value={houseNumber2}
+                                  onChange={(e) =>
+                                    setHouseNumber2(e.target.value)
+                                  }
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                             <br />
                             {/* <!--row--> */}
                             <div class="row">
