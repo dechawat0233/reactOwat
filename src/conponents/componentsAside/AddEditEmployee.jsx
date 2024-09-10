@@ -363,7 +363,20 @@ function AddEditEmployee() {
       religion: religion,
       maritalStatus: maritalStatus,
       militaryStatus: militaryStatus,
-      address: address,
+      // address: address,
+
+      province: province,
+      district: district,
+      subDistrict: subDistrict,
+      postalCode: postalCode,
+      houseNumber: houseNumber,
+
+      province2: province2,
+      district2: district2,
+      subDistrict2: subDistrict2,
+      postalCode2: postalCode2,
+      houseNumber2: houseNumber2,
+
       currentAddress: currentAddress,
       phoneNumber: phoneNumber,
       emergencyContactNumber: emergencyContactNumber,
@@ -527,6 +540,19 @@ function AddEditEmployee() {
 
         setMilitaryStatus(response.data.employees[0].militaryStatus);
         setAddress(response.data.employees[0].address);
+
+        setProvince(response.data.employees[0].province);
+    setDistrict(response.data.employees[0].district);
+    setSubDistrict(response.data.employees[0].subDistrict);
+    setPostalCode(response.data.employees[0].postalCode);
+    setHouseNumber(response.data.employees[0].houseNumber);
+
+    setProvince2(response.data.employees[0].province2);
+    setDistrict2(response.data.employees[0].district2);
+    setSubDistrict2(response.data.employees[0].subDistrict2);
+    setPostalCode2(response.data.employees[0].postalCode2);
+    setHouseNumber2(response.data.employees[0].houseNumber2);
+
         setCopyAddress(response.data.employees[0].copyAddress);
         setCurrentAddress(response.data.employees[0].currentAddress);
         setPhoneNumber(response.data.employees[0].phoneNumber);

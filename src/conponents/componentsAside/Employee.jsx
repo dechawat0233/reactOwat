@@ -286,8 +286,19 @@ function Employee() {
           religion: religion,
           maritalStatus: maritalStatus,
           militaryStatus: militaryStatus,
-          address: address,
-          currentAddress: currentAddress,
+          // address: address,
+          province: province,
+          district: district,
+          subDistrict: subDistrict,
+          postalCode: postalCode,
+          houseNumber: houseNumber,
+
+          province2: province2,
+          district2: district2,
+          subDistrict2: subDistrict2,
+          postalCode2: postalCode2,
+          houseNumber2: houseNumber2,
+          // currentAddress: currentAddress,
           phoneNumber: phoneNumber,
           emergencyContactNumber: emergencyContactNumber,
           idLine: idLine,
@@ -412,6 +423,19 @@ function Employee() {
     setMaritalStatus(empSelect.maritalStatus);
     setMilitaryStatus(empSelect.militaryStatus);
     setAddress(empSelect.address);
+
+    setProvince(empSelect.province);
+    setDistrict(empSelect.district);
+    setSubDistrict(empSelect.subDistrict);
+    setPostalCode(empSelect.postalCode);
+    setHouseNumber(empSelect.houseNumber);
+
+    setProvince2(empSelect.province2);
+    setDistrict2(empSelect.district2);
+    setSubDistrict2(empSelect.subDistrict2);
+    setPostalCode2(empSelect.postalCode2);
+    setHouseNumber2(empSelect.houseNumber2);
+    
     setCurrentAddress(empSelect.currentAddress);
     setPhoneNumber(empSelect.phoneNumber);
     setEmergencyContactNumber(empSelect.emergencyContactNumber);
@@ -454,8 +478,21 @@ function Employee() {
       religion: religion,
       maritalStatus: maritalStatus,
       militaryStatus: militaryStatus,
-      address: address,
-      currentAddress: currentAddress,
+      // address: address,
+
+      province: province,
+          district: district,
+          subDistrict: subDistrict,
+          postalCode: postalCode,
+          houseNumber: houseNumber,
+
+          province2: province2,
+          district2: district2,
+          subDistrict2: subDistrict2,
+          postalCode2: postalCode2,
+          houseNumber2: houseNumber2,
+          
+      // currentAddress: currentAddress,
       phoneNumber: phoneNumber,
       emergencyContactNumber: emergencyContactNumber,
       idLine: idLine,
@@ -1779,7 +1816,9 @@ function Employee() {
                         <div class="row">
                           <div class="col-md-3">
                             <div>
-                              <label htmlFor="subDistrict">บ้านเลขที่-หมู่</label>
+                              <label htmlFor="subDistrict">
+                                บ้านเลขที่-หมู่
+                              </label>
                               <div class="form-group">
                                 {/* <label role="idCard">
                                     เลขบัตรประจำตัวประชาชน
