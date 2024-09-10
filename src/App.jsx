@@ -216,7 +216,7 @@ function App() {
               <Route path="/applicatio4" element={<Application4 />} />
               <Route path="/application_summary" element={<ApplicationSummary />} />
 
-              <Route path="/addEdit_Employee" element={<AddEditEmployee />} />
+              <Route path="/addEdit_Employee" element={<AddEditEmployee workplaceList={workplaceList}/>} />
               <Route path="/addEdit_SalaryEmployee" element={<AddEditSalaryEmployee />} />
 
               {/* <Route path="/testPDF" element={<TestShowManyData />} /> */}
