@@ -84,12 +84,40 @@ const employeeSchema = new mongoose.Schema({
   militaryStatus: {
     type: String
   },
-  address: {
+
+  address: { //บ้านเลขที่ หมู่ที่
     type: String
   },
+  province: { //จังหวัด
+    type: String
+  },
+  district: { //อำเภอ
+    type: String
+  },
+  subdistrict: { //ตำบล
+    type: String
+  },
+  zipcode: { //รหัสไปรษณีย์
+    type: String
+  },
+  
   currentAddress: {
     type: String
   },
+  currentProvince: { //จังหวัด
+    type: String
+  },
+  currentDistrict: { //อำเภอ
+    type: String
+  },
+  currentSubdistrict: { //ตำบล
+    type: String
+  },
+  currentZipcode: { //รหัสไปรษณีย์
+    type: String
+  },
+
+
   phoneNumber: {
     type: String,
     match: /^[0-9]{10}$/ // Regular expression for 10-digit phone number
@@ -333,7 +361,17 @@ router.post('/create', async (req, res) => {
     maritalStatus,
     militaryStatus,
     address,
+    province,
+district,
+subdistrict,
+zipcode,
+
     currentAddress,
+    currentProvince,
+    currentDistrict,
+    currentSubdistrict,
+    currentZipcode,
+    
     phoneNumber,
     emergencyContactNumber,
     idLine,
@@ -433,7 +471,15 @@ router.post('/create', async (req, res) => {
     maritalStatus,
     militaryStatus,
     address,
+    province,
+district,
+subdistrict,
+zipcode,
     currentAddress,
+    currentProvince,
+currentDistrict,
+currentSubdistrict,
+currentZipcode,
     phoneNumber,
     emergencyContactNumber,
     idLine,
