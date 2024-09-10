@@ -286,7 +286,7 @@ function Employee() {
           religion: religion,
           maritalStatus: maritalStatus,
           militaryStatus: militaryStatus,
-          // address: address,
+          address: address,
           province: province,
           district: district,
           subDistrict: subDistrict,
@@ -298,7 +298,7 @@ function Employee() {
           subDistrict2: subDistrict2,
           postalCode2: postalCode2,
           houseNumber2: houseNumber2,
-          // currentAddress: currentAddress,
+          currentAddress: currentAddress,
           phoneNumber: phoneNumber,
           emergencyContactNumber: emergencyContactNumber,
           idLine: idLine,
@@ -478,7 +478,7 @@ function Employee() {
       religion: religion,
       maritalStatus: maritalStatus,
       militaryStatus: militaryStatus,
-      // address: address,
+      address: address,
 
       province: province,
           district: district,
@@ -491,8 +491,8 @@ function Employee() {
           subDistrict2: subDistrict2,
           postalCode2: postalCode2,
           houseNumber2: houseNumber2,
-          
-      // currentAddress: currentAddress,
+
+      currentAddress: currentAddress,
       phoneNumber: phoneNumber,
       emergencyContactNumber: emergencyContactNumber,
       idLine: idLine,
@@ -742,7 +742,8 @@ function Employee() {
     }
   }, [workplace, workplaceSelection]);
 
-  console.log("filteredWorkplaceGroups", filteredWorkplaceGroups);
+  console.log("province", province);
+
   return (
     <body class="hold-transition sidebar-mini" className="editlaout">
       <div class="wrapper">

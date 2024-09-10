@@ -94,10 +94,29 @@ const employeeSchema = new mongoose.Schema({
   district: { //อำเภอ
     type: String
   },
-  subdistrict: { //ตำบล
+  subDistrict: { //ตำบล
     type: String
   },
-  zipcode: { //รหัสไปรษณีย์
+  postalCode: { //รหัสไปรษณีย์
+    type: String
+  },
+  houseNumber: { //บ้านเลขที่
+    type: String
+  },
+
+  province2: { //จังหวัด
+    type: String
+  },
+  district2: { //อำเภอ
+    type: String
+  },
+  subDistrict2: { //ตำบล
+    type: String
+  },
+  postalCode2: { //รหัสไปรษณีย์
+    type: String
+  },
+  houseNumber2: { //บ้านเลขที่
     type: String
   },
   
@@ -363,8 +382,15 @@ router.post('/create', async (req, res) => {
     address,
     province,
 district,
-subdistrict,
-zipcode,
+subDistrict,
+postalCode,
+houseNumber,
+
+province2,
+district2,
+subDistrict2,
+postalCode2,
+houseNumber2,
 
     currentAddress,
     currentProvince,
@@ -472,9 +498,17 @@ zipcode,
     militaryStatus,
     address,
     province,
-district,
-subdistrict,
-zipcode,
+    district,
+    subDistrict,
+    postalCode,
+    houseNumber,
+    
+    province2,
+    district2,
+    subDistrict2,
+    postalCode2,
+    houseNumber2,
+
     currentAddress,
     currentProvince,
 currentDistrict,
