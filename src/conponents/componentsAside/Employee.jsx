@@ -146,6 +146,9 @@ function Employee() {
   const [districtOptions, setDistrictOptions] = useState([]); // Options for district
   const [subDistrictOptions, setSubDistrictOptions] = useState([]); // Options for sub-district
 
+  const [tempDistrict, setTempDistrict] = useState(""); // Temporary district
+const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-district
+
   const [isChecked, setIsChecked] = useState(false); // Checkbox state
 
   // When province changes, update district options and reset selections
@@ -156,6 +159,10 @@ function Employee() {
       setDistrict(""); // Reset district when province changes
       setSubDistrict(""); // Reset sub-district when province changes
       setSubDistrictOptions([]); // Clear sub-district options
+      if (tempDistrict) {
+        setDistrict(tempDistrict);
+        setTempDistrict(""); // Clear tempDistrict
+      }
     }
   }, [province]);
 
@@ -165,6 +172,10 @@ function Employee() {
       const subDistricts = locationData[province]?.districts[district] || [];
       setSubDistrictOptions(subDistricts);
       setSubDistrict(""); // Reset sub-district when district changes
+      if (tempSubDistrict) {
+        setSubDistrict(tempSubDistrict);
+        setTempSubDistrict(""); // Clear tempSubDistrict
+      }
     }
   }, [district, province]);
 
@@ -743,6 +754,9 @@ function Employee() {
   }, [workplace, workplaceSelection]);
 
   console.log("province", province);
+  console.log("district", district);
+  console.log("subDistrict", subDistrict);
+
 
   return (
     <body class="hold-transition sidebar-mini" className="editlaout">
