@@ -260,8 +260,6 @@ function AddsettimeEmployee() {
             await workplacesearch.workplaceGroup[
               parseInt(searchResult[0].department || 0) - 1
             ].workplaceComplexData.workTimeDay.map(async (item, index) => {
-
-              
               //    alert(JSON.stringify(item.allTimes));
               // const morningTimes = await item.allTimes.filter(time => time.shift === "กะเช้า");
               // await alert(morningTimes[0].startTime );
@@ -982,40 +980,73 @@ function AddsettimeEmployee() {
   }, [wSelectOtTime, wSelectOtTimeout]);
 
   // search employee Name by employeeId
-
   useEffect(() => {
-    try {
-      if (wId !== "") {
-        const workplacesearch = workplaceList.find(
-          (workplace) => workplace.workplaceId === wId
-        );
-        if (workplacesearch) {
-          // Check if searchResult has values and workplace matches
-          if (
-            searchResult.length > 0 &&
-            searchResult[0].workplace === wId &&
-            searchResult[0].department !== ""
-          ) {
-            const dep =
-              workplacesearch.workplaceGroup[
-                parseInt(searchResult[0].department || 0) - 1
-              ]?.workplaceComplexName || "";
+    if (wId !== "") {
+      const workplacesearch = workplaceList.find(
+        (workplace) => workplace.workplaceId === wId
+      );
+      if (workplacesearch) {
+        //department: employee department process
+        if (
+          searchResult[0].workplace === wId &&
+          searchResult[0].department !== ""
+        ) {
+          // alert(searchResult[0].workplace );
+          // alert(searchResult[0].department);
+          // alert(workplacesearch.workplaceGroup[parseInt(searchResult[0].department || 0) -1].workplaceComplexName );
+          let dep =
+            workplacesearch.workplaceGroup[
+              parseInt(searchResult[0].department || 0) - 1
+            ].workplaceComplexName || "";
 
-            setWName(workplacesearch.workplaceName + ": " + dep);
-          } else {
-            setWName(workplacesearch.workplaceName);
-          }
-
-          // Optional: Add work time to selection (as per your comment)
-          // alert(JSON.stringify(workplacesearch.workTimeDay, null, 2));
+          setWName(workplacesearch.workplaceName + ": " + dep);
         } else {
-          setWName("");
+          setWName(workplacesearch.workplaceName);
         }
+
+        //add work time to selection
+        // alert(JSON.stringify(workplacesearch.workTimeDay, null,2))
+        //time of work
+      } else {
+        setWName("");
       }
-    } catch (error) {
-      alert(`An error occurred: ${error.message}`);
     }
   }, [wId]);
+
+  // useEffect(() => {
+  //   try {
+  //     if (wId !== "") {
+  //       const workplacesearch = workplaceList.find(
+  //         (workplace) => workplace.workplaceId === wId
+  //       );
+  //       if (workplacesearch) {
+  //         // Check if searchResult has values and workplace matches
+  //         if (
+  //           searchResult.length > 0 &&
+  //           searchResult[0].workplace === wId &&
+  //           searchResult[0].department !== ""
+  //         ) {
+  //           const dep =
+  //             workplacesearch.workplaceGroup[
+  //               parseInt(searchResult[0].department || 0) - 1
+  //             ]?.workplaceComplexName || "";
+  
+  //           setWName(workplacesearch.workplaceName + ": " + dep);
+  //         } else {
+  //           setWName(workplacesearch.workplaceName);
+  //         }
+  
+  //         // Optional: Add work time to selection (as per your comment)
+  //         // alert(JSON.stringify(workplacesearch.workTimeDay, null, 2));
+  //       } else {
+  //         setWName("");
+  //       }
+  //     }
+  //   } catch (error) {
+  //     alert(`An error occurred: ${error.message}`);
+  //   }
+  // }, [wId]);
+  
 
   //search employeeId by employeeName
   // useEffect(() => {
