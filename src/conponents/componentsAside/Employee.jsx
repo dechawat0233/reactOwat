@@ -318,7 +318,7 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
           treatmentRights: treatmentRights,
         };
 
-        return data;
+        return emp;
       }
 
       return item;
