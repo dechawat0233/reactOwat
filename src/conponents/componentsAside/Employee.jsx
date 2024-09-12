@@ -307,7 +307,7 @@ function Employee() {
           treatmentRights: treatmentRights,
         };
 
-        return data;
+        return emp;
       }
 
       return item;
