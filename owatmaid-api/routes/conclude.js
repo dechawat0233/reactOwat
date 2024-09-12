@@ -182,7 +182,7 @@ if(parseFloat(salary ) >= 1660) {
       console.log('wGroup keys length:', keys.length); // Log the length of the keys
 
 //check working multi workplace and not 399-105
-      if (keys.length > 1 && dataEmp.employees[0].workplace  !== '399-105') {
+      if (keys.length > 1 && dataEmp.employees[0].workplace  !== '10105') {
         console.log('process : 21 - '+ lastday);
 
         for (const workplaceId of Object.keys(wGroup1)) {
@@ -424,7 +424,7 @@ if(parseFloat(salary ) >= 1660) {
       } else {
 console.log('2x');
 
-if(wpId1 !== '399-105'){
+if(wpId1 !== '10105'){
   wpId1 = keys[0]
 }
 
@@ -728,7 +728,7 @@ const         wpDataCalculator1 = await {
       // console.log('wGroup keys:', keys); // Log the keys of wGroup
       // console.log('wGroup keys length:', keys.length); // Log the length of the keys
 
-      if (keys.length > 1 && dataEmp.employees[0].workplace  !== '399-105') {
+      if (keys.length > 1 && dataEmp.employees[0].workplace  !== '10105') {
         console.log('process 2');
 
         for (const workplaceId of Object.keys(wGroup)) {
@@ -977,7 +977,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
         // }
       } else {
 
-        if(wpId !== '399-105'){
+        if(wpId !== '10105'){
           wpId = keys[0]
         }
       
