@@ -99,15 +99,15 @@ router.post('/searchmonth', async (req, res) => {
 //search and sum 
 router.post('/searchsummary', async (req, res) => {
     try {
-        const { year, month } = req.body;
+        const { employeeId } = req.body;
 
         // Validate input
-        if (!year || !month) {
+        if (!employeeId ) {
             return res.status(400).json({ message: 'Year and month are required.' });
         }
 
         // Find welfare records matching the year and month
-        const results = await welfare.find({ year: year, month: month });
+        const results = await welfare.find({ employeeId : employeeId  });
 
         if (results.length === 0) {
             return res.status(404).json({ message: 'No records found for the specified year and month.' });

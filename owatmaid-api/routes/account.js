@@ -1015,7 +1015,7 @@ data.specialDayListWork = await intersection || [];
 }
 
 //check emty data 
-if(data.accountingRecord.countDayWork > 0) {
+if(data.accountingRecord.countDayWork > 0 || data.accountingRecord.total  > 0) {
 const salaryRecord = new accounting(data);
 await salaryRecord.save();
 // await console.log(salaryRecord);

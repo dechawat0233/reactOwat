@@ -603,6 +603,7 @@ function Salary() {
       if (response) {
         alert("บันทึกสำเร็จ");
         // localStorage.setItem('selectedEmployees' , JSON.stringify(response.data.employees));
+        updateEmployeeLocal(response.data);
 
         // window.location.reload();
       }
@@ -797,6 +798,27 @@ function Salary() {
   }, [salaryadd1, salaryadd2, salaryadd3, salaryadd4, salaryadd5]);
   // console.log(salaryadd1 + " 1");
 
+  //Update localStorage
+  function updateEmployeeLocal(emp) {
+    let employeeLocal = JSON.parse(localStorage.getItem("selectedEmployees"));
+    // alert(JSON.stringify(employeeLocal, null, 2));
+
+    const employeeLocalUpdate = employeeLocal.map((item) => {
+      if (item._id === emp._id) {
+        // Update the item here
+        return emp;
+      }
+
+      return item;
+    });
+
+    localStorage.setItem(
+      "selectedEmployees",
+      JSON.stringify(employeeLocalUpdate)
+    );
+  }
+
+  
   return (
     <body class="hold-transition sidebar-mini" className="editlaout">
       <div class="wrapper">
