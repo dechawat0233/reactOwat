@@ -1250,7 +1250,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
       // console.log('concludeRecord ' + concludeRecord [c].workplaceId);
 
       if(parseFloat(concludeRecord [c].workRateMultiply || 0) <= 1) {
-      if(responseWpList .data.ans && concludeRecord [c].workplaceId !== '10105' && concludeRecord [c].workplaceId !== '30001') {
+      if(responseWpList .data.ans && concludeRecord [c].workplaceId !== '10105' && concludeRecord [c].workplaceId !== '') {
         console.log('*wid : ' + concludeRecord [c].workplaceId )
       const testx = responseWpList .data.ans.find(item  => item.workplaceId == concludeRecord [c].workplaceId)
 if(testx ) {
