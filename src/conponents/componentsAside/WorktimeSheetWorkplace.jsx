@@ -415,12 +415,12 @@ function WorktimeSheetWorkplace({employeeList}) {
         .post(endpoint + "/accounting/calsalarylist", dataTest)
         .then((response) => {
           const responseData = response.data;
-          const filteredData = searchWorkplaceId
-            ? responseData.filter(
-                (item) => item.workplace === searchWorkplaceId
-              )
-            : responseData;
-          const sortedData = filteredData.sort(
+          // const filteredData = searchWorkplaceId
+          //   ? responseData.filter(
+          //       (item) => item.workplace === searchWorkplaceId
+          //     )
+          //   : responseData;
+          const sortedData = responseData.sort(
             (a, b) => a.employeeId - b.employeeId
           );
 
@@ -434,8 +434,6 @@ function WorktimeSheetWorkplace({employeeList}) {
     // Call fetchData when year or month changes
     fetchData();
   }, [year, month, searchWorkplaceId]);
-
-  //   console.log("responseDataAll", responseDataAll);
 
   async function handleSearch(event) {
     event.preventDefault();
@@ -2127,7 +2125,8 @@ filteredEmployees.forEach((employee) => {
     return Number(a.employeeId) - Number(b.employeeId);
   });
 
-  //   console.log("filteredEntriesTest", filteredEntriesTest);
+    console.log("filteredEntriesTest", filteredEntriesTest);
+    console.log("responseDataAll", responseDataAll);
 
   // const responseDataAll123 = [
   //   {_id: '66ac5eca3aac559797a814e9', year: '2024', month: '06', employeeId: '670427', createDate: '02/08/2024, 04:21'},
@@ -3139,6 +3138,12 @@ filteredEmployees.forEach((employee) => {
       ? parseFloat(accountingRecord.amountThree).toFixed(2)
       : "0.00";
   });
+
+  const saveCash = responseDataAll.map((item) => 
+    item.workplace.startsWith("3") ? "สแปร์เงินสด" : ""
+  );
+
+  console.log('saveCash',saveCash);
 
   const sumArrayHoli = countSpecialDays.map(
     (countSpecialDay, index) => countSpecialDay - specialDayListWorks[index]
@@ -8770,6 +8775,11 @@ filteredEmployees.forEach((employee) => {
           cellHeight * daysInMonth + 59 + cellWidthSpSalary,
           currentY + cellHeight / 2 + 1,
           sumArrayHoli[i].toString()
+        );
+        drawCellRight(
+          cellHeight * daysInMonth + 59 + cellWidthSpSalary*12,
+          currentY + cellHeight / 2 + 1,
+          saveCash[i].toString()
         );
         drawSalaryRow(emptyArraytest, currentY, morningRowHeight);
         // drawCellRight(
