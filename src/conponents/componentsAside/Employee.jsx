@@ -264,49 +264,6 @@ function Employee() {
     const employeeLocalUpdate = employeeLocal.map((item) => {
       if (item._id === emp._id) {
         // Update the item here
-        // return { ...item, id: emp.id, /* other properties you want to update */ };
-
-        const data = {
-          employeeId: employeeId,
-          position: position,
-          department: department,
-          workplace: workplace,
-          jobtype: jobtype,
-          startjob: startjob,
-          endjob: endjob,
-          exceptjob: exceptjob,
-          prefix: prefix,
-          name: name,
-          lastName: lastName,
-          nickName: nickName,
-          gender: gender,
-          dateOfBirth: dateOfBirth,
-          age: age,
-          idCard: idCard,
-          ethnicity: ethnicity,
-          religion: religion,
-          maritalStatus: maritalStatus,
-          militaryStatus: militaryStatus,
-          address: address,
-          province: province,
-          district: district,
-          subDistrict: subDistrict,
-          postalCode: postalCode,
-          houseNumber: houseNumber,
-
-          province2: province2,
-          district2: district2,
-          subDistrict2: subDistrict2,
-          postalCode2: postalCode2,
-          houseNumber2: houseNumber2,
-          currentAddress: currentAddress,
-          phoneNumber: phoneNumber,
-          emergencyContactNumber: emergencyContactNumber,
-          idLine: idLine,
-          vaccination: vaccination,
-          treatmentRights: treatmentRights,
-        };
-
         return emp;
       }
 
