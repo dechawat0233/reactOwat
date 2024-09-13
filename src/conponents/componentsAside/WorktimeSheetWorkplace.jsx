@@ -2118,11 +2118,45 @@ filteredEmployees.forEach((employee) => {
     arrayWorkOTNormalDay.push(employeeResultArray3OT);
   });
 
-  const filteredEntriesTest = conclude.filter(
-    (entry) =>
-      entry.year === desiredTimerecordId && entry.month === desiredMonth
+  // const filteredEntriesTest = conclude.filter(
+  //   (entry) =>
+  //     entry.year === desiredTimerecordId && entry.month === desiredMonth
+  // );
+  // employeeList
+  // Assuming `conclude`, `employeeList`, `searchWorkplaceId`, `desiredTimerecordId`, and `desiredMonth` are available
+
+const filteredEntriesTest = conclude
+// Filter by year and month
+.filter((entry) =>
+  entry.year === desiredTimerecordId && entry.month === desiredMonth
+)
+// Filter by employeeId that exists in employeeList
+.filter((entry) => {
+  const employeeInList = employeeList.find(
+    (emp) => emp.employeeId === entry.employeeId
+  );
+  return employeeInList !== undefined;
+})
+// Filter by searchWorkplaceId, either matching employeeList.workplace or concludeRecord.workplaceId
+.filter((entry) => {
+  const employeeInList = employeeList.find(
+    (emp) => emp.employeeId === entry.employeeId
   );
 
+  // Check if the employee's workplace matches searchWorkplaceId
+  if (employeeInList && employeeInList.workplace === searchWorkplaceId) {
+    return true;
+  }
+
+  // Check if any of the concludeRecord's workplaceId matches searchWorkplaceId
+  const workplaceMatch = entry.concludeRecord.some(
+    (record) => record.workplaceId === searchWorkplaceId
+  );
+
+  return workplaceMatch;
+});
+
+  
   filteredEntriesTest.sort((a, b) => {
     // Assuming employeeId is a string, convert it to a number for numerical comparison
     return Number(a.employeeId) - Number(b.employeeId);
@@ -2855,10 +2889,10 @@ filteredEmployees.forEach((employee) => {
   const finalUpdatedDayWorksWorkNight =
     changeNumbersToOne2(updatedDaysWorkNight);
 
-  //   console.log(
-  //     "finalUpdatedDayWorksWorkMorningAndSS",
-  //     finalUpdatedDayWorksWorkMorningAndSS
-  //   );
+    console.log(
+      "finalUpdatedDayWorksWorkMorningAndSS",
+      finalUpdatedDayWorksWorkMorningAndSS
+    );
   //   console.log(
   //     "finalUpdatedDayWorksWorkAfternoon",
   //     finalUpdatedDayWorksWorkAfternoon
