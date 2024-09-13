@@ -945,7 +945,7 @@ data.accountingRecord.amountCountDayWork = await salary ||0;
 
 } else {
   sumSocial = await sumSocial  + (dayOffWork * salary) + calSP ;
-  if(responseConclude.data.recordConclude[c].concludeRecord[i].workType == 'specialtSalary' || x[0] == '3') {
+  if(x[0] == '3') {
   sumAmountDayWork  = await amountDay;
     data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
 
