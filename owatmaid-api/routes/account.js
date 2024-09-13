@@ -595,10 +595,27 @@ addSalaryDayArray = [];
 //ss1
 for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.length; i++) {
   let x =  response.data.workplace || '';
-  if(responseConclude.data.recordConclude[c].concludeRecord[i].workType == 'specialtSalary' ) {
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workType == 'specialtSalary' || x[0] == '3') {
     console.log('* ' + x[0] + JSON.stringify(responseConclude.data.recordConclude[c].concludeRecord[i]));
+    amountDay += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0);
+    amountOt += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT || 0);
+    countHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+    countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
 
-  }
+    if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) > 0) {
+      countDay = countDay  +1;
+      countHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+      countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+
+      amountDay += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0);
+      amountOt += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT || 0);
+      
+    }
+
+
+
+
+  }  else {
 
   amountDay += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0);
   amountOt += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT || 0);
@@ -664,7 +681,7 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
 // dayOffWork += 1;
 countHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
 
-console.log('*work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
+// console.log('*work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
 
   } else {
     let [hoursTmp, minutesTmp] = (responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || '0.0').toString().split('.').map(Number);
@@ -755,6 +772,7 @@ if(x1535 >0 ) {
   data.accountingRecord.benefitNonSocial = x1535;
 }
 
+} //end before set value
 
 data.accountingRecord.countDay = countDay;
 data.accountingRecord.countHour = countHour;
