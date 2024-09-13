@@ -591,10 +591,10 @@ await Promise.all(promisesDeduct)
 addSalaryDayArray = [];  
 
 // console.log('responseConclude.data.recordConclude[c].concludeRecord' + responseConclude.data.recordConclude[0].concludeRecord);
-
+let x  = '';
 //ss1
 for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.length; i++) {
-  let x =  response.data.workplace || '';
+  x=   response.data.workplace || '';
   if(responseConclude.data.recordConclude[c].concludeRecord[i].workType == 'specialtSalary' || x[0] == '3') {
     // console.log('* ' + x[0] + JSON.stringify(responseConclude.data.recordConclude[c].concludeRecord[i]));
     amountDay += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0);
