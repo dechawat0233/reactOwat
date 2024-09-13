@@ -947,9 +947,11 @@ data.accountingRecord.amountCountDayWork = await salary ||0;
   sumSocial = await sumSocial  + (dayOffWork * salary) + calSP ;
   if(responseConclude.data.recordConclude[c].concludeRecord[i].workType == 'specialtSalary' || x[0] == '3') {
   sumAmountDayWork  = await amountDay;
+    data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
 
   } else {
   sumAmountDayWork  = await parseFloat(dayOffWork) * parseFloat(salary);
+    data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
     
   }
 
@@ -960,7 +962,7 @@ data.accountingRecord.amountCountDayWork = await salary ||0;
   data.accountingRecord.amountCountDayWorkOt = await calOtWork ||0;
 
   //non salary     // data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
-    data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
+    // data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
 
 }
 
