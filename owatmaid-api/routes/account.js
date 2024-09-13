@@ -650,7 +650,7 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
 
   // console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
 if(responseConclude.data.recordConclude[c].concludeRecord[i].specialtSalary) {
-  console.log('shift: ' + JSON.stringify(responseConclude.data.recordConclude[c].concludeRecord[i]))
+  console.log('shift: ' + JSON.stringify(responseConclude.data.recordConclude[c].concludeRecord[i].specialtSalary ))
   
 }
   //check work rate is not standard day
