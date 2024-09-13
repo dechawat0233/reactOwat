@@ -946,7 +946,7 @@ data.accountingRecord.amountCountDayWork = await salary ||0;
 } else {
   sumSocial = await sumSocial  + (dayOffWork * salary) + calSP ;
   if(x[0] == '3') {
-  sumAmountDayWork  = await amountDay;
+  sumAmountDayWork  = await 345;
     data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
 
   } else {
@@ -973,7 +973,7 @@ console.log('workDaySocial '+ (workDaySocial * salary) + 'sumSocial '+ sumSocial
 
 
     // Other properties
-    data.accountingRecord.amountSpecialDay= await 50;
+    // data.accountingRecord.amountSpecialDay= await calSP ||0;
     data.accountingRecord.countDayWork = await dayOffWork ||0;
     // data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
     // data.accountingRecord.amountCountDayWorkOt = await calOtWork ||0;
