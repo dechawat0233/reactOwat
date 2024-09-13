@@ -604,8 +604,8 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
 
     if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) > 0) {
       countDay = countDay  +1;
-      countHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
-      countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+      // countHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+      // countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
       countHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
 
       let [hoursTmp, minutesTmp] = (responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || '0.0').toString().split('.').map(Number);
@@ -946,7 +946,7 @@ data.accountingRecord.amountCountDayWork = await salary ||0;
 } else {
   sumSocial = await sumSocial  + (dayOffWork * salary) + calSP ;
   if(x[0] == '3') {
-  sumAmountDayWork  = await 345;
+  sumAmountDayWork  = await amountDay;
     data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
 
   } else {
