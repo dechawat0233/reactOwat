@@ -612,7 +612,8 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
       countOtHourWork += parseFloat(hoursTmp + decimalFraction);
   
       workDaylist.push(responseConclude.data.recordConclude[c].concludeRecord[i].day.split("/")[0] );
-
+//count day work
+dayOffWork += 1;
       console.log('process x');
     }
 
@@ -970,7 +971,7 @@ console.log('workDaySocial '+ (workDaySocial * salary) + 'sumSocial '+ sumSocial
 
     // Other properties
     // data.accountingRecord.amountSpecialDay= await calSP ||0;
-    data.accountingRecord.countDayWork = await 543;
+    data.accountingRecord.countDayWork = await dayOffWork ||0;
     // data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
     // data.accountingRecord.amountCountDayWorkOt = await calOtWork ||0;
     data.accountingRecord.countHourWork = await countHourWork ||0;
