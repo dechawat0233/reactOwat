@@ -602,7 +602,7 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
     countHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
     countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
 
-    if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0) > 0) {
+    if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) > 0) {
       countDay = countDay  +1;
       countHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
       countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
