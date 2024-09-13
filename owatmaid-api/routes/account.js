@@ -606,9 +606,16 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
       countDay = countDay  +1;
       countHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
       countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+      countHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
 
+      let [hoursTmp, minutesTmp] = (responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || '0.0').toString().split('.').map(Number);
+      let decimalFraction = (parseFloat(minutesTmp) || 0 ).toFixed(2) / 60;
+    
+      countOtHourWork += parseFloat(hoursTmp + decimalFraction);
+  
       amountDay += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0);
       amountOt += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT || 0);
+
       console.log('process x');
     }
 
