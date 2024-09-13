@@ -594,8 +594,11 @@ addSalaryDayArray = [];
 
 //ss1
 for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.length; i++) {
-  console.log('* ' + JSON.stringify(responseConclude.data.recordConclude[c].concludeRecord[i]));
-  
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workplaceId !== "") {
+    console.log('* ' + JSON.stringify(responseConclude.data.recordConclude[c].concludeRecord[i]));
+
+  }
+
   amountDay += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0);
   amountOt += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT || 0);
   amountSpecial += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].addSalaryDay || 0);
