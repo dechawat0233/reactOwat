@@ -420,7 +420,10 @@ function WorktimeSheetWorkplace({employeeList}) {
           //       (item) => item.workplace === searchWorkplaceId
           //     )
           //   : responseData;
-          const sortedData = responseData.sort(
+
+          const filteredData = responseData.filter((item) => item.workplace);
+
+          const sortedData = filteredData.sort(
             (a, b) => a.employeeId - b.employeeId
           );
 
