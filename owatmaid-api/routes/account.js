@@ -594,8 +594,9 @@ addSalaryDayArray = [];
 
 //ss1
 for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.length; i++) {
-  if(responseConclude.data.recordConclude[c].concludeRecord[i].workType == 'specialtSalary') {
-    console.log('* ' + JSON.stringify(responseConclude.data.recordConclude[c].concludeRecord[i]));
+  let x =  response.data.workplace || '';
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workType == 'specialtSalary' ) {
+    console.log('* ' + x[0] + JSON.stringify(responseConclude.data.recordConclude[c].concludeRecord[i]));
 
   }
 
