@@ -649,10 +649,7 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
   }
 
   // console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
-if(responseConclude.data.recordConclude[c].concludeRecord[i].specialtSalary) {
-  console.log( JSON.stringify(responseConclude.data.recordConclude[c].concludeRecord[0], null,2))
-  
-}
+
   //check work rate is not standard day
   if((parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate) == parseFloat(salary)) || parseFloat(salary) > 1660 ) {
     if(! workDaylist.includes(responseConclude.data.recordConclude[c].concludeRecord[i].day.split("/")[0] ) ) {
@@ -661,7 +658,7 @@ if(responseConclude.data.recordConclude[c].concludeRecord[i].specialtSalary) {
 // dayOffWork += 1;
 countHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
 
-console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
+console.log('*work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
 
   } else {
     let [hoursTmp, minutesTmp] = responseConclude.data.recordConclude[c].concludeRecord[i].otTimes.toString().split('.').map(Number);
