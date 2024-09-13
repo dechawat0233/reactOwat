@@ -624,6 +624,7 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
 
 
   }  else {
+    console.log('process x2');
 
   amountDay += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0);
   amountOt += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT || 0);
