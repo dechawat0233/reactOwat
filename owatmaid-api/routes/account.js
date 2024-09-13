@@ -670,7 +670,6 @@ console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].con
 
   if (responseConclude.data.recordConclude[c].concludeRecord[i].workRate !== undefined) {
     countDay++;
-    dayOffWork = await dayOffWork  + 1;
 
     if(dayOffList.includes( getDayNumberFromDate( responseConclude.data.recordConclude[c].concludeRecord[i].day) ) ) {
 // console.log(getDayNumberFromDate( responseConclude.data.recordConclude[c].concludeRecord[i].day) );
