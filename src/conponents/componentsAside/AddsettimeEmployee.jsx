@@ -1693,10 +1693,10 @@ setWName(workplacesearch.workplaceName + ': ' + dep );
     // await setWOtTime('');
     // await setWSelectOtTime('');
     // await setWSelectOtTimeout('');
-    await setCashSalary("");
-    await setSpecialtSalary("");
-    await setSpecialtSalaryOT("");
-    await setMessageSalary("");
+    // await setCashSalary("");
+    // await setSpecialtSalary("");
+    // await setSpecialtSalaryOT("");
+    // await setMessageSalary("");
   }
 
   // Function to add a new row to the rowDataList with specific values
