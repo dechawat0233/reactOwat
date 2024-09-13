@@ -662,7 +662,7 @@ console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].con
 
   } else {
     let [hoursTmp, minutesTmp] = responseConclude.data.recordConclude[c].concludeRecord[i].otTimes.toString().split('.').map(Number);
-    let decimalFraction = parseFloat(minutesTmp).toFixed(2) / 60;
+    let decimalFraction = (parseFloat(minutesTmp) || 0 ).toFixed(2) / 60;
   
     countOtHourWork += parseFloat(hoursTmp + decimalFraction);
 
@@ -670,6 +670,7 @@ console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].con
 
   if (responseConclude.data.recordConclude[c].concludeRecord[i].workRate !== undefined) {
     countDay++;
+    dayOffWork = await dayOffWork  + 1;
 
     if(dayOffList.includes( getDayNumberFromDate( responseConclude.data.recordConclude[c].concludeRecord[i].day) ) ) {
 // console.log(getDayNumberFromDate( responseConclude.data.recordConclude[c].concludeRecord[i].day) );
