@@ -615,6 +615,7 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
   
       amountDay += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0);
       amountOt += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT || 0);
+      workDaylist.push(responseConclude.data.recordConclude[c].concludeRecord[i].day.split("/")[0] );
 
       console.log('process x');
     }
