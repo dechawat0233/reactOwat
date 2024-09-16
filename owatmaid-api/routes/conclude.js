@@ -1168,7 +1168,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
                 }
 
                 let [hoursTmp, minutesTmp] = otTime.toString().split('.').map(Number);
-                let decimalFraction = minutesTmp.toFixed(2) / 60;
+                let decimalFraction = (minutesTmp || 0).toFixed(2) / 60;
                 // let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction))).toFixed(2);
 
                 let workRateOT = (((salary / 8) * parseFloat(wpResponse.data.workRateOT)) * (parseFloat(hoursTmp + decimalFraction)) ).toFixed(2);
