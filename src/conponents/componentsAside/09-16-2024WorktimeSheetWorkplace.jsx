@@ -17,7 +17,7 @@ import en from "date-fns/locale/en-US";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-function WorktimeSheetWorkplace({ employeeList }) {
+function WorktimeSheetWorkplace({employeeList}) {
   // const [selectedDate, setSelectedDate] = useState("2024-02-29");
   // const [selectedThaiDate321, setSelectedThaiDate321] = useState("2567-02-29");
 
@@ -297,19 +297,19 @@ function WorktimeSheetWorkplace({ employeeList }) {
   const [m, setM] = useState("");
   const [m1, setM1] = useState("");
 
-  // useEffect(() => {
-  //   // Fetch data from the API when the component mounts
-  //   fetch(endpoint + "/employee/list")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       // Update the state with the fetched data
-  //       setEmployeelist(data);
-  //       // alert(data[0].workplaceName);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching data:", error);
-  //     });
-  // }, []); // The empty array [] ensures that the effect runs only once after the initial render
+  useEffect(() => {
+    // Fetch data from the API when the component mounts
+    fetch(endpoint + "/employee/list")
+      .then((response) => response.json())
+      .then((data) => {
+        // Update the state with the fetched data
+        setEmployeelist(data);
+        // alert(data[0].workplaceName);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []); // The empty array [] ensures that the effect runs only once after the initial render
 
   useEffect(() => {
     const fetchData = () => {
@@ -936,13 +936,13 @@ function WorktimeSheetWorkplace({ employeeList }) {
       // Calculate the number of days in the month, considering February and leap years
       const daysInMonth =
         monthset === "02" &&
-          ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0)
+        ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0)
           ? 29
           : monthset === "02"
-            ? 28
-            : [4, 6, 9, 11].includes(monthset)
-              ? 30
-              : 31;
+          ? 28
+          : [4, 6, 9, 11].includes(monthset)
+          ? 30
+          : 31;
 
       // Calculate the starting point for the table header
       let startingDay = 21;
@@ -1652,19 +1652,19 @@ function WorktimeSheetWorkplace({ employeeList }) {
   );
 
   // Assuming `employeeList` is an array containing employee data
-  filteredEmployees.forEach((employee) => {
-    // Find the matching employee in the employeeList by employeeId
-    const matchingEmployee = employeeList.find(
-      (emp) => emp.employeeId === employee.employeeId
-    );
+filteredEmployees.forEach((employee) => {
+  // Find the matching employee in the employeeList by employeeId
+  const matchingEmployee = employeeList.find(
+    (emp) => emp.employeeId === employee.employeeId
+  );
 
-    // If a matching employee is found and has "costtype" == "ภ.ง.ด.3"
-    if (matchingEmployee && matchingEmployee.costtype === "ภ.ง.ด.3") {
-      // Add the costtype information to the filteredEmployees array
-      employee.costtype = "ภ.ง.ด.3";
-    }
-  });
-  console.log("filteredEmployees", filteredEmployees);
+  // If a matching employee is found and has "costtype" == "ภ.ง.ด.3"
+  if (matchingEmployee && matchingEmployee.costtype === "ภ.ง.ด.3") {
+    // Add the costtype information to the filteredEmployees array
+    employee.costtype = "ภ.ง.ด.3";
+  }
+});
+    console.log("filteredEmployees", filteredEmployees);
 
   //     // Do something with the filtered employees
 
@@ -2125,45 +2125,45 @@ function WorktimeSheetWorkplace({ employeeList }) {
   // employeeList
   // Assuming `conclude`, `employeeList`, `searchWorkplaceId`, `desiredTimerecordId`, and `desiredMonth` are available
 
-  const filteredEntriesTest = conclude
-    // Filter by year and month
-    .filter((entry) =>
-      entry.year === desiredTimerecordId && entry.month === desiredMonth
-    )
-    // Filter by employeeId that exists in employeeList
-    .filter((entry) => {
-      const employeeInList = employeeList.find(
-        (emp) => emp.employeeId === entry.employeeId
-      );
-      return employeeInList !== undefined;
-    })
-    // Filter by searchWorkplaceId, either matching employeeList.workplace or concludeRecord.workplaceId
-    .filter((entry) => {
-      const employeeInList = employeeList.find(
-        (emp) => emp.employeeId === entry.employeeId
-      );
+const filteredEntriesTest = conclude
+// Filter by year and month
+.filter((entry) =>
+  entry.year === desiredTimerecordId && entry.month === desiredMonth
+)
+// Filter by employeeId that exists in employeeList
+.filter((entry) => {
+  const employeeInList = employeeList.find(
+    (emp) => emp.employeeId === entry.employeeId
+  );
+  return employeeInList !== undefined;
+})
+// Filter by searchWorkplaceId, either matching employeeList.workplace or concludeRecord.workplaceId
+.filter((entry) => {
+  const employeeInList = employeeList.find(
+    (emp) => emp.employeeId === entry.employeeId
+  );
 
-      // Check if the employee's workplace matches searchWorkplaceId
-      if (employeeInList && employeeInList.workplace === searchWorkplaceId) {
-        return true;
-      }
+  // Check if the employee's workplace matches searchWorkplaceId
+  if (employeeInList && employeeInList.workplace === searchWorkplaceId) {
+    return true;
+  }
 
-      // Check if any of the concludeRecord's workplaceId matches searchWorkplaceId
-      const workplaceMatch = entry.concludeRecord.some(
-        (record) => record.workplaceId === searchWorkplaceId
-      );
+  // Check if any of the concludeRecord's workplaceId matches searchWorkplaceId
+  const workplaceMatch = entry.concludeRecord.some(
+    (record) => record.workplaceId === searchWorkplaceId
+  );
 
-      return workplaceMatch;
-    });
+  return workplaceMatch;
+});
 
-
+  
   filteredEntriesTest.sort((a, b) => {
     // Assuming employeeId is a string, convert it to a number for numerical comparison
     return Number(a.employeeId) - Number(b.employeeId);
   });
 
-  console.log("filteredEntriesTest", filteredEntriesTest);
-  console.log("responseDataAll", responseDataAll);
+    console.log("filteredEntriesTest", filteredEntriesTest);
+    console.log("responseDataAll", responseDataAll);
 
   // const responseDataAll123 = [
   //   {_id: '66ac5eca3aac559797a814e9', year: '2024', month: '06', employeeId: '670427', createDate: '02/08/2024, 04:21'},
@@ -2536,10 +2536,6 @@ function WorktimeSheetWorkplace({ employeeList }) {
 
     // Iterate over each concludeRecord
     entry.concludeRecord.forEach((record) => {
-      const matchingEmployee = employeeList.find(
-        (emp) => emp.employeeId === entry.employeeId
-      );
-
       // Check if workRate or workRateOT exists
       // const
       // if (record.workRate || record.workRateOT) {
@@ -2616,63 +2612,35 @@ function WorktimeSheetWorkplace({ employeeList }) {
         dayWorkNightArray.push("");
       }
       /////////////////วันที่ทำงาน
-      console.log('matchingEmployee',matchingEmployee);
-      if (matchingEmployee && matchingEmployee.workplace.startsWith("3")) {
-        // allTimesArray.push(parseFloat(record.allTimes).toFixed(1)); // Push empty string if workplace starts with "3"
-        if (parseFloat(record.allTimes) == 0) {
-          allTimesArray.push(""); // Push empty string if allTimes is 0
-        }else{
-          allTimesArray.push(parseFloat(record.allTimes).toFixed(1));
-        }
-      } else if (
+
+      if (
         record.workRate != 0 &&
         record.workRate != null &&
         // record.workRate / workRateWorkplace < workRateWorkplaceStage1
         parseFloat(record.workRateMultiply) <= 1 // Convert workRateMultiply to float
       ) {
         // Push allTimes and otTimes to respective arrays
-        // allTimesArray.push(parseFloat(record.allTimes).toFixed(1));
-        if (parseFloat(record.allTimes) == 0) {
-          allTimesArray.push(""); // Push empty string if allTimes is 0
-        } else {
-          // Push allTimes to array if it's not 0
-          allTimesArray.push(parseFloat(record.allTimes).toFixed(1));
-        }
+        allTimesArray.push(parseFloat(record.allTimes).toFixed(1));
       } else {
         // Push empty strings if workRate and workRateOT do not exist
         allTimesArray.push("");
         // dayWorkArray.push('');
       }
-      if (matchingEmployee && matchingEmployee.workplace.startsWith("3")) {
-        // otTimesArray.push(parseFloat(record.otTimes).toFixed(1)); // Push empty string if workplace starts with "3"
-        if (parseFloat(record.otTimes) == 0) {
-          otTimesArray.push(""); // Push empty string if allTimes is 0
-        }else{
-          otTimesArray.push(parseFloat(record.otTimes).toFixed(1));
-        }
-      } else if (
+      if (
         record.workRate != 0 &&
         record.workRate != null &&
         // record.workRate / workRateWorkplace < workRateWorkplaceStage1
         parseFloat(record.workRateOTMultiply) <= 1.5 // Convert workRateMultiply to float
       ) {
         // Push allTimes and otTimes to respective arrays
-        // otTimesArray.push(parseFloat(record.otTimes).toFixed(1));
-        if (parseFloat(record.otTimes) == 0) {
-          otTimesArray.push(""); // Push empty string if allTimes is 0
-        } else {
-          // Push allTimes to array if it's not 0
-          otTimesArray.push(parseFloat(record.otTimes).toFixed(1));
-        }
+        otTimesArray.push(parseFloat(record.otTimes).toFixed(1));
       } else {
         // Push empty strings if workRate and workRateOT do not exist
         otTimesArray.push("");
         // dayWorkArray.push('');
       }
       // 22
-      if (matchingEmployee && matchingEmployee.workplace.startsWith("3")) {
-        allTimesArray2.push(""); // Push empty string if workplace starts with "3"
-      } else if (
+      if (
         record.workRate != 0 &&
         record.workRate != null &&
         // record.workRate / workRateWorkplace < workRateWorkplaceStage1
@@ -2686,9 +2654,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
         allTimesArray2.push("");
         // dayWorkArray.push('');
       }
-      if (matchingEmployee && matchingEmployee.workplace.startsWith("3")) {
-        otTimesArray2.push(""); // Push empty string if workplace starts with "3"
-      } else if (
+      if (
         record.workRate != 0 &&
         record.workRate != null &&
         // record.workRate / workRateWorkplace < workRateWorkplaceStage1
@@ -2704,9 +2670,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
       }
 
       // 33
-      if (matchingEmployee && matchingEmployee.workplace.startsWith("3")) {
-        allTimesArray3.push(""); // Push empty string if workplace starts with "3"
-      } else if (
+      if (
         record.workRate != 0 &&
         record.workRate != null &&
         // record.workRate / workRateWorkplace < workRateWorkplaceStage1
@@ -2719,9 +2683,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
         allTimesArray3.push("");
         // dayWorkArray.push('');
       }
-      if (matchingEmployee && matchingEmployee.workplace.startsWith("3")) {
-        otTimesArray3.push(""); // Push empty string if workplace starts with "3"
-      } else if (
+      if (
         record.workRate != 0 &&
         record.workRate != null &&
         // record.workRate / workRateWorkplace < workRateWorkplaceStage1
@@ -2853,8 +2815,8 @@ function WorktimeSheetWorkplace({ employeeList }) {
     return dayWorkMorningAndSSs.map((subArray) =>
       subArray.map((day) =>
         allDayOff.includes(day) ||
-          holidayList.includes(day) ||
-          singleArrayOfDates.includes(day)
+        holidayList.includes(day) ||
+        singleArrayOfDates.includes(day)
           ? ""
           : day
       )
@@ -2927,10 +2889,10 @@ function WorktimeSheetWorkplace({ employeeList }) {
   const finalUpdatedDayWorksWorkNight =
     changeNumbersToOne2(updatedDaysWorkNight);
 
-  console.log(
-    "finalUpdatedDayWorksWorkMorningAndSS",
-    finalUpdatedDayWorksWorkMorningAndSS
-  );
+    console.log(
+      "finalUpdatedDayWorksWorkMorningAndSS",
+      finalUpdatedDayWorksWorkMorningAndSS
+    );
   //   console.log(
   //     "finalUpdatedDayWorksWorkAfternoon",
   //     finalUpdatedDayWorksWorkAfternoon
@@ -3172,54 +3134,19 @@ function WorktimeSheetWorkplace({ employeeList }) {
   });
   //   console.log("amountCountDayWork", amountCountDayWork);
 
-  // const hourOneFive = responseDataAll.map((item) => {
-  //   const accountingRecord = item.accountingRecord?.[0];
-  //   return accountingRecord
-  //     ? parseFloat(accountingRecord.hourOneFive).toFixed(2)
-  //     : "0.00";
-  // });
   const hourOneFive = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
-
-    // Check if the workplace starts with "3"
-    if (item.workplace.startsWith("3")) {
-      // Return `countOtHour` if workplace starts with "3"
-      return accountingRecord
-        ? parseFloat(accountingRecord.countOtHour).toFixed(2)
-        : "0.00";
-    } else {
-      // Otherwise, return `hourOneFive`
-      return accountingRecord
-        ? parseFloat(accountingRecord.hourOneFive).toFixed(2)
-        : "0.00";
-    }
+    return accountingRecord
+      ? parseFloat(accountingRecord.hourOneFive).toFixed(2)
+      : "0.00";
   });
-
-
-  // const amountOneFive = responseDataAll.map((item) => {
-  //   const accountingRecord = item.accountingRecord?.[0];
-  //   return accountingRecord
-  //     ? parseFloat(accountingRecord.amountOneFive).toFixed(2)
-  //     : "0.00";
-  // });
 
   const amountOneFive = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
-
-    // Check if the workplace starts with "3"
-    if (item.workplace.startsWith("3")) {
-      // Return `countOtHour` if workplace starts with "3"
-      return accountingRecord
-        ? parseFloat(accountingRecord.amountOt).toFixed(2)
-        : "0.00";
-    } else {
-      // Otherwise, return `hourOneFive`
-      return accountingRecord
-        ? parseFloat(accountingRecord.hourOneFive).toFixed(2)
-        : "0.00";
-    }
+    return accountingRecord
+      ? parseFloat(accountingRecord.amountOneFive).toFixed(2)
+      : "0.00";
   });
-
 
   const hourTwo = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
@@ -3249,11 +3176,11 @@ function WorktimeSheetWorkplace({ employeeList }) {
       : "0.00";
   });
 
-  const saveCash = responseDataAll.map((item) =>
+  const saveCash = responseDataAll.map((item) => 
     item.workplace.startsWith("3") ? "สแปร์เงินสด" : ""
   );
 
-  console.log('saveCash', saveCash);
+  console.log('saveCash',saveCash);
 
   const sumArrayHoli = countSpecialDays.map(
     (countSpecialDay, index) => countSpecialDay - specialDayListWorks[index]
@@ -5098,12 +5025,12 @@ function WorktimeSheetWorkplace({ employeeList }) {
 
         doc.text(
           codePage +
-          "" +
-          formattedDate +
-          "" +
-          (pageIndex + 1) +
-          " of " +
-          makePage,
+            "" +
+            formattedDate +
+            "" +
+            (pageIndex + 1) +
+            " of " +
+            makePage,
           250,
           210
         );
@@ -6767,27 +6694,27 @@ function WorktimeSheetWorkplace({ employeeList }) {
               doc.text(
                 CodeSp,
                 9 +
-                cellWidthSpSalary * 3 +
-                startXSpSalary +
-                index * cellWidthSpSalary,
+                  cellWidthSpSalary * 3 +
+                  startXSpSalary +
+                  index * cellWidthSpSalary,
                 38,
                 { align: "center" }
               );
               doc.text(
                 NameSp,
                 9 +
-                cellWidthSpSalary * 3 +
-                startXSpSalary +
-                index * cellWidthSpSalary,
+                  cellWidthSpSalary * 3 +
+                  startXSpSalary +
+                  index * cellWidthSpSalary,
                 54.8,
                 { angle: 90 }
               );
               doc.text(
                 "ต่อ " + roundOfSalaryText,
                 12 +
-                cellWidthSpSalary * 3 +
-                startXSpSalary +
-                index * cellWidthSpSalary,
+                  cellWidthSpSalary * 3 +
+                  startXSpSalary +
+                  index * cellWidthSpSalary,
                 54.8,
                 { angle: 90 }
               );
@@ -8476,7 +8403,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
         const offsetX = startX + daysInMonth * cellWidth; // Initial offset for salary cells
 
         for (let j = 0; j < totalColumns; j++) {
-          const x = offsetX + j * cellWidthSpSalary - 0.1; // Calculate x position for each cell
+          const x = offsetX + j * cellWidthSpSalary -0.1; // Calculate x position for each cell
           const rotate = data[j] && data[j].length > 3; // Apply rotation if string length > 3
           drawCell(x, y, cellWidthSpSalary, rowHeight, data[j] || "", rotate);
         }
@@ -8769,13 +8696,13 @@ function WorktimeSheetWorkplace({ employeeList }) {
         );
         doc.text(
           "ประกันสังคม ",
-          5 + startXSpSalary + cellWidthSpSalary * 11,
+          5 + startXSpSalary + cellWidthSpSalary*11,
           54.8,
           { angle: 90 }
         );
         doc.text(
           "ภาษี ",
-          5 + startXSpSalary + cellWidthSpSalary * 12,
+          5 + startXSpSalary + cellWidthSpSalary*12,
           54.8,
           { angle: 90 }
         );
@@ -8818,27 +8745,27 @@ function WorktimeSheetWorkplace({ employeeList }) {
           doc.text(
             CodeSp,
             4 +
-            cellWidthSpSalary * 2 +
-            startXSpSalary +
-            index * cellWidthSpSalary,
+              cellWidthSpSalary * 2 +
+              startXSpSalary +
+              index * cellWidthSpSalary,
             38,
             { align: "center" }
           );
           doc.text(
             NameSp,
             4 +
-            cellWidthSpSalary * 2 +
-            startXSpSalary +
-            index * cellWidthSpSalary,
+              cellWidthSpSalary * 2 +
+              startXSpSalary +
+              index * cellWidthSpSalary,
             54.8,
             { angle: 90 }
           );
           doc.text(
             "ต่อ " + roundOfSalaryText,
             7 +
-            cellWidthSpSalary * 2 +
-            startXSpSalary +
-            index * cellWidthSpSalary,
+              cellWidthSpSalary * 2 +
+              startXSpSalary +
+              index * cellWidthSpSalary,
             54.8,
             { angle: 90 }
           );
@@ -8869,7 +8796,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
 
         if (!isRowEmpty(salaryData)) {
           // Drawing salary data
-          drawAddSalaryRow(salaryData, currentY + morningRowHeight + 1, cellHeight);
+          drawAddSalaryRow(salaryData, currentY + morningRowHeight+1, cellHeight);
         }
 
         // if (!isMorningRowEmpty) {
@@ -8887,7 +8814,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
           sumArrayHoli[i].toString()
         );
         drawCellRight(
-          cellHeight * daysInMonth + 59 + cellWidthSpSalary * 12,
+          cellHeight * daysInMonth + 59 + cellWidthSpSalary*12,
           currentY + cellHeight / 2 + 1,
           saveCash[i].toString()
         );

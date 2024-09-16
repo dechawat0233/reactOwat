@@ -12,8 +12,13 @@ import { FaCalendarAlt } from "react-icons/fa"; // You can use any icon library
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "../editwindowcss.css";
 
+
+
+
+function Employee() {
+
 const locationData = {
-  Bangkok: {
+  กรุงเทพ: {
     districts: {
       "District 1": ["SubDistrict 1-1", "SubDistrict 1-2"],
       "District 2": ["SubDistrict 2-1", "SubDistrict 2-2"],
@@ -26,8 +31,27 @@ const locationData = {
     },
   },
 };
+  const [provinces, setProvinces] = useState([]);
+const [loading, setLoading] = useState(true);
 
-function Employee() {
+// Fetch provinces data from the API
+useEffect(() => {
+  const fetchProvinces = async () => {
+    try {
+      const response = await axios.get("https://www.thaikub.com/apis/v1/thailand/provinces");
+      setProvinces(response.data.provinces); // Assuming the API returns data in this format
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching provinces data", error);
+      setLoading(false);
+    }
+  };
+
+  fetchProvinces();
+}, []);
+
+console.log('provinces',provinces);
+
   useEffect(() => {
     document.title = "ข้อมูลพนักงาน";
     // You can also return a cleanup function if needed
@@ -1487,8 +1511,8 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
                             </div>
                           </div>
                         </div>
-                        {/* <div class="row">
-                          <div class="col-md-6">
+                         <div class="row">
+                          <div class="col-md-12">
                             <div class="form-group">
                               <label role="address">
                                 ที่อยู่ตามบัตรประชาชน
@@ -1504,7 +1528,7 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
                               ></textarea>
                             </div>
                           </div>
-                          <div class="col-md-6">
+                         {/* <div class="col-md-6">
                             <div class="form-group">
                               <label role="currentAddress">
                                 ที่อยู่ปัจจุบัน
@@ -1530,8 +1554,8 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
                                 }
                               ></textarea>
                             </div>
-                          </div>
-                        </div> */}
+                          </div>*/}
+                        </div> 
 
                         <div class="row">
                           <div class="col-md-3">
@@ -1691,6 +1715,24 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
                             ใช้ที่อยู่ตามบัตรประชาชน
                           </label>
                         </div>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label role="address">
+                                ที่อยู่ตามบัตรประชาชน
+                              </label>
+                              <textarea
+                                required
+                                name="address"
+                                id="address"
+                                class="form-control"
+                                rows="3"
+                                value={address}
+                                onChange={(e) => setAddress(e.target.value)}
+                              ></textarea>
+                            </div>
+                          </div>
+                          </div>
                         <div class="row">
                           <div class="col-md-3">
                             {/* <div class="form-group">
