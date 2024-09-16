@@ -248,7 +248,7 @@ function SystemUser() {
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label role="Passwork">Passwork</label>
+                                                    <label role="Passwork">Password</label>
                                                     <input type="text" class="form-control" id="Passwork" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
                                                 </div>
                                             </div>

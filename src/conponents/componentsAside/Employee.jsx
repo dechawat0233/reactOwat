@@ -12,25 +12,26 @@ import { FaCalendarAlt } from "react-icons/fa"; // You can use any icon library
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "../editwindowcss.css";
 
+import locationData from "./LocationData/locationData";
 
 
 
 function Employee() {
 
-const locationData = {
-  กรุงเทพ: {
-    districts: {
-      "District 1": ["SubDistrict 1-1", "SubDistrict 1-2"],
-      "District 2": ["SubDistrict 2-1", "SubDistrict 2-2"],
-    },
-  },
-  ChiangMai: {
-    districts: {
-      "District 3": ["SubDistrict 3-1", "SubDistrict 3-2"],
-      "District 4": ["SubDistrict 4-1", "SubDistrict 4-2"],
-    },
-  },
-};
+// const locationData = {
+//   กรุงเทพ: {
+//     districts: {
+//       "District 1": ["SubDistrict 1-1", "SubDistrict 1-2"],
+//       "District 2": ["SubDistrict 2-1", "SubDistrict 2-2"],
+//     },
+//   },
+//   ChiangMai: {
+//     districts: {
+//       "District 3": ["SubDistrict 3-1", "SubDistrict 3-2"],
+//       "District 4": ["SubDistrict 4-1", "SubDistrict 4-2"],
+//     },
+//   },
+// };
   const [provinces, setProvinces] = useState([]);
 const [loading, setLoading] = useState(true);
 
@@ -154,6 +155,7 @@ console.log('provinces',provinces);
   const [maritalStatus, setMaritalStatus] = useState(""); //สถานภาพการสมรส
   const [militaryStatus, setMilitaryStatus] = useState(""); //สถานภาพทางการทหาร
   const [address, setAddress] = useState(""); //ที่อยู่ตามบัตรประชาชน
+  const [currentAddress, setCurrentAddress] = useState(""); //ที่อยู่ปัจจุบัน
 
   const [province, setProvince] = useState(""); //จังหวัด
   const [district, setDistrict] = useState(""); //อำเภอ
@@ -213,6 +215,8 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
       setSubDistrict2(subDistrict);
       setPostalCode2(postalCode);
       setHouseNumber2(houseNumber);
+      setCurrentAddress(address);
+
     } else {
       // Allow manual editing if unchecked
       setProvince2("");
@@ -220,10 +224,11 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
       setSubDistrict2("");
       setPostalCode2("");
       setHouseNumber2("");
+      setCurrentAddress("");
+
     }
   };
 
-  const [currentAddress, setCurrentAddress] = useState(""); //ที่อยู่ปัจจุบัน
   const [phoneNumber, setPhoneNumber] = useState(""); //เบอร์โทรศัพท์
   const [emergencyContactNumber, setEmergencyContactNumber] = useState(""); //เบอร์ติดต่อกรณีฉุกเฉิน
   const [idLine, setIdLine] = useState(""); //ไอดีไลน์
@@ -1727,8 +1732,11 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
                                 id="address"
                                 class="form-control"
                                 rows="3"
-                                value={address}
-                                onChange={(e) => setAddress(e.target.value)}
+                                value={currentAddress}
+                                // onChange={(e) => setAddress(e.target.value)}
+                                onChange={(e) =>
+                                  setCurrentAddress(e.target.value)
+                                }
                               ></textarea>
                             </div>
                           </div>
