@@ -292,10 +292,6 @@ function Salaryresult() {
     }
   }
 
-
-  //all leave usede
-  const [sumLeave , setSumLeave] = useState([]);
-
   useEffect(() => {
     // get welfare record with year and month
     const getWelfare = async () => {
@@ -305,19 +301,6 @@ function Salaryresult() {
           month: monthWelfare,
           employeeId: staffId
         };
-
-        try {
-          const result = await axios.post(
-            endpoint + "/leave/searchsummary",
-            welfareSearch
-          );
-          if (result && result.data.length > 0) {
-            // await alert(JSON.stringify(result .data[0].record));
-            setSumLeave(result.data[0].record);
-          }
-        } catch (e) {
-          // alert('get welfare error is' + e)
-        }
 
         try {
           const result = await axios.post(
@@ -337,9 +320,6 @@ function Salaryresult() {
     getWelfare();
   }, [yearWelfare, monthWelfare]);
 
-
-  let test = sumLeave.filter(item => item.welfareType == 'ลาป่วย')
-// 
   console.log("remainArray", remainArray);
   useEffect(() => {
     // setMonth("01");
@@ -1923,14 +1903,6 @@ function Salaryresult() {
     { id: "ลาเพื่อฝึกอบรม", name: "leavefortraining" },
   ];
 
-  const [remainbusinessleave , setRemainbusinessleave] = useState('');
-  const [remainsickleave , setRemainsickleave] = useState('');
-  const [remainvacation, setRemainvacation] = useState('');
-  const [maternityleavesalary, setMaternityleavesalary] = useState('');
-  const [militaryleave , setMilitaryleave] = useState('');
-  const [sterilization, setSterilization] = useState('');
-  const [leavefortraining, setLeavefortraining] = useState('');
-
   // const options = [
   //   { id: "1231", name: "จ่ายลาป่วยมีใบแพทย์" },
   //   { id: "1233", name: "ชดเชยค่าแรงลาคลอด" },
@@ -2585,7 +2557,7 @@ function Salaryresult() {
                               {empDataSelect &&
                               empDataSelect[option.name] !== undefined
                                 ? empDataSelect[option.name]
-                                : "0"}
+                                : "N/A"}
                             </td>
 
                             <td style={cellStyle}>
