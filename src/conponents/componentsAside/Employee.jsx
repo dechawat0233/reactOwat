@@ -1683,16 +1683,13 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
                                 </div>
                               </div> */}
                         </div>
-                        <div class="row">
+                        {/* <div class="row">
                           <div class="col-md-3">
                             <div>
                               <label htmlFor="subDistrict">
                                 บ้านเลขที่-หมู่ที่{" "}
                               </label>
                               <div class="form-group">
-                                {/* <label role="idCard">
-                                    เลขบัตรประจำตัวประชาชน
-                                  </label> */}
                                 <input
                                   // required
                                   type="text"
@@ -1708,7 +1705,7 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         <div>
                           <input
                             type="checkbox"
@@ -1836,16 +1833,13 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
                             </div>
                           </div>
                         </div>
-                        <div class="row">
+                        {/* <div class="row">
                           <div class="col-md-3">
                             <div>
                               <label htmlFor="subDistrict">
                                 บ้านเลขที่-หมู่
                               </label>
                               <div class="form-group">
-                                {/* <label role="idCard">
-                                    เลขบัตรประจำตัวประชาชน
-                                  </label> */}
                                 <input
                                   // required
                                   type="text"
@@ -1862,7 +1856,7 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
                             </div>
                           </div>
                         </div>
-                        <br />
+                        <br /> */}
 
                         {/* <!--row--> */}
                         <div class="row">

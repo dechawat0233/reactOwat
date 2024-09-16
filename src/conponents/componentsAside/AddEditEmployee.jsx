@@ -22,7 +22,7 @@ import {
 registerLocale("th", th);
 setDefaultLocale("th");
 import EmployeesSelected from "./EmployeesSelected";
-
+import locationData from "./LocationData/locationData";
 // const toBuddhistYear = (date, formatString) => {
 //     const christianYear = getYear(date);
 //     console.log('christianYear',christianYear);
@@ -30,20 +30,20 @@ import EmployeesSelected from "./EmployeesSelected";
 //     return format(date, formatString).replace(christianYear.toString(), buddhistYear.toString());
 // };
 
-const locationData = {
-  Bangkok: {
-    districts: {
-      "District 1": ["SubDistrict 1-1", "SubDistrict 1-2"],
-      "District 2": ["SubDistrict 2-1", "SubDistrict 2-2"],
-    },
-  },
-  ChiangMai: {
-    districts: {
-      "District 3": ["SubDistrict 3-1", "SubDistrict 3-2"],
-      "District 4": ["SubDistrict 4-1", "SubDistrict 4-2"],
-    },
-  },
-};
+// const locationData = {
+//   Bangkok: {
+//     districts: {
+//       "District 1": ["SubDistrict 1-1", "SubDistrict 1-2"],
+//       "District 2": ["SubDistrict 2-1", "SubDistrict 2-2"],
+//     },
+//   },
+//   ChiangMai: {
+//     districts: {
+//       "District 3": ["SubDistrict 3-1", "SubDistrict 3-2"],
+//       "District 4": ["SubDistrict 4-1", "SubDistrict 4-2"],
+//     },
+//   },
+// };
 
 function AddEditEmployee() {
   const [showPopup, setShowPopup] = useState(false);
@@ -159,6 +159,7 @@ function AddEditEmployee() {
   const [maritalStatus, setMaritalStatus] = useState(""); //สถานภาพการสมรส
   const [militaryStatus, setMilitaryStatus] = useState(""); //สถานภาพทางการทหาร
   const [address, setAddress] = useState(""); //ที่อยู่ตามบัตรประชาชน
+  const [currentAddress, setCurrentAddress] = useState(""); //ที่อยู่ปัจจุบัน
 
   const [province, setProvince] = useState(""); //จังหวัด
   const [district, setDistrict] = useState(""); //อำเภอ
@@ -207,6 +208,7 @@ function AddEditEmployee() {
       setSubDistrict2(subDistrict);
       setPostalCode2(postalCode);
       setHouseNumber2(houseNumber);
+      setCurrentAddress(address);
     } else {
       // Allow manual editing if unchecked
       setProvince2("");
@@ -214,10 +216,10 @@ function AddEditEmployee() {
       setSubDistrict2("");
       setPostalCode2("");
       setHouseNumber2("");
+      setCurrentAddress("");
     }
   };
 
-  const [currentAddress, setCurrentAddress] = useState(""); //ที่อยู่ปัจจุบัน
   const [phoneNumber, setPhoneNumber] = useState(""); //เบอร์โทรศัพท์
   const [emergencyContactNumber, setEmergencyContactNumber] = useState(""); //เบอร์ติดต่อกรณีฉุกเฉิน
   const [idLine, setIdLine] = useState(""); //ไอดีไลน์
@@ -542,16 +544,16 @@ function AddEditEmployee() {
         setAddress(response.data.employees[0].address);
 
         setProvince(response.data.employees[0].province);
-    setDistrict(response.data.employees[0].district);
-    setSubDistrict(response.data.employees[0].subDistrict);
-    setPostalCode(response.data.employees[0].postalCode);
-    setHouseNumber(response.data.employees[0].houseNumber);
+        setDistrict(response.data.employees[0].district);
+        setSubDistrict(response.data.employees[0].subDistrict);
+        setPostalCode(response.data.employees[0].postalCode);
+        setHouseNumber(response.data.employees[0].houseNumber);
 
-    setProvince2(response.data.employees[0].province2);
-    setDistrict2(response.data.employees[0].district2);
-    setSubDistrict2(response.data.employees[0].subDistrict2);
-    setPostalCode2(response.data.employees[0].postalCode2);
-    setHouseNumber2(response.data.employees[0].houseNumber2);
+        setProvince2(response.data.employees[0].province2);
+        setDistrict2(response.data.employees[0].district2);
+        setSubDistrict2(response.data.employees[0].subDistrict2);
+        setPostalCode2(response.data.employees[0].postalCode2);
+        setHouseNumber2(response.data.employees[0].houseNumber2);
 
         setCopyAddress(response.data.employees[0].copyAddress);
         setCurrentAddress(response.data.employees[0].currentAddress);
@@ -868,7 +870,7 @@ function AddEditEmployee() {
                                     value={workplace}
                                     onChange={handleWorkplace}
                                   />
-{/* workplaceList */}
+                                  {/* workplaceList */}
                                   <datalist id="workplaces">
                                     <option value="">ยังไม่ระบุหน่วยงาน</option>
                                     {workplaceSelection.map((wp) => (
@@ -1354,6 +1356,24 @@ function AddEditEmployee() {
                               </div>
                             </div>
                             <div class="row">
+                              <div class="col-md-12">
+                                <div class="form-group">
+                                  <label role="address">
+                                    ที่อยู่ตามบัตรประชาชน
+                                  </label>
+                                  <textarea
+                                    required
+                                    name="address"
+                                    id="address"
+                                    class="form-control"
+                                    rows="3"
+                                    value={address}
+                                    onChange={(e) => setAddress(e.target.value)}
+                                  ></textarea>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
                               <div class="col-md-3">
                                 {/* <div class="form-group">
                                   <label role="address">
@@ -1485,13 +1505,10 @@ function AddEditEmployee() {
                               </div> */}
                             </div>
                             <div class="row">
-                          <div class="col-md-3">
+                              {/* <div class="col-md-3">
                             <div>
                               <label htmlFor="subDistrict">บ้านเลขที่-หมู่</label>
                               <div class="form-group">
-                                {/* <label role="idCard">
-                                    เลขบัตรประจำตัวประชาชน
-                                  </label> */}
                                 <input
                                   // required
                                   type="text"
@@ -1506,8 +1523,8 @@ function AddEditEmployee() {
                                 />
                               </div>
                             </div>
-                          </div>
-                        </div>
+                          </div> */}
+                            </div>
                             <div>
                               <input
                                 type="checkbox"
@@ -1519,6 +1536,27 @@ function AddEditEmployee() {
                                 ใช้ที่อยู่ตามบัตรประชาชน
                               </label>
                             </div>
+                            <div class="row">
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label role="address">
+                                ที่อยู่ตามบัตรประชาชน
+                              </label>
+                              <textarea
+                                required
+                                name="address"
+                                id="address"
+                                class="form-control"
+                                rows="3"
+                                value={currentAddress}
+                                // onChange={(e) => setAddress(e.target.value)}
+                                onChange={(e) =>
+                                  setCurrentAddress(e.target.value)
+                                }
+                              ></textarea>
+                            </div>
+                          </div>
+                          </div>
                             <div class="row">
                               <div class="col-md-3">
                                 {/* <div class="form-group">
@@ -1623,13 +1661,10 @@ function AddEditEmployee() {
                               </div>
                             </div>
                             <div class="row">
-                          <div class="col-md-3">
+                              {/* <div class="col-md-3">
                             <div>
                               <label htmlFor="subDistrict">บ้านเลขที่-หมู่</label>
                               <div class="form-group">
-                                {/* <label role="idCard">
-                                    เลขบัตรประจำตัวประชาชน
-                                  </label> */}
                                 <input
                                   // required
                                   type="text"
@@ -1644,8 +1679,8 @@ function AddEditEmployee() {
                                 />
                               </div>
                             </div>
-                          </div>
-                        </div>
+                          </div> */}
+                            </div>
                             <br />
                             {/* <!--row--> */}
                             <div class="row">
