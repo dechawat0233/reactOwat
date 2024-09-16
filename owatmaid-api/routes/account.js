@@ -120,7 +120,7 @@ await dataList .push(accountData );
     const responseConclude = await axios.post(sURL + '/conclude/search', dataSearch);
 
     const dataList = [];
-
+  
     if (responseConclude.data.recordConclude.length > 0) {
 
       for (let c = 0; c < responseConclude.data.recordConclude.length; c++) {
@@ -168,6 +168,7 @@ let sumDeductBeforeTax = 0;
 
 let sumSocial = 0;
 let tax = 0;
+let costtype = '';
 
 let sumAddSalaryAfterTax = 0;
 let sumDeductAfterTax = 0;
@@ -210,6 +211,8 @@ if (response) {
     data.workplace = await response.data.workplace;
     data.accountingRecord.tax = await response.data.tax ||0;
 tax = await response.data.tax ||0; 
+costtype = await response.data.costtype  ||0; 
+
 salary = await response.data.salary || 0;
 
 // await console.log(response.data);
@@ -587,10 +590,38 @@ await Promise.all(promisesDeduct)
 
 addSalaryDayArray = [];  
 
-console.log('responseConclude.data.recordConclude[c].concludeRecord' + responseConclude.data.recordConclude[0].concludeRecord);
-
+// console.log('responseConclude.data.recordConclude[c].concludeRecord' + responseConclude.data.recordConclude[0].concludeRecord);
+let x  = '';
 //ss1
 for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.length; i++) {
+  x=   response.data.workplace || '';
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workType == 'specialtSalary' || x[0] == '3') {
+    // console.log('* ' + x[0] + JSON.stringify(responseConclude.data.recordConclude[c].concludeRecord[i]));
+    amountDay += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0);
+    amountOt += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT || 0);
+    countHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+    countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+
+    if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) > 0) {
+      countDay += 1;
+      countHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+
+      let [hoursTmp, minutesTmp] = (responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || '0.0').toString().split('.').map(Number);
+      let decimalFraction = (parseFloat(minutesTmp) || 0 ).toFixed(2) / 60;
+    
+      countOtHourWork += parseFloat(hoursTmp + decimalFraction);
+  
+      workDaylist.push(responseConclude.data.recordConclude[c].concludeRecord[i].day.split("/")[0] );
+//count day work
+dayOffWork += 1;
+      console.log('process x');
+    }
+
+
+
+
+  }  else {
+
   amountDay += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || 0);
   amountOt += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT || 0);
   amountSpecial += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].addSalaryDay || 0);
@@ -598,8 +629,8 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
   countOtHour += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
 
   //convert minit to 10 base
-  let [hoursTmp, minutesTmp] = responseConclude.data.recordConclude[c].concludeRecord[i].otTimes.toString().split('.').map(Number);
-  let decimalFraction = parseFloat(minutesTmp).toFixed(2) / 60;
+  let [hoursTmp, minutesTmp] = (responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || '0.0').toString().split('.').map(Number);
+  let decimalFraction = (parseFloat(minutesTmp) || 0).toFixed(2) / 60;
 
   countOtHourWork += parseFloat(hoursTmp + decimalFraction || 0);
 
@@ -655,16 +686,17 @@ for (let i = 0; i < responseConclude.data.recordConclude[c].concludeRecord.lengt
 // dayOffWork += 1;
 countHourWork += parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
 
-console.log('work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
+// console.log('*work rate '+ parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate ) + 'salary ' + parseFloat(salary) );
 
   } else {
-    let [hoursTmp, minutesTmp] = responseConclude.data.recordConclude[c].concludeRecord[i].otTimes.toString().split('.').map(Number);
-    let decimalFraction = parseFloat(minutesTmp).toFixed(2) / 60;
+    let [hoursTmp, minutesTmp] = (responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || '0.0').toString().split('.').map(Number);
+    let decimalFraction = (parseFloat(minutesTmp) || 0 ).toFixed(2) / 60;
   
     countOtHourWork += parseFloat(hoursTmp + decimalFraction);
 
   }
 
+  
   if (responseConclude.data.recordConclude[c].concludeRecord[i].workRate !== undefined) {
     countDay++;
 
@@ -745,6 +777,7 @@ if(x1535 >0 ) {
   data.accountingRecord.benefitNonSocial = x1535;
 }
 
+} //end before set value
 
 data.accountingRecord.countDay = countDay;
 data.accountingRecord.countHour = countHour;
@@ -909,14 +942,25 @@ data.accountingRecord.amountCountDayWork = await salary ||0;
 
 } else {
   sumSocial = await sumSocial  + (dayOffWork * salary) + calSP ;
+  if(x[0] == '3') {
+  sumAmountDayWork  = await amountDay;
+    data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
+
+  } else {
   sumAmountDayWork  = await parseFloat(dayOffWork) * parseFloat(salary);
+    data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
+    
+  }
+
+  // sumAmountDayWork  = await parseFloat(dayOffWork) * parseFloat(salary);
   let  calOtWork = await (parseFloat(amountDay) - parseFloat(sumAmountDayWork ) ) + parseFloat(amountOt) || 0;
 
   data.accountingRecord.amountSpecialDay= await calSP ||0;
   data.accountingRecord.amountCountDayWorkOt = await calOtWork ||0;
 
-  //non salary     // data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
-    data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
+  //non salary     
+  // data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
+    // data.accountingRecord.amountCountDayWork = await sumAmountDayWork ||0;
 
 }
 
@@ -960,17 +1004,33 @@ if (sumSocial < 1650) {
 }
 
 // Calculate socialSecurity based on sumSocial
-data.accountingRecord.socialSecurity = Math.ceil((sumSocial * 0.05)) || 0;
+// data.accountingRecord.socialSecurity = Math.ceil((sumSocial * 0.05)) || 0;
+
+//คำนวนหัก ณ ที่จ่าย 3 %
+if( costtype === "ภ.ง.ด.3"){
+tax = await (total  + amountDay + amountOt + calSP ) * 0.03;
+data.accountingRecord.tax = await tax|| 0;
+data.accountingRecord.socialSecurity = 0;
+
+//total
+await total  + amountDay + amountOt + calSP -(Math.ceil((sumSocial * 0.05) || 0)) ;
+data.accountingRecord.total = await total || 0;
+
+} else {
+  data.accountingRecord.socialSecurity = Math.ceil((sumSocial * 0.05)) || 0;
 
 //total
 total = await total  + amountDay + amountOt + calSP -(Math.ceil((sumSocial * 0.05) || 0)) - tax;
+data.accountingRecord.total = await total || 0;
+
+}
 
     // data.accountingRecord.socialSecurity = (sumSocial * 0.05) || 0;
     data.accountingRecord.addAmountAfterTax = sumNonTaxNonSalary || 0;
     // data.accountingRecord.advancePayment = 0;
     data.accountingRecord.deductAfterTax = sumDeductUncalculateTax || 0;
     data.accountingRecord.bank = 0;
-    data.accountingRecord.total = total || 0;
+    // data.accountingRecord.total = total || 0;
 
     data.accountingRecord.sumAddSalaryBeforeTax = sumAddSalaryBeforeTax || 0;
     data.accountingRecord.sumAddSalaryBeforeTaxNonSocial = sumAddSalaryBeforeTaxNonSocial || 0;
@@ -996,7 +1056,7 @@ data.specialDayListWork = await intersection || [];
 }
 
 //check emty data 
-if(data.accountingRecord.countDayWork > 0) {
+if(1 == 1 ||  data.accountingRecord.countDayWork > 0 || data.accountingRecord.total  > 0) {
 const salaryRecord = new accounting(data);
 await salaryRecord.save();
 // await console.log(salaryRecord);
@@ -1160,6 +1220,7 @@ data.accountingRecord.total = await 0;
 });
 
 //======
+
 
 //get all accounting
 router.post('/calsalarylist', async (req, res) => {

@@ -12,7 +12,7 @@ import "../editwindowcss.css";
 import EmployeeWorkDay from "./componentsetting/EmployeeWorkDay";
 import { useLocation } from "react-router-dom";
 
-function Setting({ workplaceList }) {
+function Setting({ workplaceList ,employeeList}) {
   // Use useLocation hook to access query parameters from URL
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -834,16 +834,22 @@ function Setting({ workplaceList }) {
           workPlace: searchResult.workplaceId,
         };
 
-        const response1 = await axios.post(
-          endpoint + "/employee/search",
-          data1
-        );
+        // const response1 = await axios.post(
+        //   endpoint + "/employee/search",
+        //   data1
+        // );
 
-        const filteredEmployees = response1.data.employees.filter(
-          (employee) => employee.workplace === searchWorkplaceId
-        );
+        // const filteredEmployees = response1.data.employees.filter(
+        //   (employee) => employee.workplace === searchWorkplaceId
+        // );
 
         // await setEmployeeListResult(response1.data.employees);
+        // employeeList
+        // searchWorkplaceId
+        const filteredEmployees = employeeList.filter(
+          (employee) => employee.workplace === searchWorkplaceId
+        );
+        // console.log('searchWorkplaceId',searchWorkplaceId);
         await setEmployeeListResult(filteredEmployees);
 
         // await alert(JSON.stringify(response1.data.employees , null ,2));
@@ -856,14 +862,22 @@ function Setting({ workplaceList }) {
       // window.location.reload();
     }
   }
-  console.log("EmployeeListResult", employeeListResult);
+  // console.log("EmployeeListResult", employeeListResult);
 
   //set data to form
   function handleClickResult(workplace) {
     setNewWorkplace(false);
-    setShowEmployeeListResult(employeeListResult);
+    
     set_id(workplace._id);
     setWorkplaceId(workplace.workplaceId);
+
+    const filteredEmployees = employeeList.filter(
+      (employee) => employee.workplace === searchWorkplaceId
+    );
+    console.log('searchWorkplaceId',searchWorkplaceId);
+    setEmployeeListResult(filteredEmployees);
+
+    setShowEmployeeListResult(filteredEmployees);
     setWorkplaceName(workplace.workplaceName);
     setWorkplaceArea(workplace.workplaceArea);
     setWorkOfWeek(workplace.workOfWeek);
@@ -1145,11 +1159,16 @@ function Setting({ workplaceList }) {
         // setEmployeesResult(response.data.employees);
         if (response) {
           alert("บันทึกสำเร็จ");
+           // Clear the query parameters
+  const newUrl = window.location.origin + window.location.pathname; // Removes the query string
+
+  // Update the URL without reloading the page
+  window.history.replaceState({}, document.title, newUrl);
           window.location.reload();
         }
       } catch (error) {
         alert("กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล");
-        // window.location.reload();
+        window.location.reload();
       }
     }
   }

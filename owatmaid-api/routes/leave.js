@@ -12,16 +12,125 @@ const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const { months } = require('moment');
 const { el, ca, it } = require('date-fns/locale');
+// Create or update a leave request
+router.post('/create', async (req, res) => {
+    const { employeeId, year, month, record } = req.body;
+
+    try {
+        // Check if a welfare record already exists for the given employeeId, year, and month
+        let existingWelfare = await welfare.findOne({ employeeId, year, month });
+
+        if (existingWelfare) {
+            // Update the existing record with the new information
+            // existingWelfare.record.push(...record);
+            existingWelfare.record = record;
+
+            await existingWelfare.save();
+            res.status(200).send({ message: 'Welfare record updated successfully', data: existingWelfare });
+        } else {
+            // Create a new welfare record if no matching record exists
+            const newWelfare = new welfare(req.body);
+            await newWelfare.save();
+            res.status(201).send({ message: 'Welfare record created successfully', data: newWelfare });
+        }
+    } catch (error) {
+        res.status(400).send({ error: 'An error occurred while creating/updating the welfare record', details: error.message });
+    }
+});
 
 // Create a new leave request
-router.post('/create', async (req, res) => {
+// router.post('/create', async (req, res) => {
+//     try {
+//         const leave = new welfare (req.body);
+//         await leave.save();
+//         res.status(201).send(leave);
+//     } catch (error) {
+//         res.status(400).send(error);
+//     }
+// });
+
+router.post('/search', async (req, res) => {
     try {
-        const leave = new welfare (req.body);
-        await leave.save();
-        res.status(201).send(leave);
+        const { year, month, employeeId } = req.body;
+
+        // Validate input
+        if (!year || !month || !employeeId) {
+            return res.status(400).json({ message: 'Year, month, and employeeId are required.' });
+        }
+
+        // Find welfare records matching the year, month, and employeeId
+        const results = await welfare.find({ year: year, month: month, employeeId: employeeId });
+
+        if (results.length === 0) {
+            return res.status(404).json({ message: 'No records found for the specified year, month, and employeeId.' });
+        }
+
+        res.status(200).json(results);
     } catch (error) {
-        res.status(400).send(error);
+        console.error('Error searching welfare records:', error);
+        res.status(500).json({ message: 'Server error while searching records.' });
     }
+});
+
+router.post('/searchmonth', async (req, res) => {
+    try {
+        const { year, month } = req.body;
+
+        // Validate input
+        if (!year || !month) {
+            return res.status(400).json({ message: 'Year and month are required.' });
+        }
+
+        // Find welfare records matching the year and month
+        const results = await welfare.find({ year: year, month: month });
+
+        if (results.length === 0) {
+            return res.status(404).json({ message: 'No records found for the specified year and month.' });
+        }
+
+        res.status(200).json(results);
+    } catch (error) {
+        console.error('Error searching welfare records:', error);
+        res.status(500).json({ message: 'Server error while searching records.' });
+    }
+});
+
+
+//search and sum 
+router.post('/searchsummary', async (req, res) => {
+    try {
+        const { employeeId } = req.body;
+
+        // Validate input
+        if (!employeeId ) {
+            return res.status(400).json({ message: 'Year and month are required.' });
+        }
+
+        // Find welfare records matching the year and month
+        const results = await welfare.find({ employeeId : employeeId  });
+
+        if (results.length === 0) {
+            return res.status(404).json({ message: 'No records found for the specified year and month.' });
+        }
+
+        res.status(200).json(results);
+    } catch (error) {
+        console.error('Error searching welfare records:', error);
+        res.status(500).json({ message: 'Server error while searching records.' });
+    }
+});
+
+
+
+//delete all record 
+router.get('/listdelete', async (req, res) => {
+
+try {
+    const result = await welfare.deleteMany({});
+    res.status(200).send({ message: 'All records deleted successfully', deletedCount: result.deletedCount });
+} catch (error) {
+    res.status(500).send({ error: 'An error occurred while deleting records', details: error.message });
+}
 });
 
 // Get all leave requests

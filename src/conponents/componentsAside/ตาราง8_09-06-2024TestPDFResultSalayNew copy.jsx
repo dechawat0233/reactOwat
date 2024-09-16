@@ -1,6 +1,6 @@
 import endpoint from "../../config";
 import { ThaiDatePicker } from "thaidatepicker-react";
-import { FaCalendarAlt } from "react-icons/fa"; // You can use any icon library
+import { FaCalendarAlt } from 'react-icons/fa'; // You can use any icon library
 
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
@@ -17,7 +17,7 @@ import en from "date-fns/locale/en-US";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-function WorktimeSheetWorkplace({employeeList}) {
+function TestPDFResultSalayNew() {
   // const [selectedDate, setSelectedDate] = useState("2024-02-29");
   // const [selectedThaiDate321, setSelectedThaiDate321] = useState("2567-02-29");
 
@@ -27,6 +27,8 @@ function WorktimeSheetWorkplace({employeeList}) {
   //   setSelectedDate(christDate);
   //   setSelectedThaiDate321(buddhistDate);
   // };
+
+  
 
   const vertical1 = {
     borderCollapse: "collapse",
@@ -130,22 +132,22 @@ function WorktimeSheetWorkplace({employeeList}) {
   const [formattedDate321, setFormattedDate] = useState(null);
 
   const handleDatePickerChange = (date) => {
-    setSelectedDate(date);
-    setShowDatePicker(false); // Hide date picker after selecting a date
-    const newDate = new Date(date);
-    setWorkDate(newDate);
-  };
+      setSelectedDate(date);
+      setShowDatePicker(false); // Hide date picker after selecting a date
+      const newDate = new Date(date);
+      setWorkDate(newDate)
+    };
 
   // useEffect(() => {
   //   if (selectedDate) {
   //     // Convert the string to a Date object
   //     const date = new Date(selectedDate);
-
+  
   //     // Extract day, month, and year
   //     const daySelectedDate = date.getDate().toString().padStart(2, '0');
   //     const monthSelectedDate = (date.getMonth() + 1).toString().padStart(2, '0');
   //     const yearSelectedDate = (date.getFullYear() + 543).toString();
-
+  
   //     // Format the date
   //     const formattedDate = `${daySelectedDate}/${monthSelectedDate}/${yearSelectedDate}`;
   //     console.log('formattedDate', formattedDate);
@@ -175,11 +177,12 @@ function WorktimeSheetWorkplace({employeeList}) {
       setSelectedDate(currentDate); // Set the initial selected date to the current date
     }
   }, [selectedDate]);
-
-  console.log("selectedDate", selectedDate);
+  
+console.log('selectedDate',selectedDate);
   const toggleDatePicker = () => {
     setShowDatePicker(!showDatePicker);
   };
+ 
 
   const handleGregorianDateChange = (date) => {
     setSelectedGregorianDate(date);
@@ -415,14 +418,11 @@ function WorktimeSheetWorkplace({employeeList}) {
         .post(endpoint + "/accounting/calsalarylist", dataTest)
         .then((response) => {
           const responseData = response.data;
-          // const filteredData = searchWorkplaceId
-          //   ? responseData.filter(
-          //       (item) => item.workplace === searchWorkplaceId
-          //     )
-          //   : responseData;
-
-          const filteredData = responseData.filter((item) => item.workplace);
-
+          const filteredData = searchWorkplaceId
+            ? responseData.filter(
+                (item) => item.workplace === searchWorkplaceId
+              )
+            : responseData;
           const sortedData = filteredData.sort(
             (a, b) => a.employeeId - b.employeeId
           );
@@ -437,6 +437,8 @@ function WorktimeSheetWorkplace({employeeList}) {
     // Call fetchData when year or month changes
     fetchData();
   }, [year, month, searchWorkplaceId]);
+
+  //   console.log("responseDataAll", responseDataAll);
 
   async function handleSearch(event) {
     event.preventDefault();
@@ -1630,18 +1632,18 @@ function WorktimeSheetWorkplace({employeeList}) {
     });
   });
 
-  // useEffect(() => {
-  //   // Fetch data from the API when the component mounts
-  //   fetch(endpoint + "/employee/list")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       // Update the state with the fetched data
-  //       setEmploeeData(data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching data:", error);
-  //     });
-  // }, []);
+  useEffect(() => {
+    // Fetch data from the API when the component mounts
+    fetch(endpoint + "/employee/list")
+      .then((response) => response.json())
+      .then((data) => {
+        // Update the state with the fetched data
+        setEmploeeData(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
   // responseDataAll
   // const filteredEmployees = emploeeData.filter(employee => employeeIdsArray.includes(parseInt(employee.employeeId, 10)));
 
@@ -1651,20 +1653,7 @@ function WorktimeSheetWorkplace({employeeList}) {
     (a, b) => parseInt(a.employeeId, 10) - parseInt(b.employeeId, 10)
   );
 
-  // Assuming `employeeList` is an array containing employee data
-filteredEmployees.forEach((employee) => {
-  // Find the matching employee in the employeeList by employeeId
-  const matchingEmployee = employeeList.find(
-    (emp) => emp.employeeId === employee.employeeId
-  );
-
-  // If a matching employee is found and has "costtype" == "ภ.ง.ด.3"
-  if (matchingEmployee && matchingEmployee.costtype === "ภ.ง.ด.3") {
-    // Add the costtype information to the filteredEmployees array
-    employee.costtype = "ภ.ง.ด.3";
-  }
-});
-    console.log("filteredEmployees", filteredEmployees);
+  //   console.log("filteredEmployees", filteredEmployees);
 
   //     // Do something with the filtered employees
 
@@ -1687,7 +1676,6 @@ filteredEmployees.forEach((employee) => {
   const extractedData = filteredEmployees.map((employee) => ({
     name: employee.name + " " + employee.lastName,
     employeeId: employee.employeeId,
-    costtype: employee.costtype,
   }));
 
   // .sort((a, b) => {
@@ -2118,52 +2106,17 @@ filteredEmployees.forEach((employee) => {
     arrayWorkOTNormalDay.push(employeeResultArray3OT);
   });
 
-  // const filteredEntriesTest = conclude.filter(
-  //   (entry) =>
-  //     entry.year === desiredTimerecordId && entry.month === desiredMonth
-  // );
-  // employeeList
-  // Assuming `conclude`, `employeeList`, `searchWorkplaceId`, `desiredTimerecordId`, and `desiredMonth` are available
-
-const filteredEntriesTest = conclude
-// Filter by year and month
-.filter((entry) =>
-  entry.year === desiredTimerecordId && entry.month === desiredMonth
-)
-// Filter by employeeId that exists in employeeList
-.filter((entry) => {
-  const employeeInList = employeeList.find(
-    (emp) => emp.employeeId === entry.employeeId
-  );
-  return employeeInList !== undefined;
-})
-// Filter by searchWorkplaceId, either matching employeeList.workplace or concludeRecord.workplaceId
-.filter((entry) => {
-  const employeeInList = employeeList.find(
-    (emp) => emp.employeeId === entry.employeeId
+  const filteredEntriesTest = conclude.filter(
+    (entry) =>
+      entry.year === desiredTimerecordId && entry.month === desiredMonth
   );
 
-  // Check if the employee's workplace matches searchWorkplaceId
-  if (employeeInList && employeeInList.workplace === searchWorkplaceId) {
-    return true;
-  }
-
-  // Check if any of the concludeRecord's workplaceId matches searchWorkplaceId
-  const workplaceMatch = entry.concludeRecord.some(
-    (record) => record.workplaceId === searchWorkplaceId
-  );
-
-  return workplaceMatch;
-});
-
-  
   filteredEntriesTest.sort((a, b) => {
     // Assuming employeeId is a string, convert it to a number for numerical comparison
     return Number(a.employeeId) - Number(b.employeeId);
   });
 
-    console.log("filteredEntriesTest", filteredEntriesTest);
-    console.log("responseDataAll", responseDataAll);
+  //   console.log("filteredEntriesTest", filteredEntriesTest);
 
   // const responseDataAll123 = [
   //   {_id: '66ac5eca3aac559797a814e9', year: '2024', month: '06', employeeId: '670427', createDate: '02/08/2024, 04:21'},
@@ -2889,10 +2842,10 @@ const filteredEntriesTest = conclude
   const finalUpdatedDayWorksWorkNight =
     changeNumbersToOne2(updatedDaysWorkNight);
 
-    console.log(
-      "finalUpdatedDayWorksWorkMorningAndSS",
-      finalUpdatedDayWorksWorkMorningAndSS
-    );
+  //   console.log(
+  //     "finalUpdatedDayWorksWorkMorningAndSS",
+  //     finalUpdatedDayWorksWorkMorningAndSS
+  //   );
   //   console.log(
   //     "finalUpdatedDayWorksWorkAfternoon",
   //     finalUpdatedDayWorksWorkAfternoon
@@ -3176,22 +3129,9 @@ const filteredEntriesTest = conclude
       : "0.00";
   });
 
-  const saveCash = responseDataAll.map((item) => 
-    item.workplace.startsWith("3") ? "สแปร์เงินสด" : ""
-  );
-
-  console.log('saveCash',saveCash);
-
   const sumArrayHoli = countSpecialDays.map(
     (countSpecialDay, index) => countSpecialDay - specialDayListWorks[index]
   );
-
-  const tax = responseDataAll.map((item) => {
-    const accountingRecord = item.accountingRecord?.[0];
-    return accountingRecord
-      ? parseFloat(accountingRecord.tax).toFixed(2)
-      : "0.00";
-  });
 
   const adjustedAmountSpecialDay = amountSpecialDay.map((amount, index) => {
     if (isNaN(amount) || amount === 0) {
@@ -8214,7 +8154,7 @@ const filteredEntriesTest = conclude
       };
       const drawTableSpSalaryHeadTop = () => {
         for (let i = 0; i < numRowsTop; i++) {
-          for (let j = 0; j < numColsSpSalary - 3; j++) {
+          for (let j = 0; j < numColsSpSalary - 2; j++) {
             let x = startXSpSalary + j * cellWidthSpSalary;
             const y = startYTop + i * 6;
             drawCell(x + cellWidthSpSalary, y + 4, cellWidthSpSalary, 6);
@@ -8306,7 +8246,7 @@ const filteredEntriesTest = conclude
         label = "",
         countNumber
       ) => {
-        const numberWidth = 30; // Width of the table number column
+        const numberWidth = 40; // Width of the table number column
         const numberX = startX - cellWidthLeftHead; // Position for table number
         const content = label || tableNumber.toString();
 
@@ -8383,7 +8323,7 @@ const filteredEntriesTest = conclude
           }
 
           // Check if rotation is needed (if the text is longer than 5 characters)
-          const rotate = cellData.length > 3;
+          const rotate = cellData.length > 5;
 
           // Draw the text on top of the colored rectangle
           drawCell(x, y, cellWidth, rowHeight, cellData, rotate);
@@ -8403,7 +8343,7 @@ const filteredEntriesTest = conclude
         const offsetX = startX + daysInMonth * cellWidth; // Initial offset for salary cells
 
         for (let j = 0; j < totalColumns; j++) {
-          const x = offsetX + j * cellWidthSpSalary -0.1; // Calculate x position for each cell
+          const x = offsetX + j * cellWidthSpSalary; // Calculate x position for each cell
           const rotate = data[j] && data[j].length > 3; // Apply rotation if string length > 3
           drawCell(x, y, cellWidthSpSalary, rowHeight, data[j] || "", rotate);
         }
@@ -8515,11 +8455,8 @@ const filteredEntriesTest = conclude
         const employeeData = arraylistNameEmp[i] || {
           name: "",
           employeeId: "",
-          costtype: "",
         };
-        employeeData.costtype = employeeData.costtype || "";
-
-        const employeeInfo = `${employeeData.name}\n${employeeData.employeeId}\n${employeeData.costtype}`;
+        const employeeInfo = `${employeeData.name}\n${employeeData.employeeId}`;
 
         // const morningData = finalUpdatedDayWorksWorkMorningAndSSTest[i] || Array(numCols).fill("");
         // const afternoonData = finalUpdatedDayWorksWorkAfternoonTest[i] || Array(numCols).fill("");
@@ -8694,18 +8631,6 @@ const filteredEntriesTest = conclude
           54.8,
           { angle: 90 }
         );
-        doc.text(
-          "ประกันสังคม ",
-          5 + startXSpSalary + cellWidthSpSalary*11,
-          54.8,
-          { angle: 90 }
-        );
-        doc.text(
-          "ภาษี ",
-          5 + startXSpSalary + cellWidthSpSalary*12,
-          54.8,
-          { angle: 90 }
-        );
 
         let uniqueSalaries = [];
 
@@ -8796,7 +8721,7 @@ const filteredEntriesTest = conclude
 
         if (!isRowEmpty(salaryData)) {
           // Drawing salary data
-          drawAddSalaryRow(salaryData, currentY + morningRowHeight+1, cellHeight);
+          drawAddSalaryRow(salaryData, currentY + morningRowHeight, cellHeight);
         }
 
         // if (!isMorningRowEmpty) {
@@ -8813,17 +8738,7 @@ const filteredEntriesTest = conclude
           currentY + cellHeight / 2 + 1,
           sumArrayHoli[i].toString()
         );
-        drawCellRight(
-          cellHeight * daysInMonth + 59 + cellWidthSpSalary*12,
-          currentY + cellHeight / 2 + 1,
-          saveCash[i].toString()
-        );
         drawSalaryRow(emptyArraytest, currentY, morningRowHeight);
-        // drawCellRight(
-        //   cellHeight * daysInMonth + 59 + cellWidthSpSalary*12,
-        //   currentY + cellHeight / 2 + 1,
-        //   tax[i].toString()
-        // );
         currentY += morningRowHeight;
         drawRow(newOtTimesspace, currentY, cellHeight);
         drawSalaryRow(emptyArraytest, currentY, cellHeight);
@@ -9161,7 +9076,7 @@ const filteredEntriesTest = conclude
                                   marginLeft: "0rem",
                                 }}
                               > */}
-                              {/* <DatePicker id="datetime" name="datetime"
+                                {/* <DatePicker id="datetime" name="datetime"
                                                                     className="form-control" // Apply Bootstrap form-control class
                                                                     popperClassName="datepicker-popper" // Apply custom popper class if needed
                                                                     selected={workDate}
@@ -9170,7 +9085,7 @@ const filteredEntriesTest = conclude
                                                                 // showMonthYearPicker
                                                                 /> */}
 
-                              {/* <DatePicker
+                                {/* <DatePicker
                                   className="form-control"
                                   selected={selectedThaiDate}
                                   onChange={handleThaiDateChange}
@@ -9178,34 +9093,23 @@ const filteredEntriesTest = conclude
                                   locale={th}
                                 />
                               </div> */}
-                              <label role="datetime">วันที่</label>
-                              <div
-                                onClick={toggleDatePicker}
-                                style={{
-                                  position: "relative",
-                                  zIndex: 9999,
-                                  marginLeft: "0rem",
-                                }}
-                              >
-                                <FaCalendarAlt size={20} />
-                                <span style={{ marginLeft: "8px" }}>
-                                  {formattedDate321
-                                    ? formattedDate321
-                                    : "Select Date"}
-                                </span>
-                              </div>
+                               <label role="datetime">วันที่</label>
+                             <div onClick={toggleDatePicker} style={{ position: 'relative', zIndex: 9999, marginLeft: "0rem"  }}>
+        <FaCalendarAlt size={20} />
+        <span style={{ marginLeft: '8px' }}>
+          {formattedDate321  ? formattedDate321  : 'Select Date'}
+        </span>
+      </div>
 
-                              {showDatePicker && (
-                                <div
-                                  style={{ position: "absolute", zIndex: 1000 }}
-                                >
-                                  <ThaiDatePicker
-                                    className="form-control"
-                                    value={selectedDate}
-                                    onChange={handleDatePickerChange}
-                                  />
-                                </div>
-                              )}
+      {showDatePicker && (
+        <div style={{ position: 'absolute', zIndex: 1000 }}>
+          <ThaiDatePicker
+            className="form-control"
+            value={selectedDate}
+            onChange={handleDatePickerChange}
+          />
+        </div>
+      )}
                             </div>
                           </div>
                         </div>
@@ -9235,6 +9139,26 @@ const filteredEntriesTest = conclude
                                 พิมพ์รายงานเก่า
                               </button> */}
                             </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12" style={{ marginTop: "5rem" }}>
+                          <div onClick={toggleDatePicker} style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center' }}>
+        <FaCalendarAlt size={20} />
+        <span style={{ marginLeft: '8px' }}>
+          {formattedDate321  ? formattedDate321  : 'Select Date'}
+        </span>
+      </div>
+
+      {showDatePicker && (
+        <div style={{ position: 'absolute', zIndex: 1000 }}>
+          <ThaiDatePicker
+            className="form-control"
+            value={selectedDate}
+            onChange={handleDatePickerChange}
+          />
+        </div>
+      )}
                           </div>
                         </div>
                       </form>
@@ -9275,6 +9199,30 @@ const filteredEntriesTest = conclude
                     employeerecord.employeeId +
                     ": ชื่อพนักงาน " +
                     employeerecord.employeeName
+                )}
+              </div>
+            </div>
+            <br />
+
+            <div class="row">
+              <div class="col-md-2">
+                {result_data.map(
+                  (employeerecord) =>
+                    "                ชื่อ :                   " +
+                    employeerecord.employeeName
+                )}
+              </div>
+              <div class="col-md-3">
+                {result_data.map(
+                  (employeerecord) =>
+                    "ประจำเดือน " +
+                    getMonthName(month) +
+                    "ตั้งแต่วันที่ 21 " +
+                    getMonthName(parseInt(month, 10) - 1) +
+                    " ถึง 20 " +
+                    getMonthName(month) +
+                    "  " +
+                    (parseInt(employeerecord.timerecordId, 10) + 543)
                 )}
               </div>
             </div>
@@ -9329,4 +9277,4 @@ const getDateDayOfWeek = (dateString) => {
 };
 // console.log('',getDateDayOfWeek);
 
-export default WorktimeSheetWorkplace;
+export default TestPDFResultSalayNew;

@@ -135,19 +135,14 @@ function Employee() {
   const [district, setDistrict] = useState(""); //อำเภอ
   const [subDistrict, setSubDistrict] = useState(""); //ตำบล
   const [postalCode, setPostalCode] = useState(""); //ตำบล
-  const [houseNumber, setHouseNumber] = useState(""); //บ้านเลขที่
 
   const [province2, setProvince2] = useState(""); // จังหวัด
   const [district2, setDistrict2] = useState(""); // อำเภอ
   const [subDistrict2, setSubDistrict2] = useState(""); // ตำบล
   const [postalCode2, setPostalCode2] = useState(""); // ไปรษณีย์
-  const [houseNumber2, setHouseNumber2] = useState(""); //บ้านเลขที่
 
   const [districtOptions, setDistrictOptions] = useState([]); // Options for district
   const [subDistrictOptions, setSubDistrictOptions] = useState([]); // Options for sub-district
-
-  const [tempDistrict, setTempDistrict] = useState(""); // Temporary district
-const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-district
 
   const [isChecked, setIsChecked] = useState(false); // Checkbox state
 
@@ -159,10 +154,6 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
       setDistrict(""); // Reset district when province changes
       setSubDistrict(""); // Reset sub-district when province changes
       setSubDistrictOptions([]); // Clear sub-district options
-      if (tempDistrict) {
-        setDistrict(tempDistrict);
-        setTempDistrict(""); // Clear tempDistrict
-      }
     }
   }, [province]);
 
@@ -172,10 +163,6 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
       const subDistricts = locationData[province]?.districts[district] || [];
       setSubDistrictOptions(subDistricts);
       setSubDistrict(""); // Reset sub-district when district changes
-      if (tempSubDistrict) {
-        setSubDistrict(tempSubDistrict);
-        setTempSubDistrict(""); // Clear tempSubDistrict
-      }
     }
   }, [district, province]);
 
@@ -188,14 +175,12 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
       setDistrict2(district);
       setSubDistrict2(subDistrict);
       setPostalCode2(postalCode);
-      setHouseNumber2(houseNumber);
     } else {
       // Allow manual editing if unchecked
       setProvince2("");
       setDistrict2("");
       setSubDistrict2("");
       setPostalCode2("");
-      setHouseNumber2("");
     }
   };
 
@@ -275,7 +260,38 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
     const employeeLocalUpdate = employeeLocal.map((item) => {
       if (item._id === emp._id) {
         // Update the item here
-        return emp;
+        // return { ...item, id: emp.id, /* other properties you want to update */ };
+        const data = {
+          employeeId: employeeId,
+          position: position,
+          department: department,
+          workplace: workplace,
+          jobtype: jobtype,
+          startjob: startjob,
+          endjob: endjob,
+          exceptjob: exceptjob,
+          prefix: prefix,
+          name: name,
+          lastName: lastName,
+          nickName: nickName,
+          gender: gender,
+          dateOfBirth: dateOfBirth,
+          age: age,
+          idCard: idCard,
+          ethnicity: ethnicity,
+          religion: religion,
+          maritalStatus: maritalStatus,
+          militaryStatus: militaryStatus,
+          address: address,
+          currentAddress: currentAddress,
+          phoneNumber: phoneNumber,
+          emergencyContactNumber: emergencyContactNumber,
+          idLine: idLine,
+          vaccination: vaccination,
+          treatmentRights: treatmentRights,
+        };
+
+        return data;
       }
 
       return item;
@@ -392,19 +408,6 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
     setMaritalStatus(empSelect.maritalStatus);
     setMilitaryStatus(empSelect.militaryStatus);
     setAddress(empSelect.address);
-
-    setProvince(empSelect.province);
-    setDistrict(empSelect.district);
-    setSubDistrict(empSelect.subDistrict);
-    setPostalCode(empSelect.postalCode);
-    setHouseNumber(empSelect.houseNumber);
-
-    setProvince2(empSelect.province2);
-    setDistrict2(empSelect.district2);
-    setSubDistrict2(empSelect.subDistrict2);
-    setPostalCode2(empSelect.postalCode2);
-    setHouseNumber2(empSelect.houseNumber2);
-    
     setCurrentAddress(empSelect.currentAddress);
     setPhoneNumber(empSelect.phoneNumber);
     setEmergencyContactNumber(empSelect.emergencyContactNumber);
@@ -448,19 +451,6 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
       maritalStatus: maritalStatus,
       militaryStatus: militaryStatus,
       address: address,
-
-      province: province,
-          district: district,
-          subDistrict: subDistrict,
-          postalCode: postalCode,
-          houseNumber: houseNumber,
-
-          province2: province2,
-          district2: district2,
-          subDistrict2: subDistrict2,
-          postalCode2: postalCode2,
-          houseNumber2: houseNumber2,
-
       currentAddress: currentAddress,
       phoneNumber: phoneNumber,
       emergencyContactNumber: emergencyContactNumber,
@@ -711,11 +701,7 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
     }
   }, [workplace, workplaceSelection]);
 
-  console.log("province", province);
-  console.log("district", district);
-  console.log("subDistrict", subDistrict);
-
-
+  console.log("filteredWorkplaceGroups", filteredWorkplaceGroups);
   return (
     <body class="hold-transition sidebar-mini" className="editlaout">
       <div class="wrapper">
@@ -1656,10 +1642,77 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
                         </div>
                         <div class="row">
                           <div class="col-md-3">
+                            {/* <div class="form-group">
+                                  <label role="address">
+                                    ที่อยู่ตามบัตรประชาชน
+                                  </label>
+                                  <textarea
+                                    name="address"
+                                    id="address"
+                                    class="form-control"
+                                    rows="3"
+                                    value={address}
+                                    onChange={(e) => setAddress(e.target.value)}
+                                  ></textarea>
+                                </div> */}
                             <div>
-                              <label htmlFor="subDistrict">
-                                บ้านเลขที่-หมู่ที่{" "}
-                              </label>
+                              <label htmlFor="province">จังหวัด </label>
+                              <select
+                                id="province"
+                                value={province}
+                                onChange={(e) => setProvince(e.target.value)}
+                                class="form-control"
+                              >
+                                <option value="">Select Province</option>
+                                {Object.keys(locationData).map((prov) => (
+                                  <option key={prov} value={prov}>
+                                    {prov}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <div>
+                              <label htmlFor="district">อำเภอ </label>
+                              <select
+                                id="district"
+                                value={district}
+                                onChange={(e) => setDistrict(e.target.value)}
+                                disabled={!province}
+                                class="form-control"
+                              >
+                                <option value="">Select District</option>
+                                {districtOptions.map((dist) => (
+                                  <option key={dist} value={dist}>
+                                    {dist}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <div>
+                              <label htmlFor="subDistrict">ตำบล </label>
+                              <select
+                                id="subDistrict"
+                                value={subDistrict}
+                                onChange={(e) => setSubDistrict(e.target.value)}
+                                disabled={!district}
+                                class="form-control"
+                              >
+                                <option value="">Select Sub-District</option>
+                                {subDistrictOptions.map((subDist) => (
+                                  <option key={subDist} value={subDist}>
+                                    {subDist}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <div>
+                              <label htmlFor="subDistrict">เลขไปรษณีย์ </label>
                               <div class="form-group">
                                 {/* <label role="idCard">
                                     เลขบัตรประจำตัวประชาชน
@@ -1671,14 +1724,42 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
                                   class="form-control"
                                   id="postalCode"
                                   placeholder="เลขไปรษณีย์"
-                                  value={houseNumber}
+                                  value={postalCode}
                                   onChange={(e) =>
-                                    setHouseNumber(e.target.value)
+                                    setPostalCode(e.target.value)
                                   }
                                 />
                               </div>
                             </div>
                           </div>
+
+                          {/* <div class="col-md-6">
+                                <div class="form-group">
+                                  <label role="currentAddress">
+                                    ที่อยู่ปัจจุบัน
+                                  </label>
+                                  <div class="icheck-primary d-inline">
+                                    <input
+                                      type="checkbox"
+                                      checked={copyAddress}
+                                      id=""
+                                      name="radio1"
+                                      onChange={handleCheckboxChange}
+                                    />{" "}
+                                    ใช้ที่อยู่ตามบัตรประชาชน
+                                  </div>
+                                  <textarea
+                                    name="currentAddress"
+                                    id="currentAddress"
+                                    class="form-control"
+                                    rows="3"
+                                    value={currentAddress}
+                                    onChange={(e) =>
+                                      setCurrentAddress(e.target.value)
+                                    }
+                                  ></textarea>
+                                </div>
+                              </div> */}
                         </div>
                         <div>
                           <input
@@ -1780,32 +1861,6 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
                                   value={postalCode2}
                                   onChange={(e) =>
                                     setPostalCode2(e.target.value)
-                                  }
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-3">
-                            <div>
-                              <label htmlFor="subDistrict">
-                                บ้านเลขที่-หมู่
-                              </label>
-                              <div class="form-group">
-                                {/* <label role="idCard">
-                                    เลขบัตรประจำตัวประชาชน
-                                  </label> */}
-                                <input
-                                  // required
-                                  type="text"
-                                  name="postalCode2"
-                                  class="form-control"
-                                  id="postalCode2"
-                                  placeholder="เลขไปรษณีย์"
-                                  value={houseNumber2}
-                                  onChange={(e) =>
-                                    setHouseNumber2(e.target.value)
                                   }
                                 />
                               </div>

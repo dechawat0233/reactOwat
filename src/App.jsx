@@ -105,6 +105,21 @@ function App() {
       });
   }, []); 
 
+  const [employeeList, setEmployeeList] = useState([]);
+
+  useEffect(() => {
+    // Fetch data from the API when the component mounts
+    fetch(endpoint + "/employee/list")
+      .then((response) => response.json())
+      .then((data) => {
+        // Update the state with the fetched data
+        setEmployeeList(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []); 
+
   const [selectedEmployees, setSelectedEmployees] = useState([]);
 
   function handleEmployeeSelect(employee) {
@@ -165,12 +180,12 @@ function App() {
               <Route path="/examine" element={<Examine />} />
               <Route path="/compensation" element={<Compensation />} />
               <Route path="/salaryresult" element={<Salaryresult />} />
-              <Route path="/salaryAllresult" element={<SalaryAllResult />} />
-              <Route path="/salarySlipPDF" element={<SalarySlipPDF />} />
+              <Route path="/salaryAllresult" element={<SalaryAllResult employeeList={employeeList}/>} />
+              <Route path="/salarySlipPDF" element={<SalarySlipPDF  employeeList={employeeList}/>} />
 
 
               <Route path="/worktimesheet" element={<Worktimesheet />} />
-              <Route path="/worktimesheetworkplace" element={<WorktimeSheetWorkplace />} />
+              <Route path="/worktimesheetworkplace" element={<WorktimeSheetWorkplace  employeeList={employeeList}/>} />
               <Route path="/worktimeSheetWorkplace_Save01_22_2024" element={<WorktimeSheetWorkplace_Save01_22_2024 />} />
 
               <Route path="/income_tax" element={<IncomeTax />} />
@@ -186,7 +201,7 @@ function App() {
               <Route path="/search_results" element={<SearchResults />} />
 
               {/* <Route path="/setting" element={<Setting />} /> */}
-              <Route path="/setting" element={<Setting workplaceList={workplaceList} />} />
+              <Route path="/setting" element={<Setting workplaceList={workplaceList}  employeeList={employeeList} />} />
               <Route path="/settingcomplex" element={<SettingComplex  workplaceList={workplaceList}  />} />
               <Route path="/settingAllList" element={<SettingAllList />} />
               <Route path="/settingspecial" element={<SettingSpecial />} />
@@ -201,7 +216,7 @@ function App() {
               <Route path="/applicatio4" element={<Application4 />} />
               <Route path="/application_summary" element={<ApplicationSummary />} />
 
-              <Route path="/addEdit_Employee" element={<AddEditEmployee />} />
+              <Route path="/addEdit_Employee" element={<AddEditEmployee workplaceList={workplaceList}/>} />
               <Route path="/addEdit_SalaryEmployee" element={<AddEditSalaryEmployee />} />
 
               {/* <Route path="/testPDF" element={<TestShowManyData />} /> */}

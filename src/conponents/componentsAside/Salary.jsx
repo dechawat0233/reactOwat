@@ -25,6 +25,8 @@ function Salary() {
     // padding: "10px",
     // zIndex: 1000,
     width: "30rem",
+    zIndex: 9999,      // Ensure it's in front of other elements
+    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",  // Optional: for a raised effect
   };
 
   const [showPopup, setShowPopup] = useState(false);
@@ -92,7 +94,6 @@ function Salary() {
       setExceptjob(exceptDate);
     }
   }, [day, month, year]);
-
 
   const [showAddSalaryButton, setShowAddSalaryButton] = useState(true);
 
@@ -474,9 +475,11 @@ function Salary() {
   //     ["startcount"]: date,
   //   }));
   // };
-  const [showDatePickerStartcount, setShowDatePickerStartcount] = useState(false);
+  const [showDatePickerStartcount, setShowDatePickerStartcount] =
+    useState(false);
   const [selectedDateStartcount, setSelectedDateStartcount] = useState(null);
-  const [formattedDate321Startcount, setFormattedDateStartcount] = useState(null);
+  const [formattedDate321Startcount, setFormattedDateStartcount] =
+    useState(null);
 
   const handleDatePickerStartcountChange = (date) => {
     setSelectedDateStartcount(date);
@@ -512,8 +515,6 @@ function Salary() {
     setShowDatePickerStartcount(!showDatePickerStartcount);
   };
 
-
-
   // const handleSalaryupdate = (date) => {
   //   setSalaryupdate(date);
   //   //add new salaryupdate to employeeData
@@ -523,9 +524,12 @@ function Salary() {
   //   }));
   // };
   // console.log(employeeData);
-  const [showDatePickerSalaryupdate, setShowDatePickerSalaryupdate] = useState(false);
-  const [selectedDateSalaryupdate, setSelectedDateSalaryupdate] = useState(null);
-  const [formattedDate321Salaryupdate, setFormattedDateSalaryupdate] = useState(null);
+  const [showDatePickerSalaryupdate, setShowDatePickerSalaryupdate] =
+    useState(false);
+  const [selectedDateSalaryupdate, setSelectedDateSalaryupdate] =
+    useState(null);
+  const [formattedDate321Salaryupdate, setFormattedDateSalaryupdate] =
+    useState(null);
 
   const handleDatePickerSalaryupdateChange = (date) => {
     setSelectedDateSalaryupdate(date);
@@ -533,9 +537,9 @@ function Salary() {
     const newDate = new Date(date);
     setSalaryupdate(newDate);
     setEmployeeData((prevData) => ({
-          ...prevData,
-          ["salaryupdate"]: newDate,
-        }));
+      ...prevData,
+      ["salaryupdate"]: newDate,
+    }));
   };
 
   useEffect(() => {
@@ -560,7 +564,6 @@ function Salary() {
   const toggleDatePickerSalaryupdate = () => {
     setShowDatePickerSalaryupdate(!showDatePickerSalaryupdate);
   };
-
 
   async function handleManageSalary(event) {
     event.preventDefault();
@@ -600,6 +603,7 @@ function Salary() {
       if (response) {
         alert("บันทึกสำเร็จ");
         // localStorage.setItem('selectedEmployees' , JSON.stringify(response.data.employees));
+        updateEmployeeLocal(response.data);
 
         // window.location.reload();
       }
@@ -617,7 +621,7 @@ function Salary() {
     const month = String(date.getMonth() + 1).padStart(2, "0"); // Get month (note: months are zero-indexed)
     const year = date.getFullYear(); // Get full year
 
-    return `${day}/${month}/${year+543}`; // Return formatted date as day/month/year
+    return `${day}/${month}/${year + 543}`; // Return formatted date as day/month/year
   }
 
   async function onEmployeeSelect(empSelect) {
@@ -659,26 +663,24 @@ function Salary() {
     if (empSelect.startjob) {
       // await setStartjob(new Date(empSelect.startjob || ""));
       const formattedDate = formatDateToDMY(empSelect.startjob);
-    // Now set the formatted date
-    await setStartjob(formattedDate);
+      // Now set the formatted date
+      await setStartjob(formattedDate);
     }
 
     if (empSelect.exceptjob) {
       // await setExceptjob(new Date(empSelect.exceptjob || ""));
       const formattedDate = formatDateToDMY(empSelect.startjob);
       // Now set the formatted date
-      await  setExceptjob(formattedDate);
+      await setExceptjob(formattedDate);
     }
     if (empSelect.startcount) {
       await setStartcount(
         empSelect.startcount ? new Date(empSelect.startcount) : ""
       );
-      
+
       await setFormattedDateStartcount(
         empSelect.startcount ? new Date(empSelect.startcount) : ""
       );
-      
-
     }
     if (empSelect.salaryupdate) {
       await setSalaryupdate(
@@ -687,8 +689,8 @@ function Salary() {
       await setFormattedDateSalaryupdate(
         empSelect.startcount ? new Date(empSelect.startcount) : ""
       );
-    }  
-      console.log('salaryupdate',empSelect.salaryupdate);
+    }
+    console.log("salaryupdate", empSelect.salaryupdate);
 
     // await setExceptjob(new Date(empSelect.exceptjob || ''));
     // await setStartcount(empSelect.startcount ? new Date(empSelect.startcount) : '');
@@ -796,6 +798,27 @@ function Salary() {
   }, [salaryadd1, salaryadd2, salaryadd3, salaryadd4, salaryadd5]);
   // console.log(salaryadd1 + " 1");
 
+  //Update localStorage
+  function updateEmployeeLocal(emp) {
+    let employeeLocal = JSON.parse(localStorage.getItem("selectedEmployees"));
+    // alert(JSON.stringify(employeeLocal, null, 2));
+
+    const employeeLocalUpdate = employeeLocal.map((item) => {
+      if (item._id === emp._id) {
+        // Update the item here
+        return emp;
+      }
+
+      return item;
+    });
+
+    localStorage.setItem(
+      "selectedEmployees",
+      JSON.stringify(employeeLocalUpdate)
+    );
+  }
+
+  
   return (
     <body class="hold-transition sidebar-mini" className="editlaout">
       <div class="wrapper">
@@ -960,39 +983,39 @@ function Salary() {
                               </select>
                             </div>
                           </div>
-                          <div class="col-md-4">
+                          <div class="col-md-12">
                             <div class="form-group">
-                              <label role="costtype">
-                                ลงบัญชีเป็นค่าใช้จ่าย
-                              </label>
+                              <label role="costtype">ลงบัญชีแบบ</label>
                               <div class="" style={{ marginTop: "10px" }}>
                                 <div class="icheck-primary d-inline">
                                   <input
                                     type="radio"
                                     id="costtype"
                                     name="costtype"
-                                    value="ทางตรง"
-                                    checked={employeeData.costtype === "ทางตรง"}
+                                    value="ภ.ง.ด.1"
+                                    checked={
+                                      employeeData.costtype === "ภ.ง.ด.1"
+                                    }
                                     onChange={(e) =>
                                       handleChange(e, "costtype")
                                     }
                                   />{" "}
-                                  ทางตรง
+                                  ภ.ง.ด.1 (ภาษีเงินได้หักณที่จ่าย)
                                 </div>
                                 <div class="icheck-primary d-inline">
                                   <input
                                     type="radio"
                                     id="costtype"
                                     name="costtype"
-                                    value="ทางอ้อม"
+                                    value="ภ.ง.ด.3"
                                     checked={
-                                      employeeData.costtype === "ทางอ้อม"
+                                      employeeData.costtype === "ภ.ง.ด.3"
                                     }
                                     onChange={(e) =>
                                       handleChange(e, "costtype")
                                     }
                                   />{" "}
-                                  ทางอ้อม
+                                  ภ.ง.ด.3 (หัก ณ ที่จ่าย 3%)
                                 </div>
                               </div>
                             </div>
@@ -1173,6 +1196,12 @@ function Salary() {
                                   >
                                     ตกลง
                                   </button>
+                                  <button
+                                    onClick={() => setShowPopup(false)}
+                                    className="btn btn-secondary mt-2 ml-2"
+                                  >
+                                    ปิด
+                                  </button>
                                 </div>
                               )}
                             </div>
@@ -1219,36 +1248,36 @@ function Salary() {
                                 onChange={handleStartcount}
                                 dateFormat="dd/MM/yyyy"
                               /> */}
+                              <div
+                                onClick={toggleDatePickerStartcount}
+                                style={{
+                                  cursor: "pointer",
+                                  display: "inline-flex",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <FaCalendarAlt size={20} />
+                                <span style={{ marginLeft: "8px" }}>
+                                  {formattedDate321Startcount
+                                    ? formattedDate321Startcount
+                                    : "Select Date"}
+                                </span>
+                              </div>
+
+                              {showDatePickerStartcount && (
                                 <div
-                                  onClick={toggleDatePickerStartcount}
                                   style={{
-                                    cursor: "pointer",
-                                    display: "inline-flex",
-                                    alignItems: "center",
+                                    position: "absolute",
+                                    zIndex: 1000,
                                   }}
                                 >
-                                  <FaCalendarAlt size={20} />
-                                  <span style={{ marginLeft: "8px" }}>
-                                    {formattedDate321Startcount
-                                      ? formattedDate321Startcount
-                                      : "Select Date"}
-                                  </span>
+                                  <ThaiDatePicker
+                                    className="form-control"
+                                    value={selectedDateStartcount}
+                                    onChange={handleDatePickerStartcountChange}
+                                  />
                                 </div>
-
-                                {showDatePickerStartcount && (
-                                  <div
-                                    style={{
-                                      position: "absolute",
-                                      zIndex: 1000,
-                                    }}
-                                  >
-                                    <ThaiDatePicker
-                                      className="form-control"
-                                      value={selectedDateStartcount}
-                                      onChange={handleDatePickerStartcountChange}
-                                    />
-                                  </div>
-                                )}
+                              )}
                             </div>
                           </div>
                         </div>
@@ -1349,7 +1378,7 @@ function Salary() {
                                   onChange={handleSalaryupdate}
                                   dateFormat="dd/MM/yyyy"
                                 /> */}
-                                  <div
+                                <div
                                   onClick={toggleDatePickerSalaryupdate}
                                   style={{
                                     cursor: "pointer",
@@ -1375,7 +1404,9 @@ function Salary() {
                                     <ThaiDatePicker
                                       className="form-control"
                                       value={selectedDateSalaryupdate}
-                                      onChange={handleDatePickerSalaryupdateChange}
+                                      onChange={
+                                        handleDatePickerSalaryupdateChange
+                                      }
                                     />
                                   </div>
                                 )}

@@ -84,12 +84,59 @@ const employeeSchema = new mongoose.Schema({
   militaryStatus: {
     type: String
   },
-  address: {
+
+  address: { //บ้านเลขที่ หมู่ที่
     type: String
   },
+  province: { //จังหวัด
+    type: String
+  },
+  district: { //อำเภอ
+    type: String
+  },
+  subDistrict: { //ตำบล
+    type: String
+  },
+  postalCode: { //รหัสไปรษณีย์
+    type: String
+  },
+  houseNumber: { //บ้านเลขที่
+    type: String
+  },
+
+  province2: { //จังหวัด
+    type: String
+  },
+  district2: { //อำเภอ
+    type: String
+  },
+  subDistrict2: { //ตำบล
+    type: String
+  },
+  postalCode2: { //รหัสไปรษณีย์
+    type: String
+  },
+  houseNumber2: { //บ้านเลขที่
+    type: String
+  },
+  
   currentAddress: {
     type: String
   },
+  currentProvince: { //จังหวัด
+    type: String
+  },
+  currentDistrict: { //อำเภอ
+    type: String
+  },
+  currentSubdistrict: { //ตำบล
+    type: String
+  },
+  currentZipcode: { //รหัสไปรษณีย์
+    type: String
+  },
+
+
   phoneNumber: {
     type: String,
     match: /^[0-9]{10}$/ // Regular expression for 10-digit phone number
@@ -114,6 +161,8 @@ const employeeSchema = new mongoose.Schema({
   salarypayment: String,
   salarybank: String,
   banknumber: String,
+salaryTaxType: String, 
+costtype : String , 
 
   salaryadd1: String,
   salaryadd1v: String,
@@ -331,7 +380,24 @@ router.post('/create', async (req, res) => {
     maritalStatus,
     militaryStatus,
     address,
+    province,
+district,
+subDistrict,
+postalCode,
+houseNumber,
+
+province2,
+district2,
+subDistrict2,
+postalCode2,
+houseNumber2,
+
     currentAddress,
+    currentProvince,
+    currentDistrict,
+    currentSubdistrict,
+    currentZipcode,
+    
     phoneNumber,
     emergencyContactNumber,
     idLine,
@@ -431,7 +497,23 @@ router.post('/create', async (req, res) => {
     maritalStatus,
     militaryStatus,
     address,
+    province,
+    district,
+    subDistrict,
+    postalCode,
+    houseNumber,
+    
+    province2,
+    district2,
+    subDistrict2,
+    postalCode2,
+    houseNumber2,
+
     currentAddress,
+    currentProvince,
+currentDistrict,
+currentSubdistrict,
+currentZipcode,
     phoneNumber,
     emergencyContactNumber,
     idLine,

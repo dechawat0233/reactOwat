@@ -349,34 +349,12 @@ function AddsettimeEmployee() {
 
                     break;
                   case "specialt_shift":
-                    // setWStartTime("");
-                    // setWEndTime("");
-                    // setWAllTime(calTime("0", "0", "24") || "");
-                    // setWOtTime(calTime("0", "0", "24") || "");
-                    // setWSelectOtTime("");
-                    // setWSelectOtTimeout("");
-                    const specialt_shift = await item.allTimes.filter(
-                      (time) => time.shift === "กะเช้า"
-                    );
-                    await setWStartTime(specialt_shift[0].startTime || "");
-                    await setWEndTime(specialt_shift[0].endTime || "");
-                    await setWAllTime(
-                      calTime(
-                        specialt_shift[0].startTime || "",
-                        specialt_shift[0].endTime || "",
-                        workplacesearch.workOfHour
-                      ) || ""
-                    );
-                    await setWOtTime(
-                      calTime(
-                        specialt_shift[0].startTimeOT || "",
-                        specialt_shift[0].endTimeOT || "",
-                        workplacesearch.workOfOT || ""
-                      ) || ""
-                    );
-                    await setWSelectOtTime(specialt_shift[0].startTimeOT || "");
-                    await setWSelectOtTimeout(specialt_shift[0].endTimeOT || "");
-                   
+                    setWStartTime("");
+                    setWEndTime("");
+                    setWAllTime(calTime("0", "0", "24") || "");
+                    setWOtTime(calTime("0", "0", "24") || "");
+                    setWSelectOtTime("");
+                    setWSelectOtTimeout("");
                     break;
                   default:
                     setWStartTime("");
@@ -472,34 +450,13 @@ function AddsettimeEmployee() {
 
                     break;
                   case "specialt_shift":
-                    // await setWAllTime(calTime("0", "0", "24") || "");
+                    await setWAllTime(calTime("0", "0", "24") || "");
 
-                    // await setWStartTime("");
-                    // await setWEndTime("");
-                    // await setWOtTime(calTime("0", "0", "24") || "");
-                    // await setWSelectOtTime("");
-                    // await setWSelectOtTimeout("");
-                    const specialt_shift = await item.allTimes.filter(
-                      (time) => time.shift === "กะเช้า"
-                    );
-                    await setWAllTime(
-                      calTime(
-                        specialt_shift[0].startTime || "",
-                        specialt_shift[0].endTime || "",
-                        workplacesearch.workOfHour
-                      ) || ""
-                    );
-                    await setWStartTime(specialt_shift[0].startTime || "");
-                    await setWEndTime(specialt_shift[0].endTime || "");
-                    await setWOtTime(
-                      calTime(
-                        specialt_shift[0].startTimeOT || "",
-                        specialt_shift[0].endTimeOT || "",
-                        workplacesearch.workOfOT || ""
-                      ) || ""
-                    );
-                    await setWSelectOtTime(specialt_shift[0].startTimeOT || "");
-                    await setWSelectOtTimeout(specialt_shift[0].endTimeOT || "");
+                    await setWStartTime("");
+                    await setWEndTime("");
+                    await setWOtTime(calTime("0", "0", "24") || "");
+                    await setWSelectOtTime("");
+                    await setWSelectOtTimeout("");
                     break;
                   default:
                     await setWStartTime("");
@@ -597,34 +554,13 @@ function AddsettimeEmployee() {
 
                     break;
                   case "specialt_shift":
-                    // await setWAllTime(calTime("0", "0", "24") || "");
+                    await setWAllTime(calTime("0", "0", "24") || "");
 
-                    // await setWStartTime("");
-                    // await setWEndTime("");
-                    // await setWOtTime(calTime("0", "0", "24") || "");
-                    // await setWSelectOtTime("");
-                    // await setWSelectOtTimeout("");
-                    const specialt_shift = await item.allTimes.filter(
-                      (time) => time.shift === "กะเช้า"
-                    );
-                    await setWAllTime(
-                      calTime(
-                        specialt_shift[0].startTime || "",
-                        specialt_shift[0].endTime || "",
-                        workplacesearch.workOfHour
-                      ) || ""
-                    );
-                    await setWStartTime(specialt_shift[0].startTime || "");
-                    await setWEndTime(specialt_shift[0].endTime || "");
-                    await setWOtTime(
-                      calTime(
-                        specialt_shift[0].startTimeOT || "",
-                        specialt_shift[0].endTimeOT || "",
-                        workplacesearch.workOfOT || ""
-                      ) || ""
-                    );
-                    await setWSelectOtTime(specialt_shift[0].startTimeOT || "");
-                    await setWSelectOtTimeout(specialt_shift[0].endTimeOT || "");
+                    await setWStartTime("");
+                    await setWEndTime("");
+                    await setWOtTime(calTime("0", "0", "24") || "");
+                    await setWSelectOtTime("");
+                    await setWSelectOtTimeout("");
                     break;
                   default:
                     await setWStartTime("");
@@ -749,33 +685,12 @@ function AddsettimeEmployee() {
 
                     break;
                   case "specialt_shift":
-                    // setWStartTime("");
-                    // setWEndTime("");
-                    // setWAllTime(calTime("0", "0", "24") || "");
-                    // setWOtTime(calTime("0", "0", "24") || "");
-                    // setWSelectOtTime("");
-                    // setWSelectOtTimeout("");
-                     const specialt_shift = await item.allTimes.filter(
-                      (time) => time.shift === "กะเช้า"
-                    );
-                    await setWStartTime(specialt_shift[0].startTime || "");
-                    await setWEndTime(specialt_shift[0].endTime || "");
-                    await setWAllTime(
-                      calTime(
-                        specialt_shift[0].startTime || "",
-                        specialt_shift[0].endTime || "",
-                        workplacesearch.workOfHour
-                      ) || ""
-                    );
-                    await setWOtTime(
-                      calTime(
-                        specialt_shift[0].startTimeOT || "",
-                        specialt_shift[0].endTimeOT || "",
-                        workplacesearch.workOfOT || ""
-                      ) || ""
-                    );
-                    await setWSelectOtTime(specialt_shift[0].startTimeOT || "");
-                    await setWSelectOtTimeout(specialt_shift[0].endTimeOT || "");
+                    setWStartTime("");
+                    setWEndTime("");
+                    setWAllTime(calTime("0", "0", "24") || "");
+                    setWOtTime(calTime("0", "0", "24") || "");
+                    setWSelectOtTime("");
+                    setWSelectOtTimeout("");
                     break;
                   default:
                     setWStartTime("");
@@ -871,34 +786,13 @@ function AddsettimeEmployee() {
 
                     break;
                   case "specialt_shift":
-                    // await setWAllTime(calTime("0", "0", "24") || "");
+                    await setWAllTime(calTime("0", "0", "24") || "");
 
-                    // await setWStartTime("");
-                    // await setWEndTime("");
-                    // await setWOtTime(calTime("0", "0", "24") || "");
-                    // await setWSelectOtTime("");
-                    // await setWSelectOtTimeout("");
-                      const specialt_shift = await item.allTimes.filter(
-                      (time) => time.shift === "กะเช้า"
-                    );
-                    await setWAllTime(
-                      calTime(
-                        specialt_shift[0].startTime || "",
-                        specialt_shift[0].endTime || "",
-                        workplacesearch.workOfHour
-                      ) || ""
-                    );
-                    await setWStartTime(specialt_shift[0].startTime || "");
-                    await setWEndTime(specialt_shift[0].endTime || "");
-                    await setWOtTime(
-                      calTime(
-                        specialt_shift[0].startTimeOT || "",
-                        specialt_shift[0].endTimeOT || "",
-                        workplacesearch.workOfOT || ""
-                      ) || ""
-                    );
-                    await setWSelectOtTime(specialt_shift[0].startTimeOT || "");
-                    await setWSelectOtTimeout(specialt_shift[0].endTimeOT || "");
+                    await setWStartTime("");
+                    await setWEndTime("");
+                    await setWOtTime(calTime("0", "0", "24") || "");
+                    await setWSelectOtTime("");
+                    await setWSelectOtTimeout("");
                     break;
                   default:
                     await setWStartTime("");
@@ -996,34 +890,13 @@ function AddsettimeEmployee() {
 
                     break;
                   case "specialt_shift":
-                    // await setWAllTime(calTime("0", "0", "24") || "");
+                    await setWAllTime(calTime("0", "0", "24") || "");
 
-                    // await setWStartTime("");
-                    // await setWEndTime("");
-                    // await setWOtTime(calTime("0", "0", "24") || "");
-                    // await setWSelectOtTime("");
-                    // await setWSelectOtTimeout("");
-                     const specialt_shift = await item.allTimes.filter(
-                      (time) => time.shift === "กะเช้า"
-                    );
-                    await setWAllTime(
-                      calTime(
-                        specialt_shift[0].startTime || "",
-                        specialt_shift[0].endTime || "",
-                        workplacesearch.workOfHour
-                      ) || ""
-                    );
-                    await setWStartTime(specialt_shift[0].startTime || "");
-                    await setWEndTime(specialt_shift[0].endTime || "");
-                    await setWOtTime(
-                      calTime(
-                        specialt_shift[0].startTimeOT || "",
-                        specialt_shift[0].endTimeOT || "",
-                        workplacesearch.workOfOT || ""
-                      ) || ""
-                    );
-                    await setWSelectOtTime(specialt_shift[0].startTimeOT || "");
-                    await setWSelectOtTimeout(specialt_shift[0].endTimeOT || "");
+                    await setWStartTime("");
+                    await setWEndTime("");
+                    await setWOtTime(calTime("0", "0", "24") || "");
+                    await setWSelectOtTime("");
+                    await setWSelectOtTimeout("");
                     break;
                   default:
                     await setWStartTime("");
@@ -1081,32 +954,32 @@ function AddsettimeEmployee() {
     }
   }, [wStartTime, wEndTime]);
 
-  // useEffect(() => {
-  //   if (wSelectOtTime !== "" && wSelectOtTimeout !== "") {
-  //     if (wId !== "" && wName !== "") {
-  //       const workplacesearch = workplaceList.find(
-  //         (workplace) => workplace.workplaceId === wId
-  //       );
-  //       if (workplacesearch) {
-  //         if (wShift == "specialt_shift") {
-  //           setWOtTime(
-  //             calTime(wSelectOtTime || "", wSelectOtTimeout || "", 24)
-  //           );
-  //         } else {
-  //           setWOtTime(
-  //             calTime(
-  //               wSelectOtTime || "",
-  //               wSelectOtTimeout || "",
-  //               workplacesearch.workOfOT || ""
-  //             )
-  //           );
-  //         }
-  //       }
-  //     }
-  //   } else {
-  //     setWOtTime(0);
-  //   }
-  // }, [wSelectOtTime, wSelectOtTimeout]);
+  useEffect(() => {
+    if (wSelectOtTime !== "" && wSelectOtTimeout !== "") {
+      if (wId !== "" && wName !== "") {
+        const workplacesearch = workplaceList.find(
+          (workplace) => workplace.workplaceId === wId
+        );
+        if (workplacesearch) {
+          if (wShift == "specialt_shift") {
+            setWOtTime(
+              calTime(wSelectOtTime || "", wSelectOtTimeout || "", 24)
+            );
+          } else {
+            setWOtTime(
+              calTime(
+                wSelectOtTime || "",
+                wSelectOtTimeout || "",
+                workplacesearch.workOfOT || ""
+              )
+            );
+          }
+        }
+      }
+    } else {
+      setWOtTime(0);
+    }
+  }, [wSelectOtTime, wSelectOtTimeout]);
 
   // search employee Name by employeeId
 
@@ -1318,33 +1191,14 @@ setWName(workplacesearch.workplaceName + ': ' + dep );
                 };
                 break;
               case "specialt_shift":
-                // newDataList2[index2] = {
-                //   ...newDataList2[index2],
-                //   ["startTime"]: "" + "",
-                //   ["endTime"]: "" + "",
-                //   ["allTime"]: calTime("0", "0", "24") || "" + "",
-                //   ["otTime"]: calTime("0", "0", "24") || "" + "",
-                //   ["selectotTime"]: "" + "",
-                //   ["selectotTimeOut"]: "" + "",
-                // };
                 newDataList2[index2] = {
                   ...newDataList2[index2],
-                  ["startTime"]: workplaceIdSearch.workStart1 || "" + "",
-                  ["endTime"]: workplaceIdSearch.workEnd1 || "" + "",
-                  ["allTime"]:
-                    calTime(
-                      workplaceIdSearch.workStart1 || "",
-                      workplaceIdSearch.workEnd1 || "",
-                      workplaceIdSearch.workOfHour || ""
-                    ) || "" + "",
-                  ["otTime"]:
-                    calTime(
-                      workplaceIdSearch.workStartOt1 || "",
-                      workplaceIdSearch.workEndOt1 || "",
-                      workplaceIdSearch.workOfOT || ""
-                    ) || "" + "",
-                  ["selectotTime"]: workplaceIdSearch.workStartOt1 || "" + "",
-                  ["selectotTimeOut"]: workplaceIdSearch.workEndOt1 || "" + "",
+                  ["startTime"]: "" + "",
+                  ["endTime"]: "" + "",
+                  ["allTime"]: calTime("0", "0", "24") || "" + "",
+                  ["otTime"]: calTime("0", "0", "24") || "" + "",
+                  ["selectotTime"]: "" + "",
+                  ["selectotTimeOut"]: "" + "",
                 };
                 break;
               default:
@@ -1693,10 +1547,10 @@ setWName(workplacesearch.workplaceName + ': ' + dep );
     // await setWOtTime('');
     // await setWSelectOtTime('');
     // await setWSelectOtTimeout('');
-    // await setCashSalary("");
-    // await setSpecialtSalary("");
-    // await setSpecialtSalaryOT("");
-    // await setMessageSalary("");
+    await setCashSalary("");
+    await setSpecialtSalary("");
+    await setSpecialtSalaryOT("");
+    await setMessageSalary("");
   }
 
   // Function to add a new row to the rowDataList with specific values

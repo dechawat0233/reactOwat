@@ -273,19 +273,19 @@ function SalaryAllResult({ employeeList }) {
             )
             .filter((item) => item.name && item.lastName); // Only include items with both name and lastName
 
-          // const updatedData = filteredData.map((item) => {
-          //   const matchingEmployee = employeeList.find(
-          //     (emp) => emp.employeeId === item.employeeId
-          //   );
+          const updatedData = filteredData.map((item) => {
+            const matchingEmployee = employeeList.find(
+              (emp) => emp.employeeId === item.employeeId
+            );
 
-          //   if (matchingEmployee && matchingEmployee.costtype === "ภ.ง.ด.3") {
-          //     // Modify the workplace by changing the first digit to '2'
-          //     item.workplace = "2" + item.workplace.slice(1);
-          //   }
+            if (matchingEmployee && matchingEmployee.costtype === "ภ.ง.ด.3") {
+              // Modify the workplace by changing the first digit to '2'
+              item.workplace = "2" + item.workplace.slice(1);
+            }
 
-          //   return item;
-          // });
-          setResponseDataAll(filteredData);
+            return item;
+          });
+          setResponseDataAll(updatedData);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -294,161 +294,6 @@ function SalaryAllResult({ employeeList }) {
 
     fetchData();
   }, [year, month, searchWorkplaceId]);
-
-// useEffect(() => {
-//   const workplaces = ['10796', '20796', '30796', '40796'];
-//   const employeesssss = [];
-//   const workplacestest = ['10796', '10798', '10596'];
-
-//   // Create 40 employees for workplace '10796'
-//   for (let i = 0; i < 120; i++) {
-//     const workplaceIndex = i % workplacestest.length; // Get the index based on the current iteration
-//     const employee = {
-//       employeeId: `6704${17 + i}`,
-//       name: `EmployeeName${i + 1}`,
-//       lastName: `LastName${i + 1}`,
-//       // workplace: '10796',
-//       workplace: workplacestest[workplaceIndex], // Assign workplace based on the index
-//       countDay: '31',
-//       countDayWork: '25',
-//       amountDay: '12000',
-//       amountOt: '5520',
-//       countHour: '200',
-//       countSpecialDay: '1',
-//       createDate: '03/09/2024, 07:31',
-//       specialDayRate: '480',
-//       year: '2024',
-//       month: '06',
-//       accountingRecord: [
-//         {
-//           addAmountAfterTax: "0",
-//           addAmountBeforeTax: "4083",
-//           amountCountDayWork: "12000",
-//           amountCountDayWorkOt: "5520",
-//           amountDay: "12000",
-//           amountHardWorking: "500",
-//           amountHoliday: "0",
-//           amountOne: "12000",
-//           amountOneFive: "5520",
-//           amountOt: "5520",
-//           amountPosition: "2000",
-//           amountSpecialDay: "480",
-//           amountThree: "0",
-//           amountTwo: "0",
-//           amountTwoFive: "0",
-//           bank: "0",
-//           benefitNonSocial: "750",
-//           countDay: "31",
-//           countDayWork: "25",
-//           countHour: "200",
-//           countHourWork: "200",
-//           countOtHour: "55.19999999999998",
-//           countOtHourWork: "0",
-//           deductAfterTax: "100",
-//           deductBeforeTax: "0",
-//           hourOne: "200",
-//           hourOneFive: "55.19999999999998",
-//           hourThree: "0",
-//           hourTwo: "0",
-//           hourTwoFive: "0",
-//           socialSecurity: "750",
-//           sumAddSalary: "4833",
-//           sumAddSalaryAfterTax: "0",
-//           sumAddSalaryBeforeTax: "361",
-//           sumAddSalaryBeforeTaxNonSocial: "722",
-//           sumDeductAfterTax: "100",
-//           sumDeductBeforeTax: "0",
-//           sumDeductBeforeTaxWithSocial: "0",
-//           sumSalaryForTax: "21603",
-//           tax: "0",
-//           tel: "500",
-//           total: "22083",
-//           travel: "0"
-//         }
-//       ],
-//       specialDayListWork: [],
-//       addSalary: [],
-//     };
-
-//     employeesssss.push(employee);
-//   }
-
-//   // Create 10 employees for each of the remaining workplaces
-//   for (let i = 0; i < 30; i++) {
-//     const workplaceIndex = i % 3; // Get index for '20796', '30796', '40796'
-//     const employee = {
-//       employeeId: `6704${57 + i}`,
-//       name: `EmployeeName${i + 41}`, // Starting after the 40 employees for '10796'
-//       lastName: `LastName${i + 41}`,
-//       workplace: workplaces[workplaceIndex + 1], // Select from '20796', '30796', '40796'
-//       countDay: '31',
-//       countDayWork: '25',
-//       amountDay: '12000',
-//       amountOt: '5520',
-//       countHour: '200',
-//       countSpecialDay: '1',
-//       createDate: '03/09/2024, 07:31',
-//       specialDayRate: '480',
-//       year: '2024',
-//       month: '06',
-//       accountingRecord: [
-//         {
-//           addAmountAfterTax: "0",
-//           addAmountBeforeTax: "4083",
-//           amountCountDayWork: "12000",
-//           amountCountDayWorkOt: "5520",
-//           amountDay: "12000",
-//           amountHardWorking: "500",
-//           amountHoliday: "0",
-//           amountOne: "12000",
-//           amountOneFive: "5520",
-//           amountOt: "5520",
-//           amountPosition: "2000",
-//           amountSpecialDay: "480",
-//           amountThree: "0",
-//           amountTwo: "0",
-//           amountTwoFive: "0",
-//           bank: "0",
-//           benefitNonSocial: "750",
-//           countDay: "31",
-//           countDayWork: "25",
-//           countHour: "200",
-//           countHourWork: "200",
-//           countOtHour: "55.19999999999998",
-//           countOtHourWork: "0",
-//           deductAfterTax: "100",
-//           deductBeforeTax: "0",
-//           hourOne: "200",
-//           hourOneFive: "55.19999999999998",
-//           hourThree: "0",
-//           hourTwo: "0",
-//           hourTwoFive: "0",
-//           socialSecurity: "750",
-//           sumAddSalary: "4833",
-//           sumAddSalaryAfterTax: "0",
-//           sumAddSalaryBeforeTax: "361",
-//           sumAddSalaryBeforeTaxNonSocial: "722",
-//           sumDeductAfterTax: "100",
-//           sumDeductBeforeTax: "0",
-//           sumDeductBeforeTaxWithSocial: "0",
-//           sumSalaryForTax: "21603",
-//           tax: "0",
-//           tel: "500",
-//           total: "22083",
-//           travel: "0"
-//         }
-//       ],
-//       specialDayListWork: [],
-//       addSalary: [],
-//     };
-
-//     employeesssss.push(employee);
-//   }
-
-//   // Set the employee data to the state variable
-//   setResponseDataAll(employeesssss);
-// }, []); // Empty dependency array to run once on component mount
-
 
   console.log("responseDataAll", responseDataAll);
 
@@ -1137,7 +982,7 @@ function SalaryAllResult({ employeeList }) {
     let sumFormattedAmountHoliday = 0;
 
     let sumNewamountOt = 0;
-    let previousFirstChar = null;
+
     // Loop through the grouped data and add content to the PDF
     // Object.keys(groupedByWorkplace).forEach((workplaceKey, index) => {
     Object.keys(groupedByWorkplace)
@@ -1190,25 +1035,16 @@ function SalaryAllResult({ employeeList }) {
         // const workplaceName = workplaceDetails.workplaceName || "Unknown"; // Use a default value if 'name' is not available
 
         const workplaceDetails = workplaceListAll.find((w) => {
-          // Remove the first character and compare the rest of the strings
-          const trimmedWorkplaceId = w.workplaceId.toString().slice(1);
-          const trimmedWorkplaceKey = workplaceKey.toString().slice(1);
-          return trimmedWorkplaceId === trimmedWorkplaceKey;
+            // Remove the first character and compare the rest of the strings
+            const trimmedWorkplaceId = w.workplaceId.toString().slice(1);
+            const trimmedWorkplaceKey = workplaceKey.toString().slice(1);
+            return trimmedWorkplaceId === trimmedWorkplaceKey;
         }) || { name: "Unknown" };
-
+        
         console.log("workplaceDetails", workplaceDetails);
-
+        
         const workplaceName = workplaceDetails.workplaceName || "Unknown"; // Use a default value if 'name' is not available
-
-        const currentFirstChar = workplaceKey[0]; // Get the first character
-        if (previousFirstChar && previousFirstChar !== currentFirstChar) {
-          // If first characters are different, add a new page
-          pdf.addPage({ orientation: "landscape" });
-          currentY = 20; // Reset Y coordinate for the new page
-        }
-  
-        previousFirstChar = currentFirstChar;
-
+        
         // Display workplace heading
         pdf.setFontSize(10);
         pdf.text(
@@ -1666,16 +1502,6 @@ function SalaryAllResult({ employeeList }) {
 
             currentY += 5;
 
-            pdf.text(
-              `พิมพ์วันที่ ${formattedWorkDateDD}/${formattedWorkDateMM}/${
-                parseInt(formattedWorkDateYYYY, 10) + 543
-              }`,
-              10,
-              200
-            );
-            pdf.text(`รายงานโดย ${present}`, 100, 200);
-            pdf.text(`แฟ้มรายงาน ${presentfilm}`, 200, 200);
-            
             // Check if there's not enough space on the current page
             if (currentY > pdf.internal.pageSize.height - 20) {
               // Add a new page
@@ -3269,6 +3095,7 @@ function SalaryAllResult({ employeeList }) {
                                                     <option key={workplace.workplaceId} value={workplace.workplaceName} />
                                                 ))}
                                             </datalist> */}
+                      <label role="searchname">ชื่อหน่วยงาน</label>
                       <input
                         type="text"
                         className="form-control"

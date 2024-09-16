@@ -1614,6 +1614,7 @@ console.log('resultArray2',resultArray2);
     afternoon_shift: "กะบ่าย",
     night_shift: "กะดึก",
     special_shift: "กะพิเศษ",
+    specialt_shift: "กะพิเศษ",
   };
 
   return (

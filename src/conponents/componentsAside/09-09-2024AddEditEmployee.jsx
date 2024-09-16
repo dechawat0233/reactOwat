@@ -30,22 +30,10 @@ import EmployeesSelected from "./EmployeesSelected";
 //     return format(date, formatString).replace(christianYear.toString(), buddhistYear.toString());
 // };
 
-const locationData = {
-  Bangkok: {
-    districts: {
-      "District 1": ["SubDistrict 1-1", "SubDistrict 1-2"],
-      "District 2": ["SubDistrict 2-1", "SubDistrict 2-2"],
-    },
-  },
-  ChiangMai: {
-    districts: {
-      "District 3": ["SubDistrict 3-1", "SubDistrict 3-2"],
-      "District 4": ["SubDistrict 4-1", "SubDistrict 4-2"],
-    },
-  },
-};
-
 function AddEditEmployee() {
+
+
+
   const [showPopup, setShowPopup] = useState(false);
   const [formattedDate, setFormattedDate] = useState("");
   const popupRef = useRef(null);
@@ -159,64 +147,6 @@ function AddEditEmployee() {
   const [maritalStatus, setMaritalStatus] = useState(""); //สถานภาพการสมรส
   const [militaryStatus, setMilitaryStatus] = useState(""); //สถานภาพทางการทหาร
   const [address, setAddress] = useState(""); //ที่อยู่ตามบัตรประชาชน
-
-  const [province, setProvince] = useState(""); //จังหวัด
-  const [district, setDistrict] = useState(""); //อำเภอ
-  const [subDistrict, setSubDistrict] = useState(""); //ตำบล
-  const [postalCode, setPostalCode] = useState(""); //ตำบล
-  const [houseNumber, setHouseNumber] = useState(""); //ตำบล
-
-  const [province2, setProvince2] = useState(""); // จังหวัด
-  const [district2, setDistrict2] = useState(""); // อำเภอ
-  const [subDistrict2, setSubDistrict2] = useState(""); // ตำบล
-  const [postalCode2, setPostalCode2] = useState(""); // ไปรษณีย์
-  const [houseNumber2, setHouseNumber2] = useState(""); //ตำบล
-
-  const [districtOptions, setDistrictOptions] = useState([]); // Options for district
-  const [subDistrictOptions, setSubDistrictOptions] = useState([]); // Options for sub-district
-
-  const [isChecked, setIsChecked] = useState(false); // Checkbox state
-
-  // When province changes, update district options and reset selections
-  useEffect(() => {
-    if (province) {
-      const districts = locationData[province]?.districts || {};
-      setDistrictOptions(Object.keys(districts));
-      setDistrict(""); // Reset district when province changes
-      setSubDistrict(""); // Reset sub-district when province changes
-      setSubDistrictOptions([]); // Clear sub-district options
-    }
-  }, [province]);
-
-  // When district changes, update sub-district options
-  useEffect(() => {
-    if (district && province) {
-      const subDistricts = locationData[province]?.districts[district] || [];
-      setSubDistrictOptions(subDistricts);
-      setSubDistrict(""); // Reset sub-district when district changes
-    }
-  }, [district, province]);
-
-  // Handle checkbox toggle to copy values
-  const handleCheckboxToggle = (event) => {
-    setIsChecked(event.target.checked);
-    if (event.target.checked) {
-      // Copy values from primary fields to secondary fields
-      setProvince2(province);
-      setDistrict2(district);
-      setSubDistrict2(subDistrict);
-      setPostalCode2(postalCode);
-      setHouseNumber2(houseNumber);
-    } else {
-      // Allow manual editing if unchecked
-      setProvince2("");
-      setDistrict2("");
-      setSubDistrict2("");
-      setPostalCode2("");
-      setHouseNumber2("");
-    }
-  };
-
   const [currentAddress, setCurrentAddress] = useState(""); //ที่อยู่ปัจจุบัน
   const [phoneNumber, setPhoneNumber] = useState(""); //เบอร์โทรศัพท์
   const [emergencyContactNumber, setEmergencyContactNumber] = useState(""); //เบอร์ติดต่อกรณีฉุกเฉิน
@@ -363,20 +293,7 @@ function AddEditEmployee() {
       religion: religion,
       maritalStatus: maritalStatus,
       militaryStatus: militaryStatus,
-      // address: address,
-
-      province: province,
-      district: district,
-      subDistrict: subDistrict,
-      postalCode: postalCode,
-      houseNumber: houseNumber,
-
-      province2: province2,
-      district2: district2,
-      subDistrict2: subDistrict2,
-      postalCode2: postalCode2,
-      houseNumber2: houseNumber2,
-
+      address: address,
       currentAddress: currentAddress,
       phoneNumber: phoneNumber,
       emergencyContactNumber: emergencyContactNumber,
@@ -540,19 +457,6 @@ function AddEditEmployee() {
 
         setMilitaryStatus(response.data.employees[0].militaryStatus);
         setAddress(response.data.employees[0].address);
-
-        setProvince(response.data.employees[0].province);
-    setDistrict(response.data.employees[0].district);
-    setSubDistrict(response.data.employees[0].subDistrict);
-    setPostalCode(response.data.employees[0].postalCode);
-    setHouseNumber(response.data.employees[0].houseNumber);
-
-    setProvince2(response.data.employees[0].province2);
-    setDistrict2(response.data.employees[0].district2);
-    setSubDistrict2(response.data.employees[0].subDistrict2);
-    setPostalCode2(response.data.employees[0].postalCode2);
-    setHouseNumber2(response.data.employees[0].houseNumber2);
-
         setCopyAddress(response.data.employees[0].copyAddress);
         setCurrentAddress(response.data.employees[0].currentAddress);
         setPhoneNumber(response.data.employees[0].phoneNumber);
@@ -868,7 +772,7 @@ function AddEditEmployee() {
                                     value={workplace}
                                     onChange={handleWorkplace}
                                   />
-{/* workplaceList */}
+
                                   <datalist id="workplaces">
                                     <option value="">ยังไม่ระบุหน่วยงาน</option>
                                     {workplaceSelection.map((wp) => (
@@ -933,9 +837,9 @@ function AddEditEmployee() {
                                     <option value="ไม่ประจำ">ไม่ประจำ</option>
                                     <option value="รายวัน">รายวัน</option>
                                     <option value="รายครั้ง">รายครั้ง</option> */}
-                                    <option value="รายวัน">รายวัน</option>
-                                    <option value="รายเดือน">รายเดือน</option>
-                                    <option value="รายครั้ง">รายครั้ง</option>
+                                     <option value="รายวัน">รายวัน</option>
+                                <option value="รายเดือน">รายเดือน</option>
+                                <option value="รายครั้ง">รายครั้ง</option>
                                   </select>
                                 </div>
                               </div>
@@ -1312,19 +1216,11 @@ function AddEditEmployee() {
                                   >
                                     <option value="">ระบุ</option>
                                     <option value="โสด">โสด</option>
-                                    <option value="แต่งงานและอยู่ด้วยกัน">
-                                      แต่งงานและอยู่ด้วยกัน
-                                    </option>
-                                    <option value="แต่งงานแต่ไม่ได้อยู่ด้วยกัน">
-                                      แต่งงานแต่ไม่ได้อยู่ด้วยกัน
-                                    </option>
-                                    <option value="ไม่แต่งงานแต่อยู่ด้วยกัน">
-                                      ไม่แต่งงานแต่อยู่ด้วยกัน
-                                    </option>
+                                    <option value="แต่งงานและอยู่ด้วยกัน">แต่งงานและอยู่ด้วยกัน</option>
+                                    <option value="แต่งงานแต่ไม่ได้อยู่ด้วยกัน">แต่งงานแต่ไม่ได้อยู่ด้วยกัน</option>
+                                    <option value="ไม่แต่งงานแต่อยู่ด้วยกัน">ไม่แต่งงานแต่อยู่ด้วยกัน</option>
                                     <option value="หม้าย">หม้าย</option>
-                                    <option value="หย่าร้าง/แยกทาง/เลิกกัน">
-                                      หย่าร้าง/แยกทาง/เลิกกัน
-                                    </option>
+                                    <option value="หย่าร้าง/แยกทาง/เลิกกัน">หย่าร้าง/แยกทาง/เลิกกัน</option>
                                   </select>
                                 </div>
                               </div>
@@ -1354,8 +1250,8 @@ function AddEditEmployee() {
                               </div>
                             </div>
                             <div class="row">
-                              <div class="col-md-3">
-                                {/* <div class="form-group">
+                              <div class="col-md-6">
+                                <div class="form-group">
                                   <label role="address">
                                     ที่อยู่ตามบัตรประชาชน
                                   </label>
@@ -1367,96 +1263,11 @@ function AddEditEmployee() {
                                     value={address}
                                     onChange={(e) => setAddress(e.target.value)}
                                   ></textarea>
-                                </div> */}
-                                <div>
-                                  <label htmlFor="province">จังหวัด </label>
-                                  <select
-                                    id="province"
-                                    value={province}
-                                    onChange={(e) =>
-                                      setProvince(e.target.value)
-                                    }
-                                    class="form-control"
-                                  >
-                                    <option value="">Select Province</option>
-                                    {Object.keys(locationData).map((prov) => (
-                                      <option key={prov} value={prov}>
-                                        {prov}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="col-md-3">
-                                <div>
-                                  <label htmlFor="district">อำเภอ </label>
-                                  <select
-                                    id="district"
-                                    value={district}
-                                    onChange={(e) =>
-                                      setDistrict(e.target.value)
-                                    }
-                                    disabled={!province}
-                                    class="form-control"
-                                  >
-                                    <option value="">Select District</option>
-                                    {districtOptions.map((dist) => (
-                                      <option key={dist} value={dist}>
-                                        {dist}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="col-md-3">
-                                <div>
-                                  <label htmlFor="subDistrict">ตำบล </label>
-                                  <select
-                                    id="subDistrict"
-                                    value={subDistrict}
-                                    onChange={(e) =>
-                                      setSubDistrict(e.target.value)
-                                    }
-                                    disabled={!district}
-                                    class="form-control"
-                                  >
-                                    <option value="">
-                                      Select Sub-District
-                                    </option>
-                                    {subDistrictOptions.map((subDist) => (
-                                      <option key={subDist} value={subDist}>
-                                        {subDist}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="col-md-3">
-                                <div>
-                                  <label htmlFor="subDistrict">
-                                    เลขไปรษณีย์{" "}
-                                  </label>
-                                  <div class="form-group">
-                                    {/* <label role="idCard">
-                                    เลขบัตรประจำตัวประชาชน
-                                  </label> */}
-                                    <input
-                                      // required
-                                      type="text"
-                                      name="postalCode"
-                                      class="form-control"
-                                      id="postalCode"
-                                      placeholder="เลขไปรษณีย์"
-                                      value={postalCode}
-                                      onChange={(e) =>
-                                        setPostalCode(e.target.value)
-                                      }
-                                    />
-                                  </div>
                                 </div>
                               </div>
 
-                              {/* <div class="col-md-6">
+
+                              <div class="col-md-6">
                                 <div class="form-group">
                                   <label role="currentAddress">
                                     ที่อยู่ปัจจุบัน
@@ -1482,171 +1293,8 @@ function AddEditEmployee() {
                                     }
                                   ></textarea>
                                 </div>
-                              </div> */}
-                            </div>
-                            <div class="row">
-                          <div class="col-md-3">
-                            <div>
-                              <label htmlFor="subDistrict">บ้านเลขที่-หมู่</label>
-                              <div class="form-group">
-                                {/* <label role="idCard">
-                                    เลขบัตรประจำตัวประชาชน
-                                  </label> */}
-                                <input
-                                  // required
-                                  type="text"
-                                  name="postalCode2"
-                                  class="form-control"
-                                  id="postalCode2"
-                                  placeholder="เลขไปรษณีย์"
-                                  value={houseNumber}
-                                  onChange={(e) =>
-                                    setHouseNumber(e.target.value)
-                                  }
-                                />
                               </div>
                             </div>
-                          </div>
-                        </div>
-                            <div>
-                              <input
-                                type="checkbox"
-                                id="copyCheckbox"
-                                checked={isChecked}
-                                onChange={handleCheckboxToggle}
-                              />
-                              <label htmlFor="copyCheckbox">
-                                ใช้ที่อยู่ตามบัตรประชาชน
-                              </label>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-3">
-                                {/* <div class="form-group">
-                                  <label role="address">
-                                    ที่อยู่ตามบัตรประชาชน
-                                  </label>
-                                  <textarea
-                                    name="address"
-                                    id="address"
-                                    class="form-control"
-                                    rows="3"
-                                    value={address}
-                                    onChange={(e) => setAddress(e.target.value)}
-                                  ></textarea>
-                                </div> */}
-                                <div>
-                                  <label htmlFor="province">จังหวัด </label>
-                                  <select
-                                    id="province2"
-                                    value={province2}
-                                    onChange={(e) =>
-                                      setProvince2(e.target.value)
-                                    }
-                                    class="form-control"
-                                  >
-                                    <option value="">Select Province</option>
-                                    {Object.keys(locationData).map((prov) => (
-                                      <option key={prov} value={prov}>
-                                        {prov}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="col-md-3">
-                                <div>
-                                  <label htmlFor="district">อำเภอ </label>
-                                  <select
-                                    id="district2"
-                                    value={district2}
-                                    onChange={(e) =>
-                                      setDistrict2(e.target.value)
-                                    }
-                                    disabled={!province}
-                                    class="form-control"
-                                  >
-                                    <option value="">Select District</option>
-                                    {districtOptions.map((dist) => (
-                                      <option key={dist} value={dist}>
-                                        {dist}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="col-md-3">
-                                <div>
-                                  <label htmlFor="subDistrict">ตำบล </label>
-                                  <select
-                                    id="subDistrict"
-                                    value={subDistrict2}
-                                    onChange={(e) =>
-                                      setSubDistrict2(e.target.value)
-                                    }
-                                    disabled={!district2}
-                                    class="form-control"
-                                  >
-                                    <option value="">
-                                      Select Sub-District
-                                    </option>
-                                    {subDistrictOptions.map((subDist) => (
-                                      <option key={subDist} value={subDist}>
-                                        {subDist}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="col-md-3">
-                                <div>
-                                  <label htmlFor="subDistrict">
-                                    เลขไปรษณีย์{" "}
-                                  </label>
-                                  <div class="form-group">
-                                    {/* <label role="idCard">
-                                    เลขบัตรประจำตัวประชาชน
-                                  </label> */}
-                                    <input
-                                      // required
-                                      type="text"
-                                      name="postalCode2"
-                                      class="form-control"
-                                      id="postalCode2"
-                                      placeholder="เลขไปรษณีย์"
-                                      value={postalCode2}
-                                      onChange={(e) =>
-                                        setPostalCode2(e.target.value)
-                                      }
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="row">
-                          <div class="col-md-3">
-                            <div>
-                              <label htmlFor="subDistrict">บ้านเลขที่-หมู่</label>
-                              <div class="form-group">
-                                {/* <label role="idCard">
-                                    เลขบัตรประจำตัวประชาชน
-                                  </label> */}
-                                <input
-                                  // required
-                                  type="text"
-                                  name="postalCode2"
-                                  class="form-control"
-                                  id="postalCode2"
-                                  placeholder="เลขไปรษณีย์"
-                                  value={houseNumber2}
-                                  onChange={(e) =>
-                                    setHouseNumber2(e.target.value)
-                                  }
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                            <br />
                             {/* <!--row--> */}
                             <div class="row">
                               <div class="col-md-3">

@@ -11,8 +11,7 @@ import Calendar from "react-calendar";
 import "../editwindowcss.css";
 import EmployeeWorkDay from "./componentsetting/EmployeeWorkDay";
 import "./salarysummary/styleCom.css";
-import { ThaiDatePicker } from "thaidatepicker-react";
-import { FaCalendarAlt } from "react-icons/fa"; // You can use any icon library
+
 import th from "date-fns/locale/th"; // Import Thai locale data from date-fns
 
 function Salaryresult() {
@@ -152,48 +151,10 @@ function Salaryresult() {
     getdata();
   }, []); // Run this effect only once on component mount
 
-  // const handleThaiDateChange = (date) => {
-  //   setSelectedThaiDate(date);
-  //   setSelectedGregorianDate(ThaiBuddhistToGregorian(date));
-  //   setWorkDate(ThaiBuddhistToGregorian(date));
-  // };
-
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [formattedDate321, setFormattedDate] = useState(null);
-
-  const handleDatePickerChange = (date) => {
-    setSelectedDate(date);
-    setShowDatePicker(false); // Hide date picker after selecting a date
-    const newDate = new Date(date);
-    setSelectedThaiDate(newDate);
-  };
-
-  useEffect(() => {
-    // Function to format a given date
-    const formatDate = (date) => {
-      const day = date.getDate().toString().padStart(2, "0");
-      const month = (date.getMonth() + 1).toString().padStart(2, "0");
-      const year = (date.getFullYear() + 543).toString();
-      return `${day}/${month}/${year}`;
-    };
-
-    if (selectedDate) {
-      // Convert the selected date string to a Date object and format it
-      const date = new Date(selectedDate);
-      const formattedDate = formatDate(date);
-      setFormattedDate(formattedDate);
-    } else {
-      // If selectedDate is null, use the current date
-      const currentDate = new Date();
-      const formattedCurrentDate = formatDate(currentDate);
-      setFormattedDate(formattedCurrentDate);
-      setSelectedDate(currentDate); // Set the initial selected date to the current date
-    }
-  }, [selectedDate]);
-
-  const toggleDatePicker = () => {
-    setShowDatePicker(!showDatePicker);
+  const handleThaiDateChange = (date) => {
+    setSelectedThaiDate(date);
+    setSelectedGregorianDate(ThaiBuddhistToGregorian(date));
+    setWorkDate(ThaiBuddhistToGregorian(date));
   };
 
   const handleRemainCodeChange = (event) => {
@@ -213,29 +174,13 @@ function Salaryresult() {
   };
 
   const handleAddData = () => {
-    // alert(selectedName2.name )
     // Create a new object with the input values
     const newData = {
-      startDay: selectedThaiDate || "",
-      endDay: selectedThaiDate || "",
-      welfareType: selectedName2.id || "",
-      welfareTypeEn: selectedName2.name || "",
-      id: remainCode || "",
-      name: remainName || "",
-      SpSalary: remainSalary || "",
-      roundOfSalary: "monthly",
-      StaffType: "",
-      nameType: "",
-      message: "",
-      comment: remainComment || "",
-
-      // thaiDate: selectedThaiDate || '',
-      // selectedName2      : selectedName2.id || '',
-      // selectedId      : selectedName2.name || '',
-      // code: remainCode || '',
-      // name: remainName || '',
-      // salary: remainSalary || '',
-      // comment: remainComment || '',
+      thaiDate: selectedThaiDate,
+      code: remainCode,
+      name: remainName,
+      salary: remainSalary,
+      comment: remainComment,
     };
 
     // Add the new data object to the dataArray state
@@ -257,70 +202,6 @@ function Salaryresult() {
 
   console.log("remainArray", remainArray);
 
-  const [yearWelfare, setYearWelfare] = useState("");
-  const [monthWelfare, setMonthWelfare] = useState("");
-
-  async function handleSaveWelfare() {
-    // alert('handleSaveWelfare');
-    try {
-      if (remainArray.length > 0 && yearWelfare !== "" && monthWelfare !== "") {
-        const welfareSave = await {
-          year: yearWelfare,
-          month: monthWelfare,
-          createDate: "",
-          employeeId: staffId,
-          workplace: "",
-          createBy: "",
-          status: "",
-          record: remainArray,
-        };
-
-        //save welfare
-        await axios
-          .post(endpoint + "/leave/create", welfareSave)
-          .then(async (response) => {
-            const responseData = await response.data;
-            if (responseData) {
-              alert("บันทึกสำเร็จ");
-            }
-          });
-      } else {
-        alert("กรุณาตรวจสอบรายการลา และข้อมูลพนักงาน");
-      }
-    } catch (e) {
-      alert("save welfare error is " + e);
-    }
-  }
-
-  useEffect(() => {
-    // get welfare record with year and month
-    const getWelfare = async () => {
-      if (yearWelfare !== "" && monthWelfare !== "" && staffId !== '') {
-        const welfareSearch = await {
-          year: yearWelfare,
-          month: monthWelfare,
-          employeeId: staffId
-        };
-
-        try {
-          const result = await axios.post(
-            endpoint + "/leave/search",
-            welfareSearch
-          );
-          if (result && result.data.length > 0) {
-            // await alert(JSON.stringify(result .data[0].record));
-            setRemainArray(result.data[0].record);
-          }
-        } catch (e) {
-          // alert('get welfare error is' + e)
-        }
-      }
-    };
-
-    getWelfare();
-  }, [yearWelfare, monthWelfare]);
-
-  console.log("remainArray", remainArray);
   useEffect(() => {
     // setMonth("01");
 
@@ -430,26 +311,18 @@ function Salaryresult() {
   //tmp for cal social
   const [wsAmountSpecialDayx, setWsAmountSpecialDayx] = useState(0);
   const [wsSocialSecurityX, setWsSocialSecurityX] = useState(0);
-  const [empDataSelect, setEmpDataSelect] = useState();
 
-  //master addSalary and deDuctSalary
-  const [searchAddSalaryList, setSearchAddSalaryList] = useState([]);
-  const [searchDeductSalaryList, setSearchDeductSalaryList] = useState([]);
-  const [addSalaryId, setAddSalaryId] = useState("");
-  const [addSalaryName, setAddSalaryName] = useState("");
+//master addSalary and deDuctSalary
+const [searchAddSalaryList, setSearchAddSalaryList] = useState([]);
+const [searchDeductSalaryList , setSearchDeductSalaryList] = useState([]);
+const [addSalaryId , setAddSalaryId] = useState('');
+const [addSalaryName , setAddSalaryName] = useState('');
+
 
   useEffect(() => {
+
     const fetchData = async () => {
       if (year !== "" && month !== "" && staffId !== "") {
-        let tmp = employeeList.find(
-          (employee) => employee.employeeId === staffId
-        );
-
-        if (tmp) {
-          setEmpDataSelect(tmp);
-        }
-        setYearWelfare(year || "");
-        setMonthWelfare(month || "");
         const dataTest = await {
           employeeId: staffId || "",
           year: year || "",
@@ -562,63 +435,72 @@ function Salaryresult() {
       }
     };
 
+
     const getMaster = async () => {
       const data = await {
-        employeeId: "0001",
-        name: "",
-        idCard: "",
-        workPlace: "",
+          employeeId: '0001',
+          name: '',
+          idCard: '',
+          workPlace: '',
       };
 
       try {
-        const response = await axios.post(endpoint + "/employee/search", data);
-        if (response) {
-          await setSearchAddSalaryList(response.data.employees[0].addSalary);
-          await setSearchDeductSalaryList(
-            response.data.employees[0].deductSalary
-          );
-        }
-        // await alert(JSON.stringify(response.data.employees[0].addSalary ,null,2 ));
-        // await alert(JSON.stringify(response.data.employees[0].deductSalary ,null,2 ));
-      } catch (e) {}
-    };
+          const response = await axios.post(endpoint + '/employee/search', data);
+          if (response) {
+              await setSearchAddSalaryList(response.data.employees[0].addSalary);
+              await setSearchDeductSalaryList(response.data.employees[0].deductSalary);
+          }
+          // await alert(JSON.stringify(response.data.employees[0].addSalary ,null,2 ));
+          // await alert(JSON.stringify(response.data.employees[0].deductSalary ,null,2 ));
+      } catch (e) {
+      }
+  }
 
-    getMaster();
+  getMaster();
 
     // Call fetchData when year or month changes
     fetchData();
+
+
   }, [year, month, staffId, updateStatus]);
 
   useEffect(() => {
+
     const getAddSalary = async () => {
-      const findObjectById = (id) => {
-        return searchAddSalaryList.find((item) => item.id === id);
-      };
 
-      if (remainCode !== "") {
-        setRemainName("");
-        const foundObject = await findObjectById(remainCode);
-        if (foundObject) {
-          setAddSalaryName(foundObject.name); // Set only the name property
-          setRemainName(foundObject.name); // Set only the name property
+    const findObjectById = (id) => {
+      return searchAddSalaryList.find(item => item.id === id);
+    }
 
-          let tmp = employeeList.find(
-            (employee) => employee.employeeId === remainCode
-          );
-          if (tmp && value in tmp) {
-            // setSelectedName(tmp[value]);
-            // setRemainSalary();
-            alert(tmp[value]);
-          }
+  if(remainCode !== '') {
+    setRemainName('');
+    const foundObject = await findObjectById(remainCode );
+    if (foundObject) {
+        setAddSalaryName(foundObject.name); // Set only the name property
+        setRemainName(foundObject.name); // Set only the name property
 
-          // alert(addSalaryName);
-        }
-      }
-    };
+        let tmp = employeeList.find(
+          (employee) => employee.employeeId === remainCode 
+        );
+    if(tmp && value in tmp) {
+        // setSelectedName(tmp[value]);
+        // setRemainSalary();
+alert(tmp[value]);
 
-    getAddSalary();
+    }
+    
+// alert(addSalaryName);
+    }
+  }
+}
+
+getAddSalary();
   }, [remainCode, searchAddSalaryList]);
 
+  
+  
+
+  
   const handleTmpamountChange = (e) => {
     setWsAmountSpecialDay(Number(e.target.value));
   };
@@ -627,6 +509,8 @@ function Salaryresult() {
     setUpdateStatus(updateStatus);
     // alert(updateStatus );
   };
+
+
 
   //sum salary before deduct
   useEffect(() => {
@@ -1892,7 +1776,7 @@ function Salaryresult() {
     fetchData();
   }
   console.log("wsCountDayWork", wsCountDayWork);
-
+  
   const options = [
     { id: "ลากิจ", name: "remainbusinessleave" },
     { id: "ลาป่วย", name: "remainsickleave" },
@@ -1918,14 +1802,16 @@ function Salaryresult() {
   //   { id: "1425", name: "ค่าจ้างในวันลาพักร้อน" },
   // ];
   const [selectedName, setSelectedName] = useState("");
-  const [welfareUse, setWelfareUse] = useState(0);
+  const [welfareUse , setWelfareUse ] = useState(0);
 
   const handleSelectChange = (event) => {
     const value = String(event.target.value);
-    let tmp = employeeList.find((employee) => employee.employeeId === staffId);
-    if (tmp && value in tmp) {
-      setSelectedName(tmp[value]);
-    }
+    let tmp = employeeList.find(
+      (employee) => employee.employeeId === staffId
+    );
+if(tmp && value in tmp) {
+    setSelectedName(tmp[value]);
+}
 
     // const selectedOption = options.find(
     //   (option) => option.id === event.target.value
@@ -1937,10 +1823,9 @@ function Salaryresult() {
 
   const handleSelectChange2 = (event) => {
     const selectedOption = options.find(
-      (option) => option.name === event.target.value
+      (option) => option.id === event.target.value
     );
-    setSelectedName2(selectedOption ? selectedOption : "");
-    // alert(selectedOption.name );
+    setSelectedName2(selectedOption ? selectedOption.name : "");
   };
   return (
     // <div>
@@ -2083,7 +1968,233 @@ function Salaryresult() {
                   </div> */}
                 </div>
               </section>
+              <h2 class="title">สรุปวันลา</h2>
+              <section class="Frame">
+                <div class="row">
+                  <div class="col-md-8">
+                    <table border="1" style={tableStyle}>
+                      <thead>
+                        <tr>
+                          <th style={headerCellStyle}>สิทธิการลา</th>
+                          <th style={headerCellStyle}>จำนวนวัน</th>
+                          <th style={headerCellStyle}>ใช้สิทธิแล้ว</th>
+                          <th style={headerCellStyle}>สิทธิคงเหลือ</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {/* sumSpSalary */}
+                        {/* <tr> */}
+                          {/* <td style={cellStyle}>{employee.remainsickleave}</td>
+                          <td style={cellStyle}>{employee.remainbusinessleave}</td>
+                          <td style={cellStyle}>{employee.remainvacation}</td> */}
 
+                                                        {options.map((option) => (
+                                                                                  <tr>
+                                                                                    <td style={cellStyle}>{option.id}</td>
+                                                                                    <td style={cellStyle}></td>
+                                                                                    <td style={cellStyle}></td>
+                                                                                    <td style={cellStyle}></td>
+
+                                                                                    </tr>
+
+
+                              ))}
+
+                        {/* <tr>
+
+                          <td style={cellStyle}>
+                            {" "}
+                            <select
+                              onChange={handleSelectChange}
+                              className="form-control"
+                            >
+                              <option value="">เลือกตัวเลือก</option>
+                              {options.map((option) => (
+                                <option key={option.id} value={option.name}>
+                                  {option.id}                                 
+                                  </option>
+                              ))}
+                            </select>
+                          </td>
+                          <td style={cellStyle}>
+                            {" "}
+                            <input
+                              type="text"
+                              className="form-control mt-2"
+                              value={selectedName}
+                              placeholder=""
+                              readOnly
+                            />
+                          </td>
+                          <td style={cellStyle}>
+                          {" "}
+                            <input
+                              type="text"
+                              className="form-control mt-2"
+                              value={welfareUse}
+                              placeholder=""
+                              readOnly
+                            />
+                          </td>
+                        </tr> */}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <br />
+                <div class="row">
+                  <div class="col-md-2">
+                    <label role="agencyname">วันที่</label>
+                  </div>
+                  <div class="col-md-2">
+                    <label role="agencyname">ประเภทการลา</label>
+                  </div>
+                  <div class="col-md-2">
+                    <label role="">รหัสเงินเพิ่มเงินหัก</label>
+                  </div>
+                  <div class="col-md-2">
+                    <label role="">ชื่อ</label>
+                  </div>
+
+                  <div class="col-md-2">
+                    <label role="agencyname"></label>
+                  </div>
+                  <div class="col-md-2">
+                    <label role="agencyname">จำนวนเงิน</label>
+                  </div>
+                  <div class="col-md-2">
+                    <label role="agencyname">หมายเหตุ</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-2">
+                    <div
+                      style={{
+                        position: "relative",
+                        zIndex: 9999,
+                        marginLeft: "0rem",
+                      }}
+                    >
+                      <DatePicker
+                        className="form-control"
+                        selected={selectedThaiDate}
+                        onChange={handleThaiDateChange}
+                        dateFormat="dd/MM/yyyy"
+                        locale={th}
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <select
+                      onChange={handleSelectChange2}
+                      className="form-control"
+                    >
+                      <option value="">เลือกตัวเลือก</option>
+                      {options.map((option) => (
+                        <option key={option.id} value={option.name}>
+                           {option.id}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div class="col-md-2">
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={remainCode}
+                      onChange={handleRemainCodeChange}
+                      placeholder="รหัส"
+                    />
+                  </div>
+                  <div class="col-md-2">
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={remainName}
+                      onChange={handleRemainNameChange}
+                      placeholder="ชื่อ"
+                    />
+                  </div>
+                  <div class="col-md-2">
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={remainSalary}
+                      onChange={handleRemainSalaryChange}
+                      placeholder="บาท"
+                    />
+                  </div>
+                  <div class="col-md-2">
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={remainComment}
+                      onChange={handleRemainCommentChange}
+                      placeholder="หมายเหตุ"
+                    />
+                  </div>
+                
+                </div>
+                <br/>
+                <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2">
+                    <button
+                      type="button"
+                      onClick={handleAddData}
+                      class="btn b_save"
+                    >
+                      <i class="custom-icon-font"> + </i>เพิ่ม
+                    </button>
+                  </div>
+                </div>
+                <br />
+                <table border="1" style={tableStyle}>
+                  <thead>
+                    <tr>
+                      <th style={headerCellStyle}>No.</th>
+                      <th style={headerCellStyle}>วันที่</th>
+                      <th style={headerCellStyle}>รายการ</th>
+                      <th style={headerCellStyle}>รหัสเงินเพิ่มเงินหัก</th>
+                      <th style={headerCellStyle}>ชื่อ</th>
+                      <th style={headerCellStyle}>จำนวนเงิน</th>
+                      <th style={headerCellStyle}>หมายเหตุ</th>
+                      <th style={headerCellStyle}>ลบ</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {remainArray.map((data, index) => (
+                      <tr key={index}>
+                        <td style={cellStyle}>{index + 1}</td>
+                        <td style={cellStyle}>
+                          {data.thaiDate.toLocaleDateString("th-TH", {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                          })}
+                        </td>
+                        <td style={cellStyle}>{data.code}</td>
+                        <td style={cellStyle}>{data.name}</td>
+                        <td style={cellStyle}>{data.salary}</td>
+                        <td style={cellStyle}>{data.comment}</td>
+                        <td style={cellStyle}>
+                          <button
+                            class="btn btn-danger"
+                            style={{ width: "4rem" }}
+                            onClick={() => handleDeleteData(index)}
+                          >
+                            ลบ
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </section>
               <h2 class="title">สรุปเงินเดือน</h2>
               <section class="Frame">
                 {staffFullName ? (
@@ -2531,286 +2642,6 @@ function Salaryresult() {
                 {/* </Link > */}
               </div>
               {/* {JSON.stringify(employee.addSalary,null,2)} */}
-              <h2 class="title">สรุปวันลา</h2>
-              <section class="Frame">
-                <div class="row">
-                  <div class="col-md-8">
-                    <table border="1" style={tableStyle}>
-                      <thead>
-                        <tr>
-                          <th style={headerCellStyle}>สิทธิการลา</th>
-                          <th style={headerCellStyle}>จำนวนวัน</th>
-                          <th style={headerCellStyle}>ใช้สิทธิแล้ว</th>
-                          <th style={headerCellStyle}>สิทธิคงเหลือ</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {/* sumSpSalary */}
-                        {/* <tr> */}
-                        {/* <td style={cellStyle}>{employee.remainsickleave}</td>
-                          <td style={cellStyle}>{employee.remainbusinessleave}</td>
-                          <td style={cellStyle}>{employee.remainvacation}</td> */}
-                        {options.map((option) => (
-                          <tr key={option.id}>
-                            <td style={cellStyle}>{option.id}</td>
-                            <td style={cellStyle}>
-                              {empDataSelect &&
-                              empDataSelect[option.name] !== undefined
-                                ? empDataSelect[option.name]
-                                : "N/A"}
-                            </td>
-
-                            <td style={cellStyle}>
-                              {/* Render additional dynamic content based on option if needed */}
-                            </td>
-                            <td style={cellStyle}>
-                              {/* Render additional dynamic content based on option if needed */}
-                            </td>
-                          </tr>
-                        ))}
-
-                        {/* <tr>
-                          <td style={cellStyle}>
-                            {" "}
-                            <select
-                              onChange={handleSelectChange}
-                              className="form-control"
-                            >
-                              <option value="">เลือกตัวเลือก</option>
-                              {options.map((option) => (
-                                <option key={option.id} value={option.name}>
-                                  {option.id}                                 
-                                  </option>
-                              ))}
-                            </select>
-                          </td>
-                          <td style={cellStyle}>
-                            {" "}
-                            <input
-                              type="text"
-                              className="form-control mt-2"
-                              value={selectedName}
-                              placeholder=""
-                              readOnly
-                            />
-                          </td>
-                          <td style={cellStyle}>
-                          {" "}
-                            <input
-                              type="text"
-                              className="form-control mt-2"
-                              value={welfareUse}
-                              placeholder=""
-                              readOnly
-                            />
-                          </td>
-                        </tr> */}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <br />
-                <div class="row">
-                  <div class="col-md-2">
-                    <label role="agencyname">วันที่</label>
-                  </div>
-                  <div class="col-md-2">
-                    <label role="agencyname">ประเภทการลา</label>
-                  </div>
-                  <div class="col-md-2">
-                    <label role="">รหัสเงินเพิ่มเงินหัก</label>
-                  </div>
-                  <div class="col-md-2">
-                    <label role="">ชื่อ</label>
-                  </div>
-
-                  <div class="col-md-2">
-                    <label role="agencyname">จำนวนเงิน</label>
-                  </div>
-                  <div class="col-md-2">
-                    <label role="agencyname"></label>
-                  </div>
-                  <div class="col-md-2">
-                    <label role="agencyname">หมายเหตุ</label>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-2">
-                    <div
-                      style={{
-                        position: "relative",
-                        zIndex: 9999,
-                        marginLeft: "0rem",
-                      }}
-                    >
-                      {/* <DatePicker
-                        className="form-control"
-                        selected={selectedThaiDate}
-                        onChange={handleThaiDateChange}
-                        dateFormat="dd/MM/yyyy"
-                        locale={th}
-                      /> */}
-                       <div
-                        onClick={toggleDatePicker}
-                        style={{
-                          position: "relative",
-                          zIndex: 9999,
-                          marginLeft: "0rem",
-                        }}
-                      >
-                        <FaCalendarAlt size={20} />
-                        <span style={{ marginLeft: "8px" }}>
-                          {formattedDate321 ? formattedDate321 : "Select Date"}
-                        </span>
-                      </div>
-
-                      {showDatePicker && (
-                        <div style={{ position: "absolute", zIndex: 1000 }}>
-                          <ThaiDatePicker
-                            className="form-control"
-                            value={selectedDate}
-                            onChange={handleDatePickerChange}
-                          />
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <select
-                      onChange={handleSelectChange2}
-                      className="form-control"
-                    >
-                      <option value="">เลือกตัวเลือก</option>
-                      {options.map((option) => (
-                        <option key={option.id} value={option.name}>
-                          {option.id}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div class="col-md-2">
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={remainCode}
-                      onChange={handleRemainCodeChange}
-                      placeholder="รหัส"
-                    />
-                  </div>
-                  <div class="col-md-2">
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={remainName}
-                      onChange={handleRemainNameChange}
-                      placeholder="ชื่อ"
-                    />
-                  </div>
-                  <div class="col-md-2">
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={remainSalary}
-                      onChange={handleRemainSalaryChange}
-                      placeholder="บาท"
-                    />
-                  </div>
-                  <div class="col-md-2">
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={remainComment}
-                      onChange={handleRemainCommentChange}
-                      placeholder="หมายเหตุ"
-                    />
-                  </div>
-                </div>
-                <br />
-                <div class="row">
-                  <div class="col-md-2"></div>
-                  <div class="col-md-2"></div>
-                  <div class="col-md-2"></div>
-                  <div class="col-md-2"></div>
-                  <div class="col-md-2"></div>
-                  <div class="col-md-2">
-                    <button
-                      type="button"
-                      onClick={handleAddData}
-                      class="btn b_save"
-                    >
-                      <i class="custom-icon-font"> + </i>เพิ่ม
-                    </button>
-                  </div>
-                </div>
-                <br />
-                <table border="1" style={tableStyle}>
-                  <thead>
-                    <tr>
-                      <th style={headerCellStyle}>No.</th>
-                      <th style={headerCellStyle}>วันที่</th>
-                      <th style={headerCellStyle}>รายการ</th>
-                      <th style={headerCellStyle}>รหัสเงินเพิ่มเงินหัก</th>
-                      <th style={headerCellStyle}>ชื่อ</th>
-                      <th style={headerCellStyle}>จำนวนเงิน</th>
-                      <th style={headerCellStyle}>หมายเหตุ</th>
-                      <th style={headerCellStyle}>ลบ</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {remainArray.map((data, index) => (
-                      <tr key={index}>
-                        <td style={cellStyle}>{index + 1}</td>
-                        <td style={cellStyle}>
-                          {/* {data.startDay.toLocaleDateString("th-TH", {
-                            day: "2-digit",
-                            month: "2-digit",
-                            year: "numeric",
-                          })} */}
-                          {new Date(data.startDay)
-                            .toLocaleDateString("th-TH", {
-                              day: "2-digit",
-                              month: "2-digit",
-                              year: "numeric",
-                            })
-                            .replace(
-                              /(\d{4})/,
-                              (match) => parseInt(match, 10)
-                            )}
-                        </td>
-                        <td style={cellStyle}>{data.welfareType}</td>
-
-                        <td style={cellStyle}>{data.id}</td>
-                        <td style={cellStyle}>{data.name}</td>
-                        <td style={cellStyle}>{data.SpSalary}</td>
-                        <td style={cellStyle}>{data.comment}</td>
-                        <td style={cellStyle}>
-                          <button
-                            class="btn btn-danger"
-                            style={{ width: "4rem" }}
-                            onClick={() => handleDeleteData(index)}
-                          >
-                            ลบ
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-                <br />
-                <div class="row">
-                  <div class="col-md-6"></div>
-                  <div class="col-md-6">
-                    <button
-                      type="button"
-                      class="btn b_save"
-                      style={{ width: "8rem" }}
-                      onClick={handleSaveWelfare}
-                    >
-                      บันทึกการลา
-                    </button>
-                  </div>
-                </div>
-              </section>
             </div>
           </section>
         </div>

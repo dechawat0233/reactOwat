@@ -415,14 +415,11 @@ function WorktimeSheetWorkplace({employeeList}) {
         .post(endpoint + "/accounting/calsalarylist", dataTest)
         .then((response) => {
           const responseData = response.data;
-          // const filteredData = searchWorkplaceId
-          //   ? responseData.filter(
-          //       (item) => item.workplace === searchWorkplaceId
-          //     )
-          //   : responseData;
-
-          const filteredData = responseData.filter((item) => item.workplace);
-
+          const filteredData = searchWorkplaceId
+            ? responseData.filter(
+                (item) => item.workplace === searchWorkplaceId
+              )
+            : responseData;
           const sortedData = filteredData.sort(
             (a, b) => a.employeeId - b.employeeId
           );
@@ -437,6 +434,8 @@ function WorktimeSheetWorkplace({employeeList}) {
     // Call fetchData when year or month changes
     fetchData();
   }, [year, month, searchWorkplaceId]);
+
+  //   console.log("responseDataAll", responseDataAll);
 
   async function handleSearch(event) {
     event.preventDefault();
@@ -2118,52 +2117,17 @@ filteredEmployees.forEach((employee) => {
     arrayWorkOTNormalDay.push(employeeResultArray3OT);
   });
 
-  // const filteredEntriesTest = conclude.filter(
-  //   (entry) =>
-  //     entry.year === desiredTimerecordId && entry.month === desiredMonth
-  // );
-  // employeeList
-  // Assuming `conclude`, `employeeList`, `searchWorkplaceId`, `desiredTimerecordId`, and `desiredMonth` are available
-
-const filteredEntriesTest = conclude
-// Filter by year and month
-.filter((entry) =>
-  entry.year === desiredTimerecordId && entry.month === desiredMonth
-)
-// Filter by employeeId that exists in employeeList
-.filter((entry) => {
-  const employeeInList = employeeList.find(
-    (emp) => emp.employeeId === entry.employeeId
-  );
-  return employeeInList !== undefined;
-})
-// Filter by searchWorkplaceId, either matching employeeList.workplace or concludeRecord.workplaceId
-.filter((entry) => {
-  const employeeInList = employeeList.find(
-    (emp) => emp.employeeId === entry.employeeId
+  const filteredEntriesTest = conclude.filter(
+    (entry) =>
+      entry.year === desiredTimerecordId && entry.month === desiredMonth
   );
 
-  // Check if the employee's workplace matches searchWorkplaceId
-  if (employeeInList && employeeInList.workplace === searchWorkplaceId) {
-    return true;
-  }
-
-  // Check if any of the concludeRecord's workplaceId matches searchWorkplaceId
-  const workplaceMatch = entry.concludeRecord.some(
-    (record) => record.workplaceId === searchWorkplaceId
-  );
-
-  return workplaceMatch;
-});
-
-  
   filteredEntriesTest.sort((a, b) => {
     // Assuming employeeId is a string, convert it to a number for numerical comparison
     return Number(a.employeeId) - Number(b.employeeId);
   });
 
-    console.log("filteredEntriesTest", filteredEntriesTest);
-    console.log("responseDataAll", responseDataAll);
+  //   console.log("filteredEntriesTest", filteredEntriesTest);
 
   // const responseDataAll123 = [
   //   {_id: '66ac5eca3aac559797a814e9', year: '2024', month: '06', employeeId: '670427', createDate: '02/08/2024, 04:21'},
@@ -2889,10 +2853,10 @@ const filteredEntriesTest = conclude
   const finalUpdatedDayWorksWorkNight =
     changeNumbersToOne2(updatedDaysWorkNight);
 
-    console.log(
-      "finalUpdatedDayWorksWorkMorningAndSS",
-      finalUpdatedDayWorksWorkMorningAndSS
-    );
+  //   console.log(
+  //     "finalUpdatedDayWorksWorkMorningAndSS",
+  //     finalUpdatedDayWorksWorkMorningAndSS
+  //   );
   //   console.log(
   //     "finalUpdatedDayWorksWorkAfternoon",
   //     finalUpdatedDayWorksWorkAfternoon
@@ -3175,12 +3139,6 @@ const filteredEntriesTest = conclude
       ? parseFloat(accountingRecord.amountThree).toFixed(2)
       : "0.00";
   });
-
-  const saveCash = responseDataAll.map((item) => 
-    item.workplace.startsWith("3") ? "สแปร์เงินสด" : ""
-  );
-
-  console.log('saveCash',saveCash);
 
   const sumArrayHoli = countSpecialDays.map(
     (countSpecialDay, index) => countSpecialDay - specialDayListWorks[index]
@@ -8383,7 +8341,7 @@ const filteredEntriesTest = conclude
           }
 
           // Check if rotation is needed (if the text is longer than 5 characters)
-          const rotate = cellData.length > 3;
+          const rotate = cellData.length > 5;
 
           // Draw the text on top of the colored rectangle
           drawCell(x, y, cellWidth, rowHeight, cellData, rotate);
@@ -8812,11 +8770,6 @@ const filteredEntriesTest = conclude
           cellHeight * daysInMonth + 59 + cellWidthSpSalary,
           currentY + cellHeight / 2 + 1,
           sumArrayHoli[i].toString()
-        );
-        drawCellRight(
-          cellHeight * daysInMonth + 59 + cellWidthSpSalary*12,
-          currentY + cellHeight / 2 + 1,
-          saveCash[i].toString()
         );
         drawSalaryRow(emptyArraytest, currentY, morningRowHeight);
         // drawCellRight(

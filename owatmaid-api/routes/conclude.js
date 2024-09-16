@@ -182,7 +182,7 @@ if(parseFloat(salary ) >= 1660) {
       console.log('wGroup keys length:', keys.length); // Log the length of the keys
 
 //check working multi workplace and not 399-105
-      if (keys.length > 1 && dataEmp.employees[0].workplace  !== '399-105') {
+      if (keys.length > 1 && dataEmp.employees[0].workplace  !== '10105') {
         console.log('process : 21 - '+ lastday);
 
         for (const workplaceId of Object.keys(wGroup1)) {
@@ -424,7 +424,7 @@ if(parseFloat(salary ) >= 1660) {
       } else {
 console.log('2x');
 
-if(wpId1 !== '399-105'){
+if(wpId1 !== '10105'){
   wpId1 = keys[0]
 }
 
@@ -626,7 +626,7 @@ const         wpDataCalculator1 = await {
                 }
 
                 let [hoursTmp, minutesTmp] = otTime.toString().split('.').map(Number);
-                let decimalFraction = minutesTmp.toFixed(2) / 60;
+                let decimalFraction = (minutesTmp || 0 ).toFixed(2) / 60;
                 // let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction))).toFixed(2);
 
                 let workRateOT = (((salary / 8) * parseFloat(wpResponse1.data.workRateOT ?? 0)) * (parseFloat(hoursTmp + decimalFraction)) ).toFixed(2);
@@ -728,7 +728,7 @@ const         wpDataCalculator1 = await {
       // console.log('wGroup keys:', keys); // Log the keys of wGroup
       // console.log('wGroup keys length:', keys.length); // Log the length of the keys
 
-      if (keys.length > 1 && dataEmp.employees[0].workplace  !== '399-105') {
+      if (keys.length > 1 && dataEmp.employees[0].workplace  !== '10105') {
         console.log('process 2');
 
         for (const workplaceId of Object.keys(wGroup)) {
@@ -977,7 +977,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
         // }
       } else {
 
-        if(wpId !== '399-105'){
+        if(wpId !== '10105'){
           wpId = keys[0]
         }
       
@@ -1250,7 +1250,8 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
       // console.log('concludeRecord ' + concludeRecord [c].workplaceId);
 
       if(parseFloat(concludeRecord [c].workRateMultiply || 0) <= 1) {
-      if(responseWpList .data.ans && concludeRecord [c].workplaceId !== '399-105') {
+      if(responseWpList .data.ans && concludeRecord [c].workplaceId !== '10105' && dataEmp.employees[0].workplace  !== '30001') {
+        console.log('*wid : ' + concludeRecord [c].workplaceId  + 'workplace: ' + dataEmp.employees[0].workplace  )
       const testx = responseWpList .data.ans.find(item  => item.workplaceId == concludeRecord [c].workplaceId)
 if(testx ) {
   // console.log('testx ' + JSON.stringify(testx.addSalary,null,2) )
