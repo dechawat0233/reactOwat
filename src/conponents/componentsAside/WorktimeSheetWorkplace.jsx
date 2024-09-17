@@ -7375,11 +7375,11 @@ function WorktimeSheetWorkplace({ employeeList }) {
         // 267
         cellWidthTopHead = 257;
       } else if (daysInMonth === 29) {
-        cellWidthTopHead = 261;
+        cellWidthTopHead = 263.5;
       } else if (daysInMonth === 30) {
-        cellWidthTopHead = 265;
+        cellWidthTopHead = 267.5;
       } else if (daysInMonth === 31) {
-        cellWidthTopHead = 269;
+        cellWidthTopHead = 271.5;
       }
 
       const startXNumHead = 5; // Adjust the starting X-coordinate as needed
