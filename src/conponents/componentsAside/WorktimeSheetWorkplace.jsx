@@ -7616,7 +7616,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
           }
 
           // Check if rotation is needed (if the text is longer than 5 characters)
-          const rotate = cellData.length > 5;
+          const rotate = cellData.length > 3;
 
           // Draw the text on top of the colored rectangle
           drawCell(x, y, cellWidth, rowHeight, cellData, rotate);
