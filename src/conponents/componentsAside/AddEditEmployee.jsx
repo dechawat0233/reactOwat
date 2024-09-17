@@ -201,8 +201,8 @@ function AddEditEmployee() {
         (district) => district.province_id === parseInt(province)
       );
       setDistrictOptions(filteredDistricts);
-      setDistrict(""); // Reset district selection
-      setSubDistrict(""); // Reset sub-district selection
+      // setDistrict(""); // Reset district selection
+      // setSubDistrict(""); // Reset sub-district selection
       setSubDistrictOptions([]); // Clear sub-district options
     }
   }, [province]);
@@ -212,8 +212,8 @@ function AddEditEmployee() {
         (district) => district.province_id === parseInt(province2)
       );
       setDistrictOptions2(filteredDistricts);
-      setDistrict2(""); // Reset district selection
-      setSubDistrict2(""); // Reset sub-district selection
+      // setDistrict2(""); // Reset district selection
+      // setSubDistrict2(""); // Reset sub-district selection
       setSubDistrictOptions2([]); // Clear sub-district options
     }
   }, [province2]);
@@ -231,7 +231,7 @@ function AddEditEmployee() {
         (subDistrict) => subDistrict.amphure_id === parseInt(district)
       );
       setSubDistrictOptions(filteredSubDistricts);
-      setSubDistrict(""); // Reset sub-district selection
+      // setSubDistrict(""); // Reset sub-district selection
       console.log("filteredSubDistricts", filteredSubDistricts);
     }
   }, [district]);
@@ -241,10 +241,42 @@ function AddEditEmployee() {
         (subDistrict) => subDistrict.amphure_id === parseInt(district2)
       );
       setSubDistrictOptions2(filteredSubDistricts);
-      setSubDistrict2(""); // Reset sub-district selection
+      // setSubDistrict2(""); // Reset sub-district selection
       console.log("filteredSubDistricts", filteredSubDistricts);
     }
   }, [district2]);
+
+  useEffect(() => {
+    if (subDistrict) {
+      // Find the selected sub-district from the data
+      const selectedSubDistrict = subDistrictsData.find(
+        (subDist) => subDist.id === parseInt(subDistrict)
+      );
+  
+      if (selectedSubDistrict) {
+        // Set the postal code based on the sub-district's zip code
+        setPostalCode(selectedSubDistrict.zip_code);
+      } else {
+        setPostalCode(""); // Reset postal code if no match
+      }
+    }
+  }, [subDistrict, subDistrictsData]);
+
+  useEffect(() => {
+    if (subDistrict2) {
+      // Find the selected sub-district from the data
+      const selectedSubDistrict = subDistrictsData.find(
+        (subDist) => subDist.id === parseInt(subDistrict2)
+      );
+  
+      if (selectedSubDistrict) {
+        // Set the postal code based on the sub-district's zip code
+        setPostalCode2(selectedSubDistrict.zip_code);
+      } else {
+        setPostalCode2(""); // Reset postal code if no match
+      }
+    }
+  }, [subDistrict2, subDistrictsData]);
 
   // Handle checkbox toggle to copy values
   const handleCheckboxToggle = (event) => {

@@ -268,7 +268,7 @@ function Employee() {
         setPostalCode2(""); // Reset postal code if no match
       }
     }
-  }, [subDistrict, subDistrictsData]);
+  }, [subDistrict2, subDistrictsData]);
 
   // Handle checkbox toggle to copy values
   const handleCheckboxToggle = (event) => {
@@ -1669,7 +1669,7 @@ function Employee() {
                                 id="district"
                                 value={district}
                                 onChange={(e) => setDistrict(e.target.value)}
-                                // disabled={!province}
+                                disabled={!province}
                                 class="form-control"
                               >
                                 {/* <option value="">Select District</option>
@@ -1694,7 +1694,7 @@ function Employee() {
                                 id="subDistrict"
                                 value={subDistrict}
                                 onChange={(e) => setSubDistrict(e.target.value)}
-                                // disabled={!district}
+                                disabled={!district}
                                 class="form-control"
                               >
                                 {/* <option value="">Select Sub-District</option>
@@ -1857,7 +1857,7 @@ function Employee() {
                                 id="district2"
                                 value={district2}
                                 onChange={(e) => setDistrict2(e.target.value)}
-                                // disabled={!province2}
+                                disabled={!province2}
                                 class="form-control"
                               >
                                 <option value="">Select District</option>
@@ -1878,7 +1878,7 @@ function Employee() {
                                 onChange={(e) =>
                                   setSubDistrict2(e.target.value)
                                 }
-                                // disabled={!district2}
+                                disabled={!district2}
                                 class="form-control"
                               >
                                 <option value="">Select Sub-District</option>
