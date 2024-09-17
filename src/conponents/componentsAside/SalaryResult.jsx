@@ -305,36 +305,66 @@ function Salaryresult() {
           employeeId: staffId,
         };
 
-        try {
-          const result = await axios.post(
-            endpoint + "/leave/searchsummary",
-            welfareSearch
-          );
-          if (result && result.data.length > 0) {
-            // await alert(JSON.stringify(result .data[0].record));
-            setSumLeave(result.data[0].record);
-          }
-        } catch (e) {
-          // alert('get welfare error is' + e)
-        }
+        // try {
+        //   const result = await axios.post(
+        //     endpoint + "/leave/searchsummary",
+        //     welfareSearch
+        //   );
+        //   if (result && result.data.length > 0) {
+        //     // await alert(JSON.stringify(result .data[0].record));
+        //     setSumLeave(result.data[0].record);
+        //   }
+        // } catch (e) {
+        //   // alert('get welfare error is' + e)
+        // }
+
+        //     try {
+        //       const result = await axios.post(
+        //         endpoint + "/leave/search",
+        //         welfareSearch
+        //       );
+        //       console.log("testresult",result.data[0].record);
+        //       // setRemainArray([]);
+        //       if (result && result.data.length > 0) {
+        //         // await alert(JSON.stringify(result .data[0].record));
+        //         setRemainArray(result.data[0].record);
+        //       }else{
+        //         console.log("testresult2");
+
+        //       }
+        //     } catch (e) {
+        //       // alert('get welfare error is' + e)
+        //     }
+        //   }
+        // };
 
         try {
           const result = await axios.post(
             endpoint + "/leave/search",
             welfareSearch
           );
+
           if (result && result.data.length > 0) {
-            // await alert(JSON.stringify(result .data[0].record));
+            console.log("testresult", result.data[0].record);
             setRemainArray(result.data[0].record);
+          } else {
+            // If no records found, set remainArray to empty
+            console.log("No records found, setting remainArray to empty.");
+            setRemainArray([]);
           }
         } catch (e) {
-          // alert('get welfare error is' + e)
+          console.error("Error fetching welfare records:", e);
+          // Set remainArray to empty on error
+          setRemainArray([]);
         }
+      } else {
+        // If yearWelfare, monthWelfare, or staffId is empty, set remainArray to empty
+        setRemainArray([]);
       }
     };
 
     getWelfare();
-  }, [yearWelfare, monthWelfare]);
+  }, [yearWelfare, monthWelfare, staffId]);
 
   let test = sumLeave.filter((item) => item.welfareType == "ลาป่วย");
   //
@@ -1076,6 +1106,7 @@ function Salaryresult() {
   const thaiMonthLowerName = getThaiMonthName(parseInt(countdownMonth, 10));
 
   async function handleSearchAccounting() {
+    // setremainArray([]);
     let tmp = await staffId;
     await setStaffId("");
     setTimeout(async () => {
@@ -2616,8 +2647,6 @@ function Salaryresult() {
                             </tr>
                           );
                         })}
-
-                       
                       </tbody>
                     </table>
                   </div>
