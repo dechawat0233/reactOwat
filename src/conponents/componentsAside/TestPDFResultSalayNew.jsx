@@ -18,7 +18,43 @@ import en from "date-fns/locale/en-US";
 
 import { addYears } from "date-fns";
 
+import provincesData from "./LocationData/json/thai_provinces.json";
+import districtsData from "./LocationData/json/thai_amphures.json";
+import subDistrictsData from "./LocationData/json/thai_tambons.json";
+
 function TestPDFResultSalayNew({ employeeList }) {
+
+
+  const [province, setProvince] = useState(""); // Selected province
+  const [district, setDistrict] = useState(""); // Selected district
+  const [subDistrict, setSubDistrict] = useState(""); // Selected sub-district
+  const [districtOptions, setDistrictOptions] = useState([]); // District options
+  const [subDistrictOptions, setSubDistrictOptions] = useState([]); // Sub-district options
+
+  // When a province is selected, update district options
+  useEffect(() => {
+    if (province) {
+      const filteredDistricts = districtsData.filter(
+        (district) => district.province_id === parseInt(province)
+      );
+      setDistrictOptions(filteredDistricts);
+      setDistrict(""); // Reset district selection
+      setSubDistrict(""); // Reset sub-district selection
+      setSubDistrictOptions([]); // Clear sub-district options
+    }
+  }, [province]);
+
+  // When a district is selected, update sub-district options
+  useEffect(() => {
+    if (district) {
+      const filteredSubDistricts = subDistrictsData.filter(
+        (subDistrict) => subDistrict.amphure_id === parseInt(district)
+      );
+      setSubDistrictOptions(filteredSubDistricts);
+      setSubDistrict(""); // Reset sub-district selection
+    }
+  }, [district]);
+
   const [workplacrId, setWorkplacrId] = useState(""); //รหัสหน่วยงาน
   const [workplacrName, setWorkplacrName] = useState(""); //รหัสหน่วยงาน
 
@@ -3439,11 +3475,69 @@ function TestPDFResultSalayNew({ employeeList }) {
                                     dateFormat="dd/MM/yyyy"
                                     locale={en}
                                 /> */}
+                                 <div>
+      {/* Province Selection */}
+      <div className="form-group">
+        <label htmlFor="province">จังหวัด (Province)</label>
+        <select
+          id="province"
+          value={province}
+          onChange={(e) => setProvince(e.target.value)}
+          className="form-control"
+        >
+          <option value="">Select Province</option>
+          {provincesData.map((prov) => (
+            <option key={prov.id} value={prov.id}>
+              {prov.name_th}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* District Selection */}
+      <div className="form-group">
+        <label htmlFor="district">อำเภอ (District)</label>
+        <select
+          id="district"
+          value={district}
+          onChange={(e) => setDistrict(e.target.value)}
+          disabled={!province}
+          className="form-control"
+        >
+          <option value="">Select District</option>
+          {districtOptions.map((dist) => (
+            <option key={dist.id} value={dist.id}>
+              {dist.name_th}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Sub-District Selection */}
+      <div className="form-group">
+        <label htmlFor="subDistrict">ตำบล (Sub-District)</label>
+        <select
+          id="subDistrict"
+          value={subDistrict}
+          onChange={(e) => setSubDistrict(e.target.value)}
+          disabled={!district}
+          className="form-control"
+        >
+          <option value="">Select Sub-District</option>
+          {subDistrictOptions.map((subDist) => (
+            <option key={subDist.id} value={subDist.id}>
+              {subDist.name_th}
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
               </section>
             </div>
           </section>
         </div>
       </div>
+      
     </body>
     // </div>
   );

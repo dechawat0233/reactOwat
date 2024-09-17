@@ -13,45 +13,25 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "../editwindowcss.css";
 
 import locationData from "./LocationData/locationData";
-
-
+import provincesData from "./LocationData/json/thai_provinces.json";
+import districtsData from "./LocationData/json/thai_amphures.json";
+import subDistrictsData from "./LocationData/json/thai_tambons.json";
 
 function Employee() {
-
-// const locationData = {
-//   กรุงเทพ: {
-//     districts: {
-//       "District 1": ["SubDistrict 1-1", "SubDistrict 1-2"],
-//       "District 2": ["SubDistrict 2-1", "SubDistrict 2-2"],
-//     },
-//   },
-//   ChiangMai: {
-//     districts: {
-//       "District 3": ["SubDistrict 3-1", "SubDistrict 3-2"],
-//       "District 4": ["SubDistrict 4-1", "SubDistrict 4-2"],
-//     },
-//   },
-// };
-  const [provinces, setProvinces] = useState([]);
-const [loading, setLoading] = useState(true);
-
-// Fetch provinces data from the API
-useEffect(() => {
-  const fetchProvinces = async () => {
-    try {
-      const response = await axios.get("https://www.thaikub.com/apis/v1/thailand/provinces");
-      setProvinces(response.data.provinces); // Assuming the API returns data in this format
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching provinces data", error);
-      setLoading(false);
-    }
-  };
-
-  fetchProvinces();
-}, []);
-
-console.log('provinces',provinces);
+  // const locationData = {
+  //   กรุงเทพ: {
+  //     districts: {
+  //       "District 1": ["SubDistrict 1-1", "SubDistrict 1-2"],
+  //       "District 2": ["SubDistrict 2-1", "SubDistrict 2-2"],
+  //     },
+  //   },
+  //   ChiangMai: {
+  //     districts: {
+  //       "District 3": ["SubDistrict 3-1", "SubDistrict 3-2"],
+  //       "District 4": ["SubDistrict 4-1", "SubDistrict 4-2"],
+  //     },
+  //   },
+  // };
 
   useEffect(() => {
     document.title = "ข้อมูลพนักงาน";
@@ -173,37 +153,68 @@ console.log('provinces',provinces);
   const [subDistrictOptions, setSubDistrictOptions] = useState([]); // Options for sub-district
 
   const [tempDistrict, setTempDistrict] = useState(""); // Temporary district
-const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-district
+  const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-district
 
   const [isChecked, setIsChecked] = useState(false); // Checkbox state
 
   // When province changes, update district options and reset selections
+  // useEffect(() => {
+  //   if (province) {
+  //     const districts = locationData[province]?.districts || {};
+  //     setDistrictOptions(Object.keys(districts));
+  //     setDistrict(""); // Reset district when province changes
+  //     setSubDistrict(""); // Reset sub-district when province changes
+  //     setSubDistrictOptions([]); // Clear sub-district options
+  //     if (tempDistrict) {
+  //       setDistrict(tempDistrict);
+  //       setTempDistrict(""); // Clear tempDistrict
+  //     }
+  //   }
+  // }, [province]);
+
   useEffect(() => {
     if (province) {
-      const districts = locationData[province]?.districts || {};
-      setDistrictOptions(Object.keys(districts));
-      setDistrict(""); // Reset district when province changes
-      setSubDistrict(""); // Reset sub-district when province changes
-      setSubDistrictOptions([]); // Clear sub-district options
-      if (tempDistrict) {
-        setDistrict(tempDistrict);
-        setTempDistrict(""); // Clear tempDistrict
-      }
+      const filteredDistricts = districtsData.filter(
+        (district) => district.province_id === parseInt(province)
+      );
+      setDistrictOptions(filteredDistricts);
+      setDistrict(""); // Reset district selection
+      setSubDistrict(""); // Reset sub-district selection
+      setSubDistrictOptions([]); // Clear sub-district options 
+
     }
   }, [province]);
+  // console.log('province',province);
+  // console.log('districtOptions',districtOptions);
+  // console.log('district',district);
+  // console.log('subDistrict',subDistrict);
+  // console.log('subDistrictOptions',subDistrictOptions);
+
 
   // When district changes, update sub-district options
+  // useEffect(() => {
+  //   if (district && province) {
+  //     const subDistricts = locationData[province]?.districts[district] || [];
+  //     setSubDistrictOptions(subDistricts);
+  //     setSubDistrict(""); // Reset sub-district when district changes
+  //     if (tempSubDistrict) {
+  //       setSubDistrict(tempSubDistrict);
+  //       setTempSubDistrict(""); // Clear tempSubDistrict
+  //     }
+  //   }
+  // }, [district, province]);
+
   useEffect(() => {
-    if (district && province) {
-      const subDistricts = locationData[province]?.districts[district] || [];
-      setSubDistrictOptions(subDistricts);
-      setSubDistrict(""); // Reset sub-district when district changes
-      if (tempSubDistrict) {
-        setSubDistrict(tempSubDistrict);
-        setTempSubDistrict(""); // Clear tempSubDistrict
-      }
-    }
-  }, [district, province]);
+    if (district) {
+      const filteredSubDistricts = subDistrictsData.filter(
+        (subDistrict) => subDistrict.amphure_id === parseInt(district)
+      );
+      setSubDistrictOptions(filteredSubDistricts);
+      setSubDistrict(""); // Reset sub-district selection
+      console.log('filteredSubDistricts',filteredSubDistricts);
+    }    
+
+  }, [district]);
 
   // Handle checkbox toggle to copy values
   const handleCheckboxToggle = (event) => {
@@ -216,7 +227,6 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
       setPostalCode2(postalCode);
       setHouseNumber2(houseNumber);
       setCurrentAddress(address);
-
     } else {
       // Allow manual editing if unchecked
       setProvince2("");
@@ -225,7 +235,6 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
       setPostalCode2("");
       setHouseNumber2("");
       setCurrentAddress("");
-
     }
   };
 
@@ -433,7 +442,7 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
     setSubDistrict2(empSelect.subDistrict2);
     setPostalCode2(empSelect.postalCode2);
     setHouseNumber2(empSelect.houseNumber2);
-    
+
     setCurrentAddress(empSelect.currentAddress);
     setPhoneNumber(empSelect.phoneNumber);
     setEmergencyContactNumber(empSelect.emergencyContactNumber);
@@ -479,16 +488,16 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
       address: address,
 
       province: province,
-          district: district,
-          subDistrict: subDistrict,
-          postalCode: postalCode,
-          houseNumber: houseNumber,
+      district: district,
+      subDistrict: subDistrict,
+      postalCode: postalCode,
+      houseNumber: houseNumber,
 
-          province2: province2,
-          district2: district2,
-          subDistrict2: subDistrict2,
-          postalCode2: postalCode2,
-          houseNumber2: houseNumber2,
+      province2: province2,
+      district2: district2,
+      subDistrict2: subDistrict2,
+      postalCode2: postalCode2,
+      houseNumber2: houseNumber2,
 
       currentAddress: currentAddress,
       phoneNumber: phoneNumber,
@@ -743,7 +752,6 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
   console.log("province", province);
   console.log("district", district);
   console.log("subDistrict", subDistrict);
-
 
   return (
     <body class="hold-transition sidebar-mini" className="editlaout">
@@ -1516,7 +1524,7 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
                             </div>
                           </div>
                         </div>
-                         <div class="row">
+                        <div class="row">
                           <div class="col-md-12">
                             <div class="form-group">
                               <label role="address">
@@ -1533,7 +1541,7 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
                               ></textarea>
                             </div>
                           </div>
-                         {/* <div class="col-md-6">
+                          {/* <div class="col-md-6">
                             <div class="form-group">
                               <label role="currentAddress">
                                 ที่อยู่ปัจจุบัน
@@ -1560,7 +1568,7 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
                               ></textarea>
                             </div>
                           </div>*/}
-                        </div> 
+                        </div>
 
                         <div class="row">
                           <div class="col-md-3">
@@ -1585,10 +1593,16 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
                                 onChange={(e) => setProvince(e.target.value)}
                                 class="form-control"
                               >
-                                <option value="">Select Province</option>
+                                {/* <option value="">Select Province</option>
                                 {Object.keys(locationData).map((prov) => (
                                   <option key={prov} value={prov}>
                                     {prov}
+                                  </option>
+                                ))} */}
+                                <option value="">Select Province</option>
+                                {provincesData.map((prov) => (
+                                  <option key={prov.id} value={prov.id}>
+                                    {prov.name_th}
                                   </option>
                                 ))}
                               </select>
@@ -1604,10 +1618,16 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
                                 disabled={!province}
                                 class="form-control"
                               >
-                                <option value="">Select District</option>
+                                {/* <option value="">Select District</option>
                                 {districtOptions.map((dist) => (
                                   <option key={dist} value={dist}>
                                     {dist}
+                                  </option>
+                                ))} */}
+                                <option value="">Select District</option>
+                                {districtOptions.map((dist) => (
+                                  <option key={dist.id} value={dist.id}>
+                                    {dist.name_th}
                                   </option>
                                 ))}
                               </select>
@@ -1623,10 +1643,16 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
                                 disabled={!district}
                                 class="form-control"
                               >
-                                <option value="">Select Sub-District</option>
+                                {/* <option value="">Select Sub-District</option>
                                 {subDistrictOptions.map((subDist) => (
                                   <option key={subDist} value={subDist}>
                                     {subDist}
+                                  </option>
+                                ))} */}
+                                <option value="">Select Sub-District</option>
+                                {subDistrictOptions.map((subDist) => (
+                                  <option key={subDist.id} value={subDist.id}>
+                                    {subDist.name_th}
                                   </option>
                                 ))}
                               </select>
@@ -1737,7 +1763,7 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
                               ></textarea>
                             </div>
                           </div>
-                          </div>
+                        </div>
                         <div class="row">
                           <div class="col-md-3">
                             {/* <div class="form-group">
@@ -1762,11 +1788,11 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
                                 class="form-control"
                               >
                                 <option value="">Select Province</option>
-                                {Object.keys(locationData).map((prov) => (
-                                  <option key={prov} value={prov}>
-                                    {prov}
-                                  </option>
-                                ))}
+          {provincesData.map((prov) => (
+            <option key={prov.id} value={prov.id}>
+              {prov.name_th}
+            </option>
+          ))}
                               </select>
                             </div>
                           </div>
@@ -1780,12 +1806,12 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
                                 disabled={!province}
                                 class="form-control"
                               >
-                                <option value="">Select District</option>
-                                {districtOptions.map((dist) => (
-                                  <option key={dist} value={dist}>
-                                    {dist}
-                                  </option>
-                                ))}
+                                 <option value="">Select District</option>
+          {districtOptions.map((dist) => (
+            <option key={dist.id} value={dist.id}>
+              {dist.name_th}
+            </option>
+          ))}
                               </select>
                             </div>
                           </div>
@@ -1802,11 +1828,11 @@ const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-dis
                                 class="form-control"
                               >
                                 <option value="">Select Sub-District</option>
-                                {subDistrictOptions.map((subDist) => (
-                                  <option key={subDist} value={subDist}>
-                                    {subDist}
-                                  </option>
-                                ))}
+          {subDistrictOptions.map((subDist) => (
+            <option key={subDist.id} value={subDist.id}>
+              {subDist.name_th}
+            </option>
+          ))}
                               </select>
                             </div>
                           </div>
