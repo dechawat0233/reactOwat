@@ -181,9 +181,9 @@ function Employee() {
         (district) => district.province_id === parseInt(province)
       );
       setDistrictOptions(filteredDistricts);
-      setDistrict(""); // Reset district selection
-      setSubDistrict(""); // Reset sub-district selection
-      setSubDistrictOptions([]); // Clear sub-district options
+      // setDistrict(""); // Reset district selection
+      // setSubDistrict(""); // Reset sub-district selection
+      // setSubDistrictOptions([]); // Clear sub-district options
     }
   }, [province]);
   useEffect(() => {
@@ -192,9 +192,9 @@ function Employee() {
         (district) => district.province_id === parseInt(province2)
       );
       setDistrictOptions2(filteredDistricts);
-      setDistrict2(""); // Reset district selection
-      setSubDistrict2(""); // Reset sub-district selection
-      setSubDistrictOptions2([]); // Clear sub-district options
+      // setDistrict2(""); // Reset district selection
+      // setSubDistrict2(""); // Reset sub-district selection
+      // setSubDistrictOptions2([]); // Clear sub-district options
     }
   }, [province2]);
   // console.log('province',province);
@@ -222,7 +222,7 @@ function Employee() {
         (subDistrict) => subDistrict.amphure_id === parseInt(district)
       );
       setSubDistrictOptions(filteredSubDistricts);
-      setSubDistrict(""); // Reset sub-district selection
+      // setSubDistrict(""); // Reset sub-district selection
       console.log("filteredSubDistricts", filteredSubDistricts);
     }
   }, [district]);
@@ -232,10 +232,43 @@ function Employee() {
         (subDistrict) => subDistrict.amphure_id === parseInt(district2)
       );
       setSubDistrictOptions2(filteredSubDistricts);
-      setSubDistrict2(""); // Reset sub-district selection
+      // setSubDistrict2(""); // Reset sub-district selection
       console.log("filteredSubDistricts", filteredSubDistricts);
     }
   }, [district2]);
+
+
+  useEffect(() => {
+    if (subDistrict) {
+      // Find the selected sub-district from the data
+      const selectedSubDistrict = subDistrictsData.find(
+        (subDist) => subDist.id === parseInt(subDistrict)
+      );
+  
+      if (selectedSubDistrict) {
+        // Set the postal code based on the sub-district's zip code
+        setPostalCode(selectedSubDistrict.zip_code);
+      } else {
+        setPostalCode(""); // Reset postal code if no match
+      }
+    }
+  }, [subDistrict, subDistrictsData]);
+
+  useEffect(() => {
+    if (subDistrict2) {
+      // Find the selected sub-district from the data
+      const selectedSubDistrict = subDistrictsData.find(
+        (subDist) => subDist.id === parseInt(subDistrict2)
+      );
+  
+      if (selectedSubDistrict) {
+        // Set the postal code based on the sub-district's zip code
+        setPostalCode2(selectedSubDistrict.zip_code);
+      } else {
+        setPostalCode2(""); // Reset postal code if no match
+      }
+    }
+  }, [subDistrict, subDistrictsData]);
 
   // Handle checkbox toggle to copy values
   const handleCheckboxToggle = (event) => {
@@ -1636,7 +1669,7 @@ function Employee() {
                                 id="district"
                                 value={district}
                                 onChange={(e) => setDistrict(e.target.value)}
-                                disabled={!province}
+                                // disabled={!province}
                                 class="form-control"
                               >
                                 {/* <option value="">Select District</option>
@@ -1661,7 +1694,7 @@ function Employee() {
                                 id="subDistrict"
                                 value={subDistrict}
                                 onChange={(e) => setSubDistrict(e.target.value)}
-                                disabled={!district}
+                                // disabled={!district}
                                 class="form-control"
                               >
                                 {/* <option value="">Select Sub-District</option>
@@ -1824,7 +1857,7 @@ function Employee() {
                                 id="district2"
                                 value={district2}
                                 onChange={(e) => setDistrict2(e.target.value)}
-                                disabled={!province2}
+                                // disabled={!province2}
                                 class="form-control"
                               >
                                 <option value="">Select District</option>
@@ -1845,7 +1878,7 @@ function Employee() {
                                 onChange={(e) =>
                                   setSubDistrict2(e.target.value)
                                 }
-                                disabled={!district2}
+                                // disabled={!district2}
                                 class="form-control"
                               >
                                 <option value="">Select Sub-District</option>

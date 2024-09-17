@@ -2577,6 +2577,12 @@ function Salaryresult() {
                         </tr>
                       </thead>
                       <tbody>
+                        {/* sumSpSalary */}
+                        {/* <tr> */}
+                        {/* <td style={cellStyle}>{employee.remainsickleave}</td>
+                          <td style={cellStyle}>{employee.remainbusinessleave}</td>
+                          <td style={cellStyle}>{employee.remainvacation}</td> */}
+
                         {/* {options.map((option) => (
                           
                           <tr key={option.id}>
@@ -2617,7 +2623,42 @@ function Salaryresult() {
                           );
                         })}
 
-                       
+                        {/* <tr>
+                          <td style={cellStyle}>
+                            {" "}
+                            <select
+                              onChange={handleSelectChange}
+                              className="form-control"
+                            >
+                              <option value="">เลือกตัวเลือก</option>
+                              {options.map((option) => (
+                                <option key={option.id} value={option.name}>
+                                  {option.id}                                 
+                                  </option>
+                              ))}
+                            </select>
+                          </td>
+                          <td style={cellStyle}>
+                            {" "}
+                            <input
+                              type="text"
+                              className="form-control mt-2"
+                              value={selectedName}
+                              placeholder=""
+                              readOnly
+                            />
+                          </td>
+                          <td style={cellStyle}>
+                          {" "}
+                            <input
+                              type="text"
+                              className="form-control mt-2"
+                              value={welfareUse}
+                              placeholder=""
+                              readOnly
+                            />
+                          </td>
+                        </tr> */}
                       </tbody>
                     </table>
                   </div>
