@@ -298,10 +298,12 @@ function Salaryresult() {
   useEffect(() => {
     // get welfare record with year and month
     const getWelfare = async () => {
-      if (yearWelfare !== "" && monthWelfare !== "" && staffId !== "") {
+      // if (yearWelfare !== "" && monthWelfare !== "" && staffId !== "") {
+        if (staffId !== "") {
+
         const welfareSearch = await {
-          year: yearWelfare,
-          month: monthWelfare,
+          // year: yearWelfare,
+          // month: monthWelfare,
           employeeId: staffId,
         };
 
@@ -340,7 +342,7 @@ function Salaryresult() {
 
         try {
           const result = await axios.post(
-            endpoint + "/leave/search",
+            endpoint + "/leave/searchsummary",
             welfareSearch
           );
 
@@ -359,7 +361,7 @@ function Salaryresult() {
         }
       } else {
         // If yearWelfare, monthWelfare, or staffId is empty, set remainArray to empty
-        setRemainArray([]);
+        // setRemainArray([]);
       }
     };
 
@@ -1106,7 +1108,6 @@ function Salaryresult() {
   const thaiMonthLowerName = getThaiMonthName(parseInt(countdownMonth, 10));
 
   async function handleSearchAccounting() {
-    // setremainArray([]);
     let tmp = await staffId;
     await setStaffId("");
     setTimeout(async () => {
