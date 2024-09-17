@@ -45,6 +45,10 @@ import locationData from "./LocationData/locationData";
 //   },
 // };
 
+import provincesData from "./LocationData/json/thai_provinces.json";
+import districtsData from "./LocationData/json/thai_amphures.json";
+import subDistrictsData from "./LocationData/json/thai_tambons.json";
+
 function AddEditEmployee() {
   const [showPopup, setShowPopup] = useState(false);
   const [formattedDate, setFormattedDate] = useState("");
@@ -174,29 +178,73 @@ function AddEditEmployee() {
   const [houseNumber2, setHouseNumber2] = useState(""); //ตำบล
 
   const [districtOptions, setDistrictOptions] = useState([]); // Options for district
+  const [districtOptions2, setDistrictOptions2] = useState([]); // Options for district
+
   const [subDistrictOptions, setSubDistrictOptions] = useState([]); // Options for sub-district
+  const [subDistrictOptions2, setSubDistrictOptions2] = useState([]); // Options for sub-district
 
   const [isChecked, setIsChecked] = useState(false); // Checkbox state
 
   // When province changes, update district options and reset selections
+  // useEffect(() => {
+  //   if (province) {
+  //     const districts = locationData[province]?.districts || {};
+  //     setDistrictOptions(Object.keys(districts));
+  //     setDistrict(""); // Reset district when province changes
+  //     setSubDistrict(""); // Reset sub-district when province changes
+  //     setSubDistrictOptions([]); // Clear sub-district options
+  //   }
+  // }, [province]);
   useEffect(() => {
     if (province) {
-      const districts = locationData[province]?.districts || {};
-      setDistrictOptions(Object.keys(districts));
-      setDistrict(""); // Reset district when province changes
-      setSubDistrict(""); // Reset sub-district when province changes
+      const filteredDistricts = districtsData.filter(
+        (district) => district.province_id === parseInt(province)
+      );
+      setDistrictOptions(filteredDistricts);
+      setDistrict(""); // Reset district selection
+      setSubDistrict(""); // Reset sub-district selection
       setSubDistrictOptions([]); // Clear sub-district options
     }
   }, [province]);
-
-  // When district changes, update sub-district options
   useEffect(() => {
-    if (district && province) {
-      const subDistricts = locationData[province]?.districts[district] || [];
-      setSubDistrictOptions(subDistricts);
-      setSubDistrict(""); // Reset sub-district when district changes
+    if (province2) {
+      const filteredDistricts = districtsData.filter(
+        (district) => district.province_id === parseInt(province2)
+      );
+      setDistrictOptions2(filteredDistricts);
+      setDistrict2(""); // Reset district selection
+      setSubDistrict2(""); // Reset sub-district selection
+      setSubDistrictOptions2([]); // Clear sub-district options
     }
-  }, [district, province]);
+  }, [province2]);
+  // When district changes, update sub-district options
+  // useEffect(() => {
+  //   if (district && province) {
+  //     const subDistricts = locationData[province]?.districts[district] || [];
+  //     setSubDistrictOptions(subDistricts);
+  //     setSubDistrict(""); // Reset sub-district when district changes
+  //   }
+  // }, [district, province]);
+  useEffect(() => {
+    if (district) {
+      const filteredSubDistricts = subDistrictsData.filter(
+        (subDistrict) => subDistrict.amphure_id === parseInt(district)
+      );
+      setSubDistrictOptions(filteredSubDistricts);
+      setSubDistrict(""); // Reset sub-district selection
+      console.log("filteredSubDistricts", filteredSubDistricts);
+    }
+  }, [district]);
+  useEffect(() => {
+    if (district2) {
+      const filteredSubDistricts = subDistrictsData.filter(
+        (subDistrict) => subDistrict.amphure_id === parseInt(district2)
+      );
+      setSubDistrictOptions2(filteredSubDistricts);
+      setSubDistrict2(""); // Reset sub-district selection
+      console.log("filteredSubDistricts", filteredSubDistricts);
+    }
+  }, [district2]);
 
   // Handle checkbox toggle to copy values
   const handleCheckboxToggle = (event) => {
@@ -1398,10 +1446,16 @@ function AddEditEmployee() {
                                     }
                                     class="form-control"
                                   >
-                                    <option value="">Select Province</option>
+                                    {/* <option value="">Select Province</option>
                                     {Object.keys(locationData).map((prov) => (
                                       <option key={prov} value={prov}>
                                         {prov}
+                                      </option>
+                                    ))} */}
+                                    <option value="">Select Province</option>
+                                    {provincesData.map((prov) => (
+                                      <option key={prov.id} value={prov.id}>
+                                        {prov.name_th}
                                       </option>
                                     ))}
                                   </select>
@@ -1419,10 +1473,16 @@ function AddEditEmployee() {
                                     disabled={!province}
                                     class="form-control"
                                   >
-                                    <option value="">Select District</option>
+                                    {/* <option value="">Select District</option>
                                     {districtOptions.map((dist) => (
                                       <option key={dist} value={dist}>
                                         {dist}
+                                      </option>
+                                    ))} */}
+                                    <option value="">Select District</option>
+                                    {districtOptions.map((dist) => (
+                                      <option key={dist.id} value={dist.id}>
+                                        {dist.name_th}
                                       </option>
                                     ))}
                                   </select>
@@ -1440,12 +1500,23 @@ function AddEditEmployee() {
                                     disabled={!district}
                                     class="form-control"
                                   >
-                                    <option value="">
+                                    {/* <option value="">
                                       Select Sub-District
                                     </option>
                                     {subDistrictOptions.map((subDist) => (
                                       <option key={subDist} value={subDist}>
                                         {subDist}
+                                      </option>
+                                    ))} */}
+                                    <option value="">
+                                      Select Sub-District
+                                    </option>
+                                    {subDistrictOptions.map((subDist) => (
+                                      <option
+                                        key={subDist.id}
+                                        value={subDist.id}
+                                      >
+                                        {subDist.name_th}
                                       </option>
                                     ))}
                                   </select>
@@ -1537,26 +1608,26 @@ function AddEditEmployee() {
                               </label>
                             </div>
                             <div class="row">
-                          <div class="col-md-12">
-                            <div class="form-group">
-                              <label role="address">
-                                ที่อยู่ตามบัตรประชาชน
-                              </label>
-                              <textarea
-                                required
-                                name="address"
-                                id="address"
-                                class="form-control"
-                                rows="3"
-                                value={currentAddress}
-                                // onChange={(e) => setAddress(e.target.value)}
-                                onChange={(e) =>
-                                  setCurrentAddress(e.target.value)
-                                }
-                              ></textarea>
+                              <div class="col-md-12">
+                                <div class="form-group">
+                                  <label role="address">
+                                    ที่อยู่ตามบัตรประชาชน
+                                  </label>
+                                  <textarea
+                                    required
+                                    name="address"
+                                    id="address"
+                                    class="form-control"
+                                    rows="3"
+                                    value={currentAddress}
+                                    // onChange={(e) => setAddress(e.target.value)}
+                                    onChange={(e) =>
+                                      setCurrentAddress(e.target.value)
+                                    }
+                                  ></textarea>
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                          </div>
                             <div class="row">
                               <div class="col-md-3">
                                 {/* <div class="form-group">
@@ -1582,10 +1653,15 @@ function AddEditEmployee() {
                                     }
                                     class="form-control"
                                   >
-                                    <option value="">Select Province</option>
+                                    {/* <option value="">Select Province</option>
                                     {Object.keys(locationData).map((prov) => (
                                       <option key={prov} value={prov}>
                                         {prov}
+                                      </option> */}
+                                    <option value="">Select Province</option>
+                                    {provincesData.map((prov) => (
+                                      <option key={prov.id} value={prov.id}>
+                                        {prov.name_th}
                                       </option>
                                     ))}
                                   </select>
@@ -1600,13 +1676,19 @@ function AddEditEmployee() {
                                     onChange={(e) =>
                                       setDistrict2(e.target.value)
                                     }
-                                    disabled={!province}
+                                    disabled={!province2}
                                     class="form-control"
                                   >
-                                    <option value="">Select District</option>
+                                    {/* <option value="">Select District</option>
                                     {districtOptions.map((dist) => (
                                       <option key={dist} value={dist}>
                                         {dist}
+                                      </option>
+                                    ))} */}
+                                    <option value="">Select District</option>
+                                    {districtOptions2.map((dist) => (
+                                      <option key={dist.id} value={dist.id}>
+                                        {dist.name_th}
                                       </option>
                                     ))}
                                   </select>
@@ -1624,12 +1706,23 @@ function AddEditEmployee() {
                                     disabled={!district2}
                                     class="form-control"
                                   >
-                                    <option value="">
+                                    {/* <option value="">
                                       Select Sub-District
                                     </option>
                                     {subDistrictOptions.map((subDist) => (
                                       <option key={subDist} value={subDist}>
                                         {subDist}
+                                      </option>
+                                    ))} */}
+                                    <option value="">
+                                      Select Sub-District
+                                    </option>
+                                    {subDistrictOptions2.map((subDist) => (
+                                      <option
+                                        key={subDist.id}
+                                        value={subDist.id}
+                                      >
+                                        {subDist.name_th}
                                       </option>
                                     ))}
                                   </select>

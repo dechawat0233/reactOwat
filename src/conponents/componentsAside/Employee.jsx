@@ -150,7 +150,10 @@ function Employee() {
   const [houseNumber2, setHouseNumber2] = useState(""); //บ้านเลขที่
 
   const [districtOptions, setDistrictOptions] = useState([]); // Options for district
+  const [districtOptions2, setDistrictOptions2] = useState([]); // Options for district
+
   const [subDistrictOptions, setSubDistrictOptions] = useState([]); // Options for sub-district
+  const [subDistrictOptions2, setSubDistrictOptions2] = useState([]); // Options for sub-district
 
   const [tempDistrict, setTempDistrict] = useState(""); // Temporary district
   const [tempSubDistrict, setTempSubDistrict] = useState(""); // Temporary sub-district
@@ -180,16 +183,25 @@ function Employee() {
       setDistrictOptions(filteredDistricts);
       setDistrict(""); // Reset district selection
       setSubDistrict(""); // Reset sub-district selection
-      setSubDistrictOptions([]); // Clear sub-district options 
-
+      setSubDistrictOptions([]); // Clear sub-district options
     }
   }, [province]);
+  useEffect(() => {
+    if (province2) {
+      const filteredDistricts = districtsData.filter(
+        (district) => district.province_id === parseInt(province2)
+      );
+      setDistrictOptions2(filteredDistricts);
+      setDistrict2(""); // Reset district selection
+      setSubDistrict2(""); // Reset sub-district selection
+      setSubDistrictOptions2([]); // Clear sub-district options
+    }
+  }, [province2]);
   // console.log('province',province);
   // console.log('districtOptions',districtOptions);
   // console.log('district',district);
   // console.log('subDistrict',subDistrict);
   // console.log('subDistrictOptions',subDistrictOptions);
-
 
   // When district changes, update sub-district options
   // useEffect(() => {
@@ -211,10 +223,19 @@ function Employee() {
       );
       setSubDistrictOptions(filteredSubDistricts);
       setSubDistrict(""); // Reset sub-district selection
-      console.log('filteredSubDistricts',filteredSubDistricts);
-    }    
-
+      console.log("filteredSubDistricts", filteredSubDistricts);
+    }
   }, [district]);
+  useEffect(() => {
+    if (district2) {
+      const filteredSubDistricts = subDistrictsData.filter(
+        (subDistrict) => subDistrict.amphure_id === parseInt(district2)
+      );
+      setSubDistrictOptions2(filteredSubDistricts);
+      setSubDistrict2(""); // Reset sub-district selection
+      console.log("filteredSubDistricts", filteredSubDistricts);
+    }
+  }, [district2]);
 
   // Handle checkbox toggle to copy values
   const handleCheckboxToggle = (event) => {
@@ -1788,11 +1809,11 @@ function Employee() {
                                 class="form-control"
                               >
                                 <option value="">Select Province</option>
-          {provincesData.map((prov) => (
-            <option key={prov.id} value={prov.id}>
-              {prov.name_th}
-            </option>
-          ))}
+                                {provincesData.map((prov) => (
+                                  <option key={prov.id} value={prov.id}>
+                                    {prov.name_th}
+                                  </option>
+                                ))}
                               </select>
                             </div>
                           </div>
@@ -1803,15 +1824,15 @@ function Employee() {
                                 id="district2"
                                 value={district2}
                                 onChange={(e) => setDistrict2(e.target.value)}
-                                disabled={!province}
+                                disabled={!province2}
                                 class="form-control"
                               >
-                                 <option value="">Select District</option>
-          {districtOptions.map((dist) => (
-            <option key={dist.id} value={dist.id}>
-              {dist.name_th}
-            </option>
-          ))}
+                                <option value="">Select District</option>
+                                {districtOptions2.map((dist) => (
+                                  <option key={dist.id} value={dist.id}>
+                                    {dist.name_th}
+                                  </option>
+                                ))}
                               </select>
                             </div>
                           </div>
@@ -1828,11 +1849,11 @@ function Employee() {
                                 class="form-control"
                               >
                                 <option value="">Select Sub-District</option>
-          {subDistrictOptions.map((subDist) => (
-            <option key={subDist.id} value={subDist.id}>
-              {subDist.name_th}
-            </option>
-          ))}
+                                {subDistrictOptions2.map((subDist) => (
+                                  <option key={subDist.id} value={subDist.id}>
+                                    {subDist.name_th}
+                                  </option>
+                                ))}
                               </select>
                             </div>
                           </div>
