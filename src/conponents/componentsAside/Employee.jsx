@@ -844,12 +844,13 @@ function Employee() {
                               <label role="employeeId">รหัสพนักงาน</label>
                               <input
                                 required
-                                type="text"
+                                type="number"
                                 class="form-control"
                                 id="employeeId"
                                 placeholder="รหัสพนักงาน"
                                 value={employeeId}
                                 onChange={(e) => setEmployeeId(e.target.value)}
+                                style={{ appearance: "textfield" }}
                               />
                             </div>
                           </div>
