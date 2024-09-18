@@ -289,25 +289,14 @@ router.get('/list', async (req, res) => {
   res.json(employees);
 });
 
-router.get('/deleteemployee:employeeId', async (req, res) => {
+router.get('/delete-all', async (req, res) => {
   try {
-    // const employeeIdToDelete = req.params._id; // Use _id instead of employeeId
-    const employeeIdToDelete = await Employee.findOne({ employeeId: req.params.employeeId });
-
-    // Find the employee by ID and delete it
-    const deletedEmployee = await Employee.findOneAndDelete({ _id: employeeIdToDelete });
-
-    if (deletedEmployee) {
-      res.json({ message: 'Employee deleted successfully', deletedEmployee });
-    } else {
-      res.status(404).json({ error: 'Employee not found' });
-    }
+    await Employee.deleteMany({});
+    res.json({ message: 'All employees have been deleted.' });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ message: 'Error deleting employees', error: error.message });
   }
 });
-
 
 // Get  employee by Id
 router.get('/:employeeId', async (req, res) => {
