@@ -71,6 +71,8 @@ const SendEmployeePDF2 = () => {
   const [signature, setSignature] = useState("นางสาวอสีดะห์ ยาบ");
   const [positionHead, setPositionHead] = useState("ผู้จัดการฝ่ายบุคคล");
 
+  const [codeClose, setCodeClose] = useState("FM-HR-024-03-01/07/63");
+
   const [input1, setInput1] = useState("");
   const [input2, setInput2] = useState("");
 
@@ -134,6 +136,10 @@ const SendEmployeePDF2 = () => {
   };
   const handlesignatureChange = (event) => {
     setSignature(event.target.value);
+  };
+
+  const handleCodeCloseChange = (event) => {
+    setCodeClose(event.target.value);
   };
   const handlepositionHeadChange = (event) => {
     setPositionHead(event.target.value);
@@ -264,9 +270,11 @@ const SendEmployeePDF2 = () => {
     doc.setFont("THSarabunNew-Bold");
     doc.setFontSize(14);
 
-    const OwatAddress = "/assets/images/OwatAddress.png"; // Replace with the path to your PNG file
-    const OwatIcon = "/assets/images/OwatIcon.png"; // Replace with the path to your PNG file
-    const OwatSupport = "/assets/images/OwatSupport.png"; // Replace with the path to your PNG file
+    const OwatAddress = "/assets/images/new/OwatAddress.png"; // Replace with the path to your PNG file
+    const OwatIcon = "/assets/images/new/OwatIcon.png"; // Replace with the path to your PNG file
+    // const OwatSupport = "/assets/images/OwatSupport.png"; // Replace with the path to your PNG file
+    const OwatSupport = "/assets/images/new/icon_under.png"; // Replace with the path to your PNG file
+
     const xx = 140; // X-coordinate
     const yy = 10; // Y-coordinate
 
@@ -277,7 +285,7 @@ const SendEmployeePDF2 = () => {
 
     doc.addImage(OwatAddress, "PNG", 140, 10, 61.5, 28.4);
     doc.addImage(OwatIcon, "PNG", 10, 10, 68, 30);
-    doc.addImage(OwatSupport, "PNG", 85, 275, 113.0, 16.4);
+    doc.addImage(OwatSupport, "PNG", 10, 270, 190, 16.4);
 
     // doc.setFont('THSarabunNew');
     const formatDateThai = (dateOfBirth) => {
@@ -357,8 +365,14 @@ const SendEmployeePDF2 = () => {
       x,
       y + inviteLines.length + titleLines.length
     ); // Adding 30 to the Y-coordinate
+    
 
     doc.text(`วันที่ : ${formatDateThaiFirst(workDate)}`, 130, 50); // Adding 30 to the Y-coordinate
+    doc.text(
+      codeClose ,
+      160,
+      290
+    );
 
     // doc.text(`เรีอง:      ${invite}`, 40, 50); // Adding 30 to the Y-coordinate
     // doc.text(`เรียน:      ${title}`, 40, 60); // Adding 30 to the Y-coordinate
@@ -376,7 +390,12 @@ const SendEmployeePDF2 = () => {
         doc.setFontSize(14);
         doc.text(`${index + 1}. ${value.Name}`, x, y);
         doc.text(`ตำแหน่ง: ${value.position}`, x + 60, y);
-
+        doc.text(
+          codeClose ,
+          160,
+          290
+        );
+        
         // doc.text(`ประวัติการศึกษา: ${value.educational}`, x, y2); // Adding 30 to the Y-coordinate
       }
     });
@@ -388,6 +407,7 @@ const SendEmployeePDF2 = () => {
 
     // if (inputValuesFirst.length === 1) {
     if (inputValuesFirst.length < 16) {
+      
       const lengthFirst = inputValuesFirst.length;
       x = 30;
       // autoText1.forEach((line, index) => {
@@ -420,7 +440,7 @@ const SendEmployeePDF2 = () => {
         doc.addPage(); // Add a new page for each set of inputs after the first
         doc.addImage(OwatAddress, "PNG", 140, 10, 61.5, 28.4);
         doc.addImage(OwatIcon, "PNG", 10, 10, 68, 30);
-        doc.addImage(OwatSupport, "PNG", 85, 275, 113.0, 16.4);
+        doc.addImage(OwatSupport, "PNG", 10, 270, 190, 16.4);
         y = 50;
         autoContent2.forEach((line, index) => {
           if (index > 0) {
@@ -443,6 +463,12 @@ const SendEmployeePDF2 = () => {
           35 + y + 10 * autoContent2.length
         );
         doc.text(positionHead, 100 + x, 40 + y + 10 * autoContent2.length);
+        doc.text(
+          codeClose ,
+          160,
+          290
+        );
+        doc.addImage(OwatSupport, "PNG", 10, 270, 190, 16.4);
       } else {
         autoContent2.forEach((line, index) => {
           if (index > 0) {
@@ -502,6 +528,12 @@ const SendEmployeePDF2 = () => {
                 autoContent2.length -
                 2)
         );
+        doc.text(
+          codeClose,
+          160,
+         290
+        );
+        doc.addImage(OwatSupport, "PNG", 10, 270, 190, 16.4);
       }
     } else {
       // doc.addPage(); // Add a new page for each set of inputs after the first
@@ -525,7 +557,7 @@ const SendEmployeePDF2 = () => {
       }
       doc.addImage(OwatAddress, "PNG", 140, 10, 61.5, 28.4);
       doc.addImage(OwatIcon, "PNG", 10, 10, 68, 30);
-      doc.addImage(OwatSupport, "PNG", 85, 275, 113.0, 16.4);
+      doc.addImage(OwatSupport, "PNG", 10, 270, 190, 16.4);
       chunk.forEach((value, index) => {
         x = 40; // X-coordinate for starting point
         const y = 50 + index * 10;
@@ -535,7 +567,11 @@ const SendEmployeePDF2 = () => {
         const currentIndex = index + initialIndex + pageIndex * chunkSize;
         doc.text(`${currentIndex + 1}. ${value.Name}`, x, y);
         doc.text(`ตำแหน่ง: ${value.position}`, x + 60, y);
-
+        doc.text(
+          codeClose ,
+          160,
+          290
+        );
         // doc.text(`ประวัติการศึกษา: ${value.educational}`, x, y2);
 
         // Check if it's the last page and the last element in the chunk
@@ -574,6 +610,12 @@ const SendEmployeePDF2 = () => {
               100 + x,
               30 + y + yMultiplier * autoContent2.length
             );
+            doc.text(
+              codeClose,
+              160,
+              290
+            );
+            doc.addImage(OwatSupport, "PNG", 10, 270, 190, 16.4);
           } else {
             const yMultiplier = 10; // Adjust this multiplier as needed
             let y = 50; // Initialize y as a variable
@@ -603,6 +645,12 @@ const SendEmployeePDF2 = () => {
               100 + x,
               30 + y + yMultiplier * chunk.length
             );
+            doc.text(
+              codeClose,
+              160,
+              290
+            );
+            doc.addImage(OwatSupport, "PNG", 10, 270, 190, 16.4);
           }
         }
       });
@@ -620,7 +668,7 @@ const SendEmployeePDF2 = () => {
       const y2 = 10;
       doc.addImage(OwatAddress, "PNG", 140, 10, 61.5, 28.4);
       doc.addImage(OwatIcon, "PNG", 10, 10, 68, 30);
-      doc.addImage(OwatSupport, "PNG", 85, 275, 113.0, 16.4);
+      doc.addImage(OwatSupport, "PNG", 10, 270, 190, 16.4);
 
       const maxWidth = 70; // Adjust the width as needed
       // const text = 'Some text that might be really long and is intended to exceed the maximum width, causing it to be split into multiple lines because it is too long to fit on a single line.';
@@ -650,6 +698,7 @@ const SendEmployeePDF2 = () => {
       doc.rect(45, 50, 130, 120 + y2 * (textLines.length + textLines2.length)); // (x, y, width, height)กรอบข้อความ
 
       doc.text(`ประวัติพนักงาน`, 95, y);
+      
       const textWidth =
         (doc.getStringUnitWidth("ประวัติพนักงาน") *
           doc.internal.getFontSize()) /
@@ -660,7 +709,11 @@ const SendEmployeePDF2 = () => {
 
       doc.setFontSize(14);
       // doc.text(textLines.length, x, y + 10);
-
+doc.text(
+        codeClose,
+        160,
+        290
+      );
       doc.text(`ไอดี: `, x, y + y2 * 2);
       doc.text(`ชื่อ/นามสกุล: `, x, y + y2 * 3);
       doc.text(`อายุ: `, x, y + y2 * 4);
@@ -889,6 +942,20 @@ const SendEmployeePDF2 = () => {
                         rows="4" // Set the number of visible rows (adjust as needed)
                         cols="50" // Set the number of visible columns (adjust as needed)
                       ></textarea>
+                    </div>
+                  </div>
+                  <br/>
+                  <div className="row">
+                    <div className="col-md-2">
+                      <label role="searchname">รหัสท้ายกระดาษ</label>
+                    </div>
+                    <div className="col-md-4">
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={codeClose}
+                        onChange={handleCodeCloseChange}
+                      />
                     </div>
                   </div>
                   <br />

@@ -76,6 +76,7 @@ const SendEmployeePDF3 = () => {
 
   const [signature, setSignature] = useState("นางสาวอสีดะห์ ยาบ");
   const [positionHead, setPositionHead] = useState("ผู้จัดการฝ่ายบุคคล");
+  const [codeClose, setCodeClose] = useState("FM-HR-024-03-01/07/63");
 
   const [input1, setInput1] = useState("");
   const [input2, setInput2] = useState("");
@@ -140,6 +141,9 @@ const SendEmployeePDF3 = () => {
   };
   const handlesignatureChange = (event) => {
     setSignature(event.target.value);
+  };
+  const handleCodeCloseChange = (event) => {
+    setCodeClose(event.target.value);
   };
   const handlepositionHeadChange = (event) => {
     setPositionHead(event.target.value);
@@ -270,9 +274,12 @@ const SendEmployeePDF3 = () => {
     doc.setFont("THSarabunNew-Bold");
     doc.setFontSize(14);
 
-    const OwatAddress = "/assets/images/OwatAddress.png"; // Replace with the path to your PNG file
-    const OwatIcon = "/assets/images/OwatIcon.png"; // Replace with the path to your PNG file
-    const OwatSupport = "/assets/images/OwatSupport.png"; // Replace with the path to your PNG file
+    // const OwatAddress = "/assets/images/OwatAddress.png"; // Replace with the path to your PNG file
+    // const OwatIcon = "/assets/images/OwatIcon.png"; // Replace with the path to your PNG file
+    // const OwatSupport = "/assets/images/OwatSupport.png"; // Replace with the path to your PNG file
+    const OwatAddress = "/assets/images/new/OwatAddress.png"; // Replace with the path to your PNG file
+    const OwatIcon = "/assets/images/new/OwatIcon.png"; // Replace with the path to your PNG file
+    const OwatSupport = "/assets/images/new/icon_under.png"; // Replace with the path to your PNG file
     const xx = 140; // X-coordinate
     const yy = 10; // Y-coordinate
 
@@ -283,8 +290,12 @@ const SendEmployeePDF3 = () => {
 
     doc.addImage(OwatAddress, "PNG", 140, 10, 61.5, 28.4);
     doc.addImage(OwatIcon, "PNG", 10, 10, 68, 30);
-    doc.addImage(OwatSupport, "PNG", 85, 275, 113.0, 16.4);
-
+    doc.addImage(OwatSupport, "PNG", 10, 270, 190, 16.4);
+    doc.text(
+      codeClose,
+      160,
+      290
+    );
     // doc.setFont('THSarabunNew');
     const formatDateThai = (dateOfBirth) => {
       if (!dateOfBirth) {
@@ -443,7 +454,12 @@ const SendEmployeePDF3 = () => {
         doc.addPage(); // Add a new page for each set of inputs after the first
         doc.addImage(OwatAddress, "PNG", 140, 10, 61.5, 28.4);
         doc.addImage(OwatIcon, "PNG", 10, 10, 68, 30);
-        doc.addImage(OwatSupport, "PNG", 85, 275, 113.0, 16.4);
+        doc.addImage(OwatSupport, "PNG", 10, 270, 190, 16.4);
+        doc.text(
+          codeClose,
+          160,
+          290
+        );
         y = 50;
         autoContent2.forEach((line, index) => {
           if (index > 0) {
@@ -634,7 +650,12 @@ const SendEmployeePDF3 = () => {
       }
       doc.addImage(OwatAddress, "PNG", 140, 10, 61.5, 28.4);
       doc.addImage(OwatIcon, "PNG", 10, 10, 68, 30);
-      doc.addImage(OwatSupport, "PNG", 85, 275, 113.0, 16.4);
+      doc.addImage(OwatSupport, "PNG", 10, 270, 190, 16.4);
+      doc.text(
+        codeClose,
+        160,
+        290
+      );
       chunk.forEach((value, index) => {
         x = 40; // X-coordinate for starting point
         const y = 50 + index * 15;
@@ -667,7 +688,12 @@ const SendEmployeePDF3 = () => {
             doc.addPage();
             doc.addImage(OwatAddress, "PNG", 140, 10, 61.5, 28.4);
             doc.addImage(OwatIcon, "PNG", 10, 10, 68, 30);
-            doc.addImage(OwatSupport, "PNG", 85, 275, 113.0, 16.4);
+            doc.addImage(OwatSupport, "PNG", 10, 270, 190, 16.4);
+            doc.text(
+              codeClose,
+              160,
+              290
+            );
             x = 40;
             y = 50;
             autoContent2.forEach((line, index) => {
@@ -836,7 +862,12 @@ const SendEmployeePDF3 = () => {
       const y2 = 10;
       doc.addImage(OwatAddress, "PNG", 140, 10, 61.5, 28.4);
       doc.addImage(OwatIcon, "PNG", 10, 10, 68, 30);
-      doc.addImage(OwatSupport, "PNG", 85, 275, 113.0, 16.4);
+      doc.addImage(OwatSupport, "PNG", 10, 270, 190, 16.4);
+      doc.text(
+        codeClose,
+        160,
+        290
+      );
 
       const maxWidth = 70; // Adjust the width as needed
       // const text = 'Some text that might be really long and is intended to exceed the maximum width, causing it to be split into multiple lines because it is too long to fit on a single line.';
@@ -1138,6 +1169,20 @@ const SendEmployeePDF3 = () => {
                         rows="4" // Set the number of visible rows (adjust as needed)
                         cols="50" // Set the number of visible columns (adjust as needed)
                       ></textarea>
+                    </div>
+                  </div>
+                  <br />
+                  <div className="row">
+                    <div className="col-md-2">
+                      <label role="searchname">รหัสท้ายกระดาษ</label>
+                    </div>
+                    <div className="col-md-4">
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={codeClose}
+                        onChange={handleCodeCloseChange}
+                      />
                     </div>
                   </div>
                   <br />
