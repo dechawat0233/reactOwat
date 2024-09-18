@@ -934,6 +934,7 @@ function AddEditEmployee() {
                                     onChange={(e) =>
                                       setEmployeeId(e.target.value)
                                     }
+                                    style={{ appearance: "textfield" }}
                                   />
                                 </div>
                               </div>
