@@ -702,6 +702,26 @@ router.delete('/delete/:_id', async (req, res) => {
   }
 });
 
+router.get('/deleteemployee:employeeId', async (req, res) => {
+    try {
+      // const employeeIdToDelete = req.params._id; // Use _id instead of employeeId
+      const employeeIdToDelete = await Employee.findOne({ employeeId: req.params.employeeId });
+
+      // Find the employee by ID and delete it
+      const deletedEmployee = await Employee.findOneAndDelete({ _id: employeeIdToDelete });
+  
+      if (deletedEmployee) {
+        res.json({ message: 'Employee deleted successfully', deletedEmployee });
+      } else {
+        res.status(404).json({ error: 'Employee not found' });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+
 router.delete('/delete_id/:_id', async (req, res) => {
   try {
     const employeeIdToDelete = req.params._id; // Use _id instead of employeeId
