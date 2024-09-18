@@ -79,8 +79,8 @@ function Addsettime() {
                                                     <select id="selectOption" class="form-control" value={selectedOption} onChange={handleOptionChange}>
                                                         <option value="workplace">รูปแบบหน่วยงาน</option>
                                                         <option value="employee">รูปแบบบุคคล</option>
-                                                        <option value="Outsiderworkplace">รูปแบบหน่วยงาน(บุคคลภายนอก)</option>
-                                                        <option value="Outsideremployee">รูปแบบบุคคล(บุคคลภายนอก)</option>
+                                                        {/* <option value="Outsiderworkplace">รูปแบบหน่วยงาน(บุคคลภายนอก)</option>
+                                                        <option value="Outsideremployee">รูปแบบบุคคล(บุคคลภายนอก)</option> */}
                                                     </select>
 
 
