@@ -926,7 +926,7 @@ function AddEditEmployee() {
                                   <label role="prefix">รหัส</label>
                                   <input
                                     required
-                                    type="text"
+                                    type="number"
                                     class="form-control"
                                     id="employeeId"
                                     placeholder="รหัสพนักงาน"
