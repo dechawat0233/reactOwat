@@ -289,6 +289,15 @@ router.get('/list', async (req, res) => {
   res.json(employees);
 });
 
+router.get('/delete-all', async (req, res) => {
+  try {
+    await Employee.deleteMany({});
+    res.json({ message: 'All employees have been deleted.' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting employees', error: error.message });
+  }
+});
+
 // Get  employee by Id
 router.get('/:employeeId', async (req, res) => {
   try {
@@ -701,6 +710,7 @@ router.delete('/delete/:_id', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 router.delete('/delete_id/:_id', async (req, res) => {
   try {
