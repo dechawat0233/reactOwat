@@ -729,14 +729,14 @@ if(tmp.id === item.id) {
       if(c < 1) {
         tmp.SpSalary = (parseFloat(item.SpSalary)/ 30);
       }
-      
+
       tmp.SpSalary = parseFloat(tmp.SpSalary) + (parseFloat(item.SpSalary)/ 30);
 
     } else {
       tmp.SpSalary = parseFloat(tmp.SpSalary) + parseFloat(item.SpSalary);
 
     }
-
+c += 1;
   // tmp.SpSalary = parseFloat(tmp.SpSalary) + parseFloat(item.SpSalary);
   tmp.message = parseFloat(tmp.message || 1) + 1;
   }
