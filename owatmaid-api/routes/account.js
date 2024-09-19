@@ -1853,6 +1853,7 @@ if(! dayW.includes( getDayNumberFromDate( responseConclude.data.recordConclude[c
       checkAddSalaryDay   = true;
       if(parseFloat(item.SpSalary) > 363) {
         tmp.SpSalary = parseFloat(tmp.SpSalary) + (parseFloat(item.SpSalary) /30 || 0);
+console.log('***');
 
       } else {
         tmp.SpSalary = parseFloat(tmp.SpSalary) + parseFloat(item.SpSalary);
