@@ -299,8 +299,7 @@ function Salaryresult() {
     // get welfare record with year and month
     const getWelfare = async () => {
       // if (yearWelfare !== "" && monthWelfare !== "" && staffId !== "") {
-        if (staffId !== "") {
-
+      if (staffId !== "") {
         const welfareSearch = await {
           // year: yearWelfare,
           // month: monthWelfare,
@@ -584,13 +583,43 @@ function Salaryresult() {
               );
 
               await setAddSalaryList(response.data[0].addSalary);
+              // if (response.data[0].addSalary) {
+              //   let tmp = 0;
+              //   response.data[0].addSalary.map((item) => {
+              //     tmp += parseFloat(item.SpSalary);
+              //   });
+              //   setSumAddSalaryList(tmp);
+              // }
+
               if (response.data[0].addSalary) {
                 let tmp = 0;
+              
+                // Calculate the sum of SpSalary from response data
                 response.data[0].addSalary.map((item) => {
                   tmp += parseFloat(item.SpSalary);
                 });
                 setSumAddSalaryList(tmp);
+              
+                // Merge addSalaryList with remainArray
+                const mergedAddSalaryList = [
+                  ...response.data[0].addSalary,
+                  ...remainArray.map((remain) => ({
+                    id: remain.id, // or generate a unique ID if needed
+                    name: remain.welfareType,
+                    SpSalary: remain.SpSalary,
+                    roundOfSalary: remain.roundOfSalary,
+                    StaffType: "", // If you need to add StaffType or other fields
+                  })),
+                ];
+              
+                // Set the updated addSalaryList
+                setAddSalaryList(mergedAddSalaryList);
+              
+                // Recalculate the sum for the merged list
+                let totalSalary = mergedAddSalaryList.reduce((acc, item) => acc + parseFloat(item.SpSalary || 0), 0);
+                setSumAddSalaryList(totalSalary);
               }
+              
               // alert(response.data[0].addSalary.length);
               // await setDeductSalaryList(response.data[0].deductSalary);
               if (response.data[0].deductSalary) {
@@ -1920,13 +1949,43 @@ function Salaryresult() {
               );
 
               await setAddSalaryList(response.data[0].addSalary);
+              // if (response.data[0].addSalary) {
+              //   let tmp = 0;
+              //   response.data[0].addSalary.map((item) => {
+              //     tmp += parseFloat(item.SpSalary);
+              //   });
+              //   setSumAddSalaryList(tmp);
+              // }
+
               if (response.data[0].addSalary) {
                 let tmp = 0;
+              
+                // Calculate the sum of SpSalary from response data
                 response.data[0].addSalary.map((item) => {
                   tmp += parseFloat(item.SpSalary);
                 });
                 setSumAddSalaryList(tmp);
+              
+                // Merge addSalaryList with remainArray
+                const mergedAddSalaryList = [
+                  ...response.data[0].addSalary,
+                  ...remainArray.map((remain) => ({
+                    id: remain.id, // or generate a unique ID if needed
+                    name: remain.welfareType,
+                    SpSalary: remain.SpSalary,
+                    roundOfSalary: remain.roundOfSalary,
+                    StaffType: "", // If you need to add StaffType or other fields
+                  })),
+                ];
+              
+                // Set the updated addSalaryList
+                setAddSalaryList(mergedAddSalaryList);
+              
+                // Recalculate the sum for the merged list
+                let totalSalary = mergedAddSalaryList.reduce((acc, item) => acc + parseFloat(item.SpSalary || 0), 0);
+                setSumAddSalaryList(totalSalary);
               }
+
               // alert(response.data[0].addSalary.length);
               setDeductSalaryList(response.data[0].deductSalary);
               // alert(JSON.stringify(response.data[0].addSalary,null,2));
@@ -1948,6 +2007,10 @@ function Salaryresult() {
     fetchData();
   }
   console.log("wsCountDayWork", wsCountDayWork);
+  console.log("addSalaryList", addSalaryList);
+  console.log("remainArray", remainArray);
+
+
 
   const options = [
     { id: "ลากิจ", name: "remainbusinessleave" },
