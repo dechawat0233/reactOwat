@@ -1852,11 +1852,11 @@ if(! dayW.includes( getDayNumberFromDate( responseConclude.data.recordConclude[c
     if(tmp.id === item.id) {
       checkAddSalaryDay   = true;
       if(parseFloat(item.SpSalary) > 363) {
-        tmp.SpSalary = parseFloat(tmp.SpSalary) + (parseFloat(item.SpSalary) /30 || 0);
+        // tmp.SpSalary = parseFloat(tmp.SpSalary) + (parseFloat(item.SpSalary) /30 );
 console.log('***');
 
       } else {
-        tmp.SpSalary = parseFloat(tmp.SpSalary) + parseFloat(item.SpSalary);
+        // tmp.SpSalary = parseFloat(tmp.SpSalary) + parseFloat(item.SpSalary);
       }
       // tmp.SpSalary = parseFloat(tmp.SpSalary) + parseFloat(item.SpSalary);
       tmp.message = parseFloat(tmp.message || 1) + 1;
