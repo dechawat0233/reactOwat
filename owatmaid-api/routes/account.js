@@ -725,10 +725,9 @@ if(tmp.id === item.id) {
   checkAddSalaryDay   = true;
   
   if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate) > 0) {
-    tmp.message = parseFloat(tmp.message || 1) + 1;
     
     if(parseFloat(item.SpSalary) >= 363) {
-      if((tmp.message) > 1) {
+      if((tmp.message || 0) >= 1) {
         tmp.SpSalary = (parseFloat(tmp.SpSalary) + (parseFloat(item.SpSalary)/ 30)).toFixed(2);
       } else {
         tmp.SpSalary = (parseFloat(item.SpSalary)/ 30).toFixed(2);
@@ -740,7 +739,7 @@ if(tmp.id === item.id) {
 
     }
   // tmp.SpSalary = parseFloat(tmp.SpSalary) + parseFloat(item.SpSalary);
-  // tmp.message = parseFloat(tmp.message || 1) + 1;
+  tmp.message = parseFloat(tmp.message || 1) + 1;
   
   }
 
