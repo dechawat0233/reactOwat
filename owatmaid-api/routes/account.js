@@ -728,7 +728,7 @@ if(tmp.id === item.id) {
     
     if(parseFloat(item.SpSalary) >= 363) {
       if((tmp.message || 0) >= 1) {
-        tmp.SpSalary = (parseFloat(tmp.SpSalary) + (parseFloat(item.SpSalary)/ 30)).toFixed(2);
+        // tmp.SpSalary = (parseFloat(tmp.SpSalary) + (parseFloat(item.SpSalary)/ 30)).toFixed(2);
       } else {
         tmp.SpSalary = (parseFloat(item.SpSalary)/ 30).toFixed(2) + (parseFloat(item.SpSalary)/ 30).toFixed(2);
 
