@@ -726,9 +726,8 @@ if(tmp.id === item.id) {
   
   if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate) > 0) {
     if(parseFloat(item.SpSalary) >= 363) {
-      if(tmp.message || 0 > 0) {
+      if((tmp.message || 1) > 1) {
         tmp.SpSalary = (parseFloat(tmp.SpSalary) + (parseFloat(item.SpSalary)/ 30)).toFixed(2);
-c += 1;
       } else {
         tmp.SpSalary = (parseFloat(item.SpSalary)/ 30).toFixed(2);
 
@@ -740,8 +739,7 @@ c += 1;
 
     }
   // tmp.SpSalary = parseFloat(tmp.SpSalary) + parseFloat(item.SpSalary);
-  // tmp.message = parseFloat(tmp.message || 1) + 1;
-  // tmp.message = c;
+  tmp.message = parseFloat(tmp.message || 1) + 1;
   
   }
 
