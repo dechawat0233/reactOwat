@@ -724,6 +724,13 @@ if(tmp.id === item.id) {
   checkAddSalaryDay   = true;
   
   if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate) > 0) {
+    if(parseFloat(item.SpSalary) >= 363) {
+      tmp.SpSalary = parseFloat(tmp.SpSalary) + (parseFloat(item.SpSalary)/ 30);
+
+    } else {
+      tmp.SpSalary = parseFloat(tmp.SpSalary) + parseFloat(item.SpSalary);
+
+    }
   // tmp.SpSalary = parseFloat(tmp.SpSalary) + parseFloat(item.SpSalary);
   tmp.message = parseFloat(tmp.message || 1) + 1;
   }
