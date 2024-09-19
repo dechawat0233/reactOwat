@@ -729,7 +729,7 @@ if(tmp.id === item.id) {
       if((tmp.message || 1) > 1) {
         tmp.SpSalary = (parseFloat(tmp.SpSalary) + (parseFloat(item.SpSalary)/ 30)).toFixed(2);
       } else {
-        tmp.SpSalary = (parseFloat(item.SpSalary)/ 30).toFixed(2);
+        // tmp.SpSalary = (parseFloat(item.SpSalary)/ 30).toFixed(2);
 
       }
 
