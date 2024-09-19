@@ -716,8 +716,9 @@ if( parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRat
 // console.log(responseConclude.data.recordConclude[c].addSalary[i].length );
 if(responseConclude.data.recordConclude[c].addSalary[i]) {
 
+  let c = 0;
 await responseConclude.data.recordConclude[c].addSalary[i].map( async (item, index) => {
-  tmp.SpSalary  = 0;
+  
   let checkAddSalaryDay  = false;
   addSalaryDayArray.map(tmp => {
 if(tmp.id === item.id) {
@@ -725,12 +726,17 @@ if(tmp.id === item.id) {
   
   if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate) > 0) {
     if(parseFloat(item.SpSalary) >= 363) {
+      if(c < 1) {
+        tmp.SpSalary = (parseFloat(item.SpSalary)/ 30);
+      }
+      
       tmp.SpSalary = parseFloat(tmp.SpSalary) + (parseFloat(item.SpSalary)/ 30);
 
     } else {
       tmp.SpSalary = parseFloat(tmp.SpSalary) + parseFloat(item.SpSalary);
 
     }
+
   // tmp.SpSalary = parseFloat(tmp.SpSalary) + parseFloat(item.SpSalary);
   tmp.message = parseFloat(tmp.message || 1) + 1;
   }
