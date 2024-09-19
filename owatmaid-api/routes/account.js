@@ -1858,7 +1858,7 @@ if(! dayW.includes( getDayNumberFromDate( responseConclude.data.recordConclude[c
       addSalaryDayArray.map(tmp => {
     if(tmp.id === item.id) {
       checkAddSalaryDay   = true;
-      tmp.SpSalary = parseFloat(tmp.SpSalary) + parseFloat(item.SpSalary);
+      // tmp.SpSalary = parseFloat(tmp.SpSalary) + parseFloat(item.SpSalary);
       tmp.message = parseFloat(tmp.message || 1) + 1;
     
     }
