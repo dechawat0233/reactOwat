@@ -717,7 +717,7 @@ if( parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRat
 if(responseConclude.data.recordConclude[c].addSalary[i]) {
 
 await responseConclude.data.recordConclude[c].addSalary[i].map( async (item, index) => {
-
+  tmp.SpSalary  = 0;
   let checkAddSalaryDay  = false;
   addSalaryDayArray.map(tmp => {
 if(tmp.id === item.id) {
@@ -1858,7 +1858,7 @@ if(! dayW.includes( getDayNumberFromDate( responseConclude.data.recordConclude[c
       addSalaryDayArray.map(tmp => {
     if(tmp.id === item.id) {
       checkAddSalaryDay   = true;
-      // tmp.SpSalary = parseFloat(tmp.SpSalary) + parseFloat(item.SpSalary);
+      tmp.SpSalary = parseFloat(tmp.SpSalary) + parseFloat(item.SpSalary);
       tmp.message = parseFloat(tmp.message || 1) + 1;
     
     }
