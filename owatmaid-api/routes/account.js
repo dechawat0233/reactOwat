@@ -723,6 +723,7 @@ await responseConclude.data.recordConclude[c].addSalary[i].map( async (item, ind
   addSalaryDayArray.map(tmp => {
 if(tmp.id === item.id) {
   checkAddSalaryDay   = true;
+        tmp.SpSalary = (parseFloat(item.SpSalary)/ 30).toFixed(2);
   
   if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate) > 0) {
     if(parseFloat(item.SpSalary) >= 363) {
