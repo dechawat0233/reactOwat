@@ -445,6 +445,7 @@ const employeeSchema = new mongoose.Schema({
 
 // Create the Employee model based on the schema
 const Employee = mongoose.model("Employee", employeeSchema);
+
 function fixKeys(obj) {
   let newObj = {};
   for (let key in obj) {
@@ -462,7 +463,7 @@ function fixKeys(obj) {
 }
 
 // Apply this transformation to each employee in the JSON array
-router.post("/import-json", async (req, res) => {
+router.get("/import-json", async (req, res) => {
   try {
     const data = fs.readFileSync(__dirname + "/importemployees.json", "utf8");
     let employees = JSON.parse(data);
