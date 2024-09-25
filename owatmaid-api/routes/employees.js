@@ -450,7 +450,7 @@ const Employee = mongoose.model("Employee", employeeSchema);
 router.get("/import-json", async (req, res) => {
   try {
     // Read the JSON file (replace 'path/to/your/file.json' with the actual file path)
-    const data = fs.readFileSync("importemployees.json", "utf8");
+    const data = fs.readFileSync(__dirname + "/importemployees.json", "utf8");
     const employees = JSON.parse(data);
 
     // Insert many documents into the Employee collection
