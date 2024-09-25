@@ -445,13 +445,30 @@ const employeeSchema = new mongoose.Schema({
 
 // Create the Employee model based on the schema
 const Employee = mongoose.model("Employee", employeeSchema);
+function fixKeys(obj) {
+  let newObj = {};
+  for (let key in obj) {
+    // Replace dot with underscore in the key
+    let newKey = key.replace(/\./g, '_');
+    
+    // Check if the value is an object, if yes, recursively fix the keys
+    if (typeof obj[key] === 'object' && obj[key] !== null) {
+      newObj[newKey] = fixKeys(obj[key]);
+    } else {
+      newObj[newKey] = obj[key];
+    }
+  }
+  return newObj;
+}
 
-// Route to push JSON data to MongoDB
-router.get("/import-json", async (req, res) => {
+// Apply this transformation to each employee in the JSON array
+router.post("/import-json", async (req, res) => {
   try {
-    // Read the JSON file (replace 'path/to/your/file.json' with the actual file path)
     const data = fs.readFileSync(__dirname + "/importemployees.json", "utf8");
-    const employees = JSON.parse(data);
+    let employees = JSON.parse(data);
+
+    // Fix the keys of each employee object
+    employees = employees.map(fixKeys);
 
     // Insert many documents into the Employee collection
     const result = await Employee.insertMany(employees);
@@ -462,6 +479,22 @@ router.get("/import-json", async (req, res) => {
     res.status(500).json({ message: "Error importing data", error: error.message });
   }
 });
+// Route to push JSON data to MongoDB
+// router.get("/import-json", async (req, res) => {
+//   try {
+//     // Read the JSON file (replace 'path/to/your/file.json' with the actual file path)
+//     const data = fs.readFileSync(__dirname + "/importemployees.json", "utf8");
+//     const employees = JSON.parse(data);
+
+//     // Insert many documents into the Employee collection
+//     const result = await Employee.insertMany(employees);
+
+//     res.status(200).json({ message: "Employees successfully added!", result });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Error importing data", error: error.message });
+//   }
+// });
 
 // Get list of employees
 router.get("/list", async (req, res) => {
