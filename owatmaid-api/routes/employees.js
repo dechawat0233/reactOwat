@@ -3,6 +3,7 @@ const connectionString = require("../config");
 var express = require("express");
 var router = express.Router();
 const mongoose = require("mongoose");
+const fs = require("fs");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -444,6 +445,23 @@ const employeeSchema = new mongoose.Schema({
 
 // Create the Employee model based on the schema
 const Employee = mongoose.model("Employee", employeeSchema);
+
+// Route to push JSON data to MongoDB
+router.get("/import-json", async (req, res) => {
+  try {
+    // Read the JSON file (replace 'path/to/your/file.json' with the actual file path)
+    const data = fs.readFileSync("importemployees.json", "utf8");
+    const employees = JSON.parse(data);
+
+    // Insert many documents into the Employee collection
+    const result = await Employee.insertMany(employees);
+
+    res.status(200).json({ message: "Employees successfully added!", result });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error importing data", error: error.message });
+  }
+});
 
 // Get list of employees
 router.get("/list", async (req, res) => {
