@@ -24,29 +24,29 @@ const employeeSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  position: {
+  position: { //ตำแหน่ง
     type: String,
   },
   department: {
     type: String,
   },
-  workplace: {
+  workplace: { //// รหัสหน่วยงาน
     type: String,
   },
   jobtype: {
     type: String,
   },
-  startjob: {
+  startjob: { /// วันที่เริ่มงาน
     type: String,
   },
-  endjob: {
+  endjob: { /// วันที่ออก
     type: String,
   },
-  exceptjob: {
+  exceptjob: { //วันที่ประจุ
     type: String,
   },
   prefix: {
-    type: String,
+    type: String, //// คำนำหน้า
   },
   name: {
     type: String, //// use SocialSecurity
@@ -71,31 +71,31 @@ const employeeSchema = new mongoose.Schema({
     required: true, //// use SocialSecurity
     unique: true,
   },
-  idCardIssueDate: {
+  idCardIssueDate: { //วันออกบัตร
     type: String,
   },
   idCardPlace: {
+    type: String, //สถานที่ออกบัตร
+  },
+  stayLive: {  // จังหวัดที่อยู่
     type: String,
   },
-  stayLive: {
+  natnalty: { //สัญชาติ
     type: String,
   },
-  natnalty: {
+  origin: { // เชื้อชาติ
     type: String,
   },
-  origin: {
+  religion: { // ประเทศ
     type: String,
   },
-  religion: {
+  ethnicity: { //เชื้อชาติ
     type: String,
   },
-  ethnicity: {
+  maritalStatus: { //สถานภาพการสมรส
     type: String,
   },
-  maritalStatus: {
-    type: String,
-  },
-  militaryStatus: {
+  militaryStatus: { //สถานภาพทางการทหาร
     type: String,
   },
   blood: {
@@ -245,19 +245,19 @@ const employeeSchema = new mongoose.Schema({
   sp_surnme: {
     type: String,
   },
-  domicile: {
+  domicile: { // ภูมิลำเนา
     type: String,
   },
-  domicile_origin: {
+  fml_domicile_origin: { // เชื้อชาติ คู่สมรส
     type: String,
   },
-  fml_natnalty: {
+  fml_natnalty: { //สัญชาติ คู่สมรส
     type: String,
   },
-  fml_religion: {
+  fml_religion: { //ประเทศ คู่สมรส
     type: String,
   },
-  fml_military: {
+  fml_military: { //// สถานภาพทางการทหาร คู่สมรส
     type: String,
   },
   fml_blood: {
@@ -293,23 +293,23 @@ const employeeSchema = new mongoose.Schema({
   Fml_motherID: {
     type: String,
   },
-  ssoEntryDate: {
+  ssoEntryDate: { // วันเข้างานปกส
     type: String,
   },
   message: {
     type: String,
   },
-  bank_initial: {
+  bank_initial: { // อักษรย่อของธนาคาร
     type: String,
   },
-  branchBank: {
+  branchBank: { // สาขาธนาคาร
     type: String,
   },
   idLine: {
     type: String,
   },
-  vaccination: [],
-  treatmentRights: {
+  vaccination: [], // การฉีดวัคซีน
+  treatmentRights: { //สิทธิการรักษา
     type: String,
   },
   startcount: String,
