@@ -207,11 +207,11 @@ const employeeSchema = new mongoose.Schema({
 
   phoneNumber: {
     type: String,
-    match: /^[0-9]{10}$/, // Regular expression for 10-digit phone number
+    // match: /^[0-9]{10}$/, // Regular expression for 10-digit phone number
   },
   emergencyContactNumber: {
     type: String,
-    match: /^[0-9]{10}$/, // Regular expression for 10-digit phone number
+    // match: /^[0-9]{10}$/, // Regular expression for 10-digit phone number
   },
   statusEmergencyContact: {
     type: String,
