@@ -675,22 +675,24 @@ function Salary() {
     }
     if (empSelect.startcount) {
       await setStartcount(
-        empSelect.startcount ? new Date(empSelect.startcount) : ""
+        // empSelect.startcount ? new Date(empSelect.startcount) : ""
+        empSelect.startcount ? empSelect.startcount : ""
+
       );
 
       await setFormattedDateStartcount(
-        empSelect.startcount ? new Date(empSelect.startcount) : ""
+        empSelect.startcount ? empSelect.startcount : ""
       );
     }
     if (empSelect.salaryupdate) {
       await setSalaryupdate(
-        empSelect.salaryupdate ? new Date(empSelect.salaryupdate) : ""
+        empSelect.salaryupdate ? empSelect.salaryupdate : ""
       );
       await setFormattedDateSalaryupdate(
-        empSelect.startcount ? new Date(empSelect.startcount) : ""
+        empSelect.startcount ? empSelect.startcount : ""
       );
     }
-    console.log("salaryupdate", empSelect.salaryupdate);
+    // console.log("salaryupdate", empSelect.salaryupdate);
 
     // await setExceptjob(new Date(empSelect.exceptjob || ''));
     // await setStartcount(empSelect.startcount ? new Date(empSelect.startcount) : '');
@@ -817,7 +819,7 @@ function Salary() {
       JSON.stringify(employeeLocalUpdate)
     );
   }
-
+console.log('selectedDateStartcount',selectedDateStartcount);
   
   return (
     <body class="hold-transition sidebar-mini" className="editlaout">
