@@ -502,7 +502,8 @@ function Employee() {
     setEmergencyContactNumber(empSelect.emergencyContactNumber);
     setIdLine(empSelect.idLine);
     // setVaccination(empSelect.vaccination);
-    const temp = empSelect.vaccination.map((item) => [...item]);
+    // const temp = empSelect.vaccination.map((item) => [...item]);
+    const temp = (empSelect.vaccination || []).map((item) => [...item]);
     //        alert(temp);
     setVaccination(temp);
     setTreatmentRights(empSelect.treatmentRights);
