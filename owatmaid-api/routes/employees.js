@@ -571,7 +571,7 @@ router.post("/search", async (req, res) => {
     const employees = await Employee.find(query);
 
     // Format the startjob field from dd/mm/yyyy to mm/dd/yyyy
-    const formattedEmployees = employees .map(employee => {
+    const formattedEmployees = await employees.map(employee => {
       if (employee.startjob) {
         const [day, month, year] = employee.startjob.split('/');
         employee.startjob = `${month}/${day}/${year}`;
@@ -582,7 +582,7 @@ router.post("/search", async (req, res) => {
     // console.log('Search Results:');
     // console.log(employees);
     let textSearch = "test";
-    res.status(200).json({ formattedEmployees  });
+    await res.status(200).json({ formattedEmployees  });
   } catch (error) {
     console.error(error);
     // res.status(500).json({ message: 'Internal server error' });
