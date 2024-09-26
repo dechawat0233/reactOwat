@@ -571,11 +571,11 @@ router.post("/search", async (req, res) => {
     const employees = await Employee.find(query);
 
     // Format the startjob field from dd/mm/yyyy to mm/dd/yyyy
-      // if (employees[0].startjob) {
-      //   const [day, month, year] = employees[0].startjob.split('/');
-      //   employees[0].startjob = `${month}/${day}/${year}`;
-      //   console.log('employees.startjob ' + employees[0].startjob )
-      // }
+      if (employees[0].startjob) {
+        const [day, month, year] = employees[0].startjob.split('/');
+        employees[0].startjob = `${month}/${day}/${year}`;
+        console.log('employees.startjob ' + employees[0].startjob )
+      }
 
     // console.log('Search Results:');
     // console.log(employees);
