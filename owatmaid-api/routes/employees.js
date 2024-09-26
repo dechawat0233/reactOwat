@@ -443,6 +443,7 @@ const employeeSchema = new mongoose.Schema({
   tax: String,
 });
 
+
 // Create the Employee model based on the schema
 const Employee = mongoose.model("Employee", employeeSchema);
 
@@ -569,10 +570,22 @@ router.post("/search", async (req, res) => {
     // Query the employee collection for matching documents
     const employees = await Employee.find(query);
 
+    // Format the startjob field from dd/mm/yyyy to mm/dd/yyyy
+      if (employees[0].startjob) {
+        const [day, month, year] = employees[0].startjob.split('/');
+        employees[0].startjob = `${month}/${day}/${year}`;
+        console.log('employees.startjob ' + employees[0].startjob )
+      }
+      if (employees[0].exceptjob) {
+        const [day, month, year] = employees[0].exceptjob.split('/');
+        employees[0].exceptjob= `${month}/${day}/${year}`;
+        console.log('employees.exceptjob' + employees[0].exceptjob)
+      }
+
     // console.log('Search Results:');
     // console.log(employees);
     let textSearch = "test";
-    res.status(200).json({ employees });
+    await res.status(200).json({ employees });
   } catch (error) {
     console.error(error);
     // res.status(500).json({ message: 'Internal server error' });
