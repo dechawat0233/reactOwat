@@ -443,6 +443,15 @@ const employeeSchema = new mongoose.Schema({
   tax: String,
 });
 
+// Pre-save middleware to format startjob from dd/mm/yyyy to mm/dd/yyyy
+employeeSchema.pre('save', function (next) {
+  if (this.startjob) {
+    const [day, month, year] = this.startjob.split('/');
+    this.startjob = `${month}/${day}/${year}`;
+  }
+  next();
+});
+
 // Create the Employee model based on the schema
 const Employee = mongoose.model("Employee", employeeSchema);
 

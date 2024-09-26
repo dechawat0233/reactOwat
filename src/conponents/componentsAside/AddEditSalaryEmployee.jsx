@@ -281,7 +281,8 @@ function AddEditSalaryEmployee() {
             }
         } catch (error) {
             alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
-            window.location.reload();
+            alert(error)
+            // window.location.reload();
         }
     }
 
