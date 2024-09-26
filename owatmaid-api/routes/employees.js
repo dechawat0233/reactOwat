@@ -443,14 +443,6 @@ const employeeSchema = new mongoose.Schema({
   tax: String,
 });
 
-// Pre-save middleware to format startjob from dd/mm/yyyy to mm/dd/yyyy
-employeeSchema.pre('save', function (next) {
-  if (this.startjob) {
-    const [day, month, year] = this.startjob.split('/');
-    this.startjob = `${month}/${day}/${year}`;
-  }
-  next();
-});
 
 // Create the Employee model based on the schema
 const Employee = mongoose.model("Employee", employeeSchema);
@@ -578,10 +570,19 @@ router.post("/search", async (req, res) => {
     // Query the employee collection for matching documents
     const employees = await Employee.find(query);
 
+    // Format the startjob field from dd/mm/yyyy to mm/dd/yyyy
+    const formattedEmployees = employees .map(employee => {
+      if (employee.startjob) {
+        const [day, month, year] = employee.startjob.split('/');
+        employee.startjob = `${month}/${day}/${year}`;
+      }
+      return employee;
+    });
+
     // console.log('Search Results:');
     // console.log(employees);
     let textSearch = "test";
-    res.status(200).json({ employees });
+    res.status(200).json({ formattedEmployees  });
   } catch (error) {
     console.error(error);
     // res.status(500).json({ message: 'Internal server error' });
