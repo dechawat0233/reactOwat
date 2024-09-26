@@ -237,14 +237,13 @@ function Employee() {
     }
   }, [district2]);
 
-
   useEffect(() => {
     if (subDistrict) {
       // Find the selected sub-district from the data
       const selectedSubDistrict = subDistrictsData.find(
         (subDist) => subDist.id === parseInt(subDistrict)
       );
-  
+
       if (selectedSubDistrict) {
         // Set the postal code based on the sub-district's zip code
         setPostalCode(selectedSubDistrict.zip_code);
@@ -260,7 +259,7 @@ function Employee() {
       const selectedSubDistrict = subDistrictsData.find(
         (subDist) => subDist.id === parseInt(subDistrict2)
       );
-  
+
       if (selectedSubDistrict) {
         // Set the postal code based on the sub-district's zip code
         setPostalCode2(selectedSubDistrict.zip_code);
@@ -454,7 +453,9 @@ function Employee() {
     setSelectedDateEnd(empSelect.endjob ? new Date(empSelect.endjob) : "");
 
     setExceptjob(empSelect.exceptjob ? new Date(empSelect.exceptjob) : "");
-    setPrefix(empSelect.prefix);
+    // setPrefix(empSelect.prefix);
+    setPrefix(empSelect.prefix === "น.ส." ? "นางสาว" : empSelect.prefix);
+console.log('prefix',prefix);
     setName(empSelect.name);
     setLastName(empSelect.lastName);
     setNickName(empSelect.nickName);
@@ -727,6 +728,41 @@ function Employee() {
   const toggleDatePickerEnd = () => {
     setShowDatePickerEnd(!showDatePickerEnd);
   };
+
+  const [showDatePickerExceptjob, setShowDatePickerExceptjob] = useState(false);
+  const [selectedDateExceptjob, setSelectedDateExceptjob] = useState(null);
+  const [formattedDate321Exceptjob, setFormattedDateExceptjob] = useState(null);
+
+  const handleDatePickerExceptjobChange = (date) => {
+    setSelectedDateExceptjob(date);
+    setShowDatePickerExceptjob(false); // Hide date picker after selecting a date
+    const newDate = new Date(date);
+    setExceptjob(newDate);
+  };
+
+  useEffect(() => {
+    if (selectedDateExceptjob) {
+      // Convert the string to a Date object
+      const date = new Date(selectedDateExceptjob);
+
+      // Extract day, month, and year
+      const daySelectedDate = date.getDate().toString().padStart(2, "0");
+      const monthSelectedDate = (date.getMonth() + 1)
+        .toString()
+        .padStart(2, "0");
+      const yearSelectedDate = (date.getFullYear() + 543).toString();
+
+      // Format the date
+      const formattedDate = `${daySelectedDate}/${monthSelectedDate}/${yearSelectedDate}`;
+      console.log("formattedDate", formattedDate);
+      setFormattedDateExceptjob(formattedDate);
+    }
+  }, [selectedDateExceptjob]);
+
+  const toggleDatePickerExceptjob = () => {
+    setShowDatePickerExceptjob(!showDatePickerExceptjob);
+  };
+
 
   // console.log('startjob',startjob);
   // console.log('endjob',endjob);
@@ -1081,7 +1117,7 @@ function Employee() {
                           <div class="col-md-3">
                             <div class="form-group">
                               <label role="exceptjob">วันที่บรรจุ</label>
-                              <div
+                              {/* <div
                                 style={{ position: "relative", zIndex: 9999 }}
                               >
                                 <DatePicker
@@ -1093,6 +1129,49 @@ function Employee() {
                                   onChange={handleExceptDateChange}
                                   dateFormat="dd/MM/yyyy"
                                 />
+                              </div> */}
+                               <div
+                                style={{ position: "relative", zIndex: 9999 }}
+                              >
+                                {/* <DatePicker
+                                  id="startjob"
+                                  name="startjob"
+                                  className="form-control"
+                                  popperClassName="datepicker-popper"
+                                  selected={startjob}
+                                  onChange={handleStartDateChange}
+                                  dateFormat="dd/MM/yyyy"
+                                /> */}
+                                <div
+                                  onClick={toggleDatePickerExceptjob}
+                                  style={{
+                                    cursor: "pointer",
+                                    display: "inline-flex",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <FaCalendarAlt size={20} />
+                                  <span style={{ marginLeft: "8px" }}>
+                                    {formattedDate321Exceptjob
+                                      ? formattedDate321Exceptjob
+                                      : "Select Date"}
+                                  </span>
+                                </div>
+
+                                {showDatePickerExceptjob && (
+                                  <div
+                                    style={{
+                                      position: "absolute",
+                                      zIndex: 1000,
+                                    }}
+                                  >
+                                    <ThaiDatePicker
+                                      className="form-control"
+                                      value={selectedDateExceptjob}
+                                      onChange={handleDatePickerExceptjobChange}
+                                    />
+                                  </div>
+                                )}
                               </div>
                             </div>
                           </div>
