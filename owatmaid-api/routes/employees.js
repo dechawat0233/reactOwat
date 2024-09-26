@@ -576,6 +576,11 @@ router.post("/search", async (req, res) => {
         employees[0].startjob = `${month}/${day}/${year}`;
         console.log('employees.startjob ' + employees[0].startjob )
       }
+      if (employees[0].exceptjob) {
+        const [day, month, year] = employees[0].exceptjob.split('/');
+        employees[0].exceptjob= `${month}/${day}/${year}`;
+        console.log('employees.exceptjob' + employees[0].exceptjob)
+      }
 
     // console.log('Search Results:');
     // console.log(employees);
