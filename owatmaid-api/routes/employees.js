@@ -582,7 +582,7 @@ router.post("/search", async (req, res) => {
     // console.log('Search Results:');
     // console.log(employees);
     let textSearch = "test";
-    await res.status(200).json({ formattedEmployees  });
+    await res.status(200).json({ employees });
   } catch (error) {
     console.error(error);
     // res.status(500).json({ message: 'Internal server error' });
