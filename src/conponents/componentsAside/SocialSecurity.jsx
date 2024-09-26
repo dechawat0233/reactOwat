@@ -397,17 +397,17 @@ function SocialSecurity() {
         setName(empSelect.name);
         // setName(parseFloat(empSelect.salaryadd3v) || 0);
 
-        setSalary(empSelect.salary);
+        // setSalary(empSelect.salary);
         setMinus(empSelect.minus);
-        // setWorkplaceId(empSelect.workplace);
+        // // setWorkplaceId(empSelect.workplace);
 
-        // setSalaryadd1vSec(parseFloat(empSelect.salaryadd1v) || 0);
-        // setSalaryadd2vSec(parseFloat(empSelect.salaryadd2v) || 0);
-        // setSalaryadd3vSec(parseFloat(empSelect.salaryadd3v) || 0);
-        // setSalaryadd4vSec(parseFloat(empSelect.salaryadd4v) || 0);
-        // setSalaryadd5vSec(parseFloat(empSelect.salaryadd5v) || 0);
+        // // setSalaryadd1vSec(parseFloat(empSelect.salaryadd1v) || 0);
+        // // setSalaryadd2vSec(parseFloat(empSelect.salaryadd2v) || 0);
+        // // setSalaryadd3vSec(parseFloat(empSelect.salaryadd3v) || 0);
+        // // setSalaryadd4vSec(parseFloat(empSelect.salaryadd4v) || 0);
+        // // setSalaryadd5vSec(parseFloat(empSelect.salaryadd5v) || 0);
 
-        // setSalaryadd1vSec(empSelect.salaryadd1v || 0);
+        // // setSalaryadd1vSec(empSelect.salaryadd1v || 0);
         setSalaryadd1vSec(empSelect.workplace);
 
         setSalaryadd2vSec(empSelect.salaryadd2v || 0);
@@ -417,13 +417,13 @@ function SocialSecurity() {
 
         setJobtype(empSelect.jobtype);
 
-        //set checkbox is selection 
-        setCheckedItems(empSelect.selectAddSalary || '');
-        //set sum addSalary
+        // //set checkbox is selection 
+        setCheckedItems(empSelect.selectAddSalary || flase);
+        // //set sum addSalary
         setSumAddSalary(empSelect.sumAddSalary || '');
 
-        // alert(empSelect._id);
-        console.log(employeeData);
+        // // alert(empSelect._id);
+        // console.log(employeeData);
     }
 
     async function handleManageEmployee(event) {

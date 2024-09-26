@@ -81,6 +81,18 @@ function Employee() {
     width: "30rem",
   };
 
+  const [showDatePickerStart, setShowDatePickerStart] = useState(false);
+  const [selectedDateStart, setSelectedDateStart] = useState(null);
+  const [formattedDate321, setFormattedDateStart] = useState('');
+
+  const [showDatePickerEnd, setShowDatePickerEnd] = useState(false);
+  const [selectedDateEnd, setSelectedDateEnd] = useState(null);
+  const [formattedDate321End, setFormattedDateEnd] = useState('');
+
+  const [showDatePickerExceptjob, setShowDatePickerExceptjob] = useState(false);
+  const [selectedDateExceptjob, setSelectedDateExceptjob] = useState(null);
+  const [formattedDate321Exceptjob, setFormattedDateExceptjob] = useState('');
+
   const [storedEmp, setStoredEmp] = useState([]);
   const [newEmp, setNewEmp] = useState(true);
   const [employeeselection, setEmployeeselection] = useState([]);
@@ -445,17 +457,63 @@ function Employee() {
     setDepartment(empSelect.department);
     setWorkplace(empSelect.workplace);
     setJobtype(empSelect.jobtype);
-    setStartjob(empSelect.startjob ? new Date(empSelect.startjob) : "");
-    setSelectedDateStart(
-      empSelect.startjob ? new Date(empSelect.startjob) : ""
-    );
-    setEndjob(empSelect.endjob ? new Date(empSelect.endjob) : "");
-    setSelectedDateEnd(empSelect.endjob ? new Date(empSelect.endjob) : "");
 
-    setExceptjob(empSelect.exceptjob ? new Date(empSelect.exceptjob) : "");
+    setStartjob(empSelect.startjob ? empSelect.startjob : "");
+    setSelectedDateStart(empSelect.startjob ? empSelect.startjob : "");
+    setEndjob(empSelect.endjob ? empSelect.endjob : "");
+    setSelectedDateEnd(empSelect.endjob ? empSelect.endjob : "");
+
+    setExceptjob(empSelect.exceptjob ? empSelect.exceptjob : "");
+    // setSelectedDateExceptjob(empSelect.exceptjob ? empSelect.exceptjob : "");
+    const exceptJobDate = empSelect.exceptjob ? empSelect.exceptjob : "";
+
+    if (exceptJobDate) {
+      // Split the exceptJobDate into day, month, year
+      const [day, month, year] = exceptJobDate.split("/");
+    
+      // Add 543 to the year
+      const buddhistYear = (parseInt(year) ).toString();
+    
+      // Format the date as YYYY-MM-DD in Buddhist calendar
+      const formattedDate = `${buddhistYear}-${month}-${day}`;
+    
+      // Set the formatted date
+      setSelectedDateExceptjob(formattedDate);
+    } else {
+      // Set an empty string if there's no exceptjob date
+      setSelectedDateExceptjob("");
+    }
+
+    // setFormattedDateStart
+    // setFormattedDateEnd
+    // setFormattedDateExceptjob
     // setPrefix(empSelect.prefix);
     setPrefix(empSelect.prefix === "น.ส." ? "นางสาว" : empSelect.prefix);
-console.log('prefix',prefix);
+    // console.log("startjob", startjob);
+    // console.log("endjob", endjob);
+    // console.log("exceptjob", exceptjob);
+    console.log(
+      "startjob",
+      empSelect.startjob,
+      "Length:",
+      empSelect.startjob ? empSelect.startjob.length : 0
+    );
+    console.log(
+      "endjob",
+      empSelect.endjob,
+      "Length:",
+      empSelect.endjob ? empSelect.endjob.length : 0
+    );
+    console.log(
+      "exceptjob",
+      empSelect.exceptjob,
+      "Length:",
+      empSelect.exceptjob ? empSelect.exceptjob.length : 0
+    );
+
+    // setShowDatePickerStart(false);
+    // setShowDatePickerEnd(false);
+    // setShowDatePickerExceptjob(false);
     setName(empSelect.name);
     setLastName(empSelect.lastName);
     setNickName(empSelect.nickName);
@@ -661,31 +719,30 @@ console.log('prefix',prefix);
   // const handleEndDateChange = (date) => {
   //   setEndjob(date);
   // };
-  const [showDatePickerStart, setShowDatePickerStart] = useState(false);
-  const [selectedDateStart, setSelectedDateStart] = useState(null);
-  const [formattedDate321, setFormattedDateStart] = useState(null);
 
   const handleDatePickerStartChange = (date) => {
     setSelectedDateStart(date);
     setShowDatePickerStart(false); // Hide date picker after selecting a date
-    const newDate = new Date(date);
-    setStartjob(newDate);
+    // const newDate = new Date(date);
+    const [year, month, day] = date.split("-");
+
+    // Format the date as DD/MM/YYYY
+    const formattedDate = `${day}/${month}/${year}`;
+
+    setStartjob(formattedDate);
   };
 
   useEffect(() => {
     if (selectedDateStart) {
-      // Convert the string to a Date object
-      const date = new Date(selectedDateStart);
+      // Split the date string into day, month, and year
+      const [day, month, year] = selectedDateStart.split("/");
 
-      // Extract day, month, and year
-      const daySelectedDate = date.getDate().toString().padStart(2, "0");
-      const monthSelectedDate = (date.getMonth() + 1)
-        .toString()
-        .padStart(2, "0");
-      const yearSelectedDate = (date.getFullYear() + 543).toString();
+      // Add 543 to the year
+      const buddhistYear = (parseInt(year) + 543).toString();
 
-      // Format the date
-      const formattedDate = `${daySelectedDate}/${monthSelectedDate}/${yearSelectedDate}`;
+      // Format the date with +543 appended
+      const formattedDate = `${day}/${month}/${buddhistYear}`;
+
       console.log("formattedDate", formattedDate);
       setFormattedDateStart(formattedDate);
     }
@@ -695,31 +752,31 @@ console.log('prefix',prefix);
     setShowDatePickerStart(!showDatePickerStart);
   };
 
-  const [showDatePickerEnd, setShowDatePickerEnd] = useState(false);
-  const [selectedDateEnd, setSelectedDateEnd] = useState(null);
-  const [formattedDate321End, setFormattedDateEnd] = useState(null);
 
   const handleDatePickerEndChange = (date) => {
     setSelectedDateEnd(date);
     setShowDatePickerEnd(false); // Hide date picker after selecting a date
     const newDate = new Date(date);
-    setEndjob(newDate);
+
+    const [year, month, day] = date.split("-");
+
+    // Format the date as DD/MM/YYYY
+    const formattedDate = `${day}/${month}/${year}`;
+
+    setEndjob(formattedDate);
   };
 
   useEffect(() => {
     if (selectedDateEnd) {
-      // Convert the string to a Date object
-      const date = new Date(selectedDateEnd);
+      // Split the date string into day, month, and year
+      const [day, month, year] = selectedDateEnd.split("/");
 
-      // Extract day, month, and year
-      const daySelectedDate = date.getDate().toString().padStart(2, "0");
-      const monthSelectedDate = (date.getMonth() + 1)
-        .toString()
-        .padStart(2, "0");
-      const yearSelectedDate = (date.getFullYear() + 543).toString();
+      // Add 543 to the year
+      const buddhistYear = (parseInt(year) + 543).toString();
 
-      // Format the date
-      const formattedDate = `${daySelectedDate}/${monthSelectedDate}/${yearSelectedDate}`;
+      // Format the date with +543 appended
+      const formattedDate = `${day}/${month}/${buddhistYear}`;
+
       console.log("formattedDate", formattedDate);
       setFormattedDateEnd(formattedDate);
     }
@@ -729,47 +786,56 @@ console.log('prefix',prefix);
     setShowDatePickerEnd(!showDatePickerEnd);
   };
 
-  const [showDatePickerExceptjob, setShowDatePickerExceptjob] = useState(false);
-  const [selectedDateExceptjob, setSelectedDateExceptjob] = useState(null);
-  const [formattedDate321Exceptjob, setFormattedDateExceptjob] = useState(null);
+
 
   const handleDatePickerExceptjobChange = (date) => {
     setSelectedDateExceptjob(date);
     setShowDatePickerExceptjob(false); // Hide date picker after selecting a date
     const newDate = new Date(date);
-    setExceptjob(newDate);
+
+    const [year, month, day] = date.split("-");
+
+    // Format the date as DD/MM/YYYY
+    const formattedDate = `${day}/${month}/${year}`;
+
+    setExceptjob(formattedDate);
   };
 
   useEffect(() => {
     if (selectedDateExceptjob) {
-      // Convert the string to a Date object
-      const date = new Date(selectedDateExceptjob);
+      // Split the date string into day, month, and year
+      const [day, month, year] = selectedDateExceptjob.split("/");
 
-      // Extract day, month, and year
-      const daySelectedDate = date.getDate().toString().padStart(2, "0");
-      const monthSelectedDate = (date.getMonth() + 1)
-        .toString()
-        .padStart(2, "0");
-      const yearSelectedDate = (date.getFullYear() + 543).toString();
+      // Add 543 to the year
+      const buddhistYear = (parseInt(year) + 543).toString();
 
-      // Format the date
-      const formattedDate = `${daySelectedDate}/${monthSelectedDate}/${yearSelectedDate}`;
+      // Format the date with +543 appended
+      const formattedDate = `${day}/${month}/${buddhistYear}`;
+
       console.log("formattedDate", formattedDate);
       setFormattedDateExceptjob(formattedDate);
     }
   }, [selectedDateExceptjob]);
 
   const toggleDatePickerExceptjob = () => {
-    setShowDatePickerExceptjob(!showDatePickerExceptjob);
+    try {
+      // Toggle the state of the date picker
+      setShowDatePickerExceptjob(!showDatePickerExceptjob);
+      
+      // Optionally add more logic here if needed
+      console.log('Date picker toggled:', showDatePickerExceptjob);
+    } catch (error) {
+      // Catch and log any errors
+      console.error('An error occurred while toggling the date picker:', error);
+    }
   };
-
-
+  
   // console.log('startjob',startjob);
   // console.log('endjob',endjob);
 
-  const handleExceptDateChange = (date) => {
-    setExceptjob(date);
-  };
+  // const handleExceptDateChange = (date) => {
+  //   setExceptjob(date);
+  // };
   // const handleDateOfBirth = (date) => {
   //   setDateOfBirth(date);
   // };
@@ -782,6 +848,7 @@ console.log('prefix',prefix);
     } else {
       setNewEmp(false);
     }
+    
   }, [employeeselection]);
 
   useEffect(() => {
@@ -1130,7 +1197,7 @@ console.log('prefix',prefix);
                                   dateFormat="dd/MM/yyyy"
                                 />
                               </div> */}
-                               <div
+                              <div
                                 style={{ position: "relative", zIndex: 9999 }}
                               >
                                 {/* <DatePicker
