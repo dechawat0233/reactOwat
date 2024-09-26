@@ -571,13 +571,10 @@ router.post("/search", async (req, res) => {
     const employees = await Employee.find(query);
 
     // Format the startjob field from dd/mm/yyyy to mm/dd/yyyy
-    const formattedEmployees = await employees.map(employee => {
-      if (employee.startjob) {
+      if (employees.startjob) {
         const [day, month, year] = employee.startjob.split('/');
-        employee.startjob = `${month}/${day}/${year}`;
+        employees.startjob = `${month}/${day}/${year}`;
       }
-      return employee;
-    });
 
     // console.log('Search Results:');
     // console.log(employees);
