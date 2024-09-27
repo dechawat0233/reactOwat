@@ -578,7 +578,7 @@ router.post("/search", async (req, res) => {
       }
       if (employees[0].exceptjob) {
         const [day, month, year] = employees[0].exceptjob.split('/');
-        employees[0].exceptjob= `${month}/${day}/${year}`;
+        employees[0].exceptjob= `${day}/${month}/${year}`;
         console.log('employees.exceptjob' + employees[0].exceptjob)
       }
       if (employees[0].addSalary == null) {
