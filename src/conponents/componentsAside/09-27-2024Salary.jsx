@@ -477,63 +477,36 @@ function Salary() {
   // };
   const [showDatePickerStartcount, setShowDatePickerStartcount] =
     useState(false);
-  const [selectedDateStartcount, setSelectedDateStartcount] = useState('');
+  const [selectedDateStartcount, setSelectedDateStartcount] = useState(null);
   const [formattedDate321Startcount, setFormattedDateStartcount] =
     useState(null);
 
   const handleDatePickerStartcountChange = (date) => {
     setSelectedDateStartcount(date);
     setShowDatePickerStartcount(false); // Hide date picker after selecting a date
-    // const newDate = new Date(date);
-    setStartcount(date);
+    const newDate = new Date(date);
+    setStartcount(newDate);
     setEmployeeData((prevData) => ({
       ...prevData,
-      ["salarystartcountupdate"]: date,
+      ["salarystartcountupdate"]: newDate,
     }));
   };
-console.log('startcount',startcount);
-  // useEffect(() => {
-  //   if (selectedDateStartcount) {
-  //     // Convert the string to a Date object
-  //     const date = new Date(selectedDateStartcount);
-
-  //     // Extract day, month, and year
-  //     const daySelectedDate = date.getDate().toString().padStart(2, "0");
-  //     const monthSelectedDate = (date.getMonth() + 1)
-  //       .toString()
-  //       .padStart(2, "0");
-  //     const yearSelectedDate = (date.getFullYear() + 543).toString();
-
-  //     // Format the date
-  //     const formattedDate = `${daySelectedDate}/${monthSelectedDate}/${yearSelectedDate}`;
-  //     console.log("formattedDate", formattedDate);
-  //     setFormattedDateStartcount(formattedDate);
-  //   }
-  // }, [selectedDateStartcount]);
 
   useEffect(() => {
     if (selectedDateStartcount) {
-      let formattedDate = "";
-  
-      // Check if the date is in the YYYY-MM-DD format
-      if (selectedDateStartcount.includes("-")) {
-        // Split the date string into year, month, day
-        const [year, month, day] = selectedDateStartcount.split("-");
-  
-        // Format the date as DD/MM/YYYY
-        formattedDate = `${day}/${month}/${year}`;
-      } else {
-        // Assume the date is already in DD/MM/YYYY format and split it
-        const [day, month, year] = selectedDateStartcount.split("/");
-  
-        // Add 543 to the year for the Buddhist calendar
-        const buddhistYear = (parseInt(year) + 543).toString();
-  
-        // Format the date with the Buddhist year
-        formattedDate = `${day}/${month}/${buddhistYear}`;
-      }
-  
-      console.log("selectedDateStartcount", selectedDateStartcount);
+      // Convert the string to a Date object
+      const date = new Date(selectedDateStartcount);
+
+      // Extract day, month, and year
+      const daySelectedDate = date.getDate().toString().padStart(2, "0");
+      const monthSelectedDate = (date.getMonth() + 1)
+        .toString()
+        .padStart(2, "0");
+      const yearSelectedDate = (date.getFullYear() + 543).toString();
+
+      // Format the date
+      const formattedDate = `${daySelectedDate}/${monthSelectedDate}/${yearSelectedDate}`;
+      console.log("formattedDate", formattedDate);
       setFormattedDateStartcount(formattedDate);
     }
   }, [selectedDateStartcount]);
@@ -642,36 +615,14 @@ console.log('startcount',startcount);
   }
   console.log("workplaceSelection", workplaceSelection);
 
-  // function formatDateToDMY(dateString) {
-  //   const date = new Date(dateString);
-  //   const day = String(date.getDate()).padStart(2, "0"); // Get day and add leading zero if necessary
-  //   const month = String(date.getMonth() + 1).padStart(2, "0"); // Get month (note: months are zero-indexed)
-  //   const year = date.getFullYear(); // Get full year
-
-  //   return `${day}/${month}/${year + 543}`; // Return formatted date as day/month/year
-  // }
   function formatDateToDMY(dateString) {
-    let day, month, year;
-  
-    // Check if dateString is in the DD/MM/YYYY format
-    if (dateString.includes("/")) {
-      // Split the date string into day, month, year
-      [day, month, year] = dateString.split("/");
-  
-      // Add 543 to the year for the Buddhist calendar
-      year = parseInt(year) + 543;
-    } else {
-      // If the date is in YYYY-MM-DD format, use the Date object
-      const date = new Date(dateString);
-      day = String(date.getDate()).padStart(2, "0");
-      month = String(date.getMonth() + 1).padStart(2, "0");
-      year = date.getFullYear() + 543;
-    }
-  
-    // Return the formatted date as day/month/year
-    return `${day}/${month}/${year}`;
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, "0"); // Get day and add leading zero if necessary
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Get month (note: months are zero-indexed)
+    const year = date.getFullYear(); // Get full year
+
+    return `${day}/${month}/${year + 543}`; // Return formatted date as day/month/year
   }
-  
 
   async function onEmployeeSelect(empSelect) {
     await setEmployeeData(empSelect);
@@ -718,7 +669,7 @@ console.log('startcount',startcount);
 
     if (empSelect.exceptjob) {
       // await setExceptjob(new Date(empSelect.exceptjob || ""));
-      const formattedDate = formatDateToDMY(empSelect.exceptjob);
+      const formattedDate = formatDateToDMY(empSelect.startjob);
       // Now set the formatted date
       await setExceptjob(formattedDate);
     }
@@ -732,13 +683,7 @@ console.log('startcount',startcount);
       await setFormattedDateStartcount(
         empSelect.startcount ? empSelect.startcount : ""
       );
-
-      await setSelectedDateStartcount(
-        empSelect.startcount ? empSelect.startcount : ""
-      );
     }
-    
-
     if (empSelect.salaryupdate) {
       await setSalaryupdate(
         empSelect.salaryupdate ? empSelect.salaryupdate : ""
@@ -780,10 +725,6 @@ console.log('startcount',startcount);
   //     handleChange({ target: { type: 'checkbox', checked: !employeeData.salaryadd1 } }, 'salaryadd1');
   //     // alert('1');
   // };
-
-  // console.log('startjob',startjob);
-  //   console.log('exceptjob',exceptjob);
-  //   console.log('startcount',startcount);
 
   const toggleCheckbox1 = () => {
     setSalaryadd1((prevValue) => {

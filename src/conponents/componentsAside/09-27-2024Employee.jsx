@@ -465,40 +465,6 @@ function Employee() {
 
     setExceptjob(empSelect.exceptjob ? empSelect.exceptjob : "");
     // setSelectedDateExceptjob(empSelect.exceptjob ? empSelect.exceptjob : "");
-    const startJobDate = empSelect.startjob ? empSelect.startjob : "";
-    if (startJobDate) {
-      // Split the exceptJobDate into day, month, year
-      const [day, month, year] = startJobDate.split("/");
-
-      // Add 543 to the year
-      const buddhistYear = parseInt(year).toString();
-
-      // Format the date as YYYY-MM-DD in Buddhist calendar
-      const formattedDate = `${buddhistYear}-${month}-${day}`;
-      console.log("formattedDate", formattedDate);
-      // Set the formatted date
-      setSelectedDateStart(formattedDate);
-    } else {
-      // Set an empty string if there's no exceptjob date
-      setSelectedDateStart("");
-    }
-    const endJobDate = empSelect.endjob ? empSelect.endjob : "";
-    if (endJobDate) {
-      // Split the exceptJobDate into day, month, year
-      const [day, month, year] = endJobDate.split("/");
-
-      // Add 543 to the year
-      const buddhistYear = parseInt(year).toString();
-
-      // Format the date as YYYY-MM-DD in Buddhist calendar
-      const formattedDate = `${buddhistYear}-${month}-${day}`;
-      console.log("formattedDate", formattedDate);
-      // Set the formatted date
-      setSelectedDateEnd(formattedDate);
-    } else {
-      // Set an empty string if there's no exceptjob date
-      setSelectedDateEnd("");
-    }
     const exceptJobDate = empSelect.exceptjob ? empSelect.exceptjob : "";
     if (exceptJobDate) {
       // Split the exceptJobDate into day, month, year
@@ -764,44 +730,18 @@ function Employee() {
     setStartjob(formattedDate);
   };
 
-  // useEffect(() => {
-  //   if (selectedDateStart) {
-  //     // Split the date string into day, month, and year
-  //     const [day, month, year] = selectedDateStart.split("/");
-
-  //     // Add 543 to the year
-  //     const buddhistYear = (parseInt(year) + 543).toString();
-
-  //     // Format the date with +543 appended
-  //     const formattedDate = `${day}/${month}/${buddhistYear}`;
-
-  //     console.log("formattedDate", formattedDate);
-  //     setFormattedDateStart(formattedDate);
-  //   }
-  // }, [selectedDateStart]);
   useEffect(() => {
     if (selectedDateStart) {
-      let formattedDate = "";
-  
-      // Check if the date is in the YYYY-MM-DD format
-      if (selectedDateStart.includes("-")) {
-        // Split the date string into year, month, day
-        const [year, month, day] = selectedDateStart.split("-");
-  
-        // Format the date as DD/MM/YYYY
-        formattedDate = `${day}/${month}/${year}`;
-      } else {
-        // Assume the date is already in DD/MM/YYYY format and split it
-        const [day, month, year] = selectedDateStart.split("/");
-  
-        // Add 543 to the year for the Buddhist calendar
-        const buddhistYear = (parseInt(year) + 543).toString();
-  
-        // Format the date with the Buddhist year
-        formattedDate = `${day}/${month}/${buddhistYear}`;
-      }
-  
-      console.log("selectedDateExceptjob", selectedDateStart);
+      // Split the date string into day, month, and year
+      const [day, month, year] = selectedDateStart.split("/");
+
+      // Add 543 to the year
+      const buddhistYear = (parseInt(year) + 543).toString();
+
+      // Format the date with +543 appended
+      const formattedDate = `${day}/${month}/${buddhistYear}`;
+
+      console.log("formattedDate", formattedDate);
       setFormattedDateStart(formattedDate);
     }
   }, [selectedDateStart]);
@@ -823,44 +763,18 @@ function Employee() {
     setEndjob(formattedDate);
   };
 
-  // useEffect(() => {
-  //   if (selectedDateEnd) {
-  //     // Split the date string into day, month, and year
-  //     const [day, month, year] = selectedDateEnd.split("/");
-
-  //     // Add 543 to the year
-  //     const buddhistYear = (parseInt(year) + 543).toString();
-
-  //     // Format the date with +543 appended
-  //     const formattedDate = `${day}/${month}/${buddhistYear}`;
-
-  //     console.log("formattedDate", formattedDate);
-  //     setFormattedDateEnd(formattedDate);
-  //   }
-  // }, [selectedDateEnd]);
   useEffect(() => {
     if (selectedDateEnd) {
-      let formattedDate = "";
-  
-      // Check if the date is in the YYYY-MM-DD format
-      if (selectedDateEnd.includes("-")) {
-        // Split the date string into year, month, day
-        const [year, month, day] = selectedDateEnd.split("-");
-  
-        // Format the date as DD/MM/YYYY
-        formattedDate = `${day}/${month}/${year}`;
-      } else {
-        // Assume the date is already in DD/MM/YYYY format and split it
-        const [day, month, year] = selectedDateEnd.split("/");
-  
-        // Add 543 to the year for the Buddhist calendar
-        const buddhistYear = (parseInt(year) + 543).toString();
-  
-        // Format the date with the Buddhist year
-        formattedDate = `${day}/${month}/${buddhistYear}`;
-      }
-  
-      console.log("selectedDateExceptjob", selectedDateEnd);
+      // Split the date string into day, month, and year
+      const [day, month, year] = selectedDateEnd.split("/");
+
+      // Add 543 to the year
+      const buddhistYear = (parseInt(year) + 543).toString();
+
+      // Format the date with +543 appended
+      const formattedDate = `${day}/${month}/${buddhistYear}`;
+
+      console.log("formattedDate", formattedDate);
       setFormattedDateEnd(formattedDate);
     }
   }, [selectedDateEnd]);
@@ -882,48 +796,21 @@ function Employee() {
     setExceptjob(formattedDate);
   };
 
-  // useEffect(() => {
-  //   if (selectedDateExceptjob) {
-  //     // Split the date string into day, month, and year
-  //     const [day, month, year] = selectedDateExceptjob.split("/");
-
-  //     // Add 543 to the year
-  //     const buddhistYear = (parseInt(year) + 543).toString();
-
-  //     // Format the date with +543 appended
-  //     const formattedDate = `${day}/${month}/${buddhistYear}`;
-
-  //     console.log("selectedDateExceptjob", selectedDateExceptjob);
-  //     setFormattedDateExceptjob(formattedDate);
-  //   }
-  // }, [selectedDateExceptjob]);
   useEffect(() => {
     if (selectedDateExceptjob) {
-      let formattedDate = "";
-  
-      // Check if the date is in the YYYY-MM-DD format
-      if (selectedDateExceptjob.includes("-")) {
-        // Split the date string into year, month, day
-        const [year, month, day] = selectedDateExceptjob.split("-");
-  
-        // Format the date as DD/MM/YYYY
-        formattedDate = `${day}/${month}/${year}`;
-      } else {
-        // Assume the date is already in DD/MM/YYYY format and split it
-        const [day, month, year] = selectedDateExceptjob.split("/");
-  
-        // Add 543 to the year for the Buddhist calendar
-        const buddhistYear = (parseInt(year) + 543).toString();
-  
-        // Format the date with the Buddhist year
-        formattedDate = `${day}/${month}/${buddhistYear}`;
-      }
-  
+      // Split the date string into day, month, and year
+      const [day, month, year] = selectedDateExceptjob.split("/");
+
+      // Add 543 to the year
+      const buddhistYear = (parseInt(year) + 543).toString();
+
+      // Format the date with +543 appended
+      const formattedDate = `${day}/${month}/${buddhistYear}`;
+
       console.log("selectedDateExceptjob", selectedDateExceptjob);
       setFormattedDateExceptjob(formattedDate);
     }
   }, [selectedDateExceptjob]);
-  
 
   const toggleDatePickerExceptjob = () => {
     try {
