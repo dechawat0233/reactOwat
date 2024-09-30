@@ -518,7 +518,7 @@ router.get("/list", async (req, res) => {
       if (employee.deductSalary == null) {
         employee.deductSalary = [];
       }
-      if (employee.department== null) {
+      if (employee.department == null) {
         employee.department= '';
       }
 
