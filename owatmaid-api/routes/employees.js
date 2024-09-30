@@ -611,6 +611,9 @@ router.post("/search", async (req, res) => {
       if (employees[0].deductSalary == null) {
         employees[0].deductSalary = [];
       }
+      if (employees[0].department  && employees[0].department == null) {
+        employees[0].department= '';
+      }
 
       
     // console.log('Search Results:');
