@@ -2069,7 +2069,7 @@ setWName(workplacesearch.workplaceName + ': ' + dep );
                     />
                   </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                   <div class="form-group">
                     <label role="agencyname">ชื่อพนักงาน</label>
                     <input
@@ -2077,7 +2077,7 @@ setWName(workplacesearch.workplaceName + ': ' + dep );
                       class="form-control"
                       id="agencyname"
                       placeholder="ชื่อพนักงาน"
-                      value={name + lastName}
+                      value={name +' '+ lastName}
                       onChange={(e) => setName(e.target.value)}
                     />
                   </div>
