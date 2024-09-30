@@ -285,13 +285,13 @@ function AddsettimeEmployee() {
         );
         if (workplacesearch) {
           // alert('wId ' + wId);
+// alert(workplacesearch.workplaceGroup.length);
 
           //department: employee department process
           if (
             searchResult[0].workplace === wId &&
-            searchResult[0].department !== "" && workplacesearch.workplaceGroup[
-              parseInt(searchResult[0].department || 0) - 1
-            ].workplaceComplexData
+            searchResult[0].department !== "" && 
+            workplacesearch.workplaceGroup.length > 0
           ) {
             // alert(searchResult[0].workplace );
             // alert(searchResult[0].department);
