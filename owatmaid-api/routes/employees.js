@@ -581,7 +581,14 @@ router.post("/search", async (req, res) => {
         employees[0].exceptjob= `${month}/${day}/${year}`;
         console.log('employees.exceptjob' + employees[0].exceptjob)
       }
+      if (employees[0].addSalary == null) {
+        employees[0].addSalary= [];
+      }
+      if (employees[0].deductSalary == null) {
+        employees[0].deductSalary = [];
+      }
 
+      
     // console.log('Search Results:');
     // console.log(employees);
     let textSearch = "test";
