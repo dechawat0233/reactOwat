@@ -502,7 +502,7 @@ router.get("/import-json", async (req, res) => {
 router.get("/list", async (req, res) => {
   const employees = await Employee.find();
 
-  employees = employees.map(employee => {
+  const employeesReturn  = employees.map(employee => {
     // Format the startjob field from dd/mm/yyyy to mm/dd/yyyy
       if (employee.startjob) {
         const [day, month, year] = employee.startjob.split('/');
@@ -525,7 +525,7 @@ router.get("/list", async (req, res) => {
 return employee;
   });
 
-  res.json(employees);
+  res.json(employeesReturn  );
 });
 
 router.get("/delete-all", async (req, res) => {
