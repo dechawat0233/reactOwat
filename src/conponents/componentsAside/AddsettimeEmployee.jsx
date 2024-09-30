@@ -289,7 +289,9 @@ function AddsettimeEmployee() {
           //department: employee department process
           if (
             searchResult[0].workplace === wId &&
-            searchResult[0].department !== ""
+            searchResult[0].department !== "" && workplacesearch.workplaceGroup[
+              parseInt(searchResult[0].department || 0) - 1
+            ].workplaceComplexData
           ) {
             // alert(searchResult[0].workplace );
             // alert(searchResult[0].department);
