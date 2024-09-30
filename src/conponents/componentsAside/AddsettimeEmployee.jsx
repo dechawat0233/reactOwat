@@ -48,7 +48,7 @@ function AddsettimeEmployee() {
   const [searchEmployeeName, setSearchEmployeeName] = useState("");
   const [month, setMonth] = useState("01");
   const [year, setYear] = useState("");
-
+  const [searchResult, setSearchResult] = useState([]);
   useEffect(() => {
     setMonth("01");
 
@@ -285,12 +285,12 @@ function AddsettimeEmployee() {
         );
         if (workplacesearch) {
           // alert('wId ' + wId);
-
           //department: employee department process
           if (
-            searchResult[0].workplace === wId &&
+            searchResult[0].workplace == wId &&
             searchResult[0].department !== ""
           ) {
+
             // alert(searchResult[0].workplace );
             // alert(searchResult[0].department);
             // alert(workplacesearch.workplaceGroup[parseInt(searchResult[0].department || 0) -1].workplaceComplexName );
@@ -316,8 +316,6 @@ function AddsettimeEmployee() {
             await workplacesearch.workplaceGroup[
               parseInt(searchResult[0].department || 0) - 1
             ].workplaceComplexData.workTimeDay.map(async (item, index) => {
-
-
               //    alert(JSON.stringify(item.allTimes));
               // const morningTimes = await item.allTimes.filter(time => time.shift === "กะเช้า");
               // await alert(morningTimes[0].startTime );
@@ -431,8 +429,10 @@ function AddsettimeEmployee() {
                       ) || ""
                     );
                     await setWSelectOtTime(specialt_shift[0].startTimeOT || "");
-                    await setWSelectOtTimeout(specialt_shift[0].endTimeOT || "");
-                   
+                    await setWSelectOtTimeout(
+                      specialt_shift[0].endTimeOT || ""
+                    );
+
                     break;
                   default:
                     setWStartTime("");
@@ -555,7 +555,9 @@ function AddsettimeEmployee() {
                       ) || ""
                     );
                     await setWSelectOtTime(specialt_shift[0].startTimeOT || "");
-                    await setWSelectOtTimeout(specialt_shift[0].endTimeOT || "");
+                    await setWSelectOtTimeout(
+                      specialt_shift[0].endTimeOT || ""
+                    );
                     break;
                   default:
                     await setWStartTime("");
@@ -680,7 +682,9 @@ function AddsettimeEmployee() {
                       ) || ""
                     );
                     await setWSelectOtTime(specialt_shift[0].startTimeOT || "");
-                    await setWSelectOtTimeout(specialt_shift[0].endTimeOT || "");
+                    await setWSelectOtTimeout(
+                      specialt_shift[0].endTimeOT || ""
+                    );
                     break;
                   default:
                     await setWStartTime("");
@@ -698,6 +702,8 @@ function AddsettimeEmployee() {
             // workplacesearch = await tmp;
             // await alert(JSON.stringify(tmp));
           } else {
+
+            console.log("");
             // setWName(workplacesearch.workplaceName);
             // workplaceUsed  = await workplacesearch;
             // alert(JSON.stringify('hi2') );
@@ -811,7 +817,7 @@ function AddsettimeEmployee() {
                     // setWOtTime(calTime("0", "0", "24") || "");
                     // setWSelectOtTime("");
                     // setWSelectOtTimeout("");
-                     const specialt_shift = await item.allTimes.filter(
+                    const specialt_shift = await item.allTimes.filter(
                       (time) => time.shift === "กะเช้า"
                     );
                     await setWStartTime(specialt_shift[0].startTime || "");
@@ -831,7 +837,9 @@ function AddsettimeEmployee() {
                       ) || ""
                     );
                     await setWSelectOtTime(specialt_shift[0].startTimeOT || "");
-                    await setWSelectOtTimeout(specialt_shift[0].endTimeOT || "");
+                    await setWSelectOtTimeout(
+                      specialt_shift[0].endTimeOT || ""
+                    );
                     break;
                   default:
                     setWStartTime("");
@@ -934,7 +942,7 @@ function AddsettimeEmployee() {
                     // await setWOtTime(calTime("0", "0", "24") || "");
                     // await setWSelectOtTime("");
                     // await setWSelectOtTimeout("");
-                      const specialt_shift = await item.allTimes.filter(
+                    const specialt_shift = await item.allTimes.filter(
                       (time) => time.shift === "กะเช้า"
                     );
                     await setWAllTime(
@@ -954,7 +962,9 @@ function AddsettimeEmployee() {
                       ) || ""
                     );
                     await setWSelectOtTime(specialt_shift[0].startTimeOT || "");
-                    await setWSelectOtTimeout(specialt_shift[0].endTimeOT || "");
+                    await setWSelectOtTimeout(
+                      specialt_shift[0].endTimeOT || ""
+                    );
                     break;
                   default:
                     await setWStartTime("");
@@ -1059,7 +1069,7 @@ function AddsettimeEmployee() {
                     // await setWOtTime(calTime("0", "0", "24") || "");
                     // await setWSelectOtTime("");
                     // await setWSelectOtTimeout("");
-                     const specialt_shift = await item.allTimes.filter(
+                    const specialt_shift = await item.allTimes.filter(
                       (time) => time.shift === "กะเช้า"
                     );
                     await setWAllTime(
@@ -1079,7 +1089,9 @@ function AddsettimeEmployee() {
                       ) || ""
                     );
                     await setWSelectOtTime(specialt_shift[0].startTimeOT || "");
-                    await setWSelectOtTimeout(specialt_shift[0].endTimeOT || "");
+                    await setWSelectOtTimeout(
+                      specialt_shift[0].endTimeOT || ""
+                    );
                     break;
                   default:
                     await setWStartTime("");
@@ -1137,7 +1149,6 @@ function AddsettimeEmployee() {
     }
   }, [wStartTime, wEndTime]);
 
-
   useEffect(() => {
     if (wSelectOtTime !== "" && wSelectOtTimeout !== "") {
       if (wId !== "" && wName !== "") {
@@ -1173,30 +1184,33 @@ function AddsettimeEmployee() {
         (workplace) => workplace.workplaceId === wId
       );
       if (workplacesearch) {
-
         //department: employee department process
-        if(searchResult[0].workplace === wId && searchResult[0].department !== "" && workplacesearch.workplaceGroup.length > 0) {
-          
-          // alert(searchResult[0].workplace );      
-// alert(searchResult[0].department);      
-// alert(workplacesearch.workplaceGroup[parseInt(searchResult[0].department || 0) -1].workplaceComplexName );
-let dep = workplacesearch.workplaceGroup[parseInt(searchResult[0].department || 0) -1].workplaceComplexName || '';
+        if (
+          searchResult[0].workplace === wId &&
+          searchResult[0].department !== "" &&
+          workplacesearch.workplaceGroup.length > 0
+        ) {
+          // alert(searchResult[0].workplace );
+          // alert(searchResult[0].department);
+          // alert(workplacesearch.workplaceGroup[parseInt(searchResult[0].department || 0) -1].workplaceComplexName );
+          let dep =
+            workplacesearch.workplaceGroup[
+              parseInt(searchResult[0].department || 0) - 1
+            ].workplaceComplexName || "";
 
-setWName(workplacesearch.workplaceName + ': ' + dep );
+          setWName(workplacesearch.workplaceName + ": " + dep);
 
-
-            setWName(workplacesearch.workplaceName + ": " + dep);
-          } else {
-            setWName(workplacesearch.workplaceName);
-          }
-
-          // Optional: Add work time to selection (as per your comment)
-          // alert(JSON.stringify(workplacesearch.workTimeDay, null, 2));
+          setWName(workplacesearch.workplaceName + ": " + dep);
         } else {
-          setWName("");
+          setWName(workplacesearch.workplaceName);
         }
+
+        // Optional: Add work time to selection (as per your comment)
+        // alert(JSON.stringify(workplacesearch.workTimeDay, null, 2));
+      } else {
+        setWName("");
       }
-  
+    }
   }, [wId]);
 
   //search employeeId by employeeName
@@ -1490,7 +1504,6 @@ setWName(workplacesearch.workplaceName + ': ' + dep );
     });
   };
 
-
   // function calTime(start, end, limit) {
 
   //     const startHours = parseFloat(start.split('.')[0]);
@@ -1555,7 +1568,6 @@ setWName(workplacesearch.workplaceName + ': ' + dep );
   //data for search
   const [searchWorkplaceId, setSearchWorkplaceId] = useState(""); //รหัสหน่วยงาน
   const [searchWorkplaceName, setSearchWorkplaceName] = useState(""); //ชื่อหน่วยงาน
-  const [searchResult, setSearchResult] = useState([]);
 
   async function handleSearch(event) {
     event.preventDefault();
@@ -2077,7 +2089,7 @@ setWName(workplacesearch.workplaceName + ': ' + dep );
                       class="form-control"
                       id="agencyname"
                       placeholder="ชื่อพนักงาน"
-                      value={name +' '+ lastName}
+                      value={name + " " + lastName}
                       onChange={(e) => setName(e.target.value)}
                     />
                   </div>
