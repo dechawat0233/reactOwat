@@ -501,6 +501,27 @@ router.get("/import-json", async (req, res) => {
 // Get list of employees
 router.get("/list", async (req, res) => {
   const employees = await Employee.find();
+
+  employees = employees.map(employee => {
+    // Format the startjob field from dd/mm/yyyy to mm/dd/yyyy
+      if (employee.startjob) {
+        const [day, month, year] = employee.startjob.split('/');
+        employee.startjob = `${month}/${day}/${year}`;
+      }
+      if (employee.exceptjob) {
+        const [day, month, year] = employee.exceptjob.split('/');
+        employee.exceptjob= `${month}/${day}/${year}`;
+      }
+      if (employee.addSalary == null) {
+        employee.addSalary= [];
+      }
+      if (employee.deductSalary == null) {
+        employee.deductSalary = [];
+      }
+
+return employee;
+  });
+
   res.json(employees);
 });
 
