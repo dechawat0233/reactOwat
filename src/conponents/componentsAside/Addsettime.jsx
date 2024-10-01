@@ -11,6 +11,7 @@ import EmployeesSelected from './EmployeesSelected';
 
 import AddsettimeWorkplace from './AddsettimeWorkplace';
 import AddsettimeEmployee from './AddsettimeEmployee';
+import AddsettimeUpload from './AddsettimeUpload';
 import AddsettimeOutsiderEmployee from './AddsettimeOutsiderEmployee';
 import AddsettimeOutsiderWorkplace from './AddsettimeOutsiderWorkplace';
 import '../editwindowcss.css';
@@ -79,6 +80,7 @@ function Addsettime() {
                                                     <select id="selectOption" class="form-control" value={selectedOption} onChange={handleOptionChange}>
                                                         <option value="workplace">รูปแบบหน่วยงาน</option>
                                                         <option value="employee">รูปแบบบุคคล</option>
+                                                        <option value="upload">อัพโหลดไฟล์ลงเวลา</option>
                                                         {/* <option value="Outsiderworkplace">รูปแบบหน่วยงาน(บุคคลภายนอก)</option>
                                                         <option value="Outsideremployee">รูปแบบบุคคล(บุคคลภายนอก)</option> */}
                                                     </select>
@@ -95,6 +97,7 @@ function Addsettime() {
                                     )} */}
                                     {selectedOption === 'workplace' && <AddsettimeWorkplace />}
                                     {selectedOption === 'employee' && <AddsettimeEmployee />}
+                                    {selectedOption === 'upload' && <AddsettimeUpload />}
                                     {selectedOption === 'Outsiderworkplace' && <AddsettimeOutsiderWorkplace />}
                                     {selectedOption === 'Outsideremployee' && <AddsettimeOutsiderEmployee />}
 
