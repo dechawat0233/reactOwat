@@ -10,6 +10,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import EmployeesSelected from "./EmployeesSelected";
 
 function AddsettimeUpload() {
+
+  //file upload
+  const [file, setFile] = useState(null);
+
   const [isDataTrue, setIsDataTrue] = useState(false);
   const linkRef = useRef(null);
 
@@ -149,9 +153,36 @@ function AddsettimeUpload() {
     const file = e.target.files[0];
     if (file) {
       setFileName(file.name); // Set the file name to display in the label
+      setFile(e.target.files[0]);
+
+    } else {
+      alert('กรุณาเลือกไฟล์ลงเวลา');
     }
   };
 
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await axios.post(endpoint  + '/api/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('File uploaded successfully:', response.data);
+            // If upload is successful, alert success
+            if (response.status === 200) {
+              alert('Upload ไฟล์สำเร็จ');
+              window.location.reload(); // Reload the page to reset the form and state
+            }
+
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  };
 
   useEffect(() => {
     // Fetch data from the API when the component mounts
@@ -2020,7 +2051,7 @@ function AddsettimeUpload() {
             <div class="row">
               <div class="col-md-12">
                 <section class="Frame">
-                  <form>
+                  <form onSubmit={handleSubmit}>
                     <div class="row">
                       <div class="col-md-6">
                          <div className="custom-file">
@@ -2033,8 +2064,10 @@ function AddsettimeUpload() {
       <label className="custom-file-label" htmlFor="customFile">
         {fileName} {/* Display the file name here */}
       </label>
+      <button type="submit">Upload</button>
     </div>
                       </div>
+
                     </div>
                   </form>
                 </section>

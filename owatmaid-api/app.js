@@ -20,6 +20,7 @@ var leaveRouter = require('./routes/leave');
 var addsalaryRouter = require('./routes/addsalary');
 var oldemployeesRouter = require('./routes/oldemployees');
 var imgemployeeRouter = require('./routes/imgemployee');
+var uploadRouter = require('./routes/upload');
 
 var app = express();
 
@@ -49,6 +50,7 @@ app.use('/conclude', concludeRouter );
 app.use('/accounting', accountingRouter );
 app.use('/welfare', welfareRouter);
 app.use('/leave', leaveRouter);
+app.use('/api', uploadRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
