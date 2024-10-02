@@ -9,8 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import EmployeesSelected from "./EmployeesSelected";
 
-function AddsettimeUpload() {
-
+function AddsettimeUpload({ workplaceList }) {
   //file upload
   const [file, setFile] = useState(null);
 
@@ -28,6 +27,7 @@ function AddsettimeUpload() {
     borderLeft: "2px solid #000",
   };
 
+  // console.log("workplaceList", workplaceList);
   const [cashSalary, setCashSalary] = useState(false);
   const [specialtSalary, setSpecialtSalary] = useState("");
   const [specialtSalaryOT, setSpecialtSalaryOT] = useState("");
@@ -144,7 +144,7 @@ function AddsettimeUpload() {
 
   //////////////////////////////
   const [employeeList, setEmployeeList] = useState([]);
-  const [workplaceList, setWorkplaceList] = useState([]);
+  // const [workplaceList, setWorkplaceList] = useState([]);
 
   const [fileName, setFileName] = useState("เลือกไฟล์");
 
@@ -154,33 +154,30 @@ function AddsettimeUpload() {
     if (file) {
       setFileName(file.name); // Set the file name to display in the label
       setFile(e.target.files[0]);
-
     } else {
-      alert('กรุณาเลือกไฟล์ลงเวลา');
+      alert("กรุณาเลือกไฟล์ลงเวลา");
     }
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append("file", file);
 
     try {
-      const response = await axios.post(endpoint  + '/api/upload', formData, {
+      const response = await axios.post(endpoint + "/api/upload", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       });
-      console.log('File uploaded successfully:', response.data);
-            // If upload is successful, alert success
-            if (response.status === 200) {
-              alert('Upload ไฟล์สำเร็จ');
-              window.location.reload(); // Reload the page to reset the form and state
-            }
-
+      console.log("File uploaded successfully:", response.data);
+      // If upload is successful, alert success
+      if (response.status === 200) {
+        alert("Upload ไฟล์สำเร็จ");
+        window.location.reload(); // Reload the page to reset the form and state
+      }
     } catch (error) {
-      console.error('Error uploading file:', error);
+      console.error("Error uploading file:", error);
     }
   };
 
@@ -199,21 +196,21 @@ function AddsettimeUpload() {
 
   console.log(employeeList);
 
-  useEffect(() => {
-    // Fetch data from the API when the component mounts
-    fetch(endpoint + "/workplace/list")
-      .then((response) => response.json())
-      .then((data) => {
-        // Update the state with the fetched data
-        setWorkplaceList(data);
-        // alert(data[0].workplaceName);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []); // The empty array [] ensures that the effect runs only once after the initial render
+  // useEffect(() => {
+  //   // Fetch data from the API when the component mounts
+  //   fetch(endpoint + "/workplace/list")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       // Update the state with the fetched data
+  //       setWorkplaceList(data);
+  //       // alert(data[0].workplaceName);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching data:", error);
+  //     });
+  // }, []); // The empty array [] ensures that the effect runs only once after the initial render
 
-  console.log(workplaceList);
+  // console.log(workplaceList);
 
   //search employee name by employeeId
   // console.log(workplaceList);
@@ -1975,6 +1972,34 @@ function AddsettimeUpload() {
   console.log("SearchEmployeeName", searchEmployeeName);
   console.log("SearchEmployeeId", searchEmployeeId);
 
+  const handleWorkplaceIdChange = (value) => {
+    setSearchWorkplaceId(value);
+
+    // Find corresponding workplace name based on workplace ID
+    const selectedWorkplace = workplaceList.find(
+      (wp) => wp.workplaceId === value
+    );
+    if (selectedWorkplace) {
+      setSearchWorkplaceName(selectedWorkplace.workplaceName);
+    } else {
+      setSearchWorkplaceName(""); // Clear if not found
+    }
+  };
+
+  const handleWorkplaceNameChange = (value) => {
+    setSearchWorkplaceName(value);
+
+    // Find corresponding workplace ID based on workplace name
+    const selectedWorkplace = workplaceList.find(
+      (wp) => wp.workplaceName === value
+    );
+    if (selectedWorkplace) {
+      setSearchWorkplaceId(selectedWorkplace.workplaceId);
+    } else {
+      setSearchWorkplaceId(""); // Clear if not found
+    }
+  };
+
   return (
     <section class="content">
       <div class="row">
@@ -1989,55 +2014,56 @@ function AddsettimeUpload() {
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label role="searchEmployeeId">รหัสพนักงาน</label>
-                            {/* <input type="text" class="form-control" id="searchEmployeeId" placeholder="รหัสพนักงาน" value={searchEmployeeId} onChange={(e) => setSearchEmployeeId(e.target.value)} /> */}
+                            <label role="searchWorkplaceId">รหัสหน่วยงาน</label>
                             <input
                               type="text"
                               className="form-control"
-                              id="staffId"
-                              placeholder="รหัสพนักงาน"
-                              value={staffId}
-                              onChange={handleStaffIdChange}
-                              list="staffIdList"
+                              id="searchWorkplaceId"
+                              placeholder="รหัสหน่วยงาน"
+                              value={searchWorkplaceId}
+                              onChange={(e) =>
+                                handleWorkplaceIdChange(e.target.value)
+                              }
+                              list="workplaces"
                             />
-                            <datalist id="staffIdList">
-                              {employeeList.map((employee) => (
-                                <option
-                                  key={employee.employeeId}
-                                  value={employee.employeeId}
-                                />
+                            <datalist id="workplaces">
+                              <option value="">ยังไม่ระบุหน่วยงาน</option>
+                              {workplaceList.map((wp) => (
+                                <option key={wp._id} value={wp.workplaceId}>
+                                  {wp.workplaceName}
+                                </option>
                               ))}
                             </datalist>
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
-                            <label role="searchname">ชื่อพนักงาน</label>
-                            {/* <input type="text" class="form-control" id="searchname" placeholder="ชื่อพนักงาน" value={searchEmployeeName} onChange={(e) => setSearchEmployeeName(e.target.value)} /> */}
+                            <label role="searchWorkplaceName">
+                              ชื่อหน่วยงาน
+                            </label>
                             <input
                               type="text"
                               className="form-control"
-                              id="staffName"
-                              placeholder="ชื่อพนักงาน"
-                              value={staffFullName}
-                              onChange={handleStaffNameChange}
-                              list="staffNameList"
+                              id="searchWorkplaceName"
+                              placeholder="ชื่อหน่วยงาน"
+                              value={searchWorkplaceName}
+                              onChange={(e) =>
+                                handleWorkplaceNameChange(e.target.value)
+                              }
                             />
-                            <datalist id="staffNameList">
-                              {employeeList.map((employee) => (
-                                <option
-                                  key={employee.employeeId}
-                                  value={
-                                    employee.name + " " + employee.lastName
-                                  }
-                                />
+                            <datalist id="workplaces">
+                              <option value="">ยังไม่ระบุหน่วยงาน</option>
+                              {workplaceList.map((wp) => (
+                                <option key={wp._id} value={wp.workplaceName}>
+                                  {wp.workplaceId}
+                                </option>
                               ))}
                             </datalist>
                           </div>
                         </div>
                       </div>
                       <div class="d-flex justify-content-center">
-                        <button class="btn b_save" onClick={handleSearch()}>
+                        <button class="btn b_save">
                           <i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา
                         </button>
                       </div>
@@ -2054,20 +2080,22 @@ function AddsettimeUpload() {
                   <form onSubmit={handleSubmit}>
                     <div class="row">
                       <div class="col-md-6">
-                         <div className="custom-file">
-      <input
-        type="file"
-        className="custom-file-input"
-        id="customFile"
-        onChange={handleFileChange} // Add onChange event handler
-      />
-      <label className="custom-file-label" htmlFor="customFile">
-        {fileName} {/* Display the file name here */}
-      </label>
-      <button type="submit">Upload</button>
-    </div>
+                        <div className="custom-file">
+                          <input
+                            type="file"
+                            className="custom-file-input"
+                            id="customFile"
+                            onChange={handleFileChange} // Add onChange event handler
+                          />
+                          <label
+                            className="custom-file-label"
+                            htmlFor="customFile"
+                          >
+                            {fileName} {/* Display the file name here */}
+                          </label>
+                          <button type="submit">Upload</button>
+                        </div>
                       </div>
-
                     </div>
                   </form>
                 </section>

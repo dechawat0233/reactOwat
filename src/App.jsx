@@ -48,6 +48,7 @@ import EmployeeWorkDay from "./conponents/componentsAside/componentsetting/Emplo
 
 import SystemUser from "./conponents/componentsAside/SystemUser";
 import Addsettime from "./conponents/componentsAside/Addsettime";
+import AddsettimeUpload from "./conponents/componentsAside/AddsettimeUpload";
 
 import Salarysummary from "./conponents/componentsAside/Salarysummary";
 // import Examine from "./conponents/componentsAside/salarysummary/examine";
@@ -208,7 +209,8 @@ function App() {
 
               <Route path="/systemuser" element={<SystemUser />} />
 
-              <Route path="/addsettime" element={<Addsettime />} />
+              <Route path="/addsettime" element={<Addsettime workplaceList={workplaceList}/>} />
+              {/* <Route path="/addsettimeupload" element={<AddsettimeUpload workplaceList={workplaceList}/>} /> */}
               <Route path="/application" element={<Application />} />
               <Route path="/applicatio1" element={<Application1 />} />
               <Route path="/applicatio2" element={<Application2 />} />
