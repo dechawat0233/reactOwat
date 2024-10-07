@@ -1374,7 +1374,7 @@ console.log('selectedDateStartcount',selectedDateStartcount);
                                 >
                                   *ต่อ
                                 </label>
-                                <div class="col-sm-6">
+                                <div class="col-sm-9">
                                   <select
                                     id="salarytype"
                                     name="salarytype"
@@ -1395,11 +1395,11 @@ console.log('selectedDateStartcount',selectedDateStartcount);
                               <div class="row">
                                 <label
                                   role="money"
-                                  class="col-sm-6 col-form-label"
+                                  class="col-sm-4 col-form-label"
                                 >
                                   สกุลเงิน
                                 </label>
-                                <div class="col-sm-6">
+                                <div class="col-sm-8">
                                   <select
                                     id="money"
                                     name="money"

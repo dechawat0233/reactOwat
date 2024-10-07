@@ -693,7 +693,7 @@ router.post("/create", async (req, res) => {
     ssoEntryDate,
     bank_initial,
     branchBank,
-
+    costtype,
     ethnicity,
     religion,
     maritalStatus,
@@ -785,7 +785,7 @@ router.post("/create", async (req, res) => {
     commentadmoney3,
     PriceType,
     divide,
-
+    salarytype,
     addSalary,
     selectAddSalary,
     sumAddSalary,
@@ -858,7 +858,7 @@ router.post("/create", async (req, res) => {
     ssoEntryDate,
     bank_initial,
     branchBank,
-
+    costtype,
     ethnicity,
     religion,
     maritalStatus,
@@ -949,6 +949,7 @@ router.post("/create", async (req, res) => {
     commentadmoney3,
     PriceType,
     divide,
+    salarytype,
     addSalary,
     selectAddSalary,
     sumAddSalary,

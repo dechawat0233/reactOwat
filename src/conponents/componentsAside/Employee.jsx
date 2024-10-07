@@ -549,8 +549,16 @@ function Employee() {
     setName(empSelect.name);
     setLastName(empSelect.lastName);
     setNickName(empSelect.nickName);
-    setGender(empSelect.gender);
-
+    // setGender(empSelect.gender);
+    if (
+      empSelect.prefix == "น.ส." ||
+      empSelect.prefix == "นางสาว" ||
+      empSelect.prefix == "นาง"
+    ) {
+      setGender("หญิง");
+    } else if (empSelect.prefix == "นาย") {
+      setGender("ชาย");
+    }
     // setDateOfBirth(new Date(empSelect.dateOfBirth));
     // setDateOfBirth(empSelect.dateOfBirth);
     // const formattedDate = formatDateToDMY(empSelect.dateOfBirth);
@@ -782,25 +790,25 @@ function Employee() {
   useEffect(() => {
     if (selectedDateStart) {
       let formattedDate = "";
-  
+
       // Check if the date is in the YYYY-MM-DD format
       if (selectedDateStart.includes("-")) {
         // Split the date string into year, month, day
         const [year, month, day] = selectedDateStart.split("-");
-  
+
         // Format the date as DD/MM/YYYY
         formattedDate = `${day}/${month}/${year}`;
       } else {
         // Assume the date is already in DD/MM/YYYY format and split it
         const [day, month, year] = selectedDateStart.split("/");
-  
+
         // Add 543 to the year for the Buddhist calendar
         const buddhistYear = (parseInt(year) + 543).toString();
-  
+
         // Format the date with the Buddhist year
         formattedDate = `${day}/${month}/${buddhistYear}`;
       }
-  
+
       console.log("selectedDateExceptjob", selectedDateStart);
       setFormattedDateStart(formattedDate);
     }
@@ -841,25 +849,25 @@ function Employee() {
   useEffect(() => {
     if (selectedDateEnd) {
       let formattedDate = "";
-  
+
       // Check if the date is in the YYYY-MM-DD format
       if (selectedDateEnd.includes("-")) {
         // Split the date string into year, month, day
         const [year, month, day] = selectedDateEnd.split("-");
-  
+
         // Format the date as DD/MM/YYYY
         formattedDate = `${day}/${month}/${year}`;
       } else {
         // Assume the date is already in DD/MM/YYYY format and split it
         const [day, month, year] = selectedDateEnd.split("/");
-  
+
         // Add 543 to the year for the Buddhist calendar
         const buddhistYear = (parseInt(year) + 543).toString();
-  
+
         // Format the date with the Buddhist year
         formattedDate = `${day}/${month}/${buddhistYear}`;
       }
-  
+
       console.log("selectedDateExceptjob", selectedDateEnd);
       setFormattedDateEnd(formattedDate);
     }
@@ -900,30 +908,29 @@ function Employee() {
   useEffect(() => {
     if (selectedDateExceptjob) {
       let formattedDate = "";
-  
+
       // Check if the date is in the YYYY-MM-DD format
       if (selectedDateExceptjob.includes("-")) {
         // Split the date string into year, month, day
         const [year, month, day] = selectedDateExceptjob.split("-");
-  
+
         // Format the date as DD/MM/YYYY
         formattedDate = `${day}/${month}/${year}`;
       } else {
         // Assume the date is already in DD/MM/YYYY format and split it
         const [day, month, year] = selectedDateExceptjob.split("/");
-  
+
         // Add 543 to the year for the Buddhist calendar
         const buddhistYear = (parseInt(year) + 543).toString();
-  
+
         // Format the date with the Buddhist year
         formattedDate = `${day}/${month}/${buddhistYear}`;
       }
-  
+
       console.log("selectedDateExceptjob", selectedDateExceptjob);
       setFormattedDateExceptjob(formattedDate);
     }
   }, [selectedDateExceptjob]);
-  
 
   const toggleDatePickerExceptjob = () => {
     try {
@@ -1753,7 +1760,7 @@ function Employee() {
                                 onChange={(e) => setReligion(e.target.value)}
                               /> */}
                               <select
-                                required
+                                // required
                                 name="religion"
                                 id="religion"
                                 class="form-control"
@@ -1908,12 +1915,22 @@ function Employee() {
                                     {prov}
                                   </option>
                                 ))} */}
-                                <option value="">Select Province</option>
+                                {/* <option value="">Select Province</option>
                                 {provincesData.map((prov) => (
                                   <option key={prov.id} value={prov.id}>
                                     {prov.name_th}
                                   </option>
-                                ))}
+                                ))} */}
+                                <option value="">Select Province</option>
+                                {provincesData
+                                  .sort((a, b) =>
+                                    a.name_th.localeCompare(b.name_th)
+                                  ) // Sort by name_th
+                                  .map((prov) => (
+                                    <option key={prov.id} value={prov.id}>
+                                      {prov.name_th}
+                                    </option>
+                                  ))}
                               </select>
                             </div>
                           </div>
@@ -1933,12 +1950,22 @@ function Employee() {
                                     {dist}
                                   </option>
                                 ))} */}
-                                <option value="">Select District</option>
+                                {/* <option value="">Select District</option>
                                 {districtOptions.map((dist) => (
                                   <option key={dist.id} value={dist.id}>
                                     {dist.name_th}
                                   </option>
-                                ))}
+                                ))} */}
+                                <option value="">Select District</option>
+                                 {districtOptions
+                                  .sort((a, b) =>
+                                    a.name_th.localeCompare(b.name_th)
+                                  ) // Sort by name_th
+                                  .map((dist) => (
+                                    <option key={dist.id} value={dist.id}>
+                                      {dist.name_th}
+                                    </option>
+                                  ))}
                               </select>
                             </div>
                           </div>
@@ -1958,12 +1985,22 @@ function Employee() {
                                     {subDist}
                                   </option>
                                 ))} */}
-                                <option value="">Select Sub-District</option>
+                                {/* <option value="">Select Sub-District</option>
                                 {subDistrictOptions.map((subDist) => (
                                   <option key={subDist.id} value={subDist.id}>
                                     {subDist.name_th}
                                   </option>
-                                ))}
+                                ))} */}
+                                <option value="">Select Sub-District</option>
+                                {subDistrictOptions
+                                  .sort((a, b) =>
+                                    a.name_th.localeCompare(b.name_th)
+                                  ) // Sort by name_th
+                                  .map((subDist) => (
+                                    <option key={subDist.id} value={subDist.id}>
+                                      {subDist.name_th}
+                                    </option>
+                                  ))}
                               </select>
                             </div>
                           </div>
@@ -2059,7 +2096,7 @@ function Employee() {
                                 ที่อยู่ตามบัตรประชาชน
                               </label>
                               <textarea
-                                required
+                                // required
                                 name="address"
                                 id="address"
                                 class="form-control"
