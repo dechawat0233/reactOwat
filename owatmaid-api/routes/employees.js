@@ -481,6 +481,34 @@ router.get("/import-json", async (req, res) => {
     res.status(500).json({ message: "Error importing data", error: error.message });
   }
 });
+
+//update employee by json file
+router.get("/update-json", async (req, res) => {
+  try {
+    const data = fs.readFileSync(__dirname + "/updateemployees.json", "utf8");
+    let employees = JSON.parse(data);
+
+    // Fix the keys of each employee object
+    employees = employees.map(fixKeys);
+
+    const updatePromises = employees.map(async (employee) => {
+      // Update if the employee exists or insert if it doesn't
+      return Employee.findOneAndUpdate(
+        { employeeId: employee.employeeId }, // Use a unique identifier here
+        employee,
+        { upsert: true, new: true } // `upsert` creates a new document if none is found
+      );
+    });
+
+    // Await all update/insert operations
+    const result = await Promise.all(updatePromises);
+
+    res.status(200).json({ message: "Employees successfully added/updated!", result });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error importing data", error: error.message });
+  }
+});
 // Route to push JSON data to MongoDB
 // router.get("/import-json", async (req, res) => {
 //   try {
