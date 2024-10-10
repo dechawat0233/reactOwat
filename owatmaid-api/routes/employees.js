@@ -503,18 +503,23 @@ router.get("/update-json", async (req, res) => {
     });
 
     const updatePromises = employees.map(async (employee) => {
+      const updateData = {
+        name: employee.name,
+        startjob: employee.startjob,
+        exceptjob: employee.exceptjob,
+        department: employee.department || '',
+        addSalary: employee.addSalary,
+        deductSalary: employee.deductSalary,
+      };
+
+      // Only set `idCard` if it is not null or undefined
+      if (employee.idCard) {
+        updateData.idCard = employee.idCard;
+      }
+
       return Employee.findOneAndUpdate(
         { employeeId: employee.employeeId }, // Use a unique identifier here
-        {
-          $set: {
-            name: employee.name,
-            startjob: employee.startjob,
-            exceptjob: employee.exceptjob,
-            department: employee.department || '', // Set department if available or default to an empty string
-            addSalary: employee.addSalary, // Set to an empty array if it's null or not provided
-            deductSalary: employee.deductSalary, // Set to an empty array if it's null or not provided
-          },
-        },
+        { $set: updateData },
         {
           upsert: true, // Create a new document if one doesn't exist
           new: true, // Return the updated document
