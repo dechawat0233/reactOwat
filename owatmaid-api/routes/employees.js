@@ -560,7 +560,7 @@ return employee;
     employees: employeesReturn,
   });
 //   res.json(employeesReturn  );
-// });
+});
 
 router.get("/delete-all", async (req, res) => {
   try {
