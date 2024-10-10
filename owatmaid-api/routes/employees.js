@@ -586,14 +586,14 @@ router.get("/update-json", async (req, res) => {
 //     });
 
     // Await all update/insert operations
-    const result = await Promise.all(updatePromises);
+//     const result = await Promise.all(updatePromises);
 
-    res.status(200).json({ message: "Employees successfully added/updated!", result });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error importing data", error: error.message });
-  }
-});
+//     res.status(200).json({ message: "Employees successfully added/updated!", result });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Error importing data", error: error.message });
+//   }
+// });
 
 //update employee by json file
 router.get("/update-json1", async (req, res) => {
