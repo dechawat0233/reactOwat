@@ -666,6 +666,36 @@ router.get("/list", async (req, res) => {
 return employee;
   });
 
+  res.json(employeesReturn  );
+});
+
+
+router.get("/list-count", async (req, res) => {
+  const employees = await Employee.find();
+
+  const employeesReturn  = employees.map(employee => {
+    // Format the startjob field from dd/mm/yyyy to mm/dd/yyyy
+      if (employee.startjob) {
+        const [day, month, year] = employee.startjob.split('/');
+        employee.startjob = `${month}/${day}/${year}`;
+      }
+      if (employee.exceptjob) {
+        const [day, month, year] = employee.exceptjob.split('/');
+        employee.exceptjob= `${month}/${day}/${year}`;
+      }
+      if (employee.addSalary == null) {
+        employee.addSalary= [];
+      }
+      if (employee.deductSalary == null) {
+        employee.deductSalary = [];
+      }
+      if (employee.department  && employee.department == null) {
+        employee.department= '';
+      }
+
+return employee;
+  });
+
   const count = employeesReturn.length;
 
   res.json({
@@ -674,6 +704,7 @@ return employee;
   });
 //   res.json(employeesReturn  );
 });
+
 
 router.get("/delete-all", async (req, res) => {
   try {
