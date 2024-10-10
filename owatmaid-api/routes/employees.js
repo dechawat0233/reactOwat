@@ -482,7 +482,8 @@ router.get("/import-json", async (req, res) => {
   }
 });
 
-//update employee by json file
+
+// update employee by JSON file
 router.get("/update-json", async (req, res) => {
   try {
     const data = fs.readFileSync(__dirname + "/updateemployees.json", "utf8");
@@ -492,11 +493,24 @@ router.get("/update-json", async (req, res) => {
     employees = employees.map(fixKeys);
 
     const updatePromises = employees.map(async (employee) => {
-      // Update if the employee exists or insert if it doesn't
       return Employee.findOneAndUpdate(
         { employeeId: employee.employeeId }, // Use a unique identifier here
-        employee,
-        { upsert: true, new: true } // `upsert` creates a new document if none is found
+        {
+          $set: {
+            name: employee.name,
+            startjob: employee.startjob,
+            exceptjob: employee.exceptjob,
+            department: employee.department || '', // Set department if available or default to an empty string
+          },
+          $push: {
+            addSalary: { $each: employee.addSalary || [] }, // Add new addSalary data if provided
+            deductSalary: { $each: employee.deductSalary || [] }, // Add new deductSalary data if provided
+          },
+        },
+        {
+          upsert: true, // Create a new document if one doesn't exist
+          new: true, // Return the updated document
+        }
       );
     });
 
@@ -509,6 +523,34 @@ router.get("/update-json", async (req, res) => {
     res.status(500).json({ message: "Error importing data", error: error.message });
   }
 });
+
+//update employee by json file
+// router.get("/update-json", async (req, res) => {
+//   try {
+//     const data = fs.readFileSync(__dirname + "/updateemployees.json", "utf8");
+//     let employees = JSON.parse(data);
+
+//     // Fix the keys of each employee object
+//     employees = employees.map(fixKeys);
+
+//     const updatePromises = employees.map(async (employee) => {
+//       // Update if the employee exists or insert if it doesn't
+//       return Employee.findOneAndUpdate(
+//         { employeeId: employee.employeeId }, // Use a unique identifier here
+//         employee,
+//         { upsert: true, new: true } // `upsert` creates a new document if none is found
+//       );
+//     });
+
+//     // Await all update/insert operations
+//     const result = await Promise.all(updatePromises);
+
+//     res.status(200).json({ message: "Employees successfully added/updated!", result });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Error importing data", error: error.message });
+//   }
+// });
 // Route to push JSON data to MongoDB
 // router.get("/import-json", async (req, res) => {
 //   try {
