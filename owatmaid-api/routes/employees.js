@@ -553,8 +553,14 @@ router.get("/list", async (req, res) => {
 return employee;
   });
 
-  res.json(employeesReturn  );
-});
+  const count = employeesReturn.length;
+
+  res.json({
+    count,
+    employees: employeesReturn,
+  });
+//   res.json(employeesReturn  );
+// });
 
 router.get("/delete-all", async (req, res) => {
   try {
