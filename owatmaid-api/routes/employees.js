@@ -490,7 +490,17 @@ router.get("/update-json", async (req, res) => {
     let employees = JSON.parse(data);
 
     // Fix the keys of each employee object
-    employees = employees.map(fixKeys);
+    employees = employees.map((employee) => {
+      // Ensure `addSalary` is an array or default to an empty array
+      if (!employee.addSalary || !Array.isArray(employee.addSalary)) {
+        employee.addSalary = [];
+      }
+      // Ensure `deductSalary` is an array or default to an empty array
+      if (!employee.deductSalary || !Array.isArray(employee.deductSalary)) {
+        employee.deductSalary = [];
+      }
+      return fixKeys(employee);
+    });
 
     const updatePromises = employees.map(async (employee) => {
       return Employee.findOneAndUpdate(
@@ -501,10 +511,8 @@ router.get("/update-json", async (req, res) => {
             startjob: employee.startjob,
             exceptjob: employee.exceptjob,
             department: employee.department || '', // Set department if available or default to an empty string
-          },
-          $push: {
-            addSalary: { $each: employee.addSalary || [] }, // Add new addSalary data if provided
-            deductSalary: { $each: employee.deductSalary || [] }, // Add new deductSalary data if provided
+            addSalary: employee.addSalary, // Set to an empty array if it's null or not provided
+            deductSalary: employee.deductSalary, // Set to an empty array if it's null or not provided
           },
         },
         {
