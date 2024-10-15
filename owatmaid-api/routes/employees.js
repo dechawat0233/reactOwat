@@ -481,6 +481,147 @@ router.get("/import-json", async (req, res) => {
     res.status(500).json({ message: "Error importing data", error: error.message });
   }
 });
+
+
+// update employee by JSON file
+router.get("/update-json", async (req, res) => {
+  try {
+    const data = fs.readFileSync(__dirname + "/updateemployees.json", "utf8");
+    let employees = JSON.parse(data);
+
+    // Fix the keys of each employee object
+    employees = employees.map((employee) => {
+      if (!employee.addSalary || !Array.isArray(employee.addSalary)) {
+        employee.addSalary = [];
+      }
+      if (!employee.deductSalary || !Array.isArray(employee.deductSalary)) {
+        employee.deductSalary = [];
+      }
+      return fixKeys(employee);
+    });
+
+    const updatePromises = employees.map(async (employee) => {
+      const updateData = {
+        name: employee.name,
+        startjob: employee.startjob,
+        exceptjob: employee.exceptjob,
+        department: employee.department || '',
+        addSalary: employee.addSalary,
+        deductSalary: employee.deductSalary,
+        ...(employee.idCard && { idCard: employee.idCard }),
+      };
+
+      // Debug: Log the update data and the match condition
+      console.log('Attempting to update employee with ID:', employee.employeeId);
+      console.log('Update data:', updateData);
+
+      const result = await Employee.findOneAndUpdate(
+        { employeeId: employee.employeeId }, // Ensure this matches your schema's identifier
+        { $set: updateData },
+        {
+          upsert: true,
+          new: true,
+        }
+      );
+
+      // Log the result of each update operation
+      console.log('Update result for employeeId', employee.employeeId, ':', result);
+
+      return result;
+    });
+
+    // Await all update/insert operations
+    const result = await Promise.all(updatePromises);
+
+    res.status(200).json({ message: "Employees successfully added/updated!", result });
+  } catch (error) {
+    console.error('Error during update:', error);
+    res.status(500).json({ message: "Error importing data", error: error.message });
+  }
+});
+
+
+// // update employee by JSON file
+// router.get("/update-json", async (req, res) => {
+//   try {
+//     const data = fs.readFileSync(__dirname + "/updateemployees.json", "utf8");
+//     let employees = JSON.parse(data);
+
+//     // Fix the keys of each employee object
+//     employees = employees.map((employee) => {
+//       // Ensure `addSalary` is an array or default to an empty array
+//       if (!employee.addSalary || !Array.isArray(employee.addSalary)) {
+//         employee.addSalary = [];
+//       }
+//       // Ensure `deductSalary` is an array or default to an empty array
+//       if (!employee.deductSalary || !Array.isArray(employee.deductSalary)) {
+//         employee.deductSalary = [];
+//       }
+//       return fixKeys(employee);
+//     });
+
+//     const updatePromises = employees.map(async (employee) => {
+//       const updateData = {
+//         name: employee.name,
+//         startjob: employee.startjob,
+//         exceptjob: employee.exceptjob,
+//         department: employee.department || '',
+//         addSalary: employee.addSalary,
+//         deductSalary: employee.deductSalary,
+//       };
+
+//       // Only set `idCard` if it is not null or undefined
+//       if (employee.idCard) {
+//         updateData.idCard = employee.idCard;
+//       }
+
+//       return Employee.findOneAndUpdate(
+//         { employeeId: employee.employeeId }, // Use a unique identifier here
+//         { $set: updateData },
+//         {
+//           upsert: true, // Create a new document if one doesn't exist
+//           new: true, // Return the updated document
+//         }
+//       );
+//     });
+
+    // Await all update/insert operations
+//     const result = await Promise.all(updatePromises);
+
+//     res.status(200).json({ message: "Employees successfully added/updated!", result });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Error importing data", error: error.message });
+//   }
+// });
+
+//update employee by json file
+router.get("/update-json1", async (req, res) => {
+  try {
+    const data = fs.readFileSync(__dirname + "/updateemployees.json", "utf8");
+    let employees = JSON.parse(data);
+
+    // Fix the keys of each employee object
+    employees = employees.map(fixKeys);
+
+    const updatePromises = employees.map(async (employee) => {
+      // Update if the employee exists or insert if it doesn't
+      return Employee.findOneAndUpdate(
+        { employeeId: employee.employeeId }, // Use a unique identifier here
+        employee,
+        { upsert: true, new: true } // `upsert` creates a new document if none is found
+      );
+    });
+
+    // Await all update/insert operations
+    const result = await Promise.all(updatePromises);
+
+    res.status(200).json({ message: "Employees successfully added/updated!", result });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error importing data", error: error.message });
+  }
+});
 // Route to push JSON data to MongoDB
 // router.get("/import-json", async (req, res) => {
 //   try {
@@ -527,6 +668,43 @@ return employee;
 
   res.json(employeesReturn  );
 });
+
+
+router.get("/list-count", async (req, res) => {
+  const employees = await Employee.find();
+
+  const employeesReturn  = employees.map(employee => {
+    // Format the startjob field from dd/mm/yyyy to mm/dd/yyyy
+      if (employee.startjob) {
+        const [day, month, year] = employee.startjob.split('/');
+        employee.startjob = `${month}/${day}/${year}`;
+      }
+      if (employee.exceptjob) {
+        const [day, month, year] = employee.exceptjob.split('/');
+        employee.exceptjob= `${month}/${day}/${year}`;
+      }
+      if (employee.addSalary == null) {
+        employee.addSalary= [];
+      }
+      if (employee.deductSalary == null) {
+        employee.deductSalary = [];
+      }
+      if (employee.department  && employee.department == null) {
+        employee.department= '';
+      }
+
+return employee;
+  });
+
+  const count = employeesReturn.length;
+
+  res.json({
+    count,
+    employees: employeesReturn,
+  });
+//   res.json(employeesReturn  );
+});
+
 
 router.get("/delete-all", async (req, res) => {
   try {

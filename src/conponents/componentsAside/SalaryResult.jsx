@@ -347,7 +347,15 @@ function Salaryresult() {
 
           if (result && result.data.length > 0) {
             console.log("testresult", result.data[0].record);
-            setRemainArray(result.data[0].record);
+            setRemainArray([]);
+
+            const tmpRemainArray = [];
+            result.data.map(item => {
+              tmpRemainArray  .push(...item.record);
+            });
+                        setRemainArray(tmpRemainArray  );
+// alert(tmpRemainArray.length  )
+            // setRemainArray(result.data[0].record);
           } else {
             // If no records found, set remainArray to empty
             console.log("No records found, setting remainArray to empty.");
