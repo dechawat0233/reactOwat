@@ -564,17 +564,18 @@ function Employee() {
     // const formattedDate = formatDateToDMY(empSelect.dateOfBirth);
     // // Now set the formatted date
     // setDateOfBirth(formattedDate);
-    const isValidDate = !isNaN(new Date(empSelect.dateOfBirth).getTime());
+    // const isValidDate = !isNaN(new Date(empSelect.dateOfBirth).getTime());
 
-    if (isValidDate) {
-      // Format the date if it's a valid Date object
-      const formattedDate = formatDateToDMY(empSelect.dateOfBirth);
-      // Set the formatted date
-      setDateOfBirth(formattedDate);
-    } else {
-      // Handle case where dateOfBirth is already in the correct format or is not a date
-      setDateOfBirth(empSelect.dateOfBirth);
-    }
+    // if (isValidDate) {
+    //   // Format the date if it's a valid Date object
+    //   const formattedDate = formatDateToDMY(empSelect.dateOfBirth);
+    //   // Set the formatted date
+    //   setDateOfBirth(formattedDate);
+    // } else {
+    //   // Handle case where dateOfBirth is already in the correct format or is not a date
+    //   setDateOfBirth(empSelect.dateOfBirth);
+    // }
+    setDateOfBirth(empSelect.dateOfBirth);
 
     setAge(empSelect.age);
     setIdCard(empSelect.idCard);
@@ -790,29 +791,34 @@ function Employee() {
   useEffect(() => {
     if (selectedDateStart) {
       let formattedDate = "";
-
+  
       // Check if the date is in the YYYY-MM-DD format
       if (selectedDateStart.includes("-")) {
         // Split the date string into year, month, day
         const [year, month, day] = selectedDateStart.split("-");
-
-        // Format the date as DD/MM/YYYY
-        formattedDate = `${day}/${month}/${year}`;
+  
+        // Convert the year to the Buddhist calendar
+        const buddhistYear = (parseInt(year) + 543).toString();
+  
+        // Format the date as DD/MM/YYYY with the Buddhist year
+        formattedDate = `${day}/${month}/${buddhistYear}`;
       } else {
         // Assume the date is already in DD/MM/YYYY format and split it
         const [day, month, year] = selectedDateStart.split("/");
-
+  
         // Add 543 to the year for the Buddhist calendar
         const buddhistYear = (parseInt(year) + 543).toString();
-
+  
         // Format the date with the Buddhist year
         formattedDate = `${day}/${month}/${buddhistYear}`;
       }
-
+  
       console.log("selectedDateExceptjob", selectedDateStart);
       setFormattedDateStart(formattedDate);
     }
   }, [selectedDateStart]);
+  
+  console.log("selectedDateStart", selectedDateStart);
 
   const toggleDatePickerStart = () => {
     setShowDatePickerStart(!showDatePickerStart);
@@ -870,6 +876,33 @@ function Employee() {
 
       console.log("selectedDateExceptjob", selectedDateEnd);
       setFormattedDateEnd(formattedDate);
+    }
+  }, [selectedDateEnd]);
+  useEffect(() => {
+    if (selectedDateEnd) {
+      let formattedDate = "";
+  
+      // Check if the date is in the YYYY-MM-DD format
+      if (selectedDateEnd.includes("-")) {
+        // Split the date string into year, month, day
+        const [year, month, day] = selectedDateEnd.split("-");
+  
+        // Convert the year to the Buddhist calendar
+        const buddhistYear = (parseInt(year) + 543).toString();
+  
+        // Format the date as DD/MM/YYYY with the Buddhist year
+        formattedDate = `${day}/${month}/${buddhistYear}`;
+      } else {
+        // Assume the date is already in DD/MM/YYYY format and split it
+        const [day, month, year] = selectedDateEnd.split("/");
+  
+        // Add 543 to the year for the Buddhist calendar
+        const buddhistYear = (parseInt(year) + 543).toString();
+  
+        // Format the date with the Buddhist year
+        formattedDate = `${day}/${month}/${buddhistYear}`;
+      }
+        setFormattedDateEnd(formattedDate);
     }
   }, [selectedDateEnd]);
 

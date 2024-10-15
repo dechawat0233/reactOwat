@@ -6,7 +6,7 @@ import endpoint from "./config";
 // import Home from "./Home";
 // import Profile from './Profile';
 
-import LoginForm from './conponents/Login';
+import LoginForm from "./conponents/Login";
 
 import AsideLeft from "./conponents/AsideLeft";
 import Top from "./conponents/Top";
@@ -24,7 +24,6 @@ import SocialSecurity from "./conponents/componentsAside/SocialSecurity";
 import ProvidentFund from "./conponents/componentsAside/ProvidentFund";
 import Collateral from "./conponents/componentsAside/Collateral";
 import Document from "./conponents/componentsAside/Document";
-
 
 import CalculateTax from "./conponents/componentsAside/CalculateTax";
 import CalculateTaxDeductions from "./conponents/componentsAside/CalculateTaxDeductions";
@@ -88,8 +87,6 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 // import MyComponent from "./server/MyComponent";
 
-
-
 function App() {
   const [workplaceList, setWorkplaceList] = useState([]);
   useEffect(() => {
@@ -104,7 +101,7 @@ function App() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []); 
+  }, []);
 
   const [employeeList, setEmployeeList] = useState([]);
 
@@ -119,30 +116,32 @@ function App() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []); 
+  }, []);
 
   const [selectedEmployees, setSelectedEmployees] = useState([]);
 
   function handleEmployeeSelect(employee) {
-    setSelectedEmployees(prevSelectedEmployees => [...prevSelectedEmployees, employee]);
+    setSelectedEmployees((prevSelectedEmployees) => [
+      ...prevSelectedEmployees,
+      employee,
+    ]);
   }
 
   function handleEmployeeRemove(employeeId) {
-    setSelectedEmployees(prevSelectedEmployees =>
-      prevSelectedEmployees.filter(employee => employee.id !== employeeId)
+    setSelectedEmployees((prevSelectedEmployees) =>
+      prevSelectedEmployees.filter((employee) => employee.id !== employeeId)
     );
   }
 
   //const [loggedIn, setLoggedIn] = useState(false);
 
   const [loggedIn, setLoggedIn] = useState(
-    localStorage.getItem('loggedIn') === 'true'
+    localStorage.getItem("loggedIn") === "true"
   );
 
   function handleLogin(username, password) {
     // TODO: Implement the login process
     // For now, just set loggedIn to true
-
     //setLoggedIn(true);
   }
 
@@ -153,7 +152,6 @@ function App() {
   return (
     <div>
       {loggedIn ? (
-
         <Router>
           <>
             {/* <ul>
@@ -181,13 +179,24 @@ function App() {
               <Route path="/examine" element={<Examine />} />
               <Route path="/compensation" element={<Compensation />} />
               <Route path="/salaryresult" element={<Salaryresult />} />
-              <Route path="/salaryAllresult" element={<SalaryAllResult employeeList={employeeList}/>} />
-              <Route path="/salarySlipPDF" element={<SalarySlipPDF  employeeList={employeeList}/>} />
-
+              <Route
+                path="/salaryAllresult"
+                element={<SalaryAllResult employeeList={employeeList} />}
+              />
+              <Route
+                path="/salarySlipPDF"
+                element={<SalarySlipPDF employeeList={employeeList} />}
+              />
 
               <Route path="/worktimesheet" element={<Worktimesheet />} />
-              <Route path="/worktimesheetworkplace" element={<WorktimeSheetWorkplace  employeeList={employeeList}/>} />
-              <Route path="/worktimeSheetWorkplace_Save01_22_2024" element={<WorktimeSheetWorkplace_Save01_22_2024 />} />
+              <Route
+                path="/worktimesheetworkplace"
+                element={<WorktimeSheetWorkplace employeeList={employeeList} />}
+              />
+              <Route
+                path="/worktimeSheetWorkplace_Save01_22_2024"
+                element={<WorktimeSheetWorkplace_Save01_22_2024 />}
+              />
 
               <Route path="/income_tax" element={<IncomeTax />} />
               <Route path="/social_security" element={<SocialSecurity />} />
@@ -195,31 +204,64 @@ function App() {
               <Route path="/collateral" element={<Collateral />} />
               <Route path="/document" element={<Document />} />
 
-
               <Route path="/calculate_tax" element={<CalculateTax />} />
-              <Route path="/calculate_tax_deductions" element={<CalculateTaxDeductions />} />
+              <Route
+                path="/calculate_tax_deductions"
+                element={<CalculateTaxDeductions />}
+              />
               <Route path="/other_expenses" element={<OtherExpenses />} />
               <Route path="/search_results" element={<SearchResults />} />
 
               {/* <Route path="/setting" element={<Setting />} /> */}
-              <Route path="/setting" element={<Setting workplaceList={workplaceList}  employeeList={employeeList} />} />
-              <Route path="/settingcomplex" element={<SettingComplex  workplaceList={workplaceList}  />} />
-              <Route path="/settingAllList" element={<SettingAllList />} />
+              <Route
+                path="/setting"
+                element={
+                  <Setting
+                    workplaceList={workplaceList}
+                    employeeList={employeeList}
+                  />
+                }
+              />
+              <Route
+                path="/settingcomplex"
+                element={<SettingComplex workplaceList={workplaceList} />}
+              />
+              <Route
+                path="/settingAllList"
+                element={
+                  <SettingAllList
+                    workplaceList={workplaceList}
+                    employeeList={employeeList}
+                  />
+                }
+              />
               <Route path="/settingspecial" element={<SettingSpecial />} />
 
               <Route path="/systemuser" element={<SystemUser />} />
 
-              <Route path="/addsettime" element={<Addsettime workplaceList={workplaceList}/>} />
+              <Route
+                path="/addsettime"
+                element={<Addsettime workplaceList={workplaceList} />}
+              />
               {/* <Route path="/addsettimeupload" element={<AddsettimeUpload workplaceList={workplaceList}/>} /> */}
               <Route path="/application" element={<Application />} />
               <Route path="/applicatio1" element={<Application1 />} />
               <Route path="/applicatio2" element={<Application2 />} />
               <Route path="/applicatio3" element={<Application3 />} />
               <Route path="/applicatio4" element={<Application4 />} />
-              <Route path="/application_summary" element={<ApplicationSummary />} />
+              <Route
+                path="/application_summary"
+                element={<ApplicationSummary />}
+              />
 
-              <Route path="/addEdit_Employee" element={<AddEditEmployee workplaceList={workplaceList}/>} />
-              <Route path="/addEdit_SalaryEmployee" element={<AddEditSalaryEmployee />} />
+              <Route
+                path="/addEdit_Employee"
+                element={<AddEditEmployee workplaceList={workplaceList} />}
+              />
+              <Route
+                path="/addEdit_SalaryEmployee"
+                element={<AddEditSalaryEmployee />}
+              />
 
               {/* <Route path="/testPDF" element={<TestShowManyData />} /> */}
               {/* <Route path="/testPDF" element={<TestPDF />} /> */}
@@ -230,22 +272,22 @@ function App() {
 
               <Route path="/testPDF" element={<Testapp />} />
               <Route path="/testPDFSalary" element={<TestPDFSalary />} />
-              <Route path="/testPDFResultSalay" element={<TestPDFResultSalayNew />} />
+              <Route
+                path="/testPDFResultSalay"
+                element={<TestPDFResultSalayNew />}
+              />
 
               <Route path="/time" element={<Testcal />} />
               <Route path="/countday" element={<Countday />} />
             </Routes>
             {/* <EmployeesSelected /> */}
-
           </>
         </Router>
       ) : (
         <LoginForm onLogin={handleLogin} />
-      )
-      }
+      )}
     </div>
   );
 }
-
 
 export default App;
