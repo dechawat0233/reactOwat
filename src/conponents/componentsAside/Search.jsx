@@ -159,6 +159,10 @@ function Search() {
                                 id="employeeId"
                                 placeholder="รหัสพนักงาน"
                                 onChange={handleEmployeeIdChange}
+                                onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                           </div>
@@ -187,6 +191,10 @@ function Search() {
                                 id="idCard"
                                 placeholder="หมายเลขบัตรประชาชน"
                                 onChange={handleIdCardChange}
+                                onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                           </div>

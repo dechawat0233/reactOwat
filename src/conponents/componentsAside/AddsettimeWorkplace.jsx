@@ -1177,12 +1177,20 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
     // Extract the year from the dateObject
     const year = dateObject.getFullYear();
     //get data from input in useState to data
+    const date = new Date(selectedDate);
+
+      // Extract day, month, and year
+      const daySelectedDate = date.getDate().toString().padStart(2, "0");
+      const monthSelectedDate = (date.getMonth() + 1)
+        .toString()
+        .padStart(2, "0");
+      const yearSelectedDate = (date.getFullYear()).toString();
     const data = {
       workplaceId: workplaceId,
       workplaceName: workplaceName,
       date: formattedWorkDate,
       employeeRecord: rowDataList,
-      timerecordId: year.toString(),
+      timerecordId: yearSelectedDate.toString(),
     };
 
     //check create or update Employee
