@@ -16,7 +16,7 @@ import AddsettimeOutsiderEmployee from "./AddsettimeOutsiderEmployee";
 import AddsettimeOutsiderWorkplace from "./AddsettimeOutsiderWorkplace";
 import "../editwindowcss.css";
 
-function Addsettime({ workplaceList }) {
+function Addsettime({ workplaceList, employeeList }) {
   const [selectedOption, setSelectedOption] = useState("workplace");
 
   const handleOptionChange = (event) => {
@@ -96,10 +96,17 @@ function Addsettime({ workplaceList }) {
                                             {formToShow}
                                         </div>
                                     )} */}
-                  {selectedOption === "workplace" && <AddsettimeWorkplace />}
+                  {selectedOption === "workplace" && (
+                    <AddsettimeWorkplace
+                      workplaceList={workplaceList}
+                      employeeList={employeeList}
+                    />
+                  )}
                   {selectedOption === "employee" && <AddsettimeEmployee />}
                   {/* {selectedOption === "upload" && <AddsettimeUpload />} */}
-                  {selectedOption === "upload" && <AddsettimeUpload workplaceList={workplaceList} />}
+                  {selectedOption === "upload" && (
+                    <AddsettimeUpload workplaceList={workplaceList} />
+                  )}
 
                   {selectedOption === "Outsiderworkplace" && (
                     <AddsettimeOutsiderWorkplace />

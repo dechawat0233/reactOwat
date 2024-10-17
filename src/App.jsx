@@ -241,7 +241,7 @@ function App() {
 
               <Route
                 path="/addsettime"
-                element={<Addsettime workplaceList={workplaceList} />}
+                element={<Addsettime workplaceList={workplaceList} employeeList={employeeList}/>}
               />
               {/* <Route path="/addsettimeupload" element={<AddsettimeUpload workplaceList={workplaceList}/>} /> */}
               <Route path="/application" element={<Application />} />
