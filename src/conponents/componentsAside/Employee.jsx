@@ -1746,6 +1746,10 @@ function Employee() {
                                 placeholder="เลขบัตรประจำตัวประชาชน"
                                 value={idCard}
                                 onChange={(e) => setIdCard(e.target.value)}
+                                onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                           </div>
@@ -2055,6 +2059,10 @@ function Employee() {
                                   onChange={(e) =>
                                     setPostalCode(e.target.value)
                                   }
+                                  onInput={(e) => {
+                                    // Remove any non-digit characters
+                                    e.target.value = e.target.value.replace(/\D/g, "");
+                                  }}
                                 />
                               </div>
                             </div>
@@ -2233,6 +2241,10 @@ function Employee() {
                                   onChange={(e) =>
                                     setPostalCode2(e.target.value)
                                   }
+                                  onInput={(e) => {
+                                    // Remove any non-digit characters
+                                    e.target.value = e.target.value.replace(/\D/g, "");
+                                  }}
                                 />
                               </div>
                             </div>

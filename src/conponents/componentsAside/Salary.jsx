@@ -925,6 +925,10 @@ console.log('selectedDateStartcount',selectedDateStartcount);
                                 placeholder="รหัสพนักงาน"
                                 value={employeeData.employeeId || ""}
                                 onChange={(e) => handleChange(e, "employeeId")}
+                                onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                           </div>
@@ -1362,6 +1366,10 @@ console.log('selectedDateStartcount',selectedDateStartcount);
                                 placeholder="จำนวนเงิน"
                                 value={employeeData.salary || ""}
                                 onChange={(e) => handleChange(e, "salary")}
+                                onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                           </div>
@@ -1623,6 +1631,10 @@ console.log('selectedDateStartcount',selectedDateStartcount);
                                 placeholder="เลขที่บัญชี"
                                 value={employeeData.banknumber || ""}
                                 onChange={(e) => handleChange(e, "banknumber")}
+                                onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                           </div>
@@ -2064,6 +2076,10 @@ console.log('selectedDateStartcount',selectedDateStartcount);
                                         onChange={(e) =>
                                           handleChange(e, "remainbusinessleave")
                                         }
+                                        onInput={(e) => {
+                                          // Remove any non-digit characters
+                                          e.target.value = e.target.value.replace(/\D/g, "");
+                                        }}
                                       />
                                     </div>
                                   </div>
@@ -2082,6 +2098,10 @@ console.log('selectedDateStartcount',selectedDateStartcount);
                                         onChange={(e) =>
                                           handleChange(e, "businessleavesalary")
                                         }
+                                        onInput={(e) => {
+                                          // Remove any non-digit characters
+                                          e.target.value = e.target.value.replace(/\D/g, "");
+                                        }}
                                       />
                                     </div>
                                   </div>
@@ -2102,6 +2122,10 @@ console.log('selectedDateStartcount',selectedDateStartcount);
                                         onChange={(e) =>
                                           handleChange(e, "remainsickleave")
                                         }
+                                        onInput={(e) => {
+                                          // Remove any non-digit characters
+                                          e.target.value = e.target.value.replace(/\D/g, "");
+                                        }}
                                       />
                                     </div>
                                   </div>
@@ -2120,6 +2144,10 @@ console.log('selectedDateStartcount',selectedDateStartcount);
                                         onChange={(e) =>
                                           handleChange(e, "sickleavesalary")
                                         }
+                                        onInput={(e) => {
+                                          // Remove any non-digit characters
+                                          e.target.value = e.target.value.replace(/\D/g, "");
+                                        }}
                                       />
                                     </div>
                                   </div>
@@ -2140,6 +2168,10 @@ console.log('selectedDateStartcount',selectedDateStartcount);
                                         onChange={(e) =>
                                           handleChange(e, "remainvacation")
                                         }
+                                        onInput={(e) => {
+                                          // Remove any non-digit characters
+                                          e.target.value = e.target.value.replace(/\D/g, "");
+                                        }}
                                       />
                                     </div>
                                   </div>
@@ -2158,6 +2190,10 @@ console.log('selectedDateStartcount',selectedDateStartcount);
                                         onChange={(e) =>
                                           handleChange(e, "maternityleave")
                                         }
+                                        onInput={(e) => {
+                                          // Remove any non-digit characters
+                                          e.target.value = e.target.value.replace(/\D/g, "");
+                                        }}
                                       />
                                     </div>
                                   </div>
@@ -2183,6 +2219,10 @@ console.log('selectedDateStartcount',selectedDateStartcount);
                                             "maternityleavesalary"
                                           )
                                         }
+                                        onInput={(e) => {
+                                          // Remove any non-digit characters
+                                          e.target.value = e.target.value.replace(/\D/g, "");
+                                        }}
                                       />
                                     </div>
                                   </div>
@@ -2201,6 +2241,10 @@ console.log('selectedDateStartcount',selectedDateStartcount);
                                         onChange={(e) =>
                                           handleChange(e, "vacationsalary")
                                         }
+                                        onInput={(e) => {
+                                          // Remove any non-digit characters
+                                          e.target.value = e.target.value.replace(/\D/g, "");
+                                        }}
                                       />
                                     </div>
                                   </div>
@@ -2221,6 +2265,10 @@ console.log('selectedDateStartcount',selectedDateStartcount);
                                         onChange={(e) =>
                                           handleChange(e, "militaryleave")
                                         }
+                                        onInput={(e) => {
+                                          // Remove any non-digit characters
+                                          e.target.value = e.target.value.replace(/\D/g, "");
+                                        }}
                                       />
                                     </div>
                                   </div>
@@ -2239,6 +2287,10 @@ console.log('selectedDateStartcount',selectedDateStartcount);
                                         onChange={(e) =>
                                           handleChange(e, "militaryleavesalary")
                                         }
+                                        onInput={(e) => {
+                                          // Remove any non-digit characters
+                                          e.target.value = e.target.value.replace(/\D/g, "");
+                                        }}
                                       />
                                     </div>
                                   </div>
@@ -2259,6 +2311,10 @@ console.log('selectedDateStartcount',selectedDateStartcount);
                                         onChange={(e) =>
                                           handleChange(e, "sterilization")
                                         }
+                                        onInput={(e) => {
+                                          // Remove any non-digit characters
+                                          e.target.value = e.target.value.replace(/\D/g, "");
+                                        }}
                                       />
                                     </div>
                                   </div>
@@ -2277,6 +2333,10 @@ console.log('selectedDateStartcount',selectedDateStartcount);
                                         onChange={(e) =>
                                           handleChange(e, "sterilizationsalary")
                                         }
+                                        onInput={(e) => {
+                                          // Remove any non-digit characters
+                                          e.target.value = e.target.value.replace(/\D/g, "");
+                                        }}
                                       />
                                     </div>
                                   </div>
@@ -2297,6 +2357,10 @@ console.log('selectedDateStartcount',selectedDateStartcount);
                                         onChange={(e) =>
                                           handleChange(e, "leavefortraining")
                                         }
+                                        onInput={(e) => {
+                                          // Remove any non-digit characters
+                                          e.target.value = e.target.value.replace(/\D/g, "");
+                                        }}
                                       />
                                     </div>
                                   </div>
@@ -2320,6 +2384,10 @@ console.log('selectedDateStartcount',selectedDateStartcount);
                                             "leavefortrainingsalary"
                                           )
                                         }
+                                        onInput={(e) => {
+                                          // Remove any non-digit characters
+                                          e.target.value = e.target.value.replace(/\D/g, "");
+                                        }}
                                       />
                                     </div>
                                   </div>
