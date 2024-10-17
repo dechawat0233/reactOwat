@@ -173,36 +173,32 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
         setEndTimeOt2("");
         setStartTimeOt3("");
         setEndTimeOt3("");
-
         //get work time from workplace
-        // const workplaceWorkTime = await getWorkTime(
-        //   response.data.workplaces,
-        //   formattedWorkDate
-        //   // '21/03/2024'
-        // );
-        // alert(JSON.stringify(workplaceWorkTime ,null,2));
-
-        // // alert(JSON.stringify(searchResult,null,2) );
-        // workplaceWorkTime.map((item) => {
-        //   // alert(item.shift);
-        //   if (item.shift == "กะเช้า") {
-        //     // alert(item.startTime);
-        //     setShift1start(item.startTime);
-        //     setShift1end(item.endTime);
-        //     setStartTimeOt1(item.startTimeOT);
-        //     setEndTimeOt1(item.endTimeOT);
-        //   } else if (item.shift == "กะบ่าย") {
-        //     setShift2start(item.startTime);
-        //     setShift2end(item.endTime);
-        //     setStartTimeOt2(item.startTimeOT);
-        //     setEndTimeOt2(item.endTimeOT);
-        //   } else if (item.shift == "กะดึก") {
-        //     setShift3start(item.startTime);
-        //     setShift3end(item.endTime);
-        //     setStartTimeOt3(item.startTimeOT);
-        //     setEndTimeOt3(item.endTimeOT);
-        //   }
-        // });
+        const workplaceWorkTime = await getWorkTime(
+          response.data.workplaces,
+          formattedWorkDate
+        );
+        // alert(JSON.stringify(searchResult,null,2) );
+        workplaceWorkTime.map((item) => {
+          // alert(item.shift);
+          if (item.shift == "กะเช้า") {
+            // alert(item.startTime);
+            setShift1start(item.startTime);
+            setShift1end(item.endTime);
+            setStartTimeOt1(item.startTimeOT);
+            setEndTimeOt1(item.endTimeOT);
+          } else if (item.shift == "กะบ่าย") {
+            setShift2start(item.startTime);
+            setShift2end(item.endTime);
+            setStartTimeOt2(item.startTimeOT);
+            setEndTimeOt2(item.endTimeOT);
+          } else if (item.shift == "กะดึก") {
+            setShift3start(item.startTime);
+            setShift3end(item.endTime);
+            setStartTimeOt3(item.startTimeOT);
+            setEndTimeOt3(item.endTimeOT);
+          }
+        });
 
         //aass
         // const worktimeList = [];
@@ -365,7 +361,7 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
       }
     } catch (error) {
       alert("กรุณาตรวจสอบข้อมูลในช่องค้นหา" + error);
-      // window.location.reload();
+      window.location.reload();
     }
   }
 
@@ -427,6 +423,7 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [formattedDate, setFormattedDate] = useState(null);
+
   const handleDatePickerChange = (date) => {
     setSelectedDate(date);
     const newDate = new Date(date);
@@ -1070,136 +1067,72 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
 
   
 
-  const convertBuddhistToGregorian = (buddhistDate) => {
-    // Split the Buddhist date into day, month, and year
-    const [day, month, buddhistYear] = buddhistDate.split('/');
-  
-    // Subtract 543 to convert Buddhist year to Gregorian year
-    const gregorianYear = buddhistYear - 543;
-  
-    // Return the new formatted date as day/month/gregorianYear
-    return `${day}/${month}/${gregorianYear}`;
-  };  
+  // async function handleCheckTimerecord() {
+
+  //     const data = {
+  //         workplaceId: searchWorkplaceId,
+  //         workplaceName: searchWorkplaceName,
+  //         date: workDate
+  //     };
+
+  //     try {
+  //         const response = await axios.post(endpoint + '/timerecord/search', data);
+  //         // setSearchResult(response.data.workplacesTimeRecord );
+  //         // alert(response.data.recordworkplace[0].employeeRecord.length);
+  //         // alert(response.data.recordworkplace.length);
+  //         if (response.data.recordworkplace.length < 1) {
+  //             alert('no data');
+  //             //                 window.location.reload();
+  //         } else {
+  //             // alert(response.data.recordworkplace.length);
+  //             // alert(response.data.recordworkplace[0].employeeRecord.length);
+
+  //             setRowDataList(response.data.recordworkplace[0].employeeRecord);
+
+  //         }
+  //     } catch (error) {
+  //         alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
+  //         alert(error.message);
+  //         window.location.reload();
+  //     }
+
+  // }
 
   async function handleCheckTimerecord() {
-    await setRowDataList([]); //Clean data 
+    await setRowDataList([]);
 
     const data = {
       workplaceId: searchWorkplaceId,
       workplaceName: searchWorkplaceName,
-      // date: formattedDate,
-      date: convertBuddhistToGregorian (formattedDate) ,
+      date: formattedWorkDate,
     };
 
-    // alert(convertBuddhistToGregorian (formattedDate) )
-    let dateString = await convertBuddhistToGregorian(formattedDate);
-const [day, month, year] = await dateString.split('/');
-
-// Create a new Date object using the year, month (0-indexed), and day
-const date = await new Date(year, month - 1, day);
-
-// Get the day of the week (0 for Sunday, 1 for Monday, ..., 6 for Saturday)
-const dayNumber = await date.getDay();
-
-// alert(dayNumber );
-
-const dayMapping = await {
-  อาทิตย์: 0,
-  จันทร์: 1,
-  อังคาร: 2,
-  พุธ: 3,
-  พฤหัส: 4,
-  ศุกร์: 5,
-  เสาร์: 6
-};
-
-       searchResult[0].workTimeDay.map(async (item, index) => {
-// await alert(dayMapping[item.startDay] + ' ' + dayMapping [item.endDay] );
-      // await alert(item.allTimes[0].shift);
-
-      if(dayMapping[item.startDay] <= dayNumber <= dayMapping [item.endDay] ) {
-
-      if (item.allTimes[0].shift== "กะเช้า") {
-        setShift1start(item.allTimes[0].startTime);
-        setShift1end(item.allTimes[0].endTime);
-        setStartTimeOt1(item.allTimes[0].startTimeOT);
-        setEndTimeOt1(item.allTimes[0].endTimeOT);
-      } else if (item.allTimes[0].shift == "กะบ่าย") {
-        setShift2start(item.allTimes[0].startTime);
-        setShift2end(item.allTimes[0].endTime);
-        setStartTimeOt2(item.allTimes[0].startTimeOT);
-        setEndTimeOt2(item.allTimes[0].endTimeOT);
-      } else if (item.allTimes[0].shift == "กะดึก") {
-        setShift3start(item.allTimes[0].startTime);
-        setShift3end(item.allTimes[0].endTime);
-        setStartTimeOt3(item.allTimes[0].startTimeOT);
-        setEndTimeOt3(item.allTimes[0].endTimeOT);
+    //get work time from workplace
+    const workplaceWorkTime = await getWorkTime(
+      searchResult,
+      formattedWorkDate
+    );
+    // alert(JSON.stringify(searchResult,null,2) );
+    workplaceWorkTime.map((item) => {
+      // alert(item.shift);
+      if (item.shift == "กะเช้า") {
+        // alert(item.startTime);
+        setShift1start(item.startTime);
+        setShift1end(item.endTime);
+        setStartTimeOt1(item.startTimeOT);
+        setEndTimeOt1(item.endTimeOT);
+      } else if (item.shift == "กะบ่าย") {
+        setShift2start(item.startTime);
+        setShift2end(item.endTime);
+        setStartTimeOt2(item.startTimeOT);
+        setEndTimeOt2(item.endTimeOT);
+      } else if (item.shift == "กะดึก") {
+        setShift3start(item.startTime);
+        setShift3end(item.endTime);
+        setStartTimeOt3(item.startTimeOT);
+        setEndTimeOt3(item.endTimeOT);
       }
-
-    } else {
-
-      (dayMapping[item.startDay] <= dayNumber <= dayMapping [item.endDay] ) 
-      if( (dayMapping[item.startDay] <= dayNumber  <= 6) || (0 <= dayNumber <= dayMapping [item.endDay] ) ) {
-
-        if (item.allTimes[0].shift== "กะเช้า") {
-          // alert(item.startTime);
-          setShift1start(item.allTimes[0].startTime);
-          setShift1end(item.allTimes[0].endTime);
-          setStartTimeOt1(item.allTimes[0].startTimeOT);
-          setEndTimeOt1(item.allTimes[0].endTimeOT);
-        } else if (item.allTimes[0].shift == "กะบ่าย") {
-          setShift2start(item.allTimes[0].startTime);
-          setShift2end(item.allTimes[0].endTime);
-          setStartTimeOt2(item.allTimes[0].startTimeOT);
-          setEndTimeOt2(item.allTimes[0].endTimeOT);
-        } else if (item.allTimes[0].shift == "กะดึก") {
-          setShift3start(item.allTimes[0].startTime);
-          setShift3end(item.allTimes[0].endTime);
-          setStartTimeOt3(item.allTimes[0].startTimeOT);
-          setEndTimeOt3(item.allTimes[0].endTimeOT);
-        }
-  
-      } else {
-
-        setShift1start('');
-        setShift1end('');
-        setStartTimeOt1('');
-        setEndTimeOt1('');
-        setShift2start('');
-        setShift2end('');
-        setStartTimeOt2('');
-        setEndTimeOt2('');
-        setShift3start('');
-        setShift3end('');
-        setStartTimeOt3('');
-        setEndTimeOt3('');
-
-      }
-    }
-
-       });
-
-
-    // workplaceWorkTime.map((item) => {
-    //   // alert(item.shift);
-    //   if (item.shift == "กะเช้า") {
-    //     // alert(item.startTime);
-    //     setShift1start(item.startTime);
-    //     setShift1end(item.endTime);
-    //     setStartTimeOt1(item.startTimeOT);
-    //     setEndTimeOt1(item.endTimeOT);
-    //   } else if (item.shift == "กะบ่าย") {
-    //     setShift2start(item.startTime);
-    //     setShift2end(item.endTime);
-    //     setStartTimeOt2(item.startTimeOT);
-    //     setEndTimeOt2(item.endTimeOT);
-    //   } else if (item.shift == "กะดึก") {
-    //     setShift3start(item.startTime);
-    //     setShift3end(item.endTime);
-    //     setStartTimeOt3(item.startTimeOT);
-    //     setEndTimeOt3(item.endTimeOT);
-    //   }
-    // });
+    });
 
     try {
       const response = await axios.post(endpoint + "/timerecord/search", data);
@@ -1244,20 +1177,12 @@ const dayMapping = await {
     // Extract the year from the dateObject
     const year = dateObject.getFullYear();
     //get data from input in useState to data
-    const date = new Date(selectedDate);
-
-      // Extract day, month, and year
-      const daySelectedDate = date.getDate().toString().padStart(2, "0");
-      const monthSelectedDate = (date.getMonth() + 1)
-        .toString()
-        .padStart(2, "0");
-      const yearSelectedDate = (date.getFullYear()).toString();
     const data = {
       workplaceId: workplaceId,
       workplaceName: workplaceName,
-      date: formattedDate,
+      date: formattedWorkDate,
       employeeRecord: rowDataList,
-      timerecordId: yearSelectedDate.toString(),
+      timerecordId: year.toString(),
     };
 
     //check create or update Employee
@@ -1302,7 +1227,7 @@ const dayMapping = await {
     const data = {
       workplaceId: workplaceId,
       workplaceName: workplaceName,
-      date: formattedDate,
+      date: formattedWorkDate,
       employeeRecord: rowDataList,
     };
 
@@ -1509,7 +1434,6 @@ const dayMapping = await {
                                 <li
                                   key={workplace.id}
                                   onClick={() => handleClickResult(workplace)}
-                                  style={{ cursor: "pointer" }}
                                 >
                                   รหัส {workplace.workplaceId} หน่วยงาน{" "}
                                   {workplace.workplaceName}

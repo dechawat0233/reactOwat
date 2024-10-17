@@ -41,15 +41,14 @@ function getNumberOfDay(dn){
       const lowerCaseDayName = dn.toLowerCase();
     
   const dayMapping = {
-    อาทิตย์: 0,
-    จันทร์: 1,
-    อังคาร: 2,
-    พุธ: 3,
-    พฤหัส: 4,
-    ศุกร์: 5,
-    เสาร์: 6
+    "อาทิตย์": 0,
+    "จันทร์": 1,
+    "อังคาร": 2,
+    "พุธ": 3,
+    "พฤหัส": 4,
+    "ศุกร์": 5,
+    "เสาร์": 6
   };
-
       // Return the corresponding day number or null if dayName is invalid
       return dayMapping[lowerCaseDayName] !== undefined ? dayMapping[lowerCaseDayName] : null;
 }
@@ -84,7 +83,7 @@ const workTime = await {
 };
 
 // alert(workplace[0].workTimeDay);
-// alert(workplace.workTimeDay.length);
+// alert(workplace[0].workTimeDay.length);
 await workplace[0].workTimeDay.map( async (item, index) => {
   // alert(JSON.stringify(item,null,2));
 // alert('start' +getNumberOfDay(item.startDay) );
@@ -119,12 +118,11 @@ if(dayMapping [item.startDay] >  dayMapping[item.endDay]){
     } 
 
     if(dayMapping[item.startDay] <  dayMapping[item.endDay]){
-
-      for(let i = dayMapping[item.startDay]; i <= dayMapping[item.endDay]; i++ ) {
         worktimeList[i] = await item.allTimes;
         // alert(JSON.stringify(item.allTimes,null,2));
         // alert(i);
-      }
+                // alert(JSON.stringify(worktimeList,null,2));
+
       }
       
       
@@ -143,8 +141,8 @@ const date = await new Date(year, month - 1, day);
 // Get the day of the week (0 for Sunday, 1 for Monday, ..., 6 for Saturday)
 const dayNumber = await date.getDay();
 // const dayNumber = dw.getDay();
-// await alert(dayNumber );
-// await alert(JSON.stringify(worktimeList[dayNumber] ,null,2));
+await alert(dayNumber  + ' ' + worktimeList.length);
+await alert(JSON.stringify(worktimeList,null,2));
 return await worktimeList[dayNumber];
   };
 
