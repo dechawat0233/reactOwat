@@ -1544,7 +1544,7 @@ function Setting({ workplaceList ,employeeList}) {
                       </div>
                     </div>
 
-                    <div class="col-md-4">
+                    {/* <div class="col-md-4">
                       <div class="form-group">
                         <label role="holiday">
                           อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายวัน
@@ -1558,7 +1558,7 @@ function Setting({ workplaceList ,employeeList}) {
                           onChange={(e) => setHoliday(e.target.value)}
                         />
                       </div>
-                    </div>
+                    </div> */}
                     <div class="col-md-4">
                       <div class="form-group">
                         <label role="holidayHour">
@@ -2552,7 +2552,7 @@ function Setting({ workplaceList ,employeeList}) {
                       </div>
                     )}
                   </div>
-                  <div>
+                  {/* <div>
                     <label>หมายเหตุ:</label>
                     <input
                       type="text"
@@ -2560,7 +2560,7 @@ function Setting({ workplaceList ,employeeList}) {
                       value={reason}
                       onChange={handleReasonChange}
                     />
-                  </div>
+                  </div> */}
                 </section>
                 {/* <section class="Frame">
                   <h2 class="title">พนักงานในสังกัด</h2> */}

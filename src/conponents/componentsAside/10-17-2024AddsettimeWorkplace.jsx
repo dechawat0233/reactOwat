@@ -15,7 +15,7 @@ import EmployeesSelected from "./EmployeesSelected";
 import th from "date-fns/locale/th"; // Import Thai locale data from date-fns
 import en from "date-fns/locale/en-US";
 
-function AddsettimeWorkplace({ workplaceList, employeeList }) {
+function AddsettimeWorkplace() {
   const bordertable = {
     borderLeft: "2px solid #000",
   };
@@ -60,6 +60,22 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
   const [workEndOt3, setWorkEndOt3] = useState("22.00"); //เวลาออกกะเย็น
 
   /////////////////////////////////
+  const [employeeList, setEmployeeList] = useState([]);
+
+  useEffect(() => {
+    // Fetch data from the API when the component mounts
+    fetch(endpoint + "/employee/list")
+      .then((response) => response.json())
+      .then((data) => {
+        // Update the state with the fetched data
+        setEmployeeList(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []); // The empty array [] ensures that the effect runs only once after the initial render
+
+  console.log(employeeList);
 
   //auto check time record
   useEffect(() => {
@@ -102,268 +118,6 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
   const [endTimeOt2, setEndTimeOt2] = useState("");
   const [startTimeOt3, setStartTimeOt3] = useState("");
   const [endTimeOt3, setEndTimeOt3] = useState("");
-
-  //data for search
-  const [searchWorkplaceId, setSearchWorkplaceId] = useState(""); //รหัสหน่วยงาน
-  const [searchWorkplaceName, setSearchWorkplaceName] = useState(""); //ชื่อหน่วยงาน
-  const [searchResult, setSearchResult] = useState([]);
-
-  async function handleSearch(event) {
-    event.preventDefault();
-    // get value from form search
-    const data = {
-      searchWorkplaceId: searchWorkplaceId,
-      searchWorkplaceName: searchWorkplaceName,
-    };
-
-    try {
-      const response = await axios.post(endpoint + "/workplace/search", data);
-      setSearchResult(response.data.workplaces);
-      // alert(JSON.stringify(response ,null,2));
-      if (response.data.workplaces.length < 1) {
-        window.location.reload();
-      } else {
-        // Calculate the time difference
-        setWorkOfHour(response.data.workplaces[0].workOfHour);
-        setWorkOfOT(response.data.workplaces[0].workOfOT);
-
-        const startTime = response.data.workplaces[0].workStart1 || "";
-        const endTime = response.data.workplaces[0].workEnd1 || "";
-        const workOfHour = response.data.workplaces[0].workOfHour || "";
-        const selectotTime = response.data.workplaces[0].workEnd1 || "";
-        const workOfOT = response.data.workplaces[0].workOfOT || "";
-        //get start time and end time for afternoon and night
-        const startTime2 = response.data.workplaces[0].workStart2 || "";
-        const endTime2 = response.data.workplaces[0].workEnd2 || "";
-        const startTime3 = response.data.workplaces[0].workStart3 || "";
-        const endTime3 = response.data.workplaces[0].workEnd3 || "";
-        const startTime4 = "";
-        const endTime4 = "";
-
-        // setStartTimeOt1(response.data.workplaces[0].workStartOt1);
-        // setEndTimeOt1(response.data.workplaces[0].workEndOt1);
-        // setStartTimeOt2(response.data.workplaces[0].workStartOt1);
-        // setEndTimeOt2(response.data.workplaces[0].workEndOt1);
-        // setStartTimeOt3(response.data.workplaces[0].workStartOt1);
-        // setEndTimeOt3(response.data.workplaces[0].workEndOt1);
-
-        // setShift('morning_shift');
-
-        // setShift1start(startTime);
-        // setShift1end(endTime);
-        // setShift2start(startTime2);
-        // setShift2end(endTime2);
-        // setShift3start(startTime3);
-        // setShift3end(endTime3);
-
-        // setShift4start(startTime4);
-        // setShift4end(endTime4);
-
-        setShift("morning_shift");
-        setShift1start("");
-        setShift1end("");
-        setShift2start("");
-        setShift2end("");
-        setShift3start("");
-        setShift3end("");
-
-        setStartTimeOt1("");
-        setEndTimeOt1("");
-        setStartTimeOt2("");
-        setEndTimeOt2("");
-        setStartTimeOt3("");
-        setEndTimeOt3("");
-        //get work time from workplace
-        const workplaceWorkTime = await getWorkTime(
-          response.data.workplaces,
-          formattedWorkDate
-        );
-        // alert(JSON.stringify(searchResult,null,2) );
-        workplaceWorkTime.map((item) => {
-          // alert(item.shift);
-          if (item.shift == "กะเช้า") {
-            // alert(item.startTime);
-            setShift1start(item.startTime);
-            setShift1end(item.endTime);
-            setStartTimeOt1(item.startTimeOT);
-            setEndTimeOt1(item.endTimeOT);
-          } else if (item.shift == "กะบ่าย") {
-            setShift2start(item.startTime);
-            setShift2end(item.endTime);
-            setStartTimeOt2(item.startTimeOT);
-            setEndTimeOt2(item.endTimeOT);
-          } else if (item.shift == "กะดึก") {
-            setShift3start(item.startTime);
-            setShift3end(item.endTime);
-            setStartTimeOt3(item.startTimeOT);
-            setEndTimeOt3(item.endTimeOT);
-          }
-        });
-
-        //aass
-        // const worktimeList = [];
-        //                 const dayMapping = await {
-        //                     อาทิตย์: 0,
-        //                     จันทร์: 1,
-        //                     อังคาร: 2,
-        //                     พุธ: 3,
-        //                     พฤหัส: 4,
-        //                     ศุกร์: 5,
-        //                     เสาร์: 6
-        //                   };
-
-        //                 //get work time from workplace
-        //                 // await alert(JSON.stringify(response.data.workplaces[0].workTimeDay.length,null,2));
-        //                 await response.data.workplaces[0].workTimeDay.map( async (item , index) => {
-
-        // // await alert(item.startDay + dayMapping[item.startDay] );
-        // // await alert(item.endDay + dayMapping[item.endDay] );
-        // if(dayMapping [item.startDay] ==  dayMapping[item.endDay] ){
-        //     // let x = await {[dayMapping[item.startDay]]: item.allTimes};
-        //     // await worktimeList.push(x);
-        //     let x = {};
-        //     x[dayMapping[item.startDay]] = item.allTimes;
-        //     worktimeList.push(x);
-
-        //   }
-
-        //   if(dayMapping [item.startDay] >  dayMapping[item.endDay]){
-        //     let tmpc = await dayMapping[item.startDay];
-        //     let c = await true;
-
-        //         while(c) {
-        //     if(tmpc == dayMapping[item.endDay]){
-        //       c =await false;
-        //       }
-
-        //       // alert(tmpc);
-        //     //   worktimeList[c] = await item.allTimes;
-        //     let x = {};
-        //     x[c] = item.allTimes;
-        //     worktimeList.push(x);
-
-        //     // alert(tmpc );
-        //     tmpc = await tmpc +1;
-        //     if(tmpc > 6 ){
-        //     tmpc = await 0;
-        //     }
-        //     // alert(tmpc);
-        //         }
-
-        //       }
-
-        //       if(dayMapping[item.startDay] <  dayMapping[item.endDay]){
-
-        //         for (let i = dayMapping[item.startDay]; i <= dayMapping[item.endDay]; i++) {
-        //             let x = {};
-        //             x[i] = item.allTimes;
-        //             worktimeList.push(x);
-        //         }
-        //         }
-
-        //                 });
-        //                 // await alert(JSON.stringify(worktimeList.length,null,2) );
-
-        // // Get the day of the week (0 for Sunday, 1 for Monday, ..., 6 for Saturday)
-        // const dayOfWeek = await workDate.getDay();
-
-        // // await alert(dayOfWeek );
-
-        //                 await Promise.all(worktimeList.map(async (item) => {
-
-        // if(item[dayOfWeek ] !== undefined) {
-        //     // alert(JSON.stringify(item[dayOfWeek ]));
-
-        //     if (item.shift == 'กะเช้า') {
-        //         // alert(item.startTime);
-        //         await setShift1start(item.startTime);
-        //         await setShift1end(item.endTime);
-        //         await setStartTimeOt1(item.startTimeOT);
-        //         await setEndTimeOt1(item.endTimeOT);
-
-        //     } else if (item.shift == 'กะบ่าย') {
-        //         await setShift2start(item.startTime);
-        //         await setShift2end(item.endTime);
-        //         await setStartTimeOt2(item.startTimeOT);
-        //         await setEndTimeOt2(item.endTimeOT);
-
-        //     } else if (item.shift == 'กะดึก') {
-        //         await setShift3start(item.startTime);
-        //         await setShift3end(item.endTime);
-        //         await setStartTimeOt3(item.startTimeOT);
-        //         await setEndTimeOt3(item.endTimeOT);
-
-        //     }
-
-        // }
-        //                 }));
-
-        const [startHours, startMinutes] = startTime.split(".").map(parseFloat);
-        const [endHours, endMinutes] = endTime.split(".").map(parseFloat);
-
-        let hours = endHours - startHours;
-        let minutes = endMinutes - startMinutes;
-
-        if (minutes < 0) {
-          hours -= 1;
-          minutes += 60;
-        }
-
-        // Handle cases where endTime is on the next day
-        if (hours < 0) {
-          hours += 24;
-        }
-        const totalMinutes = hours * 60 + minutes;
-
-        // Cap the time difference at the maximum work hours
-        const cappedTotalMinutes = Math.min(totalMinutes, workOfHour * 60);
-
-        // Convert the capped time difference back to hours and minutes
-        const cappedHours = Math.floor(cappedTotalMinutes / 60);
-        const cappedMinutes = cappedTotalMinutes % 60;
-
-        const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
-
-        // const timeDiffFormatted = `${hours}.${minutes}`;
-
-        // Populate all the startTime input fields with the search result value
-        const updatedRowDataList = rowDataList.map((rowData) => ({
-          ...rowData,
-          startTime: startTime,
-          endTime: endTime,
-          workOfHour: workOfHour,
-          selectotTime: selectotTime,
-          allTime: timeDiffFormatted,
-          workOfOT: workOfOT,
-          startTime2: startTime2,
-          endTime2: endTime2,
-          startTime3: startTime3,
-          endTime3: endTime3,
-
-          startTimeOt1: startTimeOt1,
-          endTimeOt1: endTimeOt1,
-          startTimeOt2: startTimeOt2,
-          endTimeOt2: endTimeOt2,
-          startTimeOt3: startTimeOt3,
-          endTimeOt3: endTimeOt3,
-        }));
-        // setRowDataList(updatedRowDataList);
-
-        // Set search values
-        setWorkplaceId(response.data.workplaces[0].workplaceId);
-        setWorkplaceName(response.data.workplaces[0].workplaceName);
-
-        // setSearchWorkplaceId(response.data.workplaces[0].workplaceId);
-        // setSearchWorkplaceName(response.data.workplaces[0].workplaceName);
-
-        setSearchWorkplaceId("");
-        setSearchWorkplaceName("");
-      }
-    } catch (error) {
-      alert("กรุณาตรวจสอบข้อมูลในช่องค้นหา" + error);
-      window.location.reload();
-    }
-  }
 
   //search employee name by employeeId
   useEffect(() => {
@@ -430,6 +184,7 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
     setSelectedThaiDate(newDate);
     setShowDatePicker(false); // Hide date picker after selecting a date
   };
+  console.log("selectedThaiDate", selectedThaiDate);
   useEffect(() => {
     if (selectedDate) {
       // Convert the string to a Date object
@@ -444,10 +199,12 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
 
       // Format the date
       const formattedDate = `${daySelectedDate}/${monthSelectedDate}/${yearSelectedDate}`;
+      console.log("formattedDate", formattedDate);
       setFormattedDate(formattedDate);
     }
   }, [selectedDate]);
 
+  console.log("selectedDate", selectedDate);
   const toggleDatePicker = () => {
     setShowDatePicker(!showDatePicker);
   };
@@ -477,43 +234,6 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
   // }, [staffName])
 
   //check ship and set time of work to start time and end time
-
-  function calTime(start, end, limit) {
-    const startHours = parseFloat(start.split(".")[0] || 0);
-    const startMinutes = parseFloat(start.split(".")[1] || 0);
-    const endHours = parseFloat(end.split(".")[0] || 0);
-    const endMinutes = parseFloat(end.split(".")[1] || 0);
-    let hours = endHours - startHours;
-    let minutes = endMinutes - startMinutes;
-    if (minutes < 0) {
-      hours -= 1;
-      minutes += 60;
-    }
-    // Handle cases where endTime is on the next day
-    if (hours < 0) {
-      hours += 24;
-    }
-    //check employee working >= 5 hours
-    if (hours >= 5) {
-      hours -= 1;
-    }
-
-    // Calculate the total time difference in minutes
-    const totalMinutes = hours * 60 + minutes;
-    // check employee working > 5 hours
-    // Cap the time difference at the maximum work hours
-    const cappedTotalMinutes = Math.min(totalMinutes, limit * 60);
-    // Convert the capped time difference back to hours and minutes
-    const cappedHours = Math.floor(cappedTotalMinutes / 60);
-    const cappedMinutes = cappedTotalMinutes % 60;
-    const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
-    if (isNaN(timeDiffFormatted)) {
-      return "0";
-    }
-
-    return timeDiffFormatted;
-  }
-  
   useEffect(() => {
     // alert(shift);
     switch (shift) {
@@ -679,7 +399,41 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
   // }
   // }, [selectotTime, selectotTimeOut, otTime]);
 
-  
+  function calTime(start, end, limit) {
+    const startHours = parseFloat(start.split(".")[0] || 0);
+    const startMinutes = parseFloat(start.split(".")[1] || 0);
+    const endHours = parseFloat(end.split(".")[0] || 0);
+    const endMinutes = parseFloat(end.split(".")[1] || 0);
+    let hours = endHours - startHours;
+    let minutes = endMinutes - startMinutes;
+    if (minutes < 0) {
+      hours -= 1;
+      minutes += 60;
+    }
+    // Handle cases where endTime is on the next day
+    if (hours < 0) {
+      hours += 24;
+    }
+    //check employee working >= 5 hours
+    if (hours >= 5) {
+      hours -= 1;
+    }
+
+    // Calculate the total time difference in minutes
+    const totalMinutes = hours * 60 + minutes;
+    // check employee working > 5 hours
+    // Cap the time difference at the maximum work hours
+    const cappedTotalMinutes = Math.min(totalMinutes, limit * 60);
+    // Convert the capped time difference back to hours and minutes
+    const cappedHours = Math.floor(cappedTotalMinutes / 60);
+    const cappedMinutes = cappedTotalMinutes % 60;
+    const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
+    if (isNaN(timeDiffFormatted)) {
+      return "0";
+    }
+
+    return timeDiffFormatted;
+  }
 
   // Function to add a new row to the rowDataList with specific values
   const addRow = (newRowData) => {
@@ -937,6 +691,7 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
       const totalMinutes = hours * 60 + minutes;
 
       // Cap the time difference at the maximum work hours
+      console.log(workOfOT);
 
       const cappedTotalMinutes = Math.min(totalMinutes, workOfHour * 60);
       // alert(workOfHour );
@@ -1065,7 +820,270 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
     setRowDataList(updatedRowDataList);
   }
 
-  
+  //data for search
+  const [searchWorkplaceId, setSearchWorkplaceId] = useState(""); //รหัสหน่วยงาน
+  const [searchWorkplaceName, setSearchWorkplaceName] = useState(""); //ชื่อหน่วยงาน
+  const [searchResult, setSearchResult] = useState([]);
+
+  async function handleSearch(event) {
+    event.preventDefault();
+    // get value from form search
+    const data = {
+      searchWorkplaceId: searchWorkplaceId,
+      searchWorkplaceName: searchWorkplaceName,
+    };
+
+    try {
+      const response = await axios.post(endpoint + "/workplace/search", data);
+      setSearchResult(response.data.workplaces);
+      // alert(JSON.stringify(response ,null,2));
+      if (response.data.workplaces.length < 1) {
+        window.location.reload();
+      } else {
+        // Calculate the time difference
+        setWorkOfHour(response.data.workplaces[0].workOfHour);
+        setWorkOfOT(response.data.workplaces[0].workOfOT);
+
+        const startTime = response.data.workplaces[0].workStart1 || "";
+        const endTime = response.data.workplaces[0].workEnd1 || "";
+        const workOfHour = response.data.workplaces[0].workOfHour || "";
+        const selectotTime = response.data.workplaces[0].workEnd1 || "";
+        const workOfOT = response.data.workplaces[0].workOfOT || "";
+        //get start time and end time for afternoon and night
+        const startTime2 = response.data.workplaces[0].workStart2 || "";
+        const endTime2 = response.data.workplaces[0].workEnd2 || "";
+        const startTime3 = response.data.workplaces[0].workStart3 || "";
+        const endTime3 = response.data.workplaces[0].workEnd3 || "";
+        const startTime4 = "";
+        const endTime4 = "";
+
+        // setStartTimeOt1(response.data.workplaces[0].workStartOt1);
+        // setEndTimeOt1(response.data.workplaces[0].workEndOt1);
+        // setStartTimeOt2(response.data.workplaces[0].workStartOt1);
+        // setEndTimeOt2(response.data.workplaces[0].workEndOt1);
+        // setStartTimeOt3(response.data.workplaces[0].workStartOt1);
+        // setEndTimeOt3(response.data.workplaces[0].workEndOt1);
+
+        // setShift('morning_shift');
+
+        // setShift1start(startTime);
+        // setShift1end(endTime);
+        // setShift2start(startTime2);
+        // setShift2end(endTime2);
+        // setShift3start(startTime3);
+        // setShift3end(endTime3);
+
+        // setShift4start(startTime4);
+        // setShift4end(endTime4);
+
+        setShift("morning_shift");
+        setShift1start("");
+        setShift1end("");
+        setShift2start("");
+        setShift2end("");
+        setShift3start("");
+        setShift3end("");
+
+        setStartTimeOt1("");
+        setEndTimeOt1("");
+        setStartTimeOt2("");
+        setEndTimeOt2("");
+        setStartTimeOt3("");
+        setEndTimeOt3("");
+        //get work time from workplace
+        const workplaceWorkTime = await getWorkTime(
+          response.data.workplaces,
+          formattedWorkDate
+        );
+        // alert(JSON.stringify(searchResult,null,2) );
+        workplaceWorkTime.map((item) => {
+          // alert(item.shift);
+          if (item.shift == "กะเช้า") {
+            // alert(item.startTime);
+            setShift1start(item.startTime);
+            setShift1end(item.endTime);
+            setStartTimeOt1(item.startTimeOT);
+            setEndTimeOt1(item.endTimeOT);
+          } else if (item.shift == "กะบ่าย") {
+            setShift2start(item.startTime);
+            setShift2end(item.endTime);
+            setStartTimeOt2(item.startTimeOT);
+            setEndTimeOt2(item.endTimeOT);
+          } else if (item.shift == "กะดึก") {
+            setShift3start(item.startTime);
+            setShift3end(item.endTime);
+            setStartTimeOt3(item.startTimeOT);
+            setEndTimeOt3(item.endTimeOT);
+          }
+        });
+
+        //aass
+        // const worktimeList = [];
+        //                 const dayMapping = await {
+        //                     อาทิตย์: 0,
+        //                     จันทร์: 1,
+        //                     อังคาร: 2,
+        //                     พุธ: 3,
+        //                     พฤหัส: 4,
+        //                     ศุกร์: 5,
+        //                     เสาร์: 6
+        //                   };
+
+        //                 //get work time from workplace
+        //                 // await alert(JSON.stringify(response.data.workplaces[0].workTimeDay.length,null,2));
+        //                 await response.data.workplaces[0].workTimeDay.map( async (item , index) => {
+
+        // // await alert(item.startDay + dayMapping[item.startDay] );
+        // // await alert(item.endDay + dayMapping[item.endDay] );
+        // if(dayMapping [item.startDay] ==  dayMapping[item.endDay] ){
+        //     // let x = await {[dayMapping[item.startDay]]: item.allTimes};
+        //     // await worktimeList.push(x);
+        //     let x = {};
+        //     x[dayMapping[item.startDay]] = item.allTimes;
+        //     worktimeList.push(x);
+
+        //   }
+
+        //   if(dayMapping [item.startDay] >  dayMapping[item.endDay]){
+        //     let tmpc = await dayMapping[item.startDay];
+        //     let c = await true;
+
+        //         while(c) {
+        //     if(tmpc == dayMapping[item.endDay]){
+        //       c =await false;
+        //       }
+
+        //       // alert(tmpc);
+        //     //   worktimeList[c] = await item.allTimes;
+        //     let x = {};
+        //     x[c] = item.allTimes;
+        //     worktimeList.push(x);
+
+        //     // alert(tmpc );
+        //     tmpc = await tmpc +1;
+        //     if(tmpc > 6 ){
+        //     tmpc = await 0;
+        //     }
+        //     // alert(tmpc);
+        //         }
+
+        //       }
+
+        //       if(dayMapping[item.startDay] <  dayMapping[item.endDay]){
+
+        //         for (let i = dayMapping[item.startDay]; i <= dayMapping[item.endDay]; i++) {
+        //             let x = {};
+        //             x[i] = item.allTimes;
+        //             worktimeList.push(x);
+        //         }
+        //         }
+
+        //                 });
+        //                 // await alert(JSON.stringify(worktimeList.length,null,2) );
+
+        // // Get the day of the week (0 for Sunday, 1 for Monday, ..., 6 for Saturday)
+        // const dayOfWeek = await workDate.getDay();
+
+        // // await alert(dayOfWeek );
+
+        //                 await Promise.all(worktimeList.map(async (item) => {
+
+        // if(item[dayOfWeek ] !== undefined) {
+        //     // alert(JSON.stringify(item[dayOfWeek ]));
+
+        //     if (item.shift == 'กะเช้า') {
+        //         // alert(item.startTime);
+        //         await setShift1start(item.startTime);
+        //         await setShift1end(item.endTime);
+        //         await setStartTimeOt1(item.startTimeOT);
+        //         await setEndTimeOt1(item.endTimeOT);
+
+        //     } else if (item.shift == 'กะบ่าย') {
+        //         await setShift2start(item.startTime);
+        //         await setShift2end(item.endTime);
+        //         await setStartTimeOt2(item.startTimeOT);
+        //         await setEndTimeOt2(item.endTimeOT);
+
+        //     } else if (item.shift == 'กะดึก') {
+        //         await setShift3start(item.startTime);
+        //         await setShift3end(item.endTime);
+        //         await setStartTimeOt3(item.startTimeOT);
+        //         await setEndTimeOt3(item.endTimeOT);
+
+        //     }
+
+        // }
+        //                 }));
+
+        const [startHours, startMinutes] = startTime.split(".").map(parseFloat);
+        const [endHours, endMinutes] = endTime.split(".").map(parseFloat);
+
+        let hours = endHours - startHours;
+        let minutes = endMinutes - startMinutes;
+
+        if (minutes < 0) {
+          hours -= 1;
+          minutes += 60;
+        }
+
+        // Handle cases where endTime is on the next day
+        if (hours < 0) {
+          hours += 24;
+        }
+        const totalMinutes = hours * 60 + minutes;
+
+        // Cap the time difference at the maximum work hours
+        const cappedTotalMinutes = Math.min(totalMinutes, workOfHour * 60);
+
+        // Convert the capped time difference back to hours and minutes
+        const cappedHours = Math.floor(cappedTotalMinutes / 60);
+        const cappedMinutes = cappedTotalMinutes % 60;
+
+        const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
+
+        // const timeDiffFormatted = `${hours}.${minutes}`;
+
+        // Populate all the startTime input fields with the search result value
+        const updatedRowDataList = rowDataList.map((rowData) => ({
+          ...rowData,
+          startTime: startTime,
+          endTime: endTime,
+          workOfHour: workOfHour,
+          selectotTime: selectotTime,
+          allTime: timeDiffFormatted,
+          workOfOT: workOfOT,
+          startTime2: startTime2,
+          endTime2: endTime2,
+          startTime3: startTime3,
+          endTime3: endTime3,
+
+          startTimeOt1: startTimeOt1,
+          endTimeOt1: endTimeOt1,
+          startTimeOt2: startTimeOt2,
+          endTimeOt2: endTimeOt2,
+          startTimeOt3: startTimeOt3,
+          endTimeOt3: endTimeOt3,
+        }));
+        // setRowDataList(updatedRowDataList);
+
+        // Set search values
+        setWorkplaceId(response.data.workplaces[0].workplaceId);
+        setWorkplaceName(response.data.workplaces[0].workplaceName);
+
+        // setSearchWorkplaceId(response.data.workplaces[0].workplaceId);
+        // setSearchWorkplaceName(response.data.workplaces[0].workplaceName);
+
+        // console.log('workOfOT:', response.data.workplaces[0].workOfOT);
+        // console.log('workOfOT:', endTime);
+
+        setSearchWorkplaceId("");
+        setSearchWorkplaceName("");
+      }
+    } catch (error) {
+      alert("กรุณาตรวจสอบข้อมูลในช่องค้นหา" + error);
+      window.location.reload();
+    }
+  }
 
   // async function handleCheckTimerecord() {
 
@@ -1366,6 +1384,7 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
     setStaffFullName(selectedStaffName);
   };
 
+  // console.log(workOfOT);
   return (
     <section class="content">
       <div class="row">

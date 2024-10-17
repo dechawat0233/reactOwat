@@ -1,126 +1,173 @@
-import endpoint from '../../config';
+import endpoint from "../../config";
 
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-import EmployeesSelected from './EmployeesSelected';
-import Calendar from 'react-calendar';
-import '../editwindowcss.css';
-import EmployeeWorkDay from './componentsetting/EmployeeWorkDay';
-import { Link } from 'react-router-dom';
+import EmployeesSelected from "./EmployeesSelected";
+import Calendar from "react-calendar";
+import "../editwindowcss.css";
+import EmployeeWorkDay from "./componentsetting/EmployeeWorkDay";
+import { Link } from "react-router-dom";
 
+function SettingAllList({ workplaceList, employeeList }) {
+  const tableStyle = {
+    borderCollapse: "collapse",
+    width: "100%",
+  };
 
-function SettingAllList() {
+  const cellStyle = {
+    border: "1px solid black",
+    padding: "8px",
+    textAlign: "center",
+  };
 
-    const tableStyle = {
-        borderCollapse: 'collapse',
-        width: '100%',
-    };
+  const headerCellStyle = {
+    ...cellStyle,
+    backgroundColor: "#f2f2f2",
+  };
+  const [searchTerm, setSearchTerm] = useState("");
+  //   console.log("employeeList", employeeList);
+  //   console.log("workplaceList", workplaceList);
 
-    const cellStyle = {
-        border: '1px solid black',
-        padding: '8px',
-        textAlign: 'center',
-    };
+  //   useEffect(() => {
+  //     // Fetch data from the API when the component mounts
+  //     fetch(endpoint + "/workplace/list")
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         // Update the state with the fetched data
+  //         setWorkplaceList(data);
+  //         // alert(data[0].workplaceName);
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching data:", error);
+  //       });
+  //   }, []);
 
-    const headerCellStyle = {
-        ...cellStyle,
-        backgroundColor: '#f2f2f2',
-    };
-    const [searchTerm, setSearchTerm] = useState('');
-    const [workplaceList, setWorkplaceList] = useState([]);
+  //   const [employeeList, setEmployeeList] = useState([]);
 
-    useEffect(() => {
-        // Fetch data from the API when the component mounts
-        fetch(endpoint + '/workplace/list')
-            .then(response => response.json())
-            .then(data => {
-                // Update the state with the fetched data
-                setWorkplaceList(data);
-                // alert(data[0].workplaceName);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
-    }, []);
+  //   useEffect(() => {
+  //     // Fetch data from the API when the component mounts
+  //     fetch(endpoint + "/employee/list")
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         // Update the state with the fetched data
+  //         setEmployeeList(data);
+  //         // alert(data[0].workplaceName);
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching data:", error);
+  //       });
+  //   }, []); // The empty array [] ensures that the effect runs only once after the initial render
 
-    const [employeeList, setEmployeeList] = useState([]);
+  const extractedData = workplaceList.map((item) => ({
+    workplaceId: item.workplaceId,
+    workplaceName: item.workplaceName,
+  }));
 
-    useEffect(() => {
-        // Fetch data from the API when the component mounts
-        fetch(endpoint + '/employee/list')
-            .then(response => response.json())
-            .then(data => {
-                // Update the state with the fetched data
-                setEmployeeList(data);
-                // alert(data[0].workplaceName);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
-    }, []); // The empty array [] ensures that the effect runs only once after the initial render
+  //   console.log(extractedData);
 
-    const extractedData = workplaceList.map(item => ({
-        workplaceId: item.workplaceId,
-        workplaceName: item.workplaceName
-    }));
+  const handleInputChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
-    console.log(extractedData);
+  // Filter the extracted data based on search term
+  const filteredData = extractedData.filter(
+    (data) =>
+      data.workplaceId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      data.workplaceName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-    const handleInputChange = (event) => {
-        setSearchTerm(event.target.value);
-    };
+  filteredData.sort((a, b) => a.workplaceId.localeCompare(b.workplaceId));
 
-    // Filter the extracted data based on search term
-    const filteredData = extractedData.filter(data =>
-        data.workplaceId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        data.workplaceName.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+  // Check if employeeList is defined and is an array
+  //   const employeeCountMap = {};
+  //   employeeList.forEach((employee) => {
+  //     // Check if 'workplace' exists and is not null/undefined
+  //     if (employee.workplace) {
+  //       if (!employeeCountMap[employee.workplace]) {
+  //         employeeCountMap[employee.workplace] = 1;
+  //       } else {
+  //         employeeCountMap[employee.workplace]++;
+  //       }
+  //     }
+  //   });
 
-    filteredData.sort((a, b) => a.workplaceId.localeCompare(b.workplaceId));
+  // Assuming employeeList is initially an object
+  const employeeCountMap = {};
 
+  employeeList.forEach((employee) => {
+    // Check if 'workplace' exists and is not null/undefined/empty string
+    if (employee.workplace) {
+      // Initialize or increment the count for the workplace
+      if (!employeeCountMap[employee.workplace]) {
+        employeeCountMap[employee.workplace] = 1;
+      } else {
+        employeeCountMap[employee.workplace]++;
+      }
+    }
+    // If 'workplace' doesn't exist, skip that employee
+  });
 
-    const employeeCountMap = {};
-    employeeList.forEach(employee => {
-        if (!employeeCountMap[employee.workplace]) {
-            employeeCountMap[employee.workplace] = 1;
-        } else {
-            employeeCountMap[employee.workplace]++;
-        }
-    });
+  console.error("employeeCountMap", employeeCountMap);
 
-    const countData = filteredData.length;
+  const totalEmployees = Object.values(employeeCountMap).reduce(
+    (sum, count) => sum + count,
+    0
+  );
 
-    return (
-        <body class="hold-transition sidebar-mini" className='editlaout'>
-            <div class="wrapper">
+  console.log("Total Employees:", totalEmployees);
 
-                <div class="content-wrapper">
-                    {/* <!-- Content Header (Page header) --> */}
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><i class="fas fa-home"></i> <a href="index.php">หน้าหลัก</a></li>
-                        <li class="breadcrumb-item"><a href="#"> การตั้งค่า</a></li>
-                        <li class="breadcrumb-item active">ตั้งค่าหน่วยงาน</li>
-                    </ol>
-                    <div class="content-header">
-                        <div class="container-fluid">
-                            <div class="row mb-2">
-                                <h1 class="m-0"><i class="far fa-arrow-alt-circle-right"></i> ตั้งค่าหน่วยงาน</h1>
-                            </div>
-                        </div>
-                    </div>
-                    {/* <!-- /.content-header -->
+  const countData = filteredData.length;
+
+  const filteredWorkplaceIds = filteredData.map(data => data.workplaceId);
+
+// Check for workplace IDs in employeeCountMap that are not in filteredData
+const unmatchedWorkplaceIds = Object.keys(employeeCountMap).filter(
+  (workplaceId) => !filteredWorkplaceIds.includes(workplaceId)
+);
+
+// Log or handle unmatched workplace IDs
+if (unmatchedWorkplaceIds.length > 0) {
+  console.warn("Workplace IDs in employeeCountMap not found in filteredData:", unmatchedWorkplaceIds);
+} else {
+  console.log("All workplace IDs match between employeeCountMap and filteredData");
+}
+
+  return (
+    <body class="hold-transition sidebar-mini" className="editlaout">
+      <div class="wrapper">
+        <div class="content-wrapper">
+          {/* <!-- Content Header (Page header) --> */}
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <i class="fas fa-home"></i> <a href="index.php">หน้าหลัก</a>
+            </li>
+            <li class="breadcrumb-item">
+              <a href="#"> การตั้งค่า</a>
+            </li>
+            <li class="breadcrumb-item active">ตั้งค่าหน่วยงาน</li>
+          </ol>
+          <div class="content-header">
+            <div class="container-fluid">
+              <div class="row mb-2">
+                <h1 class="m-0">
+                  <i class="far fa-arrow-alt-circle-right"></i> ตั้งค่าหน่วยงาน
+                </h1>
+              </div>
+            </div>
+          </div>
+          {/* <!-- /.content-header -->
                     <!-- Main content --> */}
-                    <section class="content">
-                        <div class="container-fluid">
-                            <h2 class="title">ตั้งค่าหน่วยงาน</h2>
-                            <section class="Frame">
-                                <div class="col-md-12">
-                                    <form>
-                                        {/* <h2>รายชื่อหน่วยงานทั้งหมด</h2>
+          <section class="content">
+            <div class="container-fluid">
+              <h2 class="title">ตั้งค่าหน่วยงาน</h2>
+              <section class="Frame">
+                <div class="col-md-12">
+                  <form>
+                    {/* <h2>รายชื่อหน่วยงานทั้งหมด</h2>
                                         <ul>
                                             {extractedData.map((data, index) => (
                                                 <li key={index}>
@@ -129,30 +176,29 @@ function SettingAllList() {
                                                 </li>
                                             ))}
                                         </ul> */}
-                                        {/* Input for filtering */}
-                                        <label>ค้นหา</label>
-                                        <div className="row">
-                                            
-                                            <div className="col-md-6">
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    placeholder="Search..."
-                                                    value={searchTerm}
-                                                    onChange={handleInputChange}
-                                                />
-                                            </div>
-                                        </div>
-                                        <br />
-                                        {/* Display filtered data */}
-                                        <ul>
-                                            {/* {filteredData.map((data, index) => (
+                    {/* Input for filtering */}
+                    <label>ค้นหา</label>
+                    <div className="row">
+                      <div className="col-md-6">
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Search..."
+                          value={searchTerm}
+                          onChange={handleInputChange}
+                        />
+                      </div>
+                    </div>
+                    <br />
+                    {/* Display filtered data */}
+                    <ul>
+                      {/* {filteredData.map((data, index) => (
                                                 <li key={index}>
                                                     <strong>Workplace ID:</strong> {data.workplaceId},
                                                     <strong> Workplace Name:</strong> {data.workplaceName}
                                                 </li>
                                             ))} */}
-                                            {/* {filteredData.map((data, index) => (
+                      {/* {filteredData.map((data, index) => (
                                                 <li key={index}>
                                                     <Link to={`/setting?workplaceId=${data.workplaceId}&workplaceName=${data.workplaceName}`}>
                                                         <strong>Workplace ID:</strong> {data.workplaceId},
@@ -161,20 +207,19 @@ function SettingAllList() {
                                                 </li>
                                             ))} */}
 
-                                            <div>จำนวนหน่วยงานทั้งหมด {countData}</div>
-                                            <br />
+                      <div>จำนวนหน่วยงานทั้งหมด {countData}</div>
+                      <br />
 
-
-                                            <table border="1" style={tableStyle}>
-                                                <thead>
-                                                    <tr>
-                                                        <th style={headerCellStyle}>รหัสหน่วยงาน</th>
-                                                        <th style={headerCellStyle}>ชื่อหน่วยงาน</th>
-                                                        <th style={headerCellStyle}>จำนวนคน</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {/* {filteredData.map((data, index) => (
+                      <table border="1" style={tableStyle}>
+                        <thead>
+                          <tr>
+                            <th style={headerCellStyle}>รหัสหน่วยงาน</th>
+                            <th style={headerCellStyle}>ชื่อหน่วยงาน</th>
+                            <th style={headerCellStyle}>จำนวนคน</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {/* {filteredData.map((data, index) => (
                                                         <tr key={index}>
                                                             <td style={cellStyle}>
                                                                 <Link to={`/setting?workplaceId=${data.workplaceId}&workplaceName=${data.workplaceName}`}>
@@ -194,35 +239,81 @@ function SettingAllList() {
                                                         </tr>
                                                     ))} */}
 
-                                                    {filteredData.map((data, index) => (
-                                                        <tr key={index}>
-                                                            <td style={cellStyle}>
-                                                                <Link to={`/setting?workplaceId=${data.workplaceId}&workplaceName=${data.workplaceName}`}>
-                                                                    {data.workplaceId}
-                                                                </Link>
-                                                            </td>
-                                                            <td style={cellStyle}>
-                                                                <Link to={`/setting?workplaceId=${data.workplaceId}&workplaceName=${data.workplaceName}`}>
-                                                                    {data.workplaceName}
-                                                                </Link>
-                                                            </td>
-                                                            <td style={cellStyle}>
-                                                                {employeeCountMap[data.workplaceId] || 0}
-                                                            </td>
-                                                        </tr>
-                                                    ))}
-                                                </tbody>
-                                            </table>
-                                        </ul>
-                                    </form>
-                                </div>
-                            </section>
-                        </div>
-                    </section>
+                          {filteredData.map((data, index) => (
+                            <tr key={index}>
+                              <td style={cellStyle}>
+                                <Link
+                                  to={`/setting?workplaceId=${data.workplaceId}&workplaceName=${data.workplaceName}`}
+                                >
+                                  {data.workplaceId}
+                                </Link>
+                              </td>
+                              <td style={cellStyle}>
+                                <Link
+                                  to={`/setting?workplaceId=${data.workplaceId}&workplaceName=${data.workplaceName}`}
+                                >
+                                  {data.workplaceName}
+                                </Link>
+                              </td>
+                              <td style={cellStyle}>
+                                {/* {employeeCountMap[data.workplaceId] || 0} */}
+                                {employeeCountMap[data.workplaceId] || 0}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                      <table
+                        border="1"
+                        style={{
+                          width: "100%",
+                          textAlign: "left",
+                          borderCollapse: "collapse",
+                        }}
+                      >
+                        <thead>
+                          <tr>
+                            <th
+                              style={{
+                                padding: "8px",
+                                backgroundColor: "#f2f2f2",
+                              }}
+                            >
+                              Workplace ID
+                            </th>
+                            <th
+                              style={{
+                                padding: "8px",
+                                backgroundColor: "#f2f2f2",
+                              }}
+                            >
+                              Employee Count
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {Object.entries(employeeCountMap).map(
+                            ([workplaceId, count]) => (
+                              <tr key={workplaceId}>
+                                <td style={{ padding: "8px" }}>
+                                  {workplaceId}
+                                </td>
+                                <td style={{ padding: "8px" }}>{count}</td>
+                              </tr>
+                            )
+                          )}
+                        </tbody>
+                      </table>
+                    </ul>
+                  </form>
                 </div>
+              </section>
             </div>
-        </body>
-    )
+          </section>
+        </div>
+      </div>
+    </body>
+  );
 }
 
-export default SettingAllList
+export default SettingAllList;
