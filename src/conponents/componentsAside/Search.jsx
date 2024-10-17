@@ -191,10 +191,10 @@ function Search() {
                                 id="idCard"
                                 placeholder="หมายเลขบัตรประชาชน"
                                 onChange={handleIdCardChange}
-                                onInput={(e) => {
-                                  // Remove any non-digit characters
-                                  e.target.value = e.target.value.replace(/\D/g, "");
-                                }}
+                                  onInput={(e) => {
+                                    // Remove any non-digit characters
+                                    e.target.value = e.target.value.replace(/\D/g, "");
+                                  }}
                               />
                             </div>
                           </div>

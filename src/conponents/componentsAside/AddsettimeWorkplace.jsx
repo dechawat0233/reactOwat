@@ -24,7 +24,7 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
 
   //Workplace Record data
   const [workDate, setWorkDate] = useState(new Date());
-  const formattedWorkDate = moment(workDate).format("DD/MM/YYYY");
+  // const formattedWorkDate = moment(workDate).format("DD/MM/YYYY");
 
   const [timeRecord_id, setTimeRecord_id] = useState("");
 
@@ -423,7 +423,6 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [formattedDate, setFormattedDate] = useState(null);
-
   const handleDatePickerChange = (date) => {
     setSelectedDate(date);
     const newDate = new Date(date);
@@ -1104,7 +1103,7 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
     const data = {
       workplaceId: searchWorkplaceId,
       workplaceName: searchWorkplaceName,
-      date: formattedWorkDate,
+      date: formattedDate,
     };
 
     //get work time from workplace
@@ -1188,7 +1187,7 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
     const data = {
       workplaceId: workplaceId,
       workplaceName: workplaceName,
-      date: formattedWorkDate,
+      date: formattedDate,
       employeeRecord: rowDataList,
       timerecordId: yearSelectedDate.toString(),
     };
@@ -1235,7 +1234,7 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
     const data = {
       workplaceId: workplaceId,
       workplaceName: workplaceName,
-      date: formattedWorkDate,
+      date: formattedDate,
       employeeRecord: rowDataList,
     };
 
@@ -1442,6 +1441,7 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
                                 <li
                                   key={workplace.id}
                                   onClick={() => handleClickResult(workplace)}
+                                  style={{ cursor: "pointer" }}
                                 >
                                   รหัส {workplace.workplaceId} หน่วยงาน{" "}
                                   {workplace.workplaceName}
