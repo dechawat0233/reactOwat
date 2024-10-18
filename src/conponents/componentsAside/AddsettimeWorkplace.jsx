@@ -1306,7 +1306,7 @@ const dayMapping = await {
       workplaceId: workplaceId,
       workplaceName: workplaceName,
       date: convertBuddhistToGregorian(formattedDate),
-      employeeRecord: rowDataList,
+        employeeRecord: rowDataList,
     };
 
     try {

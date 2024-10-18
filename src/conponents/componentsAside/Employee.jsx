@@ -791,33 +791,33 @@ function Employee() {
   useEffect(() => {
     if (selectedDateStart) {
       let formattedDate = "";
-  
+
       // Check if the date is in the YYYY-MM-DD format
       if (selectedDateStart.includes("-")) {
         // Split the date string into year, month, day
         const [year, month, day] = selectedDateStart.split("-");
-  
+
         // Convert the year to the Buddhist calendar
         const buddhistYear = (parseInt(year) + 543).toString();
-  
+
         // Format the date as DD/MM/YYYY with the Buddhist year
         formattedDate = `${day}/${month}/${buddhistYear}`;
       } else {
         // Assume the date is already in DD/MM/YYYY format and split it
         const [day, month, year] = selectedDateStart.split("/");
-  
+
         // Add 543 to the year for the Buddhist calendar
         const buddhistYear = (parseInt(year) + 543).toString();
-  
+
         // Format the date with the Buddhist year
         formattedDate = `${day}/${month}/${buddhistYear}`;
       }
-  
+
       console.log("selectedDateExceptjob", selectedDateStart);
       setFormattedDateStart(formattedDate);
     }
   }, [selectedDateStart]);
-  
+
   console.log("selectedDateStart", selectedDateStart);
 
   const toggleDatePickerStart = () => {
@@ -881,28 +881,28 @@ function Employee() {
   useEffect(() => {
     if (selectedDateEnd) {
       let formattedDate = "";
-  
+
       // Check if the date is in the YYYY-MM-DD format
       if (selectedDateEnd.includes("-")) {
         // Split the date string into year, month, day
         const [year, month, day] = selectedDateEnd.split("-");
-  
+
         // Convert the year to the Buddhist calendar
         const buddhistYear = (parseInt(year) + 543).toString();
-  
+
         // Format the date as DD/MM/YYYY with the Buddhist year
         formattedDate = `${day}/${month}/${buddhistYear}`;
       } else {
         // Assume the date is already in DD/MM/YYYY format and split it
         const [day, month, year] = selectedDateEnd.split("/");
-  
+
         // Add 543 to the year for the Buddhist calendar
         const buddhistYear = (parseInt(year) + 543).toString();
-  
+
         // Format the date with the Buddhist year
         formattedDate = `${day}/${month}/${buddhistYear}`;
       }
-        setFormattedDateEnd(formattedDate);
+      setFormattedDateEnd(formattedDate);
     }
   }, [selectedDateEnd]);
 
@@ -1108,7 +1108,7 @@ function Employee() {
                           <div class="col-md-3">
                             <div class="form-group">
                               <label role="position">ตำแหน่ง</label>
-                              <input
+                              {/* <input
                                 required
                                 type="text"
                                 class="form-control"
@@ -1116,7 +1116,100 @@ function Employee() {
                                 placeholder="ตำแหน่ง"
                                 value={position}
                                 onChange={(e) => setPosition(e.target.value)}
-                              />
+                              /> */}
+                              <select
+                                required
+                                className="form-control"
+                                id="position"
+                                value={position}
+                                onChange={(e) => setPosition(e.target.value)}
+                              >
+                                <option value="" disabled>
+                                  เลือกตำแหน่ง
+                                </option>
+                                <option value="หัวหน้าควบคุมงาน">
+                                  หัวหน้าควบคุมงาน
+                                </option>
+                                <option value="ผู้ช่วยผู้ควบคุมงาน">
+                                  ผู้ช่วยผู้ควบคุมงาน
+                                </option>
+                                <option value="พนักงานทำความสะอาด">
+                                  พนักงานทำความสะอาด
+                                </option>
+                                <option value="พนักงานทำความสะอาดรอบนอก">
+                                  พนักงานทำความสะอาดรอบนอก
+                                </option>
+                                <option value="พนักงานเสิร์ฟ">
+                                  พนักงานเสิร์ฟ
+                                </option>
+                                <option value="พนักงานคนสวน">
+                                  พนักงานคนสวน
+                                </option>
+                                <option value="พนักงานแรงงานชาย">
+                                  พนักงานแรงงานชาย
+                                </option>
+                                <option value="กรรมการผู้จัดการ">
+                                  กรรมการผู้จัดการ
+                                </option>
+                                <option value="ผู้จัดการทั่วไป">
+                                  ผู้จัดการทั่วไป
+                                </option>
+                                <option value="ผู้จัดการฝ่ายการตลาด">
+                                  ผู้จัดการฝ่ายการตลาด
+                                </option>
+                                <option value="ผู้จัดการฝ่ายบัญชี/การเงิน">
+                                  ผู้จัดการฝ่ายบัญชี/การเงิน
+                                </option>
+                                <option value="ผู้จัดการฝ่ายบุคคล">
+                                  ผู้จัดการฝ่ายบุคคล
+                                </option>
+                                <option value="เจ้าหน้าที่ฝ่ายบัญชี/การเงิน">
+                                  เจ้าหน้าที่ฝ่ายบัญชี/การเงิน
+                                </option>
+                                <option value="เจ้าหน้าที่ฝ่ายบุคคล">
+                                  เจ้าหน้าที่ฝ่ายบุคคล
+                                </option>
+                                <option value="เจ้าหน้าที่ฝ่ายจัดซื้อ">
+                                  เจ้าหน้าที่ฝ่ายจัดซื้อ
+                                </option>
+                                <option value="เจ้าหน้าที่ธุรการฝ่ายขาย">
+                                  เจ้าหน้าที่ธุรการฝ่ายขาย
+                                </option>
+                                <option value="เจ้าหน้าที่ฝ่ายการตลาด">
+                                  เจ้าหน้าที่ฝ่ายการตลาด
+                                </option>
+                                <option value="เจ้าหน้าที่ฝ่ายปฏิบัติการ">
+                                  เจ้าหน้าที่ฝ่ายปฏิบัติการ
+                                </option>
+                                <option value="เจ้าหน้าที่ฝ่ายปฏิบัติการ(สายตรวจ)">
+                                  เจ้าหน้าที่ฝ่ายปฏิบัติการ(สายตรวจ)
+                                </option>
+                                <option value="เจ้าหน้าที่ฝ่ายยานพาหนะ">
+                                  เจ้าหน้าที่ฝ่ายยานพาหนะ
+                                </option>
+                                <option value="เจ้าหน้าที่ฝ่ายไอที">
+                                  เจ้าหน้าที่ฝ่ายไอที
+                                </option>
+                                <option value="เจ้าหน้าที่ฝ่ายสโตร์">
+                                  เจ้าหน้าที่ฝ่ายสโตร์
+                                </option>
+                                <option value="เจ้าหน้าที่ความปลอดภัยในการทำงาน(จป)">
+                                  เจ้าหน้าที่ความปลอดภัยในการทำงาน(จป)
+                                </option>
+                                <option value="ธุรการทั่วไป">
+                                  ธุรการทั่วไป
+                                </option>
+                                <option value="หัวหน้าฝ่ายปฏิบัติการ">
+                                  หัวหน้าฝ่ายปฏิบัติการ
+                                </option>
+                                <option value="หัวหน้าฝ่ายบัญชี/การเงิน">
+                                  หัวหน้าฝ่ายบัญชี/การเงิน
+                                </option>
+                                <option value="หัวหน้าฝ่ายสโตร์">
+                                  หัวหน้าฝ่ายสโตร์
+                                </option>
+                                
+                              </select>
                             </div>
                           </div>
                           <div class="col-md-3">
@@ -1748,7 +1841,10 @@ function Employee() {
                                 onChange={(e) => setIdCard(e.target.value)}
                                 onInput={(e) => {
                                   // Remove any non-digit characters
-                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                  e.target.value = e.target.value.replace(
+                                    /\D/g,
+                                    ""
+                                  );
                                 }}
                               />
                             </div>
@@ -1994,7 +2090,7 @@ function Employee() {
                                   </option>
                                 ))} */}
                                 <option value="">Select District</option>
-                                 {districtOptions
+                                {districtOptions
                                   .sort((a, b) =>
                                     a.name_th.localeCompare(b.name_th)
                                   ) // Sort by name_th
@@ -2061,7 +2157,10 @@ function Employee() {
                                   }
                                   onInput={(e) => {
                                     // Remove any non-digit characters
-                                    e.target.value = e.target.value.replace(/\D/g, "");
+                                    e.target.value = e.target.value.replace(
+                                      /\D/g,
+                                      ""
+                                    );
                                   }}
                                 />
                               </div>
@@ -2243,7 +2342,10 @@ function Employee() {
                                   }
                                   onInput={(e) => {
                                     // Remove any non-digit characters
-                                    e.target.value = e.target.value.replace(/\D/g, "");
+                                    e.target.value = e.target.value.replace(
+                                      /\D/g,
+                                      ""
+                                    );
                                   }}
                                 />
                               </div>

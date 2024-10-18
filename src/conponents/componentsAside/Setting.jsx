@@ -2254,11 +2254,95 @@ function Setting({ workplaceList ,employeeList}) {
                             >
                               <option value="">เลือกตำแหน่ง</option>
 
-                              {positionWork.map((position, positionIndex) => (
+                              {/* {positionWork.map((position, positionIndex) => (
                                 <option key={positionIndex} value={position}>
                                   {position}
                                 </option>
-                              ))}
+                              ))} */}
+                              <option value="" disabled>
+                                  เลือกตำแหน่ง
+                                </option>
+                                <option value="หัวหน้าควบคุมงาน">
+                                  หัวหน้าควบคุมงาน
+                                </option>
+                                <option value="ผู้ช่วยผู้ควบคุมงาน">
+                                  ผู้ช่วยผู้ควบคุมงาน
+                                </option>
+                                <option value="พนักงานทำความสะอาด">
+                                  พนักงานทำความสะอาด
+                                </option>
+                                <option value="พนักงานทำความสะอาดรอบนอก">
+                                  พนักงานทำความสะอาดรอบนอก
+                                </option>
+                                <option value="พนักงานเสิร์ฟ">
+                                  พนักงานเสิร์ฟ
+                                </option>
+                                <option value="พนักงานคนสวน">
+                                  พนักงานคนสวน
+                                </option>
+                                <option value="พนักงานแรงงานชาย">
+                                  พนักงานแรงงานชาย
+                                </option>
+                                <option value="กรรมการผู้จัดการ">
+                                  กรรมการผู้จัดการ
+                                </option>
+                                <option value="ผู้จัดการทั่วไป">
+                                  ผู้จัดการทั่วไป
+                                </option>
+                                <option value="ผู้จัดการฝ่ายการตลาด">
+                                  ผู้จัดการฝ่ายการตลาด
+                                </option>
+                                <option value="ผู้จัดการฝ่ายบัญชี/การเงิน">
+                                  ผู้จัดการฝ่ายบัญชี/การเงิน
+                                </option>
+                                <option value="ผู้จัดการฝ่ายบุคคล">
+                                  ผู้จัดการฝ่ายบุคคล
+                                </option>
+                                <option value="เจ้าหน้าที่ฝ่ายบัญชี/การเงิน">
+                                  เจ้าหน้าที่ฝ่ายบัญชี/การเงิน
+                                </option>
+                                <option value="เจ้าหน้าที่ฝ่ายบุคคล">
+                                  เจ้าหน้าที่ฝ่ายบุคคล
+                                </option>
+                                <option value="เจ้าหน้าที่ฝ่ายจัดซื้อ">
+                                  เจ้าหน้าที่ฝ่ายจัดซื้อ
+                                </option>
+                                <option value="เจ้าหน้าที่ธุรการฝ่ายขาย">
+                                  เจ้าหน้าที่ธุรการฝ่ายขาย
+                                </option>
+                                <option value="เจ้าหน้าที่ฝ่ายการตลาด">
+                                  เจ้าหน้าที่ฝ่ายการตลาด
+                                </option>
+                                <option value="เจ้าหน้าที่ฝ่ายปฏิบัติการ">
+                                  เจ้าหน้าที่ฝ่ายปฏิบัติการ
+                                </option>
+                                <option value="เจ้าหน้าที่ฝ่ายปฏิบัติการ(สายตรวจ)">
+                                  เจ้าหน้าที่ฝ่ายปฏิบัติการ(สายตรวจ)
+                                </option>
+                                <option value="เจ้าหน้าที่ฝ่ายยานพาหนะ">
+                                  เจ้าหน้าที่ฝ่ายยานพาหนะ
+                                </option>
+                                <option value="เจ้าหน้าที่ฝ่ายไอที">
+                                  เจ้าหน้าที่ฝ่ายไอที
+                                </option>
+                                <option value="เจ้าหน้าที่ฝ่ายสโตร์">
+                                  เจ้าหน้าที่ฝ่ายสโตร์
+                                </option>
+                                <option value="เจ้าหน้าที่ความปลอดภัยในการทำงาน(จป)">
+                                  เจ้าหน้าที่ความปลอดภัยในการทำงาน(จป)
+                                </option>
+                                <option value="ธุรการทั่วไป">
+                                  ธุรการทั่วไป
+                                </option>
+                                <option value="หัวหน้าฝ่ายปฏิบัติการ">
+                                  หัวหน้าฝ่ายปฏิบัติการ
+                                </option>
+                                <option value="หัวหน้าฝ่ายบัญชี/การเงิน">
+                                  หัวหน้าฝ่ายบัญชี/การเงิน
+                                </option>
+                                <option value="หัวหน้าฝ่ายสโตร์">
+                                  หัวหน้าฝ่ายสโตร์
+                                </option>
                             </select>
                           </div>
                           <div className="col-md-2">
