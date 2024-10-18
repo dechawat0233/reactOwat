@@ -3421,7 +3421,7 @@ function SalaryAllResult({ employeeList }) {
                     style={{ marginLeft: "1rem", width: "11rem" }}
                     onClick={generatePDF02}
                   >
-                    PDF หน่วงงานทั้งหมด
+                    PDF หน่วยงานทั้งหมด
                   </button>
                 </div>
                 {/* <label>Thai Date:</label> */}
