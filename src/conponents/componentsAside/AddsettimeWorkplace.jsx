@@ -1201,6 +1201,9 @@ const dayMapping = await {
     //   }
     // });
 
+    await setShift('');
+    await setShift('morning');
+
     try {
       const response = await axios.post(endpoint + "/timerecord/search", data);
 
