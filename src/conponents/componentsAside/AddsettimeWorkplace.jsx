@@ -1258,7 +1258,7 @@ const dayMapping = await {
     const data = {
       workplaceId: workplaceId,
       workplaceName: workplaceName,
-      date: formattedDate,
+      date: convertBuddhistToGregorian(formattedDate),
       employeeRecord: rowDataList,
       timerecordId: yearSelectedDate.toString(),
     };
@@ -1305,7 +1305,7 @@ const dayMapping = await {
     const data = {
       workplaceId: workplaceId,
       workplaceName: workplaceName,
-      date: formattedDate,
+      date: convertBuddhistToGregorian(formattedDate),
       employeeRecord: rowDataList,
     };
 
