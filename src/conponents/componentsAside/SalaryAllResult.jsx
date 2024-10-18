@@ -3273,7 +3273,7 @@ function SalaryAllResult({ employeeList }) {
                         type="text"
                         className="form-control"
                         id="staffName"
-                        placeholder="ชื่อพนักงาน"
+                        placeholder="ชื่อหน่วยงาน"
                         value={workplacrName}
                         onChange={handleStaffNameChange}
                         list="WorkplaceNameList"
