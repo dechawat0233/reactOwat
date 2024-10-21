@@ -10,7 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { ThaiDatePicker } from "thaidatepicker-react";
 import { FaCalendarAlt } from "react-icons/fa"; // You can use any icon library
 
-const SendEmployeePDF3 = () => {
+const SendEmployeePDF3 = ({ employeeList }) => {
   // const [input1, setInput1] = useState('');
   // const [input2, setInput2] = useState('');
 
@@ -38,22 +38,6 @@ const SendEmployeePDF3 = () => {
     bottom: "0rem",
     // Add other styles as needed
   };
-
-  const [employeeList, setEmployeeList] = useState([]);
-
-  useEffect(() => {
-    // Fetch data from the API when the component mounts
-    fetch(endpoint + "/employee/list")
-      .then((response) => response.json())
-      .then((data) => {
-        // Update the state with the fetched data
-        setEmployeeList(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []); // The empty array [] ensures that the effect runs only once after the initial render
-  console.log(employeeList);
 
   const [title, setTitle] = useState(
     "ชี้แจงหนังสือรับรองวุฒิการศึกษาทำงานพนักงานทำความสะอาด"
@@ -291,11 +275,7 @@ const SendEmployeePDF3 = () => {
     doc.addImage(OwatAddress, "PNG", 140, 10, 61.5, 28.4);
     doc.addImage(OwatIcon, "PNG", 10, 10, 68, 30);
     doc.addImage(OwatSupport, "PNG", 10, 270, 190, 16.4);
-    doc.text(
-      codeClose,
-      160,
-      290
-    );
+    doc.text(codeClose, 160, 290);
     // doc.setFont('THSarabunNew');
     const formatDateThai = (dateOfBirth) => {
       if (!dateOfBirth) {
@@ -455,11 +435,7 @@ const SendEmployeePDF3 = () => {
         doc.addImage(OwatAddress, "PNG", 140, 10, 61.5, 28.4);
         doc.addImage(OwatIcon, "PNG", 10, 10, 68, 30);
         doc.addImage(OwatSupport, "PNG", 10, 270, 190, 16.4);
-        doc.text(
-          codeClose,
-          160,
-          290
-        );
+        doc.text(codeClose, 160, 290);
         y = 50;
         autoContent2.forEach((line, index) => {
           if (index > 0) {
@@ -651,11 +627,7 @@ const SendEmployeePDF3 = () => {
       doc.addImage(OwatAddress, "PNG", 140, 10, 61.5, 28.4);
       doc.addImage(OwatIcon, "PNG", 10, 10, 68, 30);
       doc.addImage(OwatSupport, "PNG", 10, 270, 190, 16.4);
-      doc.text(
-        codeClose,
-        160,
-        290
-      );
+      doc.text(codeClose, 160, 290);
       chunk.forEach((value, index) => {
         x = 40; // X-coordinate for starting point
         const y = 50 + index * 15;
@@ -689,11 +661,7 @@ const SendEmployeePDF3 = () => {
             doc.addImage(OwatAddress, "PNG", 140, 10, 61.5, 28.4);
             doc.addImage(OwatIcon, "PNG", 10, 10, 68, 30);
             doc.addImage(OwatSupport, "PNG", 10, 270, 190, 16.4);
-            doc.text(
-              codeClose,
-              160,
-              290
-            );
+            doc.text(codeClose, 160, 290);
             x = 40;
             y = 50;
             autoContent2.forEach((line, index) => {
@@ -863,11 +831,7 @@ const SendEmployeePDF3 = () => {
       doc.addImage(OwatAddress, "PNG", 140, 10, 61.5, 28.4);
       doc.addImage(OwatIcon, "PNG", 10, 10, 68, 30);
       doc.addImage(OwatSupport, "PNG", 10, 270, 190, 16.4);
-      doc.text(
-        codeClose,
-        160,
-        290
-      );
+      doc.text(codeClose, 160, 290);
 
       const maxWidth = 70; // Adjust the width as needed
       // const text = 'Some text that might be really long and is intended to exceed the maximum width, causing it to be split into multiple lines because it is too long to fit on a single line.';
@@ -966,6 +930,36 @@ const SendEmployeePDF3 = () => {
 
     const pdfContent = doc.output("bloburl");
     window.open(pdfContent, "_blank");
+  };
+
+  // Handle employeeId input change
+  const handleEmployeeIdChange = (e) => {
+    const id = e.target.value.replace(/\D/g, ""); // Remove non-digit chars
+    setInput1(id);
+
+    // Find the employee by id
+    const employee = employeeList.find((emp) => emp.employeeId === id);
+    if (employee) {
+      setInput2(`${employee.name} ${employee.lastName}`); // Update name
+    } else {
+      setInput2(""); // Clear name if not found
+    }
+  };
+
+  // Handle employeeName input change
+  const handleEmployeeNameChange = (e) => {
+    const name = e.target.value;
+    setInput2(name);
+
+    // Find the employee by name
+    const employee = employeeList.find(
+      (emp) => `${emp.name} ${emp.lastName}` === name
+    );
+    if (employee) {
+      setInput1(employee.employeeId); // Update employeeId
+    } else {
+      setInput1(""); // Clear employeeId if not found
+    }
   };
 
   return (
@@ -1187,13 +1181,17 @@ const SendEmployeePDF3 = () => {
                   </div>
                   <br />
                   <div className="row">
-                    <div className="col-md-3">
+                    {/* <div className="col-md-3">
                       <label>รหัสพนักงาน:</label>
                       <input
                         type="text"
                         className="form-control"
                         value={input1}
                         onChange={(e) => setInput1(e.target.value)}
+                        onInput={(e) => {
+                          // Remove any non-digit characters
+                          e.target.value = e.target.value.replace(/\D/g, "");
+                        }}
                       />
                     </div>
                     <div className="col-md-3">
@@ -1204,6 +1202,47 @@ const SendEmployeePDF3 = () => {
                         value={input2}
                         onChange={(e) => setInput2(e.target.value)}
                       />
+                    </div> */}
+                    <div className="col-md-3">
+                      <label>รหัสพนักงาน:</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={input1}
+                        onChange={handleEmployeeIdChange}
+                        onInput={(e) => {
+                          // Remove any non-digit characters
+                          e.target.value = e.target.value.replace(/\D/g, "");
+                        }}
+                        list="staffIdList"
+                      />
+                      <datalist id="staffIdList">
+                        {employeeList.map((employee) => (
+                          <option
+                            key={employee.employeeId}
+                            value={employee.employeeId}
+                          />
+                        ))}
+                      </datalist>
+                    </div>
+
+                    <div className="col-md-3">
+                      <label>ชื่อ:</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={input2}
+                        onChange={handleEmployeeNameChange}
+                        list="staffNameList"
+                      />
+                      <datalist id="staffNameList">
+                        {employeeList.map((employee) => (
+                          <option
+                            key={employee.employeeId}
+                            value={`${employee.name} ${employee.lastName}`}
+                          />
+                        ))}
+                      </datalist>
                     </div>
                     <div className="col-md-6">
                       <button

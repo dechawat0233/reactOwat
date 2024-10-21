@@ -170,7 +170,7 @@ function App() {
           <Route path="/registration" element={<Registration />} /> */}
               <Route path="" element={<Dashboard />} />
               <Route path="dashboard" element={<Dashboard />} />
-              <Route path="/search" element={<Search />} />
+              <Route path="/search" element={<Search workplaceList={workplaceList} employeeList={employeeList}/>} />
               <Route path="/employee" element={<Employee />} />
 
               <Route path="/salary" element={<Salary />} />
@@ -267,7 +267,7 @@ function App() {
               {/* <Route path="/testPDF" element={<TestPDF />} /> */}
               {/* <Route path="/testPDF" element={<PdfGenerator />} /> */}
               {/* <Route path="/testPDF" element={<Testapp />} /> */}
-              <Route path="/listsendemployee" element={<SendEmployeePDF />} />
+              <Route path="/listsendemployee" element={<SendEmployeePDF employeeList={employeeList}/>} />
               {/* <Route path="/testPDF" element={<SendEmployeePDF3 />} /> */}
 
               <Route path="/testPDF" element={<Testapp />} />

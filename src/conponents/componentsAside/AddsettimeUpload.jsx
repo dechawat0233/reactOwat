@@ -2024,6 +2024,10 @@ function AddsettimeUpload({ workplaceList }) {
                               onChange={(e) =>
                                 handleWorkplaceIdChange(e.target.value)
                               }
+                              onInput={(e) => {
+                                // Remove any non-digit characters
+                                e.target.value = e.target.value.replace(/\D/g, "");
+                              }}
                               list="workplaces"
                             />
                             <datalist id="workplaces">

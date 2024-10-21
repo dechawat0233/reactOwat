@@ -6,7 +6,7 @@ import SendEmployeePDF2 from './SendEmployeePDF2';
 import SendEmployeePDF3 from './SendEmployeePDF3';
 import jsPDF from 'jspdf';
 
-const SendEmployeePDF = () => {
+const SendEmployeePDF = ({employeeList}) => {
     const [selectedOption, setSelectedOption] = useState('SendEmployeePDF2');
 
     const handleOptionChange = (event) => {
@@ -65,8 +65,8 @@ const SendEmployeePDF = () => {
                                             {formToShow}
                                         </div>
                                     )} */}
-                                        {selectedOption === 'SendEmployeePDF2' && <SendEmployeePDF2 />}
-                                        {selectedOption === 'SendEmployeePDF3' && <SendEmployeePDF3 />}
+                                        {selectedOption === 'SendEmployeePDF2' && <SendEmployeePDF2 employeeList={employeeList}/>}
+                                        {selectedOption === 'SendEmployeePDF3' && <SendEmployeePDF3 employeeList={employeeList}/>}
                                     </div>
                                 </div>
                             </div>

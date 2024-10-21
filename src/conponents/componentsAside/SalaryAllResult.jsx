@@ -3240,6 +3240,10 @@ function SalaryAllResult({ employeeList }) {
                         placeholder="รหัสหน่อยงาน"
                         value={workplacrId}
                         onChange={handleStaffIdChange}
+                        onInput={(e) => {
+                          // Remove any non-digit characters
+                          e.target.value = e.target.value.replace(/\D/g, "");
+                        }}
                         list="WorkplaceIdList"
                       />
                       <datalist id="WorkplaceIdList">

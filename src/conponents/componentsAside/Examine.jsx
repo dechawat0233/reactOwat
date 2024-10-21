@@ -827,6 +827,10 @@ let r = {};
                                                         value={staffId}
                                                         onChange={handleStaffIdChange}
                                                         list="staffIdList"
+                                                        onInput={(e) => {
+                                                            // Remove any non-digit characters
+                                                            e.target.value = e.target.value.replace(/\D/g, "");
+                                                          }}
                                                     />
                                                     <datalist id="staffIdList">
                                                         {employeeList.map(employee => (

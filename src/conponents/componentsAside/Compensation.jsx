@@ -1659,6 +1659,10 @@ console.log('resultArray2',resultArray2);
                             placeholder="รหัสพนักงาน"
                             value={staffId == "null" ? "" : staffId}
                             onChange={handleStaffIdChange}
+                            onInput={(e) => {
+                              // Remove any non-digit characters
+                              e.target.value = e.target.value.replace(/\D/g, "");
+                            }}
                             list="staffIdList"
                           />
                           <datalist id="staffIdList">

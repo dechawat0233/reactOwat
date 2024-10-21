@@ -1281,6 +1281,10 @@ function Setting({ workplaceList ,employeeList}) {
                             onChange={(e) =>
                               setSearchWorkplaceId(e.target.value)
                             }
+                            onInput={(e) => {
+                              // Remove any non-digit characters
+                              e.target.value = e.target.value.replace(/\D/g, "");
+                            }}
                           />
                           <datalist id="workplaceIds">
                             {workplaceList.map((workplace) => (
@@ -1367,6 +1371,10 @@ function Setting({ workplaceList ,employeeList}) {
                             placeholder="รหัสหน่วยงาน"
                             value={workplaceId}
                             onChange={(e) => setWorkplaceId(e.target.value)}
+                            onInput={(e) => {
+                              // Remove any non-digit characters
+                              e.target.value = e.target.value.replace(/\D/g, "");
+                            }}
                           />
                         </div>
                       </div>
@@ -1410,6 +1418,10 @@ function Setting({ workplaceList ,employeeList}) {
                             placeholder="จำนวนวันทำงานต่อสัปดาห์"
                             value={workOfWeek}
                             onChange={(e) => setWorkOfWeek(e.target.value)}
+                            onInput={(e) => {
+                              // Remove any non-digit characters
+                              e.target.value = e.target.value.replace(/\D/g, "");
+                            }}
                           />
                         </div>
                       </div>
@@ -1431,6 +1443,10 @@ function Setting({ workplaceList ,employeeList}) {
                           placeholder="ชั่วโมงทำงาน"
                           value={workOfHour}
                           onChange={(e) => setWorkOfHour(e.target.value)}
+                          onInput={(e) => {
+                            // Remove any non-digit characters
+                            e.target.value = e.target.value.replace(/\D/g, "");
+                          }}
                         />
                       </div>
                     </div>
@@ -1444,6 +1460,10 @@ function Setting({ workplaceList ,employeeList}) {
                           placeholder="ชั่วโมง OT"
                           value={workOfOT}
                           onChange={(e) => setWorkOfOT(e.target.value)}
+                          onInput={(e) => {
+                            // Remove any non-digit characters
+                            e.target.value = e.target.value.replace(/\D/g, "");
+                          }}
                         />
                       </div>
                     </div>
@@ -1463,6 +1483,10 @@ function Setting({ workplaceList ,employeeList}) {
                           placeholder="บาท"
                           value={workRate}
                           onChange={(e) => setWorkRate(e.target.value)}
+                          onInput={(e) => {
+                            // Remove any non-digit characters
+                            e.target.value = e.target.value.replace(/\D/g, "");
+                          }}
                         />
                       </div>
                     </div>
@@ -1478,6 +1502,10 @@ function Setting({ workplaceList ,employeeList}) {
                           placeholder="กี่เท่า"
                           value={workRateOT}
                           onChange={(e) => setWorkRateOT(e.target.value)}
+                          onInput={(e) => {
+                            // Remove any non-digit characters
+                            e.target.value = e.target.value.replace(/\D/g, "");
+                          }}
                         />
                       </div>
                     </div>
@@ -1493,6 +1521,10 @@ function Setting({ workplaceList ,employeeList}) {
                           placeholder="คน"
                           value={workTotalPeople}
                           onChange={(e) => setWorkTotalPeople(e.target.value)}
+                          onInput={(e) => {
+                            // Remove any non-digit characters
+                            e.target.value = e.target.value.replace(/\D/g, "");
+                          }}
                         />
                       </div>
                     </div>
@@ -1525,6 +1557,10 @@ function Setting({ workplaceList ,employeeList}) {
                           placeholder="กี่เท่า"
                           value={dayoffRateHour}
                           onChange={(e) => setDayoffRateHour(e.target.value)}
+                          onInput={(e) => {
+                            // Remove any non-digit characters
+                            e.target.value = e.target.value.replace(/\D/g, "");
+                          }}
                         />
                       </div>
                     </div>
@@ -1540,6 +1576,10 @@ function Setting({ workplaceList ,employeeList}) {
                           placeholder="กี่เท่า"
                           value={dayoffRateOT}
                           onChange={(e) => setDayoffRateOT(e.target.value)}
+                          onInput={(e) => {
+                            // Remove any non-digit characters
+                            e.target.value = e.target.value.replace(/\D/g, "");
+                          }}
                         />
                       </div>
                     </div>
@@ -1570,7 +1610,10 @@ function Setting({ workplaceList ,employeeList}) {
                           id="holidayHour"
                           placeholder=""
                           value={holidayHour}
-                          onChange={(e) => setHolidayHour(e.target.value)}
+                          onChange={(e) => setHolidayHour(e.target.value)} onInput={(e) => {
+                            // Remove any non-digit characters
+                            e.target.value = e.target.value.replace(/\D/g, "");
+                          }}
                         />
                       </div>
                     </div>
@@ -1585,7 +1628,10 @@ function Setting({ workplaceList ,employeeList}) {
                           id="holidayOT"
                           placeholder="กี่เท่า"
                           value={holidayOT}
-                          onChange={(e) => setHolidayOT(e.target.value)}
+                          onChange={(e) => setHolidayOT(e.target.value)} onInput={(e) => {
+                            // Remove any non-digit characters
+                            e.target.value = e.target.value.replace(/\D/g, "");
+                          }}
                         />
                       </div>
                     </div>
@@ -1608,7 +1654,10 @@ function Setting({ workplaceList ,employeeList}) {
                               value={data.codeSpSalary}
                               onChange={(e) =>
                                 handleChangeSpSalary(e, index, "codeSpSalary")
-                              }
+                              } onInput={(e) => {
+                                // Remove any non-digit characters
+                                e.target.value = e.target.value.replace(/\D/g, "");
+                              }}
                             />
                           </div>
                           {/* <div className="col-md-1">
@@ -1642,7 +1691,10 @@ function Setting({ workplaceList ,employeeList}) {
                               value={data.SpSalary}
                               onChange={(e) =>
                                 handleChangeSpSalary(e, index, "SpSalary")
-                              }
+                              } onInput={(e) => {
+                                // Remove any non-digit characters
+                                e.target.value = e.target.value.replace(/\D/g, "");
+                              }}
                             />
                           </div>
                           <div className="col-md-2">
@@ -1751,7 +1803,10 @@ function Setting({ workplaceList ,employeeList}) {
                                 value={personalLeaveNumber}
                                 onChange={(e) =>
                                   setPersonalLeaveNumber(e.target.value)
-                                }
+                                } onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                           </div>
@@ -1767,7 +1822,10 @@ function Setting({ workplaceList ,employeeList}) {
                                 value={personalLeave}
                                 onChange={(e) =>
                                   setPersonalLeave(e.target.value)
-                                }
+                                } onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                           </div>
@@ -1785,7 +1843,10 @@ function Setting({ workplaceList ,employeeList}) {
                                 value={personalLeaveRate}
                                 onChange={(e) =>
                                   setPersonalLeaveRate(e.target.value)
-                                }
+                                } onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                           </div>
@@ -1803,7 +1864,10 @@ function Setting({ workplaceList ,employeeList}) {
                                 value={sickLeaveNumber}
                                 onChange={(e) =>
                                   setSickLeaveNumber(e.target.value)
-                                }
+                                } onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                           </div>
@@ -1817,7 +1881,10 @@ function Setting({ workplaceList ,employeeList}) {
                                 id="sickLeave"
                                 placeholder="วันลาป่วย"
                                 value={sickLeave}
-                                onChange={(e) => setSickLeave(e.target.value)}
+                                onChange={(e) => setSickLeave(e.target.value)} onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                           </div>
@@ -1835,7 +1902,10 @@ function Setting({ workplaceList ,employeeList}) {
                                 value={sickLeaveRate}
                                 onChange={(e) =>
                                   setSickLeaveRate(e.target.value)
-                                }
+                                } onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                           </div>
@@ -1853,7 +1923,10 @@ function Setting({ workplaceList ,employeeList}) {
                                 value={workRateDayoffNumber}
                                 onChange={(e) =>
                                   setWorkRateDayoffNumber(e.target.value)
-                                }
+                                } onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                           </div>
@@ -1869,7 +1942,10 @@ function Setting({ workplaceList ,employeeList}) {
                                 value={workRateDayoff}
                                 onChange={(e) =>
                                   setWorkRateDayoff(e.target.value)
-                                }
+                                } onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                           </div>
@@ -1887,7 +1963,10 @@ function Setting({ workplaceList ,employeeList}) {
                                 value={workRateDayoffRate}
                                 onChange={(e) =>
                                   setworkRateDayoffRate(e.target.value)
-                                }
+                                } onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                           </div>
@@ -1995,7 +2074,10 @@ function Setting({ workplaceList ,employeeList}) {
                                     "startTime",
                                     e.target.value
                                   )
-                                }
+                                } onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                             <div class="col-md-2">
@@ -2010,7 +2092,10 @@ function Setting({ workplaceList ,employeeList}) {
                                     "endTime",
                                     e.target.value
                                   )
-                                }
+                                } onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                             {/* <span>Result Time: {time.resultTime}</span> */}
@@ -2026,7 +2111,10 @@ function Setting({ workplaceList ,employeeList}) {
                                     "startTimeOT",
                                     e.target.value
                                   )
-                                }
+                                } onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                             <div class="col-md-2">
@@ -2041,7 +2129,10 @@ function Setting({ workplaceList ,employeeList}) {
                                     "endTimeOT",
                                     e.target.value
                                   )
-                                }
+                                } onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                             {/* <span>Result OT: {time.resultOT}</span> */}
@@ -2361,7 +2452,10 @@ function Setting({ workplaceList ,employeeList}) {
                               value={time.countPerson}
                               onChange={(e) =>
                                 handleInputChangePerson(e, index)
-                              }
+                              } onInput={(e) => {
+                                // Remove any non-digit characters
+                                e.target.value = e.target.value.replace(/\D/g, "");
+                              }}
                             />
                           </div>
                           <div class="col-md-2">

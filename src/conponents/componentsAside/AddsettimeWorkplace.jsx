@@ -1465,6 +1465,10 @@ const dayMapping = await {
                               id="searchWorkplaceId"
                               placeholder="รหัสหน่วยงาน"
                               value={searchWorkplaceId}
+                              onInput={(e) => {
+                                // Remove any non-digit characters
+                                e.target.value = e.target.value.replace(/\D/g, "");
+                              }}
                               onChange={(e) =>
                                 setSearchWorkplaceId(e.target.value)
                               }
@@ -1540,6 +1544,7 @@ const dayMapping = await {
                       placeholder="รหัสหน่วยงาน"
                       value={workplaceId}
                       onChange={(e) => setWorkplaceId(e.target.value)}
+                      readOnly
                     />
                   </div>
                 </div>
@@ -1553,6 +1558,7 @@ const dayMapping = await {
                       placeholder="ชื่อหน่วยงาน"
                       value={workplaceName}
                       onChange={(e) => setWorkplaceName(e.target.value)}
+                      readOnly
                     />
                   </div>
                 </div>

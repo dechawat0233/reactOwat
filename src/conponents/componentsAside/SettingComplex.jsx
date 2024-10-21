@@ -1455,6 +1455,10 @@ function SettingComplex({ workplaceList }) {
                             onChange={(e) =>
                               setSearchWorkplaceId(e.target.value)
                             }
+                            onInput={(e) => {
+                              // Remove any non-digit characters
+                              e.target.value = e.target.value.replace(/\D/g, "");
+                            }}
                           />
                           <datalist id="workplaceIds">
                             {workplaceList.map((workplace) => (
@@ -1542,6 +1546,10 @@ function SettingComplex({ workplaceList }) {
                             placeholder="รหัสหน่วยงาน"
                             value={workplaceId}
                             onChange={(e) => setWorkplaceId(e.target.value)}
+                            onInput={(e) => {
+                              // Remove any non-digit characters
+                              e.target.value = e.target.value.replace(/\D/g, "");
+                            }}
                           />
                         </div>
                       </div>
@@ -1620,6 +1628,10 @@ function SettingComplex({ workplaceList }) {
                             placeholder="จำนวนวันทำงานต่อสัปดาห์"
                             value={workOfWeek}
                             onChange={(e) => setWorkOfWeek(e.target.value)}
+                            onInput={(e) => {
+                              // Remove any non-digit characters
+                              e.target.value = e.target.value.replace(/\D/g, "");
+                            }}
                           />
                         </div>
                       </div>
@@ -1641,6 +1653,10 @@ function SettingComplex({ workplaceList }) {
                           placeholder="ชั่วโมงทำงาน"
                           value={workOfHour}
                           onChange={(e) => setWorkOfHour(e.target.value)}
+                          onInput={(e) => {
+                            // Remove any non-digit characters
+                            e.target.value = e.target.value.replace(/\D/g, "");
+                          }}
                         />
                       </div>
                     </div>
@@ -1654,6 +1670,10 @@ function SettingComplex({ workplaceList }) {
                           placeholder="ชั่วโมง OT"
                           value={workOfOT}
                           onChange={(e) => setWorkOfOT(e.target.value)}
+                          onInput={(e) => {
+                            // Remove any non-digit characters
+                            e.target.value = e.target.value.replace(/\D/g, "");
+                          }}
                         />
                       </div>
                     </div>
@@ -1673,6 +1693,10 @@ function SettingComplex({ workplaceList }) {
                           placeholder="บาท"
                           value={workRate}
                           onChange={(e) => setWorkRate(e.target.value)}
+                          onInput={(e) => {
+                            // Remove any non-digit characters
+                            e.target.value = e.target.value.replace(/\D/g, "");
+                          }}
                         />
                       </div>
                     </div>
@@ -1688,6 +1712,10 @@ function SettingComplex({ workplaceList }) {
                           placeholder="กี่เท่า"
                           value={workRateOT}
                           onChange={(e) => setWorkRateOT(e.target.value)}
+                          onInput={(e) => {
+                            // Remove any non-digit characters
+                            e.target.value = e.target.value.replace(/\D/g, "");
+                          }}
                         />
                       </div>
                     </div>
@@ -1702,7 +1730,10 @@ function SettingComplex({ workplaceList }) {
                           id="workTotalPeople"
                           placeholder="คน"
                           value={workTotalPeople}
-                          onChange={(e) => setWorkTotalPeople(e.target.value)}
+                          onChange={(e) => setWorkTotalPeople(e.target.value)} onInput={(e) => {
+                            // Remove any non-digit characters
+                            e.target.value = e.target.value.replace(/\D/g, "");
+                          }}
                         />
                       </div>
                     </div>
@@ -1725,7 +1756,10 @@ function SettingComplex({ workplaceList }) {
                           id="dayoffRateHour"
                           placeholder="กี่เท่า"
                           value={dayoffRateHour}
-                          onChange={(e) => setDayoffRateHour(e.target.value)}
+                          onChange={(e) => setDayoffRateHour(e.target.value)} onInput={(e) => {
+                            // Remove any non-digit characters
+                            e.target.value = e.target.value.replace(/\D/g, "");
+                          }}
                         />
                       </div>
                     </div>
@@ -1740,7 +1774,10 @@ function SettingComplex({ workplaceList }) {
                           id="dayoffRateOT"
                           placeholder="กี่เท่า"
                           value={dayoffRateOT}
-                          onChange={(e) => setDayoffRateOT(e.target.value)}
+                          onChange={(e) => setDayoffRateOT(e.target.value)} onInput={(e) => {
+                            // Remove any non-digit characters
+                            e.target.value = e.target.value.replace(/\D/g, "");
+                          }}
                         />
                       </div>
                     </div>
@@ -1756,7 +1793,10 @@ function SettingComplex({ workplaceList }) {
                           id="holiday"
                           placeholder="กี่เท่า"
                           value={holiday}
-                          onChange={(e) => setHoliday(e.target.value)}
+                          onChange={(e) => setHoliday(e.target.value)} onInput={(e) => {
+                            // Remove any non-digit characters
+                            e.target.value = e.target.value.replace(/\D/g, "");
+                          }}
                         />
                       </div>
                     </div>
@@ -1771,7 +1811,10 @@ function SettingComplex({ workplaceList }) {
                           id="holidayHour"
                           placeholder=""
                           value={holidayHour}
-                          onChange={(e) => setHolidayHour(e.target.value)}
+                          onChange={(e) => setHolidayHour(e.target.value)} onInput={(e) => {
+                            // Remove any non-digit characters
+                            e.target.value = e.target.value.replace(/\D/g, "");
+                          }}
                         />
                       </div>
                     </div>
@@ -1786,7 +1829,10 @@ function SettingComplex({ workplaceList }) {
                           id="holidayOT"
                           placeholder="กี่เท่า"
                           value={holidayOT}
-                          onChange={(e) => setHolidayOT(e.target.value)}
+                          onChange={(e) => setHolidayOT(e.target.value)} onInput={(e) => {
+                            // Remove any non-digit characters
+                            e.target.value = e.target.value.replace(/\D/g, "");
+                          }}
                         />
                       </div>
                     </div>
@@ -1809,7 +1855,10 @@ function SettingComplex({ workplaceList }) {
                               value={data.codeSpSalary}
                               onChange={(e) =>
                                 handleChangeSpSalary(e, index, "codeSpSalary")
-                              }
+                              } onInput={(e) => {
+                                // Remove any non-digit characters
+                                e.target.value = e.target.value.replace(/\D/g, "");
+                              }}
                             />
                           </div>
                           {/* <div className="col-md-1">
@@ -1843,7 +1892,10 @@ function SettingComplex({ workplaceList }) {
                               value={data.SpSalary}
                               onChange={(e) =>
                                 handleChangeSpSalary(e, index, "SpSalary")
-                              }
+                              } onInput={(e) => {
+                                // Remove any non-digit characters
+                                e.target.value = e.target.value.replace(/\D/g, "");
+                              }}
                             />
                           </div>
                           <div className="col-md-2">
@@ -1952,7 +2004,10 @@ function SettingComplex({ workplaceList }) {
                                 value={personalLeaveNumber}
                                 onChange={(e) =>
                                   setPersonalLeaveNumber(e.target.value)
-                                }
+                                } onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                           </div>
@@ -1968,7 +2023,10 @@ function SettingComplex({ workplaceList }) {
                                 value={personalLeave}
                                 onChange={(e) =>
                                   setPersonalLeave(e.target.value)
-                                }
+                                } onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                           </div>
@@ -1986,7 +2044,10 @@ function SettingComplex({ workplaceList }) {
                                 value={personalLeaveRate}
                                 onChange={(e) =>
                                   setPersonalLeaveRate(e.target.value)
-                                }
+                                } onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                           </div>
@@ -2004,7 +2065,10 @@ function SettingComplex({ workplaceList }) {
                                 value={sickLeaveNumber}
                                 onChange={(e) =>
                                   setSickLeaveNumber(e.target.value)
-                                }
+                                } onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                           </div>
@@ -2018,7 +2082,10 @@ function SettingComplex({ workplaceList }) {
                                 id="sickLeave"
                                 placeholder="วันลาป่วย"
                                 value={sickLeave}
-                                onChange={(e) => setSickLeave(e.target.value)}
+                                onChange={(e) => setSickLeave(e.target.value)} onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                           </div>
@@ -2036,7 +2103,10 @@ function SettingComplex({ workplaceList }) {
                                 value={sickLeaveRate}
                                 onChange={(e) =>
                                   setSickLeaveRate(e.target.value)
-                                }
+                                } onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                           </div>
@@ -2054,7 +2124,10 @@ function SettingComplex({ workplaceList }) {
                                 value={workRateDayoffNumber}
                                 onChange={(e) =>
                                   setWorkRateDayoffNumber(e.target.value)
-                                }
+                                } onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                           </div>
@@ -2070,7 +2143,10 @@ function SettingComplex({ workplaceList }) {
                                 value={workRateDayoff}
                                 onChange={(e) =>
                                   setWorkRateDayoff(e.target.value)
-                                }
+                                } onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                           </div>
@@ -2088,7 +2164,10 @@ function SettingComplex({ workplaceList }) {
                                 value={workRateDayoffRate}
                                 onChange={(e) =>
                                   setworkRateDayoffRate(e.target.value)
-                                }
+                                } onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                           </div>
@@ -2196,7 +2275,10 @@ function SettingComplex({ workplaceList }) {
                                     "startTime",
                                     e.target.value
                                   )
-                                }
+                                } onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                             <div class="col-md-2">
@@ -2211,7 +2293,10 @@ function SettingComplex({ workplaceList }) {
                                     "endTime",
                                     e.target.value
                                   )
-                                }
+                                } onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                             {/* <span>Result Time: {time.resultTime}</span> */}
@@ -2227,7 +2312,10 @@ function SettingComplex({ workplaceList }) {
                                     "startTimeOT",
                                     e.target.value
                                   )
-                                }
+                                } onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                             <div class="col-md-2">
@@ -2242,7 +2330,10 @@ function SettingComplex({ workplaceList }) {
                                     "endTimeOT",
                                     e.target.value
                                   )
-                                }
+                                } onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                               />
                             </div>
                             {/* <span>Result OT: {time.resultOT}</span> */}
@@ -2478,7 +2569,10 @@ function SettingComplex({ workplaceList }) {
                               value={time.countPerson}
                               onChange={(e) =>
                                 handleInputChangePerson(e, index)
-                              }
+                              } onInput={(e) => {
+                                // Remove any non-digit characters
+                                e.target.value = e.target.value.replace(/\D/g, "");
+                              }}
                             />
                           </div>
                           <div class="col-md-2">

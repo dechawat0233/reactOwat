@@ -9090,6 +9090,10 @@ function WorktimeSheetWorkplace({ employeeList }) {
                                 value={searchWorkplaceId}
                                 // onChange={(e) => setSearchWorkplaceId(e.target.value)}
                                 onChange={handleStaffIdChange}
+                                onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                }}
                                 list="WorkplaceIdList"
                               />
                             </div>

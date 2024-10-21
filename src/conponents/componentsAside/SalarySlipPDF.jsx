@@ -1966,6 +1966,10 @@ function SalarySlipPDF({ employeeList }) {
                             placeholder="รหัสหน่อยงาน"
                             value={workplacrId}
                             onChange={handleStaffIdChange}
+                            onInput={(e) => {
+                              // Remove any non-digit characters
+                              e.target.value = e.target.value.replace(/\D/g, "");
+                            }}
                             list="WorkplaceIdList"
                           />
                           <datalist id="WorkplaceIdList">
@@ -2015,6 +2019,10 @@ function SalarySlipPDF({ employeeList }) {
                             placeholder="รหัสพนักงาน"
                             value={staffId}
                             onChange={handleStaffIdChange2}
+                            onInput={(e) => {
+                              // Remove any non-digit characters
+                              e.target.value = e.target.value.replace(/\D/g, "");
+                            }}
                             list="staffIdList"
                           />
                           <datalist id="staffIdList">

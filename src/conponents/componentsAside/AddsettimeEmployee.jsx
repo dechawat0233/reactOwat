@@ -1996,6 +1996,10 @@ function AddsettimeEmployee() {
                               placeholder="รหัสพนักงาน"
                               value={staffId}
                               onChange={handleStaffIdChange}
+                              onInput={(e) => {
+                                // Remove any non-digit characters
+                                e.target.value = e.target.value.replace(/\D/g, "");
+                              }}
                               list="staffIdList"
                             />
                             <datalist id="staffIdList">
@@ -2081,6 +2085,7 @@ function AddsettimeEmployee() {
                       placeholder="รหัสพนักงาน"
                       value={employeeId !== "null" ? employeeId : ""}
                       onChange={(e) => setEmployeeId(e.target.value)}
+                      readOnly
                     />
                   </div>
                 </div>
@@ -2094,6 +2099,7 @@ function AddsettimeEmployee() {
                       placeholder="ชื่อพนักงาน"
                       value={name + " " + lastName}
                       onChange={(e) => setName(e.target.value)}
+                      readOnly
                     />
                   </div>
                 </div>

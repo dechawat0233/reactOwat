@@ -10,7 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { ThaiDatePicker } from "thaidatepicker-react";
 import { FaCalendarAlt } from "react-icons/fa"; // You can use any icon library
 
-const SendEmployeePDF2 = () => {
+const SendEmployeePDF2 = ({ employeeList }) => {
   // const [input1, setInput1] = useState('');
   // const [input2, setInput2] = useState('');
 
@@ -38,22 +38,6 @@ const SendEmployeePDF2 = () => {
     bottom: "0rem",
     // Add other styles as needed
   };
-
-  const [employeeList, setEmployeeList] = useState([]);
-
-  useEffect(() => {
-    // Fetch data from the API when the component mounts
-    fetch(endpoint + "/employee/list")
-      .then((response) => response.json())
-      .then((data) => {
-        // Update the state with the fetched data
-        setEmployeeList(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []); // The empty array [] ensures that the effect runs only once after the initial render
-  console.log(employeeList);
 
   const [title, setTitle] = useState(
     "ชี้แจงหนังสือรับรองวุฒิการศึกษาทำงานพนักงานทำความสะอาด"
@@ -254,6 +238,7 @@ const SendEmployeePDF2 = () => {
     setInputValuesFirst(newInputValuesFirst);
   };
 
+  console.log("formattedDate321", formattedDate321);
   const generatePDF2 = () => {
     // const doc = new jsPDF();
     const doc = new jsPDF({
@@ -288,32 +273,32 @@ const SendEmployeePDF2 = () => {
     doc.addImage(OwatSupport, "PNG", 10, 270, 190, 16.4);
 
     // doc.setFont('THSarabunNew');
-    const formatDateThai = (dateOfBirth) => {
-      if (!dateOfBirth) {
-        return "";
-      }
-      const thaiMonthNames = new Intl.DateTimeFormat("th-TH", { month: "long" })
-        .format;
-      const formattedDate = new Date(dateOfBirth);
+    // const formatDateThai = (dateOfBirth) => {
+    //   if (!dateOfBirth) {
+    //     return "";
+    //   }
+    //   const thaiMonthNames = new Intl.DateTimeFormat("th-TH", { month: "long" })
+    //     .format;
+    //   const formattedDate = new Date(dateOfBirth);
 
-      const day = formattedDate.getDate();
-      const month = thaiMonthNames(formattedDate);
-      const year = formattedDate.getFullYear();
+    //   const day = formattedDate.getDate();
+    //   const month = thaiMonthNames(formattedDate);
+    //   const year = formattedDate.getFullYear();
 
-      return `${day} ${month} ${year}`;
-    };
+    //   return `${day} ${month} ${year}`;
+    // };
 
-    const formatDateThaiFirst = (workDate) => {
-      const thaiMonthNames = new Intl.DateTimeFormat("th-TH", { month: "long" })
-        .format;
-      const formattedDate = new Date(workDate);
+    // const formatDateThaiFirst = (workDate) => {
+    //   const thaiMonthNames = new Intl.DateTimeFormat("th-TH", { month: "long" })
+    //     .format;
+    //   const formattedDate = new Date(workDate);
 
-      const day = formattedDate.getDate();
-      const month = thaiMonthNames(formattedDate);
-      const year = formattedDate.getFullYear();
+    //   const day = formattedDate.getDate();
+    //   const month = thaiMonthNames(formattedDate);
+    //   const year = formattedDate.getFullYear();
 
-      return `${day} ${month} ${year + 543}`;
-    };
+    //   return `${day} ${month} ${year + 543}`;
+    // };
 
     // doc.addPage(); // Add a new page for each set of inputs after the first
     const maxWidth = 150; // Define the maximum width for the text
@@ -365,14 +350,10 @@ const SendEmployeePDF2 = () => {
       x,
       y + inviteLines.length + titleLines.length
     ); // Adding 30 to the Y-coordinate
-    
 
-    doc.text(`วันที่ : ${formatDateThaiFirst(workDate)}`, 130, 50); // Adding 30 to the Y-coordinate
-    doc.text(
-      codeClose ,
-      160,
-      290
-    );
+    // doc.text(`วันที่ : ${formatDateThaiFirst(workDate)}`, 130, 50); // Adding 30 to the Y-coordinate
+    doc.text(`วันที่ : ${formattedDate321}`, 130, 50); // Adding 30 to the Y-coordinate
+    doc.text(codeClose, 160, 290);
 
     // doc.text(`เรีอง:      ${invite}`, 40, 50); // Adding 30 to the Y-coordinate
     // doc.text(`เรียน:      ${title}`, 40, 60); // Adding 30 to the Y-coordinate
@@ -390,12 +371,8 @@ const SendEmployeePDF2 = () => {
         doc.setFontSize(14);
         doc.text(`${index + 1}. ${value.Name}`, x, y);
         doc.text(`ตำแหน่ง: ${value.position}`, x + 60, y);
-        doc.text(
-          codeClose ,
-          160,
-          290
-        );
-        
+        doc.text(codeClose, 160, 290);
+
         // doc.text(`ประวัติการศึกษา: ${value.educational}`, x, y2); // Adding 30 to the Y-coordinate
       }
     });
@@ -407,7 +384,6 @@ const SendEmployeePDF2 = () => {
 
     // if (inputValuesFirst.length === 1) {
     if (inputValuesFirst.length < 16) {
-      
       const lengthFirst = inputValuesFirst.length;
       x = 30;
       // autoText1.forEach((line, index) => {
@@ -463,11 +439,7 @@ const SendEmployeePDF2 = () => {
           35 + y + 10 * autoContent2.length
         );
         doc.text(positionHead, 100 + x, 40 + y + 10 * autoContent2.length);
-        doc.text(
-          codeClose ,
-          160,
-          290
-        );
+        doc.text(codeClose, 160, 290);
         doc.addImage(OwatSupport, "PNG", 10, 270, 190, 16.4);
       } else {
         autoContent2.forEach((line, index) => {
@@ -528,11 +500,7 @@ const SendEmployeePDF2 = () => {
                 autoContent2.length -
                 2)
         );
-        doc.text(
-          codeClose,
-          160,
-         290
-        );
+        doc.text(codeClose, 160, 290);
         doc.addImage(OwatSupport, "PNG", 10, 270, 190, 16.4);
       }
     } else {
@@ -567,11 +535,7 @@ const SendEmployeePDF2 = () => {
         const currentIndex = index + initialIndex + pageIndex * chunkSize;
         doc.text(`${currentIndex + 1}. ${value.Name}`, x, y);
         doc.text(`ตำแหน่ง: ${value.position}`, x + 60, y);
-        doc.text(
-          codeClose ,
-          160,
-          290
-        );
+        doc.text(codeClose, 160, 290);
         // doc.text(`ประวัติการศึกษา: ${value.educational}`, x, y2);
 
         // Check if it's the last page and the last element in the chunk
@@ -610,11 +574,7 @@ const SendEmployeePDF2 = () => {
               100 + x,
               30 + y + yMultiplier * autoContent2.length
             );
-            doc.text(
-              codeClose,
-              160,
-              290
-            );
+            doc.text(codeClose, 160, 290);
             doc.addImage(OwatSupport, "PNG", 10, 270, 190, 16.4);
           } else {
             const yMultiplier = 10; // Adjust this multiplier as needed
@@ -645,11 +605,7 @@ const SendEmployeePDF2 = () => {
               100 + x,
               30 + y + yMultiplier * chunk.length
             );
-            doc.text(
-              codeClose,
-              160,
-              290
-            );
+            doc.text(codeClose, 160, 290);
             doc.addImage(OwatSupport, "PNG", 10, 270, 190, 16.4);
           }
         }
@@ -698,7 +654,7 @@ const SendEmployeePDF2 = () => {
       doc.rect(45, 50, 130, 120 + y2 * (textLines.length + textLines2.length)); // (x, y, width, height)กรอบข้อความ
 
       doc.text(`ประวัติพนักงาน`, 95, y);
-      
+
       const textWidth =
         (doc.getStringUnitWidth("ประวัติพนักงาน") *
           doc.internal.getFontSize()) /
@@ -709,11 +665,7 @@ const SendEmployeePDF2 = () => {
 
       doc.setFontSize(14);
       // doc.text(textLines.length, x, y + 10);
-doc.text(
-        codeClose,
-        160,
-        290
-      );
+      doc.text(codeClose, 160, 290);
       doc.text(`ไอดี: `, x, y + y2 * 2);
       doc.text(`ชื่อ/นามสกุล: `, x, y + y2 * 3);
       doc.text(`อายุ: `, x, y + y2 * 4);
@@ -744,10 +696,11 @@ doc.text(
       doc.text(`${value.Id}`, x2, y + y2 * 2);
       doc.text(`${value.Name}`, x2, y + y2 * 3);
       doc.text(`${value.age}`, x2, y + y2 * 4);
-      const formattedDate = formatDateThai(value.dateOfBirth);
+      // const formattedDate = formatDateThai(value.dateOfBirth);
 
       // doc.text(`${formatDateThai(value.dateOfBirth)}`, x2, y + (y2 * 5));
-      doc.text(`${formattedDate}`, x2, y + y2 * 5);
+      // doc.text(`${formattedDate}`, x2, y + y2 * 5);
+      doc.text(`${formattedDate321}`, x2, y + y2 * 5);
 
       doc.text(`${value.idCard}`, x2, y + y2 * 6);
       // doc.text(`${value.address}`, x2, y + 70);
@@ -771,6 +724,36 @@ doc.text(
 
     const pdfContent = doc.output("bloburl");
     window.open(pdfContent, "_blank");
+  };
+
+  // Handle employeeId input change
+  const handleEmployeeIdChange = (e) => {
+    const id = e.target.value.replace(/\D/g, ""); // Remove non-digit chars
+    setInput1(id);
+
+    // Find the employee by id
+    const employee = employeeList.find((emp) => emp.employeeId === id);
+    if (employee) {
+      setInput2(`${employee.name} ${employee.lastName}`); // Update name
+    } else {
+      setInput2(""); // Clear name if not found
+    }
+  };
+
+  // Handle employeeName input change
+  const handleEmployeeNameChange = (e) => {
+    const name = e.target.value;
+    setInput2(name);
+
+    // Find the employee by name
+    const employee = employeeList.find(
+      (emp) => `${emp.name} ${emp.lastName}` === name
+    );
+    if (employee) {
+      setInput1(employee.employeeId); // Update employeeId
+    } else {
+      setInput1(""); // Clear employeeId if not found
+    }
   };
 
   return (
@@ -944,7 +927,7 @@ doc.text(
                       ></textarea>
                     </div>
                   </div>
-                  <br/>
+                  <br />
                   <div className="row">
                     <div className="col-md-2">
                       <label role="searchname">รหัสท้ายกระดาษ</label>
@@ -960,14 +943,27 @@ doc.text(
                   </div>
                   <br />
                   <div className="row">
-                    <div className="col-md-3">
+                    {/* <div className="col-md-3">
                       <label>รหัสพนักงาน:</label>
                       <input
                         type="text"
                         className="form-control"
                         value={input1}
                         onChange={(e) => setInput1(e.target.value)}
+                        onInput={(e) => {
+                          // Remove any non-digit characters
+                          e.target.value = e.target.value.replace(/\D/g, "");
+                        }}
+                        list="staffIdList"
                       />
+                      <datalist id="staffIdList">
+                        {employeeList.map((employee) => (
+                          <option
+                            key={employee.employeeId}
+                            value={employee.employeeId}
+                          />
+                        ))}
+                      </datalist>
                     </div>
                     <div className="col-md-3">
                       <label>ชื่อ:</label>
@@ -976,7 +972,57 @@ doc.text(
                         className="form-control"
                         value={input2}
                         onChange={(e) => setInput2(e.target.value)}
+                        list="staffNameList"
                       />
+                      <datalist id="staffNameList">
+                        {employeeList.map((employee) => (
+                          <option
+                            key={employee.employeeId}
+                            value={employee.name + " " + employee.lastName}
+                          />
+                        ))}
+                      </datalist>
+                    </div> */}
+                    <div className="col-md-3">
+                      <label>รหัสพนักงาน:</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={input1}
+                        onChange={handleEmployeeIdChange}
+                        onInput={(e) => {
+                          // Remove any non-digit characters
+                          e.target.value = e.target.value.replace(/\D/g, "");
+                        }}
+                        list="staffIdList"
+                      />
+                      <datalist id="staffIdList">
+                        {employeeList.map((employee) => (
+                          <option
+                            key={employee.employeeId}
+                            value={employee.employeeId}
+                          />
+                        ))}
+                      </datalist>
+                    </div>
+
+                    <div className="col-md-3">
+                      <label>ชื่อ:</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={input2}
+                        onChange={handleEmployeeNameChange}
+                        list="staffNameList"
+                      />
+                      <datalist id="staffNameList">
+                        {employeeList.map((employee) => (
+                          <option
+                            key={employee.employeeId}
+                            value={`${employee.name} ${employee.lastName}`}
+                          />
+                        ))}
+                      </datalist>
                     </div>
                     <div className="col-md-6">
                       <button

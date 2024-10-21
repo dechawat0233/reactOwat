@@ -6,14 +6,14 @@ import EmployeesSelected from './EmployeesSelected';
 import axios from 'axios';
 import '../editwindowcss.css';
 
-function Search() {
+function Search({workplaceList,employeeList}) {
   //   const endpoint = 'YOUR_API_ENDPOINT'; // Replace with your API endpoint
   useEffect(() => {
     document.title = 'ข้อมูลเงินเดือน';
     // You can also return a cleanup function if needed
     // return () => { /* cleanup code */ };
 }, []);
-
+const [employeeName, setEmployeeName] = useState("");
   const [message, setMessage] = useState('');
   const [employeeId, setEmployeeId] = useState('');
   const [name, setName] = useState('');
@@ -92,13 +92,40 @@ function Search() {
     }
   }
 
-  function handleEmployeeIdChange(event) {
-    setEmployeeId(event.target.value);
-  }
+  // function handleEmployeeIdChange(event) {
+  //   setEmployeeId(event.target.value);
+  // }
+  const handleEmployeeIdChange = (e) => {
+    const id = e.target.value;
+    setEmployeeId(id);
+  
+    // Find the employee with this ID
+    const employee = employeeList.find((emp) => emp.employeeId === id);
+    if (employee) {
+      setEmployeeName(`${employee.name} ${employee.lastName}`);
+    } else {
+      setEmployeeName(""); // Clear if not found
+    }
+  };
 
-  function handleNameChange(event) {
-    setName(event.target.value);
-  }
+  // function handleNameChange(event) {
+  //   setName(event.target.value);
+  // }
+  const handleNameChange = (e) => {
+    const name = e.target.value;
+    setEmployeeName(name);
+  
+    // Find the employee matching the name input
+    const employee = employeeList.find(
+      (emp) =>
+        `${emp.name} ${emp.lastName}` === name
+    );
+    if (employee) {
+      setEmployeeId(employee.employeeId);
+    } else {
+      setEmployeeId(""); // Clear if not found
+    }
+  };
 
   function handleIdCardChange(event) {
     setIdCard(event.target.value);
@@ -116,6 +143,8 @@ function Search() {
     localStorage.removeItem('selectedEmployeeCount');
     localStorage.removeItem('selectedEmployees');
   }
+
+  
   return (
     <body class="hold-transition sidebar-mini" className='editlaout'>
       <div class="wrapper" >
@@ -159,11 +188,21 @@ function Search() {
                                 id="employeeId"
                                 placeholder="รหัสพนักงาน"
                                 onChange={handleEmployeeIdChange}
+                                value={employeeId}
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(/\D/g, "");
                                 }}
+                                 list="staffIdList"
                               />
+                              <datalist id="staffIdList">
+                              {employeeList.map((employee) => (
+                                <option
+                                  key={employee.employeeId}
+                                  value={employee.employeeId}
+                                />
+                              ))}
+                            </datalist>
                             </div>
                           </div>
                           <div class="col-md-6">
@@ -175,8 +214,20 @@ function Search() {
                                 class="form-control"
                                 id="name"
                                 placeholder="ชื่อพนักงาน"
+                                value={employeeName}
                                 onChange={handleNameChange}
+                                list="staffNameList"
                               />
+                              <datalist id="staffNameList">
+                              {employeeList.map((employee) => (
+                                <option
+                                  key={employee.employeeId}
+                                  value={
+                                    employee.name + " " + employee.lastName
+                                  }
+                                />
+                              ))}
+                            </datalist>
                             </div>
                           </div>
                         </div>
