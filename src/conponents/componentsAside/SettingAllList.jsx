@@ -263,47 +263,7 @@ if (unmatchedWorkplaceIds.length > 0) {
                           ))}
                         </tbody>
                       </table>
-                      <table
-                        border="1"
-                        style={{
-                          width: "100%",
-                          textAlign: "left",
-                          borderCollapse: "collapse",
-                        }}
-                      >
-                        <thead>
-                          <tr>
-                            <th
-                              style={{
-                                padding: "8px",
-                                backgroundColor: "#f2f2f2",
-                              }}
-                            >
-                              Workplace ID
-                            </th>
-                            <th
-                              style={{
-                                padding: "8px",
-                                backgroundColor: "#f2f2f2",
-                              }}
-                            >
-                              Employee Count
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {Object.entries(employeeCountMap).map(
-                            ([workplaceId, count]) => (
-                              <tr key={workplaceId}>
-                                <td style={{ padding: "8px" }}>
-                                  {workplaceId}
-                                </td>
-                                <td style={{ padding: "8px" }}>{count}</td>
-                              </tr>
-                            )
-                          )}
-                        </tbody>
-                      </table>
+                      
                     </ul>
                   </form>
                 </div>
