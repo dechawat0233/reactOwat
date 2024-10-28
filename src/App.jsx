@@ -42,6 +42,7 @@ import AddEditSalaryEmployee from "./conponents/componentsAside/AddEditSalaryEmp
 import Setting from "./conponents/componentsAside/Setting";
 import SettingComplex from "./conponents/componentsAside/SettingComplex";
 import SettingAllList from "./conponents/componentsAside/SettingAllList";
+import SettingEdit from "./conponents/componentsAside/SettingEdit";
 import SettingSpecial from "./conponents/componentsAside/SettingSpecail";
 import EmployeeWorkDay from "./conponents/componentsAside/componentsetting/EmployeeWorkDay";
 
@@ -230,6 +231,15 @@ function App() {
                 path="/settingAllList"
                 element={
                   <SettingAllList
+                    workplaceList={workplaceList}
+                    employeeList={employeeList}
+                  />
+                }
+              />
+                <Route
+                path="/settingEdit"
+                element={
+                  <SettingEdit
                     workplaceList={workplaceList}
                     employeeList={employeeList}
                   />

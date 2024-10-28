@@ -243,14 +243,14 @@ if (unmatchedWorkplaceIds.length > 0) {
                             <tr key={index}>
                               <td style={cellStyle}>
                                 <Link
-                                  to={`/setting?workplaceId=${data.workplaceId}&workplaceName=${data.workplaceName}`}
+                                  to={`/settingEdit?workplaceId=${data.workplaceId}&workplaceName=${data.workplaceName}`}
                                 >
                                   {data.workplaceId}
                                 </Link>
                               </td>
                               <td style={cellStyle}>
                                 <Link
-                                  to={`/setting?workplaceId=${data.workplaceId}&workplaceName=${data.workplaceName}`}
+                                  to={`/settingEdit?workplaceId=${data.workplaceId}&workplaceName=${data.workplaceName}`}
                                 >
                                   {data.workplaceName}
                                 </Link>

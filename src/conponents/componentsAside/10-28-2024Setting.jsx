@@ -1054,8 +1054,10 @@ console.log('testtest');
       setSearchWorkplaceName(workplaceNameSend || "");
 
       // Call the handleSearch function
-      handleSearch(workplaceIdSend, workplaceNameSend);
-
+      handleSearch({
+        id: workplaceIdSend || "",
+        name: workplaceNameSend || "",
+      });
     }
   }, [workplaceIdSend, workplaceNameSend, handleSearch]);
 

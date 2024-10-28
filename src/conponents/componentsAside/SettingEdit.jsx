@@ -12,7 +12,7 @@ import "../editwindowcss.css";
 import EmployeeWorkDay from "./componentsetting/EmployeeWorkDay";
 import { useLocation } from "react-router-dom";
 
-function Setting({ workplaceList, employeeList }) {
+function SettingEdit({ workplaceList, employeeList }) {
   // Use useLocation hook to access query parameters from URL
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -1009,6 +1009,163 @@ console.log('testtest');
     // // console.log(initialFormData);
     // console.log("formData", formData);
   }
+
+  useEffect(() => {
+    if (workplaceIdSend || workplaceNameSend) {
+      // Filter workplaceList based on the received query parameters
+      const filteredWorkplaces = workplaceList.filter((workplace) => {
+        const idMatch = workplace.workplaceId === workplaceIdSend;
+        const nameMatch = workplace.workplaceName === workplaceNameSend;
+        return idMatch || nameMatch; // Use OR if you want to match either
+      });
+
+      // If a matching workplace is found, update the state variables
+      if (filteredWorkplaces.length > 0) {
+        const workplace = filteredWorkplaces[0]; // Assuming you want the first match
+
+        set_id(workplace._id);
+    setWorkplaceId(workplace.workplaceId);
+
+    const filteredEmployees = employeeList.filter(
+      (employee) => employee.workplace === searchWorkplaceId
+    );
+    console.log("searchWorkplaceId", searchWorkplaceId);
+    setEmployeeListResult(filteredEmployees);
+
+    setShowEmployeeListResult(filteredEmployees);
+    setWorkplaceName(workplace.workplaceName);
+    setWorkplaceArea(workplace.workplaceArea);
+    setWorkOfWeek(workplace.workOfWeek);
+
+    setWorkStart1(workplace.workStart1);
+    setWorkEnd1(workplace.workEnd1);
+    setWorkStart2(workplace.workStart2);
+    setWorkEnd2(workplace.workEnd2);
+    setWorkStart3(workplace.workStart3);
+    setWorkEnd3(workplace.workEnd3);
+
+    setWorkStartOt1(workplace.workStartOt1);
+    setWorkEndOt1(workplace.workEndOt1);
+    setWorkStartOt2(workplace.workStartOt2);
+    setWorkEndOt2(workplace.workEndOt2);
+    setWorkStartOt3(workplace.workStartOt3);
+    setWorkEndOt3(workplace.workEndOt3);
+
+    setWorkOfHour(workplace.workOfHour);
+    setWorkOfOT(workplace.workOfOT);
+    setWorkRate(workplace.workRate);
+    setWorkRateOT(workplace.workRateOT);
+    setWorkTotalPeople(workplace.workTotalPeople);
+    setDayoffRate(workplace.dayoffRate);
+    setDayoffRateOT(workplace.dayoffRateOT);
+    setDayoffRateHour(workplace.dayoffRateHour);
+    setHoliday(workplace.holiday);
+    setHolidayOT(workplace.holidayOT);
+    setHolidayHour(workplace.holidayHour);
+    setSalaryadd1(workplace.salaryadd1);
+    setSalaryadd2(workplace.salaryadd2);
+    setSalaryadd3(workplace.salaryadd3);
+    setSalaryadd4(workplace.salaryadd4);
+    setSalaryadd5(workplace.salaryadd5);
+    setSalaryadd6(workplace.salaryadd6);
+    setPersonalLeave(workplace.personalLeave);
+    setPersonalLeaveNumber(workplace.personalLeaveNumber);
+    setPersonalLeaveRate(workplace.personalLeaveRate);
+    setSickLeave(workplace.sickLeave);
+    setSickLeaveNumber(workplace.sickLeaveNumber);
+    setSickLeaveRate(workplace.sickLeaveRate);
+    setWorkRateDayoff(workplace.workRateDayoff);
+    setWorkRateDayoffNumber(workplace.workRateDayoffNumber);
+    setworkRateDayoffRate(workplace.workRateDayoffRate);
+    setWorkplaceAddress(workplace.workplaceAddress);
+    //setSelectedDates([...selectedDates, workplace.daysOff]);
+
+    ////////work day
+    if (workplace.workday1 == "false") {
+      setWorkday1(false);
+    } else {
+      setWorkday1(workplace.workday1);
+    }
+    if (workplace.workday2 == "false") {
+      setWorkday2(false);
+    } else {
+      setWorkday2(workplace.workday2);
+    }
+    if (workplace.workday3 == "false") {
+      setWorkday3(false);
+    } else {
+      setWorkday3(workplace.workday3);
+    }
+    if (workplace.workday4 == "false") {
+      setWorkday4(false);
+    } else {
+      setWorkday4(workplace.workday4);
+    }
+    if (workplace.workday5 == "false") {
+      setWorkday5(false);
+    } else {
+      setWorkday5(workplace.workday5);
+    }
+    if (workplace.workday6 == "false") {
+      setWorkday6(false);
+    } else {
+      setWorkday6(workplace.workday6);
+    }
+    if (workplace.workday7 == "false") {
+      setWorkday7(false);
+    } else {
+      setWorkday7(workplace.workday7);
+    }
+
+    setWorkcount1(workplace.workcount1);
+    setWorkcount2(workplace.workcount2);
+    setWorkcount3(workplace.workcount3);
+    setWorkcount4(workplace.workcount4);
+    setWorkcount5(workplace.workcount5);
+    setWorkcount6(workplace.workcount6);
+    setWorkcount7(workplace.workcount7);
+    const dates = workplace.daysOff.map((dateString) => new Date(dateString));
+
+    setSelectedDates(dates);
+    setReason(workplace.reason);
+
+    // employeeIdLists
+
+    const initialFormData = {
+      addSalary: workplace.addSalary.map((item) => ({
+        name: item.name || "",
+        codeSpSalary: item.codeSpSalary || "",
+        SpSalary: item.SpSalary || "",
+        roundOfSalary: item.roundOfSalary || "",
+        StaffType: item.StaffType || "",
+        nameType: item.nameType || "",
+      })),
+    };
+
+    setFormData(initialFormData);
+    // setFormData(workplace.addSalary);
+
+    const employeeIdLists = workplace.employeeIdList.map((item) => [...item]);
+    setEmployeeIdList(employeeIdLists);
+
+    const employeeNameLists = workplace.employeeNameList.map((item) => [
+      ...item,
+    ]);
+    setEmployeeNameList(employeeNameLists);
+
+    setListEmployeeDay(workplace.listEmployeeDay);
+    setListSpecialWorktime(workplace.listSpecialWorktime);
+    setWorkTimeDayList(workplace.workTimeDay);
+    setWorkTimeDayPersonList(workplace.workTimeDayPerson);
+
+    // console.log(workplace);
+    // // console.log(initialFormData);
+    // console.log("formData", formData);
+      }
+    }
+  }, [workplaceIdSend, workplaceNameSend, workplaceList]); // Add workplaceList as a dependency
+
+
   console.log("showEmployeeListResult", showEmployeeListResult);
 
   const handleCheckboxChange1 = () => {
@@ -1148,19 +1305,19 @@ console.log('testtest');
     // await alert(JSON.stringify(formData.addSalary,null,2));
 
     //check create or update Employee
-    if (newWorkplace) {
-      // alert('Create Workplace');
-      try {
-        const response = await axios.post(endpoint + "/workplace/create", data);
-        // setEmployeesResult(response.data.employees);
-        if (response) {
-          alert("บันทึกสำเร็จ");
-        }
-      } catch (error) {
-        alert("กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล");
-        // window.location.reload();
-      }
-    } else {
+    // if (newWorkplace) {
+    //   // alert('Create Workplace');
+    //   try {
+    //     const response = await axios.post(endpoint + "/workplace/create", data);
+    //     // setEmployeesResult(response.data.employees);
+    //     if (response) {
+    //       alert("บันทึกสำเร็จ");
+    //     }
+    //   } catch (error) {
+    //     alert("กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล");
+    //     // window.location.reload();
+    //   }
+    // } else {
       //update workplace data
 
       // Make the API call to update the resource by ID
@@ -1170,20 +1327,25 @@ console.log('testtest');
           data
         );
         // setEmployeesResult(response.data.employees);
+        // if (response) {
+        //   alert("บันทึกสำเร็จ");
+        //   // Clear the query parameters
+        //   const newUrl = window.location.origin + window.location.pathname; // Removes the query string
+
+        //   // Update the URL without reloading the page
+        //   window.history.replaceState({}, document.title, newUrl);
+        //   window.location.reload();
+        // }
         if (response) {
           alert("บันทึกสำเร็จ");
-          // Clear the query parameters
-          const newUrl = window.location.origin + window.location.pathname; // Removes the query string
-
-          // Update the URL without reloading the page
-          window.history.replaceState({}, document.title, newUrl);
-          window.location.reload();
+          window.location.href = "/setting"; // Redirects directly to 'setting'
         }
+        
       } catch (error) {
         alert("กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล");
         window.location.reload();
       }
-    }
+    // }
   }
 
   console.log("selectedDates", selectedDates);
@@ -1265,114 +1427,7 @@ console.log('testtest');
           {/* <!-- /.content-header -->
                     <!-- Main content --> */}
           <section class="content">
-            <div class="container-fluid">
-              <h2 class="title">ตั้งค่าหน่วยงาน</h2>
-              <section class="Frame">
-                <div class="col-md-12">
-                  <form onSubmit={handleSearch}>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label role="searchWorkplaceId">รหัสหน่วยงาน</label>
-                          {/* <input
-                            type="text"
-                            class="form-control"
-                            id="searchWorkplaceId"
-                            placeholder="รหัสหน่วยงาน"
-                            value={searchWorkplaceId}
-                            onChange={(e) =>
-                              setSearchWorkplaceId(e.target.value)
-                            }
-                          /> */}
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="searchWorkplaceId"
-                            list="workplaceIds" // Associate the datalist with the input
-                            placeholder="รหัสหน่วยงาน"
-                            value={searchWorkplaceId}
-                            onChange={(e) =>
-                              setSearchWorkplaceId(e.target.value)
-                            }
-                            onInput={(e) => {
-                              // Remove any non-digit characters
-                              e.target.value = e.target.value.replace(
-                                /\D/g,
-                                ""
-                              );
-                            }}
-                          />
-                          <datalist id="workplaceIds">
-                            {workplaceList.map((workplace) => (
-                              <option
-                                key={workplace.workplaceId}
-                                value={workplace.workplaceId}
-                              >
-                                {workplace.workplaceId}
-                              </option>
-                            ))}
-                          </datalist>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label role="searchWorkplaceName">ชื่อหน่วยงาน</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="searchWorkplaceName"
-                            placeholder="ชื่อหน่วยงาน"
-                            value={searchWorkplaceName}
-                            onChange={(e) =>
-                              setSearchWorkplaceName(e.target.value)
-                            }
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                      <button class="btn b_save">
-                        <i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา
-                      </button>
-                    </div>
-                  </form>
-                  <br />
-                  {/* <div class="d-flex justify-content-center">
-                                        <h2 class="title">ผลลัพธ์ {searchResult.length} รายการ</h2>
-                                    </div> */}
-                  <div class="d-flex justify-content-center">
-                    {searchResult.length > 0 ? (
-                      <h2 class="title">
-                        ผลลัพธ์ {searchResult.length} รายการ
-                      </h2>
-                    ) : (
-                      <p></p>
-                    )}
-                  </div>
-                  <div class="d-flex justify-content-center">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <ul
-                            style={{ listStyle: "none", marginLeft: "-2rem" }}
-                          >
-                            {searchResult.map((workplace) => (
-                              <li
-                                key={workplace.id}
-                                onClick={() => handleClickResult(workplace)}
-                                style={{ cursor: "pointer" }}
-                              >
-                                รหัส {workplace.workplaceId} หน่วยงาน{" "}
-                                {workplace.workplaceName}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>
+            <div class="container-fluid">              
               {/* <!--Frame--> */}
               {/* <form onSubmit={handleManageWorkplace}> */}
               <form onSubmit={handleFormSubmit}>
@@ -2857,16 +2912,7 @@ console.log('testtest');
                 {/* <button onClick={handleUpload}>Upload</button> */}
                 {/* <!--Frame--> */}
                 <div class="line_btn">
-                  {newWorkplace ? (
-                    <button
-                      type="button"
-                      onClick={handleManageWorkplace}
-                      class="btn b_save"
-                    >
-                      <i class="nav-icon fas fa-save"></i>{" "}
-                      &nbsp;สร้างหน่วยงานใหม่
-                    </button>
-                  ) : (
+                  
                     <button
                       type="button"
                       onClick={handleManageWorkplace}
@@ -2874,7 +2920,7 @@ console.log('testtest');
                     >
                       <i class="nav-icon fas fa-save"></i> &nbsp;บันทึก
                     </button>
-                  )}
+                
                   <button class="btn clean">
                     <i class="far fa-window-close"></i> &nbsp;ยกเลิก
                   </button>
@@ -2891,4 +2937,4 @@ console.log('testtest');
   );
 }
 
-export default Setting;
+export default SettingEdit;
