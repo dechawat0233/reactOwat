@@ -148,13 +148,13 @@ if (unmatchedWorkplaceIds.length > 0) {
             <li class="breadcrumb-item">
               <a href="#"> การตั้งค่า</a>
             </li>
-            <li class="breadcrumb-item active">ตั้งค่าหน่วยงาน</li>
+            <li class="breadcrumb-item active">ตั้งค่าหน่วยงานที่หมด</li>
           </ol>
           <div class="content-header">
             <div class="container-fluid">
               <div class="row mb-2">
                 <h1 class="m-0">
-                  <i class="far fa-arrow-alt-circle-right"></i> ตั้งค่าหน่วยงาน
+                  <i class="far fa-arrow-alt-circle-right"></i> ตั้งค่าหน่วยงานที่หมด
                 </h1>
               </div>
             </div>
@@ -163,7 +163,7 @@ if (unmatchedWorkplaceIds.length > 0) {
                     <!-- Main content --> */}
           <section class="content">
             <div class="container-fluid">
-              <h2 class="title">ตั้งค่าหน่วยงาน</h2>
+              <h2 class="title">ตั้งค่าหน่วยงานที่หมด</h2>
               <section class="Frame">
                 <div class="col-md-12">
                   <form>

@@ -12,7 +12,7 @@ import "../editwindowcss.css";
 import EmployeeWorkDay from "./componentsetting/EmployeeWorkDay";
 import { useLocation } from "react-router-dom";
 
-function Setting({ workplaceList ,employeeList}) {
+function Setting({ workplaceList, employeeList }) {
   // Use useLocation hook to access query parameters from URL
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -794,7 +794,9 @@ function Setting({ workplaceList ,employeeList}) {
   //   }
   // }
   const [filteredWorkplaceList, setFilteredWorkplaceList] = useState([]);
-
+  const [searchWorkplaceId, setSearchWorkplaceId] = useState(""); //รหัสหน่วยงาน
+  const [searchWorkplaceName, setSearchWorkplaceName] = useState(""); //ชื่อหน่วยงาน
+  
   async function handleSearch(event) {
     event.preventDefault();
 
@@ -867,14 +869,14 @@ function Setting({ workplaceList ,employeeList}) {
   //set data to form
   function handleClickResult(workplace) {
     setNewWorkplace(false);
-    
+
     set_id(workplace._id);
     setWorkplaceId(workplace.workplaceId);
 
     const filteredEmployees = employeeList.filter(
       (employee) => employee.workplace === searchWorkplaceId
     );
-    console.log('searchWorkplaceId',searchWorkplaceId);
+    console.log("searchWorkplaceId", searchWorkplaceId);
     setEmployeeListResult(filteredEmployees);
 
     setShowEmployeeListResult(filteredEmployees);
@@ -1032,19 +1034,32 @@ function Setting({ workplaceList ,employeeList}) {
   };
 
   //data for search
-  const [searchWorkplaceId, setSearchWorkplaceId] = useState(""); //รหัสหน่วยงาน
-  const [searchWorkplaceName, setSearchWorkplaceName] = useState(""); //ชื่อหน่วยงาน
+ 
   // const [employeeListResult, setEmployeeListResult] = useState([]);
 
+  // useEffect(() => {
+  //   if (workplaceIdSend && workplaceNameSend) {
+  //     setSearchWorkplaceId(workplaceIdSend);
+  //     setSearchWorkplaceName(workplaceNameSend);
+  //   } else {
+  //     setSearchWorkplaceId("");
+  //     setSearchWorkplaceName("");
+  //   }
+  // }, [workplaceIdSend, workplaceNameSend]); // Depend on the URL parameter
+
   useEffect(() => {
-    if (workplaceIdSend && workplaceNameSend) {
-      setSearchWorkplaceId(workplaceIdSend);
-      setSearchWorkplaceName(workplaceNameSend);
-    } else {
-      setSearchWorkplaceId("");
-      setSearchWorkplaceName("");
+    // If either workplaceIdSend or workplaceNameSend is present, call handleSearch
+    if (workplaceIdSend || workplaceNameSend) {
+      setSearchWorkplaceId(workplaceIdSend || "");
+      setSearchWorkplaceName(workplaceNameSend || "");
+
+      // Call the handleSearch function
+      handleSearch({
+        id: workplaceIdSend || "",
+        name: workplaceNameSend || "",
+      });
     }
-  }, [workplaceIdSend, workplaceNameSend]); // Depend on the URL parameter
+  }, [workplaceIdSend, workplaceNameSend, handleSearch]);
 
   function handleFormSubmit(event) {
     event.preventDefault(); // Prevent the form from submitting on Enter key press
@@ -1159,11 +1174,11 @@ function Setting({ workplaceList ,employeeList}) {
         // setEmployeesResult(response.data.employees);
         if (response) {
           alert("บันทึกสำเร็จ");
-           // Clear the query parameters
-  const newUrl = window.location.origin + window.location.pathname; // Removes the query string
+          // Clear the query parameters
+          const newUrl = window.location.origin + window.location.pathname; // Removes the query string
 
-  // Update the URL without reloading the page
-  window.history.replaceState({}, document.title, newUrl);
+          // Update the URL without reloading the page
+          window.history.replaceState({}, document.title, newUrl);
           window.location.reload();
         }
       } catch (error) {
@@ -1283,12 +1298,18 @@ function Setting({ workplaceList ,employeeList}) {
                             }
                             onInput={(e) => {
                               // Remove any non-digit characters
-                              e.target.value = e.target.value.replace(/\D/g, "");
+                              e.target.value = e.target.value.replace(
+                                /\D/g,
+                                ""
+                              );
                             }}
                           />
                           <datalist id="workplaceIds">
                             {workplaceList.map((workplace) => (
-                              <option key={workplace.workplaceId} value={workplace.workplaceId}>
+                              <option
+                                key={workplace.workplaceId}
+                                value={workplace.workplaceId}
+                              >
                                 {workplace.workplaceId}
                               </option>
                             ))}
@@ -1373,7 +1394,10 @@ function Setting({ workplaceList ,employeeList}) {
                             onChange={(e) => setWorkplaceId(e.target.value)}
                             onInput={(e) => {
                               // Remove any non-digit characters
-                              e.target.value = e.target.value.replace(/\D/g, "");
+                              e.target.value = e.target.value.replace(
+                                /\D/g,
+                                ""
+                              );
                             }}
                           />
                         </div>
@@ -1420,7 +1444,10 @@ function Setting({ workplaceList ,employeeList}) {
                             onChange={(e) => setWorkOfWeek(e.target.value)}
                             onInput={(e) => {
                               // Remove any non-digit characters
-                              e.target.value = e.target.value.replace(/\D/g, "");
+                              e.target.value = e.target.value.replace(
+                                /\D/g,
+                                ""
+                              );
                             }}
                           />
                         </div>
@@ -1610,7 +1637,8 @@ function Setting({ workplaceList ,employeeList}) {
                           id="holidayHour"
                           placeholder=""
                           value={holidayHour}
-                          onChange={(e) => setHolidayHour(e.target.value)} onInput={(e) => {
+                          onChange={(e) => setHolidayHour(e.target.value)}
+                          onInput={(e) => {
                             // Remove any non-digit characters
                             e.target.value = e.target.value.replace(/\D/g, "");
                           }}
@@ -1628,7 +1656,8 @@ function Setting({ workplaceList ,employeeList}) {
                           id="holidayOT"
                           placeholder="กี่เท่า"
                           value={holidayOT}
-                          onChange={(e) => setHolidayOT(e.target.value)} onInput={(e) => {
+                          onChange={(e) => setHolidayOT(e.target.value)}
+                          onInput={(e) => {
                             // Remove any non-digit characters
                             e.target.value = e.target.value.replace(/\D/g, "");
                           }}
@@ -1654,9 +1683,13 @@ function Setting({ workplaceList ,employeeList}) {
                               value={data.codeSpSalary}
                               onChange={(e) =>
                                 handleChangeSpSalary(e, index, "codeSpSalary")
-                              } onInput={(e) => {
+                              }
+                              onInput={(e) => {
                                 // Remove any non-digit characters
-                                e.target.value = e.target.value.replace(/\D/g, "");
+                                e.target.value = e.target.value.replace(
+                                  /\D/g,
+                                  ""
+                                );
                               }}
                             />
                           </div>
@@ -1691,9 +1724,13 @@ function Setting({ workplaceList ,employeeList}) {
                               value={data.SpSalary}
                               onChange={(e) =>
                                 handleChangeSpSalary(e, index, "SpSalary")
-                              } onInput={(e) => {
+                              }
+                              onInput={(e) => {
                                 // Remove any non-digit characters
-                                e.target.value = e.target.value.replace(/\D/g, "");
+                                e.target.value = e.target.value.replace(
+                                  /\D/g,
+                                  ""
+                                );
                               }}
                             />
                           </div>
@@ -1803,9 +1840,13 @@ function Setting({ workplaceList ,employeeList}) {
                                 value={personalLeaveNumber}
                                 onChange={(e) =>
                                   setPersonalLeaveNumber(e.target.value)
-                                } onInput={(e) => {
+                                }
+                                onInput={(e) => {
                                   // Remove any non-digit characters
-                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                  e.target.value = e.target.value.replace(
+                                    /\D/g,
+                                    ""
+                                  );
                                 }}
                               />
                             </div>
@@ -1822,9 +1863,13 @@ function Setting({ workplaceList ,employeeList}) {
                                 value={personalLeave}
                                 onChange={(e) =>
                                   setPersonalLeave(e.target.value)
-                                } onInput={(e) => {
+                                }
+                                onInput={(e) => {
                                   // Remove any non-digit characters
-                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                  e.target.value = e.target.value.replace(
+                                    /\D/g,
+                                    ""
+                                  );
                                 }}
                               />
                             </div>
@@ -1843,9 +1888,13 @@ function Setting({ workplaceList ,employeeList}) {
                                 value={personalLeaveRate}
                                 onChange={(e) =>
                                   setPersonalLeaveRate(e.target.value)
-                                } onInput={(e) => {
+                                }
+                                onInput={(e) => {
                                   // Remove any non-digit characters
-                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                  e.target.value = e.target.value.replace(
+                                    /\D/g,
+                                    ""
+                                  );
                                 }}
                               />
                             </div>
@@ -1864,9 +1913,13 @@ function Setting({ workplaceList ,employeeList}) {
                                 value={sickLeaveNumber}
                                 onChange={(e) =>
                                   setSickLeaveNumber(e.target.value)
-                                } onInput={(e) => {
+                                }
+                                onInput={(e) => {
                                   // Remove any non-digit characters
-                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                  e.target.value = e.target.value.replace(
+                                    /\D/g,
+                                    ""
+                                  );
                                 }}
                               />
                             </div>
@@ -1881,9 +1934,13 @@ function Setting({ workplaceList ,employeeList}) {
                                 id="sickLeave"
                                 placeholder="วันลาป่วย"
                                 value={sickLeave}
-                                onChange={(e) => setSickLeave(e.target.value)} onInput={(e) => {
+                                onChange={(e) => setSickLeave(e.target.value)}
+                                onInput={(e) => {
                                   // Remove any non-digit characters
-                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                  e.target.value = e.target.value.replace(
+                                    /\D/g,
+                                    ""
+                                  );
                                 }}
                               />
                             </div>
@@ -1902,9 +1959,13 @@ function Setting({ workplaceList ,employeeList}) {
                                 value={sickLeaveRate}
                                 onChange={(e) =>
                                   setSickLeaveRate(e.target.value)
-                                } onInput={(e) => {
+                                }
+                                onInput={(e) => {
                                   // Remove any non-digit characters
-                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                  e.target.value = e.target.value.replace(
+                                    /\D/g,
+                                    ""
+                                  );
                                 }}
                               />
                             </div>
@@ -1923,9 +1984,13 @@ function Setting({ workplaceList ,employeeList}) {
                                 value={workRateDayoffNumber}
                                 onChange={(e) =>
                                   setWorkRateDayoffNumber(e.target.value)
-                                } onInput={(e) => {
+                                }
+                                onInput={(e) => {
                                   // Remove any non-digit characters
-                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                  e.target.value = e.target.value.replace(
+                                    /\D/g,
+                                    ""
+                                  );
                                 }}
                               />
                             </div>
@@ -1942,9 +2007,13 @@ function Setting({ workplaceList ,employeeList}) {
                                 value={workRateDayoff}
                                 onChange={(e) =>
                                   setWorkRateDayoff(e.target.value)
-                                } onInput={(e) => {
+                                }
+                                onInput={(e) => {
                                   // Remove any non-digit characters
-                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                  e.target.value = e.target.value.replace(
+                                    /\D/g,
+                                    ""
+                                  );
                                 }}
                               />
                             </div>
@@ -1963,9 +2032,13 @@ function Setting({ workplaceList ,employeeList}) {
                                 value={workRateDayoffRate}
                                 onChange={(e) =>
                                   setworkRateDayoffRate(e.target.value)
-                                } onInput={(e) => {
+                                }
+                                onInput={(e) => {
                                   // Remove any non-digit characters
-                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                  e.target.value = e.target.value.replace(
+                                    /\D/g,
+                                    ""
+                                  );
                                 }}
                               />
                             </div>
@@ -2074,9 +2147,13 @@ function Setting({ workplaceList ,employeeList}) {
                                     "startTime",
                                     e.target.value
                                   )
-                                } onInput={(e) => {
+                                }
+                                onInput={(e) => {
                                   // Remove any non-digit characters
-                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                  e.target.value = e.target.value.replace(
+                                    /\D/g,
+                                    ""
+                                  );
                                 }}
                               />
                             </div>
@@ -2092,9 +2169,13 @@ function Setting({ workplaceList ,employeeList}) {
                                     "endTime",
                                     e.target.value
                                   )
-                                } onInput={(e) => {
+                                }
+                                onInput={(e) => {
                                   // Remove any non-digit characters
-                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                  e.target.value = e.target.value.replace(
+                                    /\D/g,
+                                    ""
+                                  );
                                 }}
                               />
                             </div>
@@ -2111,9 +2192,13 @@ function Setting({ workplaceList ,employeeList}) {
                                     "startTimeOT",
                                     e.target.value
                                   )
-                                } onInput={(e) => {
+                                }
+                                onInput={(e) => {
                                   // Remove any non-digit characters
-                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                  e.target.value = e.target.value.replace(
+                                    /\D/g,
+                                    ""
+                                  );
                                 }}
                               />
                             </div>
@@ -2129,9 +2214,13 @@ function Setting({ workplaceList ,employeeList}) {
                                     "endTimeOT",
                                     e.target.value
                                   )
-                                } onInput={(e) => {
+                                }
+                                onInput={(e) => {
                                   // Remove any non-digit characters
-                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                  e.target.value = e.target.value.replace(
+                                    /\D/g,
+                                    ""
+                                  );
                                 }}
                               />
                             </div>
@@ -2351,89 +2440,85 @@ function Setting({ workplaceList ,employeeList}) {
                                 </option>
                               ))} */}
                               <option value="" disabled>
-                                  เลือกตำแหน่ง
-                                </option>
-                                <option value="หัวหน้าควบคุมงาน">
-                                  หัวหน้าควบคุมงาน
-                                </option>
-                                <option value="ผู้ช่วยผู้ควบคุมงาน">
-                                  ผู้ช่วยผู้ควบคุมงาน
-                                </option>
-                                <option value="พนักงานทำความสะอาด">
-                                  พนักงานทำความสะอาด
-                                </option>
-                                <option value="พนักงานทำความสะอาดรอบนอก">
-                                  พนักงานทำความสะอาดรอบนอก
-                                </option>
-                                <option value="พนักงานเสิร์ฟ">
-                                  พนักงานเสิร์ฟ
-                                </option>
-                                <option value="พนักงานคนสวน">
-                                  พนักงานคนสวน
-                                </option>
-                                <option value="พนักงานแรงงานชาย">
-                                  พนักงานแรงงานชาย
-                                </option>
-                                <option value="กรรมการผู้จัดการ">
-                                  กรรมการผู้จัดการ
-                                </option>
-                                <option value="ผู้จัดการทั่วไป">
-                                  ผู้จัดการทั่วไป
-                                </option>
-                                <option value="ผู้จัดการฝ่ายการตลาด">
-                                  ผู้จัดการฝ่ายการตลาด
-                                </option>
-                                <option value="ผู้จัดการฝ่ายบัญชี/การเงิน">
-                                  ผู้จัดการฝ่ายบัญชี/การเงิน
-                                </option>
-                                <option value="ผู้จัดการฝ่ายบุคคล">
-                                  ผู้จัดการฝ่ายบุคคล
-                                </option>
-                                <option value="เจ้าหน้าที่ฝ่ายบัญชี/การเงิน">
-                                  เจ้าหน้าที่ฝ่ายบัญชี/การเงิน
-                                </option>
-                                <option value="เจ้าหน้าที่ฝ่ายบุคคล">
-                                  เจ้าหน้าที่ฝ่ายบุคคล
-                                </option>
-                                <option value="เจ้าหน้าที่ฝ่ายจัดซื้อ">
-                                  เจ้าหน้าที่ฝ่ายจัดซื้อ
-                                </option>
-                                <option value="เจ้าหน้าที่ธุรการฝ่ายขาย">
-                                  เจ้าหน้าที่ธุรการฝ่ายขาย
-                                </option>
-                                <option value="เจ้าหน้าที่ฝ่ายการตลาด">
-                                  เจ้าหน้าที่ฝ่ายการตลาด
-                                </option>
-                                <option value="เจ้าหน้าที่ฝ่ายปฏิบัติการ">
-                                  เจ้าหน้าที่ฝ่ายปฏิบัติการ
-                                </option>
-                                <option value="เจ้าหน้าที่ฝ่ายปฏิบัติการ(สายตรวจ)">
-                                  เจ้าหน้าที่ฝ่ายปฏิบัติการ(สายตรวจ)
-                                </option>
-                                <option value="เจ้าหน้าที่ฝ่ายยานพาหนะ">
-                                  เจ้าหน้าที่ฝ่ายยานพาหนะ
-                                </option>
-                                <option value="เจ้าหน้าที่ฝ่ายไอที">
-                                  เจ้าหน้าที่ฝ่ายไอที
-                                </option>
-                                <option value="เจ้าหน้าที่ฝ่ายสโตร์">
-                                  เจ้าหน้าที่ฝ่ายสโตร์
-                                </option>
-                                <option value="เจ้าหน้าที่ความปลอดภัยในการทำงาน(จป)">
-                                  เจ้าหน้าที่ความปลอดภัยในการทำงาน(จป)
-                                </option>
-                                <option value="ธุรการทั่วไป">
-                                  ธุรการทั่วไป
-                                </option>
-                                <option value="หัวหน้าฝ่ายปฏิบัติการ">
-                                  หัวหน้าฝ่ายปฏิบัติการ
-                                </option>
-                                <option value="หัวหน้าฝ่ายบัญชี/การเงิน">
-                                  หัวหน้าฝ่ายบัญชี/การเงิน
-                                </option>
-                                <option value="หัวหน้าฝ่ายสโตร์">
-                                  หัวหน้าฝ่ายสโตร์
-                                </option>
+                                เลือกตำแหน่ง
+                              </option>
+                              <option value="หัวหน้าควบคุมงาน">
+                                หัวหน้าควบคุมงาน
+                              </option>
+                              <option value="ผู้ช่วยผู้ควบคุมงาน">
+                                ผู้ช่วยผู้ควบคุมงาน
+                              </option>
+                              <option value="พนักงานทำความสะอาด">
+                                พนักงานทำความสะอาด
+                              </option>
+                              <option value="พนักงานทำความสะอาดรอบนอก">
+                                พนักงานทำความสะอาดรอบนอก
+                              </option>
+                              <option value="พนักงานเสิร์ฟ">
+                                พนักงานเสิร์ฟ
+                              </option>
+                              <option value="พนักงานคนสวน">พนักงานคนสวน</option>
+                              <option value="พนักงานแรงงานชาย">
+                                พนักงานแรงงานชาย
+                              </option>
+                              <option value="กรรมการผู้จัดการ">
+                                กรรมการผู้จัดการ
+                              </option>
+                              <option value="ผู้จัดการทั่วไป">
+                                ผู้จัดการทั่วไป
+                              </option>
+                              <option value="ผู้จัดการฝ่ายการตลาด">
+                                ผู้จัดการฝ่ายการตลาด
+                              </option>
+                              <option value="ผู้จัดการฝ่ายบัญชี/การเงิน">
+                                ผู้จัดการฝ่ายบัญชี/การเงิน
+                              </option>
+                              <option value="ผู้จัดการฝ่ายบุคคล">
+                                ผู้จัดการฝ่ายบุคคล
+                              </option>
+                              <option value="เจ้าหน้าที่ฝ่ายบัญชี/การเงิน">
+                                เจ้าหน้าที่ฝ่ายบัญชี/การเงิน
+                              </option>
+                              <option value="เจ้าหน้าที่ฝ่ายบุคคล">
+                                เจ้าหน้าที่ฝ่ายบุคคล
+                              </option>
+                              <option value="เจ้าหน้าที่ฝ่ายจัดซื้อ">
+                                เจ้าหน้าที่ฝ่ายจัดซื้อ
+                              </option>
+                              <option value="เจ้าหน้าที่ธุรการฝ่ายขาย">
+                                เจ้าหน้าที่ธุรการฝ่ายขาย
+                              </option>
+                              <option value="เจ้าหน้าที่ฝ่ายการตลาด">
+                                เจ้าหน้าที่ฝ่ายการตลาด
+                              </option>
+                              <option value="เจ้าหน้าที่ฝ่ายปฏิบัติการ">
+                                เจ้าหน้าที่ฝ่ายปฏิบัติการ
+                              </option>
+                              <option value="เจ้าหน้าที่ฝ่ายปฏิบัติการ(สายตรวจ)">
+                                เจ้าหน้าที่ฝ่ายปฏิบัติการ(สายตรวจ)
+                              </option>
+                              <option value="เจ้าหน้าที่ฝ่ายยานพาหนะ">
+                                เจ้าหน้าที่ฝ่ายยานพาหนะ
+                              </option>
+                              <option value="เจ้าหน้าที่ฝ่ายไอที">
+                                เจ้าหน้าที่ฝ่ายไอที
+                              </option>
+                              <option value="เจ้าหน้าที่ฝ่ายสโตร์">
+                                เจ้าหน้าที่ฝ่ายสโตร์
+                              </option>
+                              <option value="เจ้าหน้าที่ความปลอดภัยในการทำงาน(จป)">
+                                เจ้าหน้าที่ความปลอดภัยในการทำงาน(จป)
+                              </option>
+                              <option value="ธุรการทั่วไป">ธุรการทั่วไป</option>
+                              <option value="หัวหน้าฝ่ายปฏิบัติการ">
+                                หัวหน้าฝ่ายปฏิบัติการ
+                              </option>
+                              <option value="หัวหน้าฝ่ายบัญชี/การเงิน">
+                                หัวหน้าฝ่ายบัญชี/การเงิน
+                              </option>
+                              <option value="หัวหน้าฝ่ายสโตร์">
+                                หัวหน้าฝ่ายสโตร์
+                              </option>
                             </select>
                           </div>
                           <div className="col-md-2">
@@ -2452,9 +2537,13 @@ function Setting({ workplaceList ,employeeList}) {
                               value={time.countPerson}
                               onChange={(e) =>
                                 handleInputChangePerson(e, index)
-                              } onInput={(e) => {
+                              }
+                              onInput={(e) => {
                                 // Remove any non-digit characters
-                                e.target.value = e.target.value.replace(/\D/g, "");
+                                e.target.value = e.target.value.replace(
+                                  /\D/g,
+                                  ""
+                                );
                               }}
                             />
                           </div>
