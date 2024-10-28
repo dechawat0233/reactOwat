@@ -190,23 +190,6 @@ if (unmatchedWorkplaceIds.length > 0) {
                       </div>
                     </div>
                     <br />
-                    {/* Display filtered data */}
-                    <ul>
-                      {/* {filteredData.map((data, index) => (
-                                                <li key={index}>
-                                                    <strong>Workplace ID:</strong> {data.workplaceId},
-                                                    <strong> Workplace Name:</strong> {data.workplaceName}
-                                                </li>
-                                            ))} */}
-                      {/* {filteredData.map((data, index) => (
-                                                <li key={index}>
-                                                    <Link to={`/setting?workplaceId=${data.workplaceId}&workplaceName=${data.workplaceName}`}>
-                                                        <strong>Workplace ID:</strong> {data.workplaceId},
-                                                        <strong> Workplace Name:</strong> {data.workplaceName}
-                                                    </Link>
-                                                </li>
-                                            ))} */}
-
                       <div>จำนวนหน่วยงานทั้งหมด {countData}</div>
                       <br />
 
