@@ -796,10 +796,10 @@ function Setting({ workplaceList, employeeList }) {
   const [filteredWorkplaceList, setFilteredWorkplaceList] = useState([]);
   const [searchWorkplaceId, setSearchWorkplaceId] = useState(""); //รหัสหน่วยงาน
   const [searchWorkplaceName, setSearchWorkplaceName] = useState(""); //ชื่อหน่วยงาน
-  
+
   async function handleSearch(event) {
     event.preventDefault();
-console.log('testtest');
+    console.log("testtest");
     //clean list employee
     setShowEmployeeListResult([]);
 
@@ -1034,7 +1034,7 @@ console.log('testtest');
   };
 
   //data for search
- 
+
   // const [employeeListResult, setEmployeeListResult] = useState([]);
 
   // useEffect(() => {
@@ -1055,7 +1055,6 @@ console.log('testtest');
 
       // Call the handleSearch function
       handleSearch(workplaceIdSend, workplaceNameSend);
-
     }
   }, [workplaceIdSend, workplaceNameSend, handleSearch]);
 
@@ -1470,7 +1469,16 @@ console.log('testtest');
                           onChange={(e) => setWorkOfHour(e.target.value)}
                           onInput={(e) => {
                             // Remove any non-digit characters
-                            e.target.value = e.target.value.replace(/\D/g, "");
+                            e.target.value = e.target.value.replace(
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                           }}
                         />
                       </div>
@@ -1487,7 +1495,16 @@ console.log('testtest');
                           onChange={(e) => setWorkOfOT(e.target.value)}
                           onInput={(e) => {
                             // Remove any non-digit characters
-                            e.target.value = e.target.value.replace(/\D/g, "");
+                            e.target.value = e.target.value.replace(
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                           }}
                         />
                       </div>
@@ -1510,7 +1527,16 @@ console.log('testtest');
                           onChange={(e) => setWorkRate(e.target.value)}
                           onInput={(e) => {
                             // Remove any non-digit characters
-                            e.target.value = e.target.value.replace(/\D/g, "");
+                            e.target.value = e.target.value.replace(
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                           }}
                         />
                       </div>
@@ -1529,7 +1555,16 @@ console.log('testtest');
                           onChange={(e) => setWorkRateOT(e.target.value)}
                           onInput={(e) => {
                             // Remove any non-digit characters
-                            e.target.value = e.target.value.replace(/\D/g, "");
+                            e.target.value = e.target.value.replace(
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                           }}
                         />
                       </div>
@@ -1548,7 +1583,16 @@ console.log('testtest');
                           onChange={(e) => setWorkTotalPeople(e.target.value)}
                           onInput={(e) => {
                             // Remove any non-digit characters
-                            e.target.value = e.target.value.replace(/\D/g, "");
+                            e.target.value = e.target.value.replace(
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                           }}
                         />
                       </div>
@@ -1584,7 +1628,16 @@ console.log('testtest');
                           onChange={(e) => setDayoffRateHour(e.target.value)}
                           onInput={(e) => {
                             // Remove any non-digit characters
-                            e.target.value = e.target.value.replace(/\D/g, "");
+                            e.target.value = e.target.value.replace(
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                           }}
                         />
                       </div>
@@ -1603,7 +1656,16 @@ console.log('testtest');
                           onChange={(e) => setDayoffRateOT(e.target.value)}
                           onInput={(e) => {
                             // Remove any non-digit characters
-                            e.target.value = e.target.value.replace(/\D/g, "");
+                            e.target.value = e.target.value.replace(
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                           }}
                         />
                       </div>
@@ -1638,7 +1700,16 @@ console.log('testtest');
                           onChange={(e) => setHolidayHour(e.target.value)}
                           onInput={(e) => {
                             // Remove any non-digit characters
-                            e.target.value = e.target.value.replace(/\D/g, "");
+                            e.target.value = e.target.value.replace(
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                           }}
                         />
                       </div>
@@ -1657,7 +1728,16 @@ console.log('testtest');
                           onChange={(e) => setHolidayOT(e.target.value)}
                           onInput={(e) => {
                             // Remove any non-digit characters
-                            e.target.value = e.target.value.replace(/\D/g, "");
+                            e.target.value = e.target.value.replace(
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                           }}
                         />
                       </div>
@@ -1685,9 +1765,15 @@ console.log('testtest');
                               onInput={(e) => {
                                 // Remove any non-digit characters
                                 e.target.value = e.target.value.replace(
-                                  /\D/g,
-                                  ""
-                                );
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                               }}
                             />
                           </div>
@@ -1726,9 +1812,15 @@ console.log('testtest');
                               onInput={(e) => {
                                 // Remove any non-digit characters
                                 e.target.value = e.target.value.replace(
-                                  /\D/g,
-                                  ""
-                                );
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                               }}
                             />
                           </div>
@@ -1842,9 +1934,15 @@ console.log('testtest');
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                                    /\D/g,
-                                    ""
-                                  );
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                                 }}
                               />
                             </div>
@@ -1865,9 +1963,15 @@ console.log('testtest');
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                                    /\D/g,
-                                    ""
-                                  );
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                                 }}
                               />
                             </div>
@@ -1890,9 +1994,15 @@ console.log('testtest');
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                                    /\D/g,
-                                    ""
-                                  );
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                                 }}
                               />
                             </div>
@@ -1915,9 +2025,15 @@ console.log('testtest');
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                                    /\D/g,
-                                    ""
-                                  );
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                                 }}
                               />
                             </div>
@@ -1936,9 +2052,15 @@ console.log('testtest');
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                                    /\D/g,
-                                    ""
-                                  );
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                                 }}
                               />
                             </div>
@@ -1961,9 +2083,15 @@ console.log('testtest');
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                                    /\D/g,
-                                    ""
-                                  );
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                                 }}
                               />
                             </div>
@@ -1986,9 +2114,15 @@ console.log('testtest');
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                                    /\D/g,
-                                    ""
-                                  );
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                                 }}
                               />
                             </div>
@@ -2009,9 +2143,15 @@ console.log('testtest');
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                                    /\D/g,
-                                    ""
-                                  );
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                                 }}
                               />
                             </div>
@@ -2034,9 +2174,15 @@ console.log('testtest');
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                                    /\D/g,
-                                    ""
-                                  );
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                                 }}
                               />
                             </div>
@@ -2149,9 +2295,15 @@ console.log('testtest');
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                                    /\D/g,
-                                    ""
-                                  );
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                                 }}
                               />
                             </div>
@@ -2171,9 +2323,15 @@ console.log('testtest');
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                                    /\D/g,
-                                    ""
-                                  );
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                                 }}
                               />
                             </div>
@@ -2194,9 +2352,15 @@ console.log('testtest');
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                                    /\D/g,
-                                    ""
-                                  );
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                                 }}
                               />
                             </div>
@@ -2216,9 +2380,15 @@ console.log('testtest');
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                                    /\D/g,
-                                    ""
-                                  );
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                                 }}
                               />
                             </div>
@@ -2539,9 +2709,15 @@ console.log('testtest');
                               onInput={(e) => {
                                 // Remove any non-digit characters
                                 e.target.value = e.target.value.replace(
-                                  /\D/g,
-                                  ""
-                                );
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                               }}
                             />
                           </div>
