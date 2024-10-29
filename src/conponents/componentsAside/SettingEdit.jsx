@@ -1027,7 +1027,7 @@ function SettingEdit({ workplaceList, employeeList }) {
         setWorkplaceId(workplace.workplaceId);
 
         const filteredEmployees = employeeList.filter(
-          (employee) => employee.workplace === searchWorkplaceId
+          (employee) => employee.workplace === workplaceIdSend
         );
         console.log("searchWorkplaceId", searchWorkplaceId);
         setEmployeeListResult(filteredEmployees);
