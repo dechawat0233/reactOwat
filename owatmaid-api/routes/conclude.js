@@ -368,7 +368,6 @@ if(parseFloat(salary ) >= 1660) {
                 if (salary === 0) {
                   salary = tmpWP.data.workRate;
                 }
-                salary  = 2;
 
                 if (allTime >= workOfHour) {
                   allTime = workOfHour;
@@ -378,7 +377,8 @@ if(parseFloat(salary ) >= 1660) {
                 }
 
                 let workRate = ((salary / 8) * (parseFloat(otTime) * 1.111) ).toFixed(2);
-                tmp.workRate = workRate || 0;
+                tmp.workRate = 100;
+                // workRate || 0;
                 tmp.workRateMultiply = '1';
 
                 if (otTime >= workOfOT) {
