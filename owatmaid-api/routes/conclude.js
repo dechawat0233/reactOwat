@@ -376,9 +376,9 @@ if(parseFloat(salary ) >= 1660) {
                   tmp.allTimes = allTime || 0;
                 }
 
-                let workRate = ((salary / 8) * (parseFloat(otTime) * 1.111) ).toFixed(2);
-                tmp.workRate = 100;
-                // workRate || 0;
+                // let workRate = ((salary / 8) * (parseFloat(otTime) * 1.111) ).toFixed(2);
+                let workRate = ((parseFloat(salary) / 8) * parseFloat(allTime)).toFixed(2);
+                tmp.workRate = workRate || 0;
                 tmp.workRateMultiply = '1';
 
                 if (otTime >= workOfOT) {
