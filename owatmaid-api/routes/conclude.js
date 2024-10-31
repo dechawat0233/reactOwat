@@ -277,7 +277,7 @@ if(parseFloat(salary ) >= 1660) {
                 if (salary === 0) {
                   salary = tmpWP.data.workRate;
                 }
-                salary  = 2;
+
                 if (allTime >= workOfHour) {
                   allTime = workOfHour;
                   tmp.allTimes = workOfHour || 0;
@@ -368,6 +368,7 @@ if(parseFloat(salary ) >= 1660) {
                 if (salary === 0) {
                   salary = tmpWP.data.workRate;
                 }
+                salary  = 2;
 
                 if (allTime >= workOfHour) {
                   allTime = workOfHour;
