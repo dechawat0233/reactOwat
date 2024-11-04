@@ -516,7 +516,7 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
 
     return timeDiffFormatted;
   }
-  
+
   useEffect(() => {
     // alert(shift);
     switch (shift) {
@@ -682,7 +682,7 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
   // }
   // }, [selectotTime, selectotTimeOut, otTime]);
 
-  
+
 
   // Function to add a new row to the rowDataList with specific values
   const addRow = (newRowData) => {
@@ -1068,18 +1068,18 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
     setRowDataList(updatedRowDataList);
   }
 
-  
+
 
   const convertBuddhistToGregorian = (buddhistDate) => {
     // Split the Buddhist date into day, month, and year
     const [day, month, buddhistYear] = buddhistDate.split('/');
-  
+
     // Subtract 543 to convert Buddhist year to Gregorian year
     const gregorianYear = buddhistYear - 543;
-  
+
     // Return the new formatted date as day/month/gregorianYear
     return `${day}/${month}/${gregorianYear}`;
-  };  
+  };
 
   async function handleCheckTimerecord() {
     await setRowDataList([]); //Clean data 
@@ -1088,61 +1088,38 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
       workplaceId: searchWorkplaceId,
       workplaceName: searchWorkplaceName,
       // date: formattedDate,
-      date: convertBuddhistToGregorian (formattedDate) ,
+      date: convertBuddhistToGregorian(formattedDate),
     };
 
     // alert(convertBuddhistToGregorian (formattedDate) )
     let dateString = await convertBuddhistToGregorian(formattedDate);
-const [day, month, year] = await dateString.split('/');
+    const [day, month, year] = await dateString.split('/');
 
-// Create a new Date object using the year, month (0-indexed), and day
-const date = await new Date(year, month - 1, day);
+    // Create a new Date object using the year, month (0-indexed), and day
+    const date = await new Date(year, month - 1, day);
 
-// Get the day of the week (0 for Sunday, 1 for Monday, ..., 6 for Saturday)
-const dayNumber = await date.getDay();
+    // Get the day of the week (0 for Sunday, 1 for Monday, ..., 6 for Saturday)
+    const dayNumber = await date.getDay();
 
-// alert(dayNumber );
+    // alert(dayNumber );
 
-const dayMapping = await {
-  อาทิตย์: 0,
-  จันทร์: 1,
-  อังคาร: 2,
-  พุธ: 3,
-  พฤหัส: 4,
-  ศุกร์: 5,
-  เสาร์: 6
-};
+    const dayMapping = await {
+      อาทิตย์: 0,
+      จันทร์: 1,
+      อังคาร: 2,
+      พุธ: 3,
+      พฤหัส: 4,
+      ศุกร์: 5,
+      เสาร์: 6
+    };
 
-       searchResult[0].workTimeDay.map(async (item, index) => {
-// await alert(dayMapping[item.startDay] + ' ' + dayMapping [item.endDay] );
+    searchResult[0].workTimeDay.map(async (item, index) => {
+      // await alert(dayMapping[item.startDay] + ' ' + dayMapping [item.endDay] );
       // await alert(item.allTimes[0].shift);
 
-      if(dayMapping[item.startDay] <= dayNumber <= dayMapping [item.endDay] ) {
+      if (dayMapping[item.startDay] <= dayNumber <= dayMapping[item.endDay]) {
 
-      if (item.allTimes[0].shift== "กะเช้า") {
-        setShift1start(item.allTimes[0].startTime);
-        setShift1end(item.allTimes[0].endTime);
-        setStartTimeOt1(item.allTimes[0].startTimeOT);
-        setEndTimeOt1(item.allTimes[0].endTimeOT);
-      } else if (item.allTimes[0].shift == "กะบ่าย") {
-        setShift2start(item.allTimes[0].startTime);
-        setShift2end(item.allTimes[0].endTime);
-        setStartTimeOt2(item.allTimes[0].startTimeOT);
-        setEndTimeOt2(item.allTimes[0].endTimeOT);
-      } else if (item.allTimes[0].shift == "กะดึก") {
-        setShift3start(item.allTimes[0].startTime);
-        setShift3end(item.allTimes[0].endTime);
-        setStartTimeOt3(item.allTimes[0].startTimeOT);
-        setEndTimeOt3(item.allTimes[0].endTimeOT);
-      }
-
-    } else {
-
-      (dayMapping[item.startDay] <= dayNumber <= dayMapping [item.endDay] ) 
-      if( (dayMapping[item.startDay] <= dayNumber  <= 6) || (0 <= dayNumber <= dayMapping [item.endDay] ) ) {
-
-        if (item.allTimes[0].shift== "กะเช้า") {
-          // alert(item.startTime);
+        if (item.allTimes[0].shift == "กะเช้า") {
           setShift1start(item.allTimes[0].startTime);
           setShift1end(item.allTimes[0].endTime);
           setStartTimeOt1(item.allTimes[0].startTimeOT);
@@ -1158,26 +1135,49 @@ const dayMapping = await {
           setStartTimeOt3(item.allTimes[0].startTimeOT);
           setEndTimeOt3(item.allTimes[0].endTimeOT);
         }
-  
+
       } else {
 
-        setShift1start('');
-        setShift1end('');
-        setStartTimeOt1('');
-        setEndTimeOt1('');
-        setShift2start('');
-        setShift2end('');
-        setStartTimeOt2('');
-        setEndTimeOt2('');
-        setShift3start('');
-        setShift3end('');
-        setStartTimeOt3('');
-        setEndTimeOt3('');
+        (dayMapping[item.startDay] <= dayNumber <= dayMapping[item.endDay])
+        if ((dayMapping[item.startDay] <= dayNumber <= 6) || (0 <= dayNumber <= dayMapping[item.endDay])) {
 
+          if (item.allTimes[0].shift == "กะเช้า") {
+            // alert(item.startTime);
+            setShift1start(item.allTimes[0].startTime);
+            setShift1end(item.allTimes[0].endTime);
+            setStartTimeOt1(item.allTimes[0].startTimeOT);
+            setEndTimeOt1(item.allTimes[0].endTimeOT);
+          } else if (item.allTimes[0].shift == "กะบ่าย") {
+            setShift2start(item.allTimes[0].startTime);
+            setShift2end(item.allTimes[0].endTime);
+            setStartTimeOt2(item.allTimes[0].startTimeOT);
+            setEndTimeOt2(item.allTimes[0].endTimeOT);
+          } else if (item.allTimes[0].shift == "กะดึก") {
+            setShift3start(item.allTimes[0].startTime);
+            setShift3end(item.allTimes[0].endTime);
+            setStartTimeOt3(item.allTimes[0].startTimeOT);
+            setEndTimeOt3(item.allTimes[0].endTimeOT);
+          }
+
+        } else {
+
+          setShift1start('');
+          setShift1end('');
+          setStartTimeOt1('');
+          setEndTimeOt1('');
+          setShift2start('');
+          setShift2end('');
+          setStartTimeOt2('');
+          setEndTimeOt2('');
+          setShift3start('');
+          setShift3end('');
+          setStartTimeOt3('');
+          setEndTimeOt3('');
+
+        }
       }
-    }
 
-       });
+    });
 
 
     // workplaceWorkTime.map((item) => {
@@ -1249,12 +1249,12 @@ const dayMapping = await {
     //get data from input in useState to data
     const date = new Date(selectedDate);
 
-      // Extract day, month, and year
-      const daySelectedDate = date.getDate().toString().padStart(2, "0");
-      const monthSelectedDate = (date.getMonth() + 1)
-        .toString()
-        .padStart(2, "0");
-      const yearSelectedDate = (date.getFullYear()).toString();
+    // Extract day, month, and year
+    const daySelectedDate = date.getDate().toString().padStart(2, "0");
+    const monthSelectedDate = (date.getMonth() + 1)
+      .toString()
+      .padStart(2, "0");
+    const yearSelectedDate = (date.getFullYear()).toString();
     const data = {
       workplaceId: workplaceId,
       workplaceName: workplaceName,
@@ -1306,7 +1306,7 @@ const dayMapping = await {
       workplaceId: workplaceId,
       workplaceName: workplaceName,
       date: convertBuddhistToGregorian(formattedDate),
-        employeeRecord: rowDataList,
+      employeeRecord: rowDataList,
     };
 
     try {
@@ -1459,7 +1459,7 @@ const dayMapping = await {
                         <div class="col-md-6">
                           <div class="form-group">
                             <label role="searchWorkplaceId">รหัสหน่วยงาน</label>
-                            <input
+                            {/* <input
                               type="text"
                               class="form-control"
                               id="searchWorkplaceId"
@@ -1472,15 +1472,45 @@ const dayMapping = await {
                               onChange={(e) =>
                                 setSearchWorkplaceId(e.target.value)
                               }
+                            />  */}
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="searchWorkplaceId"
+                              placeholder="รหัสหน่วยงาน"
+                              value={searchWorkplaceId}
+                              list="workplaceIdList"
+                              onInput={(e) => {
+                                // Remove any non-digit characters
+                                e.target.value = e.target.value.replace(/\D/g, "");
+                              }}
+                              onChange={(e) => {
+                                setSearchWorkplaceId(e.target.value);
+                                // Auto-fill searchWorkplaceName based on the selected workplaceId
+                                const selectedWorkplace = workplaceList.find(
+                                  (workplace) => workplace.workplaceId === e.target.value
+                                );
+                                if (selectedWorkplace) {
+                                  setSearchWorkplaceName(selectedWorkplace.workplaceName);
+                                }
+                              }}
                             />
+                            <datalist id="workplaceIdList">
+                              {workplaceList.map((workplace) => (
+                                <option key={workplace.workplaceId} value={workplace.workplaceId}>
+                                  {workplace.workplaceName}
+                                </option>
+                              ))}
+                            </datalist>
                           </div>
+
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
                             <label role="searchWorkplaceName">
                               ชื่อหน่วยงาน
                             </label>
-                            <input
+                            {/* <input
                               type="text"
                               class="form-control"
                               id="searchWorkplaceName"
@@ -1489,7 +1519,32 @@ const dayMapping = await {
                               onChange={(e) =>
                                 setSearchWorkplaceName(e.target.value)
                               }
+                            /> */}
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="searchWorkplaceName"
+                              placeholder="ชื่อหน่วยงาน"
+                              value={searchWorkplaceName}
+                              list="workplaceNameList"
+                              onChange={(e) => {
+                                setSearchWorkplaceName(e.target.value);
+                                // Auto-fill searchWorkplaceId based on the selected workplaceName
+                                const selectedWorkplace = workplaceList.find(
+                                  (workplace) => workplace.workplaceName === e.target.value
+                                );
+                                if (selectedWorkplace) {
+                                  setSearchWorkplaceId(selectedWorkplace.workplaceId);
+                                }
+                              }}
                             />
+                            <datalist id="workplaceNameList">
+                              {workplaceList.map((workplace) => (
+                                <option key={workplace.workplaceId} value={workplace.workplaceName}>
+                                  {workplace.workplaceId}
+                                </option>
+                              ))}
+                            </datalist>
                           </div>
                         </div>
                       </div>
@@ -1956,7 +2011,7 @@ const dayMapping = await {
                               </div>
 
                               {rowData.cashSalary === "true" ||
-                              rowData.cashSalary === true ? (
+                                rowData.cashSalary === true ? (
                                 <div class="col-md-1" style={bordertable}>
                                   {rowData.specialtSalary} บาท
                                 </div>
