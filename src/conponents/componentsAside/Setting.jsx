@@ -67,13 +67,14 @@ function Setting({ workplaceList, employeeList }) {
 
   // Options for dropdowns
   const daysOfWeek = [
-    "จันทร์",
+ "อาทิตย์",  
+  "จันทร์",
     "อังคาร",
     "พุธ",
     "พฤหัส",
     "ศุกร์",
     "เสาร์",
-    "อาทิตย์",
+    
   ];
   const positions = ["หัวหน้างาน", "พนักงานทำความสะอาด"];
 
