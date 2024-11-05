@@ -12,7 +12,6 @@ import EmployeesSelected from "./EmployeesSelected";
 function AddsettimeEmployee() {
   const [isDataTrue, setIsDataTrue] = useState(false);
   const linkRef = useRef(null);
-  const [loading, setLoading] = useState(false); // Create loading state
 
   // Effect to auto-click the Link when data is true
   useEffect(() => {
@@ -1788,8 +1787,6 @@ function AddsettimeEmployee() {
   };
 
   async function handleCreateWorkplaceTimerecord(event) {
-    setLoading(true); // Set loading to true to block the button
-
     event.preventDefault();
     // alert('test');
 
@@ -1810,8 +1807,6 @@ function AddsettimeEmployee() {
       // setEmployeesResult(response.data.employees);
       if (response) {
         alert("บันทึกสำเร็จ");
-        window.location.reload();
-
       }
     } catch (error) {
       alert("กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล");
@@ -2587,7 +2582,6 @@ function AddsettimeEmployee() {
                   <button
                     class="btn b_save"
                     onClick={handleUpdateWorkplaceTimerecord}
-                    disabled={loading} // Disable the button if loading is true
                   >
                     <i class="nav-icon fas fa-save"></i> &nbsp; อัพเดท
                   </button>
@@ -2595,7 +2589,6 @@ function AddsettimeEmployee() {
                   <button
                     class="btn b_save"
                     onClick={handleCreateWorkplaceTimerecord}
-                    disabled={loading} // Disable the button if loading is true
                   >
                     <i class="nav-icon fas fa-save"></i> &nbsp; บันทึก
                   </button>
