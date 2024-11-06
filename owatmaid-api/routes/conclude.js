@@ -1259,7 +1259,7 @@ if(testx ) {
   // console.log('testx ' + JSON.stringify(testx.addSalary,null,2) )
   await addSalaryList.push(testx.addSalary );
 } else {
-  await addSalaryList.push(addSalaryDaily);
+  // await addSalaryList.push(addSalaryDaily);
 }
 
 } else {
