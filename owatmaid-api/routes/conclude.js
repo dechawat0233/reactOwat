@@ -1264,8 +1264,8 @@ if(testx ) {
 
 } else {
 
-  addSalaryDaily = await addSalaryDaily.filter(item => item.id !== 1210);
-  await addSalaryList.push(addSalaryDaily);
+  addSalaryDailyx = await addSalaryDaily.filter(item => item.id !== 1210);
+  await addSalaryList.push(addSalaryDailyx);
 
 }
       } else{
