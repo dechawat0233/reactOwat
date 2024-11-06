@@ -1260,9 +1260,12 @@ if(testx ) {
   if(testx.addSalary.id !== '1210') {
   await addSalaryList.push(testx.addSalary );
   }
-  
+
 } else {
+  if(! addSalaryDaily.find(item => item.id == '1210')){
   await addSalaryList.push(addSalaryDaily);
+  }
+  
 
 }
 
