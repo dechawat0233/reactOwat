@@ -1257,20 +1257,17 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
       const testx = responseWpList .data.ans.find(item  => item.workplaceId == concludeRecord [c].workplaceId)
 if(testx ) {
   // console.log('testx ' + JSON.stringify(testx.addSalary,null,2) )
+  if(testx.addSalary.id !== '1210') {
   await addSalaryList.push(testx.addSalary );
+  }
+  
 } else {
-  if(concludeRecord [c].shift == "morning_shift" && addSalaryDaily.find(item => item.id == '1210') ) {}
-else {
   await addSalaryList.push(addSalaryDaily);
-}
 
 }
 
 } else {
-  if(concludeRecord [c].shift == "morning_shift" && addSalaryDaily.find(item => item.id == '1210') ) {}
-else {
   await addSalaryList.push(addSalaryDaily);
-}
 
 }
       } else{
@@ -1281,6 +1278,7 @@ else {
 
       // await addSalaryList.push(addSalaryDaily);
     }
+    
     dataConclude.addSalary = addSalaryList;
 
     dataConclude.sumWorkHour = sumWorkHour || 0;
