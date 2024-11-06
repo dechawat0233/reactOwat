@@ -1250,6 +1250,8 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
     for (let c = 0; c < concludeRecord.length; c++) {
       // console.log('concludeRecord ' + concludeRecord [c].workplaceId);
 
+      if(concludeRecord [c].shift !== "morning_shift" && ! addSalaryDaily.find(item => item.id == '1210')) {
+      
       if(parseFloat(concludeRecord [c].workRateMultiply || 0) <= 1) {
       if(responseWpList .data.ans && concludeRecord [c].workplaceId !== '10105' && dataEmp.employees[0].workplace  !== '30001') {
         console.log('*wid : ' + concludeRecord [c].workplaceId  + 'workplace: ' + dataEmp.employees[0].workplace  )
@@ -1270,7 +1272,7 @@ if(testx ) {
         await addSalaryList.push([]);
 
       }
-
+    } // endif
       // await addSalaryList.push(addSalaryDaily);
     }
     dataConclude.addSalary = addSalaryList;
