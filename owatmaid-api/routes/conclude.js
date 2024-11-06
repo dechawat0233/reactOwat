@@ -1264,7 +1264,7 @@ if(testx ) {
 
 } else {
 
-  addSalaryDailyx = await addSalaryDaily.filter(item => item.id !== 1210);
+  addSalaryDailyx = await addSalaryDaily.filter(item => item.id !== '1210');
   await addSalaryList.push(addSalaryDailyx);
 
 }
