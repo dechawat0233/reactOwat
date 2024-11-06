@@ -1265,11 +1265,11 @@ if(testx ) {
 } else {
 
   // remove 1012 when shift is morning_shift
-if(concludeRecord [c].shift == 'morning_shift') {
+if(concludeRecord [c].shift === 'morning_shift') {
   addSalaryDailyx = await addSalaryDaily.filter(item => item.id !== '1210');
-  await addSalaryList.push(addSalaryDailyx);
+  // await addSalaryList.push(addSalaryDailyx);
 } else {
-  // await addSalaryList.push(addSalaryDaily);
+  await addSalaryList.push(addSalaryDaily);
 }
 }
       } else{
