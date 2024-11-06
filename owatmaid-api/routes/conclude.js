@@ -1262,10 +1262,10 @@ if(testx ) {
   }
 
 } else {
-  if(! addSalaryDaily.find(item => item.id == '1210')){
+  if(addSalaryDaily.find(item => item.id == '1210')){
   await addSalaryList.push(addSalaryDaily);
   }
-  
+
 
 }
 
