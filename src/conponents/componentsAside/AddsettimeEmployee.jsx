@@ -1816,6 +1816,8 @@ function AddsettimeEmployee() {
     } catch (error) {
       alert("กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล");
       // window.location.reload();
+    }finally{
+      setLoading(false); // Set loading to false to unblock the button
     }
   }
 
