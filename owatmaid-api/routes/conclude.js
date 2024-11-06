@@ -1267,7 +1267,7 @@ if(testx ) {
   // remove 1012 when shift is morning_shift
 if(concludeRecord [c].shift === 'morning_shift') {
   addSalaryDailyx = await addSalaryDaily.filter(item => item.id !== '1210');
-  // await addSalaryList.push(addSalaryDailyx);
+  await addSalaryList.push(addSalaryDailyx);
 } else {
   await addSalaryList.push(addSalaryDaily);
 }
@@ -1281,7 +1281,7 @@ if(concludeRecord [c].shift === 'morning_shift') {
       // await addSalaryList.push(addSalaryDaily);
     }
     
-    dataConclude.addSalary = addSalaryList;
+    dataConclude.addSalary = await addSalaryList;
 
     dataConclude.sumWorkHour = sumWorkHour || 0;
     dataConclude.sumWorkRate = sumWorkRate || 0;
