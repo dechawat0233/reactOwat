@@ -1259,7 +1259,7 @@ if(testx ) {
   // console.log('testx ' + JSON.stringify(testx.addSalary,null,2) )
   await addSalaryList.push(testx.addSalary );
 } else {
-  // await addSalaryList.push(addSalaryDaily);
+  await addSalaryList.push(addSalaryDaily);
 }
 
 } else {
@@ -1269,7 +1269,7 @@ if(concludeRecord [c].shift == 'morning_shift') {
   addSalaryDailyx = await addSalaryDaily.filter(item => item.id !== '1210');
   await addSalaryList.push(addSalaryDailyx);
 } else {
-  await addSalaryList.push(addSalaryDaily);
+  // await addSalaryList.push(addSalaryDaily);
 }
 }
       } else{
