@@ -1258,15 +1258,14 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
 if(testx ) {
   // console.log('testx ' + JSON.stringify(testx.addSalary,null,2) )
   await addSalaryList.push(testx.addSalary );
-  
 } else {
   await addSalaryList.push(addSalaryDaily);
-
-
 }
 
 } else {
-  // await addSalaryList.push(addSalaryDaily);
+
+  addSalaryDaily = await addSalaryDaily.filter(item => item.id !== 1210);
+  await addSalaryList.push(addSalaryDaily);
 
 }
       } else{
