@@ -1269,11 +1269,10 @@ if(concludeRecord [c].shift === 'morning_shift1') {
   addSalaryDailyx = await addSalaryDaily.filter(item => item.id !== '1210');
   await addSalaryList.push(addSalaryDailyx);
 } else {
-  await addSalaryList.push(addSalaryDaily);
+  // await addSalaryList.push(addSalaryDaily);
 }
 
 }
-await addSalaryList.push(addSalaryDaily);
 
       } else{
         console.log(concludeRecord [c].day + 'workRateMultiply ' + parseFloat(concludeRecord [c].workRateMultiply) )
