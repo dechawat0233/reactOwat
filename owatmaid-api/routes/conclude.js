@@ -603,7 +603,7 @@ const         wpDataCalculator1 = await {
                 tmp.workType = 'dayOff';
 
               } else {
-                console.log('default rate');
+                // console.log('default rate');
                 if (salary === 0) {
                   salary = parseFloat( wpResponse1.data.workRate);
                 }
@@ -1266,10 +1266,11 @@ if(testx ) {
 
   // remove 1012 when shift is morning_shift
 if(concludeRecord [c].shift === 'morning_shift') {
-let addSalaryDailyx = await addSalaryDaily.filter(item => item.id !== '1210');
+let addSalaryDailyx = await addSalaryDaily.filter(item1 => item1.id !== '1210');
   await addSalaryList.push(addSalaryDailyx);
 } else {
   await addSalaryList.push(addSalaryDaily);
+  console.log('*any xxx');
 }
 
 }
