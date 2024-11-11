@@ -1270,7 +1270,7 @@ let addSalaryDailyx = await addSalaryDaily.filter(item1 => item1.id !== '1210');
   await addSalaryList.push(addSalaryDailyx);
 } else {
   await addSalaryList.push(addSalaryDaily);
-  console.log('*any xxx');
+  console.log('*any xxx' + concludeRecord [c].shift );
 }
 
 }
