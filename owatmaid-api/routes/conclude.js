@@ -1264,15 +1264,15 @@ if(testx ) {
 
 } else {
 
-  // remove 1012 when shift is morning_shift
-if(concludeRecord [c].shift === 'morning_shift') {
-let addSalaryDailyx = await addSalaryDaily.filter(item1 => item1.id !== '1210');
-  await addSalaryList.push(addSalaryDailyx);
-  console.log(JSON.stringify(addSalaryDailyx) )
-} else {
+//   // remove 1012 when shift is morning_shift
+// if(concludeRecord [c].shift === 'morning_shift') {
+// let addSalaryDailyx = await addSalaryDaily.filter(item1 => item1.id !== '1210');
+//   await addSalaryList.push(addSalaryDailyx);
+//   console.log(JSON.stringify(addSalaryDailyx) )
+// } else {
   await addSalaryList.push(addSalaryDaily);
-  // console.log('*any xxx ' + concludeRecord [c].shift + ' ' + JSON.stringify(addSalaryDaily,null,2) );
-}
+//   // console.log('*any xxx ' + concludeRecord [c].shift + ' ' + JSON.stringify(addSalaryDaily,null,2) );
+// }
 
 }
 
