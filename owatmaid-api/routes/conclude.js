@@ -1335,7 +1335,7 @@ let addSalaryDailyx = await addSalaryDaily.filter(item1 => item1.id !== '1210');
         }
 
                 // After saving, call account.js's /calsalaryemp route
-                const accountData = {
+                const accountData = await {
                   year: year,
                   month: month,
                   employeeId: employeeId ,
@@ -1343,9 +1343,9 @@ let addSalaryDailyx = await addSalaryDaily.filter(item1 => item1.id !== '1210');
                 };
             
                 // Send a POST request to /calsalaryemp
-                const response = await axios.post('http://localhost:3000/accounting/calsalaryemp', accountData);
+                const response = await axios.post(sURL  + '/accounting/calsalaryemp', accountData);
         
-        res.json(dataConclude);
+        await res.json(dataConclude);
       }
       // res.json(dataConclude);
 

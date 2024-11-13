@@ -395,14 +395,14 @@ console.log(workplaceTimeRecordData );
   try {
     await workplaceTimeRecordData.save();
         // After saving, call conclude.js's /autocreate route
-        const concludeData = {
+        const concludeData = await {
           year: timerecordId, // Assuming timerecordId is the year
           month: month,
           employeeId: employeeId
         };
     
         // Send a POST request to /autocreate
-        const response = await axios.post('http://localhost:3000/conclude/autocreate', concludeData);
+        const response = await axios.post(sURL + '/conclude/autocreate', concludeData);
     
         // Respond with the saved data and the response from conclude.js
         res.json({
