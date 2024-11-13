@@ -27,7 +27,6 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
   const formattedWorkDate = moment(workDate).format("DD/MM/YYYY");
 
   const [timeRecord_id, setTimeRecord_id] = useState("");
-  const [loading, setLoading] = useState(false); // Create loading state
 
   //Workplace data
   const [workplaceId, setWorkplaceId] = useState(""); //รหัสหน่วยงาน
@@ -1239,8 +1238,6 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
   }
 
   async function handleCreateWorkplaceTimerecord(event) {
-    setLoading(true); // Set loading to true to block the button
-
     // event.preventDefault();
     // alert('test');
     // alert(formattedWorkDate);
@@ -1274,13 +1271,10 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
       // setEmployeesResult(response.data.employees);
       if (response) {
         alert("บันทึกสำเร็จ");
-        window.location.reload();
       }
     } catch (error) {
       alert("กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล");
       // window.location.reload();
-    }finally{
-      setLoading(false); // Set loading to false to unblock the button
     }
     // } else {
     //update workplace data
@@ -2048,7 +2042,6 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
                 {updateButton ? (
                   <button
                     class="btn b_save"
-                    disabled={loading} // Disable the button if loading is true
                     onClick={handleUpdateWorkplaceTimerecord}
                   >
                     <i class="nav-icon fas fa-save"></i> &nbsp; อัพเดท
@@ -2056,7 +2049,6 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
                 ) : (
                   <button
                     class="btn b_save"
-                    disabled={loading} // Disable the button if loading is true
                     onClick={handleCreateWorkplaceTimerecord}
                   >
                     <i class="nav-icon fas fa-save"></i> &nbsp; บันทึก

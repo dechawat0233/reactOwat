@@ -376,7 +376,8 @@ if(parseFloat(salary ) >= 1660) {
                   tmp.allTimes = allTime || 0;
                 }
 
-                let workRate = ((salary / 8) * (parseFloat(otTime) * 1.111) ).toFixed(2);
+                // let workRate = ((salary / 8) * (parseFloat(otTime) * 1.111) ).toFixed(2);
+                let workRate = ((parseFloat(salary) / 8) * parseFloat(allTime)).toFixed(2);
                 tmp.workRate = workRate || 0;
                 tmp.workRateMultiply = '1';
 
@@ -602,7 +603,7 @@ const         wpDataCalculator1 = await {
                 tmp.workType = 'dayOff';
 
               } else {
-                console.log('default rate');
+                // console.log('default rate');
                 if (salary === 0) {
                   salary = parseFloat( wpResponse1.data.workRate);
                 }
@@ -1249,6 +1250,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
     for (let c = 0; c < concludeRecord.length; c++) {
       // console.log('concludeRecord ' + concludeRecord [c].workplaceId);
 
+      
       if(parseFloat(concludeRecord [c].workRateMultiply || 0) <= 1) {
       if(responseWpList .data.ans && concludeRecord [c].workplaceId !== '10105' && dataEmp.employees[0].workplace  !== '30001') {
         console.log('*wid : ' + concludeRecord [c].workplaceId  + 'workplace: ' + dataEmp.employees[0].workplace  )
@@ -1261,9 +1263,19 @@ if(testx ) {
 }
 
 } else {
+
+  // remove 1012 when shift is morning_shift
+if(concludeRecord [c].shift === 'morning_shift') {
+let addSalaryDailyx = await addSalaryDaily.filter(item1 => item1.id !== '1210');
+  await addSalaryList.push(addSalaryDailyx);
+  // console.log(JSON.stringify(addSalaryDailyx) )
+} else {
   await addSalaryList.push(addSalaryDaily);
+  // console.log('*any xxx ' + concludeRecord [c].shift + ' ' + JSON.stringify(addSalaryDaily,null,2) );
+}
 
 }
+
       } else{
         console.log(concludeRecord [c].day + 'workRateMultiply ' + parseFloat(concludeRecord [c].workRateMultiply) )
         await addSalaryList.push([]);
@@ -1272,7 +1284,8 @@ if(testx ) {
 
       // await addSalaryList.push(addSalaryDaily);
     }
-    dataConclude.addSalary = addSalaryList;
+    
+    dataConclude.addSalary = await addSalaryList;
 
     dataConclude.sumWorkHour = sumWorkHour || 0;
     dataConclude.sumWorkRate = sumWorkRate || 0;
@@ -1321,7 +1334,18 @@ if(testx ) {
           // console.log('New record saved successfully:', savedConclude);
         }
 
-        res.json(dataConclude);
+                // After saving, call account.js's /calsalaryemp route
+                const accountData = await {
+                  year: year,
+                  month: month,
+                  employeeId: employeeId ,
+                  updateStatus: ''
+                };
+            
+                // Send a POST request to /calsalaryemp
+                const response = await axios.post('10.10.110.7:3000/accounting/calsalaryemp', accountData);
+        
+        await res.json(dataConclude);
       }
       // res.json(dataConclude);
 
