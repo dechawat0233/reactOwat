@@ -1334,7 +1334,10 @@ let addSalaryDailyx = await addSalaryDaily.filter(item1 => item1.id !== '1210');
           // console.log('New record saved successfully:', savedConclude);
         }
 
-      res.json(dataConclude);
+            
+        await res.json(dataConclude);
+      }
+      // res.json(dataConclude);
 
     } catch (error) {
       console.error('Error processing record:', error);
