@@ -404,8 +404,9 @@ console.log(workplaceTimeRecordData );
     
         // Send a POST request to /autocreate
         const response = await axios.post('10.10.110.7:3000/conclude/autocreate', concludeData);
-    
-    res.json(workplaceTimeRecordData);
+        console.log("POST request successful:", response.data);    
+
+    await res.json(workplaceTimeRecordData);
 
   } catch (err) {
     console.log(err);
