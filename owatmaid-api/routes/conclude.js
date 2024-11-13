@@ -1334,6 +1334,17 @@ let addSalaryDailyx = await addSalaryDaily.filter(item1 => item1.id !== '1210');
           // console.log('New record saved successfully:', savedConclude);
         }
 
+                // After saving, call account.js's /calsalaryemp route
+                const accountData = {
+                  year: year,
+                  month: month,
+                  employeeId: employeeId ,
+                  updateStatus: ''
+                };
+            
+                // Send a POST request to /calsalaryemp
+                const response = await axios.post('http://localhost:3000/accounting/calsalaryemp', accountData);
+        
         res.json(dataConclude);
       }
       // res.json(dataConclude);
