@@ -1208,7 +1208,6 @@ function Employee() {
                                 <option value="หัวหน้าฝ่ายสโตร์">
                                   หัวหน้าฝ่ายสโตร์
                                 </option>
-                                
                               </select>
                             </div>
                           </div>
