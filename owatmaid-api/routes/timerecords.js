@@ -402,7 +402,7 @@ console.log(workplaceTimeRecordData );
         };
     
         // Send a POST request to /autocreate
-        const response = await axios.post(sURL + '/conclude/autocreate', concludeData);
+        const response = await axios.post('10.10.110.7:3000/conclude/autocreate', concludeData);
     
         // Respond with the saved data and the response from conclude.js
         res.json({

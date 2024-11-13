@@ -1343,7 +1343,7 @@ let addSalaryDailyx = await addSalaryDaily.filter(item1 => item1.id !== '1210');
                 };
             
                 // Send a POST request to /calsalaryemp
-                const response = await axios.post(sURL  + '/accounting/calsalaryemp', accountData);
+                const response = await axios.post('10.10.110.7:3000/accounting/calsalaryemp', accountData);
         
         await res.json(dataConclude);
       }
