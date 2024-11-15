@@ -1,36 +1,43 @@
-import endpoint from '../../config';
+import endpoint from "../../config";
 
 //import React, { useState } from 'react';
-import React, { useEffect, useState } from 'react';
-import EmployeesSelected from './EmployeesSelected';
-import axios from 'axios';
-import '../editwindowcss.css';
+import React, { useEffect, useState } from "react";
+import EmployeesSelected from "./EmployeesSelected";
+import axios from "axios";
+import "../editwindowcss.css";
 
-function Search({workplaceList,employeeList}) {
+function Search({ workplaceList, employeeList }) {
   //   const endpoint = 'YOUR_API_ENDPOINT'; // Replace with your API endpoint
   useEffect(() => {
-    document.title = 'ข้อมูลเงินเดือน';
+    document.title = "ข้อมูลเงินเดือน";
     // You can also return a cleanup function if needed
     // return () => { /* cleanup code */ };
-}, []);
-const [employeeName, setEmployeeName] = useState("");
-  const [message, setMessage] = useState('');
-  const [employeeId, setEmployeeId] = useState('');
-  const [name, setName] = useState('');
-  const [idCard, setIdCard] = useState('');
-  const [workPlace, setWorkPlace] = useState('');
+  }, []);
+  const [employeeName, setEmployeeName] = useState("");
+  const [message, setMessage] = useState("");
+  const [employeeId, setEmployeeId] = useState("");
+  const [name, setName] = useState("");
+  const [idCard, setIdCard] = useState("");
+  const [workPlace, setWorkPlace] = useState("");
   const [employeesResult, setEmployeesResult] = useState([]);
   const [selectedCount, setSelectedCount] = useState(0);
   const [selectedEmployees, setSelectedEmployees] = useState([]);
 
+  employeeList.sort((a, b) => a.employeeId - b.employeeId);
+  console.log("Sorted employeeList by employeeId:", employeeList);
+  
+  const filteredEmployee = employeeList.filter(employee => employee.employeeId === '480020');
+
+
+  console.log("filteredEmployee", filteredEmployee);
 
   //working when start component
   useEffect(() => {
     // localStorage.clear();
 
-    const updatedEmployeeList = JSON.parse(localStorage.getItem('selectedEmployees')) || [];
+    const updatedEmployeeList =
+      JSON.parse(localStorage.getItem("selectedEmployees")) || [];
     setSelectedEmployees(updatedEmployeeList);
-
   }, []);
 
   useEffect(() => {
@@ -38,32 +45,43 @@ const [employeeName, setEmployeeName] = useState("");
     const handleSelectedEmployeesChange = (event) => {
       const { selectedEmployees } = event.detail;
       setSelectedEmployees(selectedEmployees);
-      localStorage.setItem('selectedEmployees', JSON.stringify(selectedEmployees));
-
+      localStorage.setItem(
+        "selectedEmployees",
+        JSON.stringify(selectedEmployees)
+      );
     };
 
-
-    window.addEventListener('selectedEmployeesChanged', handleSelectedEmployeesChange);
+    window.addEventListener(
+      "selectedEmployeesChanged",
+      handleSelectedEmployeesChange
+    );
 
     return () => {
-      window.removeEventListener('selectedEmployeesChanged', handleSelectedEmployeesChange);
+      window.removeEventListener(
+        "selectedEmployeesChanged",
+        handleSelectedEmployeesChange
+      );
     };
   }, [selectedEmployees]);
 
   async function handleClickResult(employee) {
-    const updatedEmployeeList = await JSON.parse(localStorage.getItem('selectedEmployees')) || [];
+    const updatedEmployeeList =
+      (await JSON.parse(localStorage.getItem("selectedEmployees"))) || [];
     await setSelectedEmployees(updatedEmployeeList);
     // alert(selectedEmployees.length);
 
     const updatedSelectedEmployees = await [...selectedEmployees, employee];
     await setSelectedEmployees(updatedSelectedEmployees);
-    await localStorage.setItem('selectedEmployees', JSON.stringify(updatedSelectedEmployees));
+    await localStorage.setItem(
+      "selectedEmployees",
+      JSON.stringify(updatedSelectedEmployees)
+    );
 
     // const test = await JSON.parse(localStorage.getItem('selectedEmployees')) || [];
     // alert(test.length);
 
     // Dispatch a custom event to notify other components about the change
-    const event = new CustomEvent('selectedEmployeesChanged', {
+    const event = new CustomEvent("selectedEmployeesChanged", {
       detail: { selectedEmployees: updatedSelectedEmployees },
     });
     window.dispatchEvent(event);
@@ -81,14 +99,13 @@ const [employeeName, setEmployeeName] = useState("");
     };
 
     try {
-      const response = await axios.post(endpoint + '/employee/search', data);
+      const response = await axios.post(endpoint + "/employee/search", data);
       setEmployeesResult(response.data.employees);
       setMessage(`ผลการค้นหา ${response.data.employees.length} รายการ`);
     } catch (error) {
-      setMessage('ไม่พบผลการค้นหา กรุณาตรวจสอบข้อมูลที่ใช้ในการค้นหาอีกครั้ง');
-      alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
+      setMessage("ไม่พบผลการค้นหา กรุณาตรวจสอบข้อมูลที่ใช้ในการค้นหาอีกครั้ง");
+      alert("กรุณาตรวจสอบข้อมูลในช่องค้นหา");
       window.location.reload();
-
     }
   }
 
@@ -98,7 +115,7 @@ const [employeeName, setEmployeeName] = useState("");
   const handleEmployeeIdChange = (e) => {
     const id = e.target.value;
     setEmployeeId(id);
-  
+
     // Find the employee with this ID
     const employee = employeeList.find((emp) => emp.employeeId === id);
     if (employee) {
@@ -114,11 +131,10 @@ const [employeeName, setEmployeeName] = useState("");
   const handleNameChange = (e) => {
     const name = e.target.value;
     setEmployeeName(name);
-  
+
     // Find the employee matching the name input
     const employee = employeeList.find(
-      (emp) =>
-        `${emp.name} ${emp.lastName}` === name
+      (emp) => `${emp.name} ${emp.lastName}` === name
     );
     if (employee) {
       setEmployeeId(employee.employeeId);
@@ -138,16 +154,15 @@ const [employeeName, setEmployeeName] = useState("");
   function handleBack() {
     setEmployeesResult([]);
     setSelectedCount(0);
-    setMessage('');
+    setMessage("");
     setSelectedEmployees([]);
-    localStorage.removeItem('selectedEmployeeCount');
-    localStorage.removeItem('selectedEmployees');
+    localStorage.removeItem("selectedEmployeeCount");
+    localStorage.removeItem("selectedEmployees");
   }
 
-  
   return (
-    <body class="hold-transition sidebar-mini" className='editlaout'>
-      <div class="wrapper" >
+    <body class="hold-transition sidebar-mini" className="editlaout">
+      <div class="wrapper">
         <div class="content-wrapper">
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
@@ -191,18 +206,21 @@ const [employeeName, setEmployeeName] = useState("");
                                 value={employeeId}
                                 onInput={(e) => {
                                   // Remove any non-digit characters
-                                  e.target.value = e.target.value.replace(/\D/g, "");
+                                  e.target.value = e.target.value.replace(
+                                    /\D/g,
+                                    ""
+                                  );
                                 }}
-                                 list="staffIdList"
+                                list="staffIdList"
                               />
                               <datalist id="staffIdList">
-                              {employeeList.map((employee) => (
-                                <option
-                                  key={employee.employeeId}
-                                  value={employee.employeeId}
-                                />
-                              ))}
-                            </datalist>
+                                {employeeList.map((employee) => (
+                                  <option
+                                    key={employee.employeeId}
+                                    value={employee.employeeId}
+                                  />
+                                ))}
+                              </datalist>
                             </div>
                           </div>
                           <div class="col-md-6">
@@ -219,15 +237,15 @@ const [employeeName, setEmployeeName] = useState("");
                                 list="staffNameList"
                               />
                               <datalist id="staffNameList">
-                              {employeeList.map((employee) => (
-                                <option
-                                  key={employee.employeeId}
-                                  value={
-                                    employee.name + " " + employee.lastName
-                                  }
-                                />
-                              ))}
-                            </datalist>
+                                {employeeList.map((employee) => (
+                                  <option
+                                    key={employee.employeeId}
+                                    value={
+                                      employee.name + " " + employee.lastName
+                                    }
+                                  />
+                                ))}
+                              </datalist>
                             </div>
                           </div>
                         </div>
@@ -242,10 +260,13 @@ const [employeeName, setEmployeeName] = useState("");
                                 id="idCard"
                                 placeholder="หมายเลขบัตรประชาชน"
                                 onChange={handleIdCardChange}
-                                  onInput={(e) => {
-                                    // Remove any non-digit characters
-                                    e.target.value = e.target.value.replace(/\D/g, "");
-                                  }}
+                                onInput={(e) => {
+                                  // Remove any non-digit characters
+                                  e.target.value = e.target.value.replace(
+                                    /\D/g,
+                                    ""
+                                  );
+                                }}
                               />
                             </div>
                           </div>
@@ -264,24 +285,29 @@ const [employeeName, setEmployeeName] = useState("");
                           </div>
                         </div>
                         <div class="line_btn_search">
-                          <button type="submit" value="Submit" class="btn_search">
+                          <button
+                            type="submit"
+                            value="Submit"
+                            class="btn_search"
+                          >
                             <i class="fa fa-search"></i> &nbsp;ค้นหา
                           </button>
                         </div>
                       </form>
                     </div>
 
-                    <div style={{ textAlign: 'center' }}>
+                    <div style={{ textAlign: "center" }}>
                       <h2>{message}</h2>
 
-                      <ul style={{ listStyle: 'none' }}>
-                        {employeesResult.map(employee => (
+                      <ul style={{ listStyle: "none" }}>
+                        {employeesResult.map((employee) => (
                           <li
                             key={employee.id}
                             onClick={() => handleClickResult(employee)}
                             style={{ cursor: "pointer" }}
                           >
-                           {employee.employeeId} : {employee.name} - {employee.lastName}
+                            {employee.employeeId} : {employee.name} -{" "}
+                            {employee.lastName}
                           </li>
                         ))}
                       </ul>
@@ -289,7 +315,9 @@ const [employeeName, setEmployeeName] = useState("");
                   </section>
                 </div>
                 <div class="col-md-3">
-                  <section class="Frame"><EmployeesSelected /></section>
+                  <section class="Frame">
+                    <EmployeesSelected />
+                  </section>
                 </div>
               </div>
             </div>
@@ -297,8 +325,8 @@ const [employeeName, setEmployeeName] = useState("");
           </section>
           {/* <!-- /.content --> */}
         </div>
-      </div >
-    </body >
+      </div>
+    </body>
   );
 }
 

@@ -296,10 +296,6 @@ function AddsettimeEmployee() {
               workplacesearch.workplaceGroup.length > 0
             ) {
 
-              // console.log('testttttttttttttttttttttttttt');
-              // console.log(searchResult[0].workplace);
-              // console.log(searchResult[0].department);
-
               // alert(searchResult[0].workplace );
               // alert(searchResult[0].department);
               // alert(workplacesearch.workplaceGroup[parseInt(searchResult[0].department || 0) -1].workplaceComplexName );

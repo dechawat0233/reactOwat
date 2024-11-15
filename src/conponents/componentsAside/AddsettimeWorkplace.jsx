@@ -124,10 +124,8 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
         const response = await axios.post(endpoint + "/workplace/search", data);
         setSearchResult(response.data.workplaces);
         // alert(JSON.stringify(response ,null,2));
-        alert("test " + response.data.workplaces.length);
         console.log("searchResult", searchResult);
         if (response.data.workplaces.length < 1) {
-          // alert('test'+response.data.workplaces.length);
           window.location.reload();
         } else {
           // Calculate the time difference
@@ -369,8 +367,8 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
           // setSearchWorkplaceId(response.data.workplaces[0].workplaceId);
           // setSearchWorkplaceName(response.data.workplaces[0].workplaceName);
 
-          setSearchWorkplaceId("");
-          setSearchWorkplaceName("");
+          // setSearchWorkplaceId("");
+          // setSearchWorkplaceName("");
         }
       } catch (error) {
         alert("กรุณาตรวจสอบข้อมูลในช่องค้นหา" + error);
