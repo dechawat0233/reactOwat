@@ -1860,7 +1860,7 @@ function AddsettimeEmployee() {
       // setEmployeesResult(response.data.employees);
       if (response) {
         alert("บันทึกสำเร็จ");
-        // window.location.reload();
+        window.location.reload();
       }
     } catch (error) {
       alert("กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล");
