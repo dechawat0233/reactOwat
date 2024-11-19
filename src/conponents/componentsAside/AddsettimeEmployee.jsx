@@ -64,8 +64,8 @@ function AddsettimeEmployee() {
     if (savedEmployeeId) {
       setSearchEmployeeId(savedEmployeeId);
       setEmployeeId(savedEmployeeId);
-      // const event = new Event('submit'); // Creating a synthetic event object
-      // handleSearch(event); // Call handleSearch with the event
+      const event = new Event('submit'); // Creating a synthetic event object
+      handleSearch(event); // Call handleSearch with the event
       localStorage.removeItem("employeeId");
     }
     if (savedName) {
@@ -1222,9 +1222,10 @@ function AddsettimeEmployee() {
 
   useEffect(() => {
     if (wId !== "") {
+      try {
+
       const workplacesearch = workplaceList.find(
-        (workplace) => workplace.workplaceId === wId
-      );
+        (workplace) => workplace.workplaceId === wId);
       if (workplacesearch) {
         //department: employee department process
         if (
@@ -1260,7 +1261,14 @@ function AddsettimeEmployee() {
       } else {
         setWName("");
       }
+    } catch (error)  {
+      alert(error);
+      // alert(JSON.stringify(workplaceList,null,2) );
+
     }
+
+    }
+    
   }, [wId]);
 
   //search employeeId by employeeName
