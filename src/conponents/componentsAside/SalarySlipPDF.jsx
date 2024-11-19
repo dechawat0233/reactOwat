@@ -466,6 +466,7 @@ function SalarySlipPDF({ employeeList }) {
         0
       );
 
+      
       // Calculate the sum of SpSalary values in the filtered array
       const sumAddSalaryTavel = formattedAddSalaryTavel.reduce(
         (total, item) => total + parseFloat(item.SpSalary || 0),
