@@ -182,7 +182,7 @@ function App() {
               <Route path="/salaryresult" element={<Salaryresult />} />
               <Route
                 path="/salaryAllresult"
-                element={<SalaryAllResult employeeList={employeeList} />}
+                element={<SalaryAllResult employeeList={employeeList} workplaceList={workplaceList} />}
               />
               <Route
                 path="/salarySlipPDF"

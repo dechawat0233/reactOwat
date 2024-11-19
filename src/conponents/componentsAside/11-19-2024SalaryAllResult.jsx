@@ -18,44 +18,7 @@ import en from "date-fns/locale/en-US";
 
 import { addYears } from "date-fns";
 
-import provincesData from "./LocationData/json/thai_provinces.json";
-import districtsData from "./LocationData/json/thai_amphures.json";
-import subDistrictsData from "./LocationData/json/thai_tambons.json";
-
-import * as XLSX from "xlsx";
-import { saveAs } from "file-saver";
-
-function TestPDFResultSalayNew({ employeeList }) {
-  const [province, setProvince] = useState(""); // Selected province
-  const [district, setDistrict] = useState(""); // Selected district
-  const [subDistrict, setSubDistrict] = useState(""); // Selected sub-district
-  const [districtOptions, setDistrictOptions] = useState([]); // District options
-  const [subDistrictOptions, setSubDistrictOptions] = useState([]); // Sub-district options
-
-  // When a province is selected, update district options
-  useEffect(() => {
-    if (province) {
-      const filteredDistricts = districtsData.filter(
-        (district) => district.province_id === parseInt(province)
-      );
-      setDistrictOptions(filteredDistricts);
-      setDistrict(""); // Reset district selection
-      setSubDistrict(""); // Reset sub-district selection
-      setSubDistrictOptions([]); // Clear sub-district options
-    }
-  }, [province]);
-
-  // When a district is selected, update sub-district options
-  useEffect(() => {
-    if (district) {
-      const filteredSubDistricts = subDistrictsData.filter(
-        (subDistrict) => subDistrict.amphure_id === parseInt(district)
-      );
-      setSubDistrictOptions(filteredSubDistricts);
-      setSubDistrict(""); // Reset sub-district selection
-    }
-  }, [district]);
-
+function SalaryAllResult({ employeeList }) {
   const [workplacrId, setWorkplacrId] = useState(""); //รหัสหน่วยงาน
   const [workplacrName, setWorkplacrName] = useState(""); //รหัสหน่วยงาน
 
@@ -730,7 +693,7 @@ function TestPDFResultSalayNew({ employeeList }) {
           const y = startYTop + i * cellHeightTop;
 
           // Add text for each cell
-          const cellText = `บวกอื่นๆ`;
+          const cellText = `บวกอื่นๆ\n(ก่อนภาษี)`;
           drawCell(x, y, cellWidthAddBeforeDeductTax, cellHeightTop, cellText);
           const cellText2 = ``;
           // drawCell(x, 195, cellWidth, cellHeightTop, cellText2);
@@ -751,7 +714,7 @@ function TestPDFResultSalayNew({ employeeList }) {
           const y = startYTop + i * cellHeightTop;
 
           // Add text for each cell
-          const cellText = `หักอื่นๆ`;
+          const cellText = `หักอื่นๆ\n(ก่อนภาษี)`;
           drawCell(
             x,
             y,
@@ -2107,7 +2070,7 @@ function TestPDFResultSalayNew({ employeeList }) {
       }
     };
 
-    const cellWidthName = 25;
+    const cellWidthName = 28;
     const startXName = 11; // Adjust the starting X-coordinate as needed
     const startYName = 55; // Adjust the starting Y-coordinate as needed
 
@@ -2118,7 +2081,7 @@ function TestPDFResultSalayNew({ employeeList }) {
           const y = startYTop + i * cellHeightTop;
 
           // Add text for each cell
-          const cellText = `ชื่อ - สกุล`;
+          const cellText = `หน่วยงาน`;
           drawCell(x, y, cellWidthName, cellHeightTop, cellText);
           const cellText2 = ``;
           // drawCell(x, 195, cellWidthName, cellHeightTop, cellText2);
@@ -2127,7 +2090,7 @@ function TestPDFResultSalayNew({ employeeList }) {
     };
 
     const cellWidthAllDay = 10;
-    const startXAllDay = 60; // Adjust the starting X-coordinate as needed
+    const startXAllDay = 63; // Adjust the starting X-coordinate as needed
     const startYAllDay = 55; // Adjust the starting Y-coordinate as needed
 
     const drawAllDay = () => {
@@ -2146,7 +2109,7 @@ function TestPDFResultSalayNew({ employeeList }) {
     };
 
     const cellWidthSalary = 16;
-    const startXSalary = 36; // Adjust the starting X-coordinate as needed
+    const startXSalary = 39; // Adjust the starting X-coordinate as needed
     const startYSalary = 55; // Adjust the starting Y-coordinate as needed
 
     const drawSalary = () => {
@@ -2165,7 +2128,7 @@ function TestPDFResultSalayNew({ employeeList }) {
     };
 
     const cellWidthOT = 16;
-    const startXOT = 36 + cellWidthOT * 1; // Adjust the starting X-coordinate as needed
+    const startXOT = 39 + cellWidthOT * 1; // Adjust the starting X-coordinate as needed
     const startYOT = 55; // Adjust the starting Y-coordinate as needed
 
     const drawOT = () => {
@@ -2185,7 +2148,7 @@ function TestPDFResultSalayNew({ employeeList }) {
 
     const cellWidthWelfare = 16;
     // const startXWelfare = 110; // Adjust the starting X-coordinate as needed
-    const startXWelfare = 36 + cellWidthOT * 2;
+    const startXWelfare = 39 + cellWidthOT * 2;
     const startYWelfare = 55; // Adjust the starting Y-coordinate as needed
 
     const drawWelfare = () => {
@@ -2207,7 +2170,7 @@ function TestPDFResultSalayNew({ employeeList }) {
 
     const cellWidthRoleWork = 16;
     // const startXRoleWork = 130; // Adjust the starting X-coordinate as needed
-    const startXRoleWork = 36 + cellWidthOT * 3;
+    const startXRoleWork = 39 + cellWidthOT * 3;
     const startYRoleWork = 55; // Adjust the starting Y-coordinate as needed
 
     const drawRoleWork = () => {
@@ -2229,7 +2192,7 @@ function TestPDFResultSalayNew({ employeeList }) {
 
     const cellWidthDiligenceAllowance = 16;
     // const startXResult = 310; // Adjust the starting X-coordinate as needed
-    const startXDiligenceAllowance = 36 + cellWidthOT * 4;
+    const startXDiligenceAllowance = 39 + cellWidthOT * 4;
     const startYDiligenceAllowance = 55; // Adjust the starting Y-coordinate as needed
 
     const drawDiligenceAllowance = () => {
@@ -2249,7 +2212,7 @@ function TestPDFResultSalayNew({ employeeList }) {
 
     const cellWidthHoliday = 16;
     // const startXHoliday = 150; // Adjust the starting X-coordinate as needed
-    const startXHoliday = 36 + cellWidthOT * 5;
+    const startXHoliday = 39 + cellWidthOT * 5;
     const startYHoliday = 55; // Adjust the starting Y-coordinate as needed
 
     const drawHoliday = () => {
@@ -2269,7 +2232,7 @@ function TestPDFResultSalayNew({ employeeList }) {
 
     const cellWidthAddBeforeDeductTax = 16;
     // const startXAddBeforeDeductTax = 170; // Adjust the starting X-coordinate as needed
-    const startXAddBeforeDeductTax = 36 + cellWidthOT * 6;
+    const startXAddBeforeDeductTax = 39 + cellWidthOT * 6;
     const startYAddBeforeDeductTax = 55; // Adjust the starting Y-coordinate as needed
 
     const drawAddBeforeDeductTax = () => {
@@ -2279,7 +2242,7 @@ function TestPDFResultSalayNew({ employeeList }) {
           const y = startYTop + i * cellHeightTop;
 
           // Add text for each cell
-          const cellText = `บวกอื่นๆ`;
+          const cellText = `บวกอื่นๆ\n(ก่อนภาษี)`;
           drawCell(x, y, cellWidthAddBeforeDeductTax, cellHeightTop, cellText);
           const cellText2 = ``;
           // drawCell(x, 195, cellWidth, cellHeightTop, cellText2);
@@ -2289,7 +2252,7 @@ function TestPDFResultSalayNew({ employeeList }) {
 
     const cellWidthMinusBeforeDeductTax = 16;
     // const startXMinusBeforeDeductTax = 190; // Adjust the starting X-coordinate as needed
-    const startXMinusBeforeDeductTax = 36 + cellWidthOT * 7;
+    const startXMinusBeforeDeductTax = 39 + cellWidthOT * 7;
     const startYMinusBeforeDeductTax = 55; // Adjust the starting Y-coordinate as needed
 
     const drawMinuseforeDeductTax = () => {
@@ -2300,7 +2263,7 @@ function TestPDFResultSalayNew({ employeeList }) {
           const y = startYTop + i * cellHeightTop;
 
           // Add text for each cell
-          const cellText = `หักอื่นๆ`;
+          const cellText = `หักอื่นๆ\n(ก่อนภาษี)`;
           drawCell(
             x,
             y,
@@ -2316,7 +2279,7 @@ function TestPDFResultSalayNew({ employeeList }) {
 
     const cellWidthAddBeforeDeductTax2nd = 16;
     // const startXAddBeforeDeductTax = 170; // Adjust the starting X-coordinate as needed
-    const startXAddBeforeDeductTax2nd = 36 + cellWidthOT * 8;
+    const startXAddBeforeDeductTax2nd = 39 + cellWidthOT * 8;
     const startYAddBeforeDeductTax2nd = 55; // Adjust the starting Y-coordinate as needed
 
     const drawAddBeforeDeductTax2nd = () => {
@@ -2343,7 +2306,7 @@ function TestPDFResultSalayNew({ employeeList }) {
 
     const cellWidthMinusBeforeDeductTax2nd = 16;
     // const startXMinusBeforeDeductTax = 190; // Adjust the starting X-coordinate as needed
-    const startXMinusBeforeDeductTax2nd = 36 + cellWidthOT * 9;
+    const startXMinusBeforeDeductTax2nd = 39 + cellWidthOT * 9;
     const startYMinusBeforeDeductTax2nd = 55; // Adjust the starting Y-coordinate as needed
 
     const drawMinuseforeDeductTax2nd = () => {
@@ -2371,7 +2334,7 @@ function TestPDFResultSalayNew({ employeeList }) {
 
     const cellWidthDeductTax = 16;
     // const startXDeductTax = 210; // Adjust the starting X-coordinate as needed
-    const startXDeductTax = 36 + cellWidthOT * 10;
+    const startXDeductTax = 39 + cellWidthOT * 10;
     const startYDeductTax = 55; // Adjust the starting Y-coordinate as needed
 
     const drawDeductTax = () => {
@@ -2381,7 +2344,7 @@ function TestPDFResultSalayNew({ employeeList }) {
           const y = startYTop + i * cellHeightTop;
 
           // Add text for each cell
-          const cellText = `หักภาษี.`;
+          const cellText = `หักภาษี`;
           drawCell(x, y, cellWidthDeductTax, cellHeightTop, cellText);
           const cellText2 = ``;
           // drawCell(x, 195, cellWidth, cellHeightTop, cellText2);
@@ -2391,7 +2354,7 @@ function TestPDFResultSalayNew({ employeeList }) {
 
     const cellWidthDeductTaxSocialSecurity = 16;
     // const startXDeductTaxSocialSecurity = 230; // Adjust the starting X-coordinate as needed
-    const startXDeductTaxSocialSecurity = 36 + cellWidthOT * 11;
+    const startXDeductTaxSocialSecurity = 39 + cellWidthOT * 11;
     const startYDeductTaxSocialSecurity = 55; // Adjust the starting Y-coordinate as needed
 
     const drawDeductTaxSocialSecurity = () => {
@@ -2419,7 +2382,7 @@ function TestPDFResultSalayNew({ employeeList }) {
 
     const cellWidthAddAfterDeductTax = 16;
     // const startXAddAfterDeductTax = 250; // Adjust the starting X-coordinate as needed
-    const startXAddAfterDeductTax = 36 + cellWidthOT * 12;
+    const startXAddAfterDeductTax = 39 + cellWidthOT * 12;
     const startYAddAfterDeductTax = 55; // Adjust the starting Y-coordinate as needed
 
     const drawAddAfterDeductTax = () => {
@@ -2439,7 +2402,7 @@ function TestPDFResultSalayNew({ employeeList }) {
 
     const cellWidthMinusAfterDeductTax = 16;
     // const startXMinusAfterDeductTax = 290; // Adjust the starting X-coordinate as needed
-    const startXMinusAfterDeductTax = 36 + cellWidthOT * 13;
+    const startXMinusAfterDeductTax = 39 + cellWidthOT * 13;
     const startYMinusAfterDeductTax = 55; // Adjust the starting Y-coordinate as needed
 
     const drawMinusAfterDeductTax = () => {
@@ -2460,7 +2423,7 @@ function TestPDFResultSalayNew({ employeeList }) {
 
     const cellWidthAdvancePayment = 16;
     // const startXAdvancePayment = 270; // Adjust the starting X-coordinate as needed
-    const startXAdvancePayment = 36 + cellWidthOT * 14;
+    const startXAdvancePayment = 39 + cellWidthOT * 14;
     const startYAdvancePayment = 55; // Adjust the starting Y-coordinate as needed
 
     const drawAdvancePayment = () => {
@@ -2480,7 +2443,7 @@ function TestPDFResultSalayNew({ employeeList }) {
 
     const cellWidthBank = 16;
     // const startXBank = 290; // Adjust the starting X-coordinate as needed
-    const startXBank = 36 + cellWidthOT * 15;
+    const startXBank = 39 + cellWidthOT * 15;
     const startYBank = 55; // Adjust the starting Y-coordinate as needed
 
     const drawBank = () => {
@@ -2500,7 +2463,7 @@ function TestPDFResultSalayNew({ employeeList }) {
 
     const cellWidthResult = 16;
     // const startXResult = 310; // Adjust the starting X-coordinate as needed
-    const startXResult = 36 + cellWidthOT * 15;
+    const startXResult = 39 + cellWidthOT * 15;
     const startYResult = 55; // Adjust the starting Y-coordinate as needed
 
     const drawResult = () => {
@@ -2827,32 +2790,16 @@ function TestPDFResultSalayNew({ employeeList }) {
         // Draw the line
         // pdf.line(58, currentY - 3, 295, currentY - 3);
 
-        pdf.text(`รวมแผนก`, 1, currentY);
+        // pdf.text(`รวมแผนก`, 1, currentY);
 
         // pdf.text(`${workplaceName} : ${workplaceKey}`, startXName + 1, currentY);
         // pdf.text(`${workplaceName} `, startXName + 1, currentY);
-        pdf.text(`${workplaceKey} `, startXName + 1, currentY);
+        // pdf.text(`${workplaceKey} `, startXName + 1, currentY);
 
-        // pdf.text(`${totalEmp} คน`, 68, currentY, { align: 'right' });
-
-        // pdf.text(`${totalSalary.toFixed(2)}`, 85, currentY, { align: 'right' });
-
-        // pdf.text(`${totalAmountOt.toFixed(2)}`, 85 + (cellWidthOT), currentY, { align: 'right' });
-        // // pdf.text(`${totalAmountSpecial.toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
-        //  // sumSpSalaryall
-        //  pdf.text(`${Number(sumSpSalaryall).toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
-        // pdf.text(`${totalAmountPosition.toFixed(2)}`, 85 + (cellWidthOT * 3), currentY, { align: 'right' });
-        // pdf.text(`${totalAmountHardWorking.toFixed(2)}`, 85 + (cellWidthOT * 4), currentY, { align: 'right' });
-        // pdf.text(`${totalAmountHoliday.toFixed(2)}`, 85 + (cellWidthOT * 5), currentY, { align: 'right' });
-        // pdf.text(`${totalAddAmountBeforeTax.toFixed(2)}`, 85 + (cellWidthOT * 6), currentY, { align: 'right' });
-        // pdf.text(`${totalDeductBeforeTax.toFixed(2)}`, 85 + (cellWidthOT * 7), currentY, { align: 'right' });
-        // pdf.text(`${totalTax.toFixed(0)}`, 85 + (cellWidthOT * 8), currentY, { align: 'right' });
-        // pdf.text(`${totalSocialSecurity.toFixed(0)}`, 85 + (cellWidthOT * 9), currentY, { align: 'right' });
-        // pdf.text(`${totalAddAmountAfterTax.toFixed(2)}`, 85 + (cellWidthOT * 10), currentY, { align: 'right' });
-        // pdf.text(`${totalAdvancePayment.toFixed(2)}`, 85 + (cellWidthOT * 11), currentY, { align: 'right' });
-        // pdf.text(`${totalDeductAfterTax.toFixed(2)}`, 85 + (cellWidthOT * 12), currentY, { align: 'right' });
-        // // pdf.text(`${totalBank.toFixed(2)}`, 278, currentY, { align: 'right' });
-        // pdf.text(`${totalTotal.toFixed(2)}`, 85 + (cellWidthOT * 13), currentY, { align: 'right' });
+        pdf.text(`${workplaceKey} `, 1, currentY);
+        pdf.text(`${workplaceName} `, startXName + 1, currentY);
+        // console.log('workplaceKey',workplaceKey);
+        // console.log('workplaceName',workplaceName);
 
         // เงินเดือน
         pdf.text(`${totalSalary.toFixed(2)}`, startXSalary + 16, currentY, {
@@ -3236,15 +3183,203 @@ function TestPDFResultSalayNew({ employeeList }) {
   };
   console.log("workplacrName", workplacrName);
 
-  const data = [
-    { name: "John Doe", age: 30, position: "Developer" },
-    { name: "Jane Smith", age: 25, position: "Designer" },
-    { name: "Sam Wilson", age: 35, position: "Manager" },
-  ];
+
+  const groupedByWorkplace = responseDataAll.reduce((acc, employee) => {
+    const { workplace } = employee;
+    acc[workplace] = acc[workplace] || {
+      employees: [],
+      //  totalSalary: 0, totalAmountOt: 0,
+      // totalAmountSpecial: 0, totalAmountPosition: 0
+      // , totalAmountHardWorking: 0, totalAmountHoliday: 0, totalDeductBeforeTax: 0, totalAddAmountBeforeTax: 0,
+      // totalTax: 0, totalSocialSecurity: 0, totalAddAmountAfterTax: 0, totalAdvancePayment: 0
+      // , totalDeductAfterTax: 0, totalBank: 0, totalTotal: 0, totalEmp: 0
+      totalCountDay: 0,
+      totalSalary: 0,
+      totalAmountOt: 0,
+      totalAmountSpecial: 0,
+      // totalAmountPosition: 0,
+
+      totalAmountPosition: 0,
+      totalTel: 0,
+      totalTravel: 0,
+      totalAddSalary: 0,
+
+      totalAmountHardWorking: 0,
+      totalAmountHoliday: 0,
+      totalAmountSpecialDay: 0,
+
+      totalDeductBeforeTax: 0,
+      totalAddAmountBeforeTax: 0,
+      totalTax: 0,
+      totalSocialSecurity: 0,
+      totalAddAmountAfterTax: 0,
+      totalAdvancePayment: 0,
+      totalDeductAfterTax: 0,
+      totalBank: 0,
+      totalTotal: 0,
+      totalEmp: 0,
+      totalSpSalary: 0, // Add a new property for sum of SpSalary
+      totalCountSpecialDay: 0,
+
+      totalSumAddSalaryBeforeTax: 0,
+      totalSumAddSalaryBeforeTaxNonSocial: 0,
+      totalSumDeductBeforeTaxWithSocial: 0,
+      totalSumDeductBeforeTax: 0,
+      totalSumAddSalaryAfterTax: 0,
+      totalSumDeductAfterTax: 0,
+    };
+    acc[workplace].employees.push(employee);
+    // acc[workplace].name.push(employee.name);
+
+    // Adjust this line based on your specific structure to get the salary or any other relevant data
+    acc[workplace].totalSalary += parseFloat(
+      employee.accountingRecord?.[0]?.amountCountDayWork || 0
+    );
+    // acc[workplace].totalAmountOt += parseFloat(employee.accountingRecord?.[0]?.amountOt || 0);
+    const sumOT = parseFloat(
+      employee.accountingRecord?.[0]?.amountCountDayWorkOt || 0
+    );
+    acc[workplace].totalAmountOt += sumOT;
+
+    // acc[workplace].totalAmountPosition += parseFloat(employee.accountingRecord?.[0]?.amountPosition || 0);
+    // acc[workplace].totalTel += parseFloat(employee.accountingRecord?.[0]?.tel || 0);
+    // acc[workplace].totalTravel += parseFloat(employee.accountingRecord?.[0]?.travel || 0);
+    const totalAmountPositio = parseFloat(
+      employee.accountingRecord?.[0]?.amountPosition || 0
+    );
+    const totalTel = parseFloat(employee.accountingRecord?.[0]?.tel || 0);
+    const totalTravel = parseFloat(
+      employee.accountingRecord?.[0]?.travel || 0
+    );
+
+    acc[workplace].totalAmountPositio += totalAmountPositio;
+    acc[workplace].totalTel += totalTel;
+    acc[workplace].totalTravel += totalTravel;
+    acc[workplace].totalAddSalary +=
+      totalAmountPositio + totalTel + totalTravel;
+
+    acc[workplace].totalAmountSpecial += parseFloat(
+      employee.accountingRecord?.[0]?.amountSpecial || 0
+    );
+    acc[workplace].totalAmountPosition += parseFloat(
+      employee.accountingRecord?.[0]?.benefitNonSocial || 0
+    );
+    acc[workplace].totalAmountHardWorking += parseFloat(
+      employee.accountingRecord?.[0]?.amountHardWorking || 0
+    );
+    acc[workplace].totalAmountHoliday += parseFloat(
+      employee.accountingRecord?.[0]?.amountHoliday || 0
+    );
+    acc[workplace].totalAmountSpecialDay += parseFloat(
+      employee.accountingRecord?.[0]?.amountSpecialDay || 0
+    );
+
+    acc[workplace].totalDeductBeforeTax += parseFloat(
+      employee.accountingRecord?.[0]?.deductBeforeTax || 0
+    );
+    acc[workplace].totalAddAmountBeforeTax += parseFloat(
+      employee.accountingRecord?.[0]?.addAmountBeforeTax || 0
+    );
+    acc[workplace].totalTax += parseFloat(
+      employee.accountingRecord?.[0]?.tax || 0
+    );
+    acc[workplace].totalSocialSecurity += parseFloat(
+      employee.accountingRecord?.[0]?.socialSecurity || 0
+    );
+    acc[workplace].totalAddAmountAfterTax += parseFloat(
+      employee.accountingRecord?.[0]?.addAmountAfterTax || 0
+    );
+    acc[workplace].totalAdvancePayment += parseFloat(
+      employee.accountingRecord?.[0]?.advancePayment || 0
+    );
+    acc[workplace].totalDeductAfterTax += parseFloat(
+      employee.accountingRecord?.[0]?.deductAfterTax || 0
+    );
+    acc[workplace].totalBank += parseFloat(
+      employee.accountingRecord?.[0]?.bank || 0
+    );
+    acc[workplace].totalTotal += parseFloat(
+      employee.accountingRecord?.[0]?.total ?? 0
+    );
+
+    acc[workplace].totalSumAddSalaryBeforeTax += parseFloat(
+      employee.accountingRecord?.[0]?.sumAddSalaryBeforeTaxNonSocial || 0
+    );
+    acc[workplace].totalSumAddSalaryBeforeTaxNonSocial += parseFloat(
+      employee.accountingRecord?.[0]?.sumAddSalaryBeforeTaxNonSocial || 0
+    );
+    acc[workplace].totalSumDeductBeforeTaxWithSocial += parseFloat(
+      employee.accountingRecord?.[0]?.sumDeductBeforeTaxWithSocial || 0
+    );
+    acc[workplace].totalSumDeductBeforeTax += parseFloat(
+      employee.accountingRecord?.[0]?.sumDeductBeforeTax || 0
+    );
+    acc[workplace].totalSumAddSalaryAfterTax += parseFloat(
+      employee.accountingRecord?.[0]?.sumAddSalaryAfterTax || 0
+    );
+    acc[workplace].totalSumDeductAfterTax += parseFloat(
+      employee.accountingRecord?.[0]?.sumDeductAfterTax || 0
+    );
+    // amountSpecialDay
+
+    acc[workplace].totalEmp += 1;
+
+    return acc;
+  }, {});
+
+  console.log("groupedByWorkplace", groupedByWorkplace);
+
 
   const exportToExcel = () => {
-    // สร้าง Worksheet จากดาต้า
-    const worksheet = XLSX.utils.json_to_sheet(data);
+    
+    const headers = [
+      "รหัส",
+      "หน่วยงาน",
+      "วัน",
+      "เงินเดือน",
+      "ค่าล่วงเวลา",
+      "ค่ารถ/โทร/ตน.",
+      "สวัสดิการ(ไม่คิด ปกส.)",
+      "เบี้ยขยัน",
+      "นักขัติ",
+      "บวกอื่นๆ(ก่อนภาษี)",
+      "หักอื่นๆ(ก่อนภาษี)",
+      "บวกอื่นๆ",
+      "หักอื่นๆ",
+      "หักภาษี",
+      "หัก ปกส",
+      "บวกอื่นๆ",
+      "เบิกบ่วงหน้า",
+      "ค่าธนาคารโอน",
+      "สุทธิ",
+    ];
+
+    const formattedData = groupedByWorkplace.map((item) => ({
+      "รหัส": item.workplaceKey,
+      "หน่วยงาน": item.workplaceKey,
+      "เงินเดือน": item.totalAmountOt,
+      "ค่าล่วงเวลา": item.totalAmountOt,
+      "ค่ารถ/โทร/ตน.": item.totalAmountOt,
+      "สวัสดิการ(ไม่คิด ปกส.)": item.totalAmountOt,
+      "เบี้ยขยัน": item.totalAmountOt,
+      "นักขัติ": item.totalAmountOt,
+      "บวกอื่นๆ(ก่อนภาษี)": item.totalAmountOt,
+      "หักอื่นๆ(ก่อนภาษี)": item.totalAmountOt,
+      "บวกอื่นๆ": item.totalAmountOt,
+      "หักอื่นๆ": item.totalAmountOt,
+      "หักภาษี": item.totalAmountOt,
+      "หัก ปกส.": item.totalAmountOt,
+      "บวกอื่นๆ": item.totalAmountOt,
+      "เบิกบ่วงหน้า": item.totalAmountOt,
+      "หักอื่นๆ": item.totalAmountOt,
+      "ค่าธนาคารโอน": item.totalAmountOt,
+      "สุทธิ": item.totalAmountOt,
+    }));
+
+    // สร้าง Worksheet และเพิ่ม Headers
+    const worksheet = XLSX.utils.json_to_sheet(formattedData, {
+      header: headers,
+    });
 
     // สร้าง Workbook
     const workbook = XLSX.utils.book_new();
@@ -3257,8 +3392,8 @@ function TestPDFResultSalayNew({ employeeList }) {
     });
     const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
 
-    // ดาวน์โหลดไฟล์
-    saveAs(blob, "Data.xlsx");
+    // ดาวน์โหลดไฟล์ Excel
+    saveAs(blob, "Employee_Data.xlsx");
   };
 
   return (
@@ -3301,6 +3436,10 @@ function TestPDFResultSalayNew({ employeeList }) {
                         placeholder="รหัสหน่อยงาน"
                         value={workplacrId}
                         onChange={handleStaffIdChange}
+                        onInput={(e) => {
+                          // Remove any non-digit characters
+                          e.target.value = e.target.value.replace(/\D/g, "");
+                        }}
                         list="WorkplaceIdList"
                       />
                       <datalist id="WorkplaceIdList">
@@ -3334,7 +3473,7 @@ function TestPDFResultSalayNew({ employeeList }) {
                         type="text"
                         className="form-control"
                         id="staffName"
-                        placeholder="ชื่อพนักงาน"
+                        placeholder="ชื่อหน่วยงาน"
                         value={workplacrName}
                         onChange={handleStaffNameChange}
                         list="WorkplaceNameList"
@@ -3482,13 +3621,28 @@ function TestPDFResultSalayNew({ employeeList }) {
                     style={{ marginLeft: "1rem", width: "11rem" }}
                     onClick={generatePDF02}
                   >
-                    PDF หน่วงงานทั้งหมด
+                    PDF หน่วยงานทั้งหมด
                   </button>
                 </div>
-
+                <br/>
                 <div>
                   <button onClick={exportToExcel}>Export to Excel</button>
                 </div>
+                {/* <label>Thai Date:</label> */}
+                {/* <DatePicker
+                                    selected={selectedThaiDate}
+                                    onChange={handleThaiDateChange}
+                                    dateFormat="dd/MM/yyyy"
+                                    locale={th}
+                                /> */}
+                {/* <br />
+                                <label>Gregorian Date:</label>
+                                <DatePicker
+                                    selected={selectedGregorianDate}
+                                    onChange={handleGregorianDateChange}
+                                    dateFormat="dd/MM/yyyy"
+                                    locale={en}
+                                /> */}
               </section>
             </div>
           </section>
@@ -3499,4 +3653,4 @@ function TestPDFResultSalayNew({ employeeList }) {
   );
 }
 
-export default TestPDFResultSalayNew;
+export default SalaryAllResult;

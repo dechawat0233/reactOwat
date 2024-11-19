@@ -283,7 +283,7 @@ const SendEmployeePDF3 = ({ employeeList }) => {
       }
       const thaiMonthNames = new Intl.DateTimeFormat("th-TH", { month: "long" })
         .format;
-      const formattedDate = new Date(dateOfBirth);
+      const formattedDate = new Date(selectedDate );
 
       const day = formattedDate.getDate();
       const month = thaiMonthNames(formattedDate);

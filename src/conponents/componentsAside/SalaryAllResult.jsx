@@ -18,12 +18,15 @@ import en from "date-fns/locale/en-US";
 
 import { addYears } from "date-fns";
 
-function SalaryAllResult({ employeeList }) {
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
+
+function SalaryAllResult({ employeeList ,workplaceList}) {
   const [workplacrId, setWorkplacrId] = useState(""); //รหัสหน่วยงาน
   const [workplacrName, setWorkplacrName] = useState(""); //รหัสหน่วยงาน
 
   const [searchWorkplaceId, setSearchWorkplaceId] = useState("");
-  const [workplaceListAll, setWorkplaceListAll] = useState([]);
+  const [workplaceListAll, setWorkplaceListAll] = useState([workplaceList]);
 
   const [responseDataAll, setResponseDataAll] = useState([]);
 
@@ -70,8 +73,6 @@ function SalaryAllResult({ employeeList }) {
         console.error("Error fetching data:", error);
       });
   }, []);
-
-  console.log("workplaceListAll", workplaceListAll);
 
   const EndYear = 2010;
   const currentYear = new Date().getFullYear(); // 2024
@@ -295,160 +296,159 @@ function SalaryAllResult({ employeeList }) {
     fetchData();
   }, [year, month, searchWorkplaceId]);
 
-// useEffect(() => {
-//   const workplaces = ['10796', '20796', '30796', '40796'];
-//   const employeesssss = [];
-//   const workplacestest = ['10796', '10798', '10596'];
+  // useEffect(() => {
+  //   const workplaces = ['10796', '20796', '30796', '40796'];
+  //   const employeesssss = [];
+  //   const workplacestest = ['10796', '10798', '10596'];
 
-//   // Create 40 employees for workplace '10796'
-//   for (let i = 0; i < 120; i++) {
-//     const workplaceIndex = i % workplacestest.length; // Get the index based on the current iteration
-//     const employee = {
-//       employeeId: `6704${17 + i}`,
-//       name: `EmployeeName${i + 1}`,
-//       lastName: `LastName${i + 1}`,
-//       // workplace: '10796',
-//       workplace: workplacestest[workplaceIndex], // Assign workplace based on the index
-//       countDay: '31',
-//       countDayWork: '25',
-//       amountDay: '12000',
-//       amountOt: '5520',
-//       countHour: '200',
-//       countSpecialDay: '1',
-//       createDate: '03/09/2024, 07:31',
-//       specialDayRate: '480',
-//       year: '2024',
-//       month: '06',
-//       accountingRecord: [
-//         {
-//           addAmountAfterTax: "0",
-//           addAmountBeforeTax: "4083",
-//           amountCountDayWork: "12000",
-//           amountCountDayWorkOt: "5520",
-//           amountDay: "12000",
-//           amountHardWorking: "500",
-//           amountHoliday: "0",
-//           amountOne: "12000",
-//           amountOneFive: "5520",
-//           amountOt: "5520",
-//           amountPosition: "2000",
-//           amountSpecialDay: "480",
-//           amountThree: "0",
-//           amountTwo: "0",
-//           amountTwoFive: "0",
-//           bank: "0",
-//           benefitNonSocial: "750",
-//           countDay: "31",
-//           countDayWork: "25",
-//           countHour: "200",
-//           countHourWork: "200",
-//           countOtHour: "55.19999999999998",
-//           countOtHourWork: "0",
-//           deductAfterTax: "100",
-//           deductBeforeTax: "0",
-//           hourOne: "200",
-//           hourOneFive: "55.19999999999998",
-//           hourThree: "0",
-//           hourTwo: "0",
-//           hourTwoFive: "0",
-//           socialSecurity: "750",
-//           sumAddSalary: "4833",
-//           sumAddSalaryAfterTax: "0",
-//           sumAddSalaryBeforeTax: "361",
-//           sumAddSalaryBeforeTaxNonSocial: "722",
-//           sumDeductAfterTax: "100",
-//           sumDeductBeforeTax: "0",
-//           sumDeductBeforeTaxWithSocial: "0",
-//           sumSalaryForTax: "21603",
-//           tax: "0",
-//           tel: "500",
-//           total: "22083",
-//           travel: "0"
-//         }
-//       ],
-//       specialDayListWork: [],
-//       addSalary: [],
-//     };
+  //   // Create 40 employees for workplace '10796'
+  //   for (let i = 0; i < 120; i++) {
+  //     const workplaceIndex = i % workplacestest.length; // Get the index based on the current iteration
+  //     const employee = {
+  //       employeeId: `6704${17 + i}`,
+  //       name: `EmployeeName${i + 1}`,
+  //       lastName: `LastName${i + 1}`,
+  //       // workplace: '10796',
+  //       workplace: workplacestest[workplaceIndex], // Assign workplace based on the index
+  //       countDay: '31',
+  //       countDayWork: '25',
+  //       amountDay: '12000',
+  //       amountOt: '5520',
+  //       countHour: '200',
+  //       countSpecialDay: '1',
+  //       createDate: '03/09/2024, 07:31',
+  //       specialDayRate: '480',
+  //       year: '2024',
+  //       month: '06',
+  //       accountingRecord: [
+  //         {
+  //           addAmountAfterTax: "0",
+  //           addAmountBeforeTax: "4083",
+  //           amountCountDayWork: "12000",
+  //           amountCountDayWorkOt: "5520",
+  //           amountDay: "12000",
+  //           amountHardWorking: "500",
+  //           amountHoliday: "0",
+  //           amountOne: "12000",
+  //           amountOneFive: "5520",
+  //           amountOt: "5520",
+  //           amountPosition: "2000",
+  //           amountSpecialDay: "480",
+  //           amountThree: "0",
+  //           amountTwo: "0",
+  //           amountTwoFive: "0",
+  //           bank: "0",
+  //           benefitNonSocial: "750",
+  //           countDay: "31",
+  //           countDayWork: "25",
+  //           countHour: "200",
+  //           countHourWork: "200",
+  //           countOtHour: "55.19999999999998",
+  //           countOtHourWork: "0",
+  //           deductAfterTax: "100",
+  //           deductBeforeTax: "0",
+  //           hourOne: "200",
+  //           hourOneFive: "55.19999999999998",
+  //           hourThree: "0",
+  //           hourTwo: "0",
+  //           hourTwoFive: "0",
+  //           socialSecurity: "750",
+  //           sumAddSalary: "4833",
+  //           sumAddSalaryAfterTax: "0",
+  //           sumAddSalaryBeforeTax: "361",
+  //           sumAddSalaryBeforeTaxNonSocial: "722",
+  //           sumDeductAfterTax: "100",
+  //           sumDeductBeforeTax: "0",
+  //           sumDeductBeforeTaxWithSocial: "0",
+  //           sumSalaryForTax: "21603",
+  //           tax: "0",
+  //           tel: "500",
+  //           total: "22083",
+  //           travel: "0"
+  //         }
+  //       ],
+  //       specialDayListWork: [],
+  //       addSalary: [],
+  //     };
 
-//     employeesssss.push(employee);
-//   }
+  //     employeesssss.push(employee);
+  //   }
 
-//   // Create 10 employees for each of the remaining workplaces
-//   for (let i = 0; i < 30; i++) {
-//     const workplaceIndex = i % 3; // Get index for '20796', '30796', '40796'
-//     const employee = {
-//       employeeId: `6704${57 + i}`,
-//       name: `EmployeeName${i + 41}`, // Starting after the 40 employees for '10796'
-//       lastName: `LastName${i + 41}`,
-//       workplace: workplaces[workplaceIndex + 1], // Select from '20796', '30796', '40796'
-//       countDay: '31',
-//       countDayWork: '25',
-//       amountDay: '12000',
-//       amountOt: '5520',
-//       countHour: '200',
-//       countSpecialDay: '1',
-//       createDate: '03/09/2024, 07:31',
-//       specialDayRate: '480',
-//       year: '2024',
-//       month: '06',
-//       accountingRecord: [
-//         {
-//           addAmountAfterTax: "0",
-//           addAmountBeforeTax: "4083",
-//           amountCountDayWork: "12000",
-//           amountCountDayWorkOt: "5520",
-//           amountDay: "12000",
-//           amountHardWorking: "500",
-//           amountHoliday: "0",
-//           amountOne: "12000",
-//           amountOneFive: "5520",
-//           amountOt: "5520",
-//           amountPosition: "2000",
-//           amountSpecialDay: "480",
-//           amountThree: "0",
-//           amountTwo: "0",
-//           amountTwoFive: "0",
-//           bank: "0",
-//           benefitNonSocial: "750",
-//           countDay: "31",
-//           countDayWork: "25",
-//           countHour: "200",
-//           countHourWork: "200",
-//           countOtHour: "55.19999999999998",
-//           countOtHourWork: "0",
-//           deductAfterTax: "100",
-//           deductBeforeTax: "0",
-//           hourOne: "200",
-//           hourOneFive: "55.19999999999998",
-//           hourThree: "0",
-//           hourTwo: "0",
-//           hourTwoFive: "0",
-//           socialSecurity: "750",
-//           sumAddSalary: "4833",
-//           sumAddSalaryAfterTax: "0",
-//           sumAddSalaryBeforeTax: "361",
-//           sumAddSalaryBeforeTaxNonSocial: "722",
-//           sumDeductAfterTax: "100",
-//           sumDeductBeforeTax: "0",
-//           sumDeductBeforeTaxWithSocial: "0",
-//           sumSalaryForTax: "21603",
-//           tax: "0",
-//           tel: "500",
-//           total: "22083",
-//           travel: "0"
-//         }
-//       ],
-//       specialDayListWork: [],
-//       addSalary: [],
-//     };
+  //   // Create 10 employees for each of the remaining workplaces
+  //   for (let i = 0; i < 30; i++) {
+  //     const workplaceIndex = i % 3; // Get index for '20796', '30796', '40796'
+  //     const employee = {
+  //       employeeId: `6704${57 + i}`,
+  //       name: `EmployeeName${i + 41}`, // Starting after the 40 employees for '10796'
+  //       lastName: `LastName${i + 41}`,
+  //       workplace: workplaces[workplaceIndex + 1], // Select from '20796', '30796', '40796'
+  //       countDay: '31',
+  //       countDayWork: '25',
+  //       amountDay: '12000',
+  //       amountOt: '5520',
+  //       countHour: '200',
+  //       countSpecialDay: '1',
+  //       createDate: '03/09/2024, 07:31',
+  //       specialDayRate: '480',
+  //       year: '2024',
+  //       month: '06',
+  //       accountingRecord: [
+  //         {
+  //           addAmountAfterTax: "0",
+  //           addAmountBeforeTax: "4083",
+  //           amountCountDayWork: "12000",
+  //           amountCountDayWorkOt: "5520",
+  //           amountDay: "12000",
+  //           amountHardWorking: "500",
+  //           amountHoliday: "0",
+  //           amountOne: "12000",
+  //           amountOneFive: "5520",
+  //           amountOt: "5520",
+  //           amountPosition: "2000",
+  //           amountSpecialDay: "480",
+  //           amountThree: "0",
+  //           amountTwo: "0",
+  //           amountTwoFive: "0",
+  //           bank: "0",
+  //           benefitNonSocial: "750",
+  //           countDay: "31",
+  //           countDayWork: "25",
+  //           countHour: "200",
+  //           countHourWork: "200",
+  //           countOtHour: "55.19999999999998",
+  //           countOtHourWork: "0",
+  //           deductAfterTax: "100",
+  //           deductBeforeTax: "0",
+  //           hourOne: "200",
+  //           hourOneFive: "55.19999999999998",
+  //           hourThree: "0",
+  //           hourTwo: "0",
+  //           hourTwoFive: "0",
+  //           socialSecurity: "750",
+  //           sumAddSalary: "4833",
+  //           sumAddSalaryAfterTax: "0",
+  //           sumAddSalaryBeforeTax: "361",
+  //           sumAddSalaryBeforeTaxNonSocial: "722",
+  //           sumDeductAfterTax: "100",
+  //           sumDeductBeforeTax: "0",
+  //           sumDeductBeforeTaxWithSocial: "0",
+  //           sumSalaryForTax: "21603",
+  //           tax: "0",
+  //           tel: "500",
+  //           total: "22083",
+  //           travel: "0"
+  //         }
+  //       ],
+  //       specialDayListWork: [],
+  //       addSalary: [],
+  //     };
 
-//     employeesssss.push(employee);
-//   }
+  //     employeesssss.push(employee);
+  //   }
 
-//   // Set the employee data to the state variable
-//   setResponseDataAll(employeesssss);
-// }, []); // Empty dependency array to run once on component mount
-
+  //   // Set the employee data to the state variable
+  //   setResponseDataAll(employeesssss);
+  // }, []); // Empty dependency array to run once on component mount
 
   console.log("responseDataAll", responseDataAll);
 
@@ -694,7 +694,7 @@ function SalaryAllResult({ employeeList }) {
           const y = startYTop + i * cellHeightTop;
 
           // Add text for each cell
-          const cellText = `บวกอื่นๆ`;
+          const cellText = `บวกอื่นๆ\n(ก่อนภาษี)`;
           drawCell(x, y, cellWidthAddBeforeDeductTax, cellHeightTop, cellText);
           const cellText2 = ``;
           // drawCell(x, 195, cellWidth, cellHeightTop, cellText2);
@@ -715,7 +715,7 @@ function SalaryAllResult({ employeeList }) {
           const y = startYTop + i * cellHeightTop;
 
           // Add text for each cell
-          const cellText = `หักอื่นๆ`;
+          const cellText = `หักอื่นๆ\n(ก่อนภาษี)`;
           drawCell(
             x,
             y,
@@ -1206,7 +1206,7 @@ function SalaryAllResult({ employeeList }) {
           pdf.addPage({ orientation: "landscape" });
           currentY = 20; // Reset Y coordinate for the new page
         }
-  
+
         previousFirstChar = currentFirstChar;
 
         // Display workplace heading
@@ -1675,7 +1675,7 @@ function SalaryAllResult({ employeeList }) {
             );
             pdf.text(`รายงานโดย ${present}`, 100, 200);
             pdf.text(`แฟ้มรายงาน ${presentfilm}`, 200, 200);
-            
+
             // Check if there's not enough space on the current page
             if (currentY > pdf.internal.pageSize.height - 20) {
               // Add a new page
@@ -2071,7 +2071,7 @@ function SalaryAllResult({ employeeList }) {
       }
     };
 
-    const cellWidthName = 25;
+    const cellWidthName = 28;
     const startXName = 11; // Adjust the starting X-coordinate as needed
     const startYName = 55; // Adjust the starting Y-coordinate as needed
 
@@ -2082,7 +2082,7 @@ function SalaryAllResult({ employeeList }) {
           const y = startYTop + i * cellHeightTop;
 
           // Add text for each cell
-          const cellText = `ชื่อ - สกุล`;
+          const cellText = `หน่วยงาน`;
           drawCell(x, y, cellWidthName, cellHeightTop, cellText);
           const cellText2 = ``;
           // drawCell(x, 195, cellWidthName, cellHeightTop, cellText2);
@@ -2091,7 +2091,7 @@ function SalaryAllResult({ employeeList }) {
     };
 
     const cellWidthAllDay = 10;
-    const startXAllDay = 60; // Adjust the starting X-coordinate as needed
+    const startXAllDay = 63; // Adjust the starting X-coordinate as needed
     const startYAllDay = 55; // Adjust the starting Y-coordinate as needed
 
     const drawAllDay = () => {
@@ -2110,7 +2110,7 @@ function SalaryAllResult({ employeeList }) {
     };
 
     const cellWidthSalary = 16;
-    const startXSalary = 36; // Adjust the starting X-coordinate as needed
+    const startXSalary = 39; // Adjust the starting X-coordinate as needed
     const startYSalary = 55; // Adjust the starting Y-coordinate as needed
 
     const drawSalary = () => {
@@ -2129,7 +2129,7 @@ function SalaryAllResult({ employeeList }) {
     };
 
     const cellWidthOT = 16;
-    const startXOT = 36 + cellWidthOT * 1; // Adjust the starting X-coordinate as needed
+    const startXOT = 39 + cellWidthOT * 1; // Adjust the starting X-coordinate as needed
     const startYOT = 55; // Adjust the starting Y-coordinate as needed
 
     const drawOT = () => {
@@ -2149,7 +2149,7 @@ function SalaryAllResult({ employeeList }) {
 
     const cellWidthWelfare = 16;
     // const startXWelfare = 110; // Adjust the starting X-coordinate as needed
-    const startXWelfare = 36 + cellWidthOT * 2;
+    const startXWelfare = 39 + cellWidthOT * 2;
     const startYWelfare = 55; // Adjust the starting Y-coordinate as needed
 
     const drawWelfare = () => {
@@ -2171,7 +2171,7 @@ function SalaryAllResult({ employeeList }) {
 
     const cellWidthRoleWork = 16;
     // const startXRoleWork = 130; // Adjust the starting X-coordinate as needed
-    const startXRoleWork = 36 + cellWidthOT * 3;
+    const startXRoleWork = 39 + cellWidthOT * 3;
     const startYRoleWork = 55; // Adjust the starting Y-coordinate as needed
 
     const drawRoleWork = () => {
@@ -2193,7 +2193,7 @@ function SalaryAllResult({ employeeList }) {
 
     const cellWidthDiligenceAllowance = 16;
     // const startXResult = 310; // Adjust the starting X-coordinate as needed
-    const startXDiligenceAllowance = 36 + cellWidthOT * 4;
+    const startXDiligenceAllowance = 39 + cellWidthOT * 4;
     const startYDiligenceAllowance = 55; // Adjust the starting Y-coordinate as needed
 
     const drawDiligenceAllowance = () => {
@@ -2213,7 +2213,7 @@ function SalaryAllResult({ employeeList }) {
 
     const cellWidthHoliday = 16;
     // const startXHoliday = 150; // Adjust the starting X-coordinate as needed
-    const startXHoliday = 36 + cellWidthOT * 5;
+    const startXHoliday = 39 + cellWidthOT * 5;
     const startYHoliday = 55; // Adjust the starting Y-coordinate as needed
 
     const drawHoliday = () => {
@@ -2233,7 +2233,7 @@ function SalaryAllResult({ employeeList }) {
 
     const cellWidthAddBeforeDeductTax = 16;
     // const startXAddBeforeDeductTax = 170; // Adjust the starting X-coordinate as needed
-    const startXAddBeforeDeductTax = 36 + cellWidthOT * 6;
+    const startXAddBeforeDeductTax = 39 + cellWidthOT * 6;
     const startYAddBeforeDeductTax = 55; // Adjust the starting Y-coordinate as needed
 
     const drawAddBeforeDeductTax = () => {
@@ -2243,7 +2243,7 @@ function SalaryAllResult({ employeeList }) {
           const y = startYTop + i * cellHeightTop;
 
           // Add text for each cell
-          const cellText = `บวกอื่นๆ`;
+          const cellText = `บวกอื่นๆ\n(ก่อนภาษี)`;
           drawCell(x, y, cellWidthAddBeforeDeductTax, cellHeightTop, cellText);
           const cellText2 = ``;
           // drawCell(x, 195, cellWidth, cellHeightTop, cellText2);
@@ -2253,7 +2253,7 @@ function SalaryAllResult({ employeeList }) {
 
     const cellWidthMinusBeforeDeductTax = 16;
     // const startXMinusBeforeDeductTax = 190; // Adjust the starting X-coordinate as needed
-    const startXMinusBeforeDeductTax = 36 + cellWidthOT * 7;
+    const startXMinusBeforeDeductTax = 39 + cellWidthOT * 7;
     const startYMinusBeforeDeductTax = 55; // Adjust the starting Y-coordinate as needed
 
     const drawMinuseforeDeductTax = () => {
@@ -2264,7 +2264,7 @@ function SalaryAllResult({ employeeList }) {
           const y = startYTop + i * cellHeightTop;
 
           // Add text for each cell
-          const cellText = `หักอื่นๆ`;
+          const cellText = `หักอื่นๆ\n(ก่อนภาษี)`;
           drawCell(
             x,
             y,
@@ -2280,7 +2280,7 @@ function SalaryAllResult({ employeeList }) {
 
     const cellWidthAddBeforeDeductTax2nd = 16;
     // const startXAddBeforeDeductTax = 170; // Adjust the starting X-coordinate as needed
-    const startXAddBeforeDeductTax2nd = 36 + cellWidthOT * 8;
+    const startXAddBeforeDeductTax2nd = 39 + cellWidthOT * 8;
     const startYAddBeforeDeductTax2nd = 55; // Adjust the starting Y-coordinate as needed
 
     const drawAddBeforeDeductTax2nd = () => {
@@ -2307,7 +2307,7 @@ function SalaryAllResult({ employeeList }) {
 
     const cellWidthMinusBeforeDeductTax2nd = 16;
     // const startXMinusBeforeDeductTax = 190; // Adjust the starting X-coordinate as needed
-    const startXMinusBeforeDeductTax2nd = 36 + cellWidthOT * 9;
+    const startXMinusBeforeDeductTax2nd = 39 + cellWidthOT * 9;
     const startYMinusBeforeDeductTax2nd = 55; // Adjust the starting Y-coordinate as needed
 
     const drawMinuseforeDeductTax2nd = () => {
@@ -2335,7 +2335,7 @@ function SalaryAllResult({ employeeList }) {
 
     const cellWidthDeductTax = 16;
     // const startXDeductTax = 210; // Adjust the starting X-coordinate as needed
-    const startXDeductTax = 36 + cellWidthOT * 10;
+    const startXDeductTax = 39 + cellWidthOT * 10;
     const startYDeductTax = 55; // Adjust the starting Y-coordinate as needed
 
     const drawDeductTax = () => {
@@ -2345,7 +2345,7 @@ function SalaryAllResult({ employeeList }) {
           const y = startYTop + i * cellHeightTop;
 
           // Add text for each cell
-          const cellText = `หักภาษี.`;
+          const cellText = `หักภาษี`;
           drawCell(x, y, cellWidthDeductTax, cellHeightTop, cellText);
           const cellText2 = ``;
           // drawCell(x, 195, cellWidth, cellHeightTop, cellText2);
@@ -2355,7 +2355,7 @@ function SalaryAllResult({ employeeList }) {
 
     const cellWidthDeductTaxSocialSecurity = 16;
     // const startXDeductTaxSocialSecurity = 230; // Adjust the starting X-coordinate as needed
-    const startXDeductTaxSocialSecurity = 36 + cellWidthOT * 11;
+    const startXDeductTaxSocialSecurity = 39 + cellWidthOT * 11;
     const startYDeductTaxSocialSecurity = 55; // Adjust the starting Y-coordinate as needed
 
     const drawDeductTaxSocialSecurity = () => {
@@ -2383,7 +2383,7 @@ function SalaryAllResult({ employeeList }) {
 
     const cellWidthAddAfterDeductTax = 16;
     // const startXAddAfterDeductTax = 250; // Adjust the starting X-coordinate as needed
-    const startXAddAfterDeductTax = 36 + cellWidthOT * 12;
+    const startXAddAfterDeductTax = 39 + cellWidthOT * 12;
     const startYAddAfterDeductTax = 55; // Adjust the starting Y-coordinate as needed
 
     const drawAddAfterDeductTax = () => {
@@ -2403,7 +2403,7 @@ function SalaryAllResult({ employeeList }) {
 
     const cellWidthMinusAfterDeductTax = 16;
     // const startXMinusAfterDeductTax = 290; // Adjust the starting X-coordinate as needed
-    const startXMinusAfterDeductTax = 36 + cellWidthOT * 13;
+    const startXMinusAfterDeductTax = 39 + cellWidthOT * 13;
     const startYMinusAfterDeductTax = 55; // Adjust the starting Y-coordinate as needed
 
     const drawMinusAfterDeductTax = () => {
@@ -2424,7 +2424,7 @@ function SalaryAllResult({ employeeList }) {
 
     const cellWidthAdvancePayment = 16;
     // const startXAdvancePayment = 270; // Adjust the starting X-coordinate as needed
-    const startXAdvancePayment = 36 + cellWidthOT * 14;
+    const startXAdvancePayment = 39 + cellWidthOT * 14;
     const startYAdvancePayment = 55; // Adjust the starting Y-coordinate as needed
 
     const drawAdvancePayment = () => {
@@ -2444,7 +2444,7 @@ function SalaryAllResult({ employeeList }) {
 
     const cellWidthBank = 16;
     // const startXBank = 290; // Adjust the starting X-coordinate as needed
-    const startXBank = 36 + cellWidthOT * 15;
+    const startXBank = 39 + cellWidthOT * 15;
     const startYBank = 55; // Adjust the starting Y-coordinate as needed
 
     const drawBank = () => {
@@ -2464,7 +2464,7 @@ function SalaryAllResult({ employeeList }) {
 
     const cellWidthResult = 16;
     // const startXResult = 310; // Adjust the starting X-coordinate as needed
-    const startXResult = 36 + cellWidthOT * 15;
+    const startXResult = 39 + cellWidthOT * 15;
     const startYResult = 55; // Adjust the starting Y-coordinate as needed
 
     const drawResult = () => {
@@ -2791,32 +2791,16 @@ function SalaryAllResult({ employeeList }) {
         // Draw the line
         // pdf.line(58, currentY - 3, 295, currentY - 3);
 
-        pdf.text(`รวมแผนก`, 1, currentY);
+        // pdf.text(`รวมแผนก`, 1, currentY);
 
         // pdf.text(`${workplaceName} : ${workplaceKey}`, startXName + 1, currentY);
         // pdf.text(`${workplaceName} `, startXName + 1, currentY);
-        pdf.text(`${workplaceKey} `, startXName + 1, currentY);
+        // pdf.text(`${workplaceKey} `, startXName + 1, currentY);
 
-        // pdf.text(`${totalEmp} คน`, 68, currentY, { align: 'right' });
-
-        // pdf.text(`${totalSalary.toFixed(2)}`, 85, currentY, { align: 'right' });
-
-        // pdf.text(`${totalAmountOt.toFixed(2)}`, 85 + (cellWidthOT), currentY, { align: 'right' });
-        // // pdf.text(`${totalAmountSpecial.toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
-        //  // sumSpSalaryall
-        //  pdf.text(`${Number(sumSpSalaryall).toFixed(2)}`, 85 + (cellWidthOT * 2), currentY, { align: 'right' });
-        // pdf.text(`${totalAmountPosition.toFixed(2)}`, 85 + (cellWidthOT * 3), currentY, { align: 'right' });
-        // pdf.text(`${totalAmountHardWorking.toFixed(2)}`, 85 + (cellWidthOT * 4), currentY, { align: 'right' });
-        // pdf.text(`${totalAmountHoliday.toFixed(2)}`, 85 + (cellWidthOT * 5), currentY, { align: 'right' });
-        // pdf.text(`${totalAddAmountBeforeTax.toFixed(2)}`, 85 + (cellWidthOT * 6), currentY, { align: 'right' });
-        // pdf.text(`${totalDeductBeforeTax.toFixed(2)}`, 85 + (cellWidthOT * 7), currentY, { align: 'right' });
-        // pdf.text(`${totalTax.toFixed(0)}`, 85 + (cellWidthOT * 8), currentY, { align: 'right' });
-        // pdf.text(`${totalSocialSecurity.toFixed(0)}`, 85 + (cellWidthOT * 9), currentY, { align: 'right' });
-        // pdf.text(`${totalAddAmountAfterTax.toFixed(2)}`, 85 + (cellWidthOT * 10), currentY, { align: 'right' });
-        // pdf.text(`${totalAdvancePayment.toFixed(2)}`, 85 + (cellWidthOT * 11), currentY, { align: 'right' });
-        // pdf.text(`${totalDeductAfterTax.toFixed(2)}`, 85 + (cellWidthOT * 12), currentY, { align: 'right' });
-        // // pdf.text(`${totalBank.toFixed(2)}`, 278, currentY, { align: 'right' });
-        // pdf.text(`${totalTotal.toFixed(2)}`, 85 + (cellWidthOT * 13), currentY, { align: 'right' });
+        pdf.text(`${workplaceKey} `, 1, currentY);
+        pdf.text(`${workplaceName} `, startXName + 1, currentY);
+        // console.log('workplaceKey',workplaceKey);
+        // console.log('workplaceName',workplaceName);
 
         // เงินเดือน
         pdf.text(`${totalSalary.toFixed(2)}`, startXSalary + 16, currentY, {
@@ -2979,12 +2963,8 @@ function SalaryAllResult({ employeeList }) {
         //   currentY = 20;
         // }
         totalSalarySum += totalSalary;
-        console.log("totalSalary", totalSalary);
-        console.log("totalSalarySum", totalSalarySum);
-        totalAmountOtSum += totalAmountOt;
-        console.log("totalAmountOt", totalAmountOt);
-        console.log("totalAmountOtSum", totalAmountOtSum);
 
+        totalAmountOtSum += totalAmountOt;
         totalAmountSpecialSum += totalAmountSpecial;
         totalAmountPositionSum += totalAmountPosition;
         totalAmountHardWorkingSum += totalAmountHardWorking;
@@ -3198,7 +3178,302 @@ function SalaryAllResult({ employeeList }) {
     }
     setWorkplacrName(selectWorkplaceName);
   };
-  console.log("workplacrName", workplacrName);
+
+  const groupedByWorkplace = responseDataAll.reduce((acc, employee) => {
+    const { workplace } = employee;
+    const matchingWorkplace = workplaceList.find((w) => w.workplaceId === workplace);
+
+    acc[workplace] = acc[workplace] || {
+      employees: [],
+      workplaceName: matchingWorkplace ? matchingWorkplace.workplaceName : "N/A", // ถ้าไม่เจอให้ใส่ "N/A"
+
+      //  totalSalary: 0, totalAmountOt: 0,
+      // totalAmountSpecial: 0, totalAmountPosition: 0
+      // , totalAmountHardWorking: 0, totalAmountHoliday: 0, totalDeductBeforeTax: 0, totalAddAmountBeforeTax: 0,
+      // totalTax: 0, totalSocialSecurity: 0, totalAddAmountAfterTax: 0, totalAdvancePayment: 0
+      // , totalDeductAfterTax: 0, totalBank: 0, totalTotal: 0, totalEmp: 0
+      totalCountDay: 0,
+      totalSalary: 0,
+      totalAmountOt: 0,
+      totalAmountSpecial: 0,
+      // totalAmountPosition: 0,
+
+      totalAmountPosition: 0,
+      totalTel: 0,
+      totalTravel: 0,
+      totalAddSalary: 0,
+
+      totalAmountHardWorking: 0,
+      totalAmountHoliday: 0,
+      totalAmountSpecialDay: 0,
+
+      totalDeductBeforeTax: 0,
+      totalAddAmountBeforeTax: 0,
+      totalTax: 0,
+      totalSocialSecurity: 0,
+      totalAddAmountAfterTax: 0,
+      totalAdvancePayment: 0,
+      totalDeductAfterTax: 0,
+      totalBank: 0,
+      totalTotal: 0,
+      totalEmp: 0,
+      totalSpSalary: 0, // Add a new property for sum of SpSalary
+      totalCountSpecialDay: 0,
+
+      totalSumAddSalaryBeforeTax: 0,
+      totalSumAddSalaryBeforeTaxNonSocial: 0,
+      totalSumDeductBeforeTaxWithSocial: 0,
+      totalSumDeductBeforeTax: 0,
+      totalSumAddSalaryAfterTax: 0,
+      totalSumDeductAfterTax: 0,
+    };
+    acc[workplace].employees.push(employee);
+    // acc[workplace].name.push(employee.name);
+
+    // Adjust this line based on your specific structure to get the salary or any other relevant data
+    acc[workplace].totalSalary += parseFloat(
+      employee.accountingRecord?.[0]?.amountCountDayWork || 0
+    );
+    // acc[workplace].totalAmountOt += parseFloat(employee.accountingRecord?.[0]?.amountOt || 0);
+    const sumOT = parseFloat(
+      employee.accountingRecord?.[0]?.amountCountDayWorkOt || 0
+    );
+    acc[workplace].totalAmountOt += sumOT;
+
+    // acc[workplace].totalAmountPosition += parseFloat(employee.accountingRecord?.[0]?.amountPosition || 0);
+    // acc[workplace].totalTel += parseFloat(employee.accountingRecord?.[0]?.tel || 0);
+    // acc[workplace].totalTravel += parseFloat(employee.accountingRecord?.[0]?.travel || 0);
+    const totalAmountPositio = parseFloat(
+      employee.accountingRecord?.[0]?.amountPosition || 0
+    );
+    const totalTel = parseFloat(employee.accountingRecord?.[0]?.tel || 0);
+    const totalTravel = parseFloat(employee.accountingRecord?.[0]?.travel || 0);
+
+    acc[workplace].totalAmountPositio += totalAmountPositio;
+    acc[workplace].totalTel += totalTel;
+    acc[workplace].totalTravel += totalTravel;
+    acc[workplace].totalAddSalary +=
+      totalAmountPositio + totalTel + totalTravel;
+
+    acc[workplace].totalAmountSpecial += parseFloat(
+      employee.accountingRecord?.[0]?.amountSpecial || 0
+    );
+    acc[workplace].totalAmountPosition += parseFloat(
+      employee.accountingRecord?.[0]?.benefitNonSocial || 0
+    );
+    acc[workplace].totalAmountHardWorking += parseFloat(
+      employee.accountingRecord?.[0]?.amountHardWorking || 0
+    );
+    acc[workplace].totalAmountHoliday += parseFloat(
+      employee.accountingRecord?.[0]?.amountHoliday || 0
+    );
+    acc[workplace].totalAmountSpecialDay += parseFloat(
+      employee.accountingRecord?.[0]?.amountSpecialDay || 0
+    );
+
+    acc[workplace].totalDeductBeforeTax += parseFloat(
+      employee.accountingRecord?.[0]?.deductBeforeTax || 0
+    );
+    acc[workplace].totalAddAmountBeforeTax += parseFloat(
+      employee.accountingRecord?.[0]?.addAmountBeforeTax || 0
+    );
+    acc[workplace].totalTax += parseFloat(
+      employee.accountingRecord?.[0]?.tax || 0
+    );
+    acc[workplace].totalSocialSecurity += parseFloat(
+      employee.accountingRecord?.[0]?.socialSecurity || 0
+    );
+    acc[workplace].totalAddAmountAfterTax += parseFloat(
+      employee.accountingRecord?.[0]?.addAmountAfterTax || 0
+    );
+    acc[workplace].totalAdvancePayment += parseFloat(
+      employee.accountingRecord?.[0]?.advancePayment || 0
+    );
+    acc[workplace].totalDeductAfterTax += parseFloat(
+      employee.accountingRecord?.[0]?.deductAfterTax || 0
+    );
+    acc[workplace].totalBank += parseFloat(
+      employee.accountingRecord?.[0]?.bank || 0
+    );
+    acc[workplace].totalTotal += parseFloat(
+      employee.accountingRecord?.[0]?.total ?? 0
+    );
+
+    acc[workplace].totalSumAddSalaryBeforeTax += parseFloat(
+      employee.accountingRecord?.[0]?.sumAddSalaryBeforeTaxNonSocial || 0
+    );
+    acc[workplace].totalSumAddSalaryBeforeTaxNonSocial += parseFloat(
+      employee.accountingRecord?.[0]?.sumAddSalaryBeforeTaxNonSocial || 0
+    );
+    acc[workplace].totalSumDeductBeforeTaxWithSocial += parseFloat(
+      employee.accountingRecord?.[0]?.sumDeductBeforeTaxWithSocial || 0
+    );
+    acc[workplace].totalSumDeductBeforeTax += parseFloat(
+      employee.accountingRecord?.[0]?.sumDeductBeforeTax || 0
+    );
+    acc[workplace].totalSumAddSalaryAfterTax += parseFloat(
+      employee.accountingRecord?.[0]?.sumAddSalaryAfterTax || 0
+    );
+    acc[workplace].totalSumDeductAfterTax += parseFloat(
+      employee.accountingRecord?.[0]?.sumDeductAfterTax || 0
+    );
+    // amountSpecialDay
+
+    acc[workplace].totalEmp += 1;
+
+    return acc;
+  }, {});
+
+  console.log("groupedByWorkplace", groupedByWorkplace);
+
+  const exportToExcel = () => {
+    const headers = [
+      "รหัส",
+      "หน่วยงาน",
+      "เงินเดือน",
+      "ค่าล่วงเวลา",
+      "ค่ารถ/โทร/ตน.",
+      "สวัสดิการ(ไม่คิด ปกส.)",
+      "เบี้ยขยัน",
+      "นักขัติ",
+      "บวกอื่นๆ(ก่อนภาษี)",
+      "หักอื่นๆ(ก่อนภาษี)",
+      "บวกอื่นๆ(หลังภาษี)",
+      "หักอื่นๆ(หลังภาษี)",
+      "หักภาษี",
+      "หักปกส",
+      "บวกอื่นๆ",
+      "เบิกบ่วงหน้า",
+      "หักอื่นๆ",
+      "สุทธิ",
+    ];
+
+    // แปลง groupedByWorkplace เป็นอาร์เรย์ของข้อมูล
+    const formattedData = Object.entries(groupedByWorkplace).map(
+      ([workplaceKey, item]) => ({
+        "รหัส": workplaceKey,
+        "หน่วยงาน": item.workplaceName || "N/A", // ใช้ workplaceName หรือ N/A ถ้าไม่มี
+        "เงินเดือน": Number(item.totalSalary.toFixed(2) || 0),
+        "ค่าล่วงเวลา": Number(item.totalAmountOt.toFixed(2) || 0),
+        "ค่ารถ/โทร/ตน.": Number(item.totalAddSalary ?? 0).toFixed(2),
+        "สวัสดิการ(ไม่คิด ปกส.)": Number(item.totalAmountPosition.toFixed(2) || 0),
+        "เบี้ยขยัน": Number(item.totalAmountHardWorking.toFixed(2) || 0),
+        "นักขัติ": Number(item.totalAmountSpecialDay).toFixed(2) || 0,
+        "บวกอื่นๆ(ก่อนภาษี)": Number(item.totalSumAddSalaryBeforeTax.toFixed(2) || 0),
+        "หักอื่นๆ(ก่อนภาษี)":
+        Number(item.totalSumDeductBeforeTaxWithSocial.toFixed(2) || 0),
+        "บวกอื่นๆ(หลังภาษี)": Number(item.totalSumAddSalaryBeforeTaxNonSocial.toFixed(2) || 0),
+        "หักอื่นๆ(หลังภาษี)": Number(item.totalSumDeductBeforeTax.toFixed(2) || 0),
+        "หักภาษี": Number(item.totalTax.toFixed(0) || 0),
+        "หักปกส": Number(item.totalSocialSecurity.toFixed(0) || 0),
+        "บวกอื่นๆ": Number(item.totalSumAddSalaryAfterTax.toFixed(2) || 0),
+        "เบิกบ่วงหน้า": Number(item.totalAdvancePayment.toFixed(2) || 0),
+        "หักอื่นๆ": Number(item.totalSumDeductAfterTax.toFixed(2) || 0),
+        "สุทธิ": Number(item.totalTotal.toFixed(2) || 0),
+      })
+    );
+
+    const totals = Object.values(groupedByWorkplace).reduce(
+      (acc, item) => {
+        acc.totalSalary += item.totalSalary || 0;
+        acc.totalAmountOt += item.totalAmountOt || 0;
+        acc.totalAddSalary += Number(item.totalAddSalary ?? 0);
+        acc.totalAmountPosition += item.totalAmountPosition || 0;
+        acc.totalAmountHardWorking += item.totalAmountHardWorking || 0;
+        acc.totalAmountSpecialDay += Number(item.totalAmountSpecialDay) || 0;
+        acc.totalSumAddSalaryBeforeTax += item.totalSumAddSalaryBeforeTax || 0;
+        acc.totalSumDeductBeforeTaxWithSocial +=
+          item.totalSumDeductBeforeTaxWithSocial || 0;
+        acc.totalSumAddSalaryBeforeTaxNonSocial +=
+          item.totalSumAddSalaryBeforeTaxNonSocial || 0;
+        acc.totalSumDeductBeforeTax += item.totalSumDeductBeforeTax || 0;
+        acc.totalTax += item.totalTax || 0;
+        acc.totalSocialSecurity += item.totalSocialSecurity || 0;
+        acc.totalSumAddSalaryAfterTax += item.totalSumAddSalaryAfterTax || 0;
+        acc.totalAdvancePayment += item.totalAdvancePayment || 0;
+        acc.totalSumDeductAfterTax += item.totalSumDeductAfterTax || 0;
+        acc.totalTotal += item.totalTotal || 0;
+        return acc;
+      },
+      {
+        totalSalary: 0,
+        totalAmountOt: 0,
+        totalAddSalary: 0,
+        totalAmountPosition: 0,
+        totalAmountHardWorking: 0,
+        totalAmountSpecialDay: 0,
+        totalSumAddSalaryBeforeTax: 0,
+        totalSumDeductBeforeTaxWithSocial: 0,
+        totalSumAddSalaryBeforeTaxNonSocial: 0,
+        totalSumDeductBeforeTax: 0,
+        totalTax: 0,
+        totalSocialSecurity: 0,
+        totalSumAddSalaryAfterTax: 0,
+        totalAdvancePayment: 0,
+        totalSumDeductAfterTax: 0,
+        totalTotal: 0,
+      }
+    );
+    
+    // เพิ่มผลรวมลงใน `formattedData`
+    formattedData.push({
+      "รหัส": "รวมทั้งหมด",
+      "หน่วยงาน": "",
+      "เงินเดือน": totals.totalSalary.toFixed(2),
+      "ค่าล่วงเวลา": totals.totalAmountOt.toFixed(2),
+      "ค่ารถ/โทร/ตน.": totals.totalAddSalary.toFixed(2),
+      "สวัสดิการ(ไม่คิด ปกส.)": totals.totalAmountPosition.toFixed(2),
+      "เบี้ยขยัน": totals.totalAmountHardWorking.toFixed(2),
+      "นักขัติ": totals.totalAmountSpecialDay.toFixed(2),
+      "บวกอื่นๆ(ก่อนภาษี)": totals.totalSumAddSalaryBeforeTax.toFixed(2),
+      "หักอื่นๆ(ก่อนภาษี)": totals.totalSumDeductBeforeTaxWithSocial.toFixed(2),
+      "บวกอื่นๆ(หลังภาษี)": totals.totalSumAddSalaryBeforeTaxNonSocial.toFixed(2),
+      "หักอื่นๆ(หลังภาษี)": totals.totalSumDeductBeforeTax.toFixed(2),
+      "หักภาษี": totals.totalTax.toFixed(0),
+      "หักปกส": totals.totalSocialSecurity.toFixed(0),
+      "บวกอื่นๆ": totals.totalSumAddSalaryAfterTax.toFixed(2),
+      "เบิกบ่วงหน้า": totals.totalAdvancePayment.toFixed(2),
+      "หักอื่นๆ": totals.totalSumDeductAfterTax.toFixed(2),
+      "สุทธิ": totals.totalTotal.toFixed(2),
+    });
+
+    console.log("formattedData", formattedData);
+
+    // // สร้าง Worksheet และเพิ่ม Headers
+    // const worksheet = XLSX.utils.json_to_sheet(formattedData, {
+    //   header: headers,
+    // });
+
+    // // สร้าง Workbook
+    // const workbook = XLSX.utils.book_new();
+    // XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+    // // แปลง Workbook เป็น Blob
+    // const excelBuffer = XLSX.write(workbook, {
+    //   bookType: "xlsx",
+    //   type: "array",
+    // });
+    // const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
+
+    // // ดาวน์โหลดไฟล์
+    // saveAs(blob, "Test_Excel.xlsx");
+    const ws = XLSX.utils.json_to_sheet([], { origin: "A4" }); // เริ่มข้อมูล array ที่ A4
+
+// เพิ่มหัวเรื่องใน A1, A2, และ A3
+ws["A1"] = { v: "ชื่อ" };     // เซลล์ A1
+ws["A2"] = { v: "ที่อยู่" };  // เซลล์ A2
+ws["A3"] = { v: "วันที่" };   // เซลล์ A3
+
+// นำข้อมูลจาก formattedData ใส่ลงใน Excel (เริ่มที่ A4)
+XLSX.utils.sheet_add_json(ws, formattedData, { origin: "A4" });
+
+// สร้าง Workbook และเพิ่ม Worksheet
+const wb = XLSX.utils.book_new();
+XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+// ดาวน์โหลดไฟล์ Excel
+XLSX.writeFile(wb, "ExportedData.xlsx");
+  };
 
   return (
     <body class="hold-transition sidebar-mini" className="editlaout">
@@ -3427,6 +3702,10 @@ function SalaryAllResult({ employeeList }) {
                   >
                     PDF หน่วยงานทั้งหมด
                   </button>
+                </div>
+                <br />
+                <div>
+                  <button onClick={exportToExcel}>Export to Excel</button>
                 </div>
                 {/* <label>Thai Date:</label> */}
                 {/* <DatePicker
