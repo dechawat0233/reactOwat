@@ -19,7 +19,7 @@ import Compensation from './Compensation';
 // import './Examine.css';
 
 function Examine() {
-    document.title = 'เวลาทำงานรายบุคคล';
+    document.title = 'ตรวจการทำงาน';
 
     const tableStyle = {
         borderCollapse: 'collapse',
@@ -798,19 +798,19 @@ let r = {};
                     {/* <!-- Content Header (Page header) --> */}
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><i class="fas fa-home"></i> <a href="index.php">หน้าหลัก</a></li>
-                        <li class="breadcrumb-item"><a href="#"> ระบบเงินเดือน</a></li>
-                        <li class="breadcrumb-item active">เวลาทำงานรายบุคคล</li>
+                        <li class="breadcrumb-item"><a href="#"> การตั้งค่า</a></li>
+                        <li class="breadcrumb-item active">ตรวจการทำงาน</li>
                     </ol>
                     <div class="content-header">
                         <div class="container-fluid">
                             <div class="row mb-2">
-                                <h1 class="m-0"><i class="far fa-arrow-alt-circle-right"></i> เวลาทำงานรายบุคคล</h1>
+                                <h1 class="m-0"><i class="far fa-arrow-alt-circle-right"></i> ตรวจการทำงาน</h1>
                             </div>
                         </div>
                     </div>
                     <section class="content" id='123'>
                         <div class="container-fluid">
-                            <h2 class="title">เวลาทำงานรายบุคคล</h2>
+                            <h2 class="title">ตรวจการทำงาน</h2>
                             <section class="Frame">
                                 <div class="col-md-12">
                                     <form onSubmit={handleSearch}>
