@@ -16,7 +16,7 @@ import { FaCalendarAlt } from "react-icons/fa"; // You can use any icon library
 import th from "date-fns/locale/th"; // Import Thai locale data from date-fns
 
 function Salaryresult() {
-  document.title = "สรุปเงินเดือน";
+  document.title = "เงินเดือนรายบุคคล";
 
   const tableStyle = {
     borderCollapse: "collapse",
@@ -2092,15 +2092,15 @@ function Salaryresult() {
               <i class="fas fa-home"></i> <a href="index.php">หน้าหลัก</a>
             </li>
             <li class="breadcrumb-item">
-              <a href="#"> การตั้งค่า</a>
+              <a href="#"> ระบบเงินเดือน</a>
             </li>
-            <li class="breadcrumb-item active">สรุปเงินเดือน</li>
+            <li class="breadcrumb-item active">เงินเดือนรายบุคคล</li>
           </ol>
           <div class="content-header">
             <div class="container-fluid">
               <div class="row mb-2">
                 <h1 class="m-0">
-                  <i class="far fa-arrow-alt-circle-right"></i> สรุปเงินเดือน
+                  <i class="far fa-arrow-alt-circle-right"></i> เงินเดือนรายบุคคล
                 </h1>
               </div>
             </div>

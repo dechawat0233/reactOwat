@@ -267,7 +267,7 @@ function Calculate_tax() {
                                 </div>
                                 <div class="line_btn">
                                     <button type="submit" class="btn b_save"><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
-                                    <button type="reset" class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
+                                    <button type="reset" class="btn clean"><i class="far fa-window-close" onClick={() => window.location.reload()}></i> &nbsp;ยกเลิก</button>
                                 </div>
                             </form>
                         </div>

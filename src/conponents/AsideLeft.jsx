@@ -9,6 +9,7 @@ function AsideLeft() {
   const [showSubMenu, setShowSubMenu] = useState(false);
   const [showSubMenu2, setShowSubMenu2] = useState(false);
   const [showSubMenu3, setShowSubMenu3] = useState(false);
+  const [showSubMenu3_2, setShowSubMenu3_2] = useState(false);
   const [showSubMenu4, setShowSubMenu4] = useState(false);
 
 
@@ -42,6 +43,9 @@ function AsideLeft() {
 
   function toggleSubMenu3() {
     setShowSubMenu3(!showSubMenu3);
+  }
+  function toggleSubMenu3_2() {
+    setShowSubMenu3_2(!showSubMenu3_2);
   }
   function toggleSubMenu4() {
     setShowSubMenu4(!showSubMenu4);
@@ -103,14 +107,35 @@ function AsideLeft() {
                         <Link to="/salaryAllresult" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> ออกรายงานเงินเดือนพนักงาน</Link>
                       </li>
                       <li class="nav-item">
-                        <Link to="/worktimesheetworkplace" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ตารางเวลาทำงานพนักงาน</Link>
+                        <Link to="/worktimesheetworkplace" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> ตารางเวลาทำงานพนักงาน</Link>
                       </li>
                       <li class="nav-item">
-                        <Link to="/salarySlipPDF" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ออกสลิปเงินเดือน</Link>
+                        <Link to="/salarySlipPDF" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> ออกสลิปเงินเดือน</Link>
                       </li>
                       {/* <li class="nav-item">
                         <Link to="/worktimeSheetWorkplace_Save01_22_2024" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> สรุปหน่วยงานแบบเก่า</Link>
                       </li> */}
+                    </>
+                  </ul>
+                )}
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link" onClick={toggleSubMenu3_2}>
+                  <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                  <p> รายงาน ออดิท<i class="right fas fa-angle-left"></i><i class=""></i></p>
+                </a>
+                {showSubMenu3_2 && (
+                  <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <>
+                      <li class="nav-item">
+                        <Link to="/salaryAllresult" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> ออกรายงานเงินเดือนพนักงาน</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/worktimesheetworkplace" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> ตารางเวลาทำงานพนักงาน</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/salarySlipPDF" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> ออกสลิปเงินเดือน</Link>
+                      </li>
                     </>
                   </ul>
                 )}

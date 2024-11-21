@@ -25,13 +25,13 @@ const SendEmployeePDF = ({employeeList}) => {
                         {/* <!-- Content Header (Page header) --> */}
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><i class="fas fa-home"></i> <a href="index.php">หน้าหลัก</a></li>
-                            <li class="breadcrumb-item"><a href="#"> ระบบเงินเดือน</a></li>
-                            <li class="breadcrumb-item active">ใบลงเวลาการปฏิบัติงาน</li>
+                            <li class="breadcrumb-item"><a href="#"> ระบบออกเอกสาร</a></li>
+                            <li class="breadcrumb-item active">ใบส่งตัว</li>
                         </ol>
                         <div class="content-header">
                             <div class="container-fluid">
                                 <div class="row mb-2">
-                                    <h1 class="m-0"><i class="far fa-arrow-alt-circle-right"></i> ใบลงเวลาการปฏิบัติงาน</h1>
+                                    <h1 class="m-0"><i class="far fa-arrow-alt-circle-right"></i> ใบส่งตัว</h1>
                                 </div>
                             </div>
                         </div>

@@ -21,7 +21,7 @@ import { addYears } from "date-fns";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 
-function SalaryAllResult({ employeeList ,workplaceList}) {
+function SalaryAllResultAudit({ employeeList ,workplaceList}) {
   const [workplacrId, setWorkplacrId] = useState(""); //รหัสหน่วยงาน
   const [workplacrName, setWorkplacrName] = useState(""); //รหัสหน่วยงาน
 
@@ -694,7 +694,7 @@ function SalaryAllResult({ employeeList ,workplaceList}) {
           const y = startYTop + i * cellHeightTop;
 
           // Add text for each cell
-          const cellText = `บวกอื่นๆ\n(คิด ปกส)`;
+          const cellText = `บวกอื่นๆ\n(ก่อนหัก ปกส)`;
           drawCell(x, y, cellWidthAddBeforeDeductTax, cellHeightTop, cellText);
           const cellText2 = ``;
           // drawCell(x, 195, cellWidth, cellHeightTop, cellText2);
@@ -715,7 +715,7 @@ function SalaryAllResult({ employeeList ,workplaceList}) {
           const y = startYTop + i * cellHeightTop;
 
           // Add text for each cell
-          const cellText = `หักอื่นๆ\n(คิด ปกส)`;
+          const cellText = `หักอื่นๆ\n(ก่อนหัก ปกส)`;
           drawCell(
             x,
             y,
@@ -742,7 +742,7 @@ function SalaryAllResult({ employeeList ,workplaceList}) {
           const y = startYTop + i * cellHeightTop;
 
           // Add text for each cell
-          const cellText = `บวกอื่นๆ\n(ไม่คิด ปกส)`;
+          const cellText = `บวกอื่นๆ\n(หลังหัก ปกส)`;
           drawCell(
             x,
             y,
@@ -770,7 +770,7 @@ function SalaryAllResult({ employeeList ,workplaceList}) {
           const y = startYTop + i * cellHeightTop;
 
           // Add text for each cell
-          const cellText = `หักอื่นๆ\n(ไม่คิด ปกส)`;
+          const cellText = `หักอื่นๆ\n(หลังหัก ปกส)`;
           drawCell(
             x,
             y,
@@ -2243,7 +2243,7 @@ function SalaryAllResult({ employeeList ,workplaceList}) {
           const y = startYTop + i * cellHeightTop;
 
           // Add text for each cell
-          const cellText = `บวกอื่นๆ\n(คิด ปกส)`;
+          const cellText = `บวกอื่นๆ\n(ก่อนหัก ปกส)`;
           drawCell(x, y, cellWidthAddBeforeDeductTax, cellHeightTop, cellText);
           const cellText2 = ``;
           // drawCell(x, 195, cellWidth, cellHeightTop, cellText2);
@@ -2264,7 +2264,7 @@ function SalaryAllResult({ employeeList ,workplaceList}) {
           const y = startYTop + i * cellHeightTop;
 
           // Add text for each cell
-          const cellText = `หักอื่นๆ\n(คิด ปกส)`;
+          const cellText = `หักอื่นๆ\n(ก่อนหัก ปกส)`;
           drawCell(
             x,
             y,
@@ -2291,7 +2291,7 @@ function SalaryAllResult({ employeeList ,workplaceList}) {
           const y = startYTop + i * cellHeightTop;
 
           // Add text for each cell
-          const cellText = `บวกอื่นๆ\n(ไม่คิด ปกส)`;
+          const cellText = `บวกอื่นๆ\n(หลังหัก ปกส)`;
           drawCell(
             x,
             y,
@@ -2319,7 +2319,7 @@ function SalaryAllResult({ employeeList ,workplaceList}) {
           const y = startYTop + i * cellHeightTop;
 
           // Add text for each cell
-          const cellText = `หักอื่นๆ\n(ไม่คิด ปกส)`;
+          const cellText = `หักอื่นๆ\n(หลังหัก ปกส)`;
           drawCell(
             x,
             y,
@@ -3336,10 +3336,10 @@ function SalaryAllResult({ employeeList ,workplaceList}) {
       "สวัสดิการ(ไม่คิด ปกส.)",
       "เบี้ยขยัน",
       "นักขัติ",
-      "บวกอื่นๆ(คิด ปกส)",
-      "หักอื่นๆ(คิด ปกส",
-      "บวกอื่นๆ(ไม่คิด ปกส)",
-      "หักอื่นๆ(ไม่คิด ปกส)",
+      "บวกอื่นๆ(ก่อนหัก ปกส)",
+      "หักอื่นๆ(ก่อนหัก ปกส",
+      "บวกอื่นๆ(หลังหัก ปกส)",
+      "หักอื่นๆ(หลังหัก ปกส)",
       "หักภาษี",
       "หักปกส",
       "บวกอื่นๆ",
@@ -3359,11 +3359,11 @@ function SalaryAllResult({ employeeList ,workplaceList}) {
         "สวัสดิการ(ไม่คิด ปกส.)": Number(item.totalAmountPosition.toFixed(2) || 0),
         "เบี้ยขยัน": Number(item.totalAmountHardWorking.toFixed(2) || 0),
         "นักขัติ": Number(item.totalAmountSpecialDay).toFixed(2) || 0,
-        "บวกอื่นๆ(คิด ปกส)": Number(item.totalSumAddSalaryBeforeTax.toFixed(2) || 0),
-        "หักอื่นๆ(คิด ปกส)":
+        "บวกอื่นๆ(ก่อนหัก ปกส)": Number(item.totalSumAddSalaryBeforeTax.toFixed(2) || 0),
+        "หักอื่นๆ(ก่อนหัก ปกส)":
         Number(item.totalSumDeductBeforeTaxWithSocial.toFixed(2) || 0),
-        "บวกอื่นๆ(ไม่คิด ปกส)": Number(item.totalSumAddSalaryBeforeTaxNonSocial.toFixed(2) || 0),
-        "หักอื่นๆ(ไม่คิด ปกส)": Number(item.totalSumDeductBeforeTax.toFixed(2) || 0),
+        "บวกอื่นๆ(หลังหัก ปกส)": Number(item.totalSumAddSalaryBeforeTaxNonSocial.toFixed(2) || 0),
+        "หักอื่นๆ(หลังหัก ปกส)": Number(item.totalSumDeductBeforeTax.toFixed(2) || 0),
         "หักภาษี": Number(item.totalTax.toFixed(0) || 0),
         "หักปกส": Number(item.totalSocialSecurity.toFixed(0) || 0),
         "บวกอื่นๆ": Number(item.totalSumAddSalaryAfterTax.toFixed(2) || 0),
@@ -3485,23 +3485,23 @@ XLSX.writeFile(wb, "ExportedData.xlsx");
               <i class="fas fa-home"></i> <a href="index.php">หน้าหลัก</a>
             </li>
             <li class="breadcrumb-item">
-              <a href="#"> ระบบเงินเดือน</a>
+              <a href="#"> สรุปเงินเดือน</a>
             </li>
-            <li class="breadcrumb-item active">ออกรายงานเงินเดือนพนักงาน </li>
+            <li class="breadcrumb-item active">สรุปหน่วยงานทั้งหมด</li>
           </ol>
           <div class="content-header">
             <div class="container-fluid">
               <div class="row mb-2">
                 <h1 class="m-0">
                   <i class="far fa-arrow-alt-circle-right"></i>{" "}
-                  ออกรายงานเงินเดือนพนักงาน 
+                  สรุปหน่วยงานทั้งหมด
                 </h1>
               </div>
             </div>
           </div>
           <section class="content">
             <div class="container-fluid">
-              <h2 class="title">ออกรายงานเงินเดือนพนักงาน </h2>
+              <h2 class="title">สรุปหน่วยงานทั้งหมด</h2>
               <section class="Frame">
                 <div class="col-md-12">
                   <div class="row">
@@ -3704,8 +3704,8 @@ XLSX.writeFile(wb, "ExportedData.xlsx");
                   </button>
                 </div>
                 <br />
-                <div class="col-md-12">
-                  <button class="btn btn-success" onClick={exportToExcel}>Export to Excel</button>
+                <div>
+                  <button onClick={exportToExcel}>Export to Excel</button>
                 </div>
                 {/* <label>Thai Date:</label> */}
                 {/* <DatePicker
@@ -3732,4 +3732,4 @@ XLSX.writeFile(wb, "ExportedData.xlsx");
   );
 }
 
-export default SalaryAllResult;
+export default SalaryAllResultAudit;

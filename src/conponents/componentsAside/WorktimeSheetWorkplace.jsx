@@ -46,7 +46,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
   };
 
   useEffect(() => {
-    document.title = "ใบลงเวลาการปฏิบัติงาน";
+    document.title = "ตารางเวลาทำงานพนักงาน";
     // You can also return a cleanup function if needed
     // return () => { /* cleanup code */ };
   }, []);
@@ -9052,14 +9052,14 @@ function WorktimeSheetWorkplace({ employeeList }) {
             <li class="breadcrumb-item">
               <a href="#"> ระบบเงินเดือน</a>
             </li>
-            <li class="breadcrumb-item active">ใบลงเวลาการปฏิบัติงาน</li>
+            <li class="breadcrumb-item active">ตารางเวลาทำงานพนักงาน</li>
           </ol>
           <div class="content-header">
             <div class="container-fluid">
               <div class="row mb-2">
                 <h1 class="m-0">
                   <i class="far fa-arrow-alt-circle-right"></i>{" "}
-                  ใบลงเวลาการปฏิบัติงาน
+                  ตารางเวลาทำงานพนักงาน
                 </h1>
               </div>
             </div>

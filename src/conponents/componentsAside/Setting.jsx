@@ -67,14 +67,14 @@ function Setting({ workplaceList, employeeList }) {
 
   // Options for dropdowns
   const daysOfWeek = [
- "อาทิตย์",  
-  "จันทร์",
+    "อาทิตย์",
+    "จันทร์",
     "อังคาร",
     "พุธ",
     "พฤหัส",
     "ศุกร์",
     "เสาร์",
-    
+
   ];
   const positions = ["หัวหน้างาน", "พนักงานทำความสะอาด"];
 
@@ -379,7 +379,7 @@ function Setting({ workplaceList, employeeList }) {
         }
         // await alert(JSON.stringify(response.data.employees[0].addSalary ,null,2 ));
         // await alert(JSON.stringify(response.data.employees[0].deductSalary ,null,2 ));
-      } catch (e) {}
+      } catch (e) { }
     };
 
     getMaster();
@@ -504,11 +504,11 @@ function Setting({ workplaceList, employeeList }) {
           // Show alert for duplicate date selection
           alert(
             day +
-              "/" +
-              month +
-              "/" +
-              year +
-              "  Selected date already exists in the list."
+            "/" +
+            month +
+            "/" +
+            year +
+            "  Selected date already exists in the list."
           );
         }
         // setDay('');
@@ -518,7 +518,7 @@ function Setting({ workplaceList, employeeList }) {
         // Show alert for invalid date selection
         alert(
           day / month / year +
-            "Invalid date selection. Please select a valid day, month, and year."
+          "Invalid date selection. Please select a valid day, month, and year."
         );
       }
     } else {
@@ -598,7 +598,21 @@ function Setting({ workplaceList, employeeList }) {
   const [workEndOt3, setWorkEndOt3] = useState(""); //เวลาออกกะเย็น
 
   const [workOfHour, setWorkOfHour] = useState(""); //ชั่วโมงทำงานต่อสัปดาห์
+  const [workOfMinute, setWorkOfMinute] = useState(""); //ชั่วโมงทำงานต่อสัปดาห์
   const [workOfOT, setWorkOfOT] = useState(""); //ชั่วโมง OT ต่อสัปดาห์
+  const [workOfOTMinute, setWorkOfOTMinute] = useState(""); //ชั่วโมง OT ต่อสัปดาห์
+  const [breakOfOT, setBreakOfOT] = useState(""); //ชั่วโมง OT ต่อสัปดาห์
+  const [isCustom, setIsCustom] = useState(false); // Tracks if custom input is active
+
+  const handleRadioChange = (value) => {
+    if (value === "customset") {
+      setIsCustom(true);
+      setBreakOfOT(""); // Reset breakOfOT for custom input
+    } else {
+      setIsCustom(false);
+      setBreakOfOT(value); // Update breakOfOT with selected value
+    }
+  };
 
   const [workRate, setWorkRate] = useState(""); //ค่าจ้างต่อวัน
   const [workRateOT, setWorkRateOT] = useState(""); //ค่าจ้าง OT ต่อชั่วโมง
@@ -1457,8 +1471,8 @@ function Setting({ workplaceList, employeeList }) {
 
                 <h2 class="title">เวลาทำงาน</h2>
                 <section class="Frame">
-                  <div class="row">
-                    <div class="col-md-6">
+                  <div class="row align-items-end">
+                    <div class="col-md-3">
                       <div class="form-group">
                         <label role="workOfHour">ชั่วโมงทำงาน</label>
                         <input
@@ -1469,45 +1483,112 @@ function Setting({ workplaceList, employeeList }) {
                           value={workOfHour}
                           onChange={(e) => setWorkOfHour(e.target.value)}
                           onInput={(e) => {
-                            // Remove any non-digit characters
-                            e.target.value = e.target.value.replace(
-                              /[^0-9.]/g,
-                              ""
-                            );
-
-                            // Ensure only one '.' is allowed
-                            const parts = e.target.value.split(".");
-                            if (parts.length > 2) {
-                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                            }
+                            // Remove any non-digit characters, including '.'
+                            e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        {/* <label role="workOfOT">-</label> */}
+                        <input
+                          type="text"
+                          // style={{ marginBottom: "0rem" }}
+                          class="form-control "
+                          id="workOfOT"
+                          placeholder="นาที"
+                          value={workOfOT}
+                          onChange={(e) => setWorkOfMinute(e.target.value)}
+                          onInput={(e) => {
+                            // Remove any non-digit characters, including '.'
+                            e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row align-items-end">
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label role="workOfHour">ชั่วโมงทำงาน</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="workOfHour"
+                          placeholder="ชั่วโมงทำงาน OT"
+                          value={workOfOT}
+                          onChange={(e) => setWorkOfOT(e.target.value)}
+                          onInput={(e) => {
+                            // Remove any non-digit characters, including '.'
+                            e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        {/* <label role="workOfOT">-</label> */}
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="workOfOT"
+                          placeholder="นาที"
+                          value={workOfOTMinute}
+                          onChange={(e) => setWorkOfOTMinute(e.target.value)}
+                          onInput={(e) => {
+                            // Remove any non-digit characters, including '.'
+                            e.target.value = e.target.value.replace(/[^0-9]/g, "");
                           }}
                         />
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label role="workOfOT">ชั่วโมง OT</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="workOfOT"
-                          placeholder="ชั่วโมง OT"
-                          value={workOfOT}
-                          onChange={(e) => setWorkOfOT(e.target.value)}
-                          onInput={(e) => {
-                            // Remove any non-digit characters
-                            e.target.value = e.target.value.replace(
-                              /[^0-9.]/g,
-                              ""
-                            );
-
-                            // Ensure only one '.' is allowed
-                            const parts = e.target.value.split(".");
-                            if (parts.length > 2) {
-                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                            }
-                          }}
-                        />
+                        <div class="row align-items-end">
+                          <div class="col-md-4">
+                            <label>
+                              <input
+                                type="radio"
+                                value="20"
+                                checked={breakOfOT === "20"}
+                                onChange={(e) => handleRadioChange(e.target.value)}
+                              />
+                              20
+                            </label>
+                            <label style={{ marginLeft: "10px" }}>
+                              <input
+                                type="radio"
+                                value="30"
+                                checked={breakOfOT === "30"}
+                                onChange={(e) => handleRadioChange(e.target.value)}
+                              />
+                              30
+                            </label>
+                            <label style={{ marginLeft: "10px" }}>
+                              <input
+                                type="radio"
+                                value="customset"
+                                checked={isCustom}
+                                onChange={(e) => handleRadioChange(e.target.value)}
+                              />
+                              Custom
+                            </label>
+                          </div>
+                          <div class="col-md-6">
+                            {/* Show input if customset is selected */}
+                            {isCustom && (
+                              <input
+                                type="text"
+                                className="form-control"
+                                style={{ marginTop: "10px", width: "200px" }}
+                                placeholder="Enter custom OT hours"
+                                value={breakOfOT}
+                                onChange={(e) => setBreakOfOT(e.target.value)}
+                              />
+                            )}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1766,15 +1847,15 @@ function Setting({ workplaceList, employeeList }) {
                               onInput={(e) => {
                                 // Remove any non-digit characters
                                 e.target.value = e.target.value.replace(
-                              /[^0-9.]/g,
-                              ""
-                            );
+                                  /[^0-9.]/g,
+                                  ""
+                                );
 
-                            // Ensure only one '.' is allowed
-                            const parts = e.target.value.split(".");
-                            if (parts.length > 2) {
-                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                            }
+                                // Ensure only one '.' is allowed
+                                const parts = e.target.value.split(".");
+                                if (parts.length > 2) {
+                                  e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                                }
                               }}
                             />
                           </div>
@@ -1813,15 +1894,15 @@ function Setting({ workplaceList, employeeList }) {
                               onInput={(e) => {
                                 // Remove any non-digit characters
                                 e.target.value = e.target.value.replace(
-                              /[^0-9.]/g,
-                              ""
-                            );
+                                  /[^0-9.]/g,
+                                  ""
+                                );
 
-                            // Ensure only one '.' is allowed
-                            const parts = e.target.value.split(".");
-                            if (parts.length > 2) {
-                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                            }
+                                // Ensure only one '.' is allowed
+                                const parts = e.target.value.split(".");
+                                if (parts.length > 2) {
+                                  e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                                }
                               }}
                             />
                           </div>
@@ -1935,15 +2016,15 @@ function Setting({ workplaceList, employeeList }) {
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                              /[^0-9.]/g,
-                              ""
-                            );
+                                    /[^0-9.]/g,
+                                    ""
+                                  );
 
-                            // Ensure only one '.' is allowed
-                            const parts = e.target.value.split(".");
-                            if (parts.length > 2) {
-                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                            }
+                                  // Ensure only one '.' is allowed
+                                  const parts = e.target.value.split(".");
+                                  if (parts.length > 2) {
+                                    e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                                  }
                                 }}
                               />
                             </div>
@@ -1964,15 +2045,15 @@ function Setting({ workplaceList, employeeList }) {
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                              /[^0-9.]/g,
-                              ""
-                            );
+                                    /[^0-9.]/g,
+                                    ""
+                                  );
 
-                            // Ensure only one '.' is allowed
-                            const parts = e.target.value.split(".");
-                            if (parts.length > 2) {
-                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                            }
+                                  // Ensure only one '.' is allowed
+                                  const parts = e.target.value.split(".");
+                                  if (parts.length > 2) {
+                                    e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                                  }
                                 }}
                               />
                             </div>
@@ -1995,15 +2076,15 @@ function Setting({ workplaceList, employeeList }) {
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                              /[^0-9.]/g,
-                              ""
-                            );
+                                    /[^0-9.]/g,
+                                    ""
+                                  );
 
-                            // Ensure only one '.' is allowed
-                            const parts = e.target.value.split(".");
-                            if (parts.length > 2) {
-                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                            }
+                                  // Ensure only one '.' is allowed
+                                  const parts = e.target.value.split(".");
+                                  if (parts.length > 2) {
+                                    e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                                  }
                                 }}
                               />
                             </div>
@@ -2026,15 +2107,15 @@ function Setting({ workplaceList, employeeList }) {
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                              /[^0-9.]/g,
-                              ""
-                            );
+                                    /[^0-9.]/g,
+                                    ""
+                                  );
 
-                            // Ensure only one '.' is allowed
-                            const parts = e.target.value.split(".");
-                            if (parts.length > 2) {
-                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                            }
+                                  // Ensure only one '.' is allowed
+                                  const parts = e.target.value.split(".");
+                                  if (parts.length > 2) {
+                                    e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                                  }
                                 }}
                               />
                             </div>
@@ -2053,15 +2134,15 @@ function Setting({ workplaceList, employeeList }) {
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                              /[^0-9.]/g,
-                              ""
-                            );
+                                    /[^0-9.]/g,
+                                    ""
+                                  );
 
-                            // Ensure only one '.' is allowed
-                            const parts = e.target.value.split(".");
-                            if (parts.length > 2) {
-                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                            }
+                                  // Ensure only one '.' is allowed
+                                  const parts = e.target.value.split(".");
+                                  if (parts.length > 2) {
+                                    e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                                  }
                                 }}
                               />
                             </div>
@@ -2084,15 +2165,15 @@ function Setting({ workplaceList, employeeList }) {
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                              /[^0-9.]/g,
-                              ""
-                            );
+                                    /[^0-9.]/g,
+                                    ""
+                                  );
 
-                            // Ensure only one '.' is allowed
-                            const parts = e.target.value.split(".");
-                            if (parts.length > 2) {
-                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                            }
+                                  // Ensure only one '.' is allowed
+                                  const parts = e.target.value.split(".");
+                                  if (parts.length > 2) {
+                                    e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                                  }
                                 }}
                               />
                             </div>
@@ -2115,15 +2196,15 @@ function Setting({ workplaceList, employeeList }) {
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                              /[^0-9.]/g,
-                              ""
-                            );
+                                    /[^0-9.]/g,
+                                    ""
+                                  );
 
-                            // Ensure only one '.' is allowed
-                            const parts = e.target.value.split(".");
-                            if (parts.length > 2) {
-                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                            }
+                                  // Ensure only one '.' is allowed
+                                  const parts = e.target.value.split(".");
+                                  if (parts.length > 2) {
+                                    e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                                  }
                                 }}
                               />
                             </div>
@@ -2144,15 +2225,15 @@ function Setting({ workplaceList, employeeList }) {
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                              /[^0-9.]/g,
-                              ""
-                            );
+                                    /[^0-9.]/g,
+                                    ""
+                                  );
 
-                            // Ensure only one '.' is allowed
-                            const parts = e.target.value.split(".");
-                            if (parts.length > 2) {
-                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                            }
+                                  // Ensure only one '.' is allowed
+                                  const parts = e.target.value.split(".");
+                                  if (parts.length > 2) {
+                                    e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                                  }
                                 }}
                               />
                             </div>
@@ -2175,15 +2256,15 @@ function Setting({ workplaceList, employeeList }) {
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                              /[^0-9.]/g,
-                              ""
-                            );
+                                    /[^0-9.]/g,
+                                    ""
+                                  );
 
-                            // Ensure only one '.' is allowed
-                            const parts = e.target.value.split(".");
-                            if (parts.length > 2) {
-                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                            }
+                                  // Ensure only one '.' is allowed
+                                  const parts = e.target.value.split(".");
+                                  if (parts.length > 2) {
+                                    e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                                  }
                                 }}
                               />
                             </div>
@@ -2296,15 +2377,15 @@ function Setting({ workplaceList, employeeList }) {
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                              /[^0-9.]/g,
-                              ""
-                            );
+                                    /[^0-9.]/g,
+                                    ""
+                                  );
 
-                            // Ensure only one '.' is allowed
-                            const parts = e.target.value.split(".");
-                            if (parts.length > 2) {
-                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                            }
+                                  // Ensure only one '.' is allowed
+                                  const parts = e.target.value.split(".");
+                                  if (parts.length > 2) {
+                                    e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                                  }
                                 }}
                               />
                             </div>
@@ -2324,15 +2405,15 @@ function Setting({ workplaceList, employeeList }) {
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                              /[^0-9.]/g,
-                              ""
-                            );
+                                    /[^0-9.]/g,
+                                    ""
+                                  );
 
-                            // Ensure only one '.' is allowed
-                            const parts = e.target.value.split(".");
-                            if (parts.length > 2) {
-                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                            }
+                                  // Ensure only one '.' is allowed
+                                  const parts = e.target.value.split(".");
+                                  if (parts.length > 2) {
+                                    e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                                  }
                                 }}
                               />
                             </div>
@@ -2353,15 +2434,15 @@ function Setting({ workplaceList, employeeList }) {
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                              /[^0-9.]/g,
-                              ""
-                            );
+                                    /[^0-9.]/g,
+                                    ""
+                                  );
 
-                            // Ensure only one '.' is allowed
-                            const parts = e.target.value.split(".");
-                            if (parts.length > 2) {
-                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                            }
+                                  // Ensure only one '.' is allowed
+                                  const parts = e.target.value.split(".");
+                                  if (parts.length > 2) {
+                                    e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                                  }
                                 }}
                               />
                             </div>
@@ -2381,15 +2462,15 @@ function Setting({ workplaceList, employeeList }) {
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                              /[^0-9.]/g,
-                              ""
-                            );
+                                    /[^0-9.]/g,
+                                    ""
+                                  );
 
-                            // Ensure only one '.' is allowed
-                            const parts = e.target.value.split(".");
-                            if (parts.length > 2) {
-                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                            }
+                                  // Ensure only one '.' is allowed
+                                  const parts = e.target.value.split(".");
+                                  if (parts.length > 2) {
+                                    e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                                  }
                                 }}
                               />
                             </div>
@@ -2710,15 +2791,15 @@ function Setting({ workplaceList, employeeList }) {
                               onInput={(e) => {
                                 // Remove any non-digit characters
                                 e.target.value = e.target.value.replace(
-                              /[^0-9.]/g,
-                              ""
-                            );
+                                  /[^0-9.]/g,
+                                  ""
+                                );
 
-                            // Ensure only one '.' is allowed
-                            const parts = e.target.value.split(".");
-                            if (parts.length > 2) {
-                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                            }
+                                // Ensure only one '.' is allowed
+                                const parts = e.target.value.split(".");
+                                if (parts.length > 2) {
+                                  e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                                }
                               }}
                             />
                           </div>
@@ -2966,13 +3047,11 @@ function Setting({ workplaceList, employeeList }) {
                                   style={{ borderTop: "2px solid black" }}
                                 >
                                   {date instanceof Date &&
-                                  !isNaN(date.getTime())
-                                    ? `${date.getDate()}/${
-                                        date.getMonth() + 1
-                                      }/${date.getFullYear() + 543}`
-                                    : `${day}/${month}/${
-                                        year + 543
-                                      } (Invalid Date)`}
+                                    !isNaN(date.getTime())
+                                    ? `${date.getDate()}/${date.getMonth() + 1
+                                    }/${date.getFullYear() + 543}`
+                                    : `${day}/${month}/${year + 543
+                                    } (Invalid Date)`}
                                 </div>
                                 <div
                                   className="col-md-1"
@@ -3053,7 +3132,7 @@ function Setting({ workplaceList, employeeList }) {
                     </button>
                   )}
                   <button class="btn clean">
-                    <i class="far fa-window-close"></i> &nbsp;ยกเลิก
+                    <i class="far fa-window-close" onClick={() => window.location.reload()}></i> &nbsp;ยกเลิก
                   </button>
                 </div>
               </form>

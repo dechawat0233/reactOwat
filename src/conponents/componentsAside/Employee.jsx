@@ -2538,7 +2538,9 @@ function Employee() {
                       <i class="nav-icon fas fa-save"></i> &nbsp;บันทึก
                     </button>
                   )}
-                  <button class="btn clean">
+                  <button class="btn clean"
+                  onClick={() => window.location.reload()}
+                  >
                     <i class="far fa-window-close"></i> &nbsp;ยกเลิก
                   </button>
                 </div>

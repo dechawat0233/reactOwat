@@ -131,6 +131,7 @@ function Salary() {
         console.error("Error fetching data:", error);
       });
   }, []);
+  // console.log(workplaceSelectionSalary);
 
   const handleChange = async (e, field) => {
     // if ((field == 'salaryadd1') || (field == 'salaryadd2') || (field == 'salaryadd3') || (field == 'salaryadd4') || (field == 'salaryadd5')) {
@@ -231,46 +232,41 @@ function Salary() {
   const [formData, setFormData] = useState([]);
   const [showAdditionalInput, setShowAdditionalInput] = useState([]);
 
-  // const handleChangeSpSalary = (e, index, key) => {
-  //   const newAddSalary = [...formData.addSalary];
-  //   newAddSalary[index] = {
-  //     ...newAddSalary[index],
-  //     [key]: e.target.value,
-  //   };
+  // const handleSelectChange = (e, index) => {
+  //     const selectedValue = e.target.value;
+  //     handleChange(e, index, 'StaffType');
 
-  //   setFormData({
-  //     ...formData,
-  //     addSalary: newAddSalary,
-  //   });
+  //     // Check if "Option3" is selected, and then show the additional input
+  //     const newShowAdditionalInput = [...showAdditionalInput];
+  //     newShowAdditionalInput[index] = selectedValue === 'Option3';
+  //     setShowAdditionalInput(newShowAdditionalInput);
   // };
 
+  // const handleChangeSpSalary = (e, index, key) => {
+  //     const newFormData = [...formData];
+  //     newFormData[index] = {
+  //         ...newFormData[index],
+  //         [key]: e.target.value,
+  //     };
+  //     setFormData(newFormData);
+  // };
   const handleChangeSpSalary = (e, index, key) => {
     const newAddSalary = [...formData.addSalary];
-    const newValue = e.target.value;
-
-    // Check for duplicates in codeSpSalary
-    const isDuplicate = newAddSalary.some(
-      (item, idx) => item.codeSpSalary === newValue && idx !== index
-    );
-  
-    if (isDuplicate) {
-      alert("Duplicate codeSpSalary value detected!");
-      return; // Exit the function without updating the array
-    }
-  
     newAddSalary[index] = {
       ...newAddSalary[index],
-      [key]: newValue,
+      [key]: e.target.value,
     };
-  
+
     setFormData({
       ...formData,
       addSalary: newAddSalary,
     });
-
   };
 
-
+  // const handleAddInput = () => {
+  //     setFormData([...formData, { name: '', SpSalary: '', StaffType: '', nameType: '' }]);
+  //     setShowAdditionalInput([...showAdditionalInput, false]);
+  // };
   const handleAddInput = () => {
     // alert(formData.length);
 
@@ -320,29 +316,12 @@ function Salary() {
   const [addSalaryWorkplace, setAddSalaryWorkplace] = useState([]);
   const [addSalaryWorkplace1, setAddSalaryWorkplace1] = useState([]);
 
-  // const handleAddToSalary = async (data) => {
-  //   data.id = (await data.codeSpSalary) || "";
-  //   await setAddSalary((prev) => [...prev, data]);
-  //   // setAddSalaryWorkplace(prev => prev.filter(item => item.id !== data.id));
-  // };
-
   const handleAddToSalary = async (data) => {
-    // Check if `codeSpSalary` already exists in the array
-    const isDuplicate = addSalary.some(
-      (item) => item.codeSpSalary === data.codeSpSalary
-    );
-  
-    if (isDuplicate) {
-      alert("ให้สวัสดิการแล้ว");
-      return; // Exit the function without adding to the array
-    }
-  
-    // Add the new item to the array
-    const newData = { ...data, id: data.codeSpSalary || "" };
-    setAddSalary((prev) => [...prev, newData]);
+    data.id = (await data.codeSpSalary) || "";
+    await setAddSalary((prev) => [...prev, data]);
+    // setAddSalaryWorkplace(prev => prev.filter(item => item.id !== data.id));
   };
 
-  
   const handleRemoveFromSalary = (item) => {
     setAddSalary((prev) => prev.filter((i) => i !== item));
   };
@@ -456,6 +435,7 @@ function Salary() {
     // setWorkplacearea(filtered[0].workplaceArea );
   };
 
+  // console.log(workplaceSelection);
 
   const handleWorktable = (event) => {
     setWorktable(event.target.value);
@@ -511,6 +491,7 @@ function Salary() {
       ["salarystartcountupdate"]: date,
     }));
   };
+console.log('startcount',startcount);
   // useEffect(() => {
   //   if (selectedDateStartcount) {
   //     // Convert the string to a Date object
@@ -525,6 +506,7 @@ function Salary() {
 
   //     // Format the date
   //     const formattedDate = `${daySelectedDate}/${monthSelectedDate}/${yearSelectedDate}`;
+  //     console.log("formattedDate", formattedDate);
   //     setFormattedDateStartcount(formattedDate);
   //   }
   // }, [selectedDateStartcount]);
@@ -532,25 +514,26 @@ function Salary() {
   useEffect(() => {
     if (selectedDateStartcount) {
       let formattedDate = "";
-
+  
       // Check if the date is in the YYYY-MM-DD format
       if (selectedDateStartcount.includes("-")) {
         // Split the date string into year, month, day
         const [year, month, day] = selectedDateStartcount.split("-");
-
+  
         // Format the date as DD/MM/YYYY
         formattedDate = `${day}/${month}/${year}`;
       } else {
         // Assume the date is already in DD/MM/YYYY format and split it
         const [day, month, year] = selectedDateStartcount.split("/");
-
+  
         // Add 543 to the year for the Buddhist calendar
         const buddhistYear = (parseInt(year) + 543).toString();
-
+  
         // Format the date with the Buddhist year
         formattedDate = `${day}/${month}/${buddhistYear}`;
       }
-
+  
+      console.log("selectedDateStartcount", selectedDateStartcount);
       setFormattedDateStartcount(formattedDate);
     }
   }, [selectedDateStartcount]);
@@ -567,6 +550,7 @@ function Salary() {
   //     ["salaryupdate"]: date,
   //   }));
   // };
+  // console.log(employeeData);
   const [showDatePickerSalaryupdate, setShowDatePickerSalaryupdate] =
     useState(false);
   const [selectedDateSalaryupdate, setSelectedDateSalaryupdate] =
@@ -599,6 +583,7 @@ function Salary() {
 
       // Format the date
       const formattedDate = `${daySelectedDate}/${monthSelectedDate}/${yearSelectedDate}`;
+      console.log("formattedDate", formattedDate);
       setFormattedDateSalaryupdate(formattedDate);
     }
   }, [selectedDateSalaryupdate]);
@@ -655,6 +640,7 @@ function Salary() {
       // window.location.reload();
     }
   }
+  console.log("workplaceSelection", workplaceSelection);
 
   // function formatDateToDMY(dateString) {
   //   const date = new Date(dateString);
@@ -666,12 +652,12 @@ function Salary() {
   // }
   function formatDateToDMY(dateString) {
     let day, month, year;
-
+  
     // Check if dateString is in the DD/MM/YYYY format
     if (dateString.includes("/")) {
       // Split the date string into day, month, year
       [day, month, year] = dateString.split("/");
-
+  
       // Add 543 to the year for the Buddhist calendar
       year = parseInt(year) + 543;
     } else {
@@ -681,11 +667,11 @@ function Salary() {
       month = String(date.getMonth() + 1).padStart(2, "0");
       year = date.getFullYear() + 543;
     }
-
+  
     // Return the formatted date as day/month/year
     return `${day}/${month}/${year}`;
   }
-
+  
 
   async function onEmployeeSelect(empSelect) {
     await setEmployeeData(empSelect);
@@ -751,7 +737,7 @@ function Salary() {
         empSelect.startcount ? empSelect.startcount : ""
       );
     }
-
+    
 
     if (empSelect.salaryupdate) {
       await setSalaryupdate(
@@ -761,6 +747,7 @@ function Salary() {
         empSelect.startcount ? empSelect.startcount : ""
       );
     }
+    // console.log("salaryupdate", empSelect.salaryupdate);
 
     // await setExceptjob(new Date(empSelect.exceptjob || ''));
     // await setStartcount(empSelect.startcount ? new Date(empSelect.startcount) : '');
@@ -780,7 +767,13 @@ function Salary() {
     setSalaryadd5v(parseFloat(empSelect.salaryadd5v) || 0);
     // setSalaryadd5v("");
   }
-
+  // console.log(employeeData);
+  // save
+  // console.log(salaryadd1v + " 1");
+  // console.log(salaryadd2v + " 2");
+  // console.log(salaryadd3v + " 3");
+  // console.log(salaryadd4v + " 4");
+  // console.log(salaryadd5v + " 5x");
 
   // const toggleCheckbox1 = () => {
   //     setSalaryadd1(prevValue => !prevValue); // Toggle the checkbox state
@@ -788,7 +781,9 @@ function Salary() {
   //     // alert('1');
   // };
 
-
+  // console.log('startjob',startjob);
+  //   console.log('exceptjob',exceptjob);
+  //   console.log('startcount',startcount);
 
   const toggleCheckbox1 = () => {
     setSalaryadd1((prevValue) => {
@@ -862,6 +857,7 @@ function Salary() {
       setSalaryadd5(false);
     }
   }, [salaryadd1, salaryadd2, salaryadd3, salaryadd4, salaryadd5]);
+  // console.log(salaryadd1 + " 1");
 
   //Update localStorage
   function updateEmployeeLocal(emp) {
@@ -882,7 +878,8 @@ function Salary() {
       JSON.stringify(employeeLocalUpdate)
     );
   }
-
+console.log('selectedDateStartcount',selectedDateStartcount);
+  
   return (
     <body class="hold-transition sidebar-mini" className="editlaout">
       <div class="wrapper">
@@ -1298,7 +1295,7 @@ function Salary() {
                                 value={exceptjob}
                                 placeholder="dd/mm/yyyy"
                                 readOnly
-                              // onClick={() => setShowPopup(true)}
+                                // onClick={() => setShowPopup(true)}
                               />
                             </div>
                           </div>
@@ -1652,8 +1649,113 @@ function Salary() {
                   <div class="col-md-9">
                     <h2 class="title">เงินเพิ่มพิเศษ</h2>
                     <section class="Frame">
+                      {/* {JSON.stringify(formData.addSalary , null ,2) } */}
+                      {/* 
+                                            {formData.addSalary && formData.addSalary.length > 0 && formData.addSalary.map((data, index) => (
+                                                <div className="row" key={index}>
+                                                    <div className="col-md-2">
+                                                        <label role="salaryadd6">ชื่อรายการ</label>
+                                                        <input
+                                                            type="text"
+                                                            name="name"
+                                                            className="form-control"
+                                                            value={data.name}
+                                                            onChange={(e) => handleChangeSpSalary(e, index, 'name')}
+                                                            readOnly
+                                                        />
+                                                    </div>
+                                                    <div className="col-md-2">
+                                                        <label role="salaryadd6">จำนวนเงิน</label>
+                                                        <input
+                                                            type="text"
+                                                            name="SpSalary"
+                                                            className="form-control"
+                                                            value={data.SpSalary}
+                                                            onChange={(e) => handleChangeSpSalary(e, index, 'SpSalary')}
+                                                            readOnly
+                                                        />
+
+                                                    </div>
+                                                    <div className="col-md-2">
+                                                        <label role="salaryadd6">ได้เป็นราย</label>
+                                                        <select
+                                                            name="roundOfSalary"
+                                                            className="form-control"
+                                                            value={data.roundOfSalary}
+                                                            onChange={(e) => handleChangeSpSalary(e, index, 'roundOfSalary')}
+
+                                                        >
+                                                            <option value="daily">รายวัน</option>
+                                                            <option value="monthly">รายเดือน</option>
+                                                        </select>
+                                                    </div>
+                                                    <div className="col-md-2">
+                                                        <label role="salaryadd6">ประเภทพนักงาน</label>
+                                                        <select
+                                                            name="StaffType"
+                                                            className="form-control"
+                                                            value={data.StaffType}
+                                                            onChange={(e) => handleChangeSpSalary(e, index, 'StaffType')}
+                                                            readonly
+                                                        >
+                                                            <option value="">เลือกตำแหน่งที่จะมอบให้</option>
+                                                            <option value="all">ทั้งหมด</option>
+                                                            <option value="header">หัวหน้างาน</option>
+                                                            <option value="custom">กำหนดเอง</option>
+                                                        </select>
+                                                    </div>
+
+                                                    {data.StaffType === 'custom' && (
+                                                        <div className="col-md-2">
+                                                            <label>ตำแหน่ง</label>
+                                                            <input
+                                                                type="text"
+                                                                name="additionalInput"
+                                                                className="form-control"
+                                                                value={data.nameType}
+                                                                onChange={(e) => handleChangeSpSalary(e, index, 'nameType')}
+                                                                readOnly
+                                                            />
+                                                        </div>
+                                                    )}
+
+
+
+
+                                                    <div className="col-md-2">
+                                                        <button onClick={() => handleAddSalary(data)} className="btn btn-primary" style={{ width: "8rem", position: 'absolute', bottom: '0' }}>ให้สวัสดิการ</button>
+
+                                                    </div>
+                                                    {employeeData.addSalary && employeeData.addSalary.length > 0 && employeeData.addSalary.filter(empData => JSON.stringify(empData.name) === JSON.stringify(data.name)).map((filteredData, index1) => (
+                                                        <div key={index1} className="col-md-1">
+                                                            <div>
+                                                                <button onClick={() => handleRemoveAddSalary(data.name)} className="btn btn-danger" style={{ width: "5rem", position: 'absolute', bottom: '0' }}>นำออก</button>
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                    )}
+
+                                                </div>
+                                            ))} */}
                       <section class="Frame">
                         <h4>เงินเพิ่มของหน่วยงาน</h4>
+                        {/* <div className="row"> */}
+                        {/* <div className="col-md-1">
+                                                        <label role="salaryadd6">รหัส</label>
+                                                    </div>
+                                                    <div className="col-md-2">
+                                                        <label role="salaryadd6">ชื่อรายการ</label>
+                                                    </div>
+                                                    <div className="col-md-2">
+                                                        <label role="salaryadd6">จำนวนเงิน</label>
+                                                    </div>
+                                                    <div className="col-md-2">
+                                                        <label role="salaryadd6">ได้เป็นราย</label>
+                                                    </div>
+                                                    <div className="col-md-2">
+                                                        <label role="salaryadd6">ประเภทพนักงาน</label>
+                                                    </div> */}
+
                         <div className="row">
                           <div className="col-md-6">
                             <div className="row">
@@ -1698,7 +1800,7 @@ function Salary() {
                                         handleChangeSpSalary(
                                           e,
                                           index,
-                                          "codeSpSalary"
+                                          "SpSalary"
                                         )
                                       }
                                       readOnly
@@ -1785,7 +1887,7 @@ function Salary() {
 
                                   {data.StaffType === "custom" && (
                                     <div className="col-md-3">
-                                      {/* <label>ตำแหน่ง</label> */}
+                                      <label>ตำแหน่ง</label>
                                       <input
                                         type="text"
                                         name="additionalInput"
@@ -1903,7 +2005,7 @@ function Salary() {
 
                                   {data.StaffType === "custom" && (
                                     <div className="col-md-2">
-                                      {/* <label>ตำแหน่ง</label> */}
+                                      <label>ตำแหน่ง</label>
                                       <input
                                         type="text"
                                         name="additionalInput"
@@ -2314,9 +2416,7 @@ function Salary() {
                   >
                     <i class="nav-icon fas fa-save"></i> &nbsp;บันทึก
                   </button>
-                  <button type="reset" class="btn clean"
-                  onClick={() => window.location.reload()}
-                  >
+                  <button type="reset" class="btn clean">
                     <i class="far fa-window-close"></i> &nbsp;ยกเลิก
                   </button>
                 </div>

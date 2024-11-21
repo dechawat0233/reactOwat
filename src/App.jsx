@@ -59,6 +59,7 @@ import Examine from "./conponents/componentsAside/Examine";
 import Compensation from "./conponents/componentsAside/Compensation";
 import Salaryresult from "./conponents/componentsAside/SalaryResult";
 import SalaryAllResult from "./conponents/componentsAside/SalaryAllResult";
+import SalaryAllResultAudit from "./conponents/componentsAside/SalaryAllResultAudit";
 
 import Worktimesheet from "./conponents/componentsAside/Worktimesheet";
 import WorktimeSheetWorkplace from "./conponents/componentsAside/WorktimeSheetWorkplace";
