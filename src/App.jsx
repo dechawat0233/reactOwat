@@ -185,9 +185,13 @@ function App() {
                 path="/salaryAllresult"
                 element={<SalaryAllResult employeeList={employeeList} workplaceList={workplaceList} />}
               />
+               <Route
+                path="/salaryAllresultAudit"
+                element={<SalaryAllResultAudit employeeList={employeeList} workplaceList={workplaceList} />}
+              />
               <Route
                 path="/salarySlipPDF"
-                element={<SalarySlipPDF employeeList={employeeList} />}
+                element={<SalarySlipPDF employeeList={employeeList} workplaceList={workplaceList}/>}
               />
 
               <Route path="/worktimesheet" element={<Worktimesheet />} />
