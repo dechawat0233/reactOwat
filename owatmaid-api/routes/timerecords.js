@@ -394,7 +394,7 @@ console.log(workplaceTimeRecordData );
 
   try {
     await workplaceTimeRecordData.save();
-
+ 
     await res.json(workplaceTimeRecordData);
 
   } catch (err) {
