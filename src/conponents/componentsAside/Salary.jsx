@@ -181,7 +181,7 @@ function Salary() {
   const [salaryupdate, setSalaryupdate] = useState(""); //เงินเดือนปรับเมื่อ
   const [salaryout, setSalaryout] = useState(""); //เงินเดือนปรับเมื่อ
   const [salarypayment, setSalarypayment] = useState(""); //วิธีจ่ายเงิน
-  const [salarybank, setSalarybank] = useState(""); //ธนาคาร
+  const [salarybank, setSalarybank] = useState(""); //ธนาคาร 
   const [banknumber, setBanknumber] = useState(""); //เลขบัญชี
 
   const [salaryadd1, setSalaryadd1] = useState(false); //เงินเพิ่มพิเศษ ค่ารถ
@@ -1531,13 +1531,13 @@ function Salary() {
                               type="radio"
                               id="salarypayment"
                               name="salarypayment"
-                              value="โอนผ่านธนาคาร"
+                              value="โอนผ่านธนาคาร "
                               checked={
-                                employeeData.salarypayment === "โอนผ่านธนาคาร"
+                                employeeData.salarypayment === "โอนผ่านธนาคาร "
                               }
                               onChange={(e) => handleChange(e, "salarypayment")}
                             />{" "}
-                            โอนผ่านธนาคาร
+                            โอนผ่านธนาคาร 
                           </div>
                         </div>
                       </div>
@@ -1549,7 +1549,7 @@ function Salary() {
                               role="salarybank"
                               class="col-sm-3 col-form-label"
                             >
-                              ชื่อธนาคาร
+                              ชื่อธนาคาร 
                             </label>
                             <div class="col-sm-9">
                               <select
@@ -1561,58 +1561,58 @@ function Salary() {
                               >
                                 <option value="">ไม่ระบุ</option>
                                 <option value="ธนาคารกรุงเทพ">
-                                  ธนาคารกรุงเทพ
+                                  ธนาคาร กรุงเทพ
                                 </option>
                                 <option value="ธนาคารกสิกรไทย">
-                                  ธนาคารกสิกรไทย
+                                  ธนาคาร กสิกรไทย
                                 </option>
                                 <option value="ธนาคารกรุงไทย">
-                                  ธนาคารกรุงไทย
+                                  ธนาคาร กรุงไทย
                                 </option>
                                 <option value="ธนาคารทหารไทยธนชาต">
-                                  ธนาคารทหารไทยธนชาต
+                                  ธนาคาร ทหารไทยธนชาต
                                 </option>
                                 <option value="ธนาคารไทยพาณิชย์">
-                                  ธนาคารไทยพาณิชย์
+                                  ธนาคาร ไทยพาณิชย์
                                 </option>
                                 <option value="ธนาคารกรุงศรีอยุธยา">
-                                  ธนาคารกรุงศรีอยุธยา
+                                  ธนาคาร กรุงศรีอยุธยา
                                 </option>
                                 <option value="ธนาคารเกียรตินาคินภัทร">
-                                  ธนาคารเกียรตินาคินภัทร
+                                  ธนาคาร เกียรตินาคินภัทร
                                 </option>
                                 <option value="ธนาคารซีไอเอ็มบีไทย">
-                                  ธนาคารซีไอเอ็มบีไทย
+                                  ธนาคาร ซีไอเอ็มบีไทย
                                 </option>
-                                <option value="ธนาคารทิสโก้">
-                                  ธนาคารทิสโก้
+                                <option value="ธนาคาร ทิสโก้">
+                                  ธนาคาร ทิสโก้
                                 </option>
                                 <option value="ธนาคารยูโอบี">
-                                  ธนาคารยูโอบี
+                                  ธนาคาร ยูโอบี
                                 </option>
                                 <option value="ธนาคารไทยเครดิตเพื่อรายย่อย">
-                                  ธนาคารไทยเครดิตเพื่อรายย่อย
+                                  ธนาคาร ไทยเครดิตเพื่อรายย่อย
                                 </option>
                                 <option value="ธนาคารแลนด์ แอนด์ เฮ้าส์">
-                                  ธนาคารแลนด์ แอนด์ เฮ้าส์
+                                  ธนาคาร แลนด์ แอนด์ เฮ้าส์
                                 </option>
                                 <option value="ธนาคารไอซีบีซี (ไทย)">
-                                  ธนาคารไอซีบีซี (ไทย)
+                                  ธนาคาร ไอซีบีซี (ไทย)
                                 </option>
                                 <option value="ธนาคารพัฒนาวิสาหกิจขนาดกลางและขนาดย่อมแห่งประเทศไทย">
-                                  ธนาคารพัฒนาวิสาหกิจขนาดกลางและขนาดย่อมแห่งประเทศไทย
+                                  ธนาคาร พัฒนาวิสาหกิจขนาดกลางและขนาดย่อมแห่งประเทศไทย
                                 </option>
                                 <option value="ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร">
-                                  ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร
+                                  ธนาคาร เพื่อการเกษตรและสหกรณ์การเกษตร
                                 </option>
                                 <option value="ธนาคารเพื่อการส่งออกและนำเข้าแห่งประเทศไทย">
-                                  ธนาคารเพื่อการส่งออกและนำเข้าแห่งประเทศไทย
+                                  ธนาคาร เพื่อการส่งออกและนำเข้าแห่งประเทศไทย
                                 </option>
                                 <option value="ธนาคารออมสิน">
-                                  ธนาคารออมสิน
+                                  ธนาคาร ออมสิน
                                 </option>
                                 <option value="ธนาคารอาคารสงเคราะห์">
-                                  ธนาคารอาคารสงเคราะห์
+                                  ธนาคาร อาคารสงเคราะห์
                                 </option>
                               </select>
                             </div>

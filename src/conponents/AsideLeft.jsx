@@ -112,9 +112,9 @@ function AsideLeft() {
                       <li class="nav-item">
                         <Link to="/salarySlipPDF" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> ออกสลิปเงินเดือน</Link>
                       </li>
-                      {/* <li class="nav-item">
-                        <Link to="/worktimeSheetWorkplace_Save01_22_2024" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> สรุปหน่วยงานแบบเก่า</Link>
-                      </li> */}
+                      <li class="nav-item">
+                        <Link to="/backReport" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> ออกรายงานธนาคาร</Link>
+                      </li>
                     </>
                   </ul>
                 )}

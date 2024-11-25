@@ -449,7 +449,22 @@ function SalarySlipPDF({ employeeList, workplaceList }) {
       // Add it to the PDF
       pdf.text(`${workplaceName}`, 103, head);
 
-      pdf.text(`เลขที่บัญชี`, 165, head);
+      // const bankCheck = employeeList.find(
+      //   (item) => item.workplace === responseDataAll[i].workplace
+      // );
+
+      // const banknumber = banknumber ? bankCheck.banknumber : "Unknown";
+
+      const bankCheck = employeeList.find(
+        (item) => item.workplace === responseDataAll[i].workplace
+      );
+
+      // กำหนดค่า banknumber โดยตรวจสอบว่ามีค่าใน bankCheck หรือไม่
+      const banknumber = bankCheck && bankCheck.banknumber ? bankCheck.banknumber : "Unknown";
+
+      // เพิ่มข้อมูล banknumber ลงใน PDF
+      pdf.text(`เลขที่บัญชี ${banknumber}`, 155, head);
+
 
       // const namesWithSpecificIds = responseDataAll[i].addSalary
       //   // "1230" || item.id === "1520" || item.id === "1350"
@@ -1395,7 +1410,14 @@ function SalarySlipPDF({ employeeList, workplaceList }) {
         // Add it to the PDF
         pdf.text(`${workplaceName}`, 103, head2);
 
-        pdf.text(`เลขที่บัญชี`, 165, head2);
+        const bankCheck = employeeList.find(
+          (item) => item.workplace === responseDataAll[i + 1].workplace
+        );
+
+        // กำหนดค่า banknumber โดยตรวจสอบว่ามีค่าใน bankCheck หรือไม่
+        const banknumber = bankCheck && bankCheck.banknumber ? bankCheck.banknumber : "Unknown";
+
+        pdf.text(`เลขที่บัญชี ${banknumber}`, 155, head2);
 
         // pdf.rect(7, 156, 60, 30);
 
@@ -1631,8 +1653,8 @@ function SalarySlipPDF({ employeeList, workplaceList }) {
     // Set the initial position for text and frame
     let x = 20;
 
-    // pdf.setFont('THSarabunNew');
-    pdf.setFont("THSarabunNew Bold");
+    pdf.setFont('THSarabunNew');
+    // pdf.setFont("THSarabunNew Bold");
 
     // Loop through the names and ages arrays to add content to the PDF
     for (let i = 0; i < responseDataAll.length; i += 2) {
@@ -1771,7 +1793,14 @@ function SalarySlipPDF({ employeeList, workplaceList }) {
       // Add it to the PDF
       pdf.text(`${workplaceName}`, 103, head);
 
-      pdf.text(`เลขที่บัญชี`, 165, head);
+      const bankCheck = employeeList.find(
+        (item) => item.workplace === responseDataAll[i].workplace
+      );
+
+      // กำหนดค่า banknumber โดยตรวจสอบว่ามีค่าใน bankCheck หรือไม่
+      const banknumber = bankCheck && bankCheck.banknumber ? bankCheck.banknumber : "Unknown";
+
+      pdf.text(`เลขที่บัญชี ${banknumber}`, 155, head);
 
       const namesWithSpecificIds = responseDataAll[i].addSalary
         .filter((item) => ["1230", "1350", "1241"].includes(item.id)) // Filter based on specific IDs
@@ -2706,7 +2735,14 @@ function SalarySlipPDF({ employeeList, workplaceList }) {
         // Add it to the PDF
         pdf.text(`${workplaceName}`, 103, head2);
 
-        pdf.text(`เลขที่บัญชี`, 165, head2);
+        const bankCheck = employeeList.find(
+          (item) => item.workplace === responseDataAll[i + 1].workplace
+        );
+
+        // กำหนดค่า banknumber โดยตรวจสอบว่ามีค่าใน bankCheck หรือไม่
+        const banknumber = bankCheck && bankCheck.banknumber ? bankCheck.banknumber : "Unknown";
+
+        pdf.text(`เลขที่บัญชี ${banknumber}`, 155, head2);
 
         // pdf.rect(7, 156, 60, 30);
 

@@ -18,6 +18,15 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 function WorktimeSheetWorkplace({ employeeList }) {
+  // const [selectedDate, setSelectedDate] = useState("2024-02-29");
+  // const [selectedThaiDate321, setSelectedThaiDate321] = useState("2567-02-29");
+
+  // const handleDatePickerChange = (christDate, buddhistDate) => {
+  //   console.log(christDate);
+  //   console.log(buddhistDate);
+  //   setSelectedDate(christDate);
+  //   setSelectedThaiDate321(buddhistDate);
+  // };
 
   const vertical1 = {
     borderCollapse: "collapse",
@@ -127,6 +136,23 @@ function WorktimeSheetWorkplace({ employeeList }) {
     setWorkDate(newDate);
   };
 
+  // useEffect(() => {
+  //   if (selectedDate) {
+  //     // Convert the string to a Date object
+  //     const date = new Date(selectedDate);
+
+  //     // Extract day, month, and year
+  //     const daySelectedDate = date.getDate().toString().padStart(2, '0');
+  //     const monthSelectedDate = (date.getMonth() + 1).toString().padStart(2, '0');
+  //     const yearSelectedDate = (date.getFullYear() + 543).toString();
+
+  //     // Format the date
+  //     const formattedDate = `${daySelectedDate}/${monthSelectedDate}/${yearSelectedDate}`;
+  //     console.log('formattedDate', formattedDate);
+  //     setFormattedDate(formattedDate);
+  //   }
+  // }, [selectedDate]);
+
   useEffect(() => {
     // Function to format a given date
     const formatDate = (date) => {
@@ -150,6 +176,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
     }
   }, [selectedDate]);
 
+  console.log("selectedDate", selectedDate);
   const toggleDatePicker = () => {
     setShowDatePicker(!showDatePicker);
   };
@@ -328,6 +355,10 @@ function WorktimeSheetWorkplace({ employeeList }) {
   const [listTableDayoff, setListTableDayoff] = useState([]);
   //data for check list dayoff
   const [data_listDayoff, setData_listDayoff] = useState([]);
+
+  //   console.log("data_listDayoff", data_listDayoff);
+  //   console.log("listTableDayoff", listTableDayoff);
+  //   console.log("df", listDayOff);
 
   // Generate an array containing numbers from 21 to 31
   const range1 = Array.from({ length: 11 }, (_, i) => i + 21);
@@ -1363,9 +1394,13 @@ function WorktimeSheetWorkplace({ employeeList }) {
         //         // Access the array and perform operations if the key exists
         //         array1[englishDay].forEach(value => commonNumbers.add(value));
         //     } else {
+        //         console.log(`Key ${englishDay} does not exist in array1`);
         //     }
         // });
       });
+
+      // setHoliday(commonNumbers);
+      // console.log("Common Numbers:", commonNumbers);
     } else {
       console.log("No stop workTimeDay found.");
     }
@@ -1629,6 +1664,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
       employee.costtype = "ภ.ง.ด.3";
     }
   });
+  console.log("filteredEmployees", filteredEmployees);
 
   //     // Do something with the filtered employees
 
@@ -1663,9 +1699,13 @@ function WorktimeSheetWorkplace({ employeeList }) {
   // const extractedDataAddSalary = filteredEmployees.map(employee => [
   //     employee.addSalary
   // ]);
+  // console.log('extractedDataAddSalary', extractedDataAddSalary);
 
+  //   console.log("EmploeeData", emploeeData);
+  // console.log('EmploeeDataSearch', emploeeDataSearch);
 
   const arraylistNameEmp = extractedData;
+  //   console.log("arraylistNameEmp", arraylistNameEmp);
 
   const arraytest = [];
 
@@ -1710,6 +1750,11 @@ function WorktimeSheetWorkplace({ employeeList }) {
       (entry) =>
         entry.shift === "specialt_shift" && Number(entry.specialtSalarys) > 300
     );
+
+    // Extract dates from the filtered entries
+    // const datesArray321 = filteredEntriesSpecialt.map(entry => entry.dates).flat();
+    // const daySpecialt = filteredEntriesSpecialt.map(entry => entry.dates.map(date => parseFloat(date))).flat();
+    // console.log('datesArray321', datesArray321);
 
     const daySpecialt = filteredEntriesSpecialt.map((entry) =>
       parseInt(entry.dates, 10)
@@ -1969,10 +2014,28 @@ function WorktimeSheetWorkplace({ employeeList }) {
     arrayWorkOTHoliday.push(employeeResultArray2OT);
 
     // วันที่ทำงานปกติ
+    // const commonDates3 = datesArray.filter(date => !(allDayOff.includes(date) || holidayList.includes(date)));
+    // const employeeResultArray3 = resultArray.map(day => {
+    //     const workplaceIdIndex = commonDates3.indexOf(day);
+    //     if (workplaceIdIndex !== -1) {
+    //         const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].workplaceId;
+    //         return currentWorkplaceId === searchWorkplaceId ? 1 : parseInt(currentWorkplaceId, 10);
+    //     } else {
+    //         return '';
+    //     }
+    // });
+    // const commonDates3 = datesArray.filter(date => !(allDayOff.includes(date) || holidayList.includes(date)));
+    // console.log('commonDates3', commonDates3);
 
     // datesArray
     const employeeResultArray3 = resultArray.map((day) => {
       const workplaceIdIndex = datesArray.indexOf(day);
+      // if (workplaceIdIndex !== -1) {
+      //     const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].workplaceId;
+      //     return currentWorkplaceId === searchWorkplaceId ? 1 : currentWorkplaceId;
+      // } else {
+      //     return '';
+      // }
       if (workplaceIdIndex !== -1) {
         const currentWorkplaceId =
           combinedArray[employeeId][workplaceIdIndex].workplaceId;
@@ -2019,6 +2082,15 @@ function WorktimeSheetWorkplace({ employeeList }) {
           daySpecialt.includes(parseInt(date, 10))
         )
     );
+    // const employeeResultArray3OT = resultArray.map(day => {
+    //     const workplaceIdIndex = commonDates3OT.indexOf(day);
+    //     if (workplaceIdIndex !== -1) {
+    //         const currentWorkplaceId = combinedArray[employeeId][workplaceIdIndex].otTimes;
+    //         return currentWorkplaceId === searchWorkplaceId ? 1 : parseFloat(currentWorkplaceId, 10);
+    //     } else {
+    //         return '';
+    //     }
+    // });
 
     const employeeResultArray3OT = resultArray.map((day) => {
       const workplaceIdIndex = commonDates3OT.indexOf(day);
@@ -2045,6 +2117,13 @@ function WorktimeSheetWorkplace({ employeeList }) {
 
     arrayWorkOTNormalDay.push(employeeResultArray3OT);
   });
+
+  // const filteredEntriesTest = conclude.filter(
+  //   (entry) =>
+  //     entry.year === desiredTimerecordId && entry.month === desiredMonth
+  // );
+  // employeeList
+  // Assuming `conclude`, `employeeList`, `searchWorkplaceId`, `desiredTimerecordId`, and `desiredMonth` are available
 
   const filteredEntriesTest = conclude
     // Filter by year and month
@@ -2083,6 +2162,19 @@ function WorktimeSheetWorkplace({ employeeList }) {
     return Number(a.employeeId) - Number(b.employeeId);
   });
 
+  console.log("filteredEntriesTest", filteredEntriesTest);
+  console.log("responseDataAll", responseDataAll);
+
+  // const responseDataAll123 = [
+  //   {_id: '66ac5eca3aac559797a814e9', year: '2024', month: '06', employeeId: '670427', createDate: '02/08/2024, 04:21'},
+  //   {_id: '66ac5f1d3aac559797a855d2', year: '2024', month: '06', employeeId: '670417', createDate: '02/08/2024, 05:21'},
+  // ];
+
+  // const filteredEntriesTest123 = [
+  //   {_id: '66abe9cb0a80f1bc2e76ed1a', year: '2024', month: '06', concludeDate: '01-08-2024 20:02', employeeId: '591560'},
+  //   {_id: '66ab4f837724a7731e955b50', year: '2024', month: '06', concludeDate: '01-08-2024 20:03', employeeId: '670427'},
+  //   {_id: '66ab4f837724a7731e955b51', year: '2024', month: '06', concludeDate: '01-08-2024 20:04', employeeId: '670417'},
+  // ];
 
   // Step 1: Extract employeeId values from responseDataAll
   const employeeIdss = responseDataAll.map((entry) => entry.employeeId);
@@ -2092,8 +2184,174 @@ function WorktimeSheetWorkplace({ employeeList }) {
     employeeIdss.includes(entry.employeeId)
   );
 
+  //   console.log("responseDataAll", responseDataAll);
+
+  //   console.log("filteredEntriesqw", filteredEntriesqw);
+
   // Step 3: Sort the filtered entries
   filteredEntriesqw.sort((a, b) => Number(a.employeeId) - Number(b.employeeId));
+
+  //   console.log("filteredEntriesqw", filteredEntriesqw);
+
+  //   filteredEntriesTest.forEach(entry => {
+  //     const groupedRecords = {};
+
+  //     entry.concludeRecord.forEach(record => {
+  //         const day = record.day;
+
+  //         if (!groupedRecords[day]) {
+  //             groupedRecords[day] = {
+  //                 day: day,
+  //                 workplaceId: [],
+  //                 allTimes: [],
+  //                 workRate: [],
+  //                 workRateMultiply: [],
+  //                 otTimes: [],
+  //                 workRateOT: [],
+  //                 workRateOTMultiply: [],
+  //                 addSalaryDay: [],
+  //                 shift: [],
+  //                 _id: []
+  //             };
+  //         }
+
+  //         // groupedRecords[day].workplaceId.push(record.workplaceId);
+  //         // groupedRecords[day].allTimes.push(parseFloat(record.allTimes) || 0);
+  //         // groupedRecords[day].workRate.push(parseFloat(record.workRate) || 0);
+  //         // groupedRecords[day].workRateMultiply.push(record.workRateMultiply);
+  //         // groupedRecords[day].otTimes.push(parseFloat(record.otTimes) || 0);
+  //         // groupedRecords[day].workRateOT.push(parseFloat(record.workRateOT) || 0);
+  //         // groupedRecords[day].workRateOTMultiply.push(record.workRateOTMultiply);
+  //         // groupedRecords[day].addSalaryDay.push(record.addSalaryDay);
+  //         // groupedRecords[day].shift.push(record.shift);
+  //         // groupedRecords[day]._id.push(record._id);
+  //         groupedRecords[day].workplaceId.push(record.workplaceId);
+  //         groupedRecords[day].allTimes.push(record.allTimes);
+  //         groupedRecords[day].workRate.push(parseFloat(record.workRate) || 0);
+  //         groupedRecords[day].workRateMultiply.push(record.workRateMultiply);
+  //         groupedRecords[day].otTimes.push(parseFloat(record.otTimes) || 0);
+  //         groupedRecords[day].workRateOT.push(parseFloat(record.workRateOT) || 0);
+  //         groupedRecords[day].workRateOTMultiply.push(record.workRateOTMultiply);
+  //         groupedRecords[day].addSalaryDay.push(record.addSalaryDay);
+  //         groupedRecords[day].shift.push(record.shift);
+  //         groupedRecords[day]._id.push(record._id);
+  //     });
+
+  //     Object.values(groupedRecords).forEach(group => {
+  //         // Sorting the group by the specified shift order
+  //         const shiftOrder = ["morning_shift", "afternoon_shift", "night_shift", "specialt_shift"];
+
+  //         const sortedIndices = group.shift
+  //             .map((shift, index) => ({ shift, index }))
+  //             .sort((a, b) => shiftOrder.indexOf(a.shift) - shiftOrder.indexOf(b.shift))
+  //             .map(({ index }) => index);
+
+  //         const sortArrayByIndices = (array) => sortedIndices.map(index => array[index]);
+
+  //         group.workplaceId = sortArrayByIndices(group.workplaceId);
+  //         group.allTimes = sortArrayByIndices(group.allTimes);
+  //         group.workRateMultiply = sortArrayByIndices(group.workRateMultiply);
+  //         group.otTimes = sortArrayByIndices(group.otTimes);
+  //         group.workRateOTMultiply = sortArrayByIndices(group.workRateOTMultiply);
+  //         group.addSalaryDay = sortArrayByIndices(group.addSalaryDay);
+  //         group.shift = sortArrayByIndices(group.shift);
+  //         group._id = sortArrayByIndices(group._id);
+
+  //         // Sum allTimes and otTimes
+  //         group.sumAllTimes = group.allTimes.reduce((sum, time) => sum + time, 0);
+  //         group.sumOtTimes = group.otTimes.reduce((sum, time) => sum + time, 0);
+
+  //         group.selectedWorkRate = group.workRate[0];
+  //         group.selectedWorkRateOT = group.workRateOT[0];
+  //     });
+
+  //     entry.concludeRecord = Object.values(groupedRecords);
+  // });
+
+  //   const groupedByEmployeeId = {};
+
+  // filteredEntriesTest.forEach(entry => {
+  //     const employeeId = entry.employeeId;
+
+  //     if (!groupedByEmployeeId[employeeId]) {
+  //         groupedByEmployeeId[employeeId] = {};
+  //     }
+
+  //     entry.concludeRecord.forEach(record => {
+  //         const day = record.day;
+
+  //         if (!groupedByEmployeeId[employeeId][day]) {
+  //             groupedByEmployeeId[employeeId][day] = {
+  //                 day: day,
+  //                 workplaceId: [],
+  //                 allTimes: [],
+  //                 workRate: [],
+  //                 workRateMultiply: [],
+  //                 otTimes: [],
+  //                 workRateOT: [],
+  //                 workRateOTMultiply: [],
+  //                 addSalaryDay: [],
+  //                 shift: [],
+  //                 _id: []
+  //             };
+  //         }
+
+  //         groupedByEmployeeId[employeeId][day].workplaceId.push(record.workplaceId);
+  //         groupedByEmployeeId[employeeId][day].allTimes.push(parseFloat(record.allTimes) || 0);
+  //         groupedByEmployeeId[employeeId][day].workRate.push(record.workRate);
+  //         groupedByEmployeeId[employeeId][day].workRateMultiply.push(record.workRateMultiply);
+  //         groupedByEmployeeId[employeeId][day].otTimes.push(parseFloat(record.otTimes) || 0);
+  //         groupedByEmployeeId[employeeId][day].workRateOT.push(record.workRateOT);
+  //         groupedByEmployeeId[employeeId][day].workRateOTMultiply.push(record.workRateOTMultiply);
+  //         groupedByEmployeeId[employeeId][day].addSalaryDay.push(record.addSalaryDay);
+  //         groupedByEmployeeId[employeeId][day].shift.push(record.shift);
+  //         groupedByEmployeeId[employeeId][day]._id.push(record._id);
+  //     });
+  // });
+
+  // const shiftOrder = ["morning_shift", "afternoon_shift", "night_shift", "specialt_shift"];
+
+  // const resultArrayNew = [];
+
+  // Object.entries(groupedByEmployeeId).forEach(([employeeId, days]) => {
+  //     Object.values(days).forEach(group => {
+  //         const sortedIndices = group.shift
+  //             .map((shift, index) => ({ shift, index }))
+  //             .sort((a, b) => shiftOrder.indexOf(a.shift) - shiftOrder.indexOf(b.shift))
+  //             .map(({ index }) => index);
+
+  //         const sortArrayByIndices = (array) => sortedIndices.map(index => array[index]);
+
+  //         const sortedWorkplaceId = sortArrayByIndices(group.workplaceId);
+  //         const sortedWorkRate = sortArrayByIndices(group.workRate);
+  //         const sortedWorkRateOT = sortArrayByIndices(group.workRateOT);
+  //         const sortedWorkRateMultiply = sortArrayByIndices(group.workRateMultiply);
+  //         const sortedWorkRateOTMultiply = sortArrayByIndices(group.workRateOTMultiply);
+  //         const sortedAddSalaryDay = sortArrayByIndices(group.addSalaryDay);
+  //         const sortedShift = sortArrayByIndices(group.shift);
+  //         const sortedId = sortArrayByIndices(group._id);
+
+  //         const sumAllTimes = group.allTimes.reduce((sum, time) => sum + time, 0);
+  //         const sumOtTimes = group.otTimes.reduce((sum, time) => sum + time, 0);
+
+  //         resultArrayNew.push({
+  //             employeeId,
+  //             day: group.day,
+  //             workplaceId: sortedWorkplaceId[0], // Taking the first element after sorting
+  //             allTimes: sumAllTimes,
+  //             workRate: sortedWorkRate[0], // Taking the first element after sorting
+  //             workRateMultiply: sortedWorkRateMultiply[0], // Taking the first element after sorting
+  //             otTimes: sumOtTimes,
+  //             workRateOT: sortedWorkRateOT[0], // Taking the first element after sorting
+  //             workRateOTMultiply: sortedWorkRateOTMultiply[0], // Taking the first element after sorting
+  //             addSalaryDay: sortedAddSalaryDay[0], // Taking the first element after sorting
+  //             shift: sortedShift,
+  //             _id: sortedId
+  //         });
+  //     });
+  // });
+
+  // console.log("resultArrayNew:", resultArrayNew);
 
   const groupedByEmployeeId = {};
 
@@ -2234,6 +2492,9 @@ function WorktimeSheetWorkplace({ employeeList }) {
     });
   });
 
+  //   console.log("resultArrayNew:", resultArrayNew);
+  //   console.log("groupedByEmployeeId:", groupedByEmployeeId);
+
   // Initialize objects to store the grouped times
   const dayWorkMorningAndSS = {};
   const dayWorkAfternoon = {};
@@ -2355,6 +2616,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
         dayWorkNightArray.push("");
       }
       /////////////////วันที่ทำงาน
+      console.log('matchingEmployee',matchingEmployee);
       if (matchingEmployee && matchingEmployee.workplace.startsWith("3")) {
         // allTimesArray.push(parseFloat(record.allTimes).toFixed(1)); // Push empty string if workplace starts with "3"
         if (parseFloat(record.allTimes) == 0) {
@@ -2547,6 +2809,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
     }
     allTimesByEmployee3[entry.employeeId].push(allTimesArray3);
     otTimesByEmployee3[entry.employeeId].push(otTimesArray3);
+    // console.log("testtest123", test);
   });
 
   // Convert the objects to arrays of arrays
@@ -2563,7 +2826,23 @@ function WorktimeSheetWorkplace({ employeeList }) {
   const newAllTimes3 = Object.values(allTimesByEmployee3).flat();
   const newOtTimes3 = Object.values(otTimesByEmployee3).flat();
 
+  console.log("newAllTimes2:", newAllTimes2);
+  //   console.log("newOtTimes3:", newOtTimes3);
+
+  // Log the results
+  //   console.log("dayWorkMorningAndSSs:", dayWorkMorningAndSSs);
+  //   console.log("dayWorkAfternoons:", dayWorkAfternoons);
+  //   console.log("dayWorkNights:", dayWorkNights);
+
+  // console.log("newAllTimes:", newAllTimes);
+  // console.log("newOtTimes:", newOtTimes);
+  // console.log("newAllTimes2:", newAllTimes2);
+  // console.log("newOtTimes2:", newOtTimes2);
+  // console.log("newAllTimes3:", newAllTimes3);
+  // console.log("newOtTimes3:", newOtTimes3);
+
   const singleArrayOfDates = daySpecialts.flat();
+  //   console.log("singleArrayOfDates:", singleArrayOfDates);
 
   const updateDayWorks = (
     dayWorkMorningAndSSs,
@@ -2588,6 +2867,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
     holidayList,
     singleArrayOfDates
   );
+  //   console.log("updatedDaysWorkMorningAndSS", updatedDaysWorkMorningAndSS);
 
   const updatedDaysWorkAfternoon = updateDayWorks(
     dayWorkAfternoons,
@@ -2595,6 +2875,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
     holidayList,
     singleArrayOfDates
   );
+  //   console.log("updatedDaysWorkAfternoon", updatedDaysWorkAfternoon);
 
   const updatedDaysWorkNight = updateDayWorks(
     dayWorkNights,
@@ -2602,6 +2883,13 @@ function WorktimeSheetWorkplace({ employeeList }) {
     holidayList,
     singleArrayOfDates
   );
+  //   console.log("updatedDaysWorkNight", updatedDaysWorkNight);
+
+  // const changeNumbersToOne = (array) => {
+  //   return array.map((subArray) =>
+  //     subArray.map((day) => (typeof day === "number" && day !== "" ? 1 : day))
+  //   );
+  // };
 
   const changeNumbersToOne = (array, searchWorkplaceId) => {
     return array.map((subArray) =>
@@ -2627,18 +2915,9 @@ function WorktimeSheetWorkplace({ employeeList }) {
 
   // const searchWorkplaceId = '399-664';
 
-  
-
   const finalUpdatedDayWorksWorkMorningAndSS = changeNumbersToOne(
     updatedDaysWorkMorningAndSS,
     searchWorkplaceId
-  );
-
-  const updatedFinalMorningAndSS = finalUpdatedDayWorksWorkMorningAndSS.map(
-    (subArray) =>
-      subArray.map((value) =>
-        typeof value === "string" && value.length < 3 ? "" : value
-      )
   );
 
   const finalUpdatedDayWorksWorkAfternoon = changeNumbersToOne2(
@@ -2648,30 +2927,43 @@ function WorktimeSheetWorkplace({ employeeList }) {
   const finalUpdatedDayWorksWorkNight =
     changeNumbersToOne2(updatedDaysWorkNight);
 
-    
-    const consolidateArrays = (
-      morningArray,
-      afternoonArray,
-      nightArray
-    ) => {
-      return morningArray.map((subArray, rowIndex) =>
-        subArray.map((value, colIndex) => {
-          // Check if "1" exists in any of the arrays at the same position
-          return ["1"].includes(morningArray[rowIndex][colIndex]) ||
-            ["1"].includes(afternoonArray[rowIndex][colIndex]) ||
-            ["1"].includes(nightArray[rowIndex][colIndex])
-            ? "1"
-            : ""; // Set to "1" if found, else ""
-        })
-      );
-    };
-    
-    // Combine the arrays
-    const finalConsolidatedArray = consolidateArrays(
-      finalUpdatedDayWorksWorkMorningAndSS,
-      finalUpdatedDayWorksWorkAfternoon,
-      finalUpdatedDayWorksWorkNight
-    );
+  console.log(
+    "finalUpdatedDayWorksWorkMorningAndSS",
+    finalUpdatedDayWorksWorkMorningAndSS
+  );
+  //   console.log(
+  //     "finalUpdatedDayWorksWorkAfternoon",
+  //     finalUpdatedDayWorksWorkAfternoon
+  //   );
+  //   console.log("finalUpdatedDayWorksWorkNight", finalUpdatedDayWorksWorkNight);
+
+  // const makePage = Math.ceil(arrayWorkNormalDay.length / 5);
+  // console.log('makePage', makePage);
+
+  // const sumArrayAllTime = arrayAllTime.map(subArray =>
+  //     subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
+  // );
+
+  // const sumArrayAllTime = arrayAllTime.map(subArray => {
+  //     const totalMinutes = subArray.reduce((acc, val) => {
+  //         if (typeof val === 'number') {
+  //             // Convert the time to total minutes
+  //             const hours = Math.floor(val);
+  //             const minutes = (val - hours) * 60;
+  //             return acc + (hours * 60) + minutes;
+  //         }
+  //         return acc;
+  //     }, 0);
+
+  //     // Convert total minutes back to hours and fractional hours
+  //     const totalHours = Math.floor(totalMinutes / 60);
+  //     const remainingMinutes = totalMinutes % 60;
+  //     const fractionalHours = remainingMinutes / 60;
+
+  //     return totalHours + fractionalHours;
+  // });
+
+  // console.log('sumArrayAllTime', sumArrayAllTime);
 
   const sumArrayAllTime = arrayAllTime.map((subArray) => {
     let totalHours = 0;
@@ -2695,6 +2987,10 @@ function WorktimeSheetWorkplace({ employeeList }) {
     return totalHours;
   });
 
+  // WorkplaceDataWorkOfHour
+  // const dividedArray = sumArrayAllTime.map(sum => sum / workplaceDataWorkOfHour);
+  // console.log('dividedArray', dividedArray);
+
   const dividedArray = sumArrayAllTime.map((sum) =>
     (sum / workplaceDataWorkOfHour).toFixed(2)
   );
@@ -2702,6 +2998,12 @@ function WorktimeSheetWorkplace({ employeeList }) {
   const sumArrayOTAllTime = arrayOTAllTime.map((subArray) =>
     subArray.reduce((acc, val) => acc + (typeof val === "number" ? val : 0), 0)
   );
+
+  // const sumArrayOT = arrayWorkOTNormalDay.map(subArray =>
+  //     subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
+  // );
+  // 1.5
+  // Function to sum each sub-array
 
   const sumArray321 = (array) => {
     return array.map((subArray) =>
@@ -2711,6 +3013,37 @@ function WorktimeSheetWorkplace({ employeeList }) {
       )
     );
   };
+
+  // const sumArray321 = (array) => {
+  //     return array.map(subArray => {
+  //         let sumBeforeDecimal = 0;
+  //         let sumAfterDecimal = 0;
+
+  //         subArray.forEach(val => {
+  //             if (typeof val === 'number' && !isNaN(val)) {
+  //                 const parts = val.toString().split('.');
+  //                 const beforeDecimal = parseFloat(parts[0]) || 0;
+  //                 const afterDecimal = parts[1] ? parseFloat(parts[1].padEnd(2, '0')) : 0;
+
+  //                 // Convert fractional part to tens digit
+  //                 const afterDecimalTens = afterDecimal < 10 ? afterDecimal * 10 : afterDecimal;
+
+  //                 sumBeforeDecimal += beforeDecimal;
+  //                 sumAfterDecimal += afterDecimalTens;
+  //             }
+  //         });
+
+  //         // Convert the summed minutes into hours and minutes
+  //         const totalMinutes = sumAfterDecimal;
+  //         const additionalHours = Math.floor(totalMinutes / 60);
+  //         const remainingMinutes = totalMinutes % 60;
+
+  //         const totalHours = sumBeforeDecimal + additionalHours;
+  //         const totalTime = totalHours + (remainingMinutes / 100);
+
+  //         return totalTime.toFixed(2);
+  //     });
+  // };
 
   // Ensure all values are numbers
   const convertToNumbers = (array) => {
@@ -2744,6 +3077,8 @@ function WorktimeSheetWorkplace({ employeeList }) {
 
   const sumArrayOT = sumArray321(combinedArray1_5);
 
+  // console.log('combinedA321rray:', combinedArray1_5);
+  //   console.log("sumArrayOT:", sumArrayOT);
   const sumArrayTotal = sumArrayOT;
   // 2
   const newAllTimes3Numbers = convertToNumbers(newAllTimes3);
@@ -2773,6 +3108,19 @@ function WorktimeSheetWorkplace({ employeeList }) {
 
   // Sum each sub-array
   const sumArrayAllHourWork = sumArray321(combinedArrayAll);
+
+  // console.log('combinedA321rray:', combinedArray2);
+  // console.log('sumCombinedArray:', sumArrayOT);
+
+  // console.log('combinedA321rray:', combinedArray2);
+  // console.log('sumCombinedArray:', sumArrayOT);
+  // วันหยุด
+  // const sumArrayHoliday = arrayWorkHoli.map(subArray =>
+  //     subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
+  // );
+
+  // const sumArrayTotal = sumArrayOT.map((sumOT, index) => sumOT + (sumArrayHolid[index] || 0));
+  // console.log('sumArrayTotal:', sumArrayTotal);
 
   const countSpecialDays = responseDataAll.map(
     (item) => Number(item.countSpecialDay) || 0
@@ -2813,13 +3161,23 @@ function WorktimeSheetWorkplace({ employeeList }) {
     return accountingRecord ? parseInt(accountingRecord.countHourWork, 10) : 0;
   });
 
+  //   console.log("countDayWork", countDayWork);
+  //   console.log("responseDataAll", responseDataAll);
+
   const amountCountDayWork = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
     return accountingRecord
       ? parseFloat(accountingRecord.amountCountDayWork).toFixed(2)
       : 0;
   });
+  //   console.log("amountCountDayWork", amountCountDayWork);
 
+  // const hourOneFive = responseDataAll.map((item) => {
+  //   const accountingRecord = item.accountingRecord?.[0];
+  //   return accountingRecord
+  //     ? parseFloat(accountingRecord.hourOneFive).toFixed(2)
+  //     : "0.00";
+  // });
   const hourOneFive = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
 
@@ -2837,6 +3195,14 @@ function WorktimeSheetWorkplace({ employeeList }) {
     }
   });
 
+
+  // const amountOneFive = responseDataAll.map((item) => {
+  //   const accountingRecord = item.accountingRecord?.[0];
+  //   return accountingRecord
+  //     ? parseFloat(accountingRecord.amountOneFive).toFixed(2)
+  //     : "0.00";
+  // });
+
   const amountOneFive = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
 
@@ -2849,7 +3215,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
     } else {
       // Otherwise, return `hourOneFive`
       return accountingRecord
-        ? parseFloat(accountingRecord.amountOneFive).toFixed(2)
+        ? parseFloat(accountingRecord.hourOneFive).toFixed(2)
         : "0.00";
     }
   });
@@ -2887,6 +3253,8 @@ function WorktimeSheetWorkplace({ employeeList }) {
     item.workplace.startsWith("3") ? "สแปร์เงินสด" : ""
   );
 
+  console.log('saveCash', saveCash);
+
   const sumArrayHoli = countSpecialDays.map(
     (countSpecialDay, index) => countSpecialDay - specialDayListWorks[index]
   );
@@ -2906,6 +3274,14 @@ function WorktimeSheetWorkplace({ employeeList }) {
     return amount;
   });
 
+  // const sumArrayHoliday = arrayWorkHoliday.map(subArray =>
+  //     subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
+  // );
+  // 3 newOtTimes3
+  // const sumArrayOTHoliday = arrayWorkOTHoliday.map(subArray =>
+  //     subArray.reduce((acc, val) => acc + (typeof val === 'number' ? val : 0), 0)
+  // );
+  // 3
   const sumArrayOTHoliday = newOtTimes3.map((subArray) =>
     subArray
       .reduce((acc, val) => acc + (typeof val === "number" ? val : 0), 0)
@@ -2977,6 +3353,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
 
   addSalaryWorkplace.sort((a, b) => a.name.localeCompare(b.name, "th"));
 
+  //   console.log("addSalaryWorkplace", addSalaryWorkplace);
 
   const getUniqueEntriesWithLowestSpSalary = (entries) => {
     const uniqueEntriesMap = new Map();
@@ -2999,6 +3376,14 @@ function WorktimeSheetWorkplace({ employeeList }) {
   const filteredAddSalaryWorkplace =
     getUniqueEntriesWithLowestSpSalary(addSalaryWorkplace);
 
+  //   console.log("filteredAddSalaryWorkplace", filteredAddSalaryWorkplace);
+
+  // const extractedDataAddSalary = filteredEmployees.flatMap(employee => [
+  //     employee.addSalary
+  // ]);
+  // const extractedDataAddSalary = filteredEmployees.map(employee => [
+  //     employee.addSalary
+  // ]);
   const addSalaryNames = new Set(
     filteredAddSalaryWorkplace.map((item) => item.name)
   );
@@ -3023,6 +3408,8 @@ function WorktimeSheetWorkplace({ employeeList }) {
     });
     return spSalaryArray;
   });
+
+  //   console.log("extractedDataAddSalary", extractedDataAddSalary);
 
   const adjustedDailyExtractedDataAddSalary = extractedDataAddSalary.map(
     (salaryArray, outerIndex) => {
@@ -3069,6 +3456,10 @@ function WorktimeSheetWorkplace({ employeeList }) {
       });
     }
   );
+  //   console.log(
+  //     "adjustedDailyExtractedDataAddSalaryCount",
+  //     adjustedDailyExtractedDataAddSalaryCount
+  //   );
   // รวมคำนวนสวัสดิการ
   const SpSalaryArray = workplaceDataListAddSalary.map((item) => item.SpSalary);
   const roundOfSalaryArray = workplaceDataListAddSalary.map(
@@ -3366,6 +3757,11 @@ function WorktimeSheetWorkplace({ employeeList }) {
       } else if (daysInMonth === 31) {
         startXSpSalary = 176.5;
       }
+      // console.log('startXSpSalary:', startXSpSalary);
+      // console.log('cellHeightSpSalary:', cellHeightSpSalary);
+
+      // const startXSpSalary = 182; // Adjust the starting X-coordinate as needed
+      // const startYSpSalary = 20; // Adjust the starting Y-coordinate as needed
 
       const drawTableSpSalary = (tableNumber) => {
         for (let i = 0; i < numRows; i++) {
@@ -4585,9 +4981,30 @@ function WorktimeSheetWorkplace({ employeeList }) {
               i,
               arrayWorkNormalDay.slice(dataIdx, dataIdx + 1)
             );
+            // drawTableMess(i, arrayWorkNormalDay.slice(dataIdx, dataIdx + 1));
+            // drawArrayText(arraytest, dataIdx, dataIdx + 1);
 
+            // drawArrayText(arraytest.slice(dataIdx, dataIdx + 1));
           }
         }
+        // arrayAllTime
+
+        // drawArrayText(arrayWorkNormalDay.slice(pageStartIndex, pageEndIndex));
+
+        // drawArrayText(extractedDataAddSalary);
+        // drawArrayTextAllTime
+        // 18/06/2024
+        // drawArrayTextAllTime(arrayAllTime.slice(pageStartIndex, pageEndIndex));
+
+        // drawArrayTextOT(arrayWorkOTNormalDay.slice(pageStartIndex, pageEndIndex));
+
+        // drawArrayTextHoli(arrayWorkHoli.slice(pageStartIndex, pageEndIndex));
+
+        // drawArrayTextHoliday(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex));
+        // drawArrayTextOTHoliday(arrayWorkOTHoliday.slice(pageStartIndex, pageEndIndex));
+
+        // drawArrayNumHead(arrayWorkHoliday.slice(pageStartIndex, pageEndIndex), indexArray.slice(pageStartIndex, pageEndIndex));
+        // console.log('321arrayWorkHoliday', arrayWorkHoliday);
 
         drawArrayTextAllTime(arrayAllTime.slice(pageStartIndex, pageEndIndex));
 
@@ -5031,6 +5448,11 @@ function WorktimeSheetWorkplace({ employeeList }) {
       } else if (daysInMonth === 31) {
         startXSpSalary = 162.75;
       }
+      // console.log('startXSpSalary:', startXSpSalary);
+      // console.log('cellHeightSpSalary:', cellHeightSpSalary);
+
+      // const startXSpSalary = 182; // Adjust the starting X-coordinate as needed
+      // const startYSpSalary = 20; // Adjust the starting Y-coordinate as needed
 
       const drawTableSpSalary = (tableNumber) => {
         for (let i = 0; i < numRows; i++) {
@@ -6392,7 +6814,8 @@ function WorktimeSheetWorkplace({ employeeList }) {
               drawArrayTextWithColor([rowData[j]], j, i);
             }
             // }
-
+            // console.log('rowData',rowData);
+            // console.log('resultArray',resultArray);
             drawTable(i, newAllTimes.slice(dataIdx, dataIdx + 1));
             drawTableLeftHead(i, newAllTimes.slice(dataIdx, dataIdx + 1));
             drawTableNumHead(i, newAllTimes.slice(dataIdx, dataIdx + 1));
@@ -6863,6 +7286,8 @@ function WorktimeSheetWorkplace({ employeeList }) {
     SalaryWork3,
   } = generateHourAndSalaryData(10);
 
+  console.log("HourWork:", HourWork);
+  console.log("SalaryWork:", SalaryWork);
 
   //////////////////
   const countSpecificStrings = (row, lengthThreshold = 3) => {
@@ -7305,7 +7730,6 @@ function WorktimeSheetWorkplace({ employeeList }) {
         // newOtTimesTest.length,
         // newOtTimes2Test.length,
         // newOtTimes3Test.length
-        finalConsolidatedArray.length,
         finalUpdatedDayWorksWorkMorningAndSS.length,
         finalUpdatedDayWorksWorkAfternoon.length,
         finalUpdatedDayWorksWorkNight.length,
@@ -7334,8 +7758,6 @@ function WorktimeSheetWorkplace({ employeeList }) {
         // const newOtTimes2 = newOtTimes2Test[i] || Array(numCols).fill("");
         // const newOtTimes3 = newOtTimes3Test[i] || Array(numCols).fill("");
 
-        const allDayWork =
-        finalConsolidatedArray[i] || Array(numCols).fill("");
         const morningData =
           finalUpdatedDayWorksWorkMorningAndSS[i] || Array(numCols).fill("");
         const afternoonData =
@@ -7364,7 +7786,6 @@ function WorktimeSheetWorkplace({ employeeList }) {
           // Check if the item is a number, convert it to a string
           return item !== "" ? item.toString() : item;
         });
-        const isAllDayWorkRowEmpty = isRowEmpty(allDayWork);
         const isMorningRowEmpty = isRowEmpty(morningData);
         const isAfternoonRowEmpty = isRowEmpty(afternoonData);
         const isNightRowEmpty = isRowEmpty(nightData);
@@ -7383,7 +7804,6 @@ function WorktimeSheetWorkplace({ employeeList }) {
         const isSalaryRowEmpty = isRowEmpty(salaryData);
 
         if (
-          isAllDayWorkRowEmpty &&
           isMorningRowEmpty &&
           isAfternoonRowEmpty &&
           isNightRowEmpty &&
@@ -7417,9 +7837,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
         //   (isNewOtTimes3TestRowEmpty ? 0 : cellHeight * 2);
 
         const totalHeightNeeded =
-        
           (isMorningRowEmpty ? 0 : morningRowHeight + cellHeight) +
-          (isAllDayWorkRowEmpty ? 0 : afternoonRowHeight) +
           (isAfternoonRowEmpty ? 0 : afternoonRowHeight) +
           (isNightRowEmpty ? 0 : nightRowHeight) +
           // Add height only if both conditions for each row are false
@@ -8183,13 +8601,8 @@ function WorktimeSheetWorkplace({ employeeList }) {
         // const newOtTimes2 = newOtTimes2Test[i] || Array(numCols).fill("");
         // const newOtTimes3 = newOtTimes3Test[i] || Array(numCols).fill("");
 
-        const allDayWork =
-        finalConsolidatedArray[i] || Array(numCols).fill("");
         const morningData =
           finalUpdatedDayWorksWorkMorningAndSS[i] || Array(numCols).fill("");
-          updatedFinalMorningAndSS
-          const morningDataUpdate =
-          updatedFinalMorningAndSS[i] || Array(numCols).fill("");
         const afternoonData =
           finalUpdatedDayWorksWorkAfternoon[i] || Array(numCols).fill("");
         const nightData =
@@ -8216,7 +8629,6 @@ function WorktimeSheetWorkplace({ employeeList }) {
           // Check if the item is a number, convert it to a string
           return item !== "" ? item.toString() : item;
         });
-        const isAllDayWorkRowEmpty = isRowEmpty(allDayWork);
         const isMorningRowEmpty = isRowEmpty(morningData);
         const isAfternoonRowEmpty = isRowEmpty(afternoonData);
         const isNightRowEmpty = isRowEmpty(nightData);
@@ -8235,7 +8647,6 @@ function WorktimeSheetWorkplace({ employeeList }) {
         const isSalaryRowEmpty = isRowEmpty(salaryData);
 
         if (
-          isAllDayWorkRowEmpty &&
           isMorningRowEmpty &&
           isAfternoonRowEmpty &&
           isNightRowEmpty &&
@@ -8249,9 +8660,6 @@ function WorktimeSheetWorkplace({ employeeList }) {
 
         // Determine row heights based on content length
         const morningRowHeight = countSpecificStrings(morningData)
-          ? cellHeight * 2
-          : cellHeight;
-          const allDayWorkRowHeight = countSpecificStrings(allDayWork)
           ? cellHeight * 2
           : cellHeight;
         const afternoonRowHeight = countSpecificStrings(afternoonData)
@@ -8273,7 +8681,6 @@ function WorktimeSheetWorkplace({ employeeList }) {
 
         const totalHeightNeeded =
           (isMorningRowEmpty ? 0 : morningRowHeight + cellHeight) +
-          (isAllDayWorkRowEmpty ? 0 : afternoonRowHeight) +
           (isAfternoonRowEmpty ? 0 : afternoonRowHeight) +
           (isNightRowEmpty ? 0 : nightRowHeight) +
           // Add height only if both conditions for each row are false
@@ -8455,20 +8862,30 @@ function WorktimeSheetWorkplace({ employeeList }) {
 
         const rightX = 200; // Adjust this value based on your PDF width and margins
 
+        if (!isRowEmpty(salaryCountData)) {
+          // Drawing salary data
+          drawAddSalaryCountRow(salaryCountData, currentY, cellHeight);
+        }
+
+        if (!isRowEmpty(salaryData)) {
+          // Drawing salary data
+          drawAddSalaryRow(salaryData, currentY + morningRowHeight + 1, cellHeight);
+        }
 
         // if (!isMorningRowEmpty) {
         drawTableNumber123("", currentY, cellHeight, "กะเช้า");
         //   drawRow(morningData, currentY, morningRowHeight);
-
-        // drawRow(morningData, currentY, morningRowHeight, i);
-        drawRow(morningDataUpdate, currentY, morningRowHeight, i);
-
-        // drawCellRight(
-        //   cellHeight * daysInMonth + 59,
-        //   currentY + cellHeight / 2 + 1,
-        //   countDayWork[i].toString()
-        // );
-        
+        drawRow(morningData, currentY, morningRowHeight, i);
+        drawCellRight(
+          cellHeight * daysInMonth + 59,
+          currentY + cellHeight / 2 + 1,
+          countDayWork[i].toString()
+        );
+        drawCellRight(
+          cellHeight * daysInMonth + 59 + cellWidthSpSalary,
+          currentY + cellHeight / 2 + 1,
+          sumArrayHoli[i].toString()
+        );
         drawCellRight(
           cellHeight * daysInMonth + 59 + cellWidthSpSalary * 12,
           currentY + cellHeight / 2 + 1,
@@ -8481,42 +8898,6 @@ function WorktimeSheetWorkplace({ employeeList }) {
         //   tax[i].toString()
         // );
         currentY += morningRowHeight;
-
-        if (!isRowEmpty(salaryCountData)) {
-          // Drawing salary data
-          drawAddSalaryCountRow(salaryCountData, currentY, cellHeight);
-        }
-
-        if (!isRowEmpty(salaryData)) {
-          // Drawing salary data
-          drawAddSalaryRow(salaryData, currentY + morningRowHeight + 1, cellHeight);
-        }
-
-        drawCellRight(
-          cellHeight * daysInMonth + 59 + cellWidthSpSalary,
-          currentY + cellHeight / 2 + 1,
-          sumArrayHoli[i].toString()
-        );
-        
-        drawRow(allDayWork, currentY, cellHeight);
-        drawSalaryRow(emptyArraytest, currentY, cellHeight);
-        // drawCellRight(
-        //   cellHeight * daysInMonth + 59,
-        //   currentY + cellHeight / 2 + 1,
-        //   amountCountDayWork[i].toString()
-        // );
-        drawCellRight(
-          cellHeight * daysInMonth + 59,
-          currentY + cellHeight / 2 + 1,
-          countDayWork[i].toString()
-        );
-        // drawCellRight(
-        //   cellHeight * daysInMonth + 59 + cellWidthSpSalary,
-        //   currentY + cellHeight / 2 + 1,
-        //   adjustedAmountSpecialDay[i].toString()
-        // );
-        currentY += cellHeight;
-
         drawRow(newOtTimesspace, currentY, cellHeight);
         drawSalaryRow(emptyArraytest, currentY, cellHeight);
         drawCellRight(
