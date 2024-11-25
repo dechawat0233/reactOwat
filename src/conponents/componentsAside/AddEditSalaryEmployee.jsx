@@ -174,6 +174,18 @@ function AddEditSalaryEmployee() {
         }
     }, [addSalaryId, searchAddSalaryList]);
 
+    useEffect(() => {
+        const findObjectById = (id) => {
+            return searchDeductSalaryList.find(item => item.id === id);
+        }
+
+        const foundObject = findObjectById(minusId);
+        if (foundObject) {
+            setMisnusName(foundObject.name); // Set only the name property
+        }
+    }, [minusId, searchDeductSalaryList]);
+
+    
     ///////////////////
     function handleClickResult(emp) {
         // Populate all the startTime input fields with the search result value
