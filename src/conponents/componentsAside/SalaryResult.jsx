@@ -250,47 +250,82 @@ function Salaryresult() {
   };
 
   const handleDeleteData = (index) => {
+   alert(index); 
     const newDataArray = [...remainArray];
     newDataArray.splice(index, 1);
     setRemainArray(newDataArray);
+    
+      // Save after ensuring state update
+  setTimeout(() => handleSaveWelfare(), 0); // Use a small delay
   };
 
   console.log("remainArray", remainArray);
 
   const [yearWelfare, setYearWelfare] = useState("");
   const [monthWelfare, setMonthWelfare] = useState("");
-
   async function handleSaveWelfare() {
-    // alert('handleSaveWelfare');
     try {
-      if (remainArray.length > 0 && yearWelfare !== "" && monthWelfare !== "") {
-        const welfareSave = await {
-          year: yearWelfare,
-          month: monthWelfare,
-          createDate: "",
-          employeeId: staffId,
-          workplace: "",
-          createBy: "",
-          status: "",
-          record: remainArray,
-        };
-
-        //save welfare
-        await axios
-          .post(endpoint + "/leave/create", welfareSave)
-          .then(async (response) => {
-            const responseData = await response.data;
-            if (responseData) {
-              alert("บันทึกสำเร็จ");
-            }
-          });
-      } else {
-        alert("กรุณาตรวจสอบรายการลา และข้อมูลพนักงาน");
+      if (remainArray.length === 0) {
+        // alert("กรุณาตรวจสอบรายการลา และข้อมูลพนักงาน");
+        alert("ลบรายการวันลาหมดแล้ว");
+        // return;
+      }
+      if (!yearWelfare || !monthWelfare) {
+        alert("กรุณากรอกข้อมูลปีและเดือนให้ครบถ้วน");
+        return;
+      }
+  
+      const welfareSave = {
+        year: yearWelfare,
+        month: monthWelfare,
+        createDate: "",
+        employeeId: staffId,
+        workplace: "",
+        createBy: "",
+        status: "",
+        record: remainArray || [],
+      };
+  
+      const response = await axios.post(endpoint + "/leave/create", welfareSave);
+      if (response.data) {
+        alert("บันทึกสำเร็จ");
       }
     } catch (e) {
       alert("save welfare error is " + e);
     }
   }
+  
+  // async function handleSaveWelfare() {
+  //   // alert('handleSaveWelfare');
+  //   try {
+  //     if (remainArray.length > 0 && yearWelfare !== "" && monthWelfare !== "") {
+  //       const welfareSave = await {
+  //         year: yearWelfare,
+  //         month: monthWelfare,
+  //         createDate: "",
+  //         employeeId: staffId,
+  //         workplace: "",
+  //         createBy: "",
+  //         status: "",
+  //         record: remainArray,
+  //       };
+
+  //       //save welfare
+  //       await axios
+  //         .post(endpoint + "/leave/create", welfareSave)
+  //         .then(async (response) => {
+  //           const responseData = await response.data;
+  //           if (responseData) {
+  //             alert("บันทึกสำเร็จ");
+  //           }
+  //         });
+  //     } else {
+  //       alert("กรุณาตรวจสอบรายการลา และข้อมูลพนักงาน");
+  //     }
+  //   } catch (e) {
+  //     alert("save welfare error is " + e);
+  //   }
+  // }
 
   //all leave usede
   const [sumLeave, setSumLeave] = useState([]);
