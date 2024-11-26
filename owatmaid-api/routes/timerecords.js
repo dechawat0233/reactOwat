@@ -405,32 +405,76 @@ console.log(workplaceTimeRecordData );
 });
 
 
-// Update a employeeTimeRecordData  by its employeeTimeRecordData  
+// // Update a employeeTimeRecordData  by its employeeTimeRecordData  
+// router.put('/updateemp/:employeeRecordId', async (req, res) => {
+//   const employeeIdToUpdate = req.params.employeeRecordId;
+//   const updateFields = req.body;
+
+//   try {
+//     // Find the resource by ID and update it
+//     const updatedResource = await workplaceTimerecordEmp.findByIdAndUpdate(
+//       employeeIdToUpdate,
+//       updateFields,
+//       { new: true } // To get the updated document as the result
+//     );
+//     if (!updatedResource) {
+//       return res.status(404).json({ message: 'Resource not found' });
+//     }
+
+//     // Send the updated resource as the response
+//     res.json(updatedResource);
+
+
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// });
+
+
+// Update an employeeTimeRecordData by its employeeTimeRecordData
 router.put('/updateemp/:employeeRecordId', async (req, res) => {
   const employeeIdToUpdate = req.params.employeeRecordId;
   const updateFields = req.body;
 
   try {
-    // Find the resource by ID and update it
+    // Update the specified record
     const updatedResource = await workplaceTimerecordEmp.findByIdAndUpdate(
       employeeIdToUpdate,
       updateFields,
-      { new: true } // To get the updated document as the result
+      { new: true } // Return the updated document
     );
+
     if (!updatedResource) {
       return res.status(404).json({ message: 'Resource not found' });
     }
 
-    // Send the updated resource as the response
+    // Find duplicate records based on the unique fields
+    const duplicates = await workplaceTimerecordEmp.find({
+      timerecordId: updatedResource.timerecordId,
+      employeeId: updatedResource.employeeId,
+      employeeName: updatedResource.employeeName,
+      month: updatedResource.month,
+    });
+
+    if (duplicates.length > 1) {
+      // Keep the most recently updated record and remove others
+      const recordsToKeep = duplicates.find(record => record._id.toString() === updatedResource._id.toString());
+      const recordsToRemove = duplicates.filter(record => record._id.toString() !== updatedResource._id.toString());
+
+      // Remove extra duplicate records
+      await workplaceTimerecordEmp.deleteMany({ _id: { $in: recordsToRemove.map(record => record._id) } });
+
+      console.log(`Removed ${recordsToRemove.length} duplicate records.`);
+    }
+
+    // Respond with the updated resource
     res.json(updatedResource);
-
-
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-
 
 async function setToEmployee(selectWorkplaceId, selectworkplaceName, selectMonth, workplaceTimeRecordData) {
   console.log('setToEmployee working');

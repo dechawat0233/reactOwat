@@ -1886,7 +1886,8 @@ function AddsettimeEmployee() {
       month: month,
       employee_workplaceRecord: rowDataList2,
     };
-
+alert(timeRecord_id)
+return;
     try {
       const response = await axios.put(
         endpoint + "/timerecord/updateemp/" + timeRecord_id,
