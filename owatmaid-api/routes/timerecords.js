@@ -462,7 +462,7 @@ router.put('/updateemp/:employeeRecordId', async (req, res) => {
     });
 
     // Save the new record
-    const savedRecord = await newRecord.save();
+    const savedRecord = await updateFields .save();
 
     // Respond with the newly created record
     res.status(201).json(savedRecord);
