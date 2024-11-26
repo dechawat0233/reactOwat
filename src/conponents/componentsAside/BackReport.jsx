@@ -10,19 +10,49 @@ import "jspdf-autotable";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import * as XLSX from "xlsx";
 
 import moment from "moment";
 import "moment/locale/th"; // Import the Thai locale data
 function BackReport({ employeeList, workplaceList }) {
+
+  const filteredEmployeeList = employeeList.map(
+    ({ name, lastName, employeeId, branchBank }) => ({
+      name,
+      lastName,
+      employeeId,
+      branchBank,
+    })
+  );
+
+  const [dataAccounting, setDataAccounting] = useState(""); //รหัสหน่วยงาน
   const [workplacrId, setWorkplacrId] = useState(""); //รหัสหน่วยงาน
   const [workplacrName, setWorkplacrName] = useState(""); //รหัสหน่วยงาน
-  console.log('employeeList', employeeList);
+  console.log('filteredEmployeeList', filteredEmployeeList);
+
+  const extractBankNames = (list) => {
+    const bankNames = list
+      .map((employee) => {
+        if (employee.branchBank) {
+          return employee.branchBank.split(/\d/)[0].trim(); // Extract text before the first number
+        }
+        return null; // Return null for invalid entries
+      })
+      .filter((name) => name !== null); // Remove null entries
+
+    return [...new Set(bankNames)]; // Remove duplicates
+  };
+
+  const uniqueBankNames = extractBankNames(filteredEmployeeList);
+
+  console.log('uniqueBankNames', uniqueBankNames);
+
 
   const [selectedBank, setSelectedBank] = useState("");
   // ฟังก์ชันจัดการการเปลี่ยนค่า
-  const handleChange = (event) => {
-    setSelectedBank(event.target.value);
-  };
+  // const handleChange = (event) => {
+  //   setSelectedBank(event.target.value);
+  // };
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [formattedDate321, setFormattedDate] = useState(null);
@@ -41,9 +71,9 @@ function BackReport({ employeeList, workplaceList }) {
   // console.log("startSelectedDate", startSelectedDate + " " + startFormattedDate321);
   // console.log("endSelectedDate", endSelectedDate + " " + endFormattedDate321);
 
-    // console.log("endSelectedDate", endSelectedDate + " " + endFormattedDate321);
+  // console.log("endSelectedDate", endSelectedDate + " " + endFormattedDate321);
 
-    
+
   const handleDatePickerChange = (date) => {
     setSelectedDate(date);
     setShowDatePicker(false); // Hide date picker after selecting a date
@@ -111,7 +141,7 @@ function BackReport({ employeeList, workplaceList }) {
     }
   }, [selectedDate, startSelectedDate, endSelectedDate]);
 
-  const [responseDataAll, setResponseDataAll] = useState([]);
+  const [responseDataAll, setResponseDataAll] = useState(filteredEmployeeList);
   const [present, setPresent] = useState("DATAOWAT");
   const [presentfilm, setPresentfilm] = useState(
     "\\10.10.110.251\payrolldata\Report\System\PRRPT011.V7.RPT"
@@ -127,9 +157,52 @@ function BackReport({ employeeList, workplaceList }) {
     (_, index) => EndYear + index
   ).reverse();
 
-  const filteredEmployees = employeeList.filter(
+  const filteredEmployees = filteredEmployeeList.filter(
     (employee) => employee.branchBank === selectedBank
   );
+
+  console.log('filteredEmployees', filteredEmployees);
+
+  useEffect(() => {
+    const fetchData = () => {
+      const dataTest = {
+        year: year,
+        month: month,
+      };
+
+      axios
+        .post(endpoint + "/accounting/calsalarylist", dataTest)
+        .then((response) => {
+          const responseData = response.data;
+
+          setDataAccounting(responseData);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    };
+
+    fetchData();
+  }, [year, month]);
+
+  console.log('dataAccounting', dataAccounting);
+
+  // Handle dropdown change
+  const handleChange = (event) => {
+    const selectedValue = event.target.value;
+    setSelectedBank(selectedValue);
+
+    // Filter filteredEmployeeList based on the selected bank
+    const filteredData = filteredEmployeeList.filter((employee) => {
+      if (employee.branchBank) {
+        const bankName = employee.branchBank.split(/\d/)[0].trim();
+        return bankName === selectedValue;
+      }
+      return false;
+    });
+
+    setResponseDataAll(filteredData); // Update filtered data
+  };
 
 
   const startToggleDatePicker = () => {
@@ -142,67 +215,47 @@ function BackReport({ employeeList, workplaceList }) {
     setShowDatePicker(!showDatePicker);
   };
 
-  useEffect(() => {
-    const fetchData = () => {
-      const dataTest = {
-        year: year,
-        month: month,
-      };
+  // useEffect(() => {
+  //   const generateRandomData = () => {
+  //     const randomNames = ["สมชาย", "กิตทิมา", "สิริพา", "ไกลนิมาร", "ไหรามา", "อิริสา"];
+  //     const randomLastNames = [
+  //       "สาศิมาไร",
+  //       "รืมากา",
+  //       "การิมาร",
+  //       "ไซนยะนะ",
+  //       "คงสงไทย",
+  //       "สงพารี",
+  //     ];
 
+  //     const randomArray = Array.from({ length: 150 }, () => ({
+  //       name: randomNames[Math.floor(Math.random() * randomNames.length)],
+  //       lastName:
+  //         randomLastNames[Math.floor(Math.random() * randomLastNames.length)],
+  //       banknumber: Math.floor(1000000000 + Math.random() * 9000000000).toString(), // Convert 10-digit number to string
+  //       employee: Math.floor(100000 + Math.random() * 900000).toString(), // Convert amount to string
+  //       total: Math.floor(10000 + Math.random() * 90000).toString(), // Convert amount to string
+  //     }));
 
-      axios
-        .post(endpoint + "/accounting/calsalarylist", dataTest)
-        .then((response) => {
-          const responseData = response.data;
+  //     setResponseDataAll(randomArray);
+  //   };
 
-          // กรอง responseData ตาม employeeId ใน filteredEmployees
-          const filteredData = responseData.filter((item) =>
-            filteredEmployees.some(
-              (employee) => employee.employeeId === item.employeeId
-            )
-          );
-
-          console.log("Filtered Data:", filteredData);
-          // setResponseDataAll(filteredData);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    };
-
-    // Call fetchData when year, month, or searchWorkplaceId changes
-    fetchData();
-  }, [year, month, filteredEmployees]);
-
-  useEffect(() => {
-    const generateRandomData = () => {
-      const randomNames = ["สมชาย", "กิตทิมา", "สิริพา", "ไกลนิมาร", "ไหรามา", "อิริสา"];
-      const randomLastNames = [
-        "สาศิมาไร",
-        "รืมากา",
-        "การิมาร",
-        "ไซนยะนะ",
-        "คงสงไทย",
-        "สงพารี",
-      ];
-
-      const randomArray = Array.from({ length: 150 }, () => ({
-        name: randomNames[Math.floor(Math.random() * randomNames.length)],
-        lastName:
-          randomLastNames[Math.floor(Math.random() * randomLastNames.length)],
-          banknumber: Math.floor(1000000000 + Math.random() * 9000000000).toString(), // Convert 10-digit number to string
-          employee: Math.floor(100000 + Math.random() * 900000).toString(), // Convert amount to string
-          total: Math.floor(10000 + Math.random() * 90000).toString(), // Convert amount to string
-      }));
-
-      setResponseDataAll(randomArray);
-    };
-
-    generateRandomData();
-  }, []);
+  //   generateRandomData();
+  // }, []);
 
 
   console.log('responseDataAll', responseDataAll);
+
+  const mergedData = responseDataAll.map((response) => {
+    const accounting = dataAccounting.find(
+      (account) => account.employeeId === response.employeeId
+    );
+    return {
+      ...response,
+      salary: accounting ? accounting.salary : 0, // Add salary or default to 0
+    };
+  });
+
+  console.log('mergedData', mergedData);
 
   // const generatePDF = () => {
   //   const names = ["Alice", "Bob", "Charlie", "David", "Eva"];
@@ -385,7 +438,7 @@ function BackReport({ employeeList, workplaceList }) {
     const pageHeight = pdf.internal.pageSize.height;
     const maxContentHeight = pageHeight - marginTop - marginBottom + 200;
     const itemsPerPage = Math.floor(maxContentHeight / 10); // Adjust row height (e.g., 10 for this example)
-    const totalPages = Math.ceil(responseDataAll.length / itemsPerPage);
+    const totalPages = Math.ceil(mergedData.length / itemsPerPage);
     let currentPage = 1;
 
     let y = marginTop;
@@ -406,8 +459,8 @@ function BackReport({ employeeList, workplaceList }) {
 
     pdf.line(x, 290 - 5, 205, 290 - 5); // Line from (20, 50) to (190, 50)
     pdf.text(`พิมพ์วันที่ ${formattedDate321}`, x, 290);
-    pdf.text(`รายงานโดน ${present}`, x+30, 290);
-    pdf.text(`แฟ้มรายงาน ${presentfilm}`, x+80, 290);
+    pdf.text(`รายงานโดน ${present}`, x + 30, 290);
+    pdf.text(`แฟ้มรายงาน ${presentfilm}`, x + 80, 290);
 
     y += 5; // Move to the next line
 
@@ -419,7 +472,7 @@ function BackReport({ employeeList, workplaceList }) {
     let allperson = 0; // Variable to keep track of the total sum
 
     // Loop through data and add rows
-    responseDataAll.forEach((item, index) => {
+    mergedData.forEach((item, index) => {
       if ((index % itemsPerPage === 0) && index !== 0) {
         // Add footer with page number
 
@@ -444,8 +497,8 @@ function BackReport({ employeeList, workplaceList }) {
 
         pdf.line(x, 290 - 5, 205, 290 - 5); // Line from (20, 50) to (190, 50)
         pdf.text(`พิมพ์วันที่ ${formattedDate321}`, x, 290);
-        pdf.text(`รายงานโดน ${present}`, x+30, 290);
-        pdf.text(`แฟ้มรายงาน ${presentfilm}`, x+80, 290);
+        pdf.text(`รายงานโดน ${present}`, x + 30, 290);
+        pdf.text(`แฟ้มรายงาน ${presentfilm}`, x + 80, 290);
         y += 5; // Move to the next line
       }
 
@@ -512,7 +565,32 @@ function BackReport({ employeeList, workplaceList }) {
     window.open(pdf.output("bloburl"), "_blank");
   };
 
+  const exportToExcel = () => {
+    // Define the headers
+    const headers = ["ลำดับ", "เลขบัญชี", "รหัสพนักงาน", "ชื่อ-นามสกุล", "ยอดเงิน"];
 
+    // Prepare the data
+    const data = mergedData.map((item, index) => [
+      index + 1, // ลำดับ
+      item.banknumber, // เลขบัญชี
+      item.employee, // รหัสพนักงาน
+      `${item.name} ${item.lastName}`, // ชื่อ-นามสกุล
+      item.total, // ยอดเงิน
+    ]);
+
+    // Combine headers and data
+    const worksheetData = [headers, ...data];
+
+    // Create a worksheet
+    const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
+
+    // Create a workbook and append the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Salary Data");
+
+    // Export to Excel file
+    XLSX.writeFile(workbook, "SalaryData.xlsx");
+  };
 
 
   return (
@@ -556,7 +634,7 @@ function BackReport({ employeeList, workplaceList }) {
                           value={selectedBank}
                           onChange={handleChange}
                         >
-                          <option value="">ไม่ระบุ</option>
+                          {/* <option value="">ไม่ระบุ</option>
                           <option value="ธนาคารกรุงเทพ">
                             ธนาคาร กรุงเทพ
                           </option>
@@ -610,7 +688,12 @@ function BackReport({ employeeList, workplaceList }) {
                           </option>
                           <option value="ธนาคารอาคารสงเคราะห์">
                             ธนาคาร อาคารสงเคราะห์
-                          </option>
+                          </option> */}
+                          {uniqueBankNames.map((bankName, index) => (
+                            <option key={index} value={bankName}>
+                              {bankName}
+                            </option>
+                          ))}
                         </select>
                       </div>
 
@@ -778,9 +861,14 @@ function BackReport({ employeeList, workplaceList }) {
                   </div>
 
                 </div>
+                <br />
+                <div class="row">
+                  <div class="col-md-3">
+                    <button onClick={exportToExcel} class="btn b_save">Export to Excel</button>
 
+                  </div>
 
-
+                </div>
               </section>
             </div>
           </section>

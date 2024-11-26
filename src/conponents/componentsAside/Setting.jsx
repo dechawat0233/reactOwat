@@ -1511,7 +1511,7 @@ function Setting({ workplaceList, employeeList }) {
                   <div class="row align-items-end">
                     <div class="col-md-3">
                       <div class="form-group">
-                        <label role="workOfHour">ชั่วโมงทำงาน</label>
+                        <label role="workOfHour">ชั่วโมงทำงาน OT</label>
                         <input
                           type="text"
                           class="form-control"
@@ -1545,8 +1545,11 @@ function Setting({ workplaceList, employeeList }) {
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
+                        
                         <div class="row align-items-end">
+                          <label>เวลาพัก</label>
                           <div class="col-md-4">
+                          
                             <label>
                               <input
                                 type="radio"
@@ -1572,7 +1575,7 @@ function Setting({ workplaceList, employeeList }) {
                                 checked={isCustom}
                                 onChange={(e) => handleRadioChange(e.target.value)}
                               />
-                              Custom
+                              ปรับเอง
                             </label>
                           </div>
                           <div class="col-md-6">
@@ -1582,7 +1585,7 @@ function Setting({ workplaceList, employeeList }) {
                                 type="text"
                                 className="form-control"
                                 style={{ marginTop: "10px", width: "200px" }}
-                                placeholder="Enter custom OT hours"
+                                placeholder="นาที"
                                 value={breakOfOT}
                                 onChange={(e) => setBreakOfOT(e.target.value)}
                               />
