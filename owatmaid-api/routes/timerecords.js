@@ -437,6 +437,7 @@ router.put('/updateemp/:employeeRecordId', async (req, res) => {
   const employeeIdToUpdate = req.params.employeeRecordId;
   const updateFields = req.body;
 console.log(updateFields )
+//test
   try {
     // Find the existing record to get timerecordId, employeeId, and month
     const existingRecord = await workplaceTimerecordEmp.findById(employeeIdToUpdate);
