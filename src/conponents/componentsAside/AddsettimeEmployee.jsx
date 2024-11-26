@@ -2663,6 +2663,7 @@ function AddsettimeEmployee() {
         </div>
       </div>
       {/* <!-- /.container-fluid --> */}
+      {/* {JSON.stringify(rowDataList2)} */}
 
       {/* Hidden Link to /test */}
       <Link to="/compensation" style={{ display: "none" }} ref={linkRef}>

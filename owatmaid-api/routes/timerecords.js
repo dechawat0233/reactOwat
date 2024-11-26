@@ -432,44 +432,40 @@ console.log(workplaceTimeRecordData );
 // });
 
 
-// Update an employeeTimeRecordData by its employeeTimeRecordData
+// Delete all records by timerecordId, employeeId, and month, then save a new record
 router.put('/updateemp/:employeeRecordId', async (req, res) => {
   const employeeIdToUpdate = req.params.employeeRecordId;
   const updateFields = req.body;
 
   try {
-    // Update the specified record
-    const updatedResource = await workplaceTimerecordEmp.findByIdAndUpdate(
-      employeeIdToUpdate,
-      updateFields,
-      { new: true } // Return the updated document
-    );
-console.log(JSON.stringify(updatedResource ,null,2));
-    if (!updatedResource) {
+    // Find the existing record to get timerecordId, employeeId, and month
+    const existingRecord = await workplaceTimerecordEmp.findById(employeeIdToUpdate);
+
+    if (!existingRecord) {
       return res.status(404).json({ message: 'Resource not found' });
     }
 
-    // Find duplicate records based on the unique fields
-    const duplicates = await workplaceTimerecordEmp.find({
-      timerecordId: updatedResource.timerecordId,
-      employeeId: updatedResource.employeeId,
-      employeeName: updatedResource.employeeName,
-      month: updatedResource.month,
+    // Delete all records that match timerecordId, employeeId, and month
+    await workplaceTimerecordEmp.deleteMany({
+      timerecordId: existingRecord.timerecordId,
+      employeeId: existingRecord.employeeId,
+      month: existingRecord.month,
     });
 
-    if (duplicates.length > 1) {
-      // Keep the most recently updated record and remove others
-      const recordsToKeep = duplicates.find(record => record._id.toString() === updatedResource._id.toString());
-      const recordsToRemove = duplicates.filter(record => record._id.toString() !== updatedResource._id.toString());
+    // Create a new record with updated fields
+    const newRecord = new workplaceTimerecordEmp({
+      timerecordId: updateFields.timerecordId || existingRecord.timerecordId,
+      employeeId: updateFields.employeeId || existingRecord.employeeId,
+      employeeName: updateFields.employeeName || existingRecord.employeeName,
+      month: updateFields.month || existingRecord.month,
+      employee_workplaceRecord: updateFields.employee_workplaceRecord || existingRecord.employee_workplaceRecord
+    });
 
-      // Remove extra duplicate records
-      await workplaceTimerecordEmp.deleteMany({ _id: { $in: recordsToRemove.map(record => record._id) } });
+    // Save the new record
+    const savedRecord = await newRecord.save();
 
-      console.log(`Removed ${recordsToRemove.length} duplicate records.`);
-    }
-
-    // Respond with the updated resource
-    res.json(updatedResource);
+    // Respond with the newly created record
+    res.status(201).json(savedRecord);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
