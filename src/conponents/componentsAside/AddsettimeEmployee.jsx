@@ -94,6 +94,9 @@ function AddsettimeEmployee() {
   ).reverse();
 
   useEffect(() => {
+    const event = new Event('submit'); // Creating a synthetic event object
+    handleSearch(event); // Call handleSearch with the event
+
     if (name !== "") {
       setCheckaddData("");
 
