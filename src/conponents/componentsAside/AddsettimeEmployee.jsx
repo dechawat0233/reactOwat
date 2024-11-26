@@ -1679,7 +1679,7 @@ function AddsettimeEmployee() {
       month: month,
       timerecordId: year,
     };
-
+    setRowDataList2([]);
     if (!checkaddData) {
       try {
         const response = await axios.post(
