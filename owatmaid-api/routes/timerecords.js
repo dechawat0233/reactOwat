@@ -453,7 +453,7 @@ router.put('/updateemp/:employeeRecordId', async (req, res) => {
     });
 
     // Create a new record with updated fields
-    const newRecord = new workplaceTimerecordEmp({
+    const newRecord = await new workplaceTimerecordEmp({
       timerecordId: updateFields.timerecordId || existingRecord.timerecordId,
       employeeId: updateFields.employeeId || existingRecord.employeeId,
       employeeName: updateFields.employeeName || existingRecord.employeeName,
@@ -462,13 +462,13 @@ router.put('/updateemp/:employeeRecordId', async (req, res) => {
     });
 
     // Save the new record
-    const savedRecord = await updateFields .save();
+    const savedRecord = await newRecord.save();
 
     // Respond with the newly created record
-    res.status(201).json(savedRecord);
+    await res.status(201).json(savedRecord);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+await    console.error(error);
+    await res.status(500).json({ error: 'Internal server error' });
   }
 });
 
