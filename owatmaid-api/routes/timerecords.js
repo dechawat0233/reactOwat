@@ -444,7 +444,7 @@ router.put('/updateemp/:employeeRecordId', async (req, res) => {
       updateFields,
       { new: true } // Return the updated document
     );
-
+console.log(JSON.stringify(updatedResource ,null,2));
     if (!updatedResource) {
       return res.status(404).json({ message: 'Resource not found' });
     }
