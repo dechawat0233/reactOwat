@@ -1679,7 +1679,7 @@ function AddsettimeEmployee() {
       month: month,
       timerecordId: year,
     };
-
+    setRowDataList2([]);
     if (!checkaddData) {
       try {
         const response = await axios.post(
@@ -1886,7 +1886,6 @@ function AddsettimeEmployee() {
       month: month,
       employee_workplaceRecord: rowDataList2,
     };
-
     try {
       const response = await axios.put(
         endpoint + "/timerecord/updateemp/" + timeRecord_id,
@@ -2664,6 +2663,7 @@ function AddsettimeEmployee() {
         </div>
       </div>
       {/* <!-- /.container-fluid --> */}
+      {/* {JSON.stringify(rowDataList2)} */}
 
       {/* Hidden Link to /test */}
       <Link to="/compensation" style={{ display: "none" }} ref={linkRef}>

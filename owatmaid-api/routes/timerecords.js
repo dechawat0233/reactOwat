@@ -405,32 +405,72 @@ console.log(workplaceTimeRecordData );
 });
 
 
-// Update a employeeTimeRecordData  by its employeeTimeRecordData  
+// // Update a employeeTimeRecordData  by its employeeTimeRecordData  
+// router.put('/updateemp/:employeeRecordId', async (req, res) => {
+//   const employeeIdToUpdate = req.params.employeeRecordId;
+//   const updateFields = req.body;
+
+//   try {
+//     // Find the resource by ID and update it
+//     const updatedResource = await workplaceTimerecordEmp.findByIdAndUpdate(
+//       employeeIdToUpdate,
+//       updateFields,
+//       { new: true } // To get the updated document as the result
+//     );
+//     if (!updatedResource) {
+//       return res.status(404).json({ message: 'Resource not found' });
+//     }
+
+//     // Send the updated resource as the response
+//     res.json(updatedResource);
+
+
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// });
+
+
+// Delete all records by timerecordId, employeeId, and month, then save a new record
 router.put('/updateemp/:employeeRecordId', async (req, res) => {
   const employeeIdToUpdate = req.params.employeeRecordId;
   const updateFields = req.body;
 
   try {
-    // Find the resource by ID and update it
-    const updatedResource = await workplaceTimerecordEmp.findByIdAndUpdate(
-      employeeIdToUpdate,
-      updateFields,
-      { new: true } // To get the updated document as the result
-    );
-    if (!updatedResource) {
+    // Find the existing record to get timerecordId, employeeId, and month
+    const existingRecord = await workplaceTimerecordEmp.findById(employeeIdToUpdate);
+
+    if (!existingRecord) {
       return res.status(404).json({ message: 'Resource not found' });
     }
 
-    // Send the updated resource as the response
-    res.json(updatedResource);
+    // Delete all records that match timerecordId, employeeId, and month
+    await workplaceTimerecordEmp.deleteMany({
+      timerecordId: existingRecord.timerecordId,
+      employeeId: existingRecord.employeeId,
+      month: existingRecord.month,
+    });
 
+    // Create a new record with updated fields
+    const newRecord = await new workplaceTimerecordEmp({
+      timerecordId: updateFields.timerecordId || existingRecord.timerecordId,
+      employeeId: updateFields.employeeId || existingRecord.employeeId,
+      employeeName: updateFields.employeeName || existingRecord.employeeName,
+      month: updateFields.month || existingRecord.month,
+      employee_workplaceRecord: updateFields.employee_workplaceRecord || existingRecord.employee_workplaceRecord
+    });
 
+    // Save the new record
+    const savedRecord = await newRecord.save();
+
+    // Respond with the newly created record
+    await res.status(201).json(savedRecord);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+await    console.error(error);
+    await res.status(500).json({ error: 'Internal server error' });
   }
 });
-
 
 async function setToEmployee(selectWorkplaceId, selectworkplaceName, selectMonth, workplaceTimeRecordData) {
   console.log('setToEmployee working');
