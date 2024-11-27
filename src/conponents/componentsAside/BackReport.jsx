@@ -580,6 +580,179 @@ function BackReport({ employeeList, workplaceList }) {
     window.open(pdf.output("bloburl"), "_blank");
   };
 
+  const generatePDFAudit = () => {
+    // Create a new instance of jsPDF
+    const pdf = new jsPDF(
+      {
+        format: "a4", // Set page size to A4
+        unit: "mm",   // Use millimeters as the unit
+        orientation: "portrait", // Orientation can be 'portrait' or 'landscape'
+      }
+    );
+
+    // Add the Thai fonts to jsPDF
+    const fontPath = "/assets/fonts/THSarabunNew.ttf";
+    pdf.addFileToVFS(fontPath);
+    pdf.addFont(fontPath, "THSarabunNew", "normal");
+
+    // Add bold font
+    const boldFontPath = "/assets/fonts/THSarabunNew Bold.ttf";
+    pdf.addFileToVFS(boldFontPath);
+    pdf.addFont(boldFontPath, "THSarabunNew Bold", "normal");
+
+    // Set initial styles and positions
+    const marginTop = 30;
+    const marginBottom = 5;
+    const pageHeight = pdf.internal.pageSize.height;
+    const maxContentHeight = pageHeight - marginTop - marginBottom + 200;
+    const itemsPerPage = Math.floor(maxContentHeight / 10); // Adjust row height (e.g., 10 for this example)
+    const totalPages = Math.ceil(mergedData.length / itemsPerPage);
+    let currentPage = 1;
+
+    let y = marginTop;
+
+    const x = 10;
+
+    // Title and table headers
+    pdf.setFont("THSarabunNew Bold", "normal");
+    pdf.setFontSize(12);
+    pdf.setLineWidth(0.6); // Set the line width
+    pdf.line(x, y - 5, 205, y - 5); // Line from (20, 50) to (190, 50)
+    pdf.text("ลำดับ", x, y);
+    pdf.text("เลขที่บัญชี", x + 20, y);
+    pdf.text("รหัสพนักงาน", x + 45, y);
+    pdf.text("ชื่อ-นามสกุล", x + 90, y);
+    pdf.text("ยอดเงิน", x + 180, y);
+    pdf.line(x, y + 2, 205, y + 2); // Line from (20, 50) to (190, 50)
+
+    pdf.line(x, 290 - 5, 205, 290 - 5); // Line from (20, 50) to (190, 50)
+    pdf.text(`พิมพ์วันที่ ${formattedDate321}`, x, 290);
+    pdf.text(`รายงานโดน ${present}`, x + 30, 290);
+    pdf.text(`แฟ้มรายงาน ${presentfilm}`, x + 80, 290);
+
+    y += 5; // Move to the next line
+
+    // Reset font for table content
+    pdf.setFont("THSarabunNew", "normal");
+    pdf.setFontSize(10);
+
+    let totalSum = 0; // Variable to keep track of the total sum
+    let allperson = 0; // Variable to keep track of the total sum
+
+    // Loop through data and add rows
+    mergedData.forEach((item, index) => {
+      if ((index % itemsPerPage === 0) && index !== 0) {
+        // Add footer with page number
+
+        pdf.setFont("THSarabunNew Bold", "normal");
+        pdf.setFontSize(12);
+        y = marginTop;
+
+        // Add a new page
+        pdf.addPage();
+        currentPage++;
+
+        pdf.setLineWidth(0.6); // Set the line width
+        pdf.line(x, y - 5, 205, y - 5); // Line from (20, 50) to (190, 50)
+        pdf.text("ลำดับ", x, y);
+        pdf.text("เลขที่บัญชี", x + 20, y);
+        pdf.text("รหัสพนักงาน", x + 45, y);
+        pdf.text("ชื่อ-นามสกุล", x + 90, y);
+        pdf.text("ยอดเงิน", x + 180, y);
+        pdf.line(x, y + 2, 205, y + 2); // Line from (20, 50) to (190, 50)
+        pdf.text(`หน้าที่ ${currentPage}/${totalPages}`, 200, 22, { align: "right" });
+        // y = marginTop; // Reset y-coordinate for the new page
+
+        pdf.line(x, 290 - 5, 205, 290 - 5); // Line from (20, 50) to (190, 50)
+        pdf.text(`พิมพ์วันที่ ${formattedDate321}`, x, 290);
+        pdf.text(`รายงานโดน ${present}`, x + 30, 290);
+        pdf.text(`แฟ้มรายงาน ${presentfilm}`, x + 80, 290);
+        y += 5; // Move to the next line
+      }
+
+      // Check if we need a new page
+
+      pdf.text("บริษัท โอวาท โปร แอน์ ควิก จำกัด", 10, 10);
+      pdf.text(`รายงานโอนเงินเข้าธนาคาร ${selectedBank}`, 10, 16);
+      pdf.text(`สำหรับงวดวันที่ ${startFormattedDate321} ถึง ${endFormattedDate321}`, 10, 22);
+      // pdf.text(`หน้าที่ ${currentPage}/${totalPages}`, 200, 22, { align: "right" });
+
+
+      // if (y + 10 > maxContentHeight) {
+      //   pdf.addPage();
+      //   y = marginTop;
+
+      //   // Add table headers on new page
+      //   pdf.setFont("THSarabunNew Bold", "normal");
+      //   pdf.setFontSize(12);
+
+      //   pdf.setLineWidth(0.6); // Set the line width
+      //   pdf.line(x, y - 5, 205, y - 5); // Line from (20, 50) to (190, 50)
+      //   pdf.text("ลำดับ", x, y);
+      //   pdf.text("เลขที่บัญชี", x + 20, y);
+      //   pdf.text("รหัสพนักงาน", x + 45, y);
+      //   pdf.text("ชื่อ-นามสกุล", x + 90, y);
+      //   pdf.text("ยอดเงิน", x + 180, y);
+      //   pdf.line(x, y + 2, 205, y + 2); // Line from (20, 50) to (190, 50)
+
+      //   y += 5; // Move to the next line
+
+      //   pdf.setFont("THSarabunNew", "normal");
+      //   pdf.setFontSize(10);
+      // }
+
+      // Add row data
+      // const fullName = `${item.name} ${item.lastName}`;
+      // // const formattedTotal = Number(item.total.toLocaleString()); // Format total with commas
+      // const formattedTotal = Number(item.total).toLocaleString(); // e.g., "123,456"
+
+      const fullName = `${item.name ?? ""} ${item.lastName ?? ""}`;
+      // const bankNumber = item.branchBank ?? "Unknown"; // Ensure bankNumber is defined
+      const bankNumber = item.branchBank
+        ? item.branchBank.match(/\d{3}-\d{1}-\d{5}-\d{1}/)?.[0] ?? "Unknown"
+        : "Unknown";
+      const employee = item.employeeId ?? "Unknown"; // Ensure bankNumber is defined
+      // const formattedTotal = item.total?.toLocaleString() ?? "0";
+      // const formattedTotal = item.accountingRecord.total?.toLocaleString() ?? "0";
+      const formattedTotal = item.accountingRecord?.[0]?.total 
+      ? Number(item.accountingRecord[0].total) 
+      : 0;
+    
+    const formattedTotalAdvancePayment = item.deductSalary?.find((deduction) => deduction.id === "2124")
+      ? Number(item.deductSalary.find((deduction) => deduction.id === "2124").amount)
+      : 0;
+
+      const sumTotalAndAdvancePayment = formattedTotal + formattedTotalAdvancePayment;
+
+      const formattedSum = sumTotalAndAdvancePayment.toLocaleString();
+
+      pdf.text((index + 1).toString(), x + 3, y, { align: "center" }); // NumberdeductSalary
+      pdf.text(bankNumber, x + 20, y); // Bank Number (displayed as string)
+      pdf.text(employee, x + 46, y); // Bank Number (displayed as string)
+      pdf.text(fullName, x + 90, y); // Full Name
+      pdf.text(formattedSum, x + 185, y, { align: "center" }); // 
+
+      allperson = (index + 1).toString();
+      // totalSum += Number(formattedTotal); // Add item total to the sum (ensure it's treated as a number)
+      // totalSum += Number(item.accountingRecord?.[0]?.total || 0); // Ensure total is treated as a number
+      totalSum += Number(formattedSum);
+      y += 5; // Move to the next row
+    });
+
+    // Add total sum to the last page
+    const formattedTotalSum = totalSum.toLocaleString(); // Format total with commas
+    pdf.setFont("THSarabunNew Bold", "normal");
+    // pdf.text("Total Sum:", x + 150, y); // Position of "Total Sum" text
+    pdf.text(`รวมพนักงาน`, 45, y, { align: "right" }); // Position of total sum value
+    pdf.text(`${allperson} คน`, 70, y, { align: "right" }); // Position of total sum value
+    pdf.text(formattedTotalSum, x + 190, y, { align: "right" }); // Position of total sum value
+
+    pdf.line(x, y - 3, 205, y - 3); // Line from (20, 50) to (190, 50)
+
+    // Open the generated PDF in a new tab
+    window.open(pdf.output("bloburl"), "_blank");
+  };
+
   const exportToExcel = () => {
     // Define the headers
     const headers = ["ลำดับ", "เลขบัญชี", "รหัสพนักงาน", "ชื่อ-นามสกุล", "ยอดเงิน"];
@@ -872,6 +1045,11 @@ function BackReport({ employeeList, workplaceList }) {
                   <div class="col-md-3">
                     <button onClick={generatePDF} class="btn b_save">
                       ออกใบ
+                    </button>
+                  </div>
+                  <div class="col-md-3">
+                    <button onClick={generatePDFAudit} class="btn b_save">
+                      ออกใบออดิท
                     </button>
                   </div>
 
