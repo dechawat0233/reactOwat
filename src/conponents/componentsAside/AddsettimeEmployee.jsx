@@ -59,6 +59,9 @@ function AddsettimeEmployee() {
   ).reverse();
 
   useEffect(() => {
+    const event = new Event('submit'); // Creating a synthetic event object
+    handleSearch(event); // Call handleSearch with the event
+
     if (name !== "") {
       setCheckaddData("");
 
@@ -1629,6 +1632,9 @@ function AddsettimeEmployee() {
     };
     // alert(data.name);
     try {
+      if(searchEmployeeId == '') {
+        return;
+      }
       const response = await axios.post(endpoint + "/employee/search", data);
       setSearchResult(response.data.employees);
       // alert(response.data.employees.length);
