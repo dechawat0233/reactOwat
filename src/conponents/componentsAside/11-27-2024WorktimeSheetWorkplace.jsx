@@ -7419,7 +7419,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
         const totalHeightNeeded =
         
           (isMorningRowEmpty ? 0 : morningRowHeight + cellHeight) +
-          // (isAllDayWorkRowEmpty ? 0 : afternoonRowHeight) +
+          (isAllDayWorkRowEmpty ? 0 : afternoonRowHeight) +
           (isAfternoonRowEmpty ? 0 : afternoonRowHeight) +
           (isNightRowEmpty ? 0 : nightRowHeight) +
           // Add height only if both conditions for each row are false
