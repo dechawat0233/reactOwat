@@ -245,15 +245,20 @@ function BackReport({ employeeList, workplaceList }) {
 
   console.log('responseDataAll', responseDataAll);
 
-  const mergedData = responseDataAll.map((response) => {
-    const accounting = dataAccounting.find(
-      (account) => account.employeeId === response.employeeId
-    );
-    return {
-      ...response,
-      salary: accounting ? accounting.salary : 0, // Add salary or default to 0
-    };
-  });
+  // Merge the two arrays
+  const mergedData = responseDataAll
+    .map((employee) => {
+      const accounting = dataAccounting.find(
+        (record) => record.employeeId === employee.employeeId
+      );
+      if (accounting) {
+        return { ...employee, accountingRecord: accounting.accountingRecord };
+      }
+      return null; // Skip if no matching accounting record
+    })
+    .filter((item) => item !== null); // Remove null values
+
+  console.log(mergedData);
 
   console.log('mergedData', mergedData);
 
@@ -534,19 +539,29 @@ function BackReport({ employeeList, workplaceList }) {
       // }
 
       // Add row data
-      const fullName = `${item.name} ${item.lastName}`;
-      // const formattedTotal = Number(item.total.toLocaleString()); // Format total with commas
-      const formattedTotal = Number(item.total).toLocaleString(); // e.g., "123,456"
+      // const fullName = `${item.name} ${item.lastName}`;
+      // // const formattedTotal = Number(item.total.toLocaleString()); // Format total with commas
+      // const formattedTotal = Number(item.total).toLocaleString(); // e.g., "123,456"
 
+      const fullName = `${item.name ?? ""} ${item.lastName ?? ""}`;
+      // const bankNumber = item.branchBank ?? "Unknown"; // Ensure bankNumber is defined
+      const bankNumber = item.branchBank
+        ? item.branchBank.match(/\d{3}-\d{1}-\d{5}-\d{1}/)?.[0] ?? "Unknown"
+        : "Unknown";
+      const employee = item.employeeId ?? "Unknown"; // Ensure bankNumber is defined
+      // const formattedTotal = item.total?.toLocaleString() ?? "0";
+      // const formattedTotal = item.accountingRecord.total?.toLocaleString() ?? "0";
+      const formattedTotal = item.accountingRecord?.[0]?.total ? Number(item.accountingRecord[0].total).toLocaleString() : "0";
 
       pdf.text((index + 1).toString(), x + 3, y, { align: "center" }); // Number
-      pdf.text(item.banknumber, x + 20, y); // Bank Number (displayed as string)
-      pdf.text(item.employee, x + 46, y); // Bank Number (displayed as string)
+      pdf.text(bankNumber, x + 20, y); // Bank Number (displayed as string)
+      pdf.text(employee, x + 46, y); // Bank Number (displayed as string)
       pdf.text(fullName, x + 90, y); // Full Name
       pdf.text(formattedTotal, x + 185, y, { align: "center" }); // 
 
       allperson = (index + 1).toString();
-      totalSum += Number(item.total); // Add item total to the sum (ensure it's treated as a number)
+      // totalSum += Number(formattedTotal); // Add item total to the sum (ensure it's treated as a number)
+      totalSum += Number(item.accountingRecord?.[0]?.total || 0); // Ensure total is treated as a number
 
       y += 5; // Move to the next row
     });

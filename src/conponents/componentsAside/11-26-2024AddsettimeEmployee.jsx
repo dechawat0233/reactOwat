@@ -50,6 +50,41 @@ function AddsettimeEmployee() {
   const [month, setMonth] = useState("01");
   const [year, setYear] = useState("");
   const [searchResult, setSearchResult] = useState([]);
+  useEffect(() => {
+    setMonth("01");
+
+    const currentYear = new Date().getFullYear();
+    setYear(currentYear);
+
+    const savedEmployeeId = localStorage.getItem("employeeId");
+    const savedName = localStorage.getItem("name");
+    const savedLastName = localStorage.getItem("lastName");
+    const savedMonth = localStorage.getItem("month");
+    const savedYear = localStorage.getItem("year");
+    if (savedEmployeeId) {
+      setSearchEmployeeId(savedEmployeeId);
+      setEmployeeId(savedEmployeeId);
+      const event = new Event('submit'); // Creating a synthetic event object
+      handleSearch(event); // Call handleSearch with the event
+      localStorage.removeItem("employeeId");
+    }
+    if (savedName) {
+      setName(savedName);
+      localStorage.removeItem("name");
+    }
+    if (savedLastName) {
+      setLastname(savedLastName);
+      localStorage.removeItem("lastName");
+    }
+    if (savedMonth) {
+      setMonth(savedMonth);
+      localStorage.removeItem("month");
+    }
+    if (savedYear) {
+      setYear(savedYear);
+      localStorage.removeItem("year");
+    }
+  }, []); // Run this effect only once on component mount
 
   const EndYear = 2010;
   const currentYear = new Date().getFullYear(); // 2024
@@ -139,6 +174,10 @@ function AddsettimeEmployee() {
 
   console.log(workplaceList);
 
+  //search employee name by employeeId
+  // console.log(workplaceList);
+  // console.log(workplaceList);
+
   /////////////////////////////////////////////
   const [tmpIndex, setTmpIndex] = useState(0);
   const [wId, setWId] = useState("");
@@ -211,6 +250,11 @@ function AddsettimeEmployee() {
     }
 
     const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
+
+    console.log("cappedHours", cappedHours);
+    console.log("cappedMinutes", cappedMinutes);
+    console.log("timeDiffFormatted", timeDiffFormatted);
+    console.log("limit", limit);
 
     if (isNaN(timeDiffFormatted)) {
       return "0";
@@ -1180,51 +1224,51 @@ function AddsettimeEmployee() {
     if (wId !== "") {
       try {
 
-        const workplacesearch = workplaceList.find(
-          (workplace) => workplace.workplaceId === wId);
-        if (workplacesearch) {
-          //department: employee department process
-          if (
-            searchResult[0].workplace === wId &&
-            searchResult[0].department !== "" &&
-            workplacesearch.workplaceGroup.length > 0
-          ) {
-            // alert(searchResult[0].workplace );
-            // alert(searchResult[0].department);
-            // alert(workplacesearch.workplaceGroup[parseInt(searchResult[0].department || 0) -1].workplaceComplexName );
+      const workplacesearch = workplaceList.find(
+        (workplace) => workplace.workplaceId === wId);
+      if (workplacesearch) {
+        //department: employee department process
+        if (
+          searchResult[0].workplace === wId &&
+          searchResult[0].department !== "" &&
+          workplacesearch.workplaceGroup.length > 0
+        ) {
+          // alert(searchResult[0].workplace );
+          // alert(searchResult[0].department);
+          // alert(workplacesearch.workplaceGroup[parseInt(searchResult[0].department || 0) -1].workplaceComplexName );
 
-            // let dep =
-            //   workplacesearch.workplaceGroup[
-            //     parseInt(searchResult[0].department || 0) - 1
-            //   ].workplaceComplexName || "";
+          // let dep =
+          //   workplacesearch.workplaceGroup[
+          //     parseInt(searchResult[0].department || 0) - 1
+          //   ].workplaceComplexName || "";
 
-            let dep =
-              workplacesearch.workplaceGroup?.[
-                parseInt(searchResult[0].department || 0) - 1
-              ]?.workplaceComplexName || "";
+          let dep =
+            workplacesearch.workplaceGroup?.[
+              parseInt(searchResult[0].department || 0) - 1
+            ]?.workplaceComplexName || "";
 
-            if (dep == "") {
-              setWName(workplacesearch.workplaceName);
-            } else {
-              setWName(workplacesearch.workplaceName + ": " + dep);
-            }
-          } else {
+          if (dep == "") {
             setWName(workplacesearch.workplaceName);
+          } else {
+            setWName(workplacesearch.workplaceName + ": " + dep);
           }
-
-          // Optional: Add work time to selection (as per your comment)
-          // alert(JSON.stringify(workplacesearch.workTimeDay, null, 2));
         } else {
-          setWName("");
+          setWName(workplacesearch.workplaceName);
         }
-      } catch (error) {
-        alert(error);
-        // alert(JSON.stringify(workplaceList,null,2) );
 
+        // Optional: Add work time to selection (as per your comment)
+        // alert(JSON.stringify(workplacesearch.workTimeDay, null, 2));
+      } else {
+        setWName("");
       }
+    } catch (error)  {
+      alert(error);
+      // alert(JSON.stringify(workplaceList,null,2) );
 
     }
 
+    }
+    
   }, [wId]);
 
   //search employeeId by employeeName
@@ -1548,6 +1592,10 @@ function AddsettimeEmployee() {
   //     const cappedHours = Math.floor(cappedTotalMinutes / 60);
   //     const cappedMinutes = cappedTotalMinutes % 60;
   //     const timeDiffFormatted = `${cappedHours}.${cappedMinutes}`;
+  //     console.log('cappedHours', cappedHours);
+  //     console.log('cappedMinutes', cappedMinutes);
+  //     console.log('timeDiffFormatted', timeDiffFormatted);
+  //     console.log('limit', limit);
 
   //     if (isNaN(timeDiffFormatted)) {
   //         return '0';
@@ -1562,44 +1610,6 @@ function AddsettimeEmployee() {
   };
 
   ///////////////////
-
-  useEffect(() => {
-    setMonth("01");
-
-    const currentYear = new Date().getFullYear();
-    setYear(currentYear);
-
-    const savedEmployeeId = localStorage.getItem("employeeId");
-    console.log('savedEmployeeId', savedEmployeeId);
-    const savedName = localStorage.getItem("name");
-    const savedLastName = localStorage.getItem("lastName");
-    const savedMonth = localStorage.getItem("month");
-    const savedYear = localStorage.getItem("year");
-    if (savedEmployeeId) {
-      setSearchEmployeeId(savedEmployeeId);
-      setEmployeeId(savedEmployeeId);
-      const event = new Event('submit'); // Creating a synthetic event object
-      handleSearch(event); // Call handleSearch with the event
-      localStorage.removeItem("employeeId");
-    }
-    if (savedName) {
-      setName(savedName);
-      localStorage.removeItem("name");
-    }
-    if (savedLastName) {
-      setLastname(savedLastName);
-      localStorage.removeItem("lastName");
-    }
-    if (savedMonth) {
-      setMonth(savedMonth);
-      localStorage.removeItem("month");
-    }
-    if (savedYear) {
-      setYear(savedYear);
-      localStorage.removeItem("year");
-    }
-  }, []); // Run this effect only once on component mount
-  
   function handleClickResult(workplace) {
     // Populate all the startTime input fields with the search result value
     const updatedRowDataList = rowDataList.map((rowData) => ({
@@ -1653,6 +1663,8 @@ function AddsettimeEmployee() {
         // setSearchEmployeeId(response.data.employees[0].employeeId);
         // setSearchEmployeeName(response.data.employees[0].name);
 
+        // console.log('workOfOT:', response.data.workplaces[0].workOfOT);
+        // console.log('workOfOT:', endTime);
       }
     } catch (error) {
       alert("กรุณาตรวจสอบข้อมูลในช่องค้นหา");
@@ -1805,6 +1817,8 @@ function AddsettimeEmployee() {
     const formattedNextDate = nextDate.toString().padStart(2, "0");
     setWDate(formattedNextDate);
   };
+
+  console.log("rowDataList2", rowDataList2);
   // Function to handle editing a row
   const handleEditRow = async (index) => {
     // You can implement the edit logic here, e.g., open a modal for editing
@@ -1977,6 +1991,9 @@ function AddsettimeEmployee() {
     setSearchEmployeeName(selectedEmployeeFName);
   };
 
+  console.log("SearchEmployeeName", searchEmployeeName);
+  console.log("SearchEmployeeId", searchEmployeeId);
+
   return (
     <section class="content">
       <div class="row">
@@ -2048,7 +2065,6 @@ function AddsettimeEmployee() {
                               list="staffIdList"
                             />
                             <datalist id="staffIdList">
-                              <option value="" />
                               {employeeList.map((employee) => (
                                 <option
                                   key={employee.employeeId}
@@ -2591,7 +2607,7 @@ function AddsettimeEmployee() {
                                 {rowData2.selectotTimeOut}{" "}
                               </div>
                               {rowData2.cashSalary === "true" ||
-                                rowData2.cashSalary === true ? (
+                              rowData2.cashSalary === true ? (
                                 // <div style={{ marginBottom: '1rem', borderBottom: '2px solid #000', width: '10rem' }}>
                                 <div class="col-md-1" style={bordertable}>
                                   {rowData2.specialtSalary} บาท
