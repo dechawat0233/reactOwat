@@ -604,8 +604,25 @@ function SettingComplex({ workplaceList }) {
   const [workStartOt3, setWorkStartOt3] = useState(""); //เวลาเข้ากะเย็น
   const [workEndOt3, setWorkEndOt3] = useState(""); //เวลาออกกะเย็น
 
+  // const [workOfHour, setWorkOfHour] = useState(""); //ชั่วโมงทำงานต่อสัปดาห์
+  // const [workOfOT, setWorkOfOT] = useState(""); //ชั่วโมง OT ต่อสัปดาห์
+
   const [workOfHour, setWorkOfHour] = useState(""); //ชั่วโมงทำงานต่อสัปดาห์
+  const [workOfMinute, setWorkOfMinute] = useState(""); //ชั่วโมงทำงานต่อสัปดาห์
   const [workOfOT, setWorkOfOT] = useState(""); //ชั่วโมง OT ต่อสัปดาห์
+  const [workOfOTMinute, setWorkOfOTMinute] = useState(""); //ชั่วโมง OT ต่อสัปดาห์
+  const [breakOfOT, setBreakOfOT] = useState(""); //ชั่วโมง OT ต่อสัปดาห์
+  const [isCustom, setIsCustom] = useState(false); // Tracks if custom input is active
+
+  const handleRadioChange = (value) => {
+    if (value === "customset") {
+      setIsCustom(true);
+      setBreakOfOT(""); // Reset breakOfOT for custom input
+    } else {
+      setIsCustom(false);
+      setBreakOfOT(value); // Update breakOfOT with selected value
+    }
+  };
 
   const [workRate, setWorkRate] = useState(""); //ค่าจ้างต่อวัน
   const [workRateOT, setWorkRateOT] = useState(""); //ค่าจ้าง OT ต่อชั่วโมง
@@ -1669,7 +1686,7 @@ function SettingComplex({ workplaceList }) {
                 {/* <!--Frame--> */}
 
                 <h2 class="title">เวลาทำงาน</h2>
-                <section class="Frame">
+                {/* <section class="Frame">
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
@@ -1724,7 +1741,135 @@ function SettingComplex({ workplaceList }) {
                       </div>
                     </div>
                   </div>
+                </section> */}
+
+<section class="Frame">
+                  <div class="row align-items-end">
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label role="workOfHour">ชั่วโมงทำงาน</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="workOfHour"
+                          placeholder="ชั่วโมงทำงาน"
+                          value={workOfHour}
+                          onChange={(e) => setWorkOfHour(e.target.value)}
+                          onInput={(e) => {
+                            // Remove any non-digit characters, including '.'
+                            e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        {/* <label role="workOfOT">-</label> */}
+                        <input
+                          type="text"
+                          // style={{ marginBottom: "0rem" }}
+                          class="form-control "
+                          id="workOfOT"
+                          placeholder="นาที"
+                          value={workOfMinute}
+                          onChange={(e) => setWorkOfMinute(e.target.value)}
+                          onInput={(e) => {
+                            // Remove any non-digit characters, including '.'
+                            e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row align-items-end">
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label role="workOfHour">ชั่วโมงทำงาน OT</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="workOfHour"
+                          placeholder="ชั่วโมงทำงาน OT"
+                          value={workOfOT}
+                          onChange={(e) => setWorkOfOT(e.target.value)}
+                          onInput={(e) => {
+                            // Remove any non-digit characters, including '.'
+                            e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        {/* <label role="workOfOT">-</label> */}
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="workOfOT"
+                          placeholder="นาที"
+                          value={workOfOTMinute}
+                          onChange={(e) => setWorkOfOTMinute(e.target.value)}
+                          onInput={(e) => {
+                            // Remove any non-digit characters, including '.'
+                            e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        
+                        <div class="row align-items-end">
+                          <label>เวลาพัก</label>
+                          <div class="col-md-4">
+                          
+                            <label>
+                              <input
+                                type="radio"
+                                value="20"
+                                checked={breakOfOT === "20"}
+                                onChange={(e) => handleRadioChange(e.target.value)}
+                              />
+                              20
+                            </label>
+                            <label style={{ marginLeft: "10px" }}>
+                              <input
+                                type="radio"
+                                value="30"
+                                checked={breakOfOT === "30"}
+                                onChange={(e) => handleRadioChange(e.target.value)}
+                              />
+                              30
+                            </label>
+                            <label style={{ marginLeft: "10px" }}>
+                              <input
+                                type="radio"
+                                value="customset"
+                                checked={isCustom}
+                                onChange={(e) => handleRadioChange(e.target.value)}
+                              />
+                              ปรับเอง
+                            </label>
+                          </div>
+                          <div class="col-md-6">
+                            {/* Show input if customset is selected */}
+                            {isCustom && (
+                              <input
+                                type="text"
+                                className="form-control"
+                                style={{ marginTop: "10px", width: "200px" }}
+                                placeholder="นาที"
+                                value={breakOfOT}
+                                onChange={(e) => setBreakOfOT(e.target.value)}
+                              />
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </section>
+                
                 {/* <!--Frame--> */}
                 <h2 class="title">ค่าจ้าง</h2>
                 <section class="Frame">
@@ -1876,7 +2021,7 @@ function SettingComplex({ workplaceList }) {
                       </div>
                     </div>
 
-                    <div class="col-md-4">
+                    {/* <div class="col-md-4">
                       <div class="form-group">
                         <label role="holiday">
                           อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายวัน
@@ -1903,7 +2048,7 @@ function SettingComplex({ workplaceList }) {
                           }}
                         />
                       </div>
-                    </div>
+                    </div> */}
                     <div class="col-md-4">
                       <div class="form-group">
                         <label role="holidayHour">
@@ -3112,7 +3257,7 @@ function SettingComplex({ workplaceList }) {
                       </div>
                     )}
                   </div>
-                  <div>
+                  {/* <div>
                     <label>หมายเหตุ:</label>
                     <input
                       type="text"
@@ -3120,7 +3265,7 @@ function SettingComplex({ workplaceList }) {
                       value={reason}
                       onChange={handleReasonChange}
                     />
-                  </div>
+                  </div> */}
                 </section>
                 <section class="Frame">
                   <h2 class="title">พนักงานในสังกัด</h2>

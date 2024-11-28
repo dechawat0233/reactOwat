@@ -12,16 +12,16 @@ import "../editwindowcss.css";
 import EmployeeWorkDay from "./componentsetting/EmployeeWorkDay";
 import { useLocation } from "react-router-dom";
 
-function Setting({ workplaceList, employeeList }) {
+function SettingComplex({ workplaceList }) {
   // Use useLocation hook to access query parameters from URL
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const workplaceIdSend = queryParams.get("workplaceId");
   const workplaceNameSend = queryParams.get("workplaceName");
 
-  // console.log("workplaceId123", workplaceIdSend);
-  // console.log("workplaceName123", workplaceNameSend);
-  console.log("workplaceList", workplaceList);
+  console.log("workplaceId123", workplaceIdSend);
+  console.log("workplaceName123", workplaceNameSend);
+
   const tableStyle = {
     borderCollapse: "collapse",
     width: "100%",
@@ -67,14 +67,14 @@ function Setting({ workplaceList, employeeList }) {
 
   // Options for dropdowns
   const daysOfWeek = [
-    "อาทิตย์",
-    "จันทร์",
+ "อาทิตย์",  
+  "จันทร์",
     "อังคาร",
     "พุธ",
     "พฤหัส",
     "ศุกร์",
     "เสาร์",
-
+    
   ];
   const positions = ["หัวหน้างาน", "พนักงานทำความสะอาด"];
 
@@ -379,7 +379,7 @@ function Setting({ workplaceList, employeeList }) {
         }
         // await alert(JSON.stringify(response.data.employees[0].addSalary ,null,2 ));
         // await alert(JSON.stringify(response.data.employees[0].deductSalary ,null,2 ));
-      } catch (e) { }
+      } catch (e) {}
     };
 
     getMaster();
@@ -504,21 +504,21 @@ function Setting({ workplaceList, employeeList }) {
           // Show alert for duplicate date selection
           alert(
             day +
-            "/" +
-            month +
-            "/" +
-            year +
-            "  Selected date already exists in the list."
+              "/" +
+              month +
+              "/" +
+              year +
+              "  Selected date already exists in the list."
           );
         }
-        // setDay('');
-        // setMonth('');
+        setDay("");
+        setMonth("");
         setYear(new Date().getFullYear());
       } else {
         // Show alert for invalid date selection
         alert(
           day / month / year +
-          "Invalid date selection. Please select a valid day, month, and year."
+            "Invalid date selection. Please select a valid day, month, and year."
         );
       }
     } else {
@@ -580,6 +580,13 @@ function Setting({ workplaceList, employeeList }) {
   const [_id, set_id] = useState("");
   const [workplaceId, setWorkplaceId] = useState(""); //รหัสหน่วยงาน
   const [workplaceName, setWorkplaceName] = useState(""); //ชื่อหน่วยงาน
+
+  const [workplaceComplexId, setWorkplaceComplexId] = useState(""); //รหัสกลุ่มงานย่อย
+  const [workplaceComplexName, setWorkplaceComplexName] = useState(""); //ชื่อกลุ่มงานย่อย
+  const [workplacesComplex, setWorkplacesComplex] = useState([]);
+  const [standardWorkplace, setStandardWorkplace] = useState({});
+  const [checkSetStandard, setCheckSetStandard] = useState("");
+
   const [workplaceArea, setWorkplaceArea] = useState(""); //สถานที่ปฏิบัติงาน
   const [workOfWeek, setWorkOfWeek] = useState(""); //วันทำงานต่อสัปดาห์
 
@@ -598,21 +605,7 @@ function Setting({ workplaceList, employeeList }) {
   const [workEndOt3, setWorkEndOt3] = useState(""); //เวลาออกกะเย็น
 
   const [workOfHour, setWorkOfHour] = useState(""); //ชั่วโมงทำงานต่อสัปดาห์
-  const [workOfMinute, setWorkOfMinute] = useState(""); //ชั่วโมงทำงานต่อสัปดาห์
   const [workOfOT, setWorkOfOT] = useState(""); //ชั่วโมง OT ต่อสัปดาห์
-  const [workOfOTMinute, setWorkOfOTMinute] = useState(""); //ชั่วโมง OT ต่อสัปดาห์
-  const [breakOfOT, setBreakOfOT] = useState(""); //ชั่วโมง OT ต่อสัปดาห์
-  const [isCustom, setIsCustom] = useState(false); // Tracks if custom input is active
-
-  const handleRadioChange = (value) => {
-    if (value === "customset") {
-      setIsCustom(true);
-      setBreakOfOT(""); // Reset breakOfOT for custom input
-    } else {
-      setIsCustom(false);
-      setBreakOfOT(value); // Update breakOfOT with selected value
-    }
-  };
 
   const [workRate, setWorkRate] = useState(""); //ค่าจ้างต่อวัน
   const [workRateOT, setWorkRateOT] = useState(""); //ค่าจ้าง OT ต่อชั่วโมง
@@ -708,6 +701,79 @@ function Setting({ workplaceList, employeeList }) {
     });
   };
 
+  // const handleChangeSpSalary = (e, index, key) => {
+  //     const newAddSalary = [...formData.addSalary];
+  //     newAddSalary[index] = {
+  //         ...newAddSalary[index],
+  //         [key]: e.target.value,
+  //     };
+
+  //     setFormData({
+  //         ...formData,
+  //         addSalary: newAddSalary
+  //     });
+  // };
+
+  const handleAddWorkplaceComplex = () => {
+    // e.preventDefault();
+
+    if (workplaceComplexId && workplaceComplexName) {
+      const newWorkplace = {
+        id: workplaceComplexId,
+        name: workplaceComplexName,
+      };
+      // setWorkplacesComplex([...workplacesComplex, newWorkplace]);
+      // setWorkplaceComplexId('');
+      // setWorkplaceComplexName('');
+    }
+  };
+
+  const handleSelectChange = async (e) => {
+    // setSelectedDay(e.target.value);
+    // setWorkplaceComplexName(`Complex Name ${e.target.value}`);
+    await setWorkplaceComplexId(e.target.value);
+  };
+
+  useEffect(() => {
+    setWorkplaceComplexName("");
+
+    const setGroupData = async () => {
+      if (workplaceComplexId === "") {
+        //no selection group
+        // alert('No selection group');
+        await setCheckSetStandard("seted");
+        await handleClickResult(standardWorkplace);
+      } else {
+        if (workplacesComplex.length == 0) {
+          //No data set to workplace group
+          alert("No data set to workplace group " + workplacesComplex.length);
+          await setCheckSetStandard("seted");
+          await handleClickResult(standardWorkplace);
+        } else {
+          //set data to workplace group
+          let dataSelect = workplacesComplex.find(
+            (item) => item.workplaceComplexId === workplaceComplexId
+          );
+          if (dataSelect) {
+            await setWorkplaceComplexName(
+              dataSelect.workplaceComplexName || ""
+            );
+            await setCheckSetStandard("seted");
+            await setFormDataGroup(dataSelect.workplaceComplexData);
+          } else {
+            await setFormDataGroup(standardWorkplace);
+          }
+          // await setWorkplaceComplexName(standardWorkplace.workplaceGroup[c].workplaceComplexName || '');
+          // await setCheckSetStandard('seted');
+          // await setFormDataGroup (        standardWorkplace.workplaceGroup[c].workplaceComplexData);
+        }
+      }
+    };
+
+    setGroupData();
+    // alert(workplaceComplexId);
+  }, [workplaceComplexId]);
+
   // const handleAddInput = () => {
   //     setFormData([...formData, { name: '', SpSalary: '', StaffType: '', nameType: '' }]);
   //     setShowAdditionalInput([...showAdditionalInput, false]);
@@ -754,147 +820,23 @@ function Setting({ workplaceList, employeeList }) {
     setShowAdditionalInput(newShowAdditionalInput);
   };
 
-  const [employeeListResult, setEmployeeListResult] = useState([]);
   const [showEmployeeListResult, setShowEmployeeListResult] = useState([]);
-  const [searchResult, setSearchResult] = useState([]);
-
-  // async function handleSearch(event) {
-  //   event.preventDefault();
-
-  //   //clean list employee
-  //   setShowEmployeeListResult([]);
-
-  //   //get value from form search
-  //   const data = {
-  //     searchWorkplaceId: searchWorkplaceId,
-  //     searchWorkplaceName: searchWorkplaceName,
-  //   };
-
-  //   try {
-  //     const response = await axios.post(endpoint + "/workplace/search", data);
-  //     setSearchResult(response.data.workplaces);
-  //     console.log("response", response);
-
-  //     if (response.data.workplaces.length < 1) {
-  //       window.location.reload();
-  //     } else {
-  //       const data1 = {
-  //         employeeId: "",
-  //         name: "",
-  //         idCard: "",
-  //         //   workPlace: searchWorkplaceId,
-  //         workPlace: searchResult.workplaceId,
-  //       };
-
-  //       const response1 = await axios.post(
-  //         endpoint + "/employee/search",
-  //         data1
-  //       );
-
-  //       const filteredEmployees = response1.data.employees.filter(
-  //         (employee) => employee.workplace === searchWorkplaceId
-  //       );
-
-  //       // await setEmployeeListResult(response1.data.employees);
-  //       await setEmployeeListResult(filteredEmployees);
-
-  //       // await alert(JSON.stringify(response1.data.employees , null ,2));
-  //       // alert(response1.data );
-  //       // alert(employeeListResult.length);
-  //     }
-  //   } catch (error) {
-  //     // setMessage('ไม่พบผลการค้นหา กรุณาตรวจสอบข้อมูลที่ใช้ในการค้นหาอีกครั้ง');
-  //     alert("กรุณาตรวจสอบข้อมูลในช่องค้นหา");
-  //     window.location.reload();
-  //   }
-  // }
-  const [filteredWorkplaceList, setFilteredWorkplaceList] = useState([]);
-  const [searchWorkplaceId, setSearchWorkplaceId] = useState(""); //รหัสหน่วยงาน
-  const [searchWorkplaceName, setSearchWorkplaceName] = useState(""); //ชื่อหน่วยงาน
-
-  async function handleSearch(event) {
-    event.preventDefault();
-    console.log("testtest");
-    //clean list employee
-    setShowEmployeeListResult([]);
-
-    //get value from form search
-    const data = {
-      searchWorkplaceId: searchWorkplaceId,
-      searchWorkplaceName: searchWorkplaceName,
-    };
-
-    try {
-      // const response = await axios.post(endpoint + "/workplace/search", data);
-      // setSearchResult(response.data.workplaces);
-      // console.log("response", response);
-      const filteredList = workplaceList.filter((workplace) => {
-        const idMatch = workplace.workplaceId
-          .toString()
-          .includes(searchWorkplaceId);
-        const nameMatch = workplace.workplaceName
-          .toLowerCase()
-          .includes(searchWorkplaceName.toLowerCase());
-        return idMatch && nameMatch;
-      });
-      setSearchResult(filteredList);
-      setFilteredWorkplaceList(filteredList);
-      console.log("filteredList", filteredList);
-      if (response.data.workplaces.length < 1) {
-        window.location.reload();
-      } else {
-        const data1 = {
-          employeeId: "",
-          name: "",
-          idCard: "",
-          //   workPlace: searchWorkplaceId,
-          workPlace: searchResult.workplaceId,
-        };
-
-        // const response1 = await axios.post(
-        //   endpoint + "/employee/search",
-        //   data1
-        // );
-
-        // const filteredEmployees = response1.data.employees.filter(
-        //   (employee) => employee.workplace === searchWorkplaceId
-        // );
-
-        // await setEmployeeListResult(response1.data.employees);
-        // employeeList
-        // searchWorkplaceId
-        const filteredEmployees = employeeList.filter(
-          (employee) => employee.workplace === searchWorkplaceId
-        );
-        // console.log('searchWorkplaceId',searchWorkplaceId);
-        await setEmployeeListResult(filteredEmployees);
-
-        // await alert(JSON.stringify(response1.data.employees , null ,2));
-        // alert(response1.data );
-        // alert(employeeListResult.length);
-      }
-    } catch (error) {
-      // setMessage('ไม่พบผลการค้นหา กรุณาตรวจสอบข้อมูลที่ใช้ในการค้นหาอีกครั้ง');
-      // alert("กรุณาตรวจสอบข้อมูลในช่องค้นหา", error);
-      // window.location.reload();
-    }
-  }
-  // console.log("EmployeeListResult", employeeListResult);
 
   //set data to form
   function handleClickResult(workplace) {
     setNewWorkplace(false);
+    if (checkSetStandard == "seted") {
+      setWorkplacesComplex(standardWorkplace.workplaceGroup);
+      setStandardWorkplace(standardWorkplace);
+    } else {
+      setWorkplacesComplex(workplace.workplaceGroup);
+      setStandardWorkplace(workplace);
+    }
+    setCheckSetStandard("");
 
+    setShowEmployeeListResult(employeeListResult);
     set_id(workplace._id);
     setWorkplaceId(workplace.workplaceId);
-
-    const filteredEmployees = employeeList.filter(
-      (employee) => employee.workplace === searchWorkplaceId
-    );
-    console.log("searchWorkplaceId", searchWorkplaceId);
-    setEmployeeListResult(filteredEmployees);
-
-    setShowEmployeeListResult(filteredEmployees);
     setWorkplaceName(workplace.workplaceName);
     setWorkplaceArea(workplace.workplaceArea);
     setWorkOfWeek(workplace.workOfWeek);
@@ -1026,6 +968,142 @@ function Setting({ workplaceList, employeeList }) {
   }
   console.log("showEmployeeListResult", showEmployeeListResult);
 
+  const setFormDataGroup = async (workplace) => {
+    setShowEmployeeListResult(employeeListResult);
+    // setWorkplacesComplex(workplace.workplaceGroup);
+
+    set_id(workplace._id);
+    setWorkplaceId(workplace.workplaceId);
+    setWorkplaceName(workplace.workplaceName);
+    setWorkplaceArea(workplace.workplaceArea);
+    setWorkOfWeek(workplace.workOfWeek);
+
+    setWorkStart1(workplace.workStart1);
+    setWorkEnd1(workplace.workEnd1);
+    setWorkStart2(workplace.workStart2);
+    setWorkEnd2(workplace.workEnd2);
+    setWorkStart3(workplace.workStart3);
+    setWorkEnd3(workplace.workEnd3);
+
+    setWorkStartOt1(workplace.workStartOt1);
+    setWorkEndOt1(workplace.workEndOt1);
+    setWorkStartOt2(workplace.workStartOt2);
+    setWorkEndOt2(workplace.workEndOt2);
+    setWorkStartOt3(workplace.workStartOt3);
+    setWorkEndOt3(workplace.workEndOt3);
+
+    setWorkOfHour(workplace.workOfHour);
+    setWorkOfOT(workplace.workOfOT);
+    setWorkRate(workplace.workRate);
+    setWorkRateOT(workplace.workRateOT);
+    setWorkTotalPeople(workplace.workTotalPeople);
+    setDayoffRate(workplace.dayoffRate);
+    setDayoffRateOT(workplace.dayoffRateOT);
+    setDayoffRateHour(workplace.dayoffRateHour);
+    setHoliday(workplace.holiday);
+    setHolidayOT(workplace.holidayOT);
+    setHolidayHour(workplace.holidayHour);
+    setSalaryadd1(workplace.salaryadd1);
+    setSalaryadd2(workplace.salaryadd2);
+    setSalaryadd3(workplace.salaryadd3);
+    setSalaryadd4(workplace.salaryadd4);
+    setSalaryadd5(workplace.salaryadd5);
+    setSalaryadd6(workplace.salaryadd6);
+    setPersonalLeave(workplace.personalLeave);
+    setPersonalLeaveNumber(workplace.personalLeaveNumber);
+    setPersonalLeaveRate(workplace.personalLeaveRate);
+    setSickLeave(workplace.sickLeave);
+    setSickLeaveNumber(workplace.sickLeaveNumber);
+    setSickLeaveRate(workplace.sickLeaveRate);
+    setWorkRateDayoff(workplace.workRateDayoff);
+    setWorkRateDayoffNumber(workplace.workRateDayoffNumber);
+    setworkRateDayoffRate(workplace.workRateDayoffRate);
+    setWorkplaceAddress(workplace.workplaceAddress);
+    //setSelectedDates([...selectedDates, workplace.daysOff]);
+
+    ////////work day
+    if (workplace.workday1 == "false") {
+      setWorkday1(false);
+    } else {
+      setWorkday1(workplace.workday1);
+    }
+    if (workplace.workday2 == "false") {
+      setWorkday2(false);
+    } else {
+      setWorkday2(workplace.workday2);
+    }
+    if (workplace.workday3 == "false") {
+      setWorkday3(false);
+    } else {
+      setWorkday3(workplace.workday3);
+    }
+    if (workplace.workday4 == "false") {
+      setWorkday4(false);
+    } else {
+      setWorkday4(workplace.workday4);
+    }
+    if (workplace.workday5 == "false") {
+      setWorkday5(false);
+    } else {
+      setWorkday5(workplace.workday5);
+    }
+    if (workplace.workday6 == "false") {
+      setWorkday6(false);
+    } else {
+      setWorkday6(workplace.workday6);
+    }
+    if (workplace.workday7 == "false") {
+      setWorkday7(false);
+    } else {
+      setWorkday7(workplace.workday7);
+    }
+
+    setWorkcount1(workplace.workcount1);
+    setWorkcount2(workplace.workcount2);
+    setWorkcount3(workplace.workcount3);
+    setWorkcount4(workplace.workcount4);
+    setWorkcount5(workplace.workcount5);
+    setWorkcount6(workplace.workcount6);
+    setWorkcount7(workplace.workcount7);
+    const dates = workplace.daysOff.map((dateString) => new Date(dateString));
+
+    setSelectedDates(dates);
+    setReason(workplace.reason);
+
+    // employeeIdLists
+
+    const initialFormData = {
+      addSalary: workplace.addSalary.map((item) => ({
+        name: item.name || "",
+        codeSpSalary: item.codeSpSalary || "",
+        SpSalary: item.SpSalary || "",
+        roundOfSalary: item.roundOfSalary || "",
+        StaffType: item.StaffType || "",
+        nameType: item.nameType || "",
+      })),
+    };
+
+    setFormData(initialFormData);
+    // setFormData(workplace.addSalary);
+
+    const employeeIdLists = workplace.employeeIdList.map((item) => [...item]);
+    setEmployeeIdList(employeeIdLists);
+
+    const employeeNameLists = workplace.employeeNameList.map((item) => [
+      ...item,
+    ]);
+    setEmployeeNameList(employeeNameLists);
+
+    setListEmployeeDay(workplace.listEmployeeDay);
+    setListSpecialWorktime(workplace.listSpecialWorktime);
+    setWorkTimeDayList(workplace.workTimeDay);
+    setWorkTimeDayPersonList(workplace.workTimeDayPerson);
+
+    // console.log(workplace);
+    // // console.log(initialFormData);
+    // console.log("formData", formData);
+  };
+
   const handleCheckboxChange1 = () => {
     setWorkday1(!workday1);
   };
@@ -1049,39 +1127,83 @@ function Setting({ workplaceList, employeeList }) {
   };
 
   //data for search
-
-  // const [employeeListResult, setEmployeeListResult] = useState([]);
-
-  // useEffect(() => {
-  //   if (workplaceIdSend && workplaceNameSend) {
-  //     setSearchWorkplaceId(workplaceIdSend);
-  //     setSearchWorkplaceName(workplaceNameSend);
-  //   } else {
-  //     setSearchWorkplaceId("");
-  //     setSearchWorkplaceName("");
-  //   }
-  // }, [workplaceIdSend, workplaceNameSend]); // Depend on the URL parameter
+  const [searchWorkplaceId, setSearchWorkplaceId] = useState(""); //รหัสหน่วยงาน
+  const [searchWorkplaceName, setSearchWorkplaceName] = useState(""); //ชื่อหน่วยงาน
+  const [searchResult, setSearchResult] = useState([]);
+  const [employeeListResult, setEmployeeListResult] = useState([]);
 
   useEffect(() => {
-    // If either workplaceIdSend or workplaceNameSend is present, call handleSearch
-    if (workplaceIdSend || workplaceNameSend) {
-      setSearchWorkplaceId(workplaceIdSend || "");
-      setSearchWorkplaceName(workplaceNameSend || "");
-
-      // Call the handleSearch function
-      handleSearch(workplaceIdSend, workplaceNameSend);
+    if (workplaceIdSend && workplaceNameSend) {
+      setSearchWorkplaceId(workplaceIdSend);
+      setSearchWorkplaceName(workplaceNameSend);
+    } else {
+      setSearchWorkplaceId("");
+      setSearchWorkplaceName("");
     }
-  }, [workplaceIdSend, workplaceNameSend, handleSearch]);
+  }, [workplaceIdSend, workplaceNameSend]); // Depend on the URL parameter
 
-  function handleFormSubmit(event) {
-    event.preventDefault(); // Prevent the form from submitting on Enter key press
+  const [filteredWorkplaceList, setFilteredWorkplaceList] = useState([]);
+
+  async function handleSearch(event) {
+    event.preventDefault();
+
+    //clean list employee
+    setShowEmployeeListResult([]);
+
+    //get value from form search
+    const data = {
+      searchWorkplaceId: searchWorkplaceId,
+      searchWorkplaceName: searchWorkplaceName,
+    };
+
+    try {
+      // const response = await axios.post(endpoint + '/workplace/search', data);
+      // setSearchResult(response.data.workplaces);
+
+      const filteredList = workplaceList.filter((workplace) => {
+        const idMatch = workplace.workplaceId
+          .toString()
+          .includes(searchWorkplaceId);
+        const nameMatch = workplace.workplaceName
+          .toLowerCase()
+          .includes(searchWorkplaceName.toLowerCase());
+        return idMatch && nameMatch;
+      });
+      setSearchResult(filteredList);
+      setFilteredWorkplaceList(filteredList);
+      console.log("filteredList", filteredList);
+
+      if (response.data.workplaces.length < 1) {
+        window.location.reload();
+      } else {
+        const data1 = {
+          employeeId: "",
+          name: "",
+          idCard: "",
+          workPlace: searchWorkplaceId,
+        };
+
+        const response1 = await axios.post(
+          endpoint + "/employee/search",
+          data1
+        );
+        await setEmployeeListResult(response1.data.employees);
+        // await alert(JSON.stringify(response1.data.employees , null ,2));
+        // alert(response1.data );
+        // alert(employeeListResult.length);
+      }
+    } catch (error) {
+      // setMessage('ไม่พบผลการค้นหา กรุณาตรวจสอบข้อมูลที่ใช้ในการค้นหาอีกครั้ง');
+      // alert('กรุณาตรวจสอบข้อมูลในช่องค้นหา');
+      // window.location.reload();
+    }
   }
 
   async function handleManageWorkplace(event) {
     event.preventDefault();
 
     //get data from input in useState to data
-    const data = {
+    const dataTmp = await {
       workplaceId: workplaceId,
       workplaceName: workplaceName,
       workplaceArea: workplaceArea,
@@ -1156,10 +1278,50 @@ function Setting({ workplaceList, employeeList }) {
       workTimeDayPerson: workTimeDayPersonList,
     };
 
-    // if (file) {
-    //     data.append('reason', file);
-    // }
-    // await alert(JSON.stringify(formData.addSalary,null,2));
+    // let data = { ...dataTmp };
+    let data = standardWorkplace;
+    const _id = standardWorkplace._id;
+    // alert('_id = '+ _id)
+
+    if (workplaceComplexId !== "") {
+      let check = workplacesComplex.find(
+        (item) => item.workplaceComplexId === workplaceComplexId
+      );
+      // if (workplaceComplexId >= workplacesComplex.length) {
+
+      if (!check) {
+        // new group
+        const tmpG = {
+          workplaceComplexId: workplaceComplexId,
+          workplaceComplexName: workplaceComplexName,
+          workplaceComplexData: dataTmp,
+        };
+
+        const newGroup = [...workplacesComplex, tmpG];
+        data = {
+          ...dataTmp,
+          workplaceGroup: newGroup,
+        };
+      } else {
+        // update existing group
+        // alert(' update existing group ');
+        const updatedGroup = workplacesComplex.map((group) =>
+          group.workplaceComplexId === workplaceComplexId
+            ? {
+                ...group,
+                workplaceComplexName: workplaceComplexName,
+                workplaceComplexData: dataTmp,
+              }
+            : group
+        );
+        data = {
+          ...dataTmp,
+          workplaceGroup: updatedGroup,
+        };
+      }
+    }
+
+    // alert(data.workplaceGroup.length );
 
     //check create or update Employee
     if (newWorkplace) {
@@ -1186,16 +1348,11 @@ function Setting({ workplaceList, employeeList }) {
         // setEmployeesResult(response.data.employees);
         if (response) {
           alert("บันทึกสำเร็จ");
-          // Clear the query parameters
-          const newUrl = window.location.origin + window.location.pathname; // Removes the query string
-
-          // Update the URL without reloading the page
-          window.history.replaceState({}, document.title, newUrl);
           window.location.reload();
         }
       } catch (error) {
         alert("กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล");
-        window.location.reload();
+        // window.location.reload();
       }
     }
   }
@@ -1271,7 +1428,8 @@ function Setting({ workplaceList, employeeList }) {
             <div class="container-fluid">
               <div class="row mb-2">
                 <h1 class="m-0">
-                  <i class="far fa-arrow-alt-circle-right"></i> ตั้งค่าหน่วยงาน
+                  <i class="far fa-arrow-alt-circle-right"></i>{" "}
+                  ตั้งค่าหน่วยงานพิเศษ
                 </h1>
               </div>
             </div>
@@ -1288,22 +1446,12 @@ function Setting({ workplaceList, employeeList }) {
                       <div class="col-md-6">
                         <div class="form-group">
                           <label role="searchWorkplaceId">รหัสหน่วยงาน</label>
-                          {/* <input
+                          <input
                             type="text"
                             class="form-control"
                             id="searchWorkplaceId"
                             placeholder="รหัสหน่วยงาน"
-                            value={searchWorkplaceId}
-                            onChange={(e) =>
-                              setSearchWorkplaceId(e.target.value)
-                            }
-                          /> */}
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="searchWorkplaceId"
-                            list="workplaceIds" // Associate the datalist with the input
-                            placeholder="รหัสหน่วยงาน"
+                            list="workplaceIds"
                             value={searchWorkplaceId}
                             onChange={(e) =>
                               setSearchWorkplaceId(e.target.value)
@@ -1311,9 +1459,15 @@ function Setting({ workplaceList, employeeList }) {
                             onInput={(e) => {
                               // Remove any non-digit characters
                               e.target.value = e.target.value.replace(
-                                /\D/g,
-                                ""
-                              );
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                             }}
                           />
                           <datalist id="workplaceIds">
@@ -1374,7 +1528,6 @@ function Setting({ workplaceList, employeeList }) {
                               <li
                                 key={workplace.id}
                                 onClick={() => handleClickResult(workplace)}
-                                style={{ cursor: "pointer" }}
                               >
                                 รหัส {workplace.workplaceId} หน่วยงาน{" "}
                                 {workplace.workplaceName}
@@ -1388,13 +1541,12 @@ function Setting({ workplaceList, employeeList }) {
                 </div>
               </section>
               {/* <!--Frame--> */}
-              {/* <form onSubmit={handleManageWorkplace}> */}
-              <form onSubmit={handleFormSubmit}>
+              <form onSubmit={handleManageWorkplace}>
                 <h2 class="title">ตั้งค่าหน่วยงาน</h2>
                 <section class="Frame">
                   <div class="col-md-12">
                     <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-md-3">
                         <div class="form-group">
                           <label role="workplaceId">รหัสหน่วยงาน</label>
                           <input
@@ -1407,14 +1559,20 @@ function Setting({ workplaceList, employeeList }) {
                             onInput={(e) => {
                               // Remove any non-digit characters
                               e.target.value = e.target.value.replace(
-                                /\D/g,
-                                ""
-                              );
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                             }}
                           />
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-3">
                         <div class="form-group">
                           <label role="workplaceName">ชื่อหน่วยงาน</label>
                           <input
@@ -1427,9 +1585,44 @@ function Setting({ workplaceList, employeeList }) {
                           />
                         </div>
                       </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label role="selectGroup">เลือกกลุ่มงาน</label>
+                          <select
+                            name="selectGroup"
+                            className="form-control"
+                            value={workplaceComplexId}
+                            onChange={handleSelectChange}
+                          >
+                            <option value="">เลือกกลุ่มงาน</option>
+                            <option value="1"> 1</option>
+                            <option value="2"> 2</option>
+                            <option value="3"> 3</option>
+                            <option value="4"> 4</option>
+                            <option value="5"> 5</option>
+                            <option value="6"> 6</option>
+                            <option value="7"> 7</option>
+                            <option value="8"> 8</option>
+                            <option value="9"> 9</option>
+                            <option value="10"> 10</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="col-md-3">
+                        <label role="workplaceName">ชื่อกลุ่มงาน</label>
+                        <input
+                          type="text"
+                          value={workplaceComplexName}
+                          class="form-control"
+                          placeholder="ชื่อกลุ่มงาน"
+                          onChange={(e) =>
+                            setWorkplaceComplexName(e.target.value)
+                          }
+                        />
+                      </div>
                     </div>
                     <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-md-3">
                         <div class="form-group">
                           <label role="workplaceArea">สถานที่ปฏิบัติงาน</label>
                           <input
@@ -1442,7 +1635,7 @@ function Setting({ workplaceList, employeeList }) {
                           />
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-3">
                         <div class="form-group">
                           <label role="workOfWeek">
                             จำนวนวันทำงานต่อสัปดาห์
@@ -1457,9 +1650,15 @@ function Setting({ workplaceList, employeeList }) {
                             onInput={(e) => {
                               // Remove any non-digit characters
                               e.target.value = e.target.value.replace(
-                                /\D/g,
-                                ""
-                              );
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                             }}
                           />
                         </div>
@@ -1471,8 +1670,8 @@ function Setting({ workplaceList, employeeList }) {
 
                 <h2 class="title">เวลาทำงาน</h2>
                 <section class="Frame">
-                  <div class="row align-items-end">
-                    <div class="col-md-3">
+                  <div class="row">
+                    <div class="col-md-6">
                       <div class="form-group">
                         <label role="workOfHour">ชั่วโมงทำงาน</label>
                         <input
@@ -1483,115 +1682,45 @@ function Setting({ workplaceList, employeeList }) {
                           value={workOfHour}
                           onChange={(e) => setWorkOfHour(e.target.value)}
                           onInput={(e) => {
-                            // Remove any non-digit characters, including '.'
-                            e.target.value = e.target.value.replace(/[^0-9]/g, "");
-                          }}
-                        />
-                      </div>
-                    </div>
-                    <div class="col-md-3">
-                      <div class="form-group">
-                        {/* <label role="workOfOT">-</label> */}
-                        <input
-                          type="text"
-                          // style={{ marginBottom: "0rem" }}
-                          class="form-control "
-                          id="workOfOT"
-                          placeholder="นาที"
-                          value={workOfMinute}
-                          onChange={(e) => setWorkOfMinute(e.target.value)}
-                          onInput={(e) => {
-                            // Remove any non-digit characters, including '.'
-                            e.target.value = e.target.value.replace(/[^0-9]/g, "");
-                          }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row align-items-end">
-                    <div class="col-md-3">
-                      <div class="form-group">
-                        <label role="workOfHour">ชั่วโมงทำงาน OT</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="workOfHour"
-                          placeholder="ชั่วโมงทำงาน OT"
-                          value={workOfOT}
-                          onChange={(e) => setWorkOfOT(e.target.value)}
-                          onInput={(e) => {
-                            // Remove any non-digit characters, including '.'
-                            e.target.value = e.target.value.replace(/[^0-9]/g, "");
-                          }}
-                        />
-                      </div>
-                    </div>
-                    <div class="col-md-3">
-                      <div class="form-group">
-                        {/* <label role="workOfOT">-</label> */}
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="workOfOT"
-                          placeholder="นาที"
-                          value={workOfOTMinute}
-                          onChange={(e) => setWorkOfOTMinute(e.target.value)}
-                          onInput={(e) => {
-                            // Remove any non-digit characters, including '.'
-                            e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                            // Remove any non-digit characters
+                            e.target.value = e.target.value.replace(
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                           }}
                         />
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
-                        
-                        <div class="row align-items-end">
-                          <label>เวลาพัก</label>
-                          <div class="col-md-4">
-                          
-                            <label>
-                              <input
-                                type="radio"
-                                value="20"
-                                checked={breakOfOT === "20"}
-                                onChange={(e) => handleRadioChange(e.target.value)}
-                              />
-                              20
-                            </label>
-                            <label style={{ marginLeft: "10px" }}>
-                              <input
-                                type="radio"
-                                value="30"
-                                checked={breakOfOT === "30"}
-                                onChange={(e) => handleRadioChange(e.target.value)}
-                              />
-                              30
-                            </label>
-                            <label style={{ marginLeft: "10px" }}>
-                              <input
-                                type="radio"
-                                value="customset"
-                                checked={isCustom}
-                                onChange={(e) => handleRadioChange(e.target.value)}
-                              />
-                              ปรับเอง
-                            </label>
-                          </div>
-                          <div class="col-md-6">
-                            {/* Show input if customset is selected */}
-                            {isCustom && (
-                              <input
-                                type="text"
-                                className="form-control"
-                                style={{ marginTop: "10px", width: "200px" }}
-                                placeholder="นาที"
-                                value={breakOfOT}
-                                onChange={(e) => setBreakOfOT(e.target.value)}
-                              />
-                            )}
-                          </div>
-                        </div>
+                        <label role="workOfOT">ชั่วโมง OT</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="workOfOT"
+                          placeholder="ชั่วโมง OT"
+                          value={workOfOT}
+                          onChange={(e) => setWorkOfOT(e.target.value)}
+                          onInput={(e) => {
+                            // Remove any non-digit characters
+                            e.target.value = e.target.value.replace(
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
+                          }}
+                        />
                       </div>
                     </div>
                   </div>
@@ -1685,20 +1814,11 @@ function Setting({ workplaceList, employeeList }) {
                   </div>
                   <div class="row">
                     {/* <div class="col-md-4">
-                      <div class="form-group">
-                        <label role="dayoffRate">
-                          อัตราค่าจ้างวันหยุดประจำสัปดาห์
-                        </label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="dayoffRate"
-                          placeholder="บาท"
-                          value={dayoffRate}
-                          onChange={(e) => setDayoffRate(e.target.value)}
-                        />
-                      </div>
-                    </div> */}
+                                            <div class="form-group">
+                                                <label role="dayoffRate">อัตราค่าจ้างวันหยุดประจำสัปดาห์</label>
+                                                <input type="text" class="form-control" id="dayoffRate" placeholder="บาท" value={dayoffRate} onChange={(e) => setDayoffRate(e.target.value)} />
+                                            </div>
+                                        </div> */}
                     <div class="col-md-4">
                       <div class="form-group">
                         <label role="dayoffRateHour">
@@ -1756,7 +1876,7 @@ function Setting({ workplaceList, employeeList }) {
                       </div>
                     </div>
 
-                    {/* <div class="col-md-4">
+                    <div class="col-md-4">
                       <div class="form-group">
                         <label role="holiday">
                           อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายวัน
@@ -1768,9 +1888,22 @@ function Setting({ workplaceList, employeeList }) {
                           placeholder="กี่เท่า"
                           value={holiday}
                           onChange={(e) => setHoliday(e.target.value)}
+                          onInput={(e) => {
+                            // Remove any non-digit characters
+                            e.target.value = e.target.value.replace(
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
+                          }}
                         />
                       </div>
-                    </div> */}
+                    </div>
                     <div class="col-md-4">
                       <div class="form-group">
                         <label role="holidayHour">
@@ -1850,15 +1983,9 @@ function Setting({ workplaceList, employeeList }) {
                               onInput={(e) => {
                                 // Remove any non-digit characters
                                 e.target.value = e.target.value.replace(
-                                  /[^0-9.]/g,
+                                  /\D/g,
                                   ""
                                 );
-
-                                // Ensure only one '.' is allowed
-                                const parts = e.target.value.split(".");
-                                if (parts.length > 2) {
-                                  e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                                }
                               }}
                             />
                           </div>
@@ -1897,15 +2024,9 @@ function Setting({ workplaceList, employeeList }) {
                               onInput={(e) => {
                                 // Remove any non-digit characters
                                 e.target.value = e.target.value.replace(
-                                  /[^0-9.]/g,
+                                  /\D/g,
                                   ""
                                 );
-
-                                // Ensure only one '.' is allowed
-                                const parts = e.target.value.split(".");
-                                if (parts.length > 2) {
-                                  e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                                }
                               }}
                             />
                           </div>
@@ -2019,15 +2140,15 @@ function Setting({ workplaceList, employeeList }) {
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                                    /[^0-9.]/g,
-                                    ""
-                                  );
+                              /[^0-9.]/g,
+                              ""
+                            );
 
-                                  // Ensure only one '.' is allowed
-                                  const parts = e.target.value.split(".");
-                                  if (parts.length > 2) {
-                                    e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                                  }
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                                 }}
                               />
                             </div>
@@ -2048,15 +2169,15 @@ function Setting({ workplaceList, employeeList }) {
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                                    /[^0-9.]/g,
-                                    ""
-                                  );
+                              /[^0-9.]/g,
+                              ""
+                            );
 
-                                  // Ensure only one '.' is allowed
-                                  const parts = e.target.value.split(".");
-                                  if (parts.length > 2) {
-                                    e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                                  }
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                                 }}
                               />
                             </div>
@@ -2079,15 +2200,15 @@ function Setting({ workplaceList, employeeList }) {
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                                    /[^0-9.]/g,
-                                    ""
-                                  );
+                              /[^0-9.]/g,
+                              ""
+                            );
 
-                                  // Ensure only one '.' is allowed
-                                  const parts = e.target.value.split(".");
-                                  if (parts.length > 2) {
-                                    e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                                  }
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                                 }}
                               />
                             </div>
@@ -2110,15 +2231,15 @@ function Setting({ workplaceList, employeeList }) {
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                                    /[^0-9.]/g,
-                                    ""
-                                  );
+                              /[^0-9.]/g,
+                              ""
+                            );
 
-                                  // Ensure only one '.' is allowed
-                                  const parts = e.target.value.split(".");
-                                  if (parts.length > 2) {
-                                    e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                                  }
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                                 }}
                               />
                             </div>
@@ -2137,15 +2258,15 @@ function Setting({ workplaceList, employeeList }) {
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                                    /[^0-9.]/g,
-                                    ""
-                                  );
+                              /[^0-9.]/g,
+                              ""
+                            );
 
-                                  // Ensure only one '.' is allowed
-                                  const parts = e.target.value.split(".");
-                                  if (parts.length > 2) {
-                                    e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                                  }
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                                 }}
                               />
                             </div>
@@ -2168,15 +2289,15 @@ function Setting({ workplaceList, employeeList }) {
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                                    /[^0-9.]/g,
-                                    ""
-                                  );
+                              /[^0-9.]/g,
+                              ""
+                            );
 
-                                  // Ensure only one '.' is allowed
-                                  const parts = e.target.value.split(".");
-                                  if (parts.length > 2) {
-                                    e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                                  }
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                                 }}
                               />
                             </div>
@@ -2199,15 +2320,15 @@ function Setting({ workplaceList, employeeList }) {
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                                    /[^0-9.]/g,
-                                    ""
-                                  );
+                              /[^0-9.]/g,
+                              ""
+                            );
 
-                                  // Ensure only one '.' is allowed
-                                  const parts = e.target.value.split(".");
-                                  if (parts.length > 2) {
-                                    e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                                  }
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                                 }}
                               />
                             </div>
@@ -2228,15 +2349,15 @@ function Setting({ workplaceList, employeeList }) {
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                                    /[^0-9.]/g,
-                                    ""
-                                  );
+                              /[^0-9.]/g,
+                              ""
+                            );
 
-                                  // Ensure only one '.' is allowed
-                                  const parts = e.target.value.split(".");
-                                  if (parts.length > 2) {
-                                    e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                                  }
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                                 }}
                               />
                             </div>
@@ -2259,15 +2380,15 @@ function Setting({ workplaceList, employeeList }) {
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                                    /[^0-9.]/g,
-                                    ""
-                                  );
+                              /[^0-9.]/g,
+                              ""
+                            );
 
-                                  // Ensure only one '.' is allowed
-                                  const parts = e.target.value.split(".");
-                                  if (parts.length > 2) {
-                                    e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                                  }
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                                 }}
                               />
                             </div>
@@ -2380,15 +2501,15 @@ function Setting({ workplaceList, employeeList }) {
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                                    /[^0-9.]/g,
-                                    ""
-                                  );
+                              /[^0-9.]/g,
+                              ""
+                            );
 
-                                  // Ensure only one '.' is allowed
-                                  const parts = e.target.value.split(".");
-                                  if (parts.length > 2) {
-                                    e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                                  }
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                                 }}
                               />
                             </div>
@@ -2408,15 +2529,15 @@ function Setting({ workplaceList, employeeList }) {
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                                    /[^0-9.]/g,
-                                    ""
-                                  );
+                              /[^0-9.]/g,
+                              ""
+                            );
 
-                                  // Ensure only one '.' is allowed
-                                  const parts = e.target.value.split(".");
-                                  if (parts.length > 2) {
-                                    e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                                  }
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                                 }}
                               />
                             </div>
@@ -2437,15 +2558,15 @@ function Setting({ workplaceList, employeeList }) {
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                                    /[^0-9.]/g,
-                                    ""
-                                  );
+                              /[^0-9.]/g,
+                              ""
+                            );
 
-                                  // Ensure only one '.' is allowed
-                                  const parts = e.target.value.split(".");
-                                  if (parts.length > 2) {
-                                    e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                                  }
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                                 }}
                               />
                             </div>
@@ -2465,15 +2586,15 @@ function Setting({ workplaceList, employeeList }) {
                                 onInput={(e) => {
                                   // Remove any non-digit characters
                                   e.target.value = e.target.value.replace(
-                                    /[^0-9.]/g,
-                                    ""
-                                  );
+                              /[^0-9.]/g,
+                              ""
+                            );
 
-                                  // Ensure only one '.' is allowed
-                                  const parts = e.target.value.split(".");
-                                  if (parts.length > 2) {
-                                    e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                                  }
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
                                 }}
                               />
                             </div>
@@ -2687,91 +2808,11 @@ function Setting({ workplaceList, employeeList }) {
                             >
                               <option value="">เลือกตำแหน่ง</option>
 
-                              {/* {positionWork.map((position, positionIndex) => (
+                              {positionWork.map((position, positionIndex) => (
                                 <option key={positionIndex} value={position}>
                                   {position}
                                 </option>
-                              ))} */}
-                              <option value="" disabled>
-                                เลือกตำแหน่ง
-                              </option>
-                              <option value="หัวหน้าควบคุมงาน">
-                                หัวหน้าควบคุมงาน
-                              </option>
-                              <option value="ผู้ช่วยผู้ควบคุมงาน">
-                                ผู้ช่วยผู้ควบคุมงาน
-                              </option>
-                              <option value="พนักงานทำความสะอาด">
-                                พนักงานทำความสะอาด
-                              </option>
-                              <option value="พนักงานทำความสะอาดรอบนอก">
-                                พนักงานทำความสะอาดรอบนอก
-                              </option>
-                              <option value="พนักงานเสิร์ฟ">
-                                พนักงานเสิร์ฟ
-                              </option>
-                              <option value="พนักงานคนสวน">พนักงานคนสวน</option>
-                              <option value="พนักงานแรงงานชาย">
-                                พนักงานแรงงานชาย
-                              </option>
-                              <option value="กรรมการผู้จัดการ">
-                                กรรมการผู้จัดการ
-                              </option>
-                              <option value="ผู้จัดการทั่วไป">
-                                ผู้จัดการทั่วไป
-                              </option>
-                              <option value="ผู้จัดการฝ่ายการตลาด">
-                                ผู้จัดการฝ่ายการตลาด
-                              </option>
-                              <option value="ผู้จัดการฝ่ายบัญชี/การเงิน">
-                                ผู้จัดการฝ่ายบัญชี/การเงิน
-                              </option>
-                              <option value="ผู้จัดการฝ่ายบุคคล">
-                                ผู้จัดการฝ่ายบุคคล
-                              </option>
-                              <option value="เจ้าหน้าที่ฝ่ายบัญชี/การเงิน">
-                                เจ้าหน้าที่ฝ่ายบัญชี/การเงิน
-                              </option>
-                              <option value="เจ้าหน้าที่ฝ่ายบุคคล">
-                                เจ้าหน้าที่ฝ่ายบุคคล
-                              </option>
-                              <option value="เจ้าหน้าที่ฝ่ายจัดซื้อ">
-                                เจ้าหน้าที่ฝ่ายจัดซื้อ
-                              </option>
-                              <option value="เจ้าหน้าที่ธุรการฝ่ายขาย">
-                                เจ้าหน้าที่ธุรการฝ่ายขาย
-                              </option>
-                              <option value="เจ้าหน้าที่ฝ่ายการตลาด">
-                                เจ้าหน้าที่ฝ่ายการตลาด
-                              </option>
-                              <option value="เจ้าหน้าที่ฝ่ายปฏิบัติการ">
-                                เจ้าหน้าที่ฝ่ายปฏิบัติการ
-                              </option>
-                              <option value="เจ้าหน้าที่ฝ่ายปฏิบัติการ(สายตรวจ)">
-                                เจ้าหน้าที่ฝ่ายปฏิบัติการ(สายตรวจ)
-                              </option>
-                              <option value="เจ้าหน้าที่ฝ่ายยานพาหนะ">
-                                เจ้าหน้าที่ฝ่ายยานพาหนะ
-                              </option>
-                              <option value="เจ้าหน้าที่ฝ่ายไอที">
-                                เจ้าหน้าที่ฝ่ายไอที
-                              </option>
-                              <option value="เจ้าหน้าที่ฝ่ายสโตร์">
-                                เจ้าหน้าที่ฝ่ายสโตร์
-                              </option>
-                              <option value="เจ้าหน้าที่ความปลอดภัยในการทำงาน(จป)">
-                                เจ้าหน้าที่ความปลอดภัยในการทำงาน(จป)
-                              </option>
-                              <option value="ธุรการทั่วไป">ธุรการทั่วไป</option>
-                              <option value="หัวหน้าฝ่ายปฏิบัติการ">
-                                หัวหน้าฝ่ายปฏิบัติการ
-                              </option>
-                              <option value="หัวหน้าฝ่ายบัญชี/การเงิน">
-                                หัวหน้าฝ่ายบัญชี/การเงิน
-                              </option>
-                              <option value="หัวหน้าฝ่ายสโตร์">
-                                หัวหน้าฝ่ายสโตร์
-                              </option>
+                              ))}
                             </select>
                           </div>
                           <div className="col-md-2">
@@ -2794,15 +2835,9 @@ function Setting({ workplaceList, employeeList }) {
                               onInput={(e) => {
                                 // Remove any non-digit characters
                                 e.target.value = e.target.value.replace(
-                                  /[^0-9.]/g,
+                                  /\D/g,
                                   ""
                                 );
-
-                                // Ensure only one '.' is allowed
-                                const parts = e.target.value.split(".");
-                                if (parts.length > 2) {
-                                  e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                                }
                               }}
                             />
                           </div>
@@ -3036,7 +3071,6 @@ function Setting({ workplaceList, employeeList }) {
                         </ol>
                       </div>
                     )} */}
-
                     {selectedDates.length > 0 && (
                       <div>
                         วันหยุดหน่วยงาน (เดือน/วัน/ปี)
@@ -3050,11 +3084,13 @@ function Setting({ workplaceList, employeeList }) {
                                   style={{ borderTop: "2px solid black" }}
                                 >
                                   {date instanceof Date &&
-                                    !isNaN(date.getTime())
-                                    ? `${date.getDate()}/${date.getMonth() + 1
-                                    }/${date.getFullYear() + 543}`
-                                    : `${day}/${month}/${year + 543
-                                    } (Invalid Date)`}
+                                  !isNaN(date.getTime())
+                                    ? `${date.getDate()}/${
+                                        date.getMonth() + 1
+                                      }/${date.getFullYear() + 543}`
+                                    : `${day}/${month}/${
+                                        year + 543
+                                      } (Invalid Date)`}
                                 </div>
                                 <div
                                   className="col-md-1"
@@ -3076,7 +3112,7 @@ function Setting({ workplaceList, employeeList }) {
                       </div>
                     )}
                   </div>
-                  {/* <div>
+                  <div>
                     <label>หมายเหตุ:</label>
                     <input
                       type="text"
@@ -3084,31 +3120,90 @@ function Setting({ workplaceList, employeeList }) {
                       value={reason}
                       onChange={handleReasonChange}
                     />
-                  </div> */}
-                </section>
-                {/* <section class="Frame">
-                  <h2 class="title">พนักงานในสังกัด</h2> */}
-                <section class="Frame">
-                  <div>
-                    {showEmployeeListResult.length > 0 && (
-                      <>
-                        <h3>
-                          พนักงานในหน่วยงาน {showEmployeeListResult.length} คน
-                        </h3>
-                        <ul>
-                          {showEmployeeListResult.map((employee, index) => (
-                            <li key={index}>
-                              {employee.employeeId}: {employee.name}{" "}
-                              {employee.lastName}
-                            </li>
-                            // Replace "name" with the property you want to display for each employee
-                          ))}
-                        </ul>
-                      </>
-                    )}
                   </div>
                 </section>
-                {/* </section> */}
+                <section class="Frame">
+                  <h2 class="title">พนักงานในสังกัด</h2>
+                  <section class="Frame">
+                    <div>
+                      {showEmployeeListResult.length > 0 && (
+                        <>
+                          <h3>
+                            พนักงานในหน่วยงาน {showEmployeeListResult.length} คน
+                          </h3>
+                          <ul>
+                            {showEmployeeListResult.map((employee, index) => (
+                              <li key={index}>
+                                {employee.employeeId}: {employee.name}{" "}
+                                {employee.lastName}
+                              </li>
+                              // Replace "name" with the property you want to display for each employee
+                            ))}
+                          </ul>
+                        </>
+                      )}
+                    </div>
+                  </section>
+                </section>
+
+                {/* <section class="Frame">
+                                    <h2 class="title">กลุ่มงานย่อย</h2>
+                                    <section class="Frame">
+                                        <div>
+                                            <div className="row">
+                                                <div className="col-md-4">
+                                                    <label style={{ marginRight: '0.5rem' }}>รหัส:</label>
+
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <label style={{ margin: '0.5rem' }}>ชื่อหน่วย:</label>
+
+                                                </div>
+                                            </div>
+
+                                            <div className="row">
+                                                <div className="col-md-4">
+                                                    <input
+                                                        type="text"
+                                                        value={workplaceComplexId}
+                                                        class="form-control"
+                                                        onChange={(e) => setWorkplaceComplexId(e.target.value)}
+                                                    />
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <input
+                                                        type="text"
+                                                        value={workplaceComplexName}
+                                                        class="form-control"
+                                                        onChange={(e) => setWorkplaceComplexName(e.target.value)}
+                                                    />
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <button type="button" className="btn btn-primary" onClick={handleAddWorkplaceComplex}>
+                                                        เพิ่ม
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                            <br />
+
+                                            <button type="button" className="btn btn-primary" onClick={handleAddWorkplaceComplex}>
+                                                เพิ่ม
+                                            </button>
+                                        </div>
+                                        <label role="workRateDayoffRate">รายชื่อหน่วย</label>
+
+                                        <ul>
+                                            {workplacesComplex.map((workplace, index) => (
+                                                <li key={index}>
+                                                    {workplace.id} - {workplace.name}
+                                                </li>
+                                            ))}
+                                        </ul>
+
+
+                                    </section>
+                                </section> */}
 
                 {/* <h2>Add Image:</h2>
                                 <input type="file" onChange={handleChange} />
@@ -3117,20 +3212,12 @@ function Setting({ workplaceList, employeeList }) {
                 {/* <!--Frame--> */}
                 <div class="line_btn">
                   {newWorkplace ? (
-                    <button
-                      type="button"
-                      onClick={handleManageWorkplace}
-                      class="btn b_save"
-                    >
+                    <button class="btn b_save" disabled>
                       <i class="nav-icon fas fa-save"></i>{" "}
                       &nbsp;สร้างหน่วยงานใหม่
                     </button>
                   ) : (
-                    <button
-                      type="button"
-                      onClick={handleManageWorkplace}
-                      class="btn b_save"
-                    >
+                    <button class="btn b_save">
                       <i class="nav-icon fas fa-save"></i> &nbsp;บันทึก
                     </button>
                   )}
@@ -3150,4 +3237,4 @@ function Setting({ workplaceList, employeeList }) {
   );
 }
 
-export default Setting;
+export default SettingComplex;
