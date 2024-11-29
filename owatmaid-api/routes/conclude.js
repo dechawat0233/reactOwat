@@ -393,7 +393,7 @@ if(parseFloat(salary ) >= 1660) {
                 // let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction))).toFixed(2);
 
                 let workRateOT = (((salary / 8) * parseFloat(tmpWP.data.workRateOT ?? 0)) * (parseFloat(hoursTmp + decimalFraction))).toFixed(3);
-                tmp.workRateOT = workRateOT || 0;
+                // tmp.workRateOT = workRateOT || 0;
                 tmp.workRateOTMultiply = tmpWP.data.workRateOT || 0;
 
                 sumWorkHour += parseFloat(allTime) || 0;
