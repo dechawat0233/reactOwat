@@ -1110,8 +1110,11 @@ if(parseInt(workplace.workOfOT_breakMinute) == 20 || parseInt(workplace.workOfOT
       workEndOt3: workEndOt3,
 
       workOfHour: (parseInt(workOfHour || '0') + (parseFloat(workOfMinute || '0') / 60)),
-      workOfOT: (parseInt(workOfOT || '0') + ((parseFloat(workOfOTMinute || '0')- parseInt(breakOfOT || '0')) / 60)),
-
+      // workOfOT: (parseInt(workOfOT || '0') + ((parseFloat(workOfOTMinute || '0')- parseInt(breakOfOT || '0')) / 60)),
+      workOfOT: parseFloat(workOfOTMinute || '0') === 0
+      ? (parseInt(workOfOT || '0') * 60 - parseInt(breakOfOT || '0')) / 60
+      : (parseInt(workOfOT || '0') + (parseFloat(workOfOTMinute || '0') - parseInt(breakOfOT || '0')) / 60),
+    
       workOfHour_subHour: workOfHour || 0,
       workOfHour_subMinute: workOfMinute || 0,
       workOfOT_subHour: workOfOT || 0,
