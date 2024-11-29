@@ -549,16 +549,20 @@ function Employee() {
     setName(empSelect.name);
     setLastName(empSelect.lastName);
     setNickName(empSelect.nickName);
-    // setGender(empSelect.gender);
+
     if (
       empSelect.prefix == "น.ส." ||
       empSelect.prefix == "นางสาว" ||
       empSelect.prefix == "นาง"
     ) {
       setGender("หญิง");
-    } else if (empSelect.prefix == "นาย") {
+      // } else if (empSelect.prefix == "นาย") {
+      //   setGender("ชาย");
+      // }
+    } else {
       setGender("ชาย");
     }
+    // setGender(empSelect.gender);
     // setDateOfBirth(new Date(empSelect.dateOfBirth));
     // setDateOfBirth(empSelect.dateOfBirth);
     // const formattedDate = formatDateToDMY(empSelect.dateOfBirth);
@@ -1979,7 +1983,7 @@ function Employee() {
                                 ที่อยู่ตามบัตรประชาชน
                               </label>
                               <textarea
-                                required
+                                // required
                                 name="address"
                                 id="address"
                                 class="form-control"
@@ -2539,7 +2543,7 @@ function Employee() {
                     </button>
                   )}
                   <button class="btn clean"
-                  onClick={() => window.location.reload()}
+                    onClick={() => window.location.reload()}
                   >
                     <i class="far fa-window-close"></i> &nbsp;ยกเลิก
                   </button>

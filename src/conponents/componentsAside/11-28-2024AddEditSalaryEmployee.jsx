@@ -14,7 +14,7 @@ function AddEditSalaryEmployee() {
         borderLeft: '2px solid #000'
     };
 
-
+    
     const [newWorkplace, setNewWorkplace] = useState(true);
 
     const [searchEmployeeId, setSearchEmployeeId] = useState('');
@@ -30,7 +30,7 @@ function AddEditSalaryEmployee() {
         //get searchEmployeeId from localStorage
         const tmp = localStorage.getItem('searchEmployeeId');
         setSearchEmployeeId(tmp || '');
-
+        
         setMonth("01");
         //get data from master employee
 
@@ -185,7 +185,7 @@ function AddEditSalaryEmployee() {
         }
     }, [minusId, searchDeductSalaryList]);
 
-
+    
     ///////////////////
     function handleClickResult(emp) {
         // Populate all the startTime input fields with the search result value
@@ -344,100 +344,24 @@ function AddEditSalaryEmployee() {
 
 
     // Function to add a new row to the rowDataList with specific values
-    // const addRow = (newRowData) => {
-    //     // Create a copy of the current state
-    //     const newDataList = [...rowDataList2];
-    //     // Push a new row with specific data
-    //     // newDataList.push({ ...initialRowData, ...newRowData });
-    //     newDataList.unshift(newRowData);
-    //     // Update the state with the new data
-    //     setRowDataList2(newDataList);
-    // };
-
-    // const addRow = (newRowData) => {
-    //     // Check if the id already exists in the current list
-    //     const idExists = rowDataList2.some((row) => row.id === newRowData.id);
-
-    //     if (!idExists) {
-    //         // If the id doesn't exist, add the new row to the start of the list
-    //         const newDataList = [newRowData, ...rowDataList2];
-    //         setRowDataList2(newDataList);
-    //     } else {
-    //         // Optionally, handle the case when the id already exists
-    //         alert(`มีรหัส ${newRowData.id} ใช้งานแล้ว11111111`);
-    //     }
-    // };
-
-    // const addRow2 = (newRowData2) => {
-    //     // // Create a copy of the current state
-    //     // const newDataList = [...rowDataList];
-    //     // // Push a new row with specific data
-    //     // // newDataList.push({ ...initialRowData, ...newRowData });
-    //     // newDataList.unshift(newRowData2);
-    //     // // Update the state with the new data
-    //     // setRowDataList(newDataList);
-
-    //     // Check if the id already exists in the current list
-    //     const idExists2 = rowDataList.some((row) => row.id === newRowData2.id);
-
-    //     if (!idExists2) {
-    //         // If the id doesn't exist, add the new row to the start of the list
-    //         const newDataList = [newRowData2, ...rowDataList];
-    //         setRowDataList(newDataList);
-    //     } else {
-    //         // Optionally, handle the case when the id already exists
-    //         alert(`มีรหัส ${newRowData2.id} ใช้งานแล้ว22222222222`);
-    //     }
-    // };
-
     const addRow = (newRowData) => {
-        // Check if the id already exists in the current list
-        const idExists = rowDataList2.some((row) => row.id === newRowData.id);
-
-        if (!idExists) {
-            // Add the new row to the start of the list
-            const newDataList = [newRowData, ...rowDataList2];
-            setRowDataList2(newDataList);
-            setAddSalaryId('');
-            setAddSalaryName('');
-            setAddSalary('');
-            setRoundOfSalary('');
-            setStaffType('');
-            setMessage('');
-        } else {
-            alert(`มีรหัส ${newRowData.id} ใช้งานแล้ว`);
-            setAddSalaryId('');
-            setAddSalaryName('');
-            setAddSalary('');
-            setRoundOfSalary('');
-            setStaffType('');
-            setMessage('');
-        }
+        // Create a copy of the current state
+        const newDataList = [...rowDataList2];
+        // Push a new row with specific data
+        // newDataList.push({ ...initialRowData, ...newRowData });
+        newDataList.unshift(newRowData);
+        // Update the state with the new data
+        setRowDataList2(newDataList);
     };
 
     const addRow2 = (newRowData2) => {
-        // Check if the id already exists in the current list
-        const idExists2 = rowDataList.some((row) => row.id === newRowData2.id);
-
-        if (!idExists2) {
-            // Add the new row to the start of the list
-            const newDataList = [newRowData2, ...rowDataList];
-            setRowDataList(newDataList);
-            setMinusId('');
-            setMisnusName('');
-            setMinusSalary('');
-            setPayType('');
-            setInstallment('');
-            setMinusmessage('');
-        } else {
-            alert(`มีรหัส ${newRowData2.id} ใช้งานแล้ว`);
-            setMinusId('');
-            setMisnusName('');
-            setMinusSalary('');
-            setPayType('');
-            setInstallment('');
-            setMinusmessage('');
-        }
+        // Create a copy of the current state
+        const newDataList = [...rowDataList];
+        // Push a new row with specific data
+        // newDataList.push({ ...initialRowData, ...newRowData });
+        newDataList.unshift(newRowData2);
+        // Update the state with the new data
+        setRowDataList(newDataList);
     };
 
     // Function to handle editing a row
@@ -568,14 +492,7 @@ function AddEditSalaryEmployee() {
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
                                                                     <label role="searchEmployeeId">รหัสพนักงาน</label>
-                                                                    <input type="text" class="form-control" id="searchEmployeeId" placeholder="รหัสพนักงาน" value={searchEmployeeId} onChange={(e) => setSearchEmployeeId(e.target.value)}
-                                                                        onInput={(e) => {
-                                                                            // Remove any non-digit characters
-                                                                            e.target.value = e.target.value.replace(
-                                                                                /\D/g,
-                                                                                ""
-                                                                            );
-                                                                        }} />
+                                                                    <input type="text" class="form-control" id="searchEmployeeId" placeholder="รหัสพนักงาน" value={searchEmployeeId} onChange={(e) => setSearchEmployeeId(e.target.value)} />
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6">
@@ -690,14 +607,7 @@ function AddEditSalaryEmployee() {
                                                     <div class="row">
                                                         <div class="col-md-1">
                                                             <div class="form-group">
-                                                                <input type="text" class="form-control" id="addSalaryId" placeholder="รหัส" value={addSalaryId} onChange={(e) => setAddSalaryId(e.target.value)}
-                                                                    onInput={(e) => {
-                                                                        // Remove any non-digit characters
-                                                                        e.target.value = e.target.value.replace(
-                                                                            /\D/g,
-                                                                            ""
-                                                                        );
-                                                                    }} />
+                                                                <input type="text" class="form-control" id="addSalaryId" placeholder="รหัส" value={addSalaryId} onChange={(e) => setAddSalaryId(e.target.value)} />
                                                             </div>
                                                         </div>
 
@@ -708,20 +618,7 @@ function AddEditSalaryEmployee() {
                                                         </div>
 
                                                         <div class="col-md-1">
-                                                            <input type="text" class="form-control" id="addSalary" placeholder="จำนวนเงิน" value={addSalary} onChange={(e) => setAddSalary(e.target.value)}
-                                                                onInput={(e) => {
-                                                                    // Remove any non-digit characters
-                                                                    e.target.value = e.target.value.replace(
-                                                                        /[^0-9.]/g,
-                                                                        ""
-                                                                    );
-
-                                                                    // Ensure only one '.' is allowed
-                                                                    const parts = e.target.value.split(".");
-                                                                    if (parts.length > 2) {
-                                                                        e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                                                                    }
-                                                                }} />
+                                                            <input type="text" class="form-control" id="addSalary" placeholder="จำนวนเงิน" value={addSalary} onChange={(e) => setAddSalary(e.target.value)} />
                                                         </div>
                                                         <div class="col-md-2">
                                                             <select
@@ -752,36 +649,9 @@ function AddEditSalaryEmployee() {
                                                         <div class="col-md-2">
                                                             <input type="text" class="form-control" id="message" placeholder="หมายเหตุ" value={message} onChange={(e) => setMessage(e.target.value)} />
                                                         </div>
-                                                        {/* <div class="col-md-2">
+                                                        <div class="col-md-2">
                                                             <div class="d-flex align-items-end">
-                                                                <button class="btn b_save"><i class="fas fa-check"
-                                                                onClick={() => {                                            
-                                                                    // Call the addRow function
-                                                                    addRow(newRowData);
-                                                                  }}
-                                                                ></i> &nbsp; เพิ่ม</button>
-                                                            </div>
-                                                        </div> */}
-                                                        <div className="col-md-2">
-                                                            <div className="d-flex align-items-end">
-                                                                <button
-                                                                    type="button"
-                                                                    className="btn b_save"
-                                                                    onClick={() => {
-                                                                        const newRowData = {
-                                                                            id: addSalaryId || '',
-                                                                            name: addSalaryName || '',
-                                                                            SpSalary: addSalary || '',
-                                                                            roundOfSalary: roundOfSalary || '',
-                                                                            StaffType: staffType || '',
-                                                                            nameType: '',
-                                                                            message: message || '',
-                                                                        };
-                                                                        addRow(newRowData);
-                                                                    }}
-                                                                >
-                                                                    <i className="fas fa-check"></i> &nbsp; เพิ่ม
-                                                                </button>
+                                                                <button class="btn b_save"><i class="fas fa-check"></i> &nbsp; เพิ่ม</button>
                                                             </div>
                                                         </div>
 
@@ -906,15 +776,7 @@ function AddEditSalaryEmployee() {
                                                     <div class="row">
                                                         <div class="col-md-1">
                                                             <div class="form-group">
-                                                                <input type="text" class="form-control" id="addSalaryId" placeholder="รหัส" value={minusId} onChange={(e) => setMinusId(e.target.value)}
-                                                                    onInput={(e) => {
-                                                                        // Remove any non-digit characters
-                                                                        e.target.value = e.target.value.replace(
-                                                                            /\D/g,
-                                                                            ""
-                                                                        );
-                                                                    }}
-                                                                />
+                                                                <input type="text" class="form-control" id="addSalaryId" placeholder="รหัส" value={minusId} onChange={(e) => setMinusId(e.target.value)} />
                                                             </div>
                                                         </div>
 
@@ -925,20 +787,7 @@ function AddEditSalaryEmployee() {
                                                         </div>
 
                                                         <div class="col-md-2">
-                                                            <input type="text" class="form-control" id="addSalaryName" placeholder="จำนวนเงิน" value={minusSalary} onChange={(e) => setMinusSalary(e.target.value)}
-                                                                onInput={(e) => {
-                                                                    // Remove any non-digit characters
-                                                                    e.target.value = e.target.value.replace(
-                                                                        /[^0-9.]/g,
-                                                                        ""
-                                                                    );
-
-                                                                    // Ensure only one '.' is allowed
-                                                                    const parts = e.target.value.split(".");
-                                                                    if (parts.length > 2) {
-                                                                        e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                                                                    }
-                                                                }} />
+                                                            <input type="text" class="form-control" id="addSalaryName" placeholder="จำนวนเงิน" value={minusSalary} onChange={(e) => setMinusSalary(e.target.value)} />
                                                         </div>
 
                                                         <div class="col-md-2">
@@ -985,36 +834,9 @@ function AddEditSalaryEmployee() {
                                                         <div class="col-md-2">
                                                             <input type="text" class="form-control" id="minusStaffType" placeholder="หมายเหตุ" value={minusStaffType} onChange={(e) => setMinusStaffType(e.target.value)} />
                                                         </div>
-                                                        {/* <div class="col-md-2">
+                                                        <div class="col-md-2">
                                                             <div class="d-flex align-items-end">
-                                                                <button class="btn b_save"><i class="fas fa-check"
-                                                                onClick={() => {                                            
-                                                                    // Call the addRow function
-                                                                    addRow2(newRowData2);
-                                                                  }}
-                                                                ></i> &nbsp; เพิ่ม</button>
-                                                            </div>
-                                                        </div> */}
-                                                        <div className="col-md-2">
-                                                            <div className="d-flex align-items-end">
-                                                                <button
-                                                                    type="button"
-                                                                    className="btn b_save"
-                                                                    onClick={() => {
-                                                                        const newRowData2 = {
-                                                                            id: minusId || '',
-                                                                            name: misnusName || '',
-                                                                            amount: minusSalary || '',
-                                                                            payType: payType || '',
-                                                                            installment: installment || '',
-                                                                            nameType: '',
-                                                                            message: minusStaffType || '',
-                                                                        };
-                                                                        addRow2(newRowData2);
-                                                                    }}
-                                                                >
-                                                                    <i className="fas fa-check"></i> &nbsp; เพิ่ม
-                                                                </button>
+                                                                <button class="btn b_save"><i class="fas fa-check"></i> &nbsp; เพิ่ม</button>
                                                             </div>
                                                         </div>
 
@@ -1090,16 +912,10 @@ function AddEditSalaryEmployee() {
 
                                                                                 <div class="col-md-2" style={bordertable}> {item.message} </div>
 
-                                                                                {/* <div class="col-md-2" style={bordertable}>
+                                                                                <div class="col-md-2" style={bordertable}>
+                                                                                    {/* <button onClick={() => handleEditRow(index)}>Edit</button> */}
                                                                                     <button class="btn btn-xs btn-danger" style={{ padding: '0.3rem ', addSalaryIdth: '8rem' }} onClick={() => handleDeleteRow2(index)}>ลบ</button>
-                                                                                </div> */}
-                                                                                <button
-                                                                                    className="btn btn-xs btn-danger"
-                                                                                    style={{ padding: '0.3rem', width: '8rem' }}
-                                                                                    onClick={() => handleDeleteRow2(index)}
-                                                                                >
-                                                                                    ลบ
-                                                                                </button>
+                                                                                </div>
 
                                                                             </div>
                                                                         </div>
