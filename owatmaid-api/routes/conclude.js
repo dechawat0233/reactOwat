@@ -383,7 +383,7 @@ if(parseFloat(salary ) >= 1660) {
 
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
-                  tmp.otTimes = workOfOT || 0;
+                  tmp.otTimes = workOfOT +'x' || 0;
                 } else {
                   tmp.otTimes = otTime || 0;
                 }
