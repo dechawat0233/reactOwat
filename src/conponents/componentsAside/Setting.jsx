@@ -913,8 +913,11 @@ function Setting({ workplaceList, employeeList }) {
     setWorkStartOt3(workplace.workStartOt3);
     setWorkEndOt3(workplace.workEndOt3);
 
-    setWorkOfHour(workplace.workOfHour);
-    setWorkOfOT(workplace.workOfOT);
+    setWorkOfHour(workplace.workOfHour_subHour || workplace.workOfHour);
+    setWorkOfMinute(workplace.workOfHour_subMinute || 0);
+    setWorkOfOT( workplace.workOfOT_subHour || workplace.workOfOT);
+    setWorkOfOTMinute(workplace.workOfOT_subMinute || 0);
+
     setWorkRate(workplace.workRate);
     setWorkRateOT(workplace.workRateOT);
     setWorkTotalPeople(workplace.workTotalPeople);
@@ -1103,6 +1106,13 @@ function Setting({ workplaceList, employeeList }) {
 
       workOfHour: workOfHour,
       workOfOT: workOfOT,
+      workOfHour_subHour: workOfHour,
+      workOfHour_subMinute: workOfMinute,
+      workOfOT_subHour: workOfOT,
+      workOfOT_subMinute: workOfOTMinute,
+      workOfOT_breakHour: '',
+      workOfOT_breakMinute: breakOfOT,
+
       workRate: workRate,
       workRateOT: workRateOT,
       workTotalPeople: workTotalPeople,
