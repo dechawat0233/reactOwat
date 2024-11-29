@@ -1104,14 +1104,15 @@ function Setting({ workplaceList, employeeList }) {
       workStartOt3: workStartOt3,
       workEndOt3: workEndOt3,
 
-      workOfHour: workOfHour,
-      workOfOT: workOfOT,
-      workOfHour_subHour: workOfHour,
-      workOfHour_subMinute: workOfMinute,
-      workOfOT_subHour: workOfOT,
-      workOfOT_subMinute: workOfOTMinute,
+      workOfHour: (parseInt(workOfHour || '0') + (parseFloat(workOfMinute || '0') / 60)),
+      workOfOT: (parseInt(workOfOT || '0') + (parseFloat(workOfOTMinute || '0') / 60)),
+
+      workOfHour_subHour: workOfHour || 0,
+      workOfHour_subMinute: workOfMinute || 0,
+      workOfOT_subHour: workOfOT || 0,
+      workOfOT_subMinute: workOfOTMinute || 0,
       workOfOT_breakHour: '',
-      workOfOT_breakMinute: breakOfOT,
+      workOfOT_breakMinute: breakOfOT || 0,
 
       workRate: workRate,
       workRateOT: workRateOT,
