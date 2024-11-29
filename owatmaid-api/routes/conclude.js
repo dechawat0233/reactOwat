@@ -632,6 +632,9 @@ const         wpDataCalculator1 = await {
 
                 let workRateOT = (((salary / 8) * parseFloat(wpResponse1.data.workRateOT ?? 0)) * (parseFloat(hoursTmp + decimalFraction)) ).toFixed(3);
                 // tmp.workRateOT = workRateOT || 0;
+                tmp.workRateOT = salary                // tmp.workRateOT = workRateOT || 0;
+|| 0;
+
                 tmp.workRateOTMultiply = wpResponse1.data.workRateOT || 0;
 
                 sumWorkHour += parseFloat(allTime) || 0;
