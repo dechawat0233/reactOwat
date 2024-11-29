@@ -71,13 +71,13 @@ const workplaceSchema = new mongoose.Schema({
     workOfOT: {
         type: String
     },
-    workOfHour_subHour: { //for show in setting
+    workOfHour_subHour: { 
         type: String
     },
-    workOfHour_subMinute: { //for show in setting
+    workOfHour_subMinute: { 
         type: String
     },
-    workOfOT_subHour: { //for show in setting
+    workOfOT_subHour: { 
         type: String
     },
     workOfOT_subMinute: {
