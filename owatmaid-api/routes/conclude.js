@@ -383,7 +383,7 @@ if(parseFloat(salary ) >= 1660) {
 
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
-                  tmp.otTimes = workOfOT +'x' || 0;
+                  tmp.otTimes = workOfOT || 0;
                 } else {
                   tmp.otTimes = otTime || 0;
                 }
@@ -631,7 +631,7 @@ const         wpDataCalculator1 = await {
                 // let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction))).toFixed(2);
 
                 let workRateOT = (((salary / 8) * parseFloat(wpResponse1.data.workRateOT ?? 0)) * (parseFloat(hoursTmp + decimalFraction)) ).toFixed(3);
-                tmp.workRateOT = workRateOT || 0;
+                // tmp.workRateOT = workRateOT || 0;
                 tmp.workRateOTMultiply = wpResponse1.data.workRateOT || 0;
 
                 sumWorkHour += parseFloat(allTime) || 0;
