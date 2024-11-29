@@ -355,7 +355,7 @@ if(parseFloat(salary ) >= 1660) {
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
 
                 if(dataEmp.employees[0].salary && parseFloat(dataEmp.employees[0].salary) > 0 ) {
-
+                  salary = parseFloat(dataEmp.employees[0].salary);
                 } else {
                   salary = 0;
                 }
