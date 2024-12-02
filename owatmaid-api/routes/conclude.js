@@ -622,7 +622,10 @@ const         wpDataCalculator1 = await {
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
                   // tmp.otTimes = workOfOT || 0;
-                  tmp.otTimes = '234';
+                  let [hoursTmp, minutesTmp] = otTime.toString().split('.').map(Number);
+                  let decimalFraction = (minutesTmp || 0 ).toFixed(2) / 60;
+  
+                  tmp.otTimes = hoursTmp + '.' + decimalFraction;
 
                 } else {
                   tmp.otTimes = otTime || 0;
