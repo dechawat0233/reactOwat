@@ -105,6 +105,12 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
   const [specialtSalary, setSpecialtSalary] = useState("");
   const [specialtSalaryOT, setSpecialtSalaryOT] = useState("");
 
+  const calculateSum = () => {
+    const salary = parseFloat(specialtSalary) || 0;
+    const salaryOT = parseFloat(specialtSalaryOT) || 0;
+    return salary + salaryOT;
+  };
+
   const [messageSalary, setMessageSalary] = useState("");
 
   const [shift1start, setShift1start] = useState("");
@@ -413,6 +419,14 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
   const handleRemoveRow = (index) => {
     const updatedRows = rows.filter((_, i) => i !== index);
     setRows(updatedRows);
+  };
+
+  // Calculate the sum of all SpSalary values
+  const calculateSumSpSalary = () => {
+    return rows.reduce((sum, row) => {
+      const value = parseFloat(row.SpSalary);
+      return sum + (isNaN(value) ? 0 : value); // Add only valid numbers
+    }, 0);
   };
 
   //search employee name by employeeId
@@ -1741,6 +1755,19 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
                         value={staffId}
                         onChange={handleStaffIdChange}
                         list="staffIdList"
+                        onInput={(e) => {
+                          // Remove any non-digit characters
+                          e.target.value = e.target.value.replace(
+                            /[^0-9.]/g,
+                            ""
+                          );
+
+                          // Ensure only one '.' is allowed
+                          const parts = e.target.value.split(".");
+                          if (parts.length > 2) {
+                            e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                          }
+                        }}
                       />
                       <datalist id="staffIdList">
                         {employeeList.map((employee) => (
@@ -1798,6 +1825,19 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
                         placeholder="เวลาเข้างาน"
                         value={startTime}
                         onChange={(e) => setStartTime(e.target.value)}
+                        onInput={(e) => {
+                          // Remove any non-digit characters
+                          e.target.value = e.target.value.replace(
+                            /[^0-9.]/g,
+                            ""
+                          );
+
+                          // Ensure only one '.' is allowed
+                          const parts = e.target.value.split(".");
+                          if (parts.length > 2) {
+                            e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                          }
+                        }}
                       />
                     </div>
                   </div>
@@ -1811,6 +1851,19 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
                         placeholder="เวลาออกงาน"
                         value={endTime}
                         onChange={(e) => setEndTime(e.target.value)}
+                        onInput={(e) => {
+                          // Remove any non-digit characters
+                          e.target.value = e.target.value.replace(
+                            /[^0-9.]/g,
+                            ""
+                          );
+
+                          // Ensure only one '.' is allowed
+                          const parts = e.target.value.split(".");
+                          if (parts.length > 2) {
+                            e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                          }
+                        }}
                       />
                     </div>
                   </div>
@@ -1824,6 +1877,19 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
                         placeholder="ชั่วโมงทำงาน"
                         value={allTime}
                         onChange={(e) => setAllTime(e.target.value)}
+                        onInput={(e) => {
+                          // Remove any non-digit characters
+                          e.target.value = e.target.value.replace(
+                            /[^0-9.]/g,
+                            ""
+                          );
+
+                          // Ensure only one '.' is allowed
+                          const parts = e.target.value.split(".");
+                          if (parts.length > 2) {
+                            e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                          }
+                        }}
                       />
                     </div>
                   </div>
@@ -1837,6 +1903,19 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
                         placeholder="เวลาเข้า OT"
                         value={selectotTime}
                         onChange={(e) => setSelectotTime(e.target.value)}
+                        onInput={(e) => {
+                          // Remove any non-digit characters
+                          e.target.value = e.target.value.replace(
+                            /[^0-9.]/g,
+                            ""
+                          );
+
+                          // Ensure only one '.' is allowed
+                          const parts = e.target.value.split(".");
+                          if (parts.length > 2) {
+                            e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                          }
+                        }}
                       />
                     </div>
                   </div>
@@ -1850,6 +1929,19 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
                         placeholder="เวลาออก OT"
                         value={selectotTimeOut}
                         onChange={(e) => setSelectotTimeOut(e.target.value)}
+                        onInput={(e) => {
+                          // Remove any non-digit characters
+                          e.target.value = e.target.value.replace(
+                            /[^0-9.]/g,
+                            ""
+                          );
+
+                          // Ensure only one '.' is allowed
+                          const parts = e.target.value.split(".");
+                          if (parts.length > 2) {
+                            e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                          }
+                        }}
                       />
                     </div>
                   </div>
@@ -1863,68 +1955,120 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
                         placeholder="ชั่วโมง OT"
                         value={otTime}
                         onChange={(e) => setOtTime(e.target.value)}
+                        onInput={(e) => {
+                          // Remove any non-digit characters
+                          e.target.value = e.target.value.replace(
+                            /[^0-9.]/g,
+                            ""
+                          );
+
+                          // Ensure only one '.' is allowed
+                          const parts = e.target.value.split(".");
+                          if (parts.length > 2) {
+                            e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                          }
+                        }}
                       />
                     </div>
                   </div>
                 </div>
-                {showInputs && shift === "specialt_shift" && (
-                  <div>
-                    <div class="row">
-                      <div class="col-md-1">
-                        <label>จ่ายสด</label>
-                      </div>
-                      <div class="col-md-2">
-                        <label role="specialtSalary">เป็นเงิน</label>
-                      </div>
-                      <div class="col-md-2">
-                        <label role="specialtSalaryOT">เป็นเงินOT</label>
-                      </div>
-                      <div class="col-md-2">
-                        <label role="messageSalary">หมายเหตุ</label>
-                      </div>
+                {/* {showInputs && shift === "specialt_shift" && ( */}
+                <div>
+                  <div class="row">
+                    <div class="col-md-1">
+                      <label>จ่ายสด</label>
                     </div>
-                    <div class="row">
-                      <div class="col-md-1">
-                        <input
-                          type="checkbox"
-                          class="form-control"
-                          checked={cashSalary}
-                          onChange={handleCheckboxChange}
-                        />
-                      </div>
-                      <div class="col-md-2">
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="specialtSalary"
-                          placeholder="เป็นเงิน"
-                          value={specialtSalary}
-                          onChange={(e) => setSpecialtSalary(e.target.value)}
-                        />
-                      </div>
-                      <div class="col-md-2">
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="specialtSalaryOT"
-                          placeholder="เป็นเงิน"
-                          value={specialtSalaryOT}
-                          onChange={(e) => setSpecialtSalaryOT(e.target.value)}
-                        />
-                      </div>
-                      <div class="col-md-2">
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="messageSalary"
-                          placeholder="หมายเหตุ"
-                          value={messageSalary}
-                          onChange={(e) => setMessageSalary(e.target.value)}
-                        />
-                      </div>
+                    <div class="col-md-2">
+                      <label role="specialtSalary">เป็นเงิน</label>
+                    </div>
+                    <div class="col-md-2">
+                      <label role="specialtSalaryOT">เป็นเงินOT</label>
+                    </div>
+                    <div class="col-md-2">
+                      <label role="messageSalary">หมายเหตุ</label>
                     </div>
                   </div>
-                )}
+                  <div class="row">
+                    <div class="col-md-1">
+                      <input
+                        type="checkbox"
+                        class="form-control"
+                        checked={cashSalary}
+                        onChange={handleCheckboxChange}
+                      />
+                    </div>
+                    <div class="col-md-2">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="specialtSalary"
+                        placeholder="เป็นเงิน"
+                        value={specialtSalary}
+                        onChange={(e) => setSpecialtSalary(e.target.value)}
+                        onInput={(e) => {
+                          // Remove any non-digit characters
+                          e.target.value = e.target.value.replace(
+                            /[^0-9.]/g,
+                            ""
+                          );
+
+                          // Ensure only one '.' is allowed
+                          const parts = e.target.value.split(".");
+                          if (parts.length > 2) {
+                            e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                          }
+                        }}
+                      />
+                    </div>
+                    <div class="col-md-2">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="specialtSalaryOT"
+                        placeholder="เป็นเงิน"
+                        value={specialtSalaryOT}
+                        onChange={(e) => setSpecialtSalaryOT(e.target.value)}
+                        onInput={(e) => {
+                          // Remove any non-digit characters
+                          e.target.value = e.target.value.replace(
+                            /[^0-9.]/g,
+                            ""
+                          );
+
+                          // Ensure only one '.' is allowed
+                          const parts = e.target.value.split(".");
+                          if (parts.length > 2) {
+                            e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                          }
+                        }}
+                      />
+                    </div>
+                    <div class="col-md-2">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="messageSalary"
+                        placeholder="หมายเหตุ"
+                        value={messageSalary}
+                        onChange={(e) => setMessageSalary(e.target.value)}
+                        onInput={(e) => {
+                          // Remove any non-digit characters
+                          e.target.value = e.target.value.replace(
+                            /[^0-9.]/g,
+                            ""
+                          );
+
+                          // Ensure only one '.' is allowed
+                          const parts = e.target.value.split(".");
+                          if (parts.length > 2) {
+                            e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                          }
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+                {/* )} */}
                 <div>
                   <br />
                   <h3>เงินเพิ่ม</h3>
@@ -1939,6 +2083,19 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
                           onChange={(e) =>
                             handleInputChange(index, "codeSpSalary", e.target.value)
                           }
+                          onInput={(e) => {
+                            // Remove any non-digit characters
+                            e.target.value = e.target.value.replace(
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
+                          }}
                         />
                       </div>
                       <div className="col-md-2">
@@ -1956,11 +2113,24 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="จำนวน"
+                          placeholder="จำนวนเงิน"
                           value={row.SpSalary}
                           onChange={(e) =>
                             handleInputChange(index, "SpSalary", e.target.value)
                           }
+                          onInput={(e) => {
+                            // Remove any non-digit characters
+                            e.target.value = e.target.value.replace(
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
+                          }}
                         />
                       </div>
                       <div className="col-md-3">
@@ -1972,8 +2142,10 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
                           ลบ
                         </button>
                       </div>
-                    </div>
+                      <br /></div>
+
                   ))}
+                  <br />
                   <button
                     type="button"
                     className="btn btn-primary mt-3"
@@ -1981,6 +2153,43 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
                   >
                     เพิ่ม
                   </button>
+
+                </div>
+                <br />
+                <div class="row">
+                  <div class="col-md-3">
+                    <div className="mt-4">
+                      <label>รวมเงิน:</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={calculateSum()}
+                        readOnly
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div className="mt-4">
+                      <label>รวมเงินเพิ่ม:</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={calculateSumSpSalary()}
+                        readOnly
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div className="mt-4">
+                      <label>สุทธิ:</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={calculateSum() + calculateSumSpSalary()}
+                        readOnly
+                      />
+                    </div>
+                  </div>
                 </div>
               </section>
 
@@ -1989,6 +2198,8 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
                   <i class="fas fa-check"></i> &nbsp; เพิ่ม
                 </button>
               </div>
+
+
             </form>
 
             <form onSubmit={handleManageWorkplace}>
