@@ -124,7 +124,7 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
         const response = await axios.post(endpoint + "/workplace/search", data);
         setSearchResult(response.data.workplaces);
         // alert(JSON.stringify(response ,null,2));
-        console.log('searchResult', searchResult);
+        // console.log('searchResult', searchResult);
         if (response.data.workplaces.length < 1) {
           window.location.reload();
         } else {
@@ -145,9 +145,6 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
           const startTime4 = "";
           const endTime4 = "";
 
-          console.log('startTime', startTime);
-          console.log('startTime2', startTime2);
-          console.log('startTime3', startTime3);
           // setStartTimeOt1(response.data.workplaces[0].workStartOt1);
           // setEndTimeOt1(response.data.workplaces[0].workEndOt1);
           // setStartTimeOt2(response.data.workplaces[0].workStartOt1);

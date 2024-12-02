@@ -1221,7 +1221,7 @@ function AddsettimeEmployee() {
           setWName("");
         }
       } catch (error) {
-        alert(error);
+        // alert(error);
         // alert(JSON.stringify(workplaceList,null,2) );
 
       }
@@ -1560,7 +1560,7 @@ function AddsettimeEmployee() {
   // }
 
   const handleStartDateChange4 = (index2, date) => {
-    alert(index2);
+    // alert(index2);
     handleFieldChange2(index2, "date", date);
   };
 
