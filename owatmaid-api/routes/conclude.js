@@ -621,13 +621,7 @@ const         wpDataCalculator1 = await {
 
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
-                  // tmp.otTimes = workOfOT || 0;
-                  let [hoursTmp, minutesTmp] = otTime.toString().split('.').map(Number);
-                  // let decimalFraction = (parseFloat(minutesTmp || '0')* 100 )/ 60;
-  let t = ((parseFloat(hoursTmp || '0') *60) + (parseFloat(minutesTmp || '0'))/60).toFixed(2);
-  
-                  tmp.otTimes = t;
-
+                  tmp.otTimes = workOfOT || 0;
                 } else {
                   tmp.otTimes = otTime || 0;
                 }
