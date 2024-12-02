@@ -620,9 +620,8 @@ const         wpDataCalculator1 = await {
                 tmp.workRateMultiply = '1';
 
                 if (otTime >= workOfOT) {
-                  console.log('***');
                   otTime = workOfOT;
-                  tmp.otTimes = workOfOT || 0;
+                  // tmp.otTimes = workOfOT || 0;
                 } else {
                   tmp.otTimes = otTime || 0;
                 }
