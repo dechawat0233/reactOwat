@@ -21,13 +21,14 @@ import { addYears } from "date-fns";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 
-function SalaryAllResult({ employeeList ,workplaceList}) {
+function SalaryAllResult({ employeeList, workplaceList }) {
   const [workplacrId, setWorkplacrId] = useState(""); //รหัสหน่วยงาน
   const [workplacrName, setWorkplacrName] = useState(""); //รหัสหน่วยงาน
 
   const [searchWorkplaceId, setSearchWorkplaceId] = useState("");
   const [workplaceListAll, setWorkplaceListAll] = useState([workplaceList]);
-
+  console.log('workplaceListAll', workplaceListAll);
+  
   const [responseDataAll, setResponseDataAll] = useState([]);
 
   const [month, setMonth] = useState("01");
@@ -1086,7 +1087,7 @@ function SalaryAllResult({ employeeList ,workplaceList}) {
       const sum = parseFloat(
         Number(
           (employee.countSpecialDay - employee.specialDayListWork.length) *
-            employee.specialDayRate
+          employee.specialDayRate
         ) || 0
       );
       acc[workplace].totalSumtest += sum;
@@ -1667,8 +1668,7 @@ function SalaryAllResult({ employeeList ,workplaceList}) {
             currentY += 5;
 
             pdf.text(
-              `พิมพ์วันที่ ${formattedWorkDateDD}/${formattedWorkDateMM}/${
-                parseInt(formattedWorkDateYYYY, 10) + 543
+              `พิมพ์วันที่ ${formattedWorkDateDD}/${formattedWorkDateMM}/${parseInt(formattedWorkDateYYYY, 10) + 543
               }`,
               10,
               200
@@ -1980,8 +1980,7 @@ function SalaryAllResult({ employeeList ,workplaceList}) {
 
         // Add some space between workplaces
         pdf.text(
-          `พิมพ์วันที่ ${formattedWorkDateDD}/${formattedWorkDateMM}/${
-            parseInt(formattedWorkDateYYYY, 10) + 543
+          `พิมพ์วันที่ ${formattedWorkDateDD}/${formattedWorkDateMM}/${parseInt(formattedWorkDateYYYY, 10) + 543
           }`,
           10,
           200
@@ -2948,8 +2947,7 @@ function SalaryAllResult({ employeeList ,workplaceList}) {
 
         // Add some space between workplaces
         pdf.text(
-          `พิมพ์วันที่ ${formattedWorkDateDD}/${formattedWorkDateMM}/${
-            parseInt(formattedWorkDateYYYY, 10) + 543
+          `พิมพ์วันที่ ${formattedWorkDateDD}/${formattedWorkDateMM}/${parseInt(formattedWorkDateYYYY, 10) + 543
           }`,
           10,
           200
@@ -3361,7 +3359,7 @@ function SalaryAllResult({ employeeList ,workplaceList}) {
         "นักขัติ": Number(item.totalAmountSpecialDay).toFixed(2) || 0,
         "บวกอื่นๆ(คิด ปกส)": Number(item.totalSumAddSalaryBeforeTax.toFixed(2) || 0),
         "หักอื่นๆ(คิด ปกส)":
-        Number(item.totalSumDeductBeforeTaxWithSocial.toFixed(2) || 0),
+          Number(item.totalSumDeductBeforeTaxWithSocial.toFixed(2) || 0),
         "บวกอื่นๆ(ไม่คิด ปกส)": Number(item.totalSumAddSalaryBeforeTaxNonSocial.toFixed(2) || 0),
         "หักอื่นๆ(ไม่คิด ปกส)": Number(item.totalSumDeductBeforeTax.toFixed(2) || 0),
         "หักภาษี": Number(item.totalTax.toFixed(0) || 0),
@@ -3414,7 +3412,7 @@ function SalaryAllResult({ employeeList ,workplaceList}) {
         totalTotal: 0,
       }
     );
-    
+
     // เพิ่มผลรวมลงใน `formattedData`
     formattedData.push({
       "รหัส": "รวมทั้งหมด",
@@ -3459,20 +3457,20 @@ function SalaryAllResult({ employeeList ,workplaceList}) {
     // saveAs(blob, "Test_Excel.xlsx");
     const ws = XLSX.utils.json_to_sheet([], { origin: "A4" }); // เริ่มข้อมูล array ที่ A4
 
-// เพิ่มหัวเรื่องใน A1, A2, และ A3
-ws["A1"] = { v: "ชื่อ" };     // เซลล์ A1
-ws["A2"] = { v: "ที่อยู่" };  // เซลล์ A2
-ws["A3"] = { v: "วันที่" };   // เซลล์ A3
+    // เพิ่มหัวเรื่องใน A1, A2, และ A3
+    ws["A1"] = { v: "ชื่อ" };     // เซลล์ A1
+    ws["A2"] = { v: "ที่อยู่" };  // เซลล์ A2
+    ws["A3"] = { v: "วันที่" };   // เซลล์ A3
 
-// นำข้อมูลจาก formattedData ใส่ลงใน Excel (เริ่มที่ A4)
-XLSX.utils.sheet_add_json(ws, formattedData, { origin: "A4" });
+    // นำข้อมูลจาก formattedData ใส่ลงใน Excel (เริ่มที่ A4)
+    XLSX.utils.sheet_add_json(ws, formattedData, { origin: "A4" });
 
-// สร้าง Workbook และเพิ่ม Worksheet
-const wb = XLSX.utils.book_new();
-XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+    // สร้าง Workbook และเพิ่ม Worksheet
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
 
-// ดาวน์โหลดไฟล์ Excel
-XLSX.writeFile(wb, "ExportedData.xlsx");
+    // ดาวน์โหลดไฟล์ Excel
+    XLSX.writeFile(wb, "ExportedData.xlsx");
   };
 
   return (
@@ -3494,7 +3492,7 @@ XLSX.writeFile(wb, "ExportedData.xlsx");
               <div class="row mb-2">
                 <h1 class="m-0">
                   <i class="far fa-arrow-alt-circle-right"></i>{" "}
-                  ออกรายงานเงินเดือนพนักงาน 
+                  ออกรายงานเงินเดือนพนักงาน
                 </h1>
               </div>
             </div>
