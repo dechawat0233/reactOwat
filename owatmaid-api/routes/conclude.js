@@ -358,8 +358,13 @@ router.post('/autocreate', async (req, res) => {
                 sumWorkHourOt += parseFloat((parseFloat(hoursTmp + decimalFraction))) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
 
+<<<<<<< HEAD
                 if (dataEmp.employees[0].salary && parseFloat(dataEmp.employees[0].salary) > 0) {
 
+=======
+                if(dataEmp.employees[0].salary && parseFloat(dataEmp.employees[0].salary) > 0 ) {
+                  salary = parseFloat(dataEmp.employees[0].salary);
+>>>>>>> 66732ee5a2c1c86d73a34d934eae5c06ddd075e7
                 } else {
                   salary = 0;
                 }
@@ -405,8 +410,13 @@ router.post('/autocreate', async (req, res) => {
                 sumWorkHourOt += parseFloat((parseFloat(hoursTmp + decimalFraction))) || 0;
                 sumWorkRateOt += parseFloat(workRateOT) || 0;
 
+<<<<<<< HEAD
                 if (dataEmp.employees[0].salary && parseFloat(dataEmp.employees[0].salary) > 0) {
 
+=======
+                if(dataEmp.employees[0].salary && parseFloat(dataEmp.employees[0].salary) > 0 ) {
+salary = parseFloat(dataEmp.employees[0].salary) 
+>>>>>>> 66732ee5a2c1c86d73a34d934eae5c06ddd075e7
                 } else {
                   salary = 0;
                 }
@@ -641,13 +651,20 @@ router.post('/autocreate', async (req, res) => {
                 let [hoursTmp, minutesTmp] = otTime.toString().split('.').map(Number);
                 let decimalFraction = (minutesTmp || 0).toFixed(2) / 60;
                 // let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction))).toFixed(2);
+                // let workRateOT = ((parseFloat(wpResponse1.data.workRateOT ?? 0) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction)) ).toFixed(3);
+                let workRateOT = (((parseFloat(salary) / 8) * parseFloat(wpResponse1.data.workRateOT ?? 0) ) * parseFloat(otTime) ).toFixed(3);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
                 let workRateOT = (((salary / 8) * parseFloat(wpResponse1.data.workRateOT ?? 0)) * (parseFloat(hoursTmp + decimalFraction))).toFixed(2);
 =======
                 let workRateOT = (((salary / 8) * parseFloat(wpResponse1.data.workRateOT ?? 0)) * (parseFloat(hoursTmp + decimalFraction)) ).toFixed(3);
 >>>>>>> 4da747d03704ba0a02b8e849cc04dc5472d34aba
+=======
+                // let workRateOT = (((salary / 8) * parseFloat(wpResponse1.data.workRateOT ?? 0)) * (parseFloat(hoursTmp + decimalFraction)) ).toFixed(3);
+>>>>>>> 66732ee5a2c1c86d73a34d934eae5c06ddd075e7
                 tmp.workRateOT = workRateOT || 0;
+
                 tmp.workRateOTMultiply = wpResponse1.data.workRateOT || 0;
 
                 sumWorkHour += parseFloat(allTime) || 0;

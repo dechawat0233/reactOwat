@@ -10,6 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import EmployeesSelected from "./EmployeesSelected";
 
 import AddsettimeWorkplace from "./AddsettimeWorkplace";
+import AddsettimeWorkplaceReplace from "./AddsettimeWorkplaceReplace";
 import AddsettimeEmployee from "./AddsettimeEmployee";
 import AddsettimeUpload from "./AddsettimeUpload";
 import AddsettimeOutsiderEmployee from "./AddsettimeOutsiderEmployee";
@@ -83,6 +84,7 @@ function Addsettime({ workplaceList, employeeList }) {
                           >
                             <option value="workplace">รูปแบบหน่วยงาน</option>
                             <option value="employee">รูปแบบบุคคล</option>
+                            <option value="workplaceReplace">แทนงานพนักงาน</option>
                             <option value="upload">อัพโหลดไฟล์ลงเวลา</option>
                             {/* <option value="Outsiderworkplace">รูปแบบหน่วยงาน(บุคคลภายนอก)</option>
                                                         <option value="Outsideremployee">รูปแบบบุคคล(บุคคลภายนอก)</option> */}
@@ -103,6 +105,12 @@ function Addsettime({ workplaceList, employeeList }) {
                     />
                   )}
                   {selectedOption === "employee" && <AddsettimeEmployee />}
+                  {selectedOption === "workplaceReplace" && (
+                    <AddsettimeWorkplaceReplace
+                      workplaceList={workplaceList}
+                      employeeList={employeeList}
+                    />
+                  )}
                   {/* {selectedOption === "upload" && <AddsettimeUpload />} */}
                   {selectedOption === "upload" && (
                     <AddsettimeUpload workplaceList={workplaceList} />

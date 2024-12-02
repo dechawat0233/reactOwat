@@ -915,14 +915,14 @@ function Setting({ workplaceList, employeeList }) {
 
     setWorkOfHour(workplace.workOfHour_subHour || workplace.workOfHour);
     setWorkOfMinute(workplace.workOfHour_subMinute || 0);
-    setWorkOfOT( workplace.workOfOT_subHour || workplace.workOfOT);
+    setWorkOfOT(workplace.workOfOT_subHour || workplace.workOfOT);
     setWorkOfOTMinute(workplace.workOfOT_subMinute || 0);
-setBreakOfOT(workplace.workOfOT_breakMinute || 0);
-if(parseInt(workplace.workOfOT_breakMinute) == 20 || parseInt(workplace.workOfOT_breakMinute) == 30) {
-  setIsCustom(false);
-} else {
-  setIsCustom(true);
-}
+    setBreakOfOT(workplace.workOfOT_breakMinute || 0);
+    if (parseInt(workplace.workOfOT_breakMinute) == 20 || parseInt(workplace.workOfOT_breakMinute) == 30) {
+      setIsCustom(false);
+    } else {
+      setIsCustom(true);
+    }
     setWorkRate(workplace.workRate);
     setWorkRateOT(workplace.workRateOT);
     setWorkTotalPeople(workplace.workTotalPeople);
@@ -1110,7 +1110,10 @@ if(parseInt(workplace.workOfOT_breakMinute) == 20 || parseInt(workplace.workOfOT
       workEndOt3: workEndOt3,
 
       workOfHour: (parseInt(workOfHour || '0') + (parseFloat(workOfMinute || '0') / 60)),
-      workOfOT: (parseInt(workOfOT || '0') + ((parseFloat(workOfOTMinute || '0')- parseInt(breakOfOT || '0')) / 60)),
+      // workOfOT: (parseInt(workOfOT || '0') + ((parseFloat(workOfOTMinute || '0')- parseInt(breakOfOT || '0')) / 60)),
+      workOfOT: parseFloat(workOfOTMinute || '0') === 0
+        ? ((parseInt(workOfOT || '0') * 60 - parseInt(breakOfOT || '0')) / 60).toFixed(4)
+        : (parseInt(workOfOT || '0') + (parseFloat(workOfOTMinute || '0') - parseInt(breakOfOT || '0')) / 60).toFixed(4),
 
       workOfHour_subHour: workOfHour || 0,
       workOfHour_subMinute: workOfMinute || 0,
@@ -1561,11 +1564,11 @@ if(parseInt(workplace.workOfOT_breakMinute) == 20 || parseInt(workplace.workOfOT
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
-                        
+
                         <div class="row align-items-end">
                           <label>เวลาพัก</label>
                           <div class="col-md-4">
-                          
+
                             <label>
                               <input
                                 type="radio"
