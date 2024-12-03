@@ -2142,7 +2142,7 @@ function Salaryresult() {
           </div>
           <section class="content">
             <div class="container-fluid">
-              <h2 class="title">สรุปเงินเดือน</h2>
+              <h2 class="title">เงินเดือนรายบุคคล</h2>
               <section class="Frame">
                 <div class="col-md-12">
                   {/* <form onSubmit={handleSearch}> */}

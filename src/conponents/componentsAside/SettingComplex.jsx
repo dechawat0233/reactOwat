@@ -1455,7 +1455,7 @@ function SettingComplex({ workplaceList }) {
                     <!-- Main content --> */}
           <section class="content">
             <div class="container-fluid">
-              <h2 class="title">ตั้งค่าหน่วยงาน</h2>
+              <h2 class="title">ตั้งค่าหน่วยงานพิเศษ</h2>
               <section class="Frame">
                 <div class="col-md-12">
                   <form onSubmit={handleSearch}>

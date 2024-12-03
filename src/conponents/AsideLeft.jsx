@@ -140,7 +140,9 @@ function AsideLeft() {
                   </ul>
                 )}
               </li>
-
+              <li class="nav-item">
+                <Link to="/replaceReport" className="nav-link"><i class="nav-icon fas fa-tachometer-alt"></i> รายงานพนักงานแทน</Link>
+              </li>
               <li class="nav-item">
                 <a href="#" class="nav-link" onClick={toggleSubMenu4}><i class="nav-icon fas fa-file-import"></i>
                   <p> ระบบออกเอกสาร <i class="right fas fa-angle-left"></i><i class=""></i></p>
