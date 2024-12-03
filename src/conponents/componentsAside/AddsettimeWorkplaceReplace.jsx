@@ -48,6 +48,9 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
   const [workOfHour, setWorkOfHour] = useState(0); //ชั่วโมงทำงานต่อสัปดาห์
   const [workOfOT, setWorkOfOT] = useState(""); //ชั่วโมง OT ต่อสัปดาห์
 
+  const [replaceIt, setReplaceIt] = useState([]); //คนที่โดนแทน
+
+
   const [workRate, setWorkRate] = useState(""); //ค่าจ้างต่อวัน
   const [workRateOT, setWorkRateOT] = useState(""); //ค่าจ้าง OT ต่อชั่วโมง
   const [workTotalPeople, setWorkTotalPeople] = useState(""); //จำนวนคนในหน่วยงาน
@@ -92,6 +95,12 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
   const [staffName, setStaffName] = useState(""); //รหัสหน่วยงาน
   const [staffLastname, setStaffLastname] = useState(""); //รหัสหน่วยงาน
   const [staffFullName, setStaffFullName] = useState(""); //รหัสหน่วยงาน
+
+
+  const [staffIdReplace, setStaffIdReplace] = useState(""); //รหัสหน่วยงาน
+  const [staffNameReplace, setStaffNameReplace] = useState(""); //รหัสหน่วยงาน
+  const [staffLastnameReplace, setStaffLastnameReplace] = useState(""); //รหัสหน่วยงาน
+  const [staffFullNameReplace, setStaffFullNameReplace] = useState(""); //รหัสหน่วยงาน
 
   const [shift, setShift] = useState("");
   const [startTime, setStartTime] = useState(""); //รหัสหน่วยงาน
@@ -143,6 +152,11 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
         // workplaceId: searchWorkplaceId,
         // workplaceName: searchWorkplaceName,
       };
+
+      const filteredEmployees = employeeList.filter(
+        (employee) => employee.workplace === searchWorkplaceId
+      );
+      setReplaceIt(filteredEmployees);
 
       try {
         const response = await axios.post(endpoint + "/workplace/search", data);
@@ -1458,6 +1472,42 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
     setStaffFullName(selectedStaffName);
   };
 
+  const handleStaffIdReplaceChange = (e) => {
+    const selectedStaffId = e.target.value;
+    setStaffIdReplace(selectedStaffId);
+
+    // Find the corresponding employee and set the staffName
+    const selectedEmployee = replaceIt.find(
+      (employee) => employee.employeeId === selectedStaffId
+    );
+    if (selectedEmployee) {
+      // setStaffName(selectedEmployee.name);
+      // setStaffLastname(selectedEmployee.lastName);
+      setStaffFullNameReplace(selectedEmployee.name + " " + selectedEmployee.lastName);
+    } else {
+      setStaffNameReplace("");
+      setStaffFullNameReplace("");
+    }
+  };
+
+  const handleStaffNameReplaceChange = (e) => {
+    const selectedStaffName = e.target.value;
+
+    // Find the corresponding employee and set the staffId
+    const selectedEmployee = replaceIt.find(
+      (employee) =>
+        employee.name + " " + employee.lastName === selectedStaffName
+    );
+    if (selectedEmployee) {
+      setStaffIdReplace(selectedEmployee.employeeId);
+    } else {
+      setStaffIdReplace("");
+    }
+
+    // setStaffName(selectedStaffName);
+    setStaffFullNameReplace(selectedStaffName);
+  };
+
   return (
     <section class="content">
       <div class="row">
@@ -1972,9 +2022,82 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
                     </div>
                   </div>
                 </div>
+                <div class="row" style={{
+                  borderTop: "2px solid #000",
+                  marginTop: "10px",
+                  paddingTop: "10px",
+                }}>
+                  <div className="col-md-2">
+                    รหัสพนักงานแทน
+                  </div>
+                  <div className="col-md-2">
+                    ชื่อนักงานแทน
+                  </div>
+                </div>
+                <div class="row" >
+                  <div className="col-md-2">
+                    <div className="form-group">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="staffIdReplace"
+                        placeholder="รหัสพนักงาน"
+                        value={staffIdReplace}
+                        onChange={handleStaffIdReplaceChange}
+                        list="staffIdListReplace"
+                        onInput={(e) => {
+                          // Remove any non-digit characters
+                          e.target.value = e.target.value.replace(
+                            /[^0-9.]/g,
+                            ""
+                          );
+
+                          // Ensure only one '.' is allowed
+                          const parts = e.target.value.split(".");
+                          if (parts.length > 2) {
+                            e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                          }
+                        }}
+                      />
+                      <datalist id="staffIdListReplace">
+                        {replaceIt.map((employee) => (
+                          <option
+                            key={employee.employeeId}
+                            value={employee.employeeId}
+                          />
+                        ))}
+                      </datalist>
+                    </div>
+                  </div>
+                  <div className="col-md-2">
+                    <div className="form-group">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="staffNameReplace"
+                        placeholder="ชื่อพนักงาน"
+                        value={staffFullNameReplace}
+                        onChange={handleStaffNameReplaceChange}
+                        list="staffNameListReplace"
+                      />
+                      <datalist id="staffNameListReplace">
+                        {replaceIt.map((employee) => (
+                          <option
+                            key={employee.employeeId}
+                            value={employee.name + " " + employee.lastName}
+                          />
+                        ))}
+                      </datalist>
+                    </div>
+                  </div>
+                </div>
                 {/* {showInputs && shift === "specialt_shift" && ( */}
                 <div>
-                  <div class="row">
+                  <div class="row" style={{
+                  borderTop: "2px solid #000",
+                  marginTop: "10px",
+                  paddingTop: "10px",
+                }}>
                     <div class="col-md-1">
                       <label>จ่ายสด</label>
                     </div>
