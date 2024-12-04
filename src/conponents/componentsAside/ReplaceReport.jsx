@@ -20,6 +20,7 @@ import { addYears } from "date-fns";
 
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import employeeData from "./timerecord.json"; // นำเข้าไฟล์ JSON
 
 function ReplaceReport({ employeeList, workplaceList }) {
   const [workDate, setWorkDate] = useState(new Date());
@@ -87,6 +88,55 @@ function ReplaceReport({ employeeList, workplaceList }) {
     }
     return item.salary - item.salary * 0.03; // Apply the deduction
   };
+
+  const [analysisResult, setAnalysisResult] = useState([]);
+
+  useEffect(() => {
+    const analyzeData = () => {
+      const groupedData = {};
+
+      // จัดกลุ่มข้อมูลตาม employeeId
+      employeeData.forEach((record) => {
+        const { employeeId, month, employee_workplaceRecord } = record;
+
+        if (!groupedData[employeeId]) {
+          groupedData[employeeId] = {
+            employeeId,
+            months: [],
+            hasDuplicateMonths: false,
+            duplicateMonths: {}, // ใช้เก็บเดือนที่ซ้ำและจำนวน
+            hasWorkplaceRecords: false,
+          };
+        }
+
+        // เพิ่ม month ลงในกลุ่ม
+        groupedData[employeeId].months.push(month);
+
+        // เพิ่มจำนวนเดือนที่ซ้ำ
+        if (groupedData[employeeId].duplicateMonths[month]) {
+          groupedData[employeeId].duplicateMonths[month]++;
+        } else {
+          groupedData[employeeId].duplicateMonths[month] = 1;
+        }
+
+        // ตรวจสอบ workplace records
+        if (employee_workplaceRecord.length > 0) {
+          groupedData[employeeId].hasWorkplaceRecords = true;
+        }
+      });
+
+      // ตรวจสอบ month ซ้ำ
+      Object.values(groupedData).forEach((data) => {
+        const uniqueMonths = [...new Set(data.months)];
+        data.hasDuplicateMonths = uniqueMonths.length !== data.months.length;
+        data.months = uniqueMonths;
+      });
+
+      return Object.values(groupedData);
+    };
+
+    setAnalysisResult(analyzeData());
+  }, []);
 
   return (
     <body class="hold-transition sidebar-mini" className="editlaout">
@@ -245,8 +295,39 @@ function ReplaceReport({ employeeList, workplaceList }) {
               </section>
 
             </div>
+            {/* <div>
+              <h1>ผลการวิเคราะห์ข้อมูล Employee</h1>
+              {analysisResult.map((employee) => (
+                <div key={employee.employeeId} style={{ marginBottom: "1rem" }}>
+                  <h3>Employee ID: {employee.employeeId}</h3>
+                  <p>Months: {employee.months.join(", ")}</p>
+                  <p>มีเดือนซ้ำกันไหม: {employee.hasDuplicateMonths ? "มี" : "ไม่มี"}</p>
+
+                  {employee.hasDuplicateMonths && (
+                    <div>
+                      <h4>เดือนที่ซ้ำและจำนวน:</h4>
+                      <ul>
+                        {Object.entries(employee.duplicateMonths)
+                          .filter(([month, count]) => count > 1)
+                          .map(([month, count]) => (
+                            <li key={month}>
+                              เดือน {month} ซ้ำ {count} ครั้ง
+                            </li>
+                          ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  <p>
+                    มี workplace records ไหม:{" "}
+                    {employee.hasWorkplaceRecords ? "มี" : "ไม่มี"}
+                  </p>
+                </div>
+              ))}
+            </div> */}
           </section>
         </div>
+
       </div>
     </body>
     // </div>
