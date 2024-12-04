@@ -27,7 +27,7 @@ function ReplaceReport({ employeeList, workplaceList }) {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [formattedDate321, setFormattedDate] = useState(null);
-
+  console.log('formattedDate321', formattedDate321);
   const handleDatePickerChange = (date) => {
     setSelectedDate(date);
     setShowDatePicker(false); // Hide date picker after selecting a date
@@ -138,6 +138,84 @@ function ReplaceReport({ employeeList, workplaceList }) {
     setAnalysisResult(analyzeData());
   }, []);
 
+
+  //////////////////////////////////////////////////////////////////////
+  const handleExport = () => {
+    // กำหนดหัวตาราง
+    const headers = [
+      "No",
+      "ชื่อ-สกุล",
+      "หน่วยงาน",
+      "รายละเอียด",
+      "โอนเข้า",
+      "ยอดรวม",
+      "หักภาษี ณ ที่จ่าย",
+      "ยอดสุทธิ",
+    ];
+
+    // คำนวณข้อมูลตาราง
+    let totalSalary = 0;
+    let totalTax = 0;
+    let totalNetSalary = 0;
+
+    const tableData = data.map((item, index) => {
+      const tax = item.isChecked ? 0 : item.salary * 0.03; // หาก isChecked เป็น true ไม่หักภาษี
+      const netSalary = item.salary - tax; // คำนวณยอดสุทธิ
+
+      // รวมค่า
+      totalSalary += item.salary;
+      totalTax += tax;
+      totalNetSalary += netSalary;
+
+      return [
+        index + 1, // No
+        item.name, // ชื่อ-สกุล
+        item.workplace, // หน่วยงาน
+        item.salary, // รายละเอียด
+        item.bank, // โอนเข้า
+        item.salary, // ยอดรวม
+        tax, // หักภาษี ณ ที่จ่าย
+        netSalary, // ยอดสุทธิ
+      ];
+    });
+
+    // เพิ่มบรรทัดรวมท้ายตาราง
+    tableData.push([
+      "รวมทั้งหมด", // No
+      "", // ชื่อ-สกุล
+      "", // หน่วยงาน
+      "", // รายละเอียด
+      "", // โอนเข้า
+      totalSalary, // ยอดรวม
+      totalTax, // หักภาษี ณ ที่จ่าย
+      totalNetSalary, // ยอดสุทธิ
+    ]);
+
+    // เพิ่มหัวข้อและวันที่
+    const title = [
+      ["รายงานแทนงานพนักงาน"], // A1
+      [`${formattedDate321}`], // A2
+      [], // เว้น 1 บรรทัด
+      headers, // หัวตาราง
+    ];
+
+    // รวมข้อมูลทั้งหมด
+    const finalData = [...title, ...tableData];
+
+    // สร้างเวิร์กชีต
+    const worksheet = XLSX.utils.aoa_to_sheet(finalData);
+
+    // สร้างเวิร์กบุ๊ก
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "รายงาน");
+
+    // เขียนไฟล์ Excel
+    XLSX.writeFile(workbook, `รายงานแทนงานพนักงาน_${formattedDate321}.xlsx`);
+  };
+
+
+  console.log('data', data);
+
   return (
     <body class="hold-transition sidebar-mini" className="editlaout">
       <div class="wrapper">
@@ -196,6 +274,9 @@ function ReplaceReport({ employeeList, workplaceList }) {
                     <div class="col-md-3">
                       <button class="btn b_save">ค้นหา</button>
                     </div>
+                    <button class="btn b_save" onClick={handleExport}>
+                      สร้างไฟล์ Excel
+                    </button>
                   </div>
                   <br />
                 </div>

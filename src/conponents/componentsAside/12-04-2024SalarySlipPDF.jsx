@@ -482,23 +482,6 @@ function SalarySlipPDF({ employeeList, workplaceList }) {
           return item.name; // Otherwise, keep the original name
         });
 
-      console.log('namesWithSpecificIds', namesWithSpecificIds);
-
-      const specificIds = ["1230", "1350", "1241"]; // ID ที่ต้องการกรอง
-
-      const result = responseDataAll[i].addSalary
-        .filter((item) => specificIds.includes(item.id)) // กรองเฉพาะ ID ที่ต้องการ
-        .reduce(
-          (acc, item) => {
-            // คำนวณผลรวม SpSalary
-            acc.names.push(item.id === "1350" ? "โทรศัพท์" : item.name); // เปลี่ยนชื่อสำหรับ ID 1350
-            acc.sumSpSalary += Number(item.SpSalary) || 0; // รวมค่า SpSalary (กรณีไม่มีค่าให้ใช้ 0)
-            return acc;
-          },
-          { names: [], sumSpSalary: 0 } // ค่าเริ่มต้น
-        );
-
-      console.log("Sum of SpSalary:", result.sumSpSalary);
 
       // Concatenate names if there are any
       const concatenatedNames =
@@ -673,14 +656,14 @@ function SalarySlipPDF({ employeeList, workplaceList }) {
       }
       //รถโทรตำแหน่ง
       if (
-        result.sumSpSalary != 0 &&
-        result.sumSpSalary != null
+        formattedAddTelAmountPositionTravel != 0 &&
+        formattedAddTelAmountPositionTravel != null
       ) {
         // Push the text to textArray and the value to valueArray
         textArray.push(concatenatedNames);
         countArray.push("");
         valueArray.push(
-          result.sumSpSalary
+          formattedAddTelAmountPositionTravel
             .toFixed(2)
             .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
         );
@@ -758,7 +741,6 @@ function SalarySlipPDF({ employeeList, workplaceList }) {
         (sum, salary) => sum + salary.SpSalary,
         0
       );
-
 
       // Format the totalSpSalary with commas for thousand separators
       const formattedTotalSpSalaryCompensation = totalSpSalaryCompensation
@@ -1022,9 +1004,8 @@ function SalarySlipPDF({ employeeList, workplaceList }) {
         const countSpecialDayListWork =
           responseDataAll[i + 1].specialDayListWork.length;
         const countcal =
-          // responseDataAll[i + 1].accountingRecord[0].countDay -
-          // countSpecialDayListWork;
-          responseDataAll[i + 1].accountingRecord[0].countDayWork;
+          responseDataAll[i + 1].accountingRecord[0].countDay -
+          countSpecialDayListWork;
 
         // 2.0
         const formattedAmountHoliday2_0 = Number(
@@ -1126,42 +1107,6 @@ function SalarySlipPDF({ employeeList, workplaceList }) {
             (sum, salary) => sum + salary.SpSalary,
             0
           );
-
-        //สวัสดิการหลัก
-        const namesWithSpecificIds = responseDataAll[i + 1].addSalary
-          .filter((item) => ["1230", "1350", "1241"].includes(item.id)) // Filter based on specific IDs
-          .map((item) => {
-            // Check if the item.id is 1350 and modify item.name
-            if (item.id === "1350") {
-              return "โทรศัพท์"; // Set to "โทรศัพท์" when item.id is 1350
-            }
-            return item.name; // Otherwise, keep the original name
-          });
-
-        // Concatenate names if there are any
-        console.log('namesWithSpecificIds2', namesWithSpecificIds);
-
-        const specificIds = ["1230", "1350", "1241"]; // ID ที่ต้องการกรอง
-
-        const result = responseDataAll[i + 1].addSalary
-          .filter((item) => specificIds.includes(item.id)) // กรองเฉพาะ ID ที่ต้องการ
-          .reduce(
-            (acc, item) => {
-              // คำนวณผลรวม SpSalary
-              acc.names.push(item.id === "1350" ? "โทรศัพท์" : item.name); // เปลี่ยนชื่อสำหรับ ID 1350
-              acc.sumSpSalary += Number(item.SpSalary) || 0; // รวมค่า SpSalary (กรณีไม่มีค่าให้ใช้ 0)
-              return acc;
-            },
-            { names: [], sumSpSalary: 0 } // ค่าเริ่มต้น
-          );
-
-        const concatenatedNames =
-          namesWithSpecificIds.length > 0 ? namesWithSpecificIds.join("/") : "";
-        // Show concatenated names in the PDF
-
-        console.log('concatenatedNames2', concatenatedNames);
-        console.log("Sum of SpSalary:", result.sumSpSalary);
-
 
         // Format the totalSpSalary with commas for thousand separators
         const formattedTotalSpSalaryCompensation = totalSpSalaryCompensation
@@ -1316,14 +1261,14 @@ function SalarySlipPDF({ employeeList, workplaceList }) {
         }
         //รถโทรตำแหน่ง
         if (
-          result.sumSpSalary != 0 &&
-          result.sumSpSalary != null
+          formattedAddTelAmountPositionTravel != 0 &&
+          formattedAddTelAmountPositionTravel != null
         ) {
           // Push the text to textArray and the value to valueArray
           textArray.push(concatenatedNames);
           countArray.push("");
           valueArray.push(
-            result.sumSpSalary
+            formattedAddTelAmountPositionTravel
               .toFixed(2)
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
           );
@@ -1490,6 +1435,22 @@ function SalarySlipPDF({ employeeList, workplaceList }) {
 
         /////////////////
 
+
+        const namesWithSpecificIds = responseDataAll[i + 1].addSalary
+          .filter((item) => ["1230", "1350", "1241"].includes(item.id)) // Filter based on specific IDs
+          .map((item) => {
+            // Check if the item.id is 1350 and modify item.name
+            if (item.id === "1350") {
+              return "โทรศัพท์"; // Set to "โทรศัพท์" when item.id is 1350
+            }
+            return item.name; // Otherwise, keep the original name
+          });
+
+        // Concatenate names if there are any
+        const concatenatedNames =
+          namesWithSpecificIds.length > 0 ? namesWithSpecificIds.join("/") : "";
+        // Show concatenated names in the PDF
+
         //////////////////////// หัวข้อ
 
         pdf.rect(7, head2 + 3, 62, 63); //ตารางหลัก บน ซ้าย ช่อง1 จำนวน
@@ -1616,11 +1577,8 @@ function SalarySlipPDF({ employeeList, workplaceList }) {
             ? parseFloat(addSalary[0].sumAddSalary) || 0
             : 0;
 
-        // const sumSalary = amountDay + amountOt + sumAddSalary;
-        const total =
-          parseFloat(responseDataAll[i + 1].accountingRecord[0].total) || 0;
+        const sumSalary = amountDay + amountOt + sumAddSalary;
 
-        const sumSalary = total;
         // pdf.text(`${sumSalary.toFixed(2)}`, 92, head2 + 71, { align: 'right' });
         pdf.text(
           `${sumSalary.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`,
@@ -1860,21 +1818,6 @@ function SalarySlipPDF({ employeeList, workplaceList }) {
         });
 
 
-      const specificIds = ["1230", "1350", "1241"]; // ID ที่ต้องการกรอง
-
-      const result = responseDataAll[i].addSalary
-        .filter((item) => specificIds.includes(item.id)) // กรองเฉพาะ ID ที่ต้องการ
-        .reduce(
-          (acc, item) => {
-            // คำนวณผลรวม SpSalary
-            acc.names.push(item.id === "1350" ? "โทรศัพท์" : item.name); // เปลี่ยนชื่อสำหรับ ID 1350
-            acc.sumSpSalary += Number(item.SpSalary) || 0; // รวมค่า SpSalary (กรณีไม่มีค่าให้ใช้ 0)
-            return acc;
-          },
-          { names: [], sumSpSalary: 0 } // ค่าเริ่มต้น
-        );
-
-      console.log("Sum of SpSalary:", result.sumSpSalary);
       // Concatenate names if there are any
       const concatenatedNames =
         namesWithSpecificIds.length > 0 ? namesWithSpecificIds.join("/") : "";
@@ -2029,27 +1972,15 @@ function SalarySlipPDF({ employeeList, workplaceList }) {
         console.log("6");
       }
       //รถโทรตำแหน่ง
-      // if (
-      //   formattedAddTelAmountPositionTravel != 0 &&
-      //   formattedAddTelAmountPositionTravel != null
-      // ) {
-      //   // Push the text to textArray and the value to valueArray
-      //   textArray.push(concatenatedNames);
-      //   countArray.push("");
-      //   valueArray.push(
-      //     formattedAddTelAmountPositionTravel
-      //       .toFixed(2)
-      //       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-      //   );
       if (
-        result.sumSpSalary != 0 &&
-        result.sumSpSalary != null
+        formattedAddTelAmountPositionTravel != 0 &&
+        formattedAddTelAmountPositionTravel != null
       ) {
         // Push the text to textArray and the value to valueArray
         textArray.push(concatenatedNames);
         countArray.push("");
         valueArray.push(
-          result.sumSpSalary
+          formattedAddTelAmountPositionTravel
             .toFixed(2)
             .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
         );
@@ -2334,11 +2265,7 @@ function SalarySlipPDF({ employeeList, workplaceList }) {
 
       // const sumAddSalaryList = parseFloat(responseDataAll[i].addSalary.sumAddSalaryList) || 0;sumAddSalary
 
-      // const sumSalary = amountDay + amountOt + sumAddSalary + specialDayRate;
-      const total =
-        parseFloat(responseDataAll[i].accountingRecord[0].total) || 0;
-
-      const sumSalary = total;
+      const sumSalary = amountDay + amountOt + sumAddSalary + specialDayRate;
       pdf.text(
         `${sumSalary.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`,
         92,
@@ -2501,37 +2428,6 @@ function SalarySlipPDF({ employeeList, workplaceList }) {
           formattedTotalSpSalaryCompensation.replace(/,/g, "")
         );
 
-        const namesWithSpecificIds = responseDataAll[i + 1].addSalary
-        .filter((item) => ["1230", "1350", "1241"].includes(item.id)) // Filter based on specific IDs
-        .map((item) => {
-          // Check if the item.id is 1350 and modify item.name
-          if (item.id === "1350") {
-            return "โทรศัพท์"; // Set to "โทรศัพท์" when item.id is 1350
-          }
-          return item.name; // Otherwise, keep the original name
-        });
-
-      // Concatenate names if there are any
-      const concatenatedNames =
-        namesWithSpecificIds.length > 0 ? namesWithSpecificIds.join("/") : "";
-      // Show concatenated names in the PDF
-
-      const specificIds = ["1230", "1350", "1241"]; // ID ที่ต้องการกรอง
-
-      const result = responseDataAll[i + 1].addSalary
-        .filter((item) => specificIds.includes(item.id)) // กรองเฉพาะ ID ที่ต้องการ
-        .reduce(
-          (acc, item) => {
-            // คำนวณผลรวม SpSalary
-            acc.names.push(item.id === "1350" ? "โทรศัพท์" : item.name); // เปลี่ยนชื่อสำหรับ ID 1350
-            acc.sumSpSalary += Number(item.SpSalary) || 0; // รวมค่า SpSalary (กรณีไม่มีค่าให้ใช้ 0)
-            return acc;
-          },
-          { names: [], sumSpSalary: 0 } // ค่าเริ่มต้น
-        );
-
-      console.log("Sum of SpSalary:321", result.sumSpSalary);
-
         //หัก
         // คืนเงินเบิกล่วงหน้า
         // const advancePayment = parseFloat(
@@ -2686,27 +2582,15 @@ function SalarySlipPDF({ employeeList, workplaceList }) {
           console.log("66");
         }
         //รถโทรตำแหน่ง
-        // if (
-        //   formattedAddTelAmountPositionTravel != 0 &&
-        //   formattedAddTelAmountPositionTravel != null
-        // ) {
-        //   // Push the text to textArray and the value to valueArray
-        //   textArray.push(concatenatedNames);
-        //   countArray.push("");
-        //   valueArray.push(
-        //     formattedAddTelAmountPositionTravel
-        //       .toFixed(2)
-        //       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-        //   );
         if (
-          result.sumSpSalary != 0 &&
-          result.sumSpSalary != null
+          formattedAddTelAmountPositionTravel != 0 &&
+          formattedAddTelAmountPositionTravel != null
         ) {
           // Push the text to textArray and the value to valueArray
           textArray.push(concatenatedNames);
           countArray.push("");
           valueArray.push(
-            result.sumSpSalary
+            formattedAddTelAmountPositionTravel
               .toFixed(2)
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
           );
@@ -2876,6 +2760,23 @@ function SalarySlipPDF({ employeeList, workplaceList }) {
 
         /////////////////
 
+
+
+        const namesWithSpecificIds = responseDataAll[i + 1].addSalary
+          .filter((item) => ["1230", "1350", "1241"].includes(item.id)) // Filter based on specific IDs
+          .map((item) => {
+            // Check if the item.id is 1350 and modify item.name
+            if (item.id === "1350") {
+              return "โทรศัพท์"; // Set to "โทรศัพท์" when item.id is 1350
+            }
+            return item.name; // Otherwise, keep the original name
+          });
+
+        // Concatenate names if there are any
+        const concatenatedNames =
+          namesWithSpecificIds.length > 0 ? namesWithSpecificIds.join("/") : "";
+        // Show concatenated names in the PDF
+
         //////////////////////// หัวข้อ
 
 
@@ -3009,14 +2910,9 @@ function SalarySlipPDF({ employeeList, workplaceList }) {
             ? parseFloat(addSalary[0].sumAddSalary) || 0
             : 0;
 
-        // const sumSalary = amountDay + amountOt + sumAddSalary;
+        const sumSalary = amountDay + amountOt + sumAddSalary;
 
         // pdf.text(`${sumSalary.toFixed(2)}`, 92, head2 + 71, { align: 'right' });
-        const total =
-          parseFloat(responseDataAll[i + 1].accountingRecord[0].total) || 0;
-
-        const sumSalary = total;
-
         pdf.text(
           `${sumSalary.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`,
           92,
