@@ -132,7 +132,7 @@ function ReplaceReport({ employeeList, workplaceList }) {
                 <div class="col-md-12">
                   <div class="row">
                     <div class="col-md-3">
-                      <label role="searchEmployeeId">รหัสหน่อยงาน</label>
+                      <label role="searchEmployeeId">รหัสหน่วยงาน</label>
                       <label role="datetime">พิมพ์วันที่</label>
                       <div
                         onClick={toggleDatePicker}
