@@ -2980,7 +2980,7 @@ function SalarySlipPDF({ employeeList, workplaceList }) {
           </div>
           <section class="content">
             <div class="container-fluid">
-              <h2 class="title">สรุปหน่วยงานทั้งหมด</h2>
+              <h2 class="title">สลิปเงินเดือน</h2>
               <section class="Frame">
                 <div class="form-group">
                   <div class="row">
@@ -3032,7 +3032,7 @@ function SalarySlipPDF({ employeeList, workplaceList }) {
                             type="text"
                             className="form-control"
                             id="staffName"
-                            placeholder="ชื่อพนักงาน"
+                            placeholder="ชื่อหน่วยงาน"
                             value={workplacrName}
                             onChange={handleStaffNameChange}
                             list="WorkplaceNameList"

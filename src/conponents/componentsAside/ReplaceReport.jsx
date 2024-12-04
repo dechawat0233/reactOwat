@@ -60,46 +60,33 @@ function ReplaceReport({ employeeList, workplaceList }) {
     }
   }, [selectedDate]);
 
-  function generateRandomData(count) {
-    const randomArray = [];
-    const randomName = ['มิวะ', 'ซิวะริ', 'ปรีนา', 'ปลาใส', 'พรมาร', 'มาริกา', 'กาศิลา', 'สาวดี', 'ศรีทา', 'การะมาร'];
-    const randomLastName = ['พงศิไทย', 'สมกามา', 'มาริมาร', 'กรกล', 'กลนพา', 'ภาษิกา', 'หรศรี', 'ณทิกา', 'ราสิกา', 'ศงการมาร'];
+  const randomWorkplace = ["10154", "10175", "10751"];
+  const [data, setData] = useState([
+    { workplace: "10154", name: "กาวิสา ไพรวิกา", salary: 500, bank: "กาวิสา ไพรวิกา 123-4-56789-0", isChecked: false },
+    { workplace: "10175", name: "ไตรศรีมา มิโวหาร", salary: 600, bank: "ไตรศรีมา มิโวหารไพ 234-5-67890-1", isChecked: false },
+    { workplace: "10751", name: "ไลการี พีโวกา", salary: 700, bank: "ไตรศรีมา มิโวหาร 345-6-78901-2", isChecked: false },
+    { workplace: "10175", name: "ไตรศรีมา มิโวหารไพ", salary: 811, bank: "ไลการีการี พีโวกา 234-5-67890-3", isChecked: false },
+    { workplace: "10751", name: "ไลการี พีโวกาฟฟ", salary: 625, bank: "ไตรศรีมา มิโวหาร 345-6-78901-4", isChecked: false },
+    { workplace: "10175", name: "ไตรศรีมาดา มิโวหาร", salary: 450, bank: "ไตรศรีมา มิโวหาร 234-5-67890-5", isChecked: false },
+    { workplace: "10751", name: "ไลการีการี พีโวกา", salary: 900, bank: "ไตรศรีมาดา มิโวหาร 345-6-78901-6", isChecked: false },
+  ]);
+  const handleCheckboxChange = (index) => {
+    const updatedData = data.map((item, i) => {
+      if (i === index) {
+        return { ...item, isChecked: !item.isChecked };
+      }
+      return item;
+    });
 
-    const generateBankNumber = () => {
-      const part1 = Math.floor(Math.random() * 900) + 100; // 3-digit number
-      const part2 = Math.floor(Math.random() * 10); // 1-digit number
-      const part3 = Math.floor(Math.random() * 90000) + 10000; // 5-digit number
-      const part4 = Math.floor(Math.random() * 10); // 1-digit number
-      return `${part1}-${part2}-${part3}-${part4}`;
-    };
+    setData(updatedData);
+  };
 
-    for (let i = 0; i < count; i++) {
-      const name = randomName[Math.floor(Math.random() * randomName.length)];
-      const lastName = randomLastName[Math.floor(Math.random() * randomLastName.length)];
-      const workplace = Math.floor(Math.random() * 90000) + 10000; // Random 5-digit number
-      // const bank = generateBankNumber(); // Generate formatted bank number
-      const bank = `${name} ${lastName} - ${generateBankNumber()}`; // Add random name and lastname to bank
-      const salary = Math.floor(Math.random() * 900) + 100; // Random 3-digit number
-      const salaryCalculate = salary - (salary * 0.03); // Calculate salary
-      const result = salaryCalculate; // Same as salaryCalculate
-
-      randomArray.push({
-        name: `${name} ${lastName}`,
-        workplace,
-        bank,
-        salary,
-        salaryCalculate: salaryCalculate.toFixed(2),
-        result: salaryCalculate.toFixed(2),
-      });
+  const calculateSalary = (item) => {
+    if (item.isChecked) {
+      return item.salary; // Cancel the deduction
     }
-
-    return randomArray;
-  }
-
-  // Generate 10 random entries
-  const randomData = generateRandomData(10);
-  console.log(randomData);
-  const [data, setData] = useState(generateRandomData(10)); // Generate 10 random entries
+    return item.salary - item.salary * 0.03; // Apply the deduction
+  };
 
   return (
     <body class="hold-transition sidebar-mini" className="editlaout">
@@ -110,9 +97,9 @@ function ReplaceReport({ employeeList, workplaceList }) {
             <li class="breadcrumb-item">
               <i class="fas fa-home"></i> <a href="index.php">หน้าหลัก</a>
             </li>
-            <li class="breadcrumb-item">
+            {/* <li class="breadcrumb-item">
               <a href="#"> ระบบเงินเดือน</a>
-            </li>
+            </li> */}
             <li class="breadcrumb-item active">ออกรายงาน แทนพนักงาน </li>
           </ol>
           <div class="content-header">
@@ -130,9 +117,8 @@ function ReplaceReport({ employeeList, workplaceList }) {
               <h2 class="title">ออกรายงาน แทนพนักงาน </h2>
               <section class="Frame">
                 <div class="col-md-12">
-                  <div class="row">
+                  <div class="row align-items-end">
                     <div class="col-md-3">
-                      <label role="searchEmployeeId">รหัสหน่วยงาน</label>
                       <label role="datetime">พิมพ์วันที่</label>
                       <div
                         onClick={toggleDatePicker}
@@ -165,9 +151,27 @@ function ReplaceReport({ employeeList, workplaceList }) {
                 </div>
                 <br />
               </section>
+
               <section class="Frame">
+                {/* <table className="table table-bordered">
+                  <thead>
+                    <tr>
+                      {randomWorkplace.map((workplace, index) => (
+                        <th key={index}>
+                          {workplace}
+                          <br />
+                          <input
+                            type="checkbox"
+                            onChange={() => handleCheckboxChange(workplace)}
+                            checked={selectedWorkplaces.includes(workplace)}
+                          />
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                </table> */}
                 <div class="col-md-12">
-                  <div class="row">
+                  {/* <div class="row">
                     <table className="table table-bordered">
                       <thead>
                         <tr>
@@ -185,7 +189,10 @@ function ReplaceReport({ employeeList, workplaceList }) {
                           <tr key={index}>
                             <td>{index + 1}</td>
                             <td>{item.name}</td>
-                            <td>{item.workplace}</td>
+                            <td>{item.workplace}
+                              <br />
+                              <input type="checkbox" />
+                            </td>
                             <td><input style={{ width: "100%" }} value={item.bank} /></td>
                             <td>{item.salary}</td>
                             <td>{item.salaryCalculate}</td>
@@ -196,13 +203,44 @@ function ReplaceReport({ employeeList, workplaceList }) {
                         ))}
                       </tbody>
                     </table>
-                    {/* <button
-                      className="btn btn-primary"
-                      onClick={() => setData(generateRandomData(10))}
-                    >
-                      Generate New Data
-                    </button> */}
-                  </div>
+                  </div> */}
+                  <table className="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>หน่วยงาน</th>
+                        <th>ชื่อ-นามสกุล</th>
+                        <th>เงิน</th>
+                        <th>โอน</th>
+                        <th>รายละเอียด</th>
+                        <th>สุทธิ</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {data.map((item, index) => (
+                        <tr key={index}>
+                          <td>{item.workplace}</td>
+                          <td>{item.name}</td>
+                          <td>{item.salary}</td>
+                          <td>
+                            <input style={{ width: "100%" }} value={item.bank} readOnly />
+                          </td>
+                          <td>{calculateSalary(item).toFixed(2)}
+                            <br />
+                            <input
+                              type="checkbox"
+                              checked={item.isChecked}
+                              onChange={() => handleCheckboxChange(index)}
+                            />
+                            {item.isChecked ? " ไม่หัก 3 %" : " หัก 3 %"}
+                          </td>
+                          <td>{calculateSalary(item).toFixed(2)}
+                          </td>
+                          <td><button class="btn b_save" style={{ width: "4rem" }}>แก้ไข</button></td>
+                          <td><button class="btn clean" style={{ width: "4rem" }}>ลบ</button></td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </section>
 

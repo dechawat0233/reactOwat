@@ -1,6 +1,7 @@
 // import React from "react";
 import React, { useEffect, useState, useRef } from "react";
 import endpoint from "./config";
+import { useLocation } from "react-router-dom";
 
 // import Posts from "./Post";
 // import Home from "./Home";
@@ -93,6 +94,16 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 // import MyComponent from "./server/MyComponent";
 
 function App() {
+
+  const ScrollToTop = () => {
+    const { pathname } = useLocation();
+  
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [pathname]);
+  
+    return null;
+  };
   const [workplaceList, setWorkplaceList] = useState([]);
   useEffect(() => {
     // Fetch data from the API when the component mounts
@@ -158,6 +169,8 @@ function App() {
     <div>
       {loggedIn ? (
         <Router>
+                <ScrollToTop />
+
           <>
             {/* <ul>
           <li><Link to="/">Home</Link></li>

@@ -18,7 +18,7 @@ function Calculate_tax_deductions() {
                     {/* <!-- Content Header (Page header) --> */}
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><i class="fas fa-home"></i> <a href="index.php">หน้าหลัก</a></li>
-                        <li class="breadcrumb-item"><a href="#"> ระบบบริหารจัดการข้อมูล</a></li>
+                        <li class="breadcrumb-item"><a href="#"> ระบบจัดการพนักงาน</a></li>
                         <li class="breadcrumb-item active">ภาษีเงินได้หักลดหย่อนภาษี</li>
                     </ol>
                     <div class="content-header">

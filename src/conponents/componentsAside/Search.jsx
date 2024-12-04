@@ -169,7 +169,7 @@ function Search({ workplaceList, employeeList }) {
               <i class="fas fa-home"></i> <a href="index.php">หน้าหลัก</a>
             </li>
             <li class="breadcrumb-item">
-              <a href="#"> ระบบบริหารจัดการข้อมูล</a>
+              <a href="#"> ระบบจัดการพนักงาน</a>
             </li>
             <li class="breadcrumb-item active">ค้นหาพนักงาน</li>
           </ol>

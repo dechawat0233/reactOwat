@@ -3484,7 +3484,7 @@ function SalaryAllResultAudit({ employeeList, workplaceList }) {
               <i class="fas fa-home"></i> <a href="index.php">หน้าหลัก</a>
             </li>
             <li class="breadcrumb-item">
-              <a href="#"> สรุปเงินเดือน</a>
+              <a href="#"> รายงาน ออดิท</a>
             </li>
             <li class="breadcrumb-item active">สรุปหน่วยงานทั้งหมด</li>
           </ol>

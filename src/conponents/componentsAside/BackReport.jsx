@@ -714,13 +714,13 @@ function BackReport({ employeeList, workplaceList }) {
       const employee = item.employeeId ?? "Unknown"; // Ensure bankNumber is defined
       // const formattedTotal = item.total?.toLocaleString() ?? "0";
       // const formattedTotal = item.accountingRecord.total?.toLocaleString() ?? "0";
-      const formattedTotal = item.accountingRecord?.[0]?.total 
-      ? Number(item.accountingRecord[0].total) 
-      : 0;
-    
-    const formattedTotalAdvancePayment = item.deductSalary?.find((deduction) => deduction.id === "2124")
-      ? Number(item.deductSalary.find((deduction) => deduction.id === "2124").amount)
-      : 0;
+      const formattedTotal = item.accountingRecord?.[0]?.total
+        ? Number(item.accountingRecord[0].total)
+        : 0;
+
+      const formattedTotalAdvancePayment = item.deductSalary?.find((deduction) => deduction.id === "2124")
+        ? Number(item.deductSalary.find((deduction) => deduction.id === "2124").amount)
+        : 0;
 
       const sumTotalAndAdvancePayment = formattedTotal + formattedTotalAdvancePayment;
 
@@ -1044,12 +1044,12 @@ function BackReport({ employeeList, workplaceList }) {
                 <div class="row">
                   <div class="col-md-3">
                     <button onClick={generatePDF} class="btn b_save">
-                      ออกใบ
+                      ออกรายงานธนาคาร
                     </button>
                   </div>
                   <div class="col-md-3">
                     <button onClick={generatePDFAudit} class="btn b_save">
-                      ออกใบออดิท
+                      ออกรายงานธนาคาร(ออดิท)
                     </button>
                   </div>
 
@@ -1057,7 +1057,7 @@ function BackReport({ employeeList, workplaceList }) {
                 <br />
                 <div class="row">
                   <div class="col-md-3">
-                    <button onClick={exportToExcel} class="btn b_save">Export to Excel</button>
+                    <button onClick={exportToExcel} class="btn b_save">ออก Excel</button>
 
                   </div>
 
