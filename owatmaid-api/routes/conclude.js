@@ -441,7 +441,7 @@ const         wpDataCalculator1 = await {
         const wpResponse1 = await axios.post(sURL + '/workplace/caldata', wpDataCalculator1);
         // console.log(JSON.stringify( wpResponse1.data, null,2) );
         const workOfHour = await wpResponse1.data.workOfHour || 0;
-        // const workOfOT = await parseFloat(wpResponse1.data.workOfOT) || 0;
+        const workOfOT = await parseFloat(wpResponse1.data.workOfOT) || 0;
         //change work of OT to new data
         if(parseFloat(wpResponse1.data.workOfOT_subMinute)  && parseFloat(wpResponse1.data.workOfOT_subMinute) === 0 ) {
           const workOfOT = await (parseFloat(wpResponse1.data.workOfOT_subHour)* 60) - parseFloat(wpResponse1.data.workOfOT_breakMinute || '0') /60 || parseFloat(wpResponse1.data.workOfOT);
