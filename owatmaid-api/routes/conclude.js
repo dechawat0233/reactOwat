@@ -444,7 +444,7 @@ const         wpDataCalculator1 = await {
         // const workOfOT = await parseFloat(wpResponse1.data.workOfOT) || 0;
         //change work of OT to new data
         const workOfOT = await parseFloat(wpResponse1.data.workOfOT_subHour)+ parseFloat(wpResponse1.data.workOfOT_subMinute) || parseFloat(wpResponse1.data.workOfOT);
-alert(workOfOT )
+console.log('workOfOT  ' + workOfOT )
 
         const dayOff1 = await wpResponse1.data.workplaceDayOffList || [];
         // console.log('dayOff1 ' + dayOff1 );
