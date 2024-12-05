@@ -771,16 +771,15 @@ data.holiday = workplace.holiday ||0;
 data.holidayOT = workplace.holidayOT ||0;
 
 data.workOfHour= workplace.workOfHour||0;
-data.workOfOT = workplace.workOfOT||0;
+// data.workOfOT = workplace.workOfOT||0;
 data.workOfHour_subHour = workplace.workOfHour_subHour || 0;
 data.workOfHour_subMinute = workplace.workOfHour_subMinute || 0;
 data.workOfOT_subHour = workplace.workOfOT_subHour || 0;
 data.workOfOT_subMinute = workplace.workOfOT_subMinute || 0;
 if (workplace.workOfOT_subMinute === 0) {
-    data.workOfOT_subMinute = 
-        (workplace.workOfOT_subHour * 60 - workplace.workOfOT_breakMinute) / 60;
+    data.workOfOT = (workplace.workOfOT_subHour * 60 - workplace.workOfOT_breakMinute) / 60;
 } else {
-    data.workOfOT_subMinute = workplace.workOfOT_subMinute;
+data.workOfOT = (workplace.workOfOT_subHour || 0 + workplace.workOfOT_subMinute || 0) || workplace.workOfOT;
 }
 data.workOfOT_breakHour = workplace.workOfOT_breakHour  || 0;
 data.workOfOT_breakMinute = workplace.workOfOT_breakMinute || 0;
