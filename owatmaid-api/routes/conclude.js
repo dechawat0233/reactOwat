@@ -449,7 +449,7 @@ const         wpDataCalculator1 = await {
         } else {
           const workOfOT = await parseFloat(wpResponse1.data.workOfOT_subHour)+ parseFloat(wpResponse1.data.workOfOT_subMinute) || parseFloat(wpResponse1.data.workOfOT);
         }
-console.log('workOfOT  ' + workOfOT )
+await console.log('workOfOT  ' + workOfOT )
 
         const dayOff1 = await wpResponse1.data.workplaceDayOffList || [];
         // console.log('dayOff1 ' + dayOff1 );
