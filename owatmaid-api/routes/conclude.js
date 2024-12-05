@@ -444,7 +444,7 @@ const         wpDataCalculator1 = await {
         // const workOfOT = await parseFloat(wpResponse1.data.workOfOT) || 0;
         //change work of OT to new data
         if(parseFloat(wpResponse1.data.workOfOT_subMinute)  && parseFloat(wpResponse1.data.workOfOT_subMinute) === 0 ) {
-          const workOfOT = await (parseFloat(wpResponse1.data.workOfOT_subHour)* 60) - parseFloat(wpResponse1.data.workOfOT_breakMinute || '0') /60;
+          const workOfOT = await (parseFloat(wpResponse1.data.workOfOT_subHour)* 60) - parseFloat(wpResponse1.data.workOfOT_breakMinute || '0') /60 || parseFloat(wpResponse1.data.workOfOT);
 
         } else {
           const workOfOT = await parseFloat(wpResponse1.data.workOfOT_subHour)+ parseFloat(wpResponse1.data.workOfOT_subMinute) || parseFloat(wpResponse1.data.workOfOT);
