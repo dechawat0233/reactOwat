@@ -443,7 +443,12 @@ const         wpDataCalculator1 = await {
         const workOfHour = await wpResponse1.data.workOfHour || 0;
         // const workOfOT = await parseFloat(wpResponse1.data.workOfOT) || 0;
         //change work of OT to new data
-        const workOfOT = await parseFloat(wpResponse1.data.workOfOT_subHour)+ parseFloat(wpResponse1.data.workOfOT_subMinute) || parseFloat(wpResponse1.data.workOfOT);
+        if(parseFloat(wpResponse1.data.workOfOT_subMinute)  && parseFloat(wpResponse1.data.workOfOT_subMinute) === 0 ) {
+          const workOfOT = await (parseFloat(wpResponse1.data.workOfOT_subHour)* 60) - parseFloat(wpResponse1.data.workOfOT_breakMinute || '0') /60;
+
+        } else {
+          const workOfOT = await parseFloat(wpResponse1.data.workOfOT_subHour)+ parseFloat(wpResponse1.data.workOfOT_subMinute) || parseFloat(wpResponse1.data.workOfOT);
+        }
 console.log('workOfOT  ' + workOfOT )
 
         const dayOff1 = await wpResponse1.data.workplaceDayOffList || [];
