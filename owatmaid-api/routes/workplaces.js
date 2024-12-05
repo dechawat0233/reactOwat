@@ -776,6 +776,12 @@ data.workOfHour_subHour = workplace.workOfHour_subHour || 0;
 data.workOfHour_subMinute = workplace.workOfHour_subMinute || 0;
 data.workOfOT_subHour = workplace.workOfOT_subHour || 0;
 data.workOfOT_subMinute = workplace.workOfOT_subMinute || 0;
+if (workplace.workOfOT_subMinute === 0) {
+    data.workOfOT_subMinute = 
+        (workplace.workOfOT_subHour * 60 - workplace.workOfOT_breakMinute) / 60;
+} else {
+    data.workOfOT_subMinute = workplace.workOfOT_subMinute;
+}
 data.workOfOT_breakHour = workplace.workOfOT_breakHour  || 0;
 data.workOfOT_breakMinute = workplace.workOfOT_breakMinute || 0;
 
