@@ -625,8 +625,8 @@ const         wpDataCalculator1 = await {
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
                   // tmp.otTimes = (((workOfOT_subHour * 60)+ workOfOT_subMinute ) - workOfOT_breakMinute) / 60;
-                  tmp.otTimes = (workOfOT_subHour + workOfOT_subMinute) + ' - ' + workOfOT_breakMinute;
-                  (((workOfOT_subHour * 60)+ workOfOT_subMinute ) - workOfOT_breakMinute) / 60;
+                  tmp.otTimes = ((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)/ 60;
+                  // (((workOfOT_subHour * 60)+ workOfOT_subMinute ) - workOfOT_breakMinute) / 60;
 
                 } else {
                   tmp.otTimes = otTime || 0;
