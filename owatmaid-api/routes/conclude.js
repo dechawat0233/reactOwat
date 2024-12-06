@@ -1008,6 +1008,10 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
         const wpResponse = await axios.post(`${sURL}/workplace/caldata`, wpDataCalculator);
         const workOfHour = await wpResponse.data.workOfHour || 0;
         const workOfOT = await parseFloat(wpResponse.data.workOfOT) || 0;
+        const workOfOT_subHour = await parseFloat(wpResponse.data.workOfOT_subHour) || 0;
+        const workOfOT_subMinute = await parseFloat(wpResponse.data.workOfOT_subMinute) || 0;
+        const workOfOT_breakMinute = await parseFloat(wpResponse.data.workOfOT_breakMinute ) || 0;
+
         const dayOff = wpResponse.data.workplaceDayOffList || [];
         const specialDayOff = wpResponse.data.specialDaylist || [];
         const dayOffCheck = [];
