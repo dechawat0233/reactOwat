@@ -627,8 +627,7 @@ const         wpDataCalculator1 = await {
                   // tmp.otTimes = (((workOfOT_subHour * 60)+ workOfOT_subMinute ) - workOfOT_breakMinute) / 60;
                   // tmp.otTimes = ((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)/ 60;
                   // (((workOfOT_subHour * 60)+ workOfOT_subMinute ) - workOfOT_breakMinute) / 60;
-                  tmp.otTimes = Math.floor((((workOfOT_subHour * 60 + workOfOT_subMinute) - workOfOT_breakMinute) / 60) * 10) / 10;
-                  // (((workOfOT_subHour * 60 + workOfOT_subMinute) - workOfOT_breakMinute) / 60).toFixed(1);
+                  tmp.otTimes = Math.floor(((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)/ 60) + '.' + ((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)% 60;
 
                 } else {
                   tmp.otTimes = otTime || 0;
