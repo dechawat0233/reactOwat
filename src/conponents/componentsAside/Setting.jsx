@@ -1607,6 +1607,10 @@ function Setting({ workplaceList, employeeList }) {
                                 placeholder="นาที"
                                 value={breakOfOT}
                                 onChange={(e) => setBreakOfOT(e.target.value)}
+                                onInput={(e) => {
+                                  // Remove any non-digit characters, including '.'
+                                  e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                                }}
                               />
                             )}
                           </div>
