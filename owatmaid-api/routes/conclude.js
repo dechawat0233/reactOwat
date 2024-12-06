@@ -216,6 +216,10 @@ if(parseFloat(salary ) >= 1660) {
           // console.log('workRateOT : ' + JSON.stringify(tmpWP.data.workRateOT ,2 ,null) );
           const workOfHour = await (tmpWP?.data?.workOfHour) ?? 0;
           const workOfOT = await parseFloat(tmpWP?.data?.workOfOT) ?? 0;
+          const workOfOT_subHour = parseFloat(tmpWP?.data?.workOfOT_subHour) ?? 0;
+          const workOfOT_subMinute = await parseFloat(tmpWP?.data?.workOfOT_subMinute) ?? 0;
+          const workOfOT_breakMinute = await parseFloat(tmpWP?.data?.workOfOT_breakMinute) ?? 0;
+
           const dayOff = await tmpWP?.data?.workplaceDayOffList ?? [];
           const specialDayOff = await tmpWP?.data?.specialDaylist ?? [];
           const dayOffCheck = [];
