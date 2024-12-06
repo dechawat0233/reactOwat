@@ -216,6 +216,10 @@ if(parseFloat(salary ) >= 1660) {
           // console.log('workRateOT : ' + JSON.stringify(tmpWP.data.workRateOT ,2 ,null) );
           const workOfHour = await (tmpWP?.data?.workOfHour) ?? 0;
           const workOfOT = await parseFloat(tmpWP?.data?.workOfOT) ?? 0;
+          const workOfOT_subHour = parseFloat(tmpWP?.data?.workOfOT_subHour) ?? 0;
+          const workOfOT_subMinute = await parseFloat(tmpWP?.data?.workOfOT_subMinute) ?? 0;
+          const workOfOT_breakMinute = await parseFloat(tmpWP?.data?.workOfOT_breakMinute) ?? 0;
+
           const dayOff = await tmpWP?.data?.workplaceDayOffList ?? [];
           const specialDayOff = await tmpWP?.data?.specialDaylist ?? [];
           const dayOffCheck = [];
@@ -291,7 +295,9 @@ if(parseFloat(salary ) >= 1660) {
 
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
-                  tmp.otTimes = workOfOT || 0;
+                  // tmp.otTimes = workOfOT || 0;
+                  tmp.otTimes = Math.floor(((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)/ 60) + '.' + ((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)% 60;
+
                 } else {
                   tmp.otTimes = otTime || 0;
                 }
@@ -300,7 +306,7 @@ if(parseFloat(salary ) >= 1660) {
                 let decimalFraction = (minutesTmp || 0).toFixed(2) / 60;
                 // let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction))).toFixed(2);
 
-                let workRateOT = ((parseFloat(tmpWP.data.holidayOT) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction)) ).toFixed(3);
+                let workRateOT = ((parseFloat(tmpWP.data.holidayOT) * (salary / 8)) * (parseFloat(otTime )) ).toFixed(3);
                 tmp.workRateOT = workRateOT || '';
                 tmp.workRateOTMultiply = tmpWP.data.holidayOT || 0;
 
@@ -337,14 +343,16 @@ if(parseFloat(salary ) >= 1660) {
 
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
-                  tmp.otTimes = workOfOT || 0;
+                  // tmp.otTimes = workOfOT || 0;
+                  tmp.otTimes = Math.floor(((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)/ 60) + '.' + ((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)% 60;
+
                 } else {
                   tmp.otTimes = otTime || 0;
                 }
                 
                 let [hoursTmp, minutesTmp] = otTime.toString().split('.').map(Number);
                 let decimalFraction = (minutesTmp || 0).toFixed(2) / 60;
-                let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction))).toFixed(3);
+                let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * (parseFloat(otTime ))).toFixed(3);
 
                 tmp.workRateOT = workRateOT || 0;
                 tmp.workRateOTMultiply = tmpWP.data.dayoffRateOT || 0;
@@ -383,7 +391,9 @@ if(parseFloat(salary ) >= 1660) {
 
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
-                  tmp.otTimes = workOfOT || 0;
+                  // tmp.otTimes = workOfOT || 0;
+                  tmp.otTimes = Math.floor(((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)/ 60) + '.' + ((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)% 60;
+
                 } else {
                   tmp.otTimes = otTime || 0;
                 }
@@ -392,7 +402,7 @@ if(parseFloat(salary ) >= 1660) {
                 let decimalFraction = (minutesTmp || 0 ).toFixed(2) / 60;
                 // let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction))).toFixed(2);
 
-                let workRateOT = (((salary / 8) * parseFloat(tmpWP.data.workRateOT ?? 0)) * (parseFloat(hoursTmp + decimalFraction))).toFixed(3);
+                let workRateOT = (((salary / 8) * parseFloat(tmpWP.data.workRateOT ?? 0)) * (parseFloat(otTime ))).toFixed(3);
                 tmp.workRateOT = workRateOT || 0;
                 tmp.workRateOTMultiply = tmpWP.data.workRateOT || 0;
 
@@ -531,7 +541,9 @@ const         wpDataCalculator1 = await {
                 tmp.workRateMultiply = wpResponse1.data.holiday || 0;
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
-                  tmp.otTimes = workOfOT || 0;
+                  // tmp.otTimes = workOfOT || 0;
+                  tmp.otTimes = Math.floor(((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)/ 60) + '.' + ((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)% 60;
+
                 } else {
                   tmp.otTimes = otTime || 0;
                 }
@@ -540,7 +552,7 @@ const         wpDataCalculator1 = await {
                 let decimalFraction = (minutesTmp || 0).toFixed(2) / 60;
                 // let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction))).toFixed(2);
 
-                let workRateOT = ((parseFloat(wpResponse1.data.holidayOT) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction)) ).toFixed(3);
+                let workRateOT = ((parseFloat(wpResponse1.data.holidayOT) * (salary / 8)) * (parseFloat(otTime )) ).toFixed(3);
                 tmp.workRateOT = workRateOT || 0;
                 tmp.workRateOTMultiply = wpResponse1.data.holidayOT || 0;
 
@@ -578,7 +590,9 @@ const         wpDataCalculator1 = await {
 
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
-                  tmp.otTimes = workOfOT || 0;
+                  // tmp.otTimes = workOfOT || 0;
+                  tmp.otTimes = Math.floor(((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)/ 60) + '.' + ((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)% 60;
+
                 } else {
                   tmp.otTimes = otTime || 0;
                 }
@@ -587,7 +601,7 @@ const         wpDataCalculator1 = await {
                 let decimalFraction = (minutesTmp || 0).toFixed(2) / 60;
                 // let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction))).toFixed(2);
 
-                let workRateOT = ((parseFloat(wpResponse1.data.dayoffRateOT ?? 0) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction)) ).toFixed(3);
+                let workRateOT = ((parseFloat(wpResponse1.data.dayoffRateOT ?? 0) * (salary / 8)) * (parseFloat(otTime )) ).toFixed(3);
                 tmp.workRateOT = workRateOT || 0;
                 tmp.workRateOTMultiply = wpResponse1.data.dayoffRateOT || 0;
 
@@ -780,6 +794,10 @@ const         wpDataCalculator1 = await {
 
           const workOfHour = await (tmpWP?.data?.workOfHour) ?? 0;
           const workOfOT = await parseFloat(tmpWP?.data?.workOfOT) ?? 0;
+          const workOfOT_subHour = parseFloat(tmpWP?.data?.workOfOT_subHour) ?? 0;
+          const workOfOT_subMinute = await parseFloat(tmpWP?.data?.workOfOT_subMinute) ?? 0;
+          const workOfOT_breakMinute = await parseFloat(tmpWP?.data?.workOfOT_breakMinute) ?? 0;
+  
           const dayOff = await tmpWP?.data?.workplaceDayOffList ?? [];
           const specialDayOff = await tmpWP?.data?.specialDaylist ?? [];
           const dayOffCheck = [];
@@ -856,7 +874,9 @@ const         wpDataCalculator1 = await {
 
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
-                  tmp.otTimes = workOfOT || 0;
+                  // tmp.otTimes = workOfOT || 0;
+                  tmp.otTimes = Math.floor(((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)/ 60) + '.' + ((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)% 60;
+
                 } else {
                   tmp.otTimes = otTime || 0;
                 }
@@ -865,7 +885,7 @@ const         wpDataCalculator1 = await {
                 let decimalFraction = (minutesTmp || 0 ).toFixed(2) / 60;
                 // let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction))).toFixed(2);
 
-                let workRateOT = ((parseFloat(tmpWP.data.holidayOT) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction)) ).toFixed(3);
+                let workRateOT = ((parseFloat(tmpWP.data.holidayOT) * (salary / 8)) * (parseFloat(otTime)) ).toFixed(3);
                 tmp.workRateOT = workRateOT || '';
                 tmp.workRateOTMultiply = tmpWP.data.holidayOT || 0;
 
@@ -902,7 +922,9 @@ const         wpDataCalculator1 = await {
 
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
-                  tmp.otTimes = workOfOT || 0;
+                  // tmp.otTimes = workOfOT || 0;
+                  tmp.otTimes = Math.floor(((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)/ 60) + '.' + ((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)% 60;
+
                 } else {
                   tmp.otTimes = otTime || 0;
                 }
@@ -911,7 +933,7 @@ const         wpDataCalculator1 = await {
                 let decimalFraction = (minutesTmp || 0).toFixed(2) / 60;
                 // let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction))).toFixed(2);
 
-                let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction)) ).toFixed(3);
+                let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * (parseFloat(otTime)) ).toFixed(3);
                 tmp.workRateOT = workRateOT || 0;
                 tmp.workRateOTMultiply = tmpWP.data.dayoffRateOT || 0;
 
@@ -950,7 +972,9 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
 
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
-                  tmp.otTimes = workOfOT || 0;
+                  // tmp.otTimes = workOfOT || 0;
+                  tmp.otTimes = Math.floor(((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)/ 60) + '.' + ((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)% 60;
+
                 } else {
                   tmp.otTimes = otTime || 0;
                 }
@@ -959,7 +983,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
                 let decimalFraction = (minutesTmp || 0) .toFixed(2) / 60;
                 // let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction))).toFixed(2);
 
-                let workRateOT = (((salary / 8) * parseFloat(tmpWP.data.workRateOT)) * (parseFloat(hoursTmp + decimalFraction)) ).toFixed(3);
+                let workRateOT = (((salary / 8) * parseFloat(tmpWP.data.workRateOT)) * (parseFloat(otTime)) ).toFixed(3);
                 tmp.workRateOT = workRateOT || 0;
                 tmp.workRateOTMultiply = tmpWP.data.workRateOT || 0;
 
@@ -1004,6 +1028,10 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
         const wpResponse = await axios.post(`${sURL}/workplace/caldata`, wpDataCalculator);
         const workOfHour = await wpResponse.data.workOfHour || 0;
         const workOfOT = await parseFloat(wpResponse.data.workOfOT) || 0;
+        const workOfOT_subHour = await parseFloat(wpResponse.data.workOfOT_subHour) || 0;
+        const workOfOT_subMinute = await parseFloat(wpResponse.data.workOfOT_subMinute) || 0;
+        const workOfOT_breakMinute = await parseFloat(wpResponse.data.workOfOT_breakMinute ) || 0;
+
         const dayOff = wpResponse.data.workplaceDayOffList || [];
         const specialDayOff = wpResponse.data.specialDaylist || [];
         const dayOffCheck = [];
@@ -1083,7 +1111,9 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
 
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
-                  tmp.otTimes = workOfOT || 0;
+                  // tmp.otTimes = workOfOT || 0;
+                  tmp.otTimes = Math.floor(((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)/ 60) + '.' + ((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)% 60;
+
                 } else {
                   tmp.otTimes = otTime || 0;
                 }
@@ -1092,7 +1122,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
                 let decimalFraction = (minutesTmp || 0).toFixed(2) / 60;
                 // let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction))).toFixed(2);
 
-                let workRateOT = ((parseFloat(wpResponse.data.holidayOT) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction)) ).toFixed(3);
+                let workRateOT = ((parseFloat(wpResponse.data.holidayOT) * (salary / 8)) * (parseFloat(otTime)) ).toFixed(3);
                 tmp.workRateOT = workRateOT || '';
                 tmp.workRateOTMultiply = wpResponse.data.holidayOT || 0;
 
@@ -1128,7 +1158,9 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
 
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
-                  tmp.otTimes = workOfOT || 0;
+                  // tmp.otTimes = workOfOT || 0;
+                  tmp.otTimes = Math.floor(((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)/ 60) + '.' + ((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)% 60;
+
                 } else {
                   tmp.otTimes = otTime || 0;
                 }
@@ -1137,7 +1169,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
                 let decimalFraction = (minutesTmp || 0).toFixed(2) / 60;
                 // let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction))).toFixed(2);
 
-                let workRateOT = ((parseFloat(wpResponse.data.dayoffRateOT) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction)) ).toFixed(3);
+                let workRateOT = ((parseFloat(wpResponse.data.dayoffRateOT) * (salary / 8)) * (parseFloat(otTime)) ).toFixed(3);
                 tmp.workRateOT = workRateOT || 0;
                 tmp.workRateOTMultiply = wpResponse.data.dayoffRateOT || 0;
 
@@ -1174,7 +1206,9 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
 
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
-                  tmp.otTimes = workOfOT || 0;
+                                    // tmp.otTimes = workOfOT || 0;
+
+                  tmp.otTimes = Math.floor(((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)/ 60) + '.' + ((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)% 60;
                 } else {
                   tmp.otTimes = otTime || 0;
                 }
@@ -1183,7 +1217,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
                 let decimalFraction = (minutesTmp || 0).toFixed(2) / 60;
                 // let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction))).toFixed(2);
 
-                let workRateOT = (((salary / 8) * parseFloat(wpResponse.data.workRateOT)) * (parseFloat(hoursTmp + decimalFraction)) ).toFixed(3);
+                let workRateOT = (((salary / 8) * parseFloat(wpResponse.data.workRateOT)) * (parseFloat(otTime)) ).toFixed(3);
                 tmp.workRateOT = workRateOT || 0;
                 tmp.workRateOTMultiply = wpResponse.data.workRateOT || 0;
 
