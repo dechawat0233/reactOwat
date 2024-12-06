@@ -63,6 +63,7 @@ import SalaryAllResult from "./conponents/componentsAside/SalaryAllResult";
 import SalaryAllResultAudit from "./conponents/componentsAside/SalaryAllResultAudit";
 
 import ReplaceReport from "./conponents/componentsAside/ReplaceReport";
+import ReplaceWorkplaceReport from "./conponents/componentsAside/ReplaceWorkplaceReport";
 
 import Worktimesheet from "./conponents/componentsAside/Worktimesheet";
 import WorktimeSheetWorkplace from "./conponents/componentsAside/WorktimeSheetWorkplace";
@@ -216,6 +217,10 @@ function App() {
                <Route
                 path="/replaceReport"
                 element={<ReplaceReport employeeList={employeeList} workplaceList={workplaceList} />}
+              />
+              <Route
+                path="/replaceWorkplaceReport"
+                element={<ReplaceWorkplaceReport employeeList={employeeList} workplaceList={workplaceList} />}
               />
 
               <Route path="/worktimesheet" element={<Worktimesheet />} />

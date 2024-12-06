@@ -442,6 +442,9 @@ const         wpDataCalculator1 = await {
         // console.log(JSON.stringify( wpResponse1.data, null,2) );
         const workOfHour = await wpResponse1.data.workOfHour || 0;
         const workOfOT = await parseFloat(wpResponse1.data.workOfOT) || 0;
+        const workOfOT_subHour = await parseFloat(wpResponse1.data.workOfOT_subHour) || 0;
+        const workOfOT_subMinute = await parseFloat(wpResponse1.data.workOfOT_subMinute) || 0;
+        const workOfOT_breakMinute = await parseFloat(wpResponse1.data.workOfOT_breakMinute ) || 0;
 
         const dayOff1 = await wpResponse1.data.workplaceDayOffList || [];
         // console.log('dayOff1 ' + dayOff1 );
@@ -621,7 +624,11 @@ const         wpDataCalculator1 = await {
 
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
-                  // tmp.otTimes = workOfOT || 0;
+                  // tmp.otTimes = (((workOfOT_subHour * 60)+ workOfOT_subMinute ) - workOfOT_breakMinute) / 60;
+                  // tmp.otTimes = ((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)/ 60;
+                  // (((workOfOT_subHour * 60)+ workOfOT_subMinute ) - workOfOT_breakMinute) / 60;
+                  tmp.otTimes = Math.floor(((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)/ 60) + '.' + ((workOfOT_subHour *60 + workOfOT_subMinute) - workOfOT_breakMinute)% 60;
+
                 } else {
                   tmp.otTimes = otTime || 0;
                 }

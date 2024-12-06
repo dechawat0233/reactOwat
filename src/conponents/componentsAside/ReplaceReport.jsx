@@ -63,14 +63,15 @@ function ReplaceReport({ employeeList, workplaceList }) {
 
   const randomWorkplace = ["10154", "10175", "10751"];
   const [data, setData] = useState([
-    { workplace: "10154", name: "กาวิสา ไพรวิกา", salary: 500, bank: "กาวิสา ไพรวิกา 123-4-56789-0", isChecked: false },
-    { workplace: "10175", name: "ไตรศรีมา มิโวหาร", salary: 600, bank: "ไตรศรีมา มิโวหารไพ 234-5-67890-1", isChecked: false },
-    { workplace: "10751", name: "ไลการี พีโวกา", salary: 700, bank: "ไตรศรีมา มิโวหาร 345-6-78901-2", isChecked: false },
-    { workplace: "10175", name: "ไตรศรีมา มิโวหารไพ", salary: 811, bank: "ไลการีการี พีโวกา 234-5-67890-3", isChecked: false },
-    { workplace: "10751", name: "ไลการี พีโวกาฟฟ", salary: 625, bank: "ไตรศรีมา มิโวหาร 345-6-78901-4", isChecked: false },
-    { workplace: "10175", name: "ไตรศรีมาดา มิโวหาร", salary: 450, bank: "ไตรศรีมา มิโวหาร 234-5-67890-5", isChecked: false },
-    { workplace: "10751", name: "ไลการีการี พีโวกา", salary: 900, bank: "ไตรศรีมาดา มิโวหาร 345-6-78901-6", isChecked: false },
+    { date: "12/06/2567", workplace: "10751", name: "กาวิสา ไพรวิกา", replace: "วิสากา พิวาการ", salary: 500, update: "12/06/2567", bank: "กาวิสา ไพรวิกา 123-4-56789-0 ttb", isChecked: false },
+    { date: "17/06/2567", workplace: "10751", name: "ไตรศรีมา มิโวหาร", replace: "สารี ยิมานี", salary: 600, update: "12/06/2567", bank: "ไตรศรีมา มิโวหารไพ 234-5-67890-1 ttb", isChecked: false },
+    { date: "19/06/2567", workplace: "10751", name: "ไลการี พีโวกา", replace: "ศรีวมา ยกรึกา", salary: 700, update: "12/06/2567", bank: "ไตรศรีมา มิโวหาร 345-6-78901-2 ttb", isChecked: false },
+    { date: "12/08/2567", workplace: "10796", name: "ไตรศรีมา มิโวหารไพ", replace: "ไหรมา นิณารี", salary: 811, update: "12/06/2567", bank: "ไลการีการี พีโวกา 234-5-67890-3 ttb", isChecked: false },
+    { date: "19/08/2567", workplace: "10796", name: "ไลการี พีโวกาฟฟ", replace: "โนรากา ชนการ", salary: 625, update: "12/06/2567", bank: "ไตรศรีมา มิโวหาร 345-6-78901-4 ttb", isChecked: false },
+    { date: "20/12/2567", workplace: "10796", name: "ไตรศรีมาดา มิโวหาร", replace: "นขชัย วัดโพสัย", salary: 450, update: "12/06/2567", bank: "ไตรศรีมา มิโวหาร 234-5-67890-5 ttb", isChecked: false },
+    { date: "30/12/2567", workplace: "10796", name: "ไลการีการี พีโวกา", replace: "ไปรึณี ขนรณี", salary: 900, update: "12/06/2567", bank: "ไตรศรีมาดา มิโวหาร 345-6-78901-6 ttb", isChecked: false },
   ]);
+  
   const handleCheckboxChange = (index) => {
     const updatedData = data.map((item, i) => {
       if (i === index) {
@@ -225,9 +226,9 @@ function ReplaceReport({ employeeList, workplaceList }) {
             <li class="breadcrumb-item">
               <i class="fas fa-home"></i> <a href="index.php">หน้าหลัก</a>
             </li>
-            {/* <li class="breadcrumb-item">
-              <a href="#"> ระบบเงินเดือน</a>
-            </li> */}
+            <li class="breadcrumb-item">
+              <a href="#"> แทนพนักงาน</a>
+            </li>
             <li class="breadcrumb-item active">ออกรายงาน แทนพนักงาน </li>
           </ol>
           <div class="content-header">

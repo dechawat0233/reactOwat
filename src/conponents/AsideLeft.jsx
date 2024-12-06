@@ -10,6 +10,7 @@ function AsideLeft() {
   const [showSubMenu2, setShowSubMenu2] = useState(false);
   const [showSubMenu3, setShowSubMenu3] = useState(false);
   const [showSubMenu3_2, setShowSubMenu3_2] = useState(false);
+  const [showSubMenu3_3, setShowSubMenu3_3] = useState(false);
   const [showSubMenu4, setShowSubMenu4] = useState(false);
 
 
@@ -46,6 +47,9 @@ function AsideLeft() {
   }
   function toggleSubMenu3_2() {
     setShowSubMenu3_2(!showSubMenu3_2);
+  }
+  function toggleSubMenu3_3() {
+    setShowSubMenu3_3(!showSubMenu3_3);
   }
   function toggleSubMenu4() {
     setShowSubMenu4(!showSubMenu4);
@@ -141,7 +145,22 @@ function AsideLeft() {
                 )}
               </li>
               <li class="nav-item">
-                <Link to="/replaceReport" className="nav-link"><i class="nav-icon fas fa-tachometer-alt"></i> แทนงานพนักงาน</Link>
+                <a href="#" class="nav-link" onClick={toggleSubMenu3_3}>
+                  <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                  <p> แทนพนักงาน<i class="right fas fa-angle-left"></i><i class=""></i></p>
+                </a>
+                {showSubMenu3_3 && (
+                  <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <>
+                      <li class="nav-item">
+                        <Link to="/replaceWorkplaceReport" className="nav-link"><i class="nav-icon fas fa-tachometer-alt"></i> ดูเป็นหน่วยงาน</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/replaceReport" className="nav-link"><i class="nav-icon fas fa-tachometer-alt"></i> ดูรายงาน</Link>
+                      </li>
+                    </>
+                  </ul>
+                )}
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link" onClick={toggleSubMenu4}><i class="nav-icon fas fa-file-import"></i>
@@ -286,7 +305,7 @@ function AsideLeft() {
               <li class="nav-item">
                 <Link to="/" className="nav-link"><i class="nav-icon fas fa fa-cog" style={{ fontSize: "14px" }}></i> การแจ้งเตือน</Link>
               </li>
-             {/*  <li class="nav-item"> testPDF
+              {/*  <li class="nav-item"> testPDF
                 <Link to="/testPDFSalary" className="nav-link"><i class="nav-icon fas fa fa-cog" style={{ fontSize: "14px" }}></i> การแจ้งเตือน2</Link>
               </li> */}
               {/* <li class="nav-item">
