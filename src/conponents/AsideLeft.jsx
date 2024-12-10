@@ -114,6 +114,9 @@ function AsideLeft() {
                         <Link to="/worktimesheetworkplace" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> ตารางเวลาทำงานพนักงาน</Link>
                       </li>
                       <li class="nav-item">
+                        <Link to="/worktimesheetworkplaceSpace" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> ตารางเวลาทำงานพนักงานหน่วยพิเศษ</Link>
+                      </li>
+                      <li class="nav-item">
                         <Link to="/salarySlipPDF" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px", marginLeft: '1rem' }}></i> ออกสลิปเงินเดือน</Link>
                       </li>
                       <li class="nav-item">
@@ -154,6 +157,9 @@ function AsideLeft() {
                     <>
                       <li class="nav-item">
                         <Link to="/replaceWorkplaceReport" className="nav-link"><i class="nav-icon fas fa-tachometer-alt"></i> ดูเป็นหน่วยงาน</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/replaceEmployeeReport" className="nav-link"><i class="nav-icon fas fa-tachometer-alt"></i> ดูเป็นรายพนักงาน</Link>
                       </li>
                       <li class="nav-item">
                         <Link to="/replaceReport" className="nav-link"><i class="nav-icon fas fa-tachometer-alt"></i> ดูรายงาน</Link>

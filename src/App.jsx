@@ -64,9 +64,11 @@ import SalaryAllResultAudit from "./conponents/componentsAside/SalaryAllResultAu
 
 import ReplaceReport from "./conponents/componentsAside/ReplaceReport";
 import ReplaceWorkplaceReport from "./conponents/componentsAside/ReplaceWorkplaceReport";
+import ReplaceEmployeeReport from "./conponents/componentsAside/ReplaceEmployeeReport";
 
 import Worktimesheet from "./conponents/componentsAside/Worktimesheet";
 import WorktimeSheetWorkplace from "./conponents/componentsAside/WorktimeSheetWorkplace";
+import WorktimeSheetWorkplaceSpace from "./conponents/componentsAside/WorktimeSheetWorkplaceSpace";
 import WorktimeSheetWorkplace_Save01_22_2024 from "./conponents/componentsAside/WorktimeSheetWorkplace_Save01-22-2024";
 
 import TestPDF from "./conponents/componentsAside/TestPDF";
@@ -222,11 +224,19 @@ function App() {
                 path="/replaceWorkplaceReport"
                 element={<ReplaceWorkplaceReport employeeList={employeeList} workplaceList={workplaceList} />}
               />
+              <Route
+                path="/replaceEmployeeReport"
+                element={<ReplaceEmployeeReport employeeList={employeeList} workplaceList={workplaceList} />}
+              />
 
               <Route path="/worktimesheet" element={<Worktimesheet />} />
               <Route
                 path="/worktimesheetworkplace"
                 element={<WorktimeSheetWorkplace employeeList={employeeList} />}
+              />
+               <Route
+                path="/worktimesheetworkplaceSpace"
+                element={<WorktimeSheetWorkplaceSpace employeeList={employeeList} />}
               />
               <Route
                 path="/worktimeSheetWorkplace_Save01_22_2024"
