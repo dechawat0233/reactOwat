@@ -740,7 +740,7 @@ if(tmp.id == item.id) {
 
     }
   // tmp.SpSalary = parseFloat(tmp.SpSalary) + parseFloat(item.SpSalary);
-  tmp.message = parseFloat(tmp.message || '0') + 1;
+  tmp.message = parseFloat(tmp.message || 1) + 1;
   
   }
 
