@@ -749,7 +749,7 @@ if(tmp.id == item.id) {
 
   if (! checkAddSalaryDay ) {
     // await console.log(" push " + item.id );
-    await addSalaryDayArray.push(item);
+    // await addSalaryDayArray.push(item);
   } else {
     // await console.log('update"' + item.id );
   }
