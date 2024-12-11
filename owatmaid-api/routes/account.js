@@ -721,12 +721,12 @@ await responseConclude.data.recordConclude[c].addSalary[i].map( async (item, ind
   
   let checkAddSalaryDay  = false;
   addSalaryDayArray.map(tmp => {
-if(tmp.id === item.id) {
+if(tmp.id == item.id) {
   checkAddSalaryDay   = true;
   
-  if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate) > 0) {
+  if(parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate || '0') > 0) {
     
-    if(parseFloat(item.SpSalary) >= 363) {
+    if(parseFloat(item.SpSalary || '0') >= 363) {
       if(parseFloat(tmp.message || '0') >= 1) {
         tmp.SpSalary = (parseFloat(tmp.SpSalary) + (parseFloat(item.SpSalary)/ 30)).toFixed(2);
       } else {
