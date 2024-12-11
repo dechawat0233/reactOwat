@@ -740,7 +740,7 @@ if(tmp.id == item.id) {
 
     }
   // tmp.SpSalary = parseFloat(tmp.SpSalary) + parseFloat(item.SpSalary);
-  tmp.message = parseFloat(tmp.message || 1) + 1;
+  // tmp.message = parseFloat(tmp.message || 1) + 1;
   
   }
 
@@ -749,7 +749,7 @@ if(tmp.id == item.id) {
 
   if (! checkAddSalaryDay ) {
     // await console.log(" push " + item.id );
-    // await addSalaryDayArray.push(item);
+    await addSalaryDayArray.push(item);
   } else {
     // await console.log('update"' + item.id );
   }
