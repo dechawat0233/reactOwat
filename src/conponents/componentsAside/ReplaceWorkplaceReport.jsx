@@ -327,7 +327,7 @@ function ReplaceWorkplaceReport({ employeeList, workplaceList }) {
     let totalTax = 0;
     let totalNetSalary = 0;
 
-    const tableData = data.map((item, index) => {
+    const tableData = filteredData.map((item, index) => {
       const tax = item.isChecked ? 0 : item.salary * 0.03; // หาก isChecked เป็น true ไม่หักภาษี
       const netSalary = item.salary - tax; // คำนวณยอดสุทธิ
 

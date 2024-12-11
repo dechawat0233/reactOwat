@@ -87,7 +87,13 @@ function AsideLeft() {
               <li class="nav-item">
                 <a href="#" class="nav-link" onClick={toggleSubMenu3}>
                   <i class="nav-icon fas fa-file-invoice-dollar"></i>
-                  <p> ระบบเงินเดือน<i class="right fas fa-angle-left"></i><i class=""></i></p>
+                  <p> ระบบเงินเดือน
+                    {/* <i class="right fas fa-angle-left"></i><i class=""></i> */}
+                    <i
+                      className={`right fas ${showSubMenu3 ? "fa-angle-down" : "fa-angle-left"
+                        }`}
+                    ></i>
+                  </p>
                 </a>
                 {showSubMenu3 && (
                   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -129,7 +135,13 @@ function AsideLeft() {
               <li class="nav-item">
                 <a href="#" class="nav-link" onClick={toggleSubMenu3_2}>
                   <i class="nav-icon fas fa-file-invoice-dollar"></i>
-                  <p> รายงาน ออดิท<i class="right fas fa-angle-left"></i><i class=""></i></p>
+                  <p> รายงาน ออดิท
+                    {/* <i class="right fas fa-angle-left"></i><i class=""></i> */}
+                    <i
+                      className={`right fas ${showSubMenu3_2 ? "fa-angle-down" : "fa-angle-left"
+                        }`}
+                    ></i>
+                  </p>
                 </a>
                 {showSubMenu3_2 && (
                   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -150,7 +162,13 @@ function AsideLeft() {
               <li class="nav-item">
                 <a href="#" class="nav-link" onClick={toggleSubMenu3_3}>
                   <i class="nav-icon fas fa-file-invoice-dollar"></i>
-                  <p> แทนพนักงาน<i class="right fas fa-angle-left"></i><i class=""></i></p>
+                  <p> แทนพนักงาน
+                    {/* <i class="right fas fa-angle-left"></i><i class=""></i> */}
+                    <i
+                      className={`right fas ${showSubMenu3_3 ? "fa-angle-down" : "fa-angle-left"
+                        }`}
+                    ></i>
+                  </p>
                 </a>
                 {showSubMenu3_3 && (
                   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -170,7 +188,13 @@ function AsideLeft() {
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link" onClick={toggleSubMenu4}><i class="nav-icon fas fa-file-import"></i>
-                  <p> ระบบออกเอกสาร <i class="right fas fa-angle-left"></i><i class=""></i></p>
+                  <p> ระบบออกเอกสาร
+                    {/* <i class="right fas fa-angle-left"></i><i class=""></i> */}
+                    <i
+                      className={`right fas ${showSubMenu4 ? "fa-angle-down" : "fa-angle-left"
+                        }`}
+                    ></i>
+                  </p>
                 </a>
                 {showSubMenu4 && (
                   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -190,7 +214,13 @@ function AsideLeft() {
               <li class="nav-item">
                 <a href="#" class="nav-link" onClick={toggleSubMenu}>
                   <i class="nav-icon fas fa-network-wired"></i>
-                  <p> ระบบจัดการพนักงาน <i class="right fas fa-angle-left"></i><i class=""></i></p>
+                  <p> ระบบจัดการพนักงาน
+                    {/* <i class="right fas fa-angle-left"></i><i class=""></i> */}
+                    <i
+                      className={`right fas ${showSubMenu ? "fa-angle-down" : "fa-angle-left"
+                        }`}
+                    ></i>
+                  </p>
                 </a>
                 {showSubMenu && (
                   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -276,7 +306,13 @@ function AsideLeft() {
               <li class="nav-item">
                 <a href="#" class="nav-link" onClick={toggleSubMenu2}>
                   <i class="nav-icon fas fa-shopping-cart"></i>
-                  <p> การตั้งค่า<i class="right fas fa-angle-left"></i><i class=""></i></p>
+                  <p> การตั้งค่า
+                    {/* <i class="right fas fa-angle-left"></i><i class=""></i> */}
+                    <i
+                      className={`right fas ${showSubMenu2 ? "fa-angle-down" : "fa-angle-left"
+                        }`}
+                    ></i>
+                  </p>
                 </a>
                 {showSubMenu2 && (
 

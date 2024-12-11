@@ -8726,6 +8726,7 @@ function WorktimeSheetWorkplaceSpace({ employeeList }) {
                                   e.target.value = e.target.value.replace(/\D/g, "");
                                 }}
                                 list="WorkplaceIdList"
+                                readOnly
                               />
                             </div>
                             <datalist id="WorkplaceIdList">
@@ -8751,6 +8752,7 @@ function WorktimeSheetWorkplaceSpace({ employeeList }) {
                                 // onChange={(e) => setSearchWorkplaceName(e.target.value)}
                                 onChange={handleStaffNameChange}
                                 list="WorkplaceNameList"
+                                readOnly
                               />
                             </div>
                             <datalist id="WorkplaceNameList">

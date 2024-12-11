@@ -203,13 +203,13 @@ function ReplaceEmployeeReport({ employeeList, workplaceList }) {
 
   const randomWorkplace = ["10154", "10175", "10751"];
   const [data, setData] = useState([
-    { date: "12/06/2567", workplace: "10751", name: "กาวิสา ไพรวิกา", replace: "วิสากา พิวาการ", salary: 500, update: "12/06/2567", bank: "กาวิสา ไพรวิกา 123-4-56789-0 ttb", isChecked: false },
-    { date: "17/06/2567", workplace: "10751", name: "ไตรศรีมา มิโวหาร", replace: "สารี ยิมานี", salary: 600, update: "12/06/2567", bank: "ไตรศรีมา มิโวหารไพ 234-5-67890-1 ttb", isChecked: false },
-    { date: "19/06/2567", workplace: "10751", name: "ไลการี พีโวกา", replace: "ศรีวมา ยกรึกา", salary: 700, update: "12/06/2567", bank: "ไตรศรีมา มิโวหาร 345-6-78901-2 ttb", isChecked: false },
-    { date: "12/08/2567", workplace: "10796", name: "ไตรศรีมา มิโวหารไพ", replace: "ไหรมา นิณารี", salary: 811, update: "12/06/2567", bank: "ไลการีการี พีโวกา 234-5-67890-3 ttb", isChecked: false },
-    { date: "19/08/2567", workplace: "10796", name: "ไลการี พีโวกาฟฟ", replace: "โนรากา ชนการ", salary: 625, update: "12/06/2567", bank: "ไตรศรีมา มิโวหาร 345-6-78901-4 ttb", isChecked: false },
-    { date: "20/12/2567", workplace: "10796", name: "ไตรศรีมาดา มิโวหาร", replace: "นขชัย วัดโพสัย", salary: 450, update: "12/06/2567", bank: "ไตรศรีมา มิโวหาร 234-5-67890-5 ttb", isChecked: false },
-    { date: "30/12/2567", workplace: "10796", name: "ไลการีการี พีโวกา", replace: "ไปรึณี ขนรณี", salary: 900, update: "12/06/2567", bank: "ไตรศรีมาดา มิโวหาร 345-6-78901-6 ttb", isChecked: false },
+    { date: "12/06/2567", workplace: "10751",employeeId:"670417", name: "กาวิสา ไพรวิกา", replace: "วิสากา พิวาการ", salary: 500, update: "12/06/2567", bank: "กาวิสา ไพรวิกา 123-4-56789-0 ttb", isChecked: false },
+    { date: "17/06/2567", workplace: "10751",employeeId:"670417", name: "กาวิสา ไพรวิกา", replace: "สารี ยิมานี", salary: 600, update: "12/06/2567", bank: "ไตรศรีมา มิโวหารไพ 234-5-67890-1 ttb", isChecked: false },
+    { date: "19/06/2567", workplace: "10751",employeeId:"670417", name: "กาวิสา ไพรวิกา", replace: "ศรีวมา ยกรึกา", salary: 700, update: "12/06/2567", bank: "ไตรศรีมา มิโวหาร 345-6-78901-2 ttb", isChecked: false },
+    { date: "12/08/2567", workplace: "10796",employeeId:"670417", name: "กาวิสา ไพรวิกา", replace: "ไหรมา นิณารี", salary: 811, update: "12/06/2567", bank: "ไลการีการี พีโวกา 234-5-67890-3 ttb", isChecked: false },
+    { date: "19/08/2567", workplace: "10796",employeeId:"541752", name: "ไตรศรีมาดา มิโวหาร", replace: "โนรากา ชนการ", salary: 625, update: "12/06/2567", bank: "ไตรศรีมา มิโวหาร 345-6-78901-4 ttb", isChecked: false },
+    { date: "20/12/2567", workplace: "10796",employeeId:"541752", name: "ไตรศรีมาดา มิโวหาร", replace: "นขชัย วัดโพสัย", salary: 450, update: "12/06/2567", bank: "ไตรศรีมา มิโวหาร 234-5-67890-5 ttb", isChecked: false },
+    { date: "30/12/2567", workplace: "10796",employeeId:"541752", name: "ไตรศรีมาดา มิโวหาร", replace: "ไปรึณี ขนรณี", salary: 900, update: "12/06/2567", bank: "ไตรศรีมาดา มิโวหาร 345-6-78901-6 ttb", isChecked: false },
   ]);
 
   // ฟังก์ชันสำหรับแปลงวันที่ในรูปแบบ dd/mm/yyyy
@@ -233,7 +233,7 @@ function ReplaceEmployeeReport({ employeeList, workplaceList }) {
 
     // ตรวจสอบช่วงวันที่และ workplace พร้อมกัน
     const isDateInRange = itemDate >= startDate && itemDate <= endDate;
-    const isWorkplaceMatch = !searchWorkplaceId || item.workplace === searchWorkplaceId;
+    const isWorkplaceMatch = !searchWorkplaceId || item.employeeId === searchWorkplaceId;
 
     return isDateInRange && isWorkplaceMatch;
   });
@@ -327,7 +327,7 @@ function ReplaceEmployeeReport({ employeeList, workplaceList }) {
     let totalTax = 0;
     let totalNetSalary = 0;
 
-    const tableData = data.map((item, index) => {
+    const tableData = filteredData.map((item, index) => {
       const tax = item.isChecked ? 0 : item.salary * 0.03; // หาก isChecked เป็น true ไม่หักภาษี
       const netSalary = item.salary - tax; // คำนวณยอดสุทธิ
 
@@ -397,14 +397,14 @@ function ReplaceEmployeeReport({ employeeList, workplaceList }) {
             <li class="breadcrumb-item">
               <a href="#"> แทนพนักงาน</a>
             </li>
-            <li class="breadcrumb-item active">ดูเป็นหน่วยงาน </li>
+            <li class="breadcrumb-item active">ดูเป็นพนักงาน </li>
           </ol>
           <div class="content-header">
             <div class="container-fluid">
               <div class="row mb-2">
                 <h1 class="m-0">
                   <i class="far fa-arrow-alt-circle-right"></i>{" "}
-                  รายการแทนงานในหน่วย
+                  รายการแทนงานของพนักงาน
                 </h1>
               </div>
             </div>
@@ -418,12 +418,12 @@ function ReplaceEmployeeReport({ employeeList, workplaceList }) {
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label role="searchWorkplaceId">รหัสหน่วยงาน</label>
+                          <label role="searchWorkplaceId">รหัสพนักงาน</label>
                           {/* <input
                             type="text"
                             class="form-control"
                             id="searchWorkplaceId"
-                            placeholder="รหัสหน่วยงาน"
+                            placeholder="รหัสพนักงาน"
                             value={searchWorkplaceId}
                             onChange={(e) =>
                               setSearchWorkplaceId(e.target.value)
@@ -434,7 +434,7 @@ function ReplaceEmployeeReport({ employeeList, workplaceList }) {
                             className="form-control"
                             id="searchWorkplaceId"
                             list="workplaceIds" // Associate the datalist with the input
-                            placeholder="รหัสหน่วยงาน"
+                            placeholder="รหัสพนักงาน"
                             value={searchWorkplaceId}
                             onChange={(e) =>
                               setSearchWorkplaceId(e.target.value)
@@ -448,12 +448,12 @@ function ReplaceEmployeeReport({ employeeList, workplaceList }) {
                             }}
                           />
                           <datalist id="workplaceIds">
-                            {workplaceList.map((workplace) => (
+                            {employeeList.map((workplace) => (
                               <option
-                                key={workplace.workplaceId}
-                                value={workplace.workplaceId}
+                                key={workplace.employeeId}
+                                value={workplace.employeeId}
                               >
-                                {workplace.workplaceId}
+                                {workplace.employeeId}
                               </option>
                             ))}
                           </datalist>
@@ -461,12 +461,12 @@ function ReplaceEmployeeReport({ employeeList, workplaceList }) {
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label role="searchWorkplaceName">ชื่อหน่วยงาน</label>
+                          <label role="searchWorkplaceName">ชื่อพนักงาน</label>
                           <input
                             type="text"
                             class="form-control"
                             id="searchWorkplaceName"
-                            placeholder="ชื่อหน่วยงาน"
+                            placeholder="ชื่อพนักงาน"
                             value={searchWorkplaceName}
                             onChange={(e) =>
                               setSearchWorkplaceName(e.target.value)
@@ -485,37 +485,6 @@ function ReplaceEmployeeReport({ employeeList, workplaceList }) {
                   {/* <div class="d-flex justify-content-center">
                                         <h2 class="title">ผลลัพธ์ {searchResult.length} รายการ</h2>
                                     </div> */}
-                  <div class="d-flex justify-content-center">
-                    {searchResult.length > 0 ? (
-                      <h2 class="title">
-                        ผลลัพธ์ {searchResult.length} รายการ
-                      </h2>
-                    ) : (
-                      <p></p>
-                    )}
-                  </div>
-                  <div class="d-flex justify-content-center">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <ul
-                            style={{ listStyle: "none", marginLeft: "-2rem" }}
-                          >
-                            {searchResult.map((workplace) => (
-                              <li
-                                key={workplace.id}
-                                onClick={() => handleClickResult(workplace)}
-                                style={{ cursor: "pointer" }}
-                              >
-                                รหัส {workplace.workplaceId} หน่วยงาน{" "}
-                                {workplace.workplaceName}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
                 <div class="col-md-12">
                   <div class="row align-items-end">
