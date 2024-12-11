@@ -729,12 +729,8 @@ if(tmp.id == item.id) {
     if(parseFloat(item.SpSalary || '0') >= 363) {
 
       if(parseFloat(tmp.message || '0') >= 1) {
-        tmp.message = parseFloat(tmp.message) + 1;
-
         tmp.SpSalary = (parseFloat(tmp.SpSalary) + (parseFloat(item.SpSalary)/ 30)).toFixed(2);
       } else {
-        tmp.message = parseFloat(tmp.message || 1) + 1;
-
         tmp.SpSalary = ((parseFloat(item.SpSalary)/ 30)*2).toFixed(2);
       }
 
@@ -744,7 +740,7 @@ if(tmp.id == item.id) {
 
     }
   // tmp.SpSalary = parseFloat(tmp.SpSalary) + parseFloat(item.SpSalary);
-  // tmp.message = parseFloat(tmp.message || 1) + 1;
+  tmp.message = parseFloat(tmp.message || '0') + 1;
   
   }
 
