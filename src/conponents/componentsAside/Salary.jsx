@@ -252,17 +252,17 @@ function Salary() {
     const isDuplicate = newAddSalary.some(
       (item, idx) => item.codeSpSalary === newValue && idx !== index
     );
-  
+
     if (isDuplicate) {
       alert("Duplicate codeSpSalary value detected!");
       return; // Exit the function without updating the array
     }
-  
+
     newAddSalary[index] = {
       ...newAddSalary[index],
       [key]: newValue,
     };
-  
+
     setFormData({
       ...formData,
       addSalary: newAddSalary,
@@ -331,18 +331,18 @@ function Salary() {
     const isDuplicate = addSalary.some(
       (item) => item.codeSpSalary === data.codeSpSalary
     );
-  
+
     if (isDuplicate) {
       alert("ให้สวัสดิการแล้ว");
       return; // Exit the function without adding to the array
     }
-  
+
     // Add the new item to the array
     const newData = { ...data, id: data.codeSpSalary || "" };
     setAddSalary((prev) => [...prev, newData]);
   };
 
-  
+
   const handleRemoveFromSalary = (item) => {
     setAddSalary((prev) => prev.filter((i) => i !== item));
   };
@@ -910,63 +910,65 @@ function Salary() {
                     <!-- Main content --> */}
           <section class="content">
             <div class="container-fluid">
-              <form onSubmit={handleManageSalary}>
-                <h2 class="head-title">เงินเดือนและสวัสดิการ</h2>
-                <h2 class="title">ข้อมูลพนักงาน</h2>
-                <div class="row">
-                  <div class="col-md-9">
-                    <section class="Frame">
+              <div class="row">
+                <div class="col-md-9">
+                  <form onSubmit={handleManageSalary}>
+                    <h2 class="head-title">เงินเดือนและสวัสดิการ</h2>
+                    <h2 class="title">ข้อมูลพนักงาน</h2>
+                    <div class="row">
                       <div class="col-md-12">
-                        <div class="row">
-                          <div class="col-md-4">
-                            <div class="form-group">
-                              <label role="employeeId">รหัสพนักงาน</label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="employeeId"
-                                placeholder="รหัสพนักงาน"
-                                value={employeeData.employeeId || ""}
-                                onChange={(e) => handleChange(e, "employeeId")}
-                                onInput={(e) => {
-                                  // Remove any non-digit characters
-                                  e.target.value = e.target.value.replace(/\D/g, "");
-                                }}
-                              />
+                        <section class="Frame">
+                          <div class="col-md-12">
+                            <div class="row">
+                              <div class="col-md-4">
+                                <div class="form-group">
+                                  <label role="employeeId">รหัสพนักงาน</label>
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    id="employeeId"
+                                    placeholder="รหัสพนักงาน"
+                                    value={employeeData.employeeId || ""}
+                                    onChange={(e) => handleChange(e, "employeeId")}
+                                    onInput={(e) => {
+                                      // Remove any non-digit characters
+                                      e.target.value = e.target.value.replace(/\D/g, "");
+                                    }}
+                                  />
+                                </div>
+                              </div>
+                              <div class="col-md-4">
+                                <div class="form-group">
+                                  <label role="position">ตำแหน่ง</label>
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    id="position"
+                                    placeholder="ตำแหน่ง"
+                                    value={employeeData.position || ""}
+                                    onChange={(e) => handleChange(e, "position")}
+                                  />
+                                </div>
+                              </div>
+                              <div class="col-md-4">
+                                <div class="form-group">
+                                  <label role="department">แผนก</label>
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    id="department"
+                                    placeholder="แผนก"
+                                    value={employeeData.department || ""}
+                                    onChange={(e) => handleChange(e, "department")}
+                                  />
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                          <div class="col-md-4">
-                            <div class="form-group">
-                              <label role="position">ตำแหน่ง</label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="position"
-                                placeholder="ตำแหน่ง"
-                                value={employeeData.position || ""}
-                                onChange={(e) => handleChange(e, "position")}
-                              />
-                            </div>
-                          </div>
-                          <div class="col-md-4">
-                            <div class="form-group">
-                              <label role="department">แผนก</label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="department"
-                                placeholder="แผนก"
-                                value={employeeData.department || ""}
-                                onChange={(e) => handleChange(e, "department")}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-4">
-                            <div class="form-group">
-                              <label role="workplace">หน่วยงาน</label>
-                              {/* <select id="workplace" name="workplace" class="form-control"
+                            <div class="row">
+                              <div class="col-md-4">
+                                <div class="form-group">
+                                  <label role="workplace">หน่วยงาน</label>
+                                  {/* <select id="workplace" name="workplace" class="form-control"
                                                                 value={workplace} onChange={handleWorkplace}>
                                                                 <option value="">ยังไม่ระบุหน่วยงาน</option>
                                                                 {workplaceSelection.map(wp => (
@@ -974,26 +976,26 @@ function Salary() {
 
                                                                 ))}
                                                             </select> */}
-                              <input
-                                type="text"
-                                list="workplacelist"
-                                id="workplace"
-                                name="workplace"
-                                className="form-control"
-                                value={workplace}
-                                onChange={handleWorkplace}
-                              />
+                                  <input
+                                    type="text"
+                                    list="workplacelist"
+                                    id="workplace"
+                                    name="workplace"
+                                    className="form-control"
+                                    value={workplace}
+                                    onChange={handleWorkplace}
+                                  />
 
-                              <datalist id="workplacelist">
-                                <option value="">ยังไม่ระบุหน่วยงาน</option>
-                                {workplaceSelection.map((wp) => (
-                                  <option key={wp._id} value={wp.workplaceId}>
-                                    {wp.workplaceName}
-                                  </option>
-                                ))}
-                              </datalist>
+                                  <datalist id="workplacelist">
+                                    <option value="">ยังไม่ระบุหน่วยงาน</option>
+                                    {workplaceSelection.map((wp) => (
+                                      <option key={wp._id} value={wp.workplaceId}>
+                                        {wp.workplaceName}
+                                      </option>
+                                    ))}
+                                  </datalist>
 
-                              {/* <input
+                                  {/* <input
                                                                 type="text"
                                                                 id="workplace"
                                                                 name="workplace"
@@ -1011,275 +1013,275 @@ function Salary() {
                                                                     </option>
                                                                 ))}
                                                             </datalist> */}
-                            </div>
-                          </div>
-                          <div class="col-md-4">
-                            <div class="form-group">
-                              <label role="workplacearea">
-                                สถานที่ปฏิบัติงาน
-                              </label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="workplacearea"
-                                placeholder="สถานที่ปฏิบัติงาน"
-                                value={workplacearea}
-                                readonly
-                              />
-                            </div>
-                          </div>
+                                </div>
+                              </div>
+                              <div class="col-md-4">
+                                <div class="form-group">
+                                  <label role="workplacearea">
+                                    สถานที่ปฏิบัติงาน
+                                  </label>
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    id="workplacearea"
+                                    placeholder="สถานที่ปฏิบัติงาน"
+                                    value={workplacearea}
+                                    readonly
+                                  />
+                                </div>
+                              </div>
 
-                          <div class="col-md-4">
-                            <div class="form-group">
-                              <label role="jobtype">ประเภทการจ้าง</label>
-                              <select
-                                id="jobtype"
-                                name="jobtype"
-                                class="form-control"
-                                value={employeeData.jobtype || ""}
-                                onChange={(e) => handleChange(e, "jobtype")}
-                              >
-                                {/* <option value="">ไม่ระบุ</option>
+                              <div class="col-md-4">
+                                <div class="form-group">
+                                  <label role="jobtype">ประเภทการจ้าง</label>
+                                  <select
+                                    id="jobtype"
+                                    name="jobtype"
+                                    class="form-control"
+                                    value={employeeData.jobtype || ""}
+                                    onChange={(e) => handleChange(e, "jobtype")}
+                                  >
+                                    {/* <option value="">ไม่ระบุ</option>
                                 <option value="ประจำ">ประจำ</option>
                                 <option value="ไม่ประจำ">ไม่ประจำ</option>
                                 <option value="รายวัน">รายวัน</option>
                                 <option value="รายครั้ง">รายครั้ง</option> */}
-                                <option value="">ไม่ระบุ</option>
-                                <option value="รายวัน">รายวัน</option>
-                                <option value="รายเดือน">รายเดือน</option>
-                                <option value="รายครั้ง">รายครั้ง</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="col-md-12">
-                            <div class="form-group">
-                              <label role="costtype">ลงบัญชีแบบ</label>
-                              <div class="" style={{ marginTop: "10px" }}>
-                                <div class="icheck-primary d-inline">
-                                  <input
-                                    type="radio"
-                                    id="costtype"
-                                    name="costtype"
-                                    value="ภ.ง.ด.1"
-                                    checked={
-                                      employeeData.costtype === "ภ.ง.ด.1"
-                                    }
-                                    onChange={(e) =>
-                                      handleChange(e, "costtype")
-                                    }
-                                  />{" "}
-                                  ภ.ง.ด.1 (ภาษีเงินได้หักณที่จ่าย)
+                                    <option value="">ไม่ระบุ</option>
+                                    <option value="รายวัน">รายวัน</option>
+                                    <option value="รายเดือน">รายเดือน</option>
+                                    <option value="รายครั้ง">รายครั้ง</option>
+                                  </select>
                                 </div>
-                                <div class="icheck-primary d-inline">
-                                  <input
-                                    type="radio"
-                                    id="costtype"
-                                    name="costtype"
-                                    value="ภ.ง.ด.3"
-                                    checked={
-                                      employeeData.costtype === "ภ.ง.ด.3"
-                                    }
-                                    onChange={(e) =>
-                                      handleChange(e, "costtype")
-                                    }
-                                  />{" "}
-                                  ภ.ง.ด.3 (หัก ณ ที่จ่าย 3%)
+                              </div>
+                              <div class="col-md-12">
+                                <div class="form-group">
+                                  <label role="costtype">ลงบัญชีแบบ</label>
+                                  <div class="" style={{ marginTop: "10px" }}>
+                                    <div class="icheck-primary d-inline">
+                                      <input
+                                        type="radio"
+                                        id="costtype"
+                                        name="costtype"
+                                        value="ภ.ง.ด.1"
+                                        checked={
+                                          employeeData.costtype === "ภ.ง.ด.1"
+                                        }
+                                        onChange={(e) =>
+                                          handleChange(e, "costtype")
+                                        }
+                                      />{" "}
+                                      ภ.ง.ด.1 (ภาษีเงินได้หักณที่จ่าย)
+                                    </div>
+                                    <div class="icheck-primary d-inline">
+                                      <input
+                                        type="radio"
+                                        id="costtype"
+                                        name="costtype"
+                                        value="ภ.ง.ด.3"
+                                        checked={
+                                          employeeData.costtype === "ภ.ง.ด.3"
+                                        }
+                                        onChange={(e) =>
+                                          handleChange(e, "costtype")
+                                        }
+                                      />{" "}
+                                      ภ.ง.ด.3 (หัก ณ ที่จ่าย 3%)
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
+                            {/* <!--row--> */}
                           </div>
-                        </div>
-                        {/* <!--row--> */}
+                        </section>
                       </div>
-                    </section>
-                  </div>
-                  <div class="col-md-3">
+                      {/* <div class="col-md-3">
                     <section class="Frame">
                       <EmployeesSelected onEmployeeSelect={onEmployeeSelect} />
                     </section>
-                  </div>
-                </div>
-                {/* <!--Frame--> */}
-                <h2 class="title">การบันทึกเวลาและการลา</h2>
-                <div class="row">
-                  <div class="col-md-9">
-                    <section class="Frame">
-                      <div class="col-md-12">
-                        <div class="row">
-                          <div class="col-md-4">
-                            <div class="form-group">
-                              <label role="worktable">ตารางงาน</label>
-                              <select
-                                id="worktable"
-                                name="worktable"
-                                class="form-control"
-                                value={employeeData.worktable || ""}
-                                onChange={(e) => handleChange(e, "worktable")}
-                              >
-                                <option value="">ไม่ระบุ</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="col-md-4">
-                            <div class="form-group">
-                              <label role="workexcept">ผู้อนุมัติ</label>
-                              <select
-                                id="workexcept"
-                                name="workexcept"
-                                class="form-control"
-                                value={employeeData.workexcept || ""}
-                                onChange={(e) => handleChange(e, "workexcept")}
-                              >
-                                <option value="">ไม่ระบุ</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="col-md-4">
-                            <div class="form-group">
-                              <label role="worktimerecord">ผู้บันทึกเวลา</label>
-                              <select
-                                id="worktimerecord"
-                                name="worktimerecord"
-                                class="form-control"
-                                value={employeeData.worktimerecord || ""}
-                                onChange={(e) =>
-                                  handleChange(e, "worktimerecord")
-                                }
-                              >
-                                <option value="บันทึกผ่านเว็บ">
-                                  บันทึกผ่านเว็บ
-                                </option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-                        {/* <!--row--> */}
-                        {/* <div class="row"><h2 class="title">             ปฏิบัติงาน</h2></div> */}
-                        {/* <div class="row"> */}
-
-                        {/* </div> */}
-                        {/* <!--row--> */}
-                      </div>
-                      {/* <!--col-md-12--> */}
-                    </section>
+                  </div> */}
+                    </div>
                     {/* <!--Frame--> */}
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-9">
-                    <section class="Frame">
-                      <div class="row">
-                        <div class="col-md-5">
-                          <div class="row">
-                            <h2 class="title">วันที่เริ่มงาน</h2>
+                    <h2 class="title">การบันทึกเวลาและการลา</h2>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <section class="Frame">
+                          <div class="col-md-12">
+                            <div class="row">
+                              <div class="col-md-4">
+                                <div class="form-group">
+                                  <label role="worktable">ตารางงาน</label>
+                                  <select
+                                    id="worktable"
+                                    name="worktable"
+                                    class="form-control"
+                                    value={employeeData.worktable || ""}
+                                    onChange={(e) => handleChange(e, "worktable")}
+                                  >
+                                    <option value="">ไม่ระบุ</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-4">
+                                <div class="form-group">
+                                  <label role="workexcept">ผู้อนุมัติ</label>
+                                  <select
+                                    id="workexcept"
+                                    name="workexcept"
+                                    class="form-control"
+                                    value={employeeData.workexcept || ""}
+                                    onChange={(e) => handleChange(e, "workexcept")}
+                                  >
+                                    <option value="">ไม่ระบุ</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-4">
+                                <div class="form-group">
+                                  <label role="worktimerecord">ผู้บันทึกเวลา</label>
+                                  <select
+                                    id="worktimerecord"
+                                    name="worktimerecord"
+                                    class="form-control"
+                                    value={employeeData.worktimerecord || ""}
+                                    onChange={(e) =>
+                                      handleChange(e, "worktimerecord")
+                                    }
+                                  >
+                                    <option value="บันทึกผ่านเว็บ">
+                                      บันทึกผ่านเว็บ
+                                    </option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                            {/* <!--row--> */}
+                            {/* <div class="row"><h2 class="title">             ปฏิบัติงาน</h2></div> */}
+                            {/* <div class="row"> */}
+
+                            {/* </div> */}
+                            {/* <!--row--> */}
                           </div>
-                          <div class="form-group row">
-                            <label role="startjob">วันที่เริ่มงาน</label>
-                            <div
-                            // style={{ position: 'relative', zIndex: 9999, marginLeft: "2rem" }}
-                            >
-                              {/* <DatePicker id="startjob" name="startjob"
+                          {/* <!--col-md-12--> */}
+                        </section>
+                        {/* <!--Frame--> */}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <section class="Frame">
+                          <div class="row">
+                            <div class="col-md-5">
+                              <div class="row">
+                                <h2 class="title">วันที่เริ่มงาน</h2>
+                              </div>
+                              <div class="form-group row">
+                                <label role="startjob">วันที่เริ่มงาน</label>
+                                <div
+                                // style={{ position: 'relative', zIndex: 9999, marginLeft: "2rem" }}
+                                >
+                                  {/* <DatePicker id="startjob" name="startjob"
                                                                 className="form-control" // Apply Bootstrap form-control class
                                                                 // popperClassName="datepicker-popper" // Apply custom popper class if needed
                                                                 selected={startjob}
                                                                 onChange={handleStartDateChange}
                                                                 dateFormat="dd/MM/yyyy" /> */}
 
-                              <input
-                                required
-                                type="text"
-                                className="form-control"
-                                // value={formattedDate}
-                                // value={dateOfBirth}
-                                value={startjob}
-                                placeholder="dd/mm/yyyy"
-                                readOnly
-                                onClick={() => setShowPopup(true)}
-                              />
-                              {showPopup && (
-                                <div
-                                  className="date-popup"
-                                  ref={popupRef}
-                                  style={popupStyle}
-                                >
-                                  <div className="row">
-                                    <div className="col-md-4">วัน</div>
-                                    <div className="col-md-4">เดือน</div>
-                                    <div className="col-md-4">ปี</div>
-                                  </div>
-                                  <div className="row">
-                                    <div className="col-md-4">
-                                      <select
-                                        name="day"
-                                        className="form-control mr-1"
-                                        value={day}
-                                        onChange={(e) => setDay(e.target.value)}
+                                  <input
+                                    required
+                                    type="text"
+                                    className="form-control"
+                                    // value={formattedDate}
+                                    // value={dateOfBirth}
+                                    value={startjob}
+                                    placeholder="dd/mm/yyyy"
+                                    readOnly
+                                    onClick={() => setShowPopup(true)}
+                                  />
+                                  {showPopup && (
+                                    <div
+                                      className="date-popup"
+                                      ref={popupRef}
+                                      style={popupStyle}
+                                    >
+                                      <div className="row">
+                                        <div className="col-md-4">วัน</div>
+                                        <div className="col-md-4">เดือน</div>
+                                        <div className="col-md-4">ปี</div>
+                                      </div>
+                                      <div className="row">
+                                        <div className="col-md-4">
+                                          <select
+                                            name="day"
+                                            className="form-control mr-1"
+                                            value={day}
+                                            onChange={(e) => setDay(e.target.value)}
+                                          >
+                                            <option value="">วัน</option>
+                                            {days.map((d) => (
+                                              <option key={d} value={d}>
+                                                {d}
+                                              </option>
+                                            ))}
+                                          </select>
+                                        </div>
+                                        <div className="col-md-4">
+                                          <select
+                                            name="month"
+                                            className="form-control mr-1"
+                                            value={month}
+                                            onChange={(e) =>
+                                              setMonth(e.target.value)
+                                            }
+                                          >
+                                            <option value="">เดือน</option>
+                                            {months.map((m) => (
+                                              <option key={m} value={m}>
+                                                {m}
+                                              </option>
+                                            ))}
+                                          </select>
+                                        </div>
+                                        <div className="col-md-4">
+                                          <select
+                                            name="year"
+                                            className="form-control"
+                                            value={year}
+                                            onChange={(e) =>
+                                              setYear(e.target.value)
+                                            }
+                                          >
+                                            <option value="">ปี</option>
+                                            {years.map((y) => (
+                                              <option key={y} value={y + 543}>
+                                                {y + 543}
+                                              </option>
+                                            ))}
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <button
+                                        onClick={handleDateChange}
+                                        className="btn btn-primary mt-2"
                                       >
-                                        <option value="">วัน</option>
-                                        {days.map((d) => (
-                                          <option key={d} value={d}>
-                                            {d}
-                                          </option>
-                                        ))}
-                                      </select>
-                                    </div>
-                                    <div className="col-md-4">
-                                      <select
-                                        name="month"
-                                        className="form-control mr-1"
-                                        value={month}
-                                        onChange={(e) =>
-                                          setMonth(e.target.value)
-                                        }
+                                        ตกลง
+                                      </button>
+                                      <button
+                                        onClick={() => setShowPopup(false)}
+                                        className="btn btn-secondary mt-2 ml-2"
                                       >
-                                        <option value="">เดือน</option>
-                                        {months.map((m) => (
-                                          <option key={m} value={m}>
-                                            {m}
-                                          </option>
-                                        ))}
-                                      </select>
+                                        ปิด
+                                      </button>
                                     </div>
-                                    <div className="col-md-4">
-                                      <select
-                                        name="year"
-                                        className="form-control"
-                                        value={year}
-                                        onChange={(e) =>
-                                          setYear(e.target.value)
-                                        }
-                                      >
-                                        <option value="">ปี</option>
-                                        {years.map((y) => (
-                                          <option key={y} value={y + 543}>
-                                            {y + 543}
-                                          </option>
-                                        ))}
-                                      </select>
-                                    </div>
-                                  </div>
-                                  <button
-                                    onClick={handleDateChange}
-                                    className="btn btn-primary mt-2"
-                                  >
-                                    ตกลง
-                                  </button>
-                                  <button
-                                    onClick={() => setShowPopup(false)}
-                                    className="btn btn-secondary mt-2 ml-2"
-                                  >
-                                    ปิด
-                                  </button>
+                                  )}
                                 </div>
-                              )}
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label role="exceptjob">วันที่บรรจุ</label>
-                            <div
-                            // style={{ position: 'relative', zIndex: 9999, marginLeft: "2rem" }}
-                            >
-                              {/* <DatePicker
+                              </div>
+                              <div class="form-group row">
+                                <label role="exceptjob">วันที่บรรจุ</label>
+                                <div
+                                // style={{ position: 'relative', zIndex: 9999, marginLeft: "2rem" }}
+                                >
+                                  {/* <DatePicker
                                 id="exceptjob"
                                 name="exceptjob"
                                 className="form-control" // Apply Bootstrap form-control class
@@ -1289,25 +1291,25 @@ function Salary() {
                                 dateFormat="dd/MM/yyyy"
                               /> */}
 
-                              <input
-                                required
-                                type="text"
-                                className="form-control"
-                                // value={formattedDate}
-                                // value={dateOfBirth}
-                                value={exceptjob}
-                                placeholder="dd/mm/yyyy"
-                                readOnly
-                              // onClick={() => setShowPopup(true)}
-                              />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label role="startcount">วันที่เริ่มต้นคำนวณ</label>
-                            <div
-                            // style={{ position: 'relative', zIndex: 9999, marginLeft: "2rem" }}
-                            >
-                              {/* <DatePicker
+                                  <input
+                                    required
+                                    type="text"
+                                    className="form-control"
+                                    // value={formattedDate}
+                                    // value={dateOfBirth}
+                                    value={exceptjob}
+                                    placeholder="dd/mm/yyyy"
+                                    readOnly
+                                  // onClick={() => setShowPopup(true)}
+                                  />
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label role="startcount">วันที่เริ่มต้นคำนวณ</label>
+                                <div
+                                // style={{ position: 'relative', zIndex: 9999, marginLeft: "2rem" }}
+                                >
+                                  {/* <DatePicker
                                 id="startcount"
                                 name="startcount"
                                 className="form-control" // Apply Bootstrap form-control class
@@ -1316,132 +1318,132 @@ function Salary() {
                                 onChange={handleStartcount}
                                 dateFormat="dd/MM/yyyy"
                               /> */}
-                              <div
-                                onClick={toggleDatePickerStartcount}
-                                style={{
-                                  cursor: "pointer",
-                                  display: "inline-flex",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <FaCalendarAlt size={20} />
-                                <span style={{ marginLeft: "8px" }}>
-                                  {formattedDate321Startcount
-                                    ? formattedDate321Startcount
-                                    : "Select Date"}
-                                </span>
-                              </div>
+                                  <div
+                                    onClick={toggleDatePickerStartcount}
+                                    style={{
+                                      cursor: "pointer",
+                                      display: "inline-flex",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <FaCalendarAlt size={20} />
+                                    <span style={{ marginLeft: "8px" }}>
+                                      {formattedDate321Startcount
+                                        ? formattedDate321Startcount
+                                        : "Select Date"}
+                                    </span>
+                                  </div>
 
-                              {showDatePickerStartcount && (
-                                <div
-                                  style={{
-                                    position: "absolute",
-                                    zIndex: 1000,
-                                  }}
+                                  {showDatePickerStartcount && (
+                                    <div
+                                      style={{
+                                        position: "absolute",
+                                        zIndex: 1000,
+                                      }}
+                                    >
+                                      <ThaiDatePicker
+                                        className="form-control"
+                                        value={selectedDateStartcount}
+                                        onChange={handleDatePickerStartcountChange}
+                                      />
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                            {/* <!--col-md-6--> */}
+                            <div class="col-md-6">
+                              <div class="row">
+                                <h2 class="title">เงินเดือนปัจจุบัน</h2>
+                              </div>
+                              <div class="form-group row">
+                                <label
+                                  role="salary"
+                                  class="col-sm-2 col-form-label"
                                 >
-                                  <ThaiDatePicker
-                                    className="form-control"
-                                    value={selectedDateStartcount}
-                                    onChange={handleDatePickerStartcountChange}
+                                  *อัตรา
+                                </label>
+                                <div class="col-sm-10">
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    id="salary"
+                                    placeholder="จำนวนเงิน"
+                                    value={employeeData.salary || ""}
+                                    onChange={(e) => handleChange(e, "salary")}
+                                    onInput={(e) => {
+                                      // Remove any non-digit characters
+                                      e.target.value = e.target.value.replace(/\D/g, "");
+                                    }}
                                   />
                                 </div>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                        {/* <!--col-md-6--> */}
-                        <div class="col-md-6">
-                          <div class="row">
-                            <h2 class="title">เงินเดือนปัจจุบัน</h2>
-                          </div>
-                          <div class="form-group row">
-                            <label
-                              role="salary"
-                              class="col-sm-2 col-form-label"
-                            >
-                              *อัตรา
-                            </label>
-                            <div class="col-sm-10">
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="salary"
-                                placeholder="จำนวนเงิน"
-                                value={employeeData.salary || ""}
-                                onChange={(e) => handleChange(e, "salary")}
-                                onInput={(e) => {
-                                  // Remove any non-digit characters
-                                  e.target.value = e.target.value.replace(/\D/g, "");
-                                }}
-                              />
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <div class="col-md-6">
-                              <div class="row">
+                              </div>
+                              <div class="form-group row">
+                                <div class="col-md-6">
+                                  <div class="row">
+                                    <label
+                                      role="salarytype"
+                                      class="col-sm-3 col-form-label"
+                                    >
+                                      *ต่อ
+                                    </label>
+                                    <div class="col-sm-9">
+                                      <select
+                                        id="salarytype"
+                                        name="salarytype"
+                                        class="form-control"
+                                        value={employeeData.salarytype || ""}
+                                        onChange={(e) =>
+                                          handleChange(e, "salarytype")
+                                        }
+                                      >
+                                        <option value="">ไม่ระบุ</option>
+                                        <option value="ต่อวัน">ต่อวัน</option>
+                                        <option value="ต่อเดือน">ต่อเดือน</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-6">
+                                  <div class="row">
+                                    <label
+                                      role="money"
+                                      class="col-sm-4 col-form-label"
+                                    >
+                                      สกุลเงิน
+                                    </label>
+                                    <div class="col-sm-8">
+                                      <select
+                                        id="money"
+                                        name="money"
+                                        class="form-control"
+                                        value={employeeData.money || ""}
+                                        onChange={(e) => handleChange(e, "money")}
+                                      >
+                                        <option value="">ไม่ระบุ</option>
+                                        <option value="บาท">บาท</option>
+                                        <option value="จ๊าต">จ๊าต - พม่า</option>
+                                        <option value="เรียล">
+                                          เรียล - กัมพูชา
+                                        </option>
+                                        <option value="กีบ">กีบ - ลาว</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-group row">
                                 <label
-                                  role="salarytype"
+                                  role="salaryupdate"
                                   class="col-sm-3 col-form-label"
                                 >
-                                  *ต่อ
+                                  วันที่ปรับปรุง
                                 </label>
                                 <div class="col-sm-9">
-                                  <select
-                                    id="salarytype"
-                                    name="salarytype"
-                                    class="form-control"
-                                    value={employeeData.salarytype || ""}
-                                    onChange={(e) =>
-                                      handleChange(e, "salarytype")
-                                    }
+                                  <div
+                                  // style={{ position: 'relative', zIndex: 9999 }}
                                   >
-                                    <option value="">ไม่ระบุ</option>
-                                    <option value="ต่อวัน">ต่อวัน</option>
-                                    <option value="ต่อเดือน">ต่อเดือน</option>
-                                  </select>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                              <div class="row">
-                                <label
-                                  role="money"
-                                  class="col-sm-4 col-form-label"
-                                >
-                                  สกุลเงิน
-                                </label>
-                                <div class="col-sm-8">
-                                  <select
-                                    id="money"
-                                    name="money"
-                                    class="form-control"
-                                    value={employeeData.money || ""}
-                                    onChange={(e) => handleChange(e, "money")}
-                                  >
-                                    <option value="">ไม่ระบุ</option>
-                                    <option value="บาท">บาท</option>
-                                    <option value="จ๊าต">จ๊าต - พม่า</option>
-                                    <option value="เรียล">
-                                      เรียล - กัมพูชา
-                                    </option>
-                                    <option value="กีบ">กีบ - ลาว</option>
-                                  </select>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="form-group row">
-                            <label
-                              role="salaryupdate"
-                              class="col-sm-3 col-form-label"
-                            >
-                              วันที่ปรับปรุง
-                            </label>
-                            <div class="col-sm-9">
-                              <div
-                              // style={{ position: 'relative', zIndex: 9999 }}
-                              >
-                                {/* <DatePicker
+                                    {/* <DatePicker
                                   id="salaryupdate"
                                   name="salaryupdate"
                                   className="form-control" // Apply Bootstrap form-control class
@@ -1450,429 +1452,429 @@ function Salary() {
                                   onChange={handleSalaryupdate}
                                   dateFormat="dd/MM/yyyy"
                                 /> */}
-                                <div
-                                  onClick={toggleDatePickerSalaryupdate}
-                                  style={{
-                                    cursor: "pointer",
-                                    display: "inline-flex",
-                                    alignItems: "center",
-                                  }}
-                                >
-                                  <FaCalendarAlt size={20} />
-                                  <span style={{ marginLeft: "8px" }}>
-                                    {formattedDate321Salaryupdate
-                                      ? formattedDate321Salaryupdate
-                                      : "Select Date"}
-                                  </span>
-                                </div>
+                                    <div
+                                      onClick={toggleDatePickerSalaryupdate}
+                                      style={{
+                                        cursor: "pointer",
+                                        display: "inline-flex",
+                                        alignItems: "center",
+                                      }}
+                                    >
+                                      <FaCalendarAlt size={20} />
+                                      <span style={{ marginLeft: "8px" }}>
+                                        {formattedDate321Salaryupdate
+                                          ? formattedDate321Salaryupdate
+                                          : "Select Date"}
+                                      </span>
+                                    </div>
 
-                                {showDatePickerSalaryupdate && (
-                                  <div
-                                    style={{
-                                      position: "absolute",
-                                      zIndex: 1000,
-                                    }}
-                                  >
-                                    <ThaiDatePicker
-                                      className="form-control"
-                                      value={selectedDateSalaryupdate}
-                                      onChange={
-                                        handleDatePickerSalaryupdateChange
-                                      }
-                                    />
+                                    {showDatePickerSalaryupdate && (
+                                      <div
+                                        style={{
+                                          position: "absolute",
+                                          zIndex: 1000,
+                                        }}
+                                      >
+                                        <ThaiDatePicker
+                                          className="form-control"
+                                          value={selectedDateSalaryupdate}
+                                          onChange={
+                                            handleDatePickerSalaryupdateChange
+                                          }
+                                        />
+                                      </div>
+                                    )}
                                   </div>
-                                )}
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                      {/* <!--row--> */}
-                      <div class="form-group row">
-                        <label role="salaryout" class="col-sm-1">
-                          งวดจ่ายเงิน
-                        </label>
-                        <div class="col-sm-9">
-                          <select
-                            id="salaryout"
-                            name="salaryout"
-                            class="form-control"
-                            value={employeeData.salaryout || ""}
-                            onChange={(e) => handleChange(e, "salaryout")}
-                          >
-                            <option value="">ไม่ระบุ</option>
-                            <option value="เดือน">เดือน</option>
-                            <option value="ครึ่งเดือน">ครึ่งเดือน</option>
-                            <option value="สัปดาห์">สัปดาห์</option>
-                            <option value="10 วัน">10 วัน</option>
-                            <option value="งวดพิเศษ">งวดพิเศษ</option>
-                          </select>
-                        </div>
-                      </div>
-                      {/* <!--row--> */}
-                      <div class="form-group row">
-                        <label role="salarypayment" class="col-sm-4">
-                          วิธีจ่ายเงิน
-                        </label>
-                        <div class="col-sm-9">
-                          <div class="icheck-primary d-inline">
-                            <input
-                              type="radio"
-                              id="salarypayment"
-                              name="salarypayment"
-                              value="เงินสด"
-                              checked={employeeData.salarypayment === "เงินสด"}
-                              onChange={(e) => handleChange(e, "salarypayment")}
-                            />{" "}
-                            เงินสด
-                          </div>
-                          <div class="icheck-primary d-inline">
-                            <input
-                              type="radio"
-                              id="salarypayment"
-                              name="salarypayment"
-                              value="โอนผ่านธนาคาร "
-                              checked={
-                                employeeData.salarypayment === "โอนผ่านธนาคาร "
-                              }
-                              onChange={(e) => handleChange(e, "salarypayment")}
-                            />{" "}
-                            โอนผ่านธนาคาร 
-                          </div>
-                        </div>
-                      </div>
-                      {/* <!--row--> */}
-                      <div class="row">
-                        <div class="col-md-6">
+                          {/* <!--row--> */}
                           <div class="form-group row">
-                            <label
-                              role="salarybank"
-                              class="col-sm-3 col-form-label"
-                            >
-                              ชื่อธนาคาร 
+                            <label role="salaryout" class="col-sm-1">
+                              งวดจ่ายเงิน
                             </label>
                             <div class="col-sm-9">
                               <select
-                                id="salarybank"
-                                name="salarybank"
+                                id="salaryout"
+                                name="salaryout"
                                 class="form-control"
-                                value={employeeData.salarybank || ""}
-                                onChange={(e) => handleChange(e, "salarybank")}
+                                value={employeeData.salaryout || ""}
+                                onChange={(e) => handleChange(e, "salaryout")}
                               >
                                 <option value="">ไม่ระบุ</option>
-                                <option value="ธนาคารกรุงเทพ">
-                                  ธนาคาร กรุงเทพ
-                                </option>
-                                <option value="ธนาคารกสิกรไทย">
-                                  ธนาคาร กสิกรไทย
-                                </option>
-                                <option value="ธนาคารกรุงไทย">
-                                  ธนาคาร กรุงไทย
-                                </option>
-                                <option value="ธนาคารทหารไทยธนชาต">
-                                  ธนาคาร ทหารไทยธนชาต
-                                </option>
-                                <option value="ธนาคารไทยพาณิชย์">
-                                  ธนาคาร ไทยพาณิชย์
-                                </option>
-                                <option value="ธนาคารกรุงศรีอยุธยา">
-                                  ธนาคาร กรุงศรีอยุธยา
-                                </option>
-                                <option value="ธนาคารเกียรตินาคินภัทร">
-                                  ธนาคาร เกียรตินาคินภัทร
-                                </option>
-                                <option value="ธนาคารซีไอเอ็มบีไทย">
-                                  ธนาคาร ซีไอเอ็มบีไทย
-                                </option>
-                                <option value="ธนาคาร ทิสโก้">
-                                  ธนาคาร ทิสโก้
-                                </option>
-                                <option value="ธนาคารยูโอบี">
-                                  ธนาคาร ยูโอบี
-                                </option>
-                                <option value="ธนาคารไทยเครดิตเพื่อรายย่อย">
-                                  ธนาคาร ไทยเครดิตเพื่อรายย่อย
-                                </option>
-                                <option value="ธนาคารแลนด์ แอนด์ เฮ้าส์">
-                                  ธนาคาร แลนด์ แอนด์ เฮ้าส์
-                                </option>
-                                <option value="ธนาคารไอซีบีซี (ไทย)">
-                                  ธนาคาร ไอซีบีซี (ไทย)
-                                </option>
-                                <option value="ธนาคารพัฒนาวิสาหกิจขนาดกลางและขนาดย่อมแห่งประเทศไทย">
-                                  ธนาคาร พัฒนาวิสาหกิจขนาดกลางและขนาดย่อมแห่งประเทศไทย
-                                </option>
-                                <option value="ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร">
-                                  ธนาคาร เพื่อการเกษตรและสหกรณ์การเกษตร
-                                </option>
-                                <option value="ธนาคารเพื่อการส่งออกและนำเข้าแห่งประเทศไทย">
-                                  ธนาคาร เพื่อการส่งออกและนำเข้าแห่งประเทศไทย
-                                </option>
-                                <option value="ธนาคารออมสิน">
-                                  ธนาคาร ออมสิน
-                                </option>
-                                <option value="ธนาคารอาคารสงเคราะห์">
-                                  ธนาคาร อาคารสงเคราะห์
-                                </option>
+                                <option value="เดือน">เดือน</option>
+                                <option value="ครึ่งเดือน">ครึ่งเดือน</option>
+                                <option value="สัปดาห์">สัปดาห์</option>
+                                <option value="10 วัน">10 วัน</option>
+                                <option value="งวดพิเศษ">งวดพิเศษ</option>
                               </select>
                             </div>
                           </div>
-                        </div>
-                        <div class="col-md-6">
+                          {/* <!--row--> */}
                           <div class="form-group row">
-                            <label
-                              role="banknumber"
-                              class="col-sm-3 col-form-label"
-                            >
-                              เลขที่บัญชี
+                            <label role="salarypayment" class="col-sm-4">
+                              วิธีจ่ายเงิน
                             </label>
                             <div class="col-sm-9">
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="banknumber"
-                                placeholder="เลขที่บัญชี"
-                                value={employeeData.banknumber || ""}
-                                onChange={(e) => handleChange(e, "banknumber")}
-                                onInput={(e) => {
-                                  // Remove any non-digit characters
-                                  e.target.value = e.target.value.replace(/\D/g, "");
-                                }}
-                              />
+                              <div class="icheck-primary d-inline">
+                                <input
+                                  type="radio"
+                                  id="salarypayment"
+                                  name="salarypayment"
+                                  value="เงินสด"
+                                  checked={employeeData.salarypayment === "เงินสด"}
+                                  onChange={(e) => handleChange(e, "salarypayment")}
+                                />{" "}
+                                เงินสด
+                              </div>
+                              <div class="icheck-primary d-inline">
+                                <input
+                                  type="radio"
+                                  id="salarypayment"
+                                  name="salarypayment"
+                                  value="โอนผ่านธนาคาร "
+                                  checked={
+                                    employeeData.salarypayment === "โอนผ่านธนาคาร "
+                                  }
+                                  onChange={(e) => handleChange(e, "salarypayment")}
+                                />{" "}
+                                โอนผ่านธนาคาร
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                      {/* <!--row--> */}
-                    </section>
-                    {/* <!--Frame--> */}
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-9">
-                    <h2 class="title">เงินเพิ่มพิเศษ</h2>
-                    <section class="Frame">
-                      <section class="Frame">
-                        <h4>เงินเพิ่มของหน่วยงาน</h4>
-                        <div className="row">
-                          <div className="col-md-6">
-                            <div className="row">
-                              <div className="col-md-3">
-                                <label role="salaryadd6">รหัส</label>
+                          {/* <!--row--> */}
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="form-group row">
+                                <label
+                                  role="salarybank"
+                                  class="col-sm-3 col-form-label"
+                                >
+                                  ชื่อธนาคาร
+                                </label>
+                                <div class="col-sm-9">
+                                  <select
+                                    id="salarybank"
+                                    name="salarybank"
+                                    class="form-control"
+                                    value={employeeData.salarybank || ""}
+                                    onChange={(e) => handleChange(e, "salarybank")}
+                                  >
+                                    <option value="">ไม่ระบุ</option>
+                                    <option value="ธนาคารกรุงเทพ">
+                                      ธนาคาร กรุงเทพ
+                                    </option>
+                                    <option value="ธนาคารกสิกรไทย">
+                                      ธนาคาร กสิกรไทย
+                                    </option>
+                                    <option value="ธนาคารกรุงไทย">
+                                      ธนาคาร กรุงไทย
+                                    </option>
+                                    <option value="ธนาคารทหารไทยธนชาต">
+                                      ธนาคาร ทหารไทยธนชาต
+                                    </option>
+                                    <option value="ธนาคารไทยพาณิชย์">
+                                      ธนาคาร ไทยพาณิชย์
+                                    </option>
+                                    <option value="ธนาคารกรุงศรีอยุธยา">
+                                      ธนาคาร กรุงศรีอยุธยา
+                                    </option>
+                                    <option value="ธนาคารเกียรตินาคินภัทร">
+                                      ธนาคาร เกียรตินาคินภัทร
+                                    </option>
+                                    <option value="ธนาคารซีไอเอ็มบีไทย">
+                                      ธนาคาร ซีไอเอ็มบีไทย
+                                    </option>
+                                    <option value="ธนาคาร ทิสโก้">
+                                      ธนาคาร ทิสโก้
+                                    </option>
+                                    <option value="ธนาคารยูโอบี">
+                                      ธนาคาร ยูโอบี
+                                    </option>
+                                    <option value="ธนาคารไทยเครดิตเพื่อรายย่อย">
+                                      ธนาคาร ไทยเครดิตเพื่อรายย่อย
+                                    </option>
+                                    <option value="ธนาคารแลนด์ แอนด์ เฮ้าส์">
+                                      ธนาคาร แลนด์ แอนด์ เฮ้าส์
+                                    </option>
+                                    <option value="ธนาคารไอซีบีซี (ไทย)">
+                                      ธนาคาร ไอซีบีซี (ไทย)
+                                    </option>
+                                    <option value="ธนาคารพัฒนาวิสาหกิจขนาดกลางและขนาดย่อมแห่งประเทศไทย">
+                                      ธนาคาร พัฒนาวิสาหกิจขนาดกลางและขนาดย่อมแห่งประเทศไทย
+                                    </option>
+                                    <option value="ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร">
+                                      ธนาคาร เพื่อการเกษตรและสหกรณ์การเกษตร
+                                    </option>
+                                    <option value="ธนาคารเพื่อการส่งออกและนำเข้าแห่งประเทศไทย">
+                                      ธนาคาร เพื่อการส่งออกและนำเข้าแห่งประเทศไทย
+                                    </option>
+                                    <option value="ธนาคารออมสิน">
+                                      ธนาคาร ออมสิน
+                                    </option>
+                                    <option value="ธนาคารอาคารสงเคราะห์">
+                                      ธนาคาร อาคารสงเคราะห์
+                                    </option>
+                                  </select>
+                                </div>
                               </div>
-                              <div className="col-md-3">
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group row">
+                                <label
+                                  role="banknumber"
+                                  class="col-sm-3 col-form-label"
+                                >
+                                  เลขที่บัญชี
+                                </label>
+                                <div class="col-sm-9">
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    id="banknumber"
+                                    placeholder="เลขที่บัญชี"
+                                    value={employeeData.banknumber || ""}
+                                    onChange={(e) => handleChange(e, "banknumber")}
+                                    onInput={(e) => {
+                                      // Remove any non-digit characters
+                                      e.target.value = e.target.value.replace(/\D/g, "");
+                                    }}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          {/* <!--row--> */}
+                        </section>
+                        {/* <!--Frame--> */}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <h2 class="title">เงินเพิ่มพิเศษ</h2>
+                        <section class="Frame">
+                          <section class="Frame">
+                            <h4>เงินเพิ่มของหน่วยงาน</h4>
+                            <div className="row">
+                              <div className="col-md-6">
+                                <div className="row">
+                                  <div className="col-md-3">
+                                    <label role="salaryadd6">รหัส</label>
+                                  </div>
+                                  <div className="col-md-3">
+                                    <label role="salaryadd6">ชื่อรายการ</label>
+                                  </div>
+
+                                  <div className="col-md-3">
+                                    <label role="salaryadd6">จำนวนเงิน</label>
+                                  </div>
+                                  <div className="col-md-3">
+                                    <label role="salaryadd6">ได้เป็นราย</label>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="col-md-6">
+                                <div className="row">
+                                  <div className="col-md-3">
+                                    <label role="salaryadd6">ประเภทพนักงาน</label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            {/* </div> */}
+
+                            {addSalaryWorkplace.map((data, index) => (
+                              <div className="row" key={index}>
+                                <div className="row">
+                                  <div className="col-md-6">
+                                    <div className="row">
+                                      <div className="col-md-3">
+                                        {/* <label role="salaryadd6">จำนวนเงิน</label> */}
+                                        <input
+                                          type="text"
+                                          name="SpSalary"
+                                          className="form-control"
+                                          value={data.codeSpSalary}
+                                          onChange={(e) =>
+                                            handleChangeSpSalary(
+                                              e,
+                                              index,
+                                              "codeSpSalary"
+                                            )
+                                          }
+                                          readOnly
+                                        />
+                                      </div>
+                                      <div className="col-md-3">
+                                        {/* <label role="salaryadd6">ชื่อรายการ</label> */}
+                                        <input
+                                          type="text"
+                                          name="name"
+                                          className="form-control"
+                                          value={data.name}
+                                          onChange={(e) =>
+                                            handleChangeSpSalary(e, index, "name")
+                                          }
+                                          readOnly
+                                        />
+                                      </div>
+
+                                      <div className="col-md-3">
+                                        {/* <label role="salaryadd6">จำนวนเงิน</label> */}
+                                        <input
+                                          type="text"
+                                          name="SpSalary"
+                                          className="form-control"
+                                          value={data.SpSalary}
+                                          onChange={(e) =>
+                                            handleChangeSpSalary(
+                                              e,
+                                              index,
+                                              "SpSalary"
+                                            )
+                                          }
+                                          readOnly
+                                        />
+                                      </div>
+                                      <div className="col-md-3">
+                                        {/* <label role="salaryadd6">ได้เป็นราย</label> */}
+                                        <select
+                                          name="roundOfSalary"
+                                          className="form-control"
+                                          value={data.roundOfSalary}
+                                          onChange={(e) =>
+                                            handleChangeSpSalary(
+                                              e,
+                                              index,
+                                              "roundOfSalary"
+                                            )
+                                          }
+                                          disabled
+                                        >
+                                          <option value="daily">รายวัน</option>
+                                          <option value="monthly">รายเดือน</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="col-md-6">
+                                    <div className="row">
+                                      <div className="col-md-3">
+                                        {/* <label role="salaryadd6">ประเภทพนักงาน</label> */}
+                                        <select
+                                          name="StaffType"
+                                          className="form-control"
+                                          value={data.StaffType}
+                                          onChange={(e) =>
+                                            handleChangeSpSalary(
+                                              e,
+                                              index,
+                                              "StaffType"
+                                            )
+                                          }
+                                          readonly
+                                          disabled
+                                        >
+                                          <option value="">
+                                            เลือกตำแหน่งที่จะมอบให้
+                                          </option>
+                                          <option value="all">ทั้งหมด</option>
+                                          <option value="header">หัวหน้างาน</option>
+                                          <option value="custom">กำหนดเอง</option>
+                                        </select>
+                                      </div>
+
+                                      {data.StaffType === "custom" && (
+                                        <div className="col-md-3">
+                                          {/* <label>ตำแหน่ง</label> */}
+                                          <input
+                                            type="text"
+                                            name="additionalInput"
+                                            className="form-control"
+                                            value={data.nameType}
+                                            onChange={(e) =>
+                                              handleChangeSpSalary(
+                                                e,
+                                                index,
+                                                "nameType"
+                                              )
+                                            }
+                                            readOnly
+                                          />
+                                        </div>
+                                      )}
+                                      <div key={index} className="col-md-1">
+                                        <div>
+                                          <button
+                                            onClick={() => handleAddToSalary(data)}
+                                            className="btn btn-primary"
+                                            style={{
+                                              width: "8rem",
+                                              position: "absolute",
+                                              bottom: "0",
+                                            }}
+                                          >
+                                            ให้สวัสดิการ
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <br />
+                                <br />
+                              </div>
+                            ))}
+                          </section>
+                          <section class="Frame">
+                            <h4>เงินเพิ่มที่ได้รับ</h4>
+                            <div className="row">
+                              <div className="col-md-2">
                                 <label role="salaryadd6">ชื่อรายการ</label>
                               </div>
-
-                              <div className="col-md-3">
+                              <div className="col-md-2">
                                 <label role="salaryadd6">จำนวนเงิน</label>
                               </div>
-                              <div className="col-md-3">
-                                <label role="salaryadd6">ได้เป็นราย</label>
-                              </div>
                             </div>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="row">
-                              <div className="col-md-3">
-                                <label role="salaryadd6">ประเภทพนักงาน</label>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        {/* </div> */}
+                            {addSalary &&
+                              addSalary.map(
+                                (data, index) =>
+                                  data.name !== "" && (
+                                    <div className="row" key={index}>
+                                      <div className="col-md-2">
+                                        {/* <label role="salaryadd6">ชื่อรายการ</label> */}
+                                        <input
+                                          type="text"
+                                          name="name"
+                                          className="form-control"
+                                          value={data.name}
+                                          onChange={(e) =>
+                                            handleChangeSpSalary(e, index, "name")
+                                          }
+                                          readOnly
+                                        />
+                                      </div>
 
-                        {addSalaryWorkplace.map((data, index) => (
-                          <div className="row" key={index}>
-                            <div className="row">
-                              <div className="col-md-6">
-                                <div className="row">
-                                  <div className="col-md-3">
-                                    {/* <label role="salaryadd6">จำนวนเงิน</label> */}
-                                    <input
-                                      type="text"
-                                      name="SpSalary"
-                                      className="form-control"
-                                      value={data.codeSpSalary}
-                                      onChange={(e) =>
-                                        handleChangeSpSalary(
-                                          e,
-                                          index,
-                                          "codeSpSalary"
-                                        )
-                                      }
-                                      readOnly
-                                    />
-                                  </div>
-                                  <div className="col-md-3">
-                                    {/* <label role="salaryadd6">ชื่อรายการ</label> */}
-                                    <input
-                                      type="text"
-                                      name="name"
-                                      className="form-control"
-                                      value={data.name}
-                                      onChange={(e) =>
-                                        handleChangeSpSalary(e, index, "name")
-                                      }
-                                      readOnly
-                                    />
-                                  </div>
-
-                                  <div className="col-md-3">
-                                    {/* <label role="salaryadd6">จำนวนเงิน</label> */}
-                                    <input
-                                      type="text"
-                                      name="SpSalary"
-                                      className="form-control"
-                                      value={data.SpSalary}
-                                      onChange={(e) =>
-                                        handleChangeSpSalary(
-                                          e,
-                                          index,
-                                          "SpSalary"
-                                        )
-                                      }
-                                      readOnly
-                                    />
-                                  </div>
-                                  <div className="col-md-3">
-                                    {/* <label role="salaryadd6">ได้เป็นราย</label> */}
-                                    <select
-                                      name="roundOfSalary"
-                                      className="form-control"
-                                      value={data.roundOfSalary}
-                                      onChange={(e) =>
-                                        handleChangeSpSalary(
-                                          e,
-                                          index,
-                                          "roundOfSalary"
-                                        )
-                                      }
-                                      disabled
-                                    >
-                                      <option value="daily">รายวัน</option>
-                                      <option value="monthly">รายเดือน</option>
-                                    </select>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="col-md-6">
-                                <div className="row">
-                                  <div className="col-md-3">
-                                    {/* <label role="salaryadd6">ประเภทพนักงาน</label> */}
-                                    <select
-                                      name="StaffType"
-                                      className="form-control"
-                                      value={data.StaffType}
-                                      onChange={(e) =>
-                                        handleChangeSpSalary(
-                                          e,
-                                          index,
-                                          "StaffType"
-                                        )
-                                      }
-                                      readonly
-                                      disabled
-                                    >
-                                      <option value="">
-                                        เลือกตำแหน่งที่จะมอบให้
-                                      </option>
-                                      <option value="all">ทั้งหมด</option>
-                                      <option value="header">หัวหน้างาน</option>
-                                      <option value="custom">กำหนดเอง</option>
-                                    </select>
-                                  </div>
-
-                                  {data.StaffType === "custom" && (
-                                    <div className="col-md-3">
-                                      {/* <label>ตำแหน่ง</label> */}
-                                      <input
-                                        type="text"
-                                        name="additionalInput"
-                                        className="form-control"
-                                        value={data.nameType}
-                                        onChange={(e) =>
-                                          handleChangeSpSalary(
-                                            e,
-                                            index,
-                                            "nameType"
-                                          )
-                                        }
-                                        readOnly
-                                      />
-                                    </div>
-                                  )}
-                                  <div key={index} className="col-md-1">
-                                    <div>
-                                      <button
-                                        onClick={() => handleAddToSalary(data)}
-                                        className="btn btn-primary"
-                                        style={{
-                                          width: "8rem",
-                                          position: "absolute",
-                                          bottom: "0",
-                                        }}
-                                      >
-                                        ให้สวัสดิการ
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <br />
-                            <br />
-                          </div>
-                        ))}
-                      </section>
-                      <section class="Frame">
-                        <h4>เงินเพิ่มที่ได้รับ</h4>
-                        <div className="row">
-                          <div className="col-md-2">
-                            <label role="salaryadd6">ชื่อรายการ</label>
-                          </div>
-                          <div className="col-md-2">
-                            <label role="salaryadd6">จำนวนเงิน</label>
-                          </div>
-                        </div>
-                        {addSalary &&
-                          addSalary.map(
-                            (data, index) =>
-                              data.name !== "" && (
-                                <div className="row" key={index}>
-                                  <div className="col-md-2">
-                                    {/* <label role="salaryadd6">ชื่อรายการ</label> */}
-                                    <input
-                                      type="text"
-                                      name="name"
-                                      className="form-control"
-                                      value={data.name}
-                                      onChange={(e) =>
-                                        handleChangeSpSalary(e, index, "name")
-                                      }
-                                      readOnly
-                                    />
-                                  </div>
-
-                                  <div className="col-md-2">
-                                    {/* <label role="salaryadd6">จำนวนเงิน</label> */}
-                                    <input
-                                      type="text"
-                                      name="SpSalary"
-                                      className="form-control"
-                                      value={data.SpSalary}
-                                      onChange={(e) =>
-                                        handleChangeSpSalary(
-                                          e,
-                                          index,
-                                          "SpSalary"
-                                        )
-                                      }
-                                      readOnly
-                                    />
-                                  </div>
-                                  {/* <div className="col-md-2">
+                                      <div className="col-md-2">
+                                        {/* <label role="salaryadd6">จำนวนเงิน</label> */}
+                                        <input
+                                          type="text"
+                                          name="SpSalary"
+                                          className="form-control"
+                                          value={data.SpSalary}
+                                          onChange={(e) =>
+                                            handleChangeSpSalary(
+                                              e,
+                                              index,
+                                              "SpSalary"
+                                            )
+                                          }
+                                          readOnly
+                                        />
+                                      </div>
+                                      {/* <div className="col-md-2">
                                                             <label role="salaryadd6">ได้เป็นราย</label>
                                                             <select
                                                                 name="roundOfSalary"
@@ -1885,7 +1887,7 @@ function Salary() {
                                                                 <option value="monthly">รายเดือน</option>
                                                             </select>
                                                         </div> */}
-                                  {/* <div className="col-md-2">
+                                      {/* <div className="col-md-2">
                                                             <label role="salaryadd6">ประเภทพนักงาน</label>
                                                             <select
                                                                 name="StaffType"
@@ -1901,426 +1903,433 @@ function Salary() {
                                                             </select>
                                                         </div> */}
 
-                                  {data.StaffType === "custom" && (
-                                    <div className="col-md-2">
-                                      {/* <label>ตำแหน่ง</label> */}
-                                      <input
-                                        type="text"
-                                        name="additionalInput"
-                                        className="form-control"
-                                        value={data.nameType}
-                                        onChange={(e) =>
-                                          handleChangeSpSalary(
-                                            e,
-                                            index,
-                                            "nameType"
-                                          )
-                                        }
-                                        readOnly
-                                      />
+                                      {data.StaffType === "custom" && (
+                                        <div className="col-md-2">
+                                          {/* <label>ตำแหน่ง</label> */}
+                                          <input
+                                            type="text"
+                                            name="additionalInput"
+                                            className="form-control"
+                                            value={data.nameType}
+                                            onChange={(e) =>
+                                              handleChangeSpSalary(
+                                                e,
+                                                index,
+                                                "nameType"
+                                              )
+                                            }
+                                            readOnly
+                                          />
+                                        </div>
+                                      )}
+                                      <br />
+                                      <br />
+                                      <div key={index} className="col-md-1">
+                                        <div>
+                                          <button
+                                            onClick={() =>
+                                              handleRemoveFromSalary(data)
+                                            }
+                                            className="btn btn-danger"
+                                            style={{
+                                              width: "5rem",
+                                              position: "absolute",
+                                              bottom: "0",
+                                            }}
+                                          >
+                                            นำออก
+                                          </button>
+                                        </div>
+                                      </div>
                                     </div>
-                                  )}
-                                  <br />
-                                  <br />
-                                  <div key={index} className="col-md-1">
-                                    <div>
-                                      <button
-                                        onClick={() =>
-                                          handleRemoveFromSalary(data)
-                                        }
-                                        className="btn btn-danger"
-                                        style={{
-                                          width: "5rem",
-                                          position: "absolute",
-                                          bottom: "0",
-                                        }}
-                                      >
-                                        นำออก
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-                              )
-                          )}
-                      </section>
-                      {/* < button type='button' onClick={handleAddInput} class="btn btn-primary" >เพิ่ม</button> */}
-                      {/* <pre>{JSON.stringify(formData, null, 2)}</pre> */}
-                      {/* m1 */}
-                    </section>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-9">
-                    <section class="Frame">
-                      <div class="col-md-12">
-                        <h2 class="title">สวัสดิการวันลา</h2>
-                        <div class="row">
-                          <div class="col-md-9">
-                            <section class="Frame">
-                              <div class="col-md-12">
-                                <div class="row">
-                                  <div class="col-md-6">
-                                    <div class="form-group">
-                                      <label role="remainbusinessleave">
-                                        วันลากิจคงเหลือ
-                                      </label>
-                                      <input
-                                        type="text"
-                                        class="form-control"
-                                        id="remainbusinessleave"
-                                        placeholder="วันลากิจคงเหลือ"
-                                        value={employeeData.remainbusinessleave}
-                                        onChange={(e) =>
-                                          handleChange(e, "remainbusinessleave")
-                                        }
-                                        onInput={(e) => {
-                                          // Remove any non-digit characters
-                                          e.target.value = e.target.value.replace(/\D/g, "");
-                                        }}
-                                      />
-                                    </div>
-                                  </div>
-
-                                  <div class="col-md-6">
-                                    <div class="form-group">
-                                      <label role="businessleavesalary">
-                                        จำนวนเงินต่อวัน
-                                      </label>
-                                      <input
-                                        type="text"
-                                        class="form-control"
-                                        id="businessleavesalary"
-                                        placeholder="จำนวนเงินต่อวัน"
-                                        value={employeeData.businessleavesalary}
-                                        onChange={(e) =>
-                                          handleChange(e, "businessleavesalary")
-                                        }
-                                        onInput={(e) => {
-                                          // Remove any non-digit characters
-                                          e.target.value = e.target.value.replace(/\D/g, "");
-                                        }}
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                                {/* <!--row--> */}
-                                <div class="row">
-                                  <div class="col-md-6">
-                                    <div class="form-group">
-                                      <label role="remainsickleave">
-                                        วันลาป่วยคงเหลือ
-                                      </label>
-                                      <input
-                                        type="text"
-                                        class="form-control"
-                                        id="remainsickleave"
-                                        placeholder="วันลาป่วยคงเหลือ"
-                                        value={employeeData.remainsickleave}
-                                        onChange={(e) =>
-                                          handleChange(e, "remainsickleave")
-                                        }
-                                        onInput={(e) => {
-                                          // Remove any non-digit characters
-                                          e.target.value = e.target.value.replace(/\D/g, "");
-                                        }}
-                                      />
-                                    </div>
-                                  </div>
-
-                                  <div class="col-md-6">
-                                    <div class="form-group">
-                                      <label role="sickleavesalary">
-                                        จำนวนเงินต่อวัน
-                                      </label>
-                                      <input
-                                        type="text"
-                                        class="form-control"
-                                        id="sickleavesalary"
-                                        placeholder="จำนวนเงินต่อวัน"
-                                        value={employeeData.sickleavesalary}
-                                        onChange={(e) =>
-                                          handleChange(e, "sickleavesalary")
-                                        }
-                                        onInput={(e) => {
-                                          // Remove any non-digit characters
-                                          e.target.value = e.target.value.replace(/\D/g, "");
-                                        }}
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                                {/* <!--row--> */}
-                                <div class="row">
-                                  <div class="col-md-6">
-                                    <div class="form-group">
-                                      <label role="remainvacation">
-                                        วันลาพักร้อนคงเหลือ
-                                      </label>
-                                      <input
-                                        type="text"
-                                        class="form-control"
-                                        id="remainvacation"
-                                        placeholder="วันลาพักร้อนคงเหลือ"
-                                        value={employeeData.remainvacation}
-                                        onChange={(e) =>
-                                          handleChange(e, "remainvacation")
-                                        }
-                                        onInput={(e) => {
-                                          // Remove any non-digit characters
-                                          e.target.value = e.target.value.replace(/\D/g, "");
-                                        }}
-                                      />
-                                    </div>
-                                  </div>
-
-                                  <div class="col-md-6">
-                                    <div class="form-group">
-                                      <label role="maternityleave">
-                                        จำนวนเงินต่อวัน
-                                      </label>
-                                      <input
-                                        type="text"
-                                        class="form-control"
-                                        id="maternityleave"
-                                        placeholder="จำนวนเงินต่อวัน"
-                                        value={employeeData.maternityleave}
-                                        onChange={(e) =>
-                                          handleChange(e, "maternityleave")
-                                        }
-                                        onInput={(e) => {
-                                          // Remove any non-digit characters
-                                          e.target.value = e.target.value.replace(/\D/g, "");
-                                        }}
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                                {/* <!--row--> */}
-                                <div class="row">
-                                  <div class="col-md-6">
-                                    <div class="form-group">
-                                      <label role="maternityleavesalary">
-                                        วันลาคลอดคงเหลือ
-                                      </label>
-                                      <input
-                                        type="text"
-                                        class="form-control"
-                                        id="maternityleavesalary"
-                                        placeholder="วันลาคลอดคงเหลือ"
-                                        value={
-                                          employeeData.maternityleavesalary
-                                        }
-                                        onChange={(e) =>
-                                          handleChange(
-                                            e,
-                                            "maternityleavesalary"
-                                          )
-                                        }
-                                        onInput={(e) => {
-                                          // Remove any non-digit characters
-                                          e.target.value = e.target.value.replace(/\D/g, "");
-                                        }}
-                                      />
-                                    </div>
-                                  </div>
-
-                                  <div class="col-md-6">
-                                    <div class="form-group">
-                                      <label role="vacationsalary">
-                                        จำนวนเงินต่อวัน
-                                      </label>
-                                      <input
-                                        type="text"
-                                        class="form-control"
-                                        id="vacationsalary"
-                                        placeholder="จำนวนเงินต่อวัน"
-                                        value={employeeData.vacationsalary}
-                                        onChange={(e) =>
-                                          handleChange(e, "vacationsalary")
-                                        }
-                                        onInput={(e) => {
-                                          // Remove any non-digit characters
-                                          e.target.value = e.target.value.replace(/\D/g, "");
-                                        }}
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                                {/* <!--row--> */}
-                                <div class="row">
-                                  <div class="col-md-6">
-                                    <div class="form-group">
-                                      <label role="militaryleave">
-                                        วันลาเพื่อเกณฑ์ทหารคงเหลือ
-                                      </label>
-                                      <input
-                                        type="text"
-                                        class="form-control"
-                                        id="militaryleave"
-                                        placeholder="วันลาเพื่อเกณฑ์ทหารคงเหลือ"
-                                        value={employeeData.militaryleave}
-                                        onChange={(e) =>
-                                          handleChange(e, "militaryleave")
-                                        }
-                                        onInput={(e) => {
-                                          // Remove any non-digit characters
-                                          e.target.value = e.target.value.replace(/\D/g, "");
-                                        }}
-                                      />
-                                    </div>
-                                  </div>
-
-                                  <div class="col-md-6">
-                                    <div class="form-group">
-                                      <label role="militaryleavesalary">
-                                        จำนวนเงินต่อวัน
-                                      </label>
-                                      <input
-                                        type="text"
-                                        class="form-control"
-                                        id="militaryleavesalary"
-                                        placeholder="จำนวนเงินต่อวัน"
-                                        value={employeeData.militaryleavesalary}
-                                        onChange={(e) =>
-                                          handleChange(e, "militaryleavesalary")
-                                        }
-                                        onInput={(e) => {
-                                          // Remove any non-digit characters
-                                          e.target.value = e.target.value.replace(/\D/g, "");
-                                        }}
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                                {/* <!--row--> */}
-                                <div class="row">
-                                  <div class="col-md-6">
-                                    <div class="form-group">
-                                      <label role="sterilization">
-                                        วันลาเพื่อทำหมันคงเหลือ
-                                      </label>
-                                      <input
-                                        type="text"
-                                        class="form-control"
-                                        id="sterilization"
-                                        placeholder="วันลาเพื่อทำหมันคงเหลือ"
-                                        value={employeeData.sterilization}
-                                        onChange={(e) =>
-                                          handleChange(e, "sterilization")
-                                        }
-                                        onInput={(e) => {
-                                          // Remove any non-digit characters
-                                          e.target.value = e.target.value.replace(/\D/g, "");
-                                        }}
-                                      />
-                                    </div>
-                                  </div>
-
-                                  <div class="col-md-6">
-                                    <div class="form-group">
-                                      <label role="sterilizationsalary">
-                                        จำนวนเงินต่อวัน
-                                      </label>
-                                      <input
-                                        type="text"
-                                        class="form-control"
-                                        id="sterilizationsalary"
-                                        placeholder="จำนวนเงินต่อวัน"
-                                        value={employeeData.sterilizationsalary}
-                                        onChange={(e) =>
-                                          handleChange(e, "sterilizationsalary")
-                                        }
-                                        onInput={(e) => {
-                                          // Remove any non-digit characters
-                                          e.target.value = e.target.value.replace(/\D/g, "");
-                                        }}
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                                {/* <!--row--> */}
-                                <div class="row">
-                                  <div class="col-md-6">
-                                    <div class="form-group">
-                                      <label role="leavefortraining">
-                                        วันลาเพื่อฝึกอบรมคงเหลือ
-                                      </label>
-                                      <input
-                                        type="text"
-                                        class="form-control"
-                                        id="leavefortraining"
-                                        placeholder="วันลาเพื่อฝึกอบรมคงเหลือ"
-                                        value={employeeData.leavefortraining}
-                                        onChange={(e) =>
-                                          handleChange(e, "leavefortraining")
-                                        }
-                                        onInput={(e) => {
-                                          // Remove any non-digit characters
-                                          e.target.value = e.target.value.replace(/\D/g, "");
-                                        }}
-                                      />
-                                    </div>
-                                  </div>
-
-                                  <div class="col-md-6">
-                                    <div class="form-group">
-                                      <label role="[leavefortrainingsalary, ">
-                                        จำนวนเงินต่อวัน
-                                      </label>
-                                      <input
-                                        type="text"
-                                        class="form-control"
-                                        id="[leavefortrainingsalary, "
-                                        placeholder="จำนวนเงินต่อวัน"
-                                        value={
-                                          employeeData.leavefortrainingsalary
-                                        }
-                                        onChange={(e) =>
-                                          handleChange(
-                                            e,
-                                            "leavefortrainingsalary"
-                                          )
-                                        }
-                                        onInput={(e) => {
-                                          // Remove any non-digit characters
-                                          e.target.value = e.target.value.replace(/\D/g, "");
-                                        }}
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                                {/* <!--row--> */}
-                              </div>
-                              {/* <!--col-md-12--> */}
-                            </section>
-                            {/* <!--Frame--> */}
-                          </div>
-                        </div>
-
-                        {/* <!--row--> */}
+                                  )
+                              )}
+                          </section>
+                          {/* < button type='button' onClick={handleAddInput} class="btn btn-primary" >เพิ่ม</button> */}
+                          {/* <pre>{JSON.stringify(formData, null, 2)}</pre> */}
+                          {/* m1 */}
+                        </section>
                       </div>
-                      {/* <!--col-md-12--> */}
-                    </section>
-                    {/* <!--Frame--> */}
-                  </div>
-                </div>
+                    </div>
 
-                <div class="line_btn">
-                  <button
-                    type="submit"
-                    class="btn b_save"
-                    onClick={updateEmployee}
-                  >
-                    <i class="nav-icon fas fa-save"></i> &nbsp;บันทึก
-                  </button>
-                  <button type="reset" class="btn clean"
-                  onClick={() => window.location.reload()}
-                  >
-                    <i class="far fa-window-close"></i> &nbsp;ยกเลิก
-                  </button>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <section class="Frame">
+                          <div class="col-md-12">
+                            <h2 class="title">สวัสดิการวันลา</h2>
+                            <div class="row">
+                              <div class="col-md-12">
+                                <section class="Frame">
+                                  <div class="col-md-12">
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          <label role="remainbusinessleave">
+                                            วันลากิจคงเหลือ
+                                          </label>
+                                          <input
+                                            type="text"
+                                            class="form-control"
+                                            id="remainbusinessleave"
+                                            placeholder="วันลากิจคงเหลือ"
+                                            value={employeeData.remainbusinessleave}
+                                            onChange={(e) =>
+                                              handleChange(e, "remainbusinessleave")
+                                            }
+                                            onInput={(e) => {
+                                              // Remove any non-digit characters
+                                              e.target.value = e.target.value.replace(/\D/g, "");
+                                            }}
+                                          />
+                                        </div>
+                                      </div>
+
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          <label role="businessleavesalary">
+                                            จำนวนเงินต่อวัน
+                                          </label>
+                                          <input
+                                            type="text"
+                                            class="form-control"
+                                            id="businessleavesalary"
+                                            placeholder="จำนวนเงินต่อวัน"
+                                            value={employeeData.businessleavesalary}
+                                            onChange={(e) =>
+                                              handleChange(e, "businessleavesalary")
+                                            }
+                                            onInput={(e) => {
+                                              // Remove any non-digit characters
+                                              e.target.value = e.target.value.replace(/\D/g, "");
+                                            }}
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                    {/* <!--row--> */}
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          <label role="remainsickleave">
+                                            วันลาป่วยคงเหลือ
+                                          </label>
+                                          <input
+                                            type="text"
+                                            class="form-control"
+                                            id="remainsickleave"
+                                            placeholder="วันลาป่วยคงเหลือ"
+                                            value={employeeData.remainsickleave}
+                                            onChange={(e) =>
+                                              handleChange(e, "remainsickleave")
+                                            }
+                                            onInput={(e) => {
+                                              // Remove any non-digit characters
+                                              e.target.value = e.target.value.replace(/\D/g, "");
+                                            }}
+                                          />
+                                        </div>
+                                      </div>
+
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          <label role="sickleavesalary">
+                                            จำนวนเงินต่อวัน
+                                          </label>
+                                          <input
+                                            type="text"
+                                            class="form-control"
+                                            id="sickleavesalary"
+                                            placeholder="จำนวนเงินต่อวัน"
+                                            value={employeeData.sickleavesalary}
+                                            onChange={(e) =>
+                                              handleChange(e, "sickleavesalary")
+                                            }
+                                            onInput={(e) => {
+                                              // Remove any non-digit characters
+                                              e.target.value = e.target.value.replace(/\D/g, "");
+                                            }}
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                    {/* <!--row--> */}
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          <label role="remainvacation">
+                                            วันลาพักร้อนคงเหลือ
+                                          </label>
+                                          <input
+                                            type="text"
+                                            class="form-control"
+                                            id="remainvacation"
+                                            placeholder="วันลาพักร้อนคงเหลือ"
+                                            value={employeeData.remainvacation}
+                                            onChange={(e) =>
+                                              handleChange(e, "remainvacation")
+                                            }
+                                            onInput={(e) => {
+                                              // Remove any non-digit characters
+                                              e.target.value = e.target.value.replace(/\D/g, "");
+                                            }}
+                                          />
+                                        </div>
+                                      </div>
+
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          <label role="maternityleave">
+                                            จำนวนเงินต่อวัน
+                                          </label>
+                                          <input
+                                            type="text"
+                                            class="form-control"
+                                            id="maternityleave"
+                                            placeholder="จำนวนเงินต่อวัน"
+                                            value={employeeData.maternityleave}
+                                            onChange={(e) =>
+                                              handleChange(e, "maternityleave")
+                                            }
+                                            onInput={(e) => {
+                                              // Remove any non-digit characters
+                                              e.target.value = e.target.value.replace(/\D/g, "");
+                                            }}
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                    {/* <!--row--> */}
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          <label role="maternityleavesalary">
+                                            วันลาคลอดคงเหลือ
+                                          </label>
+                                          <input
+                                            type="text"
+                                            class="form-control"
+                                            id="maternityleavesalary"
+                                            placeholder="วันลาคลอดคงเหลือ"
+                                            value={
+                                              employeeData.maternityleavesalary
+                                            }
+                                            onChange={(e) =>
+                                              handleChange(
+                                                e,
+                                                "maternityleavesalary"
+                                              )
+                                            }
+                                            onInput={(e) => {
+                                              // Remove any non-digit characters
+                                              e.target.value = e.target.value.replace(/\D/g, "");
+                                            }}
+                                          />
+                                        </div>
+                                      </div>
+
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          <label role="vacationsalary">
+                                            จำนวนเงินต่อวัน
+                                          </label>
+                                          <input
+                                            type="text"
+                                            class="form-control"
+                                            id="vacationsalary"
+                                            placeholder="จำนวนเงินต่อวัน"
+                                            value={employeeData.vacationsalary}
+                                            onChange={(e) =>
+                                              handleChange(e, "vacationsalary")
+                                            }
+                                            onInput={(e) => {
+                                              // Remove any non-digit characters
+                                              e.target.value = e.target.value.replace(/\D/g, "");
+                                            }}
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                    {/* <!--row--> */}
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          <label role="militaryleave">
+                                            วันลาเพื่อเกณฑ์ทหารคงเหลือ
+                                          </label>
+                                          <input
+                                            type="text"
+                                            class="form-control"
+                                            id="militaryleave"
+                                            placeholder="วันลาเพื่อเกณฑ์ทหารคงเหลือ"
+                                            value={employeeData.militaryleave}
+                                            onChange={(e) =>
+                                              handleChange(e, "militaryleave")
+                                            }
+                                            onInput={(e) => {
+                                              // Remove any non-digit characters
+                                              e.target.value = e.target.value.replace(/\D/g, "");
+                                            }}
+                                          />
+                                        </div>
+                                      </div>
+
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          <label role="militaryleavesalary">
+                                            จำนวนเงินต่อวัน
+                                          </label>
+                                          <input
+                                            type="text"
+                                            class="form-control"
+                                            id="militaryleavesalary"
+                                            placeholder="จำนวนเงินต่อวัน"
+                                            value={employeeData.militaryleavesalary}
+                                            onChange={(e) =>
+                                              handleChange(e, "militaryleavesalary")
+                                            }
+                                            onInput={(e) => {
+                                              // Remove any non-digit characters
+                                              e.target.value = e.target.value.replace(/\D/g, "");
+                                            }}
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                    {/* <!--row--> */}
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          <label role="sterilization">
+                                            วันลาเพื่อทำหมันคงเหลือ
+                                          </label>
+                                          <input
+                                            type="text"
+                                            class="form-control"
+                                            id="sterilization"
+                                            placeholder="วันลาเพื่อทำหมันคงเหลือ"
+                                            value={employeeData.sterilization}
+                                            onChange={(e) =>
+                                              handleChange(e, "sterilization")
+                                            }
+                                            onInput={(e) => {
+                                              // Remove any non-digit characters
+                                              e.target.value = e.target.value.replace(/\D/g, "");
+                                            }}
+                                          />
+                                        </div>
+                                      </div>
+
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          <label role="sterilizationsalary">
+                                            จำนวนเงินต่อวัน
+                                          </label>
+                                          <input
+                                            type="text"
+                                            class="form-control"
+                                            id="sterilizationsalary"
+                                            placeholder="จำนวนเงินต่อวัน"
+                                            value={employeeData.sterilizationsalary}
+                                            onChange={(e) =>
+                                              handleChange(e, "sterilizationsalary")
+                                            }
+                                            onInput={(e) => {
+                                              // Remove any non-digit characters
+                                              e.target.value = e.target.value.replace(/\D/g, "");
+                                            }}
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                    {/* <!--row--> */}
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          <label role="leavefortraining">
+                                            วันลาเพื่อฝึกอบรมคงเหลือ
+                                          </label>
+                                          <input
+                                            type="text"
+                                            class="form-control"
+                                            id="leavefortraining"
+                                            placeholder="วันลาเพื่อฝึกอบรมคงเหลือ"
+                                            value={employeeData.leavefortraining}
+                                            onChange={(e) =>
+                                              handleChange(e, "leavefortraining")
+                                            }
+                                            onInput={(e) => {
+                                              // Remove any non-digit characters
+                                              e.target.value = e.target.value.replace(/\D/g, "");
+                                            }}
+                                          />
+                                        </div>
+                                      </div>
+
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          <label role="[leavefortrainingsalary, ">
+                                            จำนวนเงินต่อวัน
+                                          </label>
+                                          <input
+                                            type="text"
+                                            class="form-control"
+                                            id="[leavefortrainingsalary, "
+                                            placeholder="จำนวนเงินต่อวัน"
+                                            value={
+                                              employeeData.leavefortrainingsalary
+                                            }
+                                            onChange={(e) =>
+                                              handleChange(
+                                                e,
+                                                "leavefortrainingsalary"
+                                              )
+                                            }
+                                            onInput={(e) => {
+                                              // Remove any non-digit characters
+                                              e.target.value = e.target.value.replace(/\D/g, "");
+                                            }}
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                    {/* <!--row--> */}
+                                  </div>
+                                  {/* <!--col-md-12--> */}
+                                </section>
+                                {/* <!--Frame--> */}
+                              </div>
+                            </div>
+
+                            {/* <!--row--> */}
+                          </div>
+                          {/* <!--col-md-12--> */}
+                        </section>
+                        {/* <!--Frame--> */}
+                      </div>
+                    </div>
+
+                    <div class="line_btn">
+                      <button
+                        type="submit"
+                        class="btn b_save"
+                        onClick={updateEmployee}
+                      >
+                        <i class="nav-icon fas fa-save"></i> &nbsp;บันทึก
+                      </button>
+                      <button type="reset" class="btn clean"
+                        onClick={() => window.location.reload()}
+                      >
+                        <i class="far fa-window-close"></i> &nbsp;ยกเลิก
+                      </button>
+                    </div>
+                  </form>
                 </div>
-              </form>
+                <div class="col-md-3">
+                  <section class="Frame">
+                    <EmployeesSelected onEmployeeSelect={onEmployeeSelect} />
+                  </section>
+                </div>
+              </div>
             </div>
 
             {/* <!-- /.container-fluid --> */}

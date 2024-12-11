@@ -399,560 +399,567 @@ function OtherExpenses() {
                     <!-- Main content --> */}
                     <section class="content">
                         <div class="container-fluid">
-                            <form onSubmit={handleManageEmployee}>
-                                <h2 class="title">ข้อมูลพนักงาน</h2>
-                                <div class="row">
-                                    <div class="col-md-9">
-                                        <section class="Frame">
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="form-group row">
-                                                        <div class="col-md-2 col-form-label"><span class="txt-w">รหัส </span></div>
-                                                        <div class="col-md-10">
-                                                            <input type="text" class="form-control" id="id" placeholder="รหัส" value={id} onChange={(e) => setId(e.target.value)} />
-                                                            {/* <input type="number" pattern="[0-9]*" value={number2} onChange={handleNumber2Change} /> */}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group row">
-                                                        <div class="col-md-2 col-form-label"><span class="txt-w">ชื่อ </span></div>
-                                                        <div class="col-md-10">
-                                                            <input type="text" class="form-control" id="name" placeholder="ชื่อ" value={name} onChange={(e) => setName(e.target.value)} />
-                                                            {/* <input type="number" pattern="[0-9]*" value={number2} onChange={handleNumber2Change} /> */}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group row">
-                                                        <div class="col-md-2 col-form-label"><span class="txt-w">หน่วยงาน </span></div>
-                                                        <div class="col-md-10">
-                                                            <input type="text" class="form-control" id="agency" placeholder="หน่วยงาน" value={agency} onChange={(e) => setAgency(e.target.value)} />
-                                                            {/* <input type="number" pattern="[0-9]*" value={number2} onChange={handleNumber2Change} /> */}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </section>
-                                        {/* <!--Frame--> */}
-                                    </div>
-                                    <div class="col-md-3">
-                                        <section class="Frame"><EmployeesSelected onEmployeeSelect={onEmployeeSelect} /></section>
-                                    </div>
-                                </div>
-                                <h2 class="title">บัตรพนักงาน</h2>
-                                <div class="row">
-                                    <div class="col-md-9">
-                                        <section class="Frame">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group row">
-                                                        <div class="col-md-4 col-form-label"><span class="txt-w">ทำบัตรใหม่ </span><span class="txt-label">อันละ</span></div>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <form onSubmit={handleManageEmployee}>
+                                        <h2 class="title">ข้อมูลพนักงาน</h2>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <section class="Frame">
+                                                    <div class="row">
                                                         <div class="col-md-4">
-                                                            <input type="number" class="form-control" pattern="[0-9]*" value={employeeData.number1}
-                                                                //  onChange={handleNumber1Change} 
+                                                            <div class="form-group row">
+                                                                <div class="col-md-2 col-form-label"><span class="txt-w">รหัส </span></div>
+                                                                <div class="col-md-10">
+                                                                    <input type="text" class="form-control" id="id" placeholder="รหัส" value={id} onChange={(e) => setId(e.target.value)} />
+                                                                    {/* <input type="number" pattern="[0-9]*" value={number2} onChange={handleNumber2Change} /> */}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-2 col-form-label"><span class="txt-w">ชื่อ </span></div>
+                                                                <div class="col-md-10">
+                                                                    <input type="text" class="form-control" id="name" placeholder="ชื่อ" value={name} onChange={(e) => setName(e.target.value)} />
+                                                                    {/* <input type="number" pattern="[0-9]*" value={number2} onChange={handleNumber2Change} /> */}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-2 col-form-label"><span class="txt-w">หน่วยงาน </span></div>
+                                                                <div class="col-md-10">
+                                                                    <input type="text" class="form-control" id="agency" placeholder="หน่วยงาน" value={agency} onChange={(e) => setAgency(e.target.value)} />
+                                                                    {/* <input type="number" pattern="[0-9]*" value={number2} onChange={handleNumber2Change} /> */}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                                {/* <!--Frame--> */}
+                                            </div>
+                                            {/* <div class="col-md-3">
+                                                <section class="Frame"><EmployeesSelected onEmployeeSelect={onEmployeeSelect} /></section>
+                                            </div> */}
+                                        </div>
+                                        <h2 class="title">บัตรพนักงาน</h2>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <section class="Frame">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-4 col-form-label"><span class="txt-w">ทำบัตรใหม่ </span><span class="txt-label">อันละ</span></div>
+                                                                <div class="col-md-4">
+                                                                    <input type="number" class="form-control" pattern="[0-9]*" value={employeeData.number1}
+                                                                        //  onChange={handleNumber1Change} 
+                                                                        onChange={(e) => {
+                                                                            handleChange(e, 'number1');
+                                                                            handleNumber1Change(e);
+                                                                        }}
+                                                                    />
+                                                                </div>
+                                                                <label class="col-md-1 col-form-label">บาท</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <label class="col-md-2 col-form-label">จำนวน</label>
+                                                                <div class="col-md-3">
+                                                                    <input type="number" class="form-control" pattern="[0-9]*" value={employeeData.number2}
+                                                                        //  onChange={handleNumber2Change} 
+                                                                        onChange={(e) => {
+                                                                            handleChange(e, 'number2');
+                                                                            handleNumber2Change(e);
+                                                                        }}
+                                                                    />
+                                                                </div>
+                                                                <label class="col-md-1 col-form-label">อัน</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                                {/* <!--Frame--> */}
+                                            </div>
+                                        </div>
+                                        <h2 class="title">สุขภาพ</h2>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <section class="Frame">
+                                                    <div class="row form-group">
+                                                        <label class="col-md-4 col-form-label">ตรวจสุขภาพก่อนเริ่มงาน</label>
+                                                        <div class="col-md-2">
+                                                            <input type="text" class="form-control" value={employeeData.input1}
+                                                                // onChange={handleInputChange1} 
                                                                 onChange={(e) => {
-                                                                    handleChange(e, 'number1');
-                                                                    handleNumber1Change(e);
+                                                                    handleChange(e, 'input1');
+                                                                    handleInputChange1(e);
                                                                 }}
                                                             />
                                                         </div>
                                                         <label class="col-md-1 col-form-label">บาท</label>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="row">
-                                                        <label class="col-md-2 col-form-label">จำนวน</label>
-                                                        <div class="col-md-3">
-                                                            <input type="number" class="form-control" pattern="[0-9]*" value={employeeData.number2}
-                                                                //  onChange={handleNumber2Change} 
+                                                    <div class="row form-group">
+                                                        <label class="col-md-4 col-form-label">ตรวจสุขภาพประจำปี</label>
+                                                        <div class="col-md-2">
+                                                            <input type="text" class="form-control" value={employeeData.input2}
+                                                                //  onChange={handleInputChange2}
                                                                 onChange={(e) => {
-                                                                    handleChange(e, 'number2');
-                                                                    handleNumber2Change(e);
-                                                                }}
-                                                            />
-                                                        </div>
-                                                        <label class="col-md-1 col-form-label">อัน</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </section>
-                                        {/* <!--Frame--> */}
-                                    </div>
-                                </div>
-                                <h2 class="title">สุขภาพ</h2>
-                                <div class="row">
-                                    <div class="col-md-9">
-                                        <section class="Frame">
-                                            <div class="row form-group">
-                                                <label class="col-md-4 col-form-label">ตรวจสุขภาพก่อนเริ่มงาน</label>
-                                                <div class="col-md-2">
-                                                    <input type="text" class="form-control" value={employeeData.input1}
-                                                        // onChange={handleInputChange1} 
-                                                        onChange={(e) => {
-                                                            handleChange(e, 'input1');
-                                                            handleInputChange1(e);
-                                                        }}
-                                                    />
-                                                </div>
-                                                <label class="col-md-1 col-form-label">บาท</label>
-                                            </div>
-                                            <div class="row form-group">
-                                                <label class="col-md-4 col-form-label">ตรวจสุขภาพประจำปี</label>
-                                                <div class="col-md-2">
-                                                    <input type="text" class="form-control" value={employeeData.input2}
-                                                        //  onChange={handleInputChange2}
-                                                        onChange={(e) => {
-                                                            handleChange(e, 'input2');
-                                                            handleInputChange2(e);
-                                                        }}
-                                                    />
-                                                </div>
-                                                <label class="col-md-1 col-form-label">บาท</label>
-                                            </div>
-                                            <div class="row form-group">
-                                                <label class="col-md-2 col-form-label">อื่นๆ</label>
-                                                <div class="col-md-2">
-                                                    <input type="text" class="form-control" id="salaryadd1v" placeholder="อื่นๆ" value={employeeData.anything}
-                                                        //  onChange={(e) => setAnything(e.target.value)} 
-                                                        onChange={(e) => {
-                                                            handleChange(e, 'anything');
-                                                            setAnything(e.target.value);
-                                                        }}
-                                                    />
-
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <input type="text" class="form-control" value={employeeData.input3}
-                                                        //  onChange={handleInputChange3}
-                                                        onChange={(e) => {
-                                                            handleChange(e, 'input3');
-                                                            handleInputChange3(e);
-                                                        }}
-                                                    />
-                                                </div>
-                                                <label class="col-md-1 col-form-label">บาท</label>
-                                            </div>
-                                        </section>
-                                        {/* <!--Frame--> */}
-                                    </div>
-                                </div>
-                                <h2 class="title">ค่าตรวจสอบอาชญากรรม</h2>
-                                <div class="row">
-                                    <div class="col-md-9">
-                                        <section class="Frame">
-                                            <div class="row form-group">
-                                                <label class="col-md-2 col-form-label">รวมเป็นเงิน</label>
-                                                <div class="col-md-3">
-                                                    <input type="" class="form-control" id="" placeholder="00.00" value={employeeData.crimeinvestigation}
-                                                        // onChange={handleInputCrimeChange}
-                                                        onChange={(e) => {
-                                                            handleChange(e, 'crimeinvestigation');
-                                                            handleInputCrimeChange(e);
-                                                        }}
-                                                    />
-                                                </div>
-                                                <div class="col-md-1 col-form-label">บาท</div>
-                                            </div>
-                                        </section>
-                                    </div>
-                                </div>
-                                <h2 class="title">เครื่องแต่งกาย</h2>
-                                <div class="row">
-                                    <div class="col-md-9">
-                                        <section class="Frame">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group row">
-                                                        <div class="col-md-5 col-form-label"><span class="txt-w">เสื้อ </span><span class="txt-label">ตัวละ</span></div>
-                                                        <div class="col-md-4">
-                                                            <input type="" class="form-control" id="" placeholder="00.00" value={employeeData.shirt}
-                                                                //  onChange={handlesetShirt}
-                                                                onChange={(e) => {
-                                                                    handleChange(e, 'shirt');
-                                                                    handlesetShirt(e);
+                                                                    handleChange(e, 'input2');
+                                                                    handleInputChange2(e);
                                                                 }}
                                                             />
                                                         </div>
                                                         <label class="col-md-1 col-form-label">บาท</label>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="row">
-                                                        <label class="col-md-2 col-form-label">จำนวน</label>
-                                                        <div class="col-md-3">
-                                                            <input type="" class="form-control" id="" placeholder="00.00" value={employeeData.shirtcount}
-                                                                // onChange={handlesetShirtcount} 
+                                                    <div class="row form-group">
+                                                        <label class="col-md-2 col-form-label">อื่นๆ</label>
+                                                        <div class="col-md-2">
+                                                            <input type="text" class="form-control" id="salaryadd1v" placeholder="อื่นๆ" value={employeeData.anything}
+                                                                //  onChange={(e) => setAnything(e.target.value)} 
                                                                 onChange={(e) => {
-                                                                    handleChange(e, 'shirtcount');
-                                                                    handlesetShirtcount(e);
-                                                                }}
-                                                            />
-                                                        </div>
-                                                        <label class="col-md-1 col-form-label">ตัว</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group row">
-                                                        <div class="col-md-5 col-form-label"><span class="txt-w">กางเกง </span><span class="txt-label">ตัวละ</span></div>
-                                                        <div class="col-md-4">
-                                                            <input type="" class="form-control" id="" placeholder="00.00" value={employeeData.trousers}
-                                                                // onChange={handlesetTrousers} 
-                                                                onChange={(e) => {
-                                                                    handleChange(e, 'trousers');
-                                                                    handlesetTrousers(e);
-                                                                }}
-                                                            />
-                                                        </div>
-                                                        <label class="col-md-1 col-form-label">บาท</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="row">
-                                                        <label class="col-md-2 col-form-label">จำนวน</label>
-                                                        <div class="col-md-3">
-                                                            <input type="" class="form-control" id="" placeholder="00.00" value={employeeData.trouserscount}
-                                                                //  onChange={handlesetTrouserscount} 
-                                                                onChange={(e) => {
-                                                                    handleChange(e, 'trouserscount');
-                                                                    handlesetTrouserscount(e);
-                                                                }}
-                                                            />
-                                                        </div>
-                                                        <label class="col-md-1 col-form-label">ตัว</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group row">
-                                                        <div class="col-md-5 col-form-label"><span class="txt-w">ทั้งชุด </span><span class="txt-label">ชุดละ</span></div>
-                                                        <div class="col-md-4">
-                                                            <input type="" class="form-control" id="" placeholder="00.00" value={employeeData.wholeset}
-                                                                // onChange={handlesetWholeset} 
-                                                                onChange={(e) => {
-                                                                    handleChange(e, 'wholeset');
-                                                                    handlesetWholeset(e);
-                                                                }}
-                                                            />
-                                                        </div>
-                                                        <label class="col-md-1 col-form-label">บาท</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="row">
-                                                        <label class="col-md-2 col-form-label">จำนวน</label>
-                                                        <div class="col-md-3">
-                                                            <input type="" class="form-control" id="" placeholder="00.00" value={employeeData.wholesetcount}
-                                                                // onChange={handlesetWholesetcount} 
-                                                                onChange={(e) => {
-                                                                    handleChange(e, 'wholesetcount');
-                                                                    handlesetWholesetcount(e);
-                                                                }}
-                                                            />
-                                                        </div>
-                                                        <label class="col-md-1 col-form-label">ชุด</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group row">
-                                                        <div class="col-md-5 col-form-label"><span class="txt-w">รองเท้า Savefty </span><span class="txt-label">คู่ละ</span></div>
-                                                        <div class="col-md-4">
-                                                            <input type="" class="form-control" id="" placeholder="00.00" value={employeeData.saveftyShoes}
-                                                                // onChange={handlesetSaveftyShoes} 
-                                                                onChange={(e) => {
-                                                                    handleChange(e, 'saveftyShoes');
-                                                                    handlesetSaveftyShoes(e);
-                                                                }}
-                                                            />
-                                                        </div>
-                                                        <label class="col-md-1 col-form-label">บาท</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="row">
-                                                        <label class="col-md-2 col-form-label">จำนวน</label>
-                                                        <div class="col-md-3">
-                                                            <input type="" class="form-control" id="" placeholder="00.00" value={employeeData.saveftyShoescount}
-                                                                // onChange={handlesetSaveftyShoescount} 
-                                                                onChange={(e) => {
-                                                                    handleChange(e, 'saveftyShoescount');
-                                                                    handlesetSaveftyShoescount(e);
-                                                                }}
-                                                            />
-                                                        </div>
-                                                        <label class="col-md-1 col-form-label">คู่</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group row">
-                                                        <div class="col-md-5 col-form-label"><span class="txt-w">ผ้ากันเปื้อน </span><span class="txt-label">ชุดละ</span></div>
-                                                        <div class="col-md-4">
-                                                            <input type="" class="form-control" id="" placeholder="00.00" value={employeeData.apron}
-                                                                // onChange={handlesetApron} 
-                                                                onChange={(e) => {
-                                                                    handleChange(e, 'apron');
-                                                                    handlesetApron(e);
-                                                                }}
-                                                            />
-                                                        </div>
-                                                        <label class="col-md-1 col-form-label">บาท</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="row">
-                                                        <label class="col-md-2 col-form-label">จำนวน</label>
-                                                        <div class="col-md-3">
-                                                            <input type="" class="form-control" id="" placeholder="00.00" value={employeeData.aproncount}
-                                                                //  onChange={handlesetAproncount} 
-                                                                onChange={(e) => {
-                                                                    handleChange(e, 'aproncount');
-                                                                    handlesetAproncount(e);
-                                                                }}
-                                                            />
-                                                        </div>
-                                                        <label class="col-md-1 col-form-label">ชุด</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group row">
-                                                        <div class="col-md-5 col-form-label"><span class="txt-w">หมวก </span><span class="txt-label">ใบละ</span></div>
-                                                        <div class="col-md-4">
-                                                            <input type="" class="form-control" id="" placeholder="00.00" value={employeeData.hat}
-                                                                //  onChange={handlesetHat} 
-                                                                onChange={(e) => {
-                                                                    handleChange(e, 'hat');
-                                                                    handlesetHat(e);
-                                                                }}
-                                                            />
-                                                        </div>
-                                                        <label class="col-md-1 col-form-label">บาท</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="row">
-                                                        <label class="col-md-2 col-form-label">จำนวน</label>
-                                                        <div class="col-md-3">
-                                                            <input type="" class="form-control" id="" placeholder="00.00" value={employeeData.hatcount}
-                                                                // onChange={handlesetHatcount} 
-                                                                onChange={(e) => {
-                                                                    handleChange(e, 'hatcount');
-                                                                    handlesetHatcount(e);
-                                                                }}
-                                                            />
-                                                        </div>
-                                                        <label class="col-md-1 col-form-label">ใบ
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </section>
-                                        {/* <!--Frame--> */}
-                                    </div>
-                                </div>
-                                <h2 class="title">เงินเบิกล่วงหน้า</h2>
-                                <div class="row">
-                                    <div class="col-md-9">
-                                        <section class="Frame">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group row">
-                                                        <div class="col-md-3 col-form-label">รายการที่ 1</div>
-                                                        <div class="col-md-8">
-                                                            <input type="text" class="form-control" id="commentadmoney1" placeholder="อื่นๆ" value={employeeData.commentadmoney1}
-                                                                //  onChange={(e) => setCommentAdmoney1(e.target.value)} 
-                                                                onChange={(e) => {
-                                                                    handleChange(e, 'commentadmoney1');
-                                                                    setCommentAdmoney1(e.target.value);
+                                                                    handleChange(e, 'anything');
+                                                                    setAnything(e.target.value);
                                                                 }}
                                                             />
 
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="row">
-                                                        <label class="col-md-3 col-form-label">เป็นจำนวนเงิน</label>
-                                                        <div class="col-md-4">
-                                                            <input type="" class="form-control" placeholder="00.00" value={employeeData.admoney1}
-                                                                // onChange={handleAdmoney1} 
+                                                        <div class="col-md-2">
+                                                            <input type="text" class="form-control" value={employeeData.input3}
+                                                                //  onChange={handleInputChange3}
                                                                 onChange={(e) => {
-                                                                    handleChange(e, 'admoney1');
-                                                                    handleAdmoney1(e);
+                                                                    handleChange(e, 'input3');
+                                                                    handleInputChange3(e);
                                                                 }}
                                                             />
                                                         </div>
                                                         <label class="col-md-1 col-form-label">บาท</label>
                                                     </div>
-                                                </div>
+                                                </section>
+                                                {/* <!--Frame--> */}
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group row">
-                                                        <div class="col-md-3 col-form-label">รายการที่ 2</div>
-                                                        <div class="col-md-8">
-                                                            <input type="text" class="form-control" id="commentadmoney2" placeholder="รายการที่ 2" value={employeeData.commentadmoney2}
-                                                                // onChange={(e) => setCommentAdmoney2(e.target.value)} 
+                                        </div>
+                                        <h2 class="title">ค่าตรวจสอบอาชญากรรม</h2>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <section class="Frame">
+                                                    <div class="row form-group">
+                                                        <label class="col-md-2 col-form-label">รวมเป็นเงิน</label>
+                                                        <div class="col-md-3">
+                                                            <input type="" class="form-control" id="" placeholder="00.00" value={employeeData.crimeinvestigation}
+                                                                // onChange={handleInputCrimeChange}
                                                                 onChange={(e) => {
-                                                                    handleChange(e, 'commentadmoney2');
-                                                                    setCommentAdmoney2(e.target.value);
+                                                                    handleChange(e, 'crimeinvestigation');
+                                                                    handleInputCrimeChange(e);
                                                                 }}
                                                             />
                                                         </div>
+                                                        <div class="col-md-1 col-form-label">บาท</div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6">
+                                                </section>
+                                            </div>
+                                        </div>
+                                        <h2 class="title">เครื่องแต่งกาย</h2>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <section class="Frame">
                                                     <div class="row">
-                                                        <label class="col-md-3 col-form-label">เป็นจำนวนเงิน</label>
-                                                        <div class="col-md-4">
-                                                            <input type="" class="form-control" placeholder="00.00" value={employeeData.admoney2}
-                                                                // onChange={handleAdmoney2} 
-                                                                onChange={(e) => {
-                                                                    handleChange(e, 'admoney2');
-                                                                    handleAdmoney2(e);
-                                                                }}
-                                                            />
+                                                        <div class="col-md-6">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-5 col-form-label"><span class="txt-w">เสื้อ </span><span class="txt-label">ตัวละ</span></div>
+                                                                <div class="col-md-4">
+                                                                    <input type="" class="form-control" id="" placeholder="00.00" value={employeeData.shirt}
+                                                                        //  onChange={handlesetShirt}
+                                                                        onChange={(e) => {
+                                                                            handleChange(e, 'shirt');
+                                                                            handlesetShirt(e);
+                                                                        }}
+                                                                    />
+                                                                </div>
+                                                                <label class="col-md-1 col-form-label">บาท</label>
+                                                            </div>
                                                         </div>
-                                                        <label class="col-md-1 col-form-label">บาท</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group row">
-                                                        <div class="col-md-3 col-form-label">รายการที่ 3</div>
-                                                        <div class="col-md-8">
-                                                            <input type="text" class="form-control" id="commentadmoney3" placeholder="รายการที่ 3" value={employeeData.commentadmoney3}
-                                                                // onChange={(e) => setCommentAdmoney3(e.target.value)} 
-                                                                onChange={(e) => {
-                                                                    handleChange(e, 'commentadmoney3');
-                                                                    setCommentAdmoney3(e.target.value);
-                                                                }}
-                                                            />
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <label class="col-md-2 col-form-label">จำนวน</label>
+                                                                <div class="col-md-3">
+                                                                    <input type="" class="form-control" id="" placeholder="00.00" value={employeeData.shirtcount}
+                                                                        // onChange={handlesetShirtcount} 
+                                                                        onChange={(e) => {
+                                                                            handleChange(e, 'shirtcount');
+                                                                            handlesetShirtcount(e);
+                                                                        }}
+                                                                    />
+                                                                </div>
+                                                                <label class="col-md-1 col-form-label">ตัว</label>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6">
                                                     <div class="row">
-                                                        <label class="col-md-3 col-form-label">เป็นจำนวนเงิน</label>
-                                                        <div class="col-md-4">
-                                                            <input type="" class="form-control" placeholder="00.00" value={employeeData.admoney3}
-                                                                //  onChange={handleAdmoney3}
-                                                                onChange={(e) => {
-                                                                    handleChange(e, 'admoney3');
-                                                                    handleAdmoney3(e);
-                                                                }}
-                                                            />
+                                                        <div class="col-md-6">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-5 col-form-label"><span class="txt-w">กางเกง </span><span class="txt-label">ตัวละ</span></div>
+                                                                <div class="col-md-4">
+                                                                    <input type="" class="form-control" id="" placeholder="00.00" value={employeeData.trousers}
+                                                                        // onChange={handlesetTrousers} 
+                                                                        onChange={(e) => {
+                                                                            handleChange(e, 'trousers');
+                                                                            handlesetTrousers(e);
+                                                                        }}
+                                                                    />
+                                                                </div>
+                                                                <label class="col-md-1 col-form-label">บาท</label>
+                                                            </div>
                                                         </div>
-                                                        <label class="col-md-1 col-form-label">บาท</label>
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <label class="col-md-2 col-form-label">จำนวน</label>
+                                                                <div class="col-md-3">
+                                                                    <input type="" class="form-control" id="" placeholder="00.00" value={employeeData.trouserscount}
+                                                                        //  onChange={handlesetTrouserscount} 
+                                                                        onChange={(e) => {
+                                                                            handleChange(e, 'trouserscount');
+                                                                            handlesetTrouserscount(e);
+                                                                        }}
+                                                                    />
+                                                                </div>
+                                                                <label class="col-md-1 col-form-label">ตัว</label>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-5 col-form-label"><span class="txt-w">ทั้งชุด </span><span class="txt-label">ชุดละ</span></div>
+                                                                <div class="col-md-4">
+                                                                    <input type="" class="form-control" id="" placeholder="00.00" value={employeeData.wholeset}
+                                                                        // onChange={handlesetWholeset} 
+                                                                        onChange={(e) => {
+                                                                            handleChange(e, 'wholeset');
+                                                                            handlesetWholeset(e);
+                                                                        }}
+                                                                    />
+                                                                </div>
+                                                                <label class="col-md-1 col-form-label">บาท</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <label class="col-md-2 col-form-label">จำนวน</label>
+                                                                <div class="col-md-3">
+                                                                    <input type="" class="form-control" id="" placeholder="00.00" value={employeeData.wholesetcount}
+                                                                        // onChange={handlesetWholesetcount} 
+                                                                        onChange={(e) => {
+                                                                            handleChange(e, 'wholesetcount');
+                                                                            handlesetWholesetcount(e);
+                                                                        }}
+                                                                    />
+                                                                </div>
+                                                                <label class="col-md-1 col-form-label">ชุด</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-5 col-form-label"><span class="txt-w">รองเท้า Savefty </span><span class="txt-label">คู่ละ</span></div>
+                                                                <div class="col-md-4">
+                                                                    <input type="" class="form-control" id="" placeholder="00.00" value={employeeData.saveftyShoes}
+                                                                        // onChange={handlesetSaveftyShoes} 
+                                                                        onChange={(e) => {
+                                                                            handleChange(e, 'saveftyShoes');
+                                                                            handlesetSaveftyShoes(e);
+                                                                        }}
+                                                                    />
+                                                                </div>
+                                                                <label class="col-md-1 col-form-label">บาท</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <label class="col-md-2 col-form-label">จำนวน</label>
+                                                                <div class="col-md-3">
+                                                                    <input type="" class="form-control" id="" placeholder="00.00" value={employeeData.saveftyShoescount}
+                                                                        // onChange={handlesetSaveftyShoescount} 
+                                                                        onChange={(e) => {
+                                                                            handleChange(e, 'saveftyShoescount');
+                                                                            handlesetSaveftyShoescount(e);
+                                                                        }}
+                                                                    />
+                                                                </div>
+                                                                <label class="col-md-1 col-form-label">คู่</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-5 col-form-label"><span class="txt-w">ผ้ากันเปื้อน </span><span class="txt-label">ชุดละ</span></div>
+                                                                <div class="col-md-4">
+                                                                    <input type="" class="form-control" id="" placeholder="00.00" value={employeeData.apron}
+                                                                        // onChange={handlesetApron} 
+                                                                        onChange={(e) => {
+                                                                            handleChange(e, 'apron');
+                                                                            handlesetApron(e);
+                                                                        }}
+                                                                    />
+                                                                </div>
+                                                                <label class="col-md-1 col-form-label">บาท</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <label class="col-md-2 col-form-label">จำนวน</label>
+                                                                <div class="col-md-3">
+                                                                    <input type="" class="form-control" id="" placeholder="00.00" value={employeeData.aproncount}
+                                                                        //  onChange={handlesetAproncount} 
+                                                                        onChange={(e) => {
+                                                                            handleChange(e, 'aproncount');
+                                                                            handlesetAproncount(e);
+                                                                        }}
+                                                                    />
+                                                                </div>
+                                                                <label class="col-md-1 col-form-label">ชุด</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-5 col-form-label"><span class="txt-w">หมวก </span><span class="txt-label">ใบละ</span></div>
+                                                                <div class="col-md-4">
+                                                                    <input type="" class="form-control" id="" placeholder="00.00" value={employeeData.hat}
+                                                                        //  onChange={handlesetHat} 
+                                                                        onChange={(e) => {
+                                                                            handleChange(e, 'hat');
+                                                                            handlesetHat(e);
+                                                                        }}
+                                                                    />
+                                                                </div>
+                                                                <label class="col-md-1 col-form-label">บาท</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <label class="col-md-2 col-form-label">จำนวน</label>
+                                                                <div class="col-md-3">
+                                                                    <input type="" class="form-control" id="" placeholder="00.00" value={employeeData.hatcount}
+                                                                        // onChange={handlesetHatcount} 
+                                                                        onChange={(e) => {
+                                                                            handleChange(e, 'hatcount');
+                                                                            handlesetHatcount(e);
+                                                                        }}
+                                                                    />
+                                                                </div>
+                                                                <label class="col-md-1 col-form-label">ใบ
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                                {/* <!--Frame--> */}
                                             </div>
-                                        </section>
-                                        {/* <!--Frame--> */}
-                                    </div>
-                                </div>
-                                <h2 class="title">การชำระ</h2>
-                                <div class="row">
-                                    <div class="col-md-9">
-                                        <section class="Frame">
-                                            <div class="row form-group">
-                                                <label class="col-md-3 col-form-label">ค่าบัตรพนักงานรวมเป็นเงิน</label>
-                                                <div class="col-md-3">
-                                                    <input type="" class="form-control" id="" placeholder="00.00" value={sum} onChange={(e) => handleChange(e, 'sum')} readOnly />
-                                                </div>
-                                                <div class="col-md-1 col-form-label">บาท</div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <label class="col-md-3 col-form-label">ค่าตรวจสุขภาพรวมเป็นเงิน</label>
-                                                <div class="col-md-3">
-                                                    <input type="" class="form-control" id="" placeholder="00.00" value={sum2} onChange={(e) => handleChange(e, 'sum2')} readOnly />
-                                                </div>
-                                                <div class="col-md-1 col-form-label">บาท</div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <label class="col-md-3 col-form-label">ค่าตรวจสอบอาชญากรรมรวมเป็นเงิน</label>
-                                                <div class="col-md-3">
-                                                    <input type="" class="form-control" id="" placeholder="00.00" value={crimeinvestigation} onChange={(e) => handleChange(e, 'crimeinvestigation')} readOnly />
-                                                </div>
-                                                <div class="col-md-1 col-form-label">บาท</div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <label class="col-md-3 col-form-label">ค่าเครื่องแต่งกายรวมเป็นเงิน</label>
-                                                <div class="col-md-3">
-                                                    <input type="" class="form-control" id="" placeholder="00.00" value={custom} onChange={(e) => handleChange(e, 'custom')} readOnly />
-                                                </div>
-                                                <div class="col-md-1 col-form-label">บาท</div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <label class="col-md-3 col-form-label">รวมเป็นเงินทั้งหมด</label>
-                                                <div class="col-md-3">
-                                                    <input type="" class="form-control" id="" placeholder="00.00" value={sumall} onChange={(e) => handleChange(e, 'sumall')} readOnly />
-                                                </div>
-                                                <div class="col-md-1 col-form-label">บาท</div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <label class="col-md-3 col-form-label">จำนวนเงินเบิก</label>
-                                                <div class="col-md-3">
-                                                    <input type="" class="form-control" id="" placeholder="00.00" value={sumadmoney} onChange={(e) => handleChange(e, 'sumadmoney')} readOnly />
-                                                </div>
-                                                <div class="col-md-1 col-form-label">บาท</div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <label class="col-md-3 col-form-label">เป็นเงินทั้งสิทธิ</label>
-                                                <div class="col-md-3">
-                                                    <input type="" class="form-control" id="" placeholder="00.00" value={sumall2} onChange={(e) => handleChange(e, 'sumall2')} readOnly />
-                                                </div>
-                                                <div class="col-md-1 col-form-label">บาท</div>
-                                            </div>
-                                            <div class="row form-group">
-                                                {/* <input type="radio" class="form-check-input" style={{ marginLeft: "8px" }} id="radio1" name="optradio" value="option1" /> */}
-                                                <input type="radio" class="form-input" style={{ marginLeft: "8px" }} id="radioPrimary1" name="r1" value="จ่ายจำนวนเต็ม" checked={employeeData.PriceType === "จ่ายจำนวนเต็ม"} onChange={(e) => handleChange(e, 'PriceType')} />
-                                                <label class="form-label col-md-3" style={{ paddingLeft: "20px", paddingTop: "10px" }} for="radio1">จ่ายจำนวนเต็ม</label>
-                                                <div class="col-md-3">
-                                                    <input type="" class="form-control" style={{ marginLeft: "-21px" }} id="" placeholder="00.00" value={sumall2} onChange={(e) => handleChange(e, 'sumall2')} readOnly />
-                                                </div>
-                                                <div class="col-md-1 col-form-label" style={{ marginLeft: "-21px" }}>บาท</div>
-                                            </div>
-                                            <div class="row form-group">
-                                                {/* <input type="radio" class="form-check-input" style={{ marginLeft: "8px" }} id="radio1" name="optradio" value="option1" /> */}
-                                                <input type="radio" class="form-input" style={{ marginLeft: "8px" }} id="radioPrimary1" name="r1" value="หักเป็นจำนวน" checked={employeeData.PriceType === "หักเป็นจำนวน"} onChange={(e) => handleChange(e, 'PriceType')} />
+                                        </div>
+                                        <h2 class="title">เงินเบิกล่วงหน้า</h2>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <section class="Frame">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-3 col-form-label">รายการที่ 1</div>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control" id="commentadmoney1" placeholder="อื่นๆ" value={employeeData.commentadmoney1}
+                                                                        //  onChange={(e) => setCommentAdmoney1(e.target.value)} 
+                                                                        onChange={(e) => {
+                                                                            handleChange(e, 'commentadmoney1');
+                                                                            setCommentAdmoney1(e.target.value);
+                                                                        }}
+                                                                    />
 
-                                                <label class="form-check-label col-md-3 col" style={{ paddingLeft: "20px", paddingTop: "10px" }} for="radio1">หักเป็นจำนวน</label>
-
-                                                <div class="col-md-3">
-                                                    <input type="" class="form-control" style={{ marginLeft: "-21px" }} placeholder="00.00" value={employeeData.divide}
-                                                        // onChange={(event) => setDivide(Number(event.target.value))} 
-                                                        onChange={(e) => {
-                                                            handleChange(e, 'divide');
-                                                            setDivide(Number(e.target.value));
-                                                        }}
-                                                    />
-                                                </div>
-                                                <div class="col-md-1 col-form-label" style={{ marginLeft: "-21px" }}>ครั้ง</div>
-                                                <label class="form-check-label col-md-2 col" style={{ marginLeft: "-10px" }} for="radio1">เป็นจำนวนครั้งละ</label>
-                                                <div class="col-md-2">
-                                                    <input type="" class="form-control" placeholder="00.00" value={divideall} onChange={(e) => handleChange(e, 'divideall')} />
-                                                </div>
-                                                <div class="col-md-1 col-form-label" >บาท</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <label class="col-md-3 col-form-label">เป็นจำนวนเงิน</label>
+                                                                <div class="col-md-4">
+                                                                    <input type="" class="form-control" placeholder="00.00" value={employeeData.admoney1}
+                                                                        // onChange={handleAdmoney1} 
+                                                                        onChange={(e) => {
+                                                                            handleChange(e, 'admoney1');
+                                                                            handleAdmoney1(e);
+                                                                        }}
+                                                                    />
+                                                                </div>
+                                                                <label class="col-md-1 col-form-label">บาท</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-3 col-form-label">รายการที่ 2</div>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control" id="commentadmoney2" placeholder="รายการที่ 2" value={employeeData.commentadmoney2}
+                                                                        // onChange={(e) => setCommentAdmoney2(e.target.value)} 
+                                                                        onChange={(e) => {
+                                                                            handleChange(e, 'commentadmoney2');
+                                                                            setCommentAdmoney2(e.target.value);
+                                                                        }}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <label class="col-md-3 col-form-label">เป็นจำนวนเงิน</label>
+                                                                <div class="col-md-4">
+                                                                    <input type="" class="form-control" placeholder="00.00" value={employeeData.admoney2}
+                                                                        // onChange={handleAdmoney2} 
+                                                                        onChange={(e) => {
+                                                                            handleChange(e, 'admoney2');
+                                                                            handleAdmoney2(e);
+                                                                        }}
+                                                                    />
+                                                                </div>
+                                                                <label class="col-md-1 col-form-label">บาท</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-3 col-form-label">รายการที่ 3</div>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control" id="commentadmoney3" placeholder="รายการที่ 3" value={employeeData.commentadmoney3}
+                                                                        // onChange={(e) => setCommentAdmoney3(e.target.value)} 
+                                                                        onChange={(e) => {
+                                                                            handleChange(e, 'commentadmoney3');
+                                                                            setCommentAdmoney3(e.target.value);
+                                                                        }}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <label class="col-md-3 col-form-label">เป็นจำนวนเงิน</label>
+                                                                <div class="col-md-4">
+                                                                    <input type="" class="form-control" placeholder="00.00" value={employeeData.admoney3}
+                                                                        //  onChange={handleAdmoney3}
+                                                                        onChange={(e) => {
+                                                                            handleChange(e, 'admoney3');
+                                                                            handleAdmoney3(e);
+                                                                        }}
+                                                                    />
+                                                                </div>
+                                                                <label class="col-md-1 col-form-label">บาท</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                                {/* <!--Frame--> */}
                                             </div>
-                                        </section>
-                                        {/* <!--Frame--> */}
-                                    </div>
+                                        </div>
+                                        <h2 class="title">การชำระ</h2>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <section class="Frame">
+                                                    <div class="row form-group">
+                                                        <label class="col-md-3 col-form-label">ค่าบัตรพนักงานรวมเป็นเงิน</label>
+                                                        <div class="col-md-3">
+                                                            <input type="" class="form-control" id="" placeholder="00.00" value={sum} onChange={(e) => handleChange(e, 'sum')} readOnly />
+                                                        </div>
+                                                        <div class="col-md-1 col-form-label">บาท</div>
+                                                    </div>
+                                                    <div class="row form-group">
+                                                        <label class="col-md-3 col-form-label">ค่าตรวจสุขภาพรวมเป็นเงิน</label>
+                                                        <div class="col-md-3">
+                                                            <input type="" class="form-control" id="" placeholder="00.00" value={sum2} onChange={(e) => handleChange(e, 'sum2')} readOnly />
+                                                        </div>
+                                                        <div class="col-md-1 col-form-label">บาท</div>
+                                                    </div>
+                                                    <div class="row form-group">
+                                                        <label class="col-md-3 col-form-label">ค่าตรวจสอบอาชญากรรมรวมเป็นเงิน</label>
+                                                        <div class="col-md-3">
+                                                            <input type="" class="form-control" id="" placeholder="00.00" value={crimeinvestigation} onChange={(e) => handleChange(e, 'crimeinvestigation')} readOnly />
+                                                        </div>
+                                                        <div class="col-md-1 col-form-label">บาท</div>
+                                                    </div>
+                                                    <div class="row form-group">
+                                                        <label class="col-md-3 col-form-label">ค่าเครื่องแต่งกายรวมเป็นเงิน</label>
+                                                        <div class="col-md-3">
+                                                            <input type="" class="form-control" id="" placeholder="00.00" value={custom} onChange={(e) => handleChange(e, 'custom')} readOnly />
+                                                        </div>
+                                                        <div class="col-md-1 col-form-label">บาท</div>
+                                                    </div>
+                                                    <div class="row form-group">
+                                                        <label class="col-md-3 col-form-label">รวมเป็นเงินทั้งหมด</label>
+                                                        <div class="col-md-3">
+                                                            <input type="" class="form-control" id="" placeholder="00.00" value={sumall} onChange={(e) => handleChange(e, 'sumall')} readOnly />
+                                                        </div>
+                                                        <div class="col-md-1 col-form-label">บาท</div>
+                                                    </div>
+                                                    <div class="row form-group">
+                                                        <label class="col-md-3 col-form-label">จำนวนเงินเบิก</label>
+                                                        <div class="col-md-3">
+                                                            <input type="" class="form-control" id="" placeholder="00.00" value={sumadmoney} onChange={(e) => handleChange(e, 'sumadmoney')} readOnly />
+                                                        </div>
+                                                        <div class="col-md-1 col-form-label">บาท</div>
+                                                    </div>
+                                                    <div class="row form-group">
+                                                        <label class="col-md-3 col-form-label">เป็นเงินทั้งสิทธิ</label>
+                                                        <div class="col-md-3">
+                                                            <input type="" class="form-control" id="" placeholder="00.00" value={sumall2} onChange={(e) => handleChange(e, 'sumall2')} readOnly />
+                                                        </div>
+                                                        <div class="col-md-1 col-form-label">บาท</div>
+                                                    </div>
+                                                    <div class="row form-group">
+                                                        {/* <input type="radio" class="form-check-input" style={{ marginLeft: "8px" }} id="radio1" name="optradio" value="option1" /> */}
+                                                        <input type="radio" class="form-input" style={{ marginLeft: "8px" }} id="radioPrimary1" name="r1" value="จ่ายจำนวนเต็ม" checked={employeeData.PriceType === "จ่ายจำนวนเต็ม"} onChange={(e) => handleChange(e, 'PriceType')} />
+                                                        <label class="form-label col-md-3" style={{ paddingLeft: "20px", paddingTop: "10px" }} for="radio1">จ่ายจำนวนเต็ม</label>
+                                                        <div class="col-md-3">
+                                                            <input type="" class="form-control" style={{ marginLeft: "-21px" }} id="" placeholder="00.00" value={sumall2} onChange={(e) => handleChange(e, 'sumall2')} readOnly />
+                                                        </div>
+                                                        <div class="col-md-1 col-form-label" style={{ marginLeft: "-21px" }}>บาท</div>
+                                                    </div>
+                                                    <div class="row form-group">
+                                                        {/* <input type="radio" class="form-check-input" style={{ marginLeft: "8px" }} id="radio1" name="optradio" value="option1" /> */}
+                                                        <input type="radio" class="form-input" style={{ marginLeft: "8px" }} id="radioPrimary1" name="r1" value="หักเป็นจำนวน" checked={employeeData.PriceType === "หักเป็นจำนวน"} onChange={(e) => handleChange(e, 'PriceType')} />
+
+                                                        <label class="form-check-label col-md-3 col" style={{ paddingLeft: "20px", paddingTop: "10px" }} for="radio1">หักเป็นจำนวน</label>
+
+                                                        <div class="col-md-3">
+                                                            <input type="" class="form-control" style={{ marginLeft: "-21px" }} placeholder="00.00" value={employeeData.divide}
+                                                                // onChange={(event) => setDivide(Number(event.target.value))} 
+                                                                onChange={(e) => {
+                                                                    handleChange(e, 'divide');
+                                                                    setDivide(Number(e.target.value));
+                                                                }}
+                                                            />
+                                                        </div>
+                                                        <div class="col-md-1 col-form-label" style={{ marginLeft: "-21px" }}>ครั้ง</div>
+                                                        <label class="form-check-label col-md-2 col" style={{ marginLeft: "-10px" }} for="radio1">เป็นจำนวนครั้งละ</label>
+                                                        <div class="col-md-2">
+                                                            <input type="" class="form-control" placeholder="00.00" value={divideall} onChange={(e) => handleChange(e, 'divideall')} />
+                                                        </div>
+                                                        <div class="col-md-1 col-form-label" >บาท</div>
+                                                    </div>
+                                                </section>
+                                                {/* <!--Frame--> */}
+                                            </div>
+                                        </div>
+                                        <div class="line_btn">
+                                            <button type="submit" class="btn b_save" onClick={updateEmployee}><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
+                                            <button type="reset" class="btn clean"><i class="far fa-window-close" onClick={() => window.location.reload()}></i> &nbsp;ยกเลิก</button>
+                                        </div>
+                                    </form>
                                 </div>
-                                <div class="line_btn">
-                                    <button type="submit" class="btn b_save" onClick={updateEmployee}><i class="nav-icon fas fa-save"></i> &nbsp;บันทึก</button>
-                                    <button type="reset" class="btn clean"><i class="far fa-window-close" onClick={() => window.location.reload()}></i> &nbsp;ยกเลิก</button>
+                                <div class="col-md-3">
+                                    <section class="Frame"><EmployeesSelected /></section>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         {/* <!-- /.container-fluid --> */}
                     </section>

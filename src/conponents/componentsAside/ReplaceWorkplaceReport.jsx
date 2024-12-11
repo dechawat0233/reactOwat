@@ -475,47 +475,18 @@ function ReplaceWorkplaceReport({ employeeList, workplaceList }) {
                         </div>
                       </div>
                     </div>
-                    <div class="d-flex justify-content-center">
+                    {/* <div class="d-flex justify-content-center">
                       <button class="btn b_save">
                         <i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา
                       </button>
-                    </div>
+                    </div> */}
                   </form>
                   <br />
                   {/* <div class="d-flex justify-content-center">
                                         <h2 class="title">ผลลัพธ์ {searchResult.length} รายการ</h2>
                                     </div> */}
-                  <div class="d-flex justify-content-center">
-                    {searchResult.length > 0 ? (
-                      <h2 class="title">
-                        ผลลัพธ์ {searchResult.length} รายการ
-                      </h2>
-                    ) : (
-                      <p></p>
-                    )}
-                  </div>
-                  <div class="d-flex justify-content-center">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <ul
-                            style={{ listStyle: "none", marginLeft: "-2rem" }}
-                          >
-                            {searchResult.map((workplace) => (
-                              <li
-                                key={workplace.id}
-                                onClick={() => handleClickResult(workplace)}
-                                style={{ cursor: "pointer" }}
-                              >
-                                รหัส {workplace.workplaceId} หน่วยงาน{" "}
-                                {workplace.workplaceName}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              
+                 
                 </div>
                 <div class="col-md-12">
                   <div class="row align-items-end">
@@ -546,7 +517,6 @@ function ReplaceWorkplaceReport({ employeeList, workplaceList }) {
                     </div>
                     <div class="col-md-1">ถึง</div>
                     <div class="col-md-3">
-                      <label role="datetime">ตั้งแต่วันที่</label>
                       <div
                         onClick={toggleDatePickerEnd}
                         style={{

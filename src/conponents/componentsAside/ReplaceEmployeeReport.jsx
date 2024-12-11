@@ -475,11 +475,6 @@ function ReplaceEmployeeReport({ employeeList, workplaceList }) {
                         </div>
                       </div>
                     </div>
-                    <div class="d-flex justify-content-center">
-                      <button class="btn b_save">
-                        <i class="nav-icon fas fa-search"></i> &nbsp; ค้นหา
-                      </button>
-                    </div>
                   </form>
                   <br />
                   {/* <div class="d-flex justify-content-center">
@@ -515,7 +510,6 @@ function ReplaceEmployeeReport({ employeeList, workplaceList }) {
                     </div>
                     <div class="col-md-1">ถึง</div>
                     <div class="col-md-3">
-                      <label role="datetime">ตั้งแต่วันที่</label>
                       <div
                         onClick={toggleDatePickerEnd}
                         style={{

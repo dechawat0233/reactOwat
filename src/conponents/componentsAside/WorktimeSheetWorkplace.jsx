@@ -8836,12 +8836,12 @@ function WorktimeSheetWorkplace({ employeeList }) {
                         <div class="row">
                           <div class="col-md-3">
                             <div class="form-group">
-                              <label role="codePage">รหัสประดาษ</label>
+                              <label role="codePage">รหัสกระดาษ</label>
                               <input
                                 type="text"
                                 class="form-control"
                                 id="codePage"
-                                placeholder="รหัสประดาษ"
+                                placeholder="รหัสกระดาษ"
                                 value={codePage}
                                 onChange={(e) => setCodePage(e.target.value)}
                               />
@@ -8849,7 +8849,6 @@ function WorktimeSheetWorkplace({ employeeList }) {
                           </div>
                           <div class="col-md-3">
                             <div class="form-group">
-                              <label role="datetime">วันที่</label>
                               {/* <div
                                 style={{
                                   position: "relative",

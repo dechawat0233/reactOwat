@@ -8683,14 +8683,14 @@ function WorktimeSheetWorkplaceSpace({ employeeList }) {
             <li class="breadcrumb-item">
               <a href="#"> ระบบเงินเดือน</a>
             </li>
-            <li class="breadcrumb-item active">ตารางเวลาทำงานพนักงาน</li>
+            <li class="breadcrumb-item active">ตารางเวลาทำงานพนักงานหน่วยพิเศษ</li>
           </ol>
           <div class="content-header">
             <div class="container-fluid">
               <div class="row mb-2">
                 <h1 class="m-0">
                   <i class="far fa-arrow-alt-circle-right"></i>{" "}
-                  ตารางเวลาทำงานพนักงาน
+                  ตารางเวลาทำงานพนักงานหน่วยพิเศษ
                 </h1>
               </div>
             </div>
@@ -8850,12 +8850,12 @@ function WorktimeSheetWorkplaceSpace({ employeeList }) {
                         <div class="row">
                           <div class="col-md-3">
                             <div class="form-group">
-                              <label role="codePage">รหัสประดาษ</label>
+                              <label role="codePage">รหัสกระดาษ</label>
                               <input
                                 type="text"
                                 class="form-control"
                                 id="codePage"
-                                placeholder="รหัสประดาษ"
+                                placeholder="รหัสกระดาษ"
                                 value={codePage}
                                 onChange={(e) => setCodePage(e.target.value)}
                               />
@@ -8863,7 +8863,6 @@ function WorktimeSheetWorkplaceSpace({ employeeList }) {
                           </div>
                           <div class="col-md-3">
                             <div class="form-group">
-                              <label role="datetime">วันที่</label>
                               {/* <div
                                 style={{
                                   position: "relative",

@@ -31,12 +31,11 @@ function Calculate_tax() {
                     <!-- Main content --> */}
                     <section class="content">
                         <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-md-9">
+
                                     <form action="">
                                         <h2 class="title">วิธีการคำนวณ</h2>
                                         <div class="form-group row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-9">
                                                 <section class="Frame">
                                                     <div class="form-group row">
                                                         <label class="col-md-3 col-form-label"><span class="txt-red">*</span> วิธีคำนวณภาษี</label>
@@ -73,7 +72,7 @@ function Calculate_tax() {
                                         {/* <!--row--> */}
                                         <h2 class="title">เงินสนับสนุน</h2>
                                         <div class="form-group row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-9">
                                                 <section class="Frame">
                                                     <div class="form-group row">
                                                         <label class="col-md-3 col-form-label">เงินสนับสนุนเพื่อการศึกษา</label>
@@ -94,7 +93,7 @@ function Calculate_tax() {
                                         </div>
                                         <h2 class="title">หักภาษีเงินได้ที่ได้รับยกเว้นจากการซื้ออสังหาริมทรัพย์</h2>
                                         <div class="form-group row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-9">
                                                 <section class="Frame">
                                                     <div class="form-group row">
                                                         <label class="col-md-3 col-form-label">หักภาษีเงินได้ที่ได้รับการยกเว้น</label>
@@ -115,7 +114,7 @@ function Calculate_tax() {
                                         </div>
                                         <h2 class="title">รายการเงินที่ได้ที่ได้รับการยกเว้น</h2>
                                         <div class="form-group row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-9">
                                                 <section class="Frame">
                                                     <div class="form-group row">
                                                         <label class="col-md-3 col-form-label">กองทุนบำเหน็จบำนาญข้าราชการ</label>
@@ -164,7 +163,7 @@ function Calculate_tax() {
                                         </div>
                                         <h2 class="title">เฉพาะกรณีไม่ได้เป็นพนักงานตั้งแต่ต้นปี</h2>
                                         <div class="form-group row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-9">
                                                 <section class="Frame">
                                                     <div class="form-group row">
                                                         <label class="col-md-3 col-form-label">จำนวนเดือนที่ต้องจ่ายภาษี (ต่อปี)</label>
@@ -192,7 +191,7 @@ function Calculate_tax() {
                                         </div>
                                         <h2 class="title">เฉพาะกรณีไม่ได้ใช้โปรแกรมคำนวณตั้งแต่ต้นปี</h2>
                                         <div class="form-group row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-9">
                                                 <section class="Frame">
                                                     <div class="form-group row">
                                                         <label class="col-md-3 col-form-label">จำนวนเดือนที่ต้องจ่ายภาษี (ต่อปี)</label>
@@ -220,7 +219,7 @@ function Calculate_tax() {
                                         </div>
                                         <h2 class="title">เฉพาะกรณีต้องการแก้ไขภาษีนำส่งเอง</h2>
                                         <div class="form-group row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-9">
                                                 <section class="Frame">
                                                     <div class="form-group row">
                                                         <label class="col-md-3 col-form-label">งวดระหว่างปี</label>
@@ -244,7 +243,7 @@ function Calculate_tax() {
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-9">
                                                 <section class="Frame">
                                                     <div class="form-group row">
                                                         <label class="col-md-3 col-form-label">งวดปลายปี</label>
@@ -272,12 +271,7 @@ function Calculate_tax() {
                                             <button type="reset" class="btn clean"><i class="far fa-window-close" onClick={() => window.location.reload()}></i> &nbsp;ยกเลิก</button>
                                         </div>
                                     </form>
-                                </div>
-                                <div class="col-md-3">
-                                    <section class="Frame"><EmployeesSelected /></section>
-
-                                </div>
-                            </div>
+                                
                         </div>
                         {/* <!-- /.container-fluid --> */}
                     </section>

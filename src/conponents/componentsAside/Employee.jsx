@@ -1087,32 +1087,34 @@ function Employee() {
           </div>
           <section class="content">
             <div class="container-fluid">
-              <form onSubmit={handleManageEmployee}>
-                <h2 class="title">ข้อมูลพนักงาน</h2>
-                <div class="row">
-                  <div class="col-md-9">
-                    <section class="Frame">
+              <div class="row">
+                <div class="col-md-9">
+                  <form onSubmit={handleManageEmployee}>
+                    <h2 class="title">ข้อมูลพนักงาน</h2>
+                    <div class="row">
                       <div class="col-md-12">
-                        <div class="row">
-                          <div class="col-md-3">
-                            <div class="form-group">
-                              <label role="employeeId">รหัสพนักงาน</label>
-                              <input
-                                required
-                                type="number"
-                                class="form-control"
-                                id="employeeId"
-                                placeholder="รหัสพนักงาน"
-                                value={employeeId}
-                                onChange={(e) => setEmployeeId(e.target.value)}
-                                style={{ appearance: "textfield" }}
-                              />
-                            </div>
-                          </div>
-                          <div class="col-md-3">
-                            <div class="form-group">
-                              <label role="position">ตำแหน่ง</label>
-                              {/* <input
+                        <section class="Frame">
+                          <div class="col-md-12">
+                            <div class="row">
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label role="employeeId">รหัสพนักงาน</label>
+                                  <input
+                                    required
+                                    type="number"
+                                    class="form-control"
+                                    id="employeeId"
+                                    placeholder="รหัสพนักงาน"
+                                    value={employeeId}
+                                    onChange={(e) => setEmployeeId(e.target.value)}
+                                    style={{ appearance: "textfield" }}
+                                  />
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label role="position">ตำแหน่ง</label>
+                                  {/* <input
                                 required
                                 type="text"
                                 class="form-control"
@@ -1121,128 +1123,128 @@ function Employee() {
                                 value={position}
                                 onChange={(e) => setPosition(e.target.value)}
                               /> */}
-                              <select
-                                required
-                                className="form-control"
-                                id="position"
-                                value={position}
-                                onChange={(e) => setPosition(e.target.value)}
-                              >
-                                <option value="" disabled>
-                                  เลือกตำแหน่ง
-                                </option>
-                                <option value="หัวหน้าควบคุมงาน">
-                                  หัวหน้าควบคุมงาน
-                                </option>
-                                <option value="ผู้ช่วยผู้ควบคุมงาน">
-                                  ผู้ช่วยผู้ควบคุมงาน
-                                </option>
-                                <option value="พนักงานทำความสะอาด">
-                                  พนักงานทำความสะอาด
-                                </option>
-                                <option value="พนักงานทำความสะอาดรอบนอก">
-                                  พนักงานทำความสะอาดรอบนอก
-                                </option>
-                                <option value="พนักงานเสิร์ฟ">
-                                  พนักงานเสิร์ฟ
-                                </option>
-                                <option value="พนักงานคนสวน">
-                                  พนักงานคนสวน
-                                </option>
-                                <option value="พนักงานแรงงานชาย">
-                                  พนักงานแรงงานชาย
-                                </option>
-                                <option value="กรรมการผู้จัดการ">
-                                  กรรมการผู้จัดการ
-                                </option>
-                                <option value="ผู้จัดการทั่วไป">
-                                  ผู้จัดการทั่วไป
-                                </option>
-                                <option value="ผู้จัดการฝ่ายการตลาด">
-                                  ผู้จัดการฝ่ายการตลาด
-                                </option>
-                                <option value="ผู้จัดการฝ่ายบัญชี/การเงิน">
-                                  ผู้จัดการฝ่ายบัญชี/การเงิน
-                                </option>
-                                <option value="ผู้จัดการฝ่ายบุคคล">
-                                  ผู้จัดการฝ่ายบุคคล
-                                </option>
-                                <option value="เจ้าหน้าที่ฝ่ายบัญชี/การเงิน">
-                                  เจ้าหน้าที่ฝ่ายบัญชี/การเงิน
-                                </option>
-                                <option value="เจ้าหน้าที่ฝ่ายบุคคล">
-                                  เจ้าหน้าที่ฝ่ายบุคคล
-                                </option>
-                                <option value="เจ้าหน้าที่ฝ่ายจัดซื้อ">
-                                  เจ้าหน้าที่ฝ่ายจัดซื้อ
-                                </option>
-                                <option value="เจ้าหน้าที่ธุรการฝ่ายขาย">
-                                  เจ้าหน้าที่ธุรการฝ่ายขาย
-                                </option>
-                                <option value="เจ้าหน้าที่ฝ่ายการตลาด">
-                                  เจ้าหน้าที่ฝ่ายการตลาด
-                                </option>
-                                <option value="เจ้าหน้าที่ฝ่ายปฏิบัติการ">
-                                  เจ้าหน้าที่ฝ่ายปฏิบัติการ
-                                </option>
-                                <option value="เจ้าหน้าที่ฝ่ายปฏิบัติการ(สายตรวจ)">
-                                  เจ้าหน้าที่ฝ่ายปฏิบัติการ(สายตรวจ)
-                                </option>
-                                <option value="เจ้าหน้าที่ฝ่ายยานพาหนะ">
-                                  เจ้าหน้าที่ฝ่ายยานพาหนะ
-                                </option>
-                                <option value="เจ้าหน้าที่ฝ่ายไอที">
-                                  เจ้าหน้าที่ฝ่ายไอที
-                                </option>
-                                <option value="เจ้าหน้าที่ฝ่ายสโตร์">
-                                  เจ้าหน้าที่ฝ่ายสโตร์
-                                </option>
-                                <option value="เจ้าหน้าที่ความปลอดภัยในการทำงาน(จป)">
-                                  เจ้าหน้าที่ความปลอดภัยในการทำงาน(จป)
-                                </option>
-                                <option value="ธุรการทั่วไป">
-                                  ธุรการทั่วไป
-                                </option>
-                                <option value="หัวหน้าฝ่ายปฏิบัติการ">
-                                  หัวหน้าฝ่ายปฏิบัติการ
-                                </option>
-                                <option value="หัวหน้าฝ่ายบัญชี/การเงิน">
-                                  หัวหน้าฝ่ายบัญชี/การเงิน
-                                </option>
-                                <option value="หัวหน้าฝ่ายสโตร์">
-                                  หัวหน้าฝ่ายสโตร์
-                                </option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="col-md-3">
-                            <div class="form-group">
-                              {/* <label role="department">แผนก</label>
+                                  <select
+                                    required
+                                    className="form-control"
+                                    id="position"
+                                    value={position}
+                                    onChange={(e) => setPosition(e.target.value)}
+                                  >
+                                    <option value="" disabled>
+                                      เลือกตำแหน่ง
+                                    </option>
+                                    <option value="หัวหน้าควบคุมงาน">
+                                      หัวหน้าควบคุมงาน
+                                    </option>
+                                    <option value="ผู้ช่วยผู้ควบคุมงาน">
+                                      ผู้ช่วยผู้ควบคุมงาน
+                                    </option>
+                                    <option value="พนักงานทำความสะอาด">
+                                      พนักงานทำความสะอาด
+                                    </option>
+                                    <option value="พนักงานทำความสะอาดรอบนอก">
+                                      พนักงานทำความสะอาดรอบนอก
+                                    </option>
+                                    <option value="พนักงานเสิร์ฟ">
+                                      พนักงานเสิร์ฟ
+                                    </option>
+                                    <option value="พนักงานคนสวน">
+                                      พนักงานคนสวน
+                                    </option>
+                                    <option value="พนักงานแรงงานชาย">
+                                      พนักงานแรงงานชาย
+                                    </option>
+                                    <option value="กรรมการผู้จัดการ">
+                                      กรรมการผู้จัดการ
+                                    </option>
+                                    <option value="ผู้จัดการทั่วไป">
+                                      ผู้จัดการทั่วไป
+                                    </option>
+                                    <option value="ผู้จัดการฝ่ายการตลาด">
+                                      ผู้จัดการฝ่ายการตลาด
+                                    </option>
+                                    <option value="ผู้จัดการฝ่ายบัญชี/การเงิน">
+                                      ผู้จัดการฝ่ายบัญชี/การเงิน
+                                    </option>
+                                    <option value="ผู้จัดการฝ่ายบุคคล">
+                                      ผู้จัดการฝ่ายบุคคล
+                                    </option>
+                                    <option value="เจ้าหน้าที่ฝ่ายบัญชี/การเงิน">
+                                      เจ้าหน้าที่ฝ่ายบัญชี/การเงิน
+                                    </option>
+                                    <option value="เจ้าหน้าที่ฝ่ายบุคคล">
+                                      เจ้าหน้าที่ฝ่ายบุคคล
+                                    </option>
+                                    <option value="เจ้าหน้าที่ฝ่ายจัดซื้อ">
+                                      เจ้าหน้าที่ฝ่ายจัดซื้อ
+                                    </option>
+                                    <option value="เจ้าหน้าที่ธุรการฝ่ายขาย">
+                                      เจ้าหน้าที่ธุรการฝ่ายขาย
+                                    </option>
+                                    <option value="เจ้าหน้าที่ฝ่ายการตลาด">
+                                      เจ้าหน้าที่ฝ่ายการตลาด
+                                    </option>
+                                    <option value="เจ้าหน้าที่ฝ่ายปฏิบัติการ">
+                                      เจ้าหน้าที่ฝ่ายปฏิบัติการ
+                                    </option>
+                                    <option value="เจ้าหน้าที่ฝ่ายปฏิบัติการ(สายตรวจ)">
+                                      เจ้าหน้าที่ฝ่ายปฏิบัติการ(สายตรวจ)
+                                    </option>
+                                    <option value="เจ้าหน้าที่ฝ่ายยานพาหนะ">
+                                      เจ้าหน้าที่ฝ่ายยานพาหนะ
+                                    </option>
+                                    <option value="เจ้าหน้าที่ฝ่ายไอที">
+                                      เจ้าหน้าที่ฝ่ายไอที
+                                    </option>
+                                    <option value="เจ้าหน้าที่ฝ่ายสโตร์">
+                                      เจ้าหน้าที่ฝ่ายสโตร์
+                                    </option>
+                                    <option value="เจ้าหน้าที่ความปลอดภัยในการทำงาน(จป)">
+                                      เจ้าหน้าที่ความปลอดภัยในการทำงาน(จป)
+                                    </option>
+                                    <option value="ธุรการทั่วไป">
+                                      ธุรการทั่วไป
+                                    </option>
+                                    <option value="หัวหน้าฝ่ายปฏิบัติการ">
+                                      หัวหน้าฝ่ายปฏิบัติการ
+                                    </option>
+                                    <option value="หัวหน้าฝ่ายบัญชี/การเงิน">
+                                      หัวหน้าฝ่ายบัญชี/การเงิน
+                                    </option>
+                                    <option value="หัวหน้าฝ่ายสโตร์">
+                                      หัวหน้าฝ่ายสโตร์
+                                    </option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  {/* <label role="department">แผนก</label>
                                                             <input type="text" class="form-control" id="department" placeholder="แผนก" value={department} onChange={(e) => setDepartment(e.target.value)} /> */}
-                              <label role="workplace">หน่วยงาน</label>
-                              <input
-                                type="text"
-                                id="workplace"
-                                name="workplace"
-                                list="workplaces"
-                                className="form-control"
-                                value={workplace}
-                                onChange={handleWorkplace}
-                              />
+                                  <label role="workplace">หน่วยงาน</label>
+                                  <input
+                                    type="text"
+                                    id="workplace"
+                                    name="workplace"
+                                    list="workplaces"
+                                    className="form-control"
+                                    value={workplace}
+                                    onChange={handleWorkplace}
+                                  />
 
-                              <datalist id="workplaces">
-                                <option value="">ยังไม่ระบุหน่วยงาน</option>
-                                {workplaceSelection.map((wp) => (
-                                  <option key={wp._id} value={wp.workplaceId}>
-                                    {wp.workplaceName}
-                                  </option>
-                                ))}
-                              </datalist>
-                            </div>
-                          </div>
-                          <div class="col-md-3">
-                            <div class="form-group">
-                              {/* <label role="workplace">หน่วยงาน</label>
+                                  <datalist id="workplaces">
+                                    <option value="">ยังไม่ระบุหน่วยงาน</option>
+                                    {workplaceSelection.map((wp) => (
+                                      <option key={wp._id} value={wp.workplaceId}>
+                                        {wp.workplaceName}
+                                      </option>
+                                    ))}
+                                  </datalist>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  {/* <label role="workplace">หน่วยงาน</label>
                                                             <input
                                                                 type="text"
                                                                 id="workplace"
@@ -1261,19 +1263,19 @@ function Employee() {
                                                                     </option>
                                                                 ))}
                                                             </datalist> */}
-                              <label role="department">แผนก</label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="department"
-                                placeholder="แผนก"
-                                value={department}
-                                list="workplaceGroups"
-                                // onChange={(e) => setDepartment(e.target.value)}
-                                onChange={handleWorkplaceGroup}
-                                autocomplete="off"
-                              />
-                              {/* <datalist id="workplaceGroup">
+                                  <label role="department">แผนก</label>
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    id="department"
+                                    placeholder="แผนก"
+                                    value={department}
+                                    list="workplaceGroups"
+                                    // onChange={(e) => setDepartment(e.target.value)}
+                                    onChange={handleWorkplaceGroup}
+                                    autocomplete="off"
+                                  />
+                                  {/* <datalist id="workplaceGroup">
                                 <option value="">ยังไม่ระบุหน่วยงาน</option>
                                 {workplaceSelection.workplaceGroup.map((wp) => (
                                   <option key={wp._id} value={wp.workplaceComplexId}>
@@ -1281,9 +1283,9 @@ function Employee() {
                                   </option>
                                 ))}
                               </datalist> */}
-                              <datalist id="workplaceGroups">
-                                <option value="">ยังไม่ระบุหน่วยงาน</option>
-                                {/* {allWorkplaceGroups.map((group) => (
+                                  <datalist id="workplaceGroups">
+                                    <option value="">ยังไม่ระบุหน่วยงาน</option>
+                                    {/* {allWorkplaceGroups.map((group) => (
                                   <option
                                     key={group._id}
                                     value={group.workplaceComplexId}
@@ -1291,48 +1293,48 @@ function Employee() {
                                     {group.workplaceComplexName}
                                   </option>
                                 ))} */}
-                                {filteredWorkplaceGroups.map((group) => (
-                                  <option
-                                    key={group._id}
-                                    value={group.workplaceComplexId}
-                                  >
-                                    {group.workplaceComplexName}
-                                  </option>
-                                ))}
-                              </datalist>
+                                    {filteredWorkplaceGroups.map((group) => (
+                                      <option
+                                        key={group._id}
+                                        value={group.workplaceComplexId}
+                                      >
+                                        {group.workplaceComplexName}
+                                      </option>
+                                    ))}
+                                  </datalist>
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-3">
-                            <div class="form-group">
-                              <label role="jobtype">ประเภทการจ้าง</label>
-                              <select
-                                id="jobtype"
-                                name="jobtype"
-                                class="form-control"
-                                value={jobtype}
-                                onChange={handleJobtype}
-                              >
-                                {/* <option value="ประจำ">ประจำ</option>
+                            <div class="row">
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label role="jobtype">ประเภทการจ้าง</label>
+                                  <select
+                                    id="jobtype"
+                                    name="jobtype"
+                                    class="form-control"
+                                    value={jobtype}
+                                    onChange={handleJobtype}
+                                  >
+                                    {/* <option value="ประจำ">ประจำ</option>
                                 <option value="ไม่ประจำ">ไม่ประจำ</option>
                                 <option value="รายวัน">รายวัน</option>
                                 <option value="รายครั้ง">รายครั้ง</option> */}
-                                <option value="">ไม่ระบุ</option>
+                                    <option value="">ไม่ระบุ</option>
 
-                                <option value="รายวัน">รายวัน</option>
-                                <option value="รายเดือน">รายเดือน</option>
-                                <option value="รายครั้ง">รายครั้ง</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="col-md-3">
-                            <div class="form-group">
-                              <label role="startjob">วันที่เริ่มงาน</label>
-                              <div
-                                style={{ position: "relative", zIndex: 9999 }}
-                              >
-                                {/* <DatePicker
+                                    <option value="รายวัน">รายวัน</option>
+                                    <option value="รายเดือน">รายเดือน</option>
+                                    <option value="รายครั้ง">รายครั้ง</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label role="startjob">วันที่เริ่มงาน</label>
+                                  <div
+                                    style={{ position: "relative", zIndex: 9999 }}
+                                  >
+                                    {/* <DatePicker
                                   id="startjob"
                                   name="startjob"
                                   className="form-control"
@@ -1341,47 +1343,47 @@ function Employee() {
                                   onChange={handleStartDateChange}
                                   dateFormat="dd/MM/yyyy"
                                 /> */}
-                                <div
-                                  onClick={toggleDatePickerStart}
-                                  style={{
-                                    cursor: "pointer",
-                                    display: "inline-flex",
-                                    alignItems: "center",
-                                  }}
-                                >
-                                  <FaCalendarAlt size={20} />
-                                  <span style={{ marginLeft: "8px" }}>
-                                    {formattedDate321
-                                      ? formattedDate321
-                                      : "Select Date"}
-                                  </span>
-                                </div>
+                                    <div
+                                      onClick={toggleDatePickerStart}
+                                      style={{
+                                        cursor: "pointer",
+                                        display: "inline-flex",
+                                        alignItems: "center",
+                                      }}
+                                    >
+                                      <FaCalendarAlt size={20} />
+                                      <span style={{ marginLeft: "8px" }}>
+                                        {formattedDate321
+                                          ? formattedDate321
+                                          : "Select Date"}
+                                      </span>
+                                    </div>
 
-                                {showDatePickerStart && (
-                                  <div
-                                    style={{
-                                      position: "absolute",
-                                      zIndex: 1000,
-                                    }}
-                                  >
-                                    <ThaiDatePicker
-                                      className="form-control"
-                                      value={selectedDateStart}
-                                      onChange={handleDatePickerStartChange}
-                                    />
+                                    {showDatePickerStart && (
+                                      <div
+                                        style={{
+                                          position: "absolute",
+                                          zIndex: 1000,
+                                        }}
+                                      >
+                                        <ThaiDatePicker
+                                          className="form-control"
+                                          value={selectedDateStart}
+                                          onChange={handleDatePickerStartChange}
+                                        />
+                                      </div>
+                                    )}
                                   </div>
-                                )}
+                                </div>
                               </div>
-                            </div>
-                          </div>
 
-                          <div class="col-md-3">
-                            <div class="form-group">
-                              <label role="endjob">วันที่ลาออก/หมดสัญญา</label>
-                              <div
-                                style={{ position: "relative", zIndex: 9999 }}
-                              >
-                                {/* <DatePicker
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label role="endjob">วันที่ลาออก/หมดสัญญา</label>
+                                  <div
+                                    style={{ position: "relative", zIndex: 9999 }}
+                                  >
+                                    {/* <DatePicker
                                   id="endjob"
                                   name="endjob"
                                   className="form-control"
@@ -1390,44 +1392,44 @@ function Employee() {
                                   onChange={handleEndDateChange}
                                   dateFormat="dd/MM/yyyy"
                                 /> */}
-                                <div
-                                  onClick={toggleDatePickerEnd}
-                                  style={{
-                                    cursor: "pointer",
-                                    display: "inline-flex",
-                                    alignItems: "center",
-                                  }}
-                                >
-                                  <FaCalendarAlt size={20} />
-                                  <span style={{ marginLeft: "8px" }}>
-                                    {formattedDate321End
-                                      ? formattedDate321End
-                                      : "Select Date"}
-                                  </span>
-                                </div>
+                                    <div
+                                      onClick={toggleDatePickerEnd}
+                                      style={{
+                                        cursor: "pointer",
+                                        display: "inline-flex",
+                                        alignItems: "center",
+                                      }}
+                                    >
+                                      <FaCalendarAlt size={20} />
+                                      <span style={{ marginLeft: "8px" }}>
+                                        {formattedDate321End
+                                          ? formattedDate321End
+                                          : "Select Date"}
+                                      </span>
+                                    </div>
 
-                                {showDatePickerEnd && (
-                                  <div
-                                    style={{
-                                      position: "absolute",
-                                      zIndex: 1000,
-                                    }}
-                                  >
-                                    <ThaiDatePicker
-                                      className="form-control"
-                                      value={selectedDateEnd}
-                                      onChange={handleDatePickerEndChange}
-                                    />
+                                    {showDatePickerEnd && (
+                                      <div
+                                        style={{
+                                          position: "absolute",
+                                          zIndex: 1000,
+                                        }}
+                                      >
+                                        <ThaiDatePicker
+                                          className="form-control"
+                                          value={selectedDateEnd}
+                                          onChange={handleDatePickerEndChange}
+                                        />
+                                      </div>
+                                    )}
                                   </div>
-                                )}
+                                </div>
                               </div>
-                            </div>
-                          </div>
 
-                          <div class="col-md-3">
-                            <div class="form-group">
-                              <label role="exceptjob">วันที่บรรจุ</label>
-                              {/* <div
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label role="exceptjob">วันที่บรรจุ</label>
+                                  {/* <div
                                 style={{ position: "relative", zIndex: 9999 }}
                               >
                                 <DatePicker
@@ -1440,10 +1442,10 @@ function Employee() {
                                   dateFormat="dd/MM/yyyy"
                                 />
                               </div> */}
-                              <div
-                                style={{ position: "relative", zIndex: 9999 }}
-                              >
-                                {/* <DatePicker
+                                  <div
+                                    style={{ position: "relative", zIndex: 9999 }}
+                                  >
+                                    {/* <DatePicker
                                   id="startjob"
                                   name="startjob"
                                   className="form-control"
@@ -1452,212 +1454,212 @@ function Employee() {
                                   onChange={handleStartDateChange}
                                   dateFormat="dd/MM/yyyy"
                                 /> */}
-                                <div
-                                  onClick={toggleDatePickerExceptjob}
-                                  style={{
-                                    cursor: "pointer",
-                                    display: "inline-flex",
-                                    alignItems: "center",
-                                  }}
-                                >
-                                  <FaCalendarAlt size={20} />
-                                  <span style={{ marginLeft: "8px" }}>
-                                    {formattedDate321Exceptjob
-                                      ? formattedDate321Exceptjob
-                                      : "Select Date"}
-                                  </span>
-                                </div>
+                                    <div
+                                      onClick={toggleDatePickerExceptjob}
+                                      style={{
+                                        cursor: "pointer",
+                                        display: "inline-flex",
+                                        alignItems: "center",
+                                      }}
+                                    >
+                                      <FaCalendarAlt size={20} />
+                                      <span style={{ marginLeft: "8px" }}>
+                                        {formattedDate321Exceptjob
+                                          ? formattedDate321Exceptjob
+                                          : "Select Date"}
+                                      </span>
+                                    </div>
 
-                                {showDatePickerExceptjob && (
-                                  <div
-                                    style={{
-                                      position: "absolute",
-                                      zIndex: 1000,
-                                    }}
-                                  >
-                                    <ThaiDatePicker
-                                      className="form-control"
-                                      value={selectedDateExceptjob}
-                                      onChange={handleDatePickerExceptjobChange}
-                                    />
+                                    {showDatePickerExceptjob && (
+                                      <div
+                                        style={{
+                                          position: "absolute",
+                                          zIndex: 1000,
+                                        }}
+                                      >
+                                        <ThaiDatePicker
+                                          className="form-control"
+                                          value={selectedDateExceptjob}
+                                          onChange={handleDatePickerExceptjobChange}
+                                        />
+                                      </div>
+                                    )}
                                   </div>
-                                )}
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <label>อัพโหลดลายนิ้วมือ</label>
+                                  <div class="custom-file">
+                                    <input
+                                      type="file"
+                                      class="custom-file-input"
+                                      id="customFile"
+                                    />
+                                    <label
+                                      class="custom-file-label"
+                                      for="customFile"
+                                    >
+                                      เลือกไฟล์
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <label>อัพโหลดใบหน้า</label>
+                                  <div class="custom-file">
+                                    {/* <input type="file" onChange={handleFileChange} /> */}
+                                    <input
+                                      type="file"
+                                      class="custom-file-input "
+                                      id="customFile"
+                                      multiple
+                                      accept="image/*"
+                                      onChange={onImageChange}
+                                    />
+                                    <label
+                                      class="custom-file-label"
+                                      for="customFile"
+                                    >
+                                      เลือกไฟล์
+                                    </label>
+                                  </div>
+                                </div>
+                                {imageURLs.map((imageSrc, idx) => (
+                                  <img
+                                    key={idx}
+                                    width="150rem"
+                                    height="250rem"
+                                    src={imageSrc}
+                                  />
+                                ))}
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label>อัพโหลดลายนิ้วมือ</label>
-                              <div class="custom-file">
-                                <input
-                                  type="file"
-                                  class="custom-file-input"
-                                  id="customFile"
-                                />
-                                <label
-                                  class="custom-file-label"
-                                  for="customFile"
-                                >
-                                  เลือกไฟล์
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-group">
-                              <label>อัพโหลดใบหน้า</label>
-                              <div class="custom-file">
-                                {/* <input type="file" onChange={handleFileChange} /> */}
-                                <input
-                                  type="file"
-                                  class="custom-file-input "
-                                  id="customFile"
-                                  multiple
-                                  accept="image/*"
-                                  onChange={onImageChange}
-                                />
-                                <label
-                                  class="custom-file-label"
-                                  for="customFile"
-                                >
-                                  เลือกไฟล์
-                                </label>
-                              </div>
-                            </div>
-                            {imageURLs.map((imageSrc, idx) => (
-                              <img
-                                key={idx}
-                                width="150rem"
-                                height="250rem"
-                                src={imageSrc}
-                              />
-                            ))}
-                          </div>
-                        </div>
+                        </section>
+                        {/* <!--Frame--> */}
                       </div>
-                    </section>
-                    {/* <!--Frame--> */}
-                  </div>
-                  <div class="col-md-3">
-                    <section class="Frame">
-                      <EmployeesSelected onEmployeeSelect={onEmployeeSelect} />
-                    </section>
-                  </div>
-                </div>
-                <h2 class="title">ข้อมูลส่วนบุคคลพนักงาน</h2>
-                <div class="row">
-                  <div class="col-md-9">
-                    <section class="Frame">
+                      {/* <div class="col-md-3">
+                        <section class="Frame">
+                          <EmployeesSelected onEmployeeSelect={onEmployeeSelect} />
+                        </section>
+                      </div> */}
+                    </div>
+                    <h2 class="title">ข้อมูลส่วนบุคคลพนักงาน</h2>
+                    <div class="row">
                       <div class="col-md-12">
-                        <div class="row">
-                          <div class="col-md-3">
-                            <div class="form-group">
-                              <label role="prefix">คำนำหน้า</label>
-                              <select
-                                required
-                                id="prefix"
-                                name="prefix"
-                                class="form-control"
-                                value={prefix}
-                                onChange={handlePrefix}
-                              >
-                                <option value="นาย">นาย</option>
-                                <option value="นาง">นาง</option>
-                                <option value="นางสาว">นางสาว</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="col-md-3">
-                            <div class="form-group">
-                              <label role="name">ชื่อ</label>
-                              <input
-                                required
-                                type="text"
-                                name="name"
-                                class="form-control"
-                                id="name"
-                                placeholder="ชื่อ"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                              />
-                            </div>
-                          </div>
-                          <div class="col-md-3">
-                            <div class="form-group">
-                              <label role="lastName">นามสกุล</label>
-                              <input
-                                required
-                                type="text"
-                                name="lastName"
-                                class="form-control"
-                                id="lastName"
-                                placeholder="นามสกุล"
-                                value={lastName}
-                                onChange={(e) => setLastName(e.target.value)}
-                              />
-                            </div>
-                          </div>
+                        <section class="Frame">
+                          <div class="col-md-12">
+                            <div class="row">
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label role="prefix">คำนำหน้า</label>
+                                  <select
+                                    required
+                                    id="prefix"
+                                    name="prefix"
+                                    class="form-control"
+                                    value={prefix}
+                                    onChange={handlePrefix}
+                                  >
+                                    <option value="นาย">นาย</option>
+                                    <option value="นาง">นาง</option>
+                                    <option value="นางสาว">นางสาว</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label role="name">ชื่อ</label>
+                                  <input
+                                    required
+                                    type="text"
+                                    name="name"
+                                    class="form-control"
+                                    id="name"
+                                    placeholder="ชื่อ"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                  />
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label role="lastName">นามสกุล</label>
+                                  <input
+                                    required
+                                    type="text"
+                                    name="lastName"
+                                    class="form-control"
+                                    id="lastName"
+                                    placeholder="นามสกุล"
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
+                                  />
+                                </div>
+                              </div>
 
-                          <div class="col-md-3">
-                            <div class="form-group">
-                              <label role="nickName">ชื่อเล่น</label>
-                              <input
-                                // required
-                                type="text"
-                                name="nickName"
-                                class="form-control"
-                                id="nickName"
-                                placeholder="ชื่อเล่น"
-                                value={nickName}
-                                onChange={(e) => setNickName(e.target.value)}
-                              />
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label role="nickName">ชื่อเล่น</label>
+                                  <input
+                                    // required
+                                    type="text"
+                                    name="nickName"
+                                    class="form-control"
+                                    id="nickName"
+                                    placeholder="ชื่อเล่น"
+                                    value={nickName}
+                                    onChange={(e) => setNickName(e.target.value)}
+                                  />
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-3">
-                            <label role="dateOfBirth">เพศ</label>
-                          </div>
+                            <div class="row">
+                              <div class="col-md-3">
+                                <label role="dateOfBirth">เพศ</label>
+                              </div>
 
-                          <div class="col-md-3">
-                            <label role="dateOfBirth">วันเดือนปีเกิด</label>
-                          </div>
-                          <div class="col-md-3">
-                            <label role="dateOfBirth">อายุ</label>
-                          </div>
-                          <div class="col-md-3">
-                            <label role="dateOfBirth">
-                              เลขบัตรประจำตัวประชาชน
-                            </label>
-                          </div>
-                          {/* <div class="col-md-3">
+                              <div class="col-md-3">
+                                <label role="dateOfBirth">วันเดือนปีเกิด</label>
+                              </div>
+                              <div class="col-md-3">
+                                <label role="dateOfBirth">อายุ</label>
+                              </div>
+                              <div class="col-md-3">
+                                <label role="dateOfBirth">
+                                  เลขบัตรประจำตัวประชาชน
+                                </label>
+                              </div>
+                              {/* <div class="col-md-3">
                             {" "}
                             <label role="age">อายุ</label> 
                           </div>*/}
-                        </div>
-                        <div class="row">
-                          <div class="col-md-3">
-                            <div class="form-group">
-                              {/* <label role="gender">เพศ</label> */}
-                              {/* <input type="text" name="gender" class="form-control" id="gender" placeholder="เพศ" value={gender} onChange={(e) => setGender(e.target.value)} /> */}
-                              <select
-                                required
-                                name="gender"
-                                id="gender"
-                                class="form-control"
-                                value={gender}
-                                onChange={handleGender}
-                              >
-                                <option value="">ระบุ</option>
-                                <option value="ชาย">ชาย</option>
-                                <option value="หญิง">หญิง</option>
-                              </select>
                             </div>
-                          </div>
+                            <div class="row">
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  {/* <label role="gender">เพศ</label> */}
+                                  {/* <input type="text" name="gender" class="form-control" id="gender" placeholder="เพศ" value={gender} onChange={(e) => setGender(e.target.value)} /> */}
+                                  <select
+                                    required
+                                    name="gender"
+                                    id="gender"
+                                    class="form-control"
+                                    value={gender}
+                                    onChange={handleGender}
+                                  >
+                                    <option value="">ระบุ</option>
+                                    <option value="ชาย">ชาย</option>
+                                    <option value="หญิง">หญิง</option>
+                                  </select>
+                                </div>
+                              </div>
 
-                          {/* <div class="col-md-2">
+                              {/* <div class="col-md-2">
                             <div class="form-group">
 
                               <select
@@ -1706,10 +1708,10 @@ function Employee() {
                             </select>
                           </div> */}
 
-                          <div className="col-md-3">
-                            <div className="form-group">
-                              {/* <label htmlFor="date">วันเกิด</label> */}
-                              {/* <input
+                              <div className="col-md-3">
+                                <div className="form-group">
+                                  {/* <label htmlFor="date">วันเกิด</label> */}
+                                  {/* <input
                                 required
                                 type="text"
                                 className="form-control"
@@ -1718,92 +1720,92 @@ function Employee() {
                                 placeholder="dd/mm/yyyy"
                                 readOnly
                               /> */}
-                              <input
-                                required
-                                type="text"
-                                className="form-control"
-                                // value={formattedDate}
-                                value={dateOfBirth}
-                                placeholder="dd/mm/yyyy"
-                                readOnly
-                                onClick={() => setShowPopup(true)}
-                              />
-                              {showPopup && (
-                                <div className="date-popup" style={popupStyle}>
-                                  <div className="row">
-                                    <div className="col-md-4">วัน</div>
-                                    <div className="col-md-4">เดือน</div>
-                                    <div className="col-md-4">ปี</div>
-                                  </div>
-                                  <div className="row">
-                                    <div className="col-md-4">
-                                      <select
-                                        name="day"
-                                        className="form-control mr-1"
-                                        value={day}
-                                        onChange={(e) => setDay(e.target.value)}
+                                  <input
+                                    required
+                                    type="text"
+                                    className="form-control"
+                                    // value={formattedDate}
+                                    value={dateOfBirth}
+                                    placeholder="dd/mm/yyyy"
+                                    readOnly
+                                    onClick={() => setShowPopup(true)}
+                                  />
+                                  {showPopup && (
+                                    <div className="date-popup" style={popupStyle}>
+                                      <div className="row">
+                                        <div className="col-md-4">วัน</div>
+                                        <div className="col-md-4">เดือน</div>
+                                        <div className="col-md-4">ปี</div>
+                                      </div>
+                                      <div className="row">
+                                        <div className="col-md-4">
+                                          <select
+                                            name="day"
+                                            className="form-control mr-1"
+                                            value={day}
+                                            onChange={(e) => setDay(e.target.value)}
+                                          >
+                                            <option value="">วัน</option>
+                                            {days.map((d) => (
+                                              <option key={d} value={d}>
+                                                {d}
+                                              </option>
+                                            ))}
+                                          </select>
+                                        </div>
+                                        <div className="col-md-4">
+                                          <select
+                                            name="month"
+                                            className="form-control mr-1"
+                                            value={month}
+                                            onChange={(e) =>
+                                              setMonth(e.target.value)
+                                            }
+                                          >
+                                            <option value="">เดือน</option>
+                                            {months.map((m) => (
+                                              <option key={m} value={m}>
+                                                {m}
+                                              </option>
+                                            ))}
+                                          </select>
+                                        </div>
+                                        <div className="col-md-4">
+                                          <select
+                                            name="year"
+                                            className="form-control"
+                                            value={year}
+                                            onChange={(e) =>
+                                              setYear(e.target.value)
+                                            }
+                                          >
+                                            <option value="">ปี</option>
+                                            {years.map((y) => (
+                                              <option key={y} value={y + 543}>
+                                                {y + 543}
+                                              </option>
+                                            ))}
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <button
+                                        onClick={handleDateChange}
+                                        className="btn btn-primary mt-2"
                                       >
-                                        <option value="">วัน</option>
-                                        {days.map((d) => (
-                                          <option key={d} value={d}>
-                                            {d}
-                                          </option>
-                                        ))}
-                                      </select>
-                                    </div>
-                                    <div className="col-md-4">
-                                      <select
-                                        name="month"
-                                        className="form-control mr-1"
-                                        value={month}
-                                        onChange={(e) =>
-                                          setMonth(e.target.value)
-                                        }
+                                        ตกลง
+                                      </button>
+                                      <button
+                                        onClick={() => setShowPopup(false)}
+                                        className="btn btn-secondary mt-2 ml-2"
                                       >
-                                        <option value="">เดือน</option>
-                                        {months.map((m) => (
-                                          <option key={m} value={m}>
-                                            {m}
-                                          </option>
-                                        ))}
-                                      </select>
+                                        ปิด
+                                      </button>
                                     </div>
-                                    <div className="col-md-4">
-                                      <select
-                                        name="year"
-                                        className="form-control"
-                                        value={year}
-                                        onChange={(e) =>
-                                          setYear(e.target.value)
-                                        }
-                                      >
-                                        <option value="">ปี</option>
-                                        {years.map((y) => (
-                                          <option key={y} value={y + 543}>
-                                            {y + 543}
-                                          </option>
-                                        ))}
-                                      </select>
-                                    </div>
-                                  </div>
-                                  <button
-                                    onClick={handleDateChange}
-                                    className="btn btn-primary mt-2"
-                                  >
-                                    ตกลง
-                                  </button>
-                                  <button
-                                    onClick={() => setShowPopup(false)}
-                                    className="btn btn-secondary mt-2 ml-2"
-                                  >
-                                    ปิด
-                                  </button>
+                                  )}
                                 </div>
-                              )}
-                            </div>
-                          </div>
+                              </div>
 
-                          {/* <div class="col-md-3">
+                              {/* <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label role="dateOfBirth">วันเดือนปีเกิด</label>
                                                             <DatePicker id="dateOfBirth" name="dateOfBirth"
@@ -1813,52 +1815,52 @@ function Employee() {
                                                         </div>
                                                     </div> */}
 
-                          <div class="col-md-3">
-                            <div class="form-group">
-                              {/* <label role="age">อายุ</label> */}
-                              <input
-                                type="text"
-                                name="age"
-                                class="form-control"
-                                id="age"
-                                placeholder="อายุ"
-                                value={age}
-                                onChange={(e) => setAge(e.target.value)}
-                                readOnly
-                              />
-                            </div>
-                          </div>
-                          <div class="col-md-3">
-                            <div class="form-group">
-                              {/* <label role="idCard">
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  {/* <label role="age">อายุ</label> */}
+                                  <input
+                                    type="text"
+                                    name="age"
+                                    class="form-control"
+                                    id="age"
+                                    placeholder="อายุ"
+                                    value={age}
+                                    onChange={(e) => setAge(e.target.value)}
+                                    readOnly
+                                  />
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  {/* <label role="idCard">
                                 เลขบัตรประจำตัวประชาชน
                               </label> */}
-                              <input
-                                required
-                                type="text"
-                                name="idCard"
-                                class="form-control"
-                                id="idCard"
-                                placeholder="เลขบัตรประจำตัวประชาชน"
-                                value={idCard}
-                                onChange={(e) => setIdCard(e.target.value)}
-                                onInput={(e) => {
-                                  // Remove any non-digit characters
-                                  e.target.value = e.target.value.replace(
-                                    /\D/g,
-                                    ""
-                                  );
-                                }}
-                              />
+                                  <input
+                                    required
+                                    type="text"
+                                    name="idCard"
+                                    class="form-control"
+                                    id="idCard"
+                                    placeholder="เลขบัตรประจำตัวประชาชน"
+                                    value={idCard}
+                                    onChange={(e) => setIdCard(e.target.value)}
+                                    onInput={(e) => {
+                                      // Remove any non-digit characters
+                                      e.target.value = e.target.value.replace(
+                                        /\D/g,
+                                        ""
+                                      );
+                                    }}
+                                  />
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </div>
 
-                        <div class="row">
-                          <div class="col-md-3">
-                            <div class="form-group">
-                              <label role="ethnicity">เชื้อชาติ</label>
-                              {/* <input
+                            <div class="row">
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label role="ethnicity">เชื้อชาติ</label>
+                                  {/* <input
                                 type="text"
                                 name="ethnicity"
                                 class="form-control"
@@ -1867,26 +1869,26 @@ function Employee() {
                                 value={ethnicity}
                                 onChange={(e) => setEthnicity(e.target.value)}
                               /> */}
-                              <select
-                                required
-                                name="ethnicity"
-                                id="ethnicity"
-                                class="form-control"
-                                value={ethnicity}
-                                onChange={handleEthnicity}
-                              >
-                                <option value="">ระบุ</option>
-                                <option value="ไทย">ไทย</option>
-                                <option value="พม่า">พม่า</option>
-                                <option value="ลาว">ลาว</option>
-                                <option value="กัมพูชา">กัมพูชา</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="col-md-3">
-                            <div class="form-group">
-                              <label role="religion">ศาสนา</label>
-                              {/* <input
+                                  <select
+                                    required
+                                    name="ethnicity"
+                                    id="ethnicity"
+                                    class="form-control"
+                                    value={ethnicity}
+                                    onChange={handleEthnicity}
+                                  >
+                                    <option value="">ระบุ</option>
+                                    <option value="ไทย">ไทย</option>
+                                    <option value="พม่า">พม่า</option>
+                                    <option value="ลาว">ลาว</option>
+                                    <option value="กัมพูชา">กัมพูชา</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label role="religion">ศาสนา</label>
+                                  {/* <input
                                 type="text"
                                 name="religion"
                                 class="form-control"
@@ -1895,25 +1897,25 @@ function Employee() {
                                 value={religion}
                                 onChange={(e) => setReligion(e.target.value)}
                               /> */}
-                              <select
-                                // required
-                                name="religion"
-                                id="religion"
-                                class="form-control"
-                                value={religion}
-                                onChange={handleReligion}
-                              >
-                                <option value="">ระบุ</option>
-                                <option value="ไทย">พุทธ</option>
-                                <option value="พม่า">คริสต์</option>
-                                <option value="ลาว">อิสลาม</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="col-md-3">
-                            <div class="form-group">
-                              <label role="maritalStatus">สถานภาพการสมรส</label>
-                              {/* <input
+                                  <select
+                                    // required
+                                    name="religion"
+                                    id="religion"
+                                    class="form-control"
+                                    value={religion}
+                                    onChange={handleReligion}
+                                  >
+                                    <option value="">ระบุ</option>
+                                    <option value="ไทย">พุทธ</option>
+                                    <option value="พม่า">คริสต์</option>
+                                    <option value="ลาว">อิสลาม</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label role="maritalStatus">สถานภาพการสมรส</label>
+                                  {/* <input
                                 type="text"
                                 name="maritalStatus"
                                 class="form-control"
@@ -1924,76 +1926,76 @@ function Employee() {
                                   setMaritalStatus(e.target.value)
                                 }
                               /> */}
-                              <select
-                                required
-                                name="maritalStatus"
-                                id="maritalStatus"
-                                class="form-control"
-                                value={maritalStatus}
-                                onChange={handleMaritalStatus}
-                              >
-                                <option value="">ระบุ</option>
-                                <option value="โสด">โสด</option>
-                                <option value="แต่งงานและอยู่ด้วยกัน">
-                                  แต่งงานและอยู่ด้วยกัน
-                                </option>
-                                <option value="แต่งงานแต่ไม่ได้อยู่ด้วยกัน">
-                                  แต่งงานแต่ไม่ได้อยู่ด้วยกัน
-                                </option>
-                                <option value="ไม่แต่งงานแต่อยู่ด้วยกัน">
-                                  ไม่แต่งงานแต่อยู่ด้วยกัน
-                                </option>
-                                <option value="หม้าย">หม้าย</option>
-                                <option value="หย่าร้าง/แยกทาง/เลิกกัน">
-                                  หย่าร้าง/แยกทาง/เลิกกัน
-                                </option>
-                              </select>
+                                  <select
+                                    required
+                                    name="maritalStatus"
+                                    id="maritalStatus"
+                                    class="form-control"
+                                    value={maritalStatus}
+                                    onChange={handleMaritalStatus}
+                                  >
+                                    <option value="">ระบุ</option>
+                                    <option value="โสด">โสด</option>
+                                    <option value="แต่งงานและอยู่ด้วยกัน">
+                                      แต่งงานและอยู่ด้วยกัน
+                                    </option>
+                                    <option value="แต่งงานแต่ไม่ได้อยู่ด้วยกัน">
+                                      แต่งงานแต่ไม่ได้อยู่ด้วยกัน
+                                    </option>
+                                    <option value="ไม่แต่งงานแต่อยู่ด้วยกัน">
+                                      ไม่แต่งงานแต่อยู่ด้วยกัน
+                                    </option>
+                                    <option value="หม้าย">หม้าย</option>
+                                    <option value="หย่าร้าง/แยกทาง/เลิกกัน">
+                                      หย่าร้าง/แยกทาง/เลิกกัน
+                                    </option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label role="militaryStatus">
+                                    สถานภาพทางการทหาร
+                                  </label>
+                                  <select
+                                    required
+                                    name="militaryStatus"
+                                    id="militaryStatus"
+                                    class="form-control"
+                                    value={militaryStatus}
+                                    onChange={handleMilitaryStatus}
+                                  >
+                                    <option value="ยกเว้นการเกณฑ์ทหาร">
+                                      ยกเว้นการเกณฑ์ทหาร
+                                    </option>
+                                    <option value="ผ่านการเกณฑ์ทหารแล้ว">
+                                      ผ่านการเกณฑ์ทหารแล้ว
+                                    </option>
+                                    <option value="ไม่ผ่านการเกณฑ์ทหาร">
+                                      ไม่ผ่านการเกณฑ์ทหาร
+                                    </option>
+                                  </select>
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                          <div class="col-md-3">
-                            <div class="form-group">
-                              <label role="militaryStatus">
-                                สถานภาพทางการทหาร
-                              </label>
-                              <select
-                                required
-                                name="militaryStatus"
-                                id="militaryStatus"
-                                class="form-control"
-                                value={militaryStatus}
-                                onChange={handleMilitaryStatus}
-                              >
-                                <option value="ยกเว้นการเกณฑ์ทหาร">
-                                  ยกเว้นการเกณฑ์ทหาร
-                                </option>
-                                <option value="ผ่านการเกณฑ์ทหารแล้ว">
-                                  ผ่านการเกณฑ์ทหารแล้ว
-                                </option>
-                                <option value="ไม่ผ่านการเกณฑ์ทหาร">
-                                  ไม่ผ่านการเกณฑ์ทหาร
-                                </option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="form-group">
-                              <label role="address">
-                                ที่อยู่ตามบัตรประชาชน
-                              </label>
-                              <textarea
-                                // required
-                                name="address"
-                                id="address"
-                                class="form-control"
-                                rows="3"
-                                value={address}
-                                onChange={(e) => setAddress(e.target.value)}
-                              ></textarea>
-                            </div>
-                          </div>
-                          {/* <div class="col-md-6">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <div class="form-group">
+                                  <label role="address">
+                                    ที่อยู่ตามบัตรประชาชน
+                                  </label>
+                                  <textarea
+                                    // required
+                                    name="address"
+                                    id="address"
+                                    class="form-control"
+                                    rows="3"
+                                    value={address}
+                                    onChange={(e) => setAddress(e.target.value)}
+                                  ></textarea>
+                                </div>
+                              </div>
+                              {/* <div class="col-md-6">
                             <div class="form-group">
                               <label role="currentAddress">
                                 ที่อยู่ปัจจุบัน
@@ -2020,11 +2022,11 @@ function Employee() {
                               ></textarea>
                             </div>
                           </div>*/}
-                        </div>
+                            </div>
 
-                        <div class="row">
-                          <div class="col-md-3">
-                            {/* <div class="form-group">
+                            <div class="row">
+                              <div class="col-md-3">
+                                {/* <div class="form-group">
                                   <label role="address">
                                     ที่อยู่ตามบัตรประชาชน
                                   </label>
@@ -2037,140 +2039,140 @@ function Employee() {
                                     onChange={(e) => setAddress(e.target.value)}
                                   ></textarea>
                                 </div> */}
-                            <div>
-                              <label htmlFor="province">จังหวัด </label>
-                              <select
-                                id="province"
-                                value={province}
-                                onChange={(e) => setProvince(e.target.value)}
-                                class="form-control"
-                              >
-                                {/* <option value="">Select Province</option>
+                                <div>
+                                  <label htmlFor="province">จังหวัด </label>
+                                  <select
+                                    id="province"
+                                    value={province}
+                                    onChange={(e) => setProvince(e.target.value)}
+                                    class="form-control"
+                                  >
+                                    {/* <option value="">Select Province</option>
                                 {Object.keys(locationData).map((prov) => (
                                   <option key={prov} value={prov}>
                                     {prov}
                                   </option>
                                 ))} */}
-                                {/* <option value="">Select Province</option>
+                                    {/* <option value="">Select Province</option>
                                 {provincesData.map((prov) => (
                                   <option key={prov.id} value={prov.id}>
                                     {prov.name_th}
                                   </option>
                                 ))} */}
-                                <option value="">Select Province</option>
-                                {provincesData
-                                  .sort((a, b) =>
-                                    a.name_th.localeCompare(b.name_th)
-                                  ) // Sort by name_th
-                                  .map((prov) => (
-                                    <option key={prov.id} value={prov.id}>
-                                      {prov.name_th}
-                                    </option>
-                                  ))}
-                              </select>
-                            </div>
-                          </div>
-                          <div class="col-md-3">
-                            <div>
-                              <label htmlFor="district">อำเภอ </label>
-                              <select
-                                id="district"
-                                value={district}
-                                onChange={(e) => setDistrict(e.target.value)}
-                                disabled={!province}
-                                class="form-control"
-                              >
-                                {/* <option value="">Select District</option>
+                                    <option value="">Select Province</option>
+                                    {provincesData
+                                      .sort((a, b) =>
+                                        a.name_th.localeCompare(b.name_th)
+                                      ) // Sort by name_th
+                                      .map((prov) => (
+                                        <option key={prov.id} value={prov.id}>
+                                          {prov.name_th}
+                                        </option>
+                                      ))}
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div>
+                                  <label htmlFor="district">อำเภอ </label>
+                                  <select
+                                    id="district"
+                                    value={district}
+                                    onChange={(e) => setDistrict(e.target.value)}
+                                    disabled={!province}
+                                    class="form-control"
+                                  >
+                                    {/* <option value="">Select District</option>
                                 {districtOptions.map((dist) => (
                                   <option key={dist} value={dist}>
                                     {dist}
                                   </option>
                                 ))} */}
-                                {/* <option value="">Select District</option>
+                                    {/* <option value="">Select District</option>
                                 {districtOptions.map((dist) => (
                                   <option key={dist.id} value={dist.id}>
                                     {dist.name_th}
                                   </option>
                                 ))} */}
-                                <option value="">Select District</option>
-                                {districtOptions
-                                  .sort((a, b) =>
-                                    a.name_th.localeCompare(b.name_th)
-                                  ) // Sort by name_th
-                                  .map((dist) => (
-                                    <option key={dist.id} value={dist.id}>
-                                      {dist.name_th}
-                                    </option>
-                                  ))}
-                              </select>
-                            </div>
-                          </div>
-                          <div class="col-md-3">
-                            <div>
-                              <label htmlFor="subDistrict">ตำบล </label>
-                              <select
-                                id="subDistrict"
-                                value={subDistrict}
-                                onChange={(e) => setSubDistrict(e.target.value)}
-                                disabled={!district}
-                                class="form-control"
-                              >
-                                {/* <option value="">Select Sub-District</option>
+                                    <option value="">Select District</option>
+                                    {districtOptions
+                                      .sort((a, b) =>
+                                        a.name_th.localeCompare(b.name_th)
+                                      ) // Sort by name_th
+                                      .map((dist) => (
+                                        <option key={dist.id} value={dist.id}>
+                                          {dist.name_th}
+                                        </option>
+                                      ))}
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div>
+                                  <label htmlFor="subDistrict">ตำบล </label>
+                                  <select
+                                    id="subDistrict"
+                                    value={subDistrict}
+                                    onChange={(e) => setSubDistrict(e.target.value)}
+                                    disabled={!district}
+                                    class="form-control"
+                                  >
+                                    {/* <option value="">Select Sub-District</option>
                                 {subDistrictOptions.map((subDist) => (
                                   <option key={subDist} value={subDist}>
                                     {subDist}
                                   </option>
                                 ))} */}
-                                {/* <option value="">Select Sub-District</option>
+                                    {/* <option value="">Select Sub-District</option>
                                 {subDistrictOptions.map((subDist) => (
                                   <option key={subDist.id} value={subDist.id}>
                                     {subDist.name_th}
                                   </option>
                                 ))} */}
-                                <option value="">Select Sub-District</option>
-                                {subDistrictOptions
-                                  .sort((a, b) =>
-                                    a.name_th.localeCompare(b.name_th)
-                                  ) // Sort by name_th
-                                  .map((subDist) => (
-                                    <option key={subDist.id} value={subDist.id}>
-                                      {subDist.name_th}
-                                    </option>
-                                  ))}
-                              </select>
-                            </div>
-                          </div>
-                          <div class="col-md-3">
-                            <div>
-                              <label htmlFor="subDistrict">เลขไปรษณีย์ </label>
-                              <div class="form-group">
-                                {/* <label role="idCard">
+                                    <option value="">Select Sub-District</option>
+                                    {subDistrictOptions
+                                      .sort((a, b) =>
+                                        a.name_th.localeCompare(b.name_th)
+                                      ) // Sort by name_th
+                                      .map((subDist) => (
+                                        <option key={subDist.id} value={subDist.id}>
+                                          {subDist.name_th}
+                                        </option>
+                                      ))}
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div>
+                                  <label htmlFor="subDistrict">เลขไปรษณีย์ </label>
+                                  <div class="form-group">
+                                    {/* <label role="idCard">
                                     เลขบัตรประจำตัวประชาชน
                                   </label> */}
-                                <input
-                                  // required
-                                  type="text"
-                                  name="postalCode"
-                                  class="form-control"
-                                  id="postalCode"
-                                  placeholder="เลขไปรษณีย์"
-                                  value={postalCode}
-                                  onChange={(e) =>
-                                    setPostalCode(e.target.value)
-                                  }
-                                  onInput={(e) => {
-                                    // Remove any non-digit characters
-                                    e.target.value = e.target.value.replace(
-                                      /\D/g,
-                                      ""
-                                    );
-                                  }}
-                                />
+                                    <input
+                                      // required
+                                      type="text"
+                                      name="postalCode"
+                                      class="form-control"
+                                      id="postalCode"
+                                      placeholder="เลขไปรษณีย์"
+                                      value={postalCode}
+                                      onChange={(e) =>
+                                        setPostalCode(e.target.value)
+                                      }
+                                      onInput={(e) => {
+                                        // Remove any non-digit characters
+                                        e.target.value = e.target.value.replace(
+                                          /\D/g,
+                                          ""
+                                        );
+                                      }}
+                                    />
+                                  </div>
+                                </div>
                               </div>
-                            </div>
-                          </div>
 
-                          {/* <div class="col-md-6">
+                              {/* <div class="col-md-6">
                                 <div class="form-group">
                                   <label role="currentAddress">
                                     ที่อยู่ปัจจุบัน
@@ -2197,8 +2199,8 @@ function Employee() {
                                   ></textarea>
                                 </div>
                               </div> */}
-                        </div>
-                        {/* <div class="row">
+                            </div>
+                            {/* <div class="row">
                           <div class="col-md-3">
                             <div>
                               <label htmlFor="subDistrict">
@@ -2221,41 +2223,41 @@ function Employee() {
                             </div>
                           </div>
                         </div> */}
-                        <div>
-                          <input
-                            type="checkbox"
-                            id="copyCheckbox"
-                            checked={isChecked}
-                            onChange={handleCheckboxToggle}
-                          />
-                          <label htmlFor="copyCheckbox">
-                            ใช้ที่อยู่ตามบัตรประชาชน
-                          </label>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="form-group">
-                              <label role="address">
-                                ที่อยู่ตามบัตรประชาชน
+                            <div>
+                              <input
+                                type="checkbox"
+                                id="copyCheckbox"
+                                checked={isChecked}
+                                onChange={handleCheckboxToggle}
+                              />
+                              <label htmlFor="copyCheckbox">
+                                ใช้ที่อยู่ตามบัตรประชาชน
                               </label>
-                              <textarea
-                                // required
-                                name="address"
-                                id="address"
-                                class="form-control"
-                                rows="3"
-                                value={currentAddress}
-                                // onChange={(e) => setAddress(e.target.value)}
-                                onChange={(e) =>
-                                  setCurrentAddress(e.target.value)
-                                }
-                              ></textarea>
                             </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-3">
-                            {/* <div class="form-group">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <div class="form-group">
+                                  <label role="address">
+                                    ที่อยู่ตามบัตรประชาชน
+                                  </label>
+                                  <textarea
+                                    // required
+                                    name="address"
+                                    id="address"
+                                    class="form-control"
+                                    rows="3"
+                                    value={currentAddress}
+                                    // onChange={(e) => setAddress(e.target.value)}
+                                    onChange={(e) =>
+                                      setCurrentAddress(e.target.value)
+                                    }
+                                  ></textarea>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-3">
+                                {/* <div class="form-group">
                                   <label role="address">
                                     ที่อยู่ตามบัตรประชาชน
                                   </label>
@@ -2268,94 +2270,94 @@ function Employee() {
                                     onChange={(e) => setAddress(e.target.value)}
                                   ></textarea>
                                 </div> */}
-                            <div>
-                              <label htmlFor="province">จังหวัด </label>
-                              <select
-                                id="province2"
-                                value={province2}
-                                onChange={(e) => setProvince2(e.target.value)}
-                                class="form-control"
-                              >
-                                <option value="">Select Province</option>
-                                {provincesData.map((prov) => (
-                                  <option key={prov.id} value={prov.id}>
-                                    {prov.name_th}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-                          </div>
-                          <div class="col-md-3">
-                            <div>
-                              <label htmlFor="district">อำเภอ </label>
-                              <select
-                                id="district2"
-                                value={district2}
-                                onChange={(e) => setDistrict2(e.target.value)}
-                                disabled={!province2}
-                                class="form-control"
-                              >
-                                <option value="">Select District</option>
-                                {districtOptions2.map((dist) => (
-                                  <option key={dist.id} value={dist.id}>
-                                    {dist.name_th}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-                          </div>
-                          <div class="col-md-3">
-                            <div>
-                              <label htmlFor="subDistrict">ตำบล </label>
-                              <select
-                                id="subDistrict"
-                                value={subDistrict2}
-                                onChange={(e) =>
-                                  setSubDistrict2(e.target.value)
-                                }
-                                disabled={!district2}
-                                class="form-control"
-                              >
-                                <option value="">Select Sub-District</option>
-                                {subDistrictOptions2.map((subDist) => (
-                                  <option key={subDist.id} value={subDist.id}>
-                                    {subDist.name_th}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-                          </div>
-                          <div class="col-md-3">
-                            <div>
-                              <label htmlFor="subDistrict">เลขไปรษณีย์ </label>
-                              <div class="form-group">
-                                {/* <label role="idCard">
+                                <div>
+                                  <label htmlFor="province">จังหวัด </label>
+                                  <select
+                                    id="province2"
+                                    value={province2}
+                                    onChange={(e) => setProvince2(e.target.value)}
+                                    class="form-control"
+                                  >
+                                    <option value="">Select Province</option>
+                                    {provincesData.map((prov) => (
+                                      <option key={prov.id} value={prov.id}>
+                                        {prov.name_th}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div>
+                                  <label htmlFor="district">อำเภอ </label>
+                                  <select
+                                    id="district2"
+                                    value={district2}
+                                    onChange={(e) => setDistrict2(e.target.value)}
+                                    disabled={!province2}
+                                    class="form-control"
+                                  >
+                                    <option value="">Select District</option>
+                                    {districtOptions2.map((dist) => (
+                                      <option key={dist.id} value={dist.id}>
+                                        {dist.name_th}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div>
+                                  <label htmlFor="subDistrict">ตำบล </label>
+                                  <select
+                                    id="subDistrict"
+                                    value={subDistrict2}
+                                    onChange={(e) =>
+                                      setSubDistrict2(e.target.value)
+                                    }
+                                    disabled={!district2}
+                                    class="form-control"
+                                  >
+                                    <option value="">Select Sub-District</option>
+                                    {subDistrictOptions2.map((subDist) => (
+                                      <option key={subDist.id} value={subDist.id}>
+                                        {subDist.name_th}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div>
+                                  <label htmlFor="subDistrict">เลขไปรษณีย์ </label>
+                                  <div class="form-group">
+                                    {/* <label role="idCard">
                                     เลขบัตรประจำตัวประชาชน
                                   </label> */}
-                                <input
-                                  // required
-                                  type="text"
-                                  name="postalCode2"
-                                  class="form-control"
-                                  id="postalCode2"
-                                  placeholder="เลขไปรษณีย์"
-                                  value={postalCode2}
-                                  onChange={(e) =>
-                                    setPostalCode2(e.target.value)
-                                  }
-                                  onInput={(e) => {
-                                    // Remove any non-digit characters
-                                    e.target.value = e.target.value.replace(
-                                      /\D/g,
-                                      ""
-                                    );
-                                  }}
-                                />
+                                    <input
+                                      // required
+                                      type="text"
+                                      name="postalCode2"
+                                      class="form-control"
+                                      id="postalCode2"
+                                      placeholder="เลขไปรษณีย์"
+                                      value={postalCode2}
+                                      onChange={(e) =>
+                                        setPostalCode2(e.target.value)
+                                      }
+                                      onInput={(e) => {
+                                        // Remove any non-digit characters
+                                        e.target.value = e.target.value.replace(
+                                          /\D/g,
+                                          ""
+                                        );
+                                      }}
+                                    />
+                                  </div>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </div>
-                        {/* <div class="row">
+                            {/* <div class="row">
                           <div class="col-md-3">
                             <div>
                               <label htmlFor="subDistrict">
@@ -2380,111 +2382,111 @@ function Employee() {
                         </div>
                         <br /> */}
 
-                        {/* <!--row--> */}
-                        <div class="row">
-                          <div class="col-md-3">
-                            <div class="form-group">
-                              <label role="phoneNumber">เบอร์โทรศัพท์</label>
-                              <input
-                                type="text"
-                                name="phoneNumber"
-                                class="form-control"
-                                id="phoneNumber"
-                                placeholder="เบอร์โทรศัพท์"
-                                value={phoneNumber}
-                                onChange={(e) => setPhoneNumber(e.target.value)}
-                              />
+                            {/* <!--row--> */}
+                            <div class="row">
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label role="phoneNumber">เบอร์โทรศัพท์</label>
+                                  <input
+                                    type="text"
+                                    name="phoneNumber"
+                                    class="form-control"
+                                    id="phoneNumber"
+                                    placeholder="เบอร์โทรศัพท์"
+                                    value={phoneNumber}
+                                    onChange={(e) => setPhoneNumber(e.target.value)}
+                                  />
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label role="emergencyContactNumber">
+                                    เบอร์ติดต่อกรณีฉุกเฉิน
+                                  </label>
+                                  <input
+                                    type="text"
+                                    name="emergencyContactNumber"
+                                    class="form-control"
+                                    id="emergencyContactNumber"
+                                    placeholder="เบอร์ติดต่อกรณีฉุกเฉิน"
+                                    value={emergencyContactNumber}
+                                    onChange={(e) =>
+                                      setEmergencyContactNumber(e.target.value)
+                                    }
+                                  />
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label role="idLine">ไอดีไลน์</label>
+                                  <input
+                                    type="text"
+                                    name="idLine"
+                                    class="form-control"
+                                    id="idLine"
+                                    placeholder="ไอดีไลน์"
+                                    value={idLine}
+                                    onChange={(e) => setIdLine(e.target.value)}
+                                  />
+                                </div>
+                              </div>
                             </div>
                           </div>
-                          <div class="col-md-3">
-                            <div class="form-group">
-                              <label role="emergencyContactNumber">
-                                เบอร์ติดต่อกรณีฉุกเฉิน
-                              </label>
-                              <input
-                                type="text"
-                                name="emergencyContactNumber"
-                                class="form-control"
-                                id="emergencyContactNumber"
-                                placeholder="เบอร์ติดต่อกรณีฉุกเฉิน"
-                                value={emergencyContactNumber}
-                                onChange={(e) =>
-                                  setEmergencyContactNumber(e.target.value)
-                                }
-                              />
-                            </div>
-                          </div>
-                          <div class="col-md-3">
-                            <div class="form-group">
-                              <label role="idLine">ไอดีไลน์</label>
-                              <input
-                                type="text"
-                                name="idLine"
-                                class="form-control"
-                                id="idLine"
-                                placeholder="ไอดีไลน์"
-                                value={idLine}
-                                onChange={(e) => setIdLine(e.target.value)}
-                              />
-                            </div>
-                          </div>
-                        </div>
+                          {/* <!--col-md-12--> */}
+                        </section>
+                        {/* <!--Frame--> */}
                       </div>
-                      {/* <!--col-md-12--> */}
-                    </section>
-                    {/* <!--Frame--> */}
-                  </div>
-                </div>
-                <h2 class="title">ข้อมูลสุขภาพ</h2>
-                <div class="row">
-                  <div class="col-md-9">
-                    <section class="Frame">
-                      <div>
-                        <label role="vaccination">การรับวัคซีน:</label>
-                        <input
-                          class="form-control"
-                          type="text"
-                          name="vaccination"
-                          id="vaccination"
-                          value={newVaccination}
-                          onChange={handleVaccination}
-                          placeholder="เพิ่มวัคซีนที่ได้รับ"
-                        />
-                        <br />
-                        <button
-                          type="button"
-                          class="btn btn-primary"
-                          onClick={handleAddVaccination}
-                        >
-                          เพิ่มวัคซีน
-                        </button>
-                        <br />
-                        <br />
-                        {/* <h2 class="title">วัคซีนที่ได้รับ</h2> */}
-                        <label style={{ paddingLeft: "10px" }}>
-                          วัคซีนที่ได้รับ
-                        </label>
+                    </div>
+                    <h2 class="title">ข้อมูลสุขภาพ</h2>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <section class="Frame">
+                          <div>
+                            <label role="vaccination">การรับวัคซีน:</label>
+                            <input
+                              class="form-control"
+                              type="text"
+                              name="vaccination"
+                              id="vaccination"
+                              value={newVaccination}
+                              onChange={handleVaccination}
+                              placeholder="เพิ่มวัคซีนที่ได้รับ"
+                            />
+                            <br />
+                            <button
+                              type="button"
+                              class="btn btn-primary"
+                              onClick={handleAddVaccination}
+                            >
+                              เพิ่มวัคซีน
+                            </button>
+                            <br />
+                            <br />
+                            {/* <h2 class="title">วัคซีนที่ได้รับ</h2> */}
+                            <label style={{ paddingLeft: "10px" }}>
+                              วัคซีนที่ได้รับ
+                            </label>
 
-                        <ul>
-                          {vaccination.map((item, index) => (
-                            <li key={index}>
-                              {item}
-                              <button
-                                type="button"
-                                onClick={() => handleRemoveVaccination(item)}
-                                class="btn btn-info"
-                                style={{ margin: "0.5rem", width: "4rem" }}
-                              >
-                                ลบ
-                              </button>
-                            </li>
-                            // <li key={index}>{item}<button class="btn btn-info" style={{ margin: '0.5rem', width: "4rem" }}>ลบ</button></li>
-                            // <li key={index}>{item}<button class="btn btn-info" style={{ margin: '0.5rem', width: "4rem" }}>ลบ</button></li>
-                          ))}
-                        </ul>
-                      </div>
+                            <ul>
+                              {vaccination.map((item, index) => (
+                                <li key={index}>
+                                  {item}
+                                  <button
+                                    type="button"
+                                    onClick={() => handleRemoveVaccination(item)}
+                                    class="btn btn-info"
+                                    style={{ margin: "0.5rem", width: "4rem" }}
+                                  >
+                                    ลบ
+                                  </button>
+                                </li>
+                                // <li key={index}>{item}<button class="btn btn-info" style={{ margin: '0.5rem', width: "4rem" }}>ลบ</button></li>
+                                // <li key={index}>{item}<button class="btn btn-info" style={{ margin: '0.5rem', width: "4rem" }}>ลบ</button></li>
+                              ))}
+                            </ul>
+                          </div>
 
-                      {/* <div class="row">
+                          {/* <div class="row">
                                                 <div class="form-group">
                                                     <label style={{ paddingLeft: "10px" }}>การรับวัคซีน</label>
                                                     <div class="col-md-12" style={{ marginTop: "10px" }}>
@@ -2497,61 +2499,69 @@ function Employee() {
                                                     </div>
                                                 </div>
                                             </div> */}
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label>สิทธิการรักษาพยาบาล</label>
-                            <input
-                              type="text"
-                              name="treatmentRights"
-                              class="form-control"
-                              id="treatmentRights"
-                              placeholder="สิทธิการรักษาพยาบาล"
-                              value={treatmentRights}
-                              onChange={(e) =>
-                                setTreatmentRights(e.target.value)
-                              }
-                            />
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label>สิทธิการรักษาพยาบาล</label>
+                                <input
+                                  type="text"
+                                  name="treatmentRights"
+                                  class="form-control"
+                                  id="treatmentRights"
+                                  placeholder="สิทธิการรักษาพยาบาล"
+                                  value={treatmentRights}
+                                  onChange={(e) =>
+                                    setTreatmentRights(e.target.value)
+                                  }
+                                />
+                              </div>
+                            </div>
                           </div>
-                        </div>
+                        </section>
+                        {/* <!--Frame--> */}
                       </div>
-                    </section>
-                    {/* <!--Frame--> */}
-                  </div>
+                    </div>
+                    <div class="line_btn">
+                      {newEmp ? (
+                        <button
+                          type="submit"
+                          name="save"
+                          value="create"
+                          onClick={() => setButtonValue("create")}
+                          class="btn b_save"
+                        >
+                          <i class="nav-icon fas fa-save"></i>{" "}
+                          &nbsp;สร้างพนักงานใหม่
+                        </button>
+                      ) : (
+                        <button
+                          type="submit"
+                          name="save"
+                          value="save"
+                          onClick={() => setButtonValue("save")}
+                          class="btn b_save"
+                        >
+                          <i class="nav-icon fas fa-save"></i> &nbsp;บันทึก
+                        </button>
+                      )}
+                      <button class="btn clean"
+                        onClick={() => window.location.reload()}
+                      >
+                        <i class="far fa-window-close"></i> &nbsp;ยกเลิก
+                      </button>
+                    </div>
+                  </form>
                 </div>
-                <div class="line_btn">
-                  {newEmp ? (
-                    <button
-                      type="submit"
-                      name="save"
-                      value="create"
-                      onClick={() => setButtonValue("create")}
-                      class="btn b_save"
-                    >
-                      <i class="nav-icon fas fa-save"></i>{" "}
-                      &nbsp;สร้างพนักงานใหม่
-                    </button>
-                  ) : (
-                    <button
-                      type="submit"
-                      name="save"
-                      value="save"
-                      onClick={() => setButtonValue("save")}
-                      class="btn b_save"
-                    >
-                      <i class="nav-icon fas fa-save"></i> &nbsp;บันทึก
-                    </button>
-                  )}
-                  <button class="btn clean"
-                    onClick={() => window.location.reload()}
-                  >
-                    <i class="far fa-window-close"></i> &nbsp;ยกเลิก
-                  </button>
+                <div class="col-md-3">
+                  <section class="Frame">
+                    <EmployeesSelected onEmployeeSelect={onEmployeeSelect} />
+                  </section>
                 </div>
-              </form>
+              </div>
             </div>
             {/* <!-- /.container-fluid --> */}
           </section>
+
           {/* <!-- /.content --> */}
         </div>
       </div>

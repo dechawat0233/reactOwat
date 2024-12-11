@@ -163,27 +163,51 @@ function BackReport({ employeeList, workplaceList }) {
 
   console.log('filteredEmployees', filteredEmployees);
 
+  // useEffect(() => {
+  //   const fetchData = () => {
+  //     const dataTest = {
+  //       year: year,
+  //       month: month,
+  //     };
+
+  //     axios
+  //       .post(endpoint + "/accounting/calsalarylist", dataTest)
+  //       .then((response) => {
+  //         const responseData = response.data;
+
+  //         setDataAccounting(responseData);
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error:", error);
+  //       });
+  //   };
+
+  //   fetchData();
+  // }, [year, month]);
+
   useEffect(() => {
-    const fetchData = () => {
+    const fetchData = async () => {
       const dataTest = {
         year: year,
         month: month,
       };
-
-      axios
-        .post(endpoint + "/accounting/calsalarylist", dataTest)
-        .then((response) => {
-          const responseData = response.data;
-
-          setDataAccounting(responseData);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+  
+      try {
+        const response = await axios.post(endpoint + "/accounting/calsalarylist", dataTest);
+        const responseData = response.data;
+  
+        setDataAccounting(responseData);
+  
+        // Add any code here that should run after setDataAccounting
+        console.log("Data has been set:", responseData);
+      } catch (error) {
+        console.error("Error:", error);
+      }
     };
-
+  
     fetchData();
   }, [year, month]);
+  
 
   console.log('dataAccounting', dataAccounting);
 

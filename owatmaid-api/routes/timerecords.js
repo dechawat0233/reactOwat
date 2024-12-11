@@ -393,6 +393,13 @@ timerecordId,
 console.log(workplaceTimeRecordData );
 
   try {
+    // Delete existing records for the same employee and month timerecordId
+    await workplaceTimerecordEmp.deleteMany({
+      timerecordId,
+      employeeId,
+      employeeName,
+      month    });
+      
     await workplaceTimeRecordData.save();
  
     await res.json(workplaceTimeRecordData);

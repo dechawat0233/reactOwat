@@ -2502,35 +2502,35 @@ function SalarySlipPDF({ employeeList, workplaceList }) {
         );
 
         const namesWithSpecificIds = responseDataAll[i + 1].addSalary
-        .filter((item) => ["1230", "1350", "1241"].includes(item.id)) // Filter based on specific IDs
-        .map((item) => {
-          // Check if the item.id is 1350 and modify item.name
-          if (item.id === "1350") {
-            return "โทรศัพท์"; // Set to "โทรศัพท์" when item.id is 1350
-          }
-          return item.name; // Otherwise, keep the original name
-        });
+          .filter((item) => ["1230", "1350", "1241"].includes(item.id)) // Filter based on specific IDs
+          .map((item) => {
+            // Check if the item.id is 1350 and modify item.name
+            if (item.id === "1350") {
+              return "โทรศัพท์"; // Set to "โทรศัพท์" when item.id is 1350
+            }
+            return item.name; // Otherwise, keep the original name
+          });
 
-      // Concatenate names if there are any
-      const concatenatedNames =
-        namesWithSpecificIds.length > 0 ? namesWithSpecificIds.join("/") : "";
-      // Show concatenated names in the PDF
+        // Concatenate names if there are any
+        const concatenatedNames =
+          namesWithSpecificIds.length > 0 ? namesWithSpecificIds.join("/") : "";
+        // Show concatenated names in the PDF
 
-      const specificIds = ["1230", "1350", "1241"]; // ID ที่ต้องการกรอง
+        const specificIds = ["1230", "1350", "1241"]; // ID ที่ต้องการกรอง
 
-      const result = responseDataAll[i + 1].addSalary
-        .filter((item) => specificIds.includes(item.id)) // กรองเฉพาะ ID ที่ต้องการ
-        .reduce(
-          (acc, item) => {
-            // คำนวณผลรวม SpSalary
-            acc.names.push(item.id === "1350" ? "โทรศัพท์" : item.name); // เปลี่ยนชื่อสำหรับ ID 1350
-            acc.sumSpSalary += Number(item.SpSalary) || 0; // รวมค่า SpSalary (กรณีไม่มีค่าให้ใช้ 0)
-            return acc;
-          },
-          { names: [], sumSpSalary: 0 } // ค่าเริ่มต้น
-        );
+        const result = responseDataAll[i + 1].addSalary
+          .filter((item) => specificIds.includes(item.id)) // กรองเฉพาะ ID ที่ต้องการ
+          .reduce(
+            (acc, item) => {
+              // คำนวณผลรวม SpSalary
+              acc.names.push(item.id === "1350" ? "โทรศัพท์" : item.name); // เปลี่ยนชื่อสำหรับ ID 1350
+              acc.sumSpSalary += Number(item.SpSalary) || 0; // รวมค่า SpSalary (กรณีไม่มีค่าให้ใช้ 0)
+              return acc;
+            },
+            { names: [], sumSpSalary: 0 } // ค่าเริ่มต้น
+          );
 
-      console.log("Sum of SpSalary:321", result.sumSpSalary);
+        console.log("Sum of SpSalary:321", result.sumSpSalary);
 
         //หัก
         // คืนเงินเบิกล่วงหน้า
@@ -3288,6 +3288,7 @@ function SalarySlipPDF({ employeeList, workplaceList }) {
                                             </div>
                                         </div>
                                     </div> */}
+                  <br />
                   <div class="row">
                     <div class="col-md-3">
                       <label role="agencyname">เดือน</label>
