@@ -1749,12 +1749,12 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
                 <div class="row">
                   <div class="col-md-2">
                     <div class="form-group">
-                      <label role="staffId">รหัสพนักงานแทน</label>
+                      <label role="staffId">รหัสพนักงาน</label>
                     </div>
                   </div>
                   <div class="col-md-2">
                     <div class="form-group">
-                      <label role="staffName">ชื่อพนักงานแทน</label>
+                      <label role="staffName">ชื่อพนักงาน</label>
                     </div>
                   </div>
                   <div class="col-md-2">
@@ -2028,10 +2028,10 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
                   paddingTop: "10px",
                 }}>
                   <div className="col-md-2">
-                    รหัสพนักงานลา
+                    รหัสพนักงานแทน
                   </div>
                   <div className="col-md-2">
-                    ชื่อนักงานลา
+                    ชื่อนักงานแทน
                   </div>
                 </div>
                 <div class="row" >
@@ -2098,9 +2098,9 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
                   marginTop: "10px",
                   paddingTop: "10px",
                 }}>
-                    {/* <div class="col-md-1">
+                    <div class="col-md-1">
                       <label>จ่ายสด</label>
-                    </div> */}
+                    </div>
                     <div class="col-md-2">
                       <label role="specialtSalary">เป็นเงิน</label>
                     </div>
@@ -2112,14 +2112,14 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
                     </div>
                   </div>
                   <div class="row">
-                    {/* <div class="col-md-1">
+                    <div class="col-md-1">
                       <input
                         type="checkbox"
                         class="form-control"
                         checked={cashSalary}
                         onChange={handleCheckboxChange}
                       />
-                    </div> */}
+                    </div>
                     <div class="col-md-2">
                       <input
                         type="text"
