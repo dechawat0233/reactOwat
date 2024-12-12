@@ -1,0 +1,527 @@
+"addSalary": [
+    [],
+    [
+        {
+            "name": "ค่าอาหาร",
+            "codeSpSalary": "1330",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b44679"
+        },
+        {
+            "name": "ค่าเดินทาง(ไม่คิดประกันสังคม)",
+            "codeSpSalary": "1535",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b4467d"
+        }
+    ],
+    [
+        {
+            "name": "ค่าอาหาร",
+            "codeSpSalary": "1330",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b44679"
+        },
+        {
+            "name": "ค่าเดินทาง(ไม่คิดประกันสังคม)",
+            "codeSpSalary": "1535",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b4467d"
+        }
+    ],
+    [
+        {
+            "name": "ค่าอาหาร",
+            "codeSpSalary": "1330",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b44679"
+        },
+        {
+            "name": "ค่าเดินทาง(ไม่คิดประกันสังคม)",
+            "codeSpSalary": "1535",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b4467d"
+        }
+    ],
+    [
+        {
+            "name": "ค่าอาหาร",
+            "codeSpSalary": "1330",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b44679"
+        },
+        {
+            "name": "ค่าเดินทาง(ไม่คิดประกันสังคม)",
+            "codeSpSalary": "1535",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b4467d"
+        }
+    ],
+    [
+        {
+            "name": "ค่าอาหาร",
+            "codeSpSalary": "1330",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b44679"
+        },
+        {
+            "name": "ค่าเดินทาง(ไม่คิดประกันสังคม)",
+            "codeSpSalary": "1535",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b4467d"
+        }
+    ],
+    [
+        {
+            "name": "ค่าอาหาร",
+            "codeSpSalary": "1330",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b44679"
+        },
+        {
+            "name": "ค่าเดินทาง(ไม่คิดประกันสังคม)",
+            "codeSpSalary": "1535",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b4467d"
+        }
+    ],
+    [],
+    [
+        {
+            "name": "ค่าอาหาร",
+            "codeSpSalary": "1330",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b44679"
+        },
+        {
+            "name": "ค่าเดินทาง(ไม่คิดประกันสังคม)",
+            "codeSpSalary": "1535",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b4467d"
+        }
+    ],
+    [
+        {
+            "name": "ค่าอาหาร",
+            "codeSpSalary": "1330",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b44679"
+        },
+        {
+            "name": "ค่าเดินทาง(ไม่คิดประกันสังคม)",
+            "codeSpSalary": "1535",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b4467d"
+        }
+    ],
+    [
+        {
+            "name": "ค่าอาหาร",
+            "codeSpSalary": "1330",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b44679"
+        },
+        {
+            "name": "ค่าเดินทาง(ไม่คิดประกันสังคม)",
+            "codeSpSalary": "1535",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b4467d"
+        }
+    ],
+    [
+        {
+            "name": "ค่าอาหาร",
+            "codeSpSalary": "1330",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b44679"
+        },
+        {
+            "name": "ค่าเดินทาง(ไม่คิดประกันสังคม)",
+            "codeSpSalary": "1535",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b4467d"
+        }
+    ],
+    [
+        {
+            "name": "ค่าอาหาร",
+            "codeSpSalary": "1330",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b44679"
+        },
+        {
+            "name": "ค่าเดินทาง(ไม่คิดประกันสังคม)",
+            "codeSpSalary": "1535",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b4467d"
+        }
+    ],
+    [
+        {
+            "name": "ค่าอาหาร",
+            "codeSpSalary": "1330",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b44679"
+        },
+        {
+            "name": "ค่าเดินทาง(ไม่คิดประกันสังคม)",
+            "codeSpSalary": "1535",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b4467d"
+        }
+    ],
+    [],
+    [
+        {
+            "name": "ค่าอาหาร",
+            "codeSpSalary": "1330",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b44679"
+        },
+        {
+            "name": "ค่าเดินทาง(ไม่คิดประกันสังคม)",
+            "codeSpSalary": "1535",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b4467d"
+        }
+    ],
+    [
+        {
+            "name": "ค่าอาหาร",
+            "codeSpSalary": "1330",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b44679"
+        },
+        {
+            "name": "ค่าเดินทาง(ไม่คิดประกันสังคม)",
+            "codeSpSalary": "1535",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b4467d"
+        }
+    ],
+    [
+        {
+            "name": "ค่าอาหาร",
+            "codeSpSalary": "1330",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b44679"
+        },
+        {
+            "name": "ค่าเดินทาง(ไม่คิดประกันสังคม)",
+            "codeSpSalary": "1535",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b4467d"
+        }
+    ],
+    [
+        {
+            "name": "ค่าอาหาร",
+            "codeSpSalary": "1330",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b44679"
+        },
+        {
+            "name": "ค่าเดินทาง(ไม่คิดประกันสังคม)",
+            "codeSpSalary": "1535",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b4467d"
+        }
+    ],
+    [
+        {
+            "name": "ค่าอาหาร",
+            "codeSpSalary": "1330",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b44679"
+        },
+        {
+            "name": "ค่าเดินทาง(ไม่คิดประกันสังคม)",
+            "codeSpSalary": "1535",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b4467d"
+        }
+    ],
+    [
+        {
+            "name": "ค่าอาหาร",
+            "codeSpSalary": "1330",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b44679"
+        },
+        {
+            "name": "ค่าเดินทาง(ไม่คิดประกันสังคม)",
+            "codeSpSalary": "1535",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b4467d"
+        }
+    ],
+    [],
+    [
+        {
+            "name": "ค่าอาหาร",
+            "codeSpSalary": "1330",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b44679"
+        },
+        {
+            "name": "ค่าเดินทาง(ไม่คิดประกันสังคม)",
+            "codeSpSalary": "1535",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b4467d"
+        }
+    ],
+    [
+        {
+            "name": "ค่าอาหาร",
+            "codeSpSalary": "1330",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b44679"
+        },
+        {
+            "name": "ค่าเดินทาง(ไม่คิดประกันสังคม)",
+            "codeSpSalary": "1535",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b4467d"
+        }
+    ],
+    [
+        {
+            "name": "ค่าอาหาร",
+            "codeSpSalary": "1330",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b44679"
+        },
+        {
+            "name": "ค่าเดินทาง(ไม่คิดประกันสังคม)",
+            "codeSpSalary": "1535",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b4467d"
+        }
+    ],
+    [
+        {
+            "name": "ค่าอาหาร",
+            "codeSpSalary": "1330",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b44679"
+        },
+        {
+            "name": "ค่าเดินทาง(ไม่คิดประกันสังคม)",
+            "codeSpSalary": "1535",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b4467d"
+        }
+    ],
+    [
+        {
+            "name": "ค่าอาหาร",
+            "codeSpSalary": "1330",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b44679"
+        },
+        {
+            "name": "ค่าเดินทาง(ไม่คิดประกันสังคม)",
+            "codeSpSalary": "1535",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b4467d"
+        }
+    ],
+    [
+        {
+            "name": "ค่าอาหาร",
+            "codeSpSalary": "1330",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b44679"
+        },
+        {
+            "name": "ค่าเดินทาง(ไม่คิดประกันสังคม)",
+            "codeSpSalary": "1535",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b4467d"
+        }
+    ],
+    [],
+    [
+        {
+            "name": "ค่าอาหาร",
+            "codeSpSalary": "1330",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b44679"
+        },
+        {
+            "name": "ค่าเดินทาง(ไม่คิดประกันสังคม)",
+            "codeSpSalary": "1535",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b4467d"
+        }
+    ],
+    [
+        {
+            "name": "ค่าอาหาร",
+            "codeSpSalary": "1330",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b44679"
+        },
+        {
+            "name": "ค่าเดินทาง(ไม่คิดประกันสังคม)",
+            "codeSpSalary": "1535",
+            "SpSalary": "30",
+            "roundOfSalary": "daily",
+            "StaffType": "all",
+            "nameType": "",
+            "_id": "675939b99270f0a4f7b4467d"
+        }
+    ]
+],
