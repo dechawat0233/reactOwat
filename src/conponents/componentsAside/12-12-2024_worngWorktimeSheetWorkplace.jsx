@@ -1632,30 +1632,41 @@ function WorktimeSheetWorkplace({ employeeList }) {
 
   //     // Do something with the filtered employees
 
-  // const extractedData = filteredEmployees.map((employee) => ({
-  //   name: employee.name + " " + employee.lastName,
-  //   employeeId: employee.employeeId,
-  //   costtype: employee.costtype,
-  // }));
-  const extractedData = filteredEmployees
-    .filter(
-      (employee) =>
-        employee.year === year &&
-        employee.month === month &&
-        employee.workplace === searchWorkplaceId
-    )
-    .map((employee) => ({
-      name: employee.name + " " + employee.lastName,
-      employeeId: employee.employeeId,
-      costtype: employee.costtype,
-    }));
+  // const extractedData = filteredEmployees.map(employee => [
+  //     employee.name + ' ' + employee.lastName,
+  //     employee.employeeId,
+  //     'กะเช้า',
+  //     'กะดึก',
+  // ]);
 
-  console.log('extractedData', extractedData);
+  // const extractedData = filteredEmployees.map((employee) => [
+  //   // employee.name + " " + employee.lastName,
+  //   // employee.employeeId,
+  //   // "กะเช้า",
+  //   // "กะบ่าย",
+  //   // "กะดึก",
 
-  // console.log('filteredEmployees', filteredEmployees);
+  // ]);
+
+  const extractedData = filteredEmployees.map((employee) => ({
+    name: employee.name + " " + employee.lastName,
+    employeeId: employee.employeeId,
+    costtype: employee.costtype,
+  }));
+  console.log('filteredEmployees', filteredEmployees);
+  // .sort((a, b) => {
+  //     const idA = parseInt(a[1], 10);
+  //     const idB = parseInt(b[1], 10);
+  //     return idA - idB;
+  // });
+
+  // const extractedDataAddSalary = filteredEmployees.map(employee => [
+  //     employee.addSalary
+  // ]);
 
 
   const arraylistNameEmp = extractedData;
+  console.log('arraylistNameEmp', arraylistNameEmp);
   const arraytest = [];
 
   const arrayAllTime = [];
@@ -2796,60 +2807,53 @@ function WorktimeSheetWorkplace({ employeeList }) {
   // Sum each sub-array
   const sumArrayAllHourWork = sumArray321(combinedArrayAll);
 
-  console.log('responseDataAll', responseDataAll);
-
-  const filteredResponseDataAll = responseDataAll.filter((response) =>
-    extractedData.some((employee) => employee.employeeId === response.employeeId)
-  );
-
-  const countSpecialDays = filteredResponseDataAll.map(
+  const countSpecialDays = responseDataAll.map(
     (item) => Number(item.countSpecialDay) || 0
   );
-  const specialDayListWorks = filteredResponseDataAll.map((item) =>
+  const specialDayListWorks = responseDataAll.map((item) =>
     item.specialDayListWork ? item.specialDayListWork.length : 0
   );
 
-  // const specialDayRate = filteredResponseDataAll.map(item => item.specialDayRate);
-  const specialDayRate = filteredResponseDataAll.map((item) =>
+  // const specialDayRate = responseDataAll.map(item => item.specialDayRate);
+  const specialDayRate = responseDataAll.map((item) =>
     parseInt(item.specialDayRate, 10)
   );
-  // const amountSpecialDay = filteredResponseDataAll.map(item => parseInt(item.accountingRecord.amountSpecialDay, 10));
-  const amountSpecialDay = filteredResponseDataAll.map((item) => {
+  // const amountSpecialDay = responseDataAll.map(item => parseInt(item.accountingRecord.amountSpecialDay, 10));
+  const amountSpecialDay = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
     return accountingRecord
       ? parseInt(accountingRecord.amountSpecialDay, 10)
       : 0;
   });
 
-  const countHour = filteredResponseDataAll.map((item) => {
+  const countHour = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
     return accountingRecord ? parseInt(accountingRecord.countHour, 10) : 0;
   });
 
-  const countDay = filteredResponseDataAll.map((item) => {
+  const countDay = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
     return accountingRecord ? parseInt(accountingRecord.countDay, 10) : 0;
   });
 
-  const countDayWork = filteredResponseDataAll.map((item) => {
+  const countDayWork = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
     return accountingRecord ? parseInt(accountingRecord.countDayWork, 10) : 0;
   });
-  console.log('countDayWork', countDayWork);
 
-  const countHourWork = filteredResponseDataAll.map((item) => {
+  const countHourWork = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
     return accountingRecord ? parseInt(accountingRecord.countHourWork, 10) : 0;
   });
 
-  const amountCountDayWork = filteredResponseDataAll.map((item) => {
+  const amountCountDayWork = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
     return accountingRecord
       ? parseFloat(accountingRecord.amountCountDayWork).toFixed(2)
       : 0;
   });
 
-  const hourOneFive = filteredResponseDataAll.map((item) => {
+  const hourOneFive = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
 
     // Check if the workplace starts with "3"
@@ -2866,7 +2870,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
     }
   });
 
-  const amountOneFive = filteredResponseDataAll.map((item) => {
+  const amountOneFive = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
 
     // Check if the workplace starts with "3"
@@ -2884,35 +2888,35 @@ function WorktimeSheetWorkplace({ employeeList }) {
   });
 
 
-  const hourTwo = filteredResponseDataAll.map((item) => {
+  const hourTwo = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
     return accountingRecord
       ? parseFloat(accountingRecord.hourTwo).toFixed(2)
       : "0.00";
   });
 
-  const amountTwo = filteredResponseDataAll.map((item) => {
+  const amountTwo = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
     return accountingRecord
       ? parseFloat(accountingRecord.amountTwo).toFixed(2)
       : "0.00";
   });
 
-  const hourThree = filteredResponseDataAll.map((item) => {
+  const hourThree = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
     return accountingRecord
       ? parseFloat(accountingRecord.hourThree).toFixed(2)
       : "0.00";
   });
 
-  const amountThree = filteredResponseDataAll.map((item) => {
+  const amountThree = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
     return accountingRecord
       ? parseFloat(accountingRecord.amountThree).toFixed(2)
       : "0.00";
   });
 
-  const saveCash = filteredResponseDataAll.map((item) =>
+  const saveCash = responseDataAll.map((item) =>
     item.workplace.startsWith("3") ? "สแปร์เงินสด" : ""
   );
 
@@ -2920,7 +2924,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
     (countSpecialDay, index) => countSpecialDay - specialDayListWorks[index]
   );
 
-  const tax = filteredResponseDataAll.map((item) => {
+  const tax = responseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
     return accountingRecord
       ? parseFloat(accountingRecord.tax).toFixed(2)
