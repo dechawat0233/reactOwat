@@ -645,12 +645,12 @@ dayOffWork += 1;
   }
   if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '1.5') {
     amountOneFive = Number(amountOneFive ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
-    // hourOneFive = Number(hourOneFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+    hourOneFive = Number(hourOneFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
     
   }
   if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOTMultiply === '1.5'){
     amountOneFive = Number(amountOneFive ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT);
-    hourOneFive = Number(hourOneFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+    // hourOneFive = Number(hourOneFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
   }
   if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '2') {
     amountTwo = Number(amountTwo ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
