@@ -646,10 +646,17 @@ dayOffWork += 1;
   if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '1.5') {
     amountOneFive = Number(amountOneFive ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
     hourOneFive = Number(hourOneFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
+    
   }
+
   if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOTMultiply === '1.5'){
     amountOneFive = Number(amountOneFive ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT);
-    hourOneFive = Number(hourOneFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+    // hourOneFive = Number(hourOneFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+    let t1 =     await Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+    let [integerPart, fractionalPart] = await t1.toString().split('.');
+    let t2 = await Number(fractionalPart || 0) * 100 /60;
+    hourOneFive = await Number(hourOneFive) + parseFloat(Number(integerPart || 0) + '.' + Number(t2 || 0));
+
   }
   if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '2') {
     amountTwo = Number(amountTwo ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
