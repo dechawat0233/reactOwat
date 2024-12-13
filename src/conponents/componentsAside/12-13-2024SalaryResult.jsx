@@ -250,13 +250,13 @@ function Salaryresult() {
   };
 
   const handleDeleteData = (index) => {
-    alert(index);
+   alert(index); 
     const newDataArray = [...remainArray];
     newDataArray.splice(index, 1);
     setRemainArray(newDataArray);
-
-    // Save after ensuring state update
-    setTimeout(() => handleSaveWelfare(), 0); // Use a small delay
+    
+      // Save after ensuring state update
+  setTimeout(() => handleSaveWelfare(), 0); // Use a small delay
   };
 
   const [yearWelfare, setYearWelfare] = useState("");
@@ -272,7 +272,7 @@ function Salaryresult() {
         alert("กรุณากรอกข้อมูลปีและเดือนให้ครบถ้วน");
         return;
       }
-
+  
       const welfareSave = {
         year: yearWelfare,
         month: monthWelfare,
@@ -283,7 +283,7 @@ function Salaryresult() {
         status: "",
         record: remainArray || [],
       };
-
+  
       const response = await axios.post(endpoint + "/leave/create", welfareSave);
       if (response.data) {
         alert("บันทึกสำเร็จ");
@@ -292,7 +292,7 @@ function Salaryresult() {
       alert("save welfare error is " + e);
     }
   }
-
+  
   // async function handleSaveWelfare() {
   //   // alert('handleSaveWelfare');
   //   try {
@@ -384,10 +384,10 @@ function Salaryresult() {
 
             const tmpRemainArray = [];
             result.data.map(item => {
-              tmpRemainArray.push(...item.record);
+              tmpRemainArray  .push(...item.record);
             });
-            setRemainArray(tmpRemainArray);
-            // alert(tmpRemainArray.length  )
+                        setRemainArray(tmpRemainArray  );
+// alert(tmpRemainArray.length  )
             // setRemainArray(result.data[0].record);
           } else {
             // If no records found, set remainArray to empty
@@ -567,58 +567,58 @@ function Salaryresult() {
               await setAccountingData(response.data[0]);
               await setWsAmountSpecialDay(
                 response.data[0].accountingRecord.amountSpecialDay ||
-                response.data[0].accountingRecord[0].amountSpecialDay
+                  response.data[0].accountingRecord[0].amountSpecialDay
               );
               await setWsAmountSpecialDayx(
                 response.data[0].accountingRecord.amountSpecialDay ||
-                response.data[0].accountingRecord[0].amountSpecialDay
+                  response.data[0].accountingRecord[0].amountSpecialDay
               );
 
               await setWsAmountDay(
                 parseFloat(response.data[0].accountingRecord.amountDay) ||
-                parseFloat(response.data[0].accountingRecord[0].amountDay)
+                  parseFloat(response.data[0].accountingRecord[0].amountDay)
               );
               await setWsAmountOt(
                 response.data[0].accountingRecord.amountOt ||
-                response.data[0].accountingRecord[0].amountOt
+                  response.data[0].accountingRecord[0].amountOt
               );
               await setWsSocialSecurity(
                 response.data[0].accountingRecord.socialSecurity ||
-                response.data[0].accountingRecord[0].socialSecurity
+                  response.data[0].accountingRecord[0].socialSecurity
               );
               await setWsSocialSecurityX(
                 response.data[0].accountingRecord.socialSecurity ||
-                response.data[0].accountingRecord[0].socialSecurity
+                  response.data[0].accountingRecord[0].socialSecurity
               );
 
               await setWsTax(
                 response.data[0].accountingRecord.tax ||
-                response.data[0].accountingRecord[0].tax
+                  response.data[0].accountingRecord[0].tax
               );
               await setWsTotal(
                 response.data[0].accountingRecord.total ||
-                response.data[0].accountingRecord[0].total
+                  response.data[0].accountingRecord[0].total
               );
 
               await setWsCountDayWork(
                 response.data[0].accountingRecord.countDayWork ||
-                response.data[0].accountingRecord[0].countDayWork
+                  response.data[0].accountingRecord[0].countDayWork
               );
               await setWsAmountCountDayWork(
                 response.data[0].accountingRecord.amountCountDayWork ||
-                response.data[0].accountingRecord[0].amountCountDayWork
+                  response.data[0].accountingRecord[0].amountCountDayWork
               );
               await setWsAmountCountDayWorkOt(
                 response.data[0].accountingRecord.amountCountDayWorkOt ||
-                response.data[0].accountingRecord[0].amountCountDayWorkOt
+                  response.data[0].accountingRecord[0].amountCountDayWorkOt
               );
               await setWsCountHourWork(
                 response.data[0].accountingRecord.countHourWork ||
-                response.data[0].accountingRecord[0].countHourWork
+                  response.data[0].accountingRecord[0].countHourWork
               );
               await setWsCountOtHourWork(
                 response.data[0].accountingRecord.countOtHourWork ||
-                response.data[0].accountingRecord[0].countOtHourWork
+                  response.data[0].accountingRecord[0].countOtHourWork
               );
 
               await setAddSalaryList(response.data[0].addSalary);
@@ -632,13 +632,13 @@ function Salaryresult() {
 
               if (response.data[0].addSalary) {
                 let tmp = 0;
-
+              
                 // Calculate the sum of SpSalary from response data
                 response.data[0].addSalary.map((item) => {
                   tmp += parseFloat(item.SpSalary);
                 });
                 setSumAddSalaryList(tmp);
-
+              
                 // Merge addSalaryList with remainArray
                 const mergedAddSalaryList = [
                   ...response.data[0].addSalary,
@@ -650,15 +650,15 @@ function Salaryresult() {
                     StaffType: "", // If you need to add StaffType or other fields
                   })),
                 ];
-
+              
                 // Set the updated addSalaryList
                 setAddSalaryList(mergedAddSalaryList);
-
+              
                 // Recalculate the sum for the merged list
                 let totalSalary = mergedAddSalaryList.reduce((acc, item) => acc + parseFloat(item.SpSalary || 0), 0);
                 setSumAddSalaryList(totalSalary);
               }
-
+              
               // alert(response.data[0].addSalary.length);
               // await setDeductSalaryList(response.data[0].deductSalary);
               if (response.data[0].deductSalary) {
@@ -702,7 +702,7 @@ function Salaryresult() {
         }
         // await alert(JSON.stringify(response.data.employees[0].addSalary ,null,2 ));
         // await alert(JSON.stringify(response.data.employees[0].deductSalary ,null,2 ));
-      } catch (e) { }
+      } catch (e) {}
     };
 
     getMaster();
@@ -1639,58 +1639,58 @@ function Salaryresult() {
               await setAccountingData(response.data[0]);
               await setWsAmountSpecialDay(
                 response.data[0].accountingRecord.amountSpecialDay ||
-                response.data[0].accountingRecord[0].amountSpecialDay
+                  response.data[0].accountingRecord[0].amountSpecialDay
               );
               await setWsAmountSpecialDayx(
                 response.data[0].accountingRecord.amountSpecialDay ||
-                response.data[0].accountingRecord[0].amountSpecialDay
+                  response.data[0].accountingRecord[0].amountSpecialDay
               );
 
               await setWsAmountDay(
                 parseFloat(response.data[0].accountingRecord.amountDay) ||
-                parseFloat(response.data[0].accountingRecord[0].amountDay)
+                  parseFloat(response.data[0].accountingRecord[0].amountDay)
               );
               await setWsAmountOt(
                 response.data[0].accountingRecord.amountOt ||
-                response.data[0].accountingRecord[0].amountOt
+                  response.data[0].accountingRecord[0].amountOt
               );
               await setWsSocialSecurity(
                 response.data[0].accountingRecord.socialSecurity ||
-                response.data[0].accountingRecord[0].socialSecurity
+                  response.data[0].accountingRecord[0].socialSecurity
               );
               await setWsSocialSecurityX(
                 response.data[0].accountingRecord.socialSecurity ||
-                response.data[0].accountingRecord[0].socialSecurity
+                  response.data[0].accountingRecord[0].socialSecurity
               );
 
               await setWsTax(
                 response.data[0].accountingRecord.tax ||
-                response.data[0].accountingRecord[0].tax
+                  response.data[0].accountingRecord[0].tax
               );
               await setWsTotal(
                 response.data[0].accountingRecord.total ||
-                response.data[0].accountingRecord[0].total
+                  response.data[0].accountingRecord[0].total
               );
 
               await setWsCountDayWork(
                 response.data[0].accountingRecord.countDayWork ||
-                response.data[0].accountingRecord[0].countDayWork
+                  response.data[0].accountingRecord[0].countDayWork
               );
               await setWsAmountCountDayWork(
                 response.data[0].accountingRecord.amountCountDayWork ||
-                response.data[0].accountingRecord[0].amountCountDayWork
+                  response.data[0].accountingRecord[0].amountCountDayWork
               );
               await setWsAmountCountDayWorkOt(
                 response.data[0].accountingRecord.amountCountDayWorkOt ||
-                response.data[0].accountingRecord[0].amountCountDayWorkOt
+                  response.data[0].accountingRecord[0].amountCountDayWorkOt
               );
               await setWsCountHourWork(
                 response.data[0].accountingRecord.countHourWork ||
-                response.data[0].accountingRecord[0].countHourWork
+                  response.data[0].accountingRecord[0].countHourWork
               );
               await setWsCountOtHourWork(
                 response.data[0].accountingRecord.countOtHourWork ||
-                response.data[0].accountingRecord[0].countOtHourWork
+                  response.data[0].accountingRecord[0].countOtHourWork
               );
 
               await setAddSalaryList(response.data[0].addSalary);
@@ -1704,13 +1704,13 @@ function Salaryresult() {
 
               if (response.data[0].addSalary) {
                 let tmp = 0;
-
+              
                 // Calculate the sum of SpSalary from response data
                 response.data[0].addSalary.map((item) => {
                   tmp += parseFloat(item.SpSalary);
                 });
                 setSumAddSalaryList(tmp);
-
+              
                 // Merge addSalaryList with remainArray
                 const mergedAddSalaryList = [
                   ...response.data[0].addSalary,
@@ -1722,10 +1722,10 @@ function Salaryresult() {
                     StaffType: "", // If you need to add StaffType or other fields
                   })),
                 ];
-
+              
                 // Set the updated addSalaryList
                 setAddSalaryList(mergedAddSalaryList);
-
+              
                 // Recalculate the sum for the merged list
                 let totalSalary = mergedAddSalaryList.reduce((acc, item) => acc + parseFloat(item.SpSalary || 0), 0);
                 setSumAddSalaryList(totalSalary);
@@ -2031,21 +2031,14 @@ function Salaryresult() {
                           <td style={cellStyle}>{(overWorkRateOTSum).toFixed(2)}</td> */}
 
                           <td style={cellStyle}>
-                            {/* {isNaN(Number(wsAmountCountDayWork))
+                            {isNaN(Number(wsAmountCountDayWork))
                               ? 0.0
-                              : Number(wsAmountCountDayWork).toFixed(2)} */}
-                            {
-                              isNaN(Number(wsAmountCountDayWork))
-                                ? "0.00"
-                                : Number(wsAmountCountDayWork)
-                                  .toFixed(2)
-                                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                            }
+                              : Number(wsAmountCountDayWork).toFixed(2)}
                           </td>
                           <td style={cellStyle}>
                             {isNaN(Number(wsAmountCountDayWorkOt))
                               ? 0.0
-                              : Number(wsAmountCountDayWorkOt).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                              : Number(wsAmountCountDayWorkOt).toFixed(2)}
                           </td>
 
                           {/* <td style={cellStyle}>{(overAddSalaryDaySum).toFixed(2) + (sumSpSalary).toFixed(2)}</td> */}
@@ -2056,7 +2049,7 @@ function Salaryresult() {
                               style={{ color: color, cursor: "pointer" }}
                             >
                               {/* {isNaN(Number(addAmountBeforeTax + addAmountAfterTax)) ? 0.00 : Number(addAmountBeforeTax + addAmountAfterTax).toFixed(2)}  */}
-                              {sumAddSalaryList.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                              {sumAddSalaryList.toFixed(2)}
                             </span>
                             {showPopup && (
                               <div className="popup">
@@ -2080,8 +2073,8 @@ function Salaryresult() {
                                             {addsalary.SpSalary}{" "}
                                             {addsalary.roundOfSalary ==
                                               "daily" && (
-                                                <>* {addsalary.message} วัน</>
-                                              )}
+                                              <>* {addsalary.message} วัน</>
+                                            )}
                                           </li>
                                         )
                                     )}
@@ -2121,15 +2114,15 @@ function Salaryresult() {
                             } */}
                             {isNaN(
                               Number(wsAmountDay) +
-                              Number(wsAmountOt) +
-                              Number(sumAddSalaryList)
+                                Number(wsAmountOt) +
+                                Number(sumAddSalaryList)
                             )
                               ? "0"
                               : (
-                                Number(wsAmountDay) +
-                                Number(wsAmountOt) +
-                                Number(sumAddSalaryList)
-                              ).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                  Number(wsAmountDay) +
+                                  Number(wsAmountOt) +
+                                  Number(sumAddSalaryList)
+                                ).toFixed(2)}
                           </td>
 
                           <td style={cellStyle}>
@@ -2167,7 +2160,7 @@ function Salaryresult() {
                           <td style={cellStyle}>
                             {isNaN(Number(wsTax))
                               ? 0.0
-                              : Number(wsTax).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                              : Number(wsTax).toFixed(2)}
                           </td>
                           {/* <td style={cellStyle}>{((overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary) * socialSecurity).toFixed(2)}</td> */}
                           {/* <td style={cellStyle}>{isNaN(Number(socialSecurity)) ? 0 : Number(socialSecurity).toFixed(0)}</td> */}
@@ -2198,9 +2191,9 @@ function Salaryresult() {
                               )
                                 ? 0.0
                                 : (
-                                  Number(deductBeforeTax) +
-                                  Number(deductAfterTax)
-                                ).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                    Number(deductBeforeTax) +
+                                    Number(deductAfterTax)
+                                  ).toFixed(2)}
                             </span>
                             {showPopup && (
                               <div className="popup">
@@ -2235,17 +2228,17 @@ function Salaryresult() {
                             {" "}
                             {isNaN(
                               Number(wsTax) +
-                              Number(wsSocialSecurity) +
-                              Number(deductBeforeTax) +
-                              Number(deductAfterTax)
-                            )
-                              ? 0.0
-                              : Math.ceil(
-                                Number(wsTax) +
                                 Number(wsSocialSecurity) +
                                 Number(deductBeforeTax) +
                                 Number(deductAfterTax)
-                              ).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                            )
+                              ? 0.0
+                              : Math.ceil(
+                                  Number(wsTax) +
+                                    Number(wsSocialSecurity) +
+                                    Number(deductBeforeTax) +
+                                    Number(deductAfterTax)
+                                ).toFixed(2)}
                           </td>
                           {/* <td style={cellStyle}>({anyMinus} + {tax} + {((overWorkRateSum + overWorkRateOTSum + overAddSalaryDaySum + sumSpSalaryResult + anySpSalary) * socialSecurity).toFixed()} + {bankCustom} + {sumDeduct} + {sumDeductInstallment})</td> */}
                           <td style={cellStyle}>
@@ -2301,7 +2294,7 @@ function Salaryresult() {
                           <td style={cellStyle}>
                             {isNaN(Number(wsAmountSpecialDay))
                               ? 0.0
-                              : Number(wsAmountSpecialDay).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                              : Number(wsAmountSpecialDay).toFixed(2)}
                           </td>
                         </tr>
                       </tbody>
@@ -2335,17 +2328,17 @@ function Salaryresult() {
                           <td style={cellStyle}>
                             {isNaN(
                               Number(wsTax) +
-                              Number(wsSocialSecurity) +
-                              Number(deductBeforeTax) +
-                              Number(deductAfterTax)
-                            )
-                              ? 0.0
-                              : Math.ceil(
-                                Number(wsTax) +
                                 Number(wsSocialSecurity) +
                                 Number(deductBeforeTax) +
                                 Number(deductAfterTax)
-                              ).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                            )
+                              ? 0.0
+                              : Math.ceil(
+                                  Number(wsTax) +
+                                    Number(wsSocialSecurity) +
+                                    Number(deductBeforeTax) +
+                                    Number(deductAfterTax)
+                                ).toFixed(2)}
                           </td>
                           {/* <td style={cellStyle}>{totalSum - totalSumDeduct}</td> */}
                           <td style={cellStyle}>
@@ -2357,18 +2350,18 @@ function Salaryresult() {
                               Number(wsTotalSum) -
                               (isNaN(
                                 Number(wsTax) +
-                                Number(wsSocialSecurity) +
-                                Number(deductBeforeTax) +
-                                Number(deductAfterTax)
-                              )
-                                ? 0.0
-                                : Math.ceil(
-                                  Number(wsTax) +
                                   Number(wsSocialSecurity) +
                                   Number(deductBeforeTax) +
                                   Number(deductAfterTax)
-                                ).toFixed(2))
-                            ).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") || 0}
+                              )
+                                ? 0.0
+                                : Math.ceil(
+                                    Number(wsTax) +
+                                      Number(wsSocialSecurity) +
+                                      Number(deductBeforeTax) +
+                                      Number(deductAfterTax)
+                                  ).toFixed(2))
+                            ).toFixed(2) || 0}
                           </td>
                         </tr>
                       </tbody>
@@ -2442,7 +2435,7 @@ function Salaryresult() {
                         {options.map((option) => {
                           const empDataValue =
                             empDataSelect &&
-                              empDataSelect[option.name] !== undefined
+                            empDataSelect[option.name] !== undefined
                               ? empDataSelect[option.name]
                               : 0;
                           const welfareTypeCount =
