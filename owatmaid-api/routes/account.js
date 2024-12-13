@@ -655,7 +655,7 @@ dayOffWork += 1;
     let t1 =     await Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
     let [integerPart, fractionalPart] = await t1.toString().split('.');
     let t2 = await Number(fractionalPart || 0) * 100 /60;
-    hourOneFive = await Number(hourOneFive) + Number(integerPart || 0) + Number(t2 || 0);
+    hourOneFive = await Number(hourOneFive) + parseFloat(Number(integerPart || 0) + Number(t2 || 0));
 
   }
   if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '2') {
