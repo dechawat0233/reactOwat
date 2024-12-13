@@ -390,7 +390,10 @@ function WorktimeSheetWorkplace({ employeeList }) {
           //     )
           //   : responseData;
 
-          const filteredData = responseData.filter((item) => item.workplace);
+          // const filteredData = responseData.filter((item) => item.workplace);
+          const filteredData = searchWorkplaceId
+            ? responseData.filter((item) => item.workplace === searchWorkplaceId)
+            : responseData; // If no searchWorkplaceId, return all data
 
           const sortedData = filteredData.sort(
             (a, b) => a.employeeId - b.employeeId
@@ -2920,11 +2923,18 @@ function WorktimeSheetWorkplace({ employeeList }) {
     (countSpecialDay, index) => countSpecialDay - specialDayListWorks[index]
   );
 
+  const socialSecurity = filteredResponseDataAll.map((item) => {
+    const accountingRecord = item.accountingRecord?.[0];
+    return accountingRecord
+      ? parseFloat(accountingRecord.socialSecurity)
+      : "0";
+  });
+
   const tax = filteredResponseDataAll.map((item) => {
     const accountingRecord = item.accountingRecord?.[0];
     return accountingRecord
-      ? parseFloat(accountingRecord.tax).toFixed(2)
-      : "0.00";
+      ? parseFloat(accountingRecord.tax)
+      : "0";
   });
 
   const adjustedAmountSpecialDay = amountSpecialDay.map((amount, index) => {
@@ -3033,6 +3043,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
   );
 
   // Map filteredEmployees to set SpSalary based on the position of the corresponding name in filteredAddSalaryWorkplace
+  console.log('filteredEmployees', filteredEmployees);
   const extractedDataAddSalary = filteredEmployees.map((employee) => {
     // Initialize an array to hold SpSalary values
     const spSalaryArray = [];
@@ -3074,11 +3085,35 @@ function WorktimeSheetWorkplace({ employeeList }) {
     }
   );
 
+  // const adjustedDailyExtractedDataAddSalaryCount = extractedDataAddSalary.map(
+  //   (salaryArray, outerIndex) => {
+  //     return salaryArray.map((value, innerIndex) => {
+  //       // If the value is not an empty string and roundOfSalary is 'daily'
+  //       // const employeeSalaryItem = filteredEmployees[outerIndex].addSalary.find(item => item.name === filteredAddSalaryWorkplace[innerIndex].name);
+  //       const employeeSalaryItem = filteredEmployees[outerIndex].addSalary.find(
+  //         (item) =>
+  //           item.id === filteredAddSalaryWorkplace[innerIndex].codeSpSalary
+  //       );
+
+  //       if (
+  //         value !== "" &&
+  //         filteredAddSalaryWorkplace[innerIndex].roundOfSalary === "daily"
+  //       ) {
+  //         // Multiply the value by the corresponding count in sumArray
+  //         // return sumArrayOld[outerIndex];
+  //         return employeeSalaryItem.message;
+  //       } else {
+  //         // Otherwise, keep the value unchanged
+  //         return "";
+  //       }
+  //     });
+  //   }
+  // );
+
   const adjustedDailyExtractedDataAddSalaryCount = extractedDataAddSalary.map(
     (salaryArray, outerIndex) => {
       return salaryArray.map((value, innerIndex) => {
-        // If the value is not an empty string and roundOfSalary is 'daily'
-        // const employeeSalaryItem = filteredEmployees[outerIndex].addSalary.find(item => item.name === filteredAddSalaryWorkplace[innerIndex].name);
+        // Find the corresponding employee salary item
         const employeeSalaryItem = filteredEmployees[outerIndex].addSalary.find(
           (item) =>
             item.id === filteredAddSalaryWorkplace[innerIndex].codeSpSalary
@@ -3088,16 +3123,17 @@ function WorktimeSheetWorkplace({ employeeList }) {
           value !== "" &&
           filteredAddSalaryWorkplace[innerIndex].roundOfSalary === "daily"
         ) {
-          // Multiply the value by the corresponding count in sumArray
-          // return sumArrayOld[outerIndex];
-          return employeeSalaryItem.message;
+          // If employeeSalaryItem is found, return its message, else return empty string
+          return employeeSalaryItem ? employeeSalaryItem.message : "";
         } else {
-          // Otherwise, keep the value unchanged
+          // Otherwise, return an empty string
           return "";
         }
-      });
+      }).map((cell) => cell === undefined ? "" : cell); // Map again to replace undefined with ""
     }
   );
+
+  console.log('adjustedDailyExtractedDataAddSalaryCount', adjustedDailyExtractedDataAddSalaryCount);
   // รวมคำนวนสวัสดิการ
   const SpSalaryArray = workplaceDataListAddSalary.map((item) => item.SpSalary);
   const roundOfSalaryArray = workplaceDataListAddSalary.map(
@@ -8170,6 +8206,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
         doc.text(content, x, y, { align: "center" });
       };
 
+
       // Function to check if a row is empty
       const isRowEmpty = (row) => row.every((cell) => cell === "");
 
@@ -8239,9 +8276,15 @@ function WorktimeSheetWorkplace({ employeeList }) {
           newOtTimes3Testspace[i] || Array(numCols).fill("");
         const emptyArraytest = emptyArray[i] || Array(numCols).fill("");
 
+        // const salaryCountData =
+        //   adjustedDailyExtractedDataAddSalaryCount[i] ||
+        //   Array(numCols).fill("");
         const salaryCountData =
-          adjustedDailyExtractedDataAddSalaryCount[i] ||
-          Array(numCols).fill("");
+          adjustedDailyExtractedDataAddSalaryCount[i] && adjustedDailyExtractedDataAddSalaryCount[i] !== undefined
+            ? adjustedDailyExtractedDataAddSalaryCount[i]
+            : Array(numCols).fill("");
+
+        console.log('salaryCountData', salaryCountData);
         // const salaryData = adjustedDailyExtractedDataAddSalary[i] || Array(numCols).fill("");
         const salaryData = (
           adjustedDailyExtractedDataAddSalary[i] || Array(numCols).fill("")
@@ -8441,6 +8484,9 @@ function WorktimeSheetWorkplace({ employeeList }) {
           } else if (item.roundOfSalary === "daily") {
             roundOfSalaryText = "วัน";
           }
+          const fontSize = NameSp.length > 30 ? 4 : 8;
+          doc.setFontSize(8);
+
           doc.text(
             CodeSp,
             4 +
@@ -8450,6 +8496,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
             38,
             { align: "center" }
           );
+          doc.setFontSize(fontSize);
           doc.text(
             NameSp,
             4 +
@@ -8469,6 +8516,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
             { angle: 90 }
           );
         });
+        doc.setFontSize(8);
 
         drawTableTop();
         drawTableTopHead();
@@ -8507,6 +8555,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
           currentY + cellHeight / 2 + 1,
           saveCash[i].toString()
         );
+
         drawSalaryRow(emptyArraytest, currentY, morningRowHeight);
         // drawCellRight(
         //   cellHeight * daysInMonth + 59 + cellWidthSpSalary*12,
@@ -8538,11 +8587,26 @@ function WorktimeSheetWorkplace({ employeeList }) {
         //   currentY + cellHeight / 2 + 1,
         //   amountCountDayWork[i].toString()
         // );
+
         drawCellRight(
           cellHeight * daysInMonth + 59,
           currentY + cellHeight / 2 + 1,
           countDayWork[i].toString()
         );
+
+        // ประกันสังคม
+        drawCellRight(
+          cellHeight * daysInMonth + 59 + (cellWidthSpSalary * 11),
+          currentY + cellHeight / 2 + 1,
+          socialSecurity[i].toString()
+        );
+
+        drawCellRight(
+          cellHeight * daysInMonth + 59 + (cellWidthSpSalary * 12),
+          currentY + cellHeight / 2 + 1,
+          tax[i].toString()
+        );
+
         // drawCellRight(
         //   cellHeight * daysInMonth + 59 + cellWidthSpSalary,
         //   currentY + cellHeight / 2 + 1,
@@ -8552,11 +8616,13 @@ function WorktimeSheetWorkplace({ employeeList }) {
 
         drawRow(newOtTimesspace, currentY, cellHeight);
         drawSalaryRow(emptyArraytest, currentY, cellHeight);
+        
         drawCellRight(
           cellHeight * daysInMonth + 59,
           currentY + cellHeight / 2 + 1,
           amountCountDayWork[i].toString()
         );
+        
         drawCellRight(
           cellHeight * daysInMonth + 59 + cellWidthSpSalary,
           currentY + cellHeight / 2 + 1,

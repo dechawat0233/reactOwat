@@ -22,14 +22,13 @@ import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 
 function SalaryAllResult({ employeeList, workplaceList }) {
-
   const [workplacrId, setWorkplacrId] = useState(""); //รหัสหน่วยงาน
   const [workplacrName, setWorkplacrName] = useState(""); //รหัสหน่วยงาน
 
   const [searchWorkplaceId, setSearchWorkplaceId] = useState("");
   const [workplaceListAll, setWorkplaceListAll] = useState([workplaceList]);
   console.log('workplaceListAll', workplaceListAll);
-
+  
   const [responseDataAll, setResponseDataAll] = useState([]);
 
   const [month, setMonth] = useState("01");
@@ -936,25 +935,8 @@ function SalaryAllResult({ employeeList, workplaceList }) {
     };
 
     const groupedByWorkplace = responseDataAll.reduce((acc, employee) => {
-      const { workplace, name } = employee;
-      // const isWasana = employee.name === "วาสนา" || employee.name === "ฐิติรัตน์";
-      // const workplaceKey = isWasana
-      //   ? `2${employee.workplace.slice(1)}` // Edit the first number to 2
-      //   : employee.workplace;
-
-      const matchingEmployee = employeeList.find(
-        (e) => e.employeeId === employee.employeeId
-      );
-
-      // Check if the costtype is "ภ.ง.ด.3"
-      const hasSpecificCostType = matchingEmployee?.costtype === "ภ.ง.ด.3";
-
-      // Determine the workplaceKey
-      const workplaceKey = hasSpecificCostType
-        ? `2${employee.workplace.slice(1)}` // Edit the first number to 2
-        : employee.workplace;
-
-      acc[workplaceKey] = acc[workplaceKey] || {
+      const { workplace } = employee;
+      acc[workplace] = acc[workplace] || {
         employees: [],
         totalCountDay: 0,
         totalSalary: 0,
@@ -997,13 +979,8 @@ function SalaryAllResult({ employeeList, workplaceList }) {
         totalSumtest: 0,
         totalSumOT: 0,
       };
-
-      acc[workplaceKey].employees.push(employee);// 13/12/2024
-
-      // acc[workplaceKey].name.push(employee.name);
-
-      // Check if employee's name is "ดวงดาว"
-      // Check if employee.name matches the criteria
+      acc[workplace].employees.push(employee);
+      // acc[workplace].name.push(employee.name);
 
       const addSalary = employee.addSalary || [];
       const spSalarySum = addSalary.reduce((total, item) => {
@@ -1014,95 +991,95 @@ function SalaryAllResult({ employeeList, workplaceList }) {
       }, 0);
 
       // Adjust this line based on your specific structure to get the salary or any other relevant data
-      acc[workplaceKey].totalCountDay += parseFloat(
+      acc[workplace].totalCountDay += parseFloat(
         employee.accountingRecord?.[0]?.countDay || 0
       );
-      acc[workplaceKey].totalSalary += parseFloat(
+      acc[workplace].totalSalary += parseFloat(
         employee.accountingRecord?.[0]?.amountCountDayWork || 0
       );
 
-      acc[workplaceKey].totalAmountPosition += parseFloat(
+      acc[workplace].totalAmountPosition += parseFloat(
         employee.accountingRecord?.[0]?.amountPosition || 0
       );
-      acc[workplaceKey].totalTel += parseFloat(
+      acc[workplace].totalTel += parseFloat(
         employee.accountingRecord?.[0]?.tel || 0
       );
-      acc[workplaceKey].totalTravel += parseFloat(
+      acc[workplace].totalTravel += parseFloat(
         employee.accountingRecord?.[0]?.travel || 0
       );
 
-      // acc[workplaceKey].totalAllAddSalary += parseFloat(employee.accountingRecord?.[0]?.amountPosition + employee.accountingRecord?.[0]?.tel + employee.accountingRecord?.[0]?.travel || 0);
+      // acc[workplace].totalAllAddSalary += parseFloat(employee.accountingRecord?.[0]?.amountPosition + employee.accountingRecord?.[0]?.tel + employee.accountingRecord?.[0]?.travel || 0);
 
-      acc[workplaceKey].totalBenefitNonSocial += parseFloat(
+      acc[workplace].totalBenefitNonSocial += parseFloat(
         employee.accountingRecord?.[0]?.benefitNonSocial || 0
       );
 
-      acc[workplaceKey].totalAmountSpecialDay += parseFloat(
+      acc[workplace].totalAmountSpecialDay += parseFloat(
         employee.accountingRecord?.[0]?.amountSpecialDay || 0
       );
 
-      acc[workplaceKey].totalAmountOt += parseFloat(
+      acc[workplace].totalAmountOt += parseFloat(
         employee.accountingRecord?.[0]?.amountCountDayWorkOt || 0
       );
-      acc[workplaceKey].totalAmountSpecial += parseFloat(
+      acc[workplace].totalAmountSpecial += parseFloat(
         employee.accountingRecord?.[0]?.amountSpecial || 0
       );
-      // acc[workplaceKey].totalAmountPosition += parseFloat(employee.accountingRecord?.[0]?.amountPosition || 0);
+      // acc[workplace].totalAmountPosition += parseFloat(employee.accountingRecord?.[0]?.amountPosition || 0);
 
-      // acc[workplaceKey].totalAmountHardWorking += parseFloat(employee.accountingRecord?.[0]?.amountHardWorking || 0);
+      // acc[workplace].totalAmountHardWorking += parseFloat(employee.accountingRecord?.[0]?.amountHardWorking || 0);
 
-      acc[workplaceKey].totalAmountHoliday += parseFloat(
+      acc[workplace].totalAmountHoliday += parseFloat(
         employee.accountingRecord?.[0]?.amountHoliday || 0
       );
 
-      acc[workplaceKey].totalDeductBeforeTax += parseFloat(
+      acc[workplace].totalDeductBeforeTax += parseFloat(
         employee.accountingRecord?.[0]?.deductBeforeTax || 0
       );
-      acc[workplaceKey].totalAddAmountBeforeTax += parseFloat(
+      acc[workplace].totalAddAmountBeforeTax += parseFloat(
         employee.accountingRecord?.[0]?.addAmountBeforeTax || 0
       );
-      acc[workplaceKey].totalTax += parseFloat(
+      acc[workplace].totalTax += parseFloat(
         employee.accountingRecord?.[0]?.tax || 0
       );
-      acc[workplaceKey].totalSocialSecurity += parseFloat(
+      acc[workplace].totalSocialSecurity += parseFloat(
         employee.accountingRecord?.[0]?.socialSecurity || 0
       );
-      acc[workplaceKey].totalAddAmountAfterTax += parseFloat(
+      acc[workplace].totalAddAmountAfterTax += parseFloat(
         employee.accountingRecord?.[0]?.addAmountAfterTax || 0
       );
-      acc[workplaceKey].totalAdvancePayment += parseFloat(
+      acc[workplace].totalAdvancePayment += parseFloat(
         employee.accountingRecord?.[0]?.advancePayment || 0
       );
-      acc[workplaceKey].totalDeductAfterTax += parseFloat(
+      acc[workplace].totalDeductAfterTax += parseFloat(
         employee.accountingRecord?.[0]?.deductAfterTax || 0
       );
-      acc[workplaceKey].totalBank += parseFloat(
+      acc[workplace].totalBank += parseFloat(
         employee.accountingRecord?.[0]?.bank || 0
       );
-      acc[workplaceKey].totalTotal += parseFloat(
+      acc[workplace].totalTotal += parseFloat(
         employee.accountingRecord?.[0]?.total ?? 0
       );
 
-      acc[workplaceKey].totalSpSalary += parseFloat(
+      acc[workplace].totalSpSalary += parseFloat(
         employee.sumAddSalaryBeforeTax ?? 0
       ); // Add the sum to totalSpSalary
 
-      acc[workplaceKey].totalSumAddSalaryBeforeTax += parseFloat(
+      acc[workplace].totalSumAddSalaryBeforeTax += parseFloat(
         employee.accountingRecord?.[0]?.sumAddSalaryBeforeTax ?? 0
       );
-      acc[workplaceKey].totalSumAddSalaryBeforeTaxNonSocial += parseFloat(
+      acc[workplace].totalSumAddSalaryBeforeTaxNonSocial += parseFloat(
         employee.accountingRecord?.[0]?.sumAddSalaryBeforeTaxNonSocial ?? 0
       );
-      acc[workplaceKey].totalSumDeductBeforeTaxWithSocial += parseFloat(
+      acc[workplace].totalSumDeductBeforeTaxWithSocial += parseFloat(
         employee.accountingRecord?.[0]?.sumDeductBeforeTaxWithSocial ?? 0
       );
-      acc[workplaceKey].totalSumDeductBeforeTax += parseFloat(
+      acc[workplace].totalSumDeductBeforeTax += parseFloat(
         employee.accountingRecord?.[0]?.sumDeductBeforeTax ?? 0
       );
-      acc[workplaceKey].totalSumAddSalaryAfterTax += parseFloat(
+      acc[workplace].totalSumAddSalaryAfterTax += parseFloat(
         employee.accountingRecord?.[0]?.sumAddSalaryAfterTax ?? 0
       );
-      acc[workplaceKey].totalSumDeductAfterTax += parseFloat(
+      acc[workplace].totalSumDeductAfterTax += parseFloat(
         employee.accountingRecordsumDeductAfterTax ?? 0
       );
 
@@ -1113,13 +1090,13 @@ function SalaryAllResult({ employeeList, workplaceList }) {
           employee.specialDayRate
         ) || 0
       );
-      acc[workplaceKey].totalSumtest += sum;
+      acc[workplace].totalSumtest += sum;
 
       // const sumOT = parseFloat(employee.accountingRecord?.[0]?.amountOt + (employee.specialDayListWork * employee.specialDayRate) || 0);
       const sumOT = parseFloat(
         employee.accountingRecord?.[0]?.amountCountDayWorkOt || 0
       );
-      acc[workplaceKey].totalSumOT += sumOT;
+      acc[workplace].totalSumOT += sumOT;
 
       const spSalaryHardWorkSum = addSalary.reduce((total, item) => {
         if (item.id === "1410") {
@@ -1127,9 +1104,9 @@ function SalaryAllResult({ employeeList, workplaceList }) {
         }
         return total;
       }, 0);
-      acc[workplaceKey].totalAmountHardWorking += spSalaryHardWorkSum;
+      acc[workplace].totalAmountHardWorking += spSalaryHardWorkSum;
 
-      // acc[workplaceKey].totalSumOT += sumOT;
+      // acc[workplace].totalSumOT += sumOT;
 
       // Parse and calculate the value
       // const countSpecialDay = Number(employee.countSpecialDay);
@@ -1143,11 +1120,11 @@ function SalaryAllResult({ employeeList, workplaceList }) {
       // const parsedSpecialDayRate = isNaN(specialDayRate) ? 0 : specialDayRate;
 
       // // Calculate the product and add to the totalCountSpecialDaySumSpecialDayRate
-      // acc[workplaceKey].totalCountSpecialDaySumSpecialDayRate += parsedCountSpecialDay * parsedSpecialDayRate;
+      // acc[workplace].totalCountSpecialDaySumSpecialDayRate += parsedCountSpecialDay * parsedSpecialDayRate;
 
-      // acc[workplaceKey].totalCountSpecialDaySumSpecialDayRate += parseFloat((Number(employee.countSpecialDay) * Number(employee.specialDayRate)) ?? 0); // Add the sum to totalSpSalary
+      // acc[workplace].totalCountSpecialDaySumSpecialDayRate += parseFloat((Number(employee.countSpecialDay) * Number(employee.specialDayRate)) ?? 0); // Add the sum to totalSpSalary
 
-      acc[workplaceKey].totalEmp += 1;
+      acc[workplace].totalEmp += 1;
 
       return acc;
     }, {});
@@ -1256,12 +1233,6 @@ function SalaryAllResult({ employeeList, workplaceList }) {
             specialDayRate,
             specialDayListWork,
           }) => {
-            // Check if this is the target employeeId
-            // if (employeeId === "650768") {
-            //   // Add a new page for this employee
-            //   pdf.addPage({ orientation: "landscape" });
-            //   currentY = 20; // Reset Y-coordinate for the new page
-            // }
             drawID();
             drawName();
             drawAllDay();
@@ -2512,23 +2483,7 @@ function SalaryAllResult({ employeeList, workplaceList }) {
 
     const groupedByWorkplace = responseDataAll.reduce((acc, employee) => {
       const { workplace } = employee;
-      // const isWasana = employee.name === "วาสนา" || employee.name === "ฐิติรัตน์";
-      // const workplaceKey = isWasana
-      //   ? `2${employee.workplace.slice(1)}` // Edit the first number to 2
-      //   : employee.workplace;
-      const matchingEmployee = employeeList.find(
-        (e) => e.employeeId === employee.employeeId
-      );
-
-      // Check if the costtype is "ภ.ง.ด.3"
-      const hasSpecificCostType = matchingEmployee?.costtype === "ภ.ง.ด.3";
-
-      // Determine the workplaceKey
-      const workplaceKey = hasSpecificCostType
-        ? `2${employee.workplace.slice(1)}` // Edit the first number to 2
-        : employee.workplace;
-
-      acc[workplaceKey] = acc[workplaceKey] || {
+      acc[workplace] = acc[workplace] || {
         employees: [],
         //  totalSalary: 0, totalAmountOt: 0,
         // totalAmountSpecial: 0, totalAmountPosition: 0
@@ -2570,22 +2525,22 @@ function SalaryAllResult({ employeeList, workplaceList }) {
         totalSumAddSalaryAfterTax: 0,
         totalSumDeductAfterTax: 0,
       };
-      acc[workplaceKey].employees.push(employee);
-      // acc[workplaceKey].name.push(employee.name);
+      acc[workplace].employees.push(employee);
+      // acc[workplace].name.push(employee.name);
 
       // Adjust this line based on your specific structure to get the salary or any other relevant data
-      acc[workplaceKey].totalSalary += parseFloat(
+      acc[workplace].totalSalary += parseFloat(
         employee.accountingRecord?.[0]?.amountCountDayWork || 0
       );
-      // acc[workplaceKey].totalAmountOt += parseFloat(employee.accountingRecord?.[0]?.amountOt || 0);
+      // acc[workplace].totalAmountOt += parseFloat(employee.accountingRecord?.[0]?.amountOt || 0);
       const sumOT = parseFloat(
         employee.accountingRecord?.[0]?.amountCountDayWorkOt || 0
       );
-      acc[workplaceKey].totalAmountOt += sumOT;
+      acc[workplace].totalAmountOt += sumOT;
 
-      // acc[workplaceKey].totalAmountPosition += parseFloat(employee.accountingRecord?.[0]?.amountPosition || 0);
-      // acc[workplaceKey].totalTel += parseFloat(employee.accountingRecord?.[0]?.tel || 0);
-      // acc[workplaceKey].totalTravel += parseFloat(employee.accountingRecord?.[0]?.travel || 0);
+      // acc[workplace].totalAmountPosition += parseFloat(employee.accountingRecord?.[0]?.amountPosition || 0);
+      // acc[workplace].totalTel += parseFloat(employee.accountingRecord?.[0]?.tel || 0);
+      // acc[workplace].totalTravel += parseFloat(employee.accountingRecord?.[0]?.travel || 0);
       const totalAmountPositio = parseFloat(
         employee.accountingRecord?.[0]?.amountPosition || 0
       );
@@ -2594,83 +2549,83 @@ function SalaryAllResult({ employeeList, workplaceList }) {
         employee.accountingRecord?.[0]?.travel || 0
       );
 
-      acc[workplaceKey].totalAmountPositio += totalAmountPositio;
-      acc[workplaceKey].totalTel += totalTel;
-      acc[workplaceKey].totalTravel += totalTravel;
-      acc[workplaceKey].totalAddSalary +=
+      acc[workplace].totalAmountPositio += totalAmountPositio;
+      acc[workplace].totalTel += totalTel;
+      acc[workplace].totalTravel += totalTravel;
+      acc[workplace].totalAddSalary +=
         totalAmountPositio + totalTel + totalTravel;
 
-      acc[workplaceKey].totalAmountSpecial += parseFloat(
+      acc[workplace].totalAmountSpecial += parseFloat(
         employee.accountingRecord?.[0]?.amountSpecial || 0
       );
-      acc[workplaceKey].totalAmountPosition += parseFloat(
+      acc[workplace].totalAmountPosition += parseFloat(
         employee.accountingRecord?.[0]?.benefitNonSocial || 0
       );
-      acc[workplaceKey].totalAmountHardWorking += parseFloat(
+      acc[workplace].totalAmountHardWorking += parseFloat(
         employee.accountingRecord?.[0]?.amountHardWorking || 0
       );
-      acc[workplaceKey].totalAmountHoliday += parseFloat(
+      acc[workplace].totalAmountHoliday += parseFloat(
         employee.accountingRecord?.[0]?.amountHoliday || 0
       );
-      acc[workplaceKey].totalAmountSpecialDay += parseFloat(
+      acc[workplace].totalAmountSpecialDay += parseFloat(
         employee.accountingRecord?.[0]?.amountSpecialDay || 0
       );
 
-      acc[workplaceKey].totalDeductBeforeTax += parseFloat(
+      acc[workplace].totalDeductBeforeTax += parseFloat(
         employee.accountingRecord?.[0]?.deductBeforeTax || 0
       );
-      acc[workplaceKey].totalAddAmountBeforeTax += parseFloat(
+      acc[workplace].totalAddAmountBeforeTax += parseFloat(
         employee.accountingRecord?.[0]?.addAmountBeforeTax || 0
       );
-      acc[workplaceKey].totalTax += parseFloat(
+      acc[workplace].totalTax += parseFloat(
         employee.accountingRecord?.[0]?.tax || 0
       );
-      acc[workplaceKey].totalSocialSecurity += parseFloat(
+      acc[workplace].totalSocialSecurity += parseFloat(
         employee.accountingRecord?.[0]?.socialSecurity || 0
       );
-      acc[workplaceKey].totalAddAmountAfterTax += parseFloat(
+      acc[workplace].totalAddAmountAfterTax += parseFloat(
         employee.accountingRecord?.[0]?.addAmountAfterTax || 0
       );
-      acc[workplaceKey].totalAdvancePayment += parseFloat(
+      acc[workplace].totalAdvancePayment += parseFloat(
         employee.accountingRecord?.[0]?.advancePayment || 0
       );
-      acc[workplaceKey].totalDeductAfterTax += parseFloat(
+      acc[workplace].totalDeductAfterTax += parseFloat(
         employee.accountingRecord?.[0]?.deductAfterTax || 0
       );
-      acc[workplaceKey].totalBank += parseFloat(
+      acc[workplace].totalBank += parseFloat(
         employee.accountingRecord?.[0]?.bank || 0
       );
-      acc[workplaceKey].totalTotal += parseFloat(
+      acc[workplace].totalTotal += parseFloat(
         employee.accountingRecord?.[0]?.total ?? 0
       );
 
-      acc[workplaceKey].totalSumAddSalaryBeforeTax += parseFloat(
+      acc[workplace].totalSumAddSalaryBeforeTax += parseFloat(
         employee.accountingRecord?.[0]?.sumAddSalaryBeforeTaxNonSocial || 0
       );
-      acc[workplaceKey].totalSumAddSalaryBeforeTaxNonSocial += parseFloat(
+      acc[workplace].totalSumAddSalaryBeforeTaxNonSocial += parseFloat(
         employee.accountingRecord?.[0]?.sumAddSalaryBeforeTaxNonSocial || 0
       );
-      acc[workplaceKey].totalSumDeductBeforeTaxWithSocial += parseFloat(
+      acc[workplace].totalSumDeductBeforeTaxWithSocial += parseFloat(
         employee.accountingRecord?.[0]?.sumDeductBeforeTaxWithSocial || 0
       );
-      acc[workplaceKey].totalSumDeductBeforeTax += parseFloat(
+      acc[workplace].totalSumDeductBeforeTax += parseFloat(
         employee.accountingRecord?.[0]?.sumDeductBeforeTax || 0
       );
-      acc[workplaceKey].totalSumAddSalaryAfterTax += parseFloat(
+      acc[workplace].totalSumAddSalaryAfterTax += parseFloat(
         employee.accountingRecord?.[0]?.sumAddSalaryAfterTax || 0
       );
-      acc[workplaceKey].totalSumDeductAfterTax += parseFloat(
+      acc[workplace].totalSumDeductAfterTax += parseFloat(
         employee.accountingRecord?.[0]?.sumDeductAfterTax || 0
       );
       // amountSpecialDay
 
-      acc[workplaceKey].totalEmp += 1;
+      acc[workplace].totalEmp += 1;
 
       return acc;
     }, {});
 
+    console.log("groupedByWorkplace", groupedByWorkplace);
 
-    console.log('groupedByWorkplace02', groupedByWorkplace);
     // Loop through the grouped data and add content to the PDF
     let currentY = 20;
 
@@ -2744,13 +2699,9 @@ function SalaryAllResult({ employeeList, workplaceList }) {
           totalSumDeductAfterTax,
         } = groupedByWorkplace[workplaceKey];
 
-        // const workplaceDetails = workplaceListAll.find(
-        //   (w) => w.workplaceId == workplaceKey
-        // ) || { name: "Unknown" };
         const workplaceDetails = workplaceListAll.find(
-          (w) => w.workplaceId.slice(-4) === workplaceKey.slice(-4)
+          (w) => w.workplaceId == workplaceKey
         ) || { name: "Unknown" };
-
         console.log("workplaceDetails", workplaceDetails);
         const workplaceName = workplaceDetails.workplaceName || "Unknown"; // Use a default value if 'name' is not available
 
@@ -3228,26 +3179,9 @@ function SalaryAllResult({ employeeList, workplaceList }) {
 
   const groupedByWorkplace = responseDataAll.reduce((acc, employee) => {
     const { workplace } = employee;
-    // const isWasana = employee.name === "วาสนา" || employee.name === "ฐิติรัตน์";
-    // const workplaceKey = isWasana
-    //   ? `2${employee.workplace.slice(1)}` // Edit the first number to 2
-    //   : employee.workplace;
-
-    const matchingEmployee = employeeList.find(
-      (e) => e.employeeId === employee.employeeId
-    );
-
-    // Check if the costtype is "ภ.ง.ด.3"
-    const hasSpecificCostType = matchingEmployee?.costtype === "ภ.ง.ด.3";
-
-    // Determine the workplaceKey
-    const workplaceKey = hasSpecificCostType
-      ? `2${employee.workplace.slice(1)}` // Edit the first number to 2
-      : employee.workplace;
-      
     const matchingWorkplace = workplaceList.find((w) => w.workplaceId === workplace);
 
-    acc[workplaceKey] = acc[workplaceKey] || {
+    acc[workplace] = acc[workplace] || {
       employees: [],
       workplaceName: matchingWorkplace ? matchingWorkplace.workplaceName : "N/A", // ถ้าไม่เจอให้ใส่ "N/A"
 
@@ -3291,99 +3225,99 @@ function SalaryAllResult({ employeeList, workplaceList }) {
       totalSumAddSalaryAfterTax: 0,
       totalSumDeductAfterTax: 0,
     };
-    acc[workplaceKey].employees.push(employee);
-    // acc[workplaceKey].name.push(employee.name);
+    acc[workplace].employees.push(employee);
+    // acc[workplace].name.push(employee.name);
 
     // Adjust this line based on your specific structure to get the salary or any other relevant data
-    acc[workplaceKey].totalSalary += parseFloat(
+    acc[workplace].totalSalary += parseFloat(
       employee.accountingRecord?.[0]?.amountCountDayWork || 0
     );
-    // acc[workplaceKey].totalAmountOt += parseFloat(employee.accountingRecord?.[0]?.amountOt || 0);
+    // acc[workplace].totalAmountOt += parseFloat(employee.accountingRecord?.[0]?.amountOt || 0);
     const sumOT = parseFloat(
       employee.accountingRecord?.[0]?.amountCountDayWorkOt || 0
     );
-    acc[workplaceKey].totalAmountOt += sumOT;
+    acc[workplace].totalAmountOt += sumOT;
 
-    // acc[workplaceKey].totalAmountPosition += parseFloat(employee.accountingRecord?.[0]?.amountPosition || 0);
-    // acc[workplaceKey].totalTel += parseFloat(employee.accountingRecord?.[0]?.tel || 0);
-    // acc[workplaceKey].totalTravel += parseFloat(employee.accountingRecord?.[0]?.travel || 0);
+    // acc[workplace].totalAmountPosition += parseFloat(employee.accountingRecord?.[0]?.amountPosition || 0);
+    // acc[workplace].totalTel += parseFloat(employee.accountingRecord?.[0]?.tel || 0);
+    // acc[workplace].totalTravel += parseFloat(employee.accountingRecord?.[0]?.travel || 0);
     const totalAmountPositio = parseFloat(
       employee.accountingRecord?.[0]?.amountPosition || 0
     );
     const totalTel = parseFloat(employee.accountingRecord?.[0]?.tel || 0);
     const totalTravel = parseFloat(employee.accountingRecord?.[0]?.travel || 0);
 
-    acc[workplaceKey].totalAmountPositio += totalAmountPositio;
-    acc[workplaceKey].totalTel += totalTel;
-    acc[workplaceKey].totalTravel += totalTravel;
-    acc[workplaceKey].totalAddSalary +=
+    acc[workplace].totalAmountPositio += totalAmountPositio;
+    acc[workplace].totalTel += totalTel;
+    acc[workplace].totalTravel += totalTravel;
+    acc[workplace].totalAddSalary +=
       totalAmountPositio + totalTel + totalTravel;
 
-    acc[workplaceKey].totalAmountSpecial += parseFloat(
+    acc[workplace].totalAmountSpecial += parseFloat(
       employee.accountingRecord?.[0]?.amountSpecial || 0
     );
-    acc[workplaceKey].totalAmountPosition += parseFloat(
+    acc[workplace].totalAmountPosition += parseFloat(
       employee.accountingRecord?.[0]?.benefitNonSocial || 0
     );
-    acc[workplaceKey].totalAmountHardWorking += parseFloat(
+    acc[workplace].totalAmountHardWorking += parseFloat(
       employee.accountingRecord?.[0]?.amountHardWorking || 0
     );
-    acc[workplaceKey].totalAmountHoliday += parseFloat(
+    acc[workplace].totalAmountHoliday += parseFloat(
       employee.accountingRecord?.[0]?.amountHoliday || 0
     );
-    acc[workplaceKey].totalAmountSpecialDay += parseFloat(
+    acc[workplace].totalAmountSpecialDay += parseFloat(
       employee.accountingRecord?.[0]?.amountSpecialDay || 0
     );
 
-    acc[workplaceKey].totalDeductBeforeTax += parseFloat(
+    acc[workplace].totalDeductBeforeTax += parseFloat(
       employee.accountingRecord?.[0]?.deductBeforeTax || 0
     );
-    acc[workplaceKey].totalAddAmountBeforeTax += parseFloat(
+    acc[workplace].totalAddAmountBeforeTax += parseFloat(
       employee.accountingRecord?.[0]?.addAmountBeforeTax || 0
     );
-    acc[workplaceKey].totalTax += parseFloat(
+    acc[workplace].totalTax += parseFloat(
       employee.accountingRecord?.[0]?.tax || 0
     );
-    acc[workplaceKey].totalSocialSecurity += parseFloat(
+    acc[workplace].totalSocialSecurity += parseFloat(
       employee.accountingRecord?.[0]?.socialSecurity || 0
     );
-    acc[workplaceKey].totalAddAmountAfterTax += parseFloat(
+    acc[workplace].totalAddAmountAfterTax += parseFloat(
       employee.accountingRecord?.[0]?.addAmountAfterTax || 0
     );
-    acc[workplaceKey].totalAdvancePayment += parseFloat(
+    acc[workplace].totalAdvancePayment += parseFloat(
       employee.accountingRecord?.[0]?.advancePayment || 0
     );
-    acc[workplaceKey].totalDeductAfterTax += parseFloat(
+    acc[workplace].totalDeductAfterTax += parseFloat(
       employee.accountingRecord?.[0]?.deductAfterTax || 0
     );
-    acc[workplaceKey].totalBank += parseFloat(
+    acc[workplace].totalBank += parseFloat(
       employee.accountingRecord?.[0]?.bank || 0
     );
-    acc[workplaceKey].totalTotal += parseFloat(
+    acc[workplace].totalTotal += parseFloat(
       employee.accountingRecord?.[0]?.total ?? 0
     );
 
-    acc[workplaceKey].totalSumAddSalaryBeforeTax += parseFloat(
+    acc[workplace].totalSumAddSalaryBeforeTax += parseFloat(
       employee.accountingRecord?.[0]?.sumAddSalaryBeforeTaxNonSocial || 0
     );
-    acc[workplaceKey].totalSumAddSalaryBeforeTaxNonSocial += parseFloat(
+    acc[workplace].totalSumAddSalaryBeforeTaxNonSocial += parseFloat(
       employee.accountingRecord?.[0]?.sumAddSalaryBeforeTaxNonSocial || 0
     );
-    acc[workplaceKey].totalSumDeductBeforeTaxWithSocial += parseFloat(
+    acc[workplace].totalSumDeductBeforeTaxWithSocial += parseFloat(
       employee.accountingRecord?.[0]?.sumDeductBeforeTaxWithSocial || 0
     );
-    acc[workplaceKey].totalSumDeductBeforeTax += parseFloat(
+    acc[workplace].totalSumDeductBeforeTax += parseFloat(
       employee.accountingRecord?.[0]?.sumDeductBeforeTax || 0
     );
-    acc[workplaceKey].totalSumAddSalaryAfterTax += parseFloat(
+    acc[workplace].totalSumAddSalaryAfterTax += parseFloat(
       employee.accountingRecord?.[0]?.sumAddSalaryAfterTax || 0
     );
-    acc[workplaceKey].totalSumDeductAfterTax += parseFloat(
+    acc[workplace].totalSumDeductAfterTax += parseFloat(
       employee.accountingRecord?.[0]?.sumDeductAfterTax || 0
     );
     // amountSpecialDay
 
-    acc[workplaceKey].totalEmp += 1;
+    acc[workplace].totalEmp += 1;
 
     return acc;
   }, {});
