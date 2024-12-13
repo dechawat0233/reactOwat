@@ -959,7 +959,7 @@ const         wpDataCalculator1 = await {
                 }
 console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
 
-                if (allTime >= workOfHour) {
+                if (parseFloat(allTime || '0') >= workOfHour) {
                   allTime = workOfHour;
                   tmp.allTimes = workOfHour || 0;
                 } else {
