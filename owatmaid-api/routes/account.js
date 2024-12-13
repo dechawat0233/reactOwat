@@ -648,7 +648,7 @@ dayOffWork += 1;
     hourOneFive = Number(hourOneFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
     
   }
-  if (responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '1.5') {
+  if (responseConclude.data.recordConclude[c].concludeRecord[i].workRateOTMultiply === '1.5') {
     // Update the amountOneFive value
     amountOneFive = Number(amountOneFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
 
