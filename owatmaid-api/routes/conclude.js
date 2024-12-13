@@ -377,7 +377,7 @@ if(parseFloat(salary ) >= 1660) {
                   salary = tmpWP.data.workRate;
                 }
 
-                if (allTime >= workOfHour) {
+                if(parseFloat(allTime || 0 ) >= workOfHour) {
                   allTime = workOfHour;
                   tmp.allTimes = workOfHour || 0;
                 } else {
@@ -625,7 +625,7 @@ const         wpDataCalculator1 = await {
                   salary = parseFloat( wpResponse1.data.workRate);
                 }
 
-                if (allTime >= workOfHour) {
+                if (parseFloat(allTime || '0') >= workOfHour) {
                   allTime = workOfHour;
                   tmp.allTime = workOfHour || 0;
                 } else {
@@ -961,7 +961,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
 
                 if (parseFloat(allTime || '0') >= workOfHour) {
                   allTime = workOfHour;
-                  tmp.allTimes = 0;
+                  tmp.allTimes = workOfHour || 0;
                 } else {
                   tmp.allTimes = allTime || 0;
                 }
@@ -1193,7 +1193,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
                   salary = wpResponse.data.workRate;
                 }
 
-                if (allTime >= workOfHour) {
+                if (parseFloat(allTime || '0') >= workOfHour) {
                   allTime = workOfHour;
                   tmp.allTimes = workOfHour || 0;
                 } else {
