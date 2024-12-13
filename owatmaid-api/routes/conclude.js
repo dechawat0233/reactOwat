@@ -820,13 +820,21 @@ const         wpDataCalculator1 = await {
             // console.log('tmpWP.data.workRate ' + tmpWP.data.workRate);
             tmp.day = str1 + '/' + month + '/' + year;
             tmp.workplaceId = element.workplaceId || '';
+            // let parts = element.allTime.split('.');
+
+            // let hours = parseInt(parts[0], 10) || 0;
+            // let minutes = parts.length > 1 ? parseInt(parts[1], 10) : 0;
+
+            // let scaledMinutes = (minutes * 100) / 60;
+            // let allTime = `${hours}.${scaledMinutes}` || 0;
             let parts = element.allTime.split('.');
 
             let hours = parseInt(parts[0], 10) || 0;
             let minutes = parts.length > 1 ? parseInt(parts[1], 10) : 0;
 
             let scaledMinutes = (minutes * 100) / 60;
-            let allTime = `${hours}.${scaledMinutes}` || 0;
+            let allTime = Number(`${hours}.${scaledMinutes}`) || 0;
+
 
             tmp.allTimes = `${hours}.${scaledMinutes}` || 0;
 
