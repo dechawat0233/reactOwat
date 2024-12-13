@@ -961,7 +961,7 @@ console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
 
                 if (parseFloat(allTime || '0') >= workOfHour) {
                   allTime = workOfHour;
-                  tmp.allTimes = workOfHour || 0;
+                  tmp.allTimes = 0;
                 } else {
                   tmp.allTimes = allTime || 0;
                 }
