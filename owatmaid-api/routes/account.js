@@ -648,28 +648,16 @@ dayOffWork += 1;
     hourOneFive = Number(hourOneFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
     
   }
-  if (responseConclude.data.recordConclude[c].concludeRecord[i].workRateOTMultiply === '1.5') {
-    // Update the amountOneFive value
-    amountOneFive = Number(amountOneFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
 
-    // Update the hourOneFive value
-    let currentTime = Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
-    hourOneFive = Number(hourOneFive) + currentTime;
+  if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOTMultiply === '1.5'){
+    amountOneFive = Number(amountOneFive ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT);
+    // hourOneFive = Number(hourOneFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+    let t1 =     await Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
+    let [integerPart, fractionalPart] = await t1.toString().split('.');
+    let t2 = await Number(fractionalPart || 0) * 100 /60;
+    hourOneFive = await Number(hourOneFive) + Number(integerPart || 0) + Number(t2 || 0);
 
-    // Separate integer and fractional parts
-    const [integerPart, fractionalPart] = hourOneFive.toString().split('.');
-
-    // Convert fractional part from hours to minutes
-    const convertedFraction = fractionalPart ? (Number(`0.${fractionalPart}`) * 100 / 60).toFixed(2) : '0';
-
-    // Recombine the integer and fractional part
-    hourOneFive = `${integerPart}.${convertedFraction.split('.')[1] || '00'}`;
-}
-
-  // if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOTMultiply === '1.5'){
-  //   amountOneFive = Number(amountOneFive ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRateOT);
-  //   hourOneFive = Number(hourOneFive) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].otTimes || 0);
-  // }
+  }
   if(responseConclude.data.recordConclude[c].concludeRecord[i].workRateMultiply === '2') {
     amountTwo = Number(amountTwo ) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].workRate);
     hourTwo = Number(hourTwo) + Number(responseConclude.data.recordConclude[c].concludeRecord[i].allTimes || 0);
