@@ -1602,7 +1602,7 @@ function AddsettimeEmployee() {
       localStorage.removeItem("year");
     }
   }, []); // Run this effect only once on component mount
-  
+
   function handleClickResult(workplace) {
     // Populate all the startTime input fields with the search result value
     const updatedRowDataList = rowDataList.map((rowData) => ({
@@ -1632,7 +1632,7 @@ function AddsettimeEmployee() {
     };
     // alert(data.name);
     try {
-      if(searchEmployeeId == '') {
+      if (searchEmployeeId == '') {
         return;
       }
       const response = await axios.post(endpoint + "/employee/search", data);
@@ -1786,9 +1786,30 @@ function AddsettimeEmployee() {
     const newDataList = [...rowDataList2];
 
     // Check for duplicates
-    const isDuplicate = newDataList.some(
-      (row) => row.date === newRowData.date && row.shift === newRowData.shift
-    );
+    // const isDuplicate = newDataList.some(
+    //   (row) => row.date === newRowData.date && row.startTime === newRowData.startTime && row.endTime === newRowData.endTime
+    // );
+    const isDuplicate = newDataList.some((row) => {
+      const existingStart = parseTime(row.startTime); // Convert existing startTime to minutes
+      const existingEnd = parseTime(row.endTime);     // Convert existing endTime to minutes
+      const newStart = parseTime(newRowData.startTime); // Convert new startTime to minutes
+      const newEnd = parseTime(newRowData.endTime);     // Convert new endTime to minutes
+      const existingDate = row.date;
+      const newDate = newRowData.date;     // Convert new endTime to minutes
+
+      // Check for time overlap
+      const isOverlapping =
+        existingDate === newDate &&
+        (newStart < existingEnd && newEnd > existingStart);
+        
+      return isOverlapping;
+    });
+
+    // Helper function to convert "HH.mm" time strings to minutes for easy comparison
+    function parseTime(timeString) {
+      const [hours, minutes] = timeString.split('.').map(Number);
+      return hours * 60 + minutes; // Convert to total minutes
+    }
 
     if (isDuplicate) {
       alert("มีวันและกะที่ลงไว้แล้ว");

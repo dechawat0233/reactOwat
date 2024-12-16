@@ -302,7 +302,7 @@ function SalaryAllResult({ employeeList, workplaceList }) {
 
   console.log("responseDataAll", responseDataAll);
 
-
+  
   useEffect(() => {
     // Fetch data from the API when the component mounts
     fetch(endpoint + "/leave/list")
@@ -324,33 +324,6 @@ function SalaryAllResult({ employeeList, workplaceList }) {
   }, [year, month, responseDataAll]);
 
   console.log('leaveSalary', leaveSalary);
-
-  // Create a new array with updated responseDataAll values
-  const responseDataAllLeaveSalary = responseDataAll.map((employee) => {
-    // Find matching leaveSalary for the employee
-    const matchingLeave = leaveSalary.find(
-      (leave) => leave.employeeId === employee.employeeId
-    );
-
-    // Sum SpSalary from leaveSalary.record if it exists
-    const totalSpSalary = matchingLeave?.record?.reduce((sum, record) => {
-      return sum + (parseFloat(record.SpSalary) || 0);
-    }, 0) || 0;
-
-    // Add the summed SpSalary to addAmountAfterTax
-    return {
-      ...employee,
-      accountingRecord: {
-        ...employee.accountingRecord,
-        addAmountAfterTax:
-          (employee.accountingRecord?.addAmountAfterTax || 0) + totalSpSalary,
-      },
-    };
-  });
-
-  // Set the updated array into the state
-
-  console.log('responseDataAllLeaveSalary', responseDataAllLeaveSalary);
 
   // addAmountAfterTax
 
@@ -989,7 +962,7 @@ function SalaryAllResult({ employeeList, workplaceList }) {
       }
     };
 
-    const groupedByWorkplace = responseDataAllLeaveSalary.reduce((acc, employee) => {
+    const groupedByWorkplace = responseDataAll.reduce((acc, employee) => {
       const { workplace, name } = employee;
       // const isWasana = employee.name === "วาสนา" || employee.name === "ฐิติรัตน์";
       // const workplaceKey = isWasana
@@ -1683,19 +1656,19 @@ function SalaryAllResult({ employeeList, workplaceList }) {
             // บวกอื่นๆหลัง
             const formattedAddAmountAfterTax = Number(accountingRecord.addAmountAfterTax ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             pdf.text(`${formattedAddAmountAfterTax}`,
-              startXAddAfterDeductTax + cellWidthAddAfterDeductTax, currentY, { align: 'right' });
+                startXAddAfterDeductTax + cellWidthAddAfterDeductTax, currentY, { align: 'right' });
             const formattedSumAddSalaryAfterTax = Number(
               accountingRecord?.[0]?.sumAddSalaryAfterTax ?? 0
             ).toLocaleString("en-US", {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
             });
-            // pdf.text(
-            //   `${formattedSumAddSalaryAfterTax}`,
-            //   startXAddAfterDeductTax + cellWidthAddAfterDeductTax,
-            //   currentY,
-            //   { align: "right" }
-            // );
+            pdf.text(
+              `${formattedSumAddSalaryAfterTax}`,
+              startXAddAfterDeductTax + cellWidthAddAfterDeductTax,
+              currentY,
+              { align: "right" }
+            );
 
             // หักอื่นๆหลัง
             // const formattedDeductAfterTax = Number(accountingRecord.deductAfterTax ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -2564,7 +2537,7 @@ function SalaryAllResult({ employeeList, workplaceList }) {
       }
     };
 
-    const groupedByWorkplace = responseDataAllLeaveSalary.reduce((acc, employee) => {
+    const groupedByWorkplace = responseDataAll.reduce((acc, employee) => {
       const { workplace } = employee;
       // const isWasana = employee.name === "วาสนา" || employee.name === "ฐิติรัตน์";
       // const workplaceKey = isWasana
@@ -3280,7 +3253,7 @@ function SalaryAllResult({ employeeList, workplaceList }) {
     setWorkplacrName(selectWorkplaceName);
   };
 
-  const groupedByWorkplace = responseDataAllLeaveSalary.reduce((acc, employee) => {
+  const groupedByWorkplace = responseDataAll.reduce((acc, employee) => {
     const { workplace } = employee;
     // const isWasana = employee.name === "วาสนา" || employee.name === "ฐิติรัตน์";
     // const workplaceKey = isWasana

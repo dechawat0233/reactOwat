@@ -698,11 +698,19 @@ function AddsettimeWorkplace({ workplaceList, employeeList }) {
     const newDataList = [...rowDataList];
     // Push a new row with specific data
     // newDataList.push({ ...initialRowData, ...newRowData });
+
+
+
+
+    
     newDataList.unshift(newRowData);
 
     // Update the state with the new data
     setRowDataList(newDataList);
   };
+
+
+
 
   // Function to handle editing a row
   const handleEditRow = async (index) => {
