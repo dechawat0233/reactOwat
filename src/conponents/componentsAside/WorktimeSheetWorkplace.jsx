@@ -63,6 +63,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
   const [conclude, setConclude] = useState([]);
 
   const [responseDataAll, setResponseDataAll] = useState([]);
+  const [leaveSalary, setLeaveSalary] = useState([]);
 
   const [WName, setWName] = useState("");
 
@@ -72,6 +73,10 @@ function WorktimeSheetWorkplace({ employeeList }) {
   const [workRateWorkplaceStage1, setWorkRateWorkplaceStage1] = useState(0); //ค่าจ้างต่อวัน
   const [workRateWorkplaceStage2, setWorkRateWorkplaceStage2] = useState(0); //ค่าจ้างต่อวัน
   const [workRateWorkplaceStage3, setWorkRateWorkplaceStage3] = useState(0);
+
+  const [year, setYear] = useState("");
+  const [month, setMonth] = useState("");
+
 
   // const handleWorkDateChange = (date) => {
   //     setWorkDate(date);
@@ -210,6 +215,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
       .then((data) => {
         // Update the state with the fetched data
         setWorkplaceList(data);
+        setWorkplaceListAll(data);
         // alert(data[0].workplaceName);
       })
       .catch((error) => {
@@ -251,17 +257,23 @@ function WorktimeSheetWorkplace({ employeeList }) {
 
   useEffect(() => {
     // Fetch data from the API when the component mounts
-    fetch(endpoint + "/workplace/list")
+    fetch(endpoint + "/leave/list")
       .then((response) => response.json())
       .then((data) => {
-        // Update the state with the fetched data
-        setWorkplaceListAll(data);
-        // alert(data[0].workplaceName);
+        // Filter the data based on year, month, and employeeId array
+        const filteredData = data.filter((item) =>
+          item.year === year &&
+          item.month === month &&
+          responseDataAll.some((employee) => employee.employeeId === item.employeeId)
+        );
+
+        // Update the state with the filtered data
+        setLeaveSalary(filteredData);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [year, month, responseDataAll]);
 
   const [employeelist, setEmployeelist] = useState([]);
   const [employee, setEmployee] = useState([]);
@@ -345,15 +357,12 @@ function WorktimeSheetWorkplace({ employeeList }) {
   const [name, setName] = useState("");
   const [workplaceIdList, setWorkplaceIdList] = useState([]);
 
-  const [month, setMonth] = useState("");
-
   const currentYear = new Date().getFullYear();
   const years = Array.from(
     { length: currentYear - 1998 },
     (_, index) => currentYear - index
   );
 
-  const [year, setYear] = useState("");
 
   const [searchWorkplaceId, setSearchWorkplaceId] = useState(""); //รหัสหน่วยงาน
   const [searchWorkplaceName, setSearchWorkplaceName] = useState(""); //ชื่อหน่วยงาน
@@ -3038,37 +3047,136 @@ function WorktimeSheetWorkplace({ employeeList }) {
   const filteredAddSalaryWorkplace =
     getUniqueEntriesWithLowestSpSalary(addSalaryWorkplace);
 
+  console.log('filteredAddSalaryWorkplace', filteredAddSalaryWorkplace);
+
   const addSalaryNames = new Set(
     filteredAddSalaryWorkplace.map((item) => item.name)
   );
 
   // Map filteredEmployees to set SpSalary based on the position of the corresponding name in filteredAddSalaryWorkplace
   console.log('filteredEmployees', filteredEmployees);
-  const extractedDataAddSalary = filteredEmployees.map((employee) => {
+
+  // ช่วงที่เพิ่มเงินลา
+  const responseDataAllLeaveSalary = filteredEmployees.map((employee) => {
+    // Find matching leaveSalary for the employee
+    const matchingLeave = leaveSalary.find(
+      (leave) => leave.employeeId === employee.employeeId
+    );
+
+    // Sum SpSalary from leaveSalary.record if it exists
+    const totalSpSalary = matchingLeave?.record?.reduce((sum, record) => {
+      return sum + (parseFloat(record.SpSalary) || 0);
+    }, 0) || 0;
+
+    // Prepare the "เงินลา" object to add to addSalary
+    const leaveSalaryEntry = {
+      SpSalary: totalSpSalary,
+      StaffType: "all",
+      id: "-",
+      name: "เงินลา",
+      nameType: "",
+      roundOfSalary: "daily",
+    };
+
+    // Add the leaveSalaryEntry to addSalary array (initialize if needed)
+    const updatedAddSalary = [
+      ...(employee.addSalary || []), // Keep existing addSalary entries
+      leaveSalaryEntry, // Add the new leaveSalary entry
+    ];
+
+    // Add the summed SpSalary to addAmountAfterTax
+    // return {
+    //   ...employee,
+    //   accountingRecord: {
+    //     ...employee.accountingRecord,
+    //     addAmountAfterTax:
+    //       (employee.accountingRecord?.addAmountAfterTax || 0) + totalSpSalary,
+    //   },
+    //   addSalary: updatedAddSalary, // Update the addSalary array
+    // };
+    return {
+      ...employee,
+      accountingRecord: {
+        ...employee.accountingRecord,
+        addAmountAfterTax:
+          ((employee.accountingRecord?.addAmountAfterTax || 0) + totalSpSalary)
+            .toString(), // Convert addAmountAfterTax to a string
+      },
+      addSalary: updatedAddSalary, // Update the addSalary array
+    };
+  });
+
+  console.log("responseDataAllLeaveSalary", responseDataAllLeaveSalary);
+
+  // const extractedDataAddSalary = responseDataAllLeaveSalary.map((employee) => {
+  //   // Initialize an array to hold SpSalary values
+  //   const spSalaryArray = [];
+  //   // Iterate over filteredAddSalaryWorkplace
+  //   filteredAddSalaryWorkplace.forEach((salaryItem) => {
+  //     // Find the position of salaryItem.name in employee.addSalary
+  //     const index = employee.addSalary.findIndex(
+  //       (item) => item.id === salaryItem.codeSpSalary
+  //     );
+  //     // If the name exists in employee.addSalary, push the SpSalary as an integer to spSalaryArray
+  //     if (index !== -1 || employee.addSalary[index].id == '-') {
+  //       spSalaryArray.push(parseInt(employee.addSalary[index].SpSalary));
+  //     } else {
+  //       // If the name doesn't exist in employee.addSalary, push 0 as an integer
+  //       spSalaryArray.push("");
+  //     }
+  //   });
+  //   return spSalaryArray;
+  // });
+
+  const extractedDataAddSalary = responseDataAllLeaveSalary.map((employee) => {
     // Initialize an array to hold SpSalary values
     const spSalaryArray = [];
+
+    // Track if we find an entry with `id === '-'`
+    let lastSpSalary = null;
+
     // Iterate over filteredAddSalaryWorkplace
     filteredAddSalaryWorkplace.forEach((salaryItem) => {
       // Find the position of salaryItem.name in employee.addSalary
       const index = employee.addSalary.findIndex(
         (item) => item.id === salaryItem.codeSpSalary
       );
-      // If the name exists in employee.addSalary, push the SpSalary as an integer to spSalaryArray
+
       if (index !== -1) {
-        spSalaryArray.push(parseInt(employee.addSalary[index].SpSalary));
+        // If the salary item exists, push the SpSalary value
+        spSalaryArray.push(parseInt(employee.addSalary[index].SpSalary) || 0);
       } else {
-        // If the name doesn't exist in employee.addSalary, push 0 as an integer
-        spSalaryArray.push("");
+        // If the salary item doesn't exist, check for `id === '-'`
+        const dashIndex = employee.addSalary.findIndex(
+          (item) => item.id == '-'
+        );
+
+        if (dashIndex !== -1) {
+          // If `id === '-'` is found, store the SpSalary to be added at the end
+          lastSpSalary = parseInt(employee.addSalary[dashIndex].SpSalary) || 0;
+        } else {
+          // If no matching salary item or `id === '-'`, push an empty value
+          spSalaryArray.push("");
+        }
       }
     });
+
+    // If we found a `'-'`, push its SpSalary to the last position of the array
+    if (lastSpSalary !== null) {
+      spSalaryArray.push(lastSpSalary);
+    }
+
     return spSalaryArray;
   });
+
+
+  console.log('extractedDataAddSalary', extractedDataAddSalary);
 
   const adjustedDailyExtractedDataAddSalary = extractedDataAddSalary.map(
     (salaryArray, outerIndex) => {
       return salaryArray.map((value, innerIndex) => {
         // Find the corresponding salary item in employee.addSalary
-        const employeeSalaryItem = filteredEmployees[outerIndex].addSalary.find(
+        const employeeSalaryItem = responseDataAllLeaveSalary[outerIndex].addSalary.find(
           (item) => item.name === filteredAddSalaryWorkplace[innerIndex].name
         );
 
@@ -3084,6 +3192,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
       });
     }
   );
+
 
   // const adjustedDailyExtractedDataAddSalaryCount = extractedDataAddSalary.map(
   //   (salaryArray, outerIndex) => {
@@ -3114,7 +3223,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
     (salaryArray, outerIndex) => {
       return salaryArray.map((value, innerIndex) => {
         // Find the corresponding employee salary item
-        const employeeSalaryItem = filteredEmployees[outerIndex].addSalary.find(
+        const employeeSalaryItem = responseDataAllLeaveSalary[outerIndex].addSalary.find(
           (item) =>
             item.id === filteredAddSalaryWorkplace[innerIndex].codeSpSalary
         );
@@ -8292,6 +8401,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
           // Check if the item is a number, convert it to a string
           return item !== "" ? item.toString() : item;
         });
+        console.log('salaryData', salaryData);
         const isAllDayWorkRowEmpty = isRowEmpty(allDayWork);
         const isMorningRowEmpty = isRowEmpty(morningData);
         const isAfternoonRowEmpty = isRowEmpty(afternoonData);
@@ -8349,7 +8459,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
 
         const totalHeightNeeded =
           (isMorningRowEmpty ? 0 : morningRowHeight + cellHeight) +
-          (isAllDayWorkRowEmpty ? 0 : afternoonRowHeight) +
+          (afternoonRowHeight) +
           (isAfternoonRowEmpty ? 0 : afternoonRowHeight) +
           (isNightRowEmpty ? 0 : nightRowHeight) +
           // Add height only if both conditions for each row are false
@@ -8365,6 +8475,19 @@ function WorktimeSheetWorkplace({ employeeList }) {
 
         // Check if we need to start a new page
         checkPageOverflow(totalHeightNeeded);
+        console.log('totalHeightNeeded', totalHeightNeeded);
+        console.log('isMorningRowEmpty', isMorningRowEmpty);
+        console.log('isAllDayWorkRowEmpty', isAllDayWorkRowEmpty);
+        console.log('isAfternoonRowEmpty', isAfternoonRowEmpty);
+        console.log('isNightRowEmpty', isNightRowEmpty);
+
+        console.log('isNewOtTimesTestRowEmpty', isNewOtTimesTestRowEmpty);
+        console.log('isNewOtTimes2TestRowEmpty', isNewOtTimes2TestRowEmpty);
+        console.log('isNewOtTimes3TestRowEmpty', isNewOtTimes3TestRowEmpty);
+
+        console.log('isNewAllTimesTestRowEmpty', isNewAllTimes2TestRowEmpty);
+        console.log('isNewAllTimes2TestRowEmpty', isNewAllTimes2TestRowEmpty);
+        console.log('isNewAllTimes3TestRowEmpty', isNewAllTimes3TestRowEmpty);
 
         // Draw table number for the entire set of rows
         // drawTableNumber("", currentY, totalHeightNeeded);
@@ -8455,9 +8578,26 @@ function WorktimeSheetWorkplace({ employeeList }) {
         let salaryMap = new Map();
 
         // Iterate over the sorted array and populate the salaryMap
+        // for (let item of filteredAddSalaryWorkplace) {
+        //   const { codeSpSalary, SpSalary } = item;
+        //   const currentSpSalary = parseFloat(SpSalary);
+        //   if (
+        //     !salaryMap.has(codeSpSalary) ||
+        //     currentSpSalary < salaryMap.get(codeSpSalary).SpSalary
+        //   ) {
+        //     salaryMap.set(codeSpSalary, {
+        //       ...item,
+        //       SpSalary: currentSpSalary,
+        //     });
+        //   }
+        // }
         for (let item of filteredAddSalaryWorkplace) {
           const { codeSpSalary, SpSalary } = item;
+
+          // Parse the current SpSalary value
           const currentSpSalary = parseFloat(SpSalary);
+
+          // Standard salary comparison logic
           if (
             !salaryMap.has(codeSpSalary) ||
             currentSpSalary < salaryMap.get(codeSpSalary).SpSalary
@@ -8469,8 +8609,36 @@ function WorktimeSheetWorkplace({ employeeList }) {
           }
         }
 
+        // Check if leaveSalary exists and push the placeholder entry at the end
+        if (leaveSalary) {
+          salaryMap.set("1235", {
+            SpSalary: "-",
+            StaffType: "all",
+            codeSpSalary: "1235",
+            name: "เงินลา",
+            nameType: "",
+            roundOfSalary: "daily",
+          });
+        }
+
+        // Convert the salaryMap back to an array to retain order
+        const salaryArray = Array.from(salaryMap.values());
+
+        // Ensure "เงินลา" is pushed to the end of the array
+        if (leaveSalary) {
+          salaryArray.push({
+            SpSalary: "-",
+            StaffType: "all",
+            codeSpSalary: "1235",
+            name: "เงินลา",
+            nameType: "",
+            roundOfSalary: "daily",
+          });
+        }
+
         // Convert the Map values to an array
         uniqueSalaries = Array.from(salaryMap.values());
+        console.log('uniqueSalaries', uniqueSalaries);
 
         uniqueSalaries.forEach((item, index) => {
           const cleanedName = item.name.replace(/\(ไม่คิดปกส.\)/g, "").trim();
@@ -8569,6 +8737,7 @@ function WorktimeSheetWorkplace({ employeeList }) {
           drawAddSalaryCountRow(salaryCountData, currentY, cellHeight);
         }
 
+        // จำนวนเงินเพิ่ม
         if (!isRowEmpty(salaryData)) {
           // Drawing salary data
           drawAddSalaryRow(salaryData, currentY + morningRowHeight + 1, cellHeight);
@@ -8616,13 +8785,13 @@ function WorktimeSheetWorkplace({ employeeList }) {
 
         drawRow(newOtTimesspace, currentY, cellHeight);
         drawSalaryRow(emptyArraytest, currentY, cellHeight);
-        
+
         drawCellRight(
           cellHeight * daysInMonth + 59,
           currentY + cellHeight / 2 + 1,
           amountCountDayWork[i].toString()
         );
-        
+
         drawCellRight(
           cellHeight * daysInMonth + 59 + cellWidthSpSalary,
           currentY + cellHeight / 2 + 1,
