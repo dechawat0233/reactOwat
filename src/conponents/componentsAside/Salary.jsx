@@ -431,6 +431,7 @@ function Salary() {
         setWorkplacearea(filtered[0].workplaceArea);
         //set add Salary from workplace
         setAddSalaryWorkplace(filtered[0].addSalary);
+
         setEmployeeData((prevData) => ({
           ...prevData,
           ["addSalary"]: [],
@@ -704,7 +705,14 @@ function Salary() {
         setWorkplacearea("");
       } else {
         setWorkplacearea(filtered[0].workplaceArea || "");
-        setAddSalaryWorkplace(filtered[0].addSalary);
+        setAddSalaryWorkplace(filtered[0].addSalary
+          .filter(
+            (data) =>
+              data?.StaffType === "all" || data?.StaffType === employeeData?.position 
+          )
+         );
+// alert(employeeData.position );
+//เงินเพิ่มของหน่วยงาน เลือกตามประเภทพนักงาน และแบบให้ทั้งหมด
 
         const initialFormData = await {
           addSalary: filtered[0].addSalary.map((item) => ({
@@ -1683,10 +1691,10 @@ function Salary() {
                               </div>
                             </div>
                             {/* </div> */}
-                            
-                            position
-                            {addSalaryWorkplace.filter((data) => data.nameType === "all" || data.nameType === position)
+
+                            {addSalaryWorkplace
                             .map((data, index) => (
+
                               <div className="row" key={index}>
                                 <div className="row">
                                   <div className="col-md-6">
@@ -1907,7 +1915,9 @@ function Salary() {
                                 <br />
                                 <br />
                               </div>
-                            ))}
+                            ))
+
+                          }
                           </section>
                           <section class="Frame">
                             <h4>เงินเพิ่มที่ได้รับ</h4>
