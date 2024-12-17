@@ -1684,7 +1684,7 @@ function Salary() {
                             </div>
                             {/* </div> */}
                             
-
+                            position
                             {addSalaryWorkplace.filter((data) => data.nameType === "all" || data.nameType === position)
                             .map((data, index) => (
                               <div className="row" key={index}>
