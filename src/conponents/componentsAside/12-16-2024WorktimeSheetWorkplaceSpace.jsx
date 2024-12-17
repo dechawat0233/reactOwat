@@ -355,10 +355,7 @@ function WorktimeSheetWorkplaceSpace({ employeeList }) {
 
   const [year, setYear] = useState("");
 
-  const [searchWorkplaceId, setSearchWorkplaceId] = useState(); //รหัสหน่วยงาน
-  setTimeout(() => {
-    setSearchWorkplaceId("10105");
-  }, 3000);
+  const [searchWorkplaceId, setSearchWorkplaceId] = useState(10105); //รหัสหน่วยงาน
   const [searchWorkplaceName, setSearchWorkplaceName] = useState(""); //ชื่อหน่วยงาน
   const [codePage, setCodePage] = useState("FM-HR-005-03"); //ชื่อหน่วยงาน
 
@@ -2096,8 +2093,6 @@ function WorktimeSheetWorkplaceSpace({ employeeList }) {
     employeeIdss.includes(entry.employeeId)
   );
 
-  console.log('filteredEntriesqw', filteredEntriesqw);
-
   // Step 3: Sort the filtered entries
   filteredEntriesqw.sort((a, b) => Number(a.employeeId) - Number(b.employeeId));
 
@@ -2138,27 +2133,9 @@ function WorktimeSheetWorkplaceSpace({ employeeList }) {
         };
       }
 
-      // Process the workplaceId array to handle 'searchWorkplaceId'
-      let workplaceIds = record.workplaceId;
-
-      // Check if workplaceId contains searchWorkplaceId
-      if (Array.isArray(workplaceIds)) {
-        // Filter out searchWorkplaceId and ensure only one instance is kept
-        workplaceIds = workplaceIds.filter((id, index, self) => {
-          if (id === searchWorkplaceId) {
-            // Only keep one occurrence of searchWorkplaceId
-            return self.indexOf(id) === index;
-          }
-          return true; // Keep other IDs unchanged
-        });
-      }
-
-      groupedByEmployeeId[employeeId].concludeRecord[day].workplaceId.push(workplaceIds);
-
-      // groupedByEmployeeId[employeeId].concludeRecord[day].workplaceId.push(
-      //   record.workplaceId
-      // );
-
+      groupedByEmployeeId[employeeId].concludeRecord[day].workplaceId.push(
+        record.workplaceId
+      );
       groupedByEmployeeId[employeeId].concludeRecord[day].allTimes.push(
         parseFloat(record.allTimes) || 0
       );
@@ -2198,8 +2175,6 @@ function WorktimeSheetWorkplaceSpace({ employeeList }) {
   ];
   const resultArrayNew = [];
 
-  console.log('groupedByEmployeeId', groupedByEmployeeId);
-
   Object.values(groupedByEmployeeId).forEach((group) => {
     const groupedDays = [];
 
@@ -2236,7 +2211,6 @@ function WorktimeSheetWorkplaceSpace({ employeeList }) {
       groupedDays.push({
         day: groupDay.day,
         workplaceId: sortedWorkplaceId[0], // Taking the first element after sorting
-        // workplaceId: filteredWorkplaceId, // Taking the first element after sorting
         allTimes: sumAllTimes,
         workRate: sortedWorkRate[0], // Taking the first element after sorting
         workRateMultiply: sortedWorkRateMultiply[0], // Taking the first element after sorting
@@ -2262,6 +2236,8 @@ function WorktimeSheetWorkplaceSpace({ employeeList }) {
   });
 
   console.log('resultArrayNew', resultArrayNew);
+  console.log('groupedByEmployeeId', groupedByEmployeeId);
+
   // Initialize objects to store the grouped times
   const dayWorkMorningAndSS = {};
   const dayWorkAfternoon = {};
@@ -8774,7 +8750,7 @@ function WorktimeSheetWorkplaceSpace({ employeeList }) {
                                   e.target.value = e.target.value.replace(/\D/g, "");
                                 }}
                                 list="WorkplaceIdList"
-                              readOnly
+                              // readOnly
                               />
                             </div>
                             <datalist id="WorkplaceIdList">
@@ -8800,7 +8776,7 @@ function WorktimeSheetWorkplaceSpace({ employeeList }) {
                                 // onChange={(e) => setSearchWorkplaceName(e.target.value)}
                                 onChange={handleStaffNameChange}
                                 list="WorkplaceNameList"
-                              readOnly
+                              // readOnly
                               />
                             </div>
                             <datalist id="WorkplaceNameList">
