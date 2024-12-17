@@ -898,7 +898,7 @@ if(item.id === '1410') {
 if (data?.accountingRecord?.amountPosition ?? false) {
   // The property is set and truthy
 } else {
-  // The property is not set or it is falsy
+  // The property is not set or it is false
     data.accountingRecord.amountPosition =  await 0;
 }
 if (data?.accountingRecord?.tel ?? false) {
