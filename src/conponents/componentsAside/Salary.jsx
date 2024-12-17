@@ -1683,8 +1683,10 @@ function Salary() {
                               </div>
                             </div>
                             {/* </div> */}
+                            
 
-                            {addSalaryWorkplace.map((data, index) => (
+                            {addSalaryWorkplace.filter((data) => data.nameType === "all" || data.nameType === position)
+                            .map((data, index) => (
                               <div className="row" key={index}>
                                 <div className="row">
                                   <div className="col-md-6">
