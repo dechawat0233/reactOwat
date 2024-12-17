@@ -308,8 +308,7 @@ if(parseFloat(salary ) >= 1660) {
 
                 //cal OT
                 let workRateOT = ((parseFloat(tmpWP.data.holidayOT) * (salary / 8)) * (parseFloat( (((hoursTmp * 60) + (minutesTmp * 10 )) / 60) )) ).toFixed(3);
-                // tmp.workRateOT = workRateOT || '';
-                tmp.workRateOT = (((hoursTmp * 60) + (minutesTmp * 10 )) / 60)
+                tmp.workRateOT = workRateOT || '';
                 tmp.workRateOTMultiply = tmpWP.data.holidayOT || 0;
 
                 sumWorkHour += parseFloat(allTime) || 0;
@@ -357,9 +356,8 @@ if(parseFloat(salary ) >= 1660) {
                 let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * (parseFloat(otTime ))).toFixed(3);
 
                 //cal OT
-                // tmp.workRateOT = workRateOT || 0;
+                tmp.workRateOT = workRateOT || 0;
                 tmp.workRateOTMultiply = tmpWP.data.dayoffRateOT || 0;
-                tmp.workRateOT = (((hoursTmp * 60) + (minutesTmp * 10 )) / 60)
 
                 sumWorkHour += parseFloat(allTime) || 0;
                 sumWorkRate += parseFloat(workRate) || 0;
@@ -407,10 +405,9 @@ if(parseFloat(salary ) >= 1660) {
                 // let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction))).toFixed(3);
 
                 //cal OT
-                // let workRateOT = (((salary / 8) * parseFloat(tmpWP.data.workRateOT ?? 0)) * (parseFloat( (((hoursTmp * 60) + (minutesTmp * 10 )) / 60) ))).toFixed(3);
+                let workRateOT = (((salary / 8) * parseFloat(tmpWP.data.workRateOT ?? 0)) * (parseFloat( (((hoursTmp * 60) + (minutesTmp * 10 )) / 60) ))).toFixed(3);
                 tmp.workRateOT = workRateOT || 0;
                 tmp.workRateOTMultiply = tmpWP.data.workRateOT || 0;
-                tmp.workRateOT = (((hoursTmp * 60) + (minutesTmp * 10 )) / 60)
 
                 sumWorkHour += parseFloat(allTime) || 0;
                 sumWorkRate += parseFloat(workRate) || 0;
@@ -559,10 +556,9 @@ const         wpDataCalculator1 = await {
                 // let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction))).toFixed(2);
 
                 //cal OT
-                // let workRateOT = ((parseFloat(wpResponse1.data.holidayOT) * (salary / 8)) * (parseFloat( (((hoursTmp * 60) + (minutesTmp * 10 )) / 60)  )) ).toFixed(3);
+                let workRateOT = ((parseFloat(wpResponse1.data.holidayOT) * (salary / 8)) * (parseFloat( (((hoursTmp * 60) + (minutesTmp * 10 )) / 60)  )) ).toFixed(3);
                 tmp.workRateOT = workRateOT || 0;
                 tmp.workRateOTMultiply = wpResponse1.data.holidayOT || 0;
-                tmp.workRateOT = (((hoursTmp * 60) + (minutesTmp * 10 )) / 60)
 
                 sumWorkHour += parseFloat(allTime) || 0;
                 sumWorkRate += parseFloat(workRate) || 0;
@@ -610,10 +606,9 @@ const         wpDataCalculator1 = await {
                 // let workRateOT = ((parseFloat(tmpWP.data.dayoffRateOT) * (salary / 8)) * (parseFloat(hoursTmp + decimalFraction))).toFixed(2);
 
                 //cal OT
-                // let workRateOT = ((parseFloat(wpResponse1.data.dayoffRateOT ?? 0) * (salary / 8)) * (parseFloat( (((hoursTmp * 60) + (minutesTmp * 10 )) / 60) )) ).toFixed(3);
+                let workRateOT = ((parseFloat(wpResponse1.data.dayoffRateOT ?? 0) * (salary / 8)) * (parseFloat( (((hoursTmp * 60) + (minutesTmp * 10 )) / 60) )) ).toFixed(3);
                 tmp.workRateOT = workRateOT || 0;
                 tmp.workRateOTMultiply = wpResponse1.data.dayoffRateOT || 0;
-                tmp.workRateOT = (((hoursTmp * 60) + (minutesTmp * 10 )) / 60)
 
                 
                 sumWorkHour += parseFloat(allTime) || 0;
