@@ -356,9 +356,9 @@ function WorktimeSheetWorkplaceSpace({ employeeList }) {
   const [year, setYear] = useState("");
 
   const [searchWorkplaceId, setSearchWorkplaceId] = useState(); //รหัสหน่วยงาน
-  setTimeout(() => {
-    setSearchWorkplaceId("10105");
-  }, 3000);
+  // setTimeout(() => {
+  //   setSearchWorkplaceId("10105");
+  // }, 3000);
   const [searchWorkplaceName, setSearchWorkplaceName] = useState(""); //ชื่อหน่วยงาน
   const [codePage, setCodePage] = useState("FM-HR-005-03"); //ชื่อหน่วยงาน
 
@@ -405,9 +405,9 @@ function WorktimeSheetWorkplaceSpace({ employeeList }) {
           console.error("Error:", error);
         });
     };
-
     // Call fetchData when year or month changes
-    fetchData();
+    fetchData(); setSearchWorkplaceId("10105")
+
   }, [year, month, searchWorkplaceId]);
 
   async function handleSearch(event) {
@@ -2211,10 +2211,25 @@ function WorktimeSheetWorkplaceSpace({ employeeList }) {
         )
         .map(({ index }) => index);
 
-      const sortArrayByIndices = (array) =>
+      const sortArrayByIndices = (array) => //ตัวเก่า
         sortedIndices.map((index) => array[index]);
 
-      const sortedWorkplaceId = sortArrayByIndices(groupDay.workplaceId);
+      const filterWorkplaceId = (workplaceIdArray, searchWorkplaceId) => { //ตัวใหม่
+        // Filter out undefined values
+        const validWorkplaceIds = workplaceIdArray.filter((id) => id !== undefined);
+
+        if (validWorkplaceIds.length > 1) {
+          // If the array has more than one item, return the one that is NOT searchWorkplaceId
+          return validWorkplaceIds.find((id) => id !== searchWorkplaceId) || searchWorkplaceId;
+        } else {
+          // If the array has only one item or is empty, return the searchWorkplaceId as fallback
+          return validWorkplaceIds[0] || searchWorkplaceId;
+        }
+      };
+
+      // const sortedWorkplaceId = sortArrayByIndices(groupDay.workplaceId); //ตัวเก่า
+      const filteredWorkplaceId = filterWorkplaceId(groupDay.workplaceId, searchWorkplaceId); //ตัวใหม่
+      // console.log('filteredWorkplaceId', filteredWorkplaceId);
       const sortedWorkRate = sortArrayByIndices(groupDay.workRate);
       const sortedWorkRateOT = sortArrayByIndices(groupDay.workRateOT);
       const sortedWorkRateMultiply = sortArrayByIndices(
@@ -2235,7 +2250,7 @@ function WorktimeSheetWorkplaceSpace({ employeeList }) {
 
       groupedDays.push({
         day: groupDay.day,
-        workplaceId: sortedWorkplaceId[0], // Taking the first element after sorting
+        workplaceId: filteredWorkplaceId, // Taking the first element after sorting
         // workplaceId: filteredWorkplaceId, // Taking the first element after sorting
         allTimes: sumAllTimes,
         workRate: sortedWorkRate[0], // Taking the first element after sorting
@@ -2262,6 +2277,7 @@ function WorktimeSheetWorkplaceSpace({ employeeList }) {
   });
 
   console.log('resultArrayNew', resultArrayNew);
+
   // Initialize objects to store the grouped times
   const dayWorkMorningAndSS = {};
   const dayWorkAfternoon = {};
@@ -2593,6 +2609,9 @@ function WorktimeSheetWorkplaceSpace({ employeeList }) {
 
   const singleArrayOfDates = daySpecialts.flat();
 
+  console.log('newOtTimes',newOtTimes);
+  console.log('otTimesByEmployee',otTimesByEmployee);
+
   const updateDayWorks = (
     dayWorkMorningAndSSs,
     allDayOff,
@@ -2663,6 +2682,8 @@ function WorktimeSheetWorkplaceSpace({ employeeList }) {
     searchWorkplaceId
   );
 
+  console.log('finalUpdatedDayWorksWorkMorningAndSS', finalUpdatedDayWorksWorkMorningAndSS);
+
   const updatedFinalMorningAndSS = finalUpdatedDayWorksWorkMorningAndSS.map(
     (subArray) =>
       subArray.map((value) =>
@@ -2678,22 +2699,38 @@ function WorktimeSheetWorkplaceSpace({ employeeList }) {
     changeNumbersToOne2(updatedDaysWorkNight);
 
 
-  const consolidateArrays = (
-    morningArray,
-    afternoonArray,
-    nightArray
-  ) => {
+  // const consolidateArrays = (
+  //   morningArray,
+  //   afternoonArray,
+  //   nightArray
+  // ) => {
+  //   return morningArray.map((subArray, rowIndex) =>
+  //     subArray.map((value, colIndex) => {
+  //       // Check if "1" exists in any of the arrays at the same position
+  //       return ["1"].includes(morningArray[rowIndex][colIndex]) ||
+  //         ["1"].includes(afternoonArray[rowIndex][colIndex]) ||
+  //         ["1"].includes(nightArray[rowIndex][colIndex])
+  //         ? "1"
+  //         : ""; // Set to "1" if found, else ""
+  //     })
+  //   );
+  // };
+  const consolidateArrays = (morningArray, afternoonArray, nightArray) => {
     return morningArray.map((subArray, rowIndex) =>
-      subArray.map((value, colIndex) => {
-        // Check if "1" exists in any of the arrays at the same position
-        return ["1"].includes(morningArray[rowIndex][colIndex]) ||
-          ["1"].includes(afternoonArray[rowIndex][colIndex]) ||
-          ["1"].includes(nightArray[rowIndex][colIndex])
-          ? "1"
-          : ""; // Set to "1" if found, else ""
+      subArray.map((_, colIndex) => {
+        const values = [
+          morningArray[rowIndex][colIndex],
+          afternoonArray[rowIndex][colIndex],
+          nightArray[rowIndex][colIndex],
+        ];
+
+        // If any value is not an empty string, set "1"
+        return values.some((value) => value !== "") ? "1" : "";
       })
     );
   };
+
+
 
   // Combine the arrays
   const finalConsolidatedArray = consolidateArrays(
@@ -2702,6 +2739,7 @@ function WorktimeSheetWorkplaceSpace({ employeeList }) {
     finalUpdatedDayWorksWorkNight
   );
 
+  console.log('finalConsolidatedArray', finalConsolidatedArray);
   console.log('finalUpdatedDayWorksWorkMorningAndSS', finalUpdatedDayWorksWorkMorningAndSS);
   console.log('finalUpdatedDayWorksWorkAfternoon', finalUpdatedDayWorksWorkAfternoon);
   console.log('finalUpdatedDayWorksWorkNight', finalUpdatedDayWorksWorkNight);
@@ -8774,7 +8812,7 @@ function WorktimeSheetWorkplaceSpace({ employeeList }) {
                                   e.target.value = e.target.value.replace(/\D/g, "");
                                 }}
                                 list="WorkplaceIdList"
-                              readOnly
+                                readOnly
                               />
                             </div>
                             <datalist id="WorkplaceIdList">
@@ -8800,7 +8838,7 @@ function WorktimeSheetWorkplaceSpace({ employeeList }) {
                                 // onChange={(e) => setSearchWorkplaceName(e.target.value)}
                                 onChange={handleStaffNameChange}
                                 list="WorkplaceNameList"
-                              readOnly
+                                readOnly
                               />
                             </div>
                             <datalist id="WorkplaceNameList">

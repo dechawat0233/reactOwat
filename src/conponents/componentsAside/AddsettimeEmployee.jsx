@@ -1801,7 +1801,7 @@ function AddsettimeEmployee() {
       const isOverlapping =
         existingDate === newDate &&
         (newStart < existingEnd && newEnd > existingStart);
-        
+
       return isOverlapping;
     });
 
