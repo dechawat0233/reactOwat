@@ -706,10 +706,10 @@ function Salary() {
       } else {
         setWorkplacearea(filtered[0].workplaceArea || "");
         setAddSalaryWorkplace(filtered[0].addSalary
-          .filter(
-            (data) =>
-              data?.StaffType === "all" || data?.StaffType === employeeData?.position 
-          )
+          // .filter(
+          //   (data) =>
+          //     data?.StaffType === "all" || data?.StaffType === employeeData?.position 
+          // )
          );
 // alert(employeeData.position );
 //เงินเพิ่มของหน่วยงาน เลือกตามประเภทพนักงาน และแบบให้ทั้งหมด
@@ -1694,6 +1694,7 @@ function Salary() {
 
                             {addSalaryWorkplace
                             .map((data, index) => (
+                              data.StaffType === "all" || data.StaffType === employeeData?.position && (
 
                               <div className="row" key={index}>
                                 <div className="row">
@@ -1915,7 +1916,9 @@ function Salary() {
                                 <br />
                                 <br />
                               </div>
-                            ))
+                            )
+                          )
+                          )
 
                           }
                           </section>
