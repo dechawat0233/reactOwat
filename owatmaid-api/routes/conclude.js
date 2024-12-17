@@ -406,7 +406,7 @@ if(parseFloat(salary ) >= 1660) {
 
                 //cal OT
                 let workRateOT = (((salary / 8) * parseFloat(tmpWP.data.workRateOT ?? 0)) * (parseFloat( (((hoursTmp * 60) + (minutesTmp * 10 )) / 60) ))).toFixed(3);
-                tmp.workRateOT = workRateOT || 0;
+                // tmp.workRateOT = workRateOT || 0;
                 tmp.workRateOTMultiply = tmpWP.data.workRateOT || 0;
 
                 sumWorkHour += parseFloat(allTime) || 0;
