@@ -440,7 +440,7 @@ let addSalaryList = [];
 let deductSalaryList = [];
 
 
-    for (let k = 0; k < response.data.addSalary.length; k++) {
+    for (let k = 0; k < (response?.data?.addSalary?.length || 0); k++) {
       //check addSalary with tax and cal social
         const promise1 = await checkCalTax(response.data.addSalary[k].id || '0');
         const promise = await checkCalSocial(response.data.addSalary[k].id || '0');
@@ -687,7 +687,7 @@ dayOffWork += 1;
 
   //check work rate is not standard day
   if((parseFloat(responseConclude.data.recordConclude[c].concludeRecord[i].workRate) == parseFloat(salary)) || parseFloat(salary) > 1660 ) {
-    
+
       if(! workDaylist.includes(responseConclude.data.recordConclude[c].concludeRecord[i].day.split("/")[0] ) ) {
         workDaylist.push(responseConclude.data.recordConclude[c].concludeRecord[i].day.split("/")[0]);
       dayOffWork = await dayOffWork  + 1;
