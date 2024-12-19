@@ -487,7 +487,7 @@ if(promise) {
 // console.log(response.data.addSalary[k].roundOfSalary );
     }
 
-    for (let l = 0; l < response.data.deductSalary.length; l++) {
+    for (let l = 0; l < (response?.data?.deductSalary?.length || 0); l++) {
       const promisesDeduct1 = await checkCalTax(response.data.deductSalary[l].id || '0');
       const promisesDeduct2 = await checkCalSocial(response.data.deductSalary[l].id || '0');
 
