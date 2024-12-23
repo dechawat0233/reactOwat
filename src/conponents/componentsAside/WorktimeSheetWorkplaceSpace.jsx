@@ -406,8 +406,9 @@ function WorktimeSheetWorkplaceSpace({ employeeList }) {
         });
     };
     // Call fetchData when year or month changes
-    fetchData(); setSearchWorkplaceId("10105")
-
+    fetchData(); 
+    setSearchWorkplaceId("10105")
+    setSearchWorkplaceName('สแปร์กลาง-จ็อบ')
   }, [year, month, searchWorkplaceId]);
 
   async function handleSearch(event) {
@@ -8834,7 +8835,7 @@ function WorktimeSheetWorkplaceSpace({ employeeList }) {
                                 class="form-control"
                                 id="searchWorkplaceName"
                                 placeholder="ชื่อหน่วยงาน"
-                                value={searchWorkplaceName}
+                                value="สแปร์กลาง-จ็อบ"
                                 // onChange={(e) => setSearchWorkplaceName(e.target.value)}
                                 onChange={handleStaffNameChange}
                                 list="WorkplaceNameList"
