@@ -16,7 +16,7 @@ var concludeRouter = require('./routes/conclude');
 var accountingRouter = require('./routes/account');
 var welfareRouter = require('./routes/welfare');
 var leaveRouter = require('./routes/leave');
-var basicSettingRouter = require('./routes/basicSetting');
+var basicSettingRouter = require('./routes/basicsetting');
 
 var addsalaryRouter = require('./routes/addsalary');
 var oldemployeesRouter = require('./routes/oldemployees');
