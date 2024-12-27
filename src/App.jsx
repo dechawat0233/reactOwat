@@ -40,6 +40,7 @@ import ApplicationSummary from "./conponents/componentsAside/ApplicationSummary"
 import AddEditEmployee from "./conponents/componentsAside/AddEditEmployee";
 import AddEditSalaryEmployee from "./conponents/componentsAside/AddEditSalaryEmployee";
 
+import BasicSetting from "./conponents/componentsAside/BasicSetting";
 import Setting from "./conponents/componentsAside/Setting";
 import SettingComplex from "./conponents/componentsAside/SettingComplex";
 import SettingAllList from "./conponents/componentsAside/SettingAllList";
@@ -267,6 +268,11 @@ function App() {
                   />
                 }
               />
+              <Route
+                path="/basicsetting"
+                element={<BasicSetting workplaceList={workplaceList} />}
+              />
+
               <Route
                 path="/settingcomplex"
                 element={<SettingComplex workplaceList={workplaceList} />}

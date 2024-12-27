@@ -16,6 +16,7 @@ var concludeRouter = require('./routes/conclude');
 var accountingRouter = require('./routes/account');
 var welfareRouter = require('./routes/welfare');
 var leaveRouter = require('./routes/leave');
+var basicSettingRouter = require('./routes/basicSetting');
 
 var addsalaryRouter = require('./routes/addsalary');
 var oldemployeesRouter = require('./routes/oldemployees');
@@ -51,6 +52,7 @@ app.use('/accounting', accountingRouter );
 app.use('/welfare', welfareRouter);
 app.use('/leave', leaveRouter);
 app.use('/api', uploadRouter);
+app.use('/basicsetting', basicSettingRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

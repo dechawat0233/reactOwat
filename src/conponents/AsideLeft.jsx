@@ -174,13 +174,13 @@ function AsideLeft() {
                   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <>
                       <li class="nav-item">
-                        <Link to="/replaceWorkplaceReport" className="nav-link"><i class="nav-icon fas fa-tachometer-alt"></i> ดูเป็นหน่วยงาน</Link>
+                        <Link to="/replaceWorkplaceReport" className="nav-link"><i class="nav-icon fas fa-tachometer-alt"></i>รายหน่วยงาน</Link>
                       </li>
                       <li class="nav-item">
-                        <Link to="/replaceEmployeeReport" className="nav-link"><i class="nav-icon fas fa-tachometer-alt"></i> ดูเป็นรายพนักงาน</Link>
+                        <Link to="/replaceEmployeeReport" className="nav-link"><i class="nav-icon fas fa-tachometer-alt"></i> รายบุคคล</Link>
                       </li>
                       <li class="nav-item">
-                        <Link to="/replaceReport" className="nav-link"><i class="nav-icon fas fa-tachometer-alt"></i> ดูรายงาน</Link>
+                        <Link to="/replaceReport" className="nav-link"><i class="nav-icon fas fa-tachometer-alt"></i> ออกรายงาน</Link>
                       </li>
                     </>
                   </ul>
@@ -319,12 +319,11 @@ function AsideLeft() {
                   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <>
                       <li class="nav-item">
-                        <Link to="/systemuser" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ผู้ใช้งานระบบ</Link>
-                      </li>
                       <li class="nav-item">
-                        <a href="#" class="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i>
-                          <p>กำหนดสิทธิ์ใช้งาน</p>
-                        </a>
+                        <Link to="/basicsetting" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ตั้งค่าระบบ</Link>
+                      </li>
+
+                        <Link to="/systemuser" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ผู้ใช้งานระบบ</Link>
                       </li>
                       <li class="nav-item">
                         <Link to="/setting" className="nav-link"><i class="nav-icon far fa-dot-circle" style={{ fontSize: "14px" }}></i> ตั้งค่าหน่วยงาน</Link>
