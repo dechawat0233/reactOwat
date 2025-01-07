@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const basicsettingmodel = require('./models/basicsettingModel');
+// const basicsettingmodel = require('./models/basicsettingModel');
+const basicsettingmodel  = null;
 
 // Create a new BasicSetting
 router.post('/', async (req, res) => {
