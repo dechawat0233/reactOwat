@@ -31,6 +31,6 @@ leave: {
 });
 
 // Create the conclude record time model based on the schema
-const  Basicsetting= mongoose.model('basicsetting', basicsettingSchema);
+const  basicsettingmodel = mongoose.model('basicsetting', basicsettingSchema);
 
-module.exports = Basicsetting;
+module.exports = basicsettingmodel;
