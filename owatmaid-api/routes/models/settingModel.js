@@ -20,11 +20,11 @@ hospital : {},
 salary: [{
   salaryStandard : String,
 }],
-leave: {
+leave: [{
   sickLeave: String,
   personalLeave: String,
   vacationLeave: String
-},
+}],
   
   
 });
