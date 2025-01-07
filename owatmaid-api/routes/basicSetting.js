@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const basicsetting = require('./models/basicsettingModel');
+const basicsettingmodel = require('./models/basicsettingModel');
 
 // Create a new BasicSetting
 router.post('/', async (req, res) => {
   try {
-    const newSetting = new basicsetting(req.body);
+    const newSetting = new basicsettingmodel (req.body);
     const savedSetting = await newSetting.save();
     res.status(201).json(savedSetting);
   } catch (err) {
@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
 // Get all BasicSettings
 router.get('/', async (req, res) => {
   try {
-    const settings = await basicsetting.find();
+    const settings = await basicsettingmodel.find();
     res.status(200).json(settings);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
 // Get a single BasicSetting by ID
 router.get('/:id', async (req, res) => {
   try {
-    const setting = await basicsetting.findById(req.params.id);
+    const setting = await basicsettingmodel.findById(req.params.id);
     if (!setting) return res.status(404).json({ error: 'Setting not found' });
     res.status(200).json(setting);
   } catch (err) {
