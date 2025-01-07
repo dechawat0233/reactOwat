@@ -25,7 +25,7 @@ function BasicSetting() {
       const response = await axios.get(endpoint  + '/basicsetting'); // Update with your API endpoint
       setSettings(response.data);
       if(settings) {
-        setSickLeave(settings.sickLeave || '');
+        setSickLeave(settings.leave.sickLeave || '');
       }
       setLoading(false);
     } catch (err) {
