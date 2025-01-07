@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const basicsettingSchema = new mongoose.Schema({
+const settingSchema = new mongoose.Schema({
   year: String,
   month: String,
  createDate: String,
@@ -30,6 +30,6 @@ leave: {
 });
 
 // Create the conclude record time model based on the schema
-const  basicsettingmodel = mongoose.model('basicsetting', basicsettingSchema);
+const  setting= mongoose.model('setting', settingSchema);
 
-module.exports = basicsettingmodel;
+module.exports = setting;
