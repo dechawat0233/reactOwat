@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const BasicSetting = require('../models/BasicSetting');
+const basicsetting = require('./models/basicsettingModel');
 
 // Create a new BasicSetting
 router.post('/', async (req, res) => {
   try {
-    const newSetting = new BasicSetting(req.body);
+    const newSetting = new basicsetting(req.body);
     const savedSetting = await newSetting.save();
     res.status(201).json(savedSetting);
   } catch (err) {
@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
 // Get all BasicSettings
 router.get('/', async (req, res) => {
   try {
-    const settings = await BasicSetting.find();
+    const settings = await basicsetting.find();
     res.status(200).json(settings);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
 // Get a single BasicSetting by ID
 router.get('/:id', async (req, res) => {
   try {
-    const setting = await BasicSetting.findById(req.params.id);
+    const setting = await basicsetting.findById(req.params.id);
     if (!setting) return res.status(404).json({ error: 'Setting not found' });
     res.status(200).json(setting);
   } catch (err) {
@@ -37,7 +37,7 @@ router.get('/:id', async (req, res) => {
 // Update a BasicSetting by ID
 router.put('/:id', async (req, res) => {
   try {
-    const updatedSetting = await BasicSetting.findByIdAndUpdate(
+    const updatedSetting = await basicsetting.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true, runValidators: true }
@@ -53,7 +53,7 @@ router.put('/:id', async (req, res) => {
 // Delete a BasicSetting by ID
 router.delete('/:id', async (req, res) => {
   try {
-    const deletedSetting = await BasicSetting.findByIdAndDelete(req.params.id);
+    const deletedSetting = await basicsetting.findByIdAndDelete(req.params.id);
     if (!deletedSetting)
       return res.status(404).json({ error: 'Setting not found' });
     res.status(200).json({ message: 'Setting deleted successfully' });

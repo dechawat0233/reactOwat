@@ -2,6 +2,9 @@ import endpoint from '../../config';
 
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
 import EmployeesSelected from './EmployeesSelected';
 
 import DatePicker from 'react-datepicker';
@@ -10,6 +13,27 @@ import '../editwindowcss.css';
 
 function BasicSetting() {
 
+    const [settings, setSettings] = useState([]);
+    const [editSetting, setEditSetting] = useState(null); // Track setting being edited
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+  
+  // Fetch all BasicSettings
+  const fetchSettings = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(endpoint  + '/basicsetting'); // Update with your API endpoint
+      setSettings(response.data);
+      if(settings) {
+        setSickLeave(settings.sickLeave || '');
+      }
+      setLoading(false);
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+    }
+  };
+
     const [maxSalary , setMaxSalary] = useState('');
     const [maxSocial, setMaxSocial] = useState('');
 const [socialPercent , setSocialPercent] = useState(5);
@@ -17,6 +41,10 @@ const [comSocial , setComSocial] = useState(750);
 const [comSocialPercent , setComSocialPercent] = useState(5);
 
 const [salaryStandard , setSalaryStandard] = useState('');
+const [sickLeave , setSickLeave] = useState(30);
+const[personalLeave , setPersonalLeave] = useState(3);
+const [vacationLeave , setVacationLeave] = useState(6);
+
 
 //  เลือกจังหวัด
 const [selectedLocalHospital, setSelectedLocalHospital] = useState("");
@@ -130,6 +158,7 @@ const Socialoptions = [
         // You can also return a cleanup function if needed
         // return () => { /* cleanup code */ };
         
+        fetchSettings();
     }, []);
 
 
@@ -161,10 +190,20 @@ setTmpLocalHospitalList(hospital [event.target.value]);
                     </ol>
                     <div class="content-header">
                         <div class="container-fluid">
+                        <div class="row">
+
                             <div class="row mb-2">
                                 <h1 class="m-0"><i class="far fa-arrow-alt-circle-right"></i> ตั้งค่าระบบ</h1>
                             </div>
+
+                            <div class="row mb-">
+                            {loading && <p>Loading...</p>}
+                        {error && <p>Error: {error}</p>}
+                            </div>
+
+</div>
                         </div>
+                            
                     </div>
                     {/* <!-- /.content-header -->
                     <!-- Main content --> */}

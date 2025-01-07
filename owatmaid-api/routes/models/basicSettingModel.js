@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 // Define Welfare schema for Basic setting
-const basicSettingSchema = new mongoose.Schema({
+const basicsettingSchema = new mongoose.Schema({
   year: String,
   month: String,
  createDate: String,
@@ -21,11 +21,16 @@ hospital : {},
 salary: [{
   salaryStandard : String,
 }],
+leave: {
+  sickLeave: String,
+  personalLeave: String,
+  vacationLeave: String
+},
   
   
 });
 
 // Create the conclude record time model based on the schema
-const BasicSetting= mongoose.model('basicSetting', basicSettingSchema);
+const  Basicsetting= mongoose.model('basicsetting', basicsettingSchema);
 
-module.exports = BasicSetting;
+module.exports = Basicsetting;

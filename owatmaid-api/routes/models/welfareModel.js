@@ -29,6 +29,6 @@ record: [ {
 });
 
 // Create the conclude record time model based on the schema
-const Welfare= mongoose.model('welfare', welfareSchema );
+const Welfare = mongoose.model('welfare', welfareSchema );
 
 module.exports = Welfare;
