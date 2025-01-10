@@ -21,30 +21,42 @@ function BasicSetting() {
   // Fetch all BasicSettings
   const fetchSettings = async () => {
     try {
-      setLoading(true);
+      await setLoading(true);
       const response = await axios.get(endpoint  + '/basicsetting'); // Update with your API endpoint
-      setSettings(response.data);
-      alert(response.status);
-      if(settings) {
-        setSickLeave(settings?.leave?.[0]?.sickLeave || '');
+      if(response.status === 200 ) {
+        const data = response.data[0]; // Assuming the data structure has the required object in the first index
+        setSettings(data);
+
+                    // Update individual states
+                    setMaxSalary(data?.social?.[0]?.maxSalary || '');
+                    setMaxSocial(data?.social?.[0]?.maxSocial || '');
+                    setSocialPercent(data?.social?.[0]?.socialPercent || '');
+                    setComSocial(data?.social?.[0]?.comSocial || '');
+                    setComSocialPercent(data?.social?.[0]?.comSocialPercent || '');
+        
+                    setSalaryStandard(data?.salary?.[0]?.salaryStandard || '');
+        
+                    setSickLeave(data?.leave?.[0]?.sickLeave || '');
+                    setPersonalLeave(data?.leave?.[0]?.personalLeave || '');
+                    setVacationLeave(data?.leave?.[0]?.vacationLeave || '');
       }
-      setLoading(false);
+      await setLoading(false);
     } catch (err) {
-      setError(err.message);
-      setLoading(false);
+        await setError(err.message);
+        await setLoading(false);
     }
   };
 
     const [maxSalary , setMaxSalary] = useState('');
     const [maxSocial, setMaxSocial] = useState('');
-const [socialPercent , setSocialPercent] = useState(5);
-const [comSocial , setComSocial] = useState(750);
-const [comSocialPercent , setComSocialPercent] = useState(5);
+const [socialPercent , setSocialPercent] = useState('');
+const [comSocial , setComSocial] = useState('');
+const [comSocialPercent , setComSocialPercent] = useState('');
 
 const [salaryStandard , setSalaryStandard] = useState('');
-const [sickLeave , setSickLeave] = useState(30);
-const[personalLeave , setPersonalLeave] = useState(3);
-const [vacationLeave , setVacationLeave] = useState(6);
+const [sickLeave , setSickLeave] = useState('');
+const[personalLeave , setPersonalLeave] = useState('');
+const [vacationLeave , setVacationLeave] = useState('');
 
 
 //  เลือกจังหวัด
@@ -177,7 +189,46 @@ setTmpLocalHospitalList(hospital [event.target.value]);
     async function handleManageSetting(event) {
         event.preventDefault();
     
+        const settingData = {
+            social: [{
+            maxSalary,
+            maxSocial,
+            socialPercent,
+            comSocial,
+            comSocialPercent,
+        }],
+            salary: [{
+            salaryStandard 
+        }],
+            leave: [{
+            sickLeave,
+            personalLeave,
+            vacationLeave,
+        }],
+                // Add metadata or additional fields as needed
+                year: new Date().getFullYear().toString(),
+                month: new Date().toLocaleString('default', { month: 'long' }),
+                createDate: new Date().toISOString(),
+                createBy: 'Admin', // Replace with dynamic user info if available
+                status: 'active',
+        };
+
+        try {
+            const response = await axios.post(endpoint + '/basicsetting', settingData);
+            if (response.status === 201) {
+                alert('Data saved successfully!');
+                // Optionally fetch updated settings to display
+                fetchSettings();
+            }
+        } catch (error) {
+            console.error('Error saving data:', error);
+            alert('Failed to save data. Please try again.');
+        }
+
     }
+
+    
+    //view 
 
     return (
         <body class="hold-transition sidebar-mini" className='editlaout'>
@@ -191,18 +242,16 @@ setTmpLocalHospitalList(hospital [event.target.value]);
                     </ol>
                     <div class="content-header">
                         <div class="container-fluid">
-                        <div class="row">
 
                             <div class="row mb-2">
                                 <h1 class="m-0"><i class="far fa-arrow-alt-circle-right"></i> ตั้งค่าระบบ</h1>
                             </div>
-
-                            <div class="row mb-">
-                            {loading && <p>Loading...</p>}
+                            <div className="row mb-8 justify-content-center align-items-center">
+                            <div className="col-md-6 text-center">                            {loading && <p>Loading...</p>}
                         {error && <p>Error: {error}</p>}
-                            </div>
+                        </div>
+                        </div>
 
-</div>
                         </div>
                             
                     </div>
@@ -436,23 +485,29 @@ setTmpLocalHospitalList(hospital [event.target.value]);
                                             <div class="col-md-12">
                                                 <section class="Frame">
                                                     <div class="form-group row">
-                                                        <label class="col-md-3 col-form-label">ลาป่วย</label>
+                                                        <label role='sickLeave' class="col-md-3 col-form-label">ลาป่วย</label>
                                                         <div class="col-md-5">
-                                                            <input type="" class="form-control" id="" placeholder="" value="30" />
+                                                            <input type="text" class="form-control" id="sickLeave" placeholder="วันลาป่วย" value={sickLeave} 
+                                                                                                                        onChange={(e) => setSickLeave(e.target.value)} 
+/>
                                                         </div>
                                                         <label class="col-form-label">วัน</label>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label class="col-md-3 col-form-label">ลากิจ</label>
+                                                        <label role='personalLeave' class="col-md-3 col-form-label">ลากิจ</label>
                                                         <div class="col-md-5">
-                                                            <input type="" class="form-control" id="" placeholder="" value="3" />
+                                                            <input type="text" class="form-control" id="personalLeave" placeholder="วันลากิจ" value={personalLeave} 
+                                                                                                                                                                                    onChange={(e) => setPersonalLeave(e.target.value)} 
+/>
                                                         </div>
                                                         <label class="col-form-label">วัน</label>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label class="col-md-3 col-form-label">ลาพักร้อน</label>
+                                                        <label role='vacationLeave' class="col-md-3 col-form-label">ลาพักร้อน</label>
                                                         <div class="col-md-5">
-                                                            <input type="" class="form-control" id="" placeholder="" value="6" />
+                                                            <input type="text" class="form-control" id="vacationLeave" placeholder="วันพักร้อน" value={vacationLeave} 
+                                                                                                                                                                                                                                                onChange={(e) => setVacationLeave(e.target.value)} 
+/>
                                                         </div>
                                                         <label class="col-form-label">วัน</label>
                                                     </div>
@@ -463,7 +518,9 @@ setTmpLocalHospitalList(hospital [event.target.value]);
                                         <div class="line_btn">
                                             <button type="submit" class="btn b_save" 
                                             onClick=""><i class="nav-icon fas fa-save" onClick={() => setButtonValue('save')}></i> &nbsp;บันทึก</button>
-                                            <button type="reset" class="btn clean"><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
+                                            <button type="reset" class="btn clean" onClick={() => {
+        window.location.reload(); // Reload the page
+    }}><i class="far fa-window-close"></i> &nbsp;ยกเลิก</button>
                                         </div>
                                     </form>
                                 </div>
