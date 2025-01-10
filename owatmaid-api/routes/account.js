@@ -90,6 +90,7 @@ if(settingResult.status === 200 ) {
   // 1. If latest data is the last item
   if (Array.isArray(allData) && allData.length > 0) {
     const setting = await allData[allData.length - 1];
+    console.log(JSON.stringify(setting ))
   }
 
 
@@ -1054,9 +1055,7 @@ await total  + amountDay + amountOt + calSP -(Math.ceil((sumSocial * 0.05) || 0)
 data.accountingRecord.total = await total || 0;
 
 } else {
-  // data.accountingRecord.socialSecurity = Math.ceil((sumSocial * 0.05)) || 0;
-  // data.accountingRecord.socialSecurity = Math.ceil((sumSocial * (parseFloat(setting?.social?.[0]?.socialPercent || '5')/100) )) || 0;
-console.log(JSON.stringify(setting?.social?.[0] ))
+  data.accountingRecord.socialSecurity = Math.ceil((sumSocial * 0.05)) || 0;
 
 //total
 total = await total  + amountDay + amountOt + calSP -(Math.ceil((sumSocial * 0.05) || 0)) - tax;
