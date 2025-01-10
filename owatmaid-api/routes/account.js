@@ -90,7 +90,7 @@ if(settingResult.status === 200 ) {
 
   // 1. If latest data is the last item
   if (Array.isArray(allData) && allData.length > 0) {
-    setting = await allData[allData.length - 1];
+    let setting = await allData[allData.length - 1];
   }
 
 
