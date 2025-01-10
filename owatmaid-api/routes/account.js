@@ -84,7 +84,6 @@ router.post('/calsalaryemp', async (req, res) => {
     const workplaceList = await axios.get(sURL + '/workplace/list');
 const settingResult = await axios.get(sURL + '/basicsetting/');
 
-
     const dataSearch = await {
       year: year, 
       month: month,
@@ -1050,8 +1049,6 @@ data.accountingRecord.total = await total || 0;
     sumSocial * (parseFloat(settingResult?.data?.[settingResult.data.length - 1]?.social?.[0]?.socialPercent || '5') / 100)
   ) || 0;
   
-console.log(JSON.stringify(settingResult.data[settingResult.data.length -1].social[0].socialPercent ))
-
 //total
 total = await total  + amountDay + amountOt + calSP -(Math.ceil((sumSocial * 0.05) || 0)) - tax;
 data.accountingRecord.total = await total || 0;
@@ -1261,19 +1258,6 @@ router.post('/calsalarylist', async (req, res) => {
     const { year, month } = req.body;
     const workplaceList = await axios.get(sURL + '/workplace/list');
     const settingResult = await axios.get(sURL + '/basicsetting/');
-    const setting = null;
-    
-    if(settingResult.status === 200 ) {
-      const allData = settingResult.data; // Fetch all data
-    
-      // 1. If latest data is the last item
-      if (Array.isArray(allData) && allData.length > 0) {
-          setting = allData[allData.length - 1];
-      }
-    
-    
-    }
-    
     
     if(year == '' ) {
       year = new Date().getFullYear();
@@ -2139,9 +2123,10 @@ if(! dayW.includes( getDayNumberFromDate( responseConclude.data.recordConclude[c
             
     // Calculate socialSecurity based on sumSocial
     // data.accountingRecord.socialSecurity = Math.ceil((sumSocial * 0.05)) || 0;
-    data.accountingRecord.socialSecurity = Math.ceil((sumSocial * (parseFloat(setting?.social?.[0]?.socialPercent || '5')/100) )) || 0;
-console.log('test');
-    
+    data.accountingRecord.socialSecurity = Math.round(
+      sumSocial * (parseFloat(settingResult?.data?.[settingResult.data.length - 1]?.social?.[0]?.socialPercent || '5') / 100)
+    ) || 0;
+      
     //total
     total = await total  + amountDay + amountOt + calSP -(Math.ceil((sumSocial * 0.05) || 0)) - tax;
     
@@ -3288,19 +3273,6 @@ router.post('/calsalarytest', async (req, res) => {
     const { year, month } = req.body;
     const workplaceList = await axios.get(sURL + '/workplace/list');
     const settingResult = await axios.get(sURL + '/basicsetting/');
-    const setting = null;
-    
-    if(settingResult.status === 200 ) {
-      const allData = settingResult.data; // Fetch all data
-    
-      // 1. If latest data is the last item
-      if (Array.isArray(allData) && allData.length > 0) {
-          setting = allData[allData.length - 1];
-      }
-    
-    
-    }
-    
     
     const dataSearch = {
       year: year, 
@@ -4097,7 +4069,10 @@ if (sumSocial < 1650) {
 
 
 // Calculate socialSecurity based on sumSocial
-data.accountingRecord.socialSecurity = Math.ceil((sumSocial * 0.05)) || 0;
+// data.accountingRecord.socialSecurity = Math.ceil((sumSocial * 0.05)) || 0;
+data.accountingRecord.socialSecurity = Math.round(
+  sumSocial * (parseFloat(settingResult?.data?.[settingResult.data.length - 1]?.social?.[0]?.socialPercent || '5') / 100)
+) || 0;
 
 //total
 total = await total  + amountDay + amountOt + calSP -(Math.ceil((sumSocial * 0.05) || 0)) - tax;
