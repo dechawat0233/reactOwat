@@ -24,7 +24,15 @@ function BasicSetting() {
       await setLoading(true);
       const response = await axios.get(endpoint  + '/basicsetting'); // Update with your API endpoint
       if(response.status === 200 ) {
-        const data = response.data[0]; // Assuming the data structure has the required object in the first index
+        // const data = response.data[0]; // Assuming the data structure has the required object in the first index
+        const allData = response.data; // Fetch all data
+        let data = null;
+  
+        // 1. If latest data is the last item
+        if (Array.isArray(allData) && allData.length > 0) {
+            data = allData[allData.length - 1];
+        }
+  
         setSettings(data);
 
                     // Update individual states
