@@ -86,11 +86,10 @@ const settingResult = await axios.get(sURL + '/basicsetting/');
 
 if(settingResult.status === 200 ) {
   const allData = await settingResult.data; // Fetch all data
-  const setting = null;
 
   // 1. If latest data is the last item
   if (Array.isArray(allData) && allData.length > 0) {
-    setting = await allData[allData.length - 1];
+    const setting = await allData[allData.length - 1];
   }
 
 
