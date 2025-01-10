@@ -83,14 +83,14 @@ router.post('/calsalaryemp', async (req, res) => {
     const { year, month ,   employeeId , updateStatus} = await req.body;
     const workplaceList = await axios.get(sURL + '/workplace/list');
 const settingResult = await axios.get(sURL + '/basicsetting/');
-const setting = null;
 
 if(settingResult.status === 200 ) {
   const allData = await settingResult.data; // Fetch all data
+  const setting = null;
 
   // 1. If latest data is the last item
   if (Array.isArray(allData) && allData.length > 0) {
-    let setting = await allData[allData.length - 1];
+    setting = await allData[allData.length - 1];
   }
 
 
