@@ -1045,7 +1045,7 @@ data.accountingRecord.total = await total || 0;
 
 } else {
   data.accountingRecord.socialSecurity = Math.ceil((sumSocial * 0.05)) || 0;
-console.log(JSON.stringify(settingResult.data[settingResult.data.length -1].social.socialPercent ))
+console.log(JSON.stringify(settingResult.data[settingResult.data.length -1].social[0].socialPercent ))
 //total
 total = await total  + amountDay + amountOt + calSP -(Math.ceil((sumSocial * 0.05) || 0)) - tax;
 data.accountingRecord.total = await total || 0;
