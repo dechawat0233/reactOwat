@@ -1055,7 +1055,7 @@ data.accountingRecord.total = await total || 0;
 
 } else {
   // data.accountingRecord.socialSecurity = Math.ceil((sumSocial * 0.05)) || 0;
-  data.accountingRecord.socialSecurity = Math.ceil((sumSocial * (parseFloat(setting?.social?.[0]?.socialPercent || '5')/100) )) || 0;
+  // data.accountingRecord.socialSecurity = Math.ceil((sumSocial * (parseFloat(setting?.social?.[0]?.socialPercent || '5')/100) )) || 0;
 console.log(JSON.stringify(setting?.social?.[0] ))
 
 //total
