@@ -1055,7 +1055,9 @@ await total  + amountDay + amountOt + calSP -(Math.ceil((sumSocial * 0.05) || 0)
 data.accountingRecord.total = await total || 0;
 
 } else {
-  data.accountingRecord.socialSecurity = Math.ceil((sumSocial * 0.05)) || 0;
+  // data.accountingRecord.socialSecurity = Math.ceil((sumSocial * 0.05)) || 0;
+  data.accountingRecord.socialSecurity = Math.ceil((sumSocial * (parseFloat(setting?.social?.[0]?.socialPercent || '5')/100) )) || 0;
+
 
 //total
 total = await total  + amountDay + amountOt + calSP -(Math.ceil((sumSocial * 0.05) || 0)) - tax;
@@ -2144,9 +2146,9 @@ if(! dayW.includes( getDayNumberFromDate( responseConclude.data.recordConclude[c
             
     // Calculate socialSecurity based on sumSocial
     // data.accountingRecord.socialSecurity = Math.ceil((sumSocial * 0.05)) || 0;
-    // data.accountingRecord.socialSecurity = Math.ceil((sumSocial * (parseFloat(setting?.social?.[0]?.socialPercent || '5')/100) )) || 0;
+    data.accountingRecord.socialSecurity = Math.ceil((sumSocial * (parseFloat(setting?.social?.[0]?.socialPercent || '5')/100) )) || 0;
 console.log('test');
-
+    
     //total
     total = await total  + amountDay + amountOt + calSP -(Math.ceil((sumSocial * 0.05) || 0)) - tax;
     
