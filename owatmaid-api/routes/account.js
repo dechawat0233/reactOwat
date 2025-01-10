@@ -84,17 +84,6 @@ router.post('/calsalaryemp', async (req, res) => {
     const workplaceList = await axios.get(sURL + '/workplace/list');
 const settingResult = await axios.get(sURL + '/basicsetting/');
 
-if(settingResult.status === 200 ) {
-  const allData = await settingResult.data; // Fetch all data
-
-  // 1. If latest data is the last item
-  if (Array.isArray(allData) && allData.length > 0) {
-    const setting = await allData[allData.length - 1];
-    console.log(JSON.stringify(setting ))
-  }
-
-
-}
 
     const dataSearch = await {
       year: year, 
@@ -1056,7 +1045,7 @@ data.accountingRecord.total = await total || 0;
 
 } else {
   data.accountingRecord.socialSecurity = Math.ceil((sumSocial * 0.05)) || 0;
-
+console.log(JSON.stringify(settingResult.data ))
 //total
 total = await total  + amountDay + amountOt + calSP -(Math.ceil((sumSocial * 0.05) || 0)) - tax;
 data.accountingRecord.total = await total || 0;
