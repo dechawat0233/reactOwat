@@ -1045,8 +1045,11 @@ data.accountingRecord.total = await total || 0;
 
 } else {
   // data.accountingRecord.socialSecurity = Math.ceil((sumSocial * 0.05)) || 0;
-  data.accountingRecord.socialSecurity = Math.ceil((sumSocial * (parseFloat(settingResult?.data?.[settingResult.data.length -1]?.social?.[0]?.socialPercent || '0')/ 100 ) )) || 0;
-
+  // data.accountingRecord.socialSecurity = Math.ceil((sumSocial * (parseFloat(settingResult?.data?.[settingResult.data.length -1]?.social?.[0]?.socialPercent || '5')/ 100 ) )) || 0;
+  data.accountingRecord.socialSecurity = Math.round(
+    sumSocial * (parseFloat(settingResult?.data?.[settingResult.data.length - 1]?.social?.[0]?.socialPercent || '5') / 100)
+  ) || 0;
+  
 console.log(JSON.stringify(settingResult.data[settingResult.data.length -1].social[0].socialPercent ))
 
 //total
