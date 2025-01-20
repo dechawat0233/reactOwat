@@ -32,6 +32,9 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
 
   const [timeRecord_id, setTimeRecord_id] = useState("");
   const [loading, setLoading] = useState(false); // Create loading state
+  const [error, setError] = useState(null);
+  const [loadingPage , setLoadingPage] = useState(false); // Create loadingPage state
+
 
   //Workplace data
   const [workplaceId, setWorkplaceId] = useState(""); //รหัสหน่วยงาน
@@ -82,6 +85,36 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
   const [workEndOt3, setWorkEndOt3] = useState("22.00"); //เวลาออกกะเย็น
 
   /////////////////////////////////
+  useEffect(() => {
+    // Simulate data validation and fetch
+    setLoadingPage(true);
+    setLoading(true);
+    validateData()
+      .then(() => {
+        setLoadingPage(false);
+        // setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoadingPage(false);
+        setLoading(true);
+      });
+  }, [workplaceList, employeeList]);
+
+  const validateData = async () => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        // Check if lists are empty
+        if (!workplaceList || workplaceList.length === 0) {
+          reject(new Error("Workplace list is empty."));
+        } else if (!employeeList || employeeList.length === 0) {
+          reject(new Error("Employee list is empty."));
+        } else {
+          resolve("Data is valid.");
+        }
+      }, 500); // Simulate a delay
+    });
+  };
 
   //auto check time record
   useEffect(() => {
@@ -1234,6 +1267,8 @@ rowDataList
       const response = await axios.post(endpoint + "/timerecord/search", data);
 
       if (response.data.recordworkplace.length < 1) {
+        setLoading(false);
+        
         // alert('ไม่พบข้อมูล');
         // Set the state to false if no data is found
         setUpdateButton(false);
@@ -1279,16 +1314,23 @@ rowDataList
     const daySelectedDate = date.getDate().toString().padStart(2, "0");
     const monthSelectedDate = (date.getMonth() + 1).toString().padStart(2, "0");
     const yearSelectedDate = date.getFullYear().toString();
+
     const data = {
+      year: yearSelectedDate ,
+      month: monthSelectedDate ,
+      createDate: date,
+      createBy: '',
+      status: '',
+
       workplaceId: workplaceId,
       workplaceName: workplaceName,
       date: convertBuddhistToGregorian(formattedDate),
-      employeeRecord: rowDataList,
-      timerecordId: yearSelectedDate.toString(),
+
+      osd:rowDataList,
     };
 
     try {
-      const response = await axios.post(endpoint + "/timerecord/create", data);
+      const response = await axios.post(endpoint + "/outsider/", data);
       if (response) {
         alert("บันทึกสำเร็จ");
         // window.location.reload();
@@ -1648,6 +1690,19 @@ setRows([
                         ผลลัพธ์ {searchResult.length} รายการ
                       </h2>
                     </div>
+
+                    {loadingPage && 
+                                                            <div class="d-flex justify-content-center">
+                    <p>Loading...</p>
+                    </div>
+                    }
+                    {error && 
+                                        <div class="d-flex justify-content-center">
+                    <p>Error: {error}</p>
+                    </div>
+                    }
+
+
                     <div class="d-flex justify-content-center">
                       <div class="row">
                         <div class="col-md-12">

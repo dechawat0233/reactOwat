@@ -255,7 +255,8 @@ setTmpLocalHospitalList(hospital [event.target.value]);
                                 <h1 class="m-0"><i class="far fa-arrow-alt-circle-right"></i> ตั้งค่าระบบ</h1>
                             </div>
                             <div className="row mb-8 justify-content-center align-items-center">
-                            <div className="col-md-6 text-center">                            {loading && <p>Loading...</p>}
+                            <div className="col-md-6 text-center">
+                                                        {loading && <p>Loading...</p>}
                         {error && <p>Error: {error}</p>}
                         </div>
                         </div>

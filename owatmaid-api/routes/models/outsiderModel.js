@@ -9,6 +9,7 @@ status: String,
 
 workplaceId: String,
 workplaceName: String,
+date: String,
 
 osd: [ {
   staffId: String,
