@@ -1318,13 +1318,13 @@ rowDataList
     const data = {
       year: yearSelectedDate ,
       month: monthSelectedDate ,
-      createDate: date,
+      createDate: '',
       createBy: '',
       status: '',
 
       workplaceId: workplaceId,
       workplaceName: workplaceName,
-      date: convertBuddhistToGregorian(formattedDate),
+      date: '',
 
       osd:rowDataList,
     };
@@ -1332,14 +1332,14 @@ rowDataList
     try {
       const response = await axios.post(endpoint + "/outsider/", data);
       if (response.status === 201) {
-        alert("บันทึกสำเร็จ");
+        await alert("บันทึกสำเร็จ");
         // window.location.reload();
       }
     } catch (error) {
-      alert("กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล" + error);
+      await alert("กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล" + error);
       // window.location.reload();
     } finally {
-      setLoading(false); // Set loading to false to unblock the button
+      await setLoading(false); // Set loading to false to unblock the button
     }
   }
 

@@ -7,7 +7,7 @@ router.post('/', async (req, res) => {
   try {
     const newOutsider = new outsider (req.body);
     const savedOutsider = await newOutsider.save();
-    res.status(201).json(savedSetting);
+    res.status(201).json(savedOutsider );
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
