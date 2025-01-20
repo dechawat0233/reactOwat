@@ -16,13 +16,9 @@ router.post('/', async (req, res) => {
 //======test 
 router.get('/listoutsiderdelete', async (req, res) => {
   try {
-    // Fetch the data first
-    const outsiders = await outsider .find();
-
     // Delete all data
-    await outsiders.deleteMany();
-    res.status(200).json(outsiders );
-
+    const result = await outsider.deleteMany({});
+    res.status(200).json({ message: 'All outsiders deleted successfully', result });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Internal Server Error' });
