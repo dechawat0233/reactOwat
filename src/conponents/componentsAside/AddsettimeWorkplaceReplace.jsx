@@ -724,9 +724,10 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
     // Push a new row with specific data
     // newDataList.push({ ...initialRowData, ...newRowData });
     newDataList.unshift(newRowData);
-
+rowDataList
     // Update the state with the new data
     setRowDataList(newDataList);
+    alert('2')
   };
 
   // Function to handle editing a row
@@ -1266,8 +1267,6 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
     setLoading(true); // Set loading to true to block the button
 
     // event.preventDefault();
-    // alert('test');
-    // alert(formattedWorkDate);
 
     const dateObject = new Date(formattedWorkDate);
 
@@ -1288,12 +1287,8 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
       timerecordId: yearSelectedDate.toString(),
     };
 
-    //check create or update Employee
-    // if (newWorkplace) {
-    // alert('Create Workplace');
     try {
       const response = await axios.post(endpoint + "/timerecord/create", data);
-      // setEmployeesResult(response.data.employees);
       if (response) {
         alert("บันทึกสำเร็จ");
         // window.location.reload();
@@ -1304,25 +1299,6 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
     } finally {
       setLoading(false); // Set loading to false to unblock the button
     }
-    // } else {
-    //update workplace data
-
-    // Make the API call to update the resource by ID
-    //         try {
-
-    //             const response = await axios.put(endpoint + '/workplace/update/' + _id, data);
-    //             // setEmployeesResult(response.data.employees);
-    //             if (response) {
-    //                 alert("บันทึกสำเร็จ");
-    //                 window.location.reload();
-
-    //             }
-    //         } catch (error) {
-    //             alert('กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล');
-    //             // window.location.reload();
-    //         }
-
-    //     }
   }
 
   async function handleUpdateWorkplaceTimerecord(event) {
@@ -1342,7 +1318,6 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
         endpoint + "/timerecord/update/" + timeRecord_id,
         data
       );
-      // setEmployeesResult(response.data.employees);
       if (response) {
         alert("บันทึกสำเร็จ");
         // window.location.reload();
@@ -1353,10 +1328,12 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
     }
   }
 
-  async function handleManageWorkplace(event) {
+
+  //add one timerecord to list
+  async function handleAddTimeRecord(event) {
     event.preventDefault();
 
-    const newRowData = {
+    const newRowData = await {
       staffId: staffId || "",
       staffName: staffName + " " + staffLastname || "",
       shift: shift || "",
@@ -1366,35 +1343,68 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
       otTime: otTime || "",
       selectotTime: selectotTime || "",
       selectotTimeOut: selectotTimeOut || "",
+      staffIdReplace: staffIdReplace || '',
+staffFullNameReplace: staffFullNameReplace || '',
       cashSalary: cashSalary || "",
       specialtSalary: specialtSalary || "",
       specialtSalaryOT: specialtSalaryOT || "",
-
       messageSalary: messageSalary || "",
+addSalary: rows || [],
     };
-
-    addRow(newRowData);
+// alert(JSON.stringify(newRowData.addSalary))
+    await addRow (newRowData);
 
     //clean form
     setStaffId("");
-    // setShift('');
     setStaffName("");
     setStaffLastname("");
     setStaffFullName("");
-    // setStartTime('');
-    // setEndTime('');
-    // setAllTime('');
-    // setOtTime('');
-    // setSelectotTime('');
-    // setSelectotTimeOut('');
     setCashSalary(!cashSalary);
     setSpecialtSalary("");
     setSpecialtSalaryOT("");
     setMessageSalary("");
     setCashSalary(""); // Toggle the checkbox state
     setShift("morning_shift");
+setRows([
+    { codeSpSalary: "", name: "", SpSalary: "" },
+  ]);
 
-    // alert(rowDataList.length);
+  }
+
+  async function handleManageWorkplace(event) {
+    event.preventDefault();
+
+    // const newRowData = {
+    //   staffId: staffId || "",
+    //   staffName: staffName + " " + staffLastname || "",
+    //   shift: shift || "",
+    //   startTime: startTime || "",
+    //   endTime: endTime || "",
+    //   allTime: allTime || "",
+    //   otTime: otTime || "",
+    //   selectotTime: selectotTime || "",
+    //   selectotTimeOut: selectotTimeOut || "",
+    //   cashSalary: cashSalary || "",
+    //   specialtSalary: specialtSalary || "",
+    //   specialtSalaryOT: specialtSalaryOT || "",
+
+    //   messageSalary: messageSalary || "",
+    // };
+
+    // addRow(newRowData);
+
+    // //clean form
+    // setStaffId("");
+    // setStaffName("");
+    // setStaffLastname("");
+    // setStaffFullName("");
+    // setCashSalary(!cashSalary);
+    // setSpecialtSalary("");
+    // setSpecialtSalaryOT("");
+    // setMessageSalary("");
+    // setCashSalary(""); // Toggle the checkbox state
+    // setShift("morning_shift");
+
   }
 
   const [showInputs, setShowInputs] = useState(false);
@@ -2031,7 +2041,7 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
                     รหัสพนักงานลา
                   </div>
                   <div className="col-md-2">
-                    ชื่อนักงานลา
+                    ชื่อพนักงานลา
                   </div>
                 </div>
                 <div class="row" >
@@ -2317,7 +2327,7 @@ function AddsettimeWorkplaceReplace({ workplaceList, employeeList }) {
               </section>
 
               <div class="form-group">
-                <button class="btn b_save">
+                <button type="button" class="btn b_save" onClick={handleAddTimeRecord}>
                   <i class="fas fa-check"></i> &nbsp; เพิ่ม
                 </button>
               </div>
