@@ -1331,12 +1331,12 @@ rowDataList
 
     try {
       const response = await axios.post(endpoint + "/outsider/", data);
-      if (response) {
+      if (response.status === 201) {
         alert("บันทึกสำเร็จ");
         // window.location.reload();
       }
     } catch (error) {
-      alert("กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล");
+      alert("กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล" + error);
       // window.location.reload();
     } finally {
       setLoading(false); // Set loading to false to unblock the button
