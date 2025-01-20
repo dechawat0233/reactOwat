@@ -17,13 +17,12 @@ router.post('/', async (req, res) => {
 router.get('/listoutsiderdelete', async (req, res) => {
   try {
     // Fetch the data first
-    const outsiderList = await outsider.find();
+    const outsiders = await outsider .find();
 
     // Delete all data
-    await outsiderList.deleteMany();
+    await outsiders.deleteMany();
+    res.status(200).json(outsiders );
 
-    // console.log(`Deleted ${workplaceTimeRecordData.length} records.`);
-    res.json(outsiderList );
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Internal Server Error' });
