@@ -13,6 +13,25 @@ router.post('/', async (req, res) => {
   }
 });
 
+// Search outsiders by workplaceId and date
+router.post('/search', async (req, res) => {
+  const { workplaceId, date } = req.body;
+
+  try {
+    // Build the query object
+    const query = {};
+    if (workplaceId) query.workplaceId = workplaceId;
+    if (date) query.date = date; // Assuming exact match for the date string
+
+    // Execute the search query
+    const outsiders = await outsider.find(query);
+    res.status(200).json(outsiders);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 //======test 
 router.get('/listoutsiderdelete', async (req, res) => {
   try {

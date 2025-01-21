@@ -1151,7 +1151,7 @@ rowDataList
 
     const data = {
       workplaceId: searchWorkplaceId,
-      workplaceName: searchWorkplaceName,
+      // workplaceName: searchWorkplaceName,
       // date: formattedDate,
       date: convertBuddhistToGregorian(formattedDate),
     };
@@ -1239,33 +1239,12 @@ rowDataList
       }
     });
 
-    // workplaceWorkTime.map((item) => {
-    //   // alert(item.shift);
-    //   if (item.shift == "กะเช้า") {
-    //     // alert(item.startTime);
-    //     setShift1start(item.startTime);
-    //     setShift1end(item.endTime);
-    //     setStartTimeOt1(item.startTimeOT);
-    //     setEndTimeOt1(item.endTimeOT);
-    //   } else if (item.shift == "กะบ่าย") {
-    //     setShift2start(item.startTime);
-    //     setShift2end(item.endTime);
-    //     setStartTimeOt2(item.startTimeOT);
-    //     setEndTimeOt2(item.endTimeOT);
-    //   } else if (item.shift == "กะดึก") {
-    //     setShift3start(item.startTime);
-    //     setShift3end(item.endTime);
-    //     setStartTimeOt3(item.startTimeOT);
-    //     setEndTimeOt3(item.endTimeOT);
-    //   }
-    // });
-
     await setShift("");
     await setShift("morning");
 
     try {
-      const response = await axios.post(endpoint + "/timerecord/search", data);
-
+      const response = await axios.post(endpoint + "/outsider/search", data);
+alert(JSON.stringify(response , null,2))
       if (response.data.recordworkplace.length < 1) {
         setLoading(false);
         
@@ -1274,7 +1253,8 @@ rowDataList
         setUpdateButton(false);
         setTimeRecord_id("");
         setRowDataList([]);
-      } else {
+.      } else {
+        // alert(JSON.stringify(response.data))
         // Set the state to true if data is found
         await setUpdateButton(true);
         await setTimeRecord_id(response.data.recordworkplace[0]._id);
@@ -1284,17 +1264,11 @@ rowDataList
           await setRowDataList([]);
         }
 
-        // alert(JSON.stringify( rowDataList[0] ) );
-        //count work of time and set to table
-        // for (let i = 0; i < response.data.recordworkplace[0].employeeRecord.length; i++) {
-        // alert(response.data.recordworkplace[0].employeeRecord[i].shift );
-        // handleFieldChange(i, 'shift', response.data.recordworkplace[0].employeeRecord[i].shift);
-        // }
       }
     } catch (error) {
       alert("กรุณาตรวจสอบข้อมูลในช่องค้นหา");
       alert(error.message);
-      window.location.reload();
+      // window.location.reload();
     }
   }
 
@@ -1318,13 +1292,13 @@ rowDataList
     const data = {
       year: yearSelectedDate ,
       month: monthSelectedDate ,
-      createDate: '',
+      createDate: date ,
       createBy: '',
-      status: '',
+      status: 'create',
 
       workplaceId: workplaceId,
       workplaceName: workplaceName,
-      date: '',
+      date: convertBuddhistToGregorian (formattedDate),
 
       osd:rowDataList,
     };
@@ -1730,7 +1704,7 @@ setRows([
                 {/* <!--Frame--> */}
               </div>
             </div>
-            <form onSubmit={handleManageWorkplace}>
+            <form >
               <div class="row">
                 <div class="col-md-3">
                   <div class="form-group">
@@ -1801,7 +1775,7 @@ setRows([
                 <div class="col-md-3">
                   <label role="button"></label>
                   <div class="d-flex align-items-end">
-                    <button class="btn b_save" onClick={handleCheckTimerecord}>
+                    <button type="button" class="btn b_save" onClick={handleCheckTimerecord}>
                       <i class="nav-icon fas fa-search"></i> &nbsp; ตรวจสอบ
                     </button>
                   </div>
