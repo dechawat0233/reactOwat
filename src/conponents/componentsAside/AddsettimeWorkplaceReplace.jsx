@@ -1155,7 +1155,7 @@ rowDataList
       // date: formattedDate,
       date: convertBuddhistToGregorian(formattedDate),
     };
-
+// alert(formattedDate)
     // alert(convertBuddhistToGregorian (formattedDate) )
     let dateString = await convertBuddhistToGregorian(formattedDate);
     const [day, month, year] = await dateString.split("/");
@@ -1244,29 +1244,30 @@ rowDataList
 
     try {
       const response = await axios.post(endpoint + "/outsider/search", data);
-alert(JSON.stringify(response , null,2))
-      if (response.data.recordworkplace.length < 1) {
+// alert(JSON.stringify(response.data[0].osd, null))
+// alert(response.data.length)
+      if (response.data.length < 1 ) {
         setLoading(false);
-        
-        // alert('ไม่พบข้อมูล');
+        alert('ไม่พบข้อมูล');
         // Set the state to false if no data is found
         setUpdateButton(false);
         setTimeRecord_id("");
         setRowDataList([]);
-.      } else {
-        // alert(JSON.stringify(response.data))
+      } else {
         // Set the state to true if data is found
         await setUpdateButton(true);
-        await setTimeRecord_id(response.data.recordworkplace[0]._id);
+        await setTimeRecord_id(response.data[response.data.length -1]._id);
         if (workplaceName != "") {
-          await setRowDataList(response.data.recordworkplace[0].employeeRecord);
+          await setRowDataList(response.data[0].osd);
+          setLoading(false)
         } else {
           await setRowDataList([]);
         }
 
       }
+
     } catch (error) {
-      alert("กรุณาตรวจสอบข้อมูลในช่องค้นหา");
+      alert("กรุณาตรวจสอบข้อมูลในช่องค้นหาและเลือกวันตรวจสอบ");
       alert(error.message);
       // window.location.reload();
     }
@@ -1308,31 +1309,51 @@ alert(JSON.stringify(response , null,2))
       if (response.status === 201) {
         await alert("บันทึกสำเร็จ");
         // window.location.reload();
+        await handleCheckTimerecord();
       }
     } catch (error) {
       await alert("กรุณาตรวจสอบข้อมูลในช่องกรอกข้อมูล" + error);
       // window.location.reload();
     } finally {
-      await setLoading(false); // Set loading to false to unblock the button
+      // await setLoading(false); // Set loading to false to unblock the button
     }
   }
 
   async function handleUpdateWorkplaceTimerecord(event) {
     event.preventDefault();
-    // alert('hi');
     //get data from input in useState to data
 
+    const dateObject = new Date(formattedWorkDate);
+
+    // Extract the year from the dateObject
+    const year = dateObject.getFullYear();
+    //get data from input in useState to data
+    const date = new Date(selectedDate);
+
+    // Extract day, month, and year
+    const daySelectedDate = date.getDate().toString().padStart(2, "0");
+    const monthSelectedDate = (date.getMonth() + 1).toString().padStart(2, "0");
+    const yearSelectedDate = date.getFullYear().toString();
+
     const data = {
+      year: yearSelectedDate ,
+      month: monthSelectedDate ,
+      createDate: date ,
+      createBy: '',
+      status: 'create',
+
       workplaceId: workplaceId,
       workplaceName: workplaceName,
-      date: convertBuddhistToGregorian(formattedDate),
-      employeeRecord: rowDataList,
+      date: convertBuddhistToGregorian (formattedDate),
+
+      osd:rowDataList,
     };
+
 
     try {
       const response = await axios.put(
-        endpoint + "/timerecord/update/" + timeRecord_id,
-        data
+        endpoint + "/outsider/" + timeRecord_id,
+        data 
       );
       if (response) {
         alert("บันทึกสำเร็จ");
