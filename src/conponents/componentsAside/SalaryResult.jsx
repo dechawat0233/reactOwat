@@ -552,6 +552,7 @@ function Salaryresult() {
         };
 
         await setAddSalaryList([]);
+        
         await axios
           .post(endpoint + "/accounting/calsalaryemp", dataTest)
           .then(async (response) => {
