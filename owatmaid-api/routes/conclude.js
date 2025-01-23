@@ -290,7 +290,7 @@ if(parseFloat(salary ) >= 1660) {
                 }
 
                 let workRate = ((parseFloat(tmpWP.data.holiday) * (salary / 8)) * parseFloat(allTime));
-                tmp.workRate = 2;
+                tmp.workRate = '555';
                 tmp.workRateMultiply = tmpWP.data.holiday || 0;
 
                 if (otTime >= workOfOT) {
