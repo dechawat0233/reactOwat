@@ -708,7 +708,7 @@ const specialDaylist = [];
             // Process daysOff
             await Promise.all(workplace.daysOff.map(async item => {
                 const day1 = new Date(item);
-                day1.setDate(day1.getDate() + 1);
+                day1.setDate(day1.getDate() );
                 const month1 = day1.getMonth();
                 const month1String = (month1 + 1).toLocaleString('en-US', { minimumIntegerDigits: 2 });
                 const year1 = day1.getFullYear();

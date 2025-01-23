@@ -805,7 +805,6 @@ const         wpDataCalculator1 = await {
   
           const dayOff = await tmpWP?.data?.workplaceDayOffList ?? [];
           const specialDayOff = await tmpWP?.data?.specialDaylist ?? [];
-          console.log('specialDayOff ' + specialDayOff )
           const dayOffCheck = [];
 
           if (dayOff.length !== 0) {
