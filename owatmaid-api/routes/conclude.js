@@ -874,7 +874,8 @@ const         wpDataCalculator1 = await {
                 }
 
                 let workRate = ((parseFloat(tmpWP.data.holiday) * (salary / 8)) * parseFloat(allTime));
-                tmp.workRate = workRate || 0;
+                // tmp.workRate = workRate || 0;
+                tmp.workRate = tmpWP.data.holiday 
                 tmp.workRateMultiply = tmpWP.data.holiday || 0;
 
                 if (otTime >= workOfOT) {
