@@ -1242,7 +1242,7 @@ function Setting({ workplaceList, employeeList }) {
       wrh = 0; // If result is NaN, set it to 0
     }
 
-    setHolidayHour(wrh);
+    // setHolidayHour(wrh);
   }, [holiday, workOfHour, workRate]);
 
   function handleChange(e) {
