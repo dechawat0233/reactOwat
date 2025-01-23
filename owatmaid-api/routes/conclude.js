@@ -289,9 +289,9 @@ if(parseFloat(salary ) >= 1660) {
                   tmp.allTimes = allTime || 0;
                 }
 
-                let workRate = ((parseFloat(tmpWP.data.holiday) * (salary / 8)) * parseFloat(allTime));
+                let workRate = ((parseFloat(tmpWP.data.holidayHour) * (salary / 8)) * parseFloat(allTime)).toFixed(3);
                 tmp.workRate = workRate || 0;
-                tmp.workRateMultiply = tmpWP.data.holiday || 0;
+                tmp.workRateMultiply = tmpWP.data.holidayHour || 0;
 console.log(workRate + ' workRate ');
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
@@ -539,9 +539,9 @@ const         wpDataCalculator1 = await {
                   tmp.allTime = allTime;
                 }
 
-                let workRate = ((parseFloat(wpResponse1.data.holiday) * (salary / 8)) * parseFloat(allTime));
+                let workRate = ((parseFloat(tmpWP.data.holidayHour) * (salary / 8)) * parseFloat(allTime)).toFixed(3);
                 tmp.workRate = workRate || 0;
-                tmp.workRateMultiply = wpResponse1.data.holiday || 0;
+                tmp.workRateMultiply = wpResponse1.data.holidayHour || 0;
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
                   // tmp.otTimes = workOfOT || 0;
@@ -805,6 +805,7 @@ const         wpDataCalculator1 = await {
   
           const dayOff = await tmpWP?.data?.workplaceDayOffList ?? [];
           const specialDayOff = await tmpWP?.data?.specialDaylist ?? [];
+          console.log('specialDayOff ' + specialDayOff )
           const dayOffCheck = [];
 
           if (dayOff.length !== 0) {
@@ -874,7 +875,7 @@ const         wpDataCalculator1 = await {
                 }
 
                 let workRate = ((parseFloat(tmpWP.data.holidayHour) * (salary / 8)) * parseFloat(allTime)).toFixed(3);
-                console.log(dayOffCheck + ' test ' + tmpWP.data.holidayHour + ' ' + specialDayOff);
+                console.log(' test ' + tmpWP.data.holidayHour + ' ' + specialDayOff);
 
                 tmp.workRate = workRate || 0;
                 tmp.workRateMultiply = tmpWP.data.holiday || 0;
@@ -1115,9 +1116,9 @@ const         wpDataCalculator1 = await {
                   tmp.allTimes = allTime || 0;
                 }
 
-                let workRate = ((parseFloat(wpResponse.data.holiday) * (salary / 8)) * parseFloat(allTime));
+                let workRate = ((parseFloat(tmpWP.data.holidayHour) * (salary / 8)) * parseFloat(allTime)).toFixed(3);
                 tmp.workRate = workRate || 0;
-                tmp.workRateMultiply = wpResponse.data.holiday || 0;
+                tmp.workRateMultiply = wpResponse.data.holidayHour || 0;
 
                 if (otTime >= workOfOT) {
                   otTime = workOfOT;
