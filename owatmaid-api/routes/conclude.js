@@ -964,7 +964,7 @@ const         wpDataCalculator1 = await {
                   salary = tmpWP.data.workRate;
                   // console.log('test');
                 }
-console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
+// console.log('tmpWP.data.workRate ' + tmpWP.data.workRate + 'salary '+ salary);
 
                 if (parseFloat(allTime || '0') >= workOfHour) {
                   allTime = workOfHour;
