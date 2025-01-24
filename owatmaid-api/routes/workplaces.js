@@ -92,6 +92,9 @@ const workplaceSchema = new mongoose.Schema({
     workRate: {
         type: String
     },
+    addWorkRate: {
+        type: String
+    },
     workRateOT: {
         type: String
     },
@@ -116,6 +119,8 @@ const workplaceSchema = new mongoose.Schema({
     holidayHour: {
         type: String
     },
+    workRateChange: Date,
+
     salaryadd1: {
         type: String
     },
@@ -452,6 +457,7 @@ router.post('/create', async (req, res) => {
         workOfOT_breakHour,
         workOfOT_breakMinute,
         workRate,
+        addWorkRate,
         workRateOT,
         workTotalPeople,
         dayoffRate,
@@ -460,6 +466,7 @@ router.post('/create', async (req, res) => {
         holiday,
         holidayOT,
         holidayHour,
+        workRateChange,
         salaryadd1,
         salaryadd2,
         salaryadd3,
@@ -531,6 +538,7 @@ router.post('/create', async (req, res) => {
         workOfOT_breakHour,
         workOfOT_breakMinute,
         workRate,
+        addWorkRate,
         workRateOT,
         workTotalPeople,
         dayoffRate,
@@ -539,6 +547,7 @@ router.post('/create', async (req, res) => {
         holiday,
         holidayOT,
         holidayHour,
+        workRateChange,
         salaryadd1,
         salaryadd2,
         salaryadd3,
@@ -764,6 +773,7 @@ data.workplaceDayOffList = workplaceDayOffList || [];
 data.specialDaylist = specialDaylist || [];
 
 data.workRate = workplace.workRate || 0;
+data.addWorkRate = workplace.addWorkRate || 0;
 data.workRateOT = workplace.workRateOT || 0;
 data.dayoffRateHour = workplace.dayoffRateHour || 0;
 data.dayoffRateOT = workplace.dayoffRateOT  || 0;
@@ -779,7 +789,7 @@ data.workOfOT_subHour = workplace.workOfOT_subHour || 0;
 data.workOfOT_subMinute = workplace.workOfOT_subMinute || 0;
 data.workOfOT_breakHour = workplace.workOfOT_breakHour  || 0;
 data.workOfOT_breakMinute = workplace.workOfOT_breakMinute || 0;
-
+data.workRateChange = workplace.workRateChange;
 
             res.json(data);
 

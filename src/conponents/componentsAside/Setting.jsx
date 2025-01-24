@@ -485,9 +485,21 @@ function Setting({ workplaceList, employeeList }) {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState(new Date().getFullYear());
 
-  // const handleDateChange = (date) => {
-  //     setSelectedDates((prevDates) => [...prevDates, date]);
-  // };
+  const [workRateChange, setWorkRateChange] = useState('');
+  const [workRateDayChange, setWorkRateDayChange] = useState("");
+  const [workRateMonthChange, setWorkRateMonthChange] = useState("");
+  const [workRateYearChange, setWorkRateYearChange] = useState(new Date().getFullYear());
+
+  //set day month year to WorkRate change
+  useEffect(() => {
+    const currentDate = new Date(workRateChange); // Get the workRateChange date
+
+    setWorkRateDayChange(currentDate.getDate()); // Day of the month (1-31) 
+   setWorkRateMonthChange(currentDate.getMonth() + 1); // Month (0-11) - Add 1 to get 1-12
+   setWorkRateYearChange( currentDate.getFullYear()); // Year (e.g., 2025)
+  }, [workRateChange] );
+
+
   const handleAddDate = () => {
     if (day && month && year) {
       const selectedDate = new Date(`${month}/${day}/${year}`);
@@ -615,6 +627,8 @@ function Setting({ workplaceList, employeeList }) {
   };
 
   const [workRate, setWorkRate] = useState(""); //ค่าจ้างต่อวัน
+  const [addWorkRate, setAddWorkRate] = useState(""); //ค่าจ้างต่อวัน
+
   const [workRateOT, setWorkRateOT] = useState(""); //ค่าจ้าง OT ต่อชั่วโมง
   const [workTotalPeople, setWorkTotalPeople] = useState(""); //จำนวนคนในหน่วยงาน
   const [dayoffRate, setDayoffRate] = useState(""); //ค่าจ้างวันหยุดรายวันต่อชั่วโมง
@@ -924,6 +938,7 @@ function Setting({ workplaceList, employeeList }) {
       setIsCustom(true);
     }
     setWorkRate(workplace.workRate);
+    setAddWorkRate(workplace.addWorkRate);
     setWorkRateOT(workplace.workRateOT);
     setWorkTotalPeople(workplace.workTotalPeople);
     setDayoffRate(workplace.dayoffRate);
@@ -1027,6 +1042,7 @@ function Setting({ workplaceList, employeeList }) {
     setListSpecialWorktime(workplace.listSpecialWorktime);
     setWorkTimeDayList(workplace.workTimeDay);
     setWorkTimeDayPersonList(workplace.workTimeDayPerson);
+setWorkRateChange(workplace.workRateChange)
 
     // console.log(workplace);
     // // console.log(initialFormData);
@@ -1087,6 +1103,12 @@ function Setting({ workplaceList, employeeList }) {
 
   async function handleManageWorkplace(event) {
     event.preventDefault();
+//set WorkRateChange
+if (workRateDayChange && workRateMonthChange && workRateYearChange) {
+  const selectedDate = await new Date(`${workRateMonthChange }/${workRateDayChange }/${workRateYearChange}`);
+  await setWorkRateChange(selectedDate || null);
+}
+
 
     //get data from input in useState to data
     const data = {
@@ -1123,6 +1145,7 @@ function Setting({ workplaceList, employeeList }) {
       workOfOT_breakMinute: breakOfOT || 0,
 
       workRate: workRate,
+      addWorkRate: addWorkRate,
       workRateOT: workRateOT,
       workTotalPeople: workTotalPeople,
       dayoffRate: dayoffRate,
@@ -1148,6 +1171,7 @@ function Setting({ workplaceList, employeeList }) {
       workRateDayoffRate: workRateDayoffRate,
       // workplaceAddress: workplaceAddress,
       daysOff: selectedDates,
+      workRateChange: workRateChange,
       reason: reason,
 
       employeeIdList: employeeIdList,
@@ -1622,10 +1646,10 @@ function Setting({ workplaceList, employeeList }) {
                 {/* <!--Frame--> */}
                 <h2 class="title">ค่าจ้าง</h2>
                 <section class="Frame">
-                  <div class="row">
-                    <div class="col-md-4">
+                <div class="row">
+                <div class="col-md-3">
                       <div class="form-group">
-                        <label role="workRate">อัตราค่าจ้าง รายวัน</label>
+                        <label role="workRate">ค่าจ้าง รายวัน</label>
                         <input
                           type="text"
                           class="form-control"
@@ -1649,10 +1673,22 @@ function Setting({ workplaceList, employeeList }) {
                         />
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label role="workRate">รายชั่วโมง</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="workRate"
+                          placeholder="บาท"
+                          value={(parseFloat(workRate ||  0) /8) || ''} readOnly />
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
                       <div class="form-group">
                         <label role="workRateOT">
-                          อัตราค่าจ้าง OT รายชั่วโมง
+                          OT รายชั่วโมง
                         </label>
                         <input
                           type="text"
@@ -1677,55 +1713,27 @@ function Setting({ workplaceList, employeeList }) {
                         />
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                       <div class="form-group">
-                        <label role="workTotalPeople">
-                          จำนวนพนักงานที่ปฏิบัติงาน
+                        <label role="workRateOT">
+                          OT รายชั่วโมง
                         </label>
                         <input
                           type="text"
                           class="form-control"
-                          id="workTotalPeople"
-                          placeholder="คน"
-                          value={workTotalPeople}
-                          onChange={(e) => setWorkTotalPeople(e.target.value)}
-                          onInput={(e) => {
-                            // Remove any non-digit characters
-                            e.target.value = e.target.value.replace(
-                              /[^0-9.]/g,
-                              ""
-                            );
-
-                            // Ensure only one '.' is allowed
-                            const parts = e.target.value.split(".");
-                            if (parts.length > 2) {
-                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
-                            }
-                          }}
-                        />
+                          id="workRateOT"
+                          placeholder="กี่บาท"
+                          value={ ((parseFloat(workRate || '0')/ 8)* parseFloat(workRateOT || '0')) || '' }
+                        readOnly/>
                       </div>
                     </div>
-                  </div>
-                  <div class="row">
-                    {/* <div class="col-md-4">
-                      <div class="form-group">
-                        <label role="dayoffRate">
-                          อัตราค่าจ้างวันหยุดประจำสัปดาห์
-                        </label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="dayoffRate"
-                          placeholder="บาท"
-                          value={dayoffRate}
-                          onChange={(e) => setDayoffRate(e.target.value)}
-                        />
-                      </div>
-                    </div> */}
-                    <div class="col-md-4">
+                </div>
+
+                <div class="row">
+                <div class="col-md-3">
                       <div class="form-group">
                         <label role="dayoffRateHour">
-                          อัตราค่าจ้างวันหยุดประจำสัปดาห์รายชั่วโมง
+                          วันหยุดประจำสัปดาห์รายชั่วโมง
                         </label>
                         <input
                           type="text"
@@ -1750,10 +1758,24 @@ function Setting({ workplaceList, employeeList }) {
                         />
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label role="dayoffRateHour">
+                          วันหยุดประจำสัปดาห์รายชั่วโมง
+                        </label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="dayoffRateHour"
+                          placeholder="กี่บาท"
+                          value={ ((parseFloat(workRate || '0')/ 8)* parseFloat(dayoffRateHour || '0')) || '' }
+                                                readOnly />
+                      </div>
+                    </div>
+                    <div class="col-md-3">
                       <div class="form-group">
                         <label role="dayoffRateOT">
-                          อัตราค่าจ้าง OT วันหยุดประจำสัปดาห์รายชั่วโมง
+                          OT วันหยุดประจำสัปดาห์รายชั่วโมง
                         </label>
                         <input
                           type="text"
@@ -1778,26 +1800,27 @@ function Setting({ workplaceList, employeeList }) {
                         />
                       </div>
                     </div>
-
-                    {/* <div class="col-md-4">
+                    <div class="col-md-3">
                       <div class="form-group">
-                        <label role="holiday">
-                          อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายวัน
+                        <label role="dayoffRateOT">
+                          OT วันหยุดประจำสัปดาห์รายชั่วโมง
                         </label>
                         <input
                           type="text"
                           class="form-control"
-                          id="holiday"
-                          placeholder="กี่เท่า"
-                          value={holiday}
-                          onChange={(e) => setHoliday(e.target.value)}
-                        />
+                          id="dayoffRateOT"
+                          placeholder="กี่บาท"
+                          value={ ((parseFloat(workRate || '0')/ 8)* parseFloat(dayoffRateOT || '0')) || '' }
+                        readOnly />
                       </div>
-                    </div> */}
-                    <div class="col-md-4">
+                    </div>
+                </div>
+
+                <div class="row">
+                <div class="col-md-3">
                       <div class="form-group">
                         <label role="holidayHour">
-                          อัตราค่าจ้างวันหยุดนักขัตฤกษ์ รายชั่วโมง
+                          วันหยุดนักขัตฤกษ์ รายชั่วโมง
                         </label>
                         <input
                           type="text"
@@ -1822,10 +1845,24 @@ function Setting({ workplaceList, employeeList }) {
                         />
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label role="holidayHour">
+                          วันหยุดนักขัตฤกษ์ รายชั่วโมง
+                        </label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="holidayHour"
+                          placeholder=""
+                          value={ ((parseFloat(workRate || '0')/ 8)* parseFloat(holidayHour || '0')) || '' }
+                        readOnly />
+                      </div>
+                    </div>
+                    <div class="col-md-3">
                       <div class="form-group">
                         <label role="holidayOT">
-                          อัตราค่าจ้างวันหยุดนักขัตฤกษ์ OT รายชั่วโมง
+                          วันหยุดนักขัตฤกษ์ OT รายชั่วโมง
                         </label>
                         <input
                           type="text"
@@ -1850,7 +1887,127 @@ function Setting({ workplaceList, employeeList }) {
                         />
                       </div>
                     </div>
-                  </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label role="holidayOT">
+                          วันหยุดนักขัตฤกษ์ OT รายชั่วโมง
+                        </label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="holidayOT"
+                          placeholder="กี่บาท"
+                          value={ ((parseFloat(workRate || '0')/ 8)* parseFloat(holidayOT || '0')) || '' }
+                        readOnly />
+                      </div>
+                    </div>
+                </div>
+                <br/>
+
+                <div class="row">
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label role="addWorkRate">ปรับเพิ่ม</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="addWorkRate"
+                          placeholder="บาท"
+                          value={addWorkRate}
+                          onChange={(e) => setAddWorkRate(e.target.value)}
+                          onInput={(e) => {
+                            // Remove any non-digit characters
+                            e.target.value = e.target.value.replace(
+                              /[^0-9.]/g,
+                              ""
+                            );
+
+                            // Ensure only one '.' is allowed
+                            const parts = e.target.value.split(".");
+                            if (parts.length > 2) {
+                              e.target.value = `${parts[0]}.${parts[1]}`; // Keep only the first two parts
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label role="addWorkRate">ค่าจ้างใหม่</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="addWorkRate"
+                          placeholder="บาท"
+                          value={parseFloat(addWorkRate || '0')+ parseFloat(workRate || '0') }
+                        />
+                      </div>
+                    </div>
+
+<div class="col-md-6">
+
+<div>
+                    <label>วันเริ่มต้นคำนวณ:</label>
+
+                    <div>
+                      <div className="row">
+                        <div className="col-md-3">
+                          <select
+                            className="form-control"
+                            value={day}
+                            onChange={(e) => setDay(e.target.value)}
+                          >
+                            <option value="">Select day</option>
+                            {Array.from({ length: 31 }, (_, i) => i + 1).map(
+                              (day) => (
+                                <option key={day} value={day}>
+                                  {day}
+                                </option>
+                              )
+                            )}
+                          </select>
+                        </div>
+                        <div className="col-md-3">
+                          <select
+                            className="form-control"
+                            value={month}
+                            onChange={(e) => setMonth(e.target.value)}
+                          >
+                            <option value="">Select month</option>
+                            {Array.from({ length: 12 }, (_, i) => i + 1).map(
+                              (month) => (
+                                <option key={month} value={month}>
+                                  {month}
+                                </option>
+                              )
+                            )}
+                          </select>
+                        </div>
+
+                        <div className="col-md-3">
+                          <select
+                            className="form-control"
+                            value={year}
+                            onChange={(e) => setYear(e.target.value)}
+                          >
+                            <option value="">Select year</option>
+                            {Array.from(
+                              { length: 7 },
+                              (_, i) => new Date().getFullYear() + 3 - i
+                            ).map((year) => (
+                              <option key={year} value={year}>
+                                {year + 543}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div></div>
+                      </div>
+                      </div>
+
+
+                </div>
+
                 </section>
                 {/* <!--Frame--> */}
                 <h2 class="title">สวัสดิการเงินเพิ่มพนักงาน</h2>
