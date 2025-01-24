@@ -493,7 +493,7 @@ function Setting({ workplaceList, employeeList }) {
   //set day month year to WorkRate change
   useEffect(() => {
     const currentDate = new Date(workRateChange); // Get the workRateChange date
-
+alert(workRateChange);
     setWorkRateDayChange(currentDate.getDate()); // Day of the month (1-31) 
    setWorkRateMonthChange(currentDate.getMonth() + 1); // Month (0-11) - Add 1 to get 1-12
    setWorkRateYearChange( currentDate.getFullYear()); // Year (e.g., 2025)
@@ -1043,7 +1043,7 @@ function Setting({ workplaceList, employeeList }) {
     setWorkTimeDayList(workplace.workTimeDay);
     setWorkTimeDayPersonList(workplace.workTimeDayPerson);
 setWorkRateChange(workplace.workRateChange)
-
+alert('t ' + workplace.workRateChange)
     // console.log(workplace);
     // // console.log(initialFormData);
     // console.log("formData", formData);
@@ -1954,8 +1954,8 @@ if (workRateDayChange && workRateMonthChange && workRateYearChange) {
                         <div className="col-md-3">
                           <select
                             className="form-control"
-                            value={day}
-                            onChange={(e) => setDay(e.target.value)}
+                            value={workRateDayChange}
+                            onChange={(e) => setWorkRateDayChange(e.target.value)}
                           >
                             <option value="">Select day</option>
                             {Array.from({ length: 31 }, (_, i) => i + 1).map(
@@ -1970,8 +1970,8 @@ if (workRateDayChange && workRateMonthChange && workRateYearChange) {
                         <div className="col-md-3">
                           <select
                             className="form-control"
-                            value={month}
-                            onChange={(e) => setMonth(e.target.value)}
+                            value={workRateMonthChange}
+                            onChange={(e) => setWorkRateMonthChange(e.target.value)}
                           >
                             <option value="">Select month</option>
                             {Array.from({ length: 12 }, (_, i) => i + 1).map(
@@ -1987,8 +1987,8 @@ if (workRateDayChange && workRateMonthChange && workRateYearChange) {
                         <div className="col-md-3">
                           <select
                             className="form-control"
-                            value={year}
-                            onChange={(e) => setYear(e.target.value)}
+                            value={workRateYearChange}
+                            onChange={(e) => setWorkRateYearChange(e.target.value)}
                           >
                             <option value="">Select year</option>
                             {Array.from(
@@ -1996,7 +1996,7 @@ if (workRateDayChange && workRateMonthChange && workRateYearChange) {
                               (_, i) => new Date().getFullYear() + 3 - i
                             ).map((year) => (
                               <option key={year} value={year}>
-                                {year + 543}
+                                {workRateYearChange + 543}
                               </option>
                             ))}
                           </select>
